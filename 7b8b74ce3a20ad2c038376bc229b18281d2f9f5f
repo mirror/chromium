@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d362ff4_de5869ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7df4a42_ce804229",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9668606_4c6d6f70",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88718cf8_07b8072b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "You\u0027re right. That\u0027s when this can return null.",
+      "parentUuid": "d9668606_4c6d6f70",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "2ebc2402_37e8b2f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "This would log for every Presentation API URL.",
+      "parentUuid": "2452fdac_30b732ee",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e67113eb_67c55196",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
         "patchSetId": 7
@@ -84,6 +138,24 @@
       "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b0c737_bb90296d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "Yes. It\u0027s the source of the media element. It can be an invalid URL as some sites don\u0027t escape properly.",
+      "parentUuid": "e67113eb_67c55196",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "42554b4d_60a57512",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1557a47_bd75e06c",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69fb712e_f0e5703e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
         "patchSetId": 7
@@ -118,6 +208,24 @@
       "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc7c311_6ceaaaea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "I think in the case of Remote Playback we must only supply two or three possible app id all of which must be valid. I removed the try/catch block.",
+      "parentUuid": "69fb712e_f0e5703e",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

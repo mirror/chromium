@@ -16,6 +16,24 @@
       "revId": "3390583111d91f46a522585709d900f48f12f9d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779e7771_ba679b19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "I missed a check for androidMediaRouter and returning null if it\u0027s null.",
+      "parentUuid": "873c9f14_ecb9d545",
+      "revId": "3390583111d91f46a522585709d900f48f12f9d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

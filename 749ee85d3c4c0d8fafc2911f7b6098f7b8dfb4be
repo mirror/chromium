@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "46577209_cb2b9587",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "Actually, I was wrong. ChromeMediaRouter asks every provider to start observing every source it gets so this provider will get presentation api URLs, for example. If all providers don\u0027t support the source, Chrome will pretend as there\u0027s no devices.\n\nAt this point, SOURCE_NOT_SUPPORTED will be returned upstream in the media/remoting/ code before MR is asked to monitor availability.",
+      "parentUuid": "f9c7165d_adaeeb4a",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab7d2a7a_e79405f2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
         "patchSetId": 3
@@ -354,6 +372,24 @@
     },
     {
       "key": {
+        "uuid": "d98c8412_cc342338",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76f252a5_60c21ad2",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "426b8682_070c8c0f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaSource.java",
         "patchSetId": 3
@@ -401,6 +437,24 @@
       "side": 1,
       "message": "The benefit is using the URL parsing methods instead of rolling your own.  Not sure what you mean about storage as both String and URL are objects held by reference.",
       "parentUuid": "40531d4c_ca617b94",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "347e77cf_ef527f50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T21:25:50Z",
+      "side": 1,
+      "message": "The only parsing that\u0027s needed is stripping the remote-playback:// prefix, the rest is like a data: URL. The sourceId is a String in many other places like ChromeMediaRouter. Changing this to java.net.URI would cause conversions to/from String in RemotingMediaSource or changing the rest of the code to URI too. I\u0027ll file a bug for that.",
+      "parentUuid": "06ab6179_caf2f24b",
       "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
