@@ -16,6 +16,24 @@
       "revId": "fd5e6d6815a573a27633f39f9b78193c0af01d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5143dd6d_54f19daf",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-11T17:09:36Z",
+      "side": 1,
+      "message": "Not sure I understand - this isn\u0027t redeclared in the .h?\n\nThis is a concrete implementation/subclass of an interface - the general interface is what\u0027s used in the .h and managed there.",
+      "parentUuid": "c86eb39f_59f8c977",
+      "revId": "fd5e6d6815a573a27633f39f9b78193c0af01d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
