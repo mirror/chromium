@@ -16,6 +16,24 @@
       "revId": "edb431933f66db040972aeda359e617307e67934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2d5b4a_8e359970",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T12:19:28Z",
+      "side": 1,
+      "message": "I think on Gaia there are 2 possibilities when single-session sign out will be implemented:\n* If the user signs out a secondary account, than only that account is signed out\n* If the user signs out of the default account (account index 0 in the cookies), than all accounts are signed out\nI expect the Gaia sign-out header should have the right accounts in these cases. \nI expect Chrome to do the same with the tokens.\n\nI think we need to make sure we do the same this in Chrome:\n* when the user signs out of a secondary account, we just remove the token.\n* when the user signs out of the primary account, we need to remove the token and sign out of sync.\n\nOur previous decision to remove all tokens when the sync account was signed out was based on the fact that we assumed that the sync account was always the default Gaia account. I am not 100% sure this is always the case though.\n\nI think the current implementation is fine for now (today SigninManager::SignOut also revokes all the tokens), but in the long run we would need the following:\n* if the account is the sync account, call SigninManager::SignOut with an option to avoid removing the refresh tokens for that account. We\u0027ll need this method in the future as well\n* revoke tokens for all accounts present in the response header\n\nLet\u0027s chat about this and make sure we update the design doc after our discussion.",
+      "parentUuid": "bf11219f_ad6a20bd",
+      "revId": "edb431933f66db040972aeda359e617307e67934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
