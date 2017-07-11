@@ -22,6 +22,47 @@
       "revId": "165e4702f06b8a130ce7524a4d273dea31fee77c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de76ca38_70962c3b",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-11T00:13:12Z",
+      "side": 1,
+      "message": "I second this. Feels like only params.scale should be concerned about host dpi at all, while the reset is in DIP?",
+      "parentUuid": "b32a024a_70d5260d",
+      "range": {
+        "startLine": 386,
+        "startChar": 68,
+        "endLine": 386,
+        "endChar": 76
+      },
+      "revId": "165e4702f06b8a130ce7524a4d273dea31fee77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19eb18a0_dc330ee8",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-11T00:13:12Z",
+      "side": 1,
+      "message": "Is this in DIP? Relative to the document\u0027s origin, not currently visible viewport? Should we call this \"viewport\" instead, meaning that not passing it captures current viewport?",
+      "revId": "165e4702f06b8a130ce7524a4d273dea31fee77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
