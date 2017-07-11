@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "9f3d636e_6961cffa",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-11T17:50:35Z",
+      "side": 1,
+      "message": "Changed to milestone. Thanks for recommendation.",
+      "parentUuid": "5dcf2d67_c0523681",
+      "range": {
+        "startLine": 259,
+        "startChar": 52,
+        "endLine": 259,
+        "endChar": 63
+      },
+      "revId": "b0d8cda36548bcefb1911896a3aea294139d6aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26f816d1_59d15bf2",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
         "patchSetId": 5
@@ -132,6 +156,30 @@
       "writtenOn": "2017-07-11T17:15:55Z",
       "side": 1,
       "message": "When does this block get called? Ideally it would be called exactly once only if the precache database file exists and zero times otherwise.",
+      "range": {
+        "startLine": 632,
+        "startChar": 24,
+        "endLine": 632,
+        "endChar": 49
+      },
+      "revId": "b0d8cda36548bcefb1911896a3aea294139d6aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a06c89a_9a2aa094",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-11T17:50:35Z",
+      "side": 1,
+      "message": "IIUC it\u0027s called for each user request to remove browsing history. We could check if the database file exists before we delete it but we can\u0027t do this on the UI thread anyway.\n\nSome other ideas were also rejected:\n- We can\u0027t rely on the fact that user has a precache experiment variation set. \n- Saving the PRECACHE_REMOVED state somewhere probably isn\u0027t worth it.",
+      "parentUuid": "26f816d1_59d15bf2",
       "range": {
         "startLine": 632,
         "startChar": 24,
