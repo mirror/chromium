@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9397881_56bf1501",
+        "filename": "mojo/public/cpp/bindings/lib/binding_state.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-11T00:46:47Z",
+      "side": 1,
+      "message": "So it turns out there are some scenarios in production code and tests where people are calling Bind with an invalid pipe handle. I discovered this from the DCHECKs in HandleSignalTracker.\n\nThis runtime test should probably be a DCHECK IMHO, but maybe you have some extra context. Is it desirable to have Bind support binding an invalid handle? Note that this test doesn\u0027t work (as you can see from redness) because some of this code Binds to an invalid handle and then calls e.g. set_connection_error_handler which DCHECKs(is_bound())\n\nShall I fix the incorrect usage and make this a DCHECK in a separate CL?",
+      "revId": "3303d34fc1467675560f1523af21acf036725ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
