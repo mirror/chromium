@@ -30,6 +30,12 @@ class MEDIA_EXPORT FrameProcessor {
                  MediaLog* media_log);
   ~FrameProcessor();
 
+  // This must be called exactly once, before doing any track buffer creation or
+  // frame processing.
+  void SetParseWarningCallbacks(
+      const base::Closure& keyframe_time_greater_than_dependant_cb,
+      const base::Closure& muxed_sequence_mode_cb);
+
   // Get/set the current append mode, which if true means "sequence" and if
   // false means "segments".
   // See http://www.w3.org/TR/media-source/#widl-SourceBuffer-mode.
@@ -168,6 +174,11 @@ class MEDIA_EXPORT FrameProcessor {
 
   // MediaLog for reporting messages and properties to debug content and engine.
   MediaLog* media_log_;
+
+  // Callbacks for reporting problematic conditions that are not necessarily
+  // errors.
+  base::Closure keyframe_time_greater_than_dependant_cb_;
+  base::Closure muxed_sequence_mode_cb_;
 
   // Counters that limit spam to |media_log_| for frame processor warnings.
   int num_dropped_preroll_warnings_ = 0;

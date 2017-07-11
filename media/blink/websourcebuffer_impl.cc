@@ -51,6 +51,12 @@ WebSourceBufferImpl::WebSourceBufferImpl(const std::string& id,
   demuxer_->SetTracksWatcher(
       id, base::Bind(&WebSourceBufferImpl::InitSegmentReceived,
                      base::Unretained(this)));
+  demuxer_->SetParseWarningCallbacks(
+      id,
+      base::Bind(&WebSourceBufferImpl::DetectedKeyframeTimeGreaterThanDependant,
+                 base::Unretained(this)),
+      base::Bind(&WebSourceBufferImpl::DetectedMuxedSequenceAppendMode,
+                 base::Unretained(this)));
 }
 
 WebSourceBufferImpl::~WebSourceBufferImpl() {
@@ -198,6 +204,16 @@ void WebSourceBufferImpl::InitSegmentReceived(
   }
 
   client_->InitializationSegmentReceived(trackInfoVector);
+}
+
+void WebSourceBufferImpl::DetectedKeyframeTimeGreaterThanDependant() {
+  client_->NotifyParseWarning(blink::WebSourceBufferClient::ParseWarning::
+                                  kKeyframeTimeGreaterThanDependant);
+}
+
+void WebSourceBufferImpl::DetectedMuxedSequenceAppendMode() {
+  client_->NotifyParseWarning(
+      blink::WebSourceBufferClient::ParseWarning::kMuxedSequenceMode);
 }
 
 }  // namespace media

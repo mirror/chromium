@@ -85,6 +85,17 @@ class SourceBufferStateTest : public ::testing::Test {
 
     sbs->SetTracksWatcher(base::Bind(
         &SourceBufferStateTest::OnMediaTracksUpdated, base::Unretained(this)));
+
+    // These tests are not expected to issue these two parse warnings.
+    EXPECT_CALL(*this, KeyframeGreaterThanDependantMock()).Times(0);
+    EXPECT_CALL(*this, MuxedSequenceModeMock()).Times(0);
+
+    sbs->SetParseWarningCallbacks(
+        base::Bind(&SourceBufferStateTest::KeyframeGreaterThanDependantMock,
+                   base::Unretained(this)),
+        base::Bind(&SourceBufferStateTest::MuxedSequenceModeMock,
+                   base::Unretained(this)));
+
     return sbs;
   }
 
@@ -109,6 +120,9 @@ class SourceBufferStateTest : public ::testing::Test {
     sbs->Append(stream_data, data_size, t, t, &t);
     return new_configs_result;
   }
+
+  MOCK_METHOD0(KeyframeGreaterThanDependantMock, void());
+  MOCK_METHOD0(MuxedSequenceModeMock, void());
 
   MOCK_METHOD1(OnUpdateDuration, void(base::TimeDelta));
 

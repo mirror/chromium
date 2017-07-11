@@ -197,6 +197,15 @@ void SourceBufferState::SetTracksWatcher(
   init_segment_received_cb_ = tracks_updated_cb;
 }
 
+void SourceBufferState::SetParseWarningCallbacks(
+    const base::Closure& keyframe_time_greater_than_dependant_cb,
+    const base::Closure& muxed_sequence_mode_cb) {
+  // Give the callbacks to |frame_processor_|; none of these warnings are
+  // currently emitted elsewhere.
+  frame_processor_->SetParseWarningCallbacks(
+      keyframe_time_greater_than_dependant_cb, muxed_sequence_mode_cb);
+}
+
 bool SourceBufferState::Append(const uint8_t* data,
                                size_t length,
                                TimeDelta append_window_start,

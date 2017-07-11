@@ -669,6 +669,16 @@ void ChunkDemuxer::SetTracksWatcher(
   source_state_map_[id]->SetTracksWatcher(tracks_updated_cb);
 }
 
+void ChunkDemuxer::SetParseWarningCallbacks(
+    const std::string& id,
+    const base::Closure& keyframe_time_greater_than_dependant_cb,
+    const base::Closure& muxed_sequence_mode_cb) {
+  base::AutoLock auto_lock(lock_);
+  CHECK(IsValidId(id));
+  source_state_map_[id]->SetParseWarningCallbacks(
+      keyframe_time_greater_than_dependant_cb, muxed_sequence_mode_cb);
+}
+
 void ChunkDemuxer::RemoveId(const std::string& id) {
   DVLOG(1) << __func__ << " id=" << id;
   base::AutoLock auto_lock(lock_);

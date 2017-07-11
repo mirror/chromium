@@ -224,6 +224,12 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
   void SetTracksWatcher(const std::string& id,
                         const MediaTracksUpdatedCB& tracks_updated_cb);
 
+  // Notifies a caller via callbacks of various parse warnings.
+  void SetParseWarningCallbacks(
+      const std::string& id,
+      const base::Closure& keyframe_time_greater_than_dependant_cb,
+      const base::Closure& muxed_sequence_mode_cb);
+
   // Removed an ID & associated resources that were previously added with
   // AddId().
   void RemoveId(const std::string& id);
