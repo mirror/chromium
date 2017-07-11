@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "24a1ebb0_e7a2fc84",
+        "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-11T13:54:24Z",
+      "side": 1,
+      "message": "I\u0027m fine with the change, I\u0027m just wondering if it changes behavior at all (even if the test uses UKM). AFAICT we only need the trailing slash if we\u0027re using the string as a stand-in for the GURLs spec().",
+      "parentUuid": "200ac737_32227005",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa96af9f_bbb6512d",
         "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
         "patchSetId": 6
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "8c7452a7_45969558",
+        "filename": "chrome/browser/page_load_metrics/observers/from_gws_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-11T13:54:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "685621a6_e87084ce",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bff5feaf_f1b8528a",
         "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
         "patchSetId": 6
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "Yup, I don\u0027t think it\u0027s critical.\n\nI prefer test methods take string over GURL since taking GURL can mean writing unnecessary boilerplate. See for example our many calls to NavigateAndCommit(GURL(kUrl)) - I think this makes tests less readable - I\u0027d rather that there be a NavigateAndCommit that takes char*.",
       "parentUuid": "bff5feaf_f1b8528a",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3068a04d_56e121e4",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-11T13:54:24Z",
+      "side": 1,
+      "message": "Agree to disagree :) I don\u0027t think GURL(\u003cstring\u003e) is too much boilerplate, and these types of methods are exactly why tests become fragile when using char *s or strings that don\u0027t represent canonicalized URLs.\n\nIn this particular case, I think using a scoped test var is also nicer than a global const char*, which is repeated in the test and could become out of sync when edits are made.",
+      "parentUuid": "9e773799_5300592e",
       "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
