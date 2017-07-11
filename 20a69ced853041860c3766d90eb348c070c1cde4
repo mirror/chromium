@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1862794_a8d56317",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-11T05:49:55Z",
+      "side": 1,
+      "message": "s/yukiishino/yukishiino/\n\nBy the way, should this be s/FIXME/TODO/ ?",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "20a69ced853041860c3766d90eb348c070c1cde4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
