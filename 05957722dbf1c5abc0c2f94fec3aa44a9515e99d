@@ -70,6 +70,30 @@
       "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249b6823_c7fa76ce",
+        "filename": "services/ui/gpu/interfaces/gpu_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-07-11T15:45:08Z",
+      "side": 1,
+      "message": "Short explanation of cahcing:\n\nWe keep a cache of {key,program} pairs to save on repeated program compile times. The browser process writes these to disk, and warms up the cache on startup via this API. The key is necessary to match a new shader to and old one - and in the new code path it isn\u0027t easily extracted from data.",
+      "parentUuid": "2d985859_ea819f6f",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 69
+      },
+      "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
