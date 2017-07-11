@@ -26,7 +26,8 @@ Browser* TestTabStripModelDelegate::CreateNewStripWithContents(
 }
 
 void TestTabStripModelDelegate::WillAddWebContents(
-    content::WebContents* contents) {
+    content::WebContents* contents,
+    base::Optional<content::WebContents::CreateParams> create_params) {
   // Required to determine reloadability of tabs.
   CoreTabHelper::CreateForWebContents(contents);
   // Required to determine if tabs are app tabs.
