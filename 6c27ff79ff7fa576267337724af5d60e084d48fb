@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13d39c12_65206606",
+        "filename": "third_party/WebKit/Source/platform/SharedBuffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-11T07:15:32Z",
+      "side": 1,
+      "message": "How many places will you need to use FlatData? If it should be discouraged, you could rename it to DeprecatedFlatData etc.",
+      "revId": "6c27ff79ff7fa576267337724af5d60e084d48fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cea5801_57bc4849",
+        "filename": "third_party/WebKit/Source/platform/SharedBuffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-11T07:15:32Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "6c27ff79ff7fa576267337724af5d60e084d48fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
