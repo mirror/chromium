@@ -924,13 +924,7 @@ std::unique_ptr<Value> SwapInfo::ToValue() const {
   return std::move(res);
 }
 
-void GetSwapInfo(SwapInfo* swap_info) {
-  // Synchronously reading files in /sys/block/zram0 does not hit the disk.
-  ThreadRestrictions::ScopedAllowIO allow_io;
-
-  FilePath zram_path("/sys/block/zram0");
-  uint64_t orig_data_size =
-      ReadFileToUint64(zram_path.Append("orig_data_size"));
+bool IgnoreZramFirstPage(uint64_t orig_data_size, SwapInfo* swap_info) {
   if (orig_data_size <= 4096) {
     // A single page is compressed at startup, and has a high compression
     // ratio. Ignore this as it doesn't indicate any real swapping.
@@ -939,8 +933,66 @@ void GetSwapInfo(SwapInfo* swap_info) {
     swap_info->num_writes = 0;
     swap_info->compr_data_size = 0;
     swap_info->mem_used_total = 0;
-    return;
+    return true;
   }
+  return false;
+}
+
+bool ParseZramMmStat(StringPiece mm_stat_data, SwapInfo* swap_info) {
+  // There are 7 columns in /sys/block/zram0/mm_stat,
+  // split by several spaces.
+  // Example:
+  //
+  // 17715200 5008166 566062  0 1225715712  127 183842
+
+  std::vector<StringPiece> tokens = SplitStringPiece(
+      mm_stat_data, kWhitespaceASCII, TRIM_WHITESPACE, SPLIT_WANT_NONEMPTY);
+  if (tokens.size() < 7) {
+    DLOG(WARNING) << "zram mm_stat: tokens: " << tokens.size()
+                  << " malformed line: " << mm_stat_data.as_string();
+    return false;
+  }
+
+  if (!StringToUint64(tokens[0], &swap_info->orig_data_size))
+    return false;
+  if (!StringToUint64(tokens[1], &swap_info->compr_data_size))
+    return false;
+  if (!StringToUint64(tokens[2], &swap_info->mem_used_total))
+    return false;
+
+  return true;
+}
+
+bool ParseZramStat(StringPiece stat_data, SwapInfo* swap_info) {
+  // There are 11 columns in /sys/block/zram0/stat,
+  // split by several spaces.
+  // Example:
+  //
+  // 299    0    2392    0    1    0    8    0    0    0    0
+
+  std::vector<StringPiece> tokens = SplitStringPiece(
+      stat_data, kWhitespaceASCII, TRIM_WHITESPACE, SPLIT_WANT_NONEMPTY);
+  if (tokens.size() < 11) {
+    DLOG(WARNING) << "zram stat: tokens: " << tokens.size()
+                  << " malformed line: " << stat_data.as_string();
+    return false;
+  }
+
+  if (!StringToUint64(tokens[0], &swap_info->num_reads))
+    return false;
+  if (!StringToUint64(tokens[4], &swap_info->num_writes))
+    return false;
+
+  return true;
+}
+
+bool ParseZramPath(SwapInfo* swap_info) {
+  FilePath zram_path("/sys/block/zram0");
+  uint64_t orig_data_size =
+      ReadFileToUint64(zram_path.Append("orig_data_size"));
+  if (IgnoreZramFirstPage(orig_data_size, swap_info))
+    return true;
+
   swap_info->orig_data_size = orig_data_size;
   swap_info->num_reads = ReadFileToUint64(zram_path.Append("num_reads"));
   swap_info->num_writes = ReadFileToUint64(zram_path.Append("num_writes"));
@@ -948,6 +1000,42 @@ void GetSwapInfo(SwapInfo* swap_info) {
       ReadFileToUint64(zram_path.Append("compr_data_size"));
   swap_info->mem_used_total =
       ReadFileToUint64(zram_path.Append("mem_used_total"));
+
+  return true;
+}
+
+bool GetSwapInfo(SwapInfo* swap_info) {
+  // Synchronously reading files in /sys/block/zram0 does not hit the disk.
+  ThreadRestrictions::ScopedAllowIO allow_io;
+
+  // Since kernel version 3.18, zram shows the status in different places.
+  // If file "/sys/block/zram0/mm_stat" exists, use the new way, otherwise,
+  // use the old way.
+  FilePath zram_mm_stat_file("/sys/block/zram0/mm_stat"),
+      zram_stat_file("/sys/block/zram0/stat");
+  std::string mm_stat_data, stat_data;
+  if (ReadFileToString(zram_mm_stat_file, &mm_stat_data)) {
+    if (!ParseZramMmStat(mm_stat_data, swap_info)) {
+      DLOG(WARNING) << "Failed to parse " << zram_mm_stat_file.value();
+      return false;
+    }
+    if (IgnoreZramFirstPage(swap_info->orig_data_size, swap_info))
+      return true;
+
+    if (!ReadFileToString(zram_stat_file, &stat_data)) {
+      DLOG(WARNING) << "Failed to open " << zram_stat_file.value();
+      return false;
+    }
+    if (!ParseZramStat(stat_data, swap_info)) {
+      DLOG(WARNING) << "Failed to parse " << zram_stat_file.value();
+      return false;
+    }
+  } else {
+    if (!ParseZramPath(swap_info))
+      return false;
+  }
+
+  return true;
 }
 #endif  // defined(OS_CHROMEOS)
 
