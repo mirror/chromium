@@ -16,6 +16,24 @@
       "revId": "4aed01f206b9acc54a8fdf59f7be280b1b51ea66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a5bb27_08819d25",
+        "filename": "build/config/jumbo.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-07-11T08:33:21Z",
+      "side": 1,
+      "message": "I guess it does (if adding || true), and it would be shorter, but all of this depends on invisible side effects. The actual check is that the subtraction operator will cause an error if you list a file that isn\u0027t in sources. It is not an actual error that sources becomes empty which could happen if all files in some configuration are excluded.\n\nI will tune the comment a bit before committing.",
+      "parentUuid": "9c7ae915_072a4824",
+      "revId": "4aed01f206b9acc54a8fdf59f7be280b1b51ea66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
