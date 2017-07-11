@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "57d92eb0_5fbc954d",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-11T18:25:09Z",
+      "side": 1,
+      "message": "Could it be that RenderWidgetScreenMetricsEmulator::Apply is doing something prior to the DevToolsEmulator call that requires me to patch data beforehand?",
+      "parentUuid": "de76ca38_70962c3b",
+      "range": {
+        "startLine": 386,
+        "startChar": 68,
+        "endLine": 386,
+        "endChar": 76
+      },
+      "revId": "165e4702f06b8a130ce7524a4d273dea31fee77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19eb18a0_dc330ee8",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 3
