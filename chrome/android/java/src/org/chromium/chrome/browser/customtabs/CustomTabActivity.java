@@ -672,11 +672,8 @@ public class CustomTabActivity extends ChromeActivity {
     }
 
     private void recordClientPackageName() {
-        String clientName = CustomTabsConnection.getInstance(getApplication())
-                .getClientPackageNameForSession(mSession);
-        if (TextUtils.isEmpty(clientName)) clientName = mIntentDataProvider.getClientPackageName();
-        final String packageName = clientName;
-        if (TextUtils.isEmpty(packageName) || packageName.contains(getPackageName())) return;
+        final String packageName = getClientPackageName();
+        if (TextUtils.isEmpty(packageName)) return;
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -687,6 +684,21 @@ public class CustomTabActivity extends ChromeActivity {
                         "CustomTabs.ServiceClient.PackageNameThirdParty", packageName);
             }
         });
+    }
+
+    /** @returns Client package name if it exists, or empty string if Chrome or indeterminate. */
+    public String getClientPackageName() {
+        String clientName = CustomTabsConnection.getInstance(getApplication())
+                                    .getClientPackageNameForSession(mSession);
+        if (TextUtils.isEmpty(clientName)) clientName = mIntentDataProvider.getClientPackageName();
+        if (TextUtils.isEmpty(clientName) || clientName.contains(getPackageName())) return "";
+        return clientName;
+    }
+
+    /** @returns The signature hashes of the client if it exists, or null. */
+    public int[] getClientSignatureHash() {
+        return CustomTabsConnection.getInstance(getApplication())
+                .getClientSignatureHashForSession(mSession);
     }
 
     @Override

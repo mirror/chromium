@@ -9,6 +9,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.text.TextUtils;
+
+import org.json.JSONArray;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
@@ -22,6 +25,7 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.share.ShareHelper;
 import org.chromium.chrome.browser.share.ShareParams;
@@ -829,5 +833,19 @@ public class OfflinePageUtils {
     @VisibleForTesting
     public static void setSnackbarDurationForTesting(int durationMs) {
         sSnackbarDurationMs = durationMs;
+    }
+
+    /** @return a JSON string using the package name and signature hash of an app. */
+    public static String createOriginString(CustomTabActivity cct) {
+        String packageName = cct.getClientPackageName();
+        if (TextUtils.isEmpty(packageName)) return "";
+        // JSONArray(Object[]) requires API 19
+        JSONArray signatureHashes = new JSONArray();
+        int[] hashes = cct.getClientSignatureHash();
+        if (hashes == null) return "";
+        for (int hash : hashes) {
+            signatureHashes.put(hash);
+        }
+        return new JSONArray().put(packageName).put(signatureHashes).toString();
     }
 }
