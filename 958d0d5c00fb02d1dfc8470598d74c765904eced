@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad597b0e_67b853a4",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3198,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-11T04:41:36Z",
+      "side": 1,
+      "message": "It looks like InitTextfield() creates + focuses the text-field. That leaves parts of the code untested.\n\nCan you add a test that explicitly creates a textfield, adds it to the widget. The test would verify that (1) the textfield does not have focus (2) the cursor is not visible in the textfield.",
+      "revId": "958d0d5c00fb02d1dfc8470598d74c765904eced",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05456a8_09ea1014",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3199,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-11T04:41:36Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 3199,
+        "startChar": 3,
+        "endLine": 3199,
+        "endChar": 0
+      },
+      "revId": "958d0d5c00fb02d1dfc8470598d74c765904eced",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
