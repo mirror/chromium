@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed5e4a65_24027b79",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-11T21:10:44Z",
+      "side": 1,
+      "message": "Seems to me that this should just be two different methods; it\u0027s strange to pass the string around.",
+      "range": {
+        "startLine": 105,
+        "startChar": 26,
+        "endLine": 105,
+        "endChar": 43
+      },
+      "revId": "11dd64d60c9ee16933e0e1ce4fd809274a037d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee3f213_fc9010a7",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-11T21:10:44Z",
+      "side": 1,
+      "message": "Again, two methods probably makes sense here.",
+      "range": {
+        "startLine": 144,
+        "startChar": 26,
+        "endLine": 144,
+        "endChar": 42
+      },
+      "revId": "11dd64d60c9ee16933e0e1ce4fd809274a037d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
