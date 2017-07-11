@@ -68,5 +68,7 @@ void ExampleAppListPresenter::ToggleAppList(int64_t display_id) {
 
 void ExampleAppListPresenter::StartVoiceInteractionSession() {}
 
+void ExampleAppListPresenter::UpdateBoundsOnYPosition(int new_y_position) {}
+
 }  // namespace shell
 }  // namespace ash
