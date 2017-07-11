@@ -9,6 +9,9 @@
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/view.h"
+#include "ui/views/widget/widget_observer.h"
+
+class NewTabPromo;
 
 ///////////////////////////////////////////////////////////////////////////////
 // NewTabButton
@@ -18,7 +21,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 class NewTabButton : public views::ImageButton,
-                     public views::MaskedTargeterDelegate {
+                     public views::MaskedTargeterDelegate,
+                     public views::WidgetObserver {
  public:
   NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener);
   ~NewTabButton() override;
@@ -33,6 +37,9 @@ class NewTabButton : public views::ImageButton,
   // button's visible region begins.
   static int GetTopOffset();
 
+  // Shows the NewTabPromo when the NewTabFeatureEngagementTracker calls for it.
+  void ShowPromo();
+
  private:
 // views::ImageButton:
 #if defined(OS_WIN)
@@ -43,6 +50,15 @@ class NewTabButton : public views::ImageButton,
 
   // views::MaskedTargeterDelegate:
   bool GetHitTestMask(gfx::Path* mask) const override;
+
+  // views::WidgetObserver:
+  void OnWidgetClosing(views::Widget* widget) override;
+
+  // Returns the gfx::Rect around the visible portion of the New Tab Button.
+  // Note: This is different than the rect around the entire New Tab Button as
+  // it extends to the top of the tabstrip for Fitts' Law interaction in a
+  // maximized window. Used for anchoring the NewTabPromo.
+  gfx::Rect GetVisibleBounds();
 
   // Computes a path corresponding to the button's outer border for a given
   // |scale| and stores it in |path|.  |button_y| is used as the y-coordinate
@@ -63,6 +79,10 @@ class NewTabButton : public views::ImageButton,
 
   // Tab strip that contains this button.
   TabStrip* tab_strip_;
+
+  // Owned by its native widget. Will be destroyed as its widget is closed or
+  // destroyed.
+  NewTabPromo* new_tab_promo_;
 
   // The offset used to paint the background image.
   gfx::Point background_offset_;
