@@ -126,23 +126,41 @@
         margin-top: 4px;
         padding: 10px;  /* Makes the actual icon 16x16. */
       }
+
+      /* Keyframes used to pulse the dialog */
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        40% { transform: scale(1.02); }
+        60% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+      }
+
+      :host(.pulse) {
+        animation-duration: 180ms;
+        animation-iteration-count: 1;
+        animation-name: pulse;
+        animation-timing-function: ease-in-out;
+      }
     </style>
-    <div class="top-container">
-      <div class="title-container" tabindex="-1">
-        <content select=".title"></content>
+    <!-- Wrapper used to detect clicks outside of the dialog content -->
+    <div>
+      <div class="top-container">
+        <div class="title-container" tabindex="-1">
+          <content select=".title"></content>
+        </div>
+        <paper-icon-button icon="cr:clear" on-tap="cancel" id="close"
+            aria-label$="[[closeText]]" on-keypress="onCloseKeypress_"
+            hidden$="[[noCancel]]">
+        </paper-icon-button>
       </div>
-      <paper-icon-button icon="cr:clear" on-tap="cancel" id="close"
-          aria-label$="[[closeText]]" on-keypress="onCloseKeypress_"
-          hidden$="[[noCancel]]">
-      </paper-icon-button>
+      <div class="body-container">
+        <span id="bodyTopMarker"></span>
+        <content select=".body"></content>
+        <span id="bodyBottomMarker"></span>
+      </div>
+      <content select=".button-container"></content>
+      <content select=".footer"></content>
     </div>
-    <div class="body-container">
-      <span id="bodyTopMarker"></span>
-      <content select=".body"></content>
-      <span id="bodyBottomMarker"></span>
-    </div>
-    <content select=".button-container"></content>
-    <content select=".footer"></content>
   </template>
   <script src="cr_dialog.js"></script>
 </dom-module>
