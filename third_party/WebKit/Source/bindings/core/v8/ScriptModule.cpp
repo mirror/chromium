@@ -128,9 +128,6 @@ void ScriptModule::ReportException(ScriptState* script_state,
 
   v8::Isolate* isolate = script_state->GetIsolate();
 
-  v8::TryCatch try_catch(isolate);
-  try_catch.SetVerbose(true);
-
   V8ScriptRunner::ReportExceptionForModule(isolate, exception, file_name,
                                            start_position);
 }
