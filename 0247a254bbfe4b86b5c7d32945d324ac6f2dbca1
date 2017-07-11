@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5f787fb_0a6c153f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: No need for NewTabButton::",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ff26f6_8b75c6aa",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Can the \"prominent button color\" used below ever not be blue, e.g. in various Linux themes (where it\u0027s probably orange)?  If so, hardcoding blue here seems like it probably won\u0027t work.\n\nWhat do you want the relationship of this color to that one to be?",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e213ee3e_9bfeba1d",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: the |new_tab_button_| needs -\u003e we need\n\n(There is no member |new_tab_button_|)",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ca44d2_cdfc1a41",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: No need for NewTabButton::",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70569d04_8f1ea4c6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: the -\u003e its\n\n(There are multiple native widgets, and the one that owns the promo is different than the one that owns the Chrome window)",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7d732b_f78455b1",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: You no longer need this member variable (never used below).",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534235e9_d84014e1",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Consider whether the new tab button can do this itself via something like\n\n  new_tab_promo-\u003eGetWidget()-\u003eAddObserver(this);\n\n...after it creates this object.\n\nIf so, then this class doesn\u0027t need to know that that class cares about the native widget (i.e. it decouples the relationship); and you no longer need to pass in the NewTabButton to this class at all, simplifying the constructor signature.",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e8c77f_cd3b8acd",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: If you\u0027re just going to call the parent class method, then don\u0027t override this at all.",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c49eb5_e2e45d78",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: I\u0027d omit this comment, since it seems to provide no detail and its general sentiment looks pretty obvious.",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f108d11c_16e2610e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: newtab -\u003e new tab\n\nRewrap to 80 columns",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2763fd5e_713bac57",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: Probably you wanted to pass by const ref, not const value",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10277be1_958586f1",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: This #include may now be unused",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2084f047_040244ea",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: These bottom two #includes don\u0027t look to be used.",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff482bc9_75984e2c",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T21:55:29Z",
+      "side": 1,
+      "message": "Nit: While I agree with Trent that the names here benefit from these underscores, the change is basically orthogonal cleanup to existing code, and thus might have benefitted from being pulled out to a separate, rubber-stampable CL that could land first.",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
