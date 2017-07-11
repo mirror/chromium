@@ -4,5 +4,49 @@
 
 module media.mojom;
 
-// TODO(mcasas): Finalize migrating the IPC messages https://crbug.com/736517.
-interface VideoEncodeAccelerator{};
+import "media/mojo/interfaces/media_types.mojom";
+import "mojo/common/time.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+// Equivalent to media::VideoEncodeAccelerator::Error
+enum VideoEncodeAcceleratorError {
+  // An operation was attempted during an incompatible encoder state.
+  ILLEGAL_STATE_ERROR,
+  // Invalid argument was passed to an API method.
+  INVALID_ARGUMENT_ERROR,
+  // A failure occurred at the GPU process or one of its dependencies. Examples
+  // of such failures include GPU hardware failures, GPU driver failures, GPU
+  // library failures, GPU process programming errors, and so on.
+  PLATFORM_FAILURE_ERROR
+};
+
+interface VideoEncodeAccelerator {
+  // Responded by VideoEncodeAcceleratorClient.RequireBitstreamBuffers().
+  Initialize(VideoPixelFormat input_format,
+             gfx.mojom.Size input_visible_size,
+             VideoCodecProfile output_profile,
+             uint32 initial_bitrate,
+             VideoEncodeAcceleratorClient client);
+
+  // Encode |frame|, being completely done with it after its callback.
+  Encode(VideoFrame frame, bool force_keyframe) => ();
+
+  // TODO(mcasas): Find a better name for this method after finishing the
+  // transition from IPC to mojom, https://crbug.com/736517.
+  UseOutputBitstreamBuffer(int32 bitstream_buffer_id,
+                           handle<shared_buffer> buffer);
+
+  RequestEncodingParametersChange(uint32 bitrate, uint32 framerate);
+};
+
+interface VideoEncodeAcceleratorClient {
+  // Response to VideoEncodeAccelerator.Initialize().
+  RequireBitstreamBuffers(uint32 input_count,
+                          gfx.mojom.Size input_coded_size,
+                          uint32 output_buffer_size);
+
+  BitstreamBufferReady(int32 bitstream_buffer_id, uint32 payload_size,
+                       bool key_frame, mojo.common.mojom.TimeDelta timestamp);
+
+  NotifyError(VideoEncodeAcceleratorError error);
+};
