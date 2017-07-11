@@ -88,4 +88,8 @@ bool FakeCompositorDependencies::IsScrollAnimatorEnabled() {
   return false;
 }
 
+bool FakeCompositorDependencies::IsWaitForAllPipelineStagesBeforeDrawEnabled() {
+  return false;
+}
+
 }  // namespace content
