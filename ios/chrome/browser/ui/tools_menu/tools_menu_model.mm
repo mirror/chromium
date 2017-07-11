@@ -24,8 +24,9 @@
 const NSInteger kVisibleIncognitoOnly = 1 << 0;
 const NSInteger kVisibleNotIncognitoOnly = 1 << 1;
 
-// Declare all the possible items.
-const MenuItemInfo itemInfoList[] = {
+// Declare all the possible items. If adding or removing items update
+// the value of kToolsMenuNumberOfItems with the new total count.
+const MenuItemInfo itemInfoList[kToolsMenuNumberOfItems] = {
     // clang-format off
   { IDS_IOS_TOOLS_MENU_NEW_TAB,           kToolsMenuNewTabId,
     IDC_NEW_TAB,                          ToolbarTypeAll,
