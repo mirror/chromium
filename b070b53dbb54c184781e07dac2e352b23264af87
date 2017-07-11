@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abd7cec3_4f5d3c65",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Are we logging the event in the controller (the failure type)?",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 39
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bb0e1c_ae9885b6",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Do we actually want this after the if check below that quits if we\u0027re already complete?",
+      "range": {
+        "startLine": 712,
+        "startChar": 2,
+        "endLine": 713,
+        "endChar": 76
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e831a1_e6e972f1",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Do we want to log this for all completion types (suffix with completion type?)",
+      "range": {
+        "startLine": 728,
+        "startChar": 4,
+        "endLine": 728,
+        "endChar": 65
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a975e724_f8c9e60e",
+        "filename": "components/download/internal/file_monitor_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Could we rename the method to InitializeAndCreateDownloadDirectoryIfNotExists() or something that makes it sound like this method is part of the initialization flow and not a simple utility method?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf8c737_2e4ae366",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Add a \"__Test__\" here maybe as a catchall?",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 12
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b6eb28_a6593561",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Format this like the other ones?",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 16
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732d56d5_105d9a4e",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Just do else here I think?  Or build the histogram name based on success?",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 3
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc2a39f_9bcf250f",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Should this just be a for loop over the entry states and we can just inline the LogDatabaseRecords implementation into the loop?",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 60
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69edce4_1e913f18",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Is this actionable/clear?  So it looks like:\n\nAttempt \u003d anything !External.\nFailure \u003d failed Attempt\n\nReason \u003d reasons we tried to clean up.\n\nDo we want to log something like:\nsuccess,\nfailure,\nexternal\n\nbased on a suffix reason?  wdyt?",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 42
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5dea440_37c5fff2",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Should we put the unit in the name?",
+      "range": {
+        "startLine": 234,
+        "startChar": 52,
+        "endLine": 234,
+        "endChar": 60
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090e362d_6f0d0473",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Should we put this in file_monitor_impl and call it something like CalculateDiskUtilization?  Just curious how much logic we want in this file.",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 266,
+        "endChar": 3
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6584e22a_2f5f6540",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:18:41Z",
+      "side": 1,
+      "message": "Do we need this in the header?",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 59
+      },
+      "revId": "b070b53dbb54c184781e07dac2e352b23264af87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
