@@ -50,7 +50,6 @@ import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.WarmupManager;
 import org.chromium.chrome.browser.WebContentsFactory;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
-import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerDocument;
 import org.chromium.chrome.browser.datausage.DataUseTabUIManager;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
@@ -818,7 +817,9 @@ public class CustomTabActivity extends ChromeActivity {
                 mIntentDataProvider.isOpenedByChrome(), mIntentDataProvider.isMediaViewer(),
                 mIntentDataProvider.shouldShowStarButton(),
                 mIntentDataProvider.shouldShowDownloadButton(),
-                mIntentDataProvider.isPaymentRequestUI());
+                mIntentDataProvider.isPaymentRequestUI(),
+                true /* show add to home screen */,
+                true /* show request desktop site */);
     }
 
     @Override
@@ -993,15 +994,8 @@ public class CustomTabActivity extends ChromeActivity {
             RecordUserAction.record("MobileMenuAddToBookmarks");
             return true;
         } else if (id == R.id.find_in_page_id) {
-            mFindToolbarManager.showToolbar();
-            if (getContextualSearchManager() != null) {
-                getContextualSearchManager().hideContextualSearch(StateChangeReason.UNKNOWN);
-            }
-            if (fromMenu) {
-                RecordUserAction.record("MobileMenuFindInPage");
-            } else {
-                RecordUserAction.record("MobileShortcutFindInPage");
-            }
+            onMenuOrKeyboardFindInPage(mFindToolbarManager, fromMenu);
+            return true;
         } else if (id == R.id.open_in_browser_id) {
             openCurrentUrlInBrowser(false);
             RecordUserAction.record("CustomTabsMenuOpenInChrome");

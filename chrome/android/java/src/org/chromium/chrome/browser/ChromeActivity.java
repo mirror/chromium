@@ -62,6 +62,7 @@ import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.bookmarks.BookmarkModel;
 import org.chromium.chrome.browser.bookmarks.BookmarkUtils;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
+import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerDocument;
@@ -145,6 +146,7 @@ import org.chromium.chrome.browser.widget.FadingBackgroundView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
 import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
+import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.components.bookmarks.BookmarkId;
 import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
@@ -2226,5 +2228,18 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     public DiscardableReferencePool getReferencePool() {
         return mReferencePool;
+    }
+
+    protected void onMenuOrKeyboardFindInPage(
+            FindToolbarManager findToolbarManager, boolean fromMenu) {
+        findToolbarManager.showToolbar();
+        if (getContextualSearchManager() != null) {
+            getContextualSearchManager().hideContextualSearch(StateChangeReason.UNKNOWN);
+        }
+        if (fromMenu) {
+            RecordUserAction.record("MobileMenuFindInPage");
+        } else {
+            RecordUserAction.record("MobileShortcutFindInPage");
+        }
     }
 }

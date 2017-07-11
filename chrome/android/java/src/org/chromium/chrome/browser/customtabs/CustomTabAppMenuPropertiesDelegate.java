@@ -34,6 +34,8 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
     private final boolean mShowDownload;
     private final boolean mIsOpenedByChrome;
     private final boolean mIsPaymentRequestUI;
+    private final boolean mAddToHomeScreenVisible;
+    private final boolean mShowRequestDesktopSite;
 
     private final List<String> mMenuEntries;
     private final Map<MenuItem, Integer> mItemToIndexMap = new HashMap<MenuItem, Integer>();
@@ -46,7 +48,8 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
     public CustomTabAppMenuPropertiesDelegate(final ChromeActivity activity,
             List<String> menuEntries, boolean showShare, final boolean isOpenedByChrome,
             final boolean isMediaViewer, boolean showStar, boolean showDownload,
-            final boolean isPaymentRequestUI) {
+            final boolean isPaymentRequestUI, boolean addToHomeScreenVisible,
+            boolean showRequestDesktopSite) {
         super(activity);
         mMenuEntries = menuEntries;
         mShowShare = showShare;
@@ -55,6 +58,8 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
         mShowDownload = showDownload;
         mIsOpenedByChrome = isOpenedByChrome;
         mIsPaymentRequestUI = isPaymentRequestUI;
+        mAddToHomeScreenVisible = addToHomeScreenVisible;
+        mShowRequestDesktopSite = showRequestDesktopSite;
     }
 
     @Override
@@ -81,8 +86,8 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
             MenuItem bookmarkItem = menu.findItem(R.id.bookmark_this_page_id);
             MenuItem downloadItem = menu.findItem(R.id.offline_page_id);
 
-            boolean addToHomeScreenVisible = true;
-            updateRequestDesktopSiteMenuItem(menu, currentTab);
+            boolean addToHomeScreenVisible = mAddToHomeScreenVisible;
+            updateRequestDesktopSiteMenuItem(menu, currentTab, mShowRequestDesktopSite);
 
             if (mIsMediaViewer) {
                 // Most of the menu items don't make sense when viewing media.

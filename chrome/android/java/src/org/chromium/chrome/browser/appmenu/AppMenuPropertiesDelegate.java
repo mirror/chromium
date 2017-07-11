@@ -178,7 +178,7 @@ public class AppMenuPropertiesDelegate {
                     && !isChromeScheme && !isFileScheme && !isContentScheme && !isIncognito;
             prepareAddToHomescreenMenuItem(menu, currentTab, canShowHomeScreenMenuItem);
 
-            updateRequestDesktopSiteMenuItem(menu, currentTab);
+            updateRequestDesktopSiteMenuItem(menu, currentTab, true /* can show */);
 
             // Only display reader mode settings menu option if the current page is in reader mode.
             menu.findItem(R.id.reader_mode_prefs_id)
@@ -366,10 +366,11 @@ public class AppMenuPropertiesDelegate {
     /**
      * Updates the request desktop site item's state.
      *
-     * @param requstMenuItem {@link MenuItem} for request desktop site.
-     * @param currentTab      Current tab being displayed.
+     * @param menu {@link Menu} containing request desktop site item.
+     * @param currentTab Current tab being displayed.
      */
-    protected void updateRequestDesktopSiteMenuItem(Menu menu, Tab currentTab) {
+    protected void updateRequestDesktopSiteMenuItem(
+            Menu menu, Tab currentTab, boolean canShowRequestDekstopSite) {
         MenuItem requestMenuRow = menu.findItem(R.id.request_desktop_site_row_menu_id);
         MenuItem requestMenuLabel = menu.findItem(R.id.request_desktop_site_id);
         MenuItem requestMenuCheck = menu.findItem(R.id.request_desktop_site_check_id);
@@ -378,7 +379,8 @@ public class AppMenuPropertiesDelegate {
         String url = currentTab.getUrl();
         boolean isChromeScheme = url.startsWith(UrlConstants.CHROME_URL_PREFIX)
                 || url.startsWith(UrlConstants.CHROME_NATIVE_URL_PREFIX);
-        requestMenuRow.setVisible(!isChromeScheme || currentTab.isNativePage());
+        requestMenuRow.setVisible(
+                canShowRequestDekstopSite && (!isChromeScheme || currentTab.isNativePage()));
 
         // Mark the checkbox if RDS is activated on this page.
         requestMenuCheck.setChecked(currentTab.getUseDesktopUserAgent());
