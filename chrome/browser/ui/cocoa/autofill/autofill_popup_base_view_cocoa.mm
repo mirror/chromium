@@ -131,31 +131,91 @@
 }
 
 #pragma mark -
+#pragma mark Private methods:
+
+// Returns the full bounds needed by the content, which may exceed the available
+// vertical space (see getClippedPopupBounds).
+- (NSRect)getFullPopupBounds {
+  NSRect frame = NSRectFromCGRect(popup_delegate_->popup_bounds().ToCGRect());
+
+  // Flip the y-origin back into Cocoa-land. The controller's platform-neutral
+  // coordinate space places the origin at the top-left of the first screen
+  // (e.g. 300 from the top), whereas Cocoa's coordinate space expects the
+  // origin to be at the bottom-left of this same screen (e.g. 1200 from the
+  // bottom). We calculate the new y-origin of the bottom-left corner of the
+  // popup, by taking the height of the screen (e.g. 1600) and subtracting
+  // what's equivalent to the initial y-origin + the height of the popup
+  // (e.g. 300 + 100).
+  NSScreen* screen = [[NSScreen screens] firstObject];
+  // For a |popupFrame| that was 300 from the top and 100 high on a 1600 high
+  // screen, this formula is 1600 - 400, placing the bottom corner 1200 from
+  // the bottom edge of the screen.
+  frame.origin.y = NSMaxY([screen frame]) - NSMaxY(frame);
+  return frame;
+}
+
+// Returns the bounds of the popup that should be displayed, which are basically
+// the bounds of the popup, clipped if there is not enough available vertical
+// space.
+- (NSRect)getClippedPopupBounds {
+  NSRect clippedPopupBounds = [self getFullPopupBounds];
+
+  // The y-origin of the popup may be off-screen (e.g. -300, or 300 below the
+  // bottom edge). If this happens, it is corrected to be at the application
+  // window's bottom edge. Remember that the y axis starts at the bottom of the
+  // screen and the values count up.
+  NSWindow* appWindow = [popup_delegate_->container_view() window];
+  CGFloat appWindowBottomEdge = NSMinY([appWindow frame]);
+  if (clippedPopupBounds.origin.y < appWindowBottomEdge) {
+    clippedPopupBounds.origin.y = appWindowBottomEdge;
+
+    // The height also needs to be adjusted to reflect the new origin. It is
+    // equal to the distance between the top of the popup and the bottom edge
+    // of the application window.
+
+    // Distance between the top of the screen and the application window.
+    CGFloat windowTopEdgeDistance =
+        NSMaxY([[[NSScreen screens] firstObject] frame]) -
+        NSMaxY([appWindow frame]);
+    // The distance between the top of the application window and the top of the
+    // popup.
+    CGFloat popupTopDistance =
+        popup_delegate_->popup_bounds().y() - windowTopEdgeDistance;
+    clippedPopupBounds.size.height =
+        [appWindow frame].size.height - popupTopDistance;
+  }
+  return clippedPopupBounds;
+}
+
+#pragma mark -
 #pragma mark Messages from AutofillPopupViewBridge:
 
 - (void)updateBoundsAndRedrawPopup {
-  NSRect frame = NSRectFromCGRect(popup_delegate_->popup_bounds().ToCGRect());
+  [[[self superview] window] setFrame:[self getClippedPopupBounds] display:YES];
 
-  // Flip coordinates back into Cocoa-land.  The controller's platform-neutral
-  // coordinate space places the origin at the top-left of the first screen,
-  // whereas Cocoa's coordinate space expects the origin to be at the
-  // bottom-left of this same screen.
-  NSScreen* screen = [[NSScreen screens] firstObject];
-  frame.origin.y = NSMaxY([screen frame]) - NSMaxY(frame);
-
-  // TODO(isherman): The view should support scrolling if the popup gets too
-  // big to fit on the screen.
-  [[self window] setFrame:frame display:YES];
   [self setNeedsDisplay:YES];
 }
 
 - (void)showPopup {
+  NSRect clippedPopupBounds = [self getClippedPopupBounds];
+  // The window contains a scroll view, and both are the same size, which is
+  // may be clipped at the application window's bottom edge (see
+  // getClippedPopupBounds).
   NSWindow* window =
-      [[NSWindow alloc] initWithContentRect:ui::kWindowSizeDeterminedLater
+      [[NSWindow alloc] initWithContentRect:clippedPopupBounds
                                   styleMask:NSBorderlessWindowMask
                                     backing:NSBackingStoreBuffered
                                       defer:NO];
-  [window setContentView:self];
+  NSScrollView* scrollView =
+      [[NSScrollView alloc] initWithFrame:clippedPopupBounds];
+  // Configure the scroller to have no visible border.
+  [scrollView setBorderType:NSNoBorder];
+
+  // The |window| contains the |scrollView|, which contains |self|, the full
+  // popup view (which is not clipped and may be longer than |scrollView|).
+  [self setFrame:[self getFullPopupBounds]];
+  [scrollView setDocumentView:self];
+  [window setContentView:scrollView];
 
   // Telling Cocoa that the window is opaque enables some drawing optimizations.
   [window setOpaque:YES];
