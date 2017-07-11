@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b02c8bf0_dea0457b",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-11T21:26:26Z",
+      "side": 1,
+      "message": "Callbacks are useful in many scenarios, but they are heavy handed when you know you want to only call a specific function. Use a friend if needed.",
+      "parentUuid": "bb3e1963_e087ca39",
+      "range": {
+        "startLine": 108,
+        "startChar": 29,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2ae9bd4_0609fa27",
         "filename": "chrome/browser/sessions/session_restore.h",
         "patchSetId": 3
