@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b617d22_e89c0570",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-11T22:41:25Z",
+      "side": 1,
+      "message": "Iirc we don\u0027t have auto filename exclusions for fuchsia, so this likely won\u0027t pass cq on non-fuchsia",
+      "revId": "53ec7f0c29556672fdb71eece70a883068ef230c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
