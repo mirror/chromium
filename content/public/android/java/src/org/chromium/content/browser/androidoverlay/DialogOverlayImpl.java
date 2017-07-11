@@ -78,7 +78,11 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
 
         // Register to get token updates.
         mNativeHandle = nativeInit(config.routingToken.high, config.routingToken.low);
-        assert mNativeHandle != 0;
+
+        if (mNativeHandle == 0) {
+            mClient.onDestroyed();
+            cleanup();
+        }
     }
 
     // AndroidOverlay impl.
