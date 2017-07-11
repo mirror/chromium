@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "69644b96_df38e664",
+        "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-11T11:51:34Z",
+      "side": 1,
+      "message": "Okay, the failures was a memory problem the way I re-ran the tests. When I ran them as 100 individual tests everything was fine.\n\nRegarding opening a new tab, this doesn\u0027t look to be sufficient. When I load  a URL, then open a new tab, I don\u0027t see the tile. If I open another new tab, or simply go back before opening a new tab it works.",
+      "parentUuid": "4749c09a_7e30af69",
+      "revId": "fb377bd316b52447992f98ed23d2da910b8d99e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52853f97_5f4ad07b",
         "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
         "patchSetId": 1
