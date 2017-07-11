@@ -16,6 +16,24 @@
       "revId": "bea7178baa44e7506cdf7afaedb9fffa04007842",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68003ab_a90044a6",
+        "filename": "build/secondary/third_party/libjpeg_turbo/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-11T23:08:39Z",
+      "side": 0,
+      "message": "These directories don\u0027t even exist. They were removed in https://codereview.chromium.org/1953443002",
+      "parentUuid": "0c83b914_f4b1e733",
+      "revId": "bea7178baa44e7506cdf7afaedb9fffa04007842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
