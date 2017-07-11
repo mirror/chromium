@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27a04aaa_7fbcf79d",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-07-11T18:56:58Z",
+      "side": 1,
+      "message": "Is this checking whether the file exists by opening it and then closing it?",
+      "revId": "5252ac4ac619ca3a6a7a1ec8319ffd23645d25f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
