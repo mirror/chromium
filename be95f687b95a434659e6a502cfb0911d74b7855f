@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3db20543_8d6b9834",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-11T19:07:09Z",
+      "side": 1,
+      "message": "Thanks for working on the Linux sandbox! My first question is if the correct fix is to make base::UnixDomainSockets signal safe instead, or does that break existing usage?",
+      "revId": "be95f687b95a434659e6a502cfb0911d74b7855f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
