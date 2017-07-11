@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "225fe24e_5ce8222c",
+        "filename": "ui/app_list/test/app_list_test_view_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-11T02:35:21Z",
+      "side": 1,
+      "message": "nit: insert empty line.",
+      "revId": "e693e255d5502a9351f730f79f08a5d22f15a774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
