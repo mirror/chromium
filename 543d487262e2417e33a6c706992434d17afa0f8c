@@ -16,6 +16,24 @@
       "revId": "543d487262e2417e33a6c706992434d17afa0f8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7550c50c_39b326f2",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-11T13:40:55Z",
+      "side": 0,
+      "message": "Ack.\nIn case it wasn\u0027t obvious, we wanted to make sure there were no alpha channel because it improves (slightly) battery usage and perfs.",
+      "parentUuid": "3992e7ce_1a025edf",
+      "revId": "543d487262e2417e33a6c706992434d17afa0f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
