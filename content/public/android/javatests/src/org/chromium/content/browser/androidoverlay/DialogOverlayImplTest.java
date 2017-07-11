@@ -59,6 +59,24 @@ public class DialogOverlayImplTest extends DialogOverlayImplTestBase {
 
     @SmallTest
     @Feature({"AndroidOverlay"})
+    public void testWebContentsHiddenDestroysOverlay() {
+        DialogOverlayImpl overlay = createOverlay(0, 0, 10, 10);
+        Assert.assertNotNull(overlay);
+
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                getWebContents().onHide();
+            }
+        });
+
+        // We should be notified that the overlay is destroyed.
+        Client.Event event = mClient.nextEvent();
+        Assert.assertEquals(Client.DESTROYED, event.which);
+    }
+
+    @SmallTest
+    @Feature({"AndroidOverlay"})
     public void testScheduleLayoutDoesntCrash() {
         // Make sure that we don't get any messages due to scheduleLayout, and we don't crash.
         final DialogOverlayImpl overlay = createOverlay(0, 0, 10, 10);
