@@ -1673,8 +1673,9 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
 
   if (base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator)) {
-    registry->AddInterface(base::Bind(
-        &CreateResourceCoordinatorProcessInterface, base::Unretained(this)));
+    AddUIThreadInterface(registry.get(),
+                         base::Bind(&CreateResourceCoordinatorProcessInterface,
+                                    base::Unretained(this)));
   }
 
   if (base::FeatureList::IsEnabled(features::kOffMainThreadFetch)) {
