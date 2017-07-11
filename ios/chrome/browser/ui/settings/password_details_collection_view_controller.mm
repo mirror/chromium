@@ -22,7 +22,6 @@
 #import "ios/chrome/browser/ui/settings/cells/password_details_item.h"
 #import "ios/chrome/browser/ui/settings/reauthentication_module.h"
 #import "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.h"
-#include "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/CollectionCells/src/MaterialCollectionCells.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
@@ -400,7 +399,6 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
   if (_plainTextPasswordShown) {
     UIPasteboard* generalPasteboard = [UIPasteboard generalPasteboard];
     generalPasteboard.string = _password;
-    TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
     [self
         showCopyResultToast:l10n_util::GetNSString(
                                 IDS_IOS_SETTINGS_PASSWORD_WAS_COPIED_MESSAGE)];
@@ -421,7 +419,6 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
       if (success) {
         UIPasteboard* generalPasteboard = [UIPasteboard generalPasteboard];
         generalPasteboard.string = strongSelf->_password;
-        TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
         [strongSelf showCopyResultToast:
                         l10n_util::GetNSString(
                             IDS_IOS_SETTINGS_PASSWORD_WAS_COPIED_MESSAGE)];
@@ -430,7 +427,6 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
             password_manager::metrics_util::ACCESS_PASSWORD_COPIED,
             password_manager::metrics_util::ACCESS_PASSWORD_COUNT);
       } else {
-        TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeError);
         [strongSelf showCopyResultToast:
                         l10n_util::GetNSString(
                             IDS_IOS_SETTINGS_PASSWORD_WAS_NOT_COPIED_MESSAGE)];

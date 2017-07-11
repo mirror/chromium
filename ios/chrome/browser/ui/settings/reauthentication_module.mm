@@ -8,6 +8,7 @@
 #import "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
+#include "ios/chrome/browser/ui/uikit_ui_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -64,6 +65,9 @@
         return;
       if (success) {
         [strongSelf->_successfulReauthTimeAccessor updateSuccessfulReauthTime];
+        TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
+      } else {
+        TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeError);
       }
       handler(success);
       UMA_HISTOGRAM_ENUMERATION(
