@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c26a7a7_efc6a552",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-11T23:50:10Z",
+      "side": 1,
+      "message": "Can you also mention that the new test roll up to\nchrome_public_test_apk plz? This makes it easier for testers\nand sheriffs to filter from the CL description if a given\nCL might have had something to do with a particular breakage\ndown the line. In the same line, specify somewhere that this\nis only for Android platform.",
+      "revId": "9c48906d54aaac78f451162c95ee525b032e3863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345790d9_5bd32df2",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/MojoUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-11T23:50:10Z",
+      "side": 1,
+      "message": "This class does more things than just that. What about:\n\"Utility class for ShapeDetection instrumentation tests,\nprovides support for e.g. reading files and converting \nBitmaps to mojom.Bitmaps.\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 66
+      },
+      "revId": "9c48906d54aaac78f451162c95ee525b032e3863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5970289f_5b7d22f5",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/MojoUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-11T23:50:10Z",
+      "side": 1,
+      "message": "This is not restricted to Mojo. What about s/Mojo/Test/?",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "9c48906d54aaac78f451162c95ee525b032e3863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
