@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e069919_ca727a76",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-11T23:51:12Z",
+      "side": 1,
+      "message": "So, why did the proxy previously listen for a notification *and* also mediainternals listen here?\n\nAlso, what is the practical difference between ..TERMINATED and ..CLOSED? From https://cs.chromium.org/chromium/src/chrome/browser/metrics/renderer_uptime_tracker.cc?sq\u003dpackage:chromium\u0026l\u003d94 it looks like maybe we might want to listen for both??",
+      "range": {
+        "startLine": 788,
+        "startChar": 23,
+        "endLine": 788,
+        "endChar": 59
+      },
+      "revId": "e5a3c5076b5ef1687d497c7575d553688e94d1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
