@@ -226,8 +226,8 @@ Response EmulationHandler::SetDeviceMetricsOverride(
 
   device_emulation_enabled_ = true;
   device_emulation_params_ = params;
-  // if (width > 0 && height > 0)
-  //   widget_host->GetView()->SetSize(gfx::Size(width, height));
+  if (width > 0 && height > 0)
+    widget_host->GetView()->SetSize(gfx::Size(width, height));
   UpdateDeviceEmulationState();
   return Response::OK();
 }
