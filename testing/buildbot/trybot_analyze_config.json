@@ -23,7 +23,6 @@
       "build/toolchain/mac/.*py",
       "build/util/lib/common/unittest_util.py",
       "infra/scripts/.*",
-      "DEPS",
       "testing/buildbot/.*",
       "testing/scripts/.*",
       "testing/test_env.py",
