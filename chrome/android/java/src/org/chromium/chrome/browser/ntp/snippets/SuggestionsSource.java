@@ -120,5 +120,26 @@ public interface SuggestionsSource extends DestructionObserver {
     /**
      * Sets the recipient for update events from the source.
      */
-    void setObserver(Observer observer);
+    void addObserver(Observer observer);
+
+    /**
+     * Removes an observer. Is no-op if the observer was not already registered.
+     */
+    void removeObserver(Observer observer);
+
+    /** No-op implementation of {@link SuggestionsSource.Observer}. */
+    class EmptyObserver implements Observer {
+        @Override
+        public void onNewSuggestions(@CategoryInt int category) {}
+
+        @Override
+        public void onCategoryStatusChanged(
+                @CategoryInt int category, @CategoryStatus int newStatus) {}
+
+        @Override
+        public void onSuggestionInvalidated(@CategoryInt int category, String idWithinCategory) {}
+
+        @Override
+        public void onFullRefreshRequired() {}
+    }
 }
