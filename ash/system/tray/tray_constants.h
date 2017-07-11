@@ -142,6 +142,9 @@ extern const int kTrayPopupInkDropCornerRadius;
 // The height of the system info row.
 extern const int kTrayPopupSystemInfoRowHeight;
 
+// Icon color of tether notifications.
+extern const SkColor kBlueIconColor;
+
 namespace test {
 const int kSettingsTrayItemViewId = 10000;
 const int kAccessibilityTrayItemViewId = 10001;

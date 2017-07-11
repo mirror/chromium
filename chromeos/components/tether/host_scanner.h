@@ -66,6 +66,9 @@ class HostScanner : public HostScannerOperation::Observer {
           scanned_device_list_so_far,
       bool is_final_scan_result) override;
 
+  // Get the Network state of host.
+  const NetworkState* GetCachedNetworkState(std::string guid);
+
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
