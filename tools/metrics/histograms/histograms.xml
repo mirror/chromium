@@ -29668,6 +29668,33 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Engagement.SignificantPlayers.PlayerNotAdded"
+    enum="InsignificantPlaybackReason">
+  <owner>beccahughes@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Recorded when the Media Engagement service doesn't determine a player to be
+    significant. In order to be considered significant the player must have
+    media with an audio track, a video frame size of at least 200x200px, is not
+    muted and is currently playing. If a player does not meet all the criteria,
+    the criteria it does not meet will be logged to this histogram.
+  </summary>
+</histogram>
+
+<histogram name="Media.Engagement.SignificantPlayers.PlayerRemoved"
+    enum="InsignificantPlaybackReason">
+  <owner>beccahughes@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Recorded when the Media Engagement service no longer determines a player to
+    be significant. In order to be considered significant the player must have
+    media with an audio track, a video frame size of at least 200x200px, is not
+    muted and is currently playing. If a player did meet this criteria, but no
+    longer does the criteria it no longer meets will be logged to this
+    histogram.
+  </summary>
+</histogram>
+
 <histogram name="Media.FallbackHardwareAudioBitsPerChannel">
   <owner>dalecurtis@chromium.org</owner>
   <summary>
