@@ -48,6 +48,10 @@ Polymer({
     },
   },
 
+  listeners: {
+    'tap': 'onDialogTap_',
+  },
+
   /** @private {?IntersectionObserver} */
   intersectionObserver_: null,
 
@@ -197,5 +201,24 @@ Polymer({
   onCancel_: function(e) {
     if (this.noCancel)
       e.preventDefault();
+  },
+
+  /** @param {!Event} e */
+  onDialogTap_: function(e) {
+    if (e.target.tagName !== 'DIALOG')
+      return;
+
+    this.animate(
+        [
+          {transform: 'scale(1)', offset: 0},
+          {transform: 'scale(1.02)', offset: 0.4},
+          {transform: 'scale(1.02)', offset: 0.6},
+          {transform: 'scale(1)', offset: 1},
+        ],
+        {
+          duration: 180,
+          easing: 'ease-in-out',
+          iterations: 1,
+        });
   },
 });
