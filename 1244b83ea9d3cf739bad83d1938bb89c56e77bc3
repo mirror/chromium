@@ -16,6 +16,24 @@
       "revId": "1244b83ea9d3cf739bad83d1938bb89c56e77bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9251a800_68774977",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-11T17:13:39Z",
+      "side": 1,
+      "message": "I don\u0027t think so as GpuMemoryBufferImplNativePixmap only takes one FD today and ImportFromHandle doesn\u0027t support multiple FDs. We should improve that asap but that\u0027s beyond fixing this bug I think.",
+      "parentUuid": "c8ef08e9_7c92a4c3",
+      "revId": "1244b83ea9d3cf739bad83d1938bb89c56e77bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
