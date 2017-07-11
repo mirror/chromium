@@ -482,7 +482,8 @@ struct BASE_EXPORT SwapInfo {
 
 // In ChromeOS, reads files from /sys/block/zram0 that contain ZRAM usage data.
 // Fills in the provided |swap_data| structure.
-BASE_EXPORT void GetSwapInfo(SwapInfo* swap_info);
+// returns true on success or false for a parsing error
+BASE_EXPORT bool GetSwapInfo(SwapInfo* swap_info);
 #endif  // defined(OS_CHROMEOS)
 
 // Collects and holds performance metrics for system memory and disk.
