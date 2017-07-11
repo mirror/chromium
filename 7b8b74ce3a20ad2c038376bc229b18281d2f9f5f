@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ace55565_dd9dc76e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T23:17:32Z",
+      "side": 1,
+      "message": "Actually, no, we want to report no sinks in this case as if the backend is disabled.",
+      "parentUuid": "88718cf8_07b8072b",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87c8695c_b0c49490",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
         "patchSetId": 7
@@ -86,6 +104,24 @@
       "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7144627_f6f7787f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-11T23:17:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87c8695c_b0c49490",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
