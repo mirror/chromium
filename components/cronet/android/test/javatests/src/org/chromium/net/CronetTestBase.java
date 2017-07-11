@@ -6,7 +6,6 @@ package org.chromium.net;
 
 import android.content.Context;
 import android.os.StrictMode;
-import android.test.AndroidTestCase;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -26,11 +25,17 @@ import java.lang.annotation.Target;
 import java.lang.reflect.AnnotatedElement;
 import java.net.URL;
 import java.net.URLStreamHandlerFactory;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.junit.runner.RunWith;
+import android.support.test.InstrumentationRegistry;
+import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Base test class for all CronetTest based tests.
  */
-public class CronetTestBase extends AndroidTestCase {
+public class CronetTestBase implements TestRule {
     /**
      * Creates and holds pointer to CronetEngine.
      */
@@ -70,69 +75,18 @@ public class CronetTestBase extends AndroidTestCase {
     private StrictMode.VmPolicy mOldVmPolicy;
 
     @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        System.loadLibrary("cronet_tests");
-        ContextUtils.initApplicationContext(getContext().getApplicationContext());
-        PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
-        prepareTestStorage(getContext());
-        mOldVmPolicy = StrictMode.getVmPolicy();
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                                       .detectLeakedClosableObjects()
-                                       .penaltyLog()
-                                       .penaltyDeath()
-                                       .build());
-    }
-
-    @SuppressFBWarnings("DM_GC") // Used to trigger strictmode detecting leaked closeables
-    @Override
-    protected void tearDown() throws Exception {
-        try {
-            // Run GC and finalizers a few times to pick up leaked closeables
-            for (int i = 0; i < 10; i++) {
-                System.gc();
-                System.runFinalization();
+    public Statement apply(Statement base, Description desc) {
+        return new Statement() {
+            @Override
+            public void evaluate() {
+                setUp();
+                runBase(base);
+                tearDown();
             }
-            System.gc();
-            System.runFinalization();
-            super.tearDown();
-        } finally {
-            StrictMode.setVmPolicy(mOldVmPolicy);
-        }
+        };
     }
 
-    /**
-     * Starts the CronetTest framework.
-     */
-    protected CronetTestFramework startCronetTestFramework() {
-        mCronetTestFramework = new CronetTestFramework(getContext());
-        return mCronetTestFramework;
-    }
-
-    /**
-     * Returns {@code true} when test is being run against system HttpURLConnection implementation.
-     */
-    protected boolean testingSystemHttpURLConnection() {
-        return mTestingSystemHttpURLConnection;
-    }
-
-    /**
-     * Returns {@code true} when test is being run against the java implementation of CronetEngine.
-     */
-    protected boolean testingJavaImpl() {
-        return mTestingJavaImpl;
-    }
-
-    private int getMaximumAvailableApiLevel() {
-        // Prior to M59 the ApiVersion.getMaximumAvailableApiLevel API didn't exist
-        if (ApiVersion.getCronetVersion().compareTo("59") < 0) {
-            return 3;
-        }
-        return ApiVersion.getMaximumAvailableApiLevel();
-    }
-
-    @Override
-    protected void runTest() throws Throwable {
+    private void runBase(Statement base) throws Exception {
         mTestingSystemHttpURLConnection = false;
         mTestingJavaImpl = false;
         String packageName = getClass().getPackage().getName();
@@ -162,43 +116,102 @@ public class CronetTestBase extends AndroidTestCase {
                 if (method.isAnnotationPresent(CompareDefaultWithCronet.class)) {
                     // Run with the default HttpURLConnection implementation first.
                     mTestingSystemHttpURLConnection = true;
-                    super.runTest();
+                    base.evaluate();
                     // Use Cronet's implementation, and run the same test.
                     mTestingSystemHttpURLConnection = false;
                     URL.setURLStreamHandlerFactory(mStreamHandlerFactory);
-                    super.runTest();
+                    base.evaluate();
                 } else if (method.isAnnotationPresent(OnlyRunCronetHttpURLConnection.class)) {
                     // Run only with Cronet's implementation.
                     URL.setURLStreamHandlerFactory(mStreamHandlerFactory);
-                    super.runTest();
+                    base.evaluate();
                 } else {
                     // For all other tests.
-                    super.runTest();
+                    base.evaluate();
                 }
             } catch (Throwable e) {
                 throw new Throwable("CronetTestBase#runTest failed.", e);
             }
         } else if (packageName.equals("org.chromium.net")) {
             try {
-                super.runTest();
+                base.evaluate();
                 if (!method.isAnnotationPresent(OnlyRunNativeCronet.class)) {
                     if (mCronetTestFramework != null) {
                         ExperimentalCronetEngine.Builder builder = createJavaEngineBuilder();
-                        builder.setUserAgent(UserAgent.from(getContext()));
+                        builder.setUserAgent(UserAgent.from(InstrumentationRegistry.getContext()));
                         mCronetTestFramework.mCronetEngine = (CronetEngineBase) builder.build();
                         // Make sure that the instantiated engine is JavaCronetEngine.
                         assert mCronetTestFramework.mCronetEngine.getClass()
                                 == JavaCronetEngine.class;
                     }
                     mTestingJavaImpl = true;
-                    super.runTest();
+                    base.evaluate();
                 }
             } catch (Throwable e) {
                 throw new Throwable("CronetTestBase#runTest failed.", e);
             }
         } else {
-            super.runTest();
+            base.evaluate();
         }
+    }
+
+    private void setUp() throws Exception {
+        System.loadLibrary("cronet_tests");
+        ContextUtils.initApplicationContext(
+                InstrumentationRegistry.getContext().getApplicationContext());
+        PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
+        prepareTestStorage(InstrumentationRegistry.getContext());
+        mOldVmPolicy = StrictMode.getVmPolicy();
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                                       .detectLeakedClosableObjects()
+                                       .penaltyLog()
+                                       .penaltyDeath()
+                                       .build());
+    }
+
+    @SuppressFBWarnings("DM_GC") // Used to trigger strictmode detecting leaked closeables
+    private void tearDown() throws Exception {
+        try {
+            // Run GC and finalizers a few times to pick up leaked closeables
+            for (int i = 0; i < 10; i++) {
+                System.gc();
+                System.runFinalization();
+            }
+            System.gc();
+            System.runFinalization();
+        } finally {
+            StrictMode.setVmPolicy(mOldVmPolicy);
+        }
+    }
+
+    /**
+     * Starts the CronetTest framework.
+     */
+    public CronetTestFramework startCronetTestFramework() {
+        mCronetTestFramework = new CronetTestFramework(InstrumentationRegistry.getContext());
+        return mCronetTestFramework;
+    }
+
+    /**
+     * Returns {@code true} when test is being run against system HttpURLConnection implementation.
+     */
+    public boolean testingSystemHttpURLConnection() {
+        return mTestingSystemHttpURLConnection;
+    }
+
+    /**
+     * Returns {@code true} when test is being run against the java implementation of CronetEngine.
+     */
+    public boolean testingJavaImpl() {
+        return mTestingJavaImpl;
+    }
+
+    private int getMaximumAvailableApiLevel() {
+        // Prior to M59 the ApiVersion.getMaximumAvailableApiLevel API didn't exist
+        if (ApiVersion.getCronetVersion().compareTo("59") < 0) {
+            return 3;
+        }
+        return ApiVersion.getMaximumAvailableApiLevel();
     }
 
     /**
@@ -212,31 +225,31 @@ public class CronetTestBase extends AndroidTestCase {
     }
 
     public void assertResponseEquals(UrlResponseInfo expected, UrlResponseInfo actual) {
-        assertEquals(expected.getAllHeaders(), actual.getAllHeaders());
-        assertEquals(expected.getAllHeadersAsList(), actual.getAllHeadersAsList());
-        assertEquals(expected.getHttpStatusCode(), actual.getHttpStatusCode());
-        assertEquals(expected.getHttpStatusText(), actual.getHttpStatusText());
-        assertEquals(expected.getUrlChain(), actual.getUrlChain());
-        assertEquals(expected.getUrl(), actual.getUrl());
+        Assert.assertEquals(expected.getAllHeaders(), actual.getAllHeaders());
+        Assert.assertEquals(expected.getAllHeadersAsList(), actual.getAllHeadersAsList());
+        Assert.assertEquals(expected.getHttpStatusCode(), actual.getHttpStatusCode());
+        Assert.assertEquals(expected.getHttpStatusText(), actual.getHttpStatusText());
+        Assert.assertEquals(expected.getUrlChain(), actual.getUrlChain());
+        Assert.assertEquals(expected.getUrl(), actual.getUrl());
         // Transferred bytes and proxy server are not supported in pure java
         if (!testingJavaImpl()) {
-            assertEquals(expected.getReceivedByteCount(), actual.getReceivedByteCount());
-            assertEquals(expected.getProxyServer(), actual.getProxyServer());
+            Assert.assertEquals(expected.getReceivedByteCount(), actual.getReceivedByteCount());
+            Assert.assertEquals(expected.getProxyServer(), actual.getProxyServer());
             // This is a place where behavior intentionally differs between native and java
-            assertEquals(expected.getNegotiatedProtocol(), actual.getNegotiatedProtocol());
+            Assert.assertEquals(expected.getNegotiatedProtocol(), actual.getNegotiatedProtocol());
         }
     }
 
     public static void assertContains(String expectedSubstring, String actualString) {
-        assertNotNull(actualString);
+        Assert.assertNotNull(actualString);
         if (!actualString.contains(expectedSubstring)) {
-            fail("String [" + actualString + "] doesn't contain substring [" + expectedSubstring
-                    + "]");
+            Assert.fail("String [" + actualString + "] doesn't contain substring ["
+                    + expectedSubstring + "]");
         }
     }
 
     public CronetEngine.Builder enableDiskCache(CronetEngine.Builder cronetEngineBuilder) {
-        cronetEngineBuilder.setStoragePath(getTestStorage(getContext()));
+        cronetEngineBuilder.setStoragePath(getTestStorage(InstrumentationRegistry.getContext()));
         cronetEngineBuilder.enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 1000 * 1024);
         return cronetEngineBuilder;
     }
@@ -297,7 +310,7 @@ public class CronetTestBase extends AndroidTestCase {
     public static void prepareTestStorage(Context context) {
         File storage = new File(getTestStorageDirectory());
         if (storage.exists()) {
-            assertTrue(recursiveDelete(storage));
+            Assert.assertTrue(recursiveDelete(storage));
         }
         ensureTestStorageExists();
     }
@@ -316,7 +329,7 @@ public class CronetTestBase extends AndroidTestCase {
     private static void ensureTestStorageExists() {
         File storage = new File(getTestStorageDirectory());
         if (!storage.exists()) {
-            assertTrue(storage.mkdir());
+            Assert.assertTrue(storage.mkdir());
         }
     }
 
