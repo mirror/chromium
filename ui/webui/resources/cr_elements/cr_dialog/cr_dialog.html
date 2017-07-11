@@ -127,22 +127,26 @@
         padding: 10px;  /* Makes the actual icon 16x16. */
       }
     </style>
-    <div class="top-container">
-      <div class="title-container" tabindex="-1">
-        <content select=".title"></content>
+    <!-- Wrapper necessary to detect clicks outside of the dialog content, for
+        the purposes of the "pulse animation. -->
+    <div>
+      <div class="top-container">
+        <div class="title-container" tabindex="-1">
+          <content select=".title"></content>
+        </div>
+        <paper-icon-button icon="cr:clear" on-tap="cancel" id="close"
+            aria-label$="[[closeText]]" on-keypress="onCloseKeypress_"
+            hidden$="[[noCancel]]">
+        </paper-icon-button>
       </div>
-      <paper-icon-button icon="cr:clear" on-tap="cancel" id="close"
-          aria-label$="[[closeText]]" on-keypress="onCloseKeypress_"
-          hidden$="[[noCancel]]">
-      </paper-icon-button>
+      <div class="body-container">
+        <span id="bodyTopMarker"></span>
+        <content select=".body"></content>
+        <span id="bodyBottomMarker"></span>
+      </div>
+      <content select=".button-container"></content>
+      <content select=".footer"></content>
     </div>
-    <div class="body-container">
-      <span id="bodyTopMarker"></span>
-      <content select=".body"></content>
-      <span id="bodyBottomMarker"></span>
-    </div>
-    <content select=".button-container"></content>
-    <content select=".footer"></content>
   </template>
   <script src="cr_dialog.js"></script>
 </dom-module>
