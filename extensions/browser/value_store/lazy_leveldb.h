@@ -11,6 +11,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_base.h"
+#include "base/sequence_checker.h"
 #include "extensions/browser/value_store/value_store.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 
@@ -92,6 +93,8 @@ class LazyLevelDb {
   base::HistogramBase* open_histogram_ = nullptr;
   base::HistogramBase* db_restore_histogram_ = nullptr;
   base::HistogramBase* value_restore_histogram_ = nullptr;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(LazyLevelDb);
 };

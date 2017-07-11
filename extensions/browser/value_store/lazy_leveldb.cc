@@ -4,17 +4,18 @@
 
 #include "extensions/browser/value_store/lazy_leveldb.h"
 
+#include <utility>
+
 #include "base/files/file_util.h"
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
-#include "content/public/browser/browser_thread.h"
+#include "base/threading/thread_restrictions.h"
 #include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/src/include/leveldb/iterator.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
 using base::StringPiece;
-using content::BrowserThread;
 
 namespace {
 
@@ -50,8 +51,6 @@ ValueStore::StatusCode LevelDbToValueStoreStatusCode(
 }
 
 leveldb::Status DeleteValue(leveldb::DB* db, const std::string& key) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-
   leveldb::WriteBatch batch;
   batch.Delete(key);
 
@@ -63,6 +62,8 @@ leveldb::Status DeleteValue(leveldb::DB* db, const std::string& key) {
 LazyLevelDb::LazyLevelDb(const std::string& uma_client_name,
                          const base::FilePath& path)
     : db_path_(path) {
+  base::ThreadRestrictions::AssertIOAllowed();
+
   open_options_.create_if_missing = true;
   open_options_.paranoid_checks = true;
   open_options_.reuse_logs = leveldb_env::kDefaultLogReuseOptionValue;
@@ -86,13 +87,12 @@ LazyLevelDb::LazyLevelDb(const std::string& uma_client_name,
 }
 
 LazyLevelDb::~LazyLevelDb() {
-  if (db_ && !BrowserThread::CurrentlyOn(BrowserThread::FILE))
-    BrowserThread::DeleteSoon(BrowserThread::FILE, FROM_HERE, db_.release());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 ValueStore::Status LazyLevelDb::Read(const std::string& key,
                                      std::unique_ptr<base::Value>* value) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(value);
 
   std::string value_as_json;
@@ -118,7 +118,7 @@ ValueStore::Status LazyLevelDb::Read(const std::string& key,
 }
 
 ValueStore::Status LazyLevelDb::Delete(const std::string& key) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   ValueStore::Status status = EnsureDbIsOpen();
   if (!status.ok())
@@ -154,7 +154,8 @@ ValueStore::BackingStoreRestoreStatus LazyLevelDb::LogRestoreStatus(
 
 ValueStore::BackingStoreRestoreStatus LazyLevelDb::FixCorruption(
     const std::string* key) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   leveldb::Status s;
   if (key && db_) {
     s = DeleteValue(db_.get(), *key);
@@ -222,7 +223,7 @@ ValueStore::BackingStoreRestoreStatus LazyLevelDb::FixCorruption(
 }
 
 ValueStore::Status LazyLevelDb::EnsureDbIsOpen() {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (db_)
     return ValueStore::Status();
@@ -268,7 +269,8 @@ ValueStore::Status LazyLevelDb::ToValueStoreError(
 }
 
 bool LazyLevelDb::DeleteDbFile() {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   db_.reset();  // release any lock on the directory
   if (!base::DeleteFile(db_path_, true /* recursive */)) {
     LOG(WARNING) << "Failed to delete leveldb database at " << db_path_.value();

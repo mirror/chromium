@@ -7,11 +7,11 @@
 #include <stddef.h>
 
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/location.h"
-#include "base/single_thread_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
@@ -42,7 +42,7 @@ class StateStore::DelayedTaskQueue {
 
   // Queues up a task for invoking once we're ready. Invokes immediately if
   // we're already ready.
-  void InvokeWhenReady(const base::Closure& task);
+  void InvokeWhenReady(base::OnceClosure task);
 
   // Marks us ready, and invokes all pending tasks.
   void SetReady();
@@ -52,14 +52,16 @@ class StateStore::DelayedTaskQueue {
 
  private:
   bool ready_;
-  std::vector<base::Closure> pending_tasks_;
+  std::vector<base::OnceClosure> pending_tasks_;
+
+  DISALLOW_COPY_AND_ASSIGN(DelayedTaskQueue);
 };
 
-void StateStore::DelayedTaskQueue::InvokeWhenReady(const base::Closure& task) {
+void StateStore::DelayedTaskQueue::InvokeWhenReady(base::OnceClosure task) {
   if (ready_) {
-    task.Run();
+    std::move(task).Run();
   } else {
-    pending_tasks_.push_back(task);
+    pending_tasks_.push_back(std::move(task));
   }
 }
 
@@ -67,7 +69,7 @@ void StateStore::DelayedTaskQueue::SetReady() {
   ready_ = true;
 
   for (size_t i = 0; i < pending_tasks_.size(); ++i)
-    pending_tasks_[i].Run();
+    std::move(pending_tasks_[i]).Run();
   pending_tasks_.clear();
 }
 
@@ -93,46 +95,59 @@ StateStore::StateStore(content::BrowserContext* context,
 }
 
 StateStore::~StateStore() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 void StateStore::RequestInitAfterDelay() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   InitAfterDelay();
 }
 
 void StateStore::RegisterKey(const std::string& key) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   registered_keys_.insert(key);
 }
 
 void StateStore::GetExtensionValue(const std::string& extension_id,
                                    const std::string& key,
                                    ReadCallback callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   task_queue_->InvokeWhenReady(
-      base::Bind(&ValueStoreFrontend::Get, base::Unretained(store_.get()),
-                 GetFullKey(extension_id, key), callback));
+      base::BindOnce(&ValueStoreFrontend::Get, base::Unretained(store_.get()),
+                     GetFullKey(extension_id, key), std::move(callback)));
 }
 
 void StateStore::SetExtensionValue(const std::string& extension_id,
                                    const std::string& key,
                                    std::unique_ptr<base::Value> value) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   task_queue_->InvokeWhenReady(
-      base::Bind(&ValueStoreFrontend::Set, base::Unretained(store_.get()),
-                 GetFullKey(extension_id, key), base::Passed(&value)));
+      base::BindOnce(&ValueStoreFrontend::Set, base::Unretained(store_.get()),
+                     GetFullKey(extension_id, key), base::Passed(&value)));
 }
 
 void StateStore::RemoveExtensionValue(const std::string& extension_id,
                                       const std::string& key) {
-  task_queue_->InvokeWhenReady(base::Bind(&ValueStoreFrontend::Remove,
-                                          base::Unretained(store_.get()),
-                                          GetFullKey(extension_id, key)));
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  task_queue_->InvokeWhenReady(base::BindOnce(&ValueStoreFrontend::Remove,
+                                              base::Unretained(store_.get()),
+                                              GetFullKey(extension_id, key)));
 }
 
 bool StateStore::IsInitialized() const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return task_queue_->ready();
 }
 
 void StateStore::Observe(int type,
                          const content::NotificationSource& source,
                          const content::NotificationDetails& details) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK_EQ(type, content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME);
   registrar_.RemoveAll();
   InitAfterDelay();
@@ -143,6 +158,8 @@ void StateStore::OnExtensionWillBeInstalled(
     const Extension* extension,
     bool is_update,
     const std::string& old_name) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   RemoveKeysForExtension(extension->id());
 }
 
@@ -150,10 +167,14 @@ void StateStore::OnExtensionUninstalled(
     content::BrowserContext* browser_context,
     const Extension* extension,
     extensions::UninstallReason reason) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   RemoveKeysForExtension(extension->id());
 }
 
 void StateStore::Init() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   // Could be called twice if InitAfterDelay() is requested explicitly by the
   // embedder in addition to internally after first page load.
   if (IsInitialized())
@@ -169,8 +190,8 @@ void StateStore::InitAfterDelay() {
   if (IsInitialized())
     return;
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&StateStore::Init, AsWeakPtr()),
+  base::SequencedTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::BindOnce(&StateStore::Init, AsWeakPtr()),
       base::TimeDelta::FromSeconds(kInitDelaySeconds));
 }
 
@@ -178,9 +199,9 @@ void StateStore::RemoveKeysForExtension(const std::string& extension_id) {
   for (std::set<std::string>::iterator key = registered_keys_.begin();
        key != registered_keys_.end();
        ++key) {
-    task_queue_->InvokeWhenReady(base::Bind(&ValueStoreFrontend::Remove,
-                                            base::Unretained(store_.get()),
-                                            GetFullKey(extension_id, *key)));
+    task_queue_->InvokeWhenReady(base::BindOnce(
+        &ValueStoreFrontend::Remove, base::Unretained(store_.get()),
+        GetFullKey(extension_id, *key)));
   }
 }
 
