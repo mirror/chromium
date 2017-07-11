@@ -220,6 +220,22 @@ function FileManagerUI(providersModel, element, launchParam) {
   this.gearMenu = new GearMenu(this.gearButton.menu);
 
   /**
+   * The button to open file action menu
+   * @type {!cr.ui.MenuButton}
+   * @const
+   */
+  this.fileActionButton = util.queryDecoratedElement(
+      '#file-action-button', cr.ui.MenuButton);
+
+  /**
+   * Ripple effect of the file action button
+   * @type {!FilesToggleRipple}
+   * @const
+   */
+  this.fileActionButtonToggleRipple =
+      /** @type {!FilesToggleRipple} */ (queryRequiredElement(
+          'files-toggle-ripple', this.fileActionButton));
+  /**
    * Directory tree.
    * @type {DirectoryTree}
    */
