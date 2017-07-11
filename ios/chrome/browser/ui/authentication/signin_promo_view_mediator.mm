@@ -103,14 +103,6 @@ void RecordSigninNewAccountUserActionForAccessPoint(
       break;
   }
 }
-
-enum class SigninPromoViewState {
-  Unused = 0,
-  Visible,
-  Hidden,
-  SigninStarted,
-  Dismissed,
-};
 }  // namespace
 
 @interface SigninPromoViewMediator ()<ChromeIdentityServiceObserver,
@@ -122,7 +114,7 @@ enum class SigninPromoViewState {
   std::unique_ptr<ChromeIdentityServiceObserverBridge> _identityServiceObserver;
   std::unique_ptr<ChromeBrowserProviderObserverBridge> _browserProviderObserver;
   UIImage* _identityAvatar;
-  SigninPromoViewState _signinPromoViewState;
+  BOOL _isSigninPromoViewVisible;
 }
 
 @synthesize consumer = _consumer;
@@ -132,6 +124,7 @@ enum class SigninPromoViewState {
 @synthesize alreadySeenSigninViewPreferenceKey =
     _alreadySeenSigninViewPreferenceKey;
 @synthesize histograms = _histograms;
+@synthesize signinPromoViewState = _signinPromoViewState;
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
   self = [super init];
@@ -153,8 +146,7 @@ enum class SigninPromoViewState {
 
 - (void)dealloc {
   if (_displayedCountPreferenceKey &&
-      (_signinPromoViewState == SigninPromoViewState::Visible ||
-       _signinPromoViewState == SigninPromoViewState::Hidden)) {
+      _signinPromoViewState == ios::SigninPromoViewState::Unused) {
     PrefService* prefs = _browserState->GetPrefs();
     int displayedCount = prefs->GetInteger(_displayedCountPreferenceKey);
     switch (_histograms) {
@@ -210,9 +202,9 @@ enum class SigninPromoViewState {
 }
 
 - (void)sendImpressionsTillSigninButtonsHistogram {
-  DCHECK(_signinPromoViewState != SigninPromoViewState::Dismissed ||
-         _signinPromoViewState != SigninPromoViewState::Unused);
-  _signinPromoViewState = SigninPromoViewState::SigninStarted;
+  DCHECK(_signinPromoViewState != ios::SigninPromoViewState::Dismissed ||
+         _signinPromoViewState != ios::SigninPromoViewState::Unused);
+  _signinPromoViewState = ios::SigninPromoViewState::SigninStarted;
   if (!_displayedCountPreferenceKey)
     return;
   PrefService* prefs = _browserState->GetPrefs();
@@ -229,10 +221,10 @@ enum class SigninPromoViewState {
 }
 
 - (void)signinPromoViewVisible {
-  DCHECK(_signinPromoViewState != SigninPromoViewState::Dismissed);
-  if (_signinPromoViewState == SigninPromoViewState::Visible)
+  DCHECK(_signinPromoViewState != ios::SigninPromoViewState::Dismissed);
+  if (_isSigninPromoViewVisible)
     return;
-  _signinPromoViewState = SigninPromoViewState::Visible;
+  _isSigninPromoViewVisible = YES;
   if (!_displayedCountPreferenceKey)
     return;
   PrefService* prefs = _browserState->GetPrefs();
@@ -246,17 +238,12 @@ enum class SigninPromoViewState {
 }
 
 - (void)signinPromoViewHidden {
-  DCHECK(_signinPromoViewState != SigninPromoViewState::Unused ||
-         _signinPromoViewState != SigninPromoViewState::Dismissed);
-  if (_signinPromoViewState != SigninPromoViewState::Visible)
-    return;
-  _signinPromoViewState = SigninPromoViewState::Hidden;
+  _isSigninPromoViewVisible = NO;
 }
 
 - (void)signinPromoViewDismissed {
-  DCHECK(_signinPromoViewState != SigninPromoViewState::Unused ||
-         _signinPromoViewState != SigninPromoViewState::Hidden);
-  _signinPromoViewState = SigninPromoViewState::Dismissed;
+  DCHECK(_isSigninPromoViewVisible);
+  _signinPromoViewState = ios::SigninPromoViewState::Dismissed;
   if (!_displayedCountPreferenceKey)
     return;
   PrefService* prefs = _browserState->GetPrefs();
@@ -270,6 +257,13 @@ enum class SigninPromoViewState {
     case ios::SigninPromoViewHistograms::None:
       break;
   }
+}
+
+- (void)signinCallbackWithSuccess:(BOOL)succeeded {
+  DCHECK(_signinPromoViewState == ios::SigninPromoViewState::SigninStarted);
+  _signinPromoViewState = ios::SigninPromoViewState::UsedAtLeastOnce;
+  if ([_consumer respondsToSelector:@selector(signinFinishedWithSuccess:)])
+    [_consumer signinFinishedWithSuccess:succeeded];
 }
 
 #pragma mark - ChromeIdentityServiceObserver
@@ -318,10 +312,15 @@ enum class SigninPromoViewState {
   [self sendImpressionsTillSigninButtonsHistogram];
   RecordSigninUserActionForAccessPoint(_accessPoint);
   RecordSigninNewAccountUserActionForAccessPoint(_accessPoint);
+  __weak SigninPromoViewMediator* weakSelf = self;
   ShowSigninCommand* command = [[ShowSigninCommand alloc]
       initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
+               identity:nil
             accessPoint:_accessPoint
-            promoAction:signin_metrics::PromoAction::PROMO_ACTION_NEW_ACCOUNT];
+            promoAction:signin_metrics::PromoAction::PROMO_ACTION_NEW_ACCOUNT
+               callback:^(BOOL succeeded) {
+                 [weakSelf signinCallbackWithSuccess:succeeded];
+               }];
   [signinPromoView chromeExecuteCommand:command];
 }
 
@@ -331,12 +330,15 @@ enum class SigninPromoViewState {
   [self sendImpressionsTillSigninButtonsHistogram];
   RecordSigninUserActionForAccessPoint(_accessPoint);
   RecordSigninDefaultUserActionForAccessPoint(_accessPoint);
+  __weak SigninPromoViewMediator* weakSelf = self;
   ShowSigninCommand* command = [[ShowSigninCommand alloc]
       initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
                identity:_defaultIdentity
             accessPoint:_accessPoint
             promoAction:signin_metrics::PromoAction::PROMO_ACTION_WITH_DEFAULT
-               callback:nil];
+               callback:^(BOOL succeeded) {
+                 [weakSelf signinCallbackWithSuccess:succeeded];
+               }];
   [signinPromoView chromeExecuteCommand:command];
 }
 
@@ -346,10 +348,15 @@ enum class SigninPromoViewState {
   [self sendImpressionsTillSigninButtonsHistogram];
   RecordSigninNotDefaultUserActionForAccessPoint(_accessPoint);
   RecordSigninUserActionForAccessPoint(_accessPoint);
+  __weak SigninPromoViewMediator* weakSelf = self;
   ShowSigninCommand* command = [[ShowSigninCommand alloc]
       initWithOperation:AUTHENTICATION_OPERATION_SIGNIN
+               identity:nil
             accessPoint:_accessPoint
-            promoAction:signin_metrics::PromoAction::PROMO_ACTION_NOT_DEFAULT];
+            promoAction:signin_metrics::PromoAction::PROMO_ACTION_NOT_DEFAULT
+               callback:^(BOOL succeeded) {
+                 [weakSelf signinCallbackWithSuccess:succeeded];
+               }];
   [signinPromoView chromeExecuteCommand:command];
 }
 
