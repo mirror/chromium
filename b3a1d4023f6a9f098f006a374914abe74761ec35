@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be998ce1_49cac42d",
+        "filename": "ios/chrome/browser/ui/payments/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "nit: s/payments_a11y_egtests.mm/payments_a11y_egtest.mm",
+      "range": {
+        "startLine": 222,
+        "startChar": 5,
+        "endLine": 222,
+        "endChar": 29
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31780bc5_74b2c0ca",
+        "filename": "ios/chrome/browser/ui/payments/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "nit: //ios/chrome/browser/ui/payments/cells is enough since the target has the same name as the directory.",
+      "range": {
+        "startLine": 235,
+        "startChar": 5,
+        "endLine": 235,
+        "endChar": 49
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81107315_d10a8d22",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "sort.\n\noptional nit: I find it cleaner to put the using directives inside the anonymous namespace:\n\nnamespace {\nusing ::chrome_test_util::ButtonWithAccessibilityLabel;\nusing ::payment_request_util::GetAddressNotificationLabelFromAutofillProfile;\nusing ::payment_request_util::GetEmailLabelFromAutofillProfile;\nusing ::payment_request_util::GetNameLabelFromAutofillProfile;\nusing ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;\nusing ::payment_request_util::GetShippingAddressLabelFromAutofillProfile;\n\n....\n\n}  // namespace",
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7101816f_808daf42",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "nit: IIRC, The matcher methods should start with capital letters.",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955ac506_0f56902c",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be passing instances of AutofillProfile, CreditCard, PriceItem, or PaymentsTextItem to these methods. These implementation details may change. You\u0027re already making changes that make CreditCard not the sole payment method. I suggest simply passing strings.",
+      "range": {
+        "startLine": 44,
+        "startChar": 43,
+        "endLine": 44,
+        "endChar": 69
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f15f37_5a2fdc03",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "addressLabel",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efb3f88_464687db",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "refactor into -closePaymentRequestPage?",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 32
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b11ffa_1800c856",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "You can take advantage of these matcher functions:\nhttps://cs.chromium.org/chromium/src/ios/chrome/test/earl_grey/chrome_matchers.mm?type\u003dcs\u0026l\u003d116\nAlso refactor into a -goBack function or something like that.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f291be9_36ec8666",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this since the content of the profiles don\u0027t change during the test. Either keep a reference to the test profiles added to pdm in -setUp to use them here or simply pass the strings you know the profiles are initialized with.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 50
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591f1f95_da750372",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 53
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0465ab86_7824924c",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 50
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd222939_c7426e8e",
+        "filename": "ios/testing/data/http_server_files/payment_request.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "s/2016/2017",
+      "range": {
+        "startLine": 3,
+        "startChar": 15,
+        "endLine": 3,
+        "endChar": 19
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be564aed_4ff637c2",
+        "filename": "ios/testing/data/http_server_files/payment_request.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "Please remove.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 61
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f01534e_c4086e33",
+        "filename": "ios/testing/data/http_server_files/payment_request.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "Please remove these JSLint directives.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a183e2_97a6e3fa",
+        "filename": "ios/testing/data/http_server_files/payment_request.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T20:31:20Z",
+      "side": 1,
+      "message": "Could you change this to request payer\u0027s name and phone number as well?",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
