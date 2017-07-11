@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6204d7f9_e7f0fcfb",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-11T10:47:35Z",
+      "side": 1,
+      "message": "Just a note for later: I\u0027m wondering if that\u0027s actually possible and whether we should update the whole code to make non valid URLs DCHECK() (I believe there are other places where we early exit for non valid URLs)",
+      "revId": "171073eee9234a72d6f842ef51598566d9f27c06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082f898d_619a24c3",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-11T10:47:35Z",
+      "side": 1,
+      "message": "nit: `histogram_tester`?",
+      "revId": "171073eee9234a72d6f842ef51598566d9f27c06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29cc621d_5d5bcb14",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 29675,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-11T10:47:35Z",
+      "side": 1,
+      "message": "Maybe mention that it\u0027s storing the score as a percentage and the actual score is value / 100?",
+      "revId": "171073eee9234a72d6f842ef51598566d9f27c06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
