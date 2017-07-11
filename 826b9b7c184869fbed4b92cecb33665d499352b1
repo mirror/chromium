@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ec2fa0f_599c140b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T15:28:33Z",
+      "side": 1,
+      "message": "Why not \nbase::TimeDelta::FromHours(10) -                        base::TimeDelta::FromMinutes(1)?\n\nBut it\u0027s up to you.",
+      "range": {
+        "startLine": 684,
+        "startChar": 24,
+        "endLine": 685,
+        "endChar": 56
+      },
+      "revId": "826b9b7c184869fbed4b92cecb33665d499352b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
