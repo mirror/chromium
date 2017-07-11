@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "cacc56b8_e9ce60db",
+        "filename": "cc/resources/transferable_resource.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-11T22:44:39Z",
+      "side": 1,
+      "message": "nit: add initializer to constructor.",
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85a371f_82a2cced",
+        "filename": "components/viz/client/client_shared_bitmap_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-11T22:44:39Z",
+      "side": 1,
+      "message": "nit: I would recommend keeping the scope of the lock to a minimal - in particular as much as possible, avoiding syscalls while the lock is taken. I suppose you need the lock to guarantee that the NotifyAllocatedSharedBitmap are sent in the exact same order as the corresponding sequence number? If so I would suggest a small modification, which is to have NotifyAllocatedSharedBitmap allocate the sequence number right before calling DidAllocateSharedBitmap, doing so under lock, and returning the sequence number. That way you avoid taking the lock during SharedMemory::DuplicateHandle or SharedMemory::Close.",
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2267db0c_515a8b49",
         "filename": "components/viz/common/quads/shared_bitmap.h",
         "patchSetId": 10
@@ -36,6 +70,23 @@
       "writtenOn": "2017-07-11T21:59:23Z",
       "side": 1,
       "message": "nit: braces.",
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de05bee_1d414106",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-11T22:44:39Z",
+      "side": 1,
+      "message": "What if we have more than one in flight? Should we keep a queue?",
       "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
