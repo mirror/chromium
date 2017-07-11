@@ -83,6 +83,12 @@ class CORE_EXPORT ImageBitmap final
                              uint32_t height,
                              bool is_image_bitmap_premultiplied,
                              bool is_image_bitmap_origin_clean);
+  static ScriptPromise CreateAsync(
+      ImageElementBase*,
+      Optional<IntRect>,
+      Document*,
+      ScriptState*,
+      const ImageBitmapOptions& = ImageBitmapOptions());
   static sk_sp<SkImage> GetSkImageFromDecoder(
       std::unique_ptr<ImageDecoder>,
       SkColorType* decoded_color_type = nullptr,
@@ -136,9 +142,27 @@ class CORE_EXPORT ImageBitmap final
                                   const ImageBitmapOptions&,
                                   ExceptionState&) override;
 
+  struct ParsedOptions {
+    bool flip_y = false;
+    bool premultiply_alpha = true;
+    bool should_scale_input = false;
+    unsigned resize_width = 0;
+    unsigned resize_height = 0;
+    IntRect crop_rect;
+    SkFilterQuality resize_quality = kLow_SkFilterQuality;
+    CanvasColorParams color_params;
+    bool color_canvas_extensions_enabled = false;
+  };
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
+  // TODO(xidachen): replace related bool in this class, as well as the
+  // StaticBitmapImage class.
+  enum BitmapOriginClean {
+    kBitmapOriginDirty,
+    kBitmapOriginClean,
+  };
   ImageBitmap(ImageElementBase*,
               Optional<IntRect>,
               Document*,
@@ -160,7 +184,15 @@ class CORE_EXPORT ImageBitmap final
               uint32_t height,
               bool is_image_bitmap_premultiplied,
               bool is_image_bitmap_origin_clean);
-
+  static void ResolvePromiseOnOriginalThread(ScriptPromiseResolver*,
+                                             sk_sp<SkImage>,
+                                             const BitmapOriginClean&,
+                                             std::unique_ptr<ParsedOptions>);
+  static void RasterizeImageOnBackgroundThread(ScriptPromiseResolver*,
+                                               sk_sp<PaintRecord>,
+                                               const IntRect&,
+                                               const BitmapOriginClean&,
+                                               std::unique_ptr<ParsedOptions>);
   RefPtr<StaticBitmapImage> image_;
   bool is_neutered_ = false;
 };
