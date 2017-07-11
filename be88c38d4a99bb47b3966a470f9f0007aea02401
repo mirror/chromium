@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fba05f5f_3c5423a2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-11T22:55:22Z",
+      "side": 1,
+      "message": "nit: Please update the second sentence, which is no longer true.",
+      "range": {
+        "startLine": 641,
+        "startChar": 19,
+        "endLine": 641,
+        "endChar": 0
+      },
+      "revId": "be88c38d4a99bb47b3966a470f9f0007aea02401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
