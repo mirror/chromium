@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcbae49d_93abf66b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T21:31:12Z",
+      "side": 1,
+      "message": "instead of clearing focus on the container view, can we just request focus on the sheet itself?  \n\nWhen the sheet is closed, we should probably be focusing the tab\u0027s view as well instead of calling clear focus (clear focus allows Android to determine what to select, but that could be something you don\u0027t expect).  I guess if there are no tabs, you need to request focus to the compositor view. Maybe requesting focus of it is always right regardless on close (I would hope that it would defer to it\u0027s child instead of consuming it itself)?",
+      "range": {
+        "startLine": 1004,
+        "startChar": 22,
+        "endLine": 1004,
+        "endChar": 36
+      },
+      "revId": "cbaca80784f18f03ec86227d2af4531b011faf90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
