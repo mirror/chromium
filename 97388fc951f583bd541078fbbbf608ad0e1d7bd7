@@ -22,6 +22,30 @@
       "revId": "97388fc951f583bd541078fbbbf608ad0e1d7bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554ee01d_06f77f56",
+        "filename": "tools/gn/create_bundle_target_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-11T17:20:06Z",
+      "side": 1,
+      "message": "Done. Thank you for the detailed explanation!",
+      "parentUuid": "8820cc34_da8098b8",
+      "range": {
+        "startLine": 98,
+        "startChar": 27,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "97388fc951f583bd541078fbbbf608ad0e1d7bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
