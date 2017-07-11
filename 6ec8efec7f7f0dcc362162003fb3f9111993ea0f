@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a19bf53b_3e2d8dac",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-11T20:52:58Z",
+      "side": 1,
+      "message": "Be consistent about the spaces around the \u003d everywhere, not just in the other file.",
+      "revId": "6ec8efec7f7f0dcc362162003fb3f9111993ea0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d37b6d_12a8a842",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-11T20:52:58Z",
+      "side": 1,
+      "message": "NOTREACHED()?",
+      "revId": "6ec8efec7f7f0dcc362162003fb3f9111993ea0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb62578_b12fe736",
+        "filename": "chrome/browser/ui/cocoa/framed_browser_window.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-11T20:52:58Z",
+      "side": 1,
+      "message": "Here too.",
+      "revId": "6ec8efec7f7f0dcc362162003fb3f9111993ea0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
