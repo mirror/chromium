@@ -72,6 +72,8 @@ TEST_F(NetLogTest, ExistantDir) {
       [Cronet startNetLogToFile:[dir stringByAppendingString:@"/netlog.json"]
                        logBytes:NO];
 
+  [Cronet stopNetLog];
+
   [[NSFileManager defaultManager]
       removeItemAtPath:[Cronet
                            getNetLogPathForFile:
