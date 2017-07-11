@@ -16,7 +16,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "base/metrics/field_trial.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/child/child_thread_impl.h"
@@ -52,9 +51,7 @@ class GpuServiceFactory;
 // these per process. It does process initialization and shutdown. It forwards
 // IPC messages to gpu::GpuChannelManager, which is responsible for issuing
 // rendering commands to the GPU.
-class GpuChildThread : public ChildThreadImpl,
-                       public ui::mojom::GpuMain,
-                       public base::FieldTrialList::Observer {
+class GpuChildThread : public ChildThreadImpl, public ui::mojom::GpuMain {
  public:
   struct LogMessage {
     int severity;
@@ -103,10 +100,6 @@ class GpuChildThread : public ChildThreadImpl,
   void CreateFrameSinkManager(
       cc::mojom::FrameSinkManagerRequest request,
       cc::mojom::FrameSinkManagerClientPtr client) override;
-
-  // base::FieldTrialList::Observer:
-  void OnFieldTrialGroupFinalized(const std::string& trial_name,
-                                  const std::string& group_name) override;
 
   void BindServiceFactoryRequest(
       const service_manager::BindSourceInfo& source_info,
