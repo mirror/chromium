@@ -220,6 +220,22 @@ function FileManagerUI(providersModel, element, launchParam) {
   this.gearMenu = new GearMenu(this.gearButton.menu);
 
   /**
+   * The button to open context menu in the check-select mode.
+   * @type {!cr.ui.MenuButton}
+   * @const
+   */
+  this.selectionMenuButton = util.queryDecoratedElement(
+      '#selection-menu-button', cr.ui.MenuButton);
+
+  /**
+   * Ripple effect of the button to open context menu in the check-select mode.
+   * @type {!FilesToggleRipple}
+   * @const
+   */
+  this.selectionMenuButtonToggleRipple =
+      /** @type {!FilesToggleRipple} */ (queryRequiredElement(
+          'files-toggle-ripple', this.selectionMenuButton));
+  /**
    * Directory tree.
    * @type {DirectoryTree}
    */
