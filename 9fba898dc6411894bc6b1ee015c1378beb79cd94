@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "507e7ce0_c0c0433a",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-11T00:11:08Z",
+      "side": 1,
+      "message": "I went for option one. Let me know if you prefer moving the checks into the ctor (if you find that cvc should not be passed as a ctor parameter for example).",
+      "parentUuid": "7a679ec1_30c38ebb",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "9fba898dc6411894bc6b1ee015c1378beb79cd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30f4a081_3fe7158e",
         "filename": "content/browser/android/dialog_overlay_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-10T21:33:45Z",
       "side": 1,
       "message": "before, this didn\u0027t unregister for tokens, since the cvc is going away.  this is fine, as long as cvc is okay with us doing that.  i have no idea.",
+      "revId": "9fba898dc6411894bc6b1ee015c1378beb79cd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e8dba3_6a63a893",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-11T00:11:08Z",
+      "side": 1,
+      "message": "cvc uses an ObserverList, which explicitly supports removal of observers while iterating over observers. This should not cause any problems.",
+      "parentUuid": "30f4a081_3fe7158e",
       "revId": "9fba898dc6411894bc6b1ee015c1378beb79cd94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
