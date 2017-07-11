@@ -96,6 +96,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // Fires query change notification.
   void NotifyQueryChanged();
 
+  // Updates the |content_container_|'s background corner radius.
+  void UpdateBackgroundCornerRadius(bool search_box_is_empty);
+
   // Overridden from views::TextfieldController:
   void ContentsChanged(views::Textfield* sender,
                        const base::string16& new_contents) override;

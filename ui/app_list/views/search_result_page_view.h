@@ -16,6 +16,10 @@
 
 namespace app_list {
 
+namespace {
+class HorizontalSeparator;
+}
+
 // The search results page for the app list.
 class APP_LIST_EXPORT SearchResultPageView
     : public AppListPage,
@@ -47,6 +51,7 @@ class APP_LIST_EXPORT SearchResultPageView
                           AppListModel::State to_state) override;
   int GetSearchBoxZHeight() const override;
   void OnHidden() override;
+  gfx::Rect GetSearchBoxBounds() const override;
 
   void ClearSelectedIndex();
 
@@ -62,6 +67,8 @@ class APP_LIST_EXPORT SearchResultPageView
   // The SearchResultContainerViews that compose the search page. All owned by
   // the views hierarchy.
   std::vector<SearchResultContainerView*> result_container_views_;
+
+  std::vector<HorizontalSeparator*> separators_;
 
   // -1 indicates no selection.
   int selected_index_;
