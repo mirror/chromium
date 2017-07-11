@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43493ba6_d240a449",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-11T03:51:31Z",
+      "side": 1,
+      "message": "This should read 1.8.3",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 26
+      },
+      "revId": "6135510e4a6666b3206b87b571f56382fd2f4a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af31a6f_b301f90c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-11T03:51:31Z",
+      "side": 1,
+      "message": "Can\u0027t Intel easily fix this by adding a license header to this file upstream?",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "6135510e4a6666b3206b87b571f56382fd2f4a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3362bb2f_7c9a5a11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-11T03:51:31Z",
+      "side": 1,
+      "message": "Note that just removing the faulty union (which is supposed to be of size 0 anyway) works just as well. It would be nice to have this fixed upstream though.",
+      "range": {
+        "startLine": 21,
+        "startChar": 60,
+        "endLine": 21,
+        "endChar": 71
+      },
+      "revId": "6135510e4a6666b3206b87b571f56382fd2f4a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a091124_dc0b7e43",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-11T03:51:31Z",
+      "side": 1,
+      "message": "This change should not be required anymore as per https://chromium-review.googlesource.com/c/566204/",
+      "range": {
+        "startLine": 1229,
+        "startChar": 35,
+        "endLine": 1229,
+        "endChar": 36
+      },
+      "revId": "6135510e4a6666b3206b87b571f56382fd2f4a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
