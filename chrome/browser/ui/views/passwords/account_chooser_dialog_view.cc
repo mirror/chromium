@@ -44,8 +44,7 @@ void BuildColumnSet(ColumnSetType type, views::GridLayout* layout) {
   views::ColumnSet* column_set = layout->AddColumnSet(type);
   const gfx::Insets horizontal_insets =
       type == SINGLE_VIEW_COLUMN_SET
-          ? ChromeLayoutProvider::Get()->GetInsetsMetric(
-                views::INSETS_DIALOG_TITLE)
+          ? ChromeLayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG)
           : gfx::Insets();
   column_set->AddPaddingColumn(0, horizontal_insets.left());
   column_set->AddColumn(views::GridLayout::FILL,
@@ -87,7 +86,7 @@ views::ScrollView* CreateCredentialsView(
     credential_view->SetLowerLabelColor(kAutoSigninTextColor);
     ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
     gfx::Insets dialog_insets =
-        layout_provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
+        layout_provider->GetInsetsMetric(views::INSETS_DIALOG);
     const int vertical_padding = layout_provider->GetDistanceMetric(
         views::DISTANCE_RELATED_CONTROL_VERTICAL);
     credential_view->SetBorder(
@@ -112,6 +111,7 @@ AccountChooserDialogView::AccountChooserDialogView(
       show_signin_button_(false) {
   DCHECK(controller);
   DCHECK(web_contents);
+  ClearHorizontalContentMargins();
   chrome::RecordDialogCreation(chrome::DialogIdentifier::ACCOUNT_CHOOSER);
 }
 
@@ -209,20 +209,18 @@ void AccountChooserDialogView::InitWindow() {
   ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
   layout->StartRowWithPadding(
       0, SINGLE_VIEW_COLUMN_SET, 0,
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_TITLE).top());
+      layout_provider->GetInsetsMetric(views::INSETS_DIALOG).top());
   layout->AddView(title_label);
 
   // Show credentials.
-  gfx::Insets dialog_insets =
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
   BuildColumnSet(SINGLE_VIEW_COLUMN_SET_NO_PADDING, layout);
   layout->StartRowWithPadding(0, SINGLE_VIEW_COLUMN_SET_NO_PADDING, 0,
-                              dialog_insets.top());
+                              layout_provider->GetDistanceMetric(
+                                  views::DISTANCE_DIALOG_TITLE_CONTENT_MARGIN));
   layout->AddView(CreateCredentialsView(
       controller_->GetLocalForms(),
       this,
       GetProfileFromWebContents(web_contents_)->GetRequestContext()));
-  layout->AddPaddingRow(0, dialog_insets.bottom());
 }
 
 AccountChooserPrompt* CreateAccountChooserPromptView(

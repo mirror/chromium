@@ -76,8 +76,7 @@ class PromptLabel : public views::StyledLabel {
       : views::StyledLabel(text, listener) {}
 
   gfx::Insets GetInsets() const override {
-    return ChromeLayoutProvider::Get()->GetInsetsMetric(
-        views::INSETS_DIALOG_CONTENTS);
+    return ChromeLayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG);
   }
 };
 
@@ -93,6 +92,7 @@ ForcedReauthenticationDialogView::ForcedReauthenticationDialogView(
       signin_manager_(signin_manager),
       desired_close_time_(base::TimeTicks::Now() + countdown_duration),
       weak_factory_(this) {
+  ClearHorizontalContentMargins();
   constrained_window::CreateBrowserModalDialogViews(
       this, browser->window()->GetNativeWindow())
       ->Show();
@@ -205,9 +205,7 @@ void ForcedReauthenticationDialogView::AddedToWidget() {
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
   // Layout the components.
   const gfx::Insets dialog_insets =
-      provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
-  SetBorder(views::CreateEmptyBorder(dialog_insets.top(), 0,
-                                     dialog_insets.bottom(), 0));
+      provider->GetInsetsMetric(views::INSETS_DIALOG);
   views::GridLayout* dialog_layout = new views::GridLayout(this);
   SetLayoutManager(dialog_layout);
 
