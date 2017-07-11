@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2f450fe1_32f8c338",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-11T15:55:48Z",
+      "side": 1,
+      "message": "Oh sorry. Yes, that\u0027s probably good enough and in case we ever have multiple places with a home page tile, every place would receive its update. Gone.",
+      "parentUuid": "4413313c_a9924b56",
+      "range": {
+        "startLine": 79,
+        "startChar": 73,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "cabb252442e7c71384d4031220858cc2b297c111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81c1cd0e_dd471822",
         "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
         "patchSetId": 3
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Ah, okay, that makes it a bit ugly.. oh well. I\u0027ll leave it to you.",
       "parentUuid": "1e7accd8_17385439",
+      "range": {
+        "startLine": 113,
+        "startChar": 45,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "cabb252442e7c71384d4031220858cc2b297c111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cf654ec_10184ed9",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-11T15:55:48Z",
+      "side": 1,
+      "message": "I will revert to the guard clause. This is a little bit easier to see on the first glance.",
+      "parentUuid": "f3d527a6_48b41478",
       "range": {
         "startLine": 113,
         "startChar": 45,
