@@ -5,14 +5,12 @@
 #include "content/browser/renderer_host/render_widget_host_view_mac.h"
 
 #import <Carbon/Carbon.h>
-#import <objc/runtime.h>
 #include <OpenGL/gl.h>
 #include <QuartzCore/QuartzCore.h>
+#import <objc/runtime.h>
 #include <stdint.h>
-
 #include <limits>
 #include <utility>
-
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
@@ -32,6 +30,7 @@
 #include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #import "content/browser/accessibility/browser_accessibility_cocoa.h"
 #import "content/browser/accessibility/browser_accessibility_mac.h"
 #include "content/browser/accessibility/browser_accessibility_manager_mac.h"
@@ -74,6 +73,7 @@
 #import "ui/base/cocoa/appkit_utils.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #import "ui/base/cocoa/fullscreen_window_manager.h"
+#import "ui/base/cocoa/touch_bar_util.h"
 #import "ui/base/cocoa/underlay_opengl_hosting_window.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer.h"
@@ -86,8 +86,11 @@
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
+#include "ui/gfx/image/image_skia_util_mac.h"
+#include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/scoped_ns_graphics_context_save_gstate_mac.h"
 #include "ui/gl/gl_switches.h"
+#include "ui/vector_icons/vector_icons.h"
 
 using content::BrowserAccessibility;
 using content::BrowserAccessibilityManager;
@@ -1836,6 +1839,9 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     return responderDelegate_.get();
 
   return [super forwardingTargetForSelector:selector];
+}
+
+- (void)someAction:(id)sender {
 }
 
 - (void)setCanBeKeyView:(BOOL)can {

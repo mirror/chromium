@@ -4176,6 +4176,19 @@ void WebContentsImpl::OnCreditCardInputShownOnHttp() {
   controller_.ssl_manager()->DidShowCreditCardInputOnHttp();
 }
 
+void WebContentsImpl::OnAutofillFormFocused() {
+  LOG(INFO) << "OnAutofillFormFocused";
+  for (auto& observer : observers_)
+    observer.OnAutofillFormFocused();
+}
+
+void WebContentsImpl::DidEndAutofillTextFieldEditing() {
+  LOG(INFO) << "DidEndAutofillTextFieldEditing";
+  // TODO: Maybe don't use WebObservers
+  for (auto& observer : observers_)
+    observer.DidEndAutofillTextFieldEditing();
+}
+
 void WebContentsImpl::SetIsOverlayContent(bool is_overlay_content) {
   is_overlay_content_ = is_overlay_content;
 }
@@ -5341,6 +5354,10 @@ void WebContentsImpl::SetAllowOtherViews(bool allow) {
 
 bool WebContentsImpl::GetAllowOtherViews() {
   return view_->GetAllowOtherViews();
+}
+
+bool WebContentsImpl::DidFirstVisuallyNonEmptyPaint() const {
+  return did_first_visually_non_empty_paint_;
 }
 
 #endif

@@ -23,6 +23,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "cc/surfaces/surface_id.h"
+#include "components/grit/components_scaled_resources.h"
 #include "content/browser/renderer_host/browser_compositor_view_mac.h"
 #include "content/browser/renderer_host/input/mouse_wheel_phase_handler.h"
 #include "content/browser/renderer_host/input/mouse_wheel_rails_filter_mac.h"
@@ -38,6 +39,7 @@
 #import "ui/base/cocoa/command_dispatcher.h"
 #include "ui/base/cocoa/remote_layer_api.h"
 #import "ui/base/cocoa/tool_tip_base_view.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/display/display_observer.h"
 
 namespace content {

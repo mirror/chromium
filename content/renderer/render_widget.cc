@@ -987,6 +987,8 @@ void RenderWidget::UpdateVisualState() {
 void RenderWidget::WillBeginCompositorFrame() {
   TRACE_EVENT0("gpu", "RenderWidget::willBeginCompositorFrame");
 
+  // LOG(INFO) << "WillBeginCompositorFrame";
+
   GetWebWidget()->SetSuppressFrameRequestsWorkaroundFor704763Only(true);
 
   // The UpdateTextInputState can result in further layout and possibly
@@ -1009,6 +1011,7 @@ std::unique_ptr<cc::SwapPromise> RenderWidget::RequestCopyOfOutputForLayoutTest(
 // RenderWidgetInputHandlerDelegate
 
 void RenderWidget::FocusChangeComplete() {
+  LOG(INFO) << "FocusChangeComplete";
   if (!GetWebWidget()->IsWebFrameWidget())
     return;
   blink::WebLocalFrame* focused =

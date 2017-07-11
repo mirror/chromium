@@ -30,6 +30,8 @@ void AutofillHandler::OnTextFieldDidChange(const FormData& form,
   if (!IsValidFormData(form) || !IsValidFormFieldData(field))
     return;
 
+  LOG(INFO) << "OnTextFieldDidChange";
+
   gfx::RectF transformed_box =
       driver_->TransformBoundingBoxToViewportCoordinates(bounding_box);
 
@@ -43,6 +45,8 @@ void AutofillHandler::OnQueryFormFieldAutofill(int query_id,
   if (!IsValidFormData(form) || !IsValidFormFieldData(field))
     return;
 
+  LOG(INFO) << "OnQueryFormFieldAutofill";
+
   gfx::RectF transformed_box =
       driver_->TransformBoundingBoxToViewportCoordinates(bounding_box);
 
@@ -54,6 +58,8 @@ void AutofillHandler::OnFocusOnFormField(const FormData& form,
                                          const gfx::RectF& bounding_box) {
   if (!IsValidFormData(form) || !IsValidFormFieldData(field))
     return;
+
+  LOG(INFO) << "OnFocusOnFormField";
 
   gfx::RectF transformed_box =
       driver_->TransformBoundingBoxToViewportCoordinates(bounding_box);

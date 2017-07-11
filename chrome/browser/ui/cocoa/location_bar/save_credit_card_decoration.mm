@@ -13,6 +13,7 @@
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/vector_icons/vector_icons.h"
 
 SaveCreditCardDecoration::SaveCreditCardDecoration(
     CommandUpdater* command_updater)
@@ -26,7 +27,7 @@ void SaveCreditCardDecoration::SetIcon(bool locationBarIsDark) {
       locationBarIsDark ? SK_ColorWHITE : gfx::kChromeIconGrey;
 
   SetImage(NSImageFromImageSkia(
-      gfx::CreateVectorIcon(kCreditCardIcon, 16, theColor)));
+      gfx::CreateVectorIcon(ui::kCreditCardIcon, 16, theColor)));
 }
 
 NSPoint SaveCreditCardDecoration::GetBubblePointInFrame(NSRect frame) {

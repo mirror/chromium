@@ -17,6 +17,15 @@ UI_BASE_EXPORT Class NSTouchBar();
 // Returns the NSCustomTouchBarItem Class.
 UI_BASE_EXPORT Class NSCustomTouchBarItem();
 
+// Returns the NSPopoverTouchBarItem Class.
+UI_BASE_EXPORT Class NSPopoverTouchBarItem();
+
+// Returns the NSPopoverTouchBarItem Class.
+UI_BASE_EXPORT Class NSPopoverTouchBarItem();
+
+// Returns the NSGroupTouchBarItem Class.
+UI_BASE_EXPORT Class NSGroupTouchBarItem();
+
 // Returns a stylized blue button for the touch bar. The button performs
 // |action| from the |target|.
 UI_BASE_EXPORT NSButton* GetBlueTouchBarButton(NSString* title,

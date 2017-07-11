@@ -9,7 +9,10 @@
 
 #include <memory>
 
+#include "base/mac/scoped_nsobject.h"
+
 class FullscreenObserver;
+@class WebTextfieldTouchBarController;
 
 namespace content {
 class WebContents;
@@ -43,6 +46,8 @@ class WebContents;
 
    // Set to true if the window is a popup.
    BOOL isPopup_;
+
+   base::scoped_nsobject<WebTextfieldTouchBarController> touchBarController_;
 }
 @property(readonly, nonatomic) content::WebContents* webContents;
 

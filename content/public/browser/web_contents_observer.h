@@ -446,6 +446,10 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
   virtual void DidUpdateWebManifestURL(
       const base::Optional<GURL>& manifest_url) {}
 
+  virtual void OnAutofillFormFocused() {}
+
+  virtual void DidEndAutofillTextFieldEditing() {}
+
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
 
@@ -470,10 +474,10 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
   // Start observing a different WebContents; used with the default constructor.
   void Observe(WebContents* web_contents);
 
+  void ResetWebContents();
+
  private:
   friend class WebContentsImpl;
-
-  void ResetWebContents();
 
   WebContentsImpl* web_contents_;
 

@@ -175,6 +175,7 @@ gfx::RectF ContentAutofillDriver::TransformBoundingBoxToViewportCoordinates(
 }
 
 void ContentAutofillDriver::DidInteractWithCreditCardForm() {
+  LOG(INFO) << "DidInteractWithCreditCardForm";
   // Notify the WebContents about credit card inputs on HTTP pages.
   content::WebContents* contents =
       content::WebContents::FromRenderFrameHost(render_frame_host_);
@@ -224,6 +225,9 @@ void ContentAutofillDriver::FocusOnFormField(const FormData& form,
                                              const FormFieldData& field,
                                              const gfx::RectF& bounding_box) {
   autofill_handler_->OnFocusOnFormField(form, field, bounding_box);
+  content::WebContents* contents =
+      content::WebContents::FromRenderFrameHost(render_frame_host_);
+  contents->OnAutofillFormFocused();
 }
 
 void ContentAutofillDriver::DidFillAutofillFormData(const FormData& form,
@@ -237,6 +241,9 @@ void ContentAutofillDriver::DidPreviewAutofillFormData() {
 
 void ContentAutofillDriver::DidEndTextFieldEditing() {
   autofill_handler_->OnDidEndTextFieldEditing();
+  content::WebContents* contents =
+      content::WebContents::FromRenderFrameHost(render_frame_host_);
+  contents->DidEndAutofillTextFieldEditing();
 }
 
 void ContentAutofillDriver::SetDataList(

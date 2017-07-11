@@ -774,6 +774,10 @@ class WebContents : public PageNavigator,
   // can adjust the UI if desired.
   virtual void OnCreditCardInputShownOnHttp() = 0;
 
+  virtual void OnAutofillFormFocused() = 0;
+
+  virtual void DidEndAutofillTextFieldEditing() = 0;
+
   // Sets whether the WebContents is for overlaying content on a page.
   virtual void SetIsOverlayContent(bool is_overlay_content) = 0;
 
@@ -827,6 +831,8 @@ class WebContents : public PageNavigator,
 
   // Returns true if other views are allowed, false otherwise.
   virtual bool GetAllowOtherViews() = 0;
+
+  virtual bool DidFirstVisuallyNonEmptyPaint() const = 0;
 #endif  // OS_ANDROID
 
  private:

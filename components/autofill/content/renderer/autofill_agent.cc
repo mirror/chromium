@@ -468,6 +468,7 @@ void AutofillAgent::PreviewForm(int32_t id, const FormData& form) {
 
 void AutofillAgent::FieldTypePredictionsAvailable(
     const std::vector<FormDataPredictions>& forms) {
+  LOG(INFO) << "FieldTypePredictionsAvailable";
   for (const auto& form : forms) {
     form_cache_.ShowPredictions(form);
   }
@@ -612,6 +613,14 @@ bool AutofillAgent::CollectFormlessElements(FormData* output) {
 
 void AutofillAgent::ShowSuggestions(const WebFormControlElement& element,
                                     const ShowSuggestionsOptions& options) {
+  LOG(INFO) << "ShowSuggestions";
+
+  const WebInputElement* input_element2 = ToWebInputElement(&element);
+  if (form_util::IsAutofillableInputElement(input_element2))
+    LOG(INFO) << "IsAutofillableInputElement";
+  else
+    LOG(INFO) << "Nope";
+
   if (!element.IsEnabled() || element.IsReadOnly())
     return;
   if (!element.SuggestedValue().IsEmpty())
@@ -667,6 +676,7 @@ void AutofillAgent::ShowSuggestions(const WebFormControlElement& element,
 
 void AutofillAgent::QueryAutofillSuggestions(
     const WebFormControlElement& element) {
+  LOG(INFO) << "AutofillAgent::QueryAutofillSuggestions";
   if (!element.GetDocument().GetFrame())
     return;
 

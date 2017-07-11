@@ -202,6 +202,9 @@ class AutofillManager : public AutofillHandler,
   // to be uploadable. Exposed for testing.
   bool ShouldUploadForm(const FormStructure& form);
 
+  FormData focused_form() { return focused_form_; }
+  FormFieldData focused_field() { return focused_field_; }
+
  protected:
   // Test code should prefer to use this constructor.
   AutofillManager(AutofillDriver* driver,
@@ -544,6 +547,9 @@ class AutofillManager : public AutofillHandler,
   // Responsible for getting the full card details, including the PAN and the
   // CVC.
   std::unique_ptr<payments::FullCardRequest> full_card_request_;
+
+  FormData focused_form_;
+  FormFieldData focused_field_;
 
   // Collected information about the autofill form where unmasked card will be
   // filled.

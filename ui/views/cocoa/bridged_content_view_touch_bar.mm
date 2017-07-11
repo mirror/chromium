@@ -7,6 +7,7 @@
 #include "base/strings/sys_string_conversions.h"
 #import "ui/base/cocoa/touch_bar_forward_declarations.h"
 #include "ui/base/models/dialog_model.h"
+#include "ui/base/resource/resource_bundle.h"
 #import "ui/views/cocoa/bridged_content_view.h"
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/views/window/dialog_client_view.h"

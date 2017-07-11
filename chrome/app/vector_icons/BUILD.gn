@@ -34,8 +34,6 @@ aggregate_vector_icons("chrome_vector_icons") {
     "code.icon",
     "cookie.icon",
     "crashed_tab.icon",
-    "credit_card.1x.icon",
-    "credit_card.icon",
     "eol.icon",
     "extension.icon",
     "extension_crashed.icon",

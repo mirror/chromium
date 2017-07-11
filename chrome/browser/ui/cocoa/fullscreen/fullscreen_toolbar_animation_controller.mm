@@ -5,6 +5,7 @@
 #import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_animation_controller.h"
 
 #import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h"
+#include "content/public/browser/web_contents.h"
 
 namespace {
 
@@ -25,7 +26,8 @@ const NSTimeInterval kTabStripChangesDelay = 750;
 
 FullscreenToolbarAnimationController::FullscreenToolbarAnimationController(
     FullscreenToolbarController* owner)
-    : owner_(owner),
+    : WebContentsObserver(nullptr),
+      owner_(owner),
       animation_(this),
       hide_toolbar_timer_(
           FROM_HERE,
@@ -49,17 +51,31 @@ void FullscreenToolbarAnimationController::StopAnimationAndTimer() {
   hide_toolbar_timer_.Stop();
 }
 
-void FullscreenToolbarAnimationController::AnimateToolbarForTabstripChanges() {
+void FullscreenToolbarAnimationController::AnimateToolbarForTabstripChanges(
+    content::WebContents* contents,
+    bool in_foreground) {
+  LOG(INFO) << "AnimateToolbarForTabstripChanges";
   // Don't kickstart the animation if the toolbar is already displayed.
   if ([owner_ mustShowFullscreenToolbar])
     return;
 
   if (animation_.IsShowing()) {
+    LOG(INFO) << "It's already showing";
     hide_toolbar_timer_.Reset();
     return;
   }
 
   should_hide_toolbar_after_delay_ = true;
+
+  if (in_foreground)
+    LOG(INFO) << "in_foreground";
+  else
+    LOG(INFO) << "not in_foreground";
+
+  if (in_foreground && contents && !contents->DidFirstVisuallyNonEmptyPaint()) {
+    LOG(INFO) << "Observe";
+    Observe(contents);
+  }
   AnimateToolbarIn();
 }
 
@@ -106,6 +122,18 @@ void FullscreenToolbarAnimationController::AnimationProgressed(
 
 void FullscreenToolbarAnimationController::AnimationEnded(
     const gfx::Animation* animation) {
+  if (!web_contents()) {
+    if (animation_.IsShowing() && should_hide_toolbar_after_delay_) {
+      hide_toolbar_timer_.Reset();
+      should_hide_toolbar_after_delay_ = false;
+    }
+  }
+
+  if (!animation_.IsShowing())
+    ResetWebContents();
+}
+
+void FullscreenToolbarAnimationController::DidFirstVisuallyNonEmptyPaint() {
   if (animation_.IsShowing() && should_hide_toolbar_after_delay_) {
     hide_toolbar_timer_.Reset();
     should_hide_toolbar_after_delay_ = false;

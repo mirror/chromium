@@ -8,17 +8,26 @@
 #import <Cocoa/Cocoa.h>
 
 #include "base/timer/timer.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
 
 @class FullscreenToolbarController;
 
+namespace content {
+class WebContents;
+}
+
 // This class provides a controller that manages the fullscreen toolbar's
 // animation.
-class FullscreenToolbarAnimationController : public gfx::AnimationDelegate {
+class FullscreenToolbarAnimationController
+    : public gfx::AnimationDelegate,
+      public content::WebContentsObserver {
  public:
   explicit FullscreenToolbarAnimationController(
       FullscreenToolbarController* owner);
+
+  void DidFirstVisuallyNonEmptyPaint() override;
 
   // Called by |owner_| when the fullscreen toolbar layout is updated.
   void ToolbarDidUpdate();
@@ -27,7 +36,8 @@ class FullscreenToolbarAnimationController : public gfx::AnimationDelegate {
   void StopAnimationAndTimer();
 
   // Animates the toolbar in and out to show changes with the tabstrip.
-  void AnimateToolbarForTabstripChanges();
+  void AnimateToolbarForTabstripChanges(content::WebContents* contents,
+                                        bool in_foreground);
 
   // Animates the toolbar in if it's not fully shown.
   void AnimateToolbarIn();

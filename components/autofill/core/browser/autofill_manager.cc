@@ -337,6 +337,7 @@ bool AutofillManager::ShouldShowScanCreditCard(const FormData& form,
 
 bool AutofillManager::IsCreditCardPopup(const FormData& form,
                                         const FormFieldData& field) {
+  LOG(INFO) << "IsCreditCardPopup";
   AutofillField* autofill_field = GetAutofillField(form, field);
   return autofill_field && autofill_field->Type().group() == CREDIT_CARD;
 }
@@ -809,12 +810,19 @@ void AutofillManager::FillCreditCardForm(int query_id,
 }
 
 void AutofillManager::OnFocusNoLongerOnForm() {
+  focused_form_ = FormData();
+  focused_field_ = FormFieldData();
+  LOG(INFO) << "OnFocusNoLongerOnForm";
   ProcessPendingFormForUpload();
 }
 
 void AutofillManager::OnFocusOnFormFieldImpl(const FormData& form,
                                              const FormFieldData& field,
-                                             const gfx::RectF& bounding_box) {}
+                                             const gfx::RectF& bounding_box) {
+  LOG(INFO) << "OnFocusOnFormFieldImpl";
+  focused_form_ = form;
+  focused_field_ = field;
+}
 
 void AutofillManager::OnDidPreviewAutofillFormData() {
   if (test_delegate_)
@@ -1579,6 +1587,8 @@ void AutofillManager::Reset() {
   user_did_autofill_ = false;
   user_did_edit_autofilled_field_ = false;
   masked_card_ = CreditCard();
+  focused_form_ = FormData();
+  focused_field_ = FormFieldData();
   unmasking_query_id_ = -1;
   unmasking_form_ = FormData();
   unmasking_field_ = FormFieldData();
