@@ -854,14 +854,14 @@ void ControllerRenderer::SetUp(std::unique_ptr<VrControllerModel> model) {
                  GL_RGBA, GL_UNSIGNED_BYTE, pixmap.addr());
   }
 
-  const gltf::Accessor* accessor = model->PositionAccessor();
-  position_components_ = gltf::GetTypeComponents(accessor->type);
+  const vr::gltf::Accessor* accessor = model->PositionAccessor();
+  position_components_ = vr::gltf::GetTypeComponents(accessor->type);
   position_type_ = accessor->component_type;
   position_stride_ = accessor->byte_stride;
   position_offset_ = VOID_OFFSET(accessor->byte_offset);
 
   accessor = model->TextureCoordinateAccessor();
-  tex_coord_components_ = gltf::GetTypeComponents(accessor->type);
+  tex_coord_components_ = vr::gltf::GetTypeComponents(accessor->type);
   tex_coord_type_ = accessor->component_type;
   tex_coord_stride_ = accessor->byte_stride;
   tex_coord_offset_ = VOID_OFFSET(accessor->byte_offset);
