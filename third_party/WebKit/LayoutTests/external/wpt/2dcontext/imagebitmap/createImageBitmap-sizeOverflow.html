@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<title>createImageBitmap with size overflow</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="common.js"></script>
+<body>
+<script>
+(function() {
+    promise_test(function() {
+        var imgData = new ImageData(20, 20);
+        initializeImageData(imgData, 20, 20);
+        return new Promise(function(resolve, reject) {
+            createImageBitmap(imgData, 65342, 689317717011, 10, 4294967077).then(function(bitmap) {
+                resolve(bitmap);
+            });
+        });
+    }, "createImageBitmap does not crash when passing very large parameters as sx, sy, sw, sh");
+})();
+</script>
+</body>
+</html>
