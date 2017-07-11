@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af78e1dd_ddc68f3c",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T18:22:58Z",
+      "side": 1,
+      "message": "Done with a slightly different approach.",
+      "parentUuid": "dd9d20f3_a9a526c6",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 33
+      },
+      "revId": "d8c4d299648d995b8cc1681e4199c2cfdb5db59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f68e9f4f_aa7504f6",
         "filename": "chrome/browser/conflicts/module_database_win.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b7e7d6f1_3971ca6c",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T18:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f68e9f4f_aa7504f6",
+      "range": {
+        "startLine": 237,
+        "startChar": 7,
+        "endLine": 237,
+        "endChar": 34
+      },
+      "revId": "d8c4d299648d995b8cc1681e4199c2cfdb5db59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e892e1a3_5227a232",
         "filename": "chrome/browser/conflicts/module_database_win.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "d8c4d299648d995b8cc1681e4199c2cfdb5db59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070dac13_9348f9bb",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T18:22:58Z",
+      "side": 1,
+      "message": "IsIdle() already covers that case. It won\u0027t return true until registered modules are enumerated.",
+      "parentUuid": "e892e1a3_5227a232",
+      "range": {
+        "startLine": 454,
+        "startChar": 6,
+        "endLine": 454,
+        "endChar": 12
+      },
+      "revId": "d8c4d299648d995b8cc1681e4199c2cfdb5db59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
