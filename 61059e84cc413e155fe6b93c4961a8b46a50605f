@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "3ff37119_92ba916d",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T16:20:38Z",
+      "side": 1,
+      "message": "It\u0027s OK to clean up later. But Config structure should be edited now.",
+      "parentUuid": "b1410af5_22199b3f",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9939da25_33f2f6b8",
         "filename": "components/os_crypt/key_storage_config_linux.h",
         "patchSetId": 9
