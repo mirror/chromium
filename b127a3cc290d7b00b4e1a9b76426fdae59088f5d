@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "92868914_c2eba72f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-11T07:34:40Z",
+      "side": 1,
+      "message": "XMLHttpRequest.cpp",
+      "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb412d3a_3c38112c",
         "filename": "third_party/WebKit/LayoutTests/fast/files/xhr-response-blob-expected.txt",
         "patchSetId": 5
@@ -13,6 +30,24 @@
       "writtenOn": "2017-07-11T02:02:25Z",
       "side": 1,
       "message": "If the new behavior is spec compliant, can we fix our layouttest?",
+      "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7f7095_4696bfb0",
+        "filename": "third_party/WebKit/LayoutTests/fast/files/xhr-response-blob-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-11T07:34:40Z",
+      "side": 1,
+      "message": "Looks this is a result of the MIME sniffing. If so, we should put this assertion into some other file that is named to indicate that it\u0027s testing sniffing.\n\nFor now, I\u0027m fine with either leaving this FAIL or updating the expectation.",
+      "parentUuid": "cb412d3a_3c38112c",
       "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
