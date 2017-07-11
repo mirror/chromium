@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "087c2986_4d76c839",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "nit: number_list -\u003e numbers.",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a0d7b0_6e436a30",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "nits:\nThe function finds -\u003e Find\nan array -\u003e a list",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13665a35_f4ac2aad",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "nit: numbers.",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fb94b4_af5580a1",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "\"List of pairs of numbers\". No need for size as that\u0027s usually for numpy arrays.",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469f1eaf_165e77cf",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "contains -\u003e containing.",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3a310c_a3d04c67",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "I think you may omit the inner set of brackets. i.e. if (... !\u003d 1 or ... !\u003d 1).\n\nAlso, maybe a comment saying what\u0027s happening here? I\u0027m guessing you\u0027re ignoring segments of length 1 because they might as well be a case?",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ea52e1_d95dff9a",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "The function find -\u003e Find",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ec886b_c84a9533",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "I think you might be able to condense this function a bit? e.g.\n\n    longest_segment \u003d max(segments, key\u003dlambda: (start, end): end - start)\n\nSomething like that?",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f1a206_dd2098d5",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "enums -\u003e keywords?\n\nAlso maybe explain why you\u0027re finding continuous segments? i.e. mention that the default case is a fast subtraction calculation instead of a case.",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848260db_694b0aaf",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "I guess if you\u0027re not using the second return value, you can just make find_largest_segment return the largest segment. If you need the length you can always calculate it from the segment.",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bbeb27_058fa229",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "A more general comment: I don\u0027t know if using a Segment class that has start/end attributes instead of a pair is easier to read or if it\u0027s overkill. nainar@ WDYT?",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3e7a36_a9ee0cb9",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "Interesting, why do you need to convert css_num  etc. to ints? Should they be just be passed as ints from the Python script.",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c9e9c9_a44842cd",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:23:39Z",
+      "side": 1,
+      "message": "Hmm these indicies [2] [3] etc. are getting a bit confusing. What\u0027s start_segment[2] vs start_segment[3]?",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
