@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "786de81b_4af36b0e",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-11T08:24:40Z",
+      "side": 1,
+      "message": "s/[]/[kToolsMenuNumberOfItems]/\n\nAnd you can remove the comment because the compiler will enforce the up-to-dateness of kToolsMenuNumberOfItems.",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "74f27b4767be90fb497a4663680fb4828805f9c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02354ef_0da232bc",
+        "filename": "ios/clean/chrome/browser/ui/tools/tools_menu_model.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-11T08:24:40Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 15,
+        "startChar": 34,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "74f27b4767be90fb497a4663680fb4828805f9c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
