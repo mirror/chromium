@@ -652,6 +652,12 @@ void RemoteSuggestionsSchedulerImpl::RefetchInTheBackgroundIfAppropriate(
     return;
   }
 
+  if (net::NetworkChangeNotifier::IsOffline()) {
+    // Do not log lack of internet connection as a failure. Logging a failure
+    // would block further requests for a while (even after becoming online).
+    return;
+  }
+
   if (BackgroundFetchesDisabled(trigger)) {
     return;
   }
