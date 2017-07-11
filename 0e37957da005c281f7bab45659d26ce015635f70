@@ -105,6 +105,30 @@
       "revId": "0e37957da005c281f7bab45659d26ce015635f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e06c8f_d0686f6a",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-11T16:38:51Z",
+      "side": 1,
+      "message": "I agree we need to make the test faster, I was just suggesting we properly comment the code for this purpose to distinguish it from the code that mimics the production setup.\n\nAs per Chrome Home, since I don\u0027t see a call to Refresh(), it does seem like it waits until TopSites updates in the background. This is a bit fishy and I\u0027ll follow up with fhorschig@.",
+      "parentUuid": "cac3ebf4_f38d4cad",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "0e37957da005c281f7bab45659d26ce015635f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
