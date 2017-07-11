@@ -11,6 +11,8 @@ namespace blink {
 // arguments.  Tags always take exactly one byte. A serialized stream first
 // begins with a complete VersionTag. If the stream does not begin with a
 // VersionTag, we assume that the stream is in format 0.
+// For additional tags introduced in version 18 please see
+// ImageSerializationTag.h.
 
 // Tags which are not interpreted by Blink (but instead by V8) are omitted here.
 
