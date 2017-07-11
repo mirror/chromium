@@ -56,9 +56,11 @@ public class ReaderModeInfoBar extends InfoBar {
         prompt.setOnClickListener(mNavigateListener);
 
         layout.findViewById(R.id.infobar_icon).setOnClickListener(mNavigateListener);
-        final int messagePadding = getContext().getResources().getDimensionPixelOffset(
-                R.dimen.reader_mode_infobar_text_padding);
-        prompt.setPadding(0, messagePadding, 0, messagePadding);
+        final int messagePaddingTop = getContext().getResources().getDimensionPixelOffset(
+                R.dimen.reader_mode_infobar_text_padding_top);
+        final int messagePaddingBottom = getContext().getResources().getDimensionPixelOffset(
+                R.dimen.reader_mode_infobar_text_padding_bottom);
+        prompt.setPadding(0, messagePaddingTop, 0, messagePaddingBottom);
         layout.addContent(prompt, 1f);
     }
 

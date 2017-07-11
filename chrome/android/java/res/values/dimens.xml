@@ -488,5 +488,6 @@
 
     <!-- Reader Mode dimensions -->
     <!-- Padding surrounding the message. -->
-    <dimen name="reader_mode_infobar_text_padding">8dp</dimen>
+    <dimen name="reader_mode_infobar_text_padding_top">8dp</dimen>
+    <dimen name="reader_mode_infobar_text_padding_bottom">9dp</dimen>
 </resources>
