@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3acad227_f47dea47",
+        "filename": "net/http2/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Done.  By hand.  I know, I could have done better:\nhttps://stackoverflow.com/questions/782511/case-preserving-substitute-in-vim",
+      "parentUuid": "559b39c0_7336dd5d",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 61
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffa125e0_671bb1f3",
         "filename": "net/http2/decoder/http2_frame_decoder_test.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-10T20:00:58Z",
       "side": 1,
       "message": "optional: Can slay? (Converges with server-side.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cd44a98_d2dac5cd",
+        "filename": "net/http2/decoder/http2_frame_decoder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Done.  Good catch!",
+      "parentUuid": "ffa125e0_671bb1f3",
       "range": {
         "startLine": 9,
         "startChar": 17,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "df02fa53_e2262eaf",
+        "filename": "net/http2/hpack/decoder/hpack_decoder_state_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Unfortunately, that does not work here, because in Chromium, const char[] cannot be implicitly converted into Http2StringPiece.  I might either do some matcher magic here or backport this, in a future CL.",
+      "parentUuid": "dc85a1dd_553722a2",
+      "range": {
+        "startLine": 531,
+        "startChar": 36,
+        "endLine": 531,
+        "endChar": 52
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e78c865_c8ebf99a",
         "filename": "net/http2/hpack/decoder/hpack_varint_decoder.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-10T20:00:58Z",
       "side": 1,
       "message": "nit: Can slay?",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a81676eb_a831d370",
+        "filename": "net/http2/hpack/decoder/hpack_varint_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e78c865_c8ebf99a",
       "range": {
         "startLine": 7,
         "startChar": 18,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9fbc3f8d_3f18a662",
+        "filename": "net/http2/hpack/decoder/hpack_varint_decoder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Done.  Sorry, leftover from trying to use Http2StrCat.",
+      "parentUuid": "1b5040fc_2ba82deb",
+      "range": {
+        "startLine": 6,
+        "startChar": 54,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec770072_574a4576",
         "filename": "net/http2/hpack/decoder/hpack_varint_decoder_test.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-10T20:00:58Z",
       "side": 1,
       "message": "optional: Using Http2StrCat would converge with the server-side.",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 32
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1aabd0_5690618f",
+        "filename": "net/http2/hpack/decoder/hpack_varint_decoder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "No string::Hex() equivalent at hand in Chromium.  Will address in follow-up CL.  (Possibly using StringPrintf() instead: internal StrCat() is pretty sophisticated, it might not make sense to copy the whole implementation for just a few call sites.)",
+      "parentUuid": "ec770072_574a4576",
       "range": {
         "startLine": 153,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3d527c4b_1dd112df",
+        "filename": "net/http2/hpack/decoder/hpack_whole_entry_buffer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Done.  I\u0027m addressing it now, and will do a backport later in a general convergence CL.",
+      "parentUuid": "a95596d1_3c3834ad",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 24
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f4529f1_4e25ef70",
         "filename": "net/http2/hpack/decoder/http2_hpack_decoder.h",
         "patchSetId": 2
@@ -174,6 +342,24 @@
       "writtenOn": "2017-07-10T20:00:58Z",
       "side": 1,
       "message": "optional: Converge with server-side filenames (without the http2_* prefix), either by changing here or server-side. Okay to address in a later CL.",
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "299431ec_ec6d32a7",
+        "filename": "net/http2/hpack/decoder/http2_hpack_decoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Will address in follow-up CL.  FYI Chromium has a single compilation unit for the entirety of net/, so hpack_decoder.h would clash with the one in net/spdy/core/hpack, hence the rename.",
+      "parentUuid": "2f4529f1_4e25ef70",
       "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -197,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "be86fa83_a2aaeb58",
+        "filename": "net/http2/hpack/hpack_string.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Oops.  Done.",
+      "parentUuid": "77af0ae1_3bac6bad",
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9585d7b0_f39bf4f0",
         "filename": "net/http2/hpack/huffman/http2_hpack_huffman_decoder.h",
         "patchSetId": 2
@@ -214,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "17c23aa2_dfdb1099",
+        "filename": "net/http2/hpack/huffman/http2_hpack_huffman_decoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Will do in follow-up CL.",
+      "parentUuid": "9585d7b0_f39bf4f0",
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d087a10a_8d90727e",
         "filename": "net/http2/l",
         "patchSetId": 2
@@ -225,6 +447,24 @@
       "writtenOn": "2017-07-10T20:00:58Z",
       "side": 1,
       "message": "This looks like saved output from $ l - can slay? :)",
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdb70e9_1329cb4c",
+        "filename": "net/http2/l",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-11T20:17:13Z",
+      "side": 1,
+      "message": "Oops!  Done.",
+      "parentUuid": "d087a10a_8d90727e",
       "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
