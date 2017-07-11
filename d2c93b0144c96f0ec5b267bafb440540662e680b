@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075b3acb_a036cfc9",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-11T19:48:22Z",
+      "side": 0,
+      "message": "Would be better to start the timer here, after all the early exit return statements.  That way we only measure calls that actually draw something.",
+      "range": {
+        "startLine": 1171,
+        "startChar": 4,
+        "endLine": 1171,
+        "endChar": 10
+      },
+      "revId": "d2c93b0144c96f0ec5b267bafb440540662e680b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
