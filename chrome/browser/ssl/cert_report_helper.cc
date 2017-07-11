@@ -125,6 +125,14 @@ void CertReportHelper::FinishCertCollection(
 
   report.AddNetworkTimeInfo(g_browser_process->network_time_tracker());
 
+#if defined(OS_WIN)
+  report.SetIsEnterprisedManaged(base::win::IsEnterpriseManaged());
+#elif defined(OS_CHROMEOS)
+  report.SetIsEnterprisedManaged(g_browser_process->platform_part()
+                                     ->browser_policy_connector_chromeos()
+                                     ->IsEnterpriseManaged());
+#endif
+
   report.SetInterstitialInfo(
       interstitial_reason_, user_proceeded,
       overridable_

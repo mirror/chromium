@@ -73,11 +73,16 @@ class ErrorReport {
   void AddNetworkTimeInfo(
       const network_time::NetworkTimeTracker* network_time_tracker);
 
+  void SetIsEnterpriseManaged(bool is_enterprise_managed);
+
   // Sets is_retry_upload field of the protobuf to |is_retry_upload|.
   void SetIsRetryUpload(bool is_retry_upload);
 
   // Gets the hostname to which this report corresponds.
   const std::string& hostname() const;
+
+  // Returns true if the device that issued the report is a managed device.
+  bool is_enterprise_managed() const;
 
   // Returns true if the report has been retried.
   bool is_retry_upload() const;
