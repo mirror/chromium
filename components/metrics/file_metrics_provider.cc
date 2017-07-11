@@ -532,54 +532,6 @@ bool FileMetricsProvider::ProvideIndependentMetrics(
     SystemProfileProto* system_profile_proto,
     base::HistogramSnapshotManager* snapshot_manager) {
   DCHECK(thread_checker_.CalledOnValidThread());
-
-  while (!sources_with_profile_.empty()) {
-    SourceInfo* source = sources_with_profile_.begin()->get();
-    DCHECK(source->allocator);
-
-    bool success = false;
-    RecordEmbeddedProfileResult(EMBEDDED_PROFILE_ATTEMPT);
-    if (PersistentSystemProfile::GetSystemProfile(
-            *source->allocator->memory_allocator(), system_profile_proto)) {
-      RecordHistogramSnapshotsFromSource(snapshot_manager, source);
-      success = true;
-      RecordEmbeddedProfileResult(EMBEDDED_PROFILE_FOUND);
-    } else {
-      RecordEmbeddedProfileResult(EMBEDDED_PROFILE_DROPPED);
-
-      // TODO(bcwhite): Remove these once crbug/695880 is resolved.
-
-      int histogram_count = 0;
-      base::PersistentHistogramAllocator::Iterator histogram_iter(
-          source->allocator.get());
-      while (histogram_iter.GetNext()) {
-        ++histogram_count;
-      }
-      UMA_HISTOGRAM_COUNTS_10000(
-          "UMA.FileMetricsProvider.EmbeddedProfile.DroppedHistogramCount",
-          histogram_count);
-
-      base::File::Info info;
-      if (base::GetFileInfo(source->path, &info)) {
-        UMA_HISTOGRAM_CUSTOM_COUNTS(
-            "UMA.FileMetricsProvider.EmbeddedProfile.DroppedFileAge",
-            (base::Time::Now() - info.last_modified).InMinutes(), 1,
-            base::TimeDelta::FromDays(30).InMinutes(), 50);
-      }
-    }
-
-    // Regardless of whether this source was successfully recorded, it is never
-    // read again.
-    source->read_complete = true;
-    RecordSourceAsRead(source);
-    sources_to_check_.splice(sources_to_check_.end(), sources_with_profile_,
-                             sources_with_profile_.begin());
-    ScheduleSourcesCheck();
-
-    if (success)
-      return true;
-  }
-
   return false;
 }
 
