@@ -34,6 +34,41 @@
       "revId": "1244b83ea9d3cf739bad83d1938bb89c56e77bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f799f0_9ac56b61",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-11T17:34:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9251a800_68774977",
+      "revId": "1244b83ea9d3cf739bad83d1938bb89c56e77bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b74cc94c_d54df65d",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-11T17:34:36Z",
+      "side": 1,
+      "message": "Why is this not just scoped_fd.release() instead of duping and then letting scoped_fd close the old one.\n\nstd::move(scoped_fd) should work too.",
+      "revId": "1244b83ea9d3cf739bad83d1938bb89c56e77bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
