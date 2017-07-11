@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbafb738_300beac9",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-11T05:27:58Z",
+      "side": 1,
+      "message": "seems like one should clear |rfhi_| here too, instead of in Stop().  the original intention is that |!cvc_| means that the instance is shut down.",
+      "revId": "f6a693091bd3eaa8801c19e40e46a84e1d660b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c718d1_7ac3d1d7",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-11T05:27:58Z",
+      "side": 1,
+      "message": "might also want a variant that hides before creating the overlay to check the new !Init() case.",
+      "revId": "f6a693091bd3eaa8801c19e40e46a84e1d660b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38158037_007441dd",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-11T05:27:58Z",
+      "side": 1,
+      "message": "mClient became getClient() after the rebase.",
+      "range": {
+        "startLine": 74,
+        "startChar": 29,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "f6a693091bd3eaa8801c19e40e46a84e1d660b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
