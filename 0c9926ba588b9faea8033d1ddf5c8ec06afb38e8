@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1220c6a5_cf8df348",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-11T18:29:49Z",
+      "side": 1,
+      "message": "nit: this was called |clip| in the .h, which I think is a better name for it.",
+      "range": {
+        "startLine": 358,
+        "startChar": 26,
+        "endLine": 358,
+        "endChar": 34
+      },
+      "revId": "0c9926ba588b9faea8033d1ddf5c8ec06afb38e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
