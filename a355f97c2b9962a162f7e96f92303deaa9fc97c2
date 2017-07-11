@@ -16,6 +16,24 @@
       "revId": "a355f97c2b9962a162f7e96f92303deaa9fc97c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcb50b5_61ed1b88",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-11T23:38:37Z",
+      "side": 0,
+      "message": "The rest of the CL changes mojo bindings to take either a SingleThreadTaskRunner to run on or null to indicate that the current sequence should be used so the behaviour here remains the same.",
+      "parentUuid": "9c5cd5ca_25c78cb5",
+      "revId": "a355f97c2b9962a162f7e96f92303deaa9fc97c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
