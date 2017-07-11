@@ -16,6 +16,24 @@
       "revId": "fe14ee2e3619a68b672a457909ae854f5e9b13fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c4e74b_d469a23f",
+        "filename": "chrome/browser/resources/chromeos/login/oobe-flex-layout.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-11T23:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d1add7_952c11f1",
+      "revId": "fe14ee2e3619a68b672a457909ae854f5e9b13fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
