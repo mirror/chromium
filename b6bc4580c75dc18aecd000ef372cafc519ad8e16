@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4fa2dc2_e9da69f0",
+        "filename": "components/os_crypt/os_crypt.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T14:49:25Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 17,
+        "startChar": 58,
+        "endLine": 17,
+        "endChar": 67
+      },
+      "revId": "b6bc4580c75dc18aecd000ef372cafc519ad8e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

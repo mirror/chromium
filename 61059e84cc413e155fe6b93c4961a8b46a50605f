@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "826c09d5_daf9b558",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T14:49:25Z",
+      "side": 1,
+      "message": "Let\u0027s do the clean-up after OSCrypt initialization. Also let\u0027s not pretend that Config is a singleton. Public constructor/destructor, unique_ptr and SetInstance() aren\u0027t applicable to a singleton. I suggest to drop everything that makes it look different from a normal struct. OSCrypt may internally have a pointer to Config that is deleted immediately after it\u0027s initialized.\n\nNot deleting a refptr is bad because whole Chrome wastes CPU cycles for thread-safe AddRef()/Release().",
+      "parentUuid": "4e5685d7_a738d9aa",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9939da25_33f2f6b8",
         "filename": "components/os_crypt/key_storage_config_linux.h",
         "patchSetId": 9
@@ -234,6 +258,30 @@
       "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9739c6_19bebeee",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T14:49:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "260b2ea6_48ddea85",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
