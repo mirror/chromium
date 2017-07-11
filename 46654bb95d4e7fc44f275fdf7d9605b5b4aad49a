@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "7703e96e_89f12ae6",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T11:47:46Z",
+      "side": 1,
+      "message": "After our discussion, I now see that I misunderstood the code.\n\nIt may be worth keeping the status explicitly (e.g. bool is_running_), but it is up to you.",
+      "parentUuid": "a14e1e23_b1155c9f",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 78
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095b6689_31cf9b1b",
         "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
         "patchSetId": 3
@@ -892,6 +916,30 @@
       "writtenOn": "2017-07-11T09:11:02Z",
       "side": 1,
       "message": "I am not sure what is going on. Shouldn\u0027t the Manager retrieve the URL by itself? Then you would have just to wait for it.\n\nDoes this forces the fetcher to respond to Manager? Is is possible that Manager didn\u0027t fetch yet?",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32307148_3981dc0e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T11:47:46Z",
+      "side": 1,
+      "message": "So the request uses OnURLFetchComplete notification, thus, this code makes url_fetcher notify its observer with OnURLFetchComplete.",
+      "parentUuid": "68684473_1df5a633",
       "range": {
         "startLine": 108,
         "startChar": 4,
