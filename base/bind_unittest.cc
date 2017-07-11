@@ -891,7 +891,8 @@ TYPED_TEST(BindVariantsTest, ArgumentBinding) {
   IncompleteType* incomplete_ptr = reinterpret_cast<IncompleteType*>(123);
   EXPECT_EQ(incomplete_ptr,
             TypeParam::Bind(&PolymorphicIdentity<IncompleteType*>,
-                            incomplete_ptr).Run());
+                            base::Unretained(incomplete_ptr))
+                .Run());
 
   NoRefChild c;
   c.value = 6;
