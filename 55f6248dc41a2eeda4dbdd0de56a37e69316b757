@@ -354,6 +354,24 @@
       "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a958265_50e6ad8a",
+        "filename": "ui/compositor/external_begin_frame_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-11T14:04:53Z",
+      "side": 1,
+      "message": "Ok, this makes sense. FrameSinkManagerImpl will soon replace GpuPTF. Fady mentioned that there\u0027s probably already a way to use that from headless (BrowserMainLoop has a host_frame_sink_manager_), so we may be able to use that from the get-go. I\u0027ll try that :)",
+      "parentUuid": "d69c3dc3_efa38d20",
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
