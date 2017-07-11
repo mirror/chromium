@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d6835a5_9da84bf7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-11T06:06:27Z",
+      "side": 1,
+      "message": "nit: crbug.com/689423",
+      "range": {
+        "startLine": 13,
+        "startChar": 65,
+        "endLine": 13,
+        "endChar": 77
+      },
+      "revId": "5b83d55bb668e2f99beaaf9577211b139217c79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c12e15d_683c45c5",
+        "filename": "remoting/host/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-11T06:06:27Z",
+      "side": 1,
+      "message": "nit: crbug.com/689423",
+      "range": {
+        "startLine": 307,
+        "startChar": 59,
+        "endLine": 307,
+        "endChar": 71
+      },
+      "revId": "5b83d55bb668e2f99beaaf9577211b139217c79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86bcc6dc_f77325f3",
+        "filename": "remoting/host/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-11T06:06:27Z",
+      "side": 1,
+      "message": "nit: crbug.com/689423",
+      "range": {
+        "startLine": 15,
+        "startChar": 57,
+        "endLine": 15,
+        "endChar": 69
+      },
+      "revId": "5b83d55bb668e2f99beaaf9577211b139217c79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9364cf6_227e1d4c",
+        "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-11T06:06:27Z",
+      "side": 1,
+      "message": "nit: crbug.com/689423\nThis should be easier for readers to access.",
+      "range": {
+        "startLine": 17,
+        "startChar": 54,
+        "endLine": 17,
+        "endChar": 66
+      },
+      "revId": "5b83d55bb668e2f99beaaf9577211b139217c79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ae3ccb_837e1d29",
+        "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-11T06:06:27Z",
+      "side": 1,
+      "message": "Why is //services:* needed?\nCan\u0027t these lines be replaced with \"services/device:java\"?",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "5b83d55bb668e2f99beaaf9577211b139217c79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
