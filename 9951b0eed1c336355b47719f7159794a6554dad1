@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0f73823f_a99153ce",
+        "filename": "chrome/app/chrome_exe_main_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T18:37:50Z",
+      "side": 1,
+      "message": "Ack. Could also call it PARENT_PID instead of BROWSER_PID.",
+      "parentUuid": "26f9b4a8_5b0aa0c3",
+      "range": {
+        "startLine": 60,
+        "startChar": 33,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "9951b0eed1c336355b47719f7159794a6554dad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20fae4c_529737f2",
         "filename": "content/renderer/renderer_v2.sb",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Do you feel strongly about that? I personally find it easier to think of OS Versions based on their name, but that could just be me.",
       "parentUuid": "e20fae4c_529737f2",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "9951b0eed1c336355b47719f7159794a6554dad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4765574_e8dcb21e",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T18:37:50Z",
+      "side": 1,
+      "message": "\u003e Do you feel strongly about that? I personally find it easier to think of OS Versions based on their name, but that could just be me.\n\nI do. The names are all a jumble to me at this point. It\u0027s also why we switched the base::mac::IsOS* to be numbers instead of names.",
+      "parentUuid": "e18b29b2_2eb51e03",
       "range": {
         "startLine": 27,
         "startChar": 0,
