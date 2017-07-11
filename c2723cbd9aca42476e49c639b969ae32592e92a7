@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f88c2413_11beaff7",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:30:15Z",
+      "side": 1,
+      "message": "I think it\u0027d be good to mention that sorting will allow you to get the longest possible segment or something?",
+      "revId": "c2723cbd9aca42476e49c639b969ae32592e92a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61987f53_7b260c3c",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-11T06:30:15Z",
+      "side": 1,
+      "message": "Hmm, I think there\u0027s a shorter way to write this. If you get the keywords into a list, then you can do something like:\n\n   sort(enum.values, key\u003dlambda keyword: css_value_keywords.index(keyword))\n\nIt would be slow but I don\u0027t think it matters too much here.",
+      "revId": "c2723cbd9aca42476e49c639b969ae32592e92a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
