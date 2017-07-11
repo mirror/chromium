@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fb18135_65c65076",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T18:35:04Z",
+      "side": 1,
+      "message": "Could you include what changes are actually imported by this? (i.e. something like the commit message `roll-dep src/third_party/leveldatabase/src`  would create)?",
+      "revId": "2fa0ce459a612affeac206750b3e7a96c552c0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f053c20_5c89ea6d",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T18:35:04Z",
+      "side": 1,
+      "message": "Should the FilesystemErrorToStatus method in https://cs.chromium.org/chromium/src/components/leveldb/env_mojo.cc?sq\u003dpackage:chromium\u0026l\u003d36 be similarly updated to return Status::NotFound depending on the FileError? Or maybe that method should just delegate to leveldb_env::MakeIOError, as other code in MojoEnv already does anyway.",
+      "revId": "2fa0ce459a612affeac206750b3e7a96c552c0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
