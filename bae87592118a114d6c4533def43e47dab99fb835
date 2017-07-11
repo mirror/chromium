@@ -201,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "108b37c5_7b53e925",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-11T04:08:38Z",
+      "side": 1,
+      "message": "On desktop, we don\u0027t let interstitials print. Feel free to fix it later.",
+      "parentUuid": "0b8ba78a_6c27080a",
+      "revId": "bae87592118a114d6c4533def43e47dab99fb835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "745d1753_2643e293",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
         "patchSetId": 12
