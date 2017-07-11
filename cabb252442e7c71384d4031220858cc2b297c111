@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "981fdb29_c7ea6c9e",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T14:46:35Z",
+      "side": 1,
+      "message": "Is this necessary? If not, I\u0027d prefer to remove it: This is the only case where the previous callback doesn\u0027t get run, and it seems a bit arbitrary (the first caller has no way to know if their callback will get run or not).",
+      "range": {
+        "startLine": 79,
+        "startChar": 73,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "cabb252442e7c71384d4031220858cc2b297c111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c1cd0e_dd471822",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T14:46:35Z",
+      "side": 1,
+      "message": "optional: Could use arithmetic if to avoid some duplication:\nstd::move(title_callback).Run(success ? row.title() : base::nullopt);",
+      "range": {
+        "startLine": 113,
+        "startChar": 45,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "cabb252442e7c71384d4031220858cc2b297c111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
