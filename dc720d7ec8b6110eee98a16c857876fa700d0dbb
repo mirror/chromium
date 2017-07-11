@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "9be992e9_3c12f9fd",
+        "filename": "components/exo/keyboard_extension_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-11T15:44:52Z",
+      "side": 1,
+      "message": "How about we add a KeyboardObserver interface with the \"OnKeyboardDestroying\" function and remove it from the delegate interfaces? WaylandExtendedKeyboardDelegate can be renamed WaylandExtendedKeyboardImpl and the Keyboard class will instead have a SetNeedKeyboardKeyAcks(bool need_acks) function instead of using a delegate without delegate functions for this interface.",
+      "parentUuid": "37caf5ef_0377f9a2",
+      "revId": "dc720d7ec8b6110eee98a16c857876fa700d0dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d805b860_835b0b68",
         "filename": "components/exo/keyboard_extension_delegate.h",
         "patchSetId": 4
