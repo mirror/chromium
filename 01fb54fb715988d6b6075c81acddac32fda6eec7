@@ -22,6 +22,30 @@
       "revId": "01fb54fb715988d6b6075c81acddac32fda6eec7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca17c8c_5a4def48",
+        "filename": "components/viz/client/client_shared_bitmap_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-11T21:23:19Z",
+      "side": 1,
+      "message": "It also guards Notify. Technically we can do better by not guarding Close.",
+      "parentUuid": "53fbad8f_c5e021ee",
+      "range": {
+        "startLine": 135,
+        "startChar": 22,
+        "endLine": 135,
+        "endChar": 27
+      },
+      "revId": "01fb54fb715988d6b6075c81acddac32fda6eec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
