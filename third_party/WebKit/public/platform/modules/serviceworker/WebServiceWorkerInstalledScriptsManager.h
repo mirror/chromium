@@ -26,9 +26,10 @@ class WebServiceWorkerInstalledScriptsManager {
   // cross-thread-transfer-safe.
   class BLINK_PLATFORM_EXPORT RawScriptData {
    public:
-    RawScriptData(WebString encoding,
-                  WebVector<BytesChunk> script_text,
-                  WebVector<BytesChunk> meta_data);
+    static std::unique_ptr<RawScriptData> Create(
+        WebString encoding,
+        WebVector<BytesChunk> script_text,
+        WebVector<BytesChunk> meta_data);
     void AddHeader(const WebString& key, const WebString& value);
 
 #if INSIDE_BLINK
@@ -47,6 +48,11 @@ class WebServiceWorkerInstalledScriptsManager {
     }
 
    private:
+    // This instance have to be created on the blink side because blink can only
+    // know the exact size of this instance.
+    RawScriptData(WebString encoding,
+                  WebVector<BytesChunk> script_text,
+                  WebVector<BytesChunk> meta_data);
     WebString encoding_;
     WebVector<BytesChunk> script_text_;
     WebVector<BytesChunk> meta_data_;
