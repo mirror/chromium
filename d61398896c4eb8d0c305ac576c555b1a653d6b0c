@@ -70,6 +70,30 @@
       "revId": "d61398896c4eb8d0c305ac576c555b1a653d6b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b399a3a_5c06a429",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-11T22:28:48Z",
+      "side": 1,
+      "message": "Some Cronet consumers on Android report histograms through UMA pipeline, but it gets separated by product, so they don\u0027t mix into Chrome. I\u0027m not aware of any Cronet consumers to report histograms on iOS yet.",
+      "parentUuid": "f4b82627_bdd424a5",
+      "range": {
+        "startLine": 47,
+        "startChar": 32,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "d61398896c4eb8d0c305ac576c555b1a653d6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
