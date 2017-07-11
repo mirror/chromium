@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ca9c9b2_e3b2263c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T13:05:34Z",
+      "side": 1,
+      "message": "remove space",
+      "range": {
+        "startLine": 14,
+        "startChar": 67,
+        "endLine": 14,
+        "endChar": 68
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f359f4b5_a6a49052",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T13:05:34Z",
+      "side": 1,
+      "message": "Just to double check, this won\u0027t backfire if a phone is offline for a month?\n\nE.g. Chrome starts checking this every minutes.\n\nThis is a wild guess, because I am not familiar with the schedule mechanism.",
+      "range": {
+        "startLine": 655,
+        "startChar": 6,
+        "endLine": 655,
+        "endChar": 45
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd29d478_01c6f2f5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T13:05:34Z",
+      "side": 1,
+      "message": "It is not a lack of internet connection being logged, but rather a failed request.\n\nWhat about something like \"Do not let a request fail due to lack of internet connection, because then further requests would be blocked for a while (even after becoming online)\"?",
+      "range": {
+        "startLine": 656,
+        "startChar": 14,
+        "endLine": 656,
+        "endChar": 45
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a3f653_faef5e86",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T13:05:34Z",
+      "side": 1,
+      "message": "Definitely not Mock, \nFakeNetworkOfflineChangeNotifier?",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13138d85_2bf6e0db",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T13:05:34Z",
+      "side": 1,
+      "message": "This is not used in the test, is it?",
+      "range": {
+        "startLine": 904,
+        "startChar": 35,
+        "endLine": 904,
+        "endChar": 40
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab51a420_6b03aa72",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T13:05:34Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 910,
+        "startChar": 2,
+        "endLine": 910,
+        "endChar": 64
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
