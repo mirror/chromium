@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "526e5e43_79b78c5c",
+        "filename": "components/variations/variations_params_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-11T17:00:00Z",
+      "side": 1,
+      "message": "Depending on ::switches::kEnableFeatures from content_features.h smells a bit fishy.\n\nThis dependency is flagged by:\n\n** Presubmit ERRORS **\nYou added one or more #includes that violate checkdeps rules.\n  components/variations/variations_params_manager.cc\n      Illegal include: \"content/public/common/content_switches.h\"\n    Because of no rule applying.\n\nAny thoughts/comments/suggestions on this?  Note that the code here depends on:\n\n- Escaping done in components/variations/field_trial_config/field_trial_util.cc (this CL exposes EscapeValue from field_trial_util.h)\n\n- ::switches::kEnableFeatures from content/public/common/content_switches.h\n\n- ::variations::switches::kForceFieldTrialParams from components/variations/variations_switches.h\n\n- ::switches::kForceFieldTrials from base/base_switches.h",
+      "range": {
+        "startLine": 135,
+        "startChar": 48,
+        "endLine": 135,
+        "endChar": 63
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d1cc00e_475a2d98",
         "filename": "components/variations/variations_params_manager.h",
         "patchSetId": 2
