@@ -376,6 +376,7 @@ class PrefetchDelegate : public net::URLFetcherDelegate {
 }
 
 - (void)startPrerender {
+  NSLog(@"startPrerender");
   // Destroy any existing prerenders before starting a new one.
   [self destroyPreviewContents];
   prerenderedURL_ = scheduledURL_;
@@ -437,6 +438,7 @@ class PrefetchDelegate : public net::URLFetcherDelegate {
 }
 
 - (void)prefetchDidComplete:(const net::URLFetcher*)source {
+  NSLog(@"prefetchDidComplete");
   if (source) {
     DLOG_IF(WARNING, source->GetResponseCode() != 200)
         << "Prefetching URL got response code " << source->GetResponseCode();

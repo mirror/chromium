@@ -1706,6 +1706,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 #pragma mark - PrerenderDelegate
 
 - (void)discardPrerender {
+  NSLog(@"discardPrerender");
   DCHECK(_isPrerenderTab);
   [delegate_ discardPrerender];
 }
