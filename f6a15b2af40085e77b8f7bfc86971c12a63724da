@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "d3d343f4_77e5c3fd",
+        "filename": "dbus/bus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T21:59:04Z",
+      "side": 1,
+      "message": "Done, in Timeout and throughout this .cc.  I\u0027ve also cleaned up unnecessary get()s on managed pointers.",
+      "parentUuid": "86be6937_3c2ae301",
+      "range": {
+        "startLine": 112,
+        "startChar": 40,
+        "endLine": 112,
+        "endChar": 44
+      },
+      "revId": "f6a15b2af40085e77b8f7bfc86971c12a63724da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a65ed19e_ba3e0ea0",
         "filename": "dbus/bus.cc",
         "patchSetId": 1
@@ -62,6 +86,30 @@
       "revId": "f6a15b2af40085e77b8f7bfc86971c12a63724da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb483e7_fa23dc70",
+        "filename": "dbus/bus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T21:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65ed19e_ba3e0ea0",
+      "range": {
+        "startLine": 142,
+        "startChar": 32,
+        "endLine": 142,
+        "endChar": 45
+      },
+      "revId": "f6a15b2af40085e77b8f7bfc86971c12a63724da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
