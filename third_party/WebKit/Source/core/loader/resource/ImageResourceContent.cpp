@@ -322,13 +322,14 @@ PassRefPtr<Image> ImageResourceContent::CreateImage(bool is_multipart) {
 void ImageResourceContent::ClearImage() {
   if (!image_)
     return;
-  int64_t length = image_->Data() ? image_->Data()->size() : 0;
+  int64_t length = image_encoded_data_size_;
   v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(-length);
 
   // If our Image has an observer, it's always us so we need to clear the back
   // pointer before dropping our reference.
   image_->ClearImageObserver();
   image_.Clear();
+  image_encoded_data_size_ = 0;
   size_available_ = Image::kSizeUnavailable;
 }
 
@@ -453,6 +454,7 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
         if (!image_)
           image_ = CreateImage(is_multipart);
         DCHECK(image_);
+        image_encoded_data_size_ = data->size();
         size_available_ = image_->SetData(std::move(data), all_data_received);
         DCHECK(all_data_received ||
                size_available_ !=
@@ -470,6 +472,8 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
           IntSize dimensions = image_->Size();
           ClearImage();
           image_ = PlaceholderImage::Create(this, dimensions);
+          if (RefPtr<SharedBuffer> data = image_->Data())
+            image_encoded_data_size_ = data->size();
         }
       }
 
