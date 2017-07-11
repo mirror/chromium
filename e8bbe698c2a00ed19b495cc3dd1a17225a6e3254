@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48e9e560_c5c10aa9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-11T18:34:26Z",
+      "side": 1,
+      "message": "This should be WithParam() (singular) since it doesn\u0027t support more than one.",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "e8bbe698c2a00ed19b495cc3dd1a17225a6e3254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec5fdf6_5b1792dc",
+        "filename": "components/variations/variations_params_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-11T18:34:26Z",
+      "side": 1,
+      "message": "Nit: static const for string constants declared inside functions, as it results in better codegen in MSVC.",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 12
+      },
+      "revId": "e8bbe698c2a00ed19b495cc3dd1a17225a6e3254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4199f5c_e6889e5b",
+        "filename": "components/variations/variations_params_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-11T18:34:26Z",
+      "side": 1,
+      "message": "Can you add DCHECKs to ensure trial_name doesn\u0027t contain one of the reserved characters?",
+      "range": {
+        "startLine": 108,
+        "startChar": 27,
+        "endLine": 108,
+        "endChar": 37
+      },
+      "revId": "e8bbe698c2a00ed19b495cc3dd1a17225a6e3254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2b6b4c_787617c7",
+        "filename": "components/variations/variations_params_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-11T18:34:26Z",
+      "side": 1,
+      "message": "Could you expand this comment to mention the reasoning for why this doesn\u0027t take a group name?\n\n(i.e. that trials using params shouldn\u0027t be using group name for logic)",
+      "range": {
+        "startLine": 80,
+        "startChar": 29,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "e8bbe698c2a00ed19b495cc3dd1a17225a6e3254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
