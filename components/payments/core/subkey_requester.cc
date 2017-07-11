@@ -43,7 +43,7 @@ class SubKeyRequest : public SubKeyRequester::Request {
         base::TimeDelta::FromSeconds(timeout_seconds));
   }
 
-  ~SubKeyRequest() override {}
+  ~SubKeyRequest() override { on_timeout_.Cancel(); }
 
   void OnRulesLoaded() override {
     on_timeout_.Cancel();
