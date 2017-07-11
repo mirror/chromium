@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc0d4a7b_a5d96da4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializationTag.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "Since these tags are used only inside the format for a particular kind of object, I wouldn\u0027t note them here. But I would note roughly this after the ImageBitmap and ImageData tags below, where we currently document the format (which is now out-of-date).",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac39b8b9_f1aca1c5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "Why not have an explicit case for kLegacyColorSpace, so that we can get the compiler warning if we add a new enumerator but neglect to update this use?",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f774d12_711ba56d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "super-nit: Mind newlines between the code that determines each of the fields?\n\nAlso, mildly prefer a switch here to take advantage of missing-enumerator compiler check.",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683736f4_fa961193",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "ditto here: generally prefer exhaustive switch to a default case for futureproofing.",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21de4672_7ccc89c9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "ditto: prefer explicit reference to SerializedStorageFormat enumerator",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadad09b_ac2de79c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "nit: suggest this and the below enums have an explicit underlying type of uint32_t, since we make assumptions that it can be encoded that way.\n\nenum class ImageSerializationTag : uint32_t { ... };",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e088a68_0c09e8e6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "nit: SerializedImageDataStorageFormat or something like that? \"blink::SerializedStorageFormat\" seems a little too generic",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84522898_9b5d9a63",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "How many call sites are there? Explicit is better than implicit, so could the call sites just specify these? (If you don\u0027t change this, then this constructor should at a minimum be made |explicit| because it can presently accept one argument.)",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3b242e_5faf0016",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "If possible (other comments should make this easier), make this typesafe by using the enum types here and below rather than uint32_t (which makes it easier to confuse the argument order in the future).",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1400a51_5b9c4b79",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "nit: these and the below GetSerialized* should be const",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de69af9e_292ccf7d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "Hmm, this looks uglier than I\u0027d expected, sorry.\n\nWDYT of something like this in V8ScriptValueDeserializer\u0027s protected section:\n\ntemplate \u003ctypename E\u003e\nbool ReadUint32Enum(E* value) {\n  static_assert(std::is_enum\u003cE\u003e::value \u0026\u0026\n                std::is_same\u003cuint32_t, std::underlying_type\u003cE\u003e::type\u003e::value,\n                \"Only enums backed by uint32_t.\");\n  uint32_t tmp;\n  if (ReadUint32(\u0026tmp) \u0026\u0026 tmp \u003c\u003d E::kLast) {\n    *value \u003d static_cast\u003cE\u003e(tmp);\n    return true;\n  }\n  return false;\n}\n\nAnd something like this to write in V8ScriptValueSerializer:\n\ntemplate \u003ctypename E\u003e\nvoid WriteUint32Enum(E value) {\n  static_assert(std::is_enum\u003cE\u003e::value \u0026\u0026\n                std::is_same\u003cuint32_t, std::underlying_type\u003cE\u003e::type\u003e::value,\n                \"Only enums backed by uint32_t.\");\n  WriteUint32(static_cast\u003cuint32_t\u003e(value));\n}\n\nWith those in hand, we should need fewer explicit casts here, and can pass the enum type, rather than uint32_t, around in most places. i.e. this can then look something like:\n\nbool is_done \u003d false;\ndo {\n  ImageSerializationTag tag;\n  if (!ReadUint32Enum(\u0026tag))\n    return nullptr;\n  switch (tag) {\n    case ImageSerializationTag::kEndTag:\n      is_done \u003d true;\n      break;\n    case ImageSerializationTag::kCanvasColorSpaceTag:\n      if (!ReadUint32Enum(\u0026canvas_color_space))\n        return nullptr;\n      break;\n    // etc.\n  }\n} while(!is_done);",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3be84b9_0d5adefd",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "unused include at present?",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3104b8d8_ce0db65e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "nit: do continue to use WriteTag for members of the SerializationTag enum",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a104317_596799d1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "This won\u0027t be reached if an expectation fails, and may make it trickier to track down the failure. Consider using a scoped object (like ScopedEnableCompositorWorker in this file) or something similar to ensure that all early-return paths also reset it.\n\n(The test runner does re-run tests to mitigate this somewhat, but it\u0027s not too hard to do this cleanly.)",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab70e54_3a67e0e2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "The meaning of these numbers isn\u0027t obvious to me. Is it the float representation of red in P3? If so, would it be clearer to do the comparison on floats?\n\n[\"No, but I\u0027ll expand the comment.\" is a perfectly reasonable answer. :)]",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1360d77_ae207951",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "Please also add decode tests so that we know that future versions of the code will continue to support reading the data as written by this version.",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff87f06b_df8664e9",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "nit: this could be a switch (which will also give you a compile-time warning about unused enumerators)",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b46afd_e329905e",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "nit: pass enums by value, rather than by reference (since they are small and cheap to copy)",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5514700_cba0abbb",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "ImageDataStorageFormat is an enum; pass it by value",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905e832a_1514779f",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "nit: no need for a reference; SkImage* suffices.",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f77dd69_36e80339",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "nit: no need for a reference; SkImage* suffices.",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5868021_1a47ad37",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:26:35Z",
+      "side": 1,
+      "message": "Does !info.colorSpace() imply that we want RGBA8 storage, or could we have F16 data with no color space? If it is possible, fix this early return. If not, maybe a DCHECK would help clarify this for future readers?",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
