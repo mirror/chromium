@@ -29,6 +29,7 @@ class PermissionPromptAndroid : public PermissionPrompt {
   void Hide() override;
   void UpdateAnchorPosition() override;
   gfx::NativeWindow GetNativeWindow() override;
+  void CheckNoActivePrompt() override;
 
   void Closing();
   void TogglePersist(bool value);

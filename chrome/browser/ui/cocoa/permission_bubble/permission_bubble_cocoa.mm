@@ -55,6 +55,10 @@ gfx::NativeWindow PermissionBubbleCocoa::GetNativeWindow() {
   return [bubbleController_ window];
 }
 
+void PermissionBubbleCocoa::CheckNoActivePrompt() {
+  CHECK(bubbleController_ == nil);
+}
+
 void PermissionBubbleCocoa::OnBubbleClosing() {
   bubbleController_ = nil;
 }

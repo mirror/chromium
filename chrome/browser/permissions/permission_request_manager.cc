@@ -393,6 +393,11 @@ void PermissionRequestManager::DequeueRequestsAndShowBubble() {
   if (queued_requests_.empty())
     return;
 
+  // requests_ is empty so there is no active prompt. If something went wrong
+  // and there is one, it will be showing an outdated request and accepting it
+  // would accept the requests we're about to dequeue instead.
+  view_->CheckNoActivePrompt();
+
   requests_.push_back(queued_requests_.front());
   queued_requests_.pop_front();
 
@@ -431,7 +436,7 @@ void PermissionRequestManager::FinalizeBubble() {
   }
   requests_.clear();
   if (queued_requests_.size())
-    DequeueRequestsAndShowBubble();
+    ScheduleShowBubble();
 }
 
 void PermissionRequestManager::CancelPendingQueues() {
