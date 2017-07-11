@@ -1,0 +1,325 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "095b6689_31cf9b1b",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "Should the callback also be reset?",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e37696_fd746b4e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "So it does get called if the request is destroyed, but not when it\u0027s canceled - that seems a bit weird to me.",
+      "range": {
+        "startLine": 69,
+        "startChar": 29,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84cf0e4_d044a4c6",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "What if an *un*subscription request is in flight? Is it valid to have both at the same time? That seems tricky, especially with resubscribe which involves both.",
+      "range": {
+        "startLine": 58,
+        "startChar": 61,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c2e873_d23d35e4",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "Should you also delete the request? (Maybe Cancel() isn\u0027t really required?)\n\nAs it is, I think this can trigger a DCHECK if Subscribe is called twice in quick succession (you\u0027ll try to cancel an already-canceled request)",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3827021_6944842b",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "The AuthInProgress state probably shouldn\u0027t be handled explicitly here. (If the auth succeeds, you\u0027ll get a GoogleSignedIn event, so things will work out. If it fails - ??)\n(BTW, AFAIK that state doesn\u0027t exist on Android anyway, so probably it doesn\u0027t matter.)",
+      "range": {
+        "startLine": 63,
+        "startChar": 80,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb41c966_38b73525",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "Is the \"unsubscribe-then-subscribe-again\" still going to be required? Could the server interpret \"subscribe\" as \"replace any previous subscription\"? It seems like that would make things simpler.",
+      "range": {
+        "startLine": 176,
+        "startChar": 31,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a486e94d_fe4a8bfc",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "If you call this from here, then the previous unsubscription request won\u0027t have been deleted (though unsubscription_request_ will be null, since you moved it out above). I guess that\u0027s okay?",
+      "range": {
+        "startLine": 194,
+        "startChar": 39,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf010732_c82875d6",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "nit: End comments with a \".\"",
+      "range": {
+        "startLine": 205,
+        "startChar": 39,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99932bba_a532a418",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "Would any client of this class ever call this with is_resubscribe\u003dtrue? I\u0027m assuming no, in which case the param shouldn\u0027t be part of the public interface. Instead, you could have an UnsubscribeImpl (or UnsubscribeInternal) which takes the extra param.",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2dbf91_9c2735d7",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 60,
+        "startChar": 68,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd017685_6d53efbf",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "Could you add comments about these? IIUC, they can either be either the \"current\" or the \"pending\" state.",
+      "range": {
+        "startLine": 70,
+        "startChar": 36,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daae0e01_21434004",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "Methods should come before member variables.",
+      "range": {
+        "startLine": 94,
+        "startChar": 65,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c84aab_d2024051",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "Now there\u0027s a token service here and one in the utils.",
+      "range": {
+        "startLine": 125,
+        "startChar": 69,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c81b1e_3e017f38",
+        "filename": "components/ntp_snippets/remote/test_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "Ugh.. pre-existing problem, but this seems really fragile. I guess you\u0027re not calling AccountTrackerService::RegisterPrefs because you only have a PrefRegistrySimple, not a PrefRegistrySyncable? Maybe we should use a TestingPrefServiceSyncable (instead of Simple)?",
+      "range": {
+        "startLine": 66,
+        "startChar": 52,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56812c54_b8c32525",
+        "filename": "components/ntp_snippets/remote/test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T08:50:01Z",
+      "side": 1,
+      "message": "This won\u0027t compile on ChromeOS, which only has SigninManagerBase. (Since we don\u0027t have concrete plans to do anything on ChromeOS, it\u0027s not really important that the tests run there, but you\u0027ll get build errors that\u0027ll have to be resolved somehow.)",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
