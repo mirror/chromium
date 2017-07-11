@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431722ac_fb413a17",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 26693,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-11T23:57:28Z",
+      "side": 1,
+      "message": "nit: Add a description about the internal error case.",
+      "range": {
+        "startLine": 26693,
+        "startChar": 0,
+        "endLine": 26693,
+        "endChar": 10
+      },
+      "revId": "075a6b653b624fc0a4cf7e75a7ef38ba15d82eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
