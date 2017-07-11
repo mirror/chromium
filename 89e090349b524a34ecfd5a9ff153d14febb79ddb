@@ -275,6 +275,24 @@
       "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace4954b_44f63f9f",
+        "filename": "media/remoting/rpc.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-11T00:09:49Z",
+      "side": 1,
+      "message": "Sorry for the delay\n\nEric: You\u0027re right that our signal is coming as we observe from demuxer. Locally, the difference between demuxer vs renderer is pretty slight (some exceptions), so this isn\u0027t terrible. But your question caused me to take a second look at this and I plan to submit a follow up CL to delay the signal until the renderer has actually started rendering the frames for the new config. \n\nWhen I chatted with Xiangjun earlier, our fear was that the local demuxing could happen at a significant delay from remote rendering, so we deicded to forgo any RPC shortcuts and wait for the remote to signal it was using the config. \n\n\u003e If we need to implement the RPC, we should issue the message right after receiving the RPC_DS_READUNTIL_CALLBACK\nI\u0027m not familiar enough with your RPCs to vet this. Please attempt to signal at the point of rendering frames with the new config. Especially if your pipeline is deep such that demuxing can be way ahead of rendering.\n\nYuri: In response to \"One thing I\u0027m wondering about is versioning-related....\". If cast fails to send this RPC, playback will continue fine. The intended use case for these is recording of playback stats for media capabilities, so what may happen is the stats from one config may get polluted by another config (e.g. resolution) when configs change. This isn\u0027t ideal, but if cast is timely about updating devices to send this RPC, then data pollution will slowly get buried as new playback stats are recorded.",
+      "parentUuid": "26c10a2e_9b849bec",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
