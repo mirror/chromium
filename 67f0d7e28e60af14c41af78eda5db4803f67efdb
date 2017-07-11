@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "819cced9_68715468",
+        "filename": "chrome/browser/printing/print_job_worker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-11T12:24:49Z",
+      "side": 1,
+      "message": "Can the information just be extracted from the PrintingContext::Delegate? It already has these and can return the right frame, rather than getting the frame from the associated tab. Wouldn\u0027t that save a lot of plumbing and data duplication? Or am I missing other benefits from going with the current design?",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 28
+      },
+      "revId": "67f0d7e28e60af14c41af78eda5db4803f67efdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
