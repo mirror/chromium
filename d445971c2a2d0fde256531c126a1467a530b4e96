@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7d4ebde_0f4933f5",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-11T09:39:31Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "range": {
+        "startLine": 302,
+        "startChar": 3,
+        "endLine": 302,
+        "endChar": 4
+      },
+      "revId": "d445971c2a2d0fde256531c126a1467a530b4e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
