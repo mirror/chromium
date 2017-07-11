@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8624b2ff_082673bc",
+        "filename": "content/browser/renderer_host/cursor_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "Checking this isn\u0027t necessary, I think - erase() will just return 0 if the view doesn\u0027t exist.  (And I guess this is entirely possible if the view being destroyed never updated the cursor, right?)",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440dbc02_275466fe",
+        "filename": "content/browser/renderer_host/cursor_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "Is that correct when we have A(B(C)) and C is going away?  Seems like the cursor should be set to whatever B was using previously, but I\u0027m guessing B will end up calling UpdateViewUnderCursor anyway?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1793dff8_1a74f2bf",
+        "filename": "content/browser/renderer_host/cursor_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "Maybe add a short comment with an overview of what this class is for?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfd779a_1023b2e3",
+        "filename": "content/browser/renderer_host/cursor_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "Perhaps add comments to those two methods as well?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0766e3_8bdc73fd",
+        "filename": "content/browser/renderer_host/cursor_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "base/containers/README.md advises to \"generally avoid std::unordered_map\" and that it only \"makes sense mostly for large tables where you expect a lot of lookups\".  Is that the case here, or is a regular std::map better?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8ec39f_8bb153bf",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "Would it work to instead inherit from TestRenderWidgetHostView, override only the cursor stuff, and avoid the rest of the boilerplate init below?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31195869_6a9a168e",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "nit: cursor() (since it\u0027s a simple getter)",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea142700_566c6f25",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "nit: nullptr, also these -\u003e this and their -\u003e its",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320cf5c3_4f4fd299",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "For completeness, maybe also simulate UpdateCursor(top_view_, ...) and verify that it doesn\u0027t change the current cursor?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f76cbcf_b1b8f35f",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "It might be more accurate to move up the \"delete child_view1\" here and do it before this line?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d17c404_ef52403c",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5506,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "While we\u0027re here, there\u0027s an extra \"From\" in the name.",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b874fe_7c8e9f27",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5530,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "maybe just EXPECT_TRUE(root_view-\u003eGetCursorManager())?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9088ec7b_a3ef3312",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5534,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "maybe also check GetCursorForTesting(root_view, ...), before and after the mousemove?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458e086f_ffbd17e1",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5563,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-11T23:38:38Z",
+      "side": 1,
+      "message": "Optional: could we also verify that it\u0027s the text cursor and not some other cursor, maybe by checking the CursorInfo?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
