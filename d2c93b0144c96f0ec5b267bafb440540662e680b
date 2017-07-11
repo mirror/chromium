@@ -46,6 +46,30 @@
       "revId": "d2c93b0144c96f0ec5b267bafb440540662e680b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a968393_01a0ee07",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-11T20:08:37Z",
+      "side": 0,
+      "message": "Right... Then we should simply not use ScopedUsHistogramTimer and instead use CustomCountHistogram directly, so that we can avoid logging stats upon early exit.",
+      "parentUuid": "bdca489f_23da2886",
+      "range": {
+        "startLine": 1171,
+        "startChar": 4,
+        "endLine": 1171,
+        "endChar": 10
+      },
+      "revId": "d2c93b0144c96f0ec5b267bafb440540662e680b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
