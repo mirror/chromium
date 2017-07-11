@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d6e6e48_4b154d71",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T22:59:45Z",
+      "side": 1,
+      "message": "should/can we have an updateMenuButtonClickableState or something that unifies these checks across all places?",
+      "range": {
+        "startLine": 93,
+        "startChar": 24,
+        "endLine": 93,
+        "endChar": 36
+      },
+      "revId": "465770d5c8f2f577eb4897838196dd3828d67565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27304cc_040898a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T22:59:45Z",
+      "side": 1,
+      "message": "why this change?  I\u0027m worried we might have relied on this to ensure the toolbar buttons didn\u0027t get hidden incorrectly.",
+      "range": {
+        "startLine": 855,
+        "startChar": 12,
+        "endLine": 855,
+        "endChar": 13
+      },
+      "revId": "465770d5c8f2f577eb4897838196dd3828d67565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
