@@ -36,6 +36,7 @@
 #include "content/browser/frame_host/cross_process_frame_connector.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/interstitial_page_impl.h"
+#include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
@@ -1837,7 +1838,7 @@ TestNavigationManager::TestNavigationManager(WebContents* web_contents,
 
 TestNavigationManager::~TestNavigationManager() {
   if (navigation_paused_)
-    handle_->Resume();
+    static_cast<NavigationHandleImpl*>(handle_)->Resume();
 }
 
 bool TestNavigationManager::WaitForRequestStart() {
@@ -1901,7 +1902,7 @@ bool TestNavigationManager::WaitForDesiredState() {
 
   // Resume the navigation if it was paused.
   if (navigation_paused_)
-     handle_->Resume();
+    static_cast<NavigationHandleImpl*>(handle_)->Resume();
 
   // Wait for the desired state if needed.
   if (current_state_ < desired_state_) {
@@ -1927,7 +1928,7 @@ void TestNavigationManager::OnNavigationStateChanged() {
 
   // Otherwise, the navigation should be resumed if it was previously paused.
   if (navigation_paused_)
-    handle_->Resume();
+    static_cast<NavigationHandleImpl*>(handle_)->Resume();
 }
 
 bool TestNavigationManager::ShouldMonitorNavigation(NavigationHandle* handle) {

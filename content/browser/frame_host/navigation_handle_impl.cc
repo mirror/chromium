@@ -847,6 +847,12 @@ void NavigationHandleImpl::SetExpectedProcess(
       expected_process, site_url_);
 }
 
+NavigationThrottle* NavigationHandleImpl::GetDeferringThrottle() const {
+  if (next_index_ == 0)
+    return nullptr;
+  return throttles_[next_index_ - 1].get();
+}
+
 void NavigationHandleImpl::Transfer() {
   DCHECK(!IsBrowserSideNavigationEnabled());
   // This is an actual transfer. Inform the NavigationResourceThrottle. This

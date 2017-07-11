@@ -226,7 +226,7 @@ void ArcNavigationThrottle::OnAppCandidatesReceived(
     // iff there are ARC apps which can actually handle the given URL.
     DVLOG(1) << "There are no app candidates for this URL: "
              << navigation_handle()->GetURL();
-    navigation_handle()->Resume();
+    Resume();
     return;
   }
 
@@ -249,7 +249,7 @@ void ArcNavigationThrottle::OnAppCandidatesReceived(
       ArcServiceManager::GetGlobalService<ArcIntentHelperBridge>();
   if (!intent_helper_bridge) {
     LOG(ERROR) << "Cannot get an instance of ArcIntentHelperBridge";
-    navigation_handle()->Resume();
+    Resume();
     return;
   }
   std::vector<ArcIntentHelperBridge::ActivityName> activities;
