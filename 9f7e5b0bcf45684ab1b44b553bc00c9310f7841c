@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ae23ad_362174fd",
+        "filename": "ios/chrome/browser/payments/payment_request_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:53:15Z",
+      "side": 1,
+      "message": "Could you please make this a const reference as well?",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "9f7e5b0bcf45684ab1b44b553bc00c9310f7841c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b07b1a_b85d7a8b",
+        "filename": "ios/chrome/browser/payments/payment_request_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:53:15Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9f7e5b0bcf45684ab1b44b553bc00c9310f7841c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affcb738_1a04f7ce",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:53:15Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "9f7e5b0bcf45684ab1b44b553bc00c9310f7841c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f4be03_4bf65cea",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:53:15Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "9f7e5b0bcf45684ab1b44b553bc00c9310f7841c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f63841_498d010d",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:53:15Z",
+      "side": 1,
+      "message": "I prefer using one of the GetFullProfile() methods and set the desired fields to empty rather than calling GetIncompleteProfile() methods. That way you can add tests for the cases where only specific information is requested. For example if email is missing from the profile, we should not expect a notification label if email is not requested at all.",
+      "range": {
+        "startLine": 39,
+        "startChar": 44,
+        "endLine": 39,
+        "endChar": 65
+      },
+      "revId": "9f7e5b0bcf45684ab1b44b553bc00c9310f7841c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2164808_162b0250",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:53:15Z",
+      "side": 1,
+      "message": "Could you please add tests for when partial information is requested?",
+      "range": {
+        "startLine": 154,
+        "startChar": 55,
+        "endLine": 154,
+        "endChar": 76
+      },
+      "revId": "9f7e5b0bcf45684ab1b44b553bc00c9310f7841c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
