@@ -153,7 +153,22 @@ class MockMediaRouteProvider : public mojom::MediaRouteProvider {
                     mojom::MediaStatusObserverPtr& observer,
                     CreateMediaRouteControllerCallback& callback));
 
+  void CreateRouteSuccess(
+      const std::string& source,
+      const std::string& sink,
+      const std::string& presentation_id,
+      const url::Origin& origin,
+      int tab_id,
+      base::TimeDelta timeout,
+      bool incognito,
+      mojom::MediaRouteProvider::CreateRouteCallback& cb) const;
+
+  void SetRouteToReturn(const MediaRoute& route);
+
  private:
+  // The route that is passed into callbacks for CreateRoute(), JoinRoute(), and
+  // ConnectRouteByRouteId().
+  base::Optional<MediaRoute> route_;
   DISALLOW_COPY_AND_ASSIGN(MockMediaRouteProvider);
 };
 

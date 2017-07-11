@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/run_loop.h"
-#include "extensions/common/test_util.h"
 
 namespace media_router {
 namespace {
@@ -17,6 +16,22 @@ const char kInstanceId[] = "instance123";
 MockMediaRouteProvider::MockMediaRouteProvider() {}
 
 MockMediaRouteProvider::~MockMediaRouteProvider() {}
+
+void MockMediaRouteProvider::CreateRouteSuccess(
+    const std::string& source,
+    const std::string& sink,
+    const std::string& presentation_id,
+    const url::Origin& origin,
+    int tab_id,
+    base::TimeDelta timeout,
+    bool incognito,
+    mojom::MediaRouteProvider::CreateRouteCallback& cb) const {
+  std::move(cb).Run(route_, std::string(), RouteRequestResult::OK);
+}
+
+void MockMediaRouteProvider::SetRouteToReturn(const MediaRoute& route) {
+  route_ = base::make_optional(route);
+}
 
 MockEventPageTracker::MockEventPageTracker() {}
 
@@ -67,7 +82,8 @@ MediaRouterMojoTest::~MediaRouterMojoTest() {}
 void MediaRouterMojoTest::ConnectProviderManagerService() {
   // Bind the |media_route_provider| interface to |media_route_provider_|.
   auto request = mojo::MakeRequest(&media_router_proxy_);
-  mock_media_router_->BindToMojoRequest(std::move(request), *extension_);
+  mock_media_router_->BindToMojoRequest(std::move(request),
+                                        base::OnceClosure());
 
   // Bind the Mojo MediaRouter interface used by |mock_media_router_| to
   // |mock_media_route_provider_service_|.
@@ -85,7 +101,6 @@ void MediaRouterMojoTest::SetUp() {
   mock_media_router_.reset(new MediaRouterMojoImpl(&profile_));
   mock_media_router_->Initialize();
   mock_media_router_->set_instance_id_for_test(kInstanceId);
-  extension_ = extensions::test_util::CreateEmptyExtension();
   ConnectProviderManagerService();
   base::RunLoop().RunUntilIdle();
 }
