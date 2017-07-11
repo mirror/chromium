@@ -116,6 +116,11 @@ using web::WebStateImpl;
 
 namespace {
 
+BOOL UsesWebUIWorkaroundForURL(const GURL& url) {
+  return !base::ios::IsRunningOnIOS11OrLater() &&
+         web::GetWebClient()->IsAppSpecificURL(url);
+}
+
 // Struct to capture data about a user interaction. Records the time of the
 // interaction and the main document URL at that time.
 struct UserInteractionEvent {
@@ -3163,7 +3168,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // are produced during the app specific URL load process.
   const GURL errorURL =
       net::GURLWithNSURL(error.userInfo[NSURLErrorFailingURLErrorKey]);
-  if (web::GetWebClient()->IsAppSpecificURL(errorURL))
+  if (UsesWebUIWorkaroundForURL(errorURL))
     return NO;
 
   // Don't cancel NSURLErrorCancelled errors originating from navigation
@@ -3180,7 +3185,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // |HasWebUI| will return false.
   _webStateImpl->CreateWebUI(URL);
   bool isWebUIURL = _webStateImpl->HasWebUI();
-  if (isWebUIURL) {
+  if (isWebUIURL && !UsesWebUIWorkaroundForURL(URL)) {
     _webUIManager.reset(
         [[CRWWebUIManager alloc] initWithWebState:_webStateImpl]);
   }
@@ -4430,7 +4435,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   [self clearWebUI];
 
-  if (web::GetWebClient()->IsAppSpecificURL(webViewURL)) {
+  if (UsesWebUIWorkaroundForURL(webViewURL)) {
     // Restart app specific URL loads to properly capture state.
     // TODO(crbug.com/546347): Extract necessary tasks for app specific URL
     // navigation rather than restarting the load.
@@ -4439,7 +4444,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // pages. WebUI pages may have increased power and using the same web
     // process (which may potentially be controller by an attacker) is
     // dangerous.
-    if (web::GetWebClient()->IsAppSpecificURL(_documentURL)) {
+    if (UsesWebUIWorkaroundForURL(_documentURL)) {
       [self abortLoad];
       NavigationManager::WebLoadParams params(webViewURL);
       [self loadWithParams:params];

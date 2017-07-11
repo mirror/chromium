@@ -13,10 +13,55 @@
 #include "ios/web/public/browser_state.h"
 #import "ios/web/web_state/js/page_script_util.h"
 #import "ios/web/web_state/ui/crw_wk_script_message_router.h"
+#import "ios/web/webui/url_fetcher_block_adapter.h"
+#import "net/base/mac/url_conversions.h"
+#include "url/gurl.h"
+
+@interface ChromeSchemeHandler : NSObject<WKURLSchemeHandler>
+- (instancetype)initWithRequestContext:(net::URLRequestContextGetter*)context;
+@end
+
+@implementation ChromeSchemeHandler {
+  net::URLRequestContextGetter* _context;
+}
+
+- (instancetype)initWithRequestContext:(net::URLRequestContextGetter*)context {
+  self = [super init];
+  if (self) {
+    _context = context;
+  }
+  return self;
+}
+
+- (void)webView:(WKWebView*)webView
+    startURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
+  GURL URL = net::GURLWithNSURL(urlSchemeTask.request.URL);
+  web::URLFetcherBlockAdapter* adapter = new web::URLFetcherBlockAdapter(
+      URL, _context, ^(NSData* data, web::URLFetcherBlockAdapter* fetcher) {
+        NSURLResponse* response =
+            [[NSURLResponse alloc] initWithURL:urlSchemeTask.request.URL
+                                      MIMEType:@"text/html"
+                         expectedContentLength:0
+                              textEncodingName:nil];
+        [urlSchemeTask didReceiveResponse:response];
+        [urlSchemeTask didReceiveData:data];
+        [urlSchemeTask didFinish];
+      });
+  adapter->Start();
+}
+
+- (void)webView:(WKWebView*)webView
+    stopURLSchemeTask:(id<WKURLSchemeTask>)urlSchemeTask {
+}
+
+@end
 
 namespace web {
 
 namespace {
+
+ChromeSchemeHandler* gChromeSchemeHandler = nil;
+
 // A key used to associate a WKWebViewConfigurationProvider with a BrowserState.
 const char kWKWebViewConfigProviderKeyName[] = "wk_web_view_config_provider";
 
@@ -68,6 +113,13 @@ WKWebViewConfigurationProvider::GetWebViewConfiguration() {
     [[configuration_ preferences] setJavaScriptCanOpenWindowsAutomatically:YES];
     [[configuration_ userContentController]
         addUserScript:InternalGetEarlyPageScript(browser_state_)];
+
+    if (!gChromeSchemeHandler) {
+      gChromeSchemeHandler = [[ChromeSchemeHandler alloc]
+          initWithRequestContext:browser_state_->GetRequestContext()];
+    }
+    [configuration_ setURLSchemeHandler:gChromeSchemeHandler
+                           forURLScheme:@"chrome"];
   }
   // Prevent callers from changing the internals of configuration.
   return [[configuration_ copy] autorelease];
