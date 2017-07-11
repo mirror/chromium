@@ -118,6 +118,30 @@
       "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158cfa38_b4c94ec3",
+        "filename": "services/ui/gpu/interfaces/gpu_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-07-11T19:29:38Z",
+      "side": 1,
+      "message": "It\u0027s a fair question. We can\u0027t just SHA-1 \u0027data\u0027 because the hash isn\u0027t based on the entire \u0027data\u0027. \u0027Data\u0027 consists of properties of the program, which we serialized, as well as the binary blob for the driver, which is opaque and depends on the implementation. We could de-serialize the metadata, then re-compute the hash. The current implementation does this, but the details of doing the same weren\u0027t so easy in ANGLE. If this change is objectionable enough then I can fix that; I was assuming adding the extra parameter for key wouldn\u0027t be that bad. It is a bit faster with the extra key param as well, since we don\u0027t have to deserialize the data until we get a cache hit.",
+      "parentUuid": "eb25e5dd_05dea95e",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 69
+      },
+      "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
