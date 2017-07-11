@@ -8,11 +8,9 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
@@ -171,21 +169,6 @@ public class DropdownPopupWindow extends ListPopupWindow {
      */
     private int measureContentWidth() {
         assert mAdapter != null : "Set the adapter before showing the popup.";
-        int maxWidth = 0;
-        View[] itemViews = new View[mAdapter.getViewTypeCount()];
-        final int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-        final int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-        for (int i = 0; i < mAdapter.getCount(); i++) {
-            int type = mAdapter.getItemViewType(i);
-            itemViews[type] = mAdapter.getView(i, itemViews[type], null);
-            View itemView = itemViews[type];
-            LinearLayout.LayoutParams params =
-                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-            itemView.setLayoutParams(params);
-            itemView.measure(widthMeasureSpec, heightMeasureSpec);
-            maxWidth = Math.max(maxWidth, itemView.getMeasuredWidth());
-        }
-        return maxWidth;
+        return UiUtils.computeMaxWidthOfListAdapterItems(mAdapter);
     }
 }
