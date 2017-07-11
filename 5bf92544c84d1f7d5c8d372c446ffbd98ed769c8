@@ -69,6 +69,30 @@
       "revId": "5bf92544c84d1f7d5c8d372c446ffbd98ed769c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc75daed_7206b6f6",
+        "filename": "chrome/browser/ui/cocoa/framed_browser_window_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T04:00:38Z",
+      "side": 1,
+      "message": "Yeah I prefer patchset 4 slightly. (Note I\u0027ll probably consolidate this screenshot stuff with the almost-equivalent things in native_app_window_cocoa_browsertest.mm and native_widget_mac_unittest.mm - i\u0027ll be touching those at some point. this isn\u0027t a good CL to do that though.)",
+      "parentUuid": "d2f2c459_1679f530",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "5bf92544c84d1f7d5c8d372c446ffbd98ed769c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
