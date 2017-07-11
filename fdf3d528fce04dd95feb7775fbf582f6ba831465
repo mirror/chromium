@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56fc8061_fd2461ad",
+        "filename": "components/download/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T00:20:56Z",
+      "side": 0,
+      "message": "Can we leave this target here for now?  I think this is generally accepted behavior to keep (according to discussion with nyquist@).",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 1
+      },
+      "revId": "fdf3d528fce04dd95feb7775fbf582f6ba831465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
