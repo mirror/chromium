@@ -496,7 +496,7 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
       start_offset = selection_end;
       end_offset = selection_start;
     }
-
+    //
     text_painter.Paint(start_offset, end_offset, length, text_style);
 
     // Paint line-through decoration if needed.
