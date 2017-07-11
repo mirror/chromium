@@ -22,6 +22,30 @@
       "revId": "b319ec60843ce92c9efa7203ec9eb8cb91726e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9558eb18_4e16d509",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-11T23:18:22Z",
+      "side": 1,
+      "message": "I will defer to Jon to say what it should say. It is only a googler problem.",
+      "parentUuid": "95b9fd49_8bbf1b02",
+      "range": {
+        "startLine": 309,
+        "startChar": 42,
+        "endLine": 309,
+        "endChar": 64
+      },
+      "revId": "b319ec60843ce92c9efa7203ec9eb8cb91726e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
