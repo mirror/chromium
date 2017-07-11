@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8ddd95_2263322f",
+        "filename": "media/audio/audio_device_info_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-07-11T14:17:43Z",
+      "side": 1,
+      "message": "Have not figured a nice way to reuse callback definitions here and in AudioSystem",
+      "revId": "10bd984da039d28d38a1886bbc51288989723c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
