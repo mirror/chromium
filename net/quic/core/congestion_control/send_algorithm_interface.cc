@@ -34,7 +34,6 @@ SendAlgorithmInterface* SendAlgorithmInterface::Create(
                            random);
     case kPCC:
       if (FLAGS_quic_reloadable_flag_quic_enable_pcc) {
-        QUIC_FLAG_COUNT(quic_reloadable_flag_quic_enable_pcc);
         return CreatePccSender(clock, rtt_stats, unacked_packets, random, stats,
                                initial_congestion_window,
                                max_congestion_window);
