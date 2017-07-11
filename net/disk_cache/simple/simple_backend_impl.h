@@ -29,7 +29,7 @@
 #include "net/disk_cache/simple/simple_index_delegate.h"
 
 namespace base {
-class SingleThreadTaskRunner;
+class SequencedTaskRunner;
 class TaskRunner;
 }
 
@@ -58,7 +58,6 @@ class NET_EXPORT_PRIVATE SimpleBackendImpl : public Backend,
       const base::FilePath& path,
       int max_bytes,
       net::CacheType cache_type,
-      const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
       net::NetLog* net_log);
 
   ~SimpleBackendImpl() override;
@@ -120,6 +119,7 @@ class NET_EXPORT_PRIVATE SimpleBackendImpl : public Backend,
   size_t DumpMemoryStats(
       base::trace_event::ProcessMemoryDump* pmd,
       const std::string& parent_absolute_name) const override;
+  scoped_refptr<base::SequencedTaskRunner> GetCacheTaskRunner() override;
 
  private:
   class SimpleIterator;
@@ -216,7 +216,7 @@ class NET_EXPORT_PRIVATE SimpleBackendImpl : public Backend,
   const base::FilePath path_;
   const net::CacheType cache_type_;
   std::unique_ptr<SimpleIndex> index_;
-  const scoped_refptr<base::SingleThreadTaskRunner> cache_thread_;
+  const scoped_refptr<base::SequencedTaskRunner> cache_thread_;
   scoped_refptr<base::TaskRunner> worker_pool_;
 
   int orig_max_size_;

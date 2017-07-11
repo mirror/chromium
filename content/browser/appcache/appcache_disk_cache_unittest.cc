@@ -12,6 +12,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
+#include "net/base/test_completion_callback.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -21,9 +22,7 @@ class AppCacheDiskCacheTest : public testing::Test {
   AppCacheDiskCacheTest() {}
 
   void SetUp() override {
-    // Use the current thread for the DiskCache's cache_thread.
     message_loop_.reset(new base::MessageLoopForIO());
-    cache_thread_ = base::ThreadTaskRunnerHandle::Get();
     ASSERT_TRUE(directory_.CreateUniqueTempDir());
     completion_callback_ = base::Bind(
         &AppCacheDiskCacheTest::OnComplete,
@@ -36,7 +35,21 @@ class AppCacheDiskCacheTest : public testing::Test {
   }
 
   void FlushCacheTasks() {
-    base::RunLoop().RunUntilIdle();
+    base::RunLoop run_loop;
+    cache_task_runner_->PostTask(FROM_HERE, run_loop.QuitClosure());
+    run_loop.Run();
+  }
+
+  bool InitWithDiskBackendAndBlock(AppCacheDiskCache* disk_cache) {
+    net::TestCompletionCallback cb;
+    disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
+                                    cb.callback());
+    bool ok = (cb.WaitForResult() == net::OK);
+    if (ok) {
+      // Save the runner since we'll drop the backend pointer on e.g. Disable()
+      cache_task_runner_ = disk_cache->GetCacheTaskRunner();
+    }
+    return ok;
   }
 
   void OnComplete(int err) {
@@ -45,7 +58,7 @@ class AppCacheDiskCacheTest : public testing::Test {
 
   base::ScopedTempDir directory_;
   std::unique_ptr<base::MessageLoop> message_loop_;
-  scoped_refptr<base::SingleThreadTaskRunner> cache_thread_;
+  scoped_refptr<base::SequencedTaskRunner> cache_task_runner_;
   net::CompletionCallback completion_callback_;
   std::vector<int> completion_results_;
 
@@ -59,8 +72,7 @@ TEST_F(AppCacheDiskCacheTest, DisablePriorToInitCompletion) {
   // one of each kind of "entry" function.
   std::unique_ptr<AppCacheDiskCache> disk_cache(new AppCacheDiskCache);
   EXPECT_FALSE(disk_cache->is_disabled());
-  disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
-                                  cache_thread_, completion_callback_);
+  ASSERT_TRUE(InitWithDiskBackendAndBlock(disk_cache.get()));
   disk_cache->CreateEntry(1, &entry, completion_callback_);
   disk_cache->OpenEntry(2, &entry, completion_callback_);
   disk_cache->DoomEntry(3, completion_callback_);
@@ -90,11 +102,7 @@ TEST_F(AppCacheDiskCacheTest, DisableAfterInitted) {
   // Create an instance and let it fully init.
   std::unique_ptr<AppCacheDiskCache> disk_cache(new AppCacheDiskCache);
   EXPECT_FALSE(disk_cache->is_disabled());
-  disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
-                                  cache_thread_, completion_callback_);
-  FlushCacheTasks();
-  EXPECT_EQ(1u, completion_results_.size());
-  EXPECT_EQ(net::OK, completion_results_[0]);
+  ASSERT_TRUE(InitWithDiskBackendAndBlock(disk_cache.get()));
 
   // Pull the plug
   disk_cache->Disable();
@@ -109,7 +117,6 @@ TEST_F(AppCacheDiskCacheTest, DisableAfterInitted) {
   // Methods should return immediately when disabled and not invoke
   // the callback at all.
   AppCacheDiskCache::Entry* entry = NULL;
-  completion_results_.clear();
   EXPECT_EQ(net::ERR_ABORTED,
             disk_cache->CreateEntry(1, &entry, completion_callback_));
   EXPECT_EQ(net::ERR_ABORTED,
@@ -125,11 +132,7 @@ TEST_F(AppCacheDiskCacheTest, DISABLED_DisableWithEntriesOpen) {
   // Create an instance and let it fully init.
   std::unique_ptr<AppCacheDiskCache> disk_cache(new AppCacheDiskCache);
   EXPECT_FALSE(disk_cache->is_disabled());
-  disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
-                                  cache_thread_, completion_callback_);
-  FlushCacheTasks();
-  EXPECT_EQ(1u, completion_results_.size());
-  EXPECT_EQ(net::OK, completion_results_[0]);
+  ASSERT_TRUE(InitWithDiskBackendAndBlock(disk_cache.get()));
 
   // Note: We don't have detailed expectations of the DiskCache
   // operations because on android it's really SimpleCache which
