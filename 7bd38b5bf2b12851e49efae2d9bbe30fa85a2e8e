@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54737356_83777f0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002875
+      },
+      "writtenOn": "2017-07-11T06:21:37Z",
+      "side": 1,
+      "message": "typo: it reads like it should be \u0027fresh\u0027 or \u0027refreshed\u0027?",
+      "revId": "7bd38b5bf2b12851e49efae2d9bbe30fa85a2e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
