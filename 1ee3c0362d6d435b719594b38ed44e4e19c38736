@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abc4e63c_f517e083",
+        "filename": "base/files/file_descriptor_watcher_posix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T17:34:01Z",
+      "side": 1,
+      "message": "This is actually the only thing that catches the raciness in the tests (which in turn suggests that the tests weren\u0027t really doing much, of course).\n\nThings will get very strange if this is failing in the wild, so I\u0027d prefer that we CHECK or in some other way handle things, but I\u0027ve changed it to a DCHECK for this CL.",
+      "parentUuid": "808da377_fbc3952d",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 8
+      },
+      "revId": "1ee3c0362d6d435b719594b38ed44e4e19c38736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63c74feb_f335e001",
         "filename": "base/message_loop/message_pump_libevent_unittest.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "1ee3c0362d6d435b719594b38ed44e4e19c38736",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a057126_47dd6164",
+        "filename": "base/message_loop/message_pump_libevent_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T17:34:01Z",
+      "side": 1,
+      "message": "Yes, I found that we don\u0027t seem to have any tests to verify that read \u0026 write watches actually work, so I thought it best to add some (line item #3 in the list of MessagePumpLibevent changes).",
+      "parentUuid": "63c74feb_f335e001",
+      "range": {
+        "startLine": 280,
+        "startChar": 17,
+        "endLine": 280,
+        "endChar": 23
+      },
+      "revId": "1ee3c0362d6d435b719594b38ed44e4e19c38736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
