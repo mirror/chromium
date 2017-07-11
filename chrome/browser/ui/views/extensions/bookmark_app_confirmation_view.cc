@@ -64,7 +64,8 @@ BookmarkAppConfirmationView::BookmarkAppConfirmationView(
       open_as_window_checkbox_(nullptr),
       title_tf_(nullptr) {
   const ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
-  views::GridLayout* layout = views::GridLayout::CreatePanel(this);
+  views::GridLayout* layout = new views::GridLayout(this);
+  SetLayoutManager(layout);
   const int column_set_id = 0;
 
   views::ColumnSet* column_set = layout->AddColumnSet(column_set_id);
