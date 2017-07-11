@@ -3709,4 +3709,213 @@ TEST_F(PasswordFormManagerTest, Clone_SurvivesOriginal) {
   EXPECT_EQ(pending, passed);
 }
 
+// Check that URL Keyed metrics are recorded for autofilling credentials.
+TEST_F(PasswordFormManagerTest, TestUkmForFilling) {
+  ukm::TestUkmRecorder test_ukm_recorder;
+  client()->GetUkmRecorder()->UpdateSourceURL(client()->GetUkmSourceId(),
+                                              observed_form()->origin);
+
+  {
+    FakeFormFetcher fetcher;
+    PasswordFormManager form_manager(
+        password_manager(), client(), client()->driver(), *observed_form(),
+        base::MakeUnique<NiceMock<MockFormSaver>>(), &fetcher);
+    form_manager.Init(nullptr);
+    fetcher.SetNonFederated({saved_match()}, 0u);
+  }
+
+  const auto* source =
+      test_ukm_recorder.GetSourceForUrl(observed_form()->origin.spec().c_str());
+  test_ukm_recorder.ExpectMetric(
+      *source, "PasswordForm", internal::kUkmManagerFillEvent,
+      PasswordFormMetricsRecorder::kManagerFillEventFilled);
+}
+
+// Check that URL Keyed metrics are recorded for blocked autofilling
+// of credentials.
+TEST_F(PasswordFormManagerTest, TestUkmForBlockedFilling) {
+  ukm::TestUkmRecorder test_ukm_recorder;
+  client()->GetUkmRecorder()->UpdateSourceURL(client()->GetUkmSourceId(),
+                                              observed_form()->origin);
+
+  {
+    FakeFormFetcher fetcher;
+    PasswordFormManager form_manager(
+        password_manager(), client(), client()->driver(), *observed_form(),
+        base::MakeUnique<NiceMock<MockFormSaver>>(), &fetcher);
+    form_manager.Init(nullptr);
+    fetcher.SetNonFederated({psl_saved_match()}, 0u);
+  }
+
+  const auto* source =
+      test_ukm_recorder.GetSourceForUrl(observed_form()->origin.spec().c_str());
+  test_ukm_recorder.ExpectMetric(
+      *source, "PasswordForm", internal::kUkmManagerFillEvent,
+      PasswordFormMetricsRecorder::kManagerFillEventBlockedOnInteraction);
+}
+
+// Check that URL Keyed metrics are recorded for lack of matching credentials.
+TEST_F(PasswordFormManagerTest, TestUkmForNoCredentials) {
+  ukm::TestUkmRecorder test_ukm_recorder;
+  client()->GetUkmRecorder()->UpdateSourceURL(client()->GetUkmSourceId(),
+                                              observed_form()->origin);
+
+  {
+    FakeFormFetcher fetcher;
+    PasswordFormManager form_manager(
+        password_manager(), client(), client()->driver(), *observed_form(),
+        base::MakeUnique<NiceMock<MockFormSaver>>(), &fetcher);
+    form_manager.Init(nullptr);
+    fetcher.SetNonFederated(std::vector<const autofill::PasswordForm*>(), 0u);
+  }
+
+  const auto* source =
+      test_ukm_recorder.GetSourceForUrl(observed_form()->origin.spec().c_str());
+  test_ukm_recorder.ExpectMetric(
+      *source, "PasswordForm", internal::kUkmManagerFillEvent,
+      PasswordFormMetricsRecorder::kManagerFillEventNoCredential);
+}
+
+// Check that URL Keyed metrics are recorded for autofilling credentials
+// via HTTP Basic Auth.
+TEST_F(PasswordFormManagerTest, TestUkmForFillingOfBasicAuth) {
+  PasswordForm observed_basic_auth_form = *observed_form();
+  observed_basic_auth_form.scheme = PasswordForm::SCHEME_BASIC;
+  PasswordForm saved_form = *saved_match();
+  saved_form.scheme = PasswordForm::SCHEME_BASIC;
+
+  ukm::TestUkmRecorder test_ukm_recorder;
+  client()->GetUkmRecorder()->UpdateSourceURL(client()->GetUkmSourceId(),
+                                              observed_basic_auth_form.origin);
+
+  {
+    FakeFormFetcher fetcher;
+    PasswordFormManager form_manager(
+        password_manager(), client(), nullptr, observed_basic_auth_form,
+        base::MakeUnique<NiceMock<MockFormSaver>>(), &fetcher);
+    form_manager.Init(nullptr);
+    fetcher.SetNonFederated({&saved_form}, 0u);
+  }
+
+  const auto* source = test_ukm_recorder.GetSourceForUrl(
+      observed_basic_auth_form.origin.spec().c_str());
+  test_ukm_recorder.ExpectMetric(
+      *source, "PasswordForm", internal::kUkmManagerFillEvent,
+      PasswordFormMetricsRecorder::kManagerFillEventFilled);
+}
+
+// Check that URL Keyed metrics are recorded when no credentials exist for HTTP
+// Basic Auth.
+TEST_F(PasswordFormManagerTest, TestUkmForFillingOfBasicAuthNoCredentials) {
+  PasswordForm observed_basic_auth_form = *observed_form();
+  observed_basic_auth_form.scheme = PasswordForm::SCHEME_BASIC;
+
+  ukm::TestUkmRecorder test_ukm_recorder;
+  client()->GetUkmRecorder()->UpdateSourceURL(client()->GetUkmSourceId(),
+                                              observed_basic_auth_form.origin);
+
+  {
+    FakeFormFetcher fetcher;
+    PasswordFormManager form_manager(
+        password_manager(), client(), nullptr, observed_basic_auth_form,
+        base::MakeUnique<NiceMock<MockFormSaver>>(), &fetcher);
+    form_manager.Init(nullptr);
+    fetcher.SetNonFederated(std::vector<const autofill::PasswordForm*>(), 0u);
+  }
+
+  const auto* source = test_ukm_recorder.GetSourceForUrl(
+      observed_basic_auth_form.origin.spec().c_str());
+  test_ukm_recorder.ExpectMetric(
+      *source, "PasswordForm", internal::kUkmManagerFillEvent,
+      PasswordFormMetricsRecorder::kManagerFillEventNoCredential);
+}
+
+// TODO(reviewers): Which type of testing to you prefer?
+
+PasswordForm DefaultForm() {
+  PasswordForm form;
+  form.origin = GURL("http://accounts.google.com/a/LoginAuth");
+  form.action = GURL("http://accounts.google.com/a/Login");
+  form.username_element = ASCIIToUTF16("Email");
+  form.password_element = ASCIIToUTF16("Passwd");
+  form.submit_element = ASCIIToUTF16("signIn");
+  form.signon_realm = "http://accounts.google.com";
+  return form;
+}
+
+PasswordForm PSLForm() {
+  PasswordForm form = DefaultForm();
+  form.is_public_suffix_match = true;
+  form.origin = GURL("http://m.accounts.google.com/a/ServiceLoginAuth");
+  form.action = GURL("http://m.accounts.google.com/a/Login");
+  form.signon_realm = "http://m.accounts.google.com";
+  return form;
+}
+
+PasswordForm SchemeBasicForm() {
+  PasswordForm form = DefaultForm();
+  form.scheme = PasswordForm::SCHEME_BASIC;
+  return form;
+}
+
+struct UkmForFillingTestCase {
+  PasswordForm (*observed_form)();
+  bool is_http_basic_auth;
+  PasswordForm (*fetched_form)();
+  PasswordFormMetricsRecorder::ManagerFillEvent expected_event;
+};
+constexpr UkmForFillingTestCase kUkmForFillingTestCases[] = {
+    {&DefaultForm, false, &DefaultForm,
+     PasswordFormMetricsRecorder::kManagerFillEventFilled},
+    {&DefaultForm, false, &PSLForm,
+     PasswordFormMetricsRecorder::kManagerFillEventBlockedOnInteraction},
+    {&DefaultForm, false, nullptr,
+     PasswordFormMetricsRecorder::kManagerFillEventNoCredential},
+    {&SchemeBasicForm, true, &SchemeBasicForm,
+     PasswordFormMetricsRecorder::kManagerFillEventFilled},
+    {&SchemeBasicForm, true, nullptr,
+     PasswordFormMetricsRecorder::kManagerFillEventNoCredential},
+};
+
+class PasswordFormManagerTestForFilling
+    : public PasswordFormManagerTest,
+      public ::testing::WithParamInterface<UkmForFillingTestCase> {};
+
+// Verifies that URL keyed metrics are recorded for the filling of passwords
+// into forms and HTTP Basic auth.
+TEST_P(PasswordFormManagerTestForFilling, TestUkmForFilling) {
+  const UkmForFillingTestCase& params = GetParam();
+  PasswordForm observed_form = (*params.observed_form)();
+  std::vector<const autofill::PasswordForm*> fetched_forms;
+  PasswordForm fetched_form;
+  if (params.fetched_form) {
+    fetched_form = (*params.fetched_form)();
+    fetched_forms.push_back(&fetched_form);
+  }
+
+  ukm::TestUkmRecorder test_ukm_recorder;
+  client()->GetUkmRecorder()->UpdateSourceURL(client()->GetUkmSourceId(),
+                                              observed_form.origin);
+
+  {
+    FakeFormFetcher fetcher;
+    PasswordFormManager form_manager(
+        password_manager(), client(),
+        params.is_http_basic_auth ? nullptr : client()->driver(), observed_form,
+        base::MakeUnique<NiceMock<MockFormSaver>>(), &fetcher);
+    form_manager.Init(nullptr);
+    fetcher.SetNonFederated(fetched_forms, 0u);
+  }
+
+  const auto* source =
+      test_ukm_recorder.GetSourceForUrl(observed_form.origin.spec().c_str());
+  test_ukm_recorder.ExpectMetric(*source, "PasswordForm",
+                                 internal::kUkmManagerFillEvent,
+                                 params.expected_event);
+}
+
+INSTANTIATE_TEST_CASE_P(/*No extra name*/,
+                        PasswordFormManagerTestForFilling,
+                        ::testing::ValuesIn(kUkmForFillingTestCases));
+
 }  // namespace password_manager
