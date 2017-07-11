@@ -442,7 +442,7 @@ void UsbServiceImpl::EnumerateDevice(PlatformUsbDevice platform_device,
                    refresh_complete, device);
     base::Closure enumeration_failed = base::Bind(
         &UsbServiceImpl::EnumerationFailed, weak_factory_.GetWeakPtr(),
-        platform_device, refresh_complete);
+        base::Unretained(platform_device), refresh_complete);
     bool read_bos_descriptors = descriptor.bcdUSB >= kUsbVersion2_1;
 
     if (descriptor.iManufacturer == 0 && descriptor.iProduct == 0 &&
