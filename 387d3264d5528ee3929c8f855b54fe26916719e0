@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "79b6f916_e05c10bc",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T12:36:38Z",
+      "side": 1,
+      "message": "True, for some reason I thought they were required to be const now for some the methods. Turns out that not the case, so I removed them again.",
+      "parentUuid": "ee32c536_46401183",
+      "range": {
+        "startLine": 492,
+        "startChar": 0,
+        "endLine": 492,
+        "endChar": 37
+      },
+      "revId": "387d3264d5528ee3929c8f855b54fe26916719e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32f097b6_bc3eb026",
         "filename": "components/password_manager/core/browser/sql_table_builder.cc",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "dd55f286_1cc97ecd",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T12:36:38Z",
+      "side": 1,
+      "message": "No where :)",
+      "parentUuid": "32f097b6_bc3eb026",
+      "range": {
+        "startLine": 499,
+        "startChar": 17,
+        "endLine": 499,
+        "endChar": 37
+      },
+      "revId": "387d3264d5528ee3929c8f855b54fe26916719e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d36636f7_dc66904e",
         "filename": "components/password_manager/core/browser/sql_table_builder.cc",
         "patchSetId": 1
@@ -92,6 +140,30 @@
       "revId": "387d3264d5528ee3929c8f855b54fe26916719e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af35e1c_9ef8bfa7",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T12:36:38Z",
+      "side": 1,
+      "message": "No where :)",
+      "parentUuid": "d36636f7_dc66904e",
+      "range": {
+        "startLine": 516,
+        "startChar": 17,
+        "endLine": 516,
+        "endChar": 36
+      },
+      "revId": "387d3264d5528ee3929c8f855b54fe26916719e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
