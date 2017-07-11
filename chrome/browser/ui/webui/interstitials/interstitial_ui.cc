@@ -495,7 +495,7 @@ std::string InterstitialHTMLSource::GetSupervisedUserInterstitialHTML(
       supervised_user_error_page::DEFAULT;
   std::string reason_string;
   if (net::GetValueForKeyInQuery(url, "reason", &reason_string)) {
-    if (reason_string == "safe_sites") {
+    if (reason_string == "safe_sites" && is_child_account) {
       reason = supervised_user_error_page::BLACKLIST;
     } else if (reason_string == "manual") {
       reason = supervised_user_error_page::MANUAL;
