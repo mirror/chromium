@@ -185,13 +185,16 @@ void BluetoothLowEnergyWeaveClientConnection::CreateGattConnection() {
 
   PA_LOG(INFO) << "Creating GATT connection with " << device_address_;
 
-  bluetooth_device->CreateGattConnection(
-      base::Bind(
-          &BluetoothLowEnergyWeaveClientConnection::OnGattConnectionCreated,
-          weak_ptr_factory_.GetWeakPtr()),
-      base::Bind(&BluetoothLowEnergyWeaveClientConnection::
-                     OnCreateGattConnectionError,
-                 weak_ptr_factory_.GetWeakPtr()));
+  // bluetooth_device->CreateGattConnection(
+  //     base::Bind(
+  //         &BluetoothLowEnergyWeaveClientConnection::OnGattConnectionCreated,
+  //         weak_ptr_factory_.GetWeakPtr()),
+  //     base::Bind(&BluetoothLowEnergyWeaveClientConnection::
+  //                    OnCreateGattConnectionError,
+  //                weak_ptr_factory_.GetWeakPtr()));
+
+  OnCreateGattConnectionError(
+      device::BluetoothDevice::ConnectErrorCode::ERROR_UNKNOWN);
 }
 
 void BluetoothLowEnergyWeaveClientConnection::Disconnect() {

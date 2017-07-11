@@ -20,6 +20,11 @@ namespace {
 
 uint8_t kInvertedConnectionFlag = 0x01;
 
+void OnUnregister(std::string device_id) {
+  PA_LOG(ERROR) << "Unregistered for device ID: "
+                << cryptauth::RemoteDevice::TruncateDeviceIdForLogs(device_id);
+}
+
 }  // namespace
 
 BleAdvertiser::IndividualAdvertisement::IndividualAdvertisement(
@@ -38,8 +43,9 @@ BleAdvertiser::IndividualAdvertisement::IndividualAdvertisement(
 
 BleAdvertiser::IndividualAdvertisement::~IndividualAdvertisement() {
   if (advertisement_) {
+    PA_LOG(INFO) << "Calling Unregister";
     advertisement_->Unregister(
-        base::Bind(&base::DoNothing),
+        base::Bind(&OnUnregister, device_id_),
         base::Bind(&IndividualAdvertisement::OnAdvertisementUnregisterFailure,
                    weak_ptr_factory_.GetWeakPtr()));
   }
@@ -216,7 +222,16 @@ bool BleAdvertiser::StartAdvertisingToDevice(
 
 bool BleAdvertiser::StopAdvertisingToDevice(
     const cryptauth::RemoteDevice& remote_device) {
-  return device_id_to_advertisement_map_.erase(remote_device.GetDeviceId()) > 0;
+  PA_LOG(INFO) << "Stopping advertising to device "
+               << remote_device.GetTruncatedDeviceIdForLogs();
+  bool erased_any =
+      device_id_to_advertisement_map_.erase(remote_device.GetDeviceId()) > 0;
+  if (!erased_any)
+    PA_LOG(WARNING) << "Did not actually remove an advertisement";
+
+  PA_LOG(INFO) << "Remaining adverts: " << device_id_to_advertisement_map_.size();
+
+  return erased_any;
 }
 
 }  // namespace tether
