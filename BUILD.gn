@@ -155,6 +155,16 @@ group("gn_all") {
     ]
   }
 
+  if (!is_ios) {
+    deps += [
+      "//mojo",
+      "//mojo/common:mojo_common_unittests",
+      "//mojo/edk/system:mojo_system_unittests",
+      "//mojo/edk/test:mojo_public_bindings_unittests",
+      "//mojo/edk/test:mojo_public_system_unittests",
+    ]
+  }
+
   if (!is_ios && !is_fuchsia) {
     deps += [
       "//cc:cc_unittests",
@@ -178,11 +188,6 @@ group("gn_all") {
       "//media/cast:cast_unittests",
       "//media/midi:midi_unittests",
       "//media/mojo:media_mojo_unittests",
-      "//mojo",
-      "//mojo/common:mojo_common_unittests",
-      "//mojo/edk/system:mojo_system_unittests",
-      "//mojo/edk/test:mojo_public_bindings_unittests",
-      "//mojo/edk/test:mojo_public_system_unittests",
       "//net:net_perftests",
       "//storage:storage_unittests",
       "//third_party/WebKit/Source/platform:blink_platform_unittests",
