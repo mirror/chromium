@@ -29,6 +29,11 @@ class FilterPainter {
                 PaintLayerFlags paint_flags);
   ~FilterPainter();
 
+  // Returns whether it's ok to clip this PaintLayer's painted outputs
+  // the dirty rect. Some filters require input from outside this rect, in
+  // which case this method would return true.
+  static bool CanClipToDirtyRect(PaintLayer&);
+
  private:
   bool filter_in_progress_;
   GraphicsContext& context_;
