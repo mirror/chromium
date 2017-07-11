@@ -16,6 +16,24 @@
       "revId": "d13c06c2c15ac54ad4eac9a9ae03220a7aecd267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b45c0c_345a1326",
+        "filename": "cc/ipc/texture_mailbox.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-11T17:40:37Z",
+      "side": 1,
+      "message": "Based on the viz directory structure doc, this should live in //services/viz/public/interfaces/. I\u0027ll move it in the next patch. This patch is large as is.",
+      "parentUuid": "a1179962_0b4454a4",
+      "revId": "d13c06c2c15ac54ad4eac9a9ae03220a7aecd267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
