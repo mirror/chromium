@@ -292,6 +292,16 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
 - (void)dealloc {
   [self stopBrowserStateServiceObservers];
+  if (!_signinStarted && _signinPromoViewMediator) {
+    PrefService* prefs = _browserState->GetPrefs();
+    int displayedCount =
+        prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
+    UMA_HISTOGRAM_COUNTS_100(
+        "MobileSignInPromo.SettingsManager.ImpressionsTilDismiss",
+        displayedCount);
+    NSLog(@"MobileSignInPromo.SettingsManager.ImpressionsTilDismiss %d",
+          displayedCount);
+  }
 }
 
 - (void)stopBrowserStateServiceObservers {
@@ -313,18 +323,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self updateSearchCell];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-  [super viewDidDisappear:animated];
-  if (!_signinStarted && _signinPromoViewMediator) {
-    PrefService* prefs = _browserState->GetPrefs();
-    int displayedCount =
-        prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
-    UMA_HISTOGRAM_COUNTS_100(
-        "MobileSignInPromo.SettingsManager.ImpressionsTilDismiss",
-        displayedCount);
-  }
 }
 
 #pragma mark SettingsRootCollectionViewController
@@ -351,11 +349,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
         prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
     if (experimental_flags::IsSigninPromoEnabled() &&
         displayedCount < kAutomaticSigninPromoViewDismissCount) {
-      _signinPromoViewMediator =
-          [[SigninPromoViewMediator alloc] initWithBrowserState:_browserState];
-      _signinPromoViewMediator.consumer = self;
-      prefs->SetInteger(prefs::kIosSettingsSigninPromoDisplayedCount,
-                        displayedCount + 1);
+      if (!_signinPromoViewMediator) {
+        _signinPromoViewMediator = [[SigninPromoViewMediator alloc]
+            initWithBrowserState:_browserState];
+        _signinPromoViewMediator.consumer = self;
+        prefs->SetInteger(prefs::kIosSettingsSigninPromoDisplayedCount,
+                          displayedCount + 1);
+      }
     }
     [model addItem:[self signInTextItem]
         toSectionWithIdentifier:SectionIdentifierSignIn];
