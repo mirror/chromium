@@ -157,9 +157,8 @@ TEST_F(MediaRouterFileDialogTest, SelectFailureFileDoesNotExist) {
       .WillOnce(Return(false));
 
   FileSelectedExpectFailure(
-      fake_path,
-      l10n_util::GetStringFUTF8(IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_FILE_MISSING,
-                                fake_path_name));
+      fake_path, l10n_util::GetStringFUTF8(
+                     IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_ERROR, fake_path_name));
 }
 
 TEST_F(MediaRouterFileDialogTest, SelectFailureFileDoesNotContainContent) {
@@ -167,9 +166,8 @@ TEST_F(MediaRouterFileDialogTest, SelectFailureFileDoesNotContainContent) {
       .WillOnce(Return(0));
 
   FileSelectedExpectFailure(
-      fake_path,
-      l10n_util::GetStringFUTF8(IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_NOT_MEDIA,
-                                fake_path_name));
+      fake_path, l10n_util::GetStringFUTF8(
+                     IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_ERROR, fake_path_name));
 }
 
 TEST_F(MediaRouterFileDialogTest, SelectFailureCannotReadGetFileSize) {
@@ -177,9 +175,8 @@ TEST_F(MediaRouterFileDialogTest, SelectFailureCannotReadGetFileSize) {
       .WillOnce(Return(-1));
 
   FileSelectedExpectFailure(
-      fake_path,
-      l10n_util::GetStringFUTF8(IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_READ_ERROR,
-                                fake_path_name));
+      fake_path, l10n_util::GetStringFUTF8(
+                     IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_ERROR, fake_path_name));
 }
 
 TEST_F(MediaRouterFileDialogTest, SelectFailureCannotReadFile) {
@@ -187,9 +184,8 @@ TEST_F(MediaRouterFileDialogTest, SelectFailureCannotReadFile) {
       .WillOnce(Return(false));
 
   FileSelectedExpectFailure(
-      fake_path,
-      l10n_util::GetStringFUTF8(IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_READ_ERROR,
-                                fake_path_name));
+      fake_path, l10n_util::GetStringFUTF8(
+                     IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_ERROR, fake_path_name));
 }
 
 TEST_F(MediaRouterFileDialogTest, SelectFailureFileNotSupported) {
@@ -197,9 +193,8 @@ TEST_F(MediaRouterFileDialogTest, SelectFailureFileNotSupported) {
       .WillOnce(Return(false));
 
   FileSelectedExpectFailure(
-      fake_path,
-      l10n_util::GetStringFUTF8(IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_NOT_SUPPORTED,
-                                fake_path_name));
+      fake_path, l10n_util::GetStringFUTF8(
+                     IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_ERROR, fake_path_name));
 }
 
 }  // namespace media_router
