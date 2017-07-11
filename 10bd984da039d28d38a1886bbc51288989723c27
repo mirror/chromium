@@ -85,6 +85,29 @@
       "revId": "10bd984da039d28d38a1886bbc51288989723c27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb55306a_a68c27a6",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-11T15:40:32Z",
+      "side": 1,
+      "message": "How about a \"MaybeBindToCurrentLoop\" helper function?",
+      "range": {
+        "startLine": 52,
+        "startChar": 36,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "10bd984da039d28d38a1886bbc51288989723c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
