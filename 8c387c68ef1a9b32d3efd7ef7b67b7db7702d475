@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31d3a1e4_e0cb577d",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-11T18:31:11Z",
+      "side": 0,
+      "message": "This was used to report StartNetLog error when consumer specifies invalid path. Without it FileNetLogObserver::UnboundedFileWriter::Initialize crashes and burns as it does NOT expect file creation to fail.",
+      "range": {
+        "startLine": 148,
+        "startChar": 29,
+        "endLine": 148,
+        "endChar": 30
+      },
+      "revId": "8c387c68ef1a9b32d3efd7ef7b67b7db7702d475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
