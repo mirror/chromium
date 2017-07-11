@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7b73426_ab6dc8eb",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T22:37:12Z",
+      "side": 1,
+      "message": "nit: invert, call WallpaperProminentColorsChanged(), and early exit",
+      "revId": "723e412322d97be01f8e18ae5a41d76363da536d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfaf939_1b9a584b",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T22:37:12Z",
+      "side": 1,
+      "message": "nit: use a local for SkIntToScalar(kBackgroundCornerRadius)",
+      "revId": "723e412322d97be01f8e18ae5a41d76363da536d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1bf06e_e3e61fe1",
+        "filename": "ui/app_list/views/search_result_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T22:37:12Z",
+      "side": 1,
+      "message": "I added a comment to https://codereview.chromium.org/2933673002/ (even though it has already landed) requesting a better name than \"new design\". I would definitely like to avoid using \"new design\" in a class member variable. It looks like in this context the variable should be something like \u0027use_fullscreen_height_\u0027?",
+      "revId": "723e412322d97be01f8e18ae5a41d76363da536d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
