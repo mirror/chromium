@@ -399,6 +399,9 @@ PaintResult PaintLayerPainter::PaintLayerContents(
 
   PaintLayerPaintingInfo local_painting_info(painting_info);
   local_painting_info.sub_pixel_accumulation = subpixel_accumulation;
+  local_painting_info.clip_to_dirty_rect =
+      local_painting_info.clip_to_dirty_rect &&
+      FilterPainter::CanClipToDirtyRect(paint_layer_);
 
   bool should_paint_content = paint_layer_.HasVisibleContent() &&
                               is_self_painting_layer &&
@@ -431,34 +434,35 @@ PaintResult PaintLayerPainter::PaintLayerContents(
       local_painting_info.paint_dirty_rect.MoveBy(offset_to_clipper);
     }
 
+    LayoutRect used_dirty_rect = local_painting_info.paint_dirty_rect;
+    if (!local_painting_info.clip_to_dirty_rect)
+      used_dirty_rect = LayoutRect(LayoutRect::InfiniteIntRect());
+
     // TODO(trchen): We haven't decided how to handle visual fragmentation with
     // SPv2.  Related thread
     // https://groups.google.com/a/chromium.org/forum/#!topic/graphics-dev/81XuWFf-mxM
     if (fragment_policy == kForceSingleFragment ||
         RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       paint_layer_for_fragments->AppendSingleFragmentIgnoringPagination(
-          layer_fragments, local_painting_info.root_layer,
-          local_painting_info.paint_dirty_rect, cache_slot,
-          PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
-          respect_overflow_clip, &offset_from_root,
-          local_painting_info.sub_pixel_accumulation);
+          layer_fragments, local_painting_info.root_layer, used_dirty_rect,
+          cache_slot, PaintLayer::kUseGeometryMapper,
+          kIgnorePlatformOverlayScrollbarSize, respect_overflow_clip,
+          &offset_from_root, local_painting_info.sub_pixel_accumulation);
     } else if (IsFixedPositionObjectInPagedMedia()) {
       PaintLayerFragments single_fragment;
       paint_layer_for_fragments->AppendSingleFragmentIgnoringPagination(
-          single_fragment, local_painting_info.root_layer,
-          local_painting_info.paint_dirty_rect, cache_slot,
-          PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
-          respect_overflow_clip, &offset_from_root,
-          local_painting_info.sub_pixel_accumulation);
+          single_fragment, local_painting_info.root_layer, used_dirty_rect,
+          cache_slot, PaintLayer::kUseGeometryMapper,
+          kIgnorePlatformOverlayScrollbarSize, respect_overflow_clip,
+          &offset_from_root, local_painting_info.sub_pixel_accumulation);
       RepeatFixedPositionObjectInPages(single_fragment[0], painting_info,
                                        layer_fragments);
     } else {
       paint_layer_for_fragments->CollectFragments(
-          layer_fragments, local_painting_info.root_layer,
-          local_painting_info.paint_dirty_rect, cache_slot,
-          PaintLayer::kUseGeometryMapper, kIgnorePlatformOverlayScrollbarSize,
-          respect_overflow_clip, &offset_from_root,
-          local_painting_info.sub_pixel_accumulation);
+          layer_fragments, local_painting_info.root_layer, used_dirty_rect,
+          cache_slot, PaintLayer::kUseGeometryMapper,
+          kIgnorePlatformOverlayScrollbarSize, respect_overflow_clip,
+          &offset_from_root, local_painting_info.sub_pixel_accumulation);
       // PaintLayer::collectFragments depends on the paint dirty rect in
       // complicated ways. For now, always assume a partially painted output
       // for fragmented content.
@@ -535,7 +539,6 @@ PaintResult PaintLayerPainter::PaintLayerContents(
 
     if (should_paint_background) {
       PaintBackgroundForFragments(layer_fragments, context,
-                                  painting_info.paint_dirty_rect,
                                   local_painting_info, paint_flags);
     }
 
@@ -546,9 +549,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
     }
 
     if (should_paint_own_contents) {
-      PaintForegroundForFragments(
-          layer_fragments, context, painting_info.paint_dirty_rect,
-          local_painting_info, selection_only, paint_flags);
+      PaintForegroundForFragments(layer_fragments, context, local_painting_info,
+                                  selection_only, paint_flags);
     }
 
     if (should_paint_self_outline)
@@ -599,7 +601,8 @@ bool PaintLayerPainter::NeedsToClip(
   // Clipping will be applied by property nodes directly for SPv2.
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
     return false;
-  return clip_rect.Rect() != local_painting_info.paint_dirty_rect ||
+  return !local_painting_info.clip_to_dirty_rect ||
+         clip_rect.Rect() != local_painting_info.paint_dirty_rect ||
          (paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase) ||
          clip_rect.HasRadius();
 }
@@ -963,7 +966,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
 
   DisplayItemClient* client = &paint_layer_.GetLayoutObject();
   Optional<LayerClipRecorder> clip_recorder;
-  if (clip_state != kHasClipped && painting_info.clip_to_dirty_rect &&
+  if (clip_state != kHasClipped &&
       (NeedsToClip(painting_info, clip_rect, paint_flags) ||
        paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase)) {
     DisplayItem::Type clip_type =
@@ -1038,7 +1041,6 @@ void PaintLayerPainter::PaintFragmentWithPhase(
 void PaintLayerPainter::PaintBackgroundForFragments(
     const PaintLayerFragments& layer_fragments,
     GraphicsContext& context,
-    const LayoutRect& transparency_paint_dirty_rect,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
   Optional<DisplayItemCacheSkipper> cache_skipper;
@@ -1054,15 +1056,13 @@ void PaintLayerPainter::PaintBackgroundForFragments(
 void PaintLayerPainter::PaintForegroundForFragments(
     const PaintLayerFragments& layer_fragments,
     GraphicsContext& context,
-    const LayoutRect& transparency_paint_dirty_rect,
     const PaintLayerPaintingInfo& local_painting_info,
     bool selection_only,
     PaintLayerFlags paint_flags) {
   DCHECK(!(paint_flags & kPaintLayerPaintingRootBackgroundOnly));
 
   // Optimize clipping for the single fragment case.
-  bool should_clip = local_painting_info.clip_to_dirty_rect &&
-                     layer_fragments.size() == 1 &&
+  bool should_clip = layer_fragments.size() == 1 &&
                      !layer_fragments[0].foreground_rect.IsEmpty();
   ClipState clip_state = kHasNotClipped;
   Optional<LayerClipRecorder> clip_recorder;

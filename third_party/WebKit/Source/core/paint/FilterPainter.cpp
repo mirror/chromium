@@ -20,6 +20,24 @@
 
 namespace blink {
 
+static sk_sp<SkImageFilter> GetImageFilter(PaintLayer& layer) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    return nullptr;
+
+  if (!layer.PaintsWithFilters())
+    return nullptr;
+
+  FilterEffect* last_effect = layer.LastFilterEffect();
+  if (!last_effect)
+    return nullptr;
+
+  return SkiaImageFilterBuilder::Build(last_effect, kInterpolationSpaceSRGB);
+}
+
+bool FilterPainter::CanClipToDirtyRect(PaintLayer& layer) {
+  return !GetImageFilter(layer);
+}
+
 FilterPainter::FilterPainter(PaintLayer& layer,
                              GraphicsContext& context,
                              const LayoutPoint& offset_from_root,
@@ -29,30 +47,9 @@ FilterPainter::FilterPainter(PaintLayer& layer,
     : filter_in_progress_(false),
       context_(context),
       layout_object_(layer.GetLayoutObject()) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
-    return;
-
-  if (!layer.PaintsWithFilters())
-    return;
-
-  FilterEffect* last_effect = layer.LastFilterEffect();
-  if (!last_effect)
-    return;
-
-  sk_sp<SkImageFilter> image_filter =
-      SkiaImageFilterBuilder::Build(last_effect, kInterpolationSpaceSRGB);
+  sk_sp<SkImageFilter> image_filter = GetImageFilter(layer);
   if (!image_filter)
     return;
-
-  // We'll handle clipping to the dirty rect before filter rasterization.
-  // Filter processing will automatically expand the clip rect and the offscreen
-  // to accommodate any filter outsets.
-  // FIXME: It is incorrect to just clip to the damageRect here once multiple
-  // fragments are involved.
-
-  // Subsequent code should not clip to the dirty rect, since we've already
-  // done it above, and doing it later will defeat the outsets.
-  painting_info.clip_to_dirty_rect = false;
 
   if (clip_rect.Rect() != painting_info.paint_dirty_rect ||
       clip_rect.HasRadius()) {
