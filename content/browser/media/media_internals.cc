@@ -785,7 +785,7 @@ MediaInternals::MediaInternals()
     : can_update_(false),
       owner_ids_(),
       uma_handler_(new MediaInternalsUMAHandler(this)) {
-  registrar_.Add(this, NOTIFICATION_RENDERER_PROCESS_TERMINATED,
+  registrar_.Add(this, NOTIFICATION_RENDERER_PROCESS_CLOSED,
                  NotificationService::AllBrowserContextsAndSources());
 }
 
@@ -795,7 +795,7 @@ void MediaInternals::Observe(int type,
                              const NotificationSource& source,
                              const NotificationDetails& details) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK_EQ(type, NOTIFICATION_RENDERER_PROCESS_TERMINATED);
+  DCHECK_EQ(type, NOTIFICATION_RENDERER_PROCESS_CLOSED);
   RenderProcessHost* process = Source<RenderProcessHost>(source).ptr();
 
   uma_handler_->OnProcessTerminated(process->GetID());
