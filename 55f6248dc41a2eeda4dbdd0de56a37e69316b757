@@ -318,6 +318,24 @@
       "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d287ade7_75154c00",
+        "filename": "ui/compositor/external_begin_frame_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-11T12:57:45Z",
+      "side": 1,
+      "message": "Yup. This patch is preparing for controlling BeginFrames via DevTools, i.e. from content/ via ui::Compositor.",
+      "parentUuid": "bba96cf7_e8213c63",
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
