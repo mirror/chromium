@@ -35,7 +35,7 @@ public final class DistillablePageUtils {
             WebContents webContents, boolean isMobileOptimized, PageDistillableCallback callback);
 
     /**
-     * Delegate to receive distillability updates.
+     * OnDismissListener to receive distillability updates.
      */
     public static interface PageDistillableDelegate {
         /**

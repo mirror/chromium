@@ -60,7 +60,7 @@ public class AppBannerManager {
 
     /**
      * Sets the delegate that provides information about a given package.
-     * @param delegate Delegate to use.  Previously set ones are destroyed.
+     * @param delegate OnDismissListener to use.  Previously set ones are destroyed.
      */
     public static void setAppDetailsDelegate(AppDetailsDelegate delegate) {
         if (sAppDetailsDelegate != null) sAppDetailsDelegate.destroy();

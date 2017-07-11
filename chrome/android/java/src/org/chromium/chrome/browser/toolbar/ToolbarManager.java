@@ -177,7 +177,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
      *
      * @param controlContainer The container of the toolbar.
      * @param menuHandler The handler for interacting with the menu.
-     * @param appMenuPropertiesDelegate Delegate for interactions with the app level menu.
+     * @param appMenuPropertiesDelegate OnDismissListener for interactions with the app level menu.
      * @param invalidator Handler for synchronizing invalidations across UI elements.
      * @param urlFocusChangedCallback The callback to be notified when the URL focus changes.
      */

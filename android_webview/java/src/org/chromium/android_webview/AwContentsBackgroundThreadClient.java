@@ -10,7 +10,7 @@ import org.chromium.base.annotations.JNINamespace;
 import java.util.HashMap;
 
 /**
- * Delegate for handling callbacks. All methods are called on the background thread.
+ * OnDismissListener for handling callbacks. All methods are called on the background thread.
  * "Background" means something that isn't UI or IO.
  */
 @JNINamespace("android_webview")

@@ -8,7 +8,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
 /**
- * Delegate for handling callbacks. All methods are called on the IO thread.
+ * OnDismissListener for handling callbacks. All methods are called on the IO thread.
  *
  * You should create a separate instance for every WebContents that requires the
  * provided functionality.

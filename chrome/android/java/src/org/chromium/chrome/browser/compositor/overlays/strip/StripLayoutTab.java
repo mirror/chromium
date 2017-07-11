@@ -43,7 +43,7 @@ public class StripLayoutTab
     }
 
     /**
-     * Delegate for additional tab functionality.
+     * OnDismissListener for additional tab functionality.
      */
     public interface StripLayoutTabDelegate {
         /**

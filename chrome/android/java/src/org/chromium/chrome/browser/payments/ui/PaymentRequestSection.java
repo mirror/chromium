@@ -153,7 +153,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
      *
      * @param context     Context to pull resources from.
      * @param sectionName Title of the section to display.
-     * @param delegate    Delegate to alert when something changes in the dialog.
+     * @param delegate    OnDismissListener to alert when something changes in the dialog.
      */
     private PaymentRequestSection(Context context, String sectionName, SectionDelegate delegate) {
         super(context);
@@ -1077,7 +1077,7 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
          *
          * @param context     Context to pull resources from.
          * @param sectionName Title of the section to display.
-         * @param delegate    Delegate to alert when something changes in the dialog.
+         * @param delegate    OnDismissListener to alert when something changes in the dialog.
          */
         public OptionSection(Context context, String sectionName, SectionDelegate delegate) {
             super(context, sectionName, delegate);

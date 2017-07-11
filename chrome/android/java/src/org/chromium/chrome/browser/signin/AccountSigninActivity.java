@@ -29,7 +29,8 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * An Activity displayed from the MainPreferences to allow the user to pick an account to
- * sign in to. The AccountSigninView.Delegate interface is fulfilled by the AppCompatActivity.
+ * sign in to. The AccountSigninView.OnDismissListener interface is fulfilled by the
+ * AppCompatActivity.
  */
 public class AccountSigninActivity extends AppCompatActivity
         implements AccountSigninView.Listener, AccountSigninView.Delegate {
@@ -197,7 +198,7 @@ public class AccountSigninActivity extends AppCompatActivity
         }
     }
 
-    // AccountSigninView.Delegate implementation.
+    // AccountSigninView.OnDismissListener implementation.
     @Override
     public Activity getActivity() {
         return this;

@@ -21,14 +21,14 @@ import java.util.concurrent.TimeoutException;
  * // production code runs on the main thread test code runs on a separate test thread.
  * // An instance that implements this interface would be injected by test code to ensure that the
  * // methods are being called on another thread.
- * interface Delegate {
+ * interface OnDismissListener {
  *     void onOperationFailed(String errorMessage);
  *     void onDataPersisted();
  * }
  *
  * // This is the inner class you'd write in your test case to later inject into the production
  * // code.
- * class TestDelegate implements Delegate {
+ * class TestDelegate implements OnDismissListener {
  *     // This is the preferred way to create a helper that stores the parameters it receives
  *     // when called by production code.
  *     public static class OnOperationFailedHelper extends CallbackHelper {

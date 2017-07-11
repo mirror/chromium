@@ -14,9 +14,8 @@ import org.chromium.components.bookmarks.BookmarkId;
  * and get bookmark data model.
  */
 interface BookmarkDelegate {
-
     /**
-     * Delegate used to open urls for main fragment on tablet.
+     * OnDismissListener used to open urls for main fragment on tablet.
      */
     interface BookmarkStateChangeListener {
         /**

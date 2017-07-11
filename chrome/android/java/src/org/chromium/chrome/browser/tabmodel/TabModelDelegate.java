@@ -21,7 +21,7 @@ public interface TabModelDelegate {
     void requestToShowTab(Tab tab, TabSelectionType type);
 
     /**
-     * Delegate a request to close all tabs in a model.
+     * OnDismissListener a request to close all tabs in a model.
      * @param incognito Whether the model is incognito.
      * @return Whether the request was handled.
      */

@@ -68,7 +68,7 @@ public class SuggestionsSection extends InnerNode {
     private boolean mIsDataStale;
 
     /**
-     * Delegate interface that allows dismissing this section without introducing
+     * OnDismissListener interface that allows dismissing this section without introducing
      * a circular dependency.
      */
     public interface Delegate {

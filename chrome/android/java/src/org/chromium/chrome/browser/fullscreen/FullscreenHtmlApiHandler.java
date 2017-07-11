@@ -57,7 +57,7 @@ public class FullscreenHtmlApiHandler {
     private OnLayoutChangeListener mFullscreenOnLayoutChangeListener;
 
     /**
-     * Delegate that allows embedders to react to fullscreen API requests.
+     * OnDismissListener that allows embedders to react to fullscreen API requests.
      */
     public interface FullscreenHtmlApiDelegate {
         /**

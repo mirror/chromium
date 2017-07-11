@@ -69,8 +69,8 @@ public class ContextMenuManager implements OnCloseContextMenuListener {
     }
 
     /**
-     * Delegate used by the {@link ContextMenuManager} to disable touch events on the outer view
-     * while the context menu is open.
+     * OnDismissListener used by the {@link ContextMenuManager} to disable touch events on the outer
+     * view while the context menu is open.
      */
     public interface TouchEnabledDelegate { void setTouchEnabled(boolean enabled); }
 
@@ -86,8 +86,8 @@ public class ContextMenuManager implements OnCloseContextMenuListener {
      *
      * @param menu The menu to populate.
      * @param associatedView The view that requested a context menu.
-     * @param delegate Delegate that defines the configuration of the menu and what to do when items
-     *            are tapped.
+     * @param delegate OnDismissListener that defines the configuration of the menu and what to do
+     * when items are tapped.
      */
     public void createContextMenu(ContextMenu menu, View associatedView, Delegate delegate) {
         OnMenuItemClickListener listener = new ItemClickListener(delegate);

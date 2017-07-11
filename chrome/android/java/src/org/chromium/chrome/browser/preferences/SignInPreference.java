@@ -11,8 +11,9 @@ import android.support.v7.content.res.AppCompatResources;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.LinearLayout;
 
-import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.base.Log;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.firstrun.FirstRunSignInProcessor;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -22,6 +23,7 @@ import org.chromium.chrome.browser.signin.AccountSigninActivity;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInAllowedObserver;
+import org.chromium.chrome.browser.signin.SigninPromoMediator;
 import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.chrome.browser.sync.ProfileSyncService.SyncStateChangedListener;
 import org.chromium.chrome.browser.util.ViewUtils;
@@ -37,7 +39,10 @@ public class SignInPreference extends Preference
         implements SignInAllowedObserver, ProfileDownloader.Observer,
                    AndroidSyncSettings.AndroidSyncSettingsObserver, SyncStateChangedListener {
     private boolean mViewEnabled;
-    private boolean mShowingPromo;
+    private SigninPromoMediator mSigninPromoMediator;
+
+    // TODO: remove
+    private boolean mPromoDismissed;
 
     /**
      * Constructor for inflating from XML.
@@ -84,18 +89,15 @@ public class SignInPreference extends Preference
         String accountName = ChromeSigninController.get().getSignedInAccountName();
         if (SigninManager.get(getContext()).isSigninDisabledByPolicy()) {
             setupSigninDisabled();
-            mShowingPromo = false;
         } else if (accountName == null) {
-            setupNotSignedIn();
-
-            if (!mShowingPromo) {
-                // This user action should be recorded when message with sign-in prompt is shown
-                RecordUserAction.record("Signin_Impression_FromSettings");
+            if (SigninPromoMediator.shouldShowPromoInSettings()) {
+                setupSigninPromo();
+                // increment number of impressions
+            } else {
+                setupNotSignedIn();
             }
-            mShowingPromo = true;
         } else {
             setupSignedIn(accountName);
-            mShowingPromo = false;
         }
 
         setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -105,24 +107,7 @@ public class SignInPreference extends Preference
                         getContext(), SigninAccessPoint.SETTINGS);
             }
         });
-    }
 
-    private void setupSigninDisabled() {
-        setTitle(R.string.sign_in_to_chrome);
-        setSummary(R.string.sign_in_to_chrome_disabled_summary);
-        setFragment(null);
-        setIcon(ManagedPreferencesUtils.getManagedByEnterpriseIconId());
-        setWidgetLayoutResource(0);
-        setViewEnabled(false);
-    }
-
-    private void setupNotSignedIn() {
-        setTitle(R.string.sign_in_to_chrome);
-        setSummary(R.string.sign_in_to_chrome_summary);
-        setFragment(null);
-        setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.logo_avatar_anonymous));
-        setWidgetLayoutResource(0);
-        setViewEnabled(true);
     }
 
     private void setupSignedIn(String accountName) {
@@ -148,6 +133,43 @@ public class SignInPreference extends Preference
         setViewEnabled(true);
     }
 
+    private void setupNotSignedIn() {
+        // setLayoutResource(android.R.layout.preference_category);
+        setTitle(R.string.sign_in_to_chrome);
+        setSummary(R.string.sign_in_to_chrome_summary);
+        setFragment(null);
+        setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.logo_avatar_anonymous));
+        setWidgetLayoutResource(0);
+        setViewEnabled(true);
+    }
+
+    private void setupSigninDisabled() {
+        // setLayoutResource(android.R.layout.preference_category);
+        setTitle(R.string.sign_in_to_chrome);
+        setSummary(R.string.sign_in_to_chrome_disabled_summary);
+        setFragment(null);
+        setIcon(ManagedPreferencesUtils.getManagedByEnterpriseIconId());
+        setWidgetLayoutResource(0);
+        setViewEnabled(false);
+    }
+
+    private void setupSigninPromo() {
+        setLayoutResource(R.layout.signin_promo);
+        setTitle("");
+        setSummary("");
+        setFragment(null);
+        setIcon(null);
+        setWidgetLayoutResource(0);
+        setViewEnabled(true);
+
+        if (mSigninPromoMediator == null) {
+            mSigninPromoMediator = new SigninPromoMediator();
+            //            SigninPromoMediator.recordSigninPromoImpression();
+        }
+
+        notifyChanged();
+    }
+
     // This just changes visual representation. Actual enabled flag in preference stays
     // always true to receive clicks (necessary to show "Managed by administator" toast).
     private void setViewEnabled(boolean enabled) {
@@ -159,9 +181,20 @@ public class SignInPreference extends Preference
     }
 
     @Override
-    protected void onBindView(View view) {
+    protected void onBindView(final View view) {
         super.onBindView(view);
         ViewUtils.setEnabledRecursive(view, mViewEnabled);
+        if (mSigninPromoMediator != null && SigninPromoMediator.shouldShowPromoInSettings()) {
+            mSigninPromoMediator.setupSigninPromoView(
+                    view, getContext(), new SigninPromoMediator.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            // mPromoDismissed = true;
+                            // SigninPromoMediator.setToFalse();
+                            // update();
+                        }
+                    });
+        }
     }
 
     // ProfileSyncServiceListener implementation:

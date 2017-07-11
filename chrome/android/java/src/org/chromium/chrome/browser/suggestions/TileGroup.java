@@ -173,7 +173,7 @@ public class TileGroup implements MostVisitedSites.Observer {
 
     /**
      * @param context Used for initialisation and resolving resources.
-     * @param uiDelegate Delegate used to interact with the rest of the system.
+     * @param uiDelegate OnDismissListener used to interact with the rest of the system.
      * @param contextMenuManager Used to handle context menu invocations on the tiles.
      * @param tileGroupDelegate Used for interactions with the Most Visited backend.
      * @param observer Will be notified of changes to the tile data.

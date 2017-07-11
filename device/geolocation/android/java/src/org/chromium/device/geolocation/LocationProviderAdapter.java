@@ -27,7 +27,7 @@ import java.util.concurrent.FutureTask;
 public class LocationProviderAdapter {
     private static final String TAG = "cr_LocationProvider";
 
-    // Delegate handling the real work in the main thread.
+    // OnDismissListener handling the real work in the main thread.
     private LocationProviderFactory.LocationProvider mImpl;
 
     private LocationProviderAdapter() {

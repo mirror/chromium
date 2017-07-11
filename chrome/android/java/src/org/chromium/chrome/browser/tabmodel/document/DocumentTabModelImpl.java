@@ -85,10 +85,10 @@ public class DocumentTabModelImpl extends TabModelJniBridge implements DocumentT
      */
     private final List<Integer> mHistoricalTabs;
 
-    /** Delegate for working with the ActivityManager. */
+    /** OnDismissListener for working with the ActivityManager. */
     private final ActivityDelegate mActivityDelegate;
 
-    /** Delegate for working with the filesystem. */
+    /** OnDismissListener for working with the filesystem. */
     private final StorageDelegate mStorageDelegate;
 
     /** Context to use. */
@@ -110,8 +110,8 @@ public class DocumentTabModelImpl extends TabModelJniBridge implements DocumentT
 
     /**
      * Construct a DocumentTabModel.
-     * @param activityDelegate Delegate to use for accessing the ActivityManager.
-     * @param storageDelegate Delegate to use for accessing persistent storage.
+     * @param activityDelegate OnDismissListener to use for accessing the ActivityManager.
+     * @param storageDelegate OnDismissListener to use for accessing persistent storage.
      * @param tabCreatorManager Used to create Tabs.
      * @param isIncognito Whether or not the TabList is managing incognito tabs.
      * @param prioritizedTabId ID of the tab to prioritize when loading.

@@ -33,7 +33,8 @@ class IncognitoTabModelImplCreator implements IncognitoTabModelDelegate {
      * @param orderController     Determines the order for inserting new Tabs.
      * @param tabContentManager   Manages the display content of the tab.
      * @param tabSaver            Handler for saving tabs.
-     * @param modelDelegate       Delegate to handle external dependencies and interactions.
+     * @param modelDelegate       OnDismissListener to handle external dependencies and
+     * interactions.
      */
     public IncognitoTabModelImplCreator(TabCreator regularTabCreator,
             TabCreator incognitoTabCreator, TabModelSelectorUma uma,

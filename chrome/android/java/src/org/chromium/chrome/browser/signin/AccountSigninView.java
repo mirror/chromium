@@ -80,7 +80,8 @@ public class AccountSigninView extends FrameLayout {
         void onFailedToSetForcedAccount(String forcedAccountName);
     }
 
-    // TODO(peconn): Investigate expanding the Delegate to simplify the Listener implementations.
+    // TODO(peconn): Investigate expanding the OnDismissListener to simplify the Listener
+    // implementations.
 
     /**
      * Provides UI objects for new UI component creation.

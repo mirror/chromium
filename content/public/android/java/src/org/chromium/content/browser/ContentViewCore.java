@@ -422,7 +422,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
 
     /**
      *
-     * @param viewDelegate Delegate to add/remove anchor views.
+     * @param viewDelegate OnDismissListener to add/remove anchor views.
      * @param internalDispatcher Handles dispatching all hidden or super methods to the
      *                           containerView.
      * @param webContents A WebContents instance to connect to.

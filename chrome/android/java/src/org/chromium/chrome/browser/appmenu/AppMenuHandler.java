@@ -46,7 +46,7 @@ public class AppMenuHandler {
     /**
      * Constructs an AppMenuHandler object.
      * @param activity Activity that is using the AppMenu.
-     * @param delegate Delegate used to check the desired AppMenu properties on show.
+     * @param delegate OnDismissListener used to check the desired AppMenu properties on show.
      * @param menuResourceId Resource Id that should be used as the source for the menu items.
      *            It is assumed to have back_menu_id, forward_menu_id, bookmark_this_page_id.
      */
