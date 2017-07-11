@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "4b4dad96_dfa224e3",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "It\u0027s better to be explicit and have .Clone() (and maybe using rvalue goodness). Having a cursor shortens code but creates more room for confusion.",
+      "parentUuid": "d3c349d1_ffdae360",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e933cbb_7726e108",
         "filename": "chrome/installer/zucchini/buffer_sink.h",
         "patchSetId": 7
@@ -1083,6 +1107,30 @@
     },
     {
       "key": {
+        "uuid": "98c92445_18aea17e",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "Creating new instances of BufferSource() to support jump seems hacky. How about instantiating it once as \"trunk\", use .Clone() to create \"branches\" that looks ahead?\n\nNote that pointer extraction will use lots of random access and interpreting raw bytes. BufferSource, as is, won\u0027t accommodate that.  So you\u0027d have to use something else later on (and duplicate code).",
+      "parentUuid": "92bc8ff6_52e39c86",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 19
+      },
+      "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7f0dbe9_d9b0dcaa",
         "filename": "chrome/installer/zucchini/buffer_source.h",
         "patchSetId": 7
@@ -1118,6 +1166,30 @@
       "side": 1,
       "message": "Same issues as BufferSink",
       "parentUuid": "b7f0dbe9_d9b0dcaa",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc9ff7c_05745ddd",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "Same suggestion re. Clone()?",
+      "parentUuid": "29f304bb_02a28f96",
       "range": {
         "startLine": 30,
         "startChar": 2,
@@ -1174,6 +1246,30 @@
       "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0f083a_1412364e",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "464d5e1f_8305db8e",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1268,6 +1364,30 @@
       "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa448c5_8164e4bf",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d4d67b2_98feb9a8",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 21
+      },
+      "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

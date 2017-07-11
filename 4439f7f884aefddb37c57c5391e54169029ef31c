@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "1ebd2aba_1eb41092",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "If there are exceptions, add \"Where applicable, ...\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 16
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f7c0aa_b9242b5d",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "NIT: \"advances\" or \"while advancing\".\n\nNIT: s/and/, and/.",
+      "range": {
+        "startLine": 48,
+        "startChar": 25,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42792a30_48d1145e",
         "filename": "chrome/installer/zucchini/buffer_sink.h",
         "patchSetId": 11
@@ -46,6 +92,375 @@
       "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48c68236_a3b899eb",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "What\u0027s the error message? DCHECK_GE seems to use \u003e\u003d behind the scene, so it\u0027s worth investigating.",
+      "parentUuid": "9c6d48ff_57c090b2",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e660ef72_ffb788aa",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "Inline?",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 21
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59dde12_fc33f1d2",
+        "filename": "chrome/installer/zucchini/buffer_sink_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "More\n  EXPECT_EQ(..., sink_.Remaining());\nat beginning and between lines?\n?",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646c3087_6c50e656",
+        "filename": "chrome/installer/zucchini/buffer_source.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "Optional: Remove {}.",
+      "range": {
+        "startLine": 26,
+        "startChar": 30,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4107fb0_c654da37",
+        "filename": "chrome/installer/zucchini/buffer_source.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "size_type ?  You\u0027re comparing against Remaining().",
+      "range": {
+        "startLine": 33,
+        "startChar": 40,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378c4b9d_02ff5eac",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "If there are exceptions, add \"Where applicable, ...\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee845449_f89a9d1e",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "// Moves cursor forward by |n| bytes, or until end if data is exhausted. Returns a reference to *this, to allow chaining, e.g.:\n//   if (!buffer_source.Skip(1024).GetValue\u003cuint32_t\u003e(\u0026value)) {\n//      ... // Handle error.\n//   }\n// Notice that Skip() defers error handling to GetValue().",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c253ddbd_6f1f3963",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "NIT: \"while moving\"",
+      "range": {
+        "startLine": 78,
+        "startChar": 74,
+        "endLine": 78,
+        "endChar": 80
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10a5a9c_f1ff8216",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "\"while advancing\"",
+      "range": {
+        "startLine": 96,
+        "startChar": 40,
+        "endLine": 96,
+        "endChar": 49
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160258b5_2671ff14",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "It\u0027s kinda confusing that the other Get*(), on failure, gets nothing, whereas GetRegion() grabs as much as it can. Does the latter feature get used? If it does, and the intent is to get \"whatever\u0027s leftover\", then it\u0027s better to have a separate GetRemaining() function.",
+      "range": {
+        "startLine": 112,
+        "startChar": 18,
+        "endLine": 112,
+        "endChar": 27
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9129280_ed975382",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "Can be inlined?",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 21
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc54c92_6cd931b2",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "// Skipping past end just moves cursor to end.",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a167506_1ff0851a",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "// Cursor has not advanced, so check fails.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25da412b_88e13ee9",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "After this:\nEXPECT_EQ(kLen, source_.Remaining());",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1471d4f3_b52cba3d",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "Check source_.Remaining().",
+      "range": {
+        "startLine": 89,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a00b99_a4b047ec",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-11T19:00:52Z",
+      "side": 1,
+      "message": "Check source.Remaining().",
+      "range": {
+        "startLine": 132,
+        "startChar": 1,
+        "endLine": 132,
+        "endChar": 0
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
