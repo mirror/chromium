@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1054ce4e_31cc5cd8",
+        "filename": "ash/mus/shell_delegate_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-11T05:37:45Z",
+      "side": 1,
+      "message": "Yes. The destructor of unique_ptr that is needed in line 75 requires the definition of KeyboardUI.",
+      "parentUuid": "d4a42384_798f453e",
+      "revId": "096c6c04a4070dbbe6200f9e74f8b1249865575c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3186675e_9e089f7a",
         "filename": "ash/shell_delegate.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b8a765ac_35d8ad22",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-11T05:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3186675e_9e089f7a",
+      "revId": "096c6c04a4070dbbe6200f9e74f8b1249865575c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e41db1e_350dd8ab",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "096c6c04a4070dbbe6200f9e74f8b1249865575c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92da9694_b7702c02",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-11T05:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e41db1e_350dd8ab",
+      "revId": "096c6c04a4070dbbe6200f9e74f8b1249865575c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
