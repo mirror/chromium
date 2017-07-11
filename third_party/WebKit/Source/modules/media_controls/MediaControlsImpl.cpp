@@ -1163,6 +1163,8 @@ void MediaControlsImpl::ComputeWhichControlsFit() {
   } else if (overflow_elements.size() == 1) {
     overflow_menu_->SetIsWanted(false);
     overflow_elements.front()->SetDoesFit(true);
+    // TODO: tests
+    // overflow_elements.front()->ShouldShowButtonInOverflowMenu(false);
   }
 
   // Decide if the overlay play button fits.
@@ -1170,6 +1172,17 @@ void MediaControlsImpl::ComputeWhichControlsFit() {
     bool does_fit = size_.Width() >= kMinWidthForOverlayPlayButton &&
                     size_.Height() >= kMinHeightForOverlayPlayButton;
     overlay_play_button_->SetDoesFit(does_fit);
+  }
+
+  // In order to avoid recording buttons ... TODO
+  if (MediaElement().getReadyState() >= HTMLMediaElement::kHaveMetadata ||
+      MediaElement().EffectivePreloadType() ==
+          WebMediaPlayer::Preload::kPreloadNone) {
+    LOG(INFO) << "width : " << size_.Width();
+    // Record which controls are used.
+    for (const auto& element : elements)
+      element->MaybeRecordDisplayed();
+    overflow_menu_->MaybeRecordDisplayed();
   }
 }
 

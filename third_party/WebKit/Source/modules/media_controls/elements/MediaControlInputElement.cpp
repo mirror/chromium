@@ -8,6 +8,7 @@
 #include "core/html/HTMLLabelElement.h"
 #include "core/html/HTMLMediaElement.h"
 #include "modules/media_controls/MediaControlsImpl.h"
+#include "platform/Histogram.h"
 #include "platform/text/PlatformLocale.h"
 
 namespace blink {
@@ -52,6 +53,24 @@ void MediaControlInputElement::SetOverflowElementIsWanted(bool wanted) {
   overflow_element_->SetIsWanted(wanted);
 }
 
+void MediaControlInputElement::MaybeRecordDisplayed() {
+  // Display is defined as wanted and fitting. Overflow elements will only be
+  // displayed if their inline counterpart isn't displayed.
+  if (!IsWanted() || !DoesFit()) {
+    if (IsWanted() && overflow_element_)
+      overflow_element_->MaybeRecordDisplayed();
+    return;
+  }
+
+  // Keep this check after the block above because `display_recorded_` might be
+  // true for the inline element but not for the overflow one.
+  if (display_recorded_)
+    return;
+
+  RecordCTREvent(CTREvent::kDisplayed);
+  display_recorded_ = true;
+}
+
 void MediaControlInputElement::UpdateOverflowString() {
   if (!overflow_menu_text_)
     return;
@@ -89,6 +108,28 @@ void MediaControlInputElement::UpdateShownState() {
   MediaControlElementBase::UpdateShownState();
 }
 
+void MediaControlInputElement::DefaultEventHandler(Event* event) {
+  if (event->type() == EventTypeNames::click)
+    MaybeRecordInteracted();
+
+  HTMLInputElement::DefaultEventHandler(event);
+}
+
+void MediaControlInputElement::MaybeRecordInteracted() {
+  if (interaction_recorded_)
+    return;
+
+  // TODO: display_recorded_ might not be set.
+  DCHECK(display_recorded_);
+
+  RecordCTREvent(CTREvent::kInteracted);
+  interaction_recorded_ = true;
+}
+
+bool MediaControlInputElement::IsOverflowElement() const {
+  return is_overflow_element_;
+}
+
 void MediaControlInputElement::UpdateDisplayType() {}
 
 bool MediaControlInputElement::IsMouseFocusable() const {
@@ -101,6 +142,14 @@ bool MediaControlInputElement::IsMediaControlElement() const {
 
 String MediaControlInputElement::GetOverflowMenuString() const {
   return MediaElement().GetLocale().QueryString(GetOverflowStringName());
+}
+
+void MediaControlInputElement::RecordCTREvent(CTREvent event) {
+  String histogram_name("Media.Controls.CTR.");
+  histogram_name.append(GetNameForHistograms());
+  EnumerationHistogram ctr_histogram(histogram_name.Ascii().data(),
+                                     static_cast<int>(CTREvent::kCount));
+  ctr_histogram.Count(static_cast<int>(event));
 }
 
 DEFINE_TRACE(MediaControlInputElement) {

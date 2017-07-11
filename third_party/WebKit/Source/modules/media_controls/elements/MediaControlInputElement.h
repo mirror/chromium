@@ -25,22 +25,37 @@ class MediaControlInputElement : public HTMLInputElement,
 
   // Implements MediaControlElementBase.
   void SetOverflowElementIsWanted(bool) final;
+  void MaybeRecordDisplayed() final;
 
   DECLARE_VIRTUAL_TRACE();
 
  protected:
   MediaControlInputElement(MediaControlsImpl&, MediaControlElementType);
 
+  // Returns a string that represents the button for metrics purposes. This
+  // will be used as a suffix for histograms.
+  virtual const char* GetNameForHistograms() const = 0;
+
   // Returns a string representation of the media control element.
   // Subclasses should override this method to return the string representation
   // of the overflow button.
   virtual WebLocalizedString::Name GetOverflowStringName() const;
+
+  // Implements a default event handler to record interaction on click.
+  void DefaultEventHandler(Event*) override;
 
   // Implements MediaControlElementBase.
   void UpdateShownState() final;
 
   // Updates the value of the Text string shown in the overflow menu.
   void UpdateOverflowString();
+
+  // Record interaction if it wasn't recorded yet. It is used internally for
+  // click events but also by some elements that have complex interaction logic.
+  void MaybeRecordInteracted();
+
+  // Returns whether this element is used for the overflow menu.
+  bool IsOverflowElement() const;
 
  private:
   virtual void UpdateDisplayType();
@@ -52,6 +67,16 @@ class MediaControlInputElement : public HTMLInputElement,
   // the overflow menu.
   String GetOverflowMenuString() const;
 
+  // Used for histograms, do not reorder.
+  enum class CTREvent {
+    kDisplayed = 0,
+    kInteracted,
+    kCount,
+  };
+
+  // Records the CTR event.
+  void RecordCTREvent(CTREvent);
+
   // The copy of this element used for the overflow menu in the media controls.
   // Setting this pointer is optional so it may be null.
   Member<MediaControlInputElement> overflow_element_;
@@ -61,6 +86,11 @@ class MediaControlInputElement : public HTMLInputElement,
 
   // Keeps track if the button was created for the purpose of the overflow menu.
   bool is_overflow_element_ = false;
+
+  // Keeps track of whether the display/interaction have been recorded for the
+  // CTR metrics.
+  bool display_recorded_ = false;
+  bool interaction_recorded_ = false;
 };
 
 }  // namespace blink

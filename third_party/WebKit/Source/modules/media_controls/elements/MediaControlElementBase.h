@@ -25,13 +25,22 @@ class MediaControlElementBase : public GarbageCollectedMixin {
  public:
   // These hold the state about whether this control should be shown if
   // space permits.  These will also show / hide as needed.
-  virtual void SetIsWanted(bool);
+  void SetIsWanted(bool);
   bool IsWanted() const;
 
   // Tell us whether we fit or not.  This will hide / show the control as
   // needed, also.
   void SetDoesFit(bool);
   bool DoesFit() const;
+
+  // Similar to SetIsWanted() for the overflow element associated to the current
+  // element. Will be a no-op if the element does not have an associated
+  // overflow element.
+  virtual void SetOverflowElementIsWanted(bool) = 0;
+
+  // Called when recording the display state of the media control element should
+  // happen. It will be a no-op if the element isn't displayed in the controls.
+  virtual void MaybeRecordDisplayed() = 0;
 
   // Returns the display type of the element that is set at creation.
   MediaControlElementType DisplayType() const;
@@ -40,11 +49,6 @@ class MediaControlElementBase : public GarbageCollectedMixin {
   // Controls that can be added to the overflow menu should override this
   // function and return true.
   virtual bool HasOverflowButton() const;
-
-  // Similar to SetIsWanted() for the overflow element associated to the current
-  // element. Will be a no-op if the element does not have an associated
-  // overflow element.
-  virtual void SetOverflowElementIsWanted(bool) = 0;
 
   DECLARE_VIRTUAL_TRACE();
 
