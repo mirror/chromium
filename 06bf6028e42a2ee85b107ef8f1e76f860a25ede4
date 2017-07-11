@@ -46,6 +46,30 @@
       "revId": "06bf6028e42a2ee85b107ef8f1e76f860a25ede4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cdbb13_ba195d36",
+        "filename": "third_party/WebKit/Source/core/html/custom/CustomElementReactionStack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-11T19:50:12Z",
+      "side": 1,
+      "message": "That was the whole intention behind the current design :) Developers should be forced to use TraceWrappersWithManualWriteBarrier with raw pointers so they get reminded.\n\nI see that the TraceWrappers that takes raw pointers is on the public interface of WrapperVisitor. Moving this one to the private section should be enough to actually enforce this policy.",
+      "parentUuid": "d9251a03_fcaa9bbd",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 42
+      },
+      "revId": "06bf6028e42a2ee85b107ef8f1e76f860a25ede4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
