@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "663a953d_67198575",
+        "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-11T13:31:14Z",
+      "side": 1,
+      "message": "Good question - historically empty entries were dropped, but some teams depended on being able to log empty entries, so the behavior was changed. Rob, is my understanding on this current? We don\u0027t drop empty entries anymore, right?\n\nYou can see the change to add support for empty entries here:\nhttps://codereview.chromium.org/2855053002\na new test was added: AddEntryWithEmptyMetrics and that test still exists today.",
+      "parentUuid": "334a1591_e5e8c42f",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da4ddc9_4fb6e7d5",
         "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-11T13:00:10Z",
       "side": 1,
       "message": "I\u0027m curious why these URL changes are necessary, since AFAIK GURL will canonicalize them to have a slash anyways.",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200ac737_32227005",
+        "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-11T13:31:14Z",
+      "side": 1,
+      "message": "That\u0027s right, GURL normalizes URLs to include the trailing slash. UKM makes use of GURL in ways we weren\u0027t doing previously, so in order for URL lookup to match, it\u0027s better to use the normalized URL and be consistent.\n\nThe change to this test wasn\u0027t strictly necessary since it doesn\u0027t use UKM, but I feel it\u0027s better for us to use valid URLs (which include the \u0027/\u0027 in the path) consistently across our tests - I\u0027ve done similar cleanups for test code in a few other codebases in the past as this issue tends to crop up in various ways when URLs without trailing \u0027/\u0027 for the path are used.",
+      "parentUuid": "9da4ddc9_4fb6e7d5",
       "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "788a75dc_76679781",
+        "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-11T13:31:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aa96af9f_bbb6512d",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a59f3549_4daf4675",
         "filename": "chrome/browser/page_load_metrics/observers/from_gws_page_load_metrics_observer.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "685621a6_e87084ce",
+        "filename": "chrome/browser/page_load_metrics/observers/from_gws_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-11T13:31:14Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly, but I believe this style is common in blink code, but not Chrome code. I personally find it slightly harder to read, but it is shorter which is nice.\n\nMy inclincation is to follow convention, and this is not the convention for looking up the ukm recorder elsewhere in the codebase:\nhttps://cs.chromium.org/search/?q\u003d%5C%3D.*%5C%3Eukm_recorder%5C(%5C)\u0026type\u003dcs\n\nand more generally this style (an if test with assignment inside) is very uncommon in chrome/ code (only 20 files I can find that do this):\nhttps://cs.chromium.org/search/?q\u003dif%5C+%5C(%5B%5E)%5D*%5C+%3D%5C++file:chrome/+lang:c%2B%2B\u0026type\u003dcs\n\nSo I\u0027m disinclined to start using this pattern more in chrome code. It seems to be something more commonly done in blink code.",
+      "parentUuid": "a59f3549_4daf4675",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bff5feaf_f1b8528a",
         "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-11T13:00:10Z",
       "side": 1,
       "message": "I would prefer if this took a GURL since it should be readily available, but it seems not trivial without changing GetSourceForUrl.",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e773799_5300592e",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-11T13:31:14Z",
+      "side": 1,
+      "message": "Yup, I don\u0027t think it\u0027s critical.\n\nI prefer test methods take string over GURL since taking GURL can mean writing unnecessary boilerplate. See for example our many calls to NavigateAndCommit(GURL(kUrl)) - I think this makes tests less readable - I\u0027d rather that there be a NavigateAndCommit that takes char*.",
+      "parentUuid": "bff5feaf_f1b8528a",
       "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
