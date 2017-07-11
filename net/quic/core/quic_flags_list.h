@@ -122,15 +122,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_fix_adaptive_time_loss, false)
 // compressed for QUIC version >= 38.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_random_padding, true)
 
-// Increase BBR's inflight limit if recent ack rate is low.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_slow_recent_delivery, false)
-
-// Congestion window gain for QUIC BBR during slow delivery.
-QUIC_FLAG(double, FLAGS_quic_bbr_slow_delivery_cwnd_gain, 4.0f)
-
-// Threshold multiplier below which delivery is considered slow.
-QUIC_FLAG(double, FLAGS_quic_bbr_slow_delivery_threshold_multiplier, 0.5f)
-
 // If true, update state if trailing headers with a :final-offset key are
 // received for a previously closed QUIC stream.
 QUIC_FLAG(bool,

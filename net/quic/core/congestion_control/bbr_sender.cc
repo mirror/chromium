@@ -47,11 +47,6 @@ const QuicTime::Delta kProbeRttTime = QuicTime::Delta::FromMilliseconds(200);
 const float kStartupGrowthTarget = 1.25;
 const QuicRoundTripCount kRoundTripsWithoutGrowthBeforeExitingStartup = 3;
 
-// Maintain ack history for this fraction of the smoothed RTT.
-const float kRecentlyAckedRttFraction = 0.5f;
-// Minimum period over which ack history will be maintained.
-const QuicTime::Delta kMinAckHistory = QuicTime::Delta::FromMilliseconds(5);
-
 }  // namespace
 
 BbrSender::DebugState::DebugState(const BbrSender& sender)
@@ -104,10 +99,6 @@ BbrSender::BbrSender(const RttStats* rtt_stats,
       rtt_variance_weight_(
           static_cast<float>(FLAGS_quic_bbr_rtt_variation_weight)),
       num_startup_rtts_(kRoundTripsWithoutGrowthBeforeExitingStartup),
-      congestion_window_gain_for_slow_delivery_(
-          static_cast<float>(FLAGS_quic_bbr_slow_delivery_cwnd_gain)),
-      threshold_multiplier_for_slow_delivery_(static_cast<float>(
-          FLAGS_quic_bbr_slow_delivery_threshold_multiplier)),
       cycle_current_offset_(0),
       last_cycle_start_(QuicTime::Zero()),
       is_at_full_bandwidth_(false),
@@ -120,7 +111,6 @@ BbrSender::BbrSender(const RttStats* rtt_stats,
       recovery_state_(NOT_IN_RECOVERY),
       end_recovery_at_(0),
       recovery_window_(max_congestion_window_),
-      bytes_recently_acked_(0),
       rate_based_recovery_(false) {
   EnterStartupMode();
 }
@@ -147,43 +137,9 @@ bool BbrSender::OnPacketSent(QuicTime sent_time,
   return is_retransmittable == HAS_RETRANSMITTABLE_DATA;
 }
 
-bool BbrSender::SlowDeliveryAllowsSending(QuicTime now,
-                                          QuicByteCount bytes_in_flight) {
-  if (mode_ != BbrSender::PROBE_BW) {
-    return false;
-  }
-  UpdateRecentlyAcked(now, 0u);
-  // Set a (large) limit to how much we send into a blackhole.
-  if (bytes_in_flight >=
-      congestion_window_gain_for_slow_delivery_ * GetCongestionWindow()) {
-    return false;
-  }
-  // If no acks were recorded in the recent past, continue sending.
-  if (recently_acked_.empty()) {
-    return true;
-  }
-  // Compute the time period over which acks should have been recorded.
-  QuicTime::Delta ack_period =
-      std::max(now - recently_acked_.front().ack_time,
-               std::max(kMinAckHistory, kRecentlyAckedRttFraction *
-                                            rtt_stats_->smoothed_rtt()));
-  // If delivery rate is less than BW by a factor of threshold_multiplier_,
-  // ack rate has suddenly decreased substantially. Continue sending.
-  if (BandwidthEstimate() * ack_period >
-      threshold_multiplier_for_slow_delivery_ * bytes_recently_acked_) {
-    return true;
-  }
-  return false;
-}
-
-QuicTime::Delta BbrSender::TimeUntilSend(QuicTime now,
+QuicTime::Delta BbrSender::TimeUntilSend(QuicTime /* now */,
                                          QuicByteCount bytes_in_flight) {
   if (bytes_in_flight < GetCongestionWindow()) {
-    return QuicTime::Delta::Zero();
-  }
-  if (FLAGS_quic_reloadable_flag_quic_bbr_slow_recent_delivery &&
-      SlowDeliveryAllowsSending(now, bytes_in_flight)) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_slow_recent_delivery, 2, 2);
     return QuicTime::Delta::Zero();
   }
   return QuicTime::Delta::Infinite();
@@ -279,11 +235,6 @@ void BbrSender::OnCongestionEvent(bool /*rtt_updated*/,
 
     const QuicByteCount bytes_acked =
         sampler_.total_bytes_acked() - total_bytes_acked_before;
-    if (FLAGS_quic_reloadable_flag_quic_bbr_slow_recent_delivery) {
-      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_slow_recent_delivery, 1,
-                        2);
-      UpdateRecentlyAcked(event_time, bytes_acked);
-    }
 
     UpdateAckAggregationBytes(event_time, bytes_acked);
     if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 ||
@@ -574,26 +525,6 @@ void BbrSender::UpdateRecoveryState(QuicPacketNumber last_acked_packet,
 
       break;
   }
-}
-
-void BbrSender::UpdateRecentlyAcked(QuicTime new_ack_time,
-                                    QuicByteCount newly_acked_bytes) {
-  // Discard information stored for acks received too far in the past.
-  QuicTime::Delta recent_period = std::max(
-      kMinAckHistory, kRecentlyAckedRttFraction * rtt_stats_->smoothed_rtt());
-  while (!recently_acked_.empty() &&
-         (recently_acked_.front().ack_time + recent_period < new_ack_time)) {
-    DCHECK_GE(bytes_recently_acked_, recently_acked_.front().acked_bytes);
-    bytes_recently_acked_ -= recently_acked_.front().acked_bytes;
-    recently_acked_.pop_front();
-  }
-  // Nothing to add to recently_acked_ if no new ack.
-  if (newly_acked_bytes == 0)
-    return;
-  // Add information for new ack
-  DataDelivered new_ack = {new_ack_time, newly_acked_bytes};
-  recently_acked_.push_back(new_ack);
-  bytes_recently_acked_ += newly_acked_bytes;
 }
 
 // TODO(ianswett): Move this logic into BandwidthSampler.
