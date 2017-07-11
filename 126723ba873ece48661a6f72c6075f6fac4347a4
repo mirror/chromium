@@ -22,6 +22,30 @@
       "revId": "126723ba873ece48661a6f72c6075f6fac4347a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564db76f_149dd6df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-11T17:06:07Z",
+      "side": 1,
+      "message": "I am still not fully decided on this design!! The hack that I made was that these isSuccessful entries are almost \"invisible\" because they are not included in the getEntries() calls, which satisfies all the unit tests at least. This entry does get removed when the user deletes the item (cancelNotification call includes removeSharedPreferenceEntry) but does not check if the notification is dismissed (I\u0027m not sure if we\u0027re already doing this anywhere else? It seems tricky to track if we are not already doing so).\n\nI was hesitant to create yet another tracking system (probably would have to be another SharedPreferences), but if this hack doesn\u0027t seem enough, I will reconsider :)",
+      "parentUuid": "1cff0921_1c41db83",
+      "range": {
+        "startLine": 1019,
+        "startChar": 8,
+        "endLine": 1023,
+        "endChar": 9
+      },
+      "revId": "126723ba873ece48661a6f72c6075f6fac4347a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
