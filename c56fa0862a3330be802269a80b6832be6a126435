@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2ec896e_ebc4feed",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleDeclaration.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-11T20:50:33Z",
+      "side": 1,
+      "message": "Parent is set in ctor so this is fine.",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 46
+      },
+      "revId": "c56fa0862a3330be802269a80b6832be6a126435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "defd417f_c4dbbdce",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleRule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-11T20:50:33Z",
+      "side": 1,
+      "message": "Both have manual write barriers, so they are fine.",
+      "range": {
+        "startLine": 113,
+        "startChar": 11,
+        "endLine": 113,
+        "endChar": 46
+      },
+      "revId": "c56fa0862a3330be802269a80b6832be6a126435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e87923_f29d995d",
+        "filename": "third_party/WebKit/Source/core/html/custom/CustomElementRegistry.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-11T20:50:33Z",
+      "side": 1,
+      "message": "This one seems broken on HEAD and I see no one-line-fix. \n\nWe lazily create the stack in the getter and set it to a static persistent. There is no way we could do a write barrier there, because we don\u0027t have a \"parent\" object.\n\nWe would need what you suggested on Sigbjorn\u0027s CL: Some TraceWrapperMember hanging off somewhere.",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "c56fa0862a3330be802269a80b6832be6a126435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73d8513_1685dd37",
+        "filename": "third_party/WebKit/Source/core/svg/SVGAngleTearOff.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-11T20:50:33Z",
+      "side": 1,
+      "message": "For all SVG*: We cannot trace in the Base class as it is mixed in. contextElement() never changes though afaics so manually tracing is fine.",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 46
+      },
+      "revId": "c56fa0862a3330be802269a80b6832be6a126435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
