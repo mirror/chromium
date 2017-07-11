@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "73a13a84_532c2bdc",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-11T00:27:21Z",
+      "side": 1,
+      "message": "That\u0027s good point. It\u0027s why gfx::BufferUsage::SCANOUT has GBM_BO_USE_RENDERING flag.\n\nGBM_BO_USE_TEXTURING is GPU_READ. e.g. GL_TEXTURE_EXTERNAL_OES\nGBM_BO_USE_RENDERING is GPU_READ_WRITE. e.g. texture bound to FBO\n\nGBM_BO_USE_TEXTURING is introduced to distinguish GPU_READ and GPU_READ_WRITE.",
+      "parentUuid": "14414da3_48ec788c",
+      "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ff8447_eb8c1973",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-11T00:27:21Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s good idea. GBM_BO_USE_RENDERING is subset of GBM_BO_USE_TEXTURING.\n\nGBM_BO_USE_TEXTURING is GPU_READ. e.g. GL_TEXTURE_EXTERNAL_OES\nGBM_BO_USE_RENDERING is GPU_READ_WRITE. e.g. texture bound to FBO",
+      "parentUuid": "d7bb2b6e_2ca356c1",
+      "range": {
+        "startLine": 123,
+        "startChar": 14,
+        "endLine": 123,
+        "endChar": 55
+      },
+      "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c875ef6_ee12f8a6",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
         "patchSetId": 5
@@ -76,6 +118,24 @@
         "endLine": 126,
         "endChar": 75
       },
+      "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08788f6_5d40e93e",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-11T00:27:21Z",
+      "side": 1,
+      "message": "SCANOUT implies GPU_READ_WRITE, so uses GBM_BO_USE_RENDERING",
+      "parentUuid": "1c875ef6_ee12f8a6",
       "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
