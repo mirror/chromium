@@ -164,6 +164,30 @@
     },
     {
       "key": {
+        "uuid": "834c9d2a_a744bed6",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T15:47:29Z",
+      "side": 1,
+      "message": "If you use callbacks as the is_running_ (I am fine with that) it might be cleaner to add here:\nDCHECK(callback) \u003c\u003c \"Null callback specified\";",
+      "parentUuid": "7703e96e_89f12ae6",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 78
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095b6689_31cf9b1b",
         "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
         "patchSetId": 3
