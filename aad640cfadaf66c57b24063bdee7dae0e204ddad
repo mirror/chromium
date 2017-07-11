@@ -16,6 +16,24 @@
       "revId": "aad640cfadaf66c57b24063bdee7dae0e204ddad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3caede14_e07d9f60",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T11:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa5fd60f_34bfa46b",
+      "revId": "aad640cfadaf66c57b24063bdee7dae0e204ddad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
