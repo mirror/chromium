@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "d7bb2b6e_2ca356c1",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1149774
+      },
+      "writtenOn": "2017-07-11T00:24:09Z",
+      "side": 1,
+      "message": "Add GBM_BO_USE_TEXTURING",
+      "range": {
+        "startLine": 123,
+        "startChar": 14,
+        "endLine": 123,
+        "endChar": 55
+      },
+      "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c875ef6_ee12f8a6",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
         "patchSetId": 5
@@ -30,6 +53,29 @@
       "writtenOn": "2017-07-10T23:12:51Z",
       "side": 1,
       "message": "Same here, I\u0027d expect GBM_BO_USE_TEXTURING to be there.",
+      "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779084c3_2de549b4",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1149774
+      },
+      "writtenOn": "2017-07-11T00:24:09Z",
+      "side": 1,
+      "message": "Add GBM_BO_USE_TEXTURING.",
+      "range": {
+        "startLine": 126,
+        "startChar": 14,
+        "endLine": 126,
+        "endChar": 75
+      },
       "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
