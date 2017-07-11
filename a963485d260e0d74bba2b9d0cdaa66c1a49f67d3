@@ -22,6 +22,30 @@
       "revId": "a963485d260e0d74bba2b9d0cdaa66c1a49f67d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c40415d_a7ea03b0",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-11T15:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dd8369e_78ebdd68",
+      "range": {
+        "startLine": 331,
+        "startChar": 33,
+        "endLine": 331,
+        "endChar": 56
+      },
+      "revId": "a963485d260e0d74bba2b9d0cdaa66c1a49f67d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
