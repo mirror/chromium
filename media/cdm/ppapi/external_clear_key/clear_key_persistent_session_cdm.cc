@@ -44,6 +44,10 @@ class NewPersistentSessionCdmPromise : public NewSessionCdmPromise {
     promise_->reject(exception_code, system_code, error_message);
   }
 
+  ResolveParameterType GetResolveParameterType() const final {
+    return CdmPromise::STRING_TYPE;
+  }
+
  private:
   SessionCreatedCB session_created_cb_;
   std::unique_ptr<NewSessionCdmPromise> promise_;
@@ -75,6 +79,10 @@ class FinishLoadCdmPromise : public SimpleCdmPromise {
     // Return an empty string to indicate that the session was not found.
     MarkPromiseSettled();
     promise_->resolve(std::string());
+  }
+
+  ResolveParameterType GetResolveParameterType() const final {
+    return CdmPromise::VOID_TYPE;
   }
 
  private:

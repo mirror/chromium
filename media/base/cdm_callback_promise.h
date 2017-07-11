@@ -12,8 +12,6 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "media/base/cdm_promise.h"
-// TODO(xhwang): Remove this include after http://crbug.com/656706 is fixed.
-#include "media/base/content_decryption_module.h"
 #include "media/base/media_export.h"
 
 namespace media {
@@ -24,17 +22,19 @@ typedef base::OnceCallback<void(CdmPromise::Exception exception_code,
     PromiseRejectedCB;
 
 template <typename... T>
-class MEDIA_EXPORT CdmCallbackPromise : public CdmPromiseTemplate<T...> {
+class CdmCallbackPromise : public CdmPromiseTemplate<T...> {
  public:
   CdmCallbackPromise(base::OnceCallback<void(const T&...)> resolve_cb,
                      PromiseRejectedCB reject_cb);
   virtual ~CdmCallbackPromise();
 
   // CdmPromiseTemplate<T> implementation.
-  virtual void resolve(const T&... result) override;
-  virtual void reject(CdmPromise::Exception exception_code,
-                      uint32_t system_code,
-                      const std::string& error_message) override;
+  void resolve(const T&... result) override;
+  void reject(CdmPromise::Exception exception_code,
+              uint32_t system_code,
+              const std::string& error_message) override;
+
+  ResolveParameterType GetResolveParameterType() const override;
 
  private:
   using CdmPromiseTemplate<T...>::IsPromiseSettled;

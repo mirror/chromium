@@ -27,4 +27,9 @@ void CdmInitializedPromise::reject(CdmPromise::Exception exception_code,
   // Usually after this |this| (and the |cdm_| within it) will be destroyed.
 }
 
+CdmPromise::ResolveParameterType
+CdmInitializedPromise::GetResolveParameterType() const {
+  return CdmPromise::VOID_TYPE;
+}
+
 }  // namespace media

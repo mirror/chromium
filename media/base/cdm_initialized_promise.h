@@ -30,6 +30,7 @@ class MEDIA_EXPORT CdmInitializedPromise : public SimpleCdmPromise {
   void reject(CdmPromise::Exception exception_code,
               uint32_t system_code,
               const std::string& error_message) override;
+  ResolveParameterType GetResolveParameterType() const final;
 
  private:
   CdmCreatedCB cdm_created_cb_;

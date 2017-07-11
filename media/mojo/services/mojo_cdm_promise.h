@@ -29,6 +29,7 @@ class MojoCdmPromise : public CdmPromiseTemplate<T...> {
   void reject(CdmPromise::Exception exception,
               uint32_t system_code,
               const std::string& error_message) final;
+  ResolveParameterType GetResolveParameterType() const final;
 
  private:
   using CdmPromiseTemplate<T...>::IsPromiseSettled;

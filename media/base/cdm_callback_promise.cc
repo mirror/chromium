@@ -41,6 +41,12 @@ void CdmCallbackPromise<T...>::reject(CdmPromise::Exception exception_code,
   std::move(reject_cb_).Run(exception_code, system_code, error_message);
 }
 
+template <typename... T>
+CdmPromise::ResolveParameterType
+CdmCallbackPromise<T...>::GetResolveParameterType() const {
+  return CdmPromiseTraits<T...>::kType;
+}
+
 // Explicit template instantiation for the Promises needed.
 template class MEDIA_EXPORT CdmCallbackPromise<>;
 template class MEDIA_EXPORT CdmCallbackPromise<std::string>;

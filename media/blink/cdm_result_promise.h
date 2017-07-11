@@ -34,6 +34,10 @@ class CdmResultPromise : public CdmPromiseTemplate<T...> {
               uint32_t system_code,
               const std::string& error_message) override;
 
+  ResolveParameterType GetResolveParameterType() const final {
+    return CdmPromiseTraits<T...>::kType;
+  }
+
  private:
   using CdmPromiseTemplate<T...>::IsPromiseSettled;
   using CdmPromiseTemplate<T...>::MarkPromiseSettled;

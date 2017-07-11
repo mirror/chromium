@@ -40,8 +40,7 @@ typedef base::Callback<void(const std::string& session_id,
 // promise returns the session ID (as a string), but the blink promise needs
 // to get passed a SessionStatus. This class converts the session id to a
 // SessionStatus by calling |new_session_created_cb|.
-class MEDIA_BLINK_EXPORT NewSessionCdmResultPromise
-    : public CdmPromiseTemplate<std::string> {
+class NewSessionCdmResultPromise : public CdmPromiseTemplate<std::string> {
  public:
   NewSessionCdmResultPromise(
       const blink::WebContentDecryptionModuleResult& result,
@@ -55,6 +54,9 @@ class MEDIA_BLINK_EXPORT NewSessionCdmResultPromise
   void reject(CdmPromise::Exception exception_code,
               uint32_t system_code,
               const std::string& error_message) override;
+  ResolveParameterType GetResolveParameterType() const final {
+    return CdmPromise::STRING_TYPE;
+  }
 
  private:
   blink::WebContentDecryptionModuleResult web_cdm_result_;
