@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3992e7ce_1a025edf",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-11T06:56:53Z",
+      "side": 0,
+      "message": "Take notice that this DCHECK was removed. The cell should not care whether the image has an alpha channel or not. This DCHECK made it difficult to unit test because a special image without alpha needed to be constructed. Instead of adding complexity, I chose to remove this unnecessary DCHECK.",
+      "revId": "543d487262e2417e33a6c706992434d17afa0f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
