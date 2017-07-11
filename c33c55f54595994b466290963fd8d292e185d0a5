@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fbdc395_98b7be14",
+        "filename": "gpu/command_buffer/common/gles2_cmd_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-11T14:38:22Z",
+      "side": 1,
+      "message": "Sorry, one tiny follow-up nit that I just noticed. You don\u0027t need to provide a type for explicit specialization here since it\u0027s inferred from dst. So, you could more clearly write this as:\n\n  return base::CheckMul(count, element_size).AssignIfValid(dst);",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 47
+      },
+      "revId": "c33c55f54595994b466290963fd8d292e185d0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
