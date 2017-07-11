@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "56b57e1a_c4a6ccbd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-11T17:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8337ca59_f135806f",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76ab79d7_07622c06",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6284c25_49bddb2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-11T17:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ab79d7_07622c06",
+      "range": {
+        "startLine": 12,
+        "startChar": 44,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6fafb475_a6b934df",
+        "filename": "base/files/file_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-11T17:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55d99c2f_26c8c55c",
+      "range": {
+        "startLine": 169,
+        "startChar": 9,
+        "endLine": 169,
+        "endChar": 11
+      },
+      "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab964784_0fabe8a1",
         "filename": "base/files/file_util_unittest.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcccabc_428d7b79",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-11T17:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab964784_0fabe8a1",
+      "range": {
+        "startLine": 167,
+        "startChar": 43,
+        "endLine": 167,
+        "endChar": 44
+      },
+      "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fd16ba17_7f01f389",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2266,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-11T17:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08da06c5_a9cd0a20",
+      "range": {
+        "startLine": 2266,
+        "startChar": 30,
+        "endLine": 2266,
+        "endChar": 36
+      },
+      "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2de2b2_bb431758",
         "filename": "build/fuchsia/create_test_runner_script.py",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-11T16:55:18Z",
       "side": 1,
       "message": "Why this change? It\u0027s not mentioned in the CL description.",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941d5129_1a26af2a",
+        "filename": "build/fuchsia/create_test_runner_script.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-11T17:45:54Z",
+      "side": 1,
+      "message": "Whups - another CL bled into this one.",
+      "parentUuid": "aa2de2b2_bb431758",
       "range": {
         "startLine": 47,
         "startChar": 7,
