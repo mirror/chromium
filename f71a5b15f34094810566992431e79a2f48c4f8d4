@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "196643ea_3154ce85",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T22:47:09Z",
+      "side": 1,
+      "message": "\u003e We need some vocabulary. How about using:\n\u003e element - data element in the blob data builder\nI changed it to builder_element\n\n\u003e block - the contiguous renderer element\n\nIsn\u0027t really something that is referred to much in this code, but size/offsets into it are; I\u0027m currently using (expected_)source_size and (current_)source_offset for those cases.",
+      "parentUuid": "fae2aec9_c54a9344",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 64
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "132ecbee_f0e2037f",
         "filename": "storage/browser/blob/blob_transport_strategy.cc",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "217f6aaa_424d0cea",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T22:47:09Z",
+      "side": 1,
+      "message": "Done (as builder_element_index)",
+      "parentUuid": "132ecbee_f0e2037f",
+      "range": {
+        "startLine": 106,
+        "startChar": 13,
+        "endLine": 106,
+        "endChar": 22
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2868750e_a97ea789",
         "filename": "storage/browser/blob/blob_transport_strategy.cc",
         "patchSetId": 13
@@ -62,6 +110,24 @@
       "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a702261_b0890ddd",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T22:47:09Z",
+      "side": 1,
+      "message": "Good question. I added a TODO comment explaining this concern. It isn\u0027t currently possible to reuse SharedMemory from one DataPipe to another, but I supposed that could be a valid way of doing it (it might be a bit of a dangerous API though, where you have to be careful that misbehaving code can\u0027t end up writing to the shared memory for a future datapipe...). Also filed crbug.com/741159.",
+      "parentUuid": "2868750e_a97ea789",
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "3e025043_745f0e33",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T22:47:09Z",
+      "side": 1,
+      "message": "Done (as expected_source_size)",
+      "parentUuid": "056c5307_bc905886",
+      "range": {
+        "startLine": 133,
+        "startChar": 30,
+        "endLine": 133,
+        "endChar": 45
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57bb5ccc_2781d643",
         "filename": "storage/browser/blob/blob_transport_strategy.cc",
         "patchSetId": 13
@@ -102,6 +192,24 @@
       "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32055d50_7abd5e78",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T22:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57bb5ccc_2781d643",
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "721994c5_d01490a2",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T22:47:09Z",
+      "side": 1,
+      "message": "Done (as current_source_offset_)",
+      "parentUuid": "1ac1731f_bcbdf293",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 19
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f224a944_e876ee5d",
         "filename": "storage/browser/blob/blob_transport_strategy.cc",
         "patchSetId": 13
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "63269897_276ece2f",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T22:47:09Z",
+      "side": 1,
+      "message": "Done (as expected_full_source_size)",
+      "parentUuid": "f224a944_e876ee5d",
+      "range": {
+        "startLine": 158,
+        "startChar": 33,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d537f56_73847afa",
         "filename": "storage/browser/blob/blob_transport_strategy.cc",
         "patchSetId": 13
@@ -165,6 +321,24 @@
       "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38917d9_b17f97e6",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T22:47:09Z",
+      "side": 1,
+      "message": "Ah, good point. The reason for the Duplicate() is that we might end up sending the same file to multiple requests (for example if there are multiple bytes elements). But of course that doesn\u0027t mean we always have to duplicate the file. I changed the logic around a bit now to make sure we only duplicate when needed (and std::move the file to the last RequestAsFile for any particular file).",
+      "parentUuid": "0d537f56_73847afa",
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
