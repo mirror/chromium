@@ -1622,6 +1622,7 @@
 
     'cfi': {
       'gn_args': 'is_cfi=true',
+      'mixins': ['fuzzer'],
     },
 
     'cfi_full': {
