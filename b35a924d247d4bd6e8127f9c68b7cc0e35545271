@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdc11d6e_69900e0d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T13:04:50Z",
+      "side": 1,
+      "message": "Use EXPECT_EQ instead of EXPECT_TRUE for \u003d\u003d comparisons. It has a nicer debug output. Here and everywhere below.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 13
+      },
+      "revId": "b35a924d247d4bd6e8127f9c68b7cc0e35545271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac33307c_b29f50af",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T13:04:50Z",
+      "side": 1,
+      "message": "Please also check that the correct one is ignored.",
+      "revId": "b35a924d247d4bd6e8127f9c68b7cc0e35545271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca75f0d9_7c3b8f21",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T13:04:50Z",
+      "side": 1,
+      "message": "I think .clear() would be more readable here.",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 31
+      },
+      "revId": "b35a924d247d4bd6e8127f9c68b7cc0e35545271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306c8b17_ff705d35",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T13:04:50Z",
+      "side": 1,
+      "message": "const ref to avoid copy",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 53
+      },
+      "revId": "b35a924d247d4bd6e8127f9c68b7cc0e35545271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672009a7_31aaf5f6",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T13:04:50Z",
+      "side": 1,
+      "message": "It\u0027s either chicken(), or GetChickenForTesting() :)",
+      "range": {
+        "startLine": 46,
+        "startChar": 34,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "b35a924d247d4bd6e8127f9c68b7cc0e35545271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
