@@ -6,6 +6,7 @@
 
 #include "extensions/common/api/bluetooth/bluetooth_manifest_handler.h"
 #include "extensions/common/api/declarative/declarative_manifest_handler.h"
+#include "extensions/common/api/declarative_net_request/rules_manifest_info.h"
 #include "extensions/common/api/printer_provider/usb_printer_manifest_handler.h"
 #include "extensions/common/api/sockets/sockets_manifest_handler.h"
 #include "extensions/common/manifest_handler.h"
@@ -68,6 +69,7 @@ void RegisterCommonManifestHandlers() {
   (new UsbPrinterManifestHandler)->Register();
   (new WebAccessibleResourcesHandler)->Register();
   (new WebviewHandler)->Register();
+  (new declarative_net_request::RulesManifestHandler)->Register();
 }
 
 }  // namespace extensions
