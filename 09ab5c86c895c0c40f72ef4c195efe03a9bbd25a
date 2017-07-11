@@ -39,6 +39,48 @@
       "revId": "09ab5c86c895c0c40f72ef4c195efe03a9bbd25a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b72d6cb_be4e18c4",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-11T13:43:19Z",
+      "side": 1,
+      "message": "After offline discussion, there will be pre-filled TopSites URLs, which are different on desktop and mobile, making it tricky to handle. A simpler solution (if the purpose of the test is to verify redirects), is to make sure the initial URL is there, and the final URL is not.",
+      "parentUuid": "e538df27_a5e43662",
+      "range": {
+        "startLine": 120,
+        "startChar": 20,
+        "endLine": 120,
+        "endChar": 21
+      },
+      "revId": "09ab5c86c895c0c40f72ef4c195efe03a9bbd25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b209d4d8_6fc5330b",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-11T13:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd7e49b4_67e44dd3",
+      "revId": "09ab5c86c895c0c40f72ef4c195efe03a9bbd25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
