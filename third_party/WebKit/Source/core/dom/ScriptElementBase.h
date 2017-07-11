@@ -37,6 +37,7 @@ class ScriptLoader;
 class CORE_EXPORT ScriptElementBase : public GarbageCollectedMixin {
  public:
   static ScriptElementBase* FromElementIfPossible(Element*);
+  static const ScriptElementBase* FromElementIfPossible(const Element*);
 
   virtual void DispatchLoadEvent() = 0;
   virtual void DispatchErrorEvent() = 0;
@@ -69,10 +70,16 @@ class CORE_EXPORT ScriptElementBase : public GarbageCollectedMixin {
 
   virtual ScriptLoader* Loader() const = 0;
 
+  void setDuplicateAttribute(bool dupe) { had_duplicate_attribute_ = dupe; }
+  bool hadDuplicateAttribute() const { return had_duplicate_attribute_; }
+
  protected:
   ScriptLoader* InitializeScriptLoader(bool parser_inserted,
                                        bool already_started,
                                        bool created_during_document_write);
+
+ private:
+  bool had_duplicate_attribute_{false};
 };
 
 }  // namespace blink

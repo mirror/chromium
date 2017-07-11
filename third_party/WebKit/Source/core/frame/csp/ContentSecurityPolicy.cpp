@@ -100,27 +100,35 @@ bool ContentSecurityPolicy::IsNonceableElement(const Element* element) {
   } else if (!element->FastHasAttribute(HTMLNames::nonceAttr)) {
     return false;
   }
-
   bool nonceable = true;
 
   // To prevent an attacker from hijacking an existing nonce via a dangling
   // markup injection, we walk through the attributes of each nonced script
   // element: if their names or values contain "<script" or "<style", we won't
-  // apply the nonce when loading script.
+  // apply the nonce when loading script. We'll also skip elements for which
+  // the HTML parser dropped attributes.
   //
   // See http://blog.innerht.ml/csp-2015/#danglingmarkupinjection for an example
   // of the kind of attack this is aimed at mitigating.
-  static const char kScriptString[] = "<script";
-  static const char kStyleString[] = "<style";
-  for (const Attribute& attr : element->Attributes()) {
-    AtomicString name = attr.LocalName().LowerASCII();
-    AtomicString value = attr.Value().LowerASCII();
-    if (name.Find(kScriptString) != WTF::kNotFound ||
-        name.Find(kStyleString) != WTF::kNotFound ||
-        value.Find(kScriptString) != WTF::kNotFound ||
-        value.Find(kStyleString) != WTF::kNotFound) {
+  if (const ScriptElementBase* script =
+          ScriptElementBase::FromElementIfPossible(element)) {
+    if (script->hadDuplicateAttribute())
       nonceable = false;
-      break;
+  }
+
+  if (nonceable) {
+    static const char kScriptString[] = "<SCRIPT";
+    static const char kStyleString[] = "<STYLE";
+    for (const Attribute& attr : element->Attributes()) {
+      AtomicString name = attr.GetName().LocalNameUpper();
+      AtomicString value = attr.Value().UpperASCII();
+      if (name.Find(kScriptString) != WTF::kNotFound ||
+          name.Find(kStyleString) != WTF::kNotFound ||
+          value.Find(kScriptString) != WTF::kNotFound ||
+          value.Find(kStyleString) != WTF::kNotFound) {
+        nonceable = false;
+        break;
+      }
     }
   }
 

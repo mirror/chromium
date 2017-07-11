@@ -17,6 +17,15 @@ ScriptElementBase* ScriptElementBase::FromElementIfPossible(Element* element) {
   return nullptr;
 }
 
+const ScriptElementBase* ScriptElementBase::FromElementIfPossible(
+    const Element* element) {
+  if (isHTMLScriptElement(*element))
+    return toHTMLScriptElement(element);
+  if (isSVGScriptElement(*element))
+    return toSVGScriptElement(element);
+  return nullptr;
+}
+
 ScriptLoader* ScriptElementBase::InitializeScriptLoader(
     bool parser_inserted,
     bool already_started,

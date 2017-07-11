@@ -15776,6 +15776,8 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="GetUserMediaCameraDisallowedByFeaturePolicyInCrossOriginIframe"/>
   <int value="2059"
       label="RequestMIDIAccessDisallowedByFeaturePolicyInCrossOriginIframe"/>
+  <int value="2060" label="DuplicatedAttribute"/>
+  <int value="2061" label="DuplicatedAttributeForScript"/>
 </enum>
 
 <enum name="FeedbackSource">
