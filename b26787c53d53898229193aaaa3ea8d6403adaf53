@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dc36c5b_6b4d0cc6",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-11T23:37:37Z",
+      "side": 1,
+      "message": "I was just talking with nick@ about this, and he noted that data: URLs commit in the renderer that triggered the navigation. So I think this is probably an unsafe assumption...\n\nAlso, I wonder if we should write this test using a cross-process frame setup like this:\n               \n           A1\n           / \\\n         A2   B\n\nAnd have B navigate A2 to about:blank. That way, if we change it in the future, we\u0027ll notice this code break and be able to easily track it down and fix it.",
+      "range": {
+        "startLine": 220,
+        "startChar": 23,
+        "endLine": 220,
+        "endChar": 29
+      },
+      "revId": "b26787c53d53898229193aaaa3ea8d6403adaf53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
