@@ -28,8 +28,8 @@ void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
   builder->AddMetric("Resident", pmd->os_dump->resident_set_kb / 1024);
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Browser2.Malloc",
-                                pmd->chrome_dump.malloc_total_kb / 1024);
-  builder->AddMetric("Malloc", pmd->chrome_dump.malloc_total_kb / 1024);
+                                pmd->chrome_dump->malloc_total_kb / 1024);
+  builder->AddMetric("Malloc", pmd->chrome_dump->malloc_total_kb / 1024);
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB(
       "Memory.Experimental.Browser2.PrivateMemoryFootprint",
@@ -49,8 +49,8 @@ void EmitRendererMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
   builder->AddMetric("Resident", pmd->os_dump->resident_set_kb / 1024);
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Renderer2.Malloc",
-                                pmd->chrome_dump.malloc_total_kb / 1024);
-  builder->AddMetric("Malloc", pmd->chrome_dump.malloc_total_kb / 1024);
+                                pmd->chrome_dump->malloc_total_kb / 1024);
+  builder->AddMetric("Malloc", pmd->chrome_dump->malloc_total_kb / 1024);
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB(
       "Memory.Experimental.Renderer2.PrivateMemoryFootprint",
@@ -60,17 +60,17 @@ void EmitRendererMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB(
       "Memory.Experimental.Renderer2.PartitionAlloc",
-      pmd->chrome_dump.partition_alloc_total_kb / 1024);
+      pmd->chrome_dump->partition_alloc_total_kb / 1024);
   builder->AddMetric("PartitionAlloc",
-                     pmd->chrome_dump.partition_alloc_total_kb / 1024);
+                     pmd->chrome_dump->partition_alloc_total_kb / 1024);
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Renderer2.BlinkGC",
-                                pmd->chrome_dump.blink_gc_total_kb / 1024);
-  builder->AddMetric("BlinkGC", pmd->chrome_dump.blink_gc_total_kb / 1024);
+                                pmd->chrome_dump->blink_gc_total_kb / 1024);
+  builder->AddMetric("BlinkGC", pmd->chrome_dump->blink_gc_total_kb / 1024);
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Renderer2.V8",
-                                pmd->chrome_dump.v8_total_kb / 1024);
-  builder->AddMetric("V8", pmd->chrome_dump.v8_total_kb / 1024);
+                                pmd->chrome_dump->v8_total_kb / 1024);
+  builder->AddMetric("V8", pmd->chrome_dump->v8_total_kb / 1024);
 }
 
 void EmitGpuMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
@@ -84,14 +84,14 @@ void EmitGpuMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
   builder->AddMetric("Resident", pmd->os_dump->resident_set_kb / 1024);
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Gpu2.Malloc",
-                                pmd->chrome_dump.malloc_total_kb / 1024);
-  builder->AddMetric("Malloc", pmd->chrome_dump.malloc_total_kb / 1024);
+                                pmd->chrome_dump->malloc_total_kb / 1024);
+  builder->AddMetric("Malloc", pmd->chrome_dump->malloc_total_kb / 1024);
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB(
       "Memory.Experimental.Gpu2.CommandBuffer",
-      pmd->chrome_dump.command_buffer_total_kb / 1024);
+      pmd->chrome_dump->command_buffer_total_kb / 1024);
   builder->AddMetric("CommandBuffer",
-                     pmd->chrome_dump.command_buffer_total_kb / 1024);
+                     pmd->chrome_dump->command_buffer_total_kb / 1024);
 
   UMA_HISTOGRAM_MEMORY_LARGE_MB(
       "Memory.Experimental.Gpu2.PrivateMemoryFootprint",
