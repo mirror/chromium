@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9be7d003_0330e4fe",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T03:12:26Z",
+      "side": 1,
+      "message": "not sure if our compiler do that sometimes I write so that it can early exit but it did not. I will fix it anw.",
+      "parentUuid": "e1a385f0_def19ef5",
+      "revId": "3cd6eb28ce21de9e7a224e005fc534e5d0c76f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d11adc1_5b746560",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-11T01:50:15Z",
       "side": 1,
       "message": "p_segment -\u003e longest_segment\nl_segment -\u003elongest_segment_length",
+      "revId": "3cd6eb28ce21de9e7a224e005fc534e5d0c76f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42eeeb4_d0185350",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T03:12:26Z",
+      "side": 1,
+      "message": "I was using \":\" following the convention from http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html, dont know why I mistake \":\" with \"\u003d\". I will fixe it to :",
+      "parentUuid": "6d11adc1_5b746560",
       "revId": "3cd6eb28ce21de9e7a224e005fc534e5d0c76f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
