@@ -73750,6 +73750,21 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Size in kilobytes of pre-existing database at startup.</summary>
 </histogram>
 
+<histogram name="Sqlite.SmartOpenDeleteFile" enum="BooleanDeletedOrNot">
+  <owner>chuguev@yandex-team.ru</owner>
+  <summary>Delete database file path result.</summary>
+</histogram>
+
+<histogram name="Sqlite.SmartOpenError" enum="SqliteErrorCode">
+  <owner>chuguev@yandex-team.ru</owner>
+  <summary>SQLite primary error codes for smart open database fails.</summary>
+</histogram>
+
+<histogram name="Sqlite.SmartOpenRecovery" enum="BooleanSuccess">
+  <owner>chuguev@yandex-team.ru</owner>
+  <summary>Run database recovery result.</summary>
+</histogram>
+
 <histogram name="Sqlite.Stats" enum="SqliteStatsEnum">
   <owner>shess@chromium.org</owner>
   <summary>Stats for different API calls in sql/.</summary>
@@ -81124,8 +81139,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>sorin@chromium.org</owner>
   <summary>
     True if a new BITS job was created to download the url, or false, if an
-    existing job was found in the BITS queue. The metric is recorded when
-    the component updater background downloader is asked to download a CRX.
+    existing job was found in the BITS queue. The metric is recorded when the
+    component updater background downloader is asked to download a CRX.
   </summary>
 </histogram>
 
@@ -97126,6 +97141,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Sqlite.Error"/>
   <affected-histogram name="Sqlite.QueryTime"/>
   <affected-histogram name="Sqlite.SizeKB"/>
+  <affected-histogram name="Sqlite.SmartOpenDeleteFile"/>
+  <affected-histogram name="Sqlite.SmartOpenError"/>
+  <affected-histogram name="Sqlite.SmartOpenRecovery"/>
   <affected-histogram name="Sqlite.Stats"/>
   <affected-histogram name="Sqlite.UpdateTime"/>
   <affected-histogram name="Sqlite.Version"/>

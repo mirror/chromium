@@ -28,12 +28,15 @@
 #include "sql/test/test_helpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/sqlite/sqlite3.h"
 #include "url/origin.h"
 
 using autofill::PasswordForm;
 using autofill::PossibleUsernamePair;
 using autofill::PossibleUsernamesVector;
 using base::ASCIIToUTF16;
+using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::Eq;
 using ::testing::Pointee;
 using ::testing::UnorderedElementsAre;
@@ -1662,6 +1665,240 @@ TEST_F(LoginDatabaseTest, FilePermissions) {
   EXPECT_EQ((mode & base::FILE_PERMISSION_USER_MASK), mode);
 }
 #endif  // defined(OS_POSIX)
+
+class MockLogAssertHandler {
+ public:
+  MOCK_CONST_METHOD4(AssertHandler,
+                     void(const char* file,
+                          int line,
+                          const base::StringPiece message,
+                          const base::StringPiece stack_trace));
+};
+
+TEST_F(LoginDatabaseTest, ReloadOnFileCorrupt) {
+  std::vector<std::unique_ptr<PasswordForm>> result;
+  base::HistogramTester histogram_tester;
+  MockLogAssertHandler mock;
+  logging::ScopedLogAssertHandler s(base::Bind(
+      &MockLogAssertHandler::AssertHandler, base::Unretained(&mock)));
+  EXPECT_CALL(mock, AssertHandler(_, _, _, _)).Times(AtLeast(0));
+
+  // Verify the database is empty.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  EXPECT_EQ(0U, result.size());
+
+  // Example password form.
+  PasswordForm form;
+  GenerateExamplePasswordForm(&form);
+
+  // Add it and make sure it is there and that all the fields were retrieved
+  // correctly.
+  EXPECT_EQ(AddChangeForForm(form), db().AddLogin(form));
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  ASSERT_EQ(1U, result.size());
+  EXPECT_EQ(form, *result[0]);
+  result.clear();
+
+  // Close dabatase and prepare to open
+  db_.reset(new LoginDatabase(file_));
+
+  // Corrupt databasefile
+  {
+    base::File f(file_, base::File::FLAG_OPEN | base::File::FLAG_WRITE);
+    ASSERT_TRUE(f.IsValid());
+    f.SetLength(f.GetLength() >> 2);
+    f.Close();
+  }
+
+  // Try to open corrupted database
+  ASSERT_TRUE(db_->Init());
+  // Make sure everything lost.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  EXPECT_EQ(0U, result.size());
+
+  histogram_tester.ExpectBucketCount("Sqlite.RecoveryEvents", 5, 1);
+  histogram_tester.ExpectBucketCount("Sqlite.RecoveryAttachError",
+                                     SQLITE_CORRUPT, 1);
+}
+
+TEST_F(LoginDatabaseTest, ReloadOnFileCorruptToMinimumSize) {
+  std::vector<std::unique_ptr<PasswordForm>> result;
+
+  MockLogAssertHandler mock;
+  logging::ScopedLogAssertHandler s(base::Bind(
+      &MockLogAssertHandler::AssertHandler, base::Unretained(&mock)));
+  EXPECT_CALL(mock, AssertHandler(_, _, _, _)).Times(AtLeast(1));
+
+  // Verify the database is empty.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  EXPECT_EQ(0U, result.size());
+
+  // Example password form.
+  PasswordForm form;
+  GenerateExamplePasswordForm(&form);
+
+  // Add it and make sure it is there and that all the fields were retrieved
+  // correctly.
+  EXPECT_EQ(AddChangeForForm(form), db().AddLogin(form));
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  ASSERT_EQ(1U, result.size());
+  EXPECT_EQ(form, *result[0]);
+  result.clear();
+
+  auto corrupt_file = file_.InsertBeforeExtensionASCII("_corrupt");
+  base::CopyFile(file_, corrupt_file);
+  int file_size;
+
+  do {
+    // Close dabatase and prepare to open
+    db_.reset(new LoginDatabase(file_));
+
+    // Corrupt databasefile
+    {
+      base::File f(corrupt_file,
+                   base::File::FLAG_OPEN | base::File::FLAG_WRITE);
+      ASSERT_TRUE(f.IsValid());
+      f.SetLength(f.GetLength() >> 1);
+      file_size = f.GetLength();
+      f.Close();
+    }
+    base::CopyFile(corrupt_file, file_);
+
+    // Try to open corrupted database
+    ASSERT_TRUE(db_->Init());
+  } while (file_size > 10);
+
+  // Make sure everything lost.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  EXPECT_EQ(0U, result.size());
+}
+
+TEST_F(LoginDatabaseTest, ReloadAndRecoverCorruptedFile) {
+  std::vector<std::unique_ptr<PasswordForm>> result;
+  base::HistogramTester histogram_tester;
+
+  // Verify the database is empty.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  EXPECT_EQ(0U, result.size());
+
+  // Example password form.
+  PasswordForm form;
+  GenerateExamplePasswordForm(&form);
+
+  // Add it and make sure it is there and that all the fields were retrieved
+  // correctly.
+  EXPECT_EQ(AddChangeForForm(form), db().AddLogin(form));
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  ASSERT_EQ(1U, result.size());
+  EXPECT_EQ(form, *result[0]);
+  result.clear();
+
+  // Close dabatase and prepare to open
+  db_.reset(new LoginDatabase(file_));
+
+  // Corrupt databasefile
+  {
+    base::File f(file_, base::File::FLAG_OPEN | base::File::FLAG_WRITE);
+    ASSERT_TRUE(f.IsValid());
+    f.SetLength(f.GetLength() >> 1);
+    f.Close();
+  }
+
+  // Try to open corrupted database
+  ASSERT_TRUE(db_->Init());
+  // Make sure data has recovered.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  ASSERT_EQ(1U, result.size());
+  EXPECT_EQ(form, *result[0]);
+  result.clear();
+
+  histogram_tester.ExpectUniqueSample("Sqlite.SmartOpenRecovery.Passwords", 1,
+                                      1);
+  histogram_tester.ExpectTotalCount("Sqlite.SmartOpenDeleteFile.Passwords", 0);
+}
+
+TEST_F(LoginDatabaseTest, ReloadOnFileNotADB) {
+  std::vector<std::unique_ptr<PasswordForm>> result;
+  base::HistogramTester histogram_tester;
+
+  // Verify the database is empty.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  EXPECT_EQ(0U, result.size());
+
+  // Example password form.
+  PasswordForm form;
+  GenerateExamplePasswordForm(&form);
+
+  // Add it and make sure it is there and that all the fields were retrieved
+  // correctly.
+  EXPECT_EQ(AddChangeForForm(form), db().AddLogin(form));
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  ASSERT_EQ(1U, result.size());
+  EXPECT_EQ(form, *result[0]);
+  result.clear();
+
+  // Close dabatase and prepare to open
+  db_.reset(new LoginDatabase(file_));
+
+  // Corrupt databasefile
+  {
+    base::File f(file_, base::File::FLAG_OPEN | base::File::FLAG_WRITE);
+    ASSERT_TRUE(f.IsValid());
+    int64_t length = f.GetLength();
+    for (int64_t i = 0; i < length; i++) {
+      ASSERT_EQ(1, f.WriteAtCurrentPos("\1", 1));
+    }
+    f.Close();
+  }
+
+  // Try to open corrupted database
+  ASSERT_TRUE(db_->Init());
+  // Make sure everything lost.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  EXPECT_EQ(0U, result.size());
+  histogram_tester.ExpectTotalCount("Sqlite.SmartOpenRecovery.Passwords", 0);
+  histogram_tester.ExpectUniqueSample("Sqlite.SmartOpenDeleteFile.Passwords", 1,
+                                      1);
+}
+
+TEST_F(LoginDatabaseTest, ReloadOnFileIsDirectory) {
+  std::vector<std::unique_ptr<PasswordForm>> result;
+  base::HistogramTester histogram_tester;
+
+  // Verify the database is empty.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  EXPECT_EQ(0U, result.size());
+
+  // Example password form.
+  PasswordForm form;
+  GenerateExamplePasswordForm(&form);
+
+  // Add it and make sure it is there and that all the fields were retrieved
+  // correctly.
+  EXPECT_EQ(AddChangeForForm(form), db().AddLogin(form));
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  ASSERT_EQ(1U, result.size());
+  EXPECT_EQ(form, *result[0]);
+  result.clear();
+
+  // Close dabatase and prepare to open
+  db_.reset(new LoginDatabase(file_));
+
+  // Corrupt databasefile
+  {
+    ASSERT_TRUE(base::DeleteFile(file_, true));
+    ASSERT_TRUE(base::CreateDirectory(file_));
+  }
+
+  // Try to open corrupted database
+  ASSERT_TRUE(db_->Init());
+  // Make sure everything lost.
+  EXPECT_TRUE(db().GetAutofillableLogins(&result));
+  EXPECT_EQ(0U, result.size());
+  histogram_tester.ExpectTotalCount("Sqlite.SmartOpenRecovery.Passwords", 0);
+  histogram_tester.ExpectUniqueSample("Sqlite.SmartOpenDeleteFile.Passwords", 1,
+                                      1);
+}
 
 // If the database initialisation fails, the initialisation transaction should
 // roll back without crashing.
