@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4dbb7bb6_d7c73fc9",
+        "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-11T12:52:53Z",
+      "side": 1,
+      "message": "This seems WAI: I forgot TopSites implements a cache that will deliver the results, even while an ongoing (second) refresh exists. Were you planning to cover a second update scenario too?",
+      "parentUuid": "69644b96_df38e664",
+      "revId": "fb377bd316b52447992f98ed23d2da910b8d99e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52853f97_5f4ad07b",
         "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
         "patchSetId": 1
