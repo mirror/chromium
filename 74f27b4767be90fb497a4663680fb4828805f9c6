@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f719afb5_5a7a88f8",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-11T17:03:36Z",
+      "side": 1,
+      "message": "Weird. I tried this morning and I thought the compiler did give an error.\n\nCan you try one more thing?\nstatic_assert(arraysize(itemInfoList) \u003d\u003d kToolsMenuNumberOfItems, \"\");\n\n( I really don\u0027t trust comments to keep things up to date :-) )",
+      "parentUuid": "8bb8710b_06f28868",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "74f27b4767be90fb497a4663680fb4828805f9c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d02354ef_0da232bc",
         "filename": "ios/clean/chrome/browser/ui/tools/tools_menu_model.mm",
         "patchSetId": 3
