@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5b69ec_0bab9236",
+        "filename": "components/payments/core/payment_request_data_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-11T19:12:27Z",
+      "side": 1,
+      "message": "I would rename this to ParseSupportedMethods, and have an extra parameter which is out_payment_method_identifiers.",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "d89ab41e639707ef732288d661a1015f6d90e4c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
