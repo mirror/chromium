@@ -52,6 +52,24 @@
       "revId": "fd5e6d6815a573a27633f39f9b78193c0af01d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed51e100_3253d2ec",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-11T17:33:57Z",
+      "side": 1,
+      "message": "Right now, this was an intentional decision not to de-duplicate, as these are otherwise wholly unrelated consumers. Leaving each (independent) consumer to set their policies seems more appropriate than including in //net a variety of policies for consumers to use.\n\nIt\u0027s a trade-off, for sure - but unlike DoNothingCTVerifier, the DoNothingCTPolicyEnforcer is different products in the Chrome tree that otherwise have little relation to Chrome :)",
+      "parentUuid": "69e784ad_79e18df7",
+      "revId": "fd5e6d6815a573a27633f39f9b78193c0af01d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
