@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "455d99cf_4dddc7d2",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-11T16:34:56Z",
+      "side": 1,
+      "message": "IMHO, this sounds something not the result of \"RequestEnable\" thing?\nHow about setting the var to false at the beginning of the function, then true only when directly started?",
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592ae76f_7dd773a4",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-11T16:34:56Z",
+      "side": 1,
+      "message": "nit: For consistency, could you remove \"is_\" prefix from the variable?\nI think it\u0027s ok to keep it in the getter method.",
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
