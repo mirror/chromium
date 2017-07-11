@@ -16,6 +16,24 @@
       "revId": "059d59a5bb73dcceb7d655c8e67b168642db2928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9deeae_c62f43f0",
+        "filename": "cc/animation/element_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-11T13:14:43Z",
+      "side": 0,
+      "message": "I think the PropertyUpdate code is dead code now. It used to be for plumbing back opacity values produced by impl-only opacity animations back to the main thread, but we don\u0027t support impl-only opacity animations anymore (at least, not through ElementAnimations).",
+      "parentUuid": "ec8f7be5_c8c1b2d1",
+      "revId": "059d59a5bb73dcceb7d655c8e67b168642db2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
