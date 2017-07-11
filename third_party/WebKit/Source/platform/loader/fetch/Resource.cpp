@@ -860,6 +860,11 @@ bool Resource::CanReuse(const FetchParameters& params) const {
   if (new_options.synchronous_policy != options_.synchronous_policy)
     return false;
 
+  // Do not reuse resources loaded synchronously, because they don't have
+  // redirect chain information in |redirect_chain_|. https://crbug.com/618967
+  if (options_.synchronous_policy == kRequestSynchronously)
+    return false;
+
   if (resource_request_.GetKeepalive() || new_request.GetKeepalive()) {
     return false;
   }
