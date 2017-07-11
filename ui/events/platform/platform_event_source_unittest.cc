@@ -716,7 +716,7 @@ class ConsecutiveOverriddenDispatcherInTheSameMessageLoopIteration
     loop->task_runner()->PostTask(
         FROM_HERE,
         base::Bind(base::IgnoreResult(&TestPlatformEventSource::Dispatch),
-                   base::Unretained(source()), *event));
+                   base::Unretained(source()), base::Unretained(*event)));
     run_loop.Run();
     ASSERT_EQ(2u, list->size());
     EXPECT_EQ(15, (*list)[0]);
