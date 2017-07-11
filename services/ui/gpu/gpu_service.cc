@@ -33,6 +33,7 @@
 #include "media/gpu/ipc/service/gpu_video_decode_accelerator.h"
 #include "media/gpu/ipc/service/gpu_video_encode_accelerator.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
+#include "media/mojo/services/mojo_video_encode_accelerator.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_switches.h"
@@ -220,6 +221,12 @@ void GpuService::RecordLogMessage(int severity,
   std::string header = str.substr(0, message_start);
   std::string message = str.substr(message_start);
   (*gpu_host_)->RecordLogMessage(severity, header, message);
+}
+
+void GpuService::CreateVideoEncodeAccelerator(
+    media::mojom::VideoEncodeAcceleratorRequest vea_request) {
+  DCHECK(io_runner_->BelongsToCurrentThread());
+  media::MojoVideoEncodeAccelerator::Create(std::move(vea_request));
 }
 
 void GpuService::CreateGpuMemoryBuffer(
