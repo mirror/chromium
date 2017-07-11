@@ -11,7 +11,7 @@
 #include "base/compiler_specific.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/shared_memory.h"
-#include "base/synchronization/lock.h"
+#include "base/threading/thread_checker.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 #include "components/viz/service/viz_service_export.h"
@@ -52,12 +52,12 @@ class VIZ_SERVICE_EXPORT ServerSharedBitmapManager
  private:
   friend class SharedBitmapAllocationNotifierImpl;
 
+  THREAD_CHECKER(thread_checker_);
+
   bool ChildAllocatedSharedBitmap(size_t buffer_size,
                                   const base::SharedMemoryHandle& handle,
                                   const SharedBitmapId& id);
   void ChildDeletedSharedBitmap(const SharedBitmapId& id);
-
-  mutable base::Lock lock_;
 
   std::unordered_map<SharedBitmapId,
                      scoped_refptr<BitmapData>,
