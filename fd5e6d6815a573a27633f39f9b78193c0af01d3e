@@ -70,6 +70,24 @@
       "revId": "fd5e6d6815a573a27633f39f9b78193c0af01d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "516e3316_1ea83460",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-11T17:36:40Z",
+      "side": 1,
+      "message": "Ack. Thanks for explanation!",
+      "parentUuid": "ed51e100_3253d2ec",
+      "revId": "fd5e6d6815a573a27633f39f9b78193c0af01d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
