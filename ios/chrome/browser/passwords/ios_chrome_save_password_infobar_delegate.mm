@@ -34,13 +34,21 @@ void IOSChromeSavePasswordInfoBarDelegate::Create(
       infobar_manager->CreateConfirmInfoBar(std::move(delegate)));
 }
 
-IOSChromeSavePasswordInfoBarDelegate::~IOSChromeSavePasswordInfoBarDelegate() {}
+IOSChromeSavePasswordInfoBarDelegate::~IOSChromeSavePasswordInfoBarDelegate() {
+  form_to_save()->metrics_recorder()->RecordUIDismissalReason(
+      password_manager::metrics_util::AUTOMATIC_WITH_PASSWORD_PENDING,
+      infobar_response());
+}
 
 IOSChromeSavePasswordInfoBarDelegate::IOSChromeSavePasswordInfoBarDelegate(
     bool is_smart_lock_branding_enabled,
-    std::unique_ptr<PasswordFormManager> form_to_save)
+    std::unique_ptr<PasswordFormManager> form_manager)
     : IOSChromePasswordManagerInfoBarDelegate(is_smart_lock_branding_enabled,
-                                              std::move(form_to_save)) {}
+                                              std::move(form_manager)) {
+  form_to_save()->metrics_recorder()->RecordPasswordBubbleShown(
+      form_to_save()->GetCredentialSource(),
+      password_manager::metrics_util::AUTOMATIC_WITH_PASSWORD_PENDING);
+}
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 IOSChromeSavePasswordInfoBarDelegate::GetIdentifier() const {
