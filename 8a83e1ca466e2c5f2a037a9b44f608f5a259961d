@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "b1e89ddd_fcaffeac",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-11T00:39:13Z",
+      "side": 1,
+      "message": "Yes, it will be troublesome if we run tests (using UrlLog) on multiple threads within the same process.\n\nI\u0027ve moved away from testing the singleton. However, the new approach doesn\u0027t test UrlLog::AddEntry (though its code is probably touched by ChromeNetworkDelegate\u0027s test).",
+      "parentUuid": "6823d0b0_95be9081",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad90f21c_2bf19bfc",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 12
