@@ -69,6 +69,9 @@ class MediaEngagementService : public KeyedService,
   // KeyedService support:
   void Shutdown() override;
 
+  // The name of the histogram that scores are logged to on startup.
+  static const std::string& kHistogramScoreAtStartupName;
+
  private:
   friend class MediaEngagementServiceTest;
   friend class MediaEngagementContentsObserverTest;
@@ -92,6 +95,9 @@ class MediaEngagementService : public KeyedService,
 
   // An internal clock for testing.
   std::unique_ptr<base::Clock> clock_;
+
+  // Logs all the stored scores to a histogram.
+  void LogStoredScoresToHistogram();
 
   DISALLOW_COPY_AND_ASSIGN(MediaEngagementService);
 };

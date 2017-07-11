@@ -29580,6 +29580,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Engagement.ScoreAtStartup" units="%">
+  <owner>beccahughes@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    The distribution of media engagement scores recorded at Chrome startup.
+  </summary>
+</histogram>
+
 <histogram name="Media.FallbackHardwareAudioBitsPerChannel">
   <owner>dalecurtis@chromium.org</owner>
   <summary>
