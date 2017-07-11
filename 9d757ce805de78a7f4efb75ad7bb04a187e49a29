@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9739536_e3d478b8",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-11T11:50:09Z",
+      "side": 1,
+      "message": "Hi Matt,\n\nSure - will add a comment, thanks!\n\nRE: your question about the other SW UKM/UMA metrics, UKM doesn\u0027t actually know anything about UMA metrics, so none of them are logged here. What happens in UKM is that the ServiceWorker entry is logged associated with a UKM source_id:\n\n    ukm_recorder-\u003eGetEntryBuilder(info.source_id,\n                                  internal::kUkmServiceWorkerName);\n\nand that same source_id is also logged for all of the core PageLoad metrics, such as FCP and FMP, in https://cs.chromium.org/chromium/src/chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc. So, in UKM, when you look up a ServiceWorker entry for a page load at analysis time, you can use its associated source id to get all of the core page load metrics for that page load, by joining to the PageLoad entry with that same source_id.\n\nUKM is designed to have more structure and have the data be joinable in this way, to enable richer analysis than UMA. This is a nice improvement over UMA, since it means observers like ServiceWorker get all of the other metrics logged for that source id \u0027for free\u0027 without having to duplicate them in their own observer, as we\u0027ve had to do with UMA.\n\nIn addition, if there are custom service worker metrics not logged by the core UKM observer, we can also log them here. You can see some examples of how to log extra metrics in some of the other observers modified in this change. If there are additional metrics you want to log for SW, we can include them in this change if you like - just let me know.\n\nThanks,\nBryan",
+      "parentUuid": "c50cc8db_a23a868f",
+      "revId": "9d757ce805de78a7f4efb75ad7bb04a187e49a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce0e03f7_11214fd7",
         "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer.cc",
         "patchSetId": 5
