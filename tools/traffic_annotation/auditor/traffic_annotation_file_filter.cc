@@ -53,33 +53,41 @@ TrafficAnnotationFileFilter::TrafficAnnotationFileFilter() {}
 TrafficAnnotationFileFilter::~TrafficAnnotationFileFilter() {}
 
 void TrafficAnnotationFileFilter::GetFilesFromGit(
-    const base::FilePath& source_path) {
-  const base::CommandLine::CharType* args[] =
+    const base::FilePath& source_path,
+    const base::FilePath mock_git_list_file_for_tests) {
+  std::string git_list;
+  if (mock_git_list_file_for_tests.empty()) {
+    const base::CommandLine::CharType* args[] =
 #if defined(OS_WIN)
-      {FILE_PATH_LITERAL("git.bat"), FILE_PATH_LITERAL("ls-files")};
+        {FILE_PATH_LITERAL("git.bat"), FILE_PATH_LITERAL("ls-files")};
 #else
-      {"git", "ls-files"};
+        {"git", "ls-files"};
 #endif
-  base::CommandLine cmdline(2, args);
+    base::CommandLine cmdline(2, args);
 
-  // Change directory to source path to access git.
-  base::FilePath original_path;
-  base::GetCurrentDirectory(&original_path);
-  base::SetCurrentDirectory(source_path);
+    // Change directory to source path to access git.
+    base::FilePath original_path;
+    base::GetCurrentDirectory(&original_path);
+    base::SetCurrentDirectory(source_path);
 
-  // Get list of files from git.
-  std::string results;
-  if (!base::GetAppOutput(cmdline, &results)) {
-    LOG(ERROR) << "Could not get files from git.";
+    // Get list of files from git.
+    if (!base::GetAppOutput(cmdline, &git_list)) {
+      LOG(ERROR) << "Could not get files from git.";
+      git_list = std::string();
+    }
+    base::SetCurrentDirectory(original_path);
   } else {
-    for (const std::string file_path : base::SplitString(
-             results, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL)) {
-      if (IsFileRelevant(file_path))
-        git_files_.push_back(file_path);
+    if (!base::ReadFileToString(mock_git_list_file_for_tests, &git_list)) {
+      LOG(ERROR) << "Could not load mock git list file.";
+      git_list = std::string();
     }
   }
 
-  base::SetCurrentDirectory(original_path);
+  for (const std::string file_path : base::SplitString(
+           git_list, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL)) {
+    if (IsFileRelevant(file_path))
+      git_files_.push_back(file_path);
+  }
 }
 
 bool TrafficAnnotationFileFilter::IsFileRelevant(const std::string& file_path) {

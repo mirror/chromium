@@ -386,6 +386,10 @@ bool TrafficAnnotationAuditor::IsWhitelisted(
     if (!strncmp(file_path.c_str(), ignore_path.c_str(), ignore_path.length()))
       return true;
   }
+
+  // If something is in 'ALL', it should pass every type.
+  if (whitelist_type != AuditorException::ExceptionType::ALL)
+    return IsWhitelisted(file_path, AuditorException::ExceptionType::ALL);
   return false;
 }
 
