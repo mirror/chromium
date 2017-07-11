@@ -175,26 +175,19 @@ ArcNavigationThrottle::HandleRequest() {
   if (!ShouldOverrideUrlLoading(starting_gurl_, url))
     return content::NavigationThrottle::PROCEED;
 
-  ArcServiceManager* arc_service_manager = ArcServiceManager::Get();
-  if (!arc_service_manager)
+  auto* intent_helper_bridge =
+      ArcServiceManager::GetGlobalService<ArcIntentHelperBridge>();
+  if (!intent_helper_bridge)
     return content::NavigationThrottle::PROCEED;
 
-  scoped_refptr<LocalActivityResolver> local_resolver =
-      arc_service_manager->activity_resolver();
-  if (local_resolver->ShouldChromeHandleUrl(url)) {
+  if (!intent_helper_bridge->RequestUrlHandlerList(
+          url, base::Bind(&ArcNavigationThrottle::OnAppCandidatesReceived,
+                          weak_ptr_factory_.GetWeakPtr()))) {
     // Allow navigation to proceed if there isn't an android app that handles
     // the given URL.
     return content::NavigationThrottle::PROCEED;
   }
 
-  auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_service_manager->arc_bridge_service()->intent_helper(),
-      RequestUrlHandlerList);
-  if (!instance)
-    return content::NavigationThrottle::PROCEED;
-  instance->RequestUrlHandlerList(
-      url.spec(), base::Bind(&ArcNavigationThrottle::OnAppCandidatesReceived,
-                             weak_ptr_factory_.GetWeakPtr()));
   return content::NavigationThrottle::DEFER;
 }
 
@@ -289,28 +282,20 @@ void ArcNavigationThrottle::OnIntentPickerClosed(
     const std::string& selected_app_package,
     CloseReason close_reason) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  const GURL& url = navigation_handle()->GetURL();
   content::NavigationHandle* handle = navigation_handle();
   previous_user_action_ = close_reason;
 
-  // Make sure that the instance at least supports HandleUrl.
-  auto* arc_service_manager = ArcServiceManager::Get();
-  mojom::IntentHelperInstance* instance = nullptr;
-  if (arc_service_manager) {
-    instance = ARC_GET_INSTANCE_FOR_METHOD(
-        arc_service_manager->arc_bridge_service()->intent_helper(), HandleUrl);
-  }
+  auto* intent_helper_bridge =
+      ArcServiceManager::GetGlobalService<ArcIntentHelperBridge>();
 
-  // Since we are selecting an app by its package name, we need to locate it
-  // on the |handlers| structure before sending the IPC to ARC.
-  const size_t selected_app_index = GetAppIndex(handlers, selected_app_package);
-  if (!instance) {
+  // Since we are selecting an app by its package name, we need to check
+  // whether its handler is in |handlers| before sending the IPC to ARC.
+  if (!intent_helper_bridge ||
+      ((close_reason == CloseReason::JUST_ONCE_PRESSED ||
+        close_reason == CloseReason::ALWAYS_PRESSED ||
+        close_reason == CloseReason::PREFERRED_ACTIVITY_FOUND) &&
+       GetAppIndex(handlers, selected_app_package) == handlers.size())) {
     close_reason = CloseReason::ERROR;
-  } else if (close_reason == CloseReason::JUST_ONCE_PRESSED ||
-             close_reason == CloseReason::ALWAYS_PRESSED ||
-             close_reason == CloseReason::PREFERRED_ACTIVITY_FOUND) {
-    if (selected_app_index == handlers.size())
-      close_reason = CloseReason::ERROR;
   }
 
   switch (close_reason) {
@@ -326,27 +311,24 @@ void ArcNavigationThrottle::OnIntentPickerClosed(
     case CloseReason::ALWAYS_PRESSED: {
       // Call AddPreferredPackage if it is supported. Reusing the same
       // |instance| is okay.
-      DCHECK(arc_service_manager);
-      if (ARC_GET_INSTANCE_FOR_METHOD(
-              arc_service_manager->arc_bridge_service()->intent_helper(),
-              AddPreferredPackage)) {
-        instance->AddPreferredPackage(
-            handlers[selected_app_index]->package_name);
-      }
+      DCHECK(intent_helper_bridge);
+      intent_helper_bridge->AddPreferredPackage(selected_app_package);
       // fall through.
     }
     case CloseReason::JUST_ONCE_PRESSED:
     case CloseReason::PREFERRED_ACTIVITY_FOUND: {
-      if (ArcIntentHelperBridge::IsIntentHelperPackage(
-              handlers[selected_app_index]->package_name)) {
+      DCHECK(intent_helper_bridge);
+      if (!intent_helper_bridge->HandleUrl(handle->GetURL(),
+                                           selected_app_package)) {
+        DVLOG(1) << "Failed to send HandleUrl";
         handle->Resume();
-      } else {
-        instance->HandleUrl(url.spec(), selected_app_package);
-        handle->CancelDeferredNavigation(
-            content::NavigationThrottle::CANCEL_AND_IGNORE);
-        if (handle->GetWebContents()->GetController().IsInitialNavigation())
-          handle->GetWebContents()->Close();
+        break;
       }
+
+      handle->CancelDeferredNavigation(
+          content::NavigationThrottle::CANCEL_AND_IGNORE);
+      if (handle->GetWebContents()->GetController().IsInitialNavigation())
+        handle->GetWebContents()->Close();
       break;
     }
     case CloseReason::INVALID: {

@@ -29,12 +29,10 @@ const char ArcIntentHelperBridge::kArcServiceName[] =
 const char ArcIntentHelperBridge::kArcIntentHelperPackageName[] =
     "org.chromium.arc.intent_helper";
 
-ArcIntentHelperBridge::ArcIntentHelperBridge(
-    ArcBridgeService* bridge_service,
-    const scoped_refptr<LocalActivityResolver>& activity_resolver)
+ArcIntentHelperBridge::ArcIntentHelperBridge(ArcBridgeService* bridge_service)
     : ArcService(bridge_service),
       binding_(this),
-      activity_resolver_(activity_resolver) {
+      activity_resolver_(new LocalActivityResolver()) {
   arc_bridge_service()->intent_helper()->AddObserver(this);
 }
 
@@ -98,6 +96,48 @@ ArcIntentHelperBridge::GetResult ArcIntentHelperBridge::GetActivityIcons(
     const OnIconsReadyCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return icon_loader_.GetActivityIcons(activities, callback);
+}
+
+bool ArcIntentHelperBridge::RequestUrlHandlerList(
+    const GURL& url,
+    const RequestUrlHandlerListCallback& callback) {
+  if (activity_resolver_->ShouldChromeHandleUrl(url)) {
+    VLOG(1) << "No ARC app URL.";
+    return false;
+  }
+
+  auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service()->intent_helper(), RequestUrlHandlerList);
+  if (!instance)
+    return false;
+
+  instance->RequestUrlHandlerList(url.spec(), callback);
+  return true;
+}
+
+bool ArcIntentHelperBridge::AddPreferredPackage(
+    const std::string& package_name) {
+  auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service()->intent_helper(), AddPreferredPackage);
+  if (!instance)
+    return false;
+
+  instance->AddPreferredPackage(package_name);
+  return true;
+}
+
+bool ArcIntentHelperBridge::HandleUrl(const GURL& url,
+                                      const std::string& package_name) {
+  if (IsIntentHelperPackage(package_name))
+    return false;
+
+  auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service()->intent_helper(), HandleUrl);
+  if (!instance)
+    return false;
+
+  instance->HandleUrl(url.spec(), package_name);
+  return true;
 }
 
 void ArcIntentHelperBridge::AddObserver(ArcIntentHelperObserver* observer) {

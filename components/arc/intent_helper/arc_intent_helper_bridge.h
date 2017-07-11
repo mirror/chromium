@@ -40,9 +40,7 @@ class ArcIntentHelperBridge
       public mojom::IntentHelperHost,
       public ash::LinkHandlerModelFactory {
  public:
-  ArcIntentHelperBridge(
-      ArcBridgeService* bridge_service,
-      const scoped_refptr<LocalActivityResolver>& activity_resolver);
+  explicit ArcIntentHelperBridge(ArcBridgeService* bridge_service);
   ~ArcIntentHelperBridge() override;
 
   void AddObserver(ArcIntentHelperObserver* observer);
@@ -72,6 +70,26 @@ class ArcIntentHelperBridge
   using GetResult = internal::ActivityIconLoader::GetResult;
   GetResult GetActivityIcons(const std::vector<ActivityName>& activities,
                              const OnIconsReadyCallback& callback);
+
+  // Calls IntentHelperInstance::RequestUrlHandlerList.
+  // On success, returns true and |callback| will be called asynchronously,
+  // otherwise returns false and |callback| will not be called.
+  // Note that, if the URL is know that it needs to be handled by Chrome,
+  // this does not call IntentHelperInstance::RequestUrlHandlerList, so
+  // returns false.
+  using RequestUrlHandlerListCallback =
+      mojom::IntentHelperInstance::RequestUrlHandlerListCallback;
+  bool RequestUrlHandlerList(const GURL& url,
+                             const RequestUrlHandlerListCallback& callback);
+
+  // Calls IntentHelperInstance::AddPreferredPackage. Returns true on success.
+  bool AddPreferredPackage(const std::string& package_name);
+
+  // Calls IntentHelperInstance::HandleUrl. Returns true on success.
+  // If the |package_name| is intent_helper's, then it means Chrome should
+  // handle it. Thus, in that case, does not call
+  // IntentHelperInstance::HandleUrl, and returns false.
+  bool HandleUrl(const GURL& url, const std::string& package_name);
 
   // ash::LinkHandlerModelFactory
   std::unique_ptr<ash::LinkHandlerModel> CreateModel(const GURL& url) override;

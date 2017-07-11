@@ -28,14 +28,12 @@ class ArcIntentHelperTest : public testing::Test {
  private:
   void SetUp() override {
     arc_bridge_service_ = base::MakeUnique<ArcBridgeService>();
-    activity_resolver_ = new LocalActivityResolver();
-    instance_ = base::MakeUnique<ArcIntentHelperBridge>(
-        arc_bridge_service_.get(), activity_resolver_);
+    instance_ =
+        base::MakeUnique<ArcIntentHelperBridge>(arc_bridge_service_.get());
   }
 
   void TearDown() override {
     instance_.reset();
-    activity_resolver_ = nullptr;
     arc_bridge_service_.reset();
   }
 
