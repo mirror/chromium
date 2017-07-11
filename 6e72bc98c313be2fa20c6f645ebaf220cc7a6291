@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1fb1098e_a30c9ac4",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-07-11T14:42:45Z",
+      "side": 1,
+      "message": "Yeah me too, but on some websites like cnn and baidu, the getter for the attribute accounts for \u003e 10% of Blink C++.",
+      "parentUuid": "3deab5c3_f193d0db",
+      "revId": "6e72bc98c313be2fa20c6f645ebaf220cc7a6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a70313f_b0bb97be",
         "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6e72bc98c313be2fa20c6f645ebaf220cc7a6291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594650ed_a47c661a",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-07-11T14:42:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a70313f_b0bb97be",
+      "revId": "6e72bc98c313be2fa20c6f645ebaf220cc7a6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
