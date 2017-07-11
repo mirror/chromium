@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6603948e_084147bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-11T04:51:00Z",
+      "side": 1,
+      "message": "Please add TEST\u003ddbus_unittests to make it clear that you have run the tests to verify your change.",
+      "revId": "f6a15b2af40085e77b8f7bfc86971c12a63724da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86be6937_3c2ae301",
+        "filename": "dbus/bus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-11T04:51:00Z",
+      "side": 1,
+      "message": "nit: While you are here, could you replace NULL in this Timeout class with nullptr?",
+      "range": {
+        "startLine": 112,
+        "startChar": 40,
+        "endLine": 112,
+        "endChar": 44
+      },
+      "revId": "f6a15b2af40085e77b8f7bfc86971c12a63724da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65ed19e_ba3e0ea0",
+        "filename": "dbus/bus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-11T04:51:00Z",
+      "side": 1,
+      "message": "nit: Rename this to weak_ptr_factory_ to be consistent with existing code in object_maanger.h and property.h",
+      "range": {
+        "startLine": 142,
+        "startChar": 32,
+        "endLine": 142,
+        "endChar": 45
+      },
+      "revId": "f6a15b2af40085e77b8f7bfc86971c12a63724da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
