@@ -996,6 +996,13 @@ public class BottomSheet
         for (BottomSheetObserver o : mObservers) o.onSheetOpened();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_opened));
         mActivity.addViewObscuringAllTabs(this);
+
+        if (mActivity.getActivityTab() != null
+                && mActivity.getActivityTab().getContentViewCore() != null) {
+            // Clear focus on the current ContentViewCore to make sure popups don't appear on top
+            // of the bottom sheet.
+            mActivity.getActivityTab().getContentViewCore().getContainerView().clearFocus();
+        }
     }
 
     /**
