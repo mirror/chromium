@@ -22,6 +22,76 @@
       "revId": "387d3264d5528ee3929c8f855b54fe26916719e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee32c536_46401183",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T12:00:23Z",
+      "side": 1,
+      "message": "If the const versions aren\u0027t used at all then I\u0027d not add them \"just in case\".\nOtherwise, the duplication seems simpler.",
+      "parentUuid": "3517fd1c_88cd7596",
+      "range": {
+        "startLine": 492,
+        "startChar": 0,
+        "endLine": 492,
+        "endChar": 37
+      },
+      "revId": "387d3264d5528ee3929c8f855b54fe26916719e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f097b6_bc3eb026",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T12:00:23Z",
+      "side": 1,
+      "message": "Where is it used?",
+      "range": {
+        "startLine": 499,
+        "startChar": 17,
+        "endLine": 499,
+        "endChar": 37
+      },
+      "revId": "387d3264d5528ee3929c8f855b54fe26916719e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36636f7_dc66904e",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T12:00:23Z",
+      "side": 1,
+      "message": "Where is it used?",
+      "range": {
+        "startLine": 516,
+        "startChar": 17,
+        "endLine": 516,
+        "endChar": 36
+      },
+      "revId": "387d3264d5528ee3929c8f855b54fe26916719e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
