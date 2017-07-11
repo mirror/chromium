@@ -48,6 +48,156 @@
     },
     {
       "key": {
+        "uuid": "a003d356_d7fa008b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-11T22:42:27Z",
+      "side": 1,
+      "message": "Hmm... Would this ever interfere with the current identity check in FeatureList::CheckFeatureIdentity / FeatureListTest::CheckFeatureIdentity?",
+      "parentUuid": "3a560347_1fc55779",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba91e38_35187854",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-11T22:42:27Z",
+      "side": 1,
+      "message": "We probably want to move this class to //components/feature_engagement_tracker/test and create a helper target called \"test_support\". I would probably remove the MOCK_METHOD* parts and call it FakeFeatureEngagementTracker or TestFeatureEngagementTracker instead.\n\nAlso, see comments below for pre-made tools you could use.",
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67773d16_7f76097f",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-11T22:42:27Z",
+      "side": 1,
+      "message": "I would provide this construction together with the class declaration somewhere, so the construction in this test should be super simple.",
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034f4571_f048f182",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-11T22:42:27Z",
+      "side": 1,
+      "message": "You probably don\u0027t need the profile.",
+      "range": {
+        "startLine": 90,
+        "startChar": 33,
+        "endLine": 90,
+        "endChar": 49
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446f7d2b_b1d3a838",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-11T22:42:27Z",
+      "side": 1,
+      "message": "I would probably use //components/feature_engagement_tracker/internal/in_memory_store.h here so you don\u0027t need disk access or a real profile directory, etc.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 72
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123faa8c_2bab9856",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-11T22:42:27Z",
+      "side": 1,
+      "message": "This one you probably want to use since you want to use real JSON config.",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 65
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb588d61_1e01f3a8",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-11T22:42:27Z",
+      "side": 1,
+      "message": "This one you can probably also use as is, since it uses the config parsed above.",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 65
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f6da039_0137ef58",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
         "patchSetId": 30
