@@ -22,6 +22,30 @@
       "revId": "fdf3d528fce04dd95feb7775fbf582f6ba831465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6a9f62_8ca4bed5",
+        "filename": "components/download/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1226098
+      },
+      "writtenOn": "2017-07-11T06:37:26Z",
+      "side": 0,
+      "message": "I didn\u0027t quite get your point here. You mean, to keep this file as it is and no need of this changes ?",
+      "parentUuid": "56fc8061_fd2461ad",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 1
+      },
+      "revId": "fdf3d528fce04dd95feb7775fbf582f6ba831465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
