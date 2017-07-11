@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "aca57cd5_4ac7752b",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-11T14:10:19Z",
+      "side": 1,
+      "message": "Charlie: I had to remove that line for the AreCrossProcessFramesPossible CL, because we needed to be able to accommodate touchscreen gesture events that had no corresponding touch events, and didn\u0027t immediately have a way to distinguish when such gestures were expected, vs when they were unexpected. This CL adds a way to tell those cases apart again, so I asked Nathan to restore the call.",
+      "parentUuid": "de3df8fb_e0643f02",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf795aa0_4b2112ac",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 6
