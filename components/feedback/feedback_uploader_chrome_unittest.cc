@@ -8,6 +8,9 @@
 
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
+#include "base/run_loop.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "components/variations/variations_associated_data.h"
 #include "components/variations/variations_http_header_provider.h"
 #include "content/public/test/test_browser_context.h"
@@ -17,6 +20,17 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace feedback {
+
+namespace {
+
+constexpr base::TimeDelta kTestRetryDelay =
+    base::TimeDelta::FromMilliseconds(1);
+
+constexpr int kHttpPostSuccessNoContent = 204;
+constexpr int kHttpPostFailClientError = 400;
+constexpr int kHttpPostFailServerError = 500;
+
+}  // namespace
 
 class FeedbackUploaderChromeTest : public ::testing::Test {
  protected:
@@ -39,6 +53,12 @@ class FeedbackUploaderChromeTest : public ::testing::Test {
     base::FieldTrialList::CreateFieldTrial(trial_name, group_name)->group();
   }
 
+  scoped_refptr<base::SingleThreadTaskRunner> CreateUploaderTaskRunner() const {
+    return base::CreateSingleThreadTaskRunnerWithTraits(
+        {base::MayBlock(), base::TaskPriority::BACKGROUND,
+         base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+  }
+
  private:
   content::TestBrowserThreadBundle browser_thread_bundle_;
 
@@ -54,10 +74,10 @@ TEST_F(FeedbackUploaderChromeTest, VariationHeaders) {
   CreateFieldTrialWithId("Test", "Group1", 123);
 
   content::TestBrowserContext context;
-  FeedbackUploaderChrome uploader(&context);
+  FeedbackUploaderChrome uploader(&context, CreateUploaderTaskRunner());
 
   net::TestURLFetcherFactory factory;
-  uploader.DispatchReport("test");
+  uploader.QueueReport("test");
 
   net::TestURLFetcher* fetcher = factory.GetFetcherByID(0);
   net::HttpRequestHeaders headers;
@@ -69,6 +89,41 @@ TEST_F(FeedbackUploaderChromeTest, VariationHeaders) {
   fetcher->delegate()->OnURLFetchComplete(fetcher);
 
   variations::VariationsHttpHeaderProvider::GetInstance()->ResetForTesting();
+}
+
+TEST_F(FeedbackUploaderChromeTest, TestVariousServerResponses) {
+  content::TestBrowserContext context;
+  FeedbackUploader::SetMinimumRetryDelayForTesting(kTestRetryDelay);
+  FeedbackUploaderChrome uploader(&context, CreateUploaderTaskRunner());
+
+  EXPECT_EQ(kTestRetryDelay, uploader.retry_delay());
+  // Successful reports should not introduce any retries, and should not
+  // increase the backoff delay.
+  net::TestURLFetcherFactory factory;
+  factory.set_remove_fetcher_on_delete(true);
+  uploader.QueueReport("Successful report");
+  net::TestURLFetcher* fetcher = factory.GetFetcherByID(0);
+  fetcher->set_response_code(kHttpPostSuccessNoContent);
+  fetcher->delegate()->OnURLFetchComplete(fetcher);
+  EXPECT_EQ(kTestRetryDelay, uploader.retry_delay());
+  EXPECT_TRUE(uploader.QueueEmpty());
+
+  // Failed reports due to client errors are not retried. No backoff delay
+  // should be doubled.
+  uploader.QueueReport("Client error failed report");
+  fetcher = factory.GetFetcherByID(0);
+  fetcher->set_response_code(kHttpPostFailClientError);
+  fetcher->delegate()->OnURLFetchComplete(fetcher);
+  EXPECT_EQ(kTestRetryDelay, uploader.retry_delay());
+  EXPECT_TRUE(uploader.QueueEmpty());
+
+  // Failed reports due to server errors are retried.
+  uploader.QueueReport("Server error failed report");
+  fetcher = factory.GetFetcherByID(0);
+  fetcher->set_response_code(kHttpPostFailServerError);
+  fetcher->delegate()->OnURLFetchComplete(fetcher);
+  EXPECT_EQ(kTestRetryDelay * 2, uploader.retry_delay());
+  EXPECT_FALSE(uploader.QueueEmpty());
 }
 
 }  // namespace feedback
