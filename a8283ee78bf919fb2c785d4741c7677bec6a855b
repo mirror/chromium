@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd40695_3247f0e0",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-11T12:45:13Z",
+      "side": 0,
+      "message": "FYI, the same is done in other files too, unfortunately.\n\n$ git grep -le \u0027intent_helper()\u0027\nchrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc\nchrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc\nchrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc\nchrome/browser/chromeos/arc/intent_helper/arc_settings_service_browsertest.cc\nchrome/browser/chromeos/arc/user_session/arc_user_session_service.cc\nchrome/browser/chromeos/arc/user_session/arc_user_session_service_browsertest.cc\nchrome/browser/chromeos/file_manager/arc_file_tasks.cc\nchrome/browser/chromeos/note_taking_helper.cc\nchrome/browser/chromeos/note_taking_helper_unittest.cc\nchrome/browser/task_manager/providers/arc/arc_process_task.cc\nchrome/browser/ui/app_list/arc/arc_app_utils.cc",
+      "revId": "a8283ee78bf919fb2c785d4741c7677bec6a855b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

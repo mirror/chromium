@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fda9d600_e98699a3",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-11T12:45:13Z",
+      "side": 1,
+      "message": "The condition for returning false seems too complicated to me. Can you add either ShouldChromeHandleUrl() or local_activity_resolver() here and keep the call site (mostly) unchanged?\n\nMaking this not a simple proxy to mojo also makes it more difficult for other files e.g. arc_external_protocol_dialog.cc to migrate to the new ArcIntentHelperBridge functions. LocalActivityResolver can only handle http(s) URLs, but arc_external_protocol_dialog.cc and other callers are capable to handle non-http(s) URLs, for example.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "a1ad39b94ad8ea8641527c07d286bf3e7592bd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f26c2d_89f5ba54",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-11T12:45:13Z",
+      "side": 1,
+      "message": "same. I\u0027d like this to be a simple proxy to mojo.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 56
+      },
+      "revId": "a1ad39b94ad8ea8641527c07d286bf3e7592bd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac72efb0_68b0a873",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-11T12:45:13Z",
+      "side": 1,
+      "message": "Can this be just \u0027LocalActivityResolver activity_resolver_;\u0027 now?",
+      "revId": "a1ad39b94ad8ea8641527c07d286bf3e7592bd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
