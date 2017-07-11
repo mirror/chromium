@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3e83a41_e6339d72",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-11T23:09:54Z",
+      "side": 1,
+      "message": "Should this be using LOG(INFO)?",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "3b067c87ab2d300ad0b034aa6b9febc05ebb80fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb84a14_2fe869fb",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-11T23:09:54Z",
+      "side": 1,
+      "message": "If we want this to compile on Mac, we can block if with #if !define(OS_MACOSX).",
+      "revId": "3b067c87ab2d300ad0b034aa6b9febc05ebb80fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd954165_56d26832",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-11T23:09:54Z",
+      "side": 1,
+      "message": "It seems like it is only used for ResourceUsageTracker, but we might want to do logging::SetMinLogLevel() as well.",
+      "range": {
+        "startLine": 15,
+        "startChar": 18,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "3b067c87ab2d300ad0b034aa6b9febc05ebb80fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
