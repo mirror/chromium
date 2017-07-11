@@ -69,6 +69,24 @@
       "revId": "cf48b24635517cb15d6be5c3a72efef86926f341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddf2124_bb32ad8d",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-11T01:22:03Z",
+      "side": 1,
+      "message": "Good idea, but it\u0027s not practical because\n1. base::ScopedFD isn\u0027t ipc friendly, so need to own base::FileDescriptor.\n2. NativePixmapPlane is used as member and passing value. Manual open/close base::FileDescriptor causes lots of headache.",
+      "parentUuid": "f0fe3749_4df3f09d",
+      "revId": "cf48b24635517cb15d6be5c3a72efef86926f341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

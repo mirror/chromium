@@ -70,6 +70,30 @@
       "revId": "5f2725f68003a78440a8c381b258bc338e910232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453a19c3_6f503ecf",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-11T01:22:03Z",
+      "side": 0,
+      "message": "In this CL, NativePixmap ctor fails if FD count doesn\u0027t equal to plane count. Check GbmBuffer::GbmBuffer()",
+      "parentUuid": "af3694d3_048e44e8",
+      "range": {
+        "startLine": 616,
+        "startChar": 0,
+        "endLine": 623,
+        "endChar": 3
+      },
+      "revId": "5f2725f68003a78440a8c381b258bc338e910232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
