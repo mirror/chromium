@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53fbad8f_c5e021ee",
+        "filename": "components/viz/client/client_shared_bitmap_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-11T20:31:45Z",
+      "side": 1,
+      "message": "This guards the ++last_sequence_number_ right? I recommend creating a separate method for this. This makes the critical section very large and can hurt performance.",
+      "range": {
+        "startLine": 135,
+        "startChar": 22,
+        "endLine": 135,
+        "endChar": 27
+      },
+      "revId": "01fb54fb715988d6b6075c81acddac32fda6eec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
