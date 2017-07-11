@@ -626,7 +626,7 @@ public class NotificationPlatformBridge {
         String channelId = forWebApk
                 ? null
                 : ChromeFeatureList.isEnabled(ChromeFeatureList.SITE_NOTIFICATION_CHANNELS)
-                        ? SiteChannelsManager.toChannelId(origin)
+                        ? SiteChannelsManager.getInstance().getChannelIdForOrigin(origin)
                         : ChannelDefinitions.CHANNEL_ID_SITES;
         if (useCustomLayouts(hasImage)) {
             return new CustomNotificationBuilder(context, channelId);

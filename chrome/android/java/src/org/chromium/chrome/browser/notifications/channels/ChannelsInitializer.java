@@ -52,10 +52,8 @@ public class ChannelsInitializer {
      */
     public void ensureInitialized(String channelId) {
         if (channelId.startsWith(ChannelDefinitions.CHANNEL_ID_PREFIX_SITES)) {
-            // TODO(crbug.com/700377): Initialize site channels via native, not directly as below,
+            // TODO(crbug.com/700377): Initialize site channels via native,
             // in order to keep track of when they were created.
-            SiteChannelsManager.getInstance().createSiteChannel(
-                    SiteChannelsManager.toSiteOrigin(channelId), /*enabled=*/true);
             return;
         }
         ChannelDefinitions.PredefinedChannel predefinedChannel =
