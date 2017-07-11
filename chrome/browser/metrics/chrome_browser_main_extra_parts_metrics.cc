@@ -13,6 +13,8 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -501,10 +503,11 @@ void ChromeBrowserMainExtraPartsMetrics::PostBrowserStart() {
       FROM_HERE, base::BindOnce(&RecordStartupMetricsOnBlockingPool),
       kStartupMetricsGatheringDelay);
 #if defined(OS_WIN)
-  content::BrowserThread::PostDelayedTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::Bind(&RecordIsPinnedToTaskbarHistogram),
-      kStartupMetricsGatheringDelay);
+  base::TaskTraits task_traits = {base::MayBlock(),
+                                  base::TaskPriority::BACKGROUND,
+                                  base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN};
+  base::CreateSequencedTaskRunnerWithTraits(task_traits)
+      ->PostTask(FROM_HERE, base::Bind(&RecordIsPinnedToTaskbarHistogram));
 #endif  // defined(OS_WIN)
 
   display_count_ = display::Screen::GetScreen()->GetNumDisplays();
