@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74db955b_ea182cca",
+        "filename": "base/json/json_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T21:13:13Z",
+      "side": 1,
+      "message": "Do you need this line?",
+      "revId": "6addae14f05b1d821f1f8c66c7f3e46f8f320384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
