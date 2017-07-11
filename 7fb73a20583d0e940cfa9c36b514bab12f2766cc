@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2663e9a6_6f427a4e",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-11T01:06:06Z",
+      "side": 1,
+      "message": "i think this could be moved up above line 314 now, although we\u0027ve switched over to using the mojo impl now so there is no sqlite connecton in practice anymore",
+      "range": {
+        "startLine": 326,
+        "startChar": 12,
+        "endLine": 326,
+        "endChar": 17
+      },
+      "revId": "7fb73a20583d0e940cfa9c36b514bab12f2766cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
