@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9323716_4cdc4de3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/plugins/cross-frame-object-access-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-11T17:23:27Z",
+      "side": 1,
+      "message": "The original wasn\u0027t good, but it\u0027s not clear that this is an improvement. :/ Could you poke at the test to get something reasonable here?",
+      "revId": "8b80d5059156423142897f09e6450a9f43abe81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
