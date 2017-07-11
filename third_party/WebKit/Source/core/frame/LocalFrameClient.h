@@ -269,6 +269,13 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidAddContentSecurityPolicies(
       const blink::WebVector<WebContentSecurityPolicy>&) {}
 
+  // Called when the URL of a script was allowed to bypass the Content Security
+  // Policy. This method can return false to prevent the bypass and force the
+  // request to adhere to the CSP of the frame's document.
+  virtual bool CanScriptBypassContentSecurityPolicy(const KURL&) {
+    return true;
+  }
+
   virtual void DidChangeFrameOwnerProperties(HTMLFrameOwnerElement*) {}
 
   virtual void DispatchWillStartUsingPeerConnectionHandler(

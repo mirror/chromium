@@ -767,6 +767,10 @@ bool ContentSecurityPolicy::AllowScriptFromSource(
         parser_disposition == kParserInserted
             ? WebFeature::kScriptWithCSPBypassingSchemeParserInserted
             : WebFeature::kScriptWithCSPBypassingSchemeNotParserInserted);
+    LocalFrame* frame = GetDocument() ? GetDocument()->GetFrame() : nullptr;
+    if (frame && !frame->Client()->CanScriptBypassContentSecurityPolicy(url)) {
+      return false;
+    }
   }
   return IsAllowedByAll<&CSPDirectiveList::AllowScriptFromSource>(
       policies_, url, nonce, hashes, parser_disposition, redirect_status,

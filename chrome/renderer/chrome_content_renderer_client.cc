@@ -1510,6 +1510,19 @@ void ChromeContentRendererClient::RunScriptsAtDocumentIdle(
 #endif
 }
 
+bool ChromeContentRendererClient::CanScriptBypassContentSecurityPolicy(
+    RenderFrame* render_frame,
+    const GURL& url) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  // Currently, the only whitelisted scheme (possibly of an inner URL) is
+  // extensions::kExtensionScheme. So pass all calls to the extensions client.
+  return ChromeExtensionsRendererClient::GetInstance()
+      ->CanScriptBypassContentSecurityPolicy(render_frame, url);
+#else
+  return true;
+#endif
+}
+
 void ChromeContentRendererClient::
     DidInitializeServiceWorkerContextOnWorkerThread(
         v8::Local<v8::Context> context,

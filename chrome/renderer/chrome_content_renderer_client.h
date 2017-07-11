@@ -184,6 +184,8 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
   void RunScriptsAtDocumentStart(content::RenderFrame* render_frame) override;
   void RunScriptsAtDocumentEnd(content::RenderFrame* render_frame) override;
   void RunScriptsAtDocumentIdle(content::RenderFrame* render_frame) override;
+  bool CanScriptBypassContentSecurityPolicy(content::RenderFrame* render_frame,
+                                            const GURL& url) override;
   void DidInitializeServiceWorkerContextOnWorkerThread(
       v8::Local<v8::Context> context,
       int64_t service_worker_version_id,

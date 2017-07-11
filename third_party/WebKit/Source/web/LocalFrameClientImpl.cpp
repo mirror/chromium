@@ -908,6 +908,15 @@ void LocalFrameClientImpl::DidAddContentSecurityPolicies(
     web_frame_->Client()->DidAddContentSecurityPolicies(policies);
 }
 
+bool LocalFrameClientImpl::CanScriptBypassContentSecurityPolicy(
+    const KURL& url) {
+  if (web_frame_->Client()) {
+    return web_frame_->Client()->CanScriptBypassContentSecurityPolicy(
+        WebURL(url));
+  }
+  return true;
+}
+
 void LocalFrameClientImpl::DidChangeFrameOwnerProperties(
     HTMLFrameOwnerElement* frame_element) {
   if (!web_frame_->Client())

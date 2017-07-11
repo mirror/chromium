@@ -186,6 +186,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
       const WebParsedFeaturePolicy& parsed_header) override;
   void DidAddContentSecurityPolicies(
       const blink::WebVector<WebContentSecurityPolicy>&) override;
+  bool CanScriptBypassContentSecurityPolicy(const KURL&) override;
   void DidChangeFrameOwnerProperties(HTMLFrameOwnerElement*) override;
 
   void DispatchWillStartUsingPeerConnectionHandler(

@@ -245,6 +245,12 @@ BrowserPluginDelegate* ContentRendererClient::CreateBrowserPluginDelegate(
   return nullptr;
 }
 
+bool ContentRendererClient::CanScriptBypassContentSecurityPolicy(
+    RenderFrame* render_frame,
+    const GURL& url) {
+  return true;
+}
+
 bool ContentRendererClient::ShouldEnforceWebRTCRoutingPreferences() {
   return true;
 }

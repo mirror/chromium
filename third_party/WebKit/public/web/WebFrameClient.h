@@ -279,6 +279,13 @@ class BLINK_EXPORT WebFrameClient {
   virtual void DidAddContentSecurityPolicies(
       const WebVector<WebContentSecurityPolicy>& policies) {}
 
+  // Called when the URL of a script was allowed to bypass the Content Security
+  // Policy. This method can return false to prevent the bypass and force the
+  // request to adhere to the CSP of the frame's document.
+  virtual bool CanScriptBypassContentSecurityPolicy(const WebURL&) {
+    return true;
+  }
+
   // Some frame owner properties have changed for a child frame of this frame.
   // Frame owner properties currently include: scrolling, marginwidth and
   // marginheight.

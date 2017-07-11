@@ -3246,6 +3246,12 @@ void RenderFrameImpl::DidAddContentSecurityPolicies(
                                                       content_policies));
 }
 
+bool RenderFrameImpl::CanScriptBypassContentSecurityPolicy(
+    const blink::WebURL& url) {
+  return GetContentClient()->renderer()->CanScriptBypassContentSecurityPolicy(
+      this, url);
+}
+
 void RenderFrameImpl::DidChangeFrameOwnerProperties(
     blink::WebFrame* child_frame,
     const blink::WebFrameOwnerProperties& frame_owner_properties) {

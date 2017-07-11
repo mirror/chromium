@@ -341,6 +341,12 @@ class CONTENT_EXPORT ContentRendererClient {
   // started.
   virtual void SetRuntimeFeaturesDefaultsBeforeBlinkInitialization() {}
 
+  // Called when the URL of a script was allowed to bypass the Content Security
+  // Policy. This method can return false to prevent the bypass and force the
+  // request to adhere to the CSP of the frame's document.
+  virtual bool CanScriptBypassContentSecurityPolicy(RenderFrame* render_frame,
+                                                    const GURL& url);
+
   // Notifies that a service worker context has been created. This function
   // is called from the worker thread.
   virtual void DidInitializeServiceWorkerContextOnWorkerThread(

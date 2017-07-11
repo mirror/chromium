@@ -528,6 +528,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebParsedFeaturePolicy& parsed_header) override;
   void DidAddContentSecurityPolicies(
       const blink::WebVector<blink::WebContentSecurityPolicy>&) override;
+  bool CanScriptBypassContentSecurityPolicy(const blink::WebURL&) override;
   void DidChangeFrameOwnerProperties(
       blink::WebFrame* child_frame,
       const blink::WebFrameOwnerProperties& frame_owner_properties) override;

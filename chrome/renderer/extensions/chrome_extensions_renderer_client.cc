@@ -20,8 +20,10 @@
 #include "chrome/renderer/extensions/renderer_permissions_policy_delegate.h"
 #include "chrome/renderer/extensions/resource_request_policy.h"
 #include "chrome/renderer/media/cast_ipc_dispatcher.h"
+#include "content/public/common/bindings_policy.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -39,6 +41,7 @@
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebPluginParams.h"
+#include "url/origin.h"
 
 using extensions::Extension;
 
@@ -326,4 +329,34 @@ void ChromeExtensionsRendererClient::RunScriptsAtDocumentEnd(
 void ChromeExtensionsRendererClient::RunScriptsAtDocumentIdle(
     content::RenderFrame* render_frame) {
   extension_dispatcher_->RunScriptsAtDocumentIdle(render_frame);
+}
+
+bool ChromeExtensionsRendererClient::CanScriptBypassContentSecurityPolicy(
+    content::RenderFrame* render_frame,
+    const GURL& url) {
+  if (render_frame->GetEnabledBindings() & content::BINDINGS_POLICY_WEB_UI) {
+    // This is a WebUI page. Only allow the script to run if the extension can
+    // already run content scripts on the page.
+
+    // Convert to Origin and back to GURL in case the url is a blob:-URL.
+    url::Origin url_origin(url);
+    DCHECK(url_origin.GetURL().SchemeIs(extensions::kExtensionScheme));
+
+    const extensions::Extension* extension =
+        extensions::RendererExtensionRegistry::Get()->GetExtensionOrAppByURL(
+            url_origin.GetURL());
+    if (extension &&
+        extension->permissions_data()->CanAccessPage(
+            extension, GURL(render_frame->GetWebFrame()->GetDocument().Url()),
+            -1 /* tab_id */, nullptr /* error */)) {
+      // Likely a privileged (component) extension with the permission to run
+      // scripts at the given URL.
+      return true;
+    }
+
+    return false;
+  }
+  // Not a privileged WebUI page, allow chrome-extension scripts to run
+  // regardless of the page's CSP.
+  return true;
 }
