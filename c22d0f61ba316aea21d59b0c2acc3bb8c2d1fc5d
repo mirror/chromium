@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f03b4e_ae6d9386",
+        "filename": "components/password_manager/core/browser/password_reuse_defines.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T11:34:21Z",
+      "side": 1,
+      "message": "Would be nice to have a comment what this feature is about.",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 11
+      },
+      "revId": "c22d0f61ba316aea21d59b0c2acc3bb8c2d1fc5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22bee12_0aa5332a",
+        "filename": "components/password_manager/core/browser/password_reuse_defines.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T11:34:21Z",
+      "side": 1,
+      "message": "What about SYNC_PASSWORD_REUSE_DETECTION_ENABLED?",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 35
+      },
+      "revId": "c22d0f61ba316aea21d59b0c2acc3bb8c2d1fc5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
