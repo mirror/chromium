@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edffc77b_3eb2c3a5",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T10:32:27Z",
+      "side": 1,
+      "message": "Does it make sense to define a function, say ShouldSendClientHint, as follows?\n\nbool FrameFetchContext::ShouldSendClientHint(WebClientHintType type, const ClientHintsPreferences\u0026 hints_preferences) const {\n  return GetClientHintsPreferences().ShouldSend(type) || hints_preferences.ShouldSend(type);\n}\n\nThat way you don\u0027t need to have this array.",
+      "revId": "6f2e336cc4303e05097f772e394eb0d6598baace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4409b964_a6987b60",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T10:32:27Z",
+      "side": 1,
+      "message": "Why do you need this loop? Isn\u0027t it OK to just enumerate the statements?",
+      "revId": "6f2e336cc4303e05097f772e394eb0d6598baace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
