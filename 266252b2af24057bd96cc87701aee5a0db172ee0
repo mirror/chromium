@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb6c02f_c1384f98",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "It looks like the success argument is never used. Please remove it as is just adds unnecessary complexity.",
+      "range": {
+        "startLine": 25,
+        "startChar": 48,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55252c8f_072303ac",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "I think I prefer the did/will version for this notification. How about\nsigninDidFinishWithSuccess:(bool)success",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca852b0b_8d13cd27",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "s/succeeded/success",
+      "range": {
+        "startLine": 26,
+        "startChar": 40,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6038d4ff_f352d642",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "I think that doing this on dealloc is risky - if the mediator leaks, then we will not have these histograms. I think it would be better to have an explicit call to log these histograms from the view that has the mediator (either when it is dismissed, or when it is hidden).\n\nI think you were hitting this due to the same problem - the mediator was destroyed and recreated, so the histogram got logged too much.",
+      "range": {
+        "startLine": 147,
+        "startChar": 8,
+        "endLine": 147,
+        "endChar": 15
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4921e190_56b509d9",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "Prefer DCHECK_NE(ios::SigninPromoViewState::Dismissed, _signinPromoViewState) as this also prints the values of the variables if the condition is not true.",
+      "range": {
+        "startLine": 224,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 8
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a62ebf6_ad6c9b38",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "range": {
+        "startLine": 241,
+        "startChar": 9,
+        "endLine": 241,
+        "endChar": 30
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74459cb_a26accc9",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 265,
+        "startChar": 9,
+        "endLine": 265,
+        "endChar": 30
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3ab0cd_16dbfaf9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "s/animate/animated",
+      "range": {
+        "startLine": 331,
+        "startChar": 40,
+        "endLine": 331,
+        "endChar": 47
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33a5eb2_f417a3d6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "It looks like |animate| is never used. Please remove it.",
+      "range": {
+        "startLine": 331,
+        "startChar": 8,
+        "endLine": 331,
+        "endChar": 33
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3c0dad_6770adc5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "I think using a bool to indicate a state is hard to read for me.\n\nShould this be |isPromoVisibleNow|or |shouldShowPromo|?",
+      "range": {
+        "startLine": 332,
+        "startChar": 7,
+        "endLine": 332,
+        "endChar": 20
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940cbd07_04966516",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "It is not clear to me why do we even bother running thought this code (and reloading the collection view) when the sign-n promo is not enabled.",
+      "range": {
+        "startLine": 345,
+        "startChar": 26,
+        "endLine": 345,
+        "endChar": 46
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687155de_5f6ea822",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T15:59:20Z",
+      "side": 1,
+      "message": "I think animated should be NO here.",
+      "range": {
+        "startLine": 894,
+        "startChar": 8,
+        "endLine": 894,
+        "endChar": 33
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
