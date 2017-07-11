@@ -16,6 +16,23 @@
       "revId": "d1702353f3060551b4b2552a8ac33f6cc4103dfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc00cd53_e55de9f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T06:32:13Z",
+      "side": 1,
+      "message": "Also please add a Bug: line . There might be a `Launch Tracking` or `Launch Tracking Technical` bug already, but usually the CLs reference a related Eng bug for it.",
+      "revId": "d1702353f3060551b4b2552a8ac33f6cc4103dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
