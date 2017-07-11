@@ -282,9 +282,6 @@ CrNetEnvironment::CrNetEnvironment(const std::string& user_agent,
 
 void CrNetEnvironment::Install() {
   // Threads setup.
-  network_cache_thread_.reset(new base::Thread("Chrome Network Cache Thread"));
-  network_cache_thread_->StartWithOptions(
-      base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
   network_io_thread_.reset(new base::Thread("Chrome Network IO Thread"));
   network_io_thread_->StartWithOptions(
       base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
@@ -440,8 +437,7 @@ void CrNetEnvironment::InitializeOnNetworkThread() {
   std::unique_ptr<net::HttpCache::DefaultBackend> main_backend(
       new net::HttpCache::DefaultBackend(net::DISK_CACHE,
                                          net::CACHE_BACKEND_DEFAULT, cache_path,
-                                         0,  // Default cache size.
-                                         network_cache_thread_->task_runner()));
+                                         0 /* Default cache size. */));
 
   net::HttpNetworkSession::Params session_params;
   session_params.enable_http2 = spdy_enabled();

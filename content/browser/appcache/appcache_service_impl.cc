@@ -429,14 +429,12 @@ AppCacheServiceImpl::~AppCacheServiceImpl() {
 
 void AppCacheServiceImpl::Initialize(
     const base::FilePath& cache_directory,
-    const scoped_refptr<base::SingleThreadTaskRunner>& db_thread,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread) {
+    const scoped_refptr<base::SingleThreadTaskRunner>& db_thread) {
   DCHECK(!storage_.get());
   cache_directory_ = cache_directory;
   db_thread_ = db_thread;
-  cache_thread_ = cache_thread;
   AppCacheStorageImpl* storage = new AppCacheStorageImpl(this);
-  storage->Initialize(cache_directory, db_thread, cache_thread);
+  storage->Initialize(cache_directory, db_thread);
   storage_.reset(storage);
 }
 
@@ -478,7 +476,7 @@ void AppCacheServiceImpl::Reinitialize() {
   for (auto& observer : observers_)
     observer.OnServiceReinitialized(old_storage_ref.get());
 
-  Initialize(cache_directory_, db_thread_, cache_thread_);
+  Initialize(cache_directory_, db_thread_);
 }
 
 void AppCacheServiceImpl::GetAllAppCacheInfo(

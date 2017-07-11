@@ -24,7 +24,7 @@
 #include "content/common/content_export.h"
 
 namespace base {
-class SingleThreadTaskRunner;
+class SequencedTaskRunner;
 }  // namespace base
 
 namespace content {
@@ -36,10 +36,8 @@ class AppCacheStorageImpl : public AppCacheStorage {
   explicit AppCacheStorageImpl(AppCacheServiceImpl* service);
   ~AppCacheStorageImpl() override;
 
-  void Initialize(
-      const base::FilePath& cache_directory,
-      const scoped_refptr<base::SingleThreadTaskRunner>& db_thread,
-      const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread);
+  void Initialize(const base::FilePath& cache_directory,
+                  const scoped_refptr<base::SingleThreadTaskRunner>& db_thread);
   void Disable();
   bool is_disabled() const { return is_disabled_; }
 
@@ -157,7 +155,7 @@ class AppCacheStorageImpl : public AppCacheStorage {
   // its DatabaseTasks on the db thread. Separately, the disk_cache uses
   // the cache thread.
   scoped_refptr<base::SingleThreadTaskRunner> db_thread_;
-  scoped_refptr<base::SingleThreadTaskRunner> cache_thread_;
+  scoped_refptr<base::SequencedTaskRunner> cache_thread_;
 
   // Structures to keep track of DatabaseTasks that are in-flight.
   DatabaseTaskQueue scheduled_database_tasks_;
