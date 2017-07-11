@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd9d20f3_a9a526c6",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-11T13:52:04Z",
+      "side": 1,
+      "message": "A helper function for this snippet, which is repeated in OnImeEnumerationFinished?\n\nMaybe CheckIfRegisteredModulesEnumerated or something like that?",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 33
+      },
+      "revId": "d8c4d299648d995b8cc1681e4199c2cfdb5db59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68e9f4f_aa7504f6",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-11T13:52:04Z",
+      "side": 1,
+      "message": "A comment about the delayed notification would be useful (ie, how the logic works, the function that is responsible for sending the notifications, etc)",
+      "range": {
+        "startLine": 237,
+        "startChar": 7,
+        "endLine": 237,
+        "endChar": 34
+      },
+      "revId": "d8c4d299648d995b8cc1681e4199c2cfdb5db59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e892e1a3_5227a232",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-11T13:52:04Z",
+      "side": 1,
+      "message": "Do we still want to enter the idle state here? Or is this another case where we\u0027d want to wait until the registered modules are all enumerated?",
+      "range": {
+        "startLine": 454,
+        "startChar": 6,
+        "endLine": 454,
+        "endChar": 12
+      },
+      "revId": "d8c4d299648d995b8cc1681e4199c2cfdb5db59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
