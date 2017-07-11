@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9aa99fd4_ef6965e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T13:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ca9c9b2_e3b2263c",
+      "range": {
+        "startLine": 14,
+        "startChar": 67,
+        "endLine": 14,
+        "endChar": 68
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f359f4b5_a6a49052",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3c875ed4256b36107489dce6788ec05cca849683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d24225e_c862b345",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T13:38:42Z",
+      "side": 1,
+      "message": "No, this is not a problem.\n\nThe scheduler receives soft signals (opening the surface, foregrounding, cold start) and their frequency does not depend on being offline or on fetching success. \n\nBefore this change, some of these offline signals end up with the net request actually failing; most of them return early because there was a recent (albeit offline) fetch attempt. After this change, all these offline signals return early here.",
+      "parentUuid": "f359f4b5_a6a49052",
+      "range": {
+        "startLine": 655,
+        "startChar": 6,
+        "endLine": 655,
+        "endChar": 45
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dcffc216_99e845af",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T13:38:42Z",
+      "side": 1,
+      "message": "SG, rephrased a bit further. Thanks!",
+      "parentUuid": "dd29d478_01c6f2f5",
+      "range": {
+        "startLine": 656,
+        "startChar": 14,
+        "endLine": 656,
+        "endChar": 45
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80a3f653_faef5e86",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "3c875ed4256b36107489dce6788ec05cca849683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1a3e28_e7b6357c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T13:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80a3f653_faef5e86",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e233eec0_daa077ef",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T13:38:42Z",
+      "side": 1,
+      "message": "Clarified.",
+      "parentUuid": "13138d85_2bf6e0db",
+      "range": {
+        "startLine": 904,
+        "startChar": 35,
+        "endLine": 904,
+        "endChar": 40
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab51a420_6b03aa72",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "3c875ed4256b36107489dce6788ec05cca849683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f17f7a3_e8afe7ce",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T13:38:42Z",
+      "side": 1,
+      "message": "Sorry, cut\u0026paste :|\nFixed.",
+      "parentUuid": "ab51a420_6b03aa72",
+      "range": {
+        "startLine": 910,
+        "startChar": 2,
+        "endLine": 910,
+        "endChar": 64
+      },
+      "revId": "3c875ed4256b36107489dce6788ec05cca849683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
