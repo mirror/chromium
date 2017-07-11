@@ -439,14 +439,6 @@ void WebNotificationTray::HideBubbleWithView(
   }
 }
 
-bool WebNotificationTray::PerformAction(const ui::Event& event) {
-  if (message_center_bubble())
-    message_center_tray_->HideMessageCenterBubble();
-  else
-    message_center_tray_->ShowMessageCenterBubble();
-  return true;
-}
-
 void WebNotificationTray::BubbleViewDestroyed() {
   if (message_center_bubble())
     message_center_bubble()->bubble()->BubbleViewDestroyed();
@@ -478,6 +470,12 @@ bool WebNotificationTray::ShouldEnableExtraKeyboardAccessibility() {
 
 void WebNotificationTray::HideBubble(const views::TrayBubbleView* bubble_view) {
   HideBubbleWithView(bubble_view);
+}
+
+bool WebNotificationTray::ProcessGestureEventForBubble(
+    ui::GestureEvent* event) {
+  return drag_controller()->ProcessGestureEvent(*event, this,
+                                                true /* is_on_bubble */);
 }
 
 bool WebNotificationTray::ShowNotifierSettings() {
@@ -601,6 +599,41 @@ void WebNotificationTray::ClickedOutsideBubble() {
     return;
 
   message_center_tray_->HideMessageCenterBubble();
+}
+
+bool WebNotificationTray::PerformAction(const ui::Event& event) {
+  if (message_center_bubble())
+    message_center_tray_->HideMessageCenterBubble();
+  else
+    message_center_tray_->ShowMessageCenterBubble();
+  return true;
+}
+
+bool WebNotificationTray::HasBubble() {
+  return message_center_bubble_.get() != NULL;
+}
+
+void WebNotificationTray::CloseBubble() {
+  message_center_tray_->HideMessageCenterBubble();
+}
+
+void WebNotificationTray::ShowBubble() {
+  message_center_tray_->ShowMessageCenterBubble();
+}
+
+views::TrayBubbleView* WebNotificationTray::GetBubbleView() {
+  if (HasBubble())
+    return message_center_bubble_->bubble_view();
+  return nullptr;
+}
+
+void WebNotificationTray::OnGestureEvent(ui::GestureEvent* event) {
+  if (drag_controller()->ProcessGestureEvent(*event, this,
+                                             false /* is_on_bubble */)) {
+    event->SetHandled();
+  } else {
+    TrayBackgroundView::OnGestureEvent(event);
+  }
 }
 
 message_center::MessageCenter* WebNotificationTray::message_center() const {

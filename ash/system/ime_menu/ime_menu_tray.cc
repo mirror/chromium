@@ -470,6 +470,33 @@ bool ImeMenuTray::PerformAction(const ui::Event& event) {
   return true;
 }
 
+bool ImeMenuTray::HasBubble() {
+  return bubble_.get() != NULL;
+}
+
+void ImeMenuTray::CloseBubble() {
+  HideImeMenuBubble();
+}
+
+void ImeMenuTray::ShowBubble() {
+  ShowImeMenuBubble();
+}
+
+views::TrayBubbleView* ImeMenuTray::GetBubbleView() {
+  if (HasBubble())
+    return bubble_->bubble_view();
+  return nullptr;
+}
+
+void ImeMenuTray::OnGestureEvent(ui::GestureEvent* event) {
+  if (drag_controller()->ProcessGestureEvent(*event, this,
+                                             false /* is_on_bubble */)) {
+    event->SetHandled();
+  } else {
+    TrayBackgroundView::OnGestureEvent(event);
+  }
+}
+
 void ImeMenuTray::OnIMERefresh() {
   UpdateTrayLabel();
   if (bubble_ && ime_list_view_) {
@@ -519,6 +546,10 @@ void ImeMenuTray::HideBubble(const views::TrayBubbleView* bubble_view) {
   HideBubbleWithView(bubble_view);
 }
 
+bool ImeMenuTray::ProcessGestureEventForBubble(ui::GestureEvent* event) {
+  return drag_controller()->ProcessGestureEvent(*event, this,
+                                                true /* is_on_bubble */);
+}
 void ImeMenuTray::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {}
 
 void ImeMenuTray::OnKeyboardClosed() {
