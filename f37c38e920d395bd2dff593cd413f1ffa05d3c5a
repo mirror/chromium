@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac281bb_5d40284e",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-11T03:26:56Z",
+      "side": 1,
+      "message": "BindOnce?",
+      "range": {
+        "startLine": 23,
+        "startChar": 34,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "f37c38e920d395bd2dff593cd413f1ffa05d3c5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a102c920_811b2b59",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-11T03:26:56Z",
+      "side": 1,
+      "message": "WARN_UNUSED_RESULT is useful here?",
+      "range": {
+        "startLine": 75,
+        "startChar": 65,
+        "endLine": 75,
+        "endChar": 66
+      },
+      "revId": "f37c38e920d395bd2dff593cd413f1ffa05d3c5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
