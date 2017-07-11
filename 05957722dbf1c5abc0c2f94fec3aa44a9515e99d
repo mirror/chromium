@@ -142,6 +142,30 @@
       "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515c5fda_a4af4a77",
+        "filename": "services/ui/gpu/interfaces/gpu_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-07-11T19:30:54Z",
+      "side": 1,
+      "message": "Oh, and why is the hash based only on the serialized properties and not the binary blob as well? Simply because we want to hit the cache based on those properties - we don\u0027t know the blob until after we have a successfully linked binary program, which is the expensive step we want to avoid.",
+      "parentUuid": "158cfa38_b4c94ec3",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 69
+      },
+      "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
