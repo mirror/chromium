@@ -50,6 +50,24 @@
       "revId": "3ee732bc73f260663fcad39754f2c9a0f8c37b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c96eaff1_35c8eed8",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T16:57:10Z",
+      "side": 1,
+      "message": "This loop occurs near the end of the test and the std::vector will clean up at the end of the scope.\n\nDoesn\u0027t SimpleThread allocate the WaitableEvent at construction? We would have already hit FD exhaustion way before here.",
+      "parentUuid": "34d00a6d_8bf05b00",
+      "revId": "3ee732bc73f260663fcad39754f2c9a0f8c37b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
