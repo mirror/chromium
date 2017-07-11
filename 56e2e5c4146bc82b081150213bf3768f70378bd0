@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bba2ed6_7ef2964e",
+        "filename": "components/ntp_snippets/offline_pages/recent_tab_suggestions_provider_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T06:35:38Z",
+      "side": 1,
+      "message": "nit: Could you please replace \n\"\" \nwith \n/*request_origin\u003d*/\"\"\nso that the reader does not have to look the parameter up.",
+      "range": {
+        "startLine": 121,
+        "startChar": 73,
+        "endLine": 121,
+        "endChar": 75
+      },
+      "revId": "56e2e5c4146bc82b081150213bf3768f70378bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0784ccff_4e58229c",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T06:35:38Z",
+      "side": 1,
+      "message": "Again s\\\"\"\\/*request_origin\u003d*/\"\"",
+      "range": {
+        "startLine": 145,
+        "startChar": 39,
+        "endLine": 145,
+        "endChar": 41
+      },
+      "revId": "56e2e5c4146bc82b081150213bf3768f70378bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b062df_b1956928",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T06:35:38Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 166,
+        "endChar": 8
+      },
+      "revId": "56e2e5c4146bc82b081150213bf3768f70378bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
