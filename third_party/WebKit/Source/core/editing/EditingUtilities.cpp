@@ -1122,10 +1122,6 @@ static HTMLElement* FirstInSpecialElement(const Position& pos) {
       VisiblePosition v_pos = CreateVisiblePosition(pos);
       VisiblePosition first_in_element =
           CreateVisiblePosition(FirstPositionInOrBeforeNode(special_element));
-      if (IsDisplayInsideTable(special_element) &&
-          v_pos.DeepEquivalent() ==
-              NextPositionOf(first_in_element).DeepEquivalent())
-        return special_element;
       if (v_pos.DeepEquivalent() == first_in_element.DeepEquivalent())
         return special_element;
     }
@@ -1144,10 +1140,6 @@ static HTMLElement* LastInSpecialElement(const Position& pos) {
       VisiblePosition v_pos = CreateVisiblePosition(pos);
       VisiblePosition last_in_element =
           CreateVisiblePosition(LastPositionInOrAfterNode(special_element));
-      if (IsDisplayInsideTable(special_element) &&
-          v_pos.DeepEquivalent() ==
-              PreviousPositionOf(last_in_element).DeepEquivalent())
-        return special_element;
       if (v_pos.DeepEquivalent() == last_in_element.DeepEquivalent())
         return special_element;
     }
