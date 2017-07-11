@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3c99756_25a61f91",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T01:28:26Z",
+      "side": 1,
+      "message": "s/ANALYSIS_*/ANALYZER_*",
+      "revId": "bbf945c4f8c09c4ba3f681860bfcf0bf7b5219b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
