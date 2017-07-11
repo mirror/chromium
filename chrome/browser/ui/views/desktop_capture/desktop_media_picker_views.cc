@@ -65,8 +65,7 @@ DesktopMediaPickerDialogView::DesktopMediaPickerDialogView(
   const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kVertical,
-      provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS),
+      views::BoxLayout::kVertical, gfx::Insets(),
       provider->GetDistanceMetric(DISTANCE_RELATED_CONTROL_VERTICAL_SMALL)));
 
   description_label_->SetMultiLine(true);

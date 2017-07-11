@@ -91,9 +91,6 @@ void AutoSigninFirstRunDialogView::StyledLabelLinkClicked(
 }
 
 void AutoSigninFirstRunDialogView::InitWindow() {
-  SetBorder(
-      views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-          views::INSETS_DIALOG_CONTENTS)));
   SetLayoutManager(new views::FillLayout());
 
   std::pair<base::string16, gfx::Range> text_content =
