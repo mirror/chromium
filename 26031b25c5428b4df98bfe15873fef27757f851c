@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "938c1b28_6be595eb",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-11T17:39:19Z",
+      "side": 1,
+      "message": "change this to `\u0027mixins\u0027: [\u0027fuzzer\u0027]`.",
+      "revId": "26031b25c5428b4df98bfe15873fef27757f851c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
