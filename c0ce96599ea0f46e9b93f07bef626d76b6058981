@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "942c7e32_7b655264",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-07-11T21:10:53Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "add18839_dac3be8e",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 3
+      },
+      "revId": "c0ce96599ea0f46e9b93f07bef626d76b6058981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9026cc1d_a17a752d",
         "filename": "components/security_state/content/content_utils.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "c0ce96599ea0f46e9b93f07bef626d76b6058981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc14d47_3fea18bb",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-07-11T21:10:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9026cc1d_a17a752d",
+      "range": {
+        "startLine": 279,
+        "startChar": 37,
+        "endLine": 279,
+        "endChar": 39
+      },
+      "revId": "c0ce96599ea0f46e9b93f07bef626d76b6058981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
