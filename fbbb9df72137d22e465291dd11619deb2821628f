@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "513ce568_fc667a79",
+        "filename": "components/download/internal/controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T15:55:49Z",
+      "side": 1,
+      "message": "Maybe just pass a callback into initialize?  wdyt?  Don\u0027t feel too strongly either way!",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 4
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24d22e5_f042b8ed",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T15:55:49Z",
+      "side": 1,
+      "message": "Do we need some early out like this for all of our APIs?  We have to properly ack a task even if we fail to initialize.",
+      "range": {
+        "startLine": 226,
+        "startChar": 2,
+        "endLine": 226,
+        "endChar": 30
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c0f49b_50211ca0",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T15:55:49Z",
+      "side": 1,
+      "message": "What if this is null?",
+      "range": {
+        "startLine": 445,
+        "startChar": 2,
+        "endLine": 445,
+        "endChar": 62
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e686b7b9_94ff52ef",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T15:55:49Z",
+      "side": 1,
+      "message": "Is this correct?  Don\u0027t we want to finish if we have no downloads we can currently run?  They might be in the ACTIVE/AVAILABLE state but technically are paused because they don\u0027t meet the current system criteria.",
+      "range": {
+        "startLine": 831,
+        "startChar": 2,
+        "endLine": 836,
+        "endChar": 37
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361d03b1_471361cf",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T15:55:49Z",
+      "side": 1,
+      "message": "Set to nullptr in constructor?",
+      "range": {
+        "startLine": 182,
+        "startChar": 19,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d1f000_2767f296",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T15:55:49Z",
+      "side": 1,
+      "message": "Just inline this into the if statement above?  No need for task_entry_index.\n\nAlso can you walk me through what this is doing?  Sorry I\u0027m not following it :(",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 3
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1adeebaa_9d71b5db",
         "filename": "components/download/internal/download_service_impl.cc",
         "patchSetId": 3
@@ -13,6 +151,24 @@
       "writtenOn": "2017-07-06T22:09:25Z",
       "side": 1,
       "message": "Question: Do we have the run the Download/Cleanup Tasks in the same order as compared to the other API calls such as start/pause/resume/changeDownloadCriteria etc?\nCan we run them after the API calls instead?\nThat would simplify some of the code in this class.",
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d6e516_50582847",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T15:55:49Z",
+      "side": 1,
+      "message": "I\u0027d be ok with running them *after* all the other calls.  But maybe we can just run every task and have the controller early-out from all the APIs if it failed (except the StartDownload... that still needs to notify the Client why it\u0027s failing).\n\nSo you might also want to post the call to this method because otherwise Clients might start seeing responses before the \u0027initialized\u0027 call.",
+      "parentUuid": "1adeebaa_9d71b5db",
       "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
