@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "6ee2a258_b7c89f92",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-11T12:56:29Z",
+      "side": 1,
+      "message": "In a perfect world yes, but I couldn\u0027t figure out how I would get a hold of the element since a redirect is not initiated by the element, I would probably have to save the element in the ResourceRequest and that seemed like more work than it\u0027s worth. If no element is passed it falls back to using the document for the event target which is currently the behaviour for all fetches that are blocked due to CSP.",
+      "parentUuid": "7d95f17c_cd5377d8",
+      "range": {
+        "startLine": 79,
+        "startChar": 40,
+        "endLine": 79,
+        "endChar": 47
+      },
+      "revId": "8e03f5271c0daaa06e479cf60d83385f3778c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8884c90_3add92c2",
         "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
         "patchSetId": 2
