@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0619b0c_26e9f374",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/application-panel/resources-panel-websql.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-11T00:44:37Z",
+      "side": 1,
+      "message": "we still use \" in tests",
+      "revId": "c6514cd89a7ff6c400e7fd0e5778013b7aef4433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d16954b_43718365",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/application-panel/resources-panel-websql.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-11T00:44:37Z",
+      "side": 1,
+      "message": "is it used?",
+      "revId": "c6514cd89a7ff6c400e7fd0e5778013b7aef4433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070979f2_237bf70a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/application-panel/resources-panel-websql.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-11T00:44:37Z",
+      "side": 1,
+      "message": "nit: return new Promise(resolve \u003d\u003e { ...",
+      "revId": "c6514cd89a7ff6c400e7fd0e5778013b7aef4433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
