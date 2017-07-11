@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b11e640_6c0d358a",
+        "filename": "build/config/features.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-07-11T08:33:59Z",
+      "side": 1,
+      "message": "nit: trailing whitespace. Did \u0027git cl format\u0027 produce this? If you didn\u0027t run it yet, you might need to run it anyways to pass presubmit... just fyi",
+      "range": {
+        "startLine": 28,
+        "startChar": 71,
+        "endLine": 28,
+        "endChar": 72
+      },
+      "revId": "e9825cb04c8ea821c98f93c4259b77b90992858a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
