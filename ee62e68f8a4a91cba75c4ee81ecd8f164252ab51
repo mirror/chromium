@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac61923_27e2a79e",
+        "filename": "content/browser/compositor/surface_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-11T20:30:58Z",
+      "side": 1,
+      "message": "nit: it would be nice if the mac-specific logic could be factored out so that we avoid the proliferation of ifdefs that need to be kept in sync.\n\nSpecifically, both this and GpuProcessTransportFactory::EstablishedGpuChannel have similar logic relative to WindowResizeHelperMac::Get()-\u003etask_runner(). It could move to BrowserMainLoop and then the task runner injected to both GpuProcessTransportFactory and this function. WDYT?",
+      "revId": "ee62e68f8a4a91cba75c4ee81ecd8f164252ab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
