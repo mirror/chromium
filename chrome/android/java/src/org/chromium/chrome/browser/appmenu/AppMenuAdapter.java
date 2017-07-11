@@ -96,6 +96,7 @@ class AppMenuAdapter extends BaseAdapter {
     private static final int ENTER_ITEM_ADDL_DELAY_MS = 30;
     private static final float ENTER_STANDARD_ITEM_OFFSET_Y_DP = -10.f;
     private static final float ENTER_STANDARD_ITEM_OFFSET_X_DP = 10.f;
+    static final int ENTER_STANDARD_ITEM_TRANSLATION_ANIMATOR_POSITION = 1;
 
     private final AppMenu mAppMenu;
     private final LayoutInflater mInflater;

@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.appmenu;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -170,7 +171,7 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
             mPopup.setWindowLayoutType(WindowManager.LayoutParams.TYPE_APPLICATION_SUB_PANEL);
         }
 
-        boolean anchorAtBottom = isAnchorAtBottom(anchorView, visibleDisplayFrame);
+        final boolean anchorAtBottom = isAnchorAtBottom(anchorView, visibleDisplayFrame);
         int footerHeight = 0;
         mPopup.setOnDismissListener(new OnDismissListener() {
             @Override
@@ -286,7 +287,7 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
                 public void onLayoutChange(View v, int left, int top, int right, int bottom,
                         int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     mListView.removeOnLayoutChangeListener(this);
-                    runMenuItemEnterAnimations();
+                    runMenuItemEnterAnimations(anchorAtBottom);
                 }
             });
         }
@@ -541,7 +542,7 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         return menuHeight;
     }
 
-    private void runMenuItemEnterAnimations() {
+    private void runMenuItemEnterAnimations(boolean anchorAtBottom) {
         mMenuItemEnterAnimator = new AnimatorSet();
         AnimatorSet.Builder builder = null;
 
@@ -550,6 +551,13 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
             View view = list.getChildAt(i);
             Object animatorObject = view.getTag(R.id.menu_item_enter_anim_id);
             if (animatorObject != null) {
+                if (anchorAtBottom) {
+                    // If app menu is anchored at bottom, set translation value to 0.
+                    AnimatorSet animSet = (AnimatorSet) animatorObject;
+                    ObjectAnimator anim = (ObjectAnimator) animSet.getChildAnimations().get(
+                            AppMenuAdapter.ENTER_STANDARD_ITEM_TRANSLATION_ANIMATOR_POSITION);
+                    anim.setFloatValues(0.f, 0.f);
+                }
                 if (builder == null) {
                     builder = mMenuItemEnterAnimator.play((Animator) animatorObject);
                 } else {
