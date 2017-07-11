@@ -454,6 +454,10 @@
     // The target of an in-page link.
     AutomationNode? inPageLinkTarget;
 
+    // If this node is inside a text field or a content editable, returns the
+    // node at the root of the text field or content editable.
+    AutomationNode? editableRoot;
+
     // An array of custom actions.
     CustomAction[]? customActions;
 

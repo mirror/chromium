@@ -1871,7 +1871,7 @@ String AXNodeObject::StringValue() const {
     return String();
   }
 
-  if (IsNativeTextControl())
+  if (IsTextControl())
     return GetText();
 
   // Handle other HTML input elements that aren't text controls, like date and

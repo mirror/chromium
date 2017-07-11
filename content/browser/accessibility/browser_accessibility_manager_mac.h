@@ -45,6 +45,19 @@ class CONTENT_EXPORT BrowserAccessibilityManagerMac
   NSView* GetParentView();
 
  private:
+  // Stores modifications to editable text.
+  // Required by Voiceover in order to support character echo and other
+  // announcements during editing.
+  struct TextEdit final {
+    TextEdit() = default;
+    TextEdit(base::string16 text, bool is_deleted)
+        : Text(text), IsDeleted(is_deleted) {}
+
+    base::string16 Text;
+    // Whether the text has been inserted  or deleted.
+    bool IsDeleted;
+  };
+
   // AXTreeDelegate methods.
   void OnTreeDataChanged(ui::AXTree* tree,
                          const ui::AXTreeData& old_tree_data,
@@ -84,14 +97,14 @@ class CONTENT_EXPORT BrowserAccessibilityManagerMac
       const base::string16& deleted_text,
       const base::string16& inserted_text) const;
 
+  // Keeps track of any edits that have been made by the user during a tree
+  // update. Used by NSAccessibilityValueChangedNotification.
+  // Maps AXNode IDs to value attribute changes.
+  std::map<int32_t, TextEdit> text_edits_;
+
   // This gives BrowserAccessibilityManager::Create access to the class
   // constructor.
   friend class BrowserAccessibilityManager;
-
-  // Keeps track of any edits that have been made by the user during a tree
-  // update. Used by NSAccessibilityValueChangedNotification.
-  // Maps AXNode IDs to name or value attribute changes.
-  std::map<int32_t, base::string16> text_edits_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserAccessibilityManagerMac);
 };

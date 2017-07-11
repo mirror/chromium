@@ -407,6 +407,7 @@
     // Relationships between this element and other elements.
     activedescendant_id,
     details_id,
+    editable_root_id,
     errormessage_id,
     in_page_link_target_id,
     member_of_id,
