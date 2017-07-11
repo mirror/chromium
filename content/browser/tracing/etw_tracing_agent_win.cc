@@ -54,14 +54,12 @@ std::string EtwTracingAgent::GetTraceEventLabel() {
   return kETWTraceLabel;
 }
 
-void EtwTracingAgent::StartAgentTracing(
-    const base::trace_event::TraceConfig& trace_config,
-    const StartAgentTracingCallback& callback) {
+void EtwTracingAgent::StartTracing(
+    const std::string& config,
+    const Agent::StartTracingCallback& callback) {
   // Activate kernel tracing.
   if (!StartKernelSessionTracing()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::Bind(callback, GetTracingAgentName(), false /* success */));
+    callback.Run(false);
     return;
   }
 
@@ -70,10 +68,13 @@ void EtwTracingAgent::StartAgentTracing(
   thread_.task_runner()->PostTask(
       FROM_HERE, base::Bind(&EtwTracingAgent::TraceAndConsumeOnThread,
                             base::Unretained(this)));
+  callback.Run(true);
+}
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(callback, GetTracingAgentName(), true /* success */));
+void EtwTracingAgent::StartAgentTracing(
+    const base::trace_event::TraceConfig& trace_config,
+    const StartAgentTracingCallback& callback) {
+  StartTracing("", base::BindRepeating(callback, GetTracingAgentName()));
 }
 
 void EtwTracingAgent::StopAgentTracing(
@@ -87,6 +88,37 @@ void EtwTracingAgent::StopAgentTracing(
   thread_.task_runner()->PostTask(FROM_HERE,
                                   base::Bind(&EtwTracingAgent::FlushOnThread,
                                              base::Unretained(this), callback));
+}
+
+void EtwTracingAgent::RecorderProxy(
+    const std::string& event_name,
+    const std::string& events_label,
+    const scoped_refptr<base::RefCountedString>& events) {
+  if (!events->data().empty())
+    recorder_->AddChunk(events->data());
+  recorder_.reset();
+}
+
+void EtwTracingAgent::StopAndFlush(tracing::mojom::RecorderPtr recorder) {
+  recorder_ = std::move(recorder);
+  StopAgentTracing(base::BindRepeating(&EtwTracingAgent::RecorderProxy,
+                                       base::Unretained(this)));
+}
+
+void EtwTracingAgent::RequestClockSyncMarker(
+    const std::string& sync_id,
+    const Agent::RequestClockSyncMarkerCallback& callback) {
+  NOTREACHED();
+}
+
+void EtwTracingAgent::GetCategories(
+    const Agent::GetCategoriesCallback& callback) {
+  callback.Run("");
+}
+
+void EtwTracingAgent::RequestBufferStatus(
+    const Agent::RequestBufferStatusCallback& callback) {
+  callback.Run(0, 0);
 }
 
 void EtwTracingAgent::OnStopSystemTracingDone(
