@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8547064_a8b7f5e9",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-11T08:03:46Z",
+      "side": 1,
+      "message": "can/should we ceil here?",
+      "range": {
+        "startLine": 400,
+        "startChar": 15,
+        "endLine": 400,
+        "endChar": 33
+      },
+      "revId": "0ecbee70727e4f582e4372d30b83f6631daa82ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
