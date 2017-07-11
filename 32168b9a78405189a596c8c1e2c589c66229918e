@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8efa41c8_59b80c04",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-11T16:22:39Z",
+      "side": 1,
+      "message": "Ok, then I\u0027d like to update this comment then to at least be less confusing. If you make another change to this file, can you do it then? If not, I\u0027ll make a quick change soon.\n\nI\u0027m thinking something like:\n\n// Callers should only set trim_http to true if the input does not\n// explicitly contain \"http://\".\n\nlmkwyt",
+      "parentUuid": "e943b147_66a93eb5",
+      "revId": "32168b9a78405189a596c8c1e2c589c66229918e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a741797f_a3232c63",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 2
