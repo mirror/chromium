@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "482f9fe5_331d5aae",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-11T19:35:03Z",
+      "side": 1,
+      "message": "I suggest (1) extracting the check to a separate function, and (2) [optional] can you use a method like base::PathIsWriteable() rather than creating the file?\n\nI haven\u0027t tested the following function. In retrospect maybe creating the file is more straightforward :)\n\n// TODO(eroman): Creating the file(s) for a netlog is an internal detail for\n// FileNetLogObsever. This code assumes that the unbounded format is being used,\n// which writes a single file at |path| (creating or overwriting it).\nbool IsNetLogPathValid(const base::FilePath\u0026 path) {\n  base::FilePath parent \u003d path.DirName();\n  return base::PathIsWritable(parent);\n  // TODO: Should also test that either |path| doesn\u0027t exist, or it too is writable and a regular file (not directory).\n}",
+      "parentUuid": "5fb2860d_d48db4a8",
+      "revId": "5252ac4ac619ca3a6a7a1ec8319ffd23645d25f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52b10466_c5817292",
         "filename": "components/cronet/ios/test/cronet_netlog_test.mm",
         "patchSetId": 1
