@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a64115f5_1bfac46e",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T14:02:29Z",
+      "side": 1,
+      "message": "I think it can also be ON_CALL",
+      "range": {
+        "startLine": 506,
+        "startChar": 4,
+        "endLine": 506,
+        "endChar": 15
+      },
+      "revId": "4d9a5b35c59f6cc72464392367a6d3b97a342b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6219ddec_a89d60a4",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T14:02:29Z",
+      "side": 1,
+      "message": "Seems like test.expected_save_prompt_shown will just work",
+      "range": {
+        "startLine": 456,
+        "startChar": 40,
+        "endLine": 456,
+        "endChar": 66
+      },
+      "revId": "4d9a5b35c59f6cc72464392367a6d3b97a342b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f7c489_940599fb",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T14:02:29Z",
+      "side": 1,
+      "message": "It\u0027s like a question to me (the reader) with noticeable irritation. Also which password form manager?\n\nThe enum describes the source responsible for PasswordFormManager creation.",
+      "range": {
+        "startLine": 218,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 39
+      },
+      "revId": "4d9a5b35c59f6cc72464392367a6d3b97a342b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

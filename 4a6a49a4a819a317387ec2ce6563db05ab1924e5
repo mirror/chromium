@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d9c57231_35f8c59c",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T14:02:29Z",
+      "side": 1,
+      "message": "About GetPasswordFormMetricsRecorder only?",
+      "parentUuid": "520150a8_40545c92",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 15
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76ecc6ca_2f14a08c",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
         "patchSetId": 3
@@ -366,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "c514f59f_478094d8",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T14:02:29Z",
+      "side": 1,
+      "message": "Can you clarify this statement more? If it\u0027s used outside then it\u0027s probably not internal. Also it\u0027s very strange that you declare them in the header but decline to use in other files.",
+      "parentUuid": "5e00a043_51b1d097",
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ab063d_5c6b1619",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
         "patchSetId": 3
@@ -410,6 +452,30 @@
       "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f0e30b_68c5c8a6",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T14:02:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "540afac9_925c9eb0",
+      "range": {
+        "startLine": 425,
+        "startChar": 19,
+        "endLine": 425,
+        "endChar": 53
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
