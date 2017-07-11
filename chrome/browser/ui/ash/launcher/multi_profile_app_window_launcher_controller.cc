@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/ash/launcher/multi_profile_app_window_launcher_controller.h"
 
+#include "ash/public/cpp/shelf_types.h"
+#include "ash/public/cpp/window_properties.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
@@ -17,12 +19,14 @@
 MultiProfileAppWindowLauncherController::
     MultiProfileAppWindowLauncherController(ChromeLauncherController* owner)
     : ExtensionAppWindowLauncherController(owner) {
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController A!!!";
   // We might have already active windows.
   extensions::AppWindowRegistry* registry =
       extensions::AppWindowRegistry::Get(owner->profile());
   app_window_list_.insert(app_window_list_.end(),
                           registry->app_windows().begin(),
                           registry->app_windows().end());
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController B windows:" << app_window_list_.size() << " !!!";
 }
 
 MultiProfileAppWindowLauncherController::
@@ -40,15 +44,27 @@ void MultiProfileAppWindowLauncherController::ActiveUserChanged(
   // show / hide them one by one. To avoid that a user dependent state
   // "survives" in a launcher item, we first delete all items making sure that
   // nothing remains and then re-create them again.
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::ActiveUserChanged A windows:" << app_window_list_.size() << " !!!";
   for (AppWindowList::iterator it = app_window_list_.begin();
        it != app_window_list_.end();
        ++it) {
     extensions::AppWindow* app_window = *it;
     Profile* profile =
         Profile::FromBrowserContext(app_window->browser_context());
-    if (!multi_user_util::IsProfileFromActiveUser(profile) &&
-        IsRegisteredApp(app_window->GetNativeWindow()))
-      UnregisterApp(app_window->GetNativeWindow());
+    LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::ActiveUserChanged B window: " << app_window->GetNativeWindow() << " " << app_window->GetNativeWindow()->GetTitle() << " !!!";
+    LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::ActiveUserChanged C active: " << multi_user_util::IsProfileFromActiveUser(profile) << " registered: " << IsRegisteredApp(app_window->GetNativeWindow()) << " !!!";
+    // TODO(msw): Panel windows are not registered apps... Hide another way? 
+    if (!multi_user_util::IsProfileFromActiveUser(profile)) {
+      if (IsRegisteredApp(app_window->GetNativeWindow())) {
+        LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::ActiveUserChanged C1 unregistering !!!";
+        UnregisterApp(app_window->GetNativeWindow());
+      } else if (app_window->window_type_is_panel()) {
+        LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::ActiveUserChanged C2 unpaneling !!!";
+        app_window->GetNativeWindow()->SetProperty<int>(
+            ash::kShelfItemTypeKey,
+            ash::TYPE_UNDEFINED);
+      }
+    }
   }
   for (AppWindowList::iterator it = app_window_list_.begin();
        it != app_window_list_.end();
@@ -56,6 +72,9 @@ void MultiProfileAppWindowLauncherController::ActiveUserChanged(
     extensions::AppWindow* app_window = *it;
     Profile* profile =
         Profile::FromBrowserContext(app_window->browser_context());
+    LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::ActiveUserChanged D window: " << app_window->GetNativeWindow() << " " << app_window->GetNativeWindow()->GetTitle() << " !!!";
+    LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::ActiveUserChanged E active: " << multi_user_util::IsProfileFromActiveUser(profile) << " registered: " << IsRegisteredApp(app_window->GetNativeWindow()) << " !!!";
+    LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::ActiveUserChanged F min: " << app_window->GetBaseWindow()->IsMinimized() << " vis: " << app_window->GetNativeWindow()->IsVisible() << " !!!";
     if (multi_user_util::IsProfileFromActiveUser(profile) &&
         !IsRegisteredApp(app_window->GetNativeWindow()) &&
         (app_window->GetBaseWindow()->IsMinimized() ||
@@ -66,6 +85,7 @@ void MultiProfileAppWindowLauncherController::ActiveUserChanged(
 
 void MultiProfileAppWindowLauncherController::AdditionalUserAddedToSession(
     Profile* profile) {
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::AdditionalUserAddedToSession!!!";
   // Each users AppWindowRegistry needs to be observed.
   extensions::AppWindowRegistry* registry =
       extensions::AppWindowRegistry::Get(profile);
@@ -76,10 +96,12 @@ void MultiProfileAppWindowLauncherController::AdditionalUserAddedToSession(
 
 void MultiProfileAppWindowLauncherController::OnAppWindowAdded(
     extensions::AppWindow* app_window) {
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::OnAppWindowAdded A window: " << app_window->GetNativeWindow() << " " << app_window->GetNativeWindow()->GetTitle() << " !!!";
   app_window_list_.push_back(app_window);
   Profile* profile = Profile::FromBrowserContext(app_window->browser_context());
   // If the window got created for a non active user but the user allowed to
   // teleport to the current user's desktop, we teleport it now.
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::OnAppWindowAdded B active: " << multi_user_util::IsProfileFromActiveUser(profile) << " hasapp: " << UserHasAppOnActiveDesktop(app_window) << " !!!";
   if (!multi_user_util::IsProfileFromActiveUser(profile) &&
       UserHasAppOnActiveDesktop(app_window)) {
     chrome::MultiUserWindowManager::GetInstance()->ShowWindowForUser(
@@ -90,8 +112,10 @@ void MultiProfileAppWindowLauncherController::OnAppWindowAdded(
 void MultiProfileAppWindowLauncherController::OnAppWindowShown(
     extensions::AppWindow* app_window,
     bool was_hidden) {
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::OnAppWindowShown A window: " << app_window->GetNativeWindow() << " " << app_window->GetNativeWindow()->GetTitle() << " !!!";
   Profile* profile = Profile::FromBrowserContext(app_window->browser_context());
 
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::OnAppWindowAdded B active: " << multi_user_util::IsProfileFromActiveUser(profile) << " registered: " << IsRegisteredApp(app_window->GetNativeWindow()) << " !!!";
   if (multi_user_util::IsProfileFromActiveUser(profile) &&
       !IsRegisteredApp(app_window->GetNativeWindow())) {
     RegisterApp(app_window);
@@ -111,6 +135,7 @@ void MultiProfileAppWindowLauncherController::OnAppWindowShown(
 
 void MultiProfileAppWindowLauncherController::OnAppWindowHidden(
     extensions::AppWindow* app_window) {
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::OnAppWindowHidden A window: " << app_window->GetNativeWindow() << " " << app_window->GetNativeWindow()->GetTitle() << " !!!";
   Profile* profile = Profile::FromBrowserContext(app_window->browser_context());
   if (multi_user_util::IsProfileFromActiveUser(profile) &&
       IsRegisteredApp(app_window->GetNativeWindow())) {
@@ -120,6 +145,7 @@ void MultiProfileAppWindowLauncherController::OnAppWindowHidden(
 
 void MultiProfileAppWindowLauncherController::OnAppWindowRemoved(
     extensions::AppWindow* app_window) {
+  LOG(ERROR) << "MSW MultiProfileAppWindowLauncherController::OnAppWindowRemoved A window: " << app_window->GetNativeWindow() << " !!!";
   // If the application is registered with AppWindowLauncher (because the user
   // is currently active), the OnWindowDestroying observer has already (or will
   // soon) unregister it independently from the shelf. If it was not registered

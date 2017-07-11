@@ -62,22 +62,26 @@ ExtensionAppWindowLauncherController::~ExtensionAppWindowLauncherController() {
 
 void ExtensionAppWindowLauncherController::AdditionalUserAddedToSession(
     Profile* profile) {
+  LOG(ERROR) << "MSW ExtensionAppWindowLauncherController::AdditionalUserAddedToSession A";
   // TODO(skuhne): This was added for the legacy side by side mode in M32. If
   // this mode gets no longer pursued this special case can be removed.
   if (chrome::MultiUserWindowManager::GetMultiProfileMode() !=
       chrome::MultiUserWindowManager::MULTI_PROFILE_MODE_MIXED)
     return;
 
+  LOG(ERROR) << "MSW ExtensionAppWindowLauncherController::AdditionalUserAddedToSession B";
   AppWindowRegistry* registry = AppWindowRegistry::Get(profile);
   if (registry_.find(registry) != registry_.end())
     return;
 
+  LOG(ERROR) << "MSW ExtensionAppWindowLauncherController::AdditionalUserAddedToSession C";
   registry->AddObserver(this);
   registry_.insert(registry);
 }
 
 void ExtensionAppWindowLauncherController::OnAppWindowAdded(
     extensions::AppWindow* app_window) {
+  LOG(ERROR) << "MSW ExtensionAppWindowLauncherController::OnAppWindowAdded " << app_window->GetNativeWindow();
   // TODO(msw): Determine why this only seems to be called in Mash. Setting the
   // ShelfItemType as early as possible is important on Mash, to prevent Ash's
   // ShelfWindowWatcher from creating a conflicting ShelfItem. Set the item type
@@ -97,6 +101,7 @@ void ExtensionAppWindowLauncherController::OnAppWindowAdded(
 void ExtensionAppWindowLauncherController::OnAppWindowShown(
     AppWindow* app_window,
     bool was_hidden) {
+  LOG(ERROR) << "MSW ExtensionAppWindowLauncherController::OnAppWindowShown " << app_window->GetNativeWindow();
   aura::Window* window = app_window->GetNativeWindow();
   if (!IsRegisteredApp(window))
     RegisterApp(app_window);
@@ -104,6 +109,7 @@ void ExtensionAppWindowLauncherController::OnAppWindowShown(
 
 void ExtensionAppWindowLauncherController::OnAppWindowHidden(
     AppWindow* app_window) {
+  LOG(ERROR) << "MSW ExtensionAppWindowLauncherController::OnAppWindowHidden " << app_window->GetNativeWindow();
   aura::Window* window = app_window->GetNativeWindow();
   if (IsRegisteredApp(window))
     UnregisterApp(window);
@@ -114,10 +120,12 @@ void ExtensionAppWindowLauncherController::OnAppWindowHidden(
 // are valid here.
 void ExtensionAppWindowLauncherController::OnWindowDestroying(
     aura::Window* window) {
+  LOG(ERROR) << "MSW ExtensionAppWindowLauncherController::OnWindowDestroying " << window;
   UnregisterApp(window);
 }
 
 void ExtensionAppWindowLauncherController::RegisterApp(AppWindow* app_window) {
+  LOG(ERROR) << "MSW ExtensionAppWindowLauncherController::RegisterApp " << app_window->GetNativeWindow();
   aura::Window* window = app_window->GetNativeWindow();
   const ash::ShelfID shelf_id = GetShelfId(app_window);
   DCHECK(!shelf_id.IsNull());
@@ -135,6 +143,7 @@ void ExtensionAppWindowLauncherController::RegisterApp(AppWindow* app_window) {
   // Windows created by IME extension should be treated the same way as the
   // virtual keyboard window, which does not register itself in launcher.
   // Ash's ShelfWindowWatcher handles app panel windows separately.
+  // TODO(msw): This early return means that MultiProfileAppWindowLauncherController::ActiveUserChanged's call to UnregisterApp does nothing... 
   if (app_window->is_ime_window() || app_window->window_type_is_panel())
     return;
 
@@ -177,6 +186,7 @@ void ExtensionAppWindowLauncherController::RegisterApp(AppWindow* app_window) {
 }
 
 void ExtensionAppWindowLauncherController::UnregisterApp(aura::Window* window) {
+  LOG(ERROR) << "MSW ExtensionAppWindowLauncherController::UnregisterApp " << window;
   const auto window_iter = window_to_shelf_id_map_.find(window);
   DCHECK(window_iter != window_to_shelf_id_map_.end());
   ash::ShelfID shelf_id = window_iter->second;

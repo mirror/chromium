@@ -166,6 +166,7 @@ class AppObserver : public extensions::AppWindowRegistry::Observer {
   // AppWindowRegistry::Observer overrides:
   void OnAppWindowAdded(extensions::AppWindow* app_window) override {
     aura::Window* window = app_window->GetNativeWindow();
+    LOG(ERROR) << "MSW OnAppWindowAdded " << window << " " << window->GetTitle() << " " << window->type();
     DCHECK(window);
     MultiUserWindowManagerChromeOS::GetInstance()->SetWindowOwner(
         window, AccountId::FromUserEmail(user_id_));
