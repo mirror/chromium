@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96a8056e_1f14def6",
+        "filename": "tools/perf/page_sets/webrtc_cases/pause-play.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1226821
+      },
+      "writtenOn": "2017-07-11T07:22:17Z",
+      "side": 1,
+      "message": "Perhaps the title and the heading should match?\n\n\"Pause Play Test\" might be the right title and heading",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "8d374ffd733c8ee8e0550dd60b9f2a1cbe4747e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eaab39a_2dc278ab",
+        "filename": "tools/perf/page_sets/webrtc_cases/pause-play.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1226821
+      },
+      "writtenOn": "2017-07-11T07:22:17Z",
+      "side": 1,
+      "message": "remove whitespace?",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 2
+      },
+      "revId": "8d374ffd733c8ee8e0550dd60b9f2a1cbe4747e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b2e8b1_f011f1c8",
+        "filename": "tools/perf/page_sets/webrtc_cases/pause-play.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1226821
+      },
+      "writtenOn": "2017-07-11T07:22:17Z",
+      "side": 1,
+      "message": "this.id is never used. We should be able to remove it",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 9
+      },
+      "revId": "8d374ffd733c8ee8e0550dd60b9f2a1cbe4747e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
