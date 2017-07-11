@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21063a86_61e86508",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-11T08:28:53Z",
+      "side": 1,
+      "message": "shall we return when maximum_running_requests_seen_ is 0, because throttling_state_at_maximum_running_requests_ isn\u0027t initialized in such cases though it should not happen if everything go well. Or just initialize it too so that sanitizer keeps on being happy.",
+      "revId": "ac5c16b76e1cfa4cc94b2b0386c4e1f73a7eae44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
