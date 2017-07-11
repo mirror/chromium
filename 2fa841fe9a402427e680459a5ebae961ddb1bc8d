@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "79fd3943_376be6b8",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-11T22:20:25Z",
+      "side": 1,
+      "message": "should clear |obj_| here to prevent multiple calls.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f509aa25_aa3f7c03",
         "filename": "content/browser/android/dialog_overlay_impl.cc",
         "patchSetId": 6
@@ -36,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "2cb815d7_2759ee16",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-11T22:20:25Z",
+      "side": 1,
+      "message": "we\u0027d want to prevent sendWindowTokenToCore(null) @251 but would otherwise be fine.\n\nit will currently work even if we don\u0027t prevent it, but it seems potentially error-prone.  |mDialogCore| hasn\u0027t had initialize() called yet, so it\u0027s in some weird state.",
+      "parentUuid": "d8b8b844_220527ba",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25f7d6e6_8558418b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
         "patchSetId": 6
@@ -47,6 +88,24 @@
       "writtenOn": "2017-07-11T21:51:41Z",
       "side": 1,
       "message": "I think this can probably be called multiple times now, need to change anything to make sure that\u0027s ok?",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389a055e_5f32ff7d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-11T22:20:25Z",
+      "side": 1,
+      "message": "good catch -- it\u0027s not okay as written since sendWindowTokenToCore() assumes we have |mDialogCore|.  should prevent multiple calls in dialog_overlay_impl.cc .",
+      "parentUuid": "25f7d6e6_8558418b",
       "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
