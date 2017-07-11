@@ -118,6 +118,30 @@
       "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f2cca8f_54cf568e",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-11T21:27:13Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "4c16785d_57b6582d",
+      "range": {
+        "startLine": 935,
+        "startChar": 60,
+        "endLine": 935,
+        "endChar": 0
+      },
+      "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
