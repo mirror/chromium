@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f0ad0a7_21ab1a8f",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-11T17:59:36Z",
+      "side": 1,
+      "message": "Is this computation necessary? Since we don\u0027t create a segment until something is going to be written to it, we always have something better than a guess available.",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 35
+      },
+      "revId": "6413aa047611447f178c43f72add271273692d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4660ed_ac8b34ba",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-11T17:59:36Z",
+      "side": 1,
+      "message": "It seems we should be tracking |max_allocated_bytes_| and setting |allocated_bytes_| \u003d 0 here? (Under the assumption that the performance penalty is proportional to |allocation_count_|.)",
+      "range": {
+        "startLine": 845,
+        "startChar": 2,
+        "endLine": 845,
+        "endChar": 25
+      },
+      "revId": "6413aa047611447f178c43f72add271273692d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
