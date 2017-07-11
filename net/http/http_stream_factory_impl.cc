@@ -263,8 +263,10 @@ void HttpStreamFactoryImpl::AddJobControllerCountToHistograms() {
   size_t num_controllers_with_request = 0;
   size_t num_controllers_for_preconnect = 0;
   for (const auto& job_controller : job_controller_set_) {
+    /*
     DCHECK(job_controller->HasPendingAltJob() ||
            job_controller->HasPendingMainJob());
+           */
     // Additionally logs the states of the jobs if there are at least 500
     // controllers, which suggests that there might be a leak.
     if (job_controller_set_.size() >= 500)

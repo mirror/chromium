@@ -91,7 +91,7 @@ std::string EventTypeToSuffix(ServiceWorkerMetrics::EventType event_type) {
   return "_UNKNOWN";
 }
 
-ServiceWorkerMetrics::WorkerPreparationType GetWorkerPreparationType(
+ServiceWorkerMetrics::WorkerPreparationType GetLegacyWorkerPreparationType(
     EmbeddedWorkerStatus initial_worker_status,
     ServiceWorkerMetrics::StartSituation start_situation) {
   using Situation = ServiceWorkerMetrics::StartSituation;
@@ -486,7 +486,7 @@ void ServiceWorkerMetrics::RecordActivatedWorkerPreparationForMainFrame(
     bool did_navigation_preload) {
   // Record the worker preparation type.
   WorkerPreparationType preparation =
-      GetWorkerPreparationType(initial_worker_status, start_situation);
+      GetLegacyWorkerPreparationType(initial_worker_status, start_situation);
   UMA_HISTOGRAM_ENUMERATION(
       "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type",
       static_cast<int>(preparation),
@@ -914,7 +914,7 @@ void ServiceWorkerMetrics::RecordNavigationPreloadResponse(
   const bool worker_start_occurred =
       initial_worker_status != EmbeddedWorkerStatus::RUNNING;
   const WorkerPreparationType preparation =
-      GetWorkerPreparationType(initial_worker_status, start_situation);
+      GetLegacyWorkerPreparationType(initial_worker_status, start_situation);
 
   UMA_HISTOGRAM_ENUMERATION(
       "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame", preparation,
@@ -1007,6 +1007,37 @@ void ServiceWorkerMetrics::RecordUninstalledScriptImport(const GURL& url) {
                  "ServiceWorker.ContextRequestHandlerStatus."
                  "UninstalledScriptImport",
                  url));
+}
+
+blink::mojom::ServiceWorkerPreparationType
+ServiceWorkerMetrics::GetWorkerPreparationType(
+    EmbeddedWorkerStatus initial_worker_status,
+    ServiceWorkerMetrics::StartSituation start_situation) {
+  using Situation = ServiceWorkerMetrics::StartSituation;
+  using Preparation = blink::mojom::ServiceWorkerPreparationType;
+  switch (initial_worker_status) {
+    case EmbeddedWorkerStatus::STOPPED: {
+      switch (start_situation) {
+        case Situation::DURING_STARTUP:
+          return Preparation::START_DURING_STARTUP;
+        case Situation::NEW_PROCESS:
+          return Preparation::START_IN_NEW_PROCESS;
+        case Situation::EXISTING_PROCESS:
+          return Preparation::START_IN_EXISTING_PROCESS;
+        case Situation::UNKNOWN:
+          break;
+      }
+      break;
+    }
+    case EmbeddedWorkerStatus::STARTING:
+      return Preparation::STARTING;
+    case EmbeddedWorkerStatus::RUNNING:
+      return Preparation::RUNNING;
+    case EmbeddedWorkerStatus::STOPPING:
+      return Preparation::STOPPING;
+  }
+  NOTREACHED() << static_cast<int>(initial_worker_status);
+  return Preparation::UNKNOWN;
 }
 
 }  // namespace content

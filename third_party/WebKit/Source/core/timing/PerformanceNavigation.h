@@ -35,6 +35,7 @@
 #include "core/dom/ContextLifecycleObserver.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
+#include "public/platform/modules/serviceworker/service_worker_preparation_type.mojom-blink.h"
 
 namespace blink {
 
@@ -64,6 +65,7 @@ class CORE_EXPORT PerformanceNavigation final
 
   unsigned short type() const;
   unsigned short redirectCount() const;
+  mojom::ServiceWorkerPreparationType GetServiceWorkerPreparationType() const;
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 
