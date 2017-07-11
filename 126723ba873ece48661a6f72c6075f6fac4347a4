@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cff0921_1c41db83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T16:42:35Z",
+      "side": 1,
+      "message": "This is kind of changing the semantics of what a DownloadSharedPreferenceEntry means.  I think as part of the larger refactor we were talking about that\u0027s ok, but right now it could have unintended consequences for the rest of the call sites here (e.g. most things assume that if there is an entry it is an in-progress thing.  Check all calls for \u0027getEntries()\u0027 here).\n\nWould it make sense to track the completed notification ids separately?  Then we\u0027d just need to do one of two things:\n\n- Make sure to clean it up when the notification dies, which could be due to opening it or dismissing it (right now when it gets dismissed we do that hide summary notification intent but I don\u0027t think that does anything else).\n- Use it when the download is removed and we need to dismiss the notification.\n\nIn general I think having a more stable concept of metadata for Android downloads that persist beyond in-progress ones though!",
+      "range": {
+        "startLine": 1019,
+        "startChar": 8,
+        "endLine": 1023,
+        "endChar": 9
+      },
+      "revId": "126723ba873ece48661a6f72c6075f6fac4347a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
