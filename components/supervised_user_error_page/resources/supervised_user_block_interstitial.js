@@ -37,7 +37,6 @@ function setupMobileNav() {
 document.addEventListener('DOMContentLoaded', setupMobileNav);
 
 function sendCommand(cmd) {
-  window.domAutomationController.setAutomationId(1);
   window.domAutomationController.send(cmd);
 }
 
