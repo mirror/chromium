@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58676ce3_9aa7c53c",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-11T05:09:53Z",
+      "side": 1,
+      "message": "Should this be:\n\nif (!StopWatchingFileDescriptor()) NOTREACHED();\n\nAlso, why DCHECK? What if we already stopped watching it for some other reason, or we failed to watch it at all because of something like https://cs.chromium.org/chromium/src/base/message_loop/message_pump_fuchsia.cc?rcl\u003d3609c8dd447ccfaf3dd08cb2c56f904d8c3b96f3\u0026l\u003d78?",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "dea1f94a080abc80303a2a1155be4725c1bcfb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
