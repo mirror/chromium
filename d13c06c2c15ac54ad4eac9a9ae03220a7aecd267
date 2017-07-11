@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1179962_0b4454a4",
+        "filename": "cc/ipc/texture_mailbox.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-11T17:36:02Z",
+      "side": 1,
+      "message": "nit: should this move too at the same time?",
+      "revId": "d13c06c2c15ac54ad4eac9a9ae03220a7aecd267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
