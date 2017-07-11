@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94c638c9_5bb0ddd6",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-11T23:11:44Z",
+      "side": 1,
+      "message": "with any changes except for changes to OWNERS or baselines... but this probably isn\u0027t necessary to call out explicitly here.",
+      "revId": "798f8d5bb83cdbb979cd1579ceab341266e6e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5187a1fd_bcfad601",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-11T23:11:44Z",
+      "side": 1,
+      "message": "In the GitHub documentation, \"pull request\" is usually not capitalized (e.g. https://help.github.com/articles/about-pull-requests/)",
+      "revId": "798f8d5bb83cdbb979cd1579ceab341266e6e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7bb7b7c_4a4cb74d",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-11T23:11:44Z",
+      "side": 1,
+      "message": "Maybe expand \"(at the bottom of the page)\" to \"(link at the bottom of the page)\"?",
+      "revId": "798f8d5bb83cdbb979cd1579ceab341266e6e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ebc0f3_06831ce3",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-11T23:11:44Z",
+      "side": 1,
+      "message": "Optionally instead of \"provisional PR\" you could say \"All PRs for CLs that haven\u0027t yet been landed in Chromium\", although that\u0027s a lot more verbose.",
+      "revId": "798f8d5bb83cdbb979cd1579ceab341266e6e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
