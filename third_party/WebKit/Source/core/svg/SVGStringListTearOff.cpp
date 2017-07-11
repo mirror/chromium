@@ -45,6 +45,6 @@ SVGStringListTearOff::SVGStringListTearOff(
                                         attribute_name) {}
 
 DEFINE_TRACE_WRAPPERS(SVGStringListTearOff) {
-  visitor->TraceWrappers(contextElement());
+  visitor->TraceWrappersWithManualWriteBarrier(contextElement());
 }
 }
