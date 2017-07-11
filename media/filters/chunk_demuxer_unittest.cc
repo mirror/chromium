@@ -371,8 +371,15 @@ class ChunkDemuxerTest : public ::testing::Test {
                              const std::string& mime_type,
                              const std::string& codecs) {
     ChunkDemuxer::Status status = demuxer_->AddId(source_id, mime_type, codecs);
-    if (status == ChunkDemuxer::kOk)
+    if (status == ChunkDemuxer::kOk) {
       demuxer_->SetTracksWatcher(source_id, init_segment_received_cb_);
+      demuxer_->SetParseWarningCallbacks(
+          source_id,
+          base::Bind(&ChunkDemuxerTest::KeyframeTimeGreaterThanDependantMock,
+                     base::Unretained(this)),
+          base::Bind(&ChunkDemuxerTest::MuxedSequenceModeMock,
+                     base::Unretained(this)));
+    }
     return status;
   }
 
@@ -1273,6 +1280,8 @@ class ChunkDemuxerTest : public ::testing::Test {
                     const std::vector<uint8_t>& init_data));
 
   MOCK_METHOD1(InitSegmentReceivedMock, void(std::unique_ptr<MediaTracks>&));
+  MOCK_METHOD0(KeyframeTimeGreaterThanDependantMock, void());
+  MOCK_METHOD0(MuxedSequenceModeMock, void());
 
   void Seek(base::TimeDelta seek_time) {
     demuxer_->StartWaitingForSeek(seek_time);
@@ -4756,6 +4765,7 @@ TEST_F(ChunkDemuxerTest, SequenceModeMuxedAppendShouldWarn) {
   ASSERT_TRUE(InitDemuxer(HAS_AUDIO | HAS_VIDEO));
 
   demuxer_->SetSequenceMode(kSourceId, true);
+  EXPECT_CALL(*this, MuxedSequenceModeMock());
   EXPECT_MEDIA_LOG(MuxedSequenceModeWarning());
 
   AppendMuxedCluster(MuxedStreamInfo(kAudioTrackNum, "0D10K"),
@@ -4766,6 +4776,7 @@ TEST_F(ChunkDemuxerTest, SequenceModeSingleTrackNoWarning) {
   std::string audio_id = "audio1";
   std::string video_id = "video1";
 
+  EXPECT_CALL(*this, MuxedSequenceModeMock()).Times(0);
   EXPECT_MEDIA_LOG(MuxedSequenceModeWarning()).Times(0);
 
   ASSERT_TRUE(InitDemuxerAudioAndVideoSources(audio_id, video_id));
