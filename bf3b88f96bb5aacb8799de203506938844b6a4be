@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "377a41a7_54f3a018",
+        "filename": "skia/config/SkUserConfig.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-11T13:53:48Z",
+      "side": 1,
+      "message": "Nit: depending on how long-lived this flag will be, we may want a more explicit name (SK_SUPPORT_LEGACY_RECT_AA?);  if you think we can rebaseline soon, then I don\u0027t care what it\u0027s called :)",
+      "range": {
+        "startLine": 231,
+        "startChar": 8,
+        "endLine": 231,
+        "endChar": 30
+      },
+      "revId": "bf3b88f96bb5aacb8799de203506938844b6a4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
