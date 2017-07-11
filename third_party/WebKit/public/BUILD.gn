@@ -710,10 +710,14 @@ grit("image_resources") {
 }
 
 mojom("mojo_bindings") {
-  visibility = [ "//content/*" ]
+  visibility = [
+    "//content/*",
+    "//chrome/common:page_load_metrics_mojom",
+  ]
   visibility_blink = [
     "//content/common:mojo_bindings_blink",
     "//third_party/WebKit/Source/platform",
+    "//chrome/common:page_load_metrics_mojom_blink",
   ]
   sources = [
     "platform/display_mode.mojom",
