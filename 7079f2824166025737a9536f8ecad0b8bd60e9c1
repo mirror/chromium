@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2c5c6273_f7c2afcc",
+        "filename": "content/browser/utility_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-11T19:13:58Z",
+      "side": 1,
+      "message": "Yes.  For now.  Comment added.",
+      "parentUuid": "9bd4ee8f_a910f1db",
+      "revId": "7079f2824166025737a9536f8ecad0b8bd60e9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70729713_721175b5",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 9
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-11T19:04:13Z",
       "side": 1,
       "message": "Should we call it SANDBOX_TYPE_INVALID then? Based on reading the code it isn\u0027t obvious that these processes wind up unsandboxed.",
+      "revId": "7079f2824166025737a9536f8ecad0b8bd60e9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27ab8da_2af223c9",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-11T19:13:58Z",
+      "side": 1,
+      "message": "Yeah, I wasn\u0027t sure what to do with the enums in general: to rename this one to SANDBOX_TYPE_NONE, or to keep SANDBOX_TYPE_INVALID and add SANDBOX_TYPE_NONE, so I just left it for the moment.",
+      "parentUuid": "70729713_721175b5",
       "revId": "7079f2824166025737a9536f8ecad0b8bd60e9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
