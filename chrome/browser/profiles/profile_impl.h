@@ -54,6 +54,10 @@ class ProfilePolicyConnector;
 class SchemaRegistryService;
 }
 
+namespace prefs {
+class InProcessPrefServiceFactory;
+}
+
 namespace ssl_config {
 class SSLConfigServiceManager;
 }
@@ -145,7 +149,6 @@ class ProfileImpl : public Profile {
   bool WasCreatedByVersionOrLater(const std::string& version) override;
   void SetExitType(ExitType exit_type) override;
   ExitType GetLastSessionExitType() override;
-  scoped_refptr<base::SequencedTaskRunner> GetPrefServiceTaskRunner() override;
 
 #if defined(OS_CHROMEOS)
   void ChangeAppLocale(const std::string& locale, AppLocaleChangedVia) override;
@@ -234,7 +237,6 @@ class ProfileImpl : public Profile {
   // first.
   scoped_refptr<user_prefs::PrefRegistrySyncable> pref_registry_;
   std::unique_ptr<sync_preferences::PrefServiceSyncable> prefs_;
-  scoped_refptr<base::SequencedTaskRunner> pref_service_task_runner_;
   // See comment in GetOffTheRecordPrefs. Field exists so something owns the
   // dummy.
   std::unique_ptr<sync_preferences::PrefServiceSyncable> dummy_otr_prefs_;
@@ -289,6 +291,8 @@ class ProfileImpl : public Profile {
   Profile::Delegate* delegate_;
 
   chrome_browser_net::Predictor* predictor_;
+
+  std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileImpl);
 };
