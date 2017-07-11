@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f445c62f_874692ba",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-11T20:53:46Z",
+      "side": 1,
+      "message": "I think that only works if Obj-C knows what to box it to, it just needs to end up being an object, I would rather keep it an NSNumber.",
+      "parentUuid": "7b81845d_429a457f",
+      "range": {
+        "startLine": 543,
+        "startChar": 34,
+        "endLine": 543,
+        "endChar": 62
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc49c47a_a642f7c7",
         "filename": "remoting/ios/keychain_wrapper.h",
         "patchSetId": 3
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "Ah okay... So is it kind of like casting an NSData into NSString?",
       "parentUuid": "2dd4ea66_e035ebda",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "097ba123_0baf0e45",
+        "filename": "remoting/ios/keychain_wrapper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-11T20:53:46Z",
+      "side": 1,
+      "message": "Yeah for whatever reason a miss returns this NCFData object (NS is newer higher level api, NCF is older, lower level)",
+      "parentUuid": "d2e08f15_d1c961b3",
       "range": {
         "startLine": 126,
         "startChar": 17,
