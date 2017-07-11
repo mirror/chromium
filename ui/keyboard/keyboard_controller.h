@@ -53,7 +53,8 @@ enum class KeyboardControllerState {
   SHOWN,
   // Keyboard is being shown via animation.
   SHOWING,
-  // Waiting for an extension to be loaded and then move to SHOWING.
+  // Waiting for an extension to be loaded. Will move to HIDDEN if this is
+  // loading pre-emptively, otherwise will move to SHOWING.
   LOADING_EXTENSION,
   // Keyboard is still shown, but will move to HIDING in a short period, or if
   // an input element gets focused again, will move to SHOWN.
@@ -126,6 +127,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // |lock| is true.
   void ShowKeyboard(bool lock);
 
+  // Loads the keyboard UI contents in the background, but does not display
+  // the keyboard.
+  void LoadKeyboardUiInBackground();
+
   // Force the keyboard to show up in the specific display if not showing and
   // lock the keyboard
   void ShowKeyboardInDisplay(const int64_t display_id);
@@ -158,6 +163,9 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // For access to Observer methods for simulation.
   friend class KeyboardControllerTest;
 
+  // For access to NotifyKeyboardLoadingComplete.
+  friend class KeyboardLayoutManager;
+
   // aura::WindowObserver overrides
   void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
   void OnWindowAddedToRootWindow(aura::Window* window) override;
@@ -176,8 +184,12 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void OnInputMethodDestroyed(const ui::InputMethod* input_method) override;
   void OnShowImeIfNeeded() override;
 
+  // Notifies that the extension has completed loading
+  void NotifyKeyboardLoadingComplete();
+
   // Show virtual keyboard immediately with animation.
   void ShowKeyboardInternal(int64_t display_id);
+  void PopulateKeyboardContent(int64_t display_id, bool show_keyboard);
 
   // Returns true if keyboard is scheduled to hide.
   bool WillHideKeyboard() const;
