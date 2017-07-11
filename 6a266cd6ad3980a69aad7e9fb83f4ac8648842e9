@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e51efc5_84d65c59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:20:28Z",
+      "side": 1,
+      "message": "I think this was a little easier to read before (less code, no temporary set of things to remove). Does the old code not work anymore?",
+      "range": {
+        "startLine": 356,
+        "startChar": 9,
+        "endLine": 356,
+        "endChar": 0
+      },
+      "revId": "6a266cd6ad3980a69aad7e9fb83f4ac8648842e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
