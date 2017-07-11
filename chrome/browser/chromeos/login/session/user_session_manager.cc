@@ -430,6 +430,10 @@ UserSessionManager::UserSessionManager()
 }
 
 UserSessionManager::~UserSessionManager() {
+  LoginDisplayHost* host = LoginDisplayHost::default_host();
+  if (host)
+    host->RemoveObserver(this);
+
   // UserManager is destroyed before singletons, so we need to check if it
   // still exists.
   // TODO(nkostylev): fix order of destruction of UserManager
@@ -959,6 +963,11 @@ void UserSessionManager::OnProfilePrepared(Profile* profile,
   RestorePendingUserSessions();
 }
 
+void UserSessionManager::OnLoginDisplayHostClosed() {
+  DCHECK(ui_shown_time_.is_null());
+  ui_shown_time_ = base::Time::Now();
+}
+
 void UserSessionManager::ChildAccountStatusReceivedCallback(Profile* profile) {
   StopChildStatusObserving(profile);
 }
@@ -1305,6 +1314,7 @@ void UserSessionManager::ActivateWizard(OobeScreen screen) {
   LoginDisplayHost* host = LoginDisplayHost::default_host();
   CHECK(host);
   host->StartWizard(screen);
+  host->AddObserver(this);
 }
 
 void UserSessionManager::InitializeStartUrls() const {
@@ -1381,6 +1391,8 @@ bool UserSessionManager::InitializeUserSession(Profile* profile) {
       return false;
     }
   }
+
+  ui_shown_time_ = base::Time::Now();
 
   DoBrowserLaunch(profile, LoginDisplayHost::default_host());
   return true;
