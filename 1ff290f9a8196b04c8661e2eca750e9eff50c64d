@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55395d8_ef28d5cf",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-11T20:55:31Z",
+      "side": 1,
+      "message": "nit: remove \"default:\" case to have the compiler fail if a new frame type is added and this switch case is not updated",
+      "revId": "1ff290f9a8196b04c8661e2eca750e9eff50c64d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
