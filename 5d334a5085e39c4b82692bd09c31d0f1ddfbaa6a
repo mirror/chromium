@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f588b63_0d1c824e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-11T03:11:08Z",
+      "side": 1,
+      "message": "keyword -\u003e camelCase keywords",
+      "revId": "5d334a5085e39c4b82692bd09c31d0f1ddfbaa6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438650a1_c0255239",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-11T03:11:08Z",
+      "side": 1,
+      "message": "add spec link here.",
+      "revId": "5d334a5085e39c4b82692bd09c31d0f1ddfbaa6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2aaf073_97d2bfca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-11T03:11:08Z",
+      "side": 1,
+      "message": "is our keywords -\u003e is a webkit prefix\n\nif we can decide we should follow the convention of CSS property to be consistent.\n-\u003e but should be consistent with other keywords.",
+      "revId": "5d334a5085e39c4b82692bd09c31d0f1ddfbaa6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
