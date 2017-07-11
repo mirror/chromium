@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9a2b56f_200b0632",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontFamilyNames.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T18:31:15Z",
+      "side": 1,
+      "message": "nit: Maybe group the \"generic font category\" and \"specific font family\" ones separately, and alphabetize each group? (or somehow else organize them). The order seems kinda scattered at present.",
+      "revId": "2f4405e7f14d4cf24e1f8445bf93002522c0945f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
