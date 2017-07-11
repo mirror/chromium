@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d49b87_80fc754d",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T20:04:55Z",
+      "side": 1,
+      "message": "extra \"the\"",
+      "range": {
+        "startLine": 113,
+        "startChar": 10,
+        "endLine": 113,
+        "endChar": 13
+      },
+      "revId": "c95cffdc080d3d2580e652438af1073410447e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
