@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9515a9d0_bc56b900",
+        "filename": "mojo/edk/system/platform_wrapper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-11T17:50:36Z",
+      "side": 1,
+      "message": "It is a little weird to call it WINDOWS_HANDLE, but I understand that bikeshedding is probably out of the scope of this CL.",
+      "revId": "3ef014c9c5427ad24bd34d48d8925ffb7f58eaa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
