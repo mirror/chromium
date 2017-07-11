@@ -22,22 +22,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
 import gn_helpers
 
 
-def _IsManifestEmpty(manifest_str):
-  """Returns whether the given manifest has merge-worthy elements.
-
-  E.g.: <activity>, <service>, etc.
-  """
-  doc = ElementTree.fromstring(manifest_str)
-  for node in doc:
-    if node.tag == 'application':
-      if len(node):
-        return False
-    elif node.tag != 'uses-sdk':
-      return False
-
-  return True
-
-
 def main():
   parser = argparse.ArgumentParser(description=__doc__)
   parser.add_argument('--input-file',
@@ -79,9 +63,6 @@ def main():
     data['has_native_libraries'] = False
     data['has_r_text_file'] = False
     with zipfile.ZipFile(aar_file) as z:
-      data['is_manifest_empty'] = (
-          _IsManifestEmpty(z.read('AndroidManifest.xml')))
-
       for name in z.namelist():
         if name.endswith('/'):
           continue
