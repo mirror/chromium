@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2895728b_ce48f068",
+        "filename": "base/win/win_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T16:21:54Z",
+      "side": 1,
+      "message": "No idea but I wanted to try it to figure it out. I\u0027m gonna go with mark\u0027s suggestion to only do the change in a follow-up CL.",
+      "parentUuid": "4d286fa3_16001bfb",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "364ee67d_a193db3c",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d13d43_c7292b33",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T16:21:54Z",
+      "side": 1,
+      "message": "Filled crbug.com/740976.",
+      "parentUuid": "364ee67d_a193db3c",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73f2ba5e_673e1d30",
+        "filename": "chrome/browser/net/net_error_diagnostics_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T16:21:54Z",
+      "side": 1,
+      "message": "AFAICT, it has a different value on different OSes and it is still used in net_error_tab_helper.cc.",
+      "parentUuid": "4e989755_6c9feb03",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea5b2ed3_e306d2ec",
         "filename": "chrome/installer/util/shell_util.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6623f1a3_ea7828a0",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T16:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea5b2ed3_e306d2ec",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "845d7e0c_6e998f0b",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1952,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T16:21:54Z",
+      "side": 1,
+      "message": "The comment here still makes sense IMO.",
+      "parentUuid": "23d40f98_f28364a1",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19ad9599_9091df00",
         "filename": "chrome/installer/util/shell_util.cc",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0898ba81_f3aba9be",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T16:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19ad9599_9091df00",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9f28889_4b8a802c",
         "filename": "chrome/installer/util/shell_util.cc",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045161aa_26105324",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T16:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9f28889_4b8a802c",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
