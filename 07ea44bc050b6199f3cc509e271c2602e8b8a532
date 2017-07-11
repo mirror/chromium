@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "40e6febe_c91a9a31",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptCreationParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T14:38:21Z",
+      "side": 1,
+      "message": "A ModuleScriptCreationParams carries parameters for creating ModuleScript\nor\nModuleScriptCreationParams class ... (serves as a parameter object for ModuleScript c-tor)\nor something similar (start comment from ModuelScriptCreationParams)",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73ce1d31_7caa3395",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptCreationParams.h",
         "patchSetId": 6
@@ -13,6 +30,160 @@
       "writtenOn": "2017-07-11T07:37:07Z",
       "side": 1,
       "message": "FYI: This is not necessary for this CL. I\u0027ll remove this in the next patch set.",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910c6dcc_a164be8b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T14:38:21Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have GC class rather than struct",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb06a269_9a5e894a",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T14:38:21Z",
+      "side": 1,
+      "message": "Can we enforce state transfer via entry-\u003eAdvanceState()?\ne.g. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp?type\u003dcs\u0026q\u003dModuleTreeLinker::AdvanceState\u0026sq\u003dpackage:chromium\u0026l\u003d116",
+      "range": {
+        "startLine": 76,
+        "startChar": 22,
+        "endLine": 76,
+        "endChar": 23
+      },
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d61830_0a17abe4",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T14:38:21Z",
+      "side": 1,
+      "message": "Do we have a case where entry-\u003eclients are updated while being iterated? If so, can we forbid them?",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174ad50b_e0b1df9d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T14:38:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 98,
+        "startChar": 22,
+        "endLine": 98,
+        "endChar": 29
+      },
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b5fe77_f736bb28",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T14:38:21Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188fcfaa_1ec4adee",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T14:38:21Z",
+      "side": 1,
+      "message": "ASSERT_EQ(Result::kInitial, result_)?",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3196205d_d4afa07b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T14:38:21Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd247246_7a492008",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T14:38:21Z",
+      "side": 1,
+      "message": "Ditto",
       "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
