@@ -16,6 +16,24 @@
       "revId": "b7ef2d17f6d1a821e572900a9005ab6cfe589fa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae61ef3_d22dbd57",
+        "filename": "components/infobars/core/infobar_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T05:36:25Z",
+      "side": 1,
+      "message": "I don\u0027t understand why it\u0027s beneficial to wait until after the branch point to do that.",
+      "parentUuid": "b3b2dd5c_c94b44e2",
+      "revId": "b7ef2d17f6d1a821e572900a9005ab6cfe589fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
