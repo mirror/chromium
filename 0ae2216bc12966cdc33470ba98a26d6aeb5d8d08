@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "339552f0_ba2a62a9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T22:40:30Z",
+      "side": 1,
+      "message": "I\u0027d say perform the cast on line 270. It makes the loop more readable without the cast.",
+      "parentUuid": "072801bd_07a685b9",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 264,
+        "endChar": 11
+      },
+      "revId": "0ae2216bc12966cdc33470ba98a26d6aeb5d8d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dc3db49_3d7a9e56",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 11
