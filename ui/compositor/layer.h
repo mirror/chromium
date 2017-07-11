@@ -25,6 +25,7 @@
 #include "cc/surfaces/sequence_surface_reference_factory.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkRegion.h"
+#include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer_animation_delegate.h"
 #include "ui/compositor/layer_delegate.h"
@@ -193,10 +194,12 @@ class COMPOSITOR_EXPORT Layer
   // temperature otherwise.
   float GetTargetTemperature() const;
 
-  // Blur pixels by this amount in anything below the layer and visible through
-  // the layer.
-  int background_blur() const { return background_blur_radius_; }
-  void SetBackgroundBlur(int blur_radius);
+  // Blur pixels by 3 * this amount in anything below the layer and visible
+  // through the layer.
+  int background_blur() const { return background_blur_sigma_; }
+  void SetBackgroundBlur(int blur_sigma,
+                         SkBlurImageFilter::TileMode tile_mode =
+                             SkBlurImageFilter::kClamp_TileMode);
 
   // Saturate all pixels of this layer by this amount.
   // This effect will get "combined" with the inverted,
@@ -503,7 +506,8 @@ class COMPOSITOR_EXPORT Layer
   // to paint the content.
   cc::Region paint_region_;
 
-  int background_blur_radius_;
+  int background_blur_sigma_;
+  SkBlurImageFilter::TileMode background_blur_tile_mode_;
 
   // Several variables which will change the visible representation of
   // the layer.
