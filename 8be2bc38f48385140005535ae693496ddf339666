@@ -22,6 +22,30 @@
       "revId": "8be2bc38f48385140005535ae693496ddf339666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9785c98_4d494511",
+        "filename": "components/download/content/factory/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-11T23:58:09Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "e511bb35_24315c4e",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "8be2bc38f48385140005535ae693496ddf339666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
