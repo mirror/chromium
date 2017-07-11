@@ -10,7 +10,6 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
-#include "base/guid.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -455,8 +454,10 @@ class ServiceManager::Instance
       mojom::PIDReceiverRequest pid_receiver_request,
       StartServiceWithProcessCallback callback) override {
     Identity target = in_target;
+    mojom::ServicePtr service;
+    service.Bind(mojom::ServicePtrInfo(std::move(service_handle), 0));
     mojom::ConnectResult result =
-        ValidateConnectParams(&target, nullptr, nullptr);
+        ValidateConnectParams(&target, &service, &pid_receiver_request);
     if (!Succeeded(result)) {
       std::move(callback).Run(result, Identity());
       return;
@@ -466,8 +467,6 @@ class ServiceManager::Instance
     params->set_source(identity_);
     params->set_target(target);
 
-    mojom::ServicePtr service;
-    service.Bind(mojom::ServicePtrInfo(std::move(service_handle), 0));
     params->set_client_process_info(std::move(service),
                                     std::move(pid_receiver_request));
     params->set_start_service_callback(std::move(callback));
