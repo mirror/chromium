@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "233893b2_f7e04fdf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-11T23:08:08Z",
+      "side": 1,
+      "message": "I don\u0027t want to stop this Cl, but I doubt that it would improve code readability if we integrate this check everywhere.\n\nTo make user_image_selection screen forced, you have to add these checks to 3 places. (The last one is in user_session_manager:\n\n--- a/chrome/browser/chromeos/login/session/user_session_manager.cc\n+++ b/chrome/browser/chromeos/login/session/user_session_manager.cc\n@@ -1361,8 +1361,8 @@ bool UserSessionManager::InitializeUserSession(Profile* profile) {\n         user_flow-\u003eShouldSkipPostLoginScreens() ||\n         (oobe_controller \u0026\u0026 oobe_controller-\u003eskip_post_login_screens()) ||\n         cmdline-\u003eHasSwitch(chromeos::switches::kOobeSkipPostLogin);\n \n-    if (user_manager-\u003eIsCurrentUserNew() \u0026\u0026 !skip_post_login_screens) {\n+    if (true ) {\n       // Don\u0027t specify start URLs if the administrator has configured the start\n       // URLs via policy.\n       if (!SessionStartupPref::TypeIsManaged(profile-\u003eGetPrefs())) {\n\n\n\n\nI am afraid, adding support for this flag for the other screens will make the code even more complicate.",
+      "parentUuid": "e6532b64_9b47b753",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "584e26c8746e7e3f9233f93ec7abef0de2d1dd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e640ebf9_df74d5eb",
         "filename": "chrome/browser/chromeos/login/screens/user_image_screen.cc",
         "patchSetId": 2
