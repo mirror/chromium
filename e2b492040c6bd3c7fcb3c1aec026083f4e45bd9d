@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "abb70795_9ab33918",
+        "filename": "media/mojo/interfaces/video_encode_accelerator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-11T19:59:17Z",
+      "side": 1,
+      "message": "Do we have tests where we call Encode without\na) first initializing\nb) providing the correct number N of buffers",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 47
+      },
+      "revId": "e2b492040c6bd3c7fcb3c1aec026083f4e45bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2d938e5_301d35e9",
         "filename": "media/mojo/interfaces/video_encode_accelerator.mojom",
         "patchSetId": 2
