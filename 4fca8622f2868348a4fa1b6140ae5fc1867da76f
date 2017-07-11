@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a20fb7_9b35a0a2",
+        "filename": "content/common/sandbox_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T20:06:27Z",
+      "side": 1,
+      "message": "+1 to alphabetization!",
+      "revId": "4fca8622f2868348a4fa1b6140ae5fc1867da76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
