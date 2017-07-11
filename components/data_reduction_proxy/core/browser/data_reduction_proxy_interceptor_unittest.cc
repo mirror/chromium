@@ -126,6 +126,7 @@ class DataReductionProxyInterceptorTest : public testing::Test {
         &default_network_delegate_));
     default_context_->set_network_delegate(&default_network_delegate_);
     default_context_->set_net_log(test_context_->net_log());
+    test_context_->config()->test_params()->UseNonSecureProxiesForHttp();
   }
 
   ~DataReductionProxyInterceptorTest() override {
@@ -298,12 +299,15 @@ class DataReductionProxyInterceptorEndToEndTest : public testing::Test {
             .WithURLRequestContext(&context_)
             .WithMockClientSocketFactory(&mock_socket_factory_)
             .Build();
+    drp_test_context_->config()->test_params()->UseNonSecureProxiesForHttp();
     drp_test_context_->AttachToURLRequestContext(&context_storage_);
     context_.set_client_socket_factory(&mock_socket_factory_);
     proxy_delegate_ = drp_test_context_->io_data()->CreateProxyDelegate();
     context_.set_proxy_delegate(proxy_delegate_.get());
+    drp_test_context_->config()->test_params()->UseNonSecureProxiesForHttp();
     context_.Init();
     drp_test_context_->EnableDataReductionProxyWithSecureProxyCheckSuccess();
+    drp_test_context_->config()->test_params()->UseNonSecureProxiesForHttp();
 
     // Three proxies should be available for use: primary, fallback, and direct.
     const net::ProxyConfig& proxy_config =
@@ -332,6 +336,12 @@ class DataReductionProxyInterceptorEndToEndTest : public testing::Test {
   }
 
   net::ProxyServer origin() const {
+    EXPECT_FALSE(config()
+                     ->test_params()
+                     ->proxies_for_http()
+                     .front()
+                     .proxy_server()
+                     .is_https());
     return config()->test_params()->proxies_for_http().front().proxy_server();
   }
 
