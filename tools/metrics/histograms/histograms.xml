@@ -5618,6 +5618,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Blink.ResourceLoadScheduler.PeakRequests" units="requests">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>ksakamoto@chromium.org</owner>
+  <summary>
+    The largest number of outstanding resource requests issued by a frame until
+    the network 2-quiet.
+  </summary>
+</histogram>
+
 <histogram name="Blink.RestoredCachedStyleSheet"
     enum="RestoredCachedStyleSheet">
   <obsolete>
@@ -96014,6 +96024,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     </obsolete>
   </suffix>
   <affected-histogram name="Net.ResourceLoader.ResponseStartToEnd"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="ResourceLoadScheduler.FrameType" separator=".">
+  <suffix name="MainframeThrottled" label="Main frame, throttled"/>
+  <suffix name="MainframeNotThrottled" label="Main frame, not throttled"/>
+  <suffix name="SubframeThrottled" label="Sub frame, throttled"/>
+  <suffix name="MainframeNotThrottled" label="Sub frame, not throttled"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.PeakRequests"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="ResourcePrefetchPredictorNetworkTypePrefetch"
