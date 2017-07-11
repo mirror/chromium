@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4af6181_1ee89793",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-11T05:23:26Z",
+      "side": 1,
+      "message": "Drive-by: why are these casts needed?",
+      "range": {
+        "startLine": 219,
+        "startChar": 6,
+        "endLine": 219,
+        "endChar": 13
+      },
+      "revId": "ddc753934758db1cccdfc5491af7b58735a5c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
