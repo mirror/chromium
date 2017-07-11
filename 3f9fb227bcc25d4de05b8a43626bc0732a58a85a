@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a153f9c4_b0434efb",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-11T16:32:24Z",
+      "side": 1,
+      "message": "Done. But probably we can delete AppsGridViewDelegate class at all actually?",
+      "parentUuid": "6c0e9c49_7afca66a",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ad2804_edfff8ce",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ad7dfc_62e59704",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-11T16:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68ad2804_edfff8ce",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8ebade53_3a897b79",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-11T16:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c78c51_06c02ffc",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc7a185a_43121623",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659a40c7_d549fb49",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-11T16:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc7a185a_43121623",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "aee7d978_c7791ffb",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-11T16:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "175dc044_a311cca8",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eff5c7de_225ddfd3",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8f4a45fd_4d353fd3",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-11T16:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff5c7de_225ddfd3",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a8decd9_dc944e64",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3faca1a4_1fdcbc83",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-11T16:32:24Z",
+      "side": 1,
+      "message": "done. Just using TilesPerPage(1).",
+      "parentUuid": "0a8decd9_dc944e64",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +278,24 @@
       "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee629c74_ffe7887c",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-11T16:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6428854_fa1aefb4",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
