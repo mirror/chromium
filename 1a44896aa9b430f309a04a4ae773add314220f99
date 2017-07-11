@@ -22,6 +22,30 @@
       "revId": "1a44896aa9b430f309a04a4ae773add314220f99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df8c276_1d52b0ea",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-11T19:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af840aaf_8aa6c12d",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 21
+      },
+      "revId": "1a44896aa9b430f309a04a4ae773add314220f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
