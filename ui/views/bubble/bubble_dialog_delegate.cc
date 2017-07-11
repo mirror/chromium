@@ -97,19 +97,14 @@ bool BubbleDialogDelegateView::ShouldShowCloseButton() const {
 }
 
 ClientView* BubbleDialogDelegateView::CreateClientView(Widget* widget) {
-  DialogClientView* client = new DialogClientView(widget, GetContentsView());
-  LayoutProvider* provider = LayoutProvider::Get();
-  // The other three sides are taken care of by the |margins_| given to
-  // BubbleFrameView in CreateNonClientFrameView().
-  client->SetButtonRowInsets(gfx::Insets(
-      provider->GetDistanceMetric(DISTANCE_BUBBLE_BUTTON_TOP_MARGIN), 0, 0, 0));
+  ClientView* client = DialogDelegate::CreateClientView(widget);
   widget->non_client_view()->set_mirror_client_in_rtl(mirror_arrow_in_rtl_);
   return client;
 }
 
 NonClientFrameView* BubbleDialogDelegateView::CreateNonClientFrameView(
     Widget* widget) {
-  BubbleFrameView* frame = new BubbleFrameView(title_margins_, margins_);
+  BubbleFrameView* frame = new BubbleFrameView(title_margins(), margins());
   frame->SetFootnoteView(CreateFootnoteView());
 
   BubbleBorder::Arrow adjusted_arrow = arrow();
@@ -176,11 +171,6 @@ void BubbleDialogDelegateView::OnBeforeBubbleWidgetInit(
     Widget::InitParams* params,
     Widget* widget) const {}
 
-void BubbleDialogDelegateView::UseCompactMargins() {
-  const int kCompactMargin = 6;
-  margins_.Set(kCompactMargin, kCompactMargin, kCompactMargin, kCompactMargin);
-}
-
 void BubbleDialogDelegateView::SetAlignment(
     BubbleBorder::BubbleAlignment alignment) {
   GetBubbleFrameView()->bubble_border()->set_alignment(alignment);
@@ -217,9 +207,6 @@ BubbleDialogDelegateView::BubbleDialogDelegateView(View* anchor_view,
       accept_events_(true),
       adjust_if_offscreen_(true),
       parent_window_(nullptr) {
-  LayoutProvider* provider = LayoutProvider::Get();
-  margins_ = provider->GetInsetsMetric(INSETS_BUBBLE_CONTENTS);
-  title_margins_ = provider->GetInsetsMetric(INSETS_BUBBLE_TITLE);
   if (anchor_view)
     SetAnchorView(anchor_view);
   UpdateColorsFromTheme(GetNativeTheme());

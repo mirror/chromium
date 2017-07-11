@@ -125,7 +125,8 @@ void CryptoModulePasswordDialogView::Init(const std::string& hostname,
 
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
-  views::GridLayout* layout = views::GridLayout::CreatePanel(this);
+  views::GridLayout* layout = new views::GridLayout(this);
+  SetLayoutManager(layout);
 
   views::ColumnSet* reason_column_set = layout->AddColumnSet(0);
   reason_column_set->AddColumn(
