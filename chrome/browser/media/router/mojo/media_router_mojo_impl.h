@@ -301,6 +301,7 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   //     persisted incorrectly on suspension.
   void SyncStateToMediaRouteProvider();
 
+
   // mojom::MediaRouter implementation.
   void RegisterMediaRouteProvider(
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
