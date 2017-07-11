@@ -22,6 +22,30 @@
       "revId": "c278efa8bf6b70b81c89cf167fe0374b33c2a79c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55cebd78_2dc1adb0",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-11T17:47:35Z",
+      "side": 1,
+      "message": "I\u0027ll keep the current patch set because the previous code also uses |pending_script_|, not |unused_resource| (these are expected to be the same though) and the change is orthogonal to this CL.",
+      "parentUuid": "8e1b7b84_39c936cb",
+      "range": {
+        "startLine": 438,
+        "startChar": 2,
+        "endLine": 438,
+        "endChar": 31
+      },
+      "revId": "c278efa8bf6b70b81c89cf167fe0374b33c2a79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
