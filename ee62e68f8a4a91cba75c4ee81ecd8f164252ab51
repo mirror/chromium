@@ -34,6 +34,24 @@
       "revId": "ee62e68f8a4a91cba75c4ee81ecd8f164252ab51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7526403_0478a2c8",
+        "filename": "content/browser/compositor/surface_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-11T21:46:23Z",
+      "side": 1,
+      "message": "I hate statics, so that\u0027s why I was trying to abstract them away :) E.g. it\u0027s not clear that a static task runner will be necessarily appropriate if we port the Mac logic to Windows (which we ought to to get the same benefits, but no-one is working on that at the moment).\nBrowserMainLoop makes sense because it both creates GPTF and calls  ConnectWithInProcessFrameSinkManager. But I guess it doesn\u0027t work too well for RenderWidgetHostImpl without bigger refactors. What we could do is make it a function on BrowserMainLoop, inject it where we can (GPTF and this), and access it via BrowserMainLoop::GetInstance in the RenderWidgetHostImpl case.",
+      "parentUuid": "5365e3b2_2edeae38",
+      "revId": "ee62e68f8a4a91cba75c4ee81ecd8f164252ab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
