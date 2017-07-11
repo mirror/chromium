@@ -1641,6 +1641,7 @@ test("browser_tests") {
       "//components/strings",
       "//components/sync",
       "//components/translate/core/common",
+      "//components/url_log:browser_tests",
       "//content/public/common:features",
       "//content/test:test_support",
       "//crypto:platform",
