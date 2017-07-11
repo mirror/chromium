@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "90e53592_a5e824a0",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-11T14:47:56Z",
+      "side": 1,
+      "message": "I was curious, so I looked -- it always does a sync IPC to the browser process. (Still surprising that it\u0027s accessed enough to be that hot, but it makes sense that it wouldn\u0027t be super fast.)\n\nThere are definitely things we could do to optimize it if we so desired.",
+      "parentUuid": "1fb1098e_a30c9ac4",
+      "revId": "6e72bc98c313be2fa20c6f645ebaf220cc7a6291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a70313f_b0bb97be",
         "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
         "patchSetId": 1
