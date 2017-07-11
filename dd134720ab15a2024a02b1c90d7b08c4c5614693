@@ -22,6 +22,30 @@
       "revId": "dd134720ab15a2024a02b1c90d7b08c4c5614693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afcf7a5_1769e487",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-07-11T00:00:58Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve changed it to google_blue_500 (I guess we call \"material_blue\" \"google_blue\" in Chrome)",
+      "parentUuid": "e56b8b40_d03efb48",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "dd134720ab15a2024a02b1c90d7b08c4c5614693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
