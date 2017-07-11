@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5712ff9_7b709a99",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-07-11T09:17:08Z",
+      "side": 1,
+      "message": "In this case we are actually doing a second reauth. When exactly does it happen?",
+      "revId": "eaad975bbcb9e5fec5f35b40f4c9be9e03351bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8806123_3430348b",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-07-11T09:17:08Z",
+      "side": 1,
+      "message": "Is this correct? We only open the app if the reauth failed?",
+      "range": {
+        "startLine": 203,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 24
+      },
+      "revId": "eaad975bbcb9e5fec5f35b40f4c9be9e03351bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
