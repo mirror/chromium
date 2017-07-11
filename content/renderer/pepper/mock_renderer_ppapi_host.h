@@ -12,6 +12,7 @@
 #include "content/renderer/pepper/content_renderer_pepper_host_factory.h"
 #include "ppapi/host/ppapi_host.h"
 #include "ppapi/proxy/resource_message_test_sink.h"
+#include "ui/gfx/geometry/point_f.h"
 
 namespace content {
 class FakePepperPluginInstance;

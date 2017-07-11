@@ -43,6 +43,10 @@ class FakePepperPluginInstance : public PepperPluginInstance {
   void SetLinkUnderCursor(const std::string& url) override;
   void SetTextInputType(ui::TextInputType type) override;
   void PostMessageToJavaScript(PP_Var message) override;
+  void SetSelectionLeftCoordinates(const gfx::PointF& point) override;
+  void SetSelectionRightCoordinates(const gfx::PointF& point) override;
+  void SetSelectionCoordinates(const gfx::PointF& left,
+                               const gfx::PointF& right) override;
 
  private:
   GURL gurl_;

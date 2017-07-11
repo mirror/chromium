@@ -5,9 +5,23 @@
 module pdf.mojom;
 
 import "third_party/WebKit/public/platform/referrer.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
 import "url/mojo/url.mojom";
 
+interface PdfListener {
+  // Sets the start of the selection to |left|.
+  SetSelectionLeftCoordinates(gfx.mojom.PointF left);
+
+  // Sets the end of the selection to |right|.
+  SetSelectionRightCoordinates(gfx.mojom.PointF right);
+
+  // Sets the selection to start at |left| and end at |right|.
+  SetSelectionCoordinates(gfx.mojom.PointF left, gfx.mojom.PointF right);
+};
+
 interface PdfService {
+  AddListener(PdfListener client);
+
   // Updates the content restrictions, i.e. to disable print/copy.
   UpdateContentRestrictions(int32 restrictions);
 
@@ -16,4 +30,8 @@ interface PdfService {
 
   // Brings up SaveAs... dialog to save specified URL.
   SaveUrlAs(url.mojom.Url url, blink.mojom.Referrer referrer);
+
+  // Sets if the current widget accepts paste.
+  SelectionChanged(gfx.mojom.PointF left, int32 left_height,
+                   gfx.mojom.PointF right, int32 right_height);
 };

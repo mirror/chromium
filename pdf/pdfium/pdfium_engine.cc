@@ -1952,7 +1952,7 @@ bool PDFiumEngine::OnMouseMove(const pp::MouseInputEvent& event) {
 
   SelectionChangeInvalidator selection_invalidator(this);
 
-  // Check if the user has descreased their selection area and we need to remove
+  // Check if the user has decreased their selection area and we need to remove
   // pages from selection_.
   for (size_t i = 0; i < selection_.size(); ++i) {
     if (selection_[i].page_index() == page_index) {
@@ -3584,6 +3584,31 @@ void PDFiumEngine::GetRegion(const pp::Point& location,
 
 void PDFiumEngine::OnSelectionChanged() {
   pp::PDF::SetSelectedText(GetPluginInstance(), GetSelectedText().c_str());
+
+  pp::Rect left(std::numeric_limits<int32_t>::max(),
+                std::numeric_limits<int32_t>::max(), 0, 0);
+  pp::Rect right;
+  for (auto sel : selection_) {
+    for (auto rect : sel.GetScreenRects(pp::Point(), 1.0, current_rotation_)) {
+      if (rect.y() < left.y() ||
+          (rect.y() == left.y() && rect.x() < left.x())) {
+        left = rect;
+      }
+      if (rect.y() > right.y() ||
+          (rect.y() == right.y() && rect.right() > right.right())) {
+        right = rect;
+      }
+    }
+  }
+  if (left.IsEmpty()) {
+    left.set_x(0);
+    left.set_y(0);
+  }
+
+  left.Offset(page_offset_);
+  right.Offset(page_offset_);
+
+  client_->SelectionChanged(left, right);
 }
 
 void PDFiumEngine::RotateInternal() {
@@ -3943,6 +3968,57 @@ FPDF_BOOL PDFiumEngine::Pause_NeedToPauseNow(IFSDK_PAUSE* param) {
   PDFiumEngine* engine = static_cast<PDFiumEngine*>(param);
   return (base::Time::Now() - engine->last_progressive_start_time_)
              .InMilliseconds() > engine->progressive_paint_timeout_;
+}
+
+void PDFiumEngine::SetSelectionLeftCoordinates(const pp::FloatPoint& point) {
+  if (selection_.empty())
+    return;
+
+  int page_index = -1;
+  int char_index = -1;
+  int form_type = FPDF_FORMFIELD_UNKNOWN;
+  PDFiumPage::LinkTarget target;
+  GetCharIndex(pp::Point(point.x(), point.y()), &page_index, &char_index,
+               &form_type, &target);
+  if (page_index < 0)
+    return;
+
+  SelectionChangeInvalidator selection_invalidator(this);
+  selection_.insert(selection_.begin(),
+                    PDFiumRange(pages_[page_index].get(), char_index, 0));
+}
+
+void PDFiumEngine::SetSelectionRightCoordinates(const pp::FloatPoint& point) {
+  if (selection_.empty())
+    return;
+
+  int page_index = -1;
+  int char_index = -1;
+  int form_type = FPDF_FORMFIELD_UNKNOWN;
+  PDFiumPage::LinkTarget target;
+  GetCharIndex(pp::Point(point.x(), point.y()), &page_index, &char_index,
+               &form_type, &target);
+
+  SelectionChangeInvalidator selection_invalidator(this);
+  selection_.push_back(PDFiumRange(pages_[page_index].get(), char_index, 0));
+}
+
+void PDFiumEngine::SetSelectionCoordinates(const pp::FloatPoint& left,
+                                           const pp::FloatPoint& right) {
+  SelectionChangeInvalidator selection_invalidator(this);
+  selection_.clear();
+
+  int page_index = -1;
+  int char_index = -1;
+  int form_type = FPDF_FORMFIELD_UNKNOWN;
+  PDFiumPage::LinkTarget target;
+  GetCharIndex(pp::Point(left.x(), left.y()), &page_index, &char_index,
+               &form_type, &target);
+  selection_.push_back(PDFiumRange(pages_[page_index].get(), char_index, 0));
+
+  GetCharIndex(pp::Point(right.x(), right.y()), &page_index, &char_index,
+               &form_type, &target);
+  selection_.push_back(PDFiumRange(pages_[page_index].get(), char_index, 0));
 }
 
 ScopedUnsupportedFeature::ScopedUnsupportedFeature(PDFiumEngine* engine)

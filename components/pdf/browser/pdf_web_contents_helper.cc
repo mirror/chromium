@@ -46,21 +46,28 @@ PDFWebContentsHelper::~PDFWebContentsHelper() {
   touch_selection_controller_client_manager_->RemoveObserver(this);
 }
 
-void PDFWebContentsHelper::SelectionChanged(const gfx::Point& left,
+void PDFWebContentsHelper::AddListener(mojom::PdfListenerPtr listener) {
+  remote_pdf_client_ = std::move(listener);
+}
+
+void PDFWebContentsHelper::SelectionChanged(const gfx::PointF& left,
                                             int32_t left_height,
-                                            const gfx::Point& right,
+                                            const gfx::PointF& right,
                                             int32_t right_height) {
+  fprintf(stderr, "Selection %f,%f x %d -> %f,%f x %d\n", left.x(), left.y(),
+          left_height, right.x(), right.y(), right_height);
+
   if (!touch_selection_controller_client_manager_)
     InitTouchSelectionClientManager();
 
   if (touch_selection_controller_client_manager_) {
     gfx::SelectionBound start;
     gfx::SelectionBound end;
-    start.SetEdgeTop(gfx::PointF(left.x(), left.y()));
+    start.SetEdgeTop(left);
     start.SetEdgeBottom(gfx::PointF(left.x(), left.y() + left_height));
     start.set_type(gfx::SelectionBound::LEFT);
     start.set_visible(true);
-    end.SetEdgeTop(gfx::PointF(right.x(), right.y()));
+    end.SetEdgeTop(right);
     end.SetEdgeBottom(gfx::PointF(right.x(), right.y() + right_height));
     end.set_type(gfx::SelectionBound::RIGHT);
     end.set_visible(true);
@@ -77,16 +84,22 @@ bool PDFWebContentsHelper::SupportsAnimation() const {
 }
 
 void PDFWebContentsHelper::MoveCaret(const gfx::PointF& position) {
-  // TODO(wjmaclean, dsinclair): Implement connection to PDFium to implement.
+  if (!remote_pdf_client_)
+    return;
+  remote_pdf_client_->SetSelectionLeftCoordinates(position);
 }
 
 void PDFWebContentsHelper::MoveRangeSelectionExtent(const gfx::PointF& extent) {
-  // TODO(wjmaclean, dsinclair): Implement connection to PDFium to implement.
+  if (!remote_pdf_client_)
+    return;
+  remote_pdf_client_->SetSelectionRightCoordinates(extent);
 }
 
 void PDFWebContentsHelper::SelectBetweenCoordinates(const gfx::PointF& base,
                                                     const gfx::PointF& extent) {
-  // TODO(wjmaclean, dsinclair): Implement connection to PDFium to implement.
+  if (!remote_pdf_client_)
+    return;
+  remote_pdf_client_->SetSelectionCoordinates(base, extent);
 }
 
 void PDFWebContentsHelper::OnSelectionEvent(ui::SelectionEventType event) {}
@@ -122,6 +135,11 @@ void PDFWebContentsHelper::ExecuteCommand(int command_id, int event_flags) {
   // TODO(wjmaclean, dsinclair): Need to communicate to PDFium to get it to copy
   // the selection onto the clipboard (and eventually accept cut/paste commands
   // too).
+  switch (command_id) {
+    case IDS_APP_COPY:
+      web_contents()->Copy();
+      break;
+  }
 }
 
 void PDFWebContentsHelper::RunContextMenu() {
