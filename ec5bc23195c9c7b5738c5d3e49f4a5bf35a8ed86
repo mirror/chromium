@@ -365,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "6e508ab6_e86e711b",
+        "filename": "third_party/WebKit/public/platform/WebClientHintsType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-11T04:04:27Z",
+      "side": 1,
+      "message": "Yoav: As well as the other style conversion discussion, yes, I think we should have some thread on blink-dev@ first, though I don\u0027t have any strong opinion on the choice.",
+      "parentUuid": "ba8ebf28_75c25483",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d1a7d03_1a49b46c",
         "filename": "third_party/WebKit/public/platform/WebClientHintsType.h",
         "patchSetId": 7

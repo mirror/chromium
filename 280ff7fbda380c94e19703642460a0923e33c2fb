@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ddd7f8_ee974e77",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-11T04:04:27Z",
+      "side": 1,
+      "message": "Before this patch, UpdateFromAcceptClientHintsHeader() changed the corresponding should_.* variable only when the given header_value contained the corresponding hints, but now it\u0027s unsetting them when each of them is not included. Doesn\u0027t this introduce visible change for the cases e.g. when http-equiv is used?",
+      "revId": "280ff7fbda380c94e19703642460a0923e33c2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
