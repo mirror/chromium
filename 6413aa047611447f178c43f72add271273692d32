@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "970ebc8d_662d8aee",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-11T19:32:44Z",
+      "side": 1,
+      "message": "As expected, unfortunately, this undersizes and results in a lot of extra allocations which reduce the effectiveness of the smaller initial buffer sizes:\n\n360p, decoded: 1228217 (901), allocated: 221184 (10), ratio: 5.55292\n480p, decoded: 3170779 (901), allocated: 458752 (12), ratio: 6.91175\n720p, decoded: 9402525 (1801), allocated: 1179648 (15), ratio: 7.97062\n1080p, decoded: 16676052 (1801), allocated: 1941504 (17), ratio: 8.58924\n2160p, decoded: 63319373 (1801), allocated: 3555328 (26), ratio: 17.8097",
+      "parentUuid": "fa746975_50f68a41",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 35
+      },
+      "revId": "6413aa047611447f178c43f72add271273692d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4660ed_ac8b34ba",
         "filename": "media/filters/gpu_video_decoder.cc",
         "patchSetId": 3
