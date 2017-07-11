@@ -250,7 +250,6 @@ void Internals::ResetToConsistentState(Page* page) {
       ->View()
       ->LayoutViewportScrollableArea()
       ->SetScrollOffset(ScrollOffset(), kProgrammaticScroll);
-  OverrideUserPreferredLanguagesForTesting(Vector<AtomicString>());
   if (!page->DeprecatedLocalMainFrame()
            ->GetSpellChecker()
            .IsSpellCheckingEnabled())
@@ -1616,16 +1615,14 @@ void Internals::runIdleTimeSpellChecker(Document* document,
 }
 
 Vector<AtomicString> Internals::userPreferredLanguages() const {
-  return blink::UserPreferredLanguages();
+  // TODO(jbroman): Delete this.
+  return Vector<AtomicString>();
 }
 
 // Optimally, the bindings generator would pass a Vector<AtomicString> here but
 // this is not supported yet.
 void Internals::setUserPreferredLanguages(const Vector<String>& languages) {
-  Vector<AtomicString> atomic_languages;
-  for (size_t i = 0; i < languages.size(); ++i)
-    atomic_languages.push_back(AtomicString(languages[i]));
-  OverrideUserPreferredLanguagesForTesting(atomic_languages);
+  // TODO(jbroman): Delete this.
 }
 
 unsigned Internals::mediaKeysCount() {

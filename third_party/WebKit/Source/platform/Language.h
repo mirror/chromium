@@ -34,13 +34,7 @@ namespace blink {
 
 // Returns a BCP-47 language tag such as "en-US".  This is the UI locale of the
 // browser application.
-PLATFORM_EXPORT AtomicString DefaultLanguage();
-// Returns a list of BCP-47 language tags.  This never returns multiple values
-// in production.  This is not a value of Accept-Languages header.  See
-// ChromeClient::acceptLanguages.
-PLATFORM_EXPORT Vector<AtomicString> UserPreferredLanguages();
-PLATFORM_EXPORT void OverrideUserPreferredLanguagesForTesting(
-    const Vector<AtomicString>&);
+PLATFORM_EXPORT const AtomicString& DefaultLanguage();
 PLATFORM_EXPORT size_t
 IndexOfBestMatchingLanguageInList(const AtomicString& language,
                                   const Vector<AtomicString>& language_list);

@@ -29,24 +29,32 @@ class TrackGroup {
   bool has_src_lang;
 };
 
-static int TextTrackLanguageSelectionScore(const TextTrack& track) {
-  if (track.language().IsEmpty())
-    return 0;
-
-  Vector<AtomicString> languages = UserPreferredLanguages();
-  size_t language_match_index =
-      IndexOfBestMatchingLanguageInList(track.language(), languages);
-  if (language_match_index >= languages.size())
-    return 0;
-
-  return languages.size() - language_match_index;
-}
-
 static int TextTrackSelectionScore(const TextTrack& track) {
   if (!track.IsVisualKind())
     return 0;
 
-  return TextTrackLanguageSelectionScore(track);
+  const AtomicString& language = track.language();
+  if (language.IsEmpty())
+    return 0;
+
+  // The track language "matches" the user language if they match exactly, or
+  // they are language matches, or if they are language-but-not-locale matches.
+  //
+  // This corresponds to the previously existing logic, which scored against
+  // the user-preferred language list (which always has length 1), and ignoring
+  // the quality of the match.
+  //
+  // TODO(jbroman): Should this be preferring better matches? It seems like it
+  // ought to.
+  const AtomicString& preferred_language = DefaultLanguage();
+  auto can_compare_language = [](const AtomicString& locale) {
+    return locale.length() == 2 || (locale.length() >= 3 && locale[2] == '-');
+  };
+  return preferred_language == language ||
+         (can_compare_language(language) &&
+          can_compare_language(preferred_language) &&
+          language[0] == preferred_language[0] &&
+          language[1] == preferred_language[1]);
 }
 
 AutomaticTrackSelection::AutomaticTrackSelection(

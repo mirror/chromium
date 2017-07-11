@@ -50,12 +50,6 @@ const AtomicString& PlatformLanguage() {
   return *g_platform_language;
 }
 
-Vector<AtomicString>& PreferredLanguagesOverride() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<Vector<AtomicString>>,
-                                  thread_specific_languages, ());
-  return *thread_specific_languages;
-}
-
 }  // namespace
 
 void InitializePlatformLanguage() {
@@ -83,32 +77,8 @@ void InitializePlatformLanguage() {
   g_platform_language = &platform_language;
 }
 
-void OverrideUserPreferredLanguagesForTesting(
-    const Vector<AtomicString>& override) {
-  Vector<AtomicString>& canonicalized = PreferredLanguagesOverride();
-  canonicalized.resize(0);
-  canonicalized.ReserveCapacity(override.size());
-  for (const auto& lang : override)
-    canonicalized.push_back(CanonicalizeLanguageIdentifier(lang));
-  Locale::ResetDefautlLocale();
-}
-
-AtomicString DefaultLanguage() {
-  Vector<AtomicString>& override = PreferredLanguagesOverride();
-  if (!override.IsEmpty())
-    return override[0];
+const AtomicString& DefaultLanguage() {
   return PlatformLanguage();
-}
-
-Vector<AtomicString> UserPreferredLanguages() {
-  Vector<AtomicString>& override = PreferredLanguagesOverride();
-  if (!override.IsEmpty())
-    return override;
-
-  Vector<AtomicString> languages;
-  languages.ReserveInitialCapacity(1);
-  languages.push_back(PlatformLanguage());
-  return languages;
 }
 
 size_t IndexOfBestMatchingLanguageInList(
