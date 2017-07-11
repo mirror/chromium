@@ -263,6 +263,11 @@ class MEDIA_EXPORT DecoderStream {
   // overwritten in many cases.
   bool pending_demuxer_read_;
 
+  // Tracks need to notify config change observers of a new config observed by
+  // the demuxer read. The notification should be delayed until all decoded
+  // frames from the previous config have been vended.
+  bool pending_config_change_notification_;
+
   // NOTE: Weak pointers must be invalidated before all other member variables.
   base::WeakPtrFactory<DecoderStream<StreamType>> weak_factory_;
 

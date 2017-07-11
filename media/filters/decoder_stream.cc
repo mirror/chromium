@@ -61,6 +61,7 @@ DecoderStream<StreamType>::DecoderStream(
       duration_tracker_(8),
       received_config_change_during_reinit_(false),
       pending_demuxer_read_(false),
+      pending_config_change_notification_(false),
       weak_factory_(this),
       fallback_weak_factory_(this) {
   FUNCTION_DVLOG(1);
@@ -238,6 +239,11 @@ bool DecoderStream<StreamType>::CanDecodeMore() const {
   // empty.
   int num_decodes =
       static_cast<int>(ready_outputs_.size()) + pending_decode_requests_;
+
+  LOG(ERROR) << __func__ << " ready_outs.size():" << ready_outputs_.size()
+             << " pending_decode_requests_:" << pending_decode_requests_
+             << " GetMaxDecodeRequests():" << GetMaxDecodeRequests();
+
   return buffers_left && num_decodes < GetMaxDecodeRequests();
 }
 
@@ -410,7 +416,8 @@ template <DemuxerStream::Type StreamType>
 void DecoderStream<StreamType>::OnDecodeDone(int buffer_size,
                                              bool end_of_stream,
                                              DecodeStatus status) {
-  FUNCTION_DVLOG(3) << ": " << status;
+  LOG(ERROR) << __func__ << ": status:" << status  << " eos:"<< end_of_stream;
+  DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(state_ == STATE_NORMAL || state_ == STATE_FLUSHING_DECODER ||
          state_ == STATE_ERROR)
       << state_;
@@ -486,8 +493,18 @@ void DecoderStream<StreamType>::OnDecodeDone(int buffer_size,
         return;
       }
 
-      if (state_ == STATE_FLUSHING_DECODER && !pending_decode_requests_)
+      if (state_ == STATE_FLUSHING_DECODER && !pending_decode_requests_) {
+        if (pending_config_change_notification_) {
+          LOG(ERROR) << __func__ << "Signaling config change now that all previous frames vended";
+          pending_config_change_notification_ = false;
+          if (!config_change_observer_cb_.is_null()) {
+            config_change_observer_cb_.Run(StreamTraits::GetDecoderConfig(stream_));
+          }
+        }
+
         ReinitializeDecoder();
+      }
+
       return;
   }
 }
@@ -495,7 +512,7 @@ void DecoderStream<StreamType>::OnDecodeDone(int buffer_size,
 template <DemuxerStream::Type StreamType>
 void DecoderStream<StreamType>::OnDecodeOutputReady(
     const scoped_refptr<Output>& output) {
-  FUNCTION_DVLOG(3) << ": " << output->timestamp().InMilliseconds() << " ms";
+  LOG(ERROR) << __func__ << ": " << output->timestamp().InMilliseconds() << " ms";
   DCHECK(output.get());
   DCHECK(state_ == STATE_NORMAL || state_ == STATE_FLUSHING_DECODER ||
          state_ == STATE_ERROR)
@@ -561,7 +578,7 @@ template <DemuxerStream::Type StreamType>
 void DecoderStream<StreamType>::OnBufferReady(
     DemuxerStream::Status status,
     const scoped_refptr<DecoderBuffer>& buffer) {
-  FUNCTION_DVLOG(3) << ": " << status << ", "
+  LOG(ERROR) << __func__ <<  " DEMUXED A BUFFER: " << status << ", "
                     << (buffer.get() ? buffer->AsHumanReadableString()
                                      : "NULL");
 
@@ -641,9 +658,7 @@ void DecoderStream<StreamType>::OnBufferReady(
     //   happened, and read straight from the demuxer, which could lead to some
     //   lost frames if we were to fallback then).
     pending_buffers_.clear();
-
-    if (!config_change_observer_cb_.is_null())
-      config_change_observer_cb_.Run(StreamTraits::GetDecoderConfig(stream_));
+    pending_config_change_notification_ = true;
 
     state_ = STATE_FLUSHING_DECODER;
     if (!reset_cb_.is_null()) {

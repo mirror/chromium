@@ -258,6 +258,7 @@ class VideoFrameStreamTest
     if (frame.get() &&
         !frame->metadata()->IsTrue(VideoFrameMetadata::END_OF_STREAM)) {
       num_decoded_frames_++;
+      LOG(ERROR) << __func__ << " Got decoded frame #" << num_decoded_frames_;
     }
     pending_read_ = false;
   }
@@ -615,6 +616,27 @@ TEST_P(VideoFrameStreamTest, Read_DuringEndOfStreamDecode) {
   ASSERT_TRUE(frame_read_.get());
   EXPECT_TRUE(
       frame_read_->metadata()->IsTrue(VideoFrameMetadata::END_OF_STREAM));
+}
+
+void VerifyConfigChangeBoundary(const int* num_decoded_frames,
+                                int* num_config_changes,
+                                const VideoDecoderConfig& config) {
+  (*num_config_changes)++;
+  EXPECT_EQ(*num_decoded_frames,
+            *num_config_changes * kNumBuffersInOneConfig);
+}
+
+TEST_P(VideoFrameStreamTest, ConfigChangeObservedAtCorrectBoundary) {
+  int num_config_changes = 0;
+
+  video_frame_stream_->set_config_change_observer(base::Bind(
+    VerifyConfigChangeBoundary, &num_decoded_frames_, &num_config_changes));
+
+  Initialize();
+  ReadAllFrames();
+
+  // We should get notified for every config *after* the initial config.
+  EXPECT_EQ(num_config_changes, kNumConfigs - 1);
 }
 
 // No Reset() before initialization is successfully completed.
