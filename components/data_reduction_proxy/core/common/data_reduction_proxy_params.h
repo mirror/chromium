@@ -214,22 +214,12 @@ class DataReductionProxyParams : public DataReductionProxyConfigValues {
       const override;
 
  protected:
-  // Test constructor that optionally won't call Init();
-  explicit DataReductionProxyParams(bool should_call_init);
-
-  // Initialize the values of the proxies, and secure proxy check URL, from
-  // command line flags and preprocessor constants, and check that there are
-  // corresponding definitions for the allowed configurations.
-  bool Init();
-
-  // Initialize the values of the proxies, and secure proxy check URL from
-  // command line flags and preprocessor constants.
-  void InitWithoutChecks();
-
   // Returns the corresponding string from preprocessor constants if defined,
   // and an empty string otherwise.
+  /*
   virtual std::string GetDefaultOrigin() const;
   virtual std::string GetDefaultFallbackOrigin() const;
+  */
 
  private:
   std::vector<DataReductionProxyServer> proxies_for_http_;

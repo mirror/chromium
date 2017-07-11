@@ -270,10 +270,10 @@ class DataReductionProxyBypassStatsEndToEndTest : public testing::Test {
     // test bypassed bytes due to proxy fallbacks. This way, a test just needs
     // to cause one proxy fallback in order for the data reduction proxy to be
     // fully bypassed.
+    // config()->test_params()->UseNonSecureProxiesForHttp();
     std::vector<DataReductionProxyServer> data_reduction_proxy_servers;
     data_reduction_proxy_servers.push_back(DataReductionProxyServer(
-        net::ProxyServer::FromURI(config()->test_params()->DefaultOrigin(),
-                                  net::ProxyServer::SCHEME_HTTP),
+        config()->test_params()->proxies_for_http().front().proxy_server(),
         ProxyServer::CORE));
     config()->test_params()->SetProxiesForHttp(data_reduction_proxy_servers);
   }
@@ -572,7 +572,9 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest, BypassedBytesNoRetry) {
 // Verify that when there is a URL redirect cycle, data reduction proxy is
 // bypassed for a single request.
 TEST_F(DataReductionProxyBypassStatsEndToEndTest, URLRedirectCycle) {
+  config()->test_params()->UseNonSecureProxiesForHttp();
   InitializeContext();
+  config()->test_params()->UseNonSecureProxiesForHttp();
   ClearBadProxies();
   base::HistogramTester histogram_tester_1;
   CreateAndExecuteURLRedirectCycleRequest();
@@ -736,6 +738,7 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest, BypassedBytesExplicitBypass) {
   }
 }
 
+/*
 TEST_F(DataReductionProxyBypassStatsEndToEndTest,
        BypassedBytesClientSideFallback) {
   struct TestCase {
@@ -760,7 +763,9 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest,
     },
   };
 
+
   InitializeContext();
+  config()->test_params()->UseNonSecureProxiesForHttp();
   for (const TestCase& test_case : test_cases) {
     ClearBadProxies();
     base::HistogramTester histogram_tester;
@@ -793,14 +798,27 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest,
         "DataReductionProxy.ConfigService.HTTPRequests", 0, 0);
   }
 }
+*/
 
 TEST_F(DataReductionProxyBypassStatsEndToEndTest, BypassedBytesNetErrorOther) {
   // Make the data reduction proxy host fail to resolve.
-  net::ProxyServer origin =
-      config()->test_params()->proxies_for_http().front().proxy_server();
+  config()->test_params()->UseNonSecureProxiesForHttp();
   std::unique_ptr<net::MockHostResolver> host_resolver(
       new net::MockHostResolver());
-  host_resolver->rules()->AddSimulatedFailure(origin.host_port_pair().host());
+  host_resolver->rules()->AddSimulatedFailure(config()
+                                                  ->test_params()
+                                                  ->proxies_for_http()
+                                                  .front()
+                                                  .proxy_server()
+                                                  .host_port_pair()
+                                                  .host());
+  host_resolver->rules()->AddSimulatedFailure(config()
+                                                  ->test_params()
+                                                  ->proxies_for_http()
+                                                  .at(1)
+                                                  .proxy_server()
+                                                  .host_port_pair()
+                                                  .host());
   set_host_resolver(host_resolver.get());
   InitializeContext();
 
@@ -858,6 +876,7 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest,
 
 TEST_F(DataReductionProxyBypassStatsEndToEndTest,
        IsDataReductionProxyUnreachable_Unreachable) {
+  config()->test_params()->UseNonSecureProxiesForHttp();
   VerifyProxyReachablity(true, false, true);
 }
 
@@ -878,6 +897,8 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest,
 
 TEST_F(DataReductionProxyBypassStatsEndToEndTest,
        ProxyUnreachableThenReachable) {
+  config()->test_params()->UseNonSecureProxiesForHttp();
+
   net::ProxyServer fallback_proxy_server =
       net::ProxyServer::FromURI("origin.net:80", net::ProxyServer::SCHEME_HTTP);
 
@@ -900,6 +921,7 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest,
 
 TEST_F(DataReductionProxyBypassStatsEndToEndTest,
        ProxyReachableThenUnreachable) {
+  config()->test_params()->UseNonSecureProxiesForHttp();
   InitializeContext();
   net::ProxyServer fallback_proxy_server =
       net::ProxyServer::FromURI("origin.net:80", net::ProxyServer::SCHEME_HTTP);
@@ -985,6 +1007,7 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest, SuccessfulRequestCompletion) {
       "DataReductionProxy.SuccessfulRequestCompletionCounts.MainFrame";
 
   InitializeContext();
+  config()->test_params()->UseNonSecureProxiesForHttp();
   const struct {
     bool was_proxy_used;
     bool is_load_bypass_proxy;
@@ -1050,6 +1073,7 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest, SuccessfulRequestCompletion) {
 // Verifies that the scheme of the HTTP data reduction proxy used is recorded
 // correctly.
 TEST_F(DataReductionProxyBypassStatsEndToEndTest, HttpProxyScheme) {
+  config()->test_params()->UseNonSecureProxiesForHttp();
   InitializeContext();
 
   base::HistogramTester histogram_tester;
@@ -1072,6 +1096,7 @@ TEST_F(DataReductionProxyBypassStatsEndToEndTest, HttpsProxyScheme) {
   config()->test_params()->SetProxiesForHttp(data_reduction_proxy_servers);
 
   InitializeContext();
+  config()->test_params()->SetProxiesForHttp(data_reduction_proxy_servers);
 
   base::HistogramTester histogram_tester;
   CreateAndExecuteRequest(GURL("http://bar.com"), net::LOAD_NORMAL, net::OK,

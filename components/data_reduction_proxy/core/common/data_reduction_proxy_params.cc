@@ -470,40 +470,7 @@ DataReductionProxyTypeInfo::DataReductionProxyTypeInfo(
 DataReductionProxyTypeInfo::~DataReductionProxyTypeInfo() {}
 
 DataReductionProxyParams::DataReductionProxyParams()
-    : DataReductionProxyParams(true) {}
-
-DataReductionProxyParams::~DataReductionProxyParams() {}
-
-DataReductionProxyParams::DataReductionProxyParams(bool should_call_init)
     : use_override_proxies_for_http_(false) {
-  if (should_call_init) {
-    bool result = Init();
-    DCHECK(result);
-  }
-}
-
-void DataReductionProxyParams::SetProxiesForHttpForTesting(
-    const std::vector<DataReductionProxyServer>& proxies_for_http) {
-  proxies_for_http_ = proxies_for_http;
-}
-
-bool DataReductionProxyParams::Init() {
-  InitWithoutChecks();
-  // Verify that all necessary params are set.
-  if (!origin_.is_valid()) {
-    DVLOG(1) << "Invalid data reduction proxy origin: " << origin_.ToURI();
-    return false;
-  }
-
-  if (!fallback_origin_.is_valid()) {
-    DVLOG(1) << "Invalid data reduction proxy fallback origin: "
-             << fallback_origin_.ToURI();
-    return false;
-  }
-  return true;
-}
-
-void DataReductionProxyParams::InitWithoutChecks() {
   DCHECK(proxies_for_http_.empty());
 
   use_override_proxies_for_http_ =
@@ -520,9 +487,9 @@ void DataReductionProxyParams::InitWithoutChecks() {
   // Set from preprocessor constants those params that are not specified on the
   // command line.
   if (origin.empty())
-    origin = GetDefaultOrigin();
+    origin = kDefaultSpdyOrigin;
   if (fallback_origin.empty())
-    fallback_origin = GetDefaultFallbackOrigin();
+    fallback_origin = kDefaultFallbackOrigin;
 
   origin_ = net::ProxyServer::FromURI(origin, net::ProxyServer::SCHEME_HTTP);
   fallback_origin_ =
@@ -539,14 +506,27 @@ void DataReductionProxyParams::InitWithoutChecks() {
   }
 }
 
+DataReductionProxyParams::~DataReductionProxyParams() {}
+
+void DataReductionProxyParams::SetProxiesForHttpForTesting(
+    const std::vector<DataReductionProxyServer>& proxies_for_http) {
+  proxies_for_http_ = proxies_for_http;
+}
+
 const std::vector<DataReductionProxyServer>&
 DataReductionProxyParams::proxies_for_http() const {
+  /*
+  LOG(WARNING)<<"xxx
+  use_override_proxies_for_http_="<<use_override_proxies_for_http_
+  <<" ps="<<proxies_for_http_.front().proxy_server().ToPacString();
+  */
   if (use_override_proxies_for_http_)
     return override_data_reduction_proxy_servers_;
   return proxies_for_http_;
 }
 
 // TODO(kundaji): Remove tests for macro definitions.
+/*
 std::string DataReductionProxyParams::GetDefaultOrigin() const {
   return kDefaultSpdyOrigin;
 }
@@ -554,5 +534,6 @@ std::string DataReductionProxyParams::GetDefaultOrigin() const {
 std::string DataReductionProxyParams::GetDefaultFallbackOrigin() const {
   return kDefaultFallbackOrigin;
 }
+*/
 
 }  // namespace data_reduction_proxy

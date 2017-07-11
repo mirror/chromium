@@ -4,44 +4,56 @@
 
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params_test_utils.h"
 
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
+
+/*
 namespace {
 // Test values to replace the values specified in preprocessor defines.
 static const char kDefaultOrigin[] = "origin.net:80";
 static const char kDefaultFallbackOrigin[] = "fallback.net:80";
 
-static const char kFlagOrigin[] = "https://origin.org:443";
-static const char kFlagFallbackOrigin[] = "fallback.org:80";
 }
+*/
 
 namespace data_reduction_proxy {
+
 TestDataReductionProxyParams::TestDataReductionProxyParams()
-    : DataReductionProxyParams(false) {
-  init_result_ = Init();
+    : DataReductionProxyParams(), override_non_secure_proxies_(false) {
+  proxies_for_http_.push_back(DataReductionProxyServer(
+      net::ProxyServer::FromURI("origin.net:80", net::ProxyServer::SCHEME_HTTP),
+      ProxyServer::CORE));
+  proxies_for_http_.push_back(DataReductionProxyServer(
+      net::ProxyServer::FromURI("fallback.net:80",
+                                net::ProxyServer::SCHEME_HTTP),
+      ProxyServer::CORE));
   }
 
-bool TestDataReductionProxyParams::init_result() const {
-  return init_result_;
+  TestDataReductionProxyParams::~TestDataReductionProxyParams() {}
+
+  void TestDataReductionProxyParams::SetProxiesForHttp(
+      const std::vector<DataReductionProxyServer>& proxies) {
+    SetProxiesForHttpForTesting(proxies);
 }
 
-void TestDataReductionProxyParams::SetProxiesForHttp(
-    const std::vector<DataReductionProxyServer>& proxies) {
-  SetProxiesForHttpForTesting(proxies);
+const std::vector<DataReductionProxyServer>&
+TestDataReductionProxyParams::proxies_for_http() const {
+  LOG(WARNING) << "xxx override_non_secure_proxies_="
+               << override_non_secure_proxies_;
+  if (override_non_secure_proxies_ &&
+      !DataReductionProxyParams::proxies_for_http().empty()) {
+    return proxies_for_http_;
+  }
+  return DataReductionProxyParams::proxies_for_http();
 }
+
 // Test values to replace the values specified in preprocessor defines.
+/*
 std::string TestDataReductionProxyParams::DefaultOrigin() {
   return kDefaultOrigin;
 }
 
 std::string TestDataReductionProxyParams::DefaultFallbackOrigin() {
   return kDefaultFallbackOrigin;
-}
-
-std::string TestDataReductionProxyParams::FlagOrigin() {
-  return kFlagOrigin;
-}
-
-std::string TestDataReductionProxyParams::FlagFallbackOrigin() {
-  return kFlagFallbackOrigin;
 }
 
 std::string TestDataReductionProxyParams::GetDefaultOrigin() const {
@@ -51,5 +63,5 @@ std::string TestDataReductionProxyParams::GetDefaultOrigin() const {
 std::string TestDataReductionProxyParams::GetDefaultFallbackOrigin() const {
   return kDefaultFallbackOrigin;
 }
-
+*/
 }  // namespace data_reduction_proxy
