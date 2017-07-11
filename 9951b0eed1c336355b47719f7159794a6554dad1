@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26f9b4a8_5b0aa0c3",
+        "filename": "chrome/app/chrome_exe_main_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-11T18:33:53Z",
+      "side": 1,
+      "message": "Right, I called it CHILD_PID because the CHROMIUM_PID is the browser process PID, and this is a child of the browser. I\u0027m just going to rename CHROMIUM_PID to BROWSER_PID and CHILD_PID to CURRENT_PID.",
+      "parentUuid": "3080f924_4a354958",
+      "range": {
+        "startLine": 60,
+        "startChar": 33,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "9951b0eed1c336355b47719f7159794a6554dad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e20fae4c_529737f2",
         "filename": "content/renderer/renderer_v2.sb",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-11T17:48:49Z",
       "side": 1,
       "message": "Seeing this now, I\u0027m not sure these are more clear than just:\n\n(if (\u003c os-version 1011))",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "9951b0eed1c336355b47719f7159794a6554dad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18b29b2_2eb51e03",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-11T18:33:53Z",
+      "side": 1,
+      "message": "Do you feel strongly about that? I personally find it easier to think of OS Versions based on their name, but that could just be me.",
+      "parentUuid": "e20fae4c_529737f2",
       "range": {
         "startLine": 27,
         "startChar": 0,
