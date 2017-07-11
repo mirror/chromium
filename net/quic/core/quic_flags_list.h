@@ -195,3 +195,16 @@ QUIC_FLAG(bool,
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2,
           false)
+
+// If true, disables support for QUIC version 36.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_disable_version_36, false)
+
+// If true, disables support for the packets-based QUIC congestion control
+// algorithms.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_disable_packets_based_cc,
+          false);
+
+// When the flag is disabled, quic ack frames use an interval set to monitor
+// packet numbers. When enabled, they use a more efficient deque.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque, false);
