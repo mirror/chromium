@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5d632b7_f11d6ac2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-11T15:24:08Z",
+      "side": 1,
+      "message": "nit: virtual",
+      "revId": "cc4ff66245fb5940ed276cb84cbbc169c1255dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2da5534_7f4e6bed",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-11T15:24:08Z",
+      "side": 1,
+      "message": "Can this method be removed from the KeyboardUI interface?",
+      "revId": "cc4ff66245fb5940ed276cb84cbbc169c1255dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
