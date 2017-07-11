@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7366180f_5a0952a7",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserLocalContext.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-11T01:53:22Z",
+      "side": 1,
+      "message": "We don\u0027t need \"explicit\" any more because the ctor takes on 2 arguments now.",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "d12f4324e2d579f0c081ac9ae5dc56894dd4700f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
