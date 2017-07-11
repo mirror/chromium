@@ -22,6 +22,30 @@
       "revId": "b248342a09bfde6599a99fa314fdd37a39a572e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31ec3263_5fb56aa1",
+        "filename": "chromecast/media/cma/backend/android/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-11T21:04:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c917ac_468ef1bc",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 25
+      },
+      "revId": "b248342a09bfde6599a99fa314fdd37a39a572e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
