@@ -19,6 +19,7 @@
 #include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_method_data.h"
 #include "third_party/libphonenumber/phonenumber_api.h"
+#include "url/url_constants.h"
 
 namespace payments {
 namespace data_util {
@@ -89,6 +90,27 @@ BasicCardResponse GetBasicCardResponseFromAutofillCreditCard(
       GetPaymentAddressFromAutofillProfile(billing_profile, app_locale);
 
   return response;
+}
+
+void ParseSupportedPaymentApps(
+    const std::vector<PaymentMethodData>& method_data,
+    std::vector<std::string>* out_supported_apps) {
+  DCHECK(out_supported_apps->empty());
+
+  for (const PaymentMethodData& method_data_entry : method_data) {
+    if (method_data_entry.supported_methods.empty())
+      return;
+
+    for (const std::string& method : method_data_entry.supported_methods) {
+      if (method.empty())
+        continue;
+
+      // Add the method if it starts with "https."
+      if (!method.compare(0, strlen(url::kHttpsScheme), url::kHttpsScheme)) {
+        out_supported_apps->push_back(method);
+      }
+    }
+  }
 }
 
 void ParseBasicCardSupportedNetworks(
