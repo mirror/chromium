@@ -168,6 +168,10 @@ void HostScanCache::OnPreviouslyConnectedHostIdsChanged() {
   }
 }
 
+NetworkStateHandler* HostScanCache::GetNetworkStateHandler() {
+  return network_state_handler_;
+}
+
 void HostScanCache::SetTimerFactoryForTest(
     std::unique_ptr<TimerFactory> timer_factory_for_test) {
   timer_factory_ = std::move(timer_factory_for_test);

@@ -79,6 +79,7 @@ const int kTrayNotificationContentsWidth =
 
 const int kTrayIconSize = 16;
 const SkColor kTrayIconColor = SK_ColorWHITE;
+const SkColor kBlueIconColor = SkColorSetRGB(0x42, 0x85, 0xf4);
 const int kMenuIconSize = 20;
 const SkColor kMenuIconColor = gfx::kChromeIconGrey;
 const SkColor kMenuIconColorDisabled = SkColorSetA(gfx::kChromeIconGrey, 0x61);

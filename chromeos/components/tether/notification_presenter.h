@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "chromeos/network/network_state.h"
 #include "components/cryptauth/remote_device.h"
 
 namespace chromeos {
@@ -21,7 +22,8 @@ class NotificationPresenter {
   // Notifies the user that a nearby device can potentially provide a tether
   // hotspot.
   virtual void NotifyPotentialHotspotNearby(
-      const cryptauth::RemoteDevice& remote_device) = 0;
+      const cryptauth::RemoteDevice& remote_device,
+      const chromeos::NetworkState* network_state) = 0;
 
   // Notifies the user that multiple nearby devices can potentially provide
   // tether hotspots.
