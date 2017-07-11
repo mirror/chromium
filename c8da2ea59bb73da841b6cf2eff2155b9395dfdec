@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42732955_ca987ac3",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T19:55:21Z",
+      "side": 1,
+      "message": "Let\u0027s use WebContentsData::FromWebContents(contents) instead, it seems to me when a tab is created, a TabManager::WebContentsData will also be created, so it should be safe to use it.",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "c8da2ea59bb73da841b6cf2eff2155b9395dfdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
