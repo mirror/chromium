@@ -22,6 +22,30 @@
       "revId": "73bbec03fd0fe722abbf5367ac59c53364fb33e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39935de6_0b2a2e89",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2490,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-11T20:09:26Z",
+      "side": 1,
+      "message": "This hasn\u0027t lead to noticeable flicker in my testing (even when I unrestricted this and did it on all browser windows), but it\u0027s possible it could happen in circumstances I didn\u0027t test. Unfortunately I haven\u0027t found a better way to fix the flicker in the bug report.\n\nThe extension popup\u0027s size is changing because the extension\u0027s asking it to (it\u0027s an auto-resize window). I expect they\u0027re doing some sort of delayed loading and it takes a bit of time to get the final dimensions.",
+      "parentUuid": "8bdaf3f1_ef7ff3e9",
+      "range": {
+        "startLine": 2490,
+        "startChar": 11,
+        "endLine": 2490,
+        "endChar": 29
+      },
+      "revId": "73bbec03fd0fe722abbf5367ac59c53364fb33e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
