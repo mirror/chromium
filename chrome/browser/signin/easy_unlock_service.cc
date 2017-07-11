@@ -882,6 +882,9 @@ void EasyUnlockService::OnCryptohomeKeysFetchedForChecking(
                         : EasyUnlockScreenlockStateHandler::PAIRING_CHANGED);
   }
 }
+
+void EasyUnlockService::OnUserReauth(
+    const chromeos::UserContext& user_context) {}
 #endif
 
 void EasyUnlockService::PrepareForSuspend() {

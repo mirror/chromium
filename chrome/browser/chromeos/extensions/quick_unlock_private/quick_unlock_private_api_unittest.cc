@@ -15,6 +15,8 @@
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/extensions/extension_api_unittest.h"
+#include "chrome/browser/signin/easy_unlock_service_factory.h"
+#include "chrome/browser/signin/easy_unlock_service_regular.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/login/auth/fake_extended_authenticator.h"
 #include "extensions/browser/api_test_utils.h"
@@ -36,6 +38,27 @@ const char* kTestUserEmail = "testuser@gmail.com";
 const char* kTestUserEmailHash = "testuser@gmail.com-hash";
 const char* kValidPassword = "valid";
 const char* kInvalidPassword = "invalid";
+
+class StubEasyUnlockService : public EasyUnlockServiceRegular {
+ public:
+  explicit StubEasyUnlockService(Profile* profile)
+      : EasyUnlockServiceRegular(profile) {}
+  ~StubEasyUnlockService() override {}
+
+  // EasyUnlockServiceRegular:
+  void OnUserReauth(const chromeos::UserContext& user_context) override {
+    // Do nothing.
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(StubEasyUnlockService);
+};
+
+std::unique_ptr<KeyedService> CreateEasyUnlockServiceForTest(
+    content::BrowserContext* context) {
+  return base::MakeUnique<StubEasyUnlockService>(
+      Profile::FromBrowserContext(context));
+}
 
 ExtendedAuthenticator* CreateFakeAuthenticator(
     AuthStatusConsumer* auth_status_consumer) {
@@ -86,6 +109,13 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
     SetModes(QuickUnlockModeList{}, CredentialList{});
 
     modes_changed_handler_ = base::Bind(&DoNothing);
+  }
+
+  TestingProfile* CreateProfile() override {
+    TestingProfile::Builder builder;
+    builder.AddTestingFactory(EasyUnlockServiceFactory::GetInstance(),
+                              &CreateEasyUnlockServiceForTest);
+    return builder.Build().release();
   }
 
   // If a mode change event is raised, fail the test.
