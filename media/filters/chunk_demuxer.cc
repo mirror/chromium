@@ -51,6 +51,8 @@ void ChunkDemuxerStream::AbortReads() {
   DVLOG(1) << "ChunkDemuxerStream::AbortReads()";
   base::AutoLock auto_lock(lock_);
   ChangeState_Locked(RETURNING_ABORT_FOR_READS);
+  if (!bitrate_estimation_cb_.is_null())
+    StopBitrateEstimation();
   if (!read_cb_.is_null())
     base::ResetAndReturn(&read_cb_).Run(kAborted, NULL);
 }
@@ -67,6 +69,9 @@ void ChunkDemuxerStream::Shutdown() {
   DVLOG(1) << "ChunkDemuxerStream::Shutdown()";
   base::AutoLock auto_lock(lock_);
   ChangeState_Locked(SHUTDOWN);
+
+  if (!bitrate_estimation_cb_.is_null())
+    StopBitrateEstimation();
 
   // Pass an end of stream buffer to the pending callback to signal that no more
   // data will be sent.
@@ -92,6 +97,7 @@ void ChunkDemuxerStream::Seek(TimeDelta time) {
   DCHECK(read_cb_.is_null());
   DCHECK(state_ == UNINITIALIZED || state_ == RETURNING_ABORT_FOR_READS)
       << state_;
+  DCHECK(bitrate_estimation_cb_.is_null());
 
   stream_->Seek(time);
 }
@@ -412,7 +418,52 @@ void ChunkDemuxerStream::CompletePendingReadIfPossible_Locked() {
       break;
   }
 
+  if (!bitrate_estimation_cb_.is_null()) {
+    DCHECK(bitrate_estimator_);
+    if (buffer->end_of_stream() || status == DemuxerStream::kAborted ||
+        state_ == SHUTDOWN) {
+      StopBitrateEstimation();
+    } else if (buffer) {
+      bitrate_estimator_->EnqueueOneFrame(
+          buffer->data_size(), buffer->timestamp(), buffer->is_key_frame());
+    }
+  }
+
   base::ResetAndReturn(&read_cb_).Run(status, buffer);
+}
+
+void ChunkDemuxerStream::StartBitrateEstimation(
+    base::TimeDelta duration,
+    Demuxer::BitrateEstimationCB callback) {
+  // TODO(xjz): Enable multiple estimators for multi-applications.
+  if (bitrate_estimator_) {
+    VLOG(1) << "Warning: Cannot start multi bitrate estimators.";
+    std::move(callback).Run(BitrateEstimator::Status::kAborted, 0);
+    return;
+  }
+  bitrate_estimation_cb_ = std::move(callback);
+  bitrate_estimator_ = base::MakeUnique<BitrateEstimator>(
+      duration, base::Bind(&ChunkDemuxerStream::OnBitrateEstimated,
+                           base::Unretained(this)));
+}
+
+void ChunkDemuxerStream::StopBitrateEstimation() {
+  if (!bitrate_estimation_cb_.is_null()) {
+    DCHECK(bitrate_estimator_);
+    bitrate_estimator_->ReportResult();
+    // After result is reported, this function will be called again to reset the
+    // |bitrate_estimator_|.
+    return;
+  }
+  bitrate_estimator_.reset();
+}
+
+void ChunkDemuxerStream::OnBitrateEstimated(BitrateEstimator::Status status,
+                                            int bitrate) {
+  DCHECK(!bitrate_estimation_cb_.is_null());
+  std::move(bitrate_estimation_cb_).Run(status, bitrate);
+  // TODO(xjz): Can support repeating estimation if don't stop the estimation.
+  StopBitrateEstimation();
 }
 
 ChunkDemuxer::ChunkDemuxer(
@@ -1365,6 +1416,22 @@ void ChunkDemuxer::ShutdownAllStreams() {
        ++itr) {
     itr->second->Shutdown();
   }
+}
+
+void ChunkDemuxer::StartVideoStreamBitrateEstimation(
+    base::TimeDelta duration,
+    Demuxer::BitrateEstimationCB callback) {
+  if (video_streams_.empty() || !video_streams_[0]->IsEnabled()) {
+    std::move(callback).Run(BitrateEstimator::Status::kAborted, 0);
+    return;
+  }
+  video_streams_[0]->StartBitrateEstimation(duration, std::move(callback));
+}
+
+void ChunkDemuxer::StopVideoStreamBitrateEstimation() {
+  if (video_streams_.empty() || !video_streams_[0]->IsEnabled())
+    return;
+  video_streams_[0]->StopBitrateEstimation();
 }
 
 }  // namespace media

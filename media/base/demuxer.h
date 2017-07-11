@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/time/time.h"
+#include "media/base/bitrate_estimator.h"
 #include "media/base/data_source.h"
 #include "media/base/demuxer_stream.h"
 #include "media/base/eme_constants.h"
@@ -151,6 +152,21 @@ class MEDIA_EXPORT Demuxer : public MediaResource {
   virtual void OnSelectedVideoTrackChanged(
       base::Optional<MediaTrack::Id> track_id,
       base::TimeDelta curr_time) = 0;
+
+  using BitrateEstimationCB =
+      base::OnceCallback<void(BitrateEstimator::Status status, int bitrate)>;
+  // Starts to estimate the first enabled video stream bitrate with frames in
+  // the coming |duration| (according to frames' presentation timestamp). When
+  // the estimation is completed or aborted, |callback| is called with the
+  // status and the estimated bitrate (might be 0 if aborted).
+  // TODO(xjz): Support multiple video streams.
+  virtual void StartVideoStreamBitrateEstimation(
+      base::TimeDelta duration,
+      BitrateEstimationCB callback) = 0;
+  // Stops the bitrate estimation. Will report the current status and available
+  // estimated bitrate. No-op if the estimation is not started or already
+  // completed.
+  virtual void StopVideoStreamBitrateEstimation() = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Demuxer);

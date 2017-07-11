@@ -379,6 +379,7 @@ FFmpegDemuxerStream::~FFmpegDemuxerStream() {
   DCHECK(!demuxer_);
   DCHECK(read_cb_.is_null());
   DCHECK(buffer_queue_.IsEmpty());
+  DCHECK(bitrate_estimation_cb_.is_null());
 }
 
 void FFmpegDemuxerStream::EnqueuePacket(ScopedAVPacket packet) {
@@ -611,6 +612,8 @@ void FFmpegDemuxerStream::SetEndOfStream() {
 void FFmpegDemuxerStream::FlushBuffers() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(read_cb_.is_null()) << "There should be no pending read";
+  DCHECK(bitrate_estimation_cb_.is_null())
+      << "There should be no pending bitrate estimation";
 
   // H264 and AAC require that we resend the header after flush.
   // Reset bitstream for converter to do so.
@@ -626,6 +629,8 @@ void FFmpegDemuxerStream::FlushBuffers() {
 
 void FFmpegDemuxerStream::Abort() {
   aborted_ = true;
+  if (!bitrate_estimation_cb_.is_null())
+    StopBitrateEstimation();
   if (!read_cb_.is_null())
     base::ResetAndReturn(&read_cb_).Run(DemuxerStream::kAborted, nullptr);
 }
@@ -633,6 +638,8 @@ void FFmpegDemuxerStream::Abort() {
 void FFmpegDemuxerStream::Stop() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   buffer_queue_.Clear();
+  if (!bitrate_estimation_cb_.is_null())
+    StopBitrateEstimation();
   if (!read_cb_.is_null()) {
     base::ResetAndReturn(&read_cb_).Run(
         DemuxerStream::kOk, DecoderBuffer::CreateEOSBuffer());
@@ -797,9 +804,16 @@ void FFmpegDemuxerStream::SatisfyPendingRead() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   if (!read_cb_.is_null()) {
     if (!buffer_queue_.IsEmpty()) {
-      base::ResetAndReturn(&read_cb_).Run(
-          DemuxerStream::kOk, buffer_queue_.Pop());
+      scoped_refptr<DecoderBuffer> buffer = buffer_queue_.Pop();
+      if (!bitrate_estimation_cb_.is_null()) {
+        DCHECK(bitrate_estimator_);
+        bitrate_estimator_->EnqueueOneFrame(
+            buffer->data_size(), buffer->timestamp(), buffer->is_key_frame());
+      }
+      base::ResetAndReturn(&read_cb_).Run(DemuxerStream::kOk, buffer);
     } else if (end_of_stream_) {
+      if (!bitrate_estimation_cb_.is_null())
+        StopBitrateEstimation();
       base::ResetAndReturn(&read_cb_).Run(
           DemuxerStream::kOk, DecoderBuffer::CreateEOSBuffer());
     }
@@ -850,6 +864,45 @@ base::TimeDelta FFmpegDemuxerStream::ConvertStreamTimestamp(
     return kNoTimestamp;
 
   return ConvertFromTimeBase(time_base, timestamp);
+}
+
+void FFmpegDemuxerStream::StartBitrateEstimation(
+    base::TimeDelta duration,
+    Demuxer::BitrateEstimationCB callback) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  // TODO(xjz): Enable multiple estimators for multi-applications.
+  if (bitrate_estimator_) {
+    VLOG(1) << "Warning: Cannot start multi bitrate estimators.";
+    std::move(callback).Run(BitrateEstimator::Status::kAborted, 0);
+    return;
+  }
+  bitrate_estimation_cb_ = std::move(callback);
+
+  bitrate_estimator_ = base::MakeUnique<BitrateEstimator>(
+      duration, base::Bind(&FFmpegDemuxerStream::OnBitrateEstimated,
+                           base::Unretained(this)));
+}
+
+void FFmpegDemuxerStream::StopBitrateEstimation() {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  if (!bitrate_estimation_cb_.is_null()) {
+    DCHECK(bitrate_estimator_);
+    bitrate_estimator_->ReportResult();
+    // After result is reported, this function will be called again to reset the
+    // |bitrate_estimator_|.
+    return;
+  }
+  bitrate_estimator_.reset();
+}
+
+void FFmpegDemuxerStream::OnBitrateEstimated(BitrateEstimator::Status status,
+                                             int bitrate) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  DCHECK(!bitrate_estimation_cb_.is_null());
+
+  std::move(bitrate_estimation_cb_).Run(status, bitrate);
+  // TODO(xjz): Can support repeating estimation if don't stop the estimation.
+  StopBitrateEstimation();
 }
 
 //
@@ -1899,6 +1952,43 @@ void FFmpegDemuxer::SetLiveness(DemuxerStream::Liveness liveness) {
   for (const auto& stream : streams_) {
     if (stream)
       stream->SetLiveness(liveness);
+  }
+}
+
+void FFmpegDemuxer::StartVideoStreamBitrateEstimation(
+    base::TimeDelta duration,
+    Demuxer::BitrateEstimationCB callback) {
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&FFmpegDemuxer::StartVideoStreamBitrateEstimation,
+                   weak_this_, duration, base::Passed(std::move(callback))));
+    return;
+  }
+  bool video_stream_found = false;
+  for (const auto& stream : streams_) {
+    if (stream->type() == DemuxerStream::VIDEO && stream->IsEnabled()) {
+      stream->StartBitrateEstimation(duration, std::move(callback));
+      video_stream_found = true;
+      break;
+    }
+  }
+  if (!video_stream_found)
+    std::move(callback).Run(BitrateEstimator::Status::kAborted, 0);
+}
+
+void FFmpegDemuxer::StopVideoStreamBitrateEstimation() {
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(
+        FROM_HERE, base::Bind(&FFmpegDemuxer::StopVideoStreamBitrateEstimation,
+                              weak_this_));
+    return;
+  }
+  for (const auto& stream : streams_) {
+    if (stream->type() == DemuxerStream::VIDEO && stream->IsEnabled()) {
+      stream->StopBitrateEstimation();
+      break;
+    }
   }
 }
 

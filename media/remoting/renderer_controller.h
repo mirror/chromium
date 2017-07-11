@@ -99,6 +99,18 @@ class RendererController final : public SharedSession::Client,
   void UpdateAndMaybeSwitch(StartTrigger start_trigger,
                             StopTrigger stop_trigger);
 
+  // Helper to do pre-condition check when ShouldBeRemoting() is true. May
+  // request to start remoting.
+  void MaybeSwitchToRemoting(StartTrigger start_trigger);
+
+  // Helper to switch to local renderer when ShouldBeRemoting() is false.
+  void SwitchToLocalRenderer(StopTrigger stop_trigger);
+
+  // The callback to get the estimated bitrate of the video stream.
+  void OnBitrateEstimated(StartTrigger start_trigger,
+                          BitrateEstimator::Status status,
+                          int bitrate);
+
   // Indicates whether this media element is in full screen.
   bool is_fullscreen_ = false;
 
@@ -148,6 +160,10 @@ class RendererController final : public SharedSession::Client,
 
   // Not own by this class. Can only be set once by calling SetClient().
   MediaObserverClient* client_ = nullptr;
+
+  // Indicates whether is in the process of estimating the video stream's
+  // bitrate.
+  bool bitrate_estimating_ = false;
 
   base::WeakPtrFactory<RendererController> weak_factory_;
 

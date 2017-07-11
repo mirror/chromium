@@ -8,11 +8,22 @@
 #include "base/logging.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
+#include "media/base/bind_to_current_loop.h"
 #include "media/remoting/remoting_cdm.h"
 #include "media/remoting/remoting_cdm_context.h"
 
 namespace media {
 namespace remoting {
+
+namespace {
+
+// The time window in seconds to etimate the bitrate.
+constexpr base::TimeDelta kBitrateEstimationDuration =
+    base::TimeDelta::FromSeconds(5);
+// The max bitrate that Media Remoting supports.
+constexpr int kMaxRemotingBitrate = 5000000;
+
+}  // namespace
 
 RendererController::RendererController(scoped_refptr<SharedSession> session)
     : session_(std::move(session)), weak_factory_(this) {
@@ -244,6 +255,13 @@ void RendererController::OnPaused() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   is_paused_ = true;
+
+  // Stop the bitrate estimation to avoid inaccurate estimation or starting
+  // remoting while paused.
+  if (bitrate_estimating_) {
+    client_->StopVideoStreamBitrateEstimation();
+    bitrate_estimating_ = false;
+  }
 }
 
 bool RendererController::ShouldBeRemoting() {
@@ -313,42 +331,117 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
 
   bool should_be_remoting = ShouldBeRemoting();
 
+  if (!should_be_remoting && bitrate_estimating_) {
+    client_->StopVideoStreamBitrateEstimation();
+    bitrate_estimating_ = false;
+  }
+
   if (remote_rendering_started_ == should_be_remoting)
     return;
+
+  if (should_be_remoting)
+    MaybeSwitchToRemoting(start_trigger);
+  else
+    SwitchToLocalRenderer(stop_trigger);
+}
+
+void RendererController::MaybeSwitchToRemoting(StartTrigger start_trigger) {
+  DCHECK(!remote_rendering_started_);
+  DCHECK(client_);
+  DCHECK_NE(start_trigger, UNKNOWN_START_TRIGGER);
 
   // Only switch to remoting when media is playing. Since the renderer is
   // created when video starts loading/playing, receiver will display a black
   // screen before video starts playing if switching to remoting when paused.
   // Thus, the user experience is improved by not starting remoting until
   // playback resumes.
-  if (should_be_remoting && is_paused_)
+  if (is_paused_)
     return;
 
-  // Switch between local renderer and remoting renderer.
-  remote_rendering_started_ = should_be_remoting;
+  if (session_->state() == SharedSession::SESSION_PERMANENTLY_STOPPED) {
+    remote_rendering_started_ = true;
+    client_->SwitchRenderer(true);
+    return;
+  }
 
-  DCHECK(client_);
-  if (remote_rendering_started_) {
-    if (session_->state() == SharedSession::SESSION_PERMANENTLY_STOPPED) {
-      client_->SwitchRenderer(true);
-      return;
-    }
-    DCHECK_NE(start_trigger, UNKNOWN_START_TRIGGER);
+  // Start remoting for encrypted content or audio only content without bitrate
+  // check.
+  if (start_trigger == CDM_READY || !has_video()) {
+    remote_rendering_started_ = true;
     metrics_recorder_.WillStartSession(start_trigger);
     // |MediaObserverClient::SwitchRenderer()| will be called after remoting is
     // started successfully.
     session_->StartRemoting(this);
-  } else {
-    // For encrypted content, it's only valid to switch to remoting renderer,
-    // and never back to the local renderer. The RemotingCdmController will
-    // force-stop the session when remoting has ended; so no need to call
-    // StopRemoting() from here.
-    DCHECK(!is_encrypted_);
-    DCHECK_NE(stop_trigger, UNKNOWN_STOP_TRIGGER);
-    metrics_recorder_.WillStopSession(stop_trigger);
-    client_->SwitchRenderer(false);
-    session_->StopRemoting(this);
+    return;
   }
+
+  // Bitrate estimation is already in progress. There is no need to start it
+  // again.
+  if (bitrate_estimating_)
+    return;
+
+  // Starts bitrate estimation and will switch to remoting renderer if the
+  // estimated bitrate is supported by remoting.
+  bitrate_estimating_ = true;
+  VLOG(2) << "Start video stream bitrate estimation.";
+  client_->StartVideoStreamBitrateEstimation(
+      kBitrateEstimationDuration,
+      BindToCurrentLoop(base::BindOnce(&RendererController::OnBitrateEstimated,
+                                       weak_factory_.GetWeakPtr(),
+                                       start_trigger)));
+}
+
+void RendererController::SwitchToLocalRenderer(StopTrigger stop_trigger) {
+  DCHECK(remote_rendering_started_);
+  DCHECK(client_);
+  // For encrypted content, it's only valid to switch to remoting renderer,
+  // and never back to the local renderer. The RemotingCdmController will
+  // force-stop the session when remoting has ended; so no need to call
+  // StopRemoting() from here.
+  DCHECK(!is_encrypted_);
+  DCHECK_NE(stop_trigger, UNKNOWN_STOP_TRIGGER);
+
+  remote_rendering_started_ = false;
+  metrics_recorder_.WillStopSession(stop_trigger);
+  client_->SwitchRenderer(false);
+  session_->StopRemoting(this);
+}
+
+void RendererController::OnBitrateEstimated(StartTrigger start_trigger,
+                                            BitrateEstimator::Status status,
+                                            int bitrate) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  // Bitrate estimation was stopped, which indicates the remoting start request
+  // was cancelled.
+  if (!bitrate_estimating_)
+    return;
+  bitrate_estimating_ = false;
+  if (status != BitrateEstimator::Status::kOk) {
+    VLOG(1) << "Warning: Bitrate estimation fails with bitrate = " << bitrate;
+    metrics_recorder_.WillStopSession(StopTrigger::BITRATE_ESTIMATION_ABORTED);
+    // Don't start remoting if the bitrate estimation failed.
+    return;
+  }
+
+  DCHECK_NE(start_trigger, UNKNOWN_START_TRIGGER);
+  DCHECK(!remote_rendering_started_);
+
+  // TODO(xjz): In an incoming change, use receiver's info (model, wifi snr,
+  // etc.) to decide the max bitrate that remoting can support. After mirror
+  // service refactoring is done, use the estimated network bandwidth in this
+  // decision.
+  if (bitrate > kMaxRemotingBitrate) {
+    VLOG(1) << "Disable media remoting: content bitrate = " << bitrate;
+    encountered_renderer_fatal_error_ = true;
+    metrics_recorder_.WillStopSession(StopTrigger::CONTENT_BITRATE_TOO_HIGH);
+    return;
+  }
+
+  remote_rendering_started_ = true;
+  metrics_recorder_.WillStartSession(start_trigger);
+  // |MediaObserverClient::SwitchRenderer()| will be called after remoting is
+  // started successfully.
+  session_->StartRemoting(this);
 }
 
 void RendererController::OnRendererFatalError(StopTrigger stop_trigger) {

@@ -80,4 +80,12 @@ void MediaUrlDemuxer::OnSelectedVideoTrackChanged(
     base::Optional<MediaTrack::Id> selected_track_id,
     base::TimeDelta curr_time) {}
 
+void MediaUrlDemuxer::StartVideoStreamBitrateEstimation(
+    base::TimeDelta duration,
+    BitrateEstimationCB callback) {
+  std::move(callback).Run(BitrateEstimator::Status::kAborted, 0);
+}
+
+void MediaUrlDemuxer::StopVideoStreamBitrateEstimation() {}
+
 }  // namespace media

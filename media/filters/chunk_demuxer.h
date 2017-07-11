@@ -132,6 +132,14 @@ class MEDIA_EXPORT ChunkDemuxerStream : public DemuxerStream {
 
   MediaTrack::Id media_track_id() const { return media_track_id_; }
 
+  // Starts to estimate the stream bitrate in |duration|. After the
+  // estimation is done, |callback| is called to report the estimated bitrate.
+  void StartBitrateEstimation(base::TimeDelta duration,
+                              Demuxer::BitrateEstimationCB callback);
+  // Stops the bitrate estimation. No-op if the estimation is not startd or
+  // already completed.
+  void StopBitrateEstimation();
+
  private:
   enum State {
     UNINITIALIZED,
@@ -144,6 +152,10 @@ class MEDIA_EXPORT ChunkDemuxerStream : public DemuxerStream {
   void ChangeState_Locked(State state);
 
   void CompletePendingReadIfPossible_Locked();
+
+  // The callback function for bitrate estimation. |bitrate_estimater_| will
+  // be destroyed after this call.
+  void OnBitrateEstimated(BitrateEstimator::Status status, int bitrate);
 
   // Specifies the type of the stream.
   Type type_;
@@ -160,6 +172,12 @@ class MEDIA_EXPORT ChunkDemuxerStream : public DemuxerStream {
   bool partial_append_window_trimming_enabled_;
   bool is_enabled_;
   StreamStatusChangeCB stream_status_change_cb_;
+  Demuxer::BitrateEstimationCB bitrate_estimation_cb_;
+
+  // A one time estimator that is created when StartBitrateEstimation() is
+  // called and is destructed when StopBitrateEstimation() is called or when the
+  // estimation is done.
+  std::unique_ptr<BitrateEstimator> bitrate_estimator_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(ChunkDemuxerStream);
 };
@@ -207,6 +225,11 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
   // associated JS method calls.
   void StartWaitingForSeek(base::TimeDelta seek_time) override;
   void CancelPendingSeek(base::TimeDelta seek_time) override;
+
+  void StartVideoStreamBitrateEstimation(
+      base::TimeDelta duration,
+      Demuxer::BitrateEstimationCB callback) override;
+  void StopVideoStreamBitrateEstimation() override;
 
   // Registers a new |id| to use for AppendData() calls. |type| indicates
   // the MIME type for the data that we intend to append for this ID.

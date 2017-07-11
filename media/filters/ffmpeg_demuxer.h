@@ -143,6 +143,14 @@ class MEDIA_EXPORT FFmpegDemuxerStream : public DemuxerStream {
   base::TimeDelta start_time() const { return start_time_; }
   void set_start_time(base::TimeDelta time) { start_time_ = time; }
 
+  // Starts to estimate the stream bitrate in |duration|. After the
+  // estimation is done, |callback| is called to report the estimated bitrate.
+  void StartBitrateEstimation(base::TimeDelta duration,
+                              Demuxer::BitrateEstimationCB callback);
+  // Stops the bitrate estimation. No-op if the estimation is not startd or
+  // already completed.
+  void StopBitrateEstimation();
+
  private:
   friend class FFmpegDemuxerTest;
 
@@ -170,6 +178,10 @@ class MEDIA_EXPORT FFmpegDemuxerStream : public DemuxerStream {
   // Create new bitstream converter, destroying active converter if present.
   void InitBitstreamConverter();
 
+  // The callback function for bitrate estimation. |bitrate_estimater_| will
+  // be destroyed after this call.
+  void OnBitrateEstimated(BitrateEstimator::Status status, int bitrate);
+
   FFmpegDemuxer* demuxer_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   AVStream* stream_;
@@ -192,6 +204,7 @@ class MEDIA_EXPORT FFmpegDemuxerStream : public DemuxerStream {
   DecoderBufferQueue buffer_queue_;
   ReadCB read_cb_;
   StreamStatusChangeCB stream_status_change_cb_;
+  Demuxer::BitrateEstimationCB bitrate_estimation_cb_;
 
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
   std::unique_ptr<FFmpegBitstreamConverter> bitstream_converter_;
@@ -199,6 +212,11 @@ class MEDIA_EXPORT FFmpegDemuxerStream : public DemuxerStream {
 
   std::string encryption_key_id_;
   bool fixup_negative_timestamps_;
+
+  // A one time estimator that is created when StartBitrateEstimation() is
+  // called and is destructed when StopBitrateEstimation() is called or when the
+  // estimation is done.
+  std::unique_ptr<BitrateEstimator> bitrate_estimator_;
 
   DISALLOW_COPY_AND_ASSIGN(FFmpegDemuxerStream);
 };
@@ -227,6 +245,10 @@ class MEDIA_EXPORT FFmpegDemuxer : public Demuxer {
   void SetStreamStatusChangeCB(const StreamStatusChangeCB& cb) override;
   base::TimeDelta GetStartTime() const override;
   int64_t GetMemoryUsage() const override;
+  void StartVideoStreamBitrateEstimation(
+      base::TimeDelta duration,
+      Demuxer::BitrateEstimationCB callback) override;
+  void StopVideoStreamBitrateEstimation() override;
 
   // Calls |encrypted_media_init_data_cb_| with the initialization data
   // encountered in the file.

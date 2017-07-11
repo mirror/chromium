@@ -62,6 +62,9 @@ class MEDIA_EXPORT MediaUrlDemuxer : public Demuxer {
   void OnSelectedVideoTrackChanged(
       base::Optional<MediaTrack::Id> selected_track_id,
       base::TimeDelta curr_time) override;
+  void StartVideoStreamBitrateEstimation(base::TimeDelta duration,
+                                         BitrateEstimationCB callback) override;
+  void StopVideoStreamBitrateEstimation() override;
 
  private:
   MediaUrlParams params_;

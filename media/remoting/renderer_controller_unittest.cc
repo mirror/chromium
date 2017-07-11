@@ -26,6 +26,9 @@ namespace {
 
 constexpr mojom::RemotingSinkCapabilities kAllCapabilities =
     mojom::RemotingSinkCapabilities::CONTENT_DECRYPTION_AND_RENDERING;
+// Bitrates (bits per second) that are allowed/disalled to start remoting.
+constexpr int kAllowedBitrate = 3000000;
+constexpr int kDisalledBitrate = 7000000;
 
 PipelineMetadata DefaultMetadata() {
   PipelineMetadata data;
@@ -65,7 +68,26 @@ class RendererControllerTest : public ::testing::Test,
     activate_viewport_intersection_monitoring_ = activate;
   }
 
+  void StartVideoStreamBitrateEstimation(
+      base::TimeDelta duration,
+      Demuxer::BitrateEstimationCB callback) override {
+    EXPECT_EQ(duration, base::TimeDelta::FromSeconds(5));
+    EXPECT_FALSE(callback.is_null());
+    bitrate_estimation_callback_ = std::move(callback);
+  }
+
+  void StopVideoStreamBitrateEstimation() override {
+    if (!bitrate_estimation_callback_.is_null())
+      std::move(bitrate_estimation_callback_)
+          .Run(BitrateEstimator::Status::kAborted, 0);
+  }
+
   void CreateCdm(bool is_remoting) { is_remoting_cdm_ = is_remoting; }
+
+  void OnBitrateEstimated(BitrateEstimator::Status status, int bitrate) {
+    if (!bitrate_estimation_callback_.is_null())
+      std::move(bitrate_estimation_callback_).Run(status, bitrate);
+  }
 
   base::MessageLoop message_loop_;
 
@@ -75,6 +97,7 @@ class RendererControllerTest : public ::testing::Test,
   bool is_remoting_cdm_ = false;
   bool activate_viewport_intersection_monitoring_ = false;
   bool disable_pipeline_suspend_ = false;
+  Demuxer::BitrateEstimationCB bitrate_estimation_callback_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(RendererControllerTest);
@@ -90,6 +113,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnFullscreenChange) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_TRUE(bitrate_estimation_callback_.is_null());
   shared_session->OnSinkAvailable(kAllCapabilities);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
@@ -105,6 +129,11 @@ TEST_F(RendererControllerTest, ToggleRendererOnFullscreenChange) {
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnPlaying();
+  RunUntilIdle();
+  // Bitrate estimation was started.
+  EXPECT_FALSE(bitrate_estimation_callback_.is_null());
+  EXPECT_FALSE(is_rendering_remotely_);
+  OnBitrateEstimated(BitrateEstimator::Status::kOk, kAllowedBitrate);
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(disable_pipeline_suspend_);
@@ -144,6 +173,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   shared_session->OnSinkAvailable(mojom::RemotingSinkCapabilities::NONE);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_TRUE(bitrate_estimation_callback_.is_null());
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
@@ -152,6 +182,10 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   // A sink that *does* support remote rendering *does* cause the controller to
   // toggle remote rendering on.
   shared_session->OnSinkAvailable(kAllCapabilities);
+  RunUntilIdle();
+  EXPECT_FALSE(bitrate_estimation_callback_.is_null());
+  EXPECT_FALSE(is_rendering_remotely_);
+  OnBitrateEstimated(BitrateEstimator::Status::kOk, kAllowedBitrate);
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
@@ -189,6 +223,10 @@ TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnPlaying();
+  RunUntilIdle();
+  EXPECT_FALSE(bitrate_estimation_callback_.is_null());
+  EXPECT_FALSE(is_rendering_remotely_);
+  OnBitrateEstimated(BitrateEstimator::Status::kOk, kAllowedBitrate);
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
@@ -231,6 +269,42 @@ TEST_F(RendererControllerTest, StartFailed) {
   EXPECT_FALSE(disable_pipeline_suspend_);
 }
 
+TEST_F(RendererControllerTest, StartFailedWithTooHighBitrate) {
+  EXPECT_FALSE(is_rendering_remotely_);
+  const scoped_refptr<SharedSession> shared_session =
+      FakeRemoterFactory::CreateSharedSession(false);
+  controller_ = base::MakeUnique<RendererController>(shared_session);
+  controller_->SetClient(this);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_TRUE(bitrate_estimation_callback_.is_null());
+  shared_session->OnSinkAvailable(kAllCapabilities);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
+  controller_->OnEnteredFullscreen();
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  controller_->OnMetadataChanged(DefaultMetadata());
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  controller_->OnRemotePlaybackDisabled(false);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  controller_->OnPlaying();
+  RunUntilIdle();
+  // Bitrate estimation was started.
+  EXPECT_FALSE(bitrate_estimation_callback_.is_null());
+  EXPECT_FALSE(is_rendering_remotely_);
+  OnBitrateEstimated(BitrateEstimator::Status::kOk, kDisalledBitrate);
+  RunUntilIdle();
+  // All requirements satisfied except bitrate. Remoting shouldn't be started.
+  EXPECT_FALSE(is_rendering_remotely_);
+}
+
 TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {
   EXPECT_FALSE(is_rendering_remotely_);
   controller_ = base::MakeUnique<RendererController>(
@@ -264,6 +338,8 @@ TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {
   controller_->OnSetCdm(remoting_cdm_context.get());
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);
+  // There is no bitrate check for encrypted contents.
+  EXPECT_TRUE(bitrate_estimation_callback_.is_null());
 
   // For encrypted contents, entering/exiting full screen has no effect.
   controller_->OnEnteredFullscreen();

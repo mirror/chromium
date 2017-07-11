@@ -6,6 +6,7 @@
 #define MEDIA_BASE_MEDIA_OBSERVER_H_
 
 #include "media/base/cdm_context.h"
+#include "media/base/demuxer.h"
 #include "media/base/pipeline_metadata.h"
 #include "url/gurl.h"
 
@@ -23,6 +24,15 @@ class MEDIA_EXPORT MediaObserverClient {
 
   // Requests to activate monitoring changes on viewport intersection.
   virtual void ActivateViewportIntersectionMonitoring(bool activate) = 0;
+
+  // Requests to estimate the video stream bitrate in the coming
+  // |duration|. |callback| will be called when the estimation is done.
+  virtual void StartVideoStreamBitrateEstimation(
+      base::TimeDelta duration,
+      Demuxer::BitrateEstimationCB callback) = 0;
+
+  // Requests to stop the video stream bitrate estimation.
+  virtual void StopVideoStreamBitrateEstimation() = 0;
 };
 
 // This class is an observer of media player events.

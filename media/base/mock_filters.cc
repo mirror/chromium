@@ -44,6 +44,12 @@ std::string MockDemuxer::GetDisplayName() const {
   return "MockDemuxer";
 }
 
+void MockDemuxer::StartVideoStreamBitrateEstimation(
+    base::TimeDelta duration,
+    Demuxer::BitrateEstimationCB callback) {
+  std::move(callback).Run(BitrateEstimator::Status::kAborted, 0);
+}
+
 MockDemuxerStream::MockDemuxerStream(DemuxerStream::Type type)
     : type_(type), liveness_(LIVENESS_UNKNOWN) {
 }

@@ -2608,4 +2608,25 @@ void WebMediaPlayerImpl::SetTickClockForTest(base::TickClock* tick_clock) {
   buffered_data_source_host_.SetTickClockForTest(tick_clock);
 }
 
+void WebMediaPlayerImpl::StartVideoStreamBitrateEstimation(
+    base::TimeDelta duration,
+    Demuxer::BitrateEstimationCB callback) {
+  if (chunk_demuxer_) {
+    chunk_demuxer_->StartVideoStreamBitrateEstimation(duration,
+                                                      std::move(callback));
+  } else {
+    DCHECK(demuxer_);
+    demuxer_->StartVideoStreamBitrateEstimation(duration, std::move(callback));
+  }
+}
+
+void WebMediaPlayerImpl::StopVideoStreamBitrateEstimation() {
+  if (chunk_demuxer_) {
+    chunk_demuxer_->StopVideoStreamBitrateEstimation();
+  } else {
+    DCHECK(demuxer_);
+    demuxer_->StopVideoStreamBitrateEstimation();
+  }
+}
+
 }  // namespace media
