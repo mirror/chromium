@@ -40,10 +40,8 @@ namespace update_client {
 class BackgroundDownloader : public CrxDownloader {
  protected:
   friend class CrxDownloader;
-  BackgroundDownloader(
-      std::unique_ptr<CrxDownloader> successor,
-      net::URLRequestContextGetter* context_getter,
-      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
+  BackgroundDownloader(std::unique_ptr<CrxDownloader> successor,
+                       net::URLRequestContextGetter* context_getter);
   ~BackgroundDownloader() override;
 
  private:
@@ -127,6 +125,9 @@ class BackgroundDownloader : public CrxDownloader {
 
   // Ensures that we are running on the same thread we created the object on.
   base::ThreadChecker thread_checker_;
+
+  // Executes blocking COM calls to BITS.
+  scoped_refptr<base::SequencedTaskRunner> com_task_runner_;
 
   net::URLRequestContextGetter* context_getter_;
 
