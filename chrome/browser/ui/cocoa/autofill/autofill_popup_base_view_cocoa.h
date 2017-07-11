@@ -7,6 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include "base/mac/scoped_nsobject.h"
 #import "ui/base/cocoa/base_view.h"
 
 namespace autofill {
@@ -16,6 +17,7 @@ class AutofillPopupViewDelegate;
 @interface AutofillPopupBaseViewCocoa : BaseView {
  @private
   autofill::AutofillPopupViewDelegate* popup_delegate_;  // weak
+  base::scoped_nsobject<NSScrollView> scrollView_;
 }
 
 - (NSColor*)backgroundColor;
