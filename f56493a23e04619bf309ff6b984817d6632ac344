@@ -34,6 +34,24 @@
       "revId": "f56493a23e04619bf309ff6b984817d6632ac344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a62dba_bbcfd4ea",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-11T00:17:36Z",
+      "side": 1,
+      "message": "I think the html binding to this function (on both the input method row and the icon-button) is messy and overloaded. But given the new bug you filed, I\u0027m okay with this for now since changing it to \u0027BUTTON\u0027 brings it to parity.",
+      "parentUuid": "5775ab01_6a79476d",
+      "revId": "f56493a23e04619bf309ff6b984817d6632ac344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
