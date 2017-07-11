@@ -5060,6 +5060,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // As of iOS 11, WKWebView supports requests with POST data, so the
     // Javascript POST workaround only needs to be used if the OS version is
     // less than iOS 11.
+    // TODO(crbug.com/740987): Remove POST workaround once iOS 10 is dropped.
     if (!base::ios::IsRunningOnIOS11OrLater()) {
       GURL navigationURL =
           currentItem ? currentItem->GetURL() : GURL::EmptyGURL();
