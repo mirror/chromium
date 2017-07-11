@@ -109,8 +109,9 @@ void UsbDeviceImpl::OpenOnBlockingThread(
   const int rv = libusb_open(platform_device_, &handle);
   if (LIBUSB_SUCCESS == rv) {
     task_runner->PostTask(
-        FROM_HERE, base::Bind(&UsbDeviceImpl::Opened, this, handle, callback,
-                              blocking_task_runner));
+        FROM_HERE,
+        base::Bind(&UsbDeviceImpl::Opened, this, base::Unretained(handle),
+                   callback, blocking_task_runner));
   } else {
     USB_LOG(EVENT) << "Failed to open device: "
                    << ConvertPlatformUsbErrorToString(rv);

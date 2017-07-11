@@ -19,6 +19,7 @@
 #include "base/time/default_tick_clock.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
+#include "net/log/net_log.h"
 #include "net/log/net_log_source.h"
 #include "net/socket/udp_server_socket.h"
 
