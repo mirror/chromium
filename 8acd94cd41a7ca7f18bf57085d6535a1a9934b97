@@ -22,6 +22,30 @@
       "revId": "8acd94cd41a7ca7f18bf57085d6535a1a9934b97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29fdca32_aece1dcf",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-07-11T08:27:32Z",
+      "side": 0,
+      "message": "It\u0027s already in a branch here :-)\nI thought I\u0027d be able to remove the entirety of WrapperTypePrototype, but apparently NodeFilter has some special treatment and is the only user of kWrapperTypeNoPrototype...",
+      "parentUuid": "d66455fe_78ce8849",
+      "range": {
+        "startLine": 151,
+        "startChar": 25,
+        "endLine": 151,
+        "endChar": 55
+      },
+      "revId": "8acd94cd41a7ca7f18bf57085d6535a1a9934b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
