@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe18b5f_ef316903",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:22:22Z",
+      "side": 1,
+      "message": "Is it possible for the callers to supply a name here too? This allows us to differentiate between scheduler instances in the histograms.",
+      "range": {
+        "startLine": 47,
+        "startChar": 32,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "d61398896c4eb8d0c305ac576c555b1a653d6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -141,6 +141,30 @@
       "revId": "294dd97eff7cfebd0f6c3024a86e795070f71ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9675fa_6044a862",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:22:22Z",
+      "side": 1,
+      "message": "Argument based initialization lgtm. Thanks!",
+      "parentUuid": "25416880_f1fe0f8b",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 68
+      },
+      "revId": "294dd97eff7cfebd0f6c3024a86e795070f71ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
