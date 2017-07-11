@@ -58,6 +58,12 @@ void MojoCdmPromise<T...>::reject(CdmPromise::Exception exception,
       GetRejectResult(exception, system_code, error_message), T()...);
 }
 
+template <typename... T>
+CdmPromise::ResolveParameterType MojoCdmPromise<T...>::GetResolveParameterType()
+    const {
+  return CdmPromiseTraits<T...>::kType;
+}
+
 template class MojoCdmPromise<>;
 template class MojoCdmPromise<std::string>;
 

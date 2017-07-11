@@ -437,6 +437,8 @@ class MockCdmPromise : public SimpleCdmPromise {
   MOCK_METHOD3(reject,
                void(CdmPromise::Exception, uint32_t, const std::string&));
 
+  CdmPromise::ResolveParameterType GetResolveParameterType() const final;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(MockCdmPromise);
 };
@@ -452,6 +454,8 @@ class MockCdmSessionPromise : public NewSessionCdmPromise {
   MOCK_METHOD1(resolve, void(const std::string&));
   MOCK_METHOD3(reject,
                void(CdmPromise::Exception, uint32_t, const std::string&));
+
+  CdmPromise::ResolveParameterType GetResolveParameterType() const final;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockCdmSessionPromise);

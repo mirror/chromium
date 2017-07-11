@@ -167,6 +167,11 @@ MockCdmPromise::~MockCdmPromise() {
   MarkPromiseSettled();
 }
 
+CdmPromise::ResolveParameterType MockCdmPromise::GetResolveParameterType()
+    const {
+  return CdmPromise::VOID_TYPE;
+}
+
 MockCdmSessionPromise::MockCdmSessionPromise(bool expect_success,
                                              std::string* new_session_id) {
   if (expect_success) {
@@ -181,6 +186,11 @@ MockCdmSessionPromise::MockCdmSessionPromise(bool expect_success,
 MockCdmSessionPromise::~MockCdmSessionPromise() {
   // The EXPECT calls will verify that the promise is in fact fulfilled.
   MarkPromiseSettled();
+}
+
+CdmPromise::ResolveParameterType
+MockCdmSessionPromise::GetResolveParameterType() const {
+  return CdmPromise::STRING_TYPE;
 }
 
 MockCdm::MockCdm(const SessionMessageCB& session_message_cb,

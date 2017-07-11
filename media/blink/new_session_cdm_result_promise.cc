@@ -77,4 +77,9 @@ void NewSessionCdmResultPromise::reject(CdmPromise::Exception exception_code,
                                     blink::WebString::FromUTF8(error_message));
 }
 
+CdmPromise::ResolveParameterType
+NewSessionCdmResultPromise::GetResolveParameterType() const {
+  return CdmPromise::STRING_TYPE;
+}
+
 }  // namespace media

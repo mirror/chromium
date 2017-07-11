@@ -33,6 +33,7 @@ class CdmResultPromise : public CdmPromiseTemplate<T...> {
   void reject(CdmPromise::Exception exception_code,
               uint32_t system_code,
               const std::string& error_message) override;
+  CdmPromise::ResolveParameterType GetResolveParameterType() const final;
 
  private:
   using CdmPromiseTemplate<T...>::IsPromiseSettled;
@@ -87,6 +88,12 @@ void CdmResultPromise<T...>::reject(CdmPromise::Exception exception_code,
   web_cdm_result_.CompleteWithError(ConvertCdmException(exception_code),
                                     system_code,
                                     blink::WebString::FromUTF8(error_message));
+}
+
+template <typename... T>
+CdmPromise::ResolveParameterType
+CdmResultPromise<T...>::GetResolveParameterType() const {
+  return CdmPromiseTraits<T...>::kType;
 }
 
 }  // namespace media

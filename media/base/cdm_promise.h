@@ -11,8 +11,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-// TODO(xhwang): Remove this include after http://crbug.com/656706 is fixed.
-#include "media/base/content_decryption_module.h"
+#include "media/base/cdm_key_information.h"
 #include "media/base/media_export.h"
 
 namespace media {
@@ -53,8 +52,8 @@ class MEDIA_EXPORT CdmPromise {
     KEY_STATUS_TYPE
   };
 
-  CdmPromise();
-  virtual ~CdmPromise();
+  CdmPromise() = default;
+  virtual ~CdmPromise() = default;
 
   // Used to indicate that the operation failed. |exception_code| must be
   // specified. |system_code| is a Key System-specific value for the error
@@ -114,9 +113,7 @@ class CdmPromiseTemplate : public CdmPromise {
                       uint32_t system_code,
                       const std::string& error_message) = 0;
 
-  ResolveParameterType GetResolveParameterType() const override {
-    return CdmPromiseTraits<T...>::kType;
-  }
+  virtual ResolveParameterType GetResolveParameterType() const = 0;
 
  protected:
   bool IsPromiseSettled() const { return is_settled_; }
