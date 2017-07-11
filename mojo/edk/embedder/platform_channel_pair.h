@@ -93,7 +93,7 @@ class MOJO_SYSTEM_IMPL_EXPORT PlatformChannelPair {
   // any cleanup necessary.
   void ChildProcessLaunched();
 
- private:
+ //private:
   ScopedPlatformHandle server_handle_;
   ScopedPlatformHandle client_handle_;
 

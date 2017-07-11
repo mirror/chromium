@@ -19,6 +19,8 @@ void InitMemlogSenderIfNecessary(const base::CommandLine& cmdline);
 
 void StartMemlogSender(const std::string& pipe_id);
 
+void StartProfilingMojo();
+
 }  // namespace profiling
 
 #endif  // CHROME_COMMON_PROFILING_MEMLOG_SENDER_H_

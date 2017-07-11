@@ -7,6 +7,8 @@
 
 #include "base/macros.h"
 #include "base/process/process.h"
+#include "chrome/common/profiling/profiling_control.mojom.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
 
 namespace base {
 class CommandLine;
@@ -48,9 +50,24 @@ class ProfilingProcessHost {
 
   void Launch();
 
+  void EnsureControlChannelExists();
+  void ConnectControlChannelOnIO();
+
   // Use process_.IsValid() to determine if the child process has been launched.
   base::Process process_;
   std::string pipe_id_;
+
+  // IO thread only -----------------------------------------------------------
+  //
+  // Once the constructor is finished, the following variables must only be
+  // accessed on the IO thread.
+
+  // Holds the pending server handle for the Mojo control channel during
+  // the period between the profiling process launching and the Mojo channel
+  // being created. Will be invalid otherwise.
+  mojo::edk::ScopedPlatformHandle pending_control_connection_;
+
+  mojom::ProfilingControlPtr profiling_control_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfilingProcessHost);
 };

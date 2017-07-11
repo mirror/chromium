@@ -10,7 +10,7 @@
 
 namespace profiling {
 
-MemlogSenderPipe::MemlogSenderPipe(const base::string& pipe_id)
+MemlogSenderPipe::MemlogSenderPipe(const std::string& pipe_id)
     : pipe_id_(base::UTF8ToUTF16(pipe_id)), handle_(INVALID_HANDLE_VALUE) {}
 
 MemlogSenderPipe::~MemlogSenderPipe() {
@@ -30,7 +30,8 @@ bool MemlogSenderPipe::Connect() {
     if (!::WaitNamedPipe(pipe_name.c_str(), kMaxWaitMS)) {
       // Since it will wait "forever", the only time WaitNamedPipe should fail
       // is if the pipe doesn't exist.
-      return false;
+      ::Sleep(10);
+      continue;
     }
     // This is a single-direction pipe so we don't specify GENERIC_READ, but
     // MSDN says we need FILE_READ_ATTRIBUTES.
