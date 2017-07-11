@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e3c2e7_4c4cdf3c",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-11T15:45:47Z",
+      "side": 1,
+      "message": "It looks like this file\u0027s encoding got accidentally changed from LF to CRLF, please fix.",
+      "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad829969_01254c8a",
+        "filename": "chrome/VERSION",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-11T15:45:47Z",
+      "side": 1,
+      "message": "Don\u0027t change this. This is automatically managed.",
+      "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6577eb5_25a78ddf",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3175,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-11T15:45:47Z",
+      "side": 1,
+      "message": "Instead of adding a new callback, can you use WebContentsImpl::OnAudioStateChanged, which already exists?",
+      "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe75000f_8f5b75d0",
+        "filename": "extensions/browser/extension_function_histogram_value.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-11T15:45:47Z",
+      "side": 1,
+      "message": "You need to run the command above when modifying this file, it\u0027ll update the histograms.xml file.",
+      "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
