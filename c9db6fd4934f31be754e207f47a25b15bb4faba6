@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a848023c_de72f524",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-11T09:49:24Z",
+      "side": 0,
+      "message": "I marked as obsolete all histograms with \"Precache\" prefix. Need to ask someone from the bork team whether it\u0027s sufficient.",
+      "parentUuid": "89f55b4c_eb6f1957",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 140,
+        "endChar": 90
+      },
+      "revId": "c9db6fd4934f31be754e207f47a25b15bb4faba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dde6219f_b6405ce3",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
         "patchSetId": 3
@@ -41,6 +65,53 @@
         "startChar": 6,
         "endLine": 338,
         "endChar": 29
+      },
+      "revId": "c9db6fd4934f31be754e207f47a25b15bb4faba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e02679e_ba7fb192",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-11T09:49:24Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "dde6219f_b6405ce3",
+      "range": {
+        "startLine": 338,
+        "startChar": 6,
+        "endLine": 338,
+        "endChar": 29
+      },
+      "revId": "c9db6fd4934f31be754e207f47a25b15bb4faba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b2eebf_798efa69",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-11T09:49:24Z",
+      "side": 0,
+      "message": "I\u0027m a little bit confused by this expression. Shouldn\u0027t it cause a crash every time when the precache is enabled?",
+      "range": {
+        "startLine": 620,
+        "startChar": 9,
+        "endLine": 620,
+        "endChar": 25
       },
       "revId": "c9db6fd4934f31be754e207f47a25b15bb4faba6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
