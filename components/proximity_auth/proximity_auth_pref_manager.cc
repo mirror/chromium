@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/values.h"
+#include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -27,6 +28,15 @@ void ProximityAuthPrefManager::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterInt64Pref(prefs::kProximityAuthLastPasswordEntryTimestampMs,
                               0L);
   registry->RegisterDictionaryPref(prefs::kProximityAuthRemoteBleDevices);
+
+  // TODO(tengs): For existing EasyUnlock users, we want to maintain their
+  // current behaviour and keep login enabled. However, for new users, we will
+  // disable login when setting up EasyUnlock.
+  // After a sufficient number of releases, we should make the default value
+  // false.
+  registry->RegisterBooleanPref(
+      prefs::kProximityAuthIsChromeOSLoginEnabled, true,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 }
 
 bool ProximityAuthPrefManager::HasDeviceWithAddress(
@@ -119,6 +129,15 @@ int64_t ProximityAuthPrefManager::GetLastPasswordEntryTimestampMs() const {
 const base::DictionaryValue* ProximityAuthPrefManager::GetRemoteBleDevices()
     const {
   return pref_service_->GetDictionary(prefs::kProximityAuthRemoteBleDevices);
+}
+
+void ProximityAuthPrefManager::SetIsChromeOSLoginEnabled(bool is_enabled) {
+  return pref_service_->SetBoolean(prefs::kProximityAuthIsChromeOSLoginEnabled,
+                                   is_enabled);
+}
+
+bool ProximityAuthPrefManager::IsChromeOSLoginEnabled() {
+  return pref_service_->GetBoolean(prefs::kProximityAuthIsChromeOSLoginEnabled);
 }
 
 }  // namespace proximity_auth

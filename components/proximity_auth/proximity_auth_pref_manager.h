@@ -65,6 +65,11 @@ class ProximityAuthPrefManager {
   virtual void SetLastPasswordEntryTimestampMs(int64_t timestamp_ms);
   virtual int64_t GetLastPasswordEntryTimestampMs() const;
 
+  // Setting and getter for whether EasyUnlock is enabled for ChromeOS login (in
+  // addition to screen lock).
+  virtual void SetIsChromeOSLoginEnabled(bool is_enabled);
+  virtual bool IsChromeOSLoginEnabled();
+
  private:
   const base::DictionaryValue* GetRemoteBleDevices() const;
 

@@ -1,6 +1,7 @@
 include_rules = [
   "+components/cryptauth",
   "+components/prefs",
+  "+components/pref_registry",
   "+components/signin/core/account_id/account_id.h",
   "+device/bluetooth",
   "+net",
