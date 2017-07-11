@@ -236,6 +236,20 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
     needs_dircrypto_migration_ = needs_migration;
   }
 
+  void set_tpm_attestation_is_enrolled(bool enrolled) {
+    tpm_attestation_is_enrolled_ = enrolled;
+  }
+
+  void set_tpm_attestation_is_prepared(bool prepared) {
+    tpm_attestation_is_prepared_ = prepared;
+  }
+
+  void SetTpmAttestationCertificate(
+      attestation::AttestationKeyType key_type,
+      const cryptohome::Identification& cryptohome_id,
+      const std::string& key_name,
+      const std::string& certificate);
+
  private:
   void ReturnProtobufMethodCallback(
       const cryptohome::BaseReply& reply,
@@ -276,11 +290,16 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
 
   std::map<cryptohome::Identification, cryptohome::KeyData> key_data_map_;
 
+  using CertificateKey = std::pair<cryptohome::Identification, std::string>;
+  std::map<CertificateKey, std::string> certificate_map_;
+
   DircryptoMigrationProgessHandler dircrypto_migration_progress_handler_;
   base::RepeatingTimer dircrypto_migration_progress_timer_;
   uint64_t dircrypto_migration_progress_;
 
   bool needs_dircrypto_migration_ = false;
+  bool tpm_attestation_is_enrolled_ = true;
+  bool tpm_attestation_is_prepared_ = true;
 
   base::WeakPtrFactory<FakeCryptohomeClient> weak_ptr_factory_;
 
