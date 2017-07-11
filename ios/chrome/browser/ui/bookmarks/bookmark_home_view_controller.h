@@ -19,14 +19,19 @@ class ChromeBrowserState;
 
 namespace bookmarks {
 class BookmarkModel;
+class BookmarkNode;
 }  // namespace bookmarks
 
 @class BookmarkCollectionView;
-@class BookmarkPanelView;
-@class BookmarkMenuView;
+@class BookmarkEditViewController;
+@class BookmarkFolderEditorViewController;
+@class BookmarkFolderViewController;
 @class BookmarkHomeWaitingView;
-@class BookmarkNavigationBar;
+@class BookmarkItemCell;
 @class BookmarkMenuItem;
+@class BookmarkMenuView;
+@class BookmarkNavigationBar;
+@class BookmarkPanelView;
 
 // Class to navigate the bookmark hierarchy, needs subclassing for tablet /
 // handset case.
@@ -48,6 +53,11 @@ class BookmarkModel;
 
 // The main view showing all the bookmarks.
 @property(nonatomic, strong, readonly) BookmarkCollectionView* folderView;
+
+// The view controller used to pick a folder in which to move the selected
+// bookmarks.
+@property(nonatomic, strong, readonly)
+    BookmarkFolderViewController* folderSelector;
 
 // Object to load URLs.
 @property(nonatomic, weak, readonly) id<UrlLoader> loader;
@@ -74,6 +84,14 @@ class BookmarkModel;
 // set it to nil, once finished with it.
 @property(nonatomic, strong) BookmarkHomeWaitingView* waitForModelView;
 
+// The view controller used to view and edit a single bookmark.
+@property(nonatomic, strong, readonly)
+    BookmarkEditViewController* editViewController;
+
+// The view controller to present when editing the current folder.
+@property(nonatomic, strong, readonly)
+    BookmarkFolderEditorViewController* folderEditor;
+
 // This method should be called at most once in the life-cycle of the class.
 // It should be called at the soonest possible time after the view has been
 // loaded, and the bookmark model is loaded.
@@ -92,6 +110,20 @@ class BookmarkModel;
 
 // The active collection view that corresponds to primaryMenuItem.
 - (UIView<BookmarkHomePrimaryView>*)primaryView;
+
+#pragma mark - Navigation bar callbacks.
+
+// Called when the edit button is pressed on the navigation bar.
+- (void)navigationBarWantsEditing:(id)sender;
+
+#pragma mark - Action sheet callbacks
+// Opens the folder move editor for the given node.
+- (void)moveNodes:(const std::set<const bookmarks::BookmarkNode*>&)nodes;
+
+// Deletes the current node.
+- (void)deleteNodes:(const std::set<const bookmarks::BookmarkNode*>&)nodes;
+
+- (void)editNode:(const bookmarks::BookmarkNode*)node;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BOOKMARKS_HOME_VIEW_CONTROLLER_H_
