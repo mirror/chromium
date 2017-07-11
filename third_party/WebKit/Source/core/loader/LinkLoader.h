@@ -37,7 +37,7 @@
 #include "platform/CrossOriginAttributeValue.h"
 #include "platform/PrerenderClient.h"
 #include "platform/loader/fetch/ResourceOwner.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 
@@ -93,7 +93,7 @@ class CORE_EXPORT LinkLoader final
                                   CanLoadResources,
                                   MediaPreloadPolicy,
                                   ViewportDescriptionWrapper*);
-  static WTF::Optional<Resource::Type> GetResourceTypeFromAsAttribute(
+  static base::Optional<Resource::Type> GetResourceTypeFromAsAttribute(
       const String& as);
 
   Resource* GetResourceForTesting();

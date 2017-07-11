@@ -15,7 +15,7 @@
 #include "core/paint/RoundedInnerRectClipper.h"
 #include "core/paint/ScrollableAreaPainter.h"
 #include "core/paint/TransformRecorder.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 

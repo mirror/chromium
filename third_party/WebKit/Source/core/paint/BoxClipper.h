@@ -9,7 +9,7 @@
 #include "platform/graphics/paint/DisplayItem.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 

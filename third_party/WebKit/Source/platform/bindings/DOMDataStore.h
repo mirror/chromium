@@ -33,13 +33,13 @@
 
 #include <memory>
 
+#include "base/optional.h"
 #include "platform/bindings/DOMWrapperMap.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/WrapperTypeInfo.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/StackUtil.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "v8/include/v8.h"
@@ -180,7 +180,7 @@ class DOMDataStore {
   }
 
   bool is_main_world_;
-  WTF::Optional<DOMWrapperMap<ScriptWrappable>> wrapper_map_;
+  base::Optional<DOMWrapperMap<ScriptWrappable>> wrapper_map_;
 };
 
 template <>

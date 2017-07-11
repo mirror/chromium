@@ -210,7 +210,7 @@ Optional<LayoutUnit> LayoutGrid::AvailableSpaceForGutters(
   const Length& gap =
       is_row_axis ? StyleRef().GridColumnGap() : StyleRef().GridRowGap();
   if (!gap.IsPercent())
-    return WTF::nullopt;
+    return base::nullopt;
 
   return is_row_axis ? AvailableLogicalWidth()
                      : AvailableLogicalHeightForPercentageComputation();
@@ -515,7 +515,7 @@ void LayoutGrid::ComputeIntrinsicLogicalWidths(
     LayoutUnit& min_logical_width,
     LayoutUnit& max_logical_width) const {
   Grid grid(this);
-  PlaceItemsOnGrid(grid, WTF::nullopt);
+  PlaceItemsOnGrid(grid, base::nullopt);
 
   GridTrackSizingAlgorithm algorithm(this, grid);
   ComputeTrackSizesForIndefiniteSize(algorithm, kForColumns, grid,
@@ -532,7 +532,7 @@ void LayoutGrid::ComputeTrackSizesForIndefiniteSize(
     Grid& grid,
     LayoutUnit& min_intrinsic_size,
     LayoutUnit& max_intrinsic_size) const {
-  algo.Setup(direction, NumTracks(direction, grid), WTF::nullopt, WTF::nullopt);
+  algo.Setup(direction, NumTracks(direction, grid), base::nullopt, base::nullopt);
   algo.Run();
 
   min_intrinsic_size = algo.MinContentSize();
@@ -540,7 +540,7 @@ void LayoutGrid::ComputeTrackSizesForIndefiniteSize(
 
   size_t number_of_tracks = algo.Tracks(direction).size();
   LayoutUnit total_gutters_size =
-      GuttersSize(grid, direction, 0, number_of_tracks, WTF::nullopt);
+      GuttersSize(grid, direction, 0, number_of_tracks, base::nullopt);
   min_intrinsic_size += total_gutters_size;
   max_intrinsic_size += total_gutters_size;
 
@@ -586,10 +586,10 @@ LayoutUnit LayoutGrid::OverrideContainingBlockContentSizeForChild(
 }
 
 // Unfortunately there are still many layout methods that return -1 for
-// non-resolvable sizes. We prefer to represent them with WTF::nullopt.
+// non-resolvable sizes. We prefer to represent them with base::nullopt.
 static Optional<LayoutUnit> ConvertLayoutUnitToOptional(LayoutUnit size) {
   if (size == -1)
-    return WTF::nullopt;
+    return base::nullopt;
   return size;
 }
 

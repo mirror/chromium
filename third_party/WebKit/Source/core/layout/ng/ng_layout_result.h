@@ -50,7 +50,7 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
     return unpositioned_floats_;
   }
 
-  const WTF::Optional<NGLogicalOffset>& BfcOffset() const {
+  const base::Optional<NGLogicalOffset>& BfcOffset() const {
     return bfc_offset_;
   }
 
@@ -63,14 +63,14 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
                  Vector<NGOutOfFlowPositionedDescendant>
                      out_of_flow_positioned_descendants,
                  Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
-                 const WTF::Optional<NGLogicalOffset> bfc_offset,
+                 const base::Optional<NGLogicalOffset> bfc_offset,
                  const NGMarginStrut end_margin_strut);
 
   RefPtr<NGPhysicalFragment> physical_fragment_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
 
   Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants_;
-  const WTF::Optional<NGLogicalOffset> bfc_offset_;
+  const base::Optional<NGLogicalOffset> bfc_offset_;
   const NGMarginStrut end_margin_strut_;
 };
 

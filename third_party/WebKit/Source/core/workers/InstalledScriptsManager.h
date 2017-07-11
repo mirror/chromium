@@ -5,9 +5,9 @@
 #ifndef InstalledScriptsManager_h
 #define InstalledScriptsManager_h
 
+#include "base/optional.h"
 #include "platform/network/HTTPHeaderMap.h"
 #include "platform/weborigin/KURL.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -28,11 +28,11 @@ class InstalledScriptsManager {
   // installed.
   virtual bool IsScriptInstalled(const KURL& script_url) const = 0;
 
-  // Used on the worker thread. This is possible to return WTF::nullopt when the
+  // Used on the worker thread. This is possible to return base::nullopt when the
   // script has already been served from this manager (i.e. the same script is
   // read more than once). This can be blocked if the script is not streamed
   // yet.
-  virtual Optional<ScriptData> GetScriptData(const KURL& script_url) = 0;
+  virtual base::Optional<ScriptData> GetScriptData(const KURL& script_url) = 0;
 };
 
 }  // namespace blink

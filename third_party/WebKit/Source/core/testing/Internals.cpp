@@ -150,7 +150,7 @@
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/weborigin/SchemeRegistry.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/dtoa.h"
 #include "platform/wtf/text/StringBuffer.h"
@@ -192,7 +192,7 @@ class UseCounterObserverImpl final : public UseCounter::Observer {
 
 }  // namespace
 
-static WTF::Optional<DocumentMarker::MarkerType> MarkerTypeFrom(
+static base::Optional<DocumentMarker::MarkerType> MarkerTypeFrom(
     const String& marker_type) {
   if (DeprecatedEqualIgnoringCase(marker_type, "Spelling"))
     return DocumentMarker::kSpelling;
@@ -200,16 +200,16 @@ static WTF::Optional<DocumentMarker::MarkerType> MarkerTypeFrom(
     return DocumentMarker::kGrammar;
   if (DeprecatedEqualIgnoringCase(marker_type, "TextMatch"))
     return DocumentMarker::kTextMatch;
-  return WTF::nullopt;
+  return base::nullopt;
 }
 
-static WTF::Optional<DocumentMarker::MarkerTypes> MarkerTypesFrom(
+static base::Optional<DocumentMarker::MarkerTypes> MarkerTypesFrom(
     const String& marker_type) {
   if (marker_type.IsEmpty() || DeprecatedEqualIgnoringCase(marker_type, "all"))
     return DocumentMarker::AllMarkers();
-  WTF::Optional<DocumentMarker::MarkerType> type = MarkerTypeFrom(marker_type);
+  base::Optional<DocumentMarker::MarkerType> type = MarkerTypeFrom(marker_type);
   if (!type)
-    return WTF::nullopt;
+    return base::nullopt;
   return DocumentMarker::MarkerTypes(type.value());
 }
 
@@ -932,7 +932,7 @@ void Internals::setMarker(Document* document,
     return;
   }
 
-  WTF::Optional<DocumentMarker::MarkerType> type = MarkerTypeFrom(marker_type);
+  base::Optional<DocumentMarker::MarkerType> type = MarkerTypeFrom(marker_type);
   if (!type) {
     exception_state.ThrowDOMException(
         kSyntaxError,
@@ -960,7 +960,7 @@ unsigned Internals::markerCountForNode(Node* node,
                                        const String& marker_type,
                                        ExceptionState& exception_state) {
   DCHECK(node);
-  WTF::Optional<DocumentMarker::MarkerTypes> marker_types =
+  base::Optional<DocumentMarker::MarkerTypes> marker_types =
       MarkerTypesFrom(marker_type);
   if (!marker_types) {
     exception_state.ThrowDOMException(
@@ -997,7 +997,7 @@ DocumentMarker* Internals::MarkerAt(Node* node,
                                     unsigned index,
                                     ExceptionState& exception_state) {
   DCHECK(node);
-  WTF::Optional<DocumentMarker::MarkerTypes> marker_types =
+  base::Optional<DocumentMarker::MarkerTypes> marker_types =
       MarkerTypesFrom(marker_type);
   if (!marker_types) {
     exception_state.ThrowDOMException(
@@ -1035,13 +1035,13 @@ String Internals::markerDescriptionForNode(Node* node,
   return ToSpellCheckMarker(marker)->Description();
 }
 
-static WTF::Optional<TextMatchMarker::MatchStatus> MatchStatusFrom(
+static base::Optional<TextMatchMarker::MatchStatus> MatchStatusFrom(
     const String& match_status) {
   if (EqualIgnoringASCIICase(match_status, "kActive"))
     return TextMatchMarker::MatchStatus::kActive;
   if (EqualIgnoringASCIICase(match_status, "kInactive"))
     return TextMatchMarker::MatchStatus::kInactive;
-  return WTF::nullopt;
+  return base::nullopt;
 }
 
 void Internals::addTextMatchMarker(const Range* range,
@@ -1051,7 +1051,7 @@ void Internals::addTextMatchMarker(const Range* range,
   if (!range->OwnerDocument().View())
     return;
 
-  WTF::Optional<TextMatchMarker::MatchStatus> match_status_enum =
+  base::Optional<TextMatchMarker::MatchStatus> match_status_enum =
       MatchStatusFrom(match_status);
   if (!match_status_enum) {
     exception_state.ThrowDOMException(
@@ -1080,13 +1080,13 @@ static bool ParseColor(const String& value,
   return true;
 }
 
-static WTF::Optional<StyleableMarker::Thickness> ThicknessFrom(
+static base::Optional<StyleableMarker::Thickness> ThicknessFrom(
     const String& thickness) {
   if (EqualIgnoringASCIICase(thickness, "thin"))
     return StyleableMarker::Thickness::kThin;
   if (EqualIgnoringASCIICase(thickness, "thick"))
     return StyleableMarker::Thickness::kThick;
-  return WTF::nullopt;
+  return base::nullopt;
 }
 
 namespace {
@@ -1103,7 +1103,7 @@ void addStyleableMarkerHelper(
   DCHECK(range);
   range->OwnerDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  WTF::Optional<StyleableMarker::Thickness> thickness =
+  base::Optional<StyleableMarker::Thickness> thickness =
       ThicknessFrom(thickness_value);
   if (!thickness) {
     exception_state.ThrowDOMException(

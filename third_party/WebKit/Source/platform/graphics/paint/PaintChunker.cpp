@@ -17,7 +17,7 @@ void PaintChunker::UpdateCurrentPaintChunkProperties(
     const PaintChunkProperties& properties) {
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
-  current_chunk_id_ = WTF::nullopt;
+  current_chunk_id_ = base::nullopt;
   if (chunk_id)
     current_chunk_id_.emplace(*chunk_id);
   current_properties_ = properties;
@@ -43,7 +43,7 @@ bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
     // as the chunk id, and any display items after the foreign layer without a
     // new chunk id will be treated as having no id to avoid the chunk from
     // using the same id as the chunk before the foreign layer chunk.
-    current_chunk_id_ = WTF::nullopt;
+    current_chunk_id_ = base::nullopt;
   }
 
   size_t new_chunk_begin_index;
@@ -76,14 +76,14 @@ bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
 
 void PaintChunker::Clear() {
   chunks_.clear();
-  current_chunk_id_ = WTF::nullopt;
+  current_chunk_id_ = base::nullopt;
   current_properties_ = PaintChunkProperties();
 }
 
 Vector<PaintChunk> PaintChunker::ReleasePaintChunks() {
   Vector<PaintChunk> chunks;
   chunks.swap(chunks_);
-  current_chunk_id_ = WTF::nullopt;
+  current_chunk_id_ = base::nullopt;
   current_properties_ = PaintChunkProperties();
   return chunks;
 }

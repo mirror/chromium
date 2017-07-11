@@ -428,7 +428,7 @@ WebInputEventResult GestureManager::HandleGestureShowPress() {
   return WebInputEventResult::kNotHandled;
 }
 
-WTF::Optional<WTF::TimeTicks> GestureManager::GetLastShowPressTimestamp()
+base::Optional<WTF::TimeTicks> GestureManager::GetLastShowPressTimestamp()
     const {
   return last_show_press_timestamp_;
 }

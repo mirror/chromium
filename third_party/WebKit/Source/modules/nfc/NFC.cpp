@@ -201,7 +201,7 @@ struct TypeConverter<Optional<Vector<uint8_t>>, blink::ScriptValue> {
       if (!v8::JSON::Stringify(scriptValue.GetContext(), value.As<v8::Object>())
                .ToLocal(&jsonString) ||
           try_catch.HasCaught()) {
-        return WTF::nullopt;
+        return base::nullopt;
       }
 
       String string = blink::V8StringToWebCoreString<String>(
@@ -213,7 +213,7 @@ struct TypeConverter<Optional<Vector<uint8_t>>, blink::ScriptValue> {
       return mojo::ConvertTo<Vector<uint8_t>>(
           blink::V8ArrayBuffer::toImpl(value.As<v8::Object>()));
 
-    return WTF::nullopt;
+    return base::nullopt;
   }
 };
 

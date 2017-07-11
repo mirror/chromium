@@ -5,10 +5,10 @@
 #ifndef ScriptForbiddenScope_h
 #define ScriptForbiddenScope_h
 
+#include "base/optional.h"
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/AutoReset.h"
-#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -36,7 +36,7 @@ class PLATFORM_EXPORT ScriptForbiddenScope final {
     }
 
    private:
-    Optional<AutoReset<unsigned>> change_;
+    base::Optional<AutoReset<unsigned>> change_;
   };
 
   static void Enter() {

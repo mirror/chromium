@@ -98,7 +98,6 @@ component("wtf") {
     "NonCopyingSort.h",
     "Noncopyable.h",
     "NotFound.h",
-    "Optional.h",
     "PassRefPtr.h",
     "PrintStream.cpp",
     "PrintStream.h",

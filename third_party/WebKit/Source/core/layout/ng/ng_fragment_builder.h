@@ -120,7 +120,7 @@ class CORE_EXPORT NGFragmentBuilder final {
     return unpositioned_floats_;
   }
 
-  const WTF::Optional<NGLogicalOffset>& BfcOffset() const {
+  const base::Optional<NGLogicalOffset>& BfcOffset() const {
     return bfc_offset_;
   }
 
@@ -184,7 +184,7 @@ class CORE_EXPORT NGFragmentBuilder final {
 
   Vector<NGPositionedFloat> positioned_floats_;
 
-  WTF::Optional<NGLogicalOffset> bfc_offset_;
+  base::Optional<NGLogicalOffset> bfc_offset_;
   NGMarginStrut end_margin_strut_;
 
   NGBorderEdges border_edges_;

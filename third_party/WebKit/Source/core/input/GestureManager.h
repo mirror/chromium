@@ -9,7 +9,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/layout/HitTestRequest.h"
 #include "core/page/EventWithHitTestResults.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 #include "platform/wtf/Time.h"
 #include "public/platform/WebInputEventResult.h"
 
@@ -44,7 +44,7 @@ class CORE_EXPORT GestureManager
   // TODO(nzolghadr): This can probably be hidden and the related logic
   // be moved to this class (see crrev.com/112023010). Since that might cause
   // regression it's better to move that logic in another change.
-  WTF::Optional<WTF::TimeTicks> GetLastShowPressTimestamp() const;
+  base::Optional<WTF::TimeTicks> GetLastShowPressTimestamp() const;
 
  private:
   WebInputEventResult HandleGestureShowPress();
@@ -79,7 +79,7 @@ class CORE_EXPORT GestureManager
 
   const Member<SelectionController> selection_controller_;
 
-  WTF::Optional<WTF::TimeTicks> last_show_press_timestamp_;
+  base::Optional<WTF::TimeTicks> last_show_press_timestamp_;
 };
 
 }  // namespace blink

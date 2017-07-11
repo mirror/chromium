@@ -5,8 +5,8 @@
 #ifndef MediaControlsMediaEventListener_h
 #define MediaControlsMediaEventListener_h
 
+#include "base/optional.h"
 #include "core/events/EventListener.h"
-#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -40,7 +40,7 @@ class MediaControlsMediaEventListener final : public EventListener {
   void OnRemotePlaybackAvailabilityChanged();
 
   Member<MediaControlsImpl> media_controls_;
-  WTF::Optional<int> remote_playback_availability_callback_id_;
+  base::Optional<int> remote_playback_availability_callback_id_;
 };
 
 }  // namespace blink

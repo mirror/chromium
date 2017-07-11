@@ -31,10 +31,10 @@
 #ifndef DocumentAnimations_h
 #define DocumentAnimations_h
 
+#include "base/optional.h"
 #include "core/CSSPropertyNames.h"
 #include "core/dom/DocumentLifecycle.h"
 #include "platform/graphics/CompositorElementId.h"
-#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -51,7 +51,7 @@ class DocumentAnimations {
   static void UpdateAnimations(
       Document&,
       DocumentLifecycle::LifecycleState required_lifecycle_state,
-      Optional<CompositorElementIdSet>&);
+      base::Optional<CompositorElementIdSet>&);
 
  private:
   DocumentAnimations() {}

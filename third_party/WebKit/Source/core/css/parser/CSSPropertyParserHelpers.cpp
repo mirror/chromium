@@ -339,7 +339,7 @@ CSSPrimitiveValue* ConsumeGradientLengthOrPercent(
 
 CSSPrimitiveValue* ConsumeAngle(CSSParserTokenRange& range,
                                 const CSSParserContext& context,
-                                WTF::Optional<WebFeature> unitlessZeroFeature) {
+                                base::Optional<WebFeature> unitlessZeroFeature) {
   const CSSParserToken& token = range.Peek();
   if (token.GetType() == kDimensionToken) {
     switch (token.GetUnitType()) {
@@ -737,7 +737,7 @@ static void PositionFromThreeOrFourValues(CSSValue** values,
 bool ConsumePosition(CSSParserTokenRange& range,
                      const CSSParserContext& context,
                      UnitlessQuirk unitless,
-                     WTF::Optional<WebFeature> threeValuePosition,
+                     base::Optional<WebFeature> threeValuePosition,
                      CSSValue*& result_x,
                      CSSValue*& result_y) {
   bool horizontal_edge = false;
@@ -811,7 +811,7 @@ bool ConsumePosition(CSSParserTokenRange& range,
 CSSValuePair* ConsumePosition(CSSParserTokenRange& range,
                               const CSSParserContext& context,
                               UnitlessQuirk unitless,
-                              WTF::Optional<WebFeature> threeValuePosition) {
+                              base::Optional<WebFeature> threeValuePosition) {
   CSSValue* result_x = nullptr;
   CSSValue* result_y = nullptr;
   if (ConsumePosition(range, context, unitless, threeValuePosition, result_x,
@@ -982,7 +982,7 @@ static CSSPrimitiveValue* ConsumeGradientAngleOrPercent(
     UnitlessQuirk) {
   const CSSParserToken& token = range.Peek();
   if (token.GetType() == kDimensionToken || token.GetType() == kNumberToken) {
-    return ConsumeAngle(range, context, WTF::Optional<WebFeature>());
+    return ConsumeAngle(range, context, base::Optional<WebFeature>());
   }
   if (token.GetType() == kPercentageToken)
     return ConsumePercent(range, value_range);
@@ -1226,7 +1226,7 @@ static CSSValue* ConsumeConicGradient(CSSParserTokenRange& args,
   const CSSPrimitiveValue* from_angle = nullptr;
   if (ConsumeIdent<CSSValueFrom>(args)) {
     if (!(from_angle =
-              ConsumeAngle(args, context, WTF::Optional<WebFeature>())))
+              ConsumeAngle(args, context, base::Optional<WebFeature>())))
       return nullptr;
   }
 

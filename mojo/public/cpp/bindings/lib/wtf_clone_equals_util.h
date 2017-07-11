@@ -10,7 +10,6 @@
 #include "mojo/public/cpp/bindings/clone_traits.h"
 #include "mojo/public/cpp/bindings/equals_traits.h"
 #include "third_party/WebKit/Source/platform/wtf/HashMap.h"
-#include "third_party/WebKit/Source/platform/wtf/Optional.h"
 #include "third_party/WebKit/Source/platform/wtf/Vector.h"
 #include "third_party/WebKit/Source/platform/wtf/text/WTFString.h"
 

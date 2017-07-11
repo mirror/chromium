@@ -117,14 +117,14 @@ WTF::Optional<LayoutUnit> CalculateFragmentationOffset(
     return parent_space.FragmentainerSpaceAvailable() - origin_block_offset;
   }
 
-  return WTF::nullopt;
+  return base::nullopt;
 }
 
 // Creates a constraint space for an unpositioned float.
 RefPtr<NGConstraintSpace> CreateConstraintSpaceForFloat(
     const NGUnpositionedFloat& unpositioned_float,
     NGConstraintSpace* parent_space,
-    WTF::Optional<LayoutUnit> fragmentation_offset = WTF::nullopt) {
+    WTF::Optional<LayoutUnit> fragmentation_offset = base::nullopt) {
   const ComputedStyle& style = unpositioned_float.node.Style();
 
   NGConstraintSpaceBuilder builder(parent_space);

@@ -5,6 +5,7 @@
 #include "modules/mediasession/MediaSession.h"
 
 #include <memory>
+#include "base/optional.h"
 #include "bindings/modules/v8/MediaSessionActionHandler.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
@@ -12,7 +13,6 @@
 #include "core/frame/LocalFrame.h"
 #include "modules/mediasession/MediaMetadata.h"
 #include "modules/mediasession/MediaMetadataSanitizer.h"
-#include "platform/wtf/Optional.h"
 #include "public/platform/Platform.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
@@ -53,7 +53,7 @@ const AtomicString& MojomActionToActionName(MediaSessionAction action) {
   return WTF::g_empty_atom;
 }
 
-WTF::Optional<MediaSessionAction> ActionNameToMojomAction(
+base::Optional<MediaSessionAction> ActionNameToMojomAction(
     const String& action_name) {
   if ("play" == action_name)
     return MediaSessionAction::PLAY;
@@ -69,7 +69,7 @@ WTF::Optional<MediaSessionAction> ActionNameToMojomAction(
     return MediaSessionAction::SEEK_FORWARD;
 
   NOTREACHED();
-  return WTF::nullopt;
+  return base::nullopt;
 }
 
 const AtomicString& MediaSessionPlaybackStateToString(

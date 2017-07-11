@@ -5,12 +5,12 @@
 #ifndef NGLengthUtils_h
 #define NGLengthUtils_h
 
+#include "base/optional.h"
 #include "core/CoreExport.h"
 #include "core/layout/ng/geometry/ng_box_strut.h"
 #include "core/layout/ng/ng_min_max_content_size.h"
 #include "core/layout/ng/ng_writing_mode.h"
 #include "platform/text/TextDirection.h"
-#include "platform/wtf/Optional.h"
 
 namespace blink {
 class ComputedStyle;
@@ -47,7 +47,7 @@ CORE_EXPORT bool NeedMinMaxContentSizeForContentContribution(
 CORE_EXPORT LayoutUnit
 ResolveInlineLength(const NGConstraintSpace&,
                     const ComputedStyle&,
-                    const WTF::Optional<MinMaxContentSize>&,
+                    const base::Optional<MinMaxContentSize>&,
                     const Length&,
                     LengthResolveType);
 
@@ -68,7 +68,7 @@ CORE_EXPORT LayoutUnit ResolveBlockLength(const NGConstraintSpace&,
 // Also, the min/max contribution does include the inline margins as well.
 CORE_EXPORT MinMaxContentSize
 ComputeMinAndMaxContentContribution(const ComputedStyle&,
-                                    const WTF::Optional<MinMaxContentSize>&);
+                                    const base::Optional<MinMaxContentSize>&);
 
 // Resolves the given length to a layout unit, constraining it by the min
 // logical width and max logical width properties from the ComputedStyle
@@ -76,7 +76,7 @@ ComputeMinAndMaxContentContribution(const ComputedStyle&,
 CORE_EXPORT LayoutUnit
 ComputeInlineSizeForFragment(const NGConstraintSpace&,
                              const ComputedStyle&,
-                             const WTF::Optional<MinMaxContentSize>&);
+                             const base::Optional<MinMaxContentSize>&);
 
 // Resolves the given length to a layout unit, constraining it by the min
 // logical height and max logical height properties from the ComputedStyle
@@ -124,8 +124,8 @@ CORE_EXPORT void ApplyAutoMargins(const NGConstraintSpace&,
                                   NGBoxStrut* margins);
 
 CORE_EXPORT LayoutUnit ConstrainByMinMax(LayoutUnit length,
-                                         Optional<LayoutUnit> min,
-                                         Optional<LayoutUnit> max);
+                                         base::Optional<LayoutUnit> min,
+                                         base::Optional<LayoutUnit> max);
 
 // Returns scrollbar sizes or this layout object.
 NGBoxStrut GetScrollbarSizes(const LayoutObject*);

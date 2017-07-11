@@ -8,7 +8,7 @@
 #include "core/CoreExport.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/LayoutUnit.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 
@@ -18,7 +18,7 @@ struct NGLogicalOffset;
 
 // Gets the clearance offset based on the provided {@code clear_type} and list
 // of exclusions that represent left/right float.
-CORE_EXPORT WTF::Optional<LayoutUnit> GetClearanceOffset(
+CORE_EXPORT base::Optional<LayoutUnit> GetClearanceOffset(
     const std::shared_ptr<NGExclusions>& exclusions,
     EClear clear_type);
 
@@ -30,7 +30,7 @@ bool ShouldShrinkToFit(const ComputedStyle& parent_style,
 
 // Adjusts {@code offset} to the clearance line.
 CORE_EXPORT void AdjustToClearance(
-    const WTF::Optional<LayoutUnit>& clearance_offset,
+    const base::Optional<LayoutUnit>& clearance_offset,
     NGLogicalOffset* offset);
 
 }  // namespace blink

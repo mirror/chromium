@@ -13,7 +13,7 @@
 #include "core/paint/PaintTiming.h"
 #include "core/paint/SVGPaintContext.h"
 #include "core/svg/SVGSVGElement.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 

@@ -25,8 +25,8 @@
 
 #include "platform/wtf/Vector.h"
 
+#include "base/optional.h"
 #include "platform/wtf/HashSet.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/WTFString.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -665,7 +665,7 @@ TEST(VectorTest, InitializerList) {
 }
 
 TEST(VectorTest, Optional) {
-  Optional<Vector<int>> vector;
+  base::Optional<Vector<int>> vector;
   EXPECT_FALSE(vector);
   vector.emplace(3);
   EXPECT_TRUE(vector);

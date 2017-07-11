@@ -24,7 +24,7 @@
 #include "platform/graphics/paint/PaintRecord.h"
 #include "platform/graphics/paint/PaintRecorder.h"
 #include "platform/graphics/paint/PaintShader.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 #include "third_party/skia/include/effects/SkGradientShader.h"
 
 namespace blink {

@@ -26,7 +26,7 @@ ServiceWorkerInstalledScriptsManager::GetScriptData(const KURL& script_url) {
       raw_script_data = manager_->GetRawScriptData(script_url);
 
   if (!raw_script_data)
-    return WTF::nullopt;
+    return base::nullopt;
 
   // This is from WorkerScriptLoader::DidReceiveData.
   std::unique_ptr<TextResourceDecoder> decoder;

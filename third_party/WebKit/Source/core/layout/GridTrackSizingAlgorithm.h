@@ -11,7 +11,7 @@
 #include "core/style/GridTrackSize.h"
 #include "platform/LayoutUnit.h"
 #include "platform/wtf/HashSet.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 

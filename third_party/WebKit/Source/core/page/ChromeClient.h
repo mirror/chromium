@@ -40,7 +40,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 #include "platform/wtf/Vector.h"
 #include "public/platform/BlameContext.h"
 #include "public/platform/WebDragOperation.h"
@@ -191,8 +191,8 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void SetCursorForPlugin(const WebCursorInfo&, LocalFrame*) = 0;
 
   // Returns a custom visible content rect if a viewport override is active.
-  virtual WTF::Optional<IntRect> VisibleContentRectForPainting() const {
-    return WTF::nullopt;
+  virtual base::Optional<IntRect> VisibleContentRectForPainting() const {
+    return base::nullopt;
   }
 
   virtual void DispatchViewportPropertiesDidChange(

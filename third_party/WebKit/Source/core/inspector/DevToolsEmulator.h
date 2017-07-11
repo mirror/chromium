@@ -9,7 +9,7 @@
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 #include "public/platform/PointerProperties.h"
 #include "public/platform/WebFloatPoint.h"
 #include "public/platform/WebViewportStyle.h"
@@ -62,7 +62,7 @@ class CORE_EXPORT DevToolsEmulator final
 
   // Returns a custom visible content rect if a viewport override is active.
   // This ensures that all content inside the forced viewport is painted.
-  WTF::Optional<IntRect> VisibleContentRectForPainting() const;
+  base::Optional<IntRect> VisibleContentRectForPainting() const;
 
  private:
   explicit DevToolsEmulator(WebViewBase*);
@@ -89,7 +89,7 @@ class CORE_EXPORT DevToolsEmulator final
     double scale;
     bool original_visual_viewport_masking;
   };
-  WTF::Optional<ViewportOverride> viewport_override_;
+  base::Optional<ViewportOverride> viewport_override_;
 
   bool is_overlay_scrollbars_enabled_;
   bool is_orientation_event_enabled_;

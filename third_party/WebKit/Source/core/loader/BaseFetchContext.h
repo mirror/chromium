@@ -12,7 +12,7 @@
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/ReferrerPolicy.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 #include "public/platform/WebAddressSpace.h"
 
 namespace blink {

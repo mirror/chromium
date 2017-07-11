@@ -5,11 +5,11 @@
 #ifndef MediaControlsOrientationLockDelegate_h
 #define MediaControlsOrientationLockDelegate_h
 
+#include "base/optional.h"
 #include "core/events/EventListener.h"
 #include "device/screen_orientation/public/interfaces/screen_orientation.mojom-blink.h"
 #include "modules/ModulesExport.h"
 #include "platform/WebTaskRunner.h"
-#include "platform/wtf/Optional.h"
 #include "public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
 
 namespace blink {
@@ -133,7 +133,7 @@ class MediaControlsOrientationLockDelegate final : public EventListener {
 
   device::mojom::blink::ScreenOrientationListenerPtr monitor_;
 
-  WTF::Optional<bool> is_auto_rotate_enabled_by_user_override_for_testing_;
+  base::Optional<bool> is_auto_rotate_enabled_by_user_override_for_testing_;
 
   // `video_element_` owns MediaControlsImpl that owns |this|.
   Member<HTMLVideoElement> video_element_;

@@ -8,12 +8,12 @@
 #ifndef RuntimeCallStats_h
 #define RuntimeCallStats_h
 
+#include "base/optional.h"
 #include "platform/PlatformExport.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/Time.h"
 #include "platform/wtf/text/WTFString.h"
 #include "v8/include/v8.h"
@@ -108,7 +108,7 @@ class PLATFORM_EXPORT RuntimeCallTimer {
   }
 
 #define RUNTIME_CALL_TIMER_SCOPE_WITH_RCS(runtime_call_stats, counterId)  \
-  Optional<RuntimeCallTimerScope> rcs_scope;                              \
+  base::Optional<RuntimeCallTimerScope> rcs_scope;                        \
   if (UNLIKELY(RuntimeEnabledFeatures::BlinkRuntimeCallStatsEnabled())) { \
     rcs_scope.emplace(runtime_call_stats, counterId);                     \
   }
@@ -133,7 +133,7 @@ class PLATFORM_EXPORT RuntimeCallTimer {
   RUNTIME_CALL_TIMER_SCOPE_WITH_RCS(RuntimeCallStats::From(isolate), counterId)
 
 #define RUNTIME_CALL_TIMER_SCOPE_IF_ISOLATE_EXISTS(isolate, counterId) \
-  Optional<RuntimeCallTimerScope> rcs_scope;                           \
+  base::Optional<RuntimeCallTimerScope> rcs_scope;                     \
   if (isolate) {                                                       \
     RUNTIME_CALL_TIMER_SCOPE_WITH_OPTIONAL_RCS(                        \
         rcs_scope, RuntimeCallStats::From(isolate), counterId)         \

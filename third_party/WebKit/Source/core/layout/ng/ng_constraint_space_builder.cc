@@ -193,9 +193,9 @@ RefPtr<NGConstraintSpace> NGConstraintSpaceBuilder::ToConstraintSpace(
   NGLogicalOffset bfc_offset = is_new_fc_ ? NGLogicalOffset() : bfc_offset_;
   NGMarginStrut margin_strut = is_new_fc_ ? NGMarginStrut() : margin_strut_;
   WTF::Optional<LayoutUnit> clearance_offset =
-      is_new_fc_ ? WTF::nullopt : clearance_offset_;
+      is_new_fc_ ? base::nullopt : clearance_offset_;
   WTF::Optional<NGLogicalOffset> floats_bfc_offset =
-      is_new_fc_ ? WTF::nullopt : floats_bfc_offset_;
+      is_new_fc_ ? base::nullopt : floats_bfc_offset_;
 
   // The inline_offsets of the bfc_offset and floats_bfc_offset should match.
   if (floats_bfc_offset)

@@ -37,7 +37,7 @@
 #include "platform/Timer.h"
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/heap/Handle.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {

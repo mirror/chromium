@@ -8,7 +8,7 @@
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 
@@ -55,10 +55,10 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
 
   NGConstraintSpaceBuilder& SetBfcOffset(const NGLogicalOffset& bfc_offset);
   NGConstraintSpaceBuilder& SetFloatsBfcOffset(
-      const WTF::Optional<NGLogicalOffset>& floats_bfc_offset);
+      const base::Optional<NGLogicalOffset>& floats_bfc_offset);
 
   NGConstraintSpaceBuilder& SetClearanceOffset(
-      const WTF::Optional<LayoutUnit>& clearance_offset);
+      const base::Optional<LayoutUnit>& clearance_offset);
 
   // Creates a new constraint space. This may be called multiple times, for
   // example the constraint space will be different for a child which:
@@ -91,9 +91,9 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
 
   NGMarginStrut margin_strut_;
   NGLogicalOffset bfc_offset_;
-  WTF::Optional<NGLogicalOffset> floats_bfc_offset_;
+  base::Optional<NGLogicalOffset> floats_bfc_offset_;
   std::shared_ptr<NGExclusions> exclusions_;
-  WTF::Optional<LayoutUnit> clearance_offset_;
+  base::Optional<LayoutUnit> clearance_offset_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
 };
 

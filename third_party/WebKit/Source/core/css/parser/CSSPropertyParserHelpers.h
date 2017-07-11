@@ -14,7 +14,7 @@
 #include "core/frame/UseCounter.h"
 #include "platform/Length.h"  // For ValueRange
 #include "platform/heap/Handle.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 
@@ -60,7 +60,7 @@ CSSPrimitiveValue* ConsumeLengthOrPercent(
 
 CSSPrimitiveValue* ConsumeAngle(CSSParserTokenRange&,
                                 const CSSParserContext&,
-                                WTF::Optional<WebFeature> unitlessZeroFeature);
+                                base::Optional<WebFeature> unitlessZeroFeature);
 CSSPrimitiveValue* ConsumeTime(CSSParserTokenRange&, ValueRange);
 CSSPrimitiveValue* ConsumeResolution(CSSParserTokenRange&);
 
@@ -87,11 +87,11 @@ CSSValue* ConsumeLineWidth(CSSParserTokenRange&, CSSParserMode, UnitlessQuirk);
 CSSValuePair* ConsumePosition(CSSParserTokenRange&,
                               const CSSParserContext&,
                               UnitlessQuirk,
-                              WTF::Optional<WebFeature> threeValuePosition);
+                              base::Optional<WebFeature> threeValuePosition);
 bool ConsumePosition(CSSParserTokenRange&,
                      const CSSParserContext&,
                      UnitlessQuirk,
-                     WTF::Optional<WebFeature> threeValuePosition,
+                     base::Optional<WebFeature> threeValuePosition,
                      CSSValue*& result_x,
                      CSSValue*& result_y);
 bool ConsumeOneOrTwoValuedPosition(CSSParserTokenRange&,

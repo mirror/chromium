@@ -5,9 +5,9 @@
 #ifndef ClipPathClipper_h
 #define ClipPathClipper_h
 
+#include "base/optional.h"
 #include "platform/graphics/paint/ClipPathRecorder.h"
 #include "platform/graphics/paint/CompositingRecorder.h"
-#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -51,11 +51,9 @@ class ClipPathClipper {
   const LayoutObject& layout_object_;
   GraphicsContext& context_;
 
-  // TODO(pdr): This pattern should be cleaned up so that the recorders are just
-  // on the stack.
-  Optional<ClipPathRecorder> clip_path_recorder_;
-  Optional<CompositingRecorder> mask_clip_recorder_;
-  Optional<CompositingRecorder> mask_content_recorder_;
+  base::Optional<ClipPathRecorder> clip_path_recorder_;
+  base::Optional<CompositingRecorder> mask_clip_recorder_;
+  base::Optional<CompositingRecorder> mask_content_recorder_;
 };
 
 }  // namespace blink

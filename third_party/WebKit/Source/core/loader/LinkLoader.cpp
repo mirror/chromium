@@ -236,7 +236,7 @@ static void PreconnectIfNeeded(
   }
 }
 
-WTF::Optional<Resource::Type> LinkLoader::GetResourceTypeFromAsAttribute(
+base::Optional<Resource::Type> LinkLoader::GetResourceTypeFromAsAttribute(
     const String& as) {
   DCHECK_EQ(as.DeprecatedLower(), as);
   if (as == "image") {
@@ -256,7 +256,7 @@ WTF::Optional<Resource::Type> LinkLoader::GetResourceTypeFromAsAttribute(
   } else if (as == "fetch") {
     return Resource::kRaw;
   }
-  return WTF::nullopt;
+  return base::nullopt;
 }
 
 Resource* LinkLoader::GetResourceForTesting() {
@@ -328,7 +328,7 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
     UseCounter::Count(document, WebFeature::kLinkHeaderPreload);
   Optional<Resource::Type> resource_type =
       LinkLoader::GetResourceTypeFromAsAttribute(as);
-  if (resource_type == WTF::nullopt) {
+  if (resource_type == base::nullopt) {
     document.AddConsoleMessage(ConsoleMessage::Create(
         kOtherMessageSource, kWarningMessageLevel,
         String("<link rel=preload> must have a valid `as` value")));

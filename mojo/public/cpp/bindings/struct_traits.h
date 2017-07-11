@@ -47,8 +47,8 @@ namespace mojo {
 //          Value of any type that has an EnumTraits defined.
 //
 //      For any nullable string/struct/array/map/union field you could also
-//      return value or reference of base::Optional<T>/WTF::Optional<T>, if T
-//      has the right *Traits defined.
+//      return value or reference of base::Optional<T>, if T has the right
+//      *Traits defined.
 //
 //      During serialization, getters for string/struct/array/map/union fields
 //      are called twice (one for size calculation and one for actual

@@ -324,7 +324,7 @@ BlobDataHandle::BlobDataHandle(std::unique_ptr<BlobData> data, long long size)
               current_memory_population += item.data->length();
             } else if (bytes_element->embedded_data) {
               current_memory_population -= bytes_element->embedded_data->size();
-              bytes_element->embedded_data = WTF::nullopt;
+              bytes_element->embedded_data = base::nullopt;
             }
             last_bytes_provider->AppendData(item.data);
           } else {
@@ -338,7 +338,7 @@ BlobDataHandle::BlobDataHandle(std::unique_ptr<BlobData> data, long long size)
                                   MakeRequest(&bytes_provider))
                     ->impl());
             DataElementBytesPtr bytes_element = DataElementBytes::New(
-                item.data->length(), WTF::nullopt, std::move(bytes_provider));
+                item.data->length(), base::nullopt, std::move(bytes_provider));
             if (should_embed_bytes) {
               bytes_element->embedded_data = Vector<uint8_t>();
               bytes_element->embedded_data->Append(item.data->data(),

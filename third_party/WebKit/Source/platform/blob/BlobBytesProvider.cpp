@@ -117,7 +117,7 @@ void BlobBytesProvider::RequestAsFile(uint64_t source_offset,
   // TODO(mek): Make sure this code runs on a thread that is allowed to do
   // file IO.
   if (!file.IsValid()) {
-    std::move(callback).Run(WTF::nullopt);
+    std::move(callback).Run(base::nullopt);
     return;
   }
 
@@ -126,7 +126,7 @@ void BlobBytesProvider::RequestAsFile(uint64_t source_offset,
   bool seek_failed = seek_distance < 0;
   if (seek_failed) {
     // TODO(mek): Log histogram Storage.Blob.RendererFileSeekFailed.
-    std::move(callback).Run(WTF::nullopt);
+    std::move(callback).Run(base::nullopt);
     return;
   }
 
@@ -160,7 +160,7 @@ void BlobBytesProvider::RequestAsFile(uint64_t source_offset,
       bool write_failed = actual_written < 0;
       if (write_failed) {
         // TODO(mek): Log histogram Storage.Blob.RendererFileWriteFailed
-        std::move(callback).Run(WTF::nullopt);
+        std::move(callback).Run(base::nullopt);
         return;
       }
       written += actual_written;
@@ -170,12 +170,12 @@ void BlobBytesProvider::RequestAsFile(uint64_t source_offset,
   }
 
   if (!file.Flush()) {
-    std::move(callback).Run(WTF::nullopt);
+    std::move(callback).Run(base::nullopt);
     return;
   }
   base::File::Info info;
   if (!file.GetInfo(&info)) {
-    std::move(callback).Run(WTF::nullopt);
+    std::move(callback).Run(base::nullopt);
     return;
   }
   std::move(callback).Run(info.last_modified);

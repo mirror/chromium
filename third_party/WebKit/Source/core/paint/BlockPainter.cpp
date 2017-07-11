@@ -23,7 +23,7 @@
 #include "core/paint/ScrollableAreaPainter.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/ClipRecorder.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 

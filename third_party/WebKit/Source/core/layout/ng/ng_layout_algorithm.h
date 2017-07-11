@@ -10,7 +10,7 @@
 #include "core/layout/ng/ng_fragment_builder.h"
 #include "core/layout/ng/ng_min_max_content_size.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 
 namespace blink {
 
@@ -45,7 +45,7 @@ class CORE_EXPORT NGLayoutAlgorithm {
   // this value from the overflow rect returned from Layout called with an
   // available width of 0 and LayoutUnit::max(), respectively.
   virtual Optional<MinMaxContentSize> ComputeMinMaxContentSize() const {
-    return WTF::nullopt;
+    return base::nullopt;
   }
 
  protected:

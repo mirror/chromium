@@ -15,7 +15,7 @@
 #include "core/layout/ng/ng_writing_mode.h"
 #include "platform/heap/Handle.h"
 #include "platform/text/TextDirection.h"
-#include "platform/wtf/Optional.h"
+#include "base/optional.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -143,7 +143,7 @@ class CORE_EXPORT NGConstraintSpace final
   //
   // This value is calculated *after* an initial pass of the tree, this value
   // should only be present during the second pass.
-  WTF::Optional<NGLogicalOffset> FloatsBfcOffset() const {
+  base::Optional<NGLogicalOffset> FloatsBfcOffset() const {
     return floats_bfc_offset_;
   }
 
@@ -151,7 +151,7 @@ class CORE_EXPORT NGConstraintSpace final
     return unpositioned_floats_;
   }
 
-  WTF::Optional<LayoutUnit> ClearanceOffset() const {
+  base::Optional<LayoutUnit> ClearanceOffset() const {
     return clearance_offset_;
   }
 
@@ -179,10 +179,10 @@ class CORE_EXPORT NGConstraintSpace final
                     bool is_anonymous,
                     const NGMarginStrut& margin_strut,
                     const NGLogicalOffset& bfc_offset,
-                    const WTF::Optional<NGLogicalOffset>& floats_bfc_offset,
+                    const base::Optional<NGLogicalOffset>& floats_bfc_offset,
                     const std::shared_ptr<NGExclusions>& exclusions,
                     Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
-                    const WTF::Optional<LayoutUnit>& clearance_offset);
+                    const base::Optional<LayoutUnit>& clearance_offset);
 
   NGPhysicalSize InitialContainingBlockSize() const {
     return initial_containing_block_size_;
@@ -215,10 +215,10 @@ class CORE_EXPORT NGConstraintSpace final
 
   NGMarginStrut margin_strut_;
   NGLogicalOffset bfc_offset_;
-  WTF::Optional<NGLogicalOffset> floats_bfc_offset_;
+  base::Optional<NGLogicalOffset> floats_bfc_offset_;
 
   const std::shared_ptr<NGExclusions> exclusions_;
-  WTF::Optional<LayoutUnit> clearance_offset_;
+  base::Optional<LayoutUnit> clearance_offset_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
 };
 

@@ -172,9 +172,9 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
   bool Outdated() { return outdated_; }
 
   CompositorAnimations::FailureCode CheckCanStartAnimationOnCompositor(
-      const Optional<CompositorElementIdSet>& composited_element_ids) const;
+      const base::Optional<CompositorElementIdSet>& composited_element_ids) const;
   void StartAnimationOnCompositor(
-      const Optional<CompositorElementIdSet>& composited_element_ids);
+      const base::Optional<CompositorElementIdSet>& composited_element_ids);
   void CancelAnimationOnCompositor();
   void RestartAnimationOnCompositor();
   void CancelIncompatibleAnimationsOnCompositor();
@@ -192,7 +192,7 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
   // Returns whether we should continue with the commit for this animation or
   // wait until next commit.
   bool PreCommit(int compositor_group,
-                 const Optional<CompositorElementIdSet>&,
+                 const base::Optional<CompositorElementIdSet>&,
                  bool start_on_compositor);
   void PostCommit(double timeline_time);
 
@@ -236,7 +236,7 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
   void EndUpdatingState();
 
   CompositorAnimations::FailureCode CheckCanStartAnimationOnCompositorInternal(
-      const Optional<CompositorElementIdSet>&) const;
+      const base::Optional<CompositorElementIdSet>&) const;
   void CreateCompositorPlayer();
   void DestroyCompositorPlayer();
   void AttachCompositorTimeline();

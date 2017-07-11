@@ -126,7 +126,7 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   // @return Fragment's offset relative to the fragment's parent.
   NGLogicalOffset CalculateLogicalOffset(
       const NGBoxStrut& child_margins,
-      const WTF::Optional<NGLogicalOffset>& known_fragment_offset);
+      const base::Optional<NGLogicalOffset>& known_fragment_offset);
 
   NGLogicalSize child_available_size_;
   NGLogicalSize child_percentage_size_;

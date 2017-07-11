@@ -100,7 +100,7 @@ class CORE_EXPORT NGLineBreaker {
   unsigned item_index_;
   unsigned offset_;
   LayoutUnit position_;
-  WTF::Optional<NGLayoutOpportunity> opportunity_;
+  base::Optional<NGLayoutOpportunity> opportunity_;
   NGLogicalOffset content_offset_;
   LazyLineBreakIterator break_iterator_;
   HarfBuzzShaper shaper_;

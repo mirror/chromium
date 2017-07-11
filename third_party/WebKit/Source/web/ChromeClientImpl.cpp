@@ -33,6 +33,7 @@
 
 #include <memory>
 
+#include "base/optional.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "build/build_config.h"
 #include "core/HTMLNames.h"
@@ -81,7 +82,6 @@
 #include "platform/graphics/TouchAction.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/CharacterNames.h"
@@ -449,7 +449,7 @@ WebScreenInfo ChromeClientImpl::GetScreenInfo() const {
                              : WebScreenInfo();
 }
 
-WTF::Optional<IntRect> ChromeClientImpl::VisibleContentRectForPainting() const {
+base::Optional<IntRect> ChromeClientImpl::VisibleContentRectForPainting() const {
   return web_view_->GetDevToolsEmulator()->VisibleContentRectForPainting();
 }
 
