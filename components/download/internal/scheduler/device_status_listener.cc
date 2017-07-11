@@ -10,6 +10,11 @@ namespace download {
 
 namespace {
 
+// The default delay to notify the observer when network changes from
+// disconnected to connected.
+const base::TimeDelta kNotifyNetworkOnlineDelay =
+    base::TimeDelta::FromSeconds(5);
+
 // Converts |on_battery_power| to battery status.
 BatteryStatus ToBatteryStatus(bool on_battery_power) {
   return on_battery_power ? BatteryStatus::NOT_CHARGING
@@ -38,7 +43,10 @@ NetworkStatus ToNetworkStatus(net::NetworkChangeNotifier::ConnectionType type) {
 }  // namespace
 
 DeviceStatusListener::DeviceStatusListener()
-    : observer_(nullptr), listening_(false) {}
+    : DeviceStatusListener(kNotifyNetworkOnlineDelay) {}
+
+DeviceStatusListener::DeviceStatusListener(const base::TimeDelta& delay)
+    : observer_(nullptr), listening_(false), delay_(delay) {}
 
 DeviceStatusListener::~DeviceStatusListener() {
   Stop();
@@ -83,8 +91,21 @@ void DeviceStatusListener::Stop() {
 void DeviceStatusListener::OnConnectionTypeChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
   NetworkStatus new_status = ToNetworkStatus(type);
-  if (status_.network_status != new_status) {
-    status_.network_status = new_status;
+  if (status_.network_status == new_status)
+    return;
+
+  bool change_to_online =
+      (status_.network_status == NetworkStatus::DISCONNECTED) &&
+      (new_status != NetworkStatus::DISCONNECTED);
+  status_.network_status = new_status;
+
+  if (change_to_online) {
+    // It's unreliable to send requests immediately after the network changes
+    // from disconnected to connected, notify the observer after a delay.
+    timer_.Start(FROM_HERE, delay_, this,
+                 &DeviceStatusListener::NotifyStatusChange);
+  } else {
+    timer_.Stop();
     NotifyStatusChange();
   }
 }
