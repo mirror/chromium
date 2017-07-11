@@ -516,11 +516,14 @@ void XcodeWriter::CreateProductsProject(
               0, target_name.rfind(kXCTestModuleTargetNamePostfix));
         }
 
-        // Test files need to be known to Xcode for proper indexing and for
-        // discovery of tests function for XCTest, but the compilation is done
-        // via ninja and thus must prevent Xcode from linking object files via
-        // this hack.
-        PBXAttributes extra_attributes;
+        PBXAttributes extra_attributes =
+            target->bundle_data().extra_attributes();
+
+        // TODO(crbug.com/740800): Remove the following comment and code once
+        // the bug is fixed and gn has rolled past it. Test files need to be
+        // known to Xcode for proper indexing and for discovery of tests
+        // function for XCTest, but the compilation is done via ninja and thus
+        // must prevent Xcode from linking object files via this hack.
         if (IsXCTestModuleTarget(target)) {
           extra_attributes["OTHER_LDFLAGS"] = "-help";
           extra_attributes["ONLY_ACTIVE_ARCH"] = "YES";
