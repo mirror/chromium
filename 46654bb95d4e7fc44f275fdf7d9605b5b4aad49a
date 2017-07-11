@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "5aae783e_f51f9ef5",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "capital E.",
+      "range": {
+        "startLine": 396,
+        "startChar": 18,
+        "endLine": 396,
+        "endChar": 19
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd05adc_552e4b41",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "s\\false\\/*is_resubscribe\u003d*/false\n\notherwise one has to look up the parameter in order to understand the code.",
+      "range": {
+        "startLine": 67,
+        "startChar": 44,
+        "endLine": 67,
+        "endChar": 49
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e625a4_9723bafd",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "You may consider always capitalize the first letter of TODOs, because everyone else does this in other files.",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c7b1ef_4704702f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "What if not?",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 24
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2860159_26be16b3",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "s\\token, token\\/*old_token\u003d*/token, /*new_token\u003d*/token\n\nOtherwise the code is confusing.",
+      "range": {
+        "startLine": 80,
+        "startChar": 41,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14e1e23_b1155c9f",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "Using callback to check whether request is running is confusing to me. For example, I do not understand why this DCHECK does not always fail, because the only place where callback is initialized is here and by default is_null is (I presume) true.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 78
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095b6689_31cf9b1b",
         "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
         "patchSetId": 3
@@ -13,6 +151,52 @@
       "writtenOn": "2017-07-11T08:50:01Z",
       "side": 1,
       "message": "Should the callback also be reset?",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da59733b_ba7c8af9",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "This is not \"sending\" yet, rather building.",
+      "range": {
+        "startLine": 84,
+        "startChar": 14,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d400551_2d52eaa8",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "s/obtain/obtained",
+      "range": {
+        "startLine": 57,
+        "startChar": 30,
+        "endLine": 57,
+        "endChar": 36
+      },
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +289,236 @@
     },
     {
       "key": {
+        "uuid": "4d88cb8f_14934f3f",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "s\\std::string{}\\/*access_token\u003d*/std::string{}\n\nAlso you should use std::string() instead of an empty initializer list.\nSee https://sites.google.com/a/chromium.org/dev/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7dfa9fa_b4d8e81a",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "Currently this member variable is used as a way to pass parameters through multiple async calls. \n\nHave you considered not using a variable and passing the value explicitly as a parameter?\nPossible advantages:\n1) Easier to follow the data flow and see the source of a given value.\n2) If there are multiple calls in a row, the value won\u0027t be corrupted.",
+      "range": {
+        "startLine": 72,
+        "startChar": 19,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3fbc74_5c987f5b",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "scopes \u003d {kConte...\n\n\nsee https://sites.google.com/a/chromium.org/dev/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 66
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20009c5b_a9521c4a",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "\"In case of error we will retry\"",
+      "range": {
+        "startLine": 108,
+        "startChar": 23,
+        "endLine": 108,
+        "endChar": 33
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e29909_b1427502",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "You should choose \"re-subscribe\" or \"resubscribe\" and stick to it.",
+      "range": {
+        "startLine": 125,
+        "startChar": 45,
+        "endLine": 125,
+        "endChar": 57
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cececfb_9368e383",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "What if there is an ongoing subscription request?\nIs it guaranteed that if the client calls Subscribe and Unsubscribe immediately, the order of actions will be preserved?",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 3
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304d445a_5523618e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "I am confused. This is not used. Why do you to store it?",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 32
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0029c9_7978ac25",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "Not needed.\n\nBut also you have a member subscription_token_, why?",
+      "range": {
+        "startLine": 159,
+        "startChar": 32,
+        "endLine": 159,
+        "endChar": 33
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365c0884_6af6bf79",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "NeedsToResubscribe?",
+      "range": {
+        "startLine": 164,
+        "startChar": 26,
+        "endLine": 164,
+        "endChar": 42
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875ffbb1_f5058f6e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "Why do you need this at all? Isn\u0027t it equal to subscription_token_?",
+      "range": {
+        "startLine": 173,
+        "startChar": 38,
+        "endLine": 173,
+        "endChar": 66
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb41c966_38b73525",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -174,6 +588,52 @@
     },
     {
       "key": {
+        "uuid": "fdb8e761_c82879b9",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": ".",
+      "range": {
+        "startLine": 205,
+        "startChar": 38,
+        "endLine": 205,
+        "endChar": 39
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437c57ec_5eb7ebe5",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "Now you start to have multiple tokens and it is important to keep things explicit. E.g. in this case token_service may be perceived as subscription_token_service_, so please rename it to e.g. access_token_service_.",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99932bba_a532a418",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
         "patchSetId": 3
@@ -185,6 +645,29 @@
       "writtenOn": "2017-07-11T08:50:01Z",
       "side": 1,
       "message": "Would any client of this class ever call this with is_resubscribe\u003dtrue? I\u0027m assuming no, in which case the param shouldn\u0027t be part of the public interface. Instead, you could have an UnsubscribeImpl (or UnsubscribeInternal) which takes the extra param.",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df16a735_576c44fe",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "You shouldn\u0027t expose this publicly. E.g. the client may call Unsubscribe(_, true) inadvertently and break you.\n\nInstead you should make a shared piece private (e.g. UnsubscribeInternal(token, is_resubscribe)) and use it in both subscribe and resubscribe.",
+      "range": {
+        "startLine": 48,
+        "startChar": 45,
+        "endLine": 48,
+        "endChar": 64
+      },
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -207,6 +690,29 @@
         "startChar": 68,
         "endLine": 60,
         "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1a2f66_fdbcb6ef",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 68
       },
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -260,6 +766,144 @@
     },
     {
       "key": {
+        "uuid": "6303242a_4b0ae23f",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "nit: test@email.com?",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e3e96e_1376283a",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "kSubscriptionUrl",
+      "range": {
+        "startLine": 22,
+        "startChar": 18,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bfd211_e1133420",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f949b9dd_f070baba",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "(including helpers below)\n\nThat\u0027s a lot of indirection. I am not sure whether it is worth it. Imagine someone breaking your test indirectly and then encountering all of these. They would have to look up each helper multiple times. \n\nAlso most of them are just one liners.\n\nI would remove all of the helpers except RespondSuccessfully|WithError, but rename them to \"SetFetchResponse\" or something.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 51
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79de00f0_689adb0c",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "ASSERT",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68684473_1df5a633",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "I am not sure what is going on. Shouldn\u0027t the Manager retrieve the URL by itself? Then you would have just to wait for it.\n\nDoes this forces the fetcher to respond to Manager? Is is possible that Manager didn\u0027t fetch yet?",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6c84aab_d2024051",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 3
@@ -276,6 +920,144 @@
         "startChar": 69,
         "endLine": 125,
         "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456e2dfb_10659ed2",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "ASSERT",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 13
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33db72a8_596300f1",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "the order of parameters is \"expected, actual\" (this matters when it fails).",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 11
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1b2688_408aad2f",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "This feels like a private detail. Checking IsSubscribed is fine.",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 80
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a720169_ba73f133",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "What if manager does more than this? You should subscribe first for real using the manager.",
+      "range": {
+        "startLine": 192,
+        "startChar": 1,
+        "endLine": 192,
+        "endChar": 80
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00700c5e_4c03e449",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "the order of parameters is \"expected, actual\" (this matters when it fails).",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 13
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2def91e6_a4176239",
+        "filename": "components/ntp_snippets/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T09:11:02Z",
+      "side": 1,
+      "message": "I am not what is the benefit of using auth.\nIt even may be ambiguous e.g. is_authenticated vs is_authentication.",
+      "range": {
+        "startLine": 88,
+        "startChar": 53,
+        "endLine": 88,
+        "endChar": 60
       },
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
