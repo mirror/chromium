@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "58e0b702_2da5c314",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-11T06:04:32Z",
+      "side": 1,
+      "message": "Pavel: Nick is right. I don\u0027t want to make controller/ a \"catch-all\" directory. That\u0027s why I don\u0027t want to simply rename web/ to controller/.\n\nThe original plan was:\n\n1) Finish moving things in web/ to core/ and modules/.\n2) Introduce controller/.\n3) Move controller-like things back to controller/.\n\nHowever you insisted that we shouldn\u0027t move WebDevToolsAgent to core/ even if it\u0027s tentative, so we\u0027ve decided to introduce controller/ now and move WebDevToolsAgent to it.\n\nOne question: Do you think that all of WebDevToolsAgent should live in controller/?",
+      "parentUuid": "1227a37a_50132aab",
+      "revId": "1782b9d236497fe4f393125626eacf7e2e401ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e46e332e_a2dd7489",
         "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentCore.h",
         "patchSetId": 7
