@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d52b3f_85a7b304",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-11T01:59:01Z",
+      "side": 1,
+      "message": "Clarification: what\u0027s the expected behavior of this case for direct_mode?",
+      "revId": "e88dc75e212c439703c300805eabfa94a37a2b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116cb2b1_42878e8b",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-11T01:59:01Z",
+      "side": 1,
+      "message": "Could you document what \"direct_mode\" is?",
+      "revId": "e88dc75e212c439703c300805eabfa94a37a2b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
