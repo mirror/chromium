@@ -101,10 +101,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_no_stop_waiting_frames, false)
 // Allows one self address change.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_allow_one_address_change, false)
 
-// If true, QUIC BBR stores a max filtered number of bytes delivered at a rate
-// faster than the sending rate.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes, true)
-
 // Support bandwidth resumption in QUIC BBR.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_bandwidth_resumption, false)
 

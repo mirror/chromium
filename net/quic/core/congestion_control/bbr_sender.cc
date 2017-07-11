@@ -285,11 +285,7 @@ void BbrSender::OnCongestionEvent(bool /*rtt_updated*/,
       UpdateRecentlyAcked(event_time, bytes_acked);
     }
 
-    if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes) {
-      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes, 1,
-                        2);
-      UpdateAckAggregationBytes(event_time, bytes_acked);
-    }
+    UpdateAckAggregationBytes(event_time, bytes_acked);
     if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 ||
         FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3) {
       if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2) {
@@ -300,7 +296,6 @@ void BbrSender::OnCongestionEvent(bool /*rtt_updated*/,
         QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3,
                           1, 2);
       }
-      UpdateAckAggregationBytes(event_time, bytes_acked);
       if (unacked_packets_->bytes_in_flight() <=
           1.25 * GetTargetCongestionWindow(pacing_gain_)) {
         bytes_acked_since_queue_drained_ = 0;
@@ -662,11 +657,6 @@ void BbrSender::CalculateCongestionWindow(QuicByteCount bytes_acked) {
   if (rtt_variance_weight_ > 0.f && !BandwidthEstimate().IsZero()) {
     target_window += rtt_variance_weight_ * rtt_stats_->mean_deviation() *
                      BandwidthEstimate();
-  } else if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes &&
-             is_at_full_bandwidth_) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes, 2,
-                      2);
-    target_window += max_ack_height_.GetBest();
   } else if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 &&
              is_at_full_bandwidth_) {
     QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2, 2,
@@ -687,7 +677,10 @@ void BbrSender::CalculateCongestionWindow(QuicByteCount bytes_acked) {
       target_window += 1.5 * max_ack_height_.GetBest() -
                        bytes_acked_since_queue_drained_ / 2;
     }
+  } else if (is_at_full_bandwidth_) {
+    target_window += max_ack_height_.GetBest();
   }
+
   if (FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd) {
     // QUIC doesn't have TSO, but it does have similarly quantized pacing, so
     // allow extra CWND to make QUIC's BBR CWND identical to TCP's.

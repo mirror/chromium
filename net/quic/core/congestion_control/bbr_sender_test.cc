@@ -293,7 +293,6 @@ TEST_F(BbrSenderTest, SimpleTransferSmallBuffer) {
 
 // Test a simple long data transfer with 2 rtts of aggregation.
 TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes) {
-  FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes = true;
   FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 = false;
   FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd = false;
   CreateDefaultSetup();
@@ -320,7 +319,6 @@ TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes) {
 
 // Test a simple long data transfer with 2 rtts of aggregation.
 TEST_F(BbrSenderTest, SimpleTransferAckDecimation) {
-  FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes = true;
   FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 = false;
   // Decrease the CWND gain so extra CWND is required with stretch acks.
   FLAGS_quic_bbr_cwnd_gain = 1.0;
@@ -419,7 +417,6 @@ TEST_F(BbrSenderTest, SimpleTransferAckDecimation2) {
 
 // Test a simple long data transfer with 2 rtts of aggregation.
 TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes3) {
-  FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes = false;
   FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 = false;
   FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3 = true;
   FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd = false;
@@ -447,7 +444,6 @@ TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes3) {
 
 // Test a simple long data transfer with 2 rtts of aggregation.
 TEST_F(BbrSenderTest, SimpleTransferAckDecimation3) {
-  FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes = false;
   FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 = false;
   FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3 = true;
   // Decrease the CWND gain so extra CWND is required with stretch acks.
@@ -486,7 +482,6 @@ TEST_F(BbrSenderTest, SimpleTransferAckDecimation3) {
 // Test a simple long data transfer with 2 rtts of aggregation.
 TEST_F(BbrSenderTest,
        SimpleTransfer2RTTAggregationBytesWithIncreasedInflightLimit) {
-  FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes = false;
   FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd = false;
   FLAGS_quic_reloadable_flag_quic_bbr_slow_recent_delivery = true;
   FLAGS_quic_bbr_slow_delivery_threshold_multiplier = 0.5;
