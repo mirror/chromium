@@ -11,30 +11,17 @@
 @protocol KeyboardAccessoryViewDelegate
 
 // Notifies the delegate that the Voice Search button was pressed.
-- (void)keyboardAccessoryVoiceSearchTouchDown;
+- (void)keyboardAccessoryVoiceSearchTouchDown:(UIView*)view;
 
 // Notifies the delegate that a touch up occured in the the Voice Search button.
-- (void)keyboardAccessoryVoiceSearchTouchUpInside;
+- (void)keyboardAccessoryVoiceSearchTouchUpInside:(UIView*)view;
 
 // Notifies the delegate that a touch up occured in the the Camera Search
 // button.
-- (void)keyboardAccessoryCameraSearchTouchUpInside;
+- (void)keyboardAccessoryCameraSearchTouchUpInside:(UIView*)view;
 
 // Notifies the delegate that a key with the title |title| was pressed.
 - (void)keyPressed:(NSString*)title;
-
-@end
-
-typedef NS_ENUM(NSInteger, KeyboardAccessoryViewMode) {
-  VOICE_SEARCH = 0,
-  KEY_SHORTCUTS
-};
-
-// Protocol the keyboard accessory views must implement.
-@protocol KeyboardAccessoryViewProtocol
-
-// The mode in which the KeyboardAccessoryView is in.
-@property(nonatomic) KeyboardAccessoryViewMode mode;
 
 @end
 
