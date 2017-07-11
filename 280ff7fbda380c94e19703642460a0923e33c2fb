@@ -34,6 +34,24 @@
       "revId": "280ff7fbda380c94e19703642460a0923e33c2fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807e47d4_e02470fa",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-11T05:08:00Z",
+      "side": 1,
+      "message": "Thanks. I\u0027m not sure whether overwriting is expected or incremental configuration is expected to be allowed. This can be and should be discussed on the spec side if under-specified.",
+      "parentUuid": "c86b1a58_f7acf52d",
+      "revId": "280ff7fbda380c94e19703642460a0923e33c2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
