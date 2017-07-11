@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aefcf717_5a9ed1db",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T13:49:06Z",
+      "side": 1,
+      "message": "Shouldn\u0027t safe_sites map to ASYNC_CHECKER?",
+      "range": {
+        "startLine": 499,
+        "startChar": 53,
+        "endLine": 499,
+        "endChar": 0
+      },
+      "revId": "0e5bd2b7d6b95c53cdd2689803e022755ce180d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3d62a2_d6361e11",
+        "filename": "components/supervised_user_error_page/resources/supervised_user_block_interstitial.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T13:49:06Z",
+      "side": 1,
+      "message": "Why don\u0027t we have to check for the domAutomationController anymore here? (When does it exist vs not exist?)",
+      "range": {
+        "startLine": 53,
+        "startChar": 29,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "0e5bd2b7d6b95c53cdd2689803e022755ce180d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

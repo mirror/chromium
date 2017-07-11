@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74d9e6eb_19a3bcea",
+        "filename": "components/supervised_user_error_page/resources/supervised_user_block_interstitial.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T13:49:06Z",
+      "side": 0,
+      "message": "Why was the back button inside the details container?",
+      "revId": "a8283ee78bf919fb2c785d4741c7677bec6a855b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ed6af3_b0b5414b",
+        "filename": "components/supervised_user_error_page/resources/supervised_user_block_interstitial.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T13:49:06Z",
+      "side": 0,
+      "message": "...so, if we don\u0027t want to show details, wouldn\u0027t the more obvious way be to not set \u0027showDetailsLink\u0027?",
+      "range": {
+        "startLine": 88,
+        "startChar": 66,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "a8283ee78bf919fb2c785d4741c7677bec6a855b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
