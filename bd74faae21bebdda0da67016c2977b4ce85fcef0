@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13e97dd4_97e23e39",
+        "filename": "ash/system/ime_menu/ime_menu_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-11T23:11:02Z",
+      "side": 0,
+      "message": "q: Should something still test ShowKeyboardWithKeyset?\n(maybe leave those calls as they were and add a new tap test?)",
+      "revId": "bd74faae21bebdda0da67016c2977b4ce85fcef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33c5a5b_6585ea07",
+        "filename": "ash/system/ime_menu/ime_menu_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-11T23:11:02Z",
+      "side": 0,
+      "message": "q: Should something still test that these are disabled with an uninitialized InputMethodManager?",
+      "revId": "bd74faae21bebdda0da67016c2977b4ce85fcef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
