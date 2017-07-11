@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b92061d_dd2769d0",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-11T18:42:18Z",
+      "side": 1,
+      "message": "Thank you for all the info. I updated the callback to a base::OnceCallback and followed advice to keep unique_ptr instead of ptr which will be deleted.\n\nYes, it makes sense to have a non-null block but have it return null. This is true for Chrome, where the block will return null to use the baked in defaults, but the block will always exist in order to *maybe* pull updates from the variations server.",
+      "parentUuid": "9450b565_80ce72d6",
+      "range": {
+        "startLine": 129,
+        "startChar": 18,
+        "endLine": 129,
+        "endChar": 50
+      },
+      "revId": "3c3b0f59854b1394ece6f6d4ffc27e2b396d743c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95633bc_b897758c",
         "filename": "ios/web/public/app/task_scheduler_init_params_callback.h",
         "patchSetId": 19
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-11T16:26:11Z",
       "side": 1,
       "message": "This callback is only invoked once, so maybe change this to base::OnceCallback (this is better as it ensure that the bound data is deallocated earlier). Caveat: base::OnceCallback is not copiable but is moveable, so you\u0027ll have to change the code to pass the callback by value and use std::move().",
+      "revId": "3c3b0f59854b1394ece6f6d4ffc27e2b396d743c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe413500_3c3de646",
+        "filename": "ios/web/public/app/task_scheduler_init_params_callback.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-11T18:42:18Z",
+      "side": 1,
+      "message": "Thanks for the explanation, I\u0027ve updated this and updated WebMainParams to not be copied by using std::move and unique_ptr. PTAL",
+      "parentUuid": "d95633bc_b897758c",
       "revId": "3c3b0f59854b1394ece6f6d4ffc27e2b396d743c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
