@@ -10,6 +10,7 @@
 #include "base/values.h"
 #include "components/grit/components_resources.h"
 #include "components/grit/components_scaled_resources.h"
+#include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/features.h"
 #include "components/safe_browsing/web_ui/constants.h"
 #include "components/strings/grit/components_strings.h"
@@ -17,7 +18,9 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_message_handler.h"
+
 namespace safe_browsing {
+
 SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
     : content::WebUIController(web_ui) {
   // Set up the chrome://safe-browsing source.
@@ -52,10 +55,21 @@ void SafeBrowsingUIHandler::ExpParamList(const base::ListValue* unused) {
   CallJavascriptFunction("safe_browsing.addExperiment", GetFeatureStatusList());
 }
 
+void SafeBrowsingUIHandler::SbPreferencesList(const base::ListValue* unused) {
+  content::BrowserContext* context =
+      web_ui()->GetWebContents()->GetBrowserContext();
+  AllowJavascript();
+  CallJavascriptFunction("safe_browsing.addPreferences",
+                         safe_browsing::GetSbPreferencesList(context));
+}
+
 void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "expParamList",
       base::Bind(&SafeBrowsingUIHandler::ExpParamList, base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "sbPreferencesList", base::Bind(&SafeBrowsingUIHandler::SbPreferencesList,
+                                      base::Unretained(this)));
 }
 
 SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {}

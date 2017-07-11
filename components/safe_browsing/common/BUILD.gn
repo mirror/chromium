@@ -35,6 +35,8 @@ static_library("safe_browsing_prefs") {
     "//base:base",
     "//components/pref_registry:pref_registry",
     "//components/prefs",
+    "//components/user_prefs:user_prefs",
+    "//content/public/browser",
   ]
 }
 

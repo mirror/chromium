@@ -10,6 +10,7 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/user_prefs/user_prefs.h"
 
 namespace {
 
@@ -468,6 +469,35 @@ void UpdatePrefsBeforeSecurityInterstitial(PrefService* prefs) {
                         ? prefs::kSafeBrowsingSawInterstitialScoutReporting
                         : prefs::kSafeBrowsingSawInterstitialExtendedReporting,
                     true);
+}
+
+// Returns the list of the preferences shown in chrome://safe-browsing.
+base::ListValue GetSbPreferencesList(content::BrowserContext* context) {
+  base::ListValue preferencesList;
+  PrefService* prefs = user_prefs::UserPrefs::Get(context);
+
+  // List of Safe Browsing preferences. Boolean value for each list member
+  // should be set to True if the preference is to be shown at
+  // chrome://safe-browsing page, or to False otherwise.
+  std::vector<std::pair<const char*, bool>> SbPreferencesList = {
+      std::make_pair(prefs::kSafeBrowsingEnabled, true),
+      std::make_pair(prefs::kSafeBrowsingExtendedReportingOptInAllowed, true),
+      std::make_pair(prefs::kSafeBrowsingExtendedReportingEnabled, true),
+      std::make_pair(prefs::kSafeBrowsingScoutReportingEnabled, true)};
+
+  // Add the status of the preferences if they are Enabled or Disabled for the
+  // user.
+  for (std::vector<std::pair<const char*, bool>>::iterator it =
+           SbPreferencesList.begin();
+       it != SbPreferencesList.end(); ++it) {
+    preferencesList.GetList().push_back(base::Value(it->first));
+    if (prefs->GetBoolean(it->first)) {
+      preferencesList.GetList().push_back(base::Value("Enabled"));
+    } else {
+      preferencesList.GetList().push_back(base::Value("Disabled"));
+    }
+  }
+  return preferencesList;
 }
 
 }  // namespace safe_browsing
