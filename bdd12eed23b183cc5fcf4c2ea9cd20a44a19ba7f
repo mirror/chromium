@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af5883cb_07829e1c",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T01:53:25Z",
+      "side": 1,
+      "message": "Do we need \"return;\" here and below Reject blocks?",
+      "revId": "bdd12eed23b183cc5fcf4c2ea9cd20a44a19ba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c486ec0b_c14653bf",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T01:53:25Z",
+      "side": 1,
+      "message": "use enum\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Prefer-enums-to-bools-for-function-parameters",
+      "revId": "bdd12eed23b183cc5fcf4c2ea9cd20a44a19ba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
