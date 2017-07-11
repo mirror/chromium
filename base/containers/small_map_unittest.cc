@@ -563,4 +563,37 @@ TEST(SmallMap, MoveOnlyValueType) {
   EXPECT_EQ(m[2].value(), 3);
 }
 
+TEST(SmallMap, Emplace) {
+  small_map<std::map<int, MoveOnlyType>> sm;
+
+  // loop through the transition from small map to map.
+  for (int i = 1; i <= 10; ++i) {
+    VLOG(1) << "Iteration " << i;
+    // insert an element
+    auto ret = sm.emplace(i, 100 * i);
+    EXPECT_TRUE(ret.second);
+    EXPECT_TRUE(ret.first == sm.find(i));
+    EXPECT_EQ(ret.first->first, i);
+    EXPECT_EQ(ret.first->second.value(), 100 * i);
+
+    // try to insert it again with different value, fails, but we still get an
+    // iterator back with the original value.
+    ret = sm.emplace(i, -i);
+    EXPECT_FALSE(ret.second);
+    EXPECT_TRUE(ret.first == sm.find(i));
+    EXPECT_EQ(ret.first->first, i);
+    EXPECT_EQ(ret.first->second.value(), 100 * i);
+
+    // check the state of the map.
+    for (int j = 1; j <= i; ++j) {
+      const auto it = sm.find(j);
+      EXPECT_TRUE(it != sm.end());
+      EXPECT_EQ(it->first, j);
+      EXPECT_EQ(it->second.value(), j * 100);
+    }
+    EXPECT_EQ(sm.size(), static_cast<size_t>(i));
+    EXPECT_FALSE(sm.empty());
+  }
+}
+
 }  // namespace base
