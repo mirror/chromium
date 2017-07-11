@@ -123,6 +123,7 @@
     *   [response_file_contents: [string list] Contents of .rsp file for actions.](#response_file_contents)
     *   [script: [file name] Script file for actions.](#script)
     *   [sources: [file list] Source files for a target.](#sources)
+    *   [test_application_name: [string] Test application name for unit or ui test.](#test_application_name)
     *   [testonly: [boolean] Declares a target must only be used for testing.](#testonly)
     *   [visibility: [label list] A list of labels that can depend on a target.](#visibility)
     *   [write_runtime_deps: Writes the target's runtime_deps to the given path.](#write_runtime_deps)
@@ -5178,6 +5179,24 @@
 
   copy
     The source are the source files to copy.
+```
+### <a name="test_application_name"></a>**test_application_name**: Test application name for unit or ui test target.
+
+```
+  This value is used to specify the relationship between unit or ui test target
+  and the test application target. Only meaningful to Xcode (used as part of the
+  Xcode project generation).
+
+  See "gn help create_bundle" for more information.
+```
+
+#### **Example**
+
+```
+  create_bundle("chrome_xctest") {
+    test_application_name = "chrome"
+    ...
+  }
 ```
 ### <a name="testonly"></a>**testonly**: Declares a target must only be used for testing.
 
