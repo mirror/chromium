@@ -60,7 +60,7 @@ void ChromeTraceEventAgent::StartTracing(const std::string& config,
         base::trace_event::TraceConfig(config),
         base::trace_event::TraceLog::RECORDING_MODE);
   }
-  callback.Run();
+  callback.Run(true);
 }
 
 void ChromeTraceEventAgent::StopAndFlush(mojom::RecorderPtr recorder) {

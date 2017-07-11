@@ -771,8 +771,8 @@ void TracingControllerImpl::IssueClockSyncMarker() {
 
 void TracingControllerImpl::OnClockSyncMarkerRecordedByAgent(
     const std::string& sync_id,
-    const base::TimeTicks& issue_ts,
-    const base::TimeTicks& issue_end_ts) {
+    base::TimeTicks issue_ts,
+    base::TimeTicks issue_end_ts) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // TODO(charliea): Change this function so that it can accept a boolean

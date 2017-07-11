@@ -95,14 +95,15 @@ void Coordinator::SendStartTracingToAgent(
   agent_entry->AddDisconnectClosure(
       &kStartTracingClosureName,
       base::BindOnce(&Coordinator::OnTracingStarted, base::Unretained(this),
-                     base::Unretained(agent_entry)));
+                     base::Unretained(agent_entry), false));
   agent_entry->agent()->StartTracing(
       config_, base::BindRepeating(&Coordinator::OnTracingStarted,
                                    base::Unretained(this),
                                    base::Unretained(agent_entry)));
 }
 
-void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry) {
+void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry,
+                                   bool success) {
   bool removed =
       agent_entry->RemoveDisconnectClosure(&kStartTracingClosureName);
   DCHECK(removed);
