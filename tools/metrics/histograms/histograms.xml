@@ -57596,6 +57596,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.BatteryPercentage.Start" units="%">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>bengr@chromium.org</owner>
   <owner>rajendrant@chromium.org</owner>
   <summary>
@@ -57604,6 +57607,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.BatteryPercentageDiff.End" units="%">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>bengr@chromium.org</owner>
   <owner>rajendrant@chromium.org</owner>
   <summary>
@@ -57616,6 +57622,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.CacheSize.AllEntries" units="KB">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>jamartin@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57625,6 +57634,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.CacheStatus.NonPrefetch" enum="HttpCachePattern">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>jamartin@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57635,6 +57647,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Precache.CacheStatus.NonPrefetch.FromPrecache"
     enum="HttpCachePattern">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>jamartin@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57646,6 +57661,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Precache.CacheStatus.NonPrefetch.NonTopHosts"
     enum="HttpCachePattern">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>twifkak@chromium.org</owner>
   <owner>jamartin@chromium.org</owner>
   <summary>
@@ -57657,6 +57675,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Precache.CacheStatus.NonPrefetch.TopHosts"
     enum="HttpCachePattern">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>twifkak@chromium.org</owner>
   <owner>jamartin@chromium.org</owner>
   <summary>
@@ -57667,6 +57688,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.CacheStatus.Prefetch" enum="HttpCachePattern">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>jamartin@chromium.org</owner>
   <owner>twifkak@chromium.org</owner>
   <summary>
@@ -57676,6 +57700,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.DownloadedNonPrecache" units="bytes">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>bengr@chromium.org</owner>
   <summary>
     The number of bytes that were downloaded over the network for HTTP/HTTPS
@@ -57684,6 +57711,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.DownloadedPrecacheMotivated" units="bytes">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>bengr@chromium.org</owner>
   <summary>
     The number of bytes that were downloaded because of precaching. Logged
@@ -57692,6 +57722,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Events" enum="PrecacheEvents">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>rajendrant@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57702,6 +57735,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Fetch.FailureReasons">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>twifkak@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57711,6 +57747,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Fetch.MinWeight" units="thousandths">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>twifkak@chromium.org</owner>
   <summary>
     The minimum resource weight that is fetched in a given precache run.
@@ -57721,6 +57760,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Fetch.PercentCompleted" units="%">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>twifkak@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57742,6 +57784,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Fetch.ResponseBytes.Daily" units="bytes">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>twifkak@chromium.org</owner>
   <summary>
     The total number of response bytes in 24 hours received over the network
@@ -57751,6 +57796,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Fetch.ResponseBytes.Network" units="bytes">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>twifkak@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57761,6 +57809,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Fetch.ResponseBytes.NetworkWasted" units="bytes">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>rajendrant@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57772,6 +57823,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Fetch.ResponseBytes.Total" units="bytes">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>twifkak@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57781,6 +57835,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Fetch.TimeToComplete" units="ms">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>twifkak@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57790,6 +57847,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Freshness.Prefetch" units="seconds">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>jamartin@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57850,6 +57910,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.PeriodicTaskInterval" units="minutes">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>rajendrant@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57860,6 +57923,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Saved" units="bytes">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>bengr@chromium.org</owner>
   <summary>
     The number of bytes during user browsing that were served from the cache,
@@ -57869,6 +57935,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.Saved.Freshness" units="seconds">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>jamartin@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -57881,6 +57950,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Precache.TimeSinceLastPrecache" units="seconds">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <owner>jamartin@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -95154,6 +95226,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="PrecacheCellular" separator=".">
+  <obsolete>
+    Deprecated July 11 2017.
+  </obsolete>
   <suffix name="Cellular"
       label="covers fetches when connected to cellular networks"/>
   <affected-histogram name="Precache.DownloadedNonPrecache"/>
@@ -96914,7 +96989,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="History" label="History"/>
   <suffix name="OfflinePageMetadata" label="OfflinePageMetadata"/>
   <suffix name="Passwords" label="Passwords"/>
-  <suffix name="Precache" label="Precache"/>
+  <suffix name="Precache" label="Precache">
+    <obsolete>
+      Deprecated July 11 2017.
+    </obsolete>
+  </suffix>
   <suffix name="PrefetchStore" label="PrefetchStore"/>
   <suffix name="Predictor" label="Predictor"/>
   <suffix name="PreviewsOptOut" label="PreviewsOptOut"/>
