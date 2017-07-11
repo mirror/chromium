@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "df31f065_fce5ace7",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-11T07:04:11Z",
+      "side": 1,
+      "message": "on -\u003e in",
+      "revId": "c2723cbd9aca42476e49c639b969ae32592e92a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba60f175_348239de",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-11T07:04:11Z",
+      "side": 1,
+      "message": "CSSProperties.json5 enum -\u003e the keywords as listed in CSSProperties.json5",
+      "revId": "c2723cbd9aca42476e49c639b969ae32592e92a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5330d7_a16188e8",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-11T07:04:11Z",
+      "side": 1,
+      "message": "on -\u003e in",
+      "revId": "c2723cbd9aca42476e49c639b969ae32592e92a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f88c2413_11beaff7",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 2
@@ -13,6 +64,24 @@
       "writtenOn": "2017-07-11T06:30:15Z",
       "side": 1,
       "message": "I think it\u0027d be good to mention that sorting will allow you to get the longest possible segment or something?",
+      "revId": "c2723cbd9aca42476e49c639b969ae32592e92a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d47147_5cea85f1",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-11T07:04:11Z",
+      "side": 1,
+      "message": "Yes please",
+      "parentUuid": "f88c2413_11beaff7",
       "revId": "c2723cbd9aca42476e49c639b969ae32592e92a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
