@@ -86,7 +86,6 @@ TEST_F(StabilityMetricsHelperTest, LogRendererCrash) {
   // be executed immediately.
   helper.ProvideStabilityMetrics(&system_profile);
 
-  EXPECT_EQ(3, system_profile.stability().renderer_crash_count());
   EXPECT_EQ(1, system_profile.stability().renderer_failed_launch_count());
   EXPECT_EQ(0, system_profile.stability().extension_renderer_crash_count());
 
