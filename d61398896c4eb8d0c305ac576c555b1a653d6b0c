@@ -46,6 +46,30 @@
       "revId": "d61398896c4eb8d0c305ac576c555b1a653d6b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b82627_bdd424a5",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T22:10:26Z",
+      "side": 1,
+      "message": "Got it. If there is no concern that Cronet will mix with Chrome for iOS (e.g. the histograms either aren\u0027t reported for Cronet or are tracked separately), then sgtm.",
+      "parentUuid": "61dcbc96_175b31fc",
+      "range": {
+        "startLine": 47,
+        "startChar": 32,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "d61398896c4eb8d0c305ac576c555b1a653d6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
