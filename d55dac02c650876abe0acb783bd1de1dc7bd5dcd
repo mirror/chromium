@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e759f1d3_521a8bfc",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-11T06:34:31Z",
+      "side": 1,
+      "message": "Can this go outside of the defined(OS_ANDROID)?\n\nI prefer flags to be present on all platforms but disabled by the OS flag, rather than compiled out (so they still appear in chrome:flags). IIRC there was some reason (compiler error) why we couldn\u0027t have kAppBanners on Android. If that\u0027s true here then so be it, but let\u0027s try to make it compile while this flag is not conditionally compiled out.",
+      "range": {
+        "startLine": 2020,
+        "startChar": 6,
+        "endLine": 2020,
+        "endChar": 34
+      },
+      "revId": "d55dac02c650876abe0acb783bd1de1dc7bd5dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
