@@ -20,7 +20,37 @@ namespace {
 
 uint8_t kInvertedConnectionFlag = 0x01;
 
+// TODO (hansberry): Remove this method once crrev.com/2975483002 lands.
+void OnAdvertisementUnregistered(const std::string& device_id) {
+  PA_LOG(ERROR) << "Unregistered advertisement for device ID: "
+                << cryptauth::RemoteDevice::TruncateDeviceIdForLogs(device_id);
+}
+
+void OnAdvertisementUnregisteredFailure(
+    device::BluetoothAdvertisement::ErrorCode error_code) {
+  PA_LOG(ERROR) << "Error unregistering advertisement. "
+                << "Error code: " << error_code;
+}
+
 }  // namespace
+
+// TODO (hansberry): Remove this workaround once crbug.com/741050 has been
+// resolved.
+// static
+void BleAdvertiser::IndividualAdvertisement::OnAdvertisementRegistered(
+    base::WeakPtr<BleAdvertiser::IndividualAdvertisement>
+        individual_advertisement,
+    scoped_refptr<device::BluetoothAdvertisement> advertisement) {
+  if (individual_advertisement.get()) {
+    individual_advertisement->OnAdvertisementRegisteredCallback(advertisement);
+  } else {
+    PA_LOG(WARNING) << "Advertisement registered, but no caller exists to hold "
+                    << "it. Unregistering advertisement.";
+    advertisement->Unregister(
+        base::Bind(&OnAdvertisementUnregistered, "Unknown device ID"),
+        base::Bind(&OnAdvertisementUnregisteredFailure));
+  }
+}
 
 BleAdvertiser::IndividualAdvertisement::IndividualAdvertisement(
     const std::string& device_id,
@@ -39,7 +69,7 @@ BleAdvertiser::IndividualAdvertisement::IndividualAdvertisement(
 BleAdvertiser::IndividualAdvertisement::~IndividualAdvertisement() {
   if (advertisement_) {
     advertisement_->Unregister(
-        base::Bind(&base::DoNothing),
+        base::Bind(&OnAdvertisementUnregistered, device_id_),
         base::Bind(&IndividualAdvertisement::OnAdvertisementUnregisterFailure,
                    weak_ptr_factory_.GetWeakPtr()));
   }
@@ -81,8 +111,7 @@ void BleAdvertiser::IndividualAdvertisement::AdvertiseIfPossible() {
 
   adapter_->RegisterAdvertisement(
       std::move(advertisement_data),
-      base::Bind(&IndividualAdvertisement::OnAdvertisementRegisteredCallback,
-                 weak_ptr_factory_.GetWeakPtr()),
+      base::Bind(&OnAdvertisementRegistered, weak_ptr_factory_.GetWeakPtr()),
       base::Bind(&IndividualAdvertisement::OnAdvertisementErrorCallback,
                  weak_ptr_factory_.GetWeakPtr()));
 }
