@@ -31,10 +31,7 @@ using media_router::DialRegistry;
 namespace extensions {
 
 DialAPI::DialAPI(Profile* profile)
-    : RefcountedKeyedService(
-          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)),
-      profile_(profile),
-      dial_registry_(nullptr) {
+    : profile_(profile), dial_registry_(nullptr) {
   EventRouter::Get(profile)->RegisterObserver(
       this, api::dial::OnDeviceList::kEventName);
 }
@@ -44,8 +41,11 @@ DialAPI::~DialAPI() {
   // current implementation, UnregistryObserver() does not StopDiscovery() and
   // causes crash in ~DialRegistry(). May keep a listener count and
   // Register/UnregisterObserver as needed.
-  if (dial_registry_)
-    dial_registry_->StopPeriodicDiscovery();
+  if (dial_registry_) {
+    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                            base::BindOnce(&DialRegistry::StopPeriodicDiscovery,
+                                           base::Unretained(dial_registry_)));
+  }
 }
 
 DialRegistry* DialAPI::dial_registry() {
