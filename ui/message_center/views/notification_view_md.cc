@@ -108,6 +108,19 @@ const gfx::ImageSkia GetProductIcon() {
   return gfx::CreateVectorIcon(kProductIcon, kSmallImageColor);
 }
 
+base::string16 GetSystemComponentCaptionString(const NotifierId& notifier_id) {
+  DCHECK(notifier_id.type == NotifierId::SYSTEM_COMPONENT);
+  // TODO(tetsui): Add all first-party notification captions here.
+  return l10n_util::GetStringUTF16(
+      IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM);
+}
+
+SkColor GetSystemComponentAccentColor(const NotifierId& notifier_id) {
+  DCHECK(notifier_id.type == NotifierId::SYSTEM_COMPONENT);
+  // TODO(tetsui): Add all first-party notification accent colors here.
+  return kActionButtonTextColor;
+}
+
 // ItemView ////////////////////////////////////////////////////////////////////
 
 // ItemViews are responsible for drawing each list notification item's title and
@@ -477,7 +490,14 @@ void NotificationViewMD::RequestFocusOnCloseButton() {
 
 void NotificationViewMD::CreateOrUpdateContextTitleView(
     const Notification& notification) {
-  header_row_->SetAppName(notification.display_source());
+  if (notification.notifier_id().type == NotifierId::SYSTEM_COMPONENT) {
+    header_row_->SetAppName(
+        GetSystemComponentCaptionString(notification.notifier_id()));
+    header_row_->SetAccentColor(
+        GetSystemComponentAccentColor(notification.notifier_id()));
+  } else {
+    header_row_->SetAppName(notification.display_source());
+  }
   header_row_->SetTimestamp(notification.timestamp());
 }
 
