@@ -69,6 +69,9 @@ class MockMediaSource {
   void InitSegmentReceived(std::unique_ptr<MediaTracks> tracks);
   MOCK_METHOD1(InitSegmentReceivedMock, void(std::unique_ptr<MediaTracks>&));
 
+  MOCK_METHOD0(KeyframeTimeGreaterThanDependantMock, void());
+  MOCK_METHOD0(MuxedSequenceModeMock, void());
+
  private:
   MediaLog media_log_;
   scoped_refptr<DecoderBuffer> file_data_;

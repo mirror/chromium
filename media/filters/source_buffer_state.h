@@ -134,6 +134,10 @@ class MEDIA_EXPORT SourceBufferState {
 
   void SetTracksWatcher(const Demuxer::MediaTracksUpdatedCB& tracks_updated_cb);
 
+  void SetParseWarningCallbacks(
+      const base::Closure& keyframe_time_greater_than_dependant_cb,
+      const base::Closure& muxed_sequence_mode_cb);
+
  private:
   // State advances through this list. The intent is to ensure at least one
   // config is received prior to parser calling initialization callback, and

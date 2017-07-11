@@ -17,8 +17,8 @@ namespace media {
 
 const int kMaxDroppedPrerollWarnings = 10;
 const int kMaxDtsBeyondPtsWarnings = 10;
+const int kMaxNumKeyframeTimeGreaterThanDependantWarnings = 1;
 const int kMaxMuxedSequenceModeWarnings = 1;
-const int kMaxNumNonkeyframePrecedesGopStartWarnings = 1;
 
 // Helper class to capture per-track details needed by a frame processor. Some
 // of this information may be duplicated in the short-term in the associated
@@ -27,7 +27,9 @@ const int kMaxNumNonkeyframePrecedesGopStartWarnings = 1;
 // http://www.w3.org/TR/media-source/#track-buffers.
 class MseTrackBuffer {
  public:
-  MseTrackBuffer(ChunkDemuxerStream* stream, MediaLog* media_log);
+  MseTrackBuffer(ChunkDemuxerStream* stream,
+                 MediaLog* media_log,
+                 const base::Closure& keyframe_time_greater_than_dependant_cb);
   ~MseTrackBuffer();
 
   // Get/set |last_decode_timestamp_|.
@@ -140,13 +142,19 @@ class MseTrackBuffer {
   // MediaLog for reporting messages and properties to debug content and engine.
   MediaLog* media_log_;
 
+  // For reporting this problematic condition that is not necessarily an error.
+  base::Closure keyframe_time_greater_than_dependant_cb_;
+
   // Counter that limits spam to |media_log_| for MseTrackBuffer warnings.
-  int num_nonkeyframe_precedes_gop_start_warnings_ = 0;
+  int num_keyframe_time_greater_than_dependant_warnings_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(MseTrackBuffer);
 };
 
-MseTrackBuffer::MseTrackBuffer(ChunkDemuxerStream* stream, MediaLog* media_log)
+MseTrackBuffer::MseTrackBuffer(
+    ChunkDemuxerStream* stream,
+    MediaLog* media_log,
+    const base::Closure& keyframe_time_greater_than_dependant_cb)
     : last_decode_timestamp_(kNoDecodeTimestamp()),
       last_processed_decode_timestamp_(DecodeTimestamp()),
       last_keyframe_presentation_timestamp_(kNoTimestamp),
@@ -154,8 +162,11 @@ MseTrackBuffer::MseTrackBuffer(ChunkDemuxerStream* stream, MediaLog* media_log)
       highest_presentation_timestamp_(kNoTimestamp),
       needs_random_access_point_(true),
       stream_(stream),
-      media_log_(media_log) {
+      media_log_(media_log),
+      keyframe_time_greater_than_dependant_cb_(
+          keyframe_time_greater_than_dependant_cb) {
   DCHECK(stream_);
+  DCHECK(!keyframe_time_greater_than_dependant_cb_.is_null());
 }
 
 MseTrackBuffer::~MseTrackBuffer() {
@@ -188,11 +199,23 @@ void MseTrackBuffer::EnqueueProcessedFrame(
     DCHECK(last_keyframe_presentation_timestamp_ != kNoTimestamp);
     // This is just one case of potentially problematic GOP structures, though
     // others are more clearly disallowed in at least some of the MSE bytestream
-    // specs, especially ISOBMFF.
+    // specs, especially ISOBMFF. See https://crbug.com/739931 for more
+    // information.
     if (frame->timestamp() < last_keyframe_presentation_timestamp_) {
+      if (!num_keyframe_time_greater_than_dependant_warnings_) {
+        // At most once per each track (but potentially multiple times per
+        // playback, if there are more than one tracks that exhibit this
+        // sequence in a playback) report a RAPPOR URL instance and also run the
+        // warning's callback.
+        media_log_->RecordRapporWithSecurityOrigin(
+            "Media.OriginUrl.MSE.KeyframeTimeGreaterThanDependant");
+        DCHECK(!keyframe_time_greater_than_dependant_cb_.is_null());
+        keyframe_time_greater_than_dependant_cb_.Run();
+      }
+
       LIMITED_MEDIA_LOG(DEBUG, media_log_,
-                        num_nonkeyframe_precedes_gop_start_warnings_,
-                        kMaxNumNonkeyframePrecedesGopStartWarnings)
+                        num_keyframe_time_greater_than_dependant_warnings_,
+                        kMaxNumKeyframeTimeGreaterThanDependantWarnings)
           << "Warning: presentation time of most recently processed random "
              "access point ("
           << last_keyframe_presentation_timestamp_
@@ -240,6 +263,19 @@ FrameProcessor::~FrameProcessor() {
   DVLOG(2) << __func__ << "()";
 }
 
+void FrameProcessor::SetParseWarningCallbacks(
+    const base::Closure& keyframe_time_greater_than_dependant_cb,
+    const base::Closure& muxed_sequence_mode_cb) {
+  DCHECK(keyframe_time_greater_than_dependant_cb_.is_null());
+  DCHECK(!keyframe_time_greater_than_dependant_cb.is_null());
+  keyframe_time_greater_than_dependant_cb_ =
+      keyframe_time_greater_than_dependant_cb;
+
+  DCHECK(muxed_sequence_mode_cb_.is_null());
+  DCHECK(!muxed_sequence_mode_cb.is_null());
+  muxed_sequence_mode_cb_ = muxed_sequence_mode_cb;
+}
+
 void FrameProcessor::SetSequenceMode(bool sequence_mode) {
   DVLOG(2) << __func__ << "(" << sequence_mode << ")";
   // Per June 9, 2016 MSE spec editor's draft:
@@ -274,6 +310,17 @@ bool FrameProcessor::ProcessFrames(
   DCHECK(!frames.empty());
 
   if (sequence_mode_ && track_buffers_.size() > 1) {
+    if (!num_muxed_sequence_mode_warnings_) {
+      // At most once per SourceBuffer (but potentially multiple times per
+      // playback, if there are more than one SourceBuffers used this way in a
+      // playback) report a RAPPOR URL instance and also run the warning's
+      // callback.
+      media_log_->RecordRapporWithSecurityOrigin(
+          "Media.OriginUrl.MSE.MuxedSequenceModeSourceBuffer");
+      DCHECK(!muxed_sequence_mode_cb_.is_null());
+      muxed_sequence_mode_cb_.Run();
+    }
+
     LIMITED_MEDIA_LOG(DEBUG, media_log_, num_muxed_sequence_mode_warnings_,
                       kMaxMuxedSequenceModeWarnings)
         << "Warning: using MSE 'sequence' AppendMode for a SourceBuffer with "
@@ -335,7 +382,8 @@ bool FrameProcessor::AddTrack(StreamParser::TrackId id,
     return false;
   }
 
-  track_buffers_[id] = base::MakeUnique<MseTrackBuffer>(stream, media_log_);
+  track_buffers_[id] = base::MakeUnique<MseTrackBuffer>(
+      stream, media_log_, keyframe_time_greater_than_dependant_cb_);
   return true;
 }
 

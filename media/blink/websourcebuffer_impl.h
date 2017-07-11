@@ -46,6 +46,15 @@ class WebSourceBufferImpl : public blink::WebSourceBuffer {
   // during an append() call.
   void InitSegmentReceived(std::unique_ptr<MediaTracks> tracks);
 
+  // Demuxer callback handler to notify Blink of detection of a GOP structure
+  // that is not SAP Type 1: a nonkeyframe with PTS was found to depend on a
+  // keyframe with later PTS. Called up to once per track.
+  void DetectedKeyframeTimeGreaterThanDependant();
+
+  // Demuxer callback handler to notify Blink of detection of usage of muxed
+  // sequence append mode. Called up to once per SourceBuffer.
+  void DetectedMuxedSequenceAppendMode();
+
   std::string id_;
   ChunkDemuxer* demuxer_;  // Owned by WebMediaPlayerImpl.
 
