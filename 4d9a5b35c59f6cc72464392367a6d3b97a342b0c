@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c00935dc_6f81563a",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T14:15:03Z",
+      "side": 1,
+      "message": "Yes, of course. Sorry.\n\nDone.",
+      "parentUuid": "a64115f5_1bfac46e",
+      "range": {
+        "startLine": 506,
+        "startChar": 4,
+        "endLine": 506,
+        "endChar": 15
+      },
+      "revId": "4d9a5b35c59f6cc72464392367a6d3b97a342b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6219ddec_a89d60a4",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cca66730_d53542b4",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T14:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6219ddec_a89d60a4",
+      "range": {
+        "startLine": 456,
+        "startChar": 40,
+        "endLine": 456,
+        "endChar": 66
+      },
+      "revId": "4d9a5b35c59f6cc72464392367a6d3b97a342b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0f7c489_940599fb",
         "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "4d9a5b35c59f6cc72464392367a6d3b97a342b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a7465a_238e2fd4",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T14:15:03Z",
+      "side": 1,
+      "message": "Tried to clarify this.",
+      "parentUuid": "d0f7c489_940599fb",
+      "range": {
+        "startLine": 218,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 39
+      },
+      "revId": "4d9a5b35c59f6cc72464392367a6d3b97a342b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
