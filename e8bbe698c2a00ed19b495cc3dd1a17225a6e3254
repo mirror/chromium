@@ -187,6 +187,30 @@
       "revId": "e8bbe698c2a00ed19b495cc3dd1a17225a6e3254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40396db1_d91e6644",
+        "filename": "components/variations/variations_params_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-11T19:40:16Z",
+      "side": 1,
+      "message": "In that case, I suggest actually adding it as a param. Callers can simply specify a dummy value themselves if they don\u0027t care about it.",
+      "parentUuid": "e7aa6eff_8f2075f5",
+      "range": {
+        "startLine": 80,
+        "startChar": 29,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "e8bbe698c2a00ed19b495cc3dd1a17225a6e3254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
