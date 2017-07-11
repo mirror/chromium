@@ -562,6 +562,24 @@
     },
     {
       "key": {
+        "uuid": "b2223395_173e1788",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:28:59Z",
+      "side": 1,
+      "message": "FYI, Brian says that SRGB and linear SRGB are singletons, so there will be no resource allocation on creation and the comparison will be just pointer check. For others (P3 and Rec2020) the object creation allocates only the primaries and the transfer fn parameters, and the creation and comparison should be cheap. I\u0027ll follow up with Skia to see if we can have P3 and Rec2020 as singletons too, but I think we\u0027re okay for now.",
+      "parentUuid": "8535f124_a65074be",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f52952c_61b4b2eb",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
         "patchSetId": 6
