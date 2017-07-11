@@ -23,8 +23,8 @@ void InitializeGlobalState() {
 
     web_main_delegate =
         base::MakeUnique<ios_web_view::WebViewWebMainDelegate>();
-    web::WebMainParams params(web_main_delegate.get());
-    web_main = base::MakeUnique<web::WebMain>(params);
+    auto params = base::MakeUnique<web::WebMainParams>(web_main_delegate.get());
+    web_main = base::MakeUnique<web::WebMain>(std::move(params));
   });
 }
 

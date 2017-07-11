@@ -7,6 +7,8 @@
 
 #include <memory>
 
+#include "base/macros.h"
+#include "ios/web/public/app/task_scheduler_init_params_callback.h"
 #include "ios/web/public/app/web_main_delegate.h"
 
 namespace web {
@@ -14,18 +16,18 @@ class WebMainRunner;
 
 // Contains parameters passed to WebMain.
 struct WebMainParams {
-  explicit WebMainParams(WebMainDelegate* delegate)
-      : delegate(delegate),
-        register_exit_manager(true),
-        argc(0),
-        argv(nullptr) {}
+  explicit WebMainParams(WebMainDelegate* delegate);
+  ~WebMainParams();
 
   WebMainDelegate* delegate;
 
   bool register_exit_manager;
+  TaskSchedulerInitParamsCallback get_task_scheduler_init_params_callback;
 
   int argc;
   const char** argv;
+
+  DISALLOW_COPY_AND_ASSIGN(WebMainParams);
 };
 
 // Encapsulates any setup and initialization that is needed by common
@@ -37,7 +39,7 @@ struct WebMainParams {
 // in WebMainDelegate and WebMainParts.
 class WebMain {
  public:
-  explicit WebMain(const WebMainParams& params);
+  explicit WebMain(std::unique_ptr<WebMainParams> params);
   ~WebMain();
 
  private:
