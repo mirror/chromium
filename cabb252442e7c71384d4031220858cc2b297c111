@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4413313c_a9924b56",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T15:24:53Z",
+      "side": 1,
+      "message": "I\u0027m not talking about the DCHECK (which is fine), but about the TryCancelAll(). I\u0027d just let the previous task run.",
+      "parentUuid": "19a2b435_e5245eb7",
+      "range": {
+        "startLine": 79,
+        "startChar": 73,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "cabb252442e7c71384d4031220858cc2b297c111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81c1cd0e_dd471822",
         "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Hmm. Done. It looks a little bit different because the implicit constructor of optional is defined during compile time (the arithmetic must always return an optional).",
       "parentUuid": "81c1cd0e_dd471822",
+      "range": {
+        "startLine": 113,
+        "startChar": 45,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "cabb252442e7c71384d4031220858cc2b297c111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3d527a6_48b41478",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T15:24:53Z",
+      "side": 1,
+      "message": "Ah, okay, that makes it a bit ugly.. oh well. I\u0027ll leave it to you.",
+      "parentUuid": "1e7accd8_17385439",
       "range": {
         "startLine": 113,
         "startChar": 45,
