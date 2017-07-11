@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a379dc94_a4a5a67f",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-11T16:58:33Z",
+      "side": 1,
+      "message": "Why do you need a callback here? Can\u0027t this code directly call NotifySessionRestoreStartedLoadingTabs?",
+      "range": {
+        "startLine": 108,
+        "startChar": 29,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ae9bd4_0609fa27",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-11T16:58:33Z",
+      "side": 1,
+      "message": "Move to the private section.",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb25d93_55695748",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-11T16:58:33Z",
+      "side": 1,
+      "message": "functions before members (in other words, move above line 143).",
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a281d4_76cc1952",
+        "filename": "chrome/browser/sessions/session_restore_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-11T16:58:33Z",
+      "side": 1,
+      "message": "Please also indicate this is for all profiles.",
+      "range": {
+        "startLine": 12,
+        "startChar": 37,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921ffc2c_c2f5b514",
+        "filename": "chrome/browser/sessions/session_restore_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-11T16:58:33Z",
+      "side": 1,
+      "message": "Why do you need to call this directly in tests?",
+      "range": {
+        "startLine": 99,
+        "startChar": 10,
+        "endLine": 99,
+        "endChar": 31
+      },
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
