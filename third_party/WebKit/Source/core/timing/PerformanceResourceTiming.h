@@ -101,6 +101,7 @@ class CORE_EXPORT PerformanceResourceTiming : public PerformanceEntry {
   // Related doc: https://goo.gl/uNecAj.
   PerformanceResourceTiming(const String& name,
                             const String& entry_type,
+                            double time_origin,
                             double start_time,
                             double duration,
                             PerformanceServerTimingVector&);
