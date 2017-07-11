@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aa77c22_8f4e9afd",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-11T15:39:21Z",
+      "side": 1,
+      "message": "can you mention why this is needed only for Android",
+      "revId": "1ad674faadb900339b57902c51dcde73951916b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a8714f_b974492a",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-11T15:39:21Z",
+      "side": 1,
+      "message": "Wonder if we  should put this logic into the tabmodellist (or some other structure - it seems strange that android handles so differently). - David - is there a better place for this?",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 62
+      },
+      "revId": "1ad674faadb900339b57902c51dcde73951916b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
