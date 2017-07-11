@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea9f74b3_437a83a8",
+        "filename": "remoting/ios/app/user_status_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-11T17:30:22Z",
+      "side": 1,
+      "message": "I would prefer a single instance property and then start/stop to be methods on the instance. This would be more inline with other singletons in the codebase.",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "db36723bf4951b05c99dc776ad0233f8bb2259d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
