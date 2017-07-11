@@ -135,7 +135,7 @@ core_idl_files = get_path_info([
                                  "dom/Touch.idl",
                                  "dom/TouchList.idl",
                                  "dom/TreeWalker.idl",
-                                 "dom/URLSearchParams.idl",
+                                 "url/URLSearchParams.idl",
                                  "dom/Uint16Array.idl",
                                  "dom/Uint32Array.idl",
                                  "dom/Uint8Array.idl",
@@ -428,7 +428,7 @@ core_idl_files = get_path_info([
 core_idl_with_modules_dependency_files =
     get_path_info([
                     "clipboard/DataTransferItem.idl",
-                    "dom/URL.idl",
+                    "url/URL.idl",
                     "frame/Navigator.idl",
                     "frame/Screen.idl",
                     "frame/Window.idl",
@@ -467,7 +467,7 @@ core_dependency_idl_files =
                     "dom/NonDocumentTypeChildNode.idl",
                     "dom/NonElementParentNode.idl",
                     "dom/ParentNode.idl",
-                    "dom/URLUtilsReadOnly.idl",
+                    "url/URLUtilsReadOnly.idl",
                     "events/EventListener.idl",
                     "events/NavigatorEvents.idl",
                     "fileapi/URLFileAPI.idl",
