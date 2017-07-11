@@ -89,14 +89,20 @@ void KeepAliveScheduler::OnOperationFinished(
   NormalizeDeviceStatus(*device_status, &carrier, &battery_percentage,
                         &signal_strength);
 
-  // Update the cache. Note that "false" is passed for the |setup_required|
-  // parameter because it is assumed that setup is no longer required for an
-  // active connection attempt.
-  host_scan_cache_->SetHostScanResult(
-      device_id_tether_network_guid_map_->GetTetherNetworkGuidForDeviceId(
-          device_copy.GetDeviceId()),
-      device_copy.name, carrier, battery_percentage, signal_strength,
-      false /* setup_required */);
+  // Update the cache. Note that SetSetupRequired(false) is called because it is
+  // assumed that setup is no longer required for an active connection attempt.
+  HostScanCacheEntry::Builder builder;
+  builder
+      .SetTetherNetworkGuid(
+          device_id_tether_network_guid_map_->GetTetherNetworkGuidForDeviceId(
+              remote_device.GetDeviceId()))
+      .SetDeviceName(device_copy.name)
+      .SetCarrier(carrier)
+      .SetBatteryPercentage(battery_percentage)
+      .SetSignalStrength(signal_strength)
+      .SetSetupRequired(false);
+
+  host_scan_cache_->SetHostScanResult(*builder.Build());
 }
 
 void KeepAliveScheduler::SendKeepAliveTickle() {
