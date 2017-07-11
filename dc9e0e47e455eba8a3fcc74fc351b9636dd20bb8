@@ -894,6 +894,30 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88d575f8_e342d04e",
+        "filename": "ui/views/controls/focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-11T14:40:19Z",
+      "side": 1,
+      "message": "GetFocusRing() looks for a class name of FocusRing, but it may actually return a descendant. Although it could be considered an \"is\" test, IMO, the code doesn\u0027t really read that way.\n\nI\u0027ve simplified the focus ring for the Checkbox and RadioButton classes based on some of your other feedback.",
+      "parentUuid": "c1a37c06_93598426",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
