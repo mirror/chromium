@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "166aae8a_be389b91",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-07-11T23:06:51Z",
+      "side": 1,
+      "message": "If you delete the file, you can delete this suppression.",
+      "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e69ab7c_65ae9bc1",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-07-11T23:06:51Z",
+      "side": 1,
+      "message": "What\u0027s the error? That you have XML files in a mipmap* directory? I guess this is an Android O thing.",
+      "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efebc832_18d2595e",
+        "filename": "remoting/android/java/res/drawable-v26/ic_launcher_background.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-07-11T23:06:51Z",
+      "side": 1,
+      "message": "Do we need this file?",
+      "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0dc73d_697b54ba",
+        "filename": "remoting/android/java/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-07-11T23:06:51Z",
+      "side": 1,
+      "message": "Does it make sense for ic_launcher_round to be an adaptive icon?",
+      "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
