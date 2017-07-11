@@ -54,6 +54,10 @@ class CC_SURFACES_EXPORT Surface : public SurfaceDeadlineObserver {
     return previous_frame_surface_id_;
   }
 
+  base::WeakPtr<SurfaceClient> surface_client() const {
+    return surface_client_;
+  }
+
   bool has_deadline() const { return deadline_.has_deadline(); }
   const SurfaceDependencyDeadline& deadline() const { return deadline_; }
 

@@ -25,6 +25,7 @@ class BlockingTaskRunner;
 class CompositorFrame;
 class ResourceProvider;
 class Surface;
+class SurfaceClient;
 class SurfaceDrawQuad;
 class SurfaceManager;
 
@@ -139,7 +140,7 @@ class CC_SURFACES_EXPORT SurfaceAggregator {
                                  const RenderPass& source,
                                  const gfx::Rect& full_rect) const;
 
-  void UnrefResources(const SurfaceId& surface_id,
+  void UnrefResources(base::WeakPtr<SurfaceClient> surface_client,
                       const std::vector<ReturnedResource>& resources,
                       BlockingTaskRunner* main_thread_task_runner);
 
