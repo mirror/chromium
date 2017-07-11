@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c5cd5ca_25c78cb5",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-11T13:49:25Z",
+      "side": 0,
+      "message": "Don\u0027t we still need this fallback?  What happens if the preconditions (scheduler \u0026\u0026 web_task_runner) fail? If they cannot fail, we should assert so instead of test.\n\nPunting the OffscreenCanvasFrameDispatcherImpl review to xlai@, who is more familiar with this code.",
+      "revId": "a355f97c2b9962a162f7e96f92303deaa9fc97c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
