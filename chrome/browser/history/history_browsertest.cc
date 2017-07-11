@@ -474,11 +474,30 @@ IN_PROC_BROWSER_TEST_F(HistoryBrowserTest, Subframe) {
   ASSERT_FALSE(HistoryContainsURL(auto_subframe));
 }
 
-// HTTP meta-refresh redirects should have separate history entries.
-IN_PROC_BROWSER_TEST_F(HistoryBrowserTest, RedirectHistory) {
+// HTTP meta-refresh redirects should have separate history entries iff the
+// timeout is > 1 seconds.
+IN_PROC_BROWSER_TEST_F(HistoryBrowserTest, RedirectHistoryFast) {
   GURL redirector = ui_test_utils::GetTestUrl(
       base::FilePath().AppendASCII("History"),
-      base::FilePath().AppendASCII("redirector.html"));
+      base::FilePath().AppendASCII("redirector_fast.html"));
+  GURL landing_url =
+      ui_test_utils::GetTestUrl(base::FilePath().AppendASCII("History"),
+                                base::FilePath().AppendASCII("landing.html"));
+  ui_test_utils::NavigateToURLBlockUntilNavigationsComplete(browser(),
+                                                            redirector, 2);
+  ASSERT_EQ(landing_url,
+            browser()->tab_strip_model()->GetActiveWebContents()->GetURL());
+  std::vector<GURL> urls(GetHistoryContents());
+  ASSERT_EQ(1u, urls.size());
+  ASSERT_EQ(landing_url, urls[0]);
+}
+
+// HTTP meta-refresh redirects should have separate history entries iff the
+// timeout is > 1 seconds.
+IN_PROC_BROWSER_TEST_F(HistoryBrowserTest, RedirectHistorySlow) {
+  GURL redirector = ui_test_utils::GetTestUrl(
+      base::FilePath().AppendASCII("History"),
+      base::FilePath().AppendASCII("redirector_slow.html"));
   GURL landing_url = ui_test_utils::GetTestUrl(
       base::FilePath().AppendASCII("History"),
       base::FilePath().AppendASCII("landing.html"));
