@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9aacfd3c_48527fc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T19:11:09Z",
+      "side": 1,
+      "message": "Is there a Bug: to track all this work?",
+      "revId": "7079f2824166025737a9536f8ecad0b8bd60e9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bd4ee8f_a910f1db",
         "filename": "content/browser/utility_process_host_impl.cc",
         "patchSetId": 9
@@ -30,6 +47,23 @@
       "writtenOn": "2017-07-11T19:04:13Z",
       "side": 1,
       "message": "Should we call it SANDBOX_TYPE_INVALID then? Based on reading the code it isn\u0027t obvious that these processes wind up unsandboxed.",
+      "revId": "7079f2824166025737a9536f8ecad0b8bd60e9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fad75c9_03d33e1f",
+        "filename": "content/public/browser/utility_process_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T19:11:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure repurposing INVALID for DisableSandbox is best. In parts of the Mac sandbox code, INVALID is the same as \"developer error\" or \"can\u0027t find profile\". Could DisableSandbox() be left and then provide an additional SetSandboxType()?",
       "revId": "7079f2824166025737a9536f8ecad0b8bd60e9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
