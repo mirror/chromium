@@ -237,15 +237,9 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   suggested_reclaim_time_ = params.suggested_reclaim_time();
   backward_compatibility_ = params.backward_compatibility();
 
-  // Ensure we respect the StandbyThreadPolicy.
-  const int minimum_initial_workers =
-      params.standby_thread_policy() ==
-              SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE
-          ? 1
-          : 0;
-  const int num_initial_workers =
-      std::max(num_wake_ups_before_start_ + minimum_initial_workers, 1);
-
+  // The initial number of workers is |num_wake_ups_before_start_|, plus
+  // one to try to keep one at least one standby thread at all times.
+  const int num_initial_workers = num_wake_ups_before_start_ + 1;
   workers_.reserve(num_initial_workers);
 
   for (int index = 0; index < num_initial_workers; ++index) {
@@ -359,6 +353,7 @@ int SchedulerWorkerPoolImpl::GetMaxConcurrentTasksDeprecated() const {
 #if DCHECK_IS_ON()
   DCHECK(workers_created_.IsSet());
 #endif
+
   return worker_capacity_;
 }
 
@@ -576,11 +571,8 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
     else
       worker = idle_workers_stack_.Pop();
   }
-
   if (worker)
     worker->WakeUp();
-  // TODO(robliao): Honor StandbyThreadPolicy::ONE here and consider adding
-  // hysteresis to the CanDetach check. See https://crbug.com/666041.
 }
 
 void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
