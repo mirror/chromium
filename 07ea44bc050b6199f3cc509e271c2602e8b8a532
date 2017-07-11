@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73ce1d31_7caa3395",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptCreationParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-11T07:37:07Z",
+      "side": 1,
+      "message": "FYI: This is not necessary for this CL. I\u0027ll remove this in the next patch set.",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
