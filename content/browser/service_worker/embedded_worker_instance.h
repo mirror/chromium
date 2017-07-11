@@ -137,10 +137,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
 
   int embedded_worker_id() const { return embedded_worker_id_; }
   EmbeddedWorkerStatus status() const { return status_; }
-  StartingPhase starting_phase() const {
-    DCHECK_EQ(EmbeddedWorkerStatus::STARTING, status());
-    return starting_phase_;
-  }
+  StartingPhase starting_phase() const;
   int restart_count() const { return restart_count_; }
   int process_id() const;
   int thread_id() const { return thread_id_; }
@@ -198,6 +195,29 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   typedef base::ObserverList<Listener> ListenerList;
   class StartTask;
   class WorkerProcessHandle;
+  class StartingPhaseTracker {
+   public:
+    StartingPhaseTracker();
+    void Reset();
+    void NextPhase();
+
+    void OnDownloadStarted();
+    void OnReadFromCacheStarted();
+    void OnScriptStreamingStarted();
+
+    StartingPhase phase() const { return phase_; }
+
+   private:
+    enum class StartingType {
+      kUnknown,
+      kDownload,
+      kReadFromCache,
+      kScriptStreaming,
+    };
+    StartingType type_;
+    StartingPhase phase_;
+  };
+
   friend class EmbeddedWorkerRegistry;
   friend class EmbeddedWorkerInstanceTest;
   FRIEND_TEST_ALL_PREFIXES(EmbeddedWorkerInstanceTest, StartAndStop);
@@ -281,7 +301,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   const int embedded_worker_id_;
 
   EmbeddedWorkerStatus status_;
-  StartingPhase starting_phase_;
+  StartingPhaseTracker starting_phase_tracker_;
   int restart_count_;
 
   // Current running information.

@@ -430,6 +430,94 @@ class EmbeddedWorkerInstance::StartTask {
   DISALLOW_COPY_AND_ASSIGN(StartTask);
 };
 
+EmbeddedWorkerInstance::StartingPhaseTracker::StartingPhaseTracker()
+    : type_(StartingType::kUnknown), phase_(NOT_STARTING) {}
+void EmbeddedWorkerInstance::StartingPhaseTracker::Reset() {
+  type_ = StartingType::kUnknown;
+  phase_ = NOT_STARTING;
+}
+
+void EmbeddedWorkerInstance::StartingPhaseTracker::NextPhase() {
+  switch (phase_) {
+    case NOT_STARTING:
+      phase_ = ALLOCATING_PROCESS;
+      break;
+    case ALLOCATING_PROCESS:
+      phase_ = REGISTERING_TO_DEVTOOLS;
+      break;
+    case REGISTERING_TO_DEVTOOLS:
+      phase_ = SENT_START_WORKER;
+      break;
+    case SENT_START_WORKER:
+      switch (type_) {
+        case StartingType::kUnknown:
+          NOTREACHED();
+          return;
+        case StartingType::kDownload:
+          phase_ = SCRIPT_DOWNLOADING;
+          break;
+        case StartingType::kReadFromCache:
+          phase_ = SCRIPT_READ_STARTED;
+          break;
+        case StartingType::kScriptStreaming:
+          phase_ = THREAD_STARTED;
+          break;
+      }
+      break;
+    case SCRIPT_DOWNLOADING:
+      DCHECK_EQ(StartingType::kDownload, type_);
+      phase_ = SCRIPT_LOADED;
+      break;
+    case SCRIPT_LOADED:
+      if (type_ == StartingType::kScriptStreaming)
+        phase_ = SCRIPT_EVALUATED;
+      else
+        phase_ = THREAD_STARTED;
+      break;
+    case SCRIPT_EVALUATED:
+      NOTREACHED();
+      return;
+    case THREAD_STARTED:
+      if (type_ == StartingType::kScriptStreaming)
+        phase_ = SCRIPT_LOADED;
+      else
+        phase_ = SCRIPT_EVALUATED;
+      break;
+    case SCRIPT_READ_STARTED:
+      DCHECK_EQ(StartingType::kReadFromCache, type_);
+      break;
+    case SCRIPT_READ_FINISHED:
+      DCHECK_EQ(StartingType::kReadFromCache, type_);
+      phase_ = SCRIPT_LOADED;
+      break;
+    case SCRIPT_STREAMING:
+      DCHECK_EQ(StartingType::kScriptStreaming, type_);
+      phase_ = SCRIPT_LOADED;
+      break;
+    case STARTING_PHASE_MAX_VALUE:
+      NOTREACHED();
+      break;
+  }
+}
+
+void EmbeddedWorkerInstance::StartingPhaseTracker::OnDownloadStarted() {
+  DCHECK_EQ(StartingType::kUnknown, type_);
+  DCHECK_EQ(SENT_START_WORKER, phase_);
+  type_ = StartingType::kDownload;
+}
+
+void EmbeddedWorkerInstance::StartingPhaseTracker::OnReadFromCacheStarted() {
+  DCHECK_EQ(StartingType::kUnknown, type_);
+  DCHECK_EQ(SENT_START_WORKER, phase_);
+  type_ = StartingType::kReadFromCache;
+}
+
+void EmbeddedWorkerInstance::StartingPhaseTracker::OnScriptStreamingStarted() {
+  DCHECK_EQ(StartingType::kUnknown, type_);
+  DCHECK_EQ(REGISTERING_TO_DEVTOOLS, phase_);
+  type_ = StartingType::kScriptStreaming;
+}
+
 bool EmbeddedWorkerInstance::Listener::OnMessageReceived(
     const IPC::Message& message) {
   return false;
@@ -463,7 +551,8 @@ void EmbeddedWorkerInstance::Start(
 
   step_time_ = base::TimeTicks::Now();
   status_ = EmbeddedWorkerStatus::STARTING;
-  starting_phase_ = ALLOCATING_PROCESS;
+  starting_phase_tracker_.NextPhase();
+  DCHECK_EQ(ALLOCATING_PROCESS, starting_phase_tracker_.phase());
   network_accessed_for_script_ = false;
   for (auto& observer : listener_list_)
     observer.OnStarting();
@@ -555,7 +644,6 @@ EmbeddedWorkerInstance::EmbeddedWorkerInstance(
       registry_(context->embedded_worker_registry()),
       embedded_worker_id_(embedded_worker_id),
       status_(EmbeddedWorkerStatus::STOPPED),
-      starting_phase_(NOT_STARTING),
       restart_count_(0),
       thread_id_(kInvalidEmbeddedWorkerThreadId),
       instance_host_binding_(this),
@@ -570,7 +658,8 @@ void EmbeddedWorkerInstance::OnProcessAllocated(
   DCHECK(!process_handle_);
 
   process_handle_ = std::move(handle);
-  starting_phase_ = REGISTERING_TO_DEVTOOLS;
+  starting_phase_tracker_.NextPhase();
+  DCHECK_EQ(REGISTERING_TO_DEVTOOLS, starting_phase_tracker_.phase());
   start_situation_ = start_situation;
   for (auto& observer : listener_list_)
     observer.OnProcessAllocated();
@@ -642,7 +731,11 @@ void EmbeddedWorkerInstance::OnStartWorkerMessageSent(
     }
   }
 
-  starting_phase_ = is_script_streaming ? SCRIPT_STREAMING : SENT_START_WORKER;
+  if (is_script_streaming)
+    starting_phase_tracker_.OnScriptStreamingStarted();
+  starting_phase_tracker_.NextPhase();
+  DCHECK_EQ(SENT_START_WORKER, starting_phase_tracker_.phase());
+
   for (auto& observer : listener_list_)
     observer.OnStartWorkerMessageSent();
 }
@@ -655,13 +748,16 @@ void EmbeddedWorkerInstance::OnReadyForInspection() {
 void EmbeddedWorkerInstance::OnScriptReadStarted() {
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "SCRIPT_READING_CACHE",
                                     this);
-  starting_phase_ = SCRIPT_READ_STARTED;
+  starting_phase_tracker_.OnReadFromCacheStarted();
+  starting_phase_tracker_.NextPhase();
+  DCHECK_EQ(SCRIPT_READ_STARTED, starting_phase_tracker_.phase());
 }
 
 void EmbeddedWorkerInstance::OnScriptReadFinished() {
   TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", "SCRIPT_READING_CACHE",
                                   this);
-  starting_phase_ = SCRIPT_READ_FINISHED;
+  starting_phase_tracker_.NextPhase();
+  DCHECK_EQ(SCRIPT_READ_FINISHED, starting_phase_tracker_.phase());
 }
 
 void EmbeddedWorkerInstance::OnScriptLoaded() {
@@ -679,7 +775,7 @@ void EmbeddedWorkerInstance::OnScriptLoaded() {
     source = LoadSource::HTTP_CACHE;
   }
 
-  switch (starting_phase_) {
+  switch (starting_phase_tracker_.phase()) {
     case SCRIPT_DOWNLOADING:
       TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", "SCRIPT_DOWNLOADING",
                                       this);
@@ -697,7 +793,8 @@ void EmbeddedWorkerInstance::OnScriptLoaded() {
 
   // Don't record the time when script streaming is enabled because
   // OnScriptLoaded is called at the different timing.
-  if (starting_phase_ != SCRIPT_STREAMING && !step_time_.is_null()) {
+  if (starting_phase_tracker_.phase() != SCRIPT_STREAMING &&
+      !step_time_.is_null()) {
     base::TimeDelta duration = UpdateStepTime();
     ServiceWorkerMetrics::RecordTimeToLoad(duration, source, start_situation_);
   }
@@ -705,7 +802,8 @@ void EmbeddedWorkerInstance::OnScriptLoaded() {
   // Renderer side has started to launch the worker thread.
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "LAUNCHING_WORKER_THREAD",
                                     this);
-  starting_phase_ = SCRIPT_LOADED;
+  starting_phase_tracker_.NextPhase();
+  DCHECK_EQ(SCRIPT_LOADED, starting_phase_tracker_.phase());
   for (auto& observer : listener_list_)
     observer.OnScriptLoaded();
   // |this| may be destroyed by the callback.
@@ -752,7 +850,8 @@ void EmbeddedWorkerInstance::OnThreadStarted(int thread_id, int provider_id) {
                                   this);
   // Renderer side has started to evaluate the loaded worker script.
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "EVALUATING_SCRIPT", this);
-  starting_phase_ = THREAD_STARTED;
+  starting_phase_tracker_.NextPhase();
+  DCHECK_EQ(THREAD_STARTED, starting_phase_tracker_.phase());
   if (!step_time_.is_null()) {
     base::TimeDelta duration = UpdateStepTime();
     if (inflight_start_task_->is_installed())
@@ -769,7 +868,7 @@ void EmbeddedWorkerInstance::OnScriptLoadFailed() {
     return;
 
   // starting_phase_ may be SCRIPT_READ_FINISHED in case of reading from cache.
-  if (starting_phase_ == SCRIPT_DOWNLOADING) {
+  if (starting_phase() == SCRIPT_DOWNLOADING) {
     TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", "SCRIPT_DOWNLOADING",
                                     this);
   }
@@ -789,7 +888,8 @@ void EmbeddedWorkerInstance::OnScriptEvaluated(bool success) {
   // Renderer side has completed evaluating the loaded worker script.
   TRACE_EVENT_NESTABLE_ASYNC_END1("ServiceWorker", "EVALUATING_SCRIPT", this,
                                   "Success", success);
-  starting_phase_ = SCRIPT_EVALUATED;
+  starting_phase_tracker_.NextPhase();
+  DCHECK_EQ(SCRIPT_EVALUATED, starting_phase_tracker_.phase());
   if (!step_time_.is_null()) {
     base::TimeDelta duration = UpdateStepTime();
     if (success && inflight_start_task_->is_installed())
@@ -890,6 +990,12 @@ void EmbeddedWorkerInstance::OnReportConsoleMessage(
   }
 }
 
+EmbeddedWorkerInstance::StartingPhase EmbeddedWorkerInstance::starting_phase()
+    const {
+  DCHECK_EQ(EmbeddedWorkerStatus::STARTING, status());
+  return starting_phase_tracker_.phase();
+}
+
 int EmbeddedWorkerInstance::process_id() const {
   if (process_handle_)
     return process_handle_->process_id();
@@ -922,10 +1028,15 @@ void EmbeddedWorkerInstance::SetDevToolsAttached(bool attached) {
 }
 
 void EmbeddedWorkerInstance::OnNetworkAccessedForScriptLoad() {
-  TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "SCRIPT_DOWNLOADING",
-                                    this);
-  starting_phase_ = SCRIPT_DOWNLOADING;
-  network_accessed_for_script_ = true;
+  // Update the state only for the main script.
+  if (starting_phase() == SENT_START_WORKER) {
+    TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "SCRIPT_DOWNLOADING",
+                                      this);
+    starting_phase_tracker_.OnDownloadStarted();
+    starting_phase_tracker_.NextPhase();
+    DCHECK_EQ(SCRIPT_DOWNLOADING, starting_phase_tracker_.phase());
+    network_accessed_for_script_ = true;
+  }
 }
 
 void EmbeddedWorkerInstance::ReleaseProcess() {
@@ -937,7 +1048,7 @@ void EmbeddedWorkerInstance::ReleaseProcess() {
   devtools_proxy_.reset();
   process_handle_.reset();
   status_ = EmbeddedWorkerStatus::STOPPED;
-  starting_phase_ = NOT_STARTING;
+  starting_phase_tracker_.Reset();
   thread_id_ = kInvalidEmbeddedWorkerThreadId;
 }
 

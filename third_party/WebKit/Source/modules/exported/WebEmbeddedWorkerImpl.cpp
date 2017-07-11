@@ -349,7 +349,7 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
       installed_scripts_manager_ &&
       installed_scripts_manager_->IsScriptInstalled(
           worker_start_data_.script_url)) {
-    DCHECK_NE(pause_after_download_state_, kDontPauseWorkerGlobalScopeOnStart);
+    DCHECK_EQ(pause_after_download_state_, kDontPauseWorkerGlobalScopeOnStart);
     StartWorkerThread();
     return;
   }
