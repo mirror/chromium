@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ad8a22a_399c9bdf",
+        "filename": "components/ntp_snippets/offline_pages/recent_tab_suggestions_provider_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-11T18:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bba2ed6_7ef2964e",
+      "range": {
+        "startLine": 121,
+        "startChar": 73,
+        "endLine": 121,
+        "endChar": 75
+      },
+      "revId": "56e2e5c4146bc82b081150213bf3768f70378bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0784ccff_4e58229c",
         "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e281cd1f_b44addc4",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-11T18:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0784ccff_4e58229c",
+      "range": {
+        "startLine": 145,
+        "startChar": 39,
+        "endLine": 145,
+        "endChar": 41
+      },
+      "revId": "56e2e5c4146bc82b081150213bf3768f70378bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66b062df_b1956928",
         "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
         "patchSetId": 19
@@ -68,6 +116,30 @@
       "revId": "56e2e5c4146bc82b081150213bf3768f70378bd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc48c23_4bb877f1",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-11T18:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66b062df_b1956928",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 166,
+        "endChar": 8
+      },
+      "revId": "56e2e5c4146bc82b081150213bf3768f70378bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
