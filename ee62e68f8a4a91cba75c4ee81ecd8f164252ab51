@@ -16,6 +16,24 @@
       "revId": "ee62e68f8a4a91cba75c4ee81ecd8f164252ab51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5365e3b2_2edeae38",
+        "filename": "content/browser/compositor/surface_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-11T20:58:03Z",
+      "side": 1,
+      "message": "RenderWidgetHostImpl::RequestCompositorFrameSink has similar logic and unfortunately would be pretty difficult to inject into. I\u0027m totally pro factoring out the logic to somewhere common, although I wonder if BrowserMainLoop is the right place?\n\nSince the logic isn\u0027t linked to any particular data what do you think about adding a static function somewhere? eg.\n\nscoped_refptr\u003cbase::SequencedTaskRunner\u003e GetCompositorTaskRunner() { ... }",
+      "parentUuid": "7ac61923_27e2a79e",
+      "revId": "ee62e68f8a4a91cba75c4ee81ecd8f164252ab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
