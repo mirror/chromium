@@ -18,7 +18,6 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/json/json_reader.h"
 #include "base/message_loop/message_loop.h"
-#include "base/process/process_metrics.h"
 #include "base/rand_util.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -194,10 +193,9 @@ TEST_F(NativeMessagingTest, SingleSendMessageRead) {
   base::PlatformFile pipe_handles[2];
   ASSERT_EQ(0, pipe(pipe_handles));
   base::File read_file(pipe_handles[0]);
-  std::string formatted_message = FormatMessage(kTestMessage);
-  ASSERT_GT(base::GetPageSize(), formatted_message.size());
+  const std::string& kFormattedMessage = FormatMessage(kTestMessage);
   ASSERT_TRUE(base::WriteFileDescriptor(
-      pipe_handles[1], formatted_message.data(), formatted_message.size()));
+      pipe_handles[1], kFormattedMessage.c_str(), kFormattedMessage.size()));
   base::File write_file(pipe_handles[1]);
   std::unique_ptr<NativeProcessLauncher> launcher =
       FakeLauncher::CreateWithPipeInput(std::move(read_file), temp_output_file);
