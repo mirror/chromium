@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7962a964_db554985",
+        "filename": "ios/chrome/browser/ui/settings/clear_browsing_data_collection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-11T18:02:14Z",
+      "side": 1,
+      "message": "Unneeded closing parenthesis.",
+      "range": {
+        "startLine": 644,
+        "startChar": 58,
+        "endLine": 644,
+        "endChar": 59
+      },
+      "revId": "cfb87aa9ff6a78235b6682bddf5762b77e0ffbe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
