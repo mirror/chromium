@@ -7,6 +7,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
+#import "ios/chrome/browser/ui/tools_menu/new_tab_menu_view_item.h"
 #import "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.h"
 #include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #include "ios/chrome/browser/ui/ui_util.h"
@@ -29,10 +30,10 @@ const MenuItemInfo itemInfoList[] = {
     // clang-format off
   { IDS_IOS_TOOLS_MENU_NEW_TAB,           kToolsMenuNewTabId,
     IDC_NEW_TAB,                          ToolbarTypeAll,
-    0,                                    nil },
+    0,                                    [NewTabMenuViewItem class] },
   { IDS_IOS_TOOLS_MENU_NEW_INCOGNITO_TAB, kToolsMenuNewIncognitoTabId,
     IDC_NEW_INCOGNITO_TAB,                ToolbarTypeAll,
-    0,                                    nil },
+    0,                                    [NewIncognitoTabMenuViewItem class] },
   { IDS_IOS_TOOLS_MENU_CLOSE_ALL_TABS,    kToolsMenuCloseAllTabsId,
     IDC_CLOSE_ALL_TABS,                   ToolbarTypeSwitcheriPhone,
     kVisibleNotIncognitoOnly,             nil },
