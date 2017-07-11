@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d2254a2_d71fb5f9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T14:04:01Z",
+      "side": 1,
+      "message": "I prefer not to split the notion and use FakeOfflineNetworkChangeNotifier (still makes sense to me, from the linguistic point of view).",
+      "parentUuid": "3b27096e_b78c7a25",
+      "range": {
+        "startLine": 106,
+        "startChar": 23,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "64f34c32da0a168dd67c52027ecc126475e9d4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "605af6eb_9af97192",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-11T13:50:51Z",
       "side": 1,
       "message": "I am so confused. This is a local instance. How does it affect the scheduler?",
+      "range": {
+        "startLine": 903,
+        "startChar": 42,
+        "endLine": 903,
+        "endChar": 59
+      },
+      "revId": "64f34c32da0a168dd67c52027ecc126475e9d4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6fe4fd_b8df5736",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T14:04:01Z",
+      "side": 1,
+      "message": "This is the global instance\nhttps://cs.chromium.org/chromium/src/net/base/network_change_notifier.cc?l\u003d45\nset in the constructor of NetworkChangeNotifier\nhttps://cs.chromium.org/chromium/src/net/base/network_change_notifier.cc?l\u003d1012\n\nCan you please propose a comment that would help you avoid your confusion?",
+      "parentUuid": "605af6eb_9af97192",
       "range": {
         "startLine": 903,
         "startChar": 42,
@@ -68,6 +116,30 @@
       "revId": "64f34c32da0a168dd67c52027ecc126475e9d4ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37343ee_9ffb577f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T14:04:01Z",
+      "side": 1,
+      "message": "This is analogous to other tests in this file. The scheduler calls provider_ which is a strict mock, set up in the fixture.\n\nOn the other hand, a Times(0) expectation does not hurt. Added.",
+      "parentUuid": "4fb27e22_ca904922",
+      "range": {
+        "startLine": 912,
+        "startChar": 21,
+        "endLine": 912,
+        "endChar": 28
+      },
+      "revId": "64f34c32da0a168dd67c52027ecc126475e9d4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
