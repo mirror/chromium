@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eefb99b8_3584655f",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10822,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-11T22:08:54Z",
+      "side": 1,
+      "message": "This will conflict with the net_unittests cl -- maybe add that to this cl too.",
+      "revId": "5e8de3115fb223882d86256d0af53887f57777a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
