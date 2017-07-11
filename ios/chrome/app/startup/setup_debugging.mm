@@ -34,6 +34,7 @@ void swizzleUIImageImageNamed() {
   // TODO(crbug.com/721338): Add missing image.
   [whiteList addObject:@"voice_icon_keyboard_accessory"];
   [whiteList addObject:@"voice_icon"];
+  [whiteList addObject:@"feedback_sent"];
 
   // The original implementation of [UIImage imageNamed:].
   // Called by the new implementation.
