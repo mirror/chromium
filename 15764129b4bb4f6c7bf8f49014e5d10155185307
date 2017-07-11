@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f17e4d9d_240113e5",
+        "filename": "content/renderer/presentation/presentation_connection_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-11T18:32:10Z",
+      "side": 1,
+      "message": "This callback is for MessageRequestQueue. We can remove it as well :)",
+      "range": {
+        "startLine": 121,
+        "startChar": 36,
+        "endLine": 121,
+        "endChar": 66
+      },
+      "revId": "15764129b4bb4f6c7bf8f49014e5d10155185307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
