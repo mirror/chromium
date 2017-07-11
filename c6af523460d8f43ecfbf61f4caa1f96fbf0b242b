@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70593c4a_a12fe697",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-11T00:02:51Z",
+      "side": 1,
+      "message": "From chats, I\u0027m going to do a major refactor. media_internals will no longer be involved in this CL.",
+      "parentUuid": "48589c88_481e9e8f",
+      "range": {
+        "startLine": 596,
+        "startChar": 23,
+        "endLine": 596,
+        "endChar": 43
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20bae516_ea470403",
         "filename": "content/browser/media/media_internals.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-10T20:29:58Z",
       "side": 1,
       "message": "Does this show up in the media internals log with this key name? If so, it\u0027s rather long.",
+      "range": {
+        "startLine": 601,
+        "startChar": 31,
+        "endLine": 601,
+        "endChar": 72
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16501c48_8ffe6b80",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-11T00:02:51Z",
+      "side": 1,
+      "message": "It does, but I prefer it over something like \"non_sap_type_1_detected\" (since there are other things that aren\u0027t sap type 1 that aren\u0027t detected) or \"problematic_gop_type\" (since that leaves little description in the property about what is problematic -- though we DO log a separate warning at least.) I can drop the preceding \"mse_\" since that\u0027s implicit in demuxer type.\n\nWould \"detected_problematic_sequence_crbug_739931\" be better??\n\n-- update -- ignore this bit - major rework in progress...",
+      "parentUuid": "20bae516_ea470403",
       "range": {
         "startLine": 601,
         "startChar": 31,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "33145de2_28ee6cd6",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-11T00:02:51Z",
+      "side": 1,
+      "message": "Ack. Regardless, I\u0027m reworking so WMPI won\u0027t be involved, either.",
+      "parentUuid": "6d7c36b4_78ef018a",
+      "range": {
+        "startLine": 1947,
+        "startChar": 7,
+        "endLine": 1947,
+        "endChar": 30
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ee3ddb5_293ac80a",
         "filename": "media/filters/chunk_demuxer.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-10T20:29:58Z",
       "side": 1,
       "message": "I\u0027m separately trying to remove all MediaLog calls from constructors. Can this be moved to Initialize() without affecting functionality?",
+      "range": {
+        "startLine": 437,
+        "startChar": 14,
+        "endLine": 437,
+        "endChar": 31
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083dcfd8_5d1454ae",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-11T00:02:51Z",
+      "side": 1,
+      "message": "I\u0027m dropping these media_log_\u0027s in a refactor. We can add \u0027em later for informative purposes, if we want, but they\u0027re not going to be necessary (I\u0027m going to use Blink to at least do UMA, if not also RAPPOR).",
+      "parentUuid": "2ee3ddb5_293ac80a",
       "range": {
         "startLine": 437,
         "startChar": 14,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "14227df5_03a70ced",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-11T00:02:51Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "51a20d0c_d26bab48",
+      "range": {
+        "startLine": 887,
+        "startChar": 14,
+        "endLine": 887,
+        "endChar": 31
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fecc33e_5c850274",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-10T20:29:58Z",
       "side": 1,
       "message": "Since enum names don\u0027t show up in the UI, it\u0027s better for these to be more descriptive.\n\nThere seems to be a general problem of double-negatives here, but I don\u0027t have a good solution.",
+      "range": {
+        "startLine": 3343,
+        "startChar": 24,
+        "endLine": 3343,
+        "endChar": 32
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e23ad4c_576d766d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3343,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-11T00:02:51Z",
+      "side": 1,
+      "message": "I\u0027m refactoring to use a Blink Frame::UseCounter for this instead. It\u0027ll give a % of page visits encountering such GOP structure, instead of a % of all MSE playbacks encountering such GOP structure. We have a % of page visits using MSE API (from https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/mediasource/URLMediaSource.cpp?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d50 ). RAPPOR will also help us understand if there\u0027re any major site usages of this GOP structure that we might want to reach out to.",
+      "parentUuid": "6fecc33e_5c850274",
       "range": {
         "startLine": 3343,
         "startChar": 24,
