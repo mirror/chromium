@@ -21,6 +21,7 @@
 #include "base/threading/thread_checker.h"
 #include "content/common/content_export.h"
 #include "content/renderer/media/webrtc/media_stream_track_metrics.h"
+#include "content/renderer/media/webrtc/rtc_rtp_sender.h"
 #include "content/renderer/media/webrtc/webrtc_media_stream_adapter_map.h"
 #include "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h"
 #include "ipc/ipc_platform_file.h"
@@ -284,6 +285,8 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   // peer connection using |AddStream| and |RemoveStream|.
   std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
       local_streams_;
+  // ...
+  std::map<uintptr_t, std::unique_ptr<RTCRtpSender>> rtp_senders_;
 
   base::WeakPtr<PeerConnectionTracker> peer_connection_tracker_;
 

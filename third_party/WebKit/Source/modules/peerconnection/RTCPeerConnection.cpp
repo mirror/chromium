@@ -1204,7 +1204,7 @@ HeapVector<Member<RTCRtpSender>> RTCPeerConnection::getSenders() {
       MediaStreamTrack* track = nullptr;
       if (web_rtp_senders[i]->Track()) {
         track = GetTrack(*web_rtp_senders[i]->Track());
-        DCHECK(track);
+        DCHECK(track);  // Not a safe assumption for streamless tracks... MediaStreamTrack::Create(exec context, web component)
       }
       RTCRtpSender* rtp_sender =
           new RTCRtpSender(std::move(web_rtp_senders[i]), track);
@@ -1228,7 +1228,7 @@ HeapVector<Member<RTCRtpReceiver>> RTCPeerConnection::getReceivers() {
       // There does not exist a |RTCRtpReceiver| for this |WebRTCRtpReceiver|
       // yet, create it.
       MediaStreamTrack* track = GetTrack(web_rtp_receivers[i]->Track());
-      DCHECK(track);
+      DCHECK(track);  // Not a safe assumption for streamless tracks, though remote is not streamless yet... add TODO
       RTCRtpReceiver* rtp_receiver =
           new RTCRtpReceiver(std::move(web_rtp_receivers[i]), track);
       rtp_receivers_.insert(id, rtp_receiver);

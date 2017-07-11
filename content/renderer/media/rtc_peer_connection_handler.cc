@@ -30,7 +30,6 @@
 #include "content/renderer/media/rtc_dtmf_sender_handler.h"
 #include "content/renderer/media/webrtc/peer_connection_dependency_factory.h"
 #include "content/renderer/media/webrtc/rtc_rtp_receiver.h"
-#include "content/renderer/media/webrtc/rtc_rtp_sender.h"
 #include "content/renderer/media/webrtc/rtc_stats.h"
 #include "content/renderer/media/webrtc/webrtc_media_stream_adapter.h"
 #include "content/renderer/media/webrtc_audio_device_impl.h"
@@ -1650,18 +1649,24 @@ RTCPeerConnectionHandler::GetSenders() {
   blink::WebVector<std::unique_ptr<blink::WebRTCRtpSender>> web_senders(
       webrtc_senders.size());
   for (size_t i = 0; i < web_senders.size(); ++i) {
-    rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> webrtc_track =
-        webrtc_senders[i]->track();
-    std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_adapter;
-    if (webrtc_track) {
-      track_adapter =
-          track_adapter_map_->GetLocalTrackAdapter(webrtc_track->id());
-      DCHECK(track_adapter);
+    uintptr_t id = RTCRtpSender::getId(webrtc_senders[i]);
+    auto it = rtp_senders_.find(id);
+    if (it == rtp_senders_.end()) {
+      rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> webrtc_track =
+          webrtc_senders[i]->track();
+      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
+          track_adapter;
+      if (webrtc_track) {
+        track_adapter =
+            track_adapter_map_->GetLocalTrackAdapter(webrtc_track->id());
+        DCHECK(track_adapter);
+      }
+      it = rtp_senders_.insert(std::make_pair(
+          id,
+          base::MakeUnique<RTCRtpSender>(webrtc_senders[i].get(),
+                                         std::move(track_adapter)))).first;
     }
-    // Create a reference to the sender. Multiple |RTCRtpSender|s can reference
-    // the same webrtc track, see |id|.
-    web_senders[i] = base::MakeUnique<RTCRtpSender>(webrtc_senders[i].get(),
-                                                    std::move(track_adapter));
+    web_senders[i] = it->second->ShallowCopy();
   }
   return web_senders;
 }
@@ -1720,9 +1725,15 @@ std::unique_ptr<blink::WebRTCRtpSender> RTCPeerConnectionHandler::AddTrack(
                                         webrtc_streams);
   if (!webrtc_sender)
     return nullptr;
-  return base::MakeUnique<RTCRtpSender>(std::move(webrtc_sender),
-                                        std::move(track_adapter),
-                                        std::move(stream_adapters));
+  // TODO(hbos): reuse of addr/id makes this unsafe unless we remove senders.
+  DCHECK(rtp_senders_.find(RTCRtpSender::getId(webrtc_sender)) ==
+         rtp_senders_.end());
+  auto it = rtp_senders_.insert(std::make_pair(
+      RTCRtpSender::getId(webrtc_sender),
+      base::MakeUnique<RTCRtpSender>(std::move(webrtc_sender),
+                                     std::move(track_adapter),
+                                     std::move(stream_adapters)))).first;
+  return it->second->ShallowCopy();
 }
 
 bool RTCPeerConnectionHandler::RemoveTrack(blink::WebRTCRtpSender* web_sender) {
