@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c4ee1cb_afd4844b",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T01:14:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a676e0e5_1cd46320",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a98a5007_47af5c35",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "53267ebb_4eeea7de",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T01:14:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a98a5007_47af5c35",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "738fdfe0_93d32317",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-10T23:34:33Z",
       "side": 1,
       "message": "Can you do just \".... !\u003d 1\" instead of \"not ... \u003d\u003d 1\"?",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432bf27b_c9fb8971",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T01:14:20Z",
+      "side": 1,
+      "message": "it is an and statement so it is like (not (a and b)) if we expand this it is going to be ((not a) or (not b)) which is longer in term of computation, I think.",
+      "parentUuid": "738fdfe0_93d32317",
       "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "97aff129_69ee35f4",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T01:14:20Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "817d5e0e_4813f656",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd00aa9d_5f44a7e4",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-10T23:34:33Z",
       "side": 1,
       "message": "This can just be \"if property_[...] \u003d\u003d \u0027multi_keyword\u0027\"",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d43196_75e29619",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T01:14:20Z",
+      "side": 1,
+      "message": "Yeah",
+      "parentUuid": "bd00aa9d_5f44a7e4",
       "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "43a29c40_45e1c69b",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T01:14:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "926920de_61967cb5",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e488e9b1_d09fa469",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bc68ea_8cacb105",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T01:14:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e488e9b1_d09fa469",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "d1e90fdb_913c44f4",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T01:14:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b964caf_88219438",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "475c5428_8c55a53c",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 3
@@ -169,6 +313,24 @@
       "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a12cd9c_68254faf",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T01:14:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "475c5428_8c55a53c",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
