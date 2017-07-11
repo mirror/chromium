@@ -22,6 +22,30 @@
       "revId": "cc73643302ad7ea271c063fb21fbb8c047cf837e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1eae53_b52ecc99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-11T21:51:12Z",
+      "side": 0,
+      "message": "\u003e\u003e IIRC, finish previous LightweightFirstRunActivity is for startActivityForResult, but now \n\u003e\u003e LightweightFirstRunActivity is launched with pendingIntent only, might be OK here.\n\nThanks for telling me about startActivityForResult(). I did not think about startActivityForResult(). I think that not killing the LightweightFirstRunActivity should be ok. (We don\u0027t kill the FirstRunActivity if it is already running) \n\n\u003e\u003e but not sure I understand the root cause in the description since we add\n\u003e\u003e \u0027FLAG_ACTIVITY_NEW_TASK\u0027 flag for intent and caller in this function.\n\nWe add FLAG_ACTIVITY_NEW_TASK only if the caller is not an activity. In the case of WebApkActivity the caller is WebappLauncherActivity which is an Activity",
+      "parentUuid": "c954df57_97935c92",
+      "range": {
+        "startLine": 392,
+        "startChar": 33,
+        "endLine": 392,
+        "endChar": 42
+      },
+      "revId": "cc73643302ad7ea271c063fb21fbb8c047cf837e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
