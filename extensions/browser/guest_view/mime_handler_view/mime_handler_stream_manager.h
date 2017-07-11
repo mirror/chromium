@@ -10,6 +10,7 @@
 #include <string>
 
 #include "base/memory/ref_counted.h"
+#include "base/observer_list.h"
 #include "base/scoped_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "extensions/browser/extension_registry_observer.h"
@@ -30,6 +31,16 @@ class StreamContainer;
 class MimeHandlerStreamManager : public KeyedService,
                                  public ExtensionRegistryObserver {
  public:
+  class Observer {
+   public:
+    // Notifies observers that the resource requested by a frame in process
+    // |process_id| and the node id |frame_tree_node_id| has been intercepted as
+    // a stream. |view_id| can be used to release the stream if necessary.
+    virtual void OnStreamAdded(int32_t process_id,
+                               int32_t frame_tree_node_id,
+                               const std::string& view_id) {}
+  };
+
   MimeHandlerStreamManager();
   ~MimeHandlerStreamManager() override;
   static MimeHandlerStreamManager* Get(content::BrowserContext* context);
@@ -52,6 +63,9 @@ class MimeHandlerStreamManager : public KeyedService,
                            const Extension* extension,
                            UnloadedExtensionReason reason) override;
 
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
+
  private:
   class EmbedderObserver;
 
@@ -69,6 +83,8 @@ class MimeHandlerStreamManager : public KeyedService,
 
   ScopedObserver<ExtensionRegistry, ExtensionRegistryObserver>
       extension_registry_observer_;
+
+  base::ObserverList<Observer> observer_list_;
 };
 
 }  // namespace extensions

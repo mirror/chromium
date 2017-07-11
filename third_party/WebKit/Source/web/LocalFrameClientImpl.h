@@ -223,6 +223,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   KURL OverrideFlashEmbedWithHTML(const KURL&) override;
 
+  KURL OverridePDFEmbedWithHTML(const KURL&, const String&) override;
+
   void SetHasReceivedUserGesture(bool received_previously) override;
 
   void SetDevToolsFrameId(const String& devtools_frame_id) override;
@@ -239,6 +241,9 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
   void AnnotatedRegionsChanged() override;
+
+  v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(v8::Isolate*,
+                                                            Frame&) override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameBase*);
