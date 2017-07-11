@@ -103,6 +103,7 @@ bool IsNodeIdIntAttribute(AXIntAttribute attr) {
   switch (attr) {
     case AX_ATTR_ACTIVEDESCENDANT_ID:
     case AX_ATTR_DETAILS_ID:
+    case AX_ATTR_EDITABLE_ROOT_ID:
     case AX_ATTR_ERRORMESSAGE_ID:
     case AX_ATTR_IN_PAGE_LINK_TARGET_ID:
     case AX_ATTR_MEMBER_OF_ID:
@@ -670,6 +671,9 @@ std::string AXNodeData::ToString() const {
         break;
       case AX_ATTR_DETAILS_ID:
         result += " details=" + value;
+        break;
+      case AX_ATTR_EDITABLE_ROOT_ID:
+        result += " editable_root=" + value;
         break;
       case AX_ATTR_ERRORMESSAGE_ID:
         result += " errormessage=" + value;

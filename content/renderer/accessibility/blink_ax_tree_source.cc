@@ -794,6 +794,12 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
     }
 
     if (src.IsEditable()) {
+      WebAXObject editable_root = src.EditableRoot();
+      if (!editable_root.IsDetached()) {
+        dst->AddIntAttribute(ui::AX_ATTR_EDITABLE_ROOT_ID,
+                             editable_root.AxID());
+      }
+
       if (src.IsControl() && !src.IsRichlyEditable()) {
         // Only for simple input controls -- rich editable areas use AXTreeData
         dst->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_START, src.SelectionStart());
