@@ -55,6 +55,11 @@ static NSString* const kMenuItemCellID = @"MenuItemCellID";
   return menuItem;
 }
 
+- (id)command {
+  // Default is to return |self|.
+  return self;
+}
+
 @end
 
 @implementation ToolsMenuViewCell

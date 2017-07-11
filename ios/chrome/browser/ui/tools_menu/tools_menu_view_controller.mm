@@ -565,7 +565,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
         ToolsMenuViewItem* menuItem = [_menuItems objectAtIndex:item];
         DCHECK([menuItem tag]);
         [_delegate commandWasSelected:[menuItem tag]];
-        [self chromeExecuteCommand:menuItem];
+        [self chromeExecuteCommand:[menuItem command]];
       });
 }
 

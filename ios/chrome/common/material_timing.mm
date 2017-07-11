@@ -30,7 +30,7 @@ namespace material {
 
 // Helper utility for making all animations slower, since 'toggle slow
 // animations' in the simulator doesn't apply to CAAnimations.
-const NSTimeInterval kSlowAnimationModifier = 1;
+const NSTimeInterval kSlowAnimationModifier = 10;
 
 const CGFloat kDuration0 = 0 * kSlowAnimationModifier;
 const CGFloat kDuration1 = 0.25 * kSlowAnimationModifier;
