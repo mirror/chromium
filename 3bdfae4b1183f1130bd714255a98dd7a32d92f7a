@@ -16,6 +16,24 @@
       "revId": "3bdfae4b1183f1130bd714255a98dd7a32d92f7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf51077_9a93045d",
+        "filename": "content/browser/renderer_host/input/mock_input_router_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-11T23:19:24Z",
+      "side": 1,
+      "message": "Done. I originally didn\u0027t initialize |white_listed_touch_action_| in the ctor because neither |last_filter_event_| nor |overscroll_| were initialized in the ctor, but I think it is a better choice to add it.",
+      "parentUuid": "0f745001_25de1ba7",
+      "revId": "3bdfae4b1183f1130bd714255a98dd7a32d92f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
