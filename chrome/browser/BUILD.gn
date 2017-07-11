@@ -4585,7 +4585,7 @@ static_library("test_support_ui") {
     "//components/metrics:test_support",
     "//components/password_manager/content/common:mojo_interfaces",
     "//components/password_manager/core/browser:test_support",
-    "//components/translate/content/common",
+    "//components/translate/core/common",
     "//skia",
     "//testing/gtest",
     "//third_party/WebKit/public:blink_headers",

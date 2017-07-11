@@ -61,6 +61,7 @@ static_library("browser") {
     "//components/resources:components_resources",
     "//components/strings",
     "//components/translate/core/common",
+    "//components/translate/core/common:mojo_interfaces",
     "//components/ukm",
     "//components/variations",
     "//google_apis",

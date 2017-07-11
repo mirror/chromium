@@ -60,6 +60,6 @@ interface Page {
 interface ContentTranslateDriver {
   // Notification that a new page is ready to translate,
   // and the language for it has been determined.
-  RegisterPage(Page page, LanguageDetectionDetails details,
-               bool page_needs_translation);
+  OnLanguageDetected(Page page, LanguageDetectionDetails details,
+                     bool page_needs_translation);
 };

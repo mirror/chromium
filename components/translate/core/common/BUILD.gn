@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//mojo/public/tools/bindings/mojom.gni")
+
 static_library("common") {
   sources = [
     "language_detection_details.cc",
@@ -44,5 +46,16 @@ source_set("unit_tests") {
     "//components/sync/protocol",
     "//testing/gtest",
     "//url",
+  ]
+}
+
+mojom("mojo_interfaces") {
+  sources = [
+    "translate.mojom",
+  ]
+
+  public_deps = [
+    "//mojo/common:common_custom_types",
+    "//url/mojo:url_mojom_gurl",
   ]
 }

@@ -230,8 +230,7 @@ void ContentTranslateDriver::OnPageAway(int page_seq_no) {
   pages_.erase(page_seq_no);
 }
 
-// mojom::ContentTranslateDriver implementation.
-void ContentTranslateDriver::RegisterPage(
+void ContentTranslateDriver::OnLanguageDetected(
     mojom::PagePtr page,
     const LanguageDetectionDetails& details,
     bool page_needs_translation) {

@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_TRANSLATE_CONTENT_COMMON_TRANSLATE_STRUCT_TRAITS_H_
-#define COMPONENTS_TRANSLATE_CONTENT_COMMON_TRANSLATE_STRUCT_TRAITS_H_
+#ifndef COMPONENTS_TRANSLATE_CORE_COMMON_TRANSLATE_STRUCT_TRAITS_H_
+#define COMPONENTS_TRANSLATE_CORE_COMMON_TRANSLATE_STRUCT_TRAITS_H_
 
 #include "base/strings/string16.h"
 #include "base/time/time.h"
-#include "components/translate/content/common/translate.mojom.h"
 #include "components/translate/core/common/language_detection_details.h"
+#include "components/translate/core/common/translate.mojom.h"
 #include "components/translate/core/common/translate_errors.h"
 #include "mojo/public/cpp/bindings/struct_traits.h"
 
@@ -73,4 +73,4 @@ struct StructTraits<translate::mojom::LanguageDetectionDetailsDataView,
 
 }  // namespace mojo
 
-#endif  // COMPONENTS_TRANSLATE_CONTENT_COMMON_TRANSLATE_STRUCT_TRAITS_H_
+#endif  // COMPONENTS_TRANSLATE_CORE_COMMON_TRANSLATE_STRUCT_TRAITS_H_

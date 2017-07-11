@@ -12,7 +12,6 @@ static_library("browser") {
 
   public_deps = [
     "//base",
-    "//components/translate/content/common",
     "//components/translate/core/browser",
     "//components/translate/core/common",
   ]

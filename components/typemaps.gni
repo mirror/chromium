@@ -10,5 +10,5 @@ typemaps = [
   "//components/password_manager/content/common/credential_manager.typemap",
   "//components/signin/public/interfaces/account_id.typemap",
   "//components/spellcheck/common/spellcheck.typemap",
-  "//components/translate/content/common/translate.typemap",
+  "//components/translate/core/common/translate.typemap",
 ]

@@ -132,7 +132,7 @@ void TranslateHelper::PageCaptured(const base::string16& contents) {
   ResetPage();
   mojom::PagePtr page;
   binding_.Bind(mojo::MakeRequest(&page));
-  GetTranslateDriver()->RegisterPage(
+  GetTranslateDriver()->OnLanguageDetected(
       std::move(page), details, !details.has_notranslate && !language.empty());
 }
 

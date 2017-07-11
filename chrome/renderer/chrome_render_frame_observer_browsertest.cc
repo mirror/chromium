@@ -9,8 +9,8 @@
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
 #include "chrome/test/base/chrome_render_view_test.h"
-#include "components/translate/content/common/translate.mojom.h"
 #include "components/translate/content/renderer/translate_helper.h"
+#include "components/translate/core/common/translate.mojom.h"
 #include "components/translate/core/common/translate_constants.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
@@ -32,10 +32,9 @@ class FakeContentTranslateDriver
                                    std::move(handle)));
   }
 
-  // translate::mojom::ContentTranslateDriver implementation.
-  void RegisterPage(translate::mojom::PagePtr page,
-                    const translate::LanguageDetectionDetails& details,
-                    bool page_needs_translation) override {
+  void OnLanguageDetected(translate::mojom::PagePtr page,
+                          const translate::LanguageDetectionDetails& details,
+                          bool page_needs_translation) override {
     called_new_page_ = true;
     page_needs_translation_ = page_needs_translation;
   }

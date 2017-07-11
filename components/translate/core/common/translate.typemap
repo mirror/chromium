@@ -2,19 +2,18 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-mojom = "//components/translate/content/common/translate.mojom"
+mojom = "//components/translate/core/common/translate.mojom"
 public_headers = [
   "//components/translate/core/common/language_detection_details.h",
   "//components/translate/core/common/translate_errors.h",
 ]
 traits_headers =
-    [ "//components/translate/content/common/translate_struct_traits.h" ]
+    [ "//components/translate/core/common/translate_struct_traits.h" ]
 sources = [
-  "//components/translate/content/common/translate_struct_traits.cc",
+  "//components/translate/core/common/translate_struct_traits.cc",
 ]
 deps = [
   "//base",
-  "//components/translate/core/common",
 ]
 
 type_mappings = [

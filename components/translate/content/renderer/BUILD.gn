@@ -12,7 +12,6 @@ static_library("renderer") {
 
   deps = [
     "//base",
-    "//components/translate/content/common",
     "//components/translate/core/common",
     "//components/translate/core/language_detection",
     "//content/public/common",

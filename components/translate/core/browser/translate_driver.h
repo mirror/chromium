@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include "components/translate/core/common/translate.mojom.h"
+
 class GURL;
 
 namespace translate {
@@ -14,7 +16,7 @@ namespace translate {
 // Interface that allows Translate core code to interact with its driver (i.e.,
 // obtain information from it and give information to it). A concrete
 // implementation must be provided by the driver.
-class TranslateDriver {
+class TranslateDriver : public mojom::ContentTranslateDriver {
  public:
   // Returns true if the current page was navigated through a link.
   virtual bool IsLinkNavigation() = 0;
@@ -24,6 +26,11 @@ class TranslateDriver {
 
   // Called when the page is "translated" state of the page changed.
   virtual void OnIsPageTranslatedChanged() = 0;
+
+  // Called when the page language is determined.
+  //virtual void OnLanguageDetected(mojom::PagePtr page,
+  //                                const LanguageDetectionDetails& details,
+  //                                bool page_needs_translation) = 0;
 
   // Translates the page contents from |source_lang| to |target_lang|.
   virtual void TranslatePage(int page_seq_no,

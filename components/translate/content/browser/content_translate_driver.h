@@ -10,7 +10,6 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
-#include "components/translate/content/common/translate.mojom.h"
 #include "components/translate/core/browser/translate_driver.h"
 #include "components/translate/core/common/translate_errors.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -28,8 +27,7 @@ class TranslateManager;
 
 // Content implementation of TranslateDriver.
 class ContentTranslateDriver : public TranslateDriver,
-                               public content::WebContentsObserver,
-                               public mojom::ContentTranslateDriver {
+                               public content::WebContentsObserver {
  public:
   // The observer for the ContentTranslateDriver.
   class Observer {
@@ -92,6 +90,9 @@ class ContentTranslateDriver : public TranslateDriver,
   const GURL& GetVisibleURL() override;
   bool HasCurrentPage() override;
   void OpenUrlInNewTab(const GURL& url) override;
+  void OnLanguageDetected(mojom::PagePtr page,
+                          const LanguageDetectionDetails& details,
+                          bool page_needs_translation) override;
 
   // content::WebContentsObserver implementation.
   void NavigationEntryCommitted(
@@ -103,11 +104,6 @@ class ContentTranslateDriver : public TranslateDriver,
                         const std::string& original_lang,
                         const std::string& translated_lang,
                         TranslateErrors::Type error_type);
-
-  // mojom::ContentTranslateDriver implementation.
-  void RegisterPage(mojom::PagePtr page,
-                    const LanguageDetectionDetails& details,
-                    bool page_needs_translation) override;
 
  private:
   void OnPageAway(int page_seq_no);

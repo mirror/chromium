@@ -9,8 +9,7 @@
 #include "base/time/time.h"
 #include "chrome/common/chrome_isolated_world_ids.h"
 #include "chrome/test/base/chrome_render_view_test.h"
-#include "components/translate/content/common/translate.mojom.h"
-#include "components/translate/content/renderer/translate_helper.h"
+#include "components/translate/core/common/translate.mojom.h"
 #include "components/translate/core/common/translate_constants.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
@@ -39,10 +38,9 @@ class FakeContentTranslateDriver
                                    std::move(handle)));
   }
 
-  // translate::mojom::ContentTranslateDriver implementation.
-  void RegisterPage(translate::mojom::PagePtr page,
-                    const translate::LanguageDetectionDetails& details,
-                    bool page_needs_translation) override {
+  void OnLanguageDetected(translate::mojom::PagePtr page,
+                          const translate::LanguageDetectionDetails& details,
+                          bool page_needs_translation) override {
     called_new_page_ = true;
     details_ = details;
     page_needs_translation_ = page_needs_translation;
@@ -216,8 +214,7 @@ TEST_F(TranslateHelperBrowserTest, TranslateSuccess) {
       .WillOnce(Return(true));
 
   // V8 call for performance monitoring should be ignored.
-  EXPECT_CALL(*translate_helper_,
-              ExecuteScriptAndGetDoubleResult(_)).Times(3);
+  EXPECT_CALL(*translate_helper_, ExecuteScriptAndGetDoubleResult(_)).Times(3);
 
   std::string original_lang("en");
   std::string target_lang("fr");
@@ -243,8 +240,7 @@ TEST_F(TranslateHelperBrowserTest, TranslateFailure) {
       .Times(AtLeast(1))
       .WillRepeatedly(Return(true));
 
-  EXPECT_CALL(*translate_helper_, IsTranslateLibReady())
-      .WillOnce(Return(true));
+  EXPECT_CALL(*translate_helper_, IsTranslateLibReady()).WillOnce(Return(true));
 
   EXPECT_CALL(*translate_helper_, StartTranslation()).WillOnce(Return(true));
 
@@ -260,8 +256,7 @@ TEST_F(TranslateHelperBrowserTest, TranslateFailure) {
       .WillRepeatedly(Return(false));
 
   // V8 call for performance monitoring should be ignored.
-  EXPECT_CALL(*translate_helper_,
-              ExecuteScriptAndGetDoubleResult(_)).Times(2);
+  EXPECT_CALL(*translate_helper_, ExecuteScriptAndGetDoubleResult(_)).Times(2);
 
   translate_helper_->TranslatePage("en", "fr", std::string());
   base::RunLoop().RunUntilIdle();
@@ -280,8 +275,7 @@ TEST_F(TranslateHelperBrowserTest, UndefinedSourceLang) {
       .Times(AtLeast(1))
       .WillRepeatedly(Return(true));
 
-  EXPECT_CALL(*translate_helper_, IsTranslateLibReady())
-      .WillOnce(Return(true));
+  EXPECT_CALL(*translate_helper_, IsTranslateLibReady()).WillOnce(Return(true));
 
   EXPECT_CALL(*translate_helper_, GetOriginalPageLanguage())
       .WillOnce(Return("de"));
@@ -294,11 +288,9 @@ TEST_F(TranslateHelperBrowserTest, UndefinedSourceLang) {
       .WillRepeatedly(Return(true));
 
   // V8 call for performance monitoring should be ignored.
-  EXPECT_CALL(*translate_helper_,
-              ExecuteScriptAndGetDoubleResult(_)).Times(3);
+  EXPECT_CALL(*translate_helper_, ExecuteScriptAndGetDoubleResult(_)).Times(3);
 
-  translate_helper_->TranslatePage(translate::kUnknownLanguageCode,
-                                   "fr",
+  translate_helper_->TranslatePage(translate::kUnknownLanguageCode, "fr",
                                    std::string());
   base::RunLoop().RunUntilIdle();
 
@@ -331,8 +323,7 @@ TEST_F(TranslateHelperBrowserTest, MultipleSimilarTranslations) {
       .WillOnce(Return(true));
 
   // V8 call for performance monitoring should be ignored.
-  EXPECT_CALL(*translate_helper_,
-              ExecuteScriptAndGetDoubleResult(_)).Times(3);
+  EXPECT_CALL(*translate_helper_, ExecuteScriptAndGetDoubleResult(_)).Times(3);
 
   std::string original_lang("en");
   std::string target_lang("fr");
@@ -367,16 +358,15 @@ TEST_F(TranslateHelperBrowserTest, MultipleDifferentTranslations) {
       .WillOnce(Return(true));
 
   // V8 call for performance monitoring should be ignored.
-  EXPECT_CALL(*translate_helper_,
-              ExecuteScriptAndGetDoubleResult(_)).Times(5);
+  EXPECT_CALL(*translate_helper_, ExecuteScriptAndGetDoubleResult(_)).Times(5);
 
   std::string original_lang("en");
   std::string target_lang("fr");
   translate_helper_->TranslatePage(original_lang, target_lang, std::string());
   // While this is running call again TranslatePage with a new target lang.
   std::string new_target_lang("de");
-  translate_helper_->TranslatePage(
-      original_lang, new_target_lang, std::string());
+  translate_helper_->TranslatePage(original_lang, new_target_lang,
+                                   std::string());
   base::RunLoop().RunUntilIdle();
 
   std::string received_original_lang;
@@ -401,8 +391,9 @@ TEST_F(TranslateHelperBrowserTest, TranslatablePage) {
   fake_translate_driver_.ResetNewPageValues();
 
   // Now the page specifies the META tag to prevent translation.
-  LoadHTML("<html><head><meta name=\"google\" value=\"notranslate\"></head>"
-           "<body>A random page with random content.</body></html>");
+  LoadHTML(
+      "<html><head><meta name=\"google\" value=\"notranslate\"></head>"
+      "<body>A random page with random content.</body></html>");
 
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
@@ -411,8 +402,9 @@ TEST_F(TranslateHelperBrowserTest, TranslatablePage) {
   fake_translate_driver_.ResetNewPageValues();
 
   // Try the alternate version of the META tag (content instead of value).
-  LoadHTML("<html><head><meta name=\"google\" content=\"notranslate\"></head>"
-           "<body>A random page with random content.</body></html>");
+  LoadHTML(
+      "<html><head><meta name=\"google\" content=\"notranslate\"></head>"
+      "<body>A random page with random content.</body></html>");
 
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
@@ -423,8 +415,9 @@ TEST_F(TranslateHelperBrowserTest, TranslatablePage) {
 // Tests that the language meta tag takes precedence over the CLD when reporting
 // the page's language.
 TEST_F(TranslateHelperBrowserTest, LanguageMetaTag) {
-  LoadHTML("<html><head><meta http-equiv=\"content-language\" content=\"es\">"
-           "</head><body>A random page with random content.</body></html>");
+  LoadHTML(
+      "<html><head><meta http-equiv=\"content-language\" content=\"es\">"
+      "</head><body>A random page with random content.</body></html>");
 
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
@@ -432,9 +425,10 @@ TEST_F(TranslateHelperBrowserTest, LanguageMetaTag) {
   fake_translate_driver_.ResetNewPageValues();
 
   // Makes sure we support multiple languages specified.
-  LoadHTML("<html><head><meta http-equiv=\"content-language\" "
-           "content=\" fr , es,en \">"
-           "</head><body>A random page with random content.</body></html>");
+  LoadHTML(
+      "<html><head><meta http-equiv=\"content-language\" "
+      "content=\" fr , es,en \">"
+      "</head><body>A random page with random content.</body></html>");
 
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
@@ -444,17 +438,19 @@ TEST_F(TranslateHelperBrowserTest, LanguageMetaTag) {
 // Tests that the language meta tag works even with non-all-lower-case.
 // http://code.google.com/p/chromium/issues/detail?id=145689
 TEST_F(TranslateHelperBrowserTest, LanguageMetaTagCase) {
-  LoadHTML("<html><head><meta http-equiv=\"Content-Language\" content=\"es\">"
-           "</head><body>A random page with random content.</body></html>");
+  LoadHTML(
+      "<html><head><meta http-equiv=\"Content-Language\" content=\"es\">"
+      "</head><body>A random page with random content.</body></html>");
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
   EXPECT_EQ("es", fake_translate_driver_.details_->adopted_language);
   fake_translate_driver_.ResetNewPageValues();
 
   // Makes sure we support multiple languages specified.
-  LoadHTML("<html><head><meta http-equiv=\"Content-Language\" "
-           "content=\" fr , es,en \">"
-           "</head><body>A random page with random content.</body></html>");
+  LoadHTML(
+      "<html><head><meta http-equiv=\"Content-Language\" "
+      "content=\" fr , es,en \">"
+      "</head><body>A random page with random content.</body></html>");
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
   EXPECT_EQ("fr", fake_translate_driver_.details_->adopted_language);
@@ -464,15 +460,17 @@ TEST_F(TranslateHelperBrowserTest, LanguageMetaTagCase) {
 // instead of underscores and proper capitalization.
 // http://code.google.com/p/chromium/issues/detail?id=159487
 TEST_F(TranslateHelperBrowserTest, LanguageCommonMistakesAreCorrected) {
-  LoadHTML("<html><head><meta http-equiv='Content-Language' content='EN_us'>"
-           "</head><body>A random page with random content.</body></html>");
+  LoadHTML(
+      "<html><head><meta http-equiv='Content-Language' content='EN_us'>"
+      "</head><body>A random page with random content.</body></html>");
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
   EXPECT_EQ("en", fake_translate_driver_.details_->adopted_language);
   fake_translate_driver_.ResetNewPageValues();
 
-  LoadHTML("<html><head><meta http-equiv='Content-Language' content='ZH_tw'>"
-           "</head><body>A random page with random content.</body></html>");
+  LoadHTML(
+      "<html><head><meta http-equiv='Content-Language' content='ZH_tw'>"
+      "</head><body>A random page with random content.</body></html>");
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
   EXPECT_EQ("zh-TW", fake_translate_driver_.details_->adopted_language);
@@ -480,8 +478,9 @@ TEST_F(TranslateHelperBrowserTest, LanguageCommonMistakesAreCorrected) {
 
 // Tests that a back navigation gets a translate language message.
 TEST_F(TranslateHelperBrowserTest, BackToTranslatablePage) {
-  LoadHTML("<html><head><meta http-equiv=\"content-language\" content=\"zh\">"
-           "</head><body>This page is in Chinese.</body></html>");
+  LoadHTML(
+      "<html><head><meta http-equiv=\"content-language\" content=\"zh\">"
+      "</head><body>This page is in Chinese.</body></html>");
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
   EXPECT_EQ("zh", fake_translate_driver_.details_->adopted_language);
@@ -489,8 +488,9 @@ TEST_F(TranslateHelperBrowserTest, BackToTranslatablePage) {
 
   content::PageState back_state = GetCurrentPageState();
 
-  LoadHTML("<html><head><meta http-equiv=\"content-language\" content=\"fr\">"
-           "</head><body>This page is in French.</body></html>");
+  LoadHTML(
+      "<html><head><meta http-equiv=\"content-language\" content=\"fr\">"
+      "</head><body>This page is in French.</body></html>");
   base::RunLoop().RunUntilIdle();
   ASSERT_TRUE(fake_translate_driver_.called_new_page_);
   EXPECT_EQ("fr", fake_translate_driver_.details_->adopted_language);

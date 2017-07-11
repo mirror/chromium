@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/translate/content/common/translate_struct_traits.h"
+#include "components/translate/core/common/translate_struct_traits.h"
 
 #include "ipc/ipc_message_utils.h"
 #include "url/mojo/url_gurl_struct_traits.h"

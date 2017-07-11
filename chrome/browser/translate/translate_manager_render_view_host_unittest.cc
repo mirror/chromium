@@ -37,7 +37,6 @@
 #include "components/prefs/pref_change_registrar.h"
 #include "components/prefs/pref_service.h"
 #include "components/translate/content/browser/content_translate_driver.h"
-#include "components/translate/content/common/translate.mojom.h"
 #include "components/translate/core/browser/translate_accept_languages.h"
 #include "components/translate/core/browser/translate_download_manager.h"
 #include "components/translate/core/browser/translate_language_list.h"
@@ -47,6 +46,7 @@
 #include "components/translate/core/browser/translate_script.h"
 #include "components/translate/core/browser/translate_ui_delegate.h"
 #include "components/translate/core/common/language_detection_details.h"
+#include "components/translate/core/common/translate.mojom.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/notification_details.h"
@@ -182,8 +182,7 @@ class FakePageImpl : public translate::mojom::Page {
 class NavEntryCommittedObserver : public content::NotificationObserver {
  public:
   explicit NavEntryCommittedObserver(content::WebContents* web_contents) {
-    registrar_.Add(this,
-                   content::NOTIFICATION_NAV_ENTRY_COMMITTED,
+    registrar_.Add(this, content::NOTIFICATION_NAV_ENTRY_COMMITTED,
                    content::Source<content::NavigationController>(
                        &web_contents->GetController()));
   }
@@ -301,8 +300,8 @@ class TranslateManagerRenderViewHostTest
     details.adopted_language = lang;
     ChromeTranslateClient::FromWebContents(web_contents())
         ->translate_driver()
-        .RegisterPage(fake_page_.BindToNewPagePtr(), details,
-                      page_translatable);
+        .OnLanguageDetected(fake_page_.BindToNewPagePtr(), details,
+                            page_translatable);
   }
 
   void SimulateOnPageTranslated(const std::string& source_lang,
@@ -358,10 +357,12 @@ class TranslateManagerRenderViewHostTest
   // Returns the translate infobar if there is 1 infobar and it is a translate
   // infobar.
   translate::TranslateInfoBarDelegate* GetTranslateInfoBar() {
-    return (infobar_service()->infobar_count() == 1) ?
-        infobar_service()->infobar_at(0)->delegate()->
-            AsTranslateInfoBarDelegate() :
-        NULL;
+    return (infobar_service()->infobar_count() == 1)
+               ? infobar_service()
+                     ->infobar_at(0)
+                     ->delegate()
+                     ->AsTranslateInfoBarDelegate()
+               : NULL;
   }
 
   // If there is 1 infobar and it is a translate infobar, closes it and returns
@@ -448,8 +449,8 @@ class TranslateManagerRenderViewHostTest
                        const content::NotificationDetails& details) {
     DCHECK_EQ(chrome::NOTIFICATION_TAB_CONTENTS_INFOBAR_REMOVED, type);
     removed_infobars_.insert(
-        content::Details<infobars::InfoBar::RemovedDetails>(
-            details)->first->delegate());
+        content::Details<infobars::InfoBar::RemovedDetails>(details)
+            ->first->delegate());
   }
 
   MOCK_METHOD1(OnPreferenceChanged, void(const std::string&));
@@ -479,15 +480,13 @@ class TranslateManagerRenderViewHostTest
         .set_translate_max_reload_attempts(0);
 
     notification_registrar_.Add(
-        this,
-        chrome::NOTIFICATION_TAB_CONTENTS_INFOBAR_REMOVED,
+        this, chrome::NOTIFICATION_TAB_CONTENTS_INFOBAR_REMOVED,
         content::Source<InfoBarService>(infobar_service()));
   }
 
   virtual void TearDown() {
     notification_registrar_.Remove(
-        this,
-        chrome::NOTIFICATION_TAB_CONTENTS_INFOBAR_REMOVED,
+        this, chrome::NOTIFICATION_TAB_CONTENTS_INFOBAR_REMOVED,
         content::Source<InfoBarService>(infobar_service()));
 
     ChromeRenderViewHostTestHarness::TearDown();
@@ -523,8 +522,8 @@ class TranslateManagerRenderViewHostTest
           translate::TranslateLanguageList::kTargetLanguagesKey);
       const char* comma = "";
       for (size_t i = 0; i < languages.size(); ++i) {
-        data += base::StringPrintf(
-            "%s\"%s\": \"UnusedFullName\"", comma, languages[i].c_str());
+        data += base::StringPrintf("%s\"%s\": \"UnusedFullName\"", comma,
+                                   languages[i].c_str());
         if (i == 0)
           comma = ",";
       }
@@ -560,14 +559,13 @@ class TranslateManagerRenderViewHostTest
   DISALLOW_COPY_AND_ASSIGN(TranslateManagerRenderViewHostTest);
 };
 
-
 // A list of languages to fake being returned by the translate server.
 // Use only langauges for which Chrome's copy of ICU has
 // display names in English locale. To save space, Chrome's copy of ICU
 // does not have the display name for a language unless it's in the
 // Accept-Language list.
-static const char* server_language_list[] =
-    {"ach", "ak", "af", "en-CA", "zh", "yi", "fr-FR", "tl", "iw", "in", "xx"};
+static const char* server_language_list[] = {
+    "ach", "ak", "af", "en-CA", "zh", "yi", "fr-FR", "tl", "iw", "in", "xx"};
 
 // Test the fetching of languages from the translate server
 TEST_F(TranslateManagerRenderViewHostTest, FetchLanguagesFromTranslateServer) {
@@ -821,8 +819,8 @@ TEST_F(TranslateManagerRenderViewHostTest, TestLanguages) {
   GURL url("http://www.google.com");
   for (size_t i = 0; i < languages.size(); ++i) {
     std::string lang = languages[i];
-    SCOPED_TRACE(::testing::Message() << "Iteration " << i
-                                      << " language=" << lang);
+    SCOPED_TRACE(::testing::Message()
+                 << "Iteration " << i << " language=" << lang);
 
     // We should not have a translate infobar.
     translate::TranslateInfoBarDelegate* infobar = GetTranslateInfoBar();
