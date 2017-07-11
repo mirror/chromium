@@ -139,9 +139,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   net::HostPortPair GetSocketAddress() override;
   const net::HttpResponseHeaders* GetResponseHeaders() override;
   net::HttpResponseInfo::ConnectionInfo GetConnectionInfo() override;
-  void Resume() override;
-  void CancelDeferredNavigation(
-      NavigationThrottle::ThrottleCheckResult result) override;
   void RegisterThrottleForTesting(
       std::unique_ptr<NavigationThrottle> navigation_throttle) override;
   NavigationThrottle::ThrottleCheckResult CallWillStartRequestForTesting(
@@ -166,6 +163,9 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   RestoreType GetRestoreType() override;
   const GURL& GetBaseURLForDataURL() override;
   const GlobalRequestID& GetGlobalRequestID() override;
+
+  void Resume();
+  void CancelDeferredNavigation(NavigationThrottle::ThrottleCheckResult result);
 
   NavigationData* GetNavigationData() override;
 
@@ -387,6 +387,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // This is used to inform the RenderProcessHost to expect a navigation to the
   // url we're navigating to.
   void SetExpectedProcess(RenderProcessHost* expected_process);
+
+  NavigationThrottle* GetDeferringThrottle() const;
 
  private:
   friend class NavigationHandleImplTest;
