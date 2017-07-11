@@ -46,6 +46,30 @@
       "revId": "b0d8cda36548bcefb1911896a3aea294139d6aa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "225b12fe_3c3f354f",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-11T13:48:05Z",
+      "side": 1,
+      "message": "YYYY-DD-MM is a bad bad format, there are no sane uses of it. The ISO 8601 recommendation is 2017-07-11, which is good for sorting dates chronologically, and hence it is being used extensively. Hence there is usually no confusion like this among Chromies?",
+      "parentUuid": "dd559efb_147ffa85",
+      "range": {
+        "startLine": 259,
+        "startChar": 52,
+        "endLine": 259,
+        "endChar": 63
+      },
+      "revId": "b0d8cda36548bcefb1911896a3aea294139d6aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
