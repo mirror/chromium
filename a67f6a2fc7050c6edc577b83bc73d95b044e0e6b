@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b9c0cc3_28b0953d",
+        "filename": "media/remoting/DEPS",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-11T23:17:20Z",
+      "side": 1,
+      "message": "I took a much deeper look at how we avoided introducing this dependency for other things: Turns out the media OWNERS had us create the MediaObserver and MediaObserverClient interfaces. So, instead of depending on media/blink code, I think it would be better to just add a method to MediaObserverClient (WMPI implements this interface). It would actually be much simpler plumbing for this code change. :-)",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "a67f6a2fc7050c6edc577b83bc73d95b044e0e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
