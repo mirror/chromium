@@ -62,6 +62,30 @@
       "revId": "98c7d751bcd423b0c445fe402ed89a273ac88875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f190f8_aae98b22",
+        "filename": "base/json/json_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T19:02:23Z",
+      "side": 1,
+      "message": "\u003e This may be a dumb question, but why do we call ReportError() here and not between line 662 and 663?\n\nThe caller of DecodeUTF16(), ConsumeStringRaw(), calls ReportError() if it returns false, so this code branch won\u0027t actually have an effect. The INVALID_ESCAPE error is probably correct.\n\nPerhaps there should be a test for the error message here? (There are other tests that verify precise error messages).",
+      "parentUuid": "52f307f3_a4c2b8fc",
+      "range": {
+        "startLine": 672,
+        "startChar": 8,
+        "endLine": 672,
+        "endChar": 62
+      },
+      "revId": "98c7d751bcd423b0c445fe402ed89a273ac88875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
