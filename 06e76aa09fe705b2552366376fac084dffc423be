@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bebab58_2cb165e0",
+        "filename": "docs/fuchsia_build_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-11T23:22:52Z",
+      "side": 1,
+      "message": "bots don\u0027t set dcheck_always_on\u003dtrue currently",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 63
+      },
+      "revId": "06e76aa09fe705b2552366376fac084dffc423be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce05d469_3b4083ff",
+        "filename": "docs/fuchsia_build_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-11T23:22:52Z",
+      "side": 1,
+      "message": "The instructions above say to set dcheck_always_on\u003dtrue, so brokenness will be there even with is_debug\u003dfalse. Maybe mention it here instead of is_debug.",
+      "range": {
+        "startLine": 97,
+        "startChar": 39,
+        "endLine": 97,
+        "endChar": 72
+      },
+      "revId": "06e76aa09fe705b2552366376fac084dffc423be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
