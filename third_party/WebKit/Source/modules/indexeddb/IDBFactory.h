@@ -65,6 +65,9 @@ class IDBFactory final : public GarbageCollected<IDBFactory>,
   IDBOpenDBRequest* CloseConnectionsAndDeleteDatabase(ScriptState*,
                                                       const String& name,
                                                       ExceptionState&);
+  IDBRequest* AbortTransactionsAndCompactDatabase(ScriptState*,
+                                                  ExceptionState&);
+  IDBRequest* AbortTransactionsForDatabase(ScriptState*, ExceptionState&);
 
  private:
   IDBFactory();

@@ -95,6 +95,74 @@ IDBRequest* IDBFactory::GetDatabaseNames(ScriptState* script_state,
   return request;
 }
 
+IDBRequest* IDBFactory::AbortTransactionsAndCompactDatabase(
+    ScriptState* script_state,
+    ExceptionState& exception_state) {
+  IDB_TRACE("IDBFactory::abortTransactionsAndCompactDatabaseRequestSetup");
+  IDBRequest::AsyncTraceState metrics(
+      "IDBFactory::abortTransactionsAndCompactDatabase");
+  IDBRequest* request = IDBRequest::Create(script_state, IDBAny::CreateNull(),
+                                           nullptr, std::move(metrics));
+  // some of these checks might not be needed, working off of GetDatabaseNames
+  if (!IsContextValid(ExecutionContext::From(script_state)))
+    return nullptr;
+  if (!ExecutionContext::From(script_state)
+           ->GetSecurityOrigin()
+           ->CanAccessDatabase()) {
+    exception_state.ThrowSecurityError(
+        "access to the Indexed Database API is denied in this context.");
+    return nullptr;
+  }
+
+  if (!IndexedDBClient::From(ExecutionContext::From(script_state))
+           ->AllowIndexedDB(ExecutionContext::From(script_state),
+                            "Database Compaction")) {
+    request->HandleResponse(
+        DOMException::Create(kUnknownError, kPermissionDeniedErrorMessage));
+    return request;
+  }
+
+  Platform::Current()->IdbFactory()->AbortTransactionsAndCompactDatabase(
+      request->CreateWebCallbacks().release(),
+      WebSecurityOrigin(
+          ExecutionContext::From(script_state)->GetSecurityOrigin()));
+  return request;
+}
+
+IDBRequest* IDBFactory::AbortTransactionsForDatabase(
+    ScriptState* script_state,
+    ExceptionState& exception_state) {
+  IDB_TRACE("IDBFactory::abortTransactionsForDatabaseRequestSetup");
+  IDBRequest::AsyncTraceState metrics(
+      "IDBFactory::abortTransactionsForDatabase");
+  IDBRequest* request = IDBRequest::Create(script_state, IDBAny::CreateNull(),
+                                           nullptr, std::move(metrics));
+  // some of these checks might not be needed, working off of GetDatabaseNames
+  if (!IsContextValid(ExecutionContext::From(script_state)))
+    return nullptr;
+  if (!ExecutionContext::From(script_state)
+           ->GetSecurityOrigin()
+           ->CanAccessDatabase()) {
+    exception_state.ThrowSecurityError(
+        "access to the Indexed Database API is denied in this context.");
+    return nullptr;
+  }
+
+  if (!IndexedDBClient::From(ExecutionContext::From(script_state))
+           ->AllowIndexedDB(ExecutionContext::From(script_state),
+                            "Aborting Transactions")) {
+    request->HandleResponse(
+        DOMException::Create(kUnknownError, kPermissionDeniedErrorMessage));
+    return request;
+  }
+
+  Platform::Current()->IdbFactory()->AbortTransactionsForDatabase(
+      request->CreateWebCallbacks().release(),
+      WebSecurityOrigin(
+          ExecutionContext::From(script_state)->GetSecurityOrigin()));
+  return request;
+}
+
 IDBOpenDBRequest* IDBFactory::open(ScriptState* script_state,
                                    const String& name,
                                    unsigned long long version,

@@ -1996,6 +1996,24 @@
                 "returns": [
                 ],
                 "description": "Deletes a database."
+            },
+            {
+                "name": "compactDatabase",
+                "parameters": [
+                    { "name": "securityOrigin", "type": "string", "description": "Security origin." }
+                ],
+                "returns": [
+                ],
+                "description": "Aborts all transactions for the origin and starts database compaction."
+            },
+            {
+                "name": "abortTransactions",
+                "parameters": [
+                    { "name": "securityOrigin", "type": "string", "description": "Security origin." }
+                ],
+                "returns": [
+                ],
+                "description": "Aborts all transactions for the origin."
             }
         ]
     },

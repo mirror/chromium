@@ -53,6 +53,11 @@ class WebIDBFactory {
                               WebIDBCallbacks*,
                               const WebSecurityOrigin&,
                               bool force_close) = 0;
+  virtual void AbortTransactionsAndCompactDatabase(
+      WebIDBCallbacks*,
+      const WebSecurityOrigin&) = 0;
+  virtual void AbortTransactionsForDatabase(WebIDBCallbacks*,
+                                            const WebSecurityOrigin&) = 0;
 };
 
 }  // namespace blink

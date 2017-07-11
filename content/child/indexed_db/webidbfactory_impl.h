@@ -43,6 +43,12 @@ class WebIDBFactoryImpl : public blink::WebIDBFactory {
                       blink::WebIDBCallbacks* callbacks,
                       const blink::WebSecurityOrigin& origin,
                       bool force_close) override;
+  void AbortTransactionsAndCompactDatabase(
+      blink::WebIDBCallbacks* callbacks,
+      const blink::WebSecurityOrigin& origin) override;
+  void AbortTransactionsForDatabase(
+      blink::WebIDBCallbacks* callbacks,
+      const blink::WebSecurityOrigin& origin) override;
 
  private:
   class IOThreadHelper;

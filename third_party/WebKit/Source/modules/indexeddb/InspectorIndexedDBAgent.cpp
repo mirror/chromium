@@ -63,6 +63,7 @@
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
 
 using blink::protocol::Array;
+using blink::protocol::DispatchResponse;
 using blink::protocol::IndexedDB::DatabaseWithObjectStores;
 using blink::protocol::IndexedDB::DataEntry;
 using blink::protocol::IndexedDB::Key;
@@ -1035,6 +1036,61 @@ void InspectorIndexedDBAgent::deleteDatabase(
       DeleteCallback::Create(std::move(request_callback),
                              document->GetSecurityOrigin()->ToRawString()),
       false);
+}
+
+DispatchResponse InspectorIndexedDBAgent::compactDatabase(
+    const String& security_origin) {
+  LocalFrame* frame =
+      inspected_frames_->FrameWithSecurityOrigin(security_origin);
+  Document* document = frame ? frame->GetDocument() : nullptr;
+  if (!document) {
+    return Response::Error(kNoDocumentError);
+  }
+  IDBFactory* idb_factory = nullptr;
+  Response response = AssertIDBFactory(document, idb_factory);
+  if (!response.isSuccess()) {
+    return response;
+  }
+
+  ScriptState* script_state = ToScriptStateForMainWorld(frame);
+  if (!script_state) {
+    return Response::InternalError();
+  }
+  ScriptState::Scope scope(script_state);
+  DummyExceptionStateForTesting exception_state;
+  idb_factory->AbortTransactionsAndCompactDatabase(script_state,
+                                                   exception_state);
+  if (exception_state.HadException()) {
+    return DispatchResponse::Error("Could not start compaction.");
+  }
+  return DispatchResponse::OK();
+}
+
+DispatchResponse InspectorIndexedDBAgent::abortTransactions(
+    const String& security_origin) {
+  LocalFrame* frame =
+      inspected_frames_->FrameWithSecurityOrigin(security_origin);
+  Document* document = frame ? frame->GetDocument() : nullptr;
+  if (!document) {
+    return Response::Error(kNoDocumentError);
+  }
+  IDBFactory* idb_factory = nullptr;
+  Response response = AssertIDBFactory(document, idb_factory);
+  if (!response.isSuccess()) {
+    return response;
+  }
+
+  ScriptState* script_state = ToScriptStateForMainWorld(frame);
+  if (!script_state) {
+    return Response::InternalError();
+  }
+  ScriptState::Scope scope(script_state);
+  DummyExceptionStateForTesting exception_state;
+  idb_factory->AbortTransactionsForDatabase(script_state, exception_state);
+  if (exception_state.HadException()) {
+    return DispatchResponse::Error("Could not abort transactions.");
+  }
+  return DispatchResponse::OK();
 }
 
 DEFINE_TRACE(InspectorIndexedDBAgent) {
