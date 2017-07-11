@@ -16,6 +16,47 @@
       "revId": "5252ac4ac619ca3a6a7a1ec8319ffd23645d25f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb2860d_d48db4a8",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-11T19:09:20Z",
+      "side": 1,
+      "message": "It is checking that file can be created. \nThis construct was here before, but the opened file was passed down to netlog observer. \nI don\u0027t know whether there is similar possibility in file_net_log_observer.",
+      "parentUuid": "27a04aaa_7fbcf79d",
+      "revId": "5252ac4ac619ca3a6a7a1ec8319ffd23645d25f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b10466_c5817292",
+        "filename": "components/cronet/ios/test/cronet_netlog_test.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-11T19:09:20Z",
+      "side": 1,
+      "message": "Without stopping the log test crashes as directory gets deleted in next statement before netlog file is created on task scheduler thread.",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "5252ac4ac619ca3a6a7a1ec8319ffd23645d25f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
