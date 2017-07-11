@@ -746,8 +746,10 @@ TEST_F(TaskSchedulerTaskTrackerTest, LoadWillPostAndRunBeforeShutdown) {
     threads.back()->Start();
   }
 
-  for (const auto& thread : threads)
+  for (auto& thread : threads) {
     thread->Join();
+    thread.reset();
+  }
 
   // Expect all tasks to be executed.
   EXPECT_EQ(kLoadTestNumIterations * 3, NumTasksExecuted());
@@ -782,8 +784,10 @@ TEST_F(TaskSchedulerTaskTrackerTest,
     post_threads.back()->Start();
   }
 
-  for (const auto& thread : post_threads)
+  for (auto& thread : post_threads) {
     thread->Join();
+    thread.reset();
+  }
 
   // Call Shutdown() asynchronously.
   CallShutdownAsync();
@@ -798,8 +802,10 @@ TEST_F(TaskSchedulerTaskTrackerTest,
     run_threads.back()->Start();
   }
 
-  for (const auto& thread : run_threads)
+  for (auto& thread : run_threads) {
     thread->Join();
+    thread.reset();
+  }
 
   WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
 
@@ -837,8 +843,10 @@ TEST_F(TaskSchedulerTaskTrackerTest, LoadWillPostAndRunDuringShutdown) {
     threads.back()->Start();
   }
 
-  for (const auto& thread : threads)
+  for (auto& thread : threads) {
     thread->Join();
+    thread.reset();
+  }
 
   // Expect BLOCK_SHUTDOWN tasks to have been executed.
   EXPECT_EQ(kLoadTestNumIterations, NumTasksExecuted());
