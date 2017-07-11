@@ -892,4 +892,23 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   scheduler()->OnBrowserColdStart();
 }
 
+TEST_F(RemoteSuggestionsSchedulerImplTest, ShouldIgnoreSignalsWhenOffline) {
+  std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier =
+      base::WrapUnique(net::NetworkChangeNotifier::CreateMock());
+
+  // Activating the provider should schedule the persistent background fetches.
+  EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
+  scheduler()->OnProviderActivated();
+
+  // Simulate being offline.
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_NONE);
+
+  // All signals are ignored because of Eula not being accepted.
+  scheduler()->OnPersistentSchedulerWakeUp();
+  scheduler()->OnNTPOpened();
+  scheduler()->OnBrowserForegrounded();
+  scheduler()->OnBrowserColdStart();
+}
+
 }  // namespace ntp_snippets
