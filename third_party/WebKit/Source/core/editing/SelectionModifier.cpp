@@ -325,60 +325,51 @@ VisiblePosition SelectionModifier::ModifyMovingRight(
 
 VisiblePosition SelectionModifier::ModifyMovingForward(
     TextGranularity granularity) {
-  VisiblePosition pos;
-  // FIXME: Stay in editable content for the less common granularities.
+  // TODO(editing-dev): Stay in editable content for the less common
+  // granularities.
   switch (granularity) {
     case kCharacterGranularity:
       if (selection_.IsRange())
-        pos = CreateVisiblePosition(selection_.End(), selection_.Affinity());
-      else
-        pos = NextPositionOf(
-            CreateVisiblePosition(selection_.Extent(), selection_.Affinity()),
-            kCanSkipOverEditingBoundary);
-      break;
+        return CreateVisiblePosition(selection_.End(), selection_.Affinity());
+      return NextPositionOf(
+          CreateVisiblePosition(selection_.Extent(), selection_.Affinity()),
+          kCanSkipOverEditingBoundary);
     case kWordGranularity:
-      pos = NextWordPositionForPlatform(
+      return NextWordPositionForPlatform(
           CreateVisiblePosition(selection_.Extent(), selection_.Affinity()));
-      break;
     case kSentenceGranularity:
-      pos = NextSentencePosition(
+      return NextSentencePosition(
           CreateVisiblePosition(selection_.Extent(), selection_.Affinity()));
-      break;
     case kLineGranularity: {
       // down-arrowing from a range selection that ends at the start of a line
       // needs to leave the selection at that line start (no need to call
       // nextLinePosition!)
-      pos = EndForPlatform();
-      if (!selection_.IsRange() || !IsStartOfLine(pos)) {
-        pos = NextLinePosition(
-            pos,
-            LineDirectionPointForBlockDirectionNavigation(selection_.Start()));
-      }
-      break;
+      const VisiblePosition& pos = EndForPlatform();
+      if (selection_.IsRange() && IsStartOfLine(pos))
+        return pos;
+      return NextLinePosition(
+          pos,
+          LineDirectionPointForBlockDirectionNavigation(selection_.Start()));
     }
     case kParagraphGranularity:
-      pos = NextParagraphPosition(
+      return NextParagraphPosition(
           EndForPlatform(),
           LineDirectionPointForBlockDirectionNavigation(selection_.Start()));
-      break;
     case kSentenceBoundary:
-      pos = EndOfSentence(EndForPlatform());
-      break;
+      return EndOfSentence(EndForPlatform());
     case kLineBoundary:
-      pos = LogicalEndOfLine(EndForPlatform());
-      break;
+      return LogicalEndOfLine(EndForPlatform());
     case kParagraphBoundary:
-      pos = EndOfParagraph(EndForPlatform());
-      break;
-    case kDocumentBoundary:
-      pos = EndForPlatform();
+      return EndOfParagraph(EndForPlatform());
+    case kDocumentBoundary: {
+      const VisiblePosition& pos = EndForPlatform();
       if (IsEditablePosition(pos.DeepEquivalent()))
-        pos = EndOfEditableContent(pos);
-      else
-        pos = EndOfDocument(pos);
-      break;
+        return EndOfEditableContent(pos);
+      return EndOfDocument(pos);
+    }
   }
-  return pos;
+  NOTREACHED() << granularity;
+  return VisiblePosition();
 }
 
 VisiblePosition SelectionModifier::ModifyExtendingLeft(
