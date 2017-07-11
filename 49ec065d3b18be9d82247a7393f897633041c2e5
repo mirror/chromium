@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c425271f_3920a7ea",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-11T03:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87fd6845_3989e72a",
+      "revId": "49ec065d3b18be9d82247a7393f897633041c2e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5ba2cb0_976cf29f",
         "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ab39795c_0c5f0c44",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-11T03:58:28Z",
+      "side": 1,
+      "message": "Yes it would, but I need dnsEnd separate for 172 \u0026 177. (and it\u0027s easy to read/modify)",
+      "parentUuid": "b5ba2cb0_976cf29f",
+      "revId": "49ec065d3b18be9d82247a7393f897633041c2e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c357a57_b0866206",
         "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-07T22:54:33Z",
       "side": 1,
       "message": "This is ending up with negative values sometimes. A HAR I captured from paulirish.com has negative send timings for two requests. \nhttp://www.softwareishard.com/har/viewer/ throws on these errors and won\u0027t view it.",
+      "revId": "49ec065d3b18be9d82247a7393f897633041c2e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e2eb8d_37eae6ca",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-11T03:58:28Z",
+      "side": 1,
+      "message": "Should be resolved now.",
+      "parentUuid": "2c357a57_b0866206",
       "revId": "49ec065d3b18be9d82247a7393f897633041c2e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

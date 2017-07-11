@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b77d9449_220d09b4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-11T03:58:28Z",
+      "side": 1,
+      "message": "Per our offline conversation, Done.",
+      "parentUuid": "52566cef_76b8614a",
+      "revId": "cd32e0328afb64bb55d05ebb481774a2d42f22ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f428ad6d_9753dcf2",
         "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
         "patchSetId": 1
