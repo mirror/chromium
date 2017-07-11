@@ -137,6 +137,13 @@ bool ConsumeShorthandVia4LonghandsAPI(const StylePropertyShorthand&,
                                       CSSParserTokenRange&,
                                       HeapVector<CSSProperty, 256>& properties);
 
+bool ConsumeShorthandGreedilyViaLonghandAPIs(
+    const StylePropertyShorthand&,
+    bool important,
+    const CSSParserContext&,
+    CSSParserTokenRange&,
+    HeapVector<CSSProperty, 256>& properties);
+
 // Template implementations are at the bottom of the file for readability.
 
 template <typename... emptyBaseCase>
