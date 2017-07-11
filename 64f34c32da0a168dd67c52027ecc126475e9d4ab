@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "09e20cd8_93bd527f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T14:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f88146c_a7d860ca",
+      "range": {
+        "startLine": 903,
+        "startChar": 42,
+        "endLine": 903,
+        "endChar": 59
+      },
+      "revId": "64f34c32da0a168dd67c52027ecc126475e9d4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fb27e22_ca904922",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 5
