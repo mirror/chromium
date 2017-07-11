@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39ad97b8_f562f4f5",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-11T16:11:50Z",
+      "side": 1,
+      "message": "That makes sense. I think first we should decide if the test makes sense, and what the purpose of it is.",
+      "parentUuid": "aa94c896_d4cf7cac",
+      "revId": "0e37957da005c281f7bab45659d26ce015635f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96f2af6c_748ad617",
         "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
         "patchSetId": 1
@@ -54,6 +72,30 @@
       "side": 1,
       "message": "Looks like you could even remove Refresh() because Chrome Home doesn\u0027t actually trigger it.\n\nHaving said that, it could help making the test faster, and if that\u0027s the reason why we have it, I\u0027d make sure to document.",
       "parentUuid": "96f2af6c_748ad617",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "0e37957da005c281f7bab45659d26ce015635f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac3ebf4_f38d4cad",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-11T16:11:50Z",
+      "side": 1,
+      "message": "If it\u0027s removed, does this test still make sense? I\u0027m not sure if it makes sense to add a test that\u0027s this slow. In the best case it will slow down the suite by 20+ seconds. In the worst case it will timeout creating flake.\n\nSo Chrome Home doesn\u0027t do anything to trigger it? It just waits for the observer to be called?",
+      "parentUuid": "4b66cf84_aa611a0c",
       "range": {
         "startLine": 118,
         "startChar": 23,
