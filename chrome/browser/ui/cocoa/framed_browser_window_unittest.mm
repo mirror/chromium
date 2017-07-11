@@ -3,8 +3,10 @@
 // found in the LICENSE file.
 
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/QuartzCore.h>
 
 #include "base/debug/debugger.h"
+#include "base/mac/scoped_cftyperef.h"
 #include "base/mac/scoped_nsobject.h"
 #include "chrome/app/chrome_command_ids.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
@@ -43,27 +45,15 @@ class FramedBrowserWindowTest : public CocoaTest {
 
   // Returns a canonical snapshot of the window.
   NSData* WindowContentsAsTIFF() {
-    [window_ display];
+    [CATransaction flush];
 
-    NSView* frameView = [window_ contentView];
-    while ([frameView superview]) {
-      frameView = [frameView superview];
-    }
-
-    // Inset to mask off left and right edges which vary in HighDPI.
-    NSRect bounds = NSInsetRect([frameView bounds], 4, 0);
-
-    // On 10.6, the grippy changes appearance slightly when painted the second
-    // time in a textured window. Since this test cares about the window title,
-    // cut off the bottom of the window.
-    bounds.size.height -= 40;
-    bounds.origin.y += 40;
-
-    [frameView lockFocus];
-    base::scoped_nsobject<NSBitmapImageRep> bitmap(
-        [[NSBitmapImageRep alloc] initWithFocusedViewRect:bounds]);
-    [frameView unlockFocus];
-
+    const void* windowNumber = reinterpret_cast<void*>([window_ windowNumber]);
+    base::ScopedCFTypeRef<CFArrayRef> windowList(
+        CFArrayCreate(nullptr, &windowNumber, 1, nullptr));
+    base::ScopedCFTypeRef<CGImageRef> cgImage(CGWindowListCreateImageFromArray(
+        CGRectNull, windowList, kCGWindowImageBoundsIgnoreFraming));
+    base::scoped_nsobject<NSImage> bitmap(
+        [[NSImage alloc] initWithCGImage:cgImage size:NSZeroSize]);
     return [bitmap TIFFRepresentation];
   }
 
