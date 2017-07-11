@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "03979f4c_f6b00923",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-11T23:56:33Z",
+      "side": 1,
+      "message": "I think, this line is enough to get correct session start time.\nYou do not need new observers.",
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c0f92a6_23f0fe6f",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
         "patchSetId": 5
