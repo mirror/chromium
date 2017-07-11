@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7836915_b664803e",
+        "filename": "chrome/browser/password_manager/save_password_infobar_delegate_android_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "I had full coverage of the lines that I added with this unittest. But I have added the other cases because they did not have any code coverage by the rest of the unit test.\n\nDone.",
+      "parentUuid": "391842ab_038ce516",
+      "range": {
+        "startLine": 183,
+        "startChar": 40,
+        "endLine": 183,
+        "endChar": 58
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1991f557_f7a596ea",
         "filename": "chrome/browser/password_manager/save_password_infobar_delegate_android_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ad7fab_d020ff34",
+        "filename": "chrome/browser/password_manager/save_password_infobar_delegate_android_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "Nope.\n\n\"error: using declaration cannot refer to class member\"",
+      "parentUuid": "1991f557_f7a596ea",
+      "range": {
+        "startLine": 187,
+        "startChar": 53,
+        "endLine": 187,
+        "endChar": 68
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7210698b_50fb4011",
+        "filename": "chrome/browser/password_manager/update_password_infobar_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "Nope, I was not aware of that.\n\nI have removed the previous line but I do keep the UKM recording as the UKM has different ways to distinguish between save and update.\n\nDone.",
+      "parentUuid": "aa580e5f_a9438760",
+      "range": {
+        "startLine": 40,
+        "startChar": 34,
+        "endLine": 40,
+        "endChar": 54
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24260439_d735da58",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae47c75a_52da1271",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "I had to wait for https://chromium-review.googlesource.com/c/565293/ to land.\n\nDone.",
+      "parentUuid": "24260439_d735da58",
+      "range": {
+        "startLine": 105,
+        "startChar": 5,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "520150a8_40545c92",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "Done. Had to move from StrictMock to regular mock though. So this now produces some log output about uninteresting function calls.",
+      "parentUuid": "0fa5e30e_cee66bfa",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 15
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76ecc6ca_2f14a08c",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e15d493_4bd51c61",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ecc6ca_2f14a08c",
+      "range": {
+        "startLine": 535,
+        "startChar": 7,
+        "endLine": 535,
+        "endChar": 21
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a4276b52_5a6286d3",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f08c20f5_a703bb03",
+      "range": {
+        "startLine": 240,
+        "startChar": 41,
+        "endLine": 240,
+        "endChar": 53
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd5d77b7_2e399af0",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 3
@@ -180,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "5e00a043_51b1d097",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "The tests are outside of components/passord_manager and it was important to vabr to keep the internal namespace limited.",
+      "parentUuid": "bd5d77b7_2e399af0",
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6ab063d_5c6b1619",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
         "patchSetId": 3
@@ -191,6 +377,30 @@
       "writtenOn": "2017-07-10T15:27:46Z",
       "side": 1,
       "message": "This is actually nonsense. The credential is updated silently. Does it change something for you?",
+      "range": {
+        "startLine": 425,
+        "startChar": 19,
+        "endLine": 425,
+        "endChar": 53
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540afac9_925c9eb0",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "I thought about this as well.\nMy conclusion was to test this here because it is a unittest and the fact that the CM API choses to update silently is taken at a higher level. SGTY?",
+      "parentUuid": "e6ab063d_5c6b1619",
       "range": {
         "startLine": 425,
         "startChar": 19,
@@ -223,6 +433,30 @@
       "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6408c1ad_8e718f23",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_infobar_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T13:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e4bb426_9aa9b0d7",
+      "range": {
+        "startLine": 11,
+        "startChar": 43,
+        "endLine": 11,
+        "endChar": 50
+      },
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
