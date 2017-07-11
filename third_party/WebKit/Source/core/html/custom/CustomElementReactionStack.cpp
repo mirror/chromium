@@ -15,8 +15,7 @@ namespace {
 
 Persistent<CustomElementReactionStack>& GetCustomElementReactionStack() {
   DEFINE_STATIC_LOCAL(Persistent<CustomElementReactionStack>,
-                      custom_element_reaction_stack,
-                      (new CustomElementReactionStack));
+                      custom_element_reaction_stack, (nullptr));
   return custom_element_reaction_stack;
 }
 
@@ -114,7 +113,15 @@ void CustomElementReactionStack::InvokeBackupQueue() {
 }
 
 CustomElementReactionStack& CustomElementReactionStack::Current() {
-  return *GetCustomElementReactionStack();
+  Persistent<CustomElementReactionStack>& stack =
+      GetCustomElementReactionStack();
+  if (UNLIKELY(!stack))
+    stack = new CustomElementReactionStack;
+  return *stack;
+}
+
+CustomElementReactionStack* CustomElementReactionStack::MaybeCurrent() {
+  return GetCustomElementReactionStack();
 }
 
 CustomElementReactionStack*

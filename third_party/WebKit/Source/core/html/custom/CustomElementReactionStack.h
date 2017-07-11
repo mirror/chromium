@@ -34,7 +34,16 @@ class CORE_EXPORT CustomElementReactionStack final
   void EnqueueToBackupQueue(Element*, CustomElementReaction*);
   void ClearQueue(Element*);
 
+  // Gets the custom element reaction stack. This object is lazily
+  // created.
   static CustomElementReactionStack& Current();
+
+  // Gets the CustomElementReactionStack if it exists. Although
+  // there's technically always a custom element reaction stack, the
+  // object is created lazily. For callers which do not need to use
+  // the stack they can use MaybeCurrent and treat a nullptr as an
+  // empty stack.
+  static CustomElementReactionStack* MaybeCurrent();
 
  private:
   friend class CustomElementReactionStackTestSupport;

@@ -94,7 +94,7 @@ DEFINE_TRACE(CustomElementRegistry) {
 }
 
 DEFINE_TRACE_WRAPPERS(CustomElementRegistry) {
-  visitor->TraceWrappers(&CustomElementReactionStack::Current());
+  visitor->TraceWrappers(CustomElementReactionStack::MaybeCurrent());
   for (auto definition : definitions_)
     visitor->TraceWrappers(definition);
 }
