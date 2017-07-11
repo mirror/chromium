@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6f1f782_1361f712",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 69611,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-11T23:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d0c20d9_e503a22f",
+      "range": {
+        "startLine": 69611,
+        "startChar": 31,
+        "endLine": 69611,
+        "endChar": 62
+      },
+      "revId": "d9e3d45678743090eb8bf07aae5742dd5a969d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fe07d87_f54d59dc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-11T18:35:00Z",
       "side": 1,
       "message": "This wording is pretty generic.  Can you confirm that this intended to be used for precision calculations for all types of navigation hints now and in the future (web page hints, omnibox query hints, omnibox URL navigation hints, etc.)?",
+      "range": {
+        "startLine": 69616,
+        "startChar": 9,
+        "endLine": 69616,
+        "endChar": 26
+      },
+      "revId": "d9e3d45678743090eb8bf07aae5742dd5a969d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3edfbd7_d8447444",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 69616,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-11T23:58:56Z",
+      "side": 1,
+      "message": "Yes.\nWhen we will introduce new hints, we can add histogram_suffixes like \"ServiceWorker.NavigationHint\".",
+      "parentUuid": "9fe07d87_f54d59dc",
       "range": {
         "startLine": 69616,
         "startChar": 9,
