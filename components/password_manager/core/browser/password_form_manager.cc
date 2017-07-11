@@ -457,6 +457,20 @@ void PasswordFormManager::Update(
                       old_primary_key ? &old_primary_key.value() : nullptr);
 }
 
+bool PasswordFormManager::UpdateUsernameAndHandleIfNecessary(
+    const base::string16& new_username) {
+  pending_credentials_.username_value = std::move(new_username);
+  // Check if the username already exists.
+  const PasswordForm* saved_match = FindBestSavedMatch(&pending_credentials_);
+  if (saved_match) {
+    is_new_login_ = false;
+    Update(pending_credentials_);
+  } else {
+    is_new_login_ = true;
+  }
+  return !is_new_login_;
+}
+
 void PasswordFormManager::PresaveGeneratedPassword(
     const autofill::PasswordForm& form) {
   form_saver()->PresaveGeneratedPassword(form);

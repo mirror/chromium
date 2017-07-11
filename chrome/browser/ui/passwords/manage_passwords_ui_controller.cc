@@ -291,8 +291,17 @@ void ManagePasswordsUIController::NeverSavePassword() {
   // The state stays the same.
 }
 
-void ManagePasswordsUIController::SavePassword() {
+void ManagePasswordsUIController::SavePassword(const base::string16& username) {
   DCHECK_EQ(password_manager::ui::PENDING_PASSWORD_STATE, GetState());
+  if (passwords_data_.form_manager()->pending_credentials().username_value !=
+      username) {
+    bool handled =
+        passwords_data_.form_manager()->UpdateUsernameAndHandleIfNecessary(
+            username);
+    if (handled) {
+      return;
+    }
+  }
   SavePasswordInternal();
   passwords_data_.TransitionToState(password_manager::ui::MANAGE_STATE);
   // The icon is to be updated after the bubble (either "Save password" or "Sign
