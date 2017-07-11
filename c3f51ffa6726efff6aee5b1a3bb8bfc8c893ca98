@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5312d29_ce3f4a83",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-11T09:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eb53199_6fb97fd2",
+      "range": {
+        "startLine": 49,
+        "startChar": 64,
+        "endLine": 49,
+        "endChar": 68
+      },
+      "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d0c8cb9_36f5f009",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3576ab_e12823fb",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-11T09:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d0c8cb9_36f5f009",
+      "range": {
+        "startLine": 51,
+        "startChar": 30,
+        "endLine": 51,
+        "endChar": 45
+      },
+      "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "67ea7726_f748fb0a",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-11T09:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e03003e7_2bac6db9",
+      "range": {
+        "startLine": 76,
+        "startChar": 10,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd63ef66_73c6cff3",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-10T11:52:23Z",
       "side": 1,
       "message": "Question: Should *token_requested be set to false here?",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 21
+      },
+      "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5645c759_435f942d",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-11T09:24:14Z",
+      "side": 1,
+      "message": "No, we don\u0027t want to fail the test if this URL is called for a different account.\n\nWe probably want to check that it is not called multiple time for the same account though. I\u0027m adding a check for that.",
+      "parentUuid": "dd63ef66_73c6cff3",
       "range": {
         "startLine": 77,
         "startChar": 10,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7074721d_bb381929",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-11T09:24:14Z",
+      "side": 1,
+      "message": "Made a function for this. I did not cache it in the class though, I don\u0027t really understand the benefit.",
+      "parentUuid": "da5121e7_cf5c0d16",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 35
+      },
+      "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e15044d_0ab5ba33",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "41704d80_6b6e33b5",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-11T09:24:14Z",
+      "side": 1,
+      "message": "I tried to make the comment clearer.",
+      "parentUuid": "9e15044d_0ab5ba33",
+      "range": {
+        "startLine": 171,
+        "startChar": 23,
+        "endLine": 171,
+        "endChar": 52
+      },
+      "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e770e115_e5f5df15",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-10T11:57:38Z",
       "side": 1,
       "message": "You could also just check token_service-\u003eRefreshTokenIsAvailable here (but that would not check that OA2TS fires OnRefreshTokenAvailable when the token is available though).",
+      "range": {
+        "startLine": 183,
+        "startChar": 14,
+        "endLine": 183,
+        "endChar": 38
+      },
+      "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb75750b_f17749f7",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-11T09:24:14Z",
+      "side": 1,
+      "message": "Why not both? I added the check you suggested but did not remove the current check.",
+      "parentUuid": "e770e115_e5f5df15",
       "range": {
         "startLine": 183,
         "startChar": 14,
