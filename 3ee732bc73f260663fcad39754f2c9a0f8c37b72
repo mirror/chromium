@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f3ed0297_bc55c11f",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T17:54:27Z",
+      "side": 1,
+      "message": "\u003e But you only ever MakeEvent() with a kevent64() following it, so maybe leave it as a member function but make it responsible for creating the kevent64_s and then calling kevent64().\n\nDid this, since it makes the code simpler overall. Renamed to PostEvent().",
+      "parentUuid": "dacbd46d_28b129a0",
+      "revId": "3ee732bc73f260663fcad39754f2c9a0f8c37b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d00a6d_8bf05b00",
         "filename": "base/task_scheduler/task_tracker_unittest.cc",
         "patchSetId": 6
@@ -68,6 +86,24 @@
       "revId": "3ee732bc73f260663fcad39754f2c9a0f8c37b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbdada32_a4f9a1c2",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T17:54:27Z",
+      "side": 1,
+      "message": "\u003e This loop occurs near the end of the test and the std::vector will clean up at the end of the scope.\n\u003e \n\u003e Doesn\u0027t SimpleThread allocate the WaitableEvent at construction? We would have already hit FD exhaustion way before here.\n\nYes, you\u0027re correct. I did it for consistency with the other sites. If you want I can remove it, but it is also not harmful.",
+      "parentUuid": "c96eaff1_35c8eed8",
+      "revId": "3ee732bc73f260663fcad39754f2c9a0f8c37b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
