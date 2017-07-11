@@ -69,6 +69,24 @@
       "revId": "1244b83ea9d3cf739bad83d1938bb89c56e77bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c581ec1a_66480515",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-11T17:48:30Z",
+      "side": 1,
+      "message": "good idea. used \"scoped_fd.release()\" as I think that\u0027s more explicit.",
+      "parentUuid": "b74cc94c_d54df65d",
+      "revId": "1244b83ea9d3cf739bad83d1938bb89c56e77bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
