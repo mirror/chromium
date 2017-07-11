@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4c57b74_19000078",
+        "filename": "chrome/browser/extensions/api/messaging/native_message_process_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-11T18:51:31Z",
+      "side": 1,
+      "message": "Just std::string, don\u0027t need reference. Also call it formatted_message?",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 196,
+        "endChar": 20
+      },
+      "revId": "eab717a6ec52899763b50643af94ff0bfb2b33d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160f1792_90b97edc",
+        "filename": "chrome/browser/extensions/api/messaging/native_message_process_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-11T18:51:31Z",
+      "side": 1,
+      "message": "This is safe only when the buffer is not smaller than kFormattedMessage. Maybe add a DCHECK for that? I think DCHECK(formatted_message.size() \u003c base::GetPageSize()) would be sufficient as pipe buffer can\u0027t be smaller than the page size.",
+      "range": {
+        "startLine": 197,
+        "startChar": 20,
+        "endLine": 197,
+        "endChar": 39
+      },
+      "revId": "eab717a6ec52899763b50643af94ff0bfb2b33d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da51ca2_3c73c71e",
+        "filename": "chrome/browser/extensions/api/messaging/native_message_process_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-11T18:51:31Z",
+      "side": 1,
+      "message": "use data() instead of c_str().",
+      "range": {
+        "startLine": 198,
+        "startChar": 41,
+        "endLine": 198,
+        "endChar": 46
+      },
+      "revId": "eab717a6ec52899763b50643af94ff0bfb2b33d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
