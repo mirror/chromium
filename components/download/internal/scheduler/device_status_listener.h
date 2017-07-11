@@ -14,6 +14,7 @@ namespace download {
 // Listens to network and battery status change and notifies the observer.
 class DeviceStatusListener
     : public net::NetworkChangeNotifier::ConnectionTypeObserver,
+      public net::NetworkChangeNotifier::NetworkChangeObserver,
       public base::PowerObserver {
  public:
   class Observer {
@@ -44,8 +45,12 @@ class DeviceStatusListener
   bool listening_;
 
  private:
-  // net::NetworkChangeNotifier implementation.
+  // net::NetworkChangeNotifier::ConnectionTypeObserver implementation.
   void OnConnectionTypeChanged(
+      net::NetworkChangeNotifier::ConnectionType type) override;
+
+  // net::NetworkChangeNotifier::NetworkChangeObserver implementation.
+  void OnNetworkChanged(
       net::NetworkChangeNotifier::ConnectionType type) override;
 
   // base::PowerObserver implementation.

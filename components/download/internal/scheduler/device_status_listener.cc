@@ -60,6 +60,7 @@ void DeviceStatusListener::Start(DeviceStatusListener::Observer* observer) {
   power_monitor->AddObserver(this);
 
   net::NetworkChangeNotifier::AddConnectionTypeObserver(this);
+  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
 
   status_.battery_status =
       ToBatteryStatus(base::PowerMonitor::Get()->IsOnBatteryPower());
@@ -74,6 +75,7 @@ void DeviceStatusListener::Stop() {
 
   base::PowerMonitor::Get()->RemoveObserver(this);
   net::NetworkChangeNotifier::RemoveConnectionTypeObserver(this);
+  net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
 
   status_ = DeviceStatus();
   listening_ = false;
@@ -82,6 +84,13 @@ void DeviceStatusListener::Stop() {
 
 void DeviceStatusListener::OnConnectionTypeChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
+  LOG(ERROR) << "@@@ OnConnectionTypeChanged,  to type = "
+             << static_cast<int>(type);
+}
+
+void DeviceStatusListener::OnNetworkChanged(
+    net::NetworkChangeNotifier::ConnectionType type) {
+  LOG(ERROR) << "@@@ OnNetworkChanged,  to type = " << static_cast<int>(type);
   NetworkStatus new_status = ToNetworkStatus(type);
   if (status_.network_status != new_status) {
     status_.network_status = new_status;
