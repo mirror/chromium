@@ -34,6 +34,7 @@ source_set("browser") {
     "//base",
     "//base:base_static",
     "//base/third_party/dynamic_annotations",
+    "//blink/common:blink_common",
     "//cc",
     "//cc/animation",
     "//cc/paint",
