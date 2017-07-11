@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b2dd5c_c94b44e2",
+        "filename": "components/infobars/core/infobar_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-11T05:01:31Z",
+      "side": 1,
+      "message": "PermissionInfoBarDelegate is the old code-path (now unused) which after branch point we\u0027ll remove and rename GroupedP.. to.",
+      "revId": "b7ef2d17f6d1a821e572900a9005ab6cfe589fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
