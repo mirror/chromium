@@ -22,6 +22,30 @@
       "revId": "418afb4fcf763c9f2f14955f6ece48fa9e81bd04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b483ba84_1b82e7d5",
+        "filename": "services/service_manager/tests/service_manager/service_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-11T15:27:27Z",
+      "side": 1,
+      "message": "Actually ServiceContext::connector() is non-const so I\u0027d have to change that  in order to make this const. Given that this is test-only code and I\u0027d like to keep the change as small as possible for the sake of merges, I\u0027ll leave this alone for now.",
+      "parentUuid": "45afb181_35f524d1",
+      "range": {
+        "startLine": 96,
+        "startChar": 13,
+        "endLine": 96,
+        "endChar": 22
+      },
+      "revId": "418afb4fcf763c9f2f14955f6ece48fa9e81bd04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
