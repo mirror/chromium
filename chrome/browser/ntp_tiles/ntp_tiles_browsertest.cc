@@ -102,4 +102,22 @@ IN_PROC_BROWSER_TEST_F(NTPTilesTest, LoadURL) {
                                           TileSource::TOP_SITES)));
 }
 
+// Tests updating NTP tiles by calling Refresh() on most visited sites.
+IN_PROC_BROWSER_TEST_F(NTPTilesTest, Refresh) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  const GURL page_url = embedded_test_server()->GetURL("/simple.html");
+
+  // Register the observer before doing the navigation.
+  MostVisitedSitesWaiter waiter;
+  most_visited_sites_->SetMostVisitedURLsObserver(&waiter, /*num_sites=*/8);
+
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), page_url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+
+  most_visited_sites_->Refresh();
+  NTPTilesVector tiles = waiter.WaitForTiles();
+  EXPECT_THAT(tiles, Contains(MatchesTile("OK", page_url.spec().c_str(),
+                                          TileSource::TOP_SITES)));
+}
 }  // namespace ntp_tiles
