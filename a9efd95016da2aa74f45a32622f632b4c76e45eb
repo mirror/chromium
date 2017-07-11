@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e6bd0cf_7f4b8b5b",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-11T01:06:24Z",
+      "side": 1,
+      "message": "nit: Can we be consistent and put texturing always at the beginning or always at the end?",
+      "revId": "a9efd95016da2aa74f45a32622f632b4c76e45eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
