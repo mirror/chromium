@@ -216,6 +216,8 @@ bool BleAdvertiser::StartAdvertisingToDevice(
 
 bool BleAdvertiser::StopAdvertisingToDevice(
     const cryptauth::RemoteDevice& remote_device) {
+  PA_LOG(INFO) << "Stopping advertising to device "
+               << remote_device.GetTruncatedDeviceIdForLogs();
   return device_id_to_advertisement_map_.erase(remote_device.GetDeviceId()) > 0;
 }
 
