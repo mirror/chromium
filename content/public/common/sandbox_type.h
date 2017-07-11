@@ -16,7 +16,11 @@ enum SandboxType {
 
   SANDBOX_TYPE_FIRST_TYPE = 0,  // Placeholder to ease iteration.
 
-  SANDBOX_TYPE_RENDERER = SANDBOX_TYPE_FIRST_TYPE,
+  // Do not apply any sandboxing to the process.
+  SANDBOX_TYPE_NONE = SANDBOX_TYPE_FIRST_TYPE,
+
+  // Renderer or worker process. Most common case.
+  SANDBOX_TYPE_RENDERER,
 
   // Utility process is as restrictive as the worker process except full
   // access is allowed to one configurable directory.
@@ -27,6 +31,9 @@ enum SandboxType {
 
   // The PPAPI plugin process.
   SANDBOX_TYPE_PPAPI,
+
+  // The network process.
+  SANDBOX_TYPE_NETWORK,
 
   SANDBOX_TYPE_AFTER_LAST_TYPE,  // Placeholder to ease iteration.
 };
