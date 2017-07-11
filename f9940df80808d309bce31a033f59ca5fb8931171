@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f2fb7be1_243c714c",
+        "filename": "components/variations/variations_params_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-11T17:01:21Z",
+      "side": 1,
+      "message": "Maybe I can just move ::switches::kEnableFeatures from //content into //base/base_switches.h?  WDYT?",
+      "parentUuid": "526e5e43_79b78c5c",
+      "range": {
+        "startLine": 135,
+        "startChar": 48,
+        "endLine": 135,
+        "endChar": 63
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d1cc00e_475a2d98",
         "filename": "components/variations/variations_params_manager.h",
         "patchSetId": 2
