@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8aca9eb_f69e8969",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-11T23:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79fd3943_376be6b8",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f509aa25_aa3f7c03",
         "filename": "content/browser/android/dialog_overlay_impl.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-11T21:51:41Z",
       "side": 1,
       "message": "webcontents owns contentviewcore, so I\u0027m guessing this isn\u0027t needed anymore with WebContentsDestroyed",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056c99a9_4fba8bd3",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-11T23:11:51Z",
+      "side": 1,
+      "message": "Can a ContentViewCore ever be destroyed/replaced whilst the WebContent lives on? I am not that familiar with CVC. If this is impossible, I will remove this method.",
+      "parentUuid": "f509aa25_aa3f7c03",
       "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "b9951efd_39a616a9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-11T23:11:51Z",
+      "side": 1,
+      "message": "Frank said everything I had to say :)",
+      "parentUuid": "d8b8b844_220527ba",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25f7d6e6_8558418b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
         "patchSetId": 6
@@ -105,6 +165,24 @@
       "writtenOn": "2017-07-11T22:20:25Z",
       "side": 1,
       "message": "good catch -- it\u0027s not okay as written since sendWindowTokenToCore() assumes we have |mDialogCore|.  should prevent multiple calls in dialog_overlay_impl.cc .",
+      "parentUuid": "25f7d6e6_8558418b",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5f0080_d501fa55",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-11T23:11:51Z",
+      "side": 1,
+      "message": "I have added the null check on the java side as well. Thanks!",
       "parentUuid": "25f7d6e6_8558418b",
       "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
