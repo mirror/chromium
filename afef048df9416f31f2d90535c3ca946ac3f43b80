@@ -22,6 +22,30 @@
       "revId": "afef048df9416f31f2d90535c3ca946ac3f43b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62edb45f_94642295",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-11T20:12:58Z",
+      "side": 0,
+      "message": "I have some thoughts but don\u0027t think anybody is picking up the work right now. I\u0027ll file a bug for doing the animation work. Also we do have unittest right now for making sure both transform and scroll tree has scroll offset up to date so we should be fine.",
+      "parentUuid": "61f0f4aa_ee480f7e",
+      "range": {
+        "startLine": 1102,
+        "startChar": 15,
+        "endLine": 1102,
+        "endChar": 68
+      },
+      "revId": "afef048df9416f31f2d90535c3ca946ac3f43b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
