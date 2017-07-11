@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "072801bd_07a685b9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-11T15:05:07Z",
+      "side": 1,
+      "message": "In the\n\nindex \u003c num_wake_ups_before_start_\n\ncomparison on line 270, num_wake_ups_before_start_ is an int so I\u0027d have to do a cast then (or also change num_wake_ups_before_start_ to size_t, but then I\u0027d probably have to propagate a few int -\u003e size_t changes elsewhere in the code where num_wake_ups_before_start_ is used (besides an increment, it\u0027s only other use is in line 247 to calculate num_initial_workers_)).\n\nFor the first idea, it doesn\u0027t seem to really matter where I do that cast (whether I cast on line 270 or here). For the second idea of changing num_wake_ups_before_start_ to size_t, it seems to me like it\u0027d be better to limit the use of size_t, but OTOH, these values aren\u0027t expected to be negative anyways...\n\nIs it fine as is, or do you still think I should change something?",
+      "parentUuid": "d02d0f41_98e8670e",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 264,
+        "endChar": 11
+      },
+      "revId": "0ae2216bc12966cdc33470ba98a26d6aeb5d8d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dc3db49_3d7a9e56",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "0ae2216bc12966cdc33470ba98a26d6aeb5d8d08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f452060_97a31193",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-11T15:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc3db49_3d7a9e56",
+      "revId": "0ae2216bc12966cdc33470ba98a26d6aeb5d8d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
