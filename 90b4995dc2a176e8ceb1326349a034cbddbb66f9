@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c86e98a2_756a5c1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T12:21:22Z",
+      "side": 1,
+      "message": "Can you explain the term \"whitelisting\"? Does that mean that SB is selectively disabled or enabled for these domains?",
+      "revId": "90b4995dc2a176e8ceb1326349a034cbddbb66f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754db053_b583d2c5",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T12:21:22Z",
+      "side": 1,
+      "message": "nit: UI",
+      "range": {
+        "startLine": 47,
+        "startChar": 22,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "90b4995dc2a176e8ceb1326349a034cbddbb66f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d78736_cd1414ed",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T12:21:22Z",
+      "side": 1,
+      "message": "The name indicates that this should happen on the IO thread but the comment points to a background thread.",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 17
+      },
+      "revId": "90b4995dc2a176e8ceb1326349a034cbddbb66f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
