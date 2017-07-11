@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7217dc96_f61c4bdd",
+        "filename": "ui/compositor/paint_cache.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-11T18:36:21Z",
+      "side": 1,
+      "message": "This is really used in one spot (after I removed one other spot in this cl). Do you think we could just remove PaintCache and make the user do the logic of UseCache in a helper locally and just pass a DIL to the paint recorder instead of a context and a cache?",
+      "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
