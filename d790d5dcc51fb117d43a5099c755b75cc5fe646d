@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "423bf06a_8ddd720f",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-11T19:39:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e2e391a_f03644c3",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5097f140_15de94b4",
         "filename": "chrome/common/extensions/api/dial.idl",
         "patchSetId": 2
@@ -143,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "f52824ac_e393bec5",
+        "filename": "chrome/test/data/extensions/api_test/dial/experimental/get_network_id.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-11T19:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b2b08e7_57aeb0d6",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4569ee69_931842c5",
         "filename": "chrome/test/data/extensions/api_test/dial/experimental/network_id_changed.js",
         "patchSetId": 2
@@ -175,6 +211,24 @@
       "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c549ca1_8e94c6c7",
+        "filename": "chrome/test/data/extensions/api_test/dial/experimental/network_id_changed.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-11T19:39:35Z",
+      "side": 1,
+      "message": "Asserted they are non-empty.",
+      "parentUuid": "72f0638c_d6982695",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
