@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d286fa3_16001bfb",
+        "filename": "base/win/win_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-11T11:45:25Z",
+      "side": 1,
+      "message": "this looks like it actually changes something, but I assume that UAC is now enabled on all bots?",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364ee67d_a193db3c",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-11T11:45:25Z",
+      "side": 1,
+      "message": "is there a bug on file for this?",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e989755_6c9feb03",
+        "filename": "chrome/browser/net/net_error_diagnostics_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-11T11:45:25Z",
+      "side": 1,
+      "message": "maybe just delete this method? It\u0027s only used for a DCHECK() it seems, and DCHECK(true) doesn\u0027t really make sense",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5b2ed3_e306d2ec",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-11T11:45:25Z",
+      "side": 1,
+      "message": "Vista \u003d Win7?",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d40f98_f28364a1",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1952,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-11T11:45:25Z",
+      "side": 1,
+      "message": "Vista+ or Win7?",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ad9599_9091df00",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-11T11:45:25Z",
+      "side": 1,
+      "message": "Win7?",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f28889_4b8a802c",
+        "filename": "chrome/installer/util/shell_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-11T11:45:25Z",
+      "side": 1,
+      "message": "Win7?",
+      "revId": "ec40446f1ed81423b913712c8bf91233602db0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
