@@ -28,6 +28,7 @@ class CreateBundleTargetGenerator : public TargetGenerator {
                      SourceDir* bundle_dir);
 
   bool FillProductType();
+  bool FillTestApplicationName();
 
   bool FillCodeSigningScript();
   bool FillCodeSigningSources();
