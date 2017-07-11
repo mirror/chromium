@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d36d9277_a1b517cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-11T10:27:54Z",
+      "side": 1,
+      "message": "Wow, PictureInPictureController takes so long to instantiate? Is that because the statics make class loading take long?",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 38
+      },
+      "revId": "855d645e517dbdcf04e433fe875c1569b845dccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
