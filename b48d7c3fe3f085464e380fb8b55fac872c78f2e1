@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a7a1191_ddcfd51f",
+        "filename": "android_webview/browser/aw_safe_browsing_blocking_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-11T17:32:08Z",
+      "side": 1,
+      "message": "you probably don\u0027t need to create this temp boolean \"is_proceed_anyway_disabled\"",
+      "revId": "b48d7c3fe3f085464e380fb8b55fac872c78f2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
