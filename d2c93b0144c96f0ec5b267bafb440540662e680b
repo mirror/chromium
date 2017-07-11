@@ -22,6 +22,30 @@
       "revId": "d2c93b0144c96f0ec5b267bafb440540662e680b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdca489f_23da2886",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-11T19:54:10Z",
+      "side": 0,
+      "message": "But then we are missing the image-decoding time. The original thought of this CL is to measure the image-decoding + drawing time. For example, when the input source is an SVG, the function image_source-\u003eGetSourceImageForCanvas() does the paint+rasterization which is probably more time-consuming than the actual draw time. Does that make sense?",
+      "parentUuid": "075b3acb_a036cfc9",
+      "range": {
+        "startLine": 1171,
+        "startChar": 4,
+        "endLine": 1171,
+        "endChar": 10
+      },
+      "revId": "d2c93b0144c96f0ec5b267bafb440540662e680b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
