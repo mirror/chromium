@@ -21,7 +21,6 @@
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/safe_browsing_db/database_manager.h"
-#include "components/safe_browsing_db/v4_feature_list.h"
 #include "components/subresource_filter/content/browser/content_ruleset_service.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h"
 #include "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.h"
@@ -47,11 +46,8 @@ scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> GetDatabaseManager() {
       g_browser_process->safe_browsing_service();
   bool has_supported_manager =
       safe_browsing_service &&
-      safe_browsing_service->database_manager()->IsSupported();
-#if !defined(OS_ANDROID)
-  has_supported_manager &= safe_browsing::V4FeatureList::GetV4UsageStatus() ==
-                           safe_browsing::V4FeatureList::V4UsageStatus::V4_ONLY;
-#endif
+      safe_browsing_service->database_manager()->IsSupported() &&
+      safe_browsing_service->database_manager()->CanCheckSubResourceFilter();
   return has_supported_manager ? safe_browsing_service->database_manager()
                                : nullptr;
 }
