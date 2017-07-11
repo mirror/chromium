@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cde1be41_8986b691",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-07-11T18:29:52Z",
+      "side": 1,
+      "message": "nit: I do prefer brackets everywhere but we typically omit them around 1-line statements so I\u0027d remove them here for consistency.",
+      "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c2fa4b_6b3851be",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-07-11T18:29:52Z",
+      "side": 1,
+      "message": "I think it makes sense for the list itself to also be a view, and we can then do away with CreateListView entirely. WDYT?",
+      "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d100fe1_4dae5a0c",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-07-11T18:29:52Z",
+      "side": 1,
+      "message": "nit: update comment.",
+      "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c735ff2f_b770cf44",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-07-11T18:29:52Z",
+      "side": 1,
+      "message": "I assume this is for a11y? Maybe add that/how it\u0027ll be used to the comment.",
+      "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
