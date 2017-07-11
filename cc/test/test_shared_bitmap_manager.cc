@@ -17,7 +17,7 @@ class OwnedSharedBitmap : public SharedBitmap {
  public:
   OwnedSharedBitmap(std::unique_ptr<base::SharedMemory> shared_memory,
                     const SharedBitmapId& id)
-      : SharedBitmap(static_cast<uint8_t*>(shared_memory->memory()), id),
+      : SharedBitmap(static_cast<uint8_t*>(shared_memory->memory()), id, 0),
         shared_memory_(std::move(shared_memory)) {}
 
   ~OwnedSharedBitmap() override {}
@@ -34,7 +34,7 @@ class OwnedSharedBitmap : public SharedBitmap {
 class UnownedSharedBitmap : public SharedBitmap {
  public:
   UnownedSharedBitmap(uint8_t* pixels, const SharedBitmapId& id)
-      : SharedBitmap(pixels, id) {}
+      : SharedBitmap(pixels, id, 0) {}
 
   // SharedBitmap:
   base::SharedMemoryHandle GetSharedMemoryHandle() const override {

@@ -326,6 +326,9 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
   CHECK(result.second) << "Inserting a duplicate item!";
   process_->AddRoute(routing_id_, this);
   process_->AddWidget(this);
+  static_cast<RenderProcessHostImpl*>(process_)
+      ->shared_bitmap_allocation_notifier()
+      ->AddObserver(this);
 
   // If we're initially visible, tell the process host that we're alive.
   // Otherwise we'll notify the process host when we are first shown.
@@ -1790,6 +1793,9 @@ void RenderWidgetHostImpl::Destroy(bool also_delete) {
   }
 
   process_->RemoveWidget(this);
+  static_cast<RenderProcessHostImpl*>(process_)
+      ->shared_bitmap_allocation_notifier()
+      ->RemoveObserver(this);
   process_->RemoveRoute(routing_id_);
   g_routing_id_widget_map.Get().erase(
       RenderWidgetHostID(process_->GetID(), routing_id_));
@@ -2693,5 +2699,7 @@ device::mojom::WakeLock* RenderWidgetHostImpl::GetWakeLock() {
   return wake_lock_.get();
 }
 #endif
+
+void RenderWidgetHostImpl::DidAllocateSharedBitmap() {}
 
 }  // namespace content

@@ -19,8 +19,6 @@
 #include "base/sequenced_task_runner_helpers.h"
 #include "base/strings/string16.h"
 #include "build/build_config.h"
-#include "cc/resources/shared_bitmap_manager.h"
-#include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
 #include "content/common/cache_storage/cache_storage_types.h"
 #include "content/common/render_message_filter.mojom.h"
 #include "content/public/browser/browser_associated_interface.h"
@@ -118,9 +116,6 @@ class CONTENT_EXPORT RenderMessageFilter
   void CreateFullscreenWidget(int opener_id,
                               mojom::WidgetPtr widget,
                               CreateFullscreenWidgetCallback callback) override;
-  void GetSharedBitmapAllocationNotifier(
-      cc::mojom::SharedBitmapAllocationNotifierAssociatedRequest request)
-      override;
 
   // Message handlers called on the browser IO thread:
   void OnHasGpuProcess(IPC::Message* reply);
@@ -161,9 +156,6 @@ class CONTENT_EXPORT RenderMessageFilter
   // not own it; it is managed by the BrowserProcess, which has a wider scope
   // than we do.
   ResourceDispatcherHostImpl* resource_dispatcher_host_;
-
-  viz::SharedBitmapAllocationNotifierImpl
-      shared_bitmap_allocation_notifier_impl_;
 
   // Contextual information to be used for requests created here.
   scoped_refptr<net::URLRequestContextGetter> request_context_;
