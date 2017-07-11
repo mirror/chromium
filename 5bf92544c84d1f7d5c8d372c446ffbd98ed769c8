@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ba18379_bbb9e023",
+        "filename": "chrome/browser/ui/cocoa/framed_browser_window_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:48:32Z",
+      "side": 1,
+      "message": "ooh nice find!",
+      "range": {
+        "startLine": 50,
+        "startChar": 46,
+        "endLine": 50,
+        "endChar": 69
+      },
+      "revId": "5bf92544c84d1f7d5c8d372c446ffbd98ed769c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca27212a_8695c31c",
+        "filename": "chrome/browser/ui/cocoa/framed_browser_window_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:48:32Z",
+      "side": 1,
+      "message": "The documentation for kCGWindowListOptionIncludingWindow says \"You must combine this option with the kCGWindowListOptionOnScreenAboveWindow or kCGWindowListOptionOnScreenBelowWindow option to retrieve meaningful results.\" But I guess ScreenshotNSWindow(..) in native_app_window_cocoa_browsertest.mm doesn\u0027t do that.",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "5bf92544c84d1f7d5c8d372c446ffbd98ed769c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
