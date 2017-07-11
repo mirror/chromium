@@ -9,10 +9,60 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "net/base/completion_callback.h"
+#include "net/http/http_request_info.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
 namespace predictors {
+
+namespace internal {
+
+// Allows to mock free functions for testing.
+class PreconnectImpl {
+ public:
+  virtual ~PreconnectImpl();
+
+  virtual void PreconnectUrl(
+      net::URLRequestContext* request_context,
+      const GURL& url,
+      const GURL& first_party_for_cookies,
+      int count,
+      bool allow_credentials,
+      net::HttpRequestInfo::RequestMotivation motivation) const;
+
+  virtual int PreresolveUrl(net::URLRequestContext* request_context,
+                            const GURL& url,
+                            const net::CompletionCallback& callback) const;
+};
+
+}  // namespace internal
+
+// Stores the status of all preconnects associated with a given |url|.
+struct PreresolveInfo {
+  PreresolveInfo(const GURL& url, size_t count);
+  PreresolveInfo(const PreresolveInfo& other);
+  ~PreresolveInfo();
+
+  bool is_done() { return queued_count == 0 && inflight_count == 0; }
+
+  GURL url;
+  size_t queued_count;
+  size_t inflight_count;
+  bool was_canceled;
+};
+
+// Stores all data need for running a preresolve and a subsequent optional
+// preconnect for a |url|.
+struct PreresolveJob {
+  PreresolveJob(const GURL& url, bool need_preconnect, PreresolveInfo* info);
+  PreresolveJob(const PreresolveJob& other);
+  ~PreresolveJob();
+
+  GURL url;
+  bool need_preconnect;
+  PreresolveInfo* info;
+};
 
 // PreconnectManager is responsible for preresolving and preconnecting to
 // origins based on the input list of URLs.
@@ -49,9 +99,27 @@ class PreconnectManager {
   // No additional jobs keyed by the |url| will be queued after this.
   void Stop(const GURL& url);
 
+  // Used for testing to inject mock impl.
+  void SetMockImplForTesting(std::unique_ptr<internal::PreconnectImpl> impl) {
+    preconnect_impl_ = std::move(impl);
+  }
+
  private:
+  void TryToLaunchPreresolveJobs();
+  void OnPreresolveFinished(const PreresolveJob& job, int result);
+  void FinishPreresolve(const PreresolveJob& job, bool found);
+  void AllPreresolvesForUrlFinished(PreresolveInfo* info);
+
+  std::unique_ptr<internal::PreconnectImpl> preconnect_impl_;
   base::WeakPtr<Delegate> delegate_;
   scoped_refptr<net::URLRequestContextGetter> context_getter_;
+  std::deque<PreresolveJob> preresolve_queue_;
+  std::map<GURL, std::unique_ptr<PreresolveInfo>> preresolve_info_;
+  size_t inflight_preresolves_count_;
+
+  base::WeakPtrFactory<PreconnectManager> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(PreconnectManager);
 };
 
 }  // namespace predictors
