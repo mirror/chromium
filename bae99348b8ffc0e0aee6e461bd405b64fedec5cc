@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ad4afc_28269e0a",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-11T15:52:39Z",
+      "side": 1,
+      "message": "Remove GBM_BO_USE_RENDERING. This buffer is not going to be written using the GPU as CPU access for writing to the buffer is explicitly requested with this usage.",
+      "revId": "bae99348b8ffc0e0aee6e461bd405b64fedec5cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
