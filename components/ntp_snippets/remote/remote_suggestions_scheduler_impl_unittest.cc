@@ -681,7 +681,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest, FetchIntervalForShownTriggerOnWifi) {
   signal_fetch_done.Run(Status::Success());
 
   // Open NTP again after too short delay. This time no fetch is executed.
-  test_clock()->Advance(base::TimeDelta::FromHours(1));
+  test_clock()->Advance(base::TimeDelta::FromHours(5));
   scheduler()->OnNTPOpened();
 
   // Open NTP after another delay, now together long enough to issue a fetch.
