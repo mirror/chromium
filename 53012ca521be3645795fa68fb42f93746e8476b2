@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efe66876_c813fb67",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "Can you add the link to the design doc here",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232bb752_a13e5dc7",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "\"ThreadSafeScriptContainer stores the scripts of a service worker for startup.\"",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049fe1f0_1a242f40",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "This looks good, would like it to more explicitly explain the need for RefCounting.\n\n\"This class is RefCounted because there is no ordering guarantee of lifetime between WebServiceWorkerInstalledScriptsManagerImpl and its Internal class. WebSWInstalledScriptsManagerImpl is destroyed earlier than Internal if the worker is terminated before all scripts are streamed, and Internal is destroyed earlier if all of scripts are received before finishing script evaluation.\"\n\nAlso the blocking part I would rephrase like this:\n\"This class uses explicit synchronization because it needs to support synchronous importScripts() from the worker thread.\"",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad73d441_b1fa6ed3",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "Since this class is doing clever synchronization, can we add unit tests for it/",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874bf404_c24844be",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "Called on the IO thread?",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06925586_bf68cd36",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "typo: thread",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ab98da_97926234",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "\"wakes up\" -\u003e \"is signaled\" maybe, to align with recommendations in https://www.chromium.org/developers/lock-and-condition-variable",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978d36b7_e0f901b1",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "\"so it does not wait forever\"",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d86abc1_09407243",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "\"reached until here\" -\u003e \"added yet\"?",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c777ef6_1a29b827",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "will return false",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff70604_ab9d1871",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T05:40:24Z",
+      "side": 1,
+      "message": "\"added\"",
+      "revId": "53012ca521be3645795fa68fb42f93746e8476b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
