@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6bbea84_c05f1f2d",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-11T00:04:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the comparator be \u003e\u003d1 because the user should have performed a delete history action?",
+      "revId": "e46aef28b8e89197c3b85c509b94905a24dd2bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e1f0a9_07f9be98",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-11T00:04:31Z",
+      "side": 1,
+      "message": "This comparator should be \u003d\u003d0 because the user should not have opened an incognito window yet.",
+      "revId": "e46aef28b8e89197c3b85c509b94905a24dd2bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
