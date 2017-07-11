@@ -74,6 +74,12 @@ NSString* GetShippingAddressSelectorErrorMessage(
 NSString* GetShippingOptionSelectorErrorMessage(
     const payments::PaymentRequest& payment_request);
 
+// Helper function to create a notification label for a contact info entry from
+// an autofill profile. Returns nil if the resulting label is empty.
+NSString* GetContactNotificationLabelFromAutofillProfile(
+    const payments::PaymentRequest& payment_request,
+    const autofill::AutofillProfile& profile);
+
 }  // namespace payment_request_util
 
 #endif  // IOS_CHROME_BROWSER_PAYMENTS_PAYMENT_REQUEST_UTIL_H_

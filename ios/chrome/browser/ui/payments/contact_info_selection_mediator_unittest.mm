@@ -28,6 +28,7 @@ namespace {
 using ::payment_request_util::GetNameLabelFromAutofillProfile;
 using ::payment_request_util::GetEmailLabelFromAutofillProfile;
 using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
+using ::payment_request_util::GetContactNotificationLabelFromAutofillProfile;
 }  // namespace
 
 class PaymentRequestContactInfoSelectionMediatorTest : public PlatformTest {
@@ -35,11 +36,12 @@ class PaymentRequestContactInfoSelectionMediatorTest : public PlatformTest {
   PaymentRequestContactInfoSelectionMediatorTest()
       : autofill_profile_1_(autofill::test::GetFullProfile()),
         autofill_profile_2_(autofill::test::GetFullProfile2()),
+        autofill_profile_3_(autofill::test::GetIncompleteProfile1()),
         chrome_browser_state_(TestChromeBrowserState::Builder().Build()) {
     // Add testing profiles to autofill::TestPersonalDataManager.
     personal_data_manager_.AddTestingProfile(&autofill_profile_1_);
     personal_data_manager_.AddTestingProfile(&autofill_profile_2_);
-
+    personal_data_manager_.AddTestingProfile(&autofill_profile_3_);
     payment_request_ = base::MakeUnique<payments::TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
         chrome_browser_state_.get(), &web_state_, &personal_data_manager_);
@@ -61,6 +63,7 @@ class PaymentRequestContactInfoSelectionMediatorTest : public PlatformTest {
 
   autofill::AutofillProfile autofill_profile_1_;
   autofill::AutofillProfile autofill_profile_2_;
+  autofill::AutofillProfile autofill_profile_3_;
   web::TestWebState web_state_;
   autofill::TestPersonalDataManager personal_data_manager_;
   std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
@@ -73,8 +76,8 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestSelectableItems) {
   NSArray<CollectionViewItem*>* selectable_items =
       [GetMediator() selectableItems];
 
-  // There must be two selectable items.
-  ASSERT_EQ(2U, selectable_items.count);
+  // There must be three selectable items.
+  ASSERT_EQ(3U, selectable_items.count);
 
   // The second item must be selected.
   EXPECT_EQ(1U, GetMediator().selectedItemIndex);
@@ -110,6 +113,23 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestSelectableItems) {
                           *payment_request_->contact_profiles()[1])]);
   EXPECT_EQ(nil, profile_item_2.address);
   EXPECT_EQ(nil, profile_item_2.notification);
+
+  CollectionViewItem* item_3 = [selectable_items objectAtIndex:2];
+  DCHECK([item_3 isKindOfClass:[AutofillProfileItem class]]);
+  AutofillProfileItem* profile_item_3 =
+      base::mac::ObjCCastStrict<AutofillProfileItem>(item_3);
+  EXPECT_TRUE([profile_item_3.name
+      isEqualToString:GetNameLabelFromAutofillProfile(
+                          *payment_request_->contact_profiles()[2])]);
+  EXPECT_TRUE([profile_item_3.email
+      isEqualToString:GetEmailLabelFromAutofillProfile(
+                          *payment_request_->contact_profiles()[2])]);
+  EXPECT_EQ(nil, profile_item_3.phoneNumber);
+  EXPECT_EQ(nil, profile_item_3.address);
+  EXPECT_TRUE([profile_item_3.notification
+      isEqualToString:GetContactNotificationLabelFromAutofillProfile(
+                          *payment_request_.get(),
+                          *payment_request_->contact_profiles()[2])]);
 }
 
 // Tests that the index of the selected item is as expected when there is no
@@ -123,8 +143,8 @@ TEST_F(PaymentRequestContactInfoSelectionMediatorTest, TestNoSelectedItem) {
   NSArray<CollectionViewItem*>* selectable_items =
       [GetMediator() selectableItems];
 
-  // There must be two selectable items.
-  ASSERT_EQ(2U, selectable_items.count);
+  // There must be three selectable items.
+  ASSERT_EQ(3U, selectable_items.count);
 
   // The selected item index must be invalid.
   EXPECT_EQ(NSUIntegerMax, GetMediator().selectedItemIndex);
