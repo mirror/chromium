@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3fd1cc27_0e358e27",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:06:21Z",
+      "side": 1,
+      "message": "Ack. Not longer a change in the new patchset.\n\nJust to clarify, I\u0027m not sure what kind of an example should be given here.\nAn unsuccessful outcome would be a failure in running the script I assume, which results in |completionHandler| getting called with a NO.",
+      "parentUuid": "3de4e4f7_00ea7631",
+      "range": {
+        "startLine": 33,
+        "startChar": 51,
+        "endLine": 33,
+        "endChar": 60
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f31feeaa_ccebb1c3",
         "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3051ebeb_605d2df1",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:06:21Z",
+      "side": 1,
+      "message": "Ack. Not longer a change in the new patchset.",
+      "parentUuid": "f31feeaa_ccebb1c3",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc8eb502_c774ddd1",
         "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-10T18:51:26Z",
       "side": 1,
       "message": "Could you please add a test for this new method.",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2b07f5_cd6142b4",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:06:21Z",
+      "side": 1,
+      "message": "Ack. Not longer a change in the new patchset.",
+      "parentUuid": "cc8eb502_c774ddd1",
       "range": {
         "startLine": 35,
         "startChar": 17,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "03376acc_e3cab0a5",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:06:21Z",
+      "side": 1,
+      "message": "Makes sense.\n\nHowever, in the new patchset, I went with generating a unique identifier in the JS. There are a few reasons generating one on the Objective-C side won\u0027t have the outcome we expect:\n\nThere\u0027s no callback mechanism when sending messages from JS. This requires a temporary JS object to be maintained in the JS namespace in order to receive the id generated in Objective-C. That could work for .show(). But in canMakePayment() case, there\u0027s no such temporary object. Even if we were to send a message from JS in PaymentRequest\u0027s constructor, calls to canMakePayment() or show() which probably immediately follow the construction of the instance will result in generating a new id and caching a new instance of payments::PaymentRequest.\nIn the new patchset, in the JS constructor, if details.id is empty an id is generated which resembles a GUID and a message a sent to Objective-C so that the an instance of payments::PaymenntRequest gets cached.",
+      "parentUuid": "df299cdc_5986ad86",
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "739a6702_174acefb",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2017-07-10T18:50:39Z",
       "side": 1,
       "message": "typo: requires_total",
+      "range": {
+        "startLine": 585,
+        "startChar": 51,
+        "endLine": 585,
+        "endChar": 65
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f20167_706ac1a8",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:06:21Z",
+      "side": 1,
+      "message": "Moved to a separate CL.",
+      "parentUuid": "739a6702_174acefb",
       "range": {
         "startLine": 585,
         "startChar": 51,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "4433253f_9f73e5d5",
+        "filename": "ios/web/payments/payment_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:06:21Z",
+      "side": 1,
+      "message": "Done. Is this because Id is more prevalent that ID? I\u0027m not able to find the entry in the style guide.",
+      "parentUuid": "31ad3a75_165942df",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6822b755_19355424",
         "filename": "ios/web/payments/payment_request.cc",
         "patchSetId": 2
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "0d5cd6f1_693d05a1",
+        "filename": "ios/web/payments/payment_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:06:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6822b755_19355424",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 20
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1517e061_4c658755",
         "filename": "ios/web/payments/payment_request.cc",
         "patchSetId": 2
@@ -168,6 +330,24 @@
       "writtenOn": "2017-07-10T18:50:39Z",
       "side": 1,
       "message": "As mentioned in payment_request_manager.mm, this bit of code should be kept with the bit of code that sync\u0027s this ID back to the JavaScript object.",
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61141b05_098048d7",
+        "filename": "ios/web/payments/payment_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-11T18:06:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1517e061_4c658755",
       "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
