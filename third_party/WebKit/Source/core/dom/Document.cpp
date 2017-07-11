@@ -6883,6 +6883,7 @@ DEFINE_TRACE(Document) {
   visitor->Trace(resize_observer_controller_);
   visitor->Trace(property_registry_);
   visitor->Trace(network_state_observer_);
+  visitor->Trace(document_definition_map_);
   Supplementable<Document>::Trace(visitor);
   TreeScope::Trace(visitor);
   ContainerNode::Trace(visitor);

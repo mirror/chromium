@@ -47,7 +47,8 @@ class CORE_EXPORT CSSPaintImageGenerator
 
   // Invokes the CSS Paint API 'paint' callback. May return a nullptr
   // representing an invalid image if an error occurred.
-  virtual PassRefPtr<Image> Paint(const ImageResourceObserver&,
+  virtual PassRefPtr<Image> Paint(const Document&,
+                                  const ImageResourceObserver&,
                                   const IntSize&,
                                   const CSSStyleValueVector*) = 0;
 
