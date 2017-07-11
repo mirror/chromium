@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53103539_b412c55c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T15:11:02Z",
+      "side": 1,
+      "message": "So we just don\u0027t distinguish between WiFi and cellular anymore? Why?",
+      "range": {
+        "startLine": 67,
+        "startChar": 66,
+        "endLine": 67,
+        "endChar": 76
+      },
+      "revId": "73b838554576d9c947b6082bf9352d5d30131ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f381709_45c42ec1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T15:11:02Z",
+      "side": 1,
+      "message": "This is not 8h anymore? Could we avoid specifying the value in the comment?",
+      "range": {
+        "startLine": 667,
+        "startChar": 72,
+        "endLine": 667,
+        "endChar": 74
+      },
+      "revId": "73b838554576d9c947b6082bf9352d5d30131ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9f64dd_834b4cda",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T15:11:02Z",
+      "side": 1,
+      "message": "Could you have a delay very close to the one triggering fetch (e.g. 10 hours - 1 minute)?",
+      "range": {
+        "startLine": 684,
+        "startChar": 51,
+        "endLine": 684,
+        "endChar": 52
+      },
+      "revId": "73b838554576d9c947b6082bf9352d5d30131ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7b3006_1348b460",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-11T15:11:02Z",
+      "side": 1,
+      "message": "Could you have overall delay very close to the one triggering fetch (e.g. 2 minutes)?",
+      "range": {
+        "startLine": 688,
+        "startChar": 51,
+        "endLine": 688,
+        "endChar": 52
+      },
+      "revId": "73b838554576d9c947b6082bf9352d5d30131ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
