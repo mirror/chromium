@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5165c2ed_e7dd19b7",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-11T20:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9df25d8b_76148906",
+      "range": {
+        "startLine": 1100,
+        "startChar": 33,
+        "endLine": 1100,
+        "endChar": 46
+      },
+      "revId": "abfddb9c3523327eebbd8b8718f4f8da92595f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25bb862e_b4d0820a",
         "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-10T13:44:25Z",
       "side": 1,
       "message": "Is it possible to be more restrictive in what the MOCK will get called with?\n\nThese assert that the interface is called once. But no notion of what it is called with.",
+      "revId": "abfddb9c3523327eebbd8b8718f4f8da92595f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5895bc7d_8b6b958f",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2549,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-11T20:56:58Z",
+      "side": 1,
+      "message": "I simplified the check in HitTestTouch event and changed corresponding unit tests to maintain the current tests.\n\nI also changed some of the unittests in order to check that SetWhiteListedTouchAction is being called with specific parameters for the following four cases. \n   (1) touch_action is set to PanUp twice, and SetWhiteListed is called with PanUp\n   (2) touch_action is set to Auto then PanY, and SetWhiteListed is called with PanY\n   (3) touch_action is set to PanRight then PanX, and SetWhiteListed is called with PanRight\n   (4) touch_action is set to None, and SetWhiteListed is called with None\n\nThe last two tests I did not change because I thought the first four cases tested enough, but I am willing to if you think that is a better idea.",
+      "parentUuid": "25bb862e_b4d0820a",
       "revId": "abfddb9c3523327eebbd8b8718f4f8da92595f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
