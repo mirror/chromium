@@ -339,8 +339,7 @@ void BookmarkBubbleView::Init() {
 
   if (provider->UseExtraDialogPadding()) {
     layout->AddPaddingRow(
-        kFixed,
-        provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS).bottom());
+        kFixed, provider->GetInsetsMetric(views::INSETS_DIALOG).bottom());
   }
 
   AddChildView(bookmark_contents_view_);

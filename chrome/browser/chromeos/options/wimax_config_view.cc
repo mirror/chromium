@@ -209,7 +209,8 @@ void WimaxConfigView::Init() {
   WifiConfigView::ParseUIProperty(
       &passphrase_ui_data_, wimax, ::onc::wifi::kPassphrase);
 
-  views::GridLayout* layout = views::GridLayout::CreatePanel(this);
+  views::GridLayout* layout = new views::GridLayout(this);
+  SetLayoutManager(layout);
   views::LayoutProvider* provider = views::LayoutProvider::Get();
 
   const int column_view_set_id = 0;
