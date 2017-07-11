@@ -28,7 +28,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ClientRect.h"
-#include "core/dom/Fullscreen.h"
 #include "core/dom/MutationCallback.h"
 #include "core/dom/MutationObserver.h"
 #include "core/dom/MutationObserverInit.h"
@@ -40,6 +39,7 @@
 #include "core/events/MouseEvent.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
+#include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/media/AutoplayPolicy.h"
