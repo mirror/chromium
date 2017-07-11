@@ -26,12 +26,21 @@ MemlogStreamParser::Block::Block(std::unique_ptr<char[]> d, size_t s)
 
 MemlogStreamParser::Block::~Block() {}
 
-MemlogStreamParser::MemlogStreamParser(MemlogReceiver* receiver)
-    : receiver_(receiver) {}
+MemlogStreamParser::MemlogStreamParser(MemlogControlReceiver* control_receiver,
+                                       MemlogReceiver* receiver)
+    : control_receiver_(control_receiver), receiver_(receiver) {}
 
 MemlogStreamParser::~MemlogStreamParser() {}
 
+void MemlogStreamParser::DisconnectReceivers() {
+  receiver_ = nullptr;
+  control_receiver_ = nullptr;
+}
+
 void MemlogStreamParser::OnStreamData(std::unique_ptr<char[]> data, size_t sz) {
+  if (!receiver_)
+    return;  // When no receiver is connected, do nothing with incoming data.
+
   blocks_.emplace_back(std::move(data), sz);
 
   if (!received_header_) {
@@ -54,6 +63,13 @@ void MemlogStreamParser::OnStreamData(std::unique_ptr<char[]> data, size_t sz) {
       case kFreePacketType:
         status = ParseFree();
         break;
+      case kStartMojoControlPacketType:
+        ConsumeBytes(sizeof(StartMojoControlPacket));
+fprintf(stderr, "========== MemlogStreamParser kStartMojoControlPacketType\n");
+        if (control_receiver_)
+          control_receiver_->OnStartMojoControl();
+        status = READ_OK;
+        break;
       default:
         return;  // TODO(brettw) signal error.
     }
@@ -63,7 +79,8 @@ void MemlogStreamParser::OnStreamData(std::unique_ptr<char[]> data, size_t sz) {
 }
 
 void MemlogStreamParser::OnStreamComplete() {
-  receiver_->OnComplete();
+  if (receiver_)
+    receiver_->OnComplete();
 }
 
 bool MemlogStreamParser::AreBytesAvailable(size_t count) const {

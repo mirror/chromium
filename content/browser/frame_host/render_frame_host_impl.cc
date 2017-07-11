@@ -648,7 +648,7 @@ gfx::NativeView RenderFrameHostImpl::GetNativeView() {
 
 void RenderFrameHostImpl::AddMessageToConsole(ConsoleMessageLevel level,
                                               const std::string& message) {
-  Send(new FrameMsg_AddMessageToConsole(routing_id_, level, message));
+  //Send(new FrameMsg_AddMessageToConsole(routing_id_, level, message));
 }
 
 void RenderFrameHostImpl::ExecuteJavaScript(
@@ -1229,6 +1229,7 @@ void RenderFrameHostImpl::OnDidAddMessageToConsole(
     const base::string16& message,
     int32_t line_no,
     const base::string16& source_id) {
+/*
   if (level < logging::LOG_VERBOSE || level > logging::LOG_FATAL) {
     bad_message::ReceivedBadMessage(
         GetProcess(), bad_message::RFH_DID_ADD_CONSOLE_MESSAGE_BAD_SEVERITY);
@@ -1254,6 +1255,7 @@ void RenderFrameHostImpl::OnDidAddMessageToConsole(
         << "\"" << message << "\", source: " << source_id << " (" << line_no
         << ")";
   }
+  */
 }
 
 void RenderFrameHostImpl::OnCreateChildFrame(

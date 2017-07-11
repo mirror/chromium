@@ -26,6 +26,7 @@ const int kReadBufferSize = 1024 * 64;
 
 MemlogReceiverPipe::MemlogReceiverPipe(base::ScopedFD fd)
     : fd_(std::move(fd)), read_buffer_(new char[kReadBufferSize]) {
+fprintf(stderr, "========== MemlogReceiverPipePosix on %d\n", fd_.get());
   static std::vector<base::ScopedFD> dummy_instance;
   dummy_for_receive_ = &dummy_instance;
 }
@@ -37,6 +38,7 @@ void MemlogReceiverPipe::ReadUntilBlocking() {
   do {
     bytes_read = base::UnixDomainSocket::RecvMsg(
         fd_.get(), read_buffer_.get(), kReadBufferSize, dummy_for_receive_);
+fprintf(stderr, "========== Read %d\n", (int)bytes_read);
     if (bytes_read > 0) {
       receiver_task_runner_->PostTask(
           FROM_HERE,

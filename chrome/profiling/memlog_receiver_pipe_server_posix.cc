@@ -20,6 +20,7 @@ MemlogReceiverPipeServer::MemlogReceiverPipeServer(
   int fd;
   CHECK(base::StringToInt(first_pipe_id, &fd));
   first_pipe_.reset(fd);
+  fprintf(stderr, "========== Server create on %d \"%s\"\n", first_pipe_.get(), first_pipe_id.c_str());
 }
 
 MemlogReceiverPipeServer::~MemlogReceiverPipeServer() {}
@@ -44,6 +45,7 @@ MemlogReceiverPipeServer::PipePoller::~PipePoller() {}
 
 scoped_refptr<MemlogReceiverPipe>
 MemlogReceiverPipeServer::PipePoller::CreatePipe(base::ScopedFD fd) {
+fprintf(stderr, "MemlogReceiverPipeServer::PipePoller::CreatePipe %d\n", fd.get());
   int raw_fd = fd.get();
   scoped_refptr<MemlogReceiverPipe> pipe(new MemlogReceiverPipe(std::move(fd)));
   pipes_[raw_fd] = pipe;

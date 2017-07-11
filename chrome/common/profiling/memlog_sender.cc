@@ -12,6 +12,13 @@
 
 namespace profiling {
 
+namespace {
+
+// FIXME(brettw) this is a hack!
+MemlogSenderPipe* memlog_sender_pipe = nullptr;
+
+}  // namespace
+
 void InitMemlogSenderIfNecessary(const base::CommandLine& cmdline) {
   std::string pipe_id = cmdline.GetSwitchValueASCII(switches::kMemlogPipe);
   if (!pipe_id.empty())
@@ -21,13 +28,26 @@ void InitMemlogSenderIfNecessary(const base::CommandLine& cmdline) {
 void StartMemlogSender(const std::string& pipe_id) {
   static MemlogSenderPipe pipe(pipe_id);
   pipe.Connect();
+  memlog_sender_pipe = &pipe;
 
   StreamHeader header;
   header.signature = kStreamSignature;
 
   pipe.Send(&header, sizeof(StreamHeader));
 
-  InitAllocatorShim(&pipe);
+  //InitAllocatorShim(&pipe);
+}
+
+void StartProfilingMojo() {
+  static bool started_mojo = false;
+
+  if (!started_mojo) {
+    started_mojo = true;
+    StartMojoControlPacket start_mojo_message;
+    start_mojo_message.op = kStartMojoControlPacketType;
+    bool success = memlog_sender_pipe->Send(&start_mojo_message, sizeof(start_mojo_message));
+    fprintf(stderr, "========== StartProfilingMojo %d\n", (int)success);
+  }
 }
 
 }  // namespace profiling
