@@ -1082,6 +1082,19 @@ Details of dependency propagation
   See also "public_deps".
 )";
 
+const char kExtraAttributes[] = "extra_attributes";
+const char kExtraAttributes_HelpShort[] =
+    "extra_attributes: [string list] Extra attributes for Xcode projects.";
+const char kExtraAttributes_Help[] =
+    R"(extra_attributes: [string list] Extra attributes for Xcode projects.
+
+      This list of attributes is used to append to the buid settings of the
+      generated Xcode target that corresponds to a create_bundle target. Only
+      meaningful to Xcode (used as part of the Xcode project generation).
+
+      See "gn help create_bundle" for more information.
+        )";
+
 const char kIncludeDirs[] = "include_dirs";
 const char kIncludeDirs_HelpShort[] =
     "include_dirs: [directory list] Additional include directories.";
@@ -1904,6 +1917,7 @@ const VariableInfoMap& GetTargetVariables() {
     INSERT_VARIABLE(Defines)
     INSERT_VARIABLE(Depfile)
     INSERT_VARIABLE(Deps)
+    INSERT_VARIABLE(ExtraAttributes)
     INSERT_VARIABLE(IncludeDirs)
     INSERT_VARIABLE(Inputs)
     INSERT_VARIABLE(Ldflags)

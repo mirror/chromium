@@ -102,6 +102,7 @@
     *   [defines: [string list] C preprocessor defines.](#defines)
     *   [depfile: [string] File name for input dependencies for actions.](#depfile)
     *   [deps: [label list] Private linked dependencies.](#deps)
+    *   [extra_attributes: [string list] Extra attributes for Xcode projects.](#depfile)
     *   [include_dirs: [directory list] Additional include directories.](#include_dirs)
     *   [inputs: [file list] Additional compile-time dependencies.](#inputs)
     *   [ldflags: [string list] Flags passed to the linker.](#ldflags)
@@ -1395,7 +1396,8 @@
   Deps: data_deps, deps, public_deps
   Dependent configs: all_dependent_configs, public_configs
   General: check_includes, configs, data, inputs, output_name,
-           output_extension, public, sources, testonly, visibility
+           output_extension, public, sources, testonly, visibility,
+           extra_attributes
 ```
 ### <a name="group"></a>**group**: Declare a named group of targets.
 
