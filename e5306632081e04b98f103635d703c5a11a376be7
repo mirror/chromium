@@ -297,6 +297,30 @@
     },
     {
       "key": {
+        "uuid": "159a6953_93733f9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:44:02Z",
+      "side": 1,
+      "message": "I did a v1 implementation that updates all of the items, updates the CBD and updates the privacy disclaimers so that if a supervised user is signed in users can\u0027t delete browsing history (https://chromium.googlesource.com/chromium/src/+/c0a3e03dcb29eb247d06e77333eaf316425dedef). But if the user signs out, we are likely still showing history from their signed in account, which we shouldn\u0027t be doing. Hiding the privacy toggle while we\u0027re still potentially showing history from when the user was signed in doesn\u0027t seem like the right thing to do.\n\nAn \"easy\" fix may be to call initialize() from HistoryAdapter#onSignInStateChange() to trigger a refresh of the entire history view. Hopefully that shows the loading view, but it may not. If this isn\u0027t easy to fix then I think we can leave it for a follow-up CL (and remove the isSignedIn() check here). Fixing that is a P2 or P3, though, since there\u0027s a simple, easily discoverable work-around (refresh the page).",
+      "parentUuid": "ca86665f_8bc2b42d",
+      "range": {
+        "startLine": 416,
+        "startChar": 48,
+        "endLine": 416,
+        "endChar": 54
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8068c8fc_1755a3d1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
         "patchSetId": 1

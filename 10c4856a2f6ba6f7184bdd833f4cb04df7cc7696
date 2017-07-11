@@ -187,6 +187,30 @@
       "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8c934c_e4cb109a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:44:02Z",
+      "side": 1,
+      "message": "I see. Let\u0027s rename the test method in HistoryAdapter #getFirstGroupForTests() and in these tests assert whether the group is a header or not.",
+      "parentUuid": "0aceab25_44d9cf71",
+      "range": {
+        "startLine": 508,
+        "startChar": 24,
+        "endLine": 508,
+        "endChar": 35
+      },
+      "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

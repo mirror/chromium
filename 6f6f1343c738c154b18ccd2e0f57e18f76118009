@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cfc45c5_2b068356",
+        "filename": "chrome/android/java/res/layout/history_clear_browsing_data_header.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:44:02Z",
+      "side": 1,
+      "message": "Will you please change this to:\n\nTODO(twellington): change start/end padding back to 16dp and remove duplicate FrameLayout when list item background is removed.",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "6f6f1343c738c154b18ccd2e0f57e18f76118009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d949ba_79bb611a",
+        "filename": "chrome/android/java/res/layout/history_header_view.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:44:02Z",
+      "side": 1,
+      "message": "Instead of a separate closing tag, the FrameLayout tag above can be:\n\n\u003cFrameLayout xmlns:android\u003d\"http://schemas.android.com/apk/res/android\"\n    android:layout_width\u003d\"match_parent\"\n    android:layout_height\u003d\"wrap_content\" /\u003e",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "6f6f1343c738c154b18ccd2e0f57e18f76118009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a0446f_5c961722",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:44:02Z",
+      "side": 1,
+      "message": "I think it makes sense for this to be the default implementation in DateDividedAdapter since it\u0027s likely that other clients will use the same code when binding a HeaderItem to a viewholder.",
+      "range": {
+        "startLine": 242,
+        "startChar": 21,
+        "endLine": 242,
+        "endChar": 36
+      },
+      "revId": "6f6f1343c738c154b18ccd2e0f57e18f76118009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f3cb6d_e1b64b4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:44:02Z",
+      "side": 1,
+      "message": "It looks like this comment inadvertently was added here?",
+      "range": {
+        "startLine": 304,
+        "startChar": 32,
+        "endLine": 304,
+        "endChar": 62
+      },
+      "revId": "6f6f1343c738c154b18ccd2e0f57e18f76118009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21d7597_73cf532f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:44:02Z",
+      "side": 1,
+      "message": "nit: The cast to (ViewGroup) probably isn\u0027t necessary anymore.",
+      "range": {
+        "startLine": 313,
+        "startChar": 23,
+        "endLine": 313,
+        "endChar": 32
+      },
+      "revId": "6f6f1343c738c154b18ccd2e0f57e18f76118009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2eac429_e10fd9cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:44:02Z",
+      "side": 1,
+      "message": "nit: More of this can fit on the line above since the Java line length limit is 100-chars.",
+      "range": {
+        "startLine": 139,
+        "startChar": 11,
+        "endLine": 139,
+        "endChar": 15
+      },
+      "revId": "6f6f1343c738c154b18ccd2e0f57e18f76118009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111296a7_63bfe371",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T00:44:02Z",
+      "side": 1,
+      "message": "Can we update this comment to indicate what the sub-classes are responsible for? E.g.\n\nIf headerItems is null, ... as a the first group. Sub-classes should implement {@link #createHeader(ViewGroup)} to return the BasicViewHolder that should be displayed as the header. If headerItems is not null, ... as child items to the header group. Sub-classes should implement {@link #createHeader(ViewGroup)} to return a holder for the header item(s). {@link #bindViewHolderForHeaderItem(ViewHolder, HeaderItem)} will be called to bind the BasicViewHolder to the associated HeaderItem.\n\n\nWhat do you think of only offering one way to provide headers (a list of HeaderItems)? It would require a bit of refactoring downloads (which should hopefully be fairly easy) and would create a consistent way to use this interface.",
+      "range": {
+        "startLine": 480,
+        "startChar": 88,
+        "endLine": 480,
+        "endChar": 93
+      },
+      "revId": "6f6f1343c738c154b18ccd2e0f57e18f76118009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
