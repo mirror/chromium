@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c377beff_01a8fbb2",
+        "filename": "media/mojo/interfaces/video_encode_accelerator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-11T23:19:13Z",
+      "side": 1,
+      "message": "\u003e Do we have tests where we call Encode without\n\u003e a) first initializing\n\nNot at the moment, but I\u0027ll take it the suggestion, thanks!\n\n\u003e b) providing the correct number N of buffers\n\nN depends on the implementation and varies between\n1 and 10 (e.g. in my MBP I see it requests 4); the \nunittests in https://crrev.com/c/566145 use a FakeVEA \nthat only accepts 1; I can add a test that will exercise \nsending an Encode() where there  are no BitstreamBuffers \navailable.\n\nI was also planning on using the GPU bots to add a \ncase to media_mojo_unittests using the hardware and run it\non the GPU bots, and that\u0027ll exercise better all this\nfunctionality .",
+      "parentUuid": "abb70795_9ab33918",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 47
+      },
+      "revId": "e2b492040c6bd3c7fcb3c1aec026083f4e45bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2d938e5_301d35e9",
         "filename": "media/mojo/interfaces/video_encode_accelerator.mojom",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e2b492040c6bd3c7fcb3c1aec026083f4e45bd9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73585247_74d5d9dd",
+        "filename": "media/mojo/interfaces/video_encode_accelerator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-11T23:19:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d938e5_301d35e9",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 53
+      },
+      "revId": "e2b492040c6bd3c7fcb3c1aec026083f4e45bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
