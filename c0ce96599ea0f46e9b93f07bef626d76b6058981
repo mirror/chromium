@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add18839_dac3be8e",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-11T17:19:13Z",
+      "side": 1,
+      "message": "duplicated with ExplainSafeBrowsing",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 3
+      },
+      "revId": "c0ce96599ea0f46e9b93f07bef626d76b6058981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9026cc1d_a17a752d",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-11T17:19:13Z",
+      "side": 1,
+      "message": "\"no\" \u003d\u003e \"with no\"",
+      "range": {
+        "startLine": 279,
+        "startChar": 37,
+        "endLine": 279,
+        "endChar": 39
+      },
+      "revId": "c0ce96599ea0f46e9b93f07bef626d76b6058981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
