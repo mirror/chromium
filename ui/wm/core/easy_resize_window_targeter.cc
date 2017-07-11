@@ -5,6 +5,7 @@
 #include "ui/wm/core/easy_resize_window_targeter.h"
 
 #include "services/ui/public/interfaces/window_manager.mojom.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/transient_window_client.h"
 #include "ui/aura/env.h"
 #include "ui/aura/mus/window_port_mus.h"
@@ -69,11 +70,16 @@ bool EasyResizeWindowTargeter::ShouldUseExtendedBounds(
   if (window->parent() != container_)
     return false;
 
+  bool can_resize = window->GetProperty(aura::client::kResizeBehaviorKey) &
+                    ui::mojom::kResizeBehaviorCanResize;
   aura::client::TransientWindowClient* transient_window_client =
       aura::client::GetTransientWindowClient();
   return !transient_window_client ||
-      !transient_window_client->GetTransientParent(window) ||
-      transient_window_client->GetTransientParent(window) == container_;
+         !transient_window_client->GetTransientParent(window) ||
+         transient_window_client->GetTransientParent(window) == container_ ||
+         (can_resize &&
+          transient_window_client->GetTransientParent(window)->parent() ==
+              container_);
 }
 
 }  // namespace wm
