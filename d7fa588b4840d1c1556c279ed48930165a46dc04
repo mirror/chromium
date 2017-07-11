@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "122e642b_5f218cd0",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T22:50:06Z",
+      "side": 1,
+      "message": "We should probably be fine here, as this does a value based comparison. Identity is indeed something else. Arguably, this could also compare FeatureState as well.\n\nThis is used by the mocks to perform argument comparisons.",
+      "parentUuid": "a003d356_d7fa008b",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ba91e38_35187854",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
         "patchSetId": 30
