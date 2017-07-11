@@ -22,6 +22,30 @@
       "revId": "8c387c68ef1a9b32d3efd7ef7b67b7db7702d475",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721d9066_d3323184",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-11T19:13:22Z",
+      "side": 0,
+      "message": "I think I\u0027ll solve this with two modifications:\n\n  (1) Make FileNetLogObserver resilient to failures opening the output file. That it crashes right now is a problem (and not just for the iOS integration).\n\n  (2) Test the path validity synchronously at this callsite, in order to return false and LOG(ERROR) as we did before. I am not sure how critical that API contract was, but my change did break it. Testing the path validity separately here is of course a TOCTTOU race, but given modification (1), edge cases where the race is lost will just mean we return true but don\u0027t actually log stuff.\n\nChange #2 would be a hack. I would like to re-visit if we need that synchronous API contract to StartNetLogging(). Testing the file path external to FileNetLogObserver leaks details about the log format, which may not hold for other log formats (like the \"bounded\" directory based one).",
+      "parentUuid": "31d3a1e4_e0cb577d",
+      "range": {
+        "startLine": 148,
+        "startChar": 29,
+        "endLine": 148,
+        "endChar": 30
+      },
+      "revId": "8c387c68ef1a9b32d3efd7ef7b67b7db7702d475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
