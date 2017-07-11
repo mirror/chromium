@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "182226bd_6983ab7b",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-11T02:09:57Z",
+      "side": 1,
+      "message": "The color space is determined by the android.Window\u0027s \"isWideColorGamut\" property which is static for the lifetime of this context.\n\nThe comment above is WRT the fact that we don\u0027t plumb this to the display::Display appropriately (this patch is split off from the Java patch which does that).",
+      "parentUuid": "c6cf655b_dc278138",
+      "revId": "e1eea453edfa333c751706a456d81b08704ca7d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dd1f9c2_7d37eb57",
         "filename": "ui/gl/gl_surface_format.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-11T01:59:00Z",
       "side": 1,
       "message": "I think color space shouldn\u0027t affect compatibility of surface formats. This is passed in to egl as an attrib, not as part of the EGLConfig, so the context shouldn\u0027t know anything about it.",
+      "revId": "e1eea453edfa333c751706a456d81b08704ca7d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d49dd59_a24dec82",
+        "filename": "ui/gl/gl_surface_format.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-11T02:09:57Z",
+      "side": 1,
+      "message": "Good point, you\u0027re right -- the contexts are compatible here.",
+      "parentUuid": "7dd1f9c2_7d37eb57",
       "revId": "e1eea453edfa333c751706a456d81b08704ca7d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
