@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f80ea583_e2619f91",
+        "filename": "ash/shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-11T03:06:52Z",
+      "side": 1,
+      "message": "nit: GetLocalStatePrefService() or GetLocalStatePrefs(). The fact that chrome just calls this \"local state\" is a historical oddity.",
+      "revId": "cdb1da13aef2ff7529b95e6aa682b6df88c7f600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a93c982_961d9b88",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-11T03:06:52Z",
+      "side": 1,
+      "message": "nit: GetLocalStatePrefService() or GetLocalStatePrefs()",
+      "revId": "cdb1da13aef2ff7529b95e6aa682b6df88c7f600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a7fe89_196b799a",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-11T03:06:52Z",
+      "side": 1,
+      "message": "Aside: Methods like this are why having local state access in src/ash is a good idea. Later we will be able to eliminate this method and the next 2.",
+      "revId": "cdb1da13aef2ff7529b95e6aa682b6df88c7f600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
