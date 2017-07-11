@@ -22,6 +22,30 @@
       "revId": "ddc753934758db1cccdfc5491af7b58735a5c6f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1ba9af_549761e0",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-11T14:20:32Z",
+      "side": 1,
+      "message": "Windows compiler was complaining about not being able to resolve which operator!\u003d to use:\n\nrootscrollercontroller.cpp(223): error C2678: binary \u0027!\u003d\u0027: no operator found which takes a left-hand operand of type \u0027const blink::Element *\u0027 (or there is no acceptable conversion)\n\nSee trybot results for patchset 3. Perhaps we need to define an explicit comparison for Node\u0026 and Element\u0026? Though clang accepted it just fine...",
+      "parentUuid": "a4af6181_1ee89793",
+      "range": {
+        "startLine": 219,
+        "startChar": 6,
+        "endLine": 219,
+        "endChar": 13
+      },
+      "revId": "ddc753934758db1cccdfc5491af7b58735a5c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
