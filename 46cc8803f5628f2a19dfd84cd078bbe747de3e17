@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "003228c1_96d51ab8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T22:45:58Z",
+      "side": 0,
+      "message": "Sequencing this change first before creation on demand would save you from having to change this line twice. Either way since we\u0027re this far into the review, we can just let this stand.",
+      "parentUuid": "015aa0b6_c804b60b",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 18
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4508eccc_508e62de",
         "filename": "components/task_scheduler_util/common/variations_util.cc",
         "patchSetId": 8
@@ -84,6 +108,30 @@
       "side": 0,
       "message": "Nothing to change, right?",
       "parentUuid": "4508eccc_508e62de",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 36
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8021203e_93d7d9d8",
+        "filename": "components/task_scheduler_util/common/variations_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T22:45:58Z",
+      "side": 0,
+      "message": "Correct.",
+      "parentUuid": "f3f68dc4_e01d19dd",
       "range": {
         "startLine": 44,
         "startChar": 0,
