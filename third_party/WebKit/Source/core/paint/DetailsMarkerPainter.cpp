@@ -25,7 +25,8 @@ void DetailsMarkerPainter::Paint(const PaintInfo& paint_info,
           paint_info.context, layout_details_marker_, paint_info.phase))
     return;
 
-  LayoutPoint box_origin(paint_offset + layout_details_marker_.Location());
+  LayoutPoint location(RoundedIntPoint(layout_details_marker_.Location()));
+  LayoutPoint box_origin(paint_offset + location);
   LayoutRect overflow_rect(layout_details_marker_.VisualOverflowRect());
   overflow_rect.MoveBy(box_origin);
 
