@@ -149,7 +149,8 @@ class ServiceWorkerGlobalScopeProxy final
   void DidCreateWorkerGlobalScope(WorkerOrWorkletGlobalScope*) override;
   void DidInitializeWorkerContext() override;
   void WillEvaluateWorkerScript(size_t script_size,
-                                size_t cached_metadata_size) override;
+                                size_t cached_metadata_size,
+                                bool loaded_script_on_worker_thread) override;
   void WillEvaluateImportedScript(size_t script_size,
                                   size_t cached_metadata_size) override;
   void DidEvaluateWorkerScript(bool success) override;
