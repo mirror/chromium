@@ -38,6 +38,13 @@ BasicCardResponse GetBasicCardResponseFromAutofillCreditCard(
     const autofill::AutofillProfile& billing_profile,
     const std::string& app_locale);
 
+// Parse the supported payment apps from supportedMethods. |out_supported_apps|
+// is filled with a list of native payment app universal links in the order that
+// they were specified by the merchant.
+void ParseSupportedPaymentApps(
+    const std::vector<PaymentMethodData>& method_data,
+    std::vector<std::string>* out_supported_apps);
+
 // Parse the supported card networks from supportedMethods and  "basic-card"'s
 // supportedNetworks. |out_supported_networks| is filled with list of networks
 // in the order that they were specified by the merchant.
