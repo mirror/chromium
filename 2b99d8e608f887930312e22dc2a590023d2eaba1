@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d2a2676_139c88ae",
+        "filename": "tools/traffic_annotation/auditor/tests/git_list.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T11:28:13Z",
+      "side": 1,
+      "message": "spelling: (ir)relev*a*nt\n\nHere and everywhere pls :)",
+      "range": {
+        "startLine": 2,
+        "startChar": 39,
+        "endLine": 2,
+        "endChar": 49
+      },
+      "revId": "2b99d8e608f887930312e22dc2a590023d2eaba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1a5ad9_ecb3af7e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T11:28:13Z",
+      "side": 1,
+      "message": "Could you improve this comment? What does \u0027something\u0027 refer to, and what does it mean to pass a type?",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 57
+      },
+      "revId": "2b99d8e608f887930312e22dc2a590023d2eaba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56248216_af475cca",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T11:28:13Z",
+      "side": 1,
+      "message": "Why do we need this sentinel? Range-based loops as well as arraysize() can be used to iterate through this array.",
+      "range": {
+        "startLine": 22,
+        "startChar": 71,
+        "endLine": 22,
+        "endChar": 78
+      },
+      "revId": "2b99d8e608f887930312e22dc2a590023d2eaba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdb3b96_83bddc0d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T11:28:13Z",
+      "side": 1,
+      "message": "nit: This is weird if you read it in the code that is already landed :)",
+      "range": {
+        "startLine": 153,
+        "startChar": 22,
+        "endLine": 153,
+        "endChar": 40
+      },
+      "revId": "2b99d8e608f887930312e22dc2a590023d2eaba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6128c82_44ed2cda",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T11:28:13Z",
+      "side": 1,
+      "message": "style: We don\u0027t use default parameters in C++.",
+      "range": {
+        "startLine": 40,
+        "startChar": 56,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "2b99d8e608f887930312e22dc2a590023d2eaba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b727918_a29e7486",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-11T11:28:13Z",
+      "side": 1,
+      "message": "This doesn\u0027t belong here. A public interface should not so readily advertise that it works differently in testing.\n\nThe way this is normally done is:\n\nSetGitFilesForTesting(const base::FilePath\u0026 mock_git_list_file_for_tests) {\n  git_files_for_testing_ \u003d git_files_for_testing;\n}\n\nGetFilesFromGit() {\n  if (!git_files_for_testing_.empty())\n    return git_files_for_testing_;\n\n  return the real thing;\n}",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 55
+      },
+      "revId": "2b99d8e608f887930312e22dc2a590023d2eaba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
