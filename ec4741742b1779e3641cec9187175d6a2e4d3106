@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e72b633_02003613",
+        "filename": "third_party/WebKit/Source/core/animation/FontWeightConversion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "Remove empty leading line.",
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f55f7b_ce4d7666",
+        "filename": "third_party/WebKit/Source/core/animation/FontWeightConversion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "Given that we no longer have a FontWeight type these names are a little misleading and also seems redundant. FontSelectionValue::value or even an implicit cast should be sufficient, right?",
+      "range": {
+        "startLine": 13,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 44
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed03e2f4_79ff89ea",
+        "filename": "third_party/WebKit/Source/core/css/CSSSegmentedFontFace.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "So italics is always represented as a slope now? How does that work with fonts that have a variable slope *and* an italic variant?",
+      "range": {
+        "startLine": 121,
+        "startChar": 52,
+        "endLine": 121,
+        "endChar": 68
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6c658b_58857aaa",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "the two values here are min and max presumably? A comment explaining that would be helpful.",
+      "range": {
+        "startLine": 455,
+        "startChar": 27,
+        "endLine": 455,
+        "endChar": 43
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd62b6c_8970e257",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceCache.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "I love how well structured and easy to follow this code is, well done!",
+      "range": {
+        "startLine": 180,
+        "startChar": 27,
+        "endLine": 180,
+        "endChar": 39
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa73ec44_20257e6a",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceCache.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "[optional suggestion] How about keeping this private and using a friend declaration to expose it for testing?",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87133677_e68b7bb6",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceCache.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "Prefer // style comments.",
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be155014_af408452",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceCacheTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "AvailableCapabilitiesChoices (use TitleCase, not camelCase)",
+      "range": {
+        "startLine": 170,
+        "startChar": 36,
+        "endLine": 170,
+        "endChar": 64
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe9f6b2_a19a40f2",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "This effectively changes font-weight from using discrete values to continuous within the 0-999 range, right? Do we still clamp the values or are the full range of FontSelectionValue available?",
+      "range": {
+        "startLine": 972,
+        "startChar": 14,
+        "endLine": 972,
+        "endChar": 32
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc02c817_3cd3ea4c",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontDescription.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "This means that the value that is exposed though ComputedStyle etc is different from the one we use, right? Is the plan to eventually support values outside of the discrete 100, 200, etc series here?",
+      "range": {
+        "startLine": 346,
+        "startChar": 18,
+        "endLine": 346,
+        "endChar": 21
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bdb8e8_07d996be",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "Adding a new fixed-point type seems like a bit of an overkill. Is the rational to limit the cache impact of animating font variables? Any chance we could use one of our existing fixed point types instead? Either in platform or from chromium base?",
+      "range": {
+        "startLine": 37,
+        "startChar": 32,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7089561_0b8f6141",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "Remove commented out code.",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 13
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f169e7ed_a228d1d8",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-11T20:24:37Z",
+      "side": 1,
+      "message": "Can we make these constants instead of functions?",
+      "range": {
+        "startLine": 179,
+        "startChar": 33,
+        "endLine": 179,
+        "endChar": 55
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
