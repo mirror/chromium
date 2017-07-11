@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c917ac_468ef1bc",
+        "filename": "chromecast/media/cma/backend/android/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-07-11T18:11:59Z",
+      "side": 1,
+      "message": "This should be more specific, eg \"chromecast/internal/android/prebuilt/things\"",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 25
+      },
+      "revId": "b248342a09bfde6599a99fa314fdd37a39a572e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
