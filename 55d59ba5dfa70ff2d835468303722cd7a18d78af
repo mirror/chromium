@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2b8418a_264e4fd5",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-11T02:44:42Z",
+      "side": 1,
+      "message": "Do this in the initializer list and make the member variable const.",
+      "revId": "55d59ba5dfa70ff2d835468303722cd7a18d78af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affd3346_4e766ffe",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-11T02:44:42Z",
+      "side": 1,
+      "message": "I would just call this hide_title_bars_.\n\nOr better yet, invert the sense of the booleans in the C++ code, and make it show_title_bars_ and ShouldShowTitleBars(), or show_window_captions_ and ShouldShowWindowCaptions(). The flag could stay the same, since the default behavior is to show them. See go/tott-387",
+      "revId": "55d59ba5dfa70ff2d835468303722cd7a18d78af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
