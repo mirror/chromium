@@ -17,6 +17,7 @@ var AutomationNode = chrome.automation.AutomationNode;
 var Dir = constants.Dir;
 var Role = chrome.automation.RoleType;
 var State = chrome.automation.StateType;
+var Restrictions = chrome.automation.Restrictions;
 
 /**
  * @constructor
@@ -251,7 +252,9 @@ AutomationPredicate.container = function(node) {
       AutomationPredicate.landmark, AutomationPredicate.structuralContainer,
       function(node) {
         // For example, crosh.
-        return (node.role == Role.TEXT_FIELD && node.state.readOnly);
+        return (
+            node.role == Role.TEXT_FIELD &&
+            node.restrictions == Restrictions.READ_ONLY);
       },
       function(node) {
         return (

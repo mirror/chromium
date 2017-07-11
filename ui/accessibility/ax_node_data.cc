@@ -148,6 +148,7 @@ bool IsNodeIdIntAttribute(AXIntAttribute attr) {
     case AX_ATTR_COLOR:
     case AX_ATTR_INVALID_STATE:
     case AX_ATTR_CHECKED_STATE:
+    case AX_ATTR_RESTRICTIONS:
     case AX_ATTR_TEXT_DIRECTION:
     case AX_ATTR_TEXT_STYLE:
     case AX_ATTR_ARIA_COLUMN_COUNT:
@@ -795,6 +796,16 @@ std::string AXNodeData::ToString() const {
             break;
         }
         break;
+      case AX_ATTR_RESTRICTIONS:
+        switch (int_attributes[i].second) {
+          case AX_RESTRICTIONS_READ_ONLY:
+            result += " restrictions=readonly";
+            break;
+          case AX_RESTRICTIONS_DISABLED:
+            result += " restrictions=disabled";
+            break;
+        }
+        break;
       case AX_INT_ATTRIBUTE_NONE:
         break;
     }
@@ -909,9 +920,6 @@ std::string AXNodeData::ToString() const {
         break;
       case AX_ATTR_CONTAINER_LIVE_BUSY:
         result += " container_busy=" + value;
-        break;
-      case AX_ATTR_ARIA_READONLY:
-        result += " aria_readonly=" + value;
         break;
       case AX_ATTR_UPDATE_LOCATION_ONLY:
         result += " update_location_only=" + value;
