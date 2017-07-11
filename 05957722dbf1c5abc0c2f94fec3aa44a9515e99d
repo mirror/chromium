@@ -94,6 +94,30 @@
       "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb25e5dd_05dea95e",
+        "filename": "services/ui/gpu/interfaces/gpu_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-11T18:57:12Z",
+      "side": 1,
+      "message": "I think I\u0027m missing a lot of context that would help me evaluate this. For example, why does ANGLE need a map? What is the cache for? It\u0027s also not clear to me why it\u0027s difficult to recreate the key. Why can\u0027t the GpuService implementation just sha1 |data| and be done with it? Are there other bits of data that go into this (presumably there must be)?\n\nSorry for asking so many questions.",
+      "parentUuid": "2d985859_ea819f6f",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 69
+      },
+      "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
