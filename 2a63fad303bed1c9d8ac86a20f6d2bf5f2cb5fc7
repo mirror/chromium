@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dff4536_18344593",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-11T06:34:52Z",
+      "side": 1,
+      "message": "You can remember the state and use it when the maximum_running_requests_seen_ is updated to classify report names for throttled case and not throttled case.",
+      "revId": "2a63fad303bed1c9d8ac86a20f6d2bf5f2cb5fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe313a6e_eb0c60e8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-11T06:34:52Z",
+      "side": 1,
+      "message": "nits: it\u0027s better to place it before the OnThrottlingStateChange() so that override methods follow other methods.",
+      "revId": "2a63fad303bed1c9d8ac86a20f6d2bf5f2cb5fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
