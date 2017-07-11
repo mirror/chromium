@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dcba7776_37b0d200",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-11T16:00:46Z",
+      "side": 1,
+      "message": "Good catch, thanks! We do need early exist.",
+      "parentUuid": "af5883cb_07829e1c",
+      "revId": "bdd12eed23b183cc5fcf4c2ea9cd20a44a19ba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c486ec0b_c14653bf",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "bdd12eed23b183cc5fcf4c2ea9cd20a44a19ba7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bc490f_42f8d58e",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-11T16:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c486ec0b_c14653bf",
+      "revId": "bdd12eed23b183cc5fcf4c2ea9cd20a44a19ba7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
