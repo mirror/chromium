@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76385335_eb7296e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-11T22:36:53Z",
+      "side": 1,
+      "message": "I seriously doubt anyone would extend this to any other screens, and there\u0027s very few that have this problem of being tricky to produce in testing. Why not just have a specific flag for the user image screen instead of making this general?",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "584e26c8746e7e3f9233f93ec7abef0de2d1dd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
