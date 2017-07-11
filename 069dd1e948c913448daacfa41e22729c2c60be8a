@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ca21517_ea025673",
+        "filename": "third_party/WebKit/LayoutTests/custom-elements/spec/parsing.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-07-11T05:16:34Z",
+      "side": 1,
+      "message": "I think this test is/will be synced with the W3C tests upstream, so TODO comments related to the Chromium implementation aren\u0027t good to include here.",
+      "revId": "069dd1e948c913448daacfa41e22729c2c60be8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a10dc17_83244fb1",
+        "filename": "third_party/WebKit/LayoutTests/custom-elements/spec/parsing.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-07-11T05:16:34Z",
+      "side": 1,
+      "message": "Just out of curiosity, what should nsuri be here? the XHTML nsuri? null? It might be worth testing that.",
+      "revId": "069dd1e948c913448daacfa41e22729c2c60be8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "573dbe37_876a4f58",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-07-11T05:16:34Z",
+      "side": 1,
+      "message": "Is this right? It seems odd to discard the \"is\" value without doing anything with it. Can you give me a pointer to the spec where it says to do that? Is there a test which covers this branch?",
+      "revId": "069dd1e948c913448daacfa41e22729c2c60be8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8141b408_f2ef2e05",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-07-11T05:16:34Z",
+      "side": 1,
+      "message": "You can revert this one blank line change; it doesn\u0027t make sense to touch this file to add a blank line.",
+      "revId": "069dd1e948c913448daacfa41e22729c2c60be8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c9bebc2_39f8ec9c",
+        "filename": "third_party/WebKit/Source/core/dom/custom/CustomElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-07-11T05:16:34Z",
+      "side": 1,
+      "message": "When/where is \"is\" set for these instances.",
+      "revId": "069dd1e948c913448daacfa41e22729c2c60be8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de97fc98_4e409bd6",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLConstructionSite.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-07-11T05:16:34Z",
+      "side": 1,
+      "message": "Why isn\u0027t \"is\" passed in here? I think you need a FIXME at least. Does this crash when \"is\" gets this far? It might be better to DCHECK is is empty and crash in a clear way.",
+      "revId": "069dd1e948c913448daacfa41e22729c2c60be8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bec8aea2_692f947d",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLConstructionSite.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-07-11T05:16:34Z",
+      "side": 1,
+      "message": "Let\u0027s name these parameters now so people know which one is which.",
+      "revId": "069dd1e948c913448daacfa41e22729c2c60be8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
