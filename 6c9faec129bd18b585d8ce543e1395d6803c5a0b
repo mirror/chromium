@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a9ab1ee3_ad87abb3",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-11T12:25:25Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "44b59e1f_fecb2c12",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "6c9faec129bd18b585d8ce543e1395d6803c5a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bd82d23_a14559d3",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h",
         "patchSetId": 3
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ec1d31bc_9397c31b",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-11T12:25:25Z",
+      "side": 1,
+      "message": "Named both to Fill and removed the GetOSMemoryDump method.",
+      "parentUuid": "3bd82d23_a14559d3",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 4
+      },
+      "revId": "6c9faec129bd18b585d8ce543e1395d6803c5a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7c2eb18_c8697b67",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_linux.cc",
         "patchSetId": 3
@@ -92,6 +140,30 @@
       "revId": "6c9faec129bd18b585d8ce543e1395d6803c5a0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb87af4_f46671b0",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-11T12:25:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7c2eb18_c8697b67",
+      "range": {
+        "startLine": 178,
+        "startChar": 6,
+        "endLine": 178,
+        "endChar": 7
+      },
+      "revId": "6c9faec129bd18b585d8ce543e1395d6803c5a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
