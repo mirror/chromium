@@ -57,6 +57,7 @@
       "requires": {
         "*": [ "app" ],
         // In classic ash, the browser supplies ash interfaces to itself.
+        "cdm": [ "media:cdm" ],
         "content_browser": [ "ash", "display", "memory_instrumentation", "url_keyed_metrics" ],
         "content_gpu": [ "browser" ],
         "content_plugin": [ "browser" ],
