@@ -22,6 +22,30 @@
       "revId": "cbaca80784f18f03ec86227d2af4531b011faf90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bf7ad2_a85f237b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T23:36:44Z",
+      "side": 1,
+      "message": "After selecting \"New tab\" from the app menu or pressing the tab switcher new tab button, BottomSheet#findFocus() returns null (focus is back on the CompositorViewHolder). Calling requestFocus() causes TalkBack to look for an appropriate view to focus. Currently, when there is a pull handle the entire toolbar is focusable so without changes that will gain focus. When there isn\u0027t a pull handle the expand button gains focus.\n\nWhen the bottom sheet is open, I made it focusable in touch mode and gave it a content description of \"Navigation panel\". Now, if the bottom sheet is opened through means other than a URL focus, we announce \"Navigation panel opened\", then we focus the bottom sheet and Talkback announces \"Navigation panel\".  If the bottom sheet is opened via a url focus, Talkback reads \"Navigation panel opened. Showing English US keyboard. End of field.\"\n\nWhen the bottom sheet is closed, it doesn\u0027t make sense to allow it to gain accessibility focus so I clear the content description and make it unfocusable. Prior to this change we were already clearing focus on the bottom sheet when it was closed which causes the CompositorViewHolder to gain focus.\n\nFor M62, I think we should sync w/ the accessibility team and do another review/audit.",
+      "parentUuid": "dcbae49d_93abf66b",
+      "range": {
+        "startLine": 1004,
+        "startChar": 22,
+        "endLine": 1004,
+        "endChar": 36
+      },
+      "revId": "cbaca80784f18f03ec86227d2af4531b011faf90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
