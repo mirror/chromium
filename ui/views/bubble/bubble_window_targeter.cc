@@ -12,18 +12,11 @@
 
 namespace views {
 
-BubbleWindowTargeter::BubbleWindowTargeter(BubbleDialogDelegateView* bubble)
-    : wm::MaskedWindowTargeter(bubble->GetWidget()->GetNativeView()),
-      bubble_(bubble) {}
-
-BubbleWindowTargeter::~BubbleWindowTargeter() {
+BubbleWindowTargeter::BubbleWindowTargeter(BubbleDialogDelegateView* bubble) {
+  const gfx::Insets insets = bubble->GetBubbleFrameView()->GetInsets();
+  SetInsets(insets, insets);
 }
 
-bool BubbleWindowTargeter::GetHitTestMask(aura::Window* window,
-                                          gfx::Path* mask) const {
-  mask->addRect(
-      gfx::RectToSkRect(bubble_->GetBubbleFrameView()->GetContentsBounds()));
-  return true;
-}
+BubbleWindowTargeter::~BubbleWindowTargeter() {}
 
 }  // namespace views
