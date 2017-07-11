@@ -116,6 +116,11 @@ class PDFiumEngine : public PDFEngine,
   void OnDocumentFailed() override;
   void OnDocumentComplete() override;
 
+  void SetSelectionLeftCoordinates(const pp::Point& point) override;
+  void SetSelectionRightCoordinates(const pp::Point& point) override;
+  void SetSelectionCoordinates(const pp::Point& left,
+                               const pp::Point& right) override;
+
   void UnsupportedFeature(int type);
   void FontSubstituted();
 
@@ -300,6 +305,8 @@ class PDFiumEngine : public PDFEngine,
   bool OnKeyDown(const pp::KeyboardInputEvent& event);
   bool OnKeyUp(const pp::KeyboardInputEvent& event);
   bool OnChar(const pp::KeyboardInputEvent& event);
+
+  bool ExtendSelection(int page_index, int char_index);
 
   FPDF_DOCUMENT CreateSinglePageRasterPdf(
       double source_page_width,
@@ -763,6 +770,14 @@ class PDFiumEngine : public PDFEngine,
   // Set to true if the user is being prompted for their password. Will be set
   // to false after the user finishes getting their password.
   bool getting_password_;
+
+  enum class TouchSelectionDirection {
+    Left,
+    Right
+  };
+  TouchSelectionDirection touch_selection_direction_;
+
+  pp::Point left_selection_base_;
 
   DISALLOW_COPY_AND_ASSIGN(PDFiumEngine);
 };

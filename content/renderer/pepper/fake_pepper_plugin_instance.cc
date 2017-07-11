@@ -77,5 +77,14 @@ void FakePepperPluginInstance::SetLinkUnderCursor(const std::string& url) {}
 void FakePepperPluginInstance::SetTextInputType(ui::TextInputType type) {}
 void FakePepperPluginInstance::PostMessageToJavaScript(PP_Var message) {}
 
+void FakePepperPluginInstance::SetSelectionLeftCoordinates(
+    const gfx::PointF& point) {}
+
+void FakePepperPluginInstance::SetSelectionRightCoordinates(
+    const gfx::PointF& point) {}
+
+void FakePepperPluginInstance::SetSelectionCoordinates(
+    const gfx::PointF& left,
+    const gfx::PointF& right) {}
 
 }  // namespace content

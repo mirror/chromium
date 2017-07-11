@@ -213,10 +213,45 @@ void EnableAccessibility(PP_Instance instance) {
   }
 }
 
-const PPP_Pdf ppp_private = {
-    &GetLinkAtPosition, &Transform, &GetPrintPresetOptionsFromDocument,
-    &EnableAccessibility,
-};
+void SetSelectionLeftCoordinates(PP_Instance instance,
+                                 struct PP_FloatPoint pt) {
+  void* object = pp::Instance::GetPerInstanceObject(instance, kPPPPdfInterface);
+  if (object) {
+    OutOfProcessInstance* obj_instance =
+        static_cast<OutOfProcessInstance*>(object);
+    return obj_instance->SetSelectionLeftCoordinates(pp::FloatPoint(pt));
+  }
+}
+
+void SetSelectionRightCoordinates(PP_Instance instance,
+                                  struct PP_FloatPoint pt) {
+  void* object = pp::Instance::GetPerInstanceObject(instance, kPPPPdfInterface);
+  if (object) {
+    OutOfProcessInstance* obj_instance =
+        static_cast<OutOfProcessInstance*>(object);
+    return obj_instance->SetSelectionRightCoordinates(pp::FloatPoint(pt));
+  }
+}
+
+void SetSelectionCoordinates(PP_Instance instance,
+                             struct PP_FloatPoint left,
+                             struct PP_FloatPoint right) {
+  void* object = pp::Instance::GetPerInstanceObject(instance, kPPPPdfInterface);
+  if (object) {
+    OutOfProcessInstance* obj_instance =
+        static_cast<OutOfProcessInstance*>(object);
+    return obj_instance->SetSelectionCoordinates(pp::FloatPoint(left),
+                                                 pp::FloatPoint(right));
+  }
+}
+
+const PPP_Pdf ppp_private = {&GetLinkAtPosition,
+                             &Transform,
+                             &GetPrintPresetOptionsFromDocument,
+                             &EnableAccessibility,
+                             &SetSelectionLeftCoordinates,
+                             &SetSelectionRightCoordinates,
+                             &SetSelectionCoordinates};
 
 int ExtractPrintPreviewPageIndex(base::StringPiece src_url) {
   // Sample |src_url| format: chrome://print/id/page_index/print.pdf
@@ -580,6 +615,7 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
 }
 
 bool OutOfProcessInstance::HandleInputEvent(const pp::InputEvent& event) {
+
   // To simplify things, convert the event into device coordinates.
   pp::InputEvent event_device_res(event);
   {
@@ -810,6 +846,46 @@ void OutOfProcessInstance::SendAccessibilityViewportInfo() {
   viewport_info.offset = available_area_.point();
   viewport_info.zoom = zoom_ * device_scale_;
   pp::PDF::SetAccessibilityViewportInfo(GetPluginInstance(), &viewport_info);
+}
+
+void OutOfProcessInstance::SelectionChanged(const pp::Rect& left,
+                                            const pp::Rect& right) {
+  pp::PDF::SelectionChanged(
+      GetPluginInstance(),
+      PP_MakeFloatPoint(left.x(), left.y() + top_toolbar_height_),
+      left.height(),
+      PP_MakeFloatPoint(right.right(), right.y() + top_toolbar_height_),
+      right.height());
+}
+
+void OutOfProcessInstance::SetSelectionLeftCoordinates(
+    const pp::FloatPoint& point) {
+  pp::Point new_point(point.x(), point.y());
+  ScalePoint(device_scale_, &new_point);
+  new_point.set_x(new_point.x() - available_area_.x());
+  engine_->SetSelectionLeftCoordinates(new_point);
+}
+
+void OutOfProcessInstance::SetSelectionRightCoordinates(
+    const pp::FloatPoint& point) {
+  pp::Point new_point(point.x(), point.y());
+  ScalePoint(device_scale_, &new_point);
+  new_point.set_x(new_point.x() - available_area_.x());
+  engine_->SetSelectionRightCoordinates(new_point);
+}
+
+void OutOfProcessInstance::SetSelectionCoordinates(
+    const pp::FloatPoint& left,
+    const pp::FloatPoint& right) {
+  pp::Point new_left_point(left.x(), left.y());
+  ScalePoint(device_scale_, &new_left_point);
+  new_left_point.set_x(new_left_point.x() - available_area_.x());
+
+  pp::Point new_right_point(right.x(), right.y());
+  ScalePoint(device_scale_, &new_right_point);
+  new_right_point.set_x(new_right_point.x() - available_area_.x());
+
+  engine_->SetSelectionCoordinates(new_left_point, new_right_point);
 }
 
 pp::Var OutOfProcessInstance::GetLinkAtPosition(const pp::Point& point) {
