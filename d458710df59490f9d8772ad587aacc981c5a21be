@@ -2,6 +2,213 @@
   "comments": [
     {
       "key": {
+        "uuid": "78560699_4d3d5a57",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-11T22:40:18Z",
+      "side": 1,
+      "message": "rm #include \u003cvector\u003e since it\u0027s now in .h file.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdede144_2cf03167",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-11T22:40:18Z",
+      "side": 1,
+      "message": "No need for parens here since the body of the if-conditional is 1-line.",
+      "range": {
+        "startLine": 130,
+        "startChar": 36,
+        "endLine": 130,
+        "endChar": 72
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69d296f_4c67fb66",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-11T22:40:18Z",
+      "side": 1,
+      "message": "s/must be/are/",
+      "range": {
+        "startLine": 493,
+        "startChar": 19,
+        "endLine": 493,
+        "endChar": 20
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f209c7_290f04fe",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-11T22:40:18Z",
+      "side": 1,
+      "message": "It might be better to move this DCHECK to where |max_requests_for_bdp_ranges_| is actually set so that it DCHECKs sooner than later. This would also bring the DCHECK closer to the offending code.",
+      "range": {
+        "startLine": 794,
+        "startChar": 4,
+        "endLine": 794,
+        "endChar": 57
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98aa053c_3c6334da",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-11T22:40:18Z",
+      "side": 1,
+      "message": "There is an implicit assumption that |max_requests_for_bdp_ranges_| contains entries in ascending order. Can that be enforced in GetMaxDelayableRequestsExperimentConfig() via DCHECKs?",
+      "range": {
+        "startLine": 796,
+        "startChar": 30,
+        "endLine": 796,
+        "endChar": 58
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cabaffe_59c8cc4a",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-11T22:40:18Z",
+      "side": 1,
+      "message": "No need for parens.",
+      "range": {
+        "startLine": 899,
+        "startChar": 63,
+        "endLine": 899,
+        "endChar": 64
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a489f984_ba0ce958",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-11T22:40:18Z",
+      "side": 1,
+      "message": "Is it enough to forward declare \"class NetworkQualityEstimator\" here, and then include the actual nqe header file in resource_scheduler.cc?",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0db32c_59ce2faf",
+        "filename": "content/browser/loader/resource_scheduler_browsertest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-11T22:40:18Z",
+      "side": 1,
+      "message": "nit: Is it possible to move the tests in anonymous namespace?",
+      "range": {
+        "startLine": 17,
+        "startChar": 17,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465cac6a_b426ad05",
+        "filename": "content/browser/loader/resource_scheduler_browsertest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-11T22:40:18Z",
+      "side": 1,
+      "message": "#include \u003cmap\u003e",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d281401_419bfc03",
         "filename": "content/browser/loader/resource_scheduler_browsertest.cc",
         "patchSetId": 41
