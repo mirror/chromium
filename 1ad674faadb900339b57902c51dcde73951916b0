@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8db349b4_c06a7d6a",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-11T19:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aa77c22_8f4e9afd",
+      "revId": "1ad674faadb900339b57902c51dcde73951916b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8a8714f_b974492a",
         "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
         "patchSetId": 1
