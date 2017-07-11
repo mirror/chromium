@@ -16,7 +16,7 @@ MessagePumpFuchsia::FileDescriptorWatcher::FileDescriptorWatcher(
 }
 
 MessagePumpFuchsia::FileDescriptorWatcher::~FileDescriptorWatcher() {
-  StopWatchingFileDescriptor();
+  DCHECK(StopWatchingFileDescriptor());
   if (io_)
     __mxio_release(io_);
   if (was_destroyed_) {
@@ -32,7 +32,9 @@ bool MessagePumpFuchsia::FileDescriptorWatcher::StopWatchingFileDescriptor() {
 }
 
 MessagePumpFuchsia::MessagePumpFuchsia() : keep_running_(true) {
-  CHECK(mx_port_create(0, &port_) == MX_OK);
+  // TODO(wez): Remove MX_PORT_OPT_V2 once the SDK is rolled, or migrate
+  // this implementation use ulib/port helpers.
+  CHECK(mx_port_create(MX_PORT_OPT_V2, &port_) == MX_OK);
 }
 
 MessagePumpFuchsia::~MessagePumpFuchsia() {
@@ -74,8 +76,10 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
   controller->desired_events_ = events;
 
   controller->io_ = __mxio_fd_to_io(fd);
-  if (!controller->io_)
+  if (!controller->io_) {
+    DLOG(ERROR) << "Failed to get IO for FD";
     return false;
+  }
 
   controller->fd_ = fd;
   controller->persistent_ = persistent;
@@ -86,15 +90,18 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
 bool MessagePumpFuchsia::FileDescriptorWatcher::WaitBegin() {
   uint32_t signals = 0u;
   __mxio_wait_begin(io_, desired_events_, &handle_, &signals);
-  if (handle_ == MX_HANDLE_INVALID)
+  if (handle_ == MX_HANDLE_INVALID) {
+    DLOG(ERROR) << "mxio_wait_begin failed";
     return false;
+  }
 
   uint64_t this_as_key =
       static_cast<uint64_t>(reinterpret_cast<uintptr_t>(this));
   mx_status_t status = mx_object_wait_async(handle_, port_, this_as_key,
                                             signals, MX_WAIT_ASYNC_ONCE);
   if (status != MX_OK) {
-    DLOG(ERROR) << "mx_object_wait_async failed: " << status;
+    DLOG(ERROR) << "mx_object_wait_async failed: " << status
+                << " (port=" << port_ << ")";
     return false;
   }
   return true;
@@ -199,9 +206,8 @@ void MessagePumpFuchsia::ScheduleWork() {
   mx_port_packet_t packet = {};
   packet.type = MX_PKT_TYPE_USER;
   mx_status_t status = mx_port_queue(port_, &packet, 0);
-  if (status != MX_OK) {
-    DLOG(ERROR) << "mx_port_queue failed: " << status;
-  }
+  DLOG_IF(ERROR, status != MX_OK)
+      << "mx_port_queue failed: " << status << " (port=" << port_ << ")";
 }
 
 void MessagePumpFuchsia::ScheduleDelayedWork(
