@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad70eb87_439909ea",
+        "filename": "skia/public/interfaces/blur_image_filter_tile_mode_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-11T19:55:22Z",
+      "side": 1,
+      "message": "Can we remove this now?",
+      "revId": "1362d41c112b1f26d9ad5c00e2f862e205545679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900824e7_9229062b",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-11T19:55:22Z",
+      "side": 1,
+      "message": "Is there a use case which will require something other than Clamp? Can we just hardcode it in the .cpp until we need it? (There\u0027s also the crop rect which we don\u0027t provide support for here, so I don\u0027t see a big deal in skipping the tile mode as well).",
+      "revId": "1362d41c112b1f26d9ad5c00e2f862e205545679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
