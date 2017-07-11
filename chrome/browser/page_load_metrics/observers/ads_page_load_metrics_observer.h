@@ -5,20 +5,28 @@
 #ifndef CHROME_BROWSER_PAGE_LOAD_METRICS_OBSERVERS_ADS_PAGE_LOAD_METRICS_OBSERVER_H_
 #define CHROME_BROWSER_PAGE_LOAD_METRICS_OBSERVERS_ADS_PAGE_LOAD_METRICS_OBSERVER_H_
 
+#include <bitset>
 #include <list>
 #include <map>
 #include <memory>
 
 #include "base/macros.h"
+#include "base/scoped_observer.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_observer.h"
+#include "components/subresource_filter/content/browser/subresource_filter_observer.h"
+#include "components/subresource_filter/content/browser/subresource_filter_observer_manager.h"
+#include "components/subresource_filter/core/common/load_policy.h"
 #include "components/ukm/ukm_source.h"
 #include "net/http/http_response_info.h"
 
 // This observer labels each sub-frame as an ad or not, and keeps track of
 // relevant per-frame and whole-page byte statistics.
 class AdsPageLoadMetricsObserver
-    : public page_load_metrics::PageLoadMetricsObserver {
+    : public page_load_metrics::PageLoadMetricsObserver,
+      public subresource_filter::SubresourceFilterObserver {
  public:
+  using AdTypes = std::bitset<2>;
+
   // Returns a new AdsPageLoadMetricObserver. If the feature is disabled it
   // returns nullptr.
   static std::unique_ptr<AdsPageLoadMetricsObserver> CreateIfNeeded();
@@ -27,6 +35,9 @@ class AdsPageLoadMetricsObserver
   ~AdsPageLoadMetricsObserver() override;
 
   // page_load_metrics::PageLoadMetricsObserver
+  ObservePolicy OnStart(content::NavigationHandle* navigation_handle,
+                        const GURL& currently_committed_url,
+                        bool started_in_foreground) override;
   ObservePolicy OnCommit(content::NavigationHandle* navigation_handle,
                          ukm::SourceId source_id) override;
   void OnDidFinishSubFrameNavigation(
@@ -41,15 +52,33 @@ class AdsPageLoadMetricsObserver
 
  private:
   struct AdFrameData {
-    explicit AdFrameData(FrameTreeNodeId frame_tree_node_id);
+    AdFrameData(FrameTreeNodeId frame_tree_node_id, AdTypes ad_types);
     size_t frame_bytes;
     size_t frame_bytes_uncached;
     const FrameTreeNodeId frame_tree_node_id;
+    AdTypes ad_types;
   };
+
+  // subresource_filter::SubresourceFilterObserver:
+  void OnSubframeNavigationEvaluated(
+      content::NavigationHandle* navigation_handle,
+      subresource_filter::LoadPolicy load_policy) override;
+  void OnSubresourceFilterGoingAway() override;
+
+  // Determines if the URL of a frame matches the SubResourceFilter block
+  // list. Should only be called once per frame navigation.
+  bool FrameIsSubresourceFilterAd(FrameTreeNodeId frame_tree_node_id);
+
+  // This should only be called once per frame navigation, as the
+  // SubResourceFilter detector clears its state about detected frames after
+  // each call in order to free up memory.
+  AdTypes FrameIsAd(content::NavigationHandle* navigation_handle);
 
   void ProcessLoadedResource(
       const page_load_metrics::ExtraRequestCompleteInfo& extra_request_info);
+
   void RecordHistograms();
+  void RecordHistogramsForType(int ad_type);
 
   // Checks to see if a resource is waiting for a navigation with the given
   // |frame_tree_node_id| to commit before it can be processed. If so, call
@@ -67,6 +96,8 @@ class AdsPageLoadMetricsObserver
   // nullptr.
   std::map<FrameTreeNodeId, AdFrameData*> ad_frames_data_;
 
+  std::set<FrameTreeNodeId> unfinished_subresource_ad_frames_;
+
   // When the observer receives report of a document resource loading for a
   // sub-frame before the sub-frame commit occurs, hold onto the resource
   // request info (delay it) until the sub-frame commits.
@@ -76,6 +107,10 @@ class AdsPageLoadMetricsObserver
   size_t page_bytes_ = 0u;
   size_t uncached_page_bytes_ = 0u;
   bool committed_ = false;
+
+  ScopedObserver<subresource_filter::SubresourceFilterObserverManager,
+                 subresource_filter::SubresourceFilterObserver>
+      subresource_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(AdsPageLoadMetricsObserver);
 };
