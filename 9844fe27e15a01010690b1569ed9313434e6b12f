@@ -34,6 +34,24 @@
       "revId": "9844fe27e15a01010690b1569ed9313434e6b12f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3b8bb0_f9af0b3f",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-11T14:26:50Z",
+      "side": 1,
+      "message": "I\u0027ll leave this to the owners to review. But I think it isn\u0027t clear which method should be called since there are two and what the difference between them is.",
+      "parentUuid": "43a08784_ee417ff7",
+      "revId": "9844fe27e15a01010690b1569ed9313434e6b12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
