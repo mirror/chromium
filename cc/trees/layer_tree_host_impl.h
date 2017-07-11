@@ -133,6 +133,12 @@ class LayerTreeHostImplClient {
 
   virtual void RequestBeginMainFrameNotExpected(bool new_state) = 0;
 
+  // Notifies that a new pending tree can be activated, even if the previous
+  // active tree has not been drawn yet. This allows merging updates from the
+  // main thread to the active tree in the case where no animation on the impl
+  // thread are using impl-side invalidations.
+  virtual void NotifyCanSkipActiveTreeFirstDraw() = 0;
+
  protected:
   virtual ~LayerTreeHostImplClient() {}
 };

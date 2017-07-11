@@ -1101,6 +1101,12 @@ void LayerTreeHostImpl::InvalidateContentOnImplSide() {
   bool is_impl_side_update = true;
   sync_tree()->UpdatePropertyTreeScrollingAndAnimationFromMainThread(
       is_impl_side_update);
+
+  // For now impl-side invalidations are used only for checker-imaging, so this
+  // pending tree does not need to be flushed as an independent update through
+  // the pipeline.
+  client_->NotifyCanSkipActiveTreeFirstDraw();
+
   UpdateSyncTreeAfterCommitOrImplSideInvalidation();
 }
 

@@ -97,6 +97,7 @@ class CC_EXPORT ProxyImpl : public NON_EXPORTED_BASE(LayerTreeHostImplClient),
   void OnDrawForLayerTreeFrameSink(bool resourceless_software_draw) override;
   void NeedsImplSideInvalidation() override;
   void NotifyImageDecodeRequestFinished() override;
+  void NotifyCanSkipActiveTreeFirstDraw() override;
 
   // SchedulerClient implementation
   void WillBeginImplFrame(const BeginFrameArgs& args) override;

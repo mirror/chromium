@@ -2865,5 +2865,33 @@ TEST(SchedulerStateMachineTest, TestFullPipelineMode) {
             state.CurrentBeginImplFrameDeadlineMode());
 }
 
+TEST(SchedulerStateMachineTest, AllowSkippingActiveTreeFirstDraws) {
+  SchedulerSettings settings;
+  StateMachine state(settings);
+  SET_UP_STATE(state)
+
+  // Impl-side invalidation creates a pending tree which is activated but not
+  // drawn in this frame.
+  state.SetNeedsImplSideInvalidation();
+  state.OnBeginImplFrame(0, 1);
+  state.OnBeginImplFrameDeadline();
+  EXPECT_ACTION_UPDATE_STATE(
+      SchedulerStateMachine::ACTION_PERFORM_IMPL_SIDE_INVALIDATION);
+  state.SetCanSkipActiveTreeFirstDraw();
+  state.NotifyReadyToActivate();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::ACTION_ACTIVATE_SYNC_TREE);
+  state.OnBeginImplFrameIdle();
+
+  // Now we have a main frame.
+  state.SetNeedsBeginMainFrame();
+  state.OnBeginImplFrame(0, 2);
+  EXPECT_ACTION_UPDATE_STATE(
+      SchedulerStateMachine::ACTION_SEND_BEGIN_MAIN_FRAME);
+  state.NotifyReadyToCommit();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::ACTION_COMMIT);
+  state.NotifyReadyToActivate();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::ACTION_ACTIVATE_SYNC_TREE);
+}
+
 }  // namespace
 }  // namespace cc

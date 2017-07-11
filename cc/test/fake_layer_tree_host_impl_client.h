@@ -38,6 +38,7 @@ class FakeLayerTreeHostImplClient : public LayerTreeHostImplClient {
   void NeedsImplSideInvalidation() override;
   void RequestBeginMainFrameNotExpected(bool new_state) override {}
   void NotifyImageDecodeRequestFinished() override {}
+  void NotifyCanSkipActiveTreeFirstDraw() override {}
 
   void reset_did_request_impl_side_invalidation() {
     did_request_impl_side_invalidation_ = false;
