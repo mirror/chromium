@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae2aec9_c54a9344",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-11T20:38:32Z",
+      "side": 1,
+      "message": "We need some vocabulary. How about using:\nelement - data element in the blob data builder\nblock - the contiguous renderer element\n\nOR element can be \u0027chunk\u0027? I just want to differentiate between the two in naming. suggestions based on \u0027element\u0027 and \u0027block\u0027",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 64
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132ecbee_f0e2037f",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-11T20:38:32Z",
+      "side": 1,
+      "message": "element_index",
+      "range": {
+        "startLine": 106,
+        "startChar": 13,
+        "endLine": 106,
+        "endChar": 22
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2868750e_a97ea789",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-11T20:38:32Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned that we\u0027ll be creating shared memory for every single item - I guess we do one at a time, but it would be nice to reuse the shared memory... this causes more churn than the current implementation. Is there any way to grab the shared memory back from mojo and use it in another pipe?",
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056c5307_bc905886",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-11T20:38:32Z",
+      "side": 1,
+      "message": "expected_block_length",
+      "range": {
+        "startLine": 133,
+        "startChar": 30,
+        "endLine": 133,
+        "endChar": 45
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bb5ccc_2781d643",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-11T20:38:32Z",
+      "side": 1,
+      "message": "Do we want to modify this to the exact size of our memory we need? So min(original_full_length, max_shared_mem_size)",
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac1731f_bcbdf293",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-11T20:38:32Z",
+      "side": 1,
+      "message": "current_block_offset_",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 19
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f224a944_e876ee5d",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-11T20:38:32Z",
+      "side": 1,
+      "message": "expected_full_block_length",
+      "range": {
+        "startLine": 158,
+        "startChar": 33,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d537f56_73847afa",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-11T20:38:32Z",
+      "side": 1,
+      "message": "We can\u0027t \u0027destroy\u0027 a base::File on a non-blocking IO thread - edge case to keep in mind. Not sure if duplicate is what we want? We might want to std::move it.",
+      "revId": "f71a5b15f34094810566992431e79a2f48c4f8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
