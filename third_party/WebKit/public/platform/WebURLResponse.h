@@ -41,6 +41,7 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponseType.h"
+#include "public/platform/modules/serviceworker/service_worker_preparation_type.mojom-shared.h"
 
 namespace blink {
 
@@ -257,6 +258,9 @@ class WebURLResponse {
   // See ServiceWorkerResponseInfo::did_navigation_preload() for
   // details.
   BLINK_PLATFORM_EXPORT void SetDidServiceWorkerNavigationPreload(bool);
+
+  BLINK_PLATFORM_EXPORT void SetServiceWorkerPreparationType(
+      mojom::ServiceWorkerPreparationType);
 
   // This indicates the location of a downloaded response if the
   // WebURLRequest had the downloadToFile flag set to true. This file path

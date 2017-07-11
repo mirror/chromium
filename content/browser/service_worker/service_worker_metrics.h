@@ -379,6 +379,10 @@ class ServiceWorkerMetrics {
   // TODO(falken): Remove after this is deprecated. https://crbug.com/737044
   static void RecordUninstalledScriptImport(const GURL& url);
 
+  static blink::mojom::ServiceWorkerPreparationType GetWorkerPreparationType(
+      EmbeddedWorkerStatus initial_worker_status,
+      ServiceWorkerMetrics::StartSituation start_situation);
+
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(ServiceWorkerMetrics);
 };

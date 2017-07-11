@@ -925,7 +925,8 @@ void ServiceWorkerURLRequestJob::OnStartCompleted() const {
               false /* response_is_in_cache_storage */,
               std::string() /* response_cache_storage_cache_name */,
               ServiceWorkerHeaderList() /* cors_exposed_header_names */,
-              did_navigation_preload_);
+              did_navigation_preload_,
+              blink::mojom::ServiceWorkerPreparationType::UNKNOWN);
       break;
     case FALLBACK_TO_RENDERER:
     case FORWARD_TO_SERVICE_WORKER:
@@ -940,7 +941,9 @@ void ServiceWorkerURLRequestJob::OnStartCompleted() const {
               service_worker_response_type_, worker_start_time_,
               worker_ready_time_, response_is_in_cache_storage_,
               response_cache_storage_cache_name_, cors_exposed_header_names_,
-              did_navigation_preload_);
+              did_navigation_preload_,
+              ServiceWorkerMetrics::GetWorkerPreparationType(
+                  initial_worker_status_, worker_start_situation_));
       break;
   }
 }

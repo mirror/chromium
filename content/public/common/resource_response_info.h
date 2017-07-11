@@ -22,6 +22,7 @@
 #include "net/http/http_response_info.h"
 #include "net/nqe/effective_connection_type.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseType.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_preparation_type.mojom.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -182,6 +183,8 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // True if service worker navigation preload was performed due to the request
   // for this response.
   bool did_service_worker_navigation_preload;
+
+  blink::mojom::ServiceWorkerPreparationType service_worker_preparation_type;
 
   // NOTE: When adding or changing fields here, also update
   // ResourceResponse::DeepCopy in resource_response.cc.
