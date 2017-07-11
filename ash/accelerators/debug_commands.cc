@@ -195,6 +195,9 @@ void PerformDebugActionIfEnabled(AcceleratorAction action) {
           ToastData("id", base::ASCIIToUTF16("Toast"), 5000 /* duration_ms */,
                     base::ASCIIToUTF16("Dismiss")));
       break;
+    case DEBUG_TOGGLE_DEVICE_SCALE_FACTOR:
+      Shell::Get()->display_manager()->ToggleDisplayScaleFactor();
+      break;
     case DEBUG_TOGGLE_TOUCH_PAD:
       HandleToggleTouchpad();
       break;
