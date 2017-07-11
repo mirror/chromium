@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93418340_775778c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-11T19:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aacfd3c_48527fc1",
+      "revId": "7079f2824166025737a9536f8ecad0b8bd60e9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bd4ee8f_a910f1db",
         "filename": "content/browser/utility_process_host_impl.cc",
         "patchSetId": 9
