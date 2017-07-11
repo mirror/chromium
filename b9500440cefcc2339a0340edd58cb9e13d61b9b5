@@ -16,6 +16,24 @@
       "revId": "b9500440cefcc2339a0340edd58cb9e13d61b9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89da4f3d_d2fc09d3",
+        "filename": "base/mac/sdk_forward_declarations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-11T18:43:53Z",
+      "side": 1,
+      "message": "Removed spaces here.\n\nThe original formatting was what clang-format did, maybe a clang-format bug?",
+      "parentUuid": "093fd0d5_3b313950",
+      "revId": "b9500440cefcc2339a0340edd58cb9e13d61b9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
