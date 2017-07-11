@@ -281,6 +281,30 @@
       "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51fa5183_633bf73b",
+        "filename": "build/fuchsia/create_test_runner_script.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-11T17:48:07Z",
+      "side": 1,
+      "message": "It\u0027s still here (?)",
+      "parentUuid": "941d5129_1a26af2a",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "ee30a8c3b87f74ac575f69d44bba88c6feb7eeb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
