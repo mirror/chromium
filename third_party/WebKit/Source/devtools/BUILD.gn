@@ -509,6 +509,7 @@ all_devtools_files = [
   "front_end/sdk/NetworkRequest.js",
   "front_end/sdk/OverlayModel.js",
   "front_end/sdk/PaintProfiler.js",
+  "front_end/sdk/PasswordManagerModel.js",
   "front_end/sdk/ProfileTreeModel.js",
   "front_end/sdk/RemoteObject.js",
   "front_end/sdk/Resource.js",

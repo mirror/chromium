@@ -1096,6 +1096,7 @@ void DevToolsUIBindings::ReadyForTest() {
 
 void DevToolsUIBindings::DispatchProtocolMessageFromDevToolsFrontend(
     const std::string& message) {
+    printf("dpmfdtf\n");
   if (agent_host_.get())
     agent_host_->DispatchProtocolMessage(this, message);
 }

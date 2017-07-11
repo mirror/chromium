@@ -113,6 +113,7 @@ interface CoreProbes {
   void scriptExecutionBlockedByCSP(ExecutionContext*, const String& directiveText);
   void didReceiveScriptResponse(ExecutionContext*, unsigned long identifier);
   void domContentLoadedEventFired([Keep] LocalFrame*);
+  void trivialPasswordManagerEventFired([Keep] LocalFrame*);
   void loadEventFired([Keep] LocalFrame*);
   void frameAttachedToParent([Keep] LocalFrame*);
   void frameDetachedFromParent([Keep] LocalFrame*);

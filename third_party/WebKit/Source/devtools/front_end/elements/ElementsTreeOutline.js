@@ -783,6 +783,30 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
     contextMenu.show();
   }
 
+  /**
+   * @param {!Elements.ElementsTreeElement} treeElement
+   * @param {!Event} event
+   */
+  showSuggestion(treeElement, event) {
+    if (UI.isEditing())
+      return;
+
+    var suggestion = treeElement._listItemNode.querySelector('.annotation-container').createChild('div', 'annotation-suggestion');
+    suggestion.createTextChild('This is a suggestion regarding improving your DOM.');
+    suggestion.addEventListener('click', ev => {
+      this.fulfillSuggestion(treeElement);
+      ev.stopPropagation();
+      suggestion.remove();
+    });
+  }
+
+  fulfillSuggestion(treeElement) {
+    treeElement._node.setAttribute('', 'autocomplete="username"');
+    treeElement._title.querySelector('.annotation-attribute').remove();
+    // treeElement._annotationContainer.remove();
+    delete treeElement._annotationContainer;
+  }
+
   runPendingUpdates() {
     this._updateModifiedNodes();
   }
@@ -892,6 +916,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
    * @param {!SDK.DOMNode} node
    */
   async toggleHideElement(node) {
+    console.log(node);
     var pseudoType = node.pseudoType();
     var effectiveNode = pseudoType ? node.parentNode : node;
     if (!effectiveNode)

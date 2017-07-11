@@ -31,6 +31,7 @@ SDK.Target = class extends Protocol.TargetBase {
     this._creatingModels = true;
     // TODO(dgozman): fix this in bindings layer.
     this.model(SDK.ResourceTreeModel);
+    this.model(SDK.PasswordManagerModel);
     var registered = Array.from(SDK.SDKModel._registeredModels.keys());
     for (var modelClass of registered) {
       var info = SDK.SDKModel._registeredModels.get(modelClass);
