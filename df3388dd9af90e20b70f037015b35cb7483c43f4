@@ -33,6 +33,75 @@
       "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0f92a6_23f0fe6f",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-11T19:52:44Z",
+      "side": 1,
+      "message": "Optional nit: UMA_HISTOGRAM_CUSTOM_TIMES is slightly more efficient, and safe to use since the histogram name is a runtime constant.",
+      "range": {
+        "startLine": 649,
+        "startChar": 36,
+        "endLine": 649,
+        "endChar": 0
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c9fa22_15cd4273",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-11T19:52:44Z",
+      "side": 1,
+      "message": "This is quite a small range.  Are you sure you don\u0027t want to consider a larger upper-bound?  If not, perhaps it would be appropriate to use fewer buckets?\n\nPut another way: What sort of question(s) are you hoping to answer with this metric?  How much granularity do you need to answer those questions?",
+      "range": {
+        "startLine": 652,
+        "startChar": 60,
+        "endLine": 652,
+        "endChar": 71
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255edc88_54a8be3b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1763,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-11T19:52:44Z",
+      "side": 1,
+      "message": "Any of the *Time* histogram recording functions will record values in milliseconds.  If you want to record values in seconds, please use a *Counts* histogram instead.",
+      "range": {
+        "startLine": 1763,
+        "startChar": 61,
+        "endLine": 1763,
+        "endChar": 68
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
