@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef378da6_82c55233",
+        "filename": "media/blink/webremoteplaybackclient_proxy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-11T11:01:07Z",
+      "side": 1,
+      "message": "nit: `final`?",
+      "revId": "f1ab25dcf6d6dbcd0e2f9a65bb596e5ec82b05d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67629e31_91fcf583",
+        "filename": "media/blink/webremoteplaybackclient_proxy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-11T11:01:07Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "f1ab25dcf6d6dbcd0e2f9a65bb596e5ec82b05d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58c7d19_eb088e10",
+        "filename": "media/blink/webremoteplaybackclient_proxy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-11T11:01:07Z",
+      "side": 1,
+      "message": "what about DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "f1ab25dcf6d6dbcd0e2f9a65bb596e5ec82b05d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

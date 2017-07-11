@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6298c910_254537bc",
+        "filename": "media/base/renderer_factory_selector.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-11T11:01:07Z",
+      "side": 0,
+      "message": "Why did you have to drop this?",
+      "revId": "86bccd8d0f8018af9c8c2bc660dc26ea024d6963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
