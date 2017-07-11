@@ -142,6 +142,11 @@ class CONTENT_EXPORT GestureEventQueue {
   bool ShouldForwardForTapSuppression(
       const GestureEventWithLatencyInfo& gesture_event);
 
+  // Sub-filter for suppressing scroll events immediately after a
+  // GestureFlingStart.
+  bool ShouldForwardForInProgressFling(
+      const GestureEventWithLatencyInfo& gesture_event);
+
   // Puts the events in a queue to forward them one by one; i.e., forward them
   // whenever ACK for previous event is received. This queue also tries to
   // coalesce events as much as possible.

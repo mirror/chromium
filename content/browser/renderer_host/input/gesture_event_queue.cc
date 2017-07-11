@@ -44,13 +44,27 @@ GestureEventQueue::~GestureEventQueue() { }
 void GestureEventQueue::QueueEvent(
     const GestureEventWithLatencyInfo& gesture_event) {
   TRACE_EVENT0("input", "GestureEventQueue::QueueEvent");
-  if (!ShouldForwardForBounceReduction(gesture_event) ||
+  if (!ShouldForwardForInProgressFling(gesture_event) ||
+      !ShouldForwardForBounceReduction(gesture_event) ||
       !ShouldForwardForGFCFiltering(gesture_event) ||
       !ShouldForwardForTapSuppression(gesture_event)) {
     return;
   }
 
   QueueAndForwardIfNecessary(gesture_event);
+}
+
+bool GestureEventQueue::ShouldForwardForInProgressFling(
+    const GestureEventWithLatencyInfo& gesture_event) {
+  switch (gesture_event.event.GetType()) {
+    case WebInputEvent::kGestureScrollBegin:
+    case WebInputEvent::kGestureScrollEnd:
+    case WebInputEvent::kGestureScrollUpdate:
+      // GestureScroll events may arrive out of order after a GestureFlingStart
+      return !fling_in_progress_;
+    default:
+      return true;
+  }
 }
 
 bool GestureEventQueue::ShouldDiscardFlingCancelEvent(
@@ -87,6 +101,13 @@ bool GestureEventQueue::ShouldForwardForBounceReduction(
       }
       scrolling_in_progress_ = true;
       debouncing_deferral_queue_.clear();
+      return true;
+
+    case WebInputEvent::kGestureFlingStart:
+      // GestureFlingStart shouldn't be debounced because it is a discrete event
+      // signalling the end of a scroll
+      debounce_deferring_timer_.Stop();
+      GestureEventQueue::SendScrollEndingEventsNow();
       return true;
 
     case WebInputEvent::kGesturePinchBegin:
