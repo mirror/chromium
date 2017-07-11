@@ -16,6 +16,24 @@
       "revId": "be95f687b95a434659e6a502cfb0911d74b7855f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6b7f56_83af93a4",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002768
+      },
+      "writtenOn": "2017-07-11T21:33:49Z",
+      "side": 1,
+      "message": "Great question! I talked to jln@ a bit about this, and I think this is the better approach because it\u0027s a pretty limited use case, and the solution (and least that I could come up with) is not flexible and has some limitations. In particular, the real problem is that base::UnixDomainSockets uses Pickle which isn\u0027t signal safe, but Pickle is a lot neater, cleaner, and simpler than the approach I came up with in this solution.\n\nFor example, in this solution, messages are very limited in size because we have to preallocate a stack-allocated array for them since we can\u0027t use the heap. Because it\u0027s a static stack allocation, we don\u0027t want *huge* stack arrays, which ultimately limits our message sizes.\n\nMy suggestion, though, would be to take a look at my solution and see if (a) you agree that this would not be great in base::UnixDomainSockets, or (b) if you can think of a better/more clever solution that would play nice in base::UnixDomainSockets.",
+      "parentUuid": "3db20543_8d6b9834",
+      "revId": "be95f687b95a434659e6a502cfb0911d74b7855f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
