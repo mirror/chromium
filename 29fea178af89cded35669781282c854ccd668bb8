@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9983cdcd_0c267e67",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-11T08:04:13Z",
+      "side": 1,
+      "message": "this check is the one I explained below.",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 18
+      },
+      "revId": "29fea178af89cded35669781282c854ccd668bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bb62c0b_bb618081",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 3
@@ -16,6 +39,24 @@
       "revId": "29fea178af89cded35669781282c854ccd668bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21bfa68_1d40316d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-11T08:04:13Z",
+      "side": 1,
+      "message": "Yes, without this, it continues to take a fallback behavior that always calls client\u0027s Run() in the Request() call. This is a default behavior for Default and Disabled groups.",
+      "parentUuid": "2bb62c0b_bb618081",
+      "revId": "29fea178af89cded35669781282c854ccd668bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
