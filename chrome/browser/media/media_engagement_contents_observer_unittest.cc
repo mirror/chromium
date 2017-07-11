@@ -11,6 +11,8 @@
 #include "chrome/browser/media/media_engagement_service_factory.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/ukm/test_ukm_recorder.h"
+#include "components/ukm/ukm_source.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/web_contents_tester.h"
@@ -118,6 +120,15 @@ class MediaEngagementContentsObserverTest
     delete score;
   }
 
+  void SetScores(GURL url, int visits, int media_playbacks) {
+    MediaEngagementScore* score =
+        contents_observer_->service_->CreateEngagementScore(url);
+    score->SetVisits(visits);
+    score->SetMediaPlaybacks(media_playbacks);
+    score->Commit();
+    delete score;
+  }
+
   void Navigate(GURL url) {
     std::unique_ptr<content::NavigationHandle> test_handle =
         content::NavigationHandle::CreateNavigationHandleForTesting(
@@ -136,6 +147,61 @@ class MediaEngagementContentsObserverTest
         ->SetWasRecentlyAudible(false);
   }
 
+  void ExpectUkmEntry(GURL url,
+                      int playbacks_total,
+                      int visits_total,
+                      int score,
+                      int playbacks_delta) {
+    std::vector<std::pair<const char*, int64_t>> metrics = {
+        {MediaEngagementContentsObserver::kUkmMetricPlaybacksTotalName,
+         playbacks_total},
+        {MediaEngagementContentsObserver::kUkmMetricVisitsTotalName,
+         visits_total},
+        {MediaEngagementContentsObserver::kUkmMetricEngagementScoreName, score},
+        {MediaEngagementContentsObserver::kUkmMetricPlaybacksDeltaName,
+         playbacks_delta},
+    };
+
+    const ukm::UkmSource* source =
+        test_ukm_recorder_.GetSourceForUrl(url.spec().c_str());
+    EXPECT_EQ(url, source->url());
+    EXPECT_EQ(1, test_ukm_recorder_.CountEntries(
+                     *source, MediaEngagementContentsObserver::kUkmEntryName));
+    test_ukm_recorder_.ExpectMetric(
+        *source, MediaEngagementContentsObserver::kUkmEntryName,
+        MediaEngagementContentsObserver::kUkmMetricVisitsTotalName,
+        visits_total);
+    test_ukm_recorder_.ExpectMetric(
+        *source, MediaEngagementContentsObserver::kUkmEntryName,
+        MediaEngagementContentsObserver::kUkmMetricPlaybacksTotalName,
+        playbacks_total);
+    test_ukm_recorder_.ExpectMetric(
+        *source, MediaEngagementContentsObserver::kUkmEntryName,
+        MediaEngagementContentsObserver::kUkmMetricEngagementScoreName, score);
+    test_ukm_recorder_.ExpectMetric(
+        *source, MediaEngagementContentsObserver::kUkmEntryName,
+        MediaEngagementContentsObserver::kUkmMetricPlaybacksDeltaName,
+        playbacks_delta);
+    test_ukm_recorder_.ExpectEntry(
+        *source, MediaEngagementContentsObserver::kUkmEntryName, metrics);
+  }
+
+  void ExpectNoUkmEntry() { EXPECT_FALSE(test_ukm_recorder_.sources_count()); }
+
+  void ExpectPlaybacksDelta(int delta) {
+    EXPECT_EQ(contents_observer_->playbacks_delta_, delta);
+  }
+
+  void SimulateDestroy() { contents_observer_->WebContentsDestroyed(); }
+
+  void SimulateSignificantPlayer(int id) {
+    SimulatePlaybackStarted(id);
+    SimulateIsVisible();
+    SimulateAudible();
+    web_contents()->SetAudioMuted(false);
+    SimulateResizeEvent(id, MediaEngagementContentsObserver::kSignificantSize);
+  }
+
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
@@ -143,6 +209,8 @@ class MediaEngagementContentsObserverTest
   base::test::ScopedFeatureList scoped_feature_list_;
 
   base::MockTimer* playback_timer_;
+
+  ukm::TestUkmRecorder test_ukm_recorder_;
 };
 
 // TODO(mlamouri): test that visits are not recorded multiple times when a
@@ -266,11 +334,7 @@ TEST_F(MediaEngagementContentsObserverTest, TimerDoesNotRunIfEntryRecorded) {
 
 TEST_F(MediaEngagementContentsObserverTest,
        SignificantPlaybackRecordedWhenTimerFires) {
-  SimulatePlaybackStarted(0);
-  SimulateIsVisible();
-  SimulateAudible();
-  web_contents()->SetAudioMuted(false);
-  SimulateResizeEvent(0, MediaEngagementContentsObserver::kSignificantSize);
+  SimulateSignificantPlayer(0);
   EXPECT_TRUE(IsTimerRunning());
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
 
@@ -306,4 +370,72 @@ TEST_F(MediaEngagementContentsObserverTest, DoNotRecordAudiolessTrack) {
   content::WebContentsObserver::MediaPlayerInfo player_info(true, false);
   SimulatePlaybackStarted(player_info, 0);
   EXPECT_EQ(0u, GetSignificantActivePlayersCount());
+}
+
+TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnDestroy) {
+  GURL url("https://www.google.com");
+  SetScores(url, 6, 5);
+  Navigate(url);
+
+  ExpectPlaybacksDelta(0);
+  SimulateSignificantPlayer(0);
+  SimulateSignificantPlaybackTime();
+  ExpectScores(url, 6.0 / 7.0, 7, 6);
+  ExpectPlaybacksDelta(1);
+
+  SimulateDestroy();
+  ExpectUkmEntry(url, 6, 7, 86, 1);
+}
+
+TEST_F(MediaEngagementContentsObserverTest,
+       RecordUkmMetricsOnDestroy_NoPlaybacks) {
+  GURL url("https://www.google.com");
+  SetScores(url, 6, 5);
+  Navigate(url);
+
+  ExpectPlaybacksDelta(0);
+  ExpectScores(url, 5.0 / 7.0, 7, 5);
+
+  SimulateDestroy();
+  ExpectUkmEntry(url, 5, 7, 71, 0);
+}
+
+TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnNavigate) {
+  GURL url("https://www.google.com");
+  SetScores(url, 6, 5);
+  Navigate(url);
+
+  ExpectPlaybacksDelta(0);
+  SimulateSignificantPlayer(0);
+  SimulateSignificantPlaybackTime();
+  ExpectScores(url, 6.0 / 7.0, 7, 6);
+  ExpectPlaybacksDelta(1);
+
+  Navigate(GURL("https://www.example.org"));
+  ExpectUkmEntry(url, 6, 7, 86, 1);
+}
+
+TEST_F(MediaEngagementContentsObserverTest,
+       RecordUkmMetricsOnNavigate_NoPlaybacks) {
+  GURL url("https://www.google.com");
+  SetScores(url, 6, 5);
+  Navigate(url);
+
+  ExpectPlaybacksDelta(0);
+  ExpectScores(url, 5.0 / 7.0, 7, 5);
+
+  Navigate(GURL("https://www.example.org"));
+  ExpectUkmEntry(url, 5, 7, 71, 0);
+}
+
+TEST_F(MediaEngagementContentsObserverTest, DoNotRecordMetricsOnInternalUrl) {
+  Navigate(GURL("chrome://about"));
+
+  ExpectPlaybacksDelta(0);
+  SimulateSignificantPlayer(0);
+  SimulateSignificantPlaybackTime();
+  ExpectPlaybacksDelta(1);
+
+  SimulateDestroy();
+  ExpectNoUkmEntry();
 }

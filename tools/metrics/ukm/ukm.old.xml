@@ -442,6 +442,8 @@ be describing additional metrics about the same event.
 </event>
 
 <event name="Media.Engagement.SessionFinished">
+  <metric name="Engagement.Score"/>
+  <metric name="Playbacks.Delta"/>
   <owner>beccahughes@chromium.org</owner>
   <owner>media-dev@chromium.org</owner>
   <summary>
@@ -457,8 +459,6 @@ be describing additional metrics about the same event.
     not be muted, produce sound, have a video frame size of at least 200x200px
     and be watched for at least 7 seconds.
   </summary>
-  <metric name="Engagement.Score"/>
-  <metric name="Playbacks.Delta"/>
   <metric name="Playbacks.Total"/>
   <metric name="Visits.Total"/>
 </event>

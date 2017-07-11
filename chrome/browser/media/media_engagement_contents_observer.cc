@@ -7,17 +7,38 @@
 #include "chrome/browser/media/media_engagement_service.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
+#include "services/metrics/public/cpp/ukm_entry_builder.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace {
 
 constexpr base::TimeDelta kSignificantMediaPlaybackTime =
     base::TimeDelta::FromSeconds(7);
 
+int ConvertScoreToPercentage(double score) {
+  return round(score * 100);
+}
+
 }  // namespace.
 
 // This is the minimum size (in px) of each dimension that a media
 // element has to be in order to be determined significant.
 const int MediaEngagementContentsObserver::kSignificantSize = 200;
+
+const char* MediaEngagementContentsObserver::kUkmEntryName =
+    "Media.Engagement.SessionFinished";
+
+const char* MediaEngagementContentsObserver::kUkmMetricPlaybacksTotalName =
+    "Playbacks.Total";
+
+const char* MediaEngagementContentsObserver::kUkmMetricVisitsTotalName =
+    "Visits.Total";
+
+const char* MediaEngagementContentsObserver::kUkmMetricEngagementScoreName =
+    "Engagement.Score";
+
+const char* MediaEngagementContentsObserver::kUkmMetricPlaybacksDeltaName =
+    "Playbacks.Delta";
 
 MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     content::WebContents* web_contents,
@@ -30,6 +51,7 @@ MediaEngagementContentsObserver::~MediaEngagementContentsObserver() = default;
 
 void MediaEngagementContentsObserver::WebContentsDestroyed() {
   playback_timer_->Stop();
+  RecordUkmMetrics();
   ClearPlayerStates();
   service_->contents_observers_.erase(this);
   delete this;
@@ -41,6 +63,36 @@ void MediaEngagementContentsObserver::ClearPlayerStates() {
   player_states_.clear();
 }
 
+void MediaEngagementContentsObserver::RecordUkmMetrics() {
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  if (!ukm_recorder)
+    return;
+
+  GURL url = committed_origin_.GetURL();
+  if (!service_->ShouldRecordEngagement(url))
+    return;
+
+  ukm::SourceId source_id = ukm_recorder->GetNewSourceID();
+  ukm_recorder->UpdateSourceURL(source_id, url);
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_recorder->GetEntryBuilder(
+      source_id, MediaEngagementContentsObserver::kUkmEntryName);
+
+  MediaEngagementScore* score = service_->CreateEngagementScore(url);
+  builder->AddMetric(
+      MediaEngagementContentsObserver::kUkmMetricPlaybacksTotalName,
+      score->media_playbacks());
+  builder->AddMetric(MediaEngagementContentsObserver::kUkmMetricVisitsTotalName,
+                     score->visits());
+  builder->AddMetric(
+      MediaEngagementContentsObserver::kUkmMetricEngagementScoreName,
+      ConvertScoreToPercentage(score->GetTotalScore()));
+  builder->AddMetric(
+      MediaEngagementContentsObserver::kUkmMetricPlaybacksDeltaName,
+      playbacks_delta_);
+  delete score;
+}
+
 void MediaEngagementContentsObserver::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   if (!navigation_handle->IsInMainFrame() ||
@@ -49,14 +101,15 @@ void MediaEngagementContentsObserver::DidFinishNavigation(
     return;
   }
 
-  DCHECK(!playback_timer_->IsRunning());
-  DCHECK(significant_players_.empty());
-
+  playback_timer_->Stop();
   ClearPlayerStates();
 
   url::Origin new_origin(navigation_handle->GetURL());
   if (committed_origin_.IsSameOriginWith(new_origin))
     return;
+
+  RecordUkmMetrics();
+  playbacks_delta_ = 0;
 
   committed_origin_ = new_origin;
   significant_playback_recorded_ = false;
@@ -156,6 +209,7 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
     return;
 
   service_->RecordPlayback(committed_origin_.GetURL());
+  playbacks_delta_++;
 }
 
 void MediaEngagementContentsObserver::MaybeInsertSignificantPlayer(
