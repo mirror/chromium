@@ -38,15 +38,15 @@
 
 const CommandLinePrefStore::SwitchToPreferenceMapEntry
     ChromeCommandLinePrefStore::string_switch_map_[] = {
-      { switches::kLang, prefs::kApplicationLocale },
-      { data_reduction_proxy::switches::kDataReductionProxy,
-          data_reduction_proxy::prefs::kDataReductionProxy },
-      { switches::kAuthServerWhitelist, prefs::kAuthServerWhitelist },
-      { switches::kSSLVersionMin, ssl_config::prefs::kSSLVersionMin },
-      { switches::kSSLVersionMax, ssl_config::prefs::kSSLVersionMax },
+        {switches::kLang, prefs::kApplicationLocale},
+        {data_reduction_proxy::switches::kDataReductionProxy,
+         data_reduction_proxy::prefs::kDataReductionProxy},
+        {switches::kAuthServerWhitelist, prefs::kAuthServerWhitelist},
+        {switches::kSSLVersionMin, ssl_config::prefs::kSSLVersionMin},
+        {switches::kTLS13Variant, ssl_config::prefs::kTLS13Variant},
 #if defined(OS_ANDROID)
-      { switches::kAuthAndroidNegotiateAccountType,
-          prefs::kAuthAndroidNegotiateAccountType },
+        {switches::kAuthAndroidNegotiateAccountType,
+         prefs::kAuthAndroidNegotiateAccountType},
 #endif
 };
 
@@ -158,6 +158,12 @@ void ChromeCommandLinePrefStore::ApplySSLSwitches() {
         command_line()->GetSwitchValueASCII(switches::kCipherSuiteBlacklist),
         ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL));
     SetValue(ssl_config::prefs::kCipherSuiteBlacklist, std::move(list_value),
+             WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
+  }
+
+  if (command_line()->HasSwitch(switches::kTLS13Variant)) {
+    SetValue(ssl_config::prefs::kSSLVersionMax,
+             base::MakeUnique<base::Value>(switches::kSSLVersionTLSv13),
              WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
   }
 }
