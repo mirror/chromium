@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8eab2f1_9b35081b",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T17:01:15Z",
+      "side": 1,
+      "message": "Naming conventions in Cocoa avoid the use of \"get\" for getters. So this should be -fullPopupFrame, and below should be -clippedPopupFrame.\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html",
+      "range": {
+        "startLine": 139,
+        "startChar": 10,
+        "endLine": 139,
+        "endChar": 14
+      },
+      "revId": "6f30394cfdfcf628e0513a053d12c530803e0746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f67f415_62262c7d",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T17:01:15Z",
+      "side": 1,
+      "message": "This scrollView is leaked, since it will be retained by the window when it is set as the contentView. It should be placed in a scoped_nsobject\u003cT\u003e.",
+      "range": {
+        "startLine": 189,
+        "startChar": 21,
+        "endLine": 189,
+        "endChar": 32
+      },
+      "revId": "6f30394cfdfcf628e0513a053d12c530803e0746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
