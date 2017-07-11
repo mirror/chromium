@@ -439,6 +439,8 @@ void TranslateManager::PageTranslated(const std::string& source_lang,
     error_type = TranslateErrors::UNSUPPORTED_LANGUAGE;
   }
 
+  if (error_type == TranslateErrors::INITIALIZATION_ERROR)
+    RecordTranslateEvent(metrics::TranslateEventProto::INITIALIZATION_ERROR);
   translate_client_->ShowTranslateUI(translate::TRANSLATE_STEP_AFTER_TRANSLATE,
                                      source_lang, target_lang, error_type,
                                      false);
