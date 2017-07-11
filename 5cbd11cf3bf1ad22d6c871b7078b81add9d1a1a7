@@ -16,6 +16,24 @@
       "revId": "5cbd11cf3bf1ad22d6c871b7078b81add9d1a1a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a23caac_88ccbb86",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-11T01:50:42Z",
+      "side": 1,
+      "message": "After most services are migrated to BrowserContextKeyedService, then I\u0027d change the shutdown procedure and its timing of ArcServiceLauncher. Specifically, it will be ensured that the ABS is deleted after Profile destruction (\u003d BrowserContextKeyedService destruction), so that we can assume ABS is alive while BrowserContextKeyedService is alive.",
+      "parentUuid": "fd8fcf9e_a9f07cab",
+      "revId": "5cbd11cf3bf1ad22d6c871b7078b81add9d1a1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
