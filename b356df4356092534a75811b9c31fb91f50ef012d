@@ -165,6 +165,30 @@
       "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7ca674_cac7ac92",
+        "filename": "content/browser/cocoa/system_hotkey_helper_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-11T15:52:29Z",
+      "side": 1,
+      "message": "Thanks for the link!\n\nI\u0027m still a bit confused about SKIP_ON_SHUTDOWN vs. CONTINUE_ON_SHUTDOWN. If you default to SKIP_ON_SHUTDOWN because it\u0027s \"safer\", that\u0027s essentially a leaky interface, right? And all of your callers are going to depend on that safety, maybe not on purpose. You\u0027re never going to be able to change it.\n\nIt seems to me what you really want here is to force every caller to specify a priority and a shutdown behavior. I don\u0027t see why it\u0027s optional to begin with if your stance is that every callsite should think about, specify, and document these.\n\nMaybe I\u0027m just missing the user case where you don\u0027t want to specify these.",
+      "parentUuid": "da6e3414_481e4b2e",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
