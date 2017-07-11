@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1861d3d9_47ad8525",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-11T23:05:36Z",
+      "side": 1,
+      "message": "While this shouldn\u0027t be used to communicate to sites the size (in pixels) that the canvas should render with, I would expect some sites are using this size instead of consuming eye parameters.\n\nIf we have a place to tell API consumers of behavior changes, this might be worth calling out.",
+      "revId": "23cc0761bdf1c40f52180d4833438f74839a5af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
