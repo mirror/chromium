@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d1b7480_d5c199ad",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-11T08:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a2cc5b0_d5fb6210",
+      "revId": "96a92a717a2cd53c846fe827715385489919a37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b60ea52_6e1a4b53",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl_unittest.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "96a92a717a2cd53c846fe827715385489919a37d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f96ec3_ef93ff84",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-11T08:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b60ea52_6e1a4b53",
+      "revId": "96a92a717a2cd53c846fe827715385489919a37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
