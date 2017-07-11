@@ -393,6 +393,13 @@ void TrayBubbleView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   }
 }
 
+void TrayBubbleView::OnGestureEvent(ui::GestureEvent* event) {
+  if (delegate_ && delegate_->ProcessGestureEventForBubble(event))
+    event->SetHandled();
+  else
+    BubbleDialogDelegateView::OnGestureEvent(event);
+}
+
 void TrayBubbleView::MouseMovedOutOfHost() {
   // The mouse was accidentally over the bubble when it opened and the AutoClose
   // logic was not activated. Now that the user did move the mouse we tell the

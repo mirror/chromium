@@ -10,6 +10,7 @@
 #include "ash/ash_export.h"
 #include "ash/shelf/shelf_background_animator_observer.h"
 #include "ash/system/tray/actionable_view.h"
+#include "ash/system/tray_drag_controller.h"
 #include "base/macros.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/gfx/geometry/insets.h"
@@ -52,6 +53,12 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   std::unique_ptr<views::InkDropHighlight> CreateInkDropHighlight()
       const override;
   void PaintButtonContents(gfx::Canvas* canvas) override;
+
+  // Dragging releated functions:
+  virtual bool HasBubble();
+  virtual views::TrayBubbleView* GetBubbleView();
+  virtual void CloseBubble() {}
+  virtual void ShowBubble() {}
 
   // Called whenever the shelf alignment changes.
   virtual void UpdateAfterShelfAlignmentChange();
@@ -100,7 +107,11 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   gfx::Insets GetBubbleAnchorInsets() const;
 
   // Returns the container window for the bubble (on the proper display).
-  aura::Window* GetBubbleWindowContainer() const;
+  aura::Window* GetBubbleWindowContainer();
+
+  // Update the bounds of the tray bubbles. Close the bubble if
+  // |close_bubble| is set.
+  void AnimateToTargetBounds(const gfx::Rect& target_bounds, bool close_bubble);
 
  protected:
   // ActionableView:
@@ -109,6 +120,8 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   bool PerformAction(const ui::Event& event) override;
   void HandlePerformActionResult(bool action_performed,
                                  const ui::Event& event) override;
+
+  TrayDragController* drag_controller() { return drag_controller_.get(); }
 
  private:
   class TrayWidgetObserver;
@@ -144,6 +157,12 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   // Visibility of this tray's separator which is a line of 1x32px and 4px to
   // right of tray.
   bool separator_visible_;
+
+  std::unique_ptr<TrayDragController> drag_controller_;
+
+  // Used in maximize mode to make sure the system tray bubble only be shown in
+  // work area.
+  std::unique_ptr<aura::Window> clipping_window_;
 
   std::unique_ptr<TrayWidgetObserver> widget_observer_;
   std::unique_ptr<TrayEventFilter> tray_event_filter_;

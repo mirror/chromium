@@ -16,6 +16,7 @@
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_container.h"
 #include "ash/system/tray/tray_event_filter.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "base/memory/ptr_util.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/compositor/layer.h"
@@ -130,6 +131,26 @@ class TrayBackground : public views::Background {
   DISALLOW_COPY_AND_ASSIGN(TrayBackground);
 };
 
+// CloseBubbleObserver is used to delay closing the tray bubbles until the
+// animation completes.
+class CloseBubbleObserver : public ui::ImplicitAnimationObserver {
+ public:
+  explicit CloseBubbleObserver(TrayBackgroundView* tray_background_view)
+      : tray_background_view_(tray_background_view) {}
+
+  ~CloseBubbleObserver() override {}
+
+  void OnImplicitAnimationsCompleted() override {
+    tray_background_view_->CloseBubble();
+    delete this;
+  }
+
+ private:
+  TrayBackgroundView* tray_background_view_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(CloseBubbleObserver);
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // TrayBackgroundView
 
@@ -159,6 +180,8 @@ TrayBackgroundView::TrayBackgroundView(Shelf* shelf)
   layer()->SetFillsBoundsOpaquely(false);
   // Start the tray items not visible, because visibility changes are animated.
   views::View::SetVisible(false);
+
+  drag_controller_.reset(new TrayDragController(shelf));
 }
 
 TrayBackgroundView::~TrayBackgroundView() {
@@ -306,6 +329,14 @@ void TrayBackgroundView::PaintButtonContents(gfx::Canvas* canvas) {
   }
 }
 
+bool TrayBackgroundView::HasBubble() {
+  return false;
+}
+
+TrayBubbleView* TrayBackgroundView::GetBubbleView() {
+  return nullptr;
+}
+
 void TrayBackgroundView::UpdateAfterShelfAlignmentChange() {
   tray_container_->UpdateAfterShelfAlignmentChange();
 
@@ -392,10 +423,41 @@ gfx::Insets TrayBackgroundView::GetBubbleAnchorInsets() const {
   }
 }
 
-aura::Window* TrayBackgroundView::GetBubbleWindowContainer() const {
-  return Shell::GetContainer(
+aura::Window* TrayBackgroundView::GetBubbleWindowContainer() {
+  aura::Window* container = Shell::GetContainer(
       tray_container()->GetWidget()->GetNativeWindow()->GetRootWindow(),
       kShellWindowId_SettingBubbleContainer);
+
+  if (Shell::Get()
+          ->maximize_mode_controller()
+          ->IsMaximizeModeWindowManagerEnabled()) {
+    if (!clipping_window_.get()) {
+      clipping_window_.reset(new aura::Window(nullptr));
+      clipping_window_->Init(ui::LAYER_NOT_DRAWN);
+      clipping_window_->layer()->SetMasksToBounds(true);
+      container->AddChild(clipping_window_.get());
+      clipping_window_->Show();
+    }
+    clipping_window_->SetBounds(shelf_->GetUserWorkAreaBounds());
+    return clipping_window_.get();
+  }
+  return container;
+}
+
+void TrayBackgroundView::AnimateToTargetBounds(const gfx::Rect& target_bounds,
+                                               bool close_bubble) {
+  const int kAnimationDurationMS = 200;
+
+  ui::ScopedLayerAnimationSettings settings(
+      GetBubbleView()->GetWidget()->GetNativeView()->layer()->GetAnimator());
+  settings.SetTransitionDuration(
+      base::TimeDelta::FromMilliseconds(kAnimationDurationMS));
+  settings.SetTweenType(gfx::Tween::EASE_OUT);
+  settings.SetPreemptionStrategy(
+      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+  if (close_bubble)
+    settings.AddObserver(new CloseBubbleObserver(this));
+  GetBubbleView()->GetWidget()->SetBounds(target_bounds);
 }
 
 std::unique_ptr<views::InkDropMask> TrayBackgroundView::CreateInkDropMask()

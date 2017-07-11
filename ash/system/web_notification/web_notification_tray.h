@@ -83,9 +83,14 @@ class ASH_EXPORT WebNotificationTray
   base::string16 GetAccessibleNameForTray() override;
   void HideBubbleWithView(const views::TrayBubbleView* bubble_view) override;
   void ClickedOutsideBubble() override;
-
-  // Overridden from ActionableView.
   bool PerformAction(const ui::Event& event) override;
+  bool HasBubble() override;
+  void CloseBubble() override;
+  void ShowBubble() override;
+  views::TrayBubbleView* GetBubbleView() override;
+
+  // ui::EventHandler:
+  void OnGestureEvent(ui::GestureEvent* event) override;
 
   // Overridden from views::TrayBubbleView::Delegate.
   void BubbleViewDestroyed() override;
@@ -98,6 +103,7 @@ class ASH_EXPORT WebNotificationTray
   base::string16 GetAccessibleNameForBubble() override;
   bool ShouldEnableExtraKeyboardAccessibility() override;
   void HideBubble(const views::TrayBubbleView* bubble_view) override;
+  bool ProcessGestureEventForBubble(ui::GestureEvent* event) override;
 
   // Overridden from MessageCenterTrayDelegate.
   void OnMessageCenterTrayChanged() override;

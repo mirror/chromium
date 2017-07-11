@@ -85,6 +85,8 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
     // child view was closed).
     virtual void HideBubble(const TrayBubbleView* bubble_view) = 0;
 
+    virtual bool ProcessGestureEventForBubble(ui::GestureEvent* event) = 0;
+
    private:
     DISALLOW_COPY_AND_ASSIGN(Delegate);
   };
@@ -158,6 +160,7 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
   void OnMouseEntered(const ui::MouseEvent& event) override;
   void OnMouseExited(const ui::MouseEvent& event) override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
+  void OnGestureEvent(ui::GestureEvent* event) override;
 
   // Overridden from MouseWatcherListener
   void MouseMovedOutOfHost() override;
