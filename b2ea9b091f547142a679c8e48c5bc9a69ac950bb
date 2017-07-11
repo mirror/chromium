@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "adb387a5_d3128ffb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdf9440f_ba1b3386",
+      "range": {
+        "startLine": 12,
+        "startChar": 43,
+        "endLine": 12,
+        "endChar": 59
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "622cbcd2_1b58ff0b",
         "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.cpp",
         "patchSetId": 18
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5da82f14_98131674",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b7c3139_3aa68603",
+      "range": {
+        "startLine": 269,
+        "startChar": 27,
+        "endLine": 269,
+        "endChar": 28
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97242e2a_79909f4d",
         "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScannerTest.cpp",
         "patchSetId": 18
@@ -86,6 +134,24 @@
       "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88fe27da_59b3e294",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScannerTest.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "This is false because I made is_unused_preload_\u0027s default value as false. The field is set to true when issueing a preload request, and set to false when it is matched to another request. Neither happens in this test, so it returns the initial value.\n\nThe assertion tested if addClient changes preload_result_. With this change it is obvious that it doesn\u0027t, so I removed the assertion. If you prefer checking it, I can call Resource::MarkAsPreload manually.",
+      "parentUuid": "97242e2a_79909f4d",
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "94117048_2aeb0b86",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "Because we are going to remove the function.",
+      "parentUuid": "30a64a02_00d14d7c",
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5dd4bab_399389bc",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 18
@@ -215,6 +299,30 @@
       "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3516a76a_bca3885d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "Thanks, Done.",
+      "parentUuid": "e5dd4bab_399389bc",
+      "range": {
+        "startLine": 400,
+        "startChar": 34,
+        "endLine": 400,
+        "endChar": 52
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +397,30 @@
     },
     {
       "key": {
+        "uuid": "572b7b7a_ea2750c0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "I think the things have been changed since then mainly because of https://codereview.chromium.org/2682603002. A resource cannot be shared by a different ResourceFetcher while loading anyway. Hence I expect that the perf impact is small.",
+      "parentUuid": "65a09c69_f98e3b34",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 19
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86b1bfba_9ead22e6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 18
@@ -300,6 +432,30 @@
       "writtenOn": "2017-07-10T06:35:08Z",
       "side": 1,
       "message": "Wouldn\u0027t that result in double downloads in e.g. `\u003cscript src\u003dblocking.js\u003e\u003clink rel\u003dpreload href\u003dfoo as\u003dimage\u003e\u003cimg src\u003dfoo\u003e`?",
+      "range": {
+        "startLine": 1019,
+        "startChar": 3,
+        "endLine": 1019,
+        "endChar": 0
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58dfc88b_acd0759e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "I don\u0027t think so - usually a preload request is unified to another preloaded resource in ResourceFetcher::MatchPreload. If I\u0027m misunderstanding your example, can you provide a more detailed scenario?",
+      "parentUuid": "86b1bfba_9ead22e6",
       "range": {
         "startLine": 1019,
         "startChar": 3,
@@ -329,6 +485,24 @@
     },
     {
       "key": {
+        "uuid": "f66cea84_848a3a6c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b5ca874_a01134fc",
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aae3f4e_5ddbf92b",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 18
@@ -343,6 +517,24 @@
       "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a702bb56_e4ca3c3b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "Used/matched/referenced preloads are expected to have been moved to matched_preloads_.",
+      "parentUuid": "4aae3f4e_5ddbf92b",
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

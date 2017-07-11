@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcd44fb3_6ae83c93",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScannerTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T09:38:03Z",
+      "side": 1,
+      "message": "I removed this assertion for the same reason as assertions in CSSPreloadScannerTest.",
+      "parentUuid": "73acabb1_4a6c92d0",
+      "revId": "82f66f76e9e0f427e3b12c47df2b134e0c2a0550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cc72932_fb990a87",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 16
