@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7f47a9e3_9cb75977",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-07-11T07:02:41Z",
+      "side": 1,
+      "message": "740468",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "d4f7cecf1f0304b4e2980aef62083795504ca05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "376a7368_027a92eb",
         "filename": "AUTHORS",
         "patchSetId": 1
