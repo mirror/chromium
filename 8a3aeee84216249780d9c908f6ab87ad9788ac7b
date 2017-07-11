@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60dd2973_f5f4d811",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T16:18:56Z",
+      "side": 1,
+      "message": "So we probably want the caller to specify this (multiple things will be able to call the service in the near future and some will be explicitly google-owned services and some will be from websites).  We persist the request information to disk.  Would it be ok to save the JSON string?  Are you worried about versioning?  We could still use a consistent unique_id \"download_service\", but the rest is caller specific.",
+      "range": {
+        "startLine": 655,
+        "startChar": 6,
+        "endLine": 674,
+        "endChar": 15
+      },
+      "revId": "8a3aeee84216249780d9c908f6ab87ad9788ac7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
