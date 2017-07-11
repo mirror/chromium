@@ -229,6 +229,7 @@ static_library("content_shell_lib") {
     "//components/network_session_configurator/common",
     "//components/plugins/renderer",
     "//components/url_formatter",
+    "//components/url_log",
     "//components/web_cache/renderer",
     "//content:resources",
     "//content/app/resources",
