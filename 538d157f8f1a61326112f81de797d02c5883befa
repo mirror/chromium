@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "e9f1d396_f5ceefc1",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T03:50:57Z",
+      "side": 1,
+      "message": "ah",
+      "parentUuid": "3f2cd70c_c374973c",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b7b6f3e_0ac5bdc6",
         "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
         "patchSetId": 28
@@ -225,6 +243,24 @@
       "side": 1,
       "message": "I think this is correct. Anything that is not disabled is considered enabled, and this passed tests which do test for this. Readonly has a value of 1 in the generated file:\n\nenum AXRestrictions {\n  AX_RESTRICTIONS_NONE,\n  AX_RESTRICTIONS_READ_ONLY,\n  AX_RESTRICTIONS_DISABLED,\n  AX_RESTRICTIONS_LAST \u003d AX_RESTRICTIONS_DISABLED,\n};",
       "parentUuid": "7b7b6f3e_0ac5bdc6",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe69dad7_fe0e36d3",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T03:50:57Z",
+      "side": 1,
+      "message": "Ah, thanks. I missed that automatic `_NONE` enum value.",
+      "parentUuid": "30b9c899_4d365aef",
       "revId": "538d157f8f1a61326112f81de797d02c5883befa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

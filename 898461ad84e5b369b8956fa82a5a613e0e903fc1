@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4077a6a2_af0e36ca",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 33
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T03:50:57Z",
+      "side": 1,
+      "message": "nit: spurious whitespace?",
+      "range": {
+        "startLine": 621,
+        "startChar": 21,
+        "endLine": 621,
+        "endChar": 22
+      },
+      "revId": "898461ad84e5b369b8956fa82a5a613e0e903fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21683ade_855a9839",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 33
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T03:50:57Z",
+      "side": 1,
+      "message": "nit: remove trailing whitespace",
+      "range": {
+        "startLine": 624,
+        "startChar": 12,
+        "endLine": 624,
+        "endChar": 14
+      },
+      "revId": "898461ad84e5b369b8956fa82a5a613e0e903fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf763403_04438a0f",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T03:50:57Z",
+      "side": 1,
+      "message": "Gosh phrasing these two concepts is hard. Maybe avoid \"incorrectly not supported/correctly not supported\"\n\nPerhaps, \"is not supported (unlike Cocoa)\" -\u003e \"should work but it does not - see http://crbug.com/692362.\"",
+      "range": {
+        "startLine": 517,
+        "startChar": 38,
+        "endLine": 517,
+        "endChar": 0
+      },
+      "revId": "898461ad84e5b369b8956fa82a5a613e0e903fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd83a4a_bd2c1555",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T03:50:57Z",
+      "side": 1,
+      "message": "and \"is also correctly not supported\" -\u003e \"is prevented, which is correct behavior.\"",
+      "range": {
+        "startLine": 519,
+        "startChar": 44,
+        "endLine": 519,
+        "endChar": 75
+      },
+      "revId": "898461ad84e5b369b8956fa82a5a613e0e903fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ee4e62_cbcb9f0e",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T03:50:57Z",
+      "side": 1,
+      "message": "\"even if\" -\u003e \"even if disabled or readonly.\"?",
+      "range": {
+        "startLine": 914,
+        "startChar": 22,
+        "endLine": 914,
+        "endChar": 29
+      },
+      "revId": "898461ad84e5b369b8956fa82a5a613e0e903fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
