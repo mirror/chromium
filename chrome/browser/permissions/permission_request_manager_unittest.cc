@@ -431,6 +431,7 @@ TEST_F(PermissionRequestManagerTest, MainFrameAndIFrameRequestOtherDomain) {
   Closing();
   EXPECT_TRUE(request1_.finished());
   EXPECT_FALSE(iframe_request_other_domain_.finished());
+  WaitForBubbleToBeShown();
   EXPECT_TRUE(prompt_factory_->is_visible());
   Closing();
   EXPECT_TRUE(iframe_request_other_domain_.finished());
@@ -448,6 +449,7 @@ TEST_F(PermissionRequestManagerTest, IFrameRequestWhenMainRequestVisible) {
   Closing();
   EXPECT_TRUE(request1_.finished());
   EXPECT_FALSE(iframe_request_same_domain_.finished());
+  WaitForBubbleToBeShown();
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 1);
   Closing();
@@ -466,6 +468,7 @@ TEST_F(PermissionRequestManagerTest,
   Closing();
   EXPECT_TRUE(request1_.finished());
   EXPECT_FALSE(iframe_request_other_domain_.finished());
+  WaitForBubbleToBeShown();
   EXPECT_TRUE(prompt_factory_->is_visible());
   Closing();
   EXPECT_TRUE(iframe_request_other_domain_.finished());

@@ -31,6 +31,7 @@ class PermissionBubbleCocoa : public PermissionPrompt {
   bool HidesAutomatically() override;
   void UpdateAnchorPosition() override;
   gfx::NativeWindow GetNativeWindow() override;
+  void CheckNoActivePrompt() override;
 
   // Called when |bubbleController_| is closing.
   void OnBubbleClosing();

@@ -116,3 +116,8 @@ bool GroupedPermissionInfoBarDelegate::EqualsDelegate(
   // equality check is sufficient.
   return this == delegate;
 }
+
+GroupedPermissionInfoBarDelegate*
+GroupedPermissionInfoBarDelegate::AsGroupedPermissionInfoBarDelegate() {
+  return this;
+}

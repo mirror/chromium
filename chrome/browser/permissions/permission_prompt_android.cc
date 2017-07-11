@@ -13,6 +13,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
+#include "components/infobars/core/infobar.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/elide_url.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -70,6 +71,19 @@ void PermissionPromptAndroid::UpdateAnchorPosition() {
 gfx::NativeWindow PermissionPromptAndroid::GetNativeWindow() {
   NOTREACHED() << "GetNativeWindow is not implemented";
   return nullptr;
+}
+
+void PermissionPromptAndroid::CheckNoActivePrompt() {
+  // TODO(timloh): Check modals too.
+  InfoBarService* infobar_service =
+      InfoBarService::FromWebContents(web_contents_);
+  if (!infobar_service)
+    return;
+  for (size_t i = 0; i < infobar_service->infobar_count(); i++) {
+    CHECK(!infobar_service->infobar_at(i)
+               ->delegate()
+               ->AsGroupedPermissionInfoBarDelegate());
+  }
 }
 
 void PermissionPromptAndroid::Closing() {

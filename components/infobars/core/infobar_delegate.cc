@@ -80,6 +80,11 @@ ConfirmInfoBarDelegate* InfoBarDelegate::AsConfirmInfoBarDelegate() {
   return nullptr;
 }
 
+GroupedPermissionInfoBarDelegate*
+InfoBarDelegate::AsGroupedPermissionInfoBarDelegate() {
+  return nullptr;
+}
+
 HungRendererInfoBarDelegate* InfoBarDelegate::AsHungRendererInfoBarDelegate() {
   return nullptr;
 }
