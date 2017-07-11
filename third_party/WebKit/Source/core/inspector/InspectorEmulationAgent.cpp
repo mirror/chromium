@@ -81,12 +81,13 @@ Response InspectorEmulationAgent::disable() {
 }
 
 Response InspectorEmulationAgent::resetPageScaleFactor() {
-  GetWebViewBase()->ResetScaleStateImmediately();
+  GetWebViewBase()->GetDevToolsEmulator()->ResetPageScaleFactor();
   return Response::OK();
 }
 
 Response InspectorEmulationAgent::setPageScaleFactor(double page_scale_factor) {
-  GetWebViewBase()->SetPageScaleFactor(static_cast<float>(page_scale_factor));
+  GetWebViewBase()->GetDevToolsEmulator()->SetPageScaleFactor(
+      page_scale_factor);
   return Response::OK();
 }
 

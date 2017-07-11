@@ -55,6 +55,8 @@ class CORE_EXPORT DevToolsEmulator final
   void SetTouchEventEmulationEnabled(bool);
   bool HandleInputEvent(const WebInputEvent&);
   void SetScriptExecutionDisabled(bool);
+  void SetPageScaleFactor(float);
+  void ResetPageScaleFactor();
 
   // Notify the DevToolsEmulator about a scroll or scale change of the main
   // frame. Updates the transform for a viewport override.
@@ -106,6 +108,7 @@ class CORE_EXPORT DevToolsEmulator final
   int embedder_available_hover_types_;
   HoverType embedder_primary_hover_type_;
   bool embedder_main_frame_resizes_are_orientation_changes_;
+  float page_scale_factor_;
 
   bool touch_event_emulation_enabled_;
   bool double_tap_to_zoom_enabled_;

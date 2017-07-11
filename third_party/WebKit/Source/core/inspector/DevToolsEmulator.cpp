@@ -92,6 +92,7 @@ DevToolsEmulator::DevToolsEmulator(WebViewBase* web_view)
           web_view->GetPage()
               ->GetSettings()
               .GetMainFrameResizesAreOrientationChanges()),
+      page_scale_factor_(1),
       touch_event_emulation_enabled_(false),
       double_tap_to_zoom_enabled_(false),
       original_touch_event_feature_detection_enabled_(false),
@@ -217,7 +218,8 @@ void DevToolsEmulator::EnableDeviceEmulation(
       emulation_params_.screen_position == params.screen_position &&
       emulation_params_.device_scale_factor == params.device_scale_factor &&
       emulation_params_.offset == params.offset &&
-      emulation_params_.scale == params.scale) {
+      emulation_params_.scale == params.scale &&
+      emulation_params_.viewport_offset == params.viewport_offset) {
     return;
   }
   if (emulation_params_.device_scale_factor != params.device_scale_factor ||
@@ -238,7 +240,11 @@ void DevToolsEmulator::EnableDeviceEmulation(
     DisableMobileEmulation();
 
   web_view_->SetCompositorDeviceScaleFactorOverride(params.device_scale_factor);
-  UpdateRootLayerTransform();
+  if (params.viewport_offset.x >= 0)
+    ForceViewport(params.viewport_offset, page_scale_factor_);
+  else
+    ResetViewport();
+
   // TODO(dgozman): mainFrameImpl() is null when it's remote. Figure out how
   // we end up with enabling emulation in this case.
   if (web_view_->MainFrameImpl()) {
@@ -385,8 +391,10 @@ void DevToolsEmulator::ForceViewport(const WebFloatPoint& position,
 }
 
 void DevToolsEmulator::ResetViewport() {
-  if (!viewport_override_)
+  if (!viewport_override_) {
+    UpdateRootLayerTransform();
     return;
+  }
 
   bool original_masking = viewport_override_->original_visual_viewport_masking;
   viewport_override_ = WTF::nullopt;
@@ -512,6 +520,16 @@ void DevToolsEmulator::SetScriptExecutionDisabled(
   script_execution_disabled_ = script_execution_disabled;
   web_view_->GetPage()->GetSettings().SetScriptEnabled(
       script_execution_disabled_ ? false : embedder_script_enabled_);
+}
+
+void DevToolsEmulator::SetPageScaleFactor(float page_scale_factor) {
+  web_view_->SetPageScaleFactor(static_cast<float>(page_scale_factor));
+  page_scale_factor_ = page_scale_factor;
+}
+
+void DevToolsEmulator::ResetPageScaleFactor() {
+  web_view_->ResetScaleStateImmediately();
+  page_scale_factor_ = 1;
 }
 
 bool DevToolsEmulator::HandleInputEvent(const WebInputEvent& input_event) {
