@@ -22,6 +22,30 @@
       "revId": "50d1bd04af118592a3006851c0baf54fdebbdf66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c7cbef_dc671a1a",
+        "filename": "ui/display/display.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-11T20:26:46Z",
+      "side": 1,
+      "message": "Yeah, I was following \"HasForceDeviceScaleFactor\", but yeah, \"Forced\" isn\u0027t as awkward.\n\nUpdated.",
+      "parentUuid": "de79a8ac_6223866f",
+      "range": {
+        "startLine": 97,
+        "startChar": 14,
+        "endLine": 97,
+        "endChar": 34
+      },
+      "revId": "50d1bd04af118592a3006851c0baf54fdebbdf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
