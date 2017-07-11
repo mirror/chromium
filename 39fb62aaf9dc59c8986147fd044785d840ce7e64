@@ -46,6 +46,30 @@
       "revId": "39fb62aaf9dc59c8986147fd044785d840ce7e64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166ac7e4_92a7faa9",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-11T17:52:24Z",
+      "side": 1,
+      "message": "In both cases this is called, from your current approach in CTOR and from ::Start in second case. Both are executed on UI thread. From my experience this is fast call. Second case we have benefit not to keep it in memory (actually if it is set, it is already kept in mem so keeping it here is dup).\n\nI would recommend to remove query_suffix_ if you don\u0027t have strong pref.\n\nLGTM in both cases.",
+      "parentUuid": "d23e9b60_a34a080b",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 19
+      },
+      "revId": "39fb62aaf9dc59c8986147fd044785d840ce7e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
