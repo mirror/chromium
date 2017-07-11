@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/ui_base_export.h"
@@ -25,6 +26,11 @@ class UI_BASE_EXPORT ImageCursors {
   ImageCursors();
   ~ImageCursors();
 
+  // Creates the |cursor_loader_|. Note that this might initialize some thread-
+  // local state (see CursorLoaderOzone), so it is important to call this on the
+  // right thread.
+  void Initialize();
+
   // Returns the scale and rotation of the currently loaded cursor.
   float GetScale() const;
   display::Display::Rotation GetRotation() const;
@@ -39,12 +45,15 @@ class UI_BASE_EXPORT ImageCursors {
   // Sets the platform cursor based on the native type of |cursor|.
   void SetPlatformCursor(gfx::NativeCursor* cursor);
 
+  base::WeakPtr<ImageCursors> GetWeakPtr();
+
  private:
   // Reloads the all loaded cursors in the cursor loader.
   void ReloadCursors();
 
   std::unique_ptr<CursorLoader> cursor_loader_;
   CursorSize cursor_size_;
+  base::WeakPtrFactory<ImageCursors> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ImageCursors);
 };

@@ -46,7 +46,7 @@ std::unique_ptr<service_manager::Service> CreateEmbeddedMashService(
   if (service_name == mash::session::mojom::kServiceName)
     return base::MakeUnique<mash::session::Session>();
   if (service_name == ui::mojom::kServiceName)
-    return base::MakeUnique<ui::Service>();
+    return base::MakeUnique<ui::Service>(nullptr);
   if (service_name == mash::quick_launch::mojom::kServiceName)
     return base::MakeUnique<mash::quick_launch::QuickLaunch>();
   if (service_name == mash::task_viewer::mojom::kServiceName)
