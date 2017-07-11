@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ec4888f_bfc94ee9",
+        "filename": "components/viz/service/display/display.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-11T15:12:34Z",
+      "side": 1,
+      "message": "nit: Delete this?",
+      "revId": "da46e397b1f8e515f3690b6e807935a19273b342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
