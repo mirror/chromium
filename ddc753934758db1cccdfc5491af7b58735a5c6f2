@@ -46,6 +46,30 @@
       "revId": "ddc753934758db1cccdfc5491af7b58735a5c6f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b86fc0_d619570c",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-11T15:53:59Z",
+      "side": 1,
+      "message": "You could probably do:\n  \u0026element !\u003d effective_root_scroller_.get()",
+      "parentUuid": "eb1ba9af_549761e0",
+      "range": {
+        "startLine": 219,
+        "startChar": 6,
+        "endLine": 219,
+        "endChar": 13
+      },
+      "revId": "ddc753934758db1cccdfc5491af7b58735a5c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
