@@ -22,6 +22,30 @@
       "revId": "a688ccb5c5e4a608c8a111898e2ea66f34e5a42c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b635c752_fd1e014d",
+        "filename": "components/sync/driver/sync_service_crypto.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-11T11:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14cc3405_a25c1da2",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 40
+      },
+      "revId": "a688ccb5c5e4a608c8a111898e2ea66f34e5a42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
