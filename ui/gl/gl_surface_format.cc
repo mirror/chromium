@@ -10,13 +10,13 @@ namespace gl {
 GLSurfaceFormat::GLSurfaceFormat() {
 }
 
-GLSurfaceFormat::GLSurfaceFormat(SurfacePixelLayout layout) {
-  pixel_layout_ = layout;
-}
-
 GLSurfaceFormat::GLSurfaceFormat(const GLSurfaceFormat& other) = default;
 
 GLSurfaceFormat::~GLSurfaceFormat() {
+}
+
+GLSurfaceFormat::GLSurfaceFormat(SurfacePixelLayout layout) {
+  pixel_layout_ = layout;
 }
 
 GLSurfaceFormat::SurfacePixelLayout GLSurfaceFormat::GetPixelLayout() {
@@ -28,6 +28,14 @@ void GLSurfaceFormat::SetDefaultPixelLayout(SurfacePixelLayout layout) {
       layout != PIXEL_LAYOUT_DONT_CARE) {
     pixel_layout_ = layout;
   }
+}
+
+void GLSurfaceFormat::SetColorSpace(SurfaceColorSpace color_space) {
+  color_space_ = color_space;
+}
+
+GLSurfaceFormat::SurfaceColorSpace GLSurfaceFormat::GetColorSpace() {
+  return color_space_;
 }
 
 void GLSurfaceFormat::SetRGB565() {
