@@ -178,6 +178,41 @@
     },
     {
       "key": {
+        "uuid": "82613a79_f296911a",
+        "filename": "chrome/browser/page_load_metrics/observers/from_gws_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T13:56:34Z",
+      "side": 1,
+      "message": "Yep this has been my understanding too (a Chromium vs WebKit/Blink style diff). See also\nhttps://groups.google.com/a/chromium.org/d/msg/chromium-dev/cQmHtdqTwGo/A-8GotxWd5cJ",
+      "parentUuid": "685621a6_e87084ce",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9c85a1_8af1a8e2",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T13:56:34Z",
+      "side": 1,
+      "message": "By the way, are all the core PageLoad metrics understood to be logged only for main frame navigations? If not, we might want to add to this comment to say for \"main frame pages controlled by a service worker\". If my understanding is right, IsServiceWorkerControlled() only returns true for main frame loads.\n\nActually I wonder if this is a bug in our current code. Are OnDomContentLoadedEventStart() and OnLoadEventStart() only called for the main frame load? Our code intends to do:\n\nif (IsServiceWorkerControlled()) {\n  // sw controlled metrics\n} else {\n  // non sw controlled metrics\n}\n\nIf they are called for subframes too, the else{} is logging both non-sw controlled main frame loads and all subframe loads.",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bff5feaf_f1b8528a",
         "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
         "patchSetId": 6
