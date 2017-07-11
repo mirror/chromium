@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe667f10_df6c6663",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-11T11:00:09Z",
+      "side": 1,
+      "message": "As we chatted offline, there are cases where Document can be created without scheduler, but create ResourceFetcher, that makes this condition happens in production paths.",
+      "parentUuid": "3fcfbffd_9dabeb90",
+      "revId": "f2054b90440a80d1c21c0a5aac25025059040ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "471670d4_3a52c9f4",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f0497c3a_6eb4539a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-11T11:00:09Z",
+      "side": 1,
+      "message": "As we talked offline, I will move this comment to class comment.",
+      "parentUuid": "471670d4_3a52c9f4",
+      "range": {
+        "startLine": 81,
+        "startChar": 41,
+        "endLine": 81,
+        "endChar": 53
+      },
+      "revId": "f2054b90440a80d1c21c0a5aac25025059040ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db611ae9_c50909cb",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "f2054b90440a80d1c21c0a5aac25025059040ad9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57aa345_e27e9d01",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-11T11:00:09Z",
+      "side": 1,
+      "message": "Done, with a TODO comment say that we should enable experimental features by default for platform tests.",
+      "parentUuid": "db611ae9_c50909cb",
+      "revId": "f2054b90440a80d1c21c0a5aac25025059040ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
