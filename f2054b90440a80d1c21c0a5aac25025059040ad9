@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fcfbffd_9dabeb90",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T08:37:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether this branch was only for tests. If it was, replacing this with DCHECK may be good.",
+      "revId": "f2054b90440a80d1c21c0a5aac25025059040ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471670d4_3a52c9f4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T08:37:40Z",
+      "side": 1,
+      "message": "Is the second sentence needed? This sounds like a constructor behavior.",
+      "range": {
+        "startLine": 81,
+        "startChar": 41,
+        "endLine": 81,
+        "endChar": 53
+      },
+      "revId": "f2054b90440a80d1c21c0a5aac25025059040ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db611ae9_c50909cb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-11T08:37:40Z",
+      "side": 1,
+      "message": "DCHECK(RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled(false))?",
+      "revId": "f2054b90440a80d1c21c0a5aac25025059040ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
