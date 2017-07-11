@@ -613,14 +613,8 @@ scoped_refptr<VASurface> VaapiWrapper::CreateVASurfaceForPixmap(
   va_attrib_extbuf.width = size.width();
   va_attrib_extbuf.height = size.height();
 
-  size_t num_fds = pixmap->GetDmaBufFdCount();
   size_t num_planes =
       gfx::NumberOfPlanesForBufferFormat(pixmap->GetBufferFormat());
-  if (num_fds == 0 || num_fds > num_planes) {
-    LOG(ERROR) << "Invalid number of dmabuf fds: " << num_fds
-               << " , planes: " << num_planes;
-    return nullptr;
-  }
 
   for (size_t i = 0; i < num_planes; ++i) {
     va_attrib_extbuf.pitches[i] = pixmap->GetDmaBufPitch(i);
@@ -630,8 +624,8 @@ scoped_refptr<VASurface> VaapiWrapper::CreateVASurfaceForPixmap(
   }
   va_attrib_extbuf.num_planes = num_planes;
 
-  std::vector<unsigned long> fds(num_fds);
-  for (size_t i = 0; i < num_fds; ++i) {
+  std::vector<unsigned long> fds(num_planes);
+  for (size_t i = 0; i < num_planes; ++i) {
     int dmabuf_fd = pixmap->GetDmaBufFd(i);
     if (dmabuf_fd < 0) {
       LOG(ERROR) << "Failed to get dmabuf from an Ozone NativePixmap";
