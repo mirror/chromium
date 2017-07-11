@@ -462,8 +462,8 @@ enum class SnapshotViewOption {
 
 - (UIImage*)updateScreenshotForCellIfNeeded:(TabSwitcherLocalSessionCell*)cell
                                    tabModel:(TabModel*)tabModel {
-  if (cell.screenshot)
-    return cell.screenshot;
+  if (cell.snapshot)
+    return cell.snapshot;
   UIColor* backgroundColor = [tabModel isOffTheRecord]
                                  ? [[MDCPalette greyPalette] tint700]
                                  : [UIColor whiteColor];
