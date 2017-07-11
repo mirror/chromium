@@ -625,8 +625,11 @@ void PasswordFormManager::ProcessFrameInternal(
 
   driver->AllowPasswordGenerationForForm(observed_form_);
 
-  if (best_matches_.empty())
+  if (best_matches_.empty()) {
+    metrics_recorder_->RecordFillEvent(
+        PasswordFormMetricsRecorder::kManagerFillEventNoCredential);
     return;
+  }
 
   // Proceed to autofill.
   // Note that we provide the choices but don't actually prefill a value if:
@@ -639,10 +642,14 @@ void PasswordFormManager::ProcessFrameInternal(
   if (wait_for_username) {
     metrics_recorder_->SetManagerAction(
         PasswordFormMetricsRecorder::kManagerActionNone);
+    metrics_recorder_->RecordFillEvent(
+        PasswordFormMetricsRecorder::kManagerFillEventBlockedOnInteraction);
   } else {
     has_autofilled_ = true;
     metrics_recorder_->SetManagerAction(
         PasswordFormMetricsRecorder::kManagerActionAutofilled);
+    metrics_recorder_->RecordFillEvent(
+        PasswordFormMetricsRecorder::kManagerFillEventFilled);
     base::RecordAction(base::UserMetricsAction("PasswordManager_Autofilled"));
   }
   if (ShouldShowInitialPasswordAccountSuggestions()) {
@@ -664,12 +671,17 @@ void PasswordFormManager::ProcessFrameInternal(
 
 void PasswordFormManager::ProcessLoginPrompt() {
   DCHECK_NE(PasswordForm::SCHEME_HTML, observed_form_.scheme);
-  if (!preferred_match_)
+  if (!preferred_match_) {
+    metrics_recorder_->RecordFillEvent(
+        PasswordFormMetricsRecorder::kManagerFillEventNoCredential);
     return;
+  }
 
   has_autofilled_ = true;
   metrics_recorder_->SetManagerAction(
       PasswordFormMetricsRecorder::kManagerActionAutofilled);
+  metrics_recorder_->RecordFillEvent(
+      PasswordFormMetricsRecorder::kManagerFillEventFilled);
   password_manager_->AutofillHttpAuth(best_matches_, *preferred_match_);
 }
 
