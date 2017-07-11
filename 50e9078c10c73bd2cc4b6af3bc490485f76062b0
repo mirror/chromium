@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6c98a6_8ce556d4",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T00:20:41Z",
+      "side": 1,
+      "message": "might not make a difference (and you\u0027re probably aware of the following..), but this will mean\n - the animation starts slightly later, after a PostTask\n - we could try to animate an ink drop in cases that were not animated previously (e.g. on Windows logout, when the OS destroys widgets in a weird order).\n\nEither way, I think it will be fine.",
+      "revId": "50e9078c10c73bd2cc4b6af3bc490485f76062b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb310599_8b43c6d7",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T00:20:41Z",
+      "side": 1,
+      "message": "Is the profile chooser still showing at this point? It\u0027s not obvious to me where the crash would get tickled.\n\nMaybe\n\n  EXPECT_FALSE(ProfileChooserView::IsShowing());\n  CloseBrowserSynchronously(browser);\n\nor\n\n  EXPECT_TRUE(ProfileChooserView::IsShowing());\n  current_profile_bubble()-\u003eGetWidget()-\u003eClose();\n  EXPECT_FALSE(ProfileChooserView::IsShowing());\n  CloseBrowserSynchronously(browser);\n\nor just a comment like\n\n  // Ensure no crash occurs when the test harness tears down the browser window.",
+      "revId": "50e9078c10c73bd2cc4b6af3bc490485f76062b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
