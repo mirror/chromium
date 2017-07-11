@@ -69,6 +69,24 @@
       "revId": "9fb74307cb849897798766f884b7b07663fd949c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8c4b16_cca24408",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-07-11T18:22:04Z",
+      "side": 1,
+      "message": "bump",
+      "parentUuid": "f81bd167_161d2b3b",
+      "revId": "9fb74307cb849897798766f884b7b07663fd949c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
