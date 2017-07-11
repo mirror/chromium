@@ -13,7 +13,7 @@
 
 namespace settings_utils {
 
-bool FixupAndValidateStartupPage(const std::string& url_string,
+bool FixUpAndValidateStartupPage(const std::string& url_string,
                                  GURL* fixed_url) {
   GURL url = url_formatter::FixupURL(url_string, std::string());
   bool valid = url.is_valid() && !extensions::ExtensionTabUtil::IsKillURL(url);

@@ -6,7 +6,9 @@
 
 #include <stddef.h>
 
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -173,7 +175,7 @@ void StartupPagesHandler::AddStartupPage(const base::ListValue* args) {
   CHECK(args->GetString(0, &url_string));
 
   GURL fixed_url;
-  if (!settings_utils::FixupAndValidateStartupPage(url_string, &fixed_url)) {
+  if (!settings_utils::FixUpAndValidateStartupPage(url_string, &fixed_url)) {
     NOTREACHED();
     return;
   }
@@ -200,7 +202,7 @@ void StartupPagesHandler::EditStartupPage(const base::ListValue* args) {
   CHECK(args->GetString(1, &url_string));
 
   GURL fixed_url;
-  if (settings_utils::FixupAndValidateStartupPage(url_string, &fixed_url)) {
+  if (settings_utils::FixUpAndValidateStartupPage(url_string, &fixed_url)) {
     std::vector<GURL> urls = startup_custom_pages_table_model_->GetURLs();
     urls[index] = fixed_url;
     startup_custom_pages_table_model_->SetURLs(urls);

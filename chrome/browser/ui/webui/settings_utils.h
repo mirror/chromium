@@ -32,7 +32,7 @@ void ShowManageSSLCertificates(content::WebContents* web_contents);
 
 // Returns whether |url_string| is a valid startup page. |fixed_url| is set to
 // the fixed up, valid URL if not null.
-bool FixupAndValidateStartupPage(const std::string& url_string,
+bool FixUpAndValidateStartupPage(const std::string& url_string,
                                  GURL* fixed_url);
 
 base::RefCountedMemory* GetFaviconResourceBytes(ui::ScaleFactor scale_factor);

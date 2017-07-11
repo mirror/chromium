@@ -107,7 +107,7 @@ void StartupPagesHandler::HandleAddStartupPage(const base::ListValue* args) {
   CHECK(args->GetString(1, &url_string));
 
   GURL url;
-  if (!settings_utils::FixupAndValidateStartupPage(url_string, &url)) {
+  if (!settings_utils::FixUpAndValidateStartupPage(url_string, &url)) {
     ResolveJavascriptCallback(*callback_id, base::Value(false));
     return;
   }
@@ -139,7 +139,7 @@ void StartupPagesHandler::HandleEditStartupPage(const base::ListValue* args) {
   CHECK(args->GetString(2, &url_string));
 
   GURL fixed_url;
-  if (settings_utils::FixupAndValidateStartupPage(url_string, &fixed_url)) {
+  if (settings_utils::FixUpAndValidateStartupPage(url_string, &fixed_url)) {
     std::vector<GURL> urls = startup_custom_pages_table_model_.GetURLs();
     urls[index] = fixed_url;
     startup_custom_pages_table_model_.SetURLs(urls);

@@ -9,19 +9,19 @@
 
 namespace settings_utils {
 
-TEST(SettingsUtilsTest, FixupAndValidateStartupPage) {
-  EXPECT_FALSE(FixupAndValidateStartupPage(std::string(), nullptr));
-  EXPECT_FALSE(FixupAndValidateStartupPage("   ", nullptr));
-  EXPECT_FALSE(FixupAndValidateStartupPage("^&*@)^)", nullptr));
-  EXPECT_FALSE(FixupAndValidateStartupPage("chrome://quit", nullptr));
+TEST(SettingsUtilsTest, FixUpAndValidateStartupPage) {
+  EXPECT_FALSE(FixUpAndValidateStartupPage(std::string(), nullptr));
+  EXPECT_FALSE(FixUpAndValidateStartupPage("   ", nullptr));
+  EXPECT_FALSE(FixUpAndValidateStartupPage("^&*@)^)", nullptr));
+  EXPECT_FALSE(FixUpAndValidateStartupPage("chrome://quit", nullptr));
 
-  EXPECT_TRUE(FixupAndValidateStartupPage("facebook.com", nullptr));
-  EXPECT_TRUE(FixupAndValidateStartupPage("http://reddit.com", nullptr));
-  EXPECT_TRUE(FixupAndValidateStartupPage("https://google.com", nullptr));
-  EXPECT_TRUE(FixupAndValidateStartupPage("chrome://apps", nullptr));
+  EXPECT_TRUE(FixUpAndValidateStartupPage("facebook.com", nullptr));
+  EXPECT_TRUE(FixUpAndValidateStartupPage("http://reddit.com", nullptr));
+  EXPECT_TRUE(FixUpAndValidateStartupPage("https://google.com", nullptr));
+  EXPECT_TRUE(FixUpAndValidateStartupPage("chrome://apps", nullptr));
 
   GURL fixed_url;
-  EXPECT_TRUE(FixupAndValidateStartupPage("about:settings", &fixed_url));
+  EXPECT_TRUE(FixUpAndValidateStartupPage("about:settings", &fixed_url));
   EXPECT_EQ("chrome://settings/", fixed_url.spec());
 }
 
