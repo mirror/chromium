@@ -50,6 +50,7 @@ import android.webkit.WebViewClient;
 import android.webkit.WebViewProvider;
 import android.widget.TextView;
 
+import org.chromium.android_webview.AwBrowserState;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwContentsStatics;
 import org.chromium.android_webview.AwPrintDocumentAdapter;
@@ -227,8 +228,8 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
         AwContentsStatics.setRecordFullDocument(sRecordWholeDocumentEnabledByApi
                 || mAppTargetSdkVersion < Build.VERSION_CODES.LOLLIPOP);
 
-        mAwContents = new AwContents(mFactory.getBrowserContextOnUiThread(), mWebView, mContext,
-                new InternalAccessAdapter(), new WebViewNativeDrawGLFunctorFactory(),
+        mAwContents = new AwContents(AwBrowserState.getBrowserContextOnUiThread(), mWebView,
+                mContext, new InternalAccessAdapter(), new WebViewNativeDrawGLFunctorFactory(),
                 mContentsClientAdapter, mWebSettings.getAwSettings(),
                 new AwContents.DependencyFactory() {
                     @Override
