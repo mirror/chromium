@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "36ee0fb6_01df29ea",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-11T14:07:10Z",
+      "side": 1,
+      "message": "Sure - I updated the comment.\n\nAll the callbacks you mention are for main frames only, so your code should be working as you intend it to.",
+      "parentUuid": "5e9c85a1_8af1a8e2",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bff5feaf_f1b8528a",
         "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
         "patchSetId": 6
