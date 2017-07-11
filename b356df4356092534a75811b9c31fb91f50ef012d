@@ -189,6 +189,30 @@
       "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cf929f_b7fbe30b",
+        "filename": "content/browser/cocoa/system_hotkey_helper_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-11T16:01:06Z",
+      "side": 1,
+      "message": "Also, posted https://chromium-review.googlesource.com/c/567020/ to actually add the things that we should. I think I was wrong when I initially said it should be \"fairly low\" priority, after reading TaskPriority documentation I think you were right, USER_VISIBLE is fairly reasonable for this use case.",
+      "parentUuid": "cf7ca674_cac7ac92",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
