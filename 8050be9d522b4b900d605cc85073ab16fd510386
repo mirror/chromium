@@ -34,6 +34,24 @@
       "revId": "8050be9d522b4b900d605cc85073ab16fd510386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bddb6373_0a12bbcf",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-07-11T08:41:24Z",
+      "side": 1,
+      "message": "Note that in the end real time priority for audio thread is ignored on some of the platforms. AFAIK it\u0027s set as real-time on ChromeOS, and probably on Windows.\nSee platform-specific base::PlatformThread::CreateWithPriority implementations.\n\nHow do you make sure that the worklet thread priority matches the actual audio thread priority?",
+      "parentUuid": "c8081abe_39350859",
+      "revId": "8050be9d522b4b900d605cc85073ab16fd510386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
