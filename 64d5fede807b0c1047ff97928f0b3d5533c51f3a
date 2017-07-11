@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a29742_96b793d0",
+        "filename": "ash/mus/bridge/shell_port_mash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-11T00:45:44Z",
+      "side": 1,
+      "message": "nit: no else after return",
+      "revId": "64d5fede807b0c1047ff97928f0b3d5533c51f3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
