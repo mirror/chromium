@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "b1410af5_22199b3f",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-11T15:42:17Z",
+      "side": 1,
+      "message": "Do you mind if I implement the cleanup in another CL? In the cleanup we need to remove both the Config and the cached KeyStorage. The second requires to rework how we do faking for the tests I think.",
+      "parentUuid": "826c09d5_daf9b558",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9939da25_33f2f6b8",
         "filename": "components/os_crypt/key_storage_config_linux.h",
         "patchSetId": 9
