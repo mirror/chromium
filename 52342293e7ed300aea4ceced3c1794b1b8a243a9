@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c592c34_b3f4afb3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-11T01:13:18Z",
+      "side": 1,
+      "message": "nit: Add a space between \u0027]\u0027 and \u0027interface\u0027.",
+      "revId": "52342293e7ed300aea4ceced3c1794b1b8a243a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
