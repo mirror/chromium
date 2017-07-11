@@ -45,6 +45,30 @@
       "revId": "5bf92544c84d1f7d5c8d372c446ffbd98ed769c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2f2c459_1679f530",
+        "filename": "chrome/browser/ui/cocoa/framed_browser_window_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-11T03:36:42Z",
+      "side": 1,
+      "message": "It looks like this function is intended for capturing a bunch of windows without knowing what they are in advance, but it does the right thing if you just ask for one window. I just uploaded a patch set that switches to another function that just takes a list of windows to capture, but it’s uglier and I’m tempted to go back and just look at the other one as a doc error.",
+      "parentUuid": "ca27212a_8695c31c",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "5bf92544c84d1f7d5c8d372c446ffbd98ed769c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
