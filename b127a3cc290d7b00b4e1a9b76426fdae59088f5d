@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb412d3a_3c38112c",
+        "filename": "third_party/WebKit/LayoutTests/fast/files/xhr-response-blob-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-11T02:02:25Z",
+      "side": 1,
+      "message": "If the new behavior is spec compliant, can we fix our layouttest?",
+      "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
