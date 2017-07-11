@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e8e4664d_d8cef0c3",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aae783e_f51f9ef5",
+      "range": {
+        "startLine": 396,
+        "startChar": 18,
+        "endLine": 396,
+        "endChar": 19
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cd05adc_552e4b41",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fdbca2d_d97a1caf",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cd05adc_552e4b41",
+      "range": {
+        "startLine": 67,
+        "startChar": 44,
+        "endLine": 67,
+        "endChar": 49
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cc777485_89a5ee10",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d1e625a4_9723bafd",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c7b1ef_4704702f",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cf379c82_06ae1ea6",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c7b1ef_4704702f",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 24
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2860159_26be16b3",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac90179c_e925b5d3",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2860159_26be16b3",
+      "range": {
+        "startLine": 80,
+        "startChar": 41,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +308,54 @@
     },
     {
       "key": {
+        "uuid": "dacc317b_ee38f6dd",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7703e96e_89f12ae6",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 78
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "303a5c21_9044c6d1",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "But DECHECK should fail when the callback isn\u0027t null, right?",
+      "parentUuid": "834c9d2a_a744bed6",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 78
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095b6689_31cf9b1b",
         "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
         "patchSetId": 3
@@ -202,6 +370,24 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fd114b_a7c0ccd2",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Yes!",
+      "parentUuid": "095b6689_31cf9b1b",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -228,6 +414,30 @@
     },
     {
       "key": {
+        "uuid": "2b8db494_622b663d",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da59733b_ba7c8af9",
+      "range": {
+        "startLine": 84,
+        "startChar": 14,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d400551_2d52eaa8",
         "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
         "patchSetId": 3
@@ -251,6 +461,30 @@
     },
     {
       "key": {
+        "uuid": "1c2744d6_394c0a82",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d400551_2d52eaa8",
+      "range": {
+        "startLine": 57,
+        "startChar": 30,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e37696_fd746b4e",
         "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
         "patchSetId": 3
@@ -262,6 +496,30 @@
       "writtenOn": "2017-07-11T08:50:01Z",
       "side": 1,
       "message": "So it does get called if the request is destroyed, but not when it\u0027s canceled - that seems a bit weird to me.",
+      "range": {
+        "startLine": 69,
+        "startChar": 29,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9543878b_a854e528",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "So what do you suggest?\nRun the callback in Cancel()?",
+      "parentUuid": "f4e37696_fd746b4e",
       "range": {
         "startLine": 69,
         "startChar": 29,
@@ -297,6 +555,30 @@
     },
     {
       "key": {
+        "uuid": "64d321f0_9ba918d8",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "I removed the support of concurrent sub/unsub requests.  PTAL",
+      "parentUuid": "a84cf0e4_d044a4c6",
+      "range": {
+        "startLine": 58,
+        "startChar": 61,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10c2e873_d23d35e4",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -311,6 +593,24 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc461f7c_48a8342d",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10c2e873_d23d35e4",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +637,30 @@
     },
     {
       "key": {
+        "uuid": "1f6dfda9_a8b326f8",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3827021_6944842b",
+      "range": {
+        "startLine": 63,
+        "startChar": 80,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d88cb8f_14934f3f",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -357,6 +681,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16682e62_5e5d97b3",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d88cb8f_14934f3f",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -383,6 +731,30 @@
     },
     {
       "key": {
+        "uuid": "2cf8b1a0_49989b78",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Yes, I felt it\u0027s getting complicated with allowing multiple requests.\nI got rid of the state variables.",
+      "parentUuid": "a7dfa9fa_b4d8e81a",
+      "range": {
+        "startLine": 72,
+        "startChar": 19,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c3fbc74_5c987f5b",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -403,6 +775,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c2bfc3_9a880836",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c3fbc74_5c987f5b",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 66
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -429,6 +825,30 @@
     },
     {
       "key": {
+        "uuid": "90a8d58b_ed0306eb",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20009c5b_a9521c4a",
+      "range": {
+        "startLine": 108,
+        "startChar": 23,
+        "endLine": 108,
+        "endChar": 33
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5e29909_b1427502",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -452,6 +872,30 @@
     },
     {
       "key": {
+        "uuid": "d5b3e1cc_bf9586d0",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5e29909_b1427502",
+      "range": {
+        "startLine": 125,
+        "startChar": 45,
+        "endLine": 125,
+        "endChar": 57
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cececfb_9368e383",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -463,6 +907,30 @@
       "writtenOn": "2017-07-11T09:11:02Z",
       "side": 1,
       "message": "What if there is an ongoing subscription request?\nIs it guaranteed that if the client calls Subscribe and Unsubscribe immediately, the order of actions will be preserved?",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 3
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9b87ea_722af01a",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "The class now doesn\u0027t support concurrent sub/unsub requests.\nPTAL",
+      "parentUuid": "9cececfb_9368e383",
       "range": {
         "startLine": 145,
         "startChar": 2,
@@ -498,6 +966,30 @@
     },
     {
       "key": {
+        "uuid": "a41176e8_46b28c7e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "No need to store it.",
+      "parentUuid": "304d445a_5523618e",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 32
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b0029c9_7978ac25",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -518,6 +1010,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58282f6_d99f35ad",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8b0029c9_7978ac25",
+      "range": {
+        "startLine": 159,
+        "startChar": 32,
+        "endLine": 159,
+        "endChar": 33
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -544,6 +1060,30 @@
     },
     {
       "key": {
+        "uuid": "a74f3207_a4f8512e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "365c0884_6af6bf79",
+      "range": {
+        "startLine": 164,
+        "startChar": 26,
+        "endLine": 164,
+        "endChar": 42
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "875ffbb1_f5058f6e",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -564,6 +1104,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e799ab_2a4ba1d3",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "875ffbb1_f5058f6e",
+      "range": {
+        "startLine": 173,
+        "startChar": 38,
+        "endLine": 173,
+        "endChar": 66
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -590,6 +1154,30 @@
     },
     {
       "key": {
+        "uuid": "8a0cf043_325fb071",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "It\u0027s not needed if the subscription token doesn\u0027t change.\nHowever, in case of change in the subscription token, it\u0027s needed to drop the \"obsolete\" subscription with the old token.\nWhat do you think, keep it consistent across different resubscription or provide special handling for the case of change in the token?",
+      "parentUuid": "fb41c966_38b73525",
+      "range": {
+        "startLine": 176,
+        "startChar": 31,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a486e94d_fe4a8bfc",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -601,6 +1189,30 @@
       "writtenOn": "2017-07-11T08:50:01Z",
       "side": 1,
       "message": "If you call this from here, then the previous unsubscription request won\u0027t have been deleted (though unsubscription_request_ will be null, since you moved it out above). I guess that\u0027s okay?",
+      "range": {
+        "startLine": 194,
+        "startChar": 39,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b043c244_8ef25b7d",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "It should be fine now because I stopped allowing concurrent sub/unsub requests.\nCorrect?",
+      "parentUuid": "a486e94d_fe4a8bfc",
       "range": {
         "startLine": 194,
         "startChar": 39,
@@ -659,6 +1271,54 @@
     },
     {
       "key": {
+        "uuid": "a7e73c66_3557d83b",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf010732_c82875d6",
+      "range": {
+        "startLine": 205,
+        "startChar": 39,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3c947be_4adad27b",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdb8e761_c82879b9",
+      "range": {
+        "startLine": 205,
+        "startChar": 38,
+        "endLine": 205,
+        "endChar": 39
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "437c57ec_5eb7ebe5",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
         "patchSetId": 3
@@ -679,6 +1339,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13726256_8ad49ff3",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "437c57ec_5eb7ebe5",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -719,6 +1403,48 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e813c4_3cfc297e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df16a735_576c44fe",
+      "range": {
+        "startLine": 48,
+        "startChar": 45,
+        "endLine": 48,
+        "endChar": 64
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1752dbcd_8277b9e6",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99932bba_a532a418",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -768,6 +1494,54 @@
     },
     {
       "key": {
+        "uuid": "ad5a3d53_e2bf1118",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bf1a2f66_fdbcb6ef",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a47a8e6_5bcee63e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6c2dbf91_9c2735d7",
+      "range": {
+        "startLine": 60,
+        "startChar": 68,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd017685_6d53efbf",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
         "patchSetId": 3
@@ -788,6 +1562,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96371a5_a8c30367",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Will be removed to simplify the subscription state machine.",
+      "parentUuid": "fd017685_6d53efbf",
+      "range": {
+        "startLine": 70,
+        "startChar": 36,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -814,6 +1612,30 @@
     },
     {
       "key": {
+        "uuid": "595c491f_a5262472",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daae0e01_21434004",
+      "range": {
+        "startLine": 94,
+        "startChar": 65,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6303242a_4b0ae23f",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 3
@@ -834,6 +1656,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1b5b4a_354db82e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6303242a_4b0ae23f",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -860,6 +1706,30 @@
     },
     {
       "key": {
+        "uuid": "2a972bc8_714692a2",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6e3e96e_1376283a",
+      "range": {
+        "startLine": 22,
+        "startChar": 18,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05bfd211_e1133420",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 3
@@ -883,6 +1753,30 @@
     },
     {
       "key": {
+        "uuid": "563306f1_5971d8a4",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05bfd211_e1133420",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f949b9dd_f070baba",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 3
@@ -894,6 +1788,30 @@
       "writtenOn": "2017-07-11T09:11:02Z",
       "side": 1,
       "message": "(including helpers below)\n\nThat\u0027s a lot of indirection. I am not sure whether it is worth it. Imagine someone breaking your test indirectly and then encountering all of these. They would have to look up each helper multiple times. \n\nAlso most of them are just one liners.\n\nI would remove all of the helpers except RespondSuccessfully|WithError, but rename them to \"SetFetchResponse\" or something.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 51
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a1a3ea_e2573200",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "They have been renamed because they caused a confusing while debugging a failing test.\nOne missing \"RespondSuccessfully\" was missing when \"Resubscribing\" and it was to find it because the same method is used to respond to both subscription and unsubscription request.",
+      "parentUuid": "f949b9dd_f070baba",
       "range": {
         "startLine": 58,
         "startChar": 2,
@@ -926,6 +1844,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6662385a_72e30fc5",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79de00f0_689adb0c",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -976,6 +1918,30 @@
     },
     {
       "key": {
+        "uuid": "81c968ef_0069bf35",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "It\u0027s following the test below. (recommended by fhorschig@). He explained to me why this is very nice, but I forgot :-)\n\nhttps://cs.chromium.org/chromium/src/components/doodle/doodle_fetcher_impl_unittest.cc?l\u003d89\u0026rcl\u003dc085745ac17b783a62ddbd9d843f7cabe0fd4ea1",
+      "parentUuid": "32307148_3981dc0e",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6c84aab_d2024051",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 3
@@ -987,6 +1953,30 @@
       "writtenOn": "2017-07-11T08:50:01Z",
       "side": 1,
       "message": "Now there\u0027s a token service here and one in the utils.",
+      "range": {
+        "startLine": 125,
+        "startChar": 69,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e223e78_8f12a6ea",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Sorry?\nWhich one are you referring to?",
+      "parentUuid": "e6c84aab_d2024051",
       "range": {
         "startLine": 125,
         "startChar": 69,
@@ -1022,6 +2012,30 @@
     },
     {
       "key": {
+        "uuid": "7717aec0_5fd6a1a1",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "456e2dfb_10659ed2",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 13
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33db72a8_596300f1",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 3
@@ -1042,6 +2056,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ceabb54_01bad2f8",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33db72a8_596300f1",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 11
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1068,6 +2106,30 @@
     },
     {
       "key": {
+        "uuid": "d417f87c_bb550eec",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f1b2688_408aad2f",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 80
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a720169_ba73f133",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 3
@@ -1088,6 +2150,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6f7500_f421ac57",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a720169_ba73f133",
+      "range": {
+        "startLine": 192,
+        "startChar": 1,
+        "endLine": 192,
+        "endChar": 80
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1114,6 +2200,30 @@
     },
     {
       "key": {
+        "uuid": "6687bd41_45208e0e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00700c5e_4c03e449",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 13
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2def91e6_a4176239",
         "filename": "components/ntp_snippets/pref_names.cc",
         "patchSetId": 3
@@ -1134,6 +2244,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d718077e_af09369c",
+        "filename": "components/ntp_snippets/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2def91e6_a4176239",
+      "range": {
+        "startLine": 88,
+        "startChar": 53,
+        "endLine": 88,
+        "endChar": 60
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1160,6 +2294,30 @@
     },
     {
       "key": {
+        "uuid": "0eac60ac_d0390c45",
+        "filename": "components/ntp_snippets/remote/test_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "I was very tempted to do that already :-)\nSo if you say so ;-)",
+      "parentUuid": "f5c81b1e_3e017f38",
+      "range": {
+        "startLine": 66,
+        "startChar": 52,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56812c54_b8c32525",
         "filename": "components/ntp_snippets/remote/test_utils.h",
         "patchSetId": 3
@@ -1174,6 +2332,24 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29191c08_1f617341",
+        "filename": "components/ntp_snippets/remote/test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-11T20:04:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56812c54_b8c32525",
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
