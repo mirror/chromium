@@ -22,6 +22,30 @@
       "revId": "b0d8cda36548bcefb1911896a3aea294139d6aa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd559efb_147ffa85",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-11T13:03:29Z",
+      "side": 1,
+      "message": "1. That way we avoid a confusion between YYYY-MM-DD and YYYY-DD-MM formats. I don\u0027t want to leave additional note about the used format.\n2. Nope, but I used the same data in histograms.xml in an obsolete tag. At least, we have synchronization between them.",
+      "parentUuid": "0e4c20fc_fdecfea3",
+      "range": {
+        "startLine": 259,
+        "startChar": 52,
+        "endLine": 259,
+        "endChar": 63
+      },
+      "revId": "b0d8cda36548bcefb1911896a3aea294139d6aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
