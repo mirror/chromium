@@ -8,6 +8,7 @@
 #include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/files/scoped_file.h"
 #include "base/location.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/path_service.h"
@@ -249,6 +250,7 @@ void FakeSessionManagerClient::StartArcInstance(
     const StartArcInstanceCallback& callback) {
   StartArcInstanceResult result;
   std::string container_instance_id;
+  base::ScopedFD server_socket;
   if (arc_available_) {
     result = StartArcInstanceResult::SUCCESS;
     base::Base64Encode(base::RandBytesAsString(16), &container_instance_id);
@@ -256,7 +258,8 @@ void FakeSessionManagerClient::StartArcInstance(
     result = StartArcInstanceResult::UNKNOWN_ERROR;
   }
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(callback, result, container_instance_id));
+      FROM_HERE, base::Bind(callback, result, container_instance_id,
+                            base::Passed(&server_socket)));
 }
 
 void FakeSessionManagerClient::StopArcInstance(const ArcCallback& callback) {
