@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c644f045_317d8e1f",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T17:18:12Z",
+      "side": 1,
+      "message": "Alternatively, this could be kept as a local variable with a scoped_nsobject. When scrollView is passed to -setContentView: the window will call -retain on it, and then the local scoped_nsobject would call -release at the end of scope. Keeping it as a instance variable works too.",
+      "range": {
+        "startLine": 188,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 14
+      },
+      "revId": "073c0ceae5299b5d75d194cf702e710bc2515ca0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
