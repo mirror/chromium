@@ -53,6 +53,9 @@ class APIBindingsSystemTest : public APIBindingTest {
       v8::Local<v8::Context> context,
       v8::Local<v8::Object>* secondary_parent);
 
+  virtual void AddConsoleError(v8::Local<v8::Context> context,
+                               const std::string& error) {}
+
   // Returns the DictionaryValue representing the schema with the given API
   // name.
   const base::DictionaryValue& GetAPISchema(const std::string& api_name);

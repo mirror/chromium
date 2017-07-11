@@ -364,7 +364,8 @@ NativeExtensionBindingsSystem::NativeExtensionBindingsSystem(
                      base::Unretained(this)),
           base::Bind(&APIActivityLogger::LogAPICall),
           APILastError(base::Bind(&GetLastErrorParents),
-                       base::Bind(&AddConsoleError))),
+                       base::Bind(&AddConsoleError)),
+          base::Bind(&AddConsoleError)),
       weak_factory_(this) {
   api_system_.RegisterCustomType("storage.StorageArea",
                                  base::Bind(&StorageArea::CreateStorageArea));
@@ -706,7 +707,8 @@ void NativeExtensionBindingsSystem::GetJSBindingUtil(
       context->GetIsolate(),
       new APIBindingJSUtil(
           api_system_.type_reference_map(), api_system_.request_handler(),
-          api_system_.event_handler(), base::Bind(&CallJsFunction)));
+          api_system_.event_handler(), api_system_.exception_handler(),
+          base::Bind(&CallJsFunction)));
   *binding_util_out = handle.ToV8();
 }
 

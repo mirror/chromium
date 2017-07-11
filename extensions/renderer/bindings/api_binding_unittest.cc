@@ -103,8 +103,8 @@ class APIBindingUnittest : public APIBindingTest {
     request_handler_ = base::MakeUnique<APIRequestHandler>(
         base::Bind(&APIBindingUnittest::OnFunctionCall, base::Unretained(this)),
         base::Bind(&RunFunctionOnGlobalAndIgnoreResult),
-        APILastError(APILastError::GetParent(),
-                     APILastError::AddConsoleError()));
+        APILastError(APILastError::GetParent(), binding::AddConsoleError()),
+        nullptr);
   }
 
   void TearDown() override {
@@ -179,7 +179,7 @@ class APIBindingUnittest : public APIBindingTest {
     event_handler_ = base::MakeUnique<APIEventHandler>(
         base::Bind(&RunFunctionOnGlobalAndIgnoreResult),
         base::Bind(&RunFunctionOnGlobalAndReturnHandle),
-        base::Bind(&OnEventListenersChanged));
+        base::Bind(&OnEventListenersChanged), nullptr);
     access_checker_ =
         base::MakeUnique<BindingAccessChecker>(availability_callback_);
     binding_ = base::MakeUnique<APIBinding>(

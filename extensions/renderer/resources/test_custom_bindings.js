@@ -17,6 +17,22 @@ var userGestures = requireNative('user_gestures');
 
 var GetModuleSystem = requireNative('v8_context').GetModuleSystem;
 
+var jsExceptionHandler =
+    bindingUtil ? undefined : require('uncaught_exception_handler');
+function setExceptionHandler(handler) {
+  if (bindingUtil)
+    bindingUtil.setExceptionHandler(handler);
+  else
+    jsExceptionHandler.setHandler(handler);
+}
+
+function handleException(message, error) {
+  if (bindingUtil)
+    bindingUtil.handleException(message, error);
+  else
+    jsExceptionHandler.handle(message, error);
+}
+
 binding.registerCustomHook(function(api) {
   var chromeTest = api.compiledApi;
   var apiFunctions = api.apiFunctions;
@@ -88,13 +104,16 @@ binding.registerCustomHook(function(api) {
 
     try {
       chromeTest.log("( RUN      ) " + testName(currentTest));
-      uncaughtExceptionHandler.setHandler(function(message, e) {
+      console.warn('Setting');
+      setExceptionHandler(function(message, e) {
         if (e !== failureException)
           chromeTest.fail('uncaught exception: ' + message);
       });
+      console.warn('Calling');
       currentTest.call();
+      console.warn('Called');
     } catch (e) {
-      uncaughtExceptionHandler.handle(e.message, e);
+      handleException(e.message, e);
     }
   });
 
@@ -261,7 +280,7 @@ binding.registerCustomHook(function(api) {
     } catch (e) {
       if (e === failureException)
         throw e;
-      uncaughtExceptionHandler.handle(e.message, e);
+      handleException(e.message, e);
     }
   };
 
@@ -354,7 +373,7 @@ binding.registerCustomHook(function(api) {
 
   apiFunctions.setHandleRequest('setExceptionHandler', function(callback) {
     chromeTest.assertEq(typeof(callback), 'function');
-    uncaughtExceptionHandler.setHandler(callback);
+    setExceptionHandler(callback);
   });
 
   apiFunctions.setHandleRequest('getWakeEventPage', function() {

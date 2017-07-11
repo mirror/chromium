@@ -19,11 +19,19 @@ APIBindingsSystem::APIBindingsSystem(
     const APIRequestHandler::SendRequestMethod& send_request,
     const APIEventHandler::EventListenersChangedMethod& event_listeners_changed,
     const APIBinding::OnSilentRequest& on_silent_request,
-    APILastError last_error)
+    APILastError last_error,
+    const binding::AddConsoleError& add_console_error)
     : type_reference_map_(base::Bind(&APIBindingsSystem::InitializeType,
                                      base::Unretained(this))),
-      request_handler_(send_request, call_js, std::move(last_error)),
-      event_handler_(call_js, call_js_sync, event_listeners_changed),
+      exception_handler_(add_console_error, call_js),
+      request_handler_(send_request,
+                       call_js,
+                       std::move(last_error),
+                       &exception_handler_),
+      event_handler_(call_js,
+                     call_js_sync,
+                     event_listeners_changed,
+                     &exception_handler_),
       access_checker_(is_available),
       call_js_(call_js),
       call_js_sync_(call_js_sync),
@@ -130,6 +138,7 @@ void APIBindingsSystem::RegisterCustomType(const std::string& type_name,
 void APIBindingsSystem::WillReleaseContext(v8::Local<v8::Context> context) {
   request_handler_.InvalidateContext(context);
   event_handler_.InvalidateContext(context);
+  //  exception_handler_.InvalidateContext(context);
 }
 
 v8::Local<v8::Object> APIBindingsSystem::CreateCustomType(
