@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "542667ed_69087671",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-11T15:55:21Z",
+      "side": 1,
+      "message": "True... they both result in the same message though, which is why I didn\u0027t notice it.",
+      "parentUuid": "aefcf717_5a9ed1db",
+      "range": {
+        "startLine": 499,
+        "startChar": 53,
+        "endLine": 499,
+        "endChar": 0
+      },
+      "revId": "0e5bd2b7d6b95c53cdd2689803e022755ce180d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d3d62a2_d6361e11",
         "filename": "components/supervised_user_error_page/resources/supervised_user_block_interstitial.js",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0e5bd2b7d6b95c53cdd2689803e022755ce180d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7bb02e5_1fe956b0",
+        "filename": "components/supervised_user_error_page/resources/supervised_user_block_interstitial.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-11T15:55:21Z",
+      "side": 1,
+      "message": "The check here was for supporting the block page in WebView, which ended up not launching. In WebView we returned this as an error page, which doesn\u0027t have a DOMAutomationController, so we used Gin bindings instead. The problem is that WebUI doesn\u0027t define a DOMAutomationController either, so chrome://interstitials would show something different from the interstitial. With this change we assume that in production we will always have a DOMAutomationController, so we don\u0027t need the check anymore. If you actually try to send a command from the page in chrome://interstitials, it will throw an exception, which isn\u0027t ideal but has no user-visible impact. I\u0027ll have to think about how I can hook up a message handler into the interstitials UI to handle the commands.",
+      "parentUuid": "2d3d62a2_d6361e11",
+      "range": {
+        "startLine": 53,
+        "startChar": 29,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "0e5bd2b7d6b95c53cdd2689803e022755ce180d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

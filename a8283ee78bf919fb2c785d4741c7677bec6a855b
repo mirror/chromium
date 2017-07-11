@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c53dfd64_b8164f7f",
+        "filename": "components/supervised_user_error_page/resources/supervised_user_block_interstitial.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-11T15:55:21Z",
+      "side": 0,
+      "message": "Because reasons? I don\u0027t think it made a difference in the old UI, because the details container was always visible (the condition that used to show it was always true; see https://chromium-review.googlesource.com/c/566959/3/components%252Fsupervised_user_error_page%252Fresources%252Fsupervised_user_block_interstitial.js#88).",
+      "parentUuid": "74d9e6eb_19a3bcea",
+      "revId": "a8283ee78bf919fb2c785d4741c7677bec6a855b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23ed6af3_b0b5414b",
         "filename": "components/supervised_user_error_page/resources/supervised_user_block_interstitial.js",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "a8283ee78bf919fb2c785d4741c7677bec6a855b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99dc2f88_55e142ae",
+        "filename": "components/supervised_user_error_page/resources/supervised_user_block_interstitial.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-11T15:55:21Z",
+      "side": 0,
+      "message": "The existing code is kind of misleading -- showDetailsLink is set to the localized string for \"Details\", so the variable always had a true value. I could use a separate value that states whether the details section should be shown, but its value would be identical to showFeedbackLink.",
+      "parentUuid": "23ed6af3_b0b5414b",
+      "range": {
+        "startLine": 88,
+        "startChar": 66,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "a8283ee78bf919fb2c785d4741c7677bec6a855b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
