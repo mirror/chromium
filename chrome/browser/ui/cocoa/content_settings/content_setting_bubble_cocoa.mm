@@ -18,6 +18,7 @@
 #import "chrome/browser/ui/cocoa/info_bubble_view.h"
 #import "chrome/browser/ui/cocoa/l10n_util.h"
 #import "chrome/browser/ui/cocoa/location_bar/content_setting_decoration.h"
+#import "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.h"
 #import "chrome/browser/ui/cocoa/subresource_filter/subresource_filter_bubble_controller.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "chrome/browser/ui/content_settings/content_setting_media_menu_model.h"
@@ -278,7 +279,7 @@ const ContentTypeToNibPath kNibPaths[] = {
     {CONTENT_SETTINGS_TYPE_IMAGES, @"ContentBlockedSimple"},
     {CONTENT_SETTINGS_TYPE_JAVASCRIPT, @"ContentBlockedSimple"},
     {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, @"ContentBlockedSimple"},
-    {CONTENT_SETTINGS_TYPE_PLUGINS, @"ContentBlockedPlugins"},
+//    {CONTENT_SETTINGS_TYPE_PLUGINS, @"ContentBlockedPlugins"},
     {CONTENT_SETTINGS_TYPE_POPUPS, @"ContentBlockedPopups"},
     {CONTENT_SETTINGS_TYPE_GEOLOCATION, @"ContentBlockedGeolocation"},
     {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, @"ContentBlockedMixedScript"},
@@ -370,6 +371,12 @@ const ContentTypeToNibPath kNibPaths[] = {
 
   if (model->AsSubresourceFilterBubbleModel())
     return [SubresourceFilterBubbleController alloc];
+
+  if (model->AsSimpleBubbleModel() &&
+      model->AsSimpleBubbleModel()->content_type() ==
+CONTENT_SETTINGS_TYPE_PLUGINS) {
+    return [BlockedPluginBubbleController alloc];
+  }
 
   return nil;
 }
@@ -1049,7 +1056,7 @@ const ContentTypeToNibPath kNibPaths[] = {
 }
 
 - (IBAction)learnMoreLinkClicked:(id)sender {
-  contentSettingBubbleModel_->OnManageLinkClicked();
+  contentSettingBubbleModel_->OnLearnMoreLinkClicked();
 }
 
 - (IBAction)manageBlocking:(id)sender {
