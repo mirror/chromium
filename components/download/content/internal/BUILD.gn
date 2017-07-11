@@ -14,6 +14,7 @@ source_set("internal") {
   ]
 
   public_deps = [
+    "//components/download/content/public",
     "//components/download/internal",
     "//components/download/public",
   ]
@@ -35,6 +36,7 @@ source_set("unit_tests") {
 
   deps = [
     ":internal",
+    "//components/download/content/public",
     "//content/test:test_support",
     "//testing/gmock",
     "//testing/gtest",
