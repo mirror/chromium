@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d62ebf0e_6971ebd6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-11T17:10:01Z",
+      "side": 1,
+      "message": "As we discussed briefly today before I had to run away, this seems correct so far as it goes, but it doesn\u0027t solve the underlying problem. I don\u0027t have a good suggestion off the top of my head, honestly. The architecture here is strange, and doesn\u0027t really map well to what we\u0027d ideally be doing.\n\nI also agree with Yoav that forcing developers to add integrity checks to their `Link` headers is a bad answer. :/\n\nLet\u0027s dig into this together tomorrow.",
+      "revId": "61139f24ee838669cb576142ec6be1281bff365d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
