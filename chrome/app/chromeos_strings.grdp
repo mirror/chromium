@@ -512,7 +512,7 @@ Press any key to continue exploring.
     Remove shortcut
   </message>
   <message name="IDS_FILE_BROWSER_SHARE_BUTTON_LABEL" desc="Menu item label, showing dialog to share the selected file.">
-    Share
+    Share with others
   </message>
   <message name="IDS_FILE_BROWSER_TOGGLE_HIDDEN_FILES_COMMAND_LABEL" desc="Label for menu or button with checkmark that toggles visibility of hidden files.">
     Show hidden files

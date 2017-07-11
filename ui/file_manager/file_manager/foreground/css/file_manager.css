@@ -351,6 +351,18 @@ body.check-select #search-button > .icon {
       url(../images/files/ui/2x/search.png) 2x);
 }
 
+#share-menu-button > .icon {
+  background-image: -webkit-image-set(
+      url(../images/files/ui/share_white.png) 1x,
+      url(../images/files/ui/2x/share_white.png) 2x);
+}
+
+body.check-select #share-menu-button > .icon {
+  background-image: -webkit-image-set(
+      url(../images/files/ui/share.png) 1x,
+      url(../images/files/ui/2x/share.png) 2x);
+}
+
 #share-button > .icon {
   background-image: -webkit-image-set(
       url(../images/files/ui/share_white.png) 1x,
@@ -1627,9 +1639,16 @@ body.check-select #list-container list li[selected] .detail-thumbnail
   opacity: 0;
 }
 
+#share-menu cr-menu-item,
 #tasks-menu cr-menu-item:not(.change-default) {
   background-position: left 10px center;
   padding-left: 32px;
+}
+
+#share-menu cr-menu-item.share-with-others {
+  background-image: -webkit-image-set(
+      url(../images/files/ui/share.png) 1x,
+      url(../images/files/ui/2x/share.png) 2x);
 }
 
 .detail-name > * {
@@ -1916,7 +1935,8 @@ list.autocomplete-suggestions > [lead] {
 
 #gear-menu,
 #sort-menu,
-#tasks-menu {
+#tasks-menu,
+#share-menu {
   margin-top: 2px;
 }
 
