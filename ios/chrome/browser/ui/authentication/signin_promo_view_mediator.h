@@ -24,6 +24,18 @@ enum class SigninPromoViewHistograms {
   // Histograms: MobileSignInPromo.BookmarkManager.*.
   Bookmarks,
 };
+
+// Enums for the sign-in promo view state.
+enum class SigninPromoViewState {
+  // None of the buttons has been used yet.
+  Unused = 0,
+  // Sign-in is in progress.
+  SigninStarted,
+  // Sign-in buttons has been used at least once.
+  UsedAtLeastOnce,
+  // Sign-in promo has been dismissed.
+  Dismissed,
+};
 }  // namespace ios
 
 // Class that monitors the available identities and creates
@@ -50,6 +62,8 @@ enum class SigninPromoViewHistograms {
 @property(nonatomic) const char* alreadySeenSigninViewPreferenceKey;
 // Histograms to use for the user actions.
 @property(nonatomic) ios::SigninPromoViewHistograms histograms;
+// Sign-in promo view state.
+@property(nonatomic) ios::SigninPromoViewState signinPromoViewState;
 
 // See -[SigninPromoViewMediator initWithBrowserState:].
 - (instancetype)init NS_UNAVAILABLE;
