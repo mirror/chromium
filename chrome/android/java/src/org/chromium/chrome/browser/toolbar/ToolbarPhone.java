@@ -680,7 +680,7 @@ public class ToolbarPhone extends ToolbarLayout
      */
     protected int getBoundsAfterAccountingForRightButtons() {
         return Math.max(mToolbarSidePadding,
-                shouldHideToolbarButtons() ? 0 : mToolbarButtonsContainer.getMeasuredWidth());
+                shouldHideSomeToolbarButtons() ? 0 : mToolbarButtonsContainer.getMeasuredWidth());
     }
 
     protected void updateToolbarBackground(int color) {
@@ -848,11 +848,15 @@ public class ToolbarPhone extends ToolbarLayout
             return;
         }
 
+        int toolbarButtonVisibility = mUrlExpansionPercent == 1f ? INVISIBLE : VISIBLE;
+
         // Ensure the buttons are invisible after focusing the omnibox to prevent them from
-        // accepting click events.
-        int toolbarButtonVisibility =
-                mUrlExpansionPercent == 1f || shouldHideToolbarButtons() ? INVISIBLE : VISIBLE;
-        mToolbarButtonsContainer.setVisibility(toolbarButtonVisibility);
+        // accepting click events. If shouldHideSomeToolbarButtons() is true, the sub-class is
+        // responsible for setting toolbar button visibility appropriately.
+        if (!shouldHideSomeToolbarButtons()) {
+            mToolbarButtonsContainer.setVisibility(toolbarButtonVisibility);
+        }
+
         if (mHomeButton.getVisibility() != GONE) {
             mHomeButton.setVisibility(toolbarButtonVisibility);
         }
@@ -924,7 +928,7 @@ public class ToolbarPhone extends ToolbarLayout
             urlActionsTranslationX += mLocationBarNtpOffsetRight - mLocationBarNtpOffsetLeft;
         }
 
-        if (shouldHideToolbarButtons()) {
+        if (shouldHideSomeToolbarButtons()) {
             // When the end toolbar buttons are not hidden, url actions are shown and hidden due to
             // a change in location bar's width. When the end toolbar buttons are hidden, the
             // location bar's width does not change by as much, causing the end location for the url
@@ -1434,10 +1438,12 @@ public class ToolbarPhone extends ToolbarLayout
     }
 
     /**
-     * @return Whether the toolbar buttons (tab switcher and menu) are currently hidden regardless
-     *         of URL bar focus. Sub-classes that hide these buttons should override this method.
+     * @return Whether some (or all) of the toolbar buttons (tab switcher and menu) are currently
+     *         hidden regardless of URL bar focus. Sub-classes that hide these buttons should
+     *         override this method. When sub-classes return true for this method, they are
+     *         responsible for setting toolbar button visibility appropriately.
      */
-    protected boolean shouldHideToolbarButtons() {
+    protected boolean shouldHideSomeToolbarButtons() {
         return false;
     }
 
