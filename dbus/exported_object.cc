@@ -103,11 +103,8 @@ void ExportedObject::SendSignal(Signal* signal) {
     SendSignalInternal(start_time, signal_message);
   } else {
     bus_->GetDBusTaskRunner()->PostTask(
-        FROM_HERE,
-        base::Bind(&ExportedObject::SendSignalInternal,
-                   this,
-                   start_time,
-                   signal_message));
+        FROM_HERE, base::Bind(&ExportedObject::SendSignalInternal, this,
+                              start_time, base::Unretained(signal_message)));
   }
 }
 

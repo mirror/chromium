@@ -11,6 +11,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/sync/base/cryptographer.h"
 #include "components/sync/base/nigori.h"
 #include "components/sync/base/sync_prefs.h"
 #include "components/sync/driver/data_type_manager.h"

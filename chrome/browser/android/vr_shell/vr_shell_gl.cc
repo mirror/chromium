@@ -866,8 +866,9 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
     task_runner_->PostDelayedTask(
         FROM_HERE,
         base::Bind(&VrShellGl::DrawFrameSubmitWhenReady,
-                   weak_ptr_factory_.GetWeakPtr(), frame_index, frame.release(),
-                   head_pose, base::Passed(&fence)),
+                   weak_ptr_factory_.GetWeakPtr(), frame_index,
+                   base::Unretained(frame.release()), head_pose,
+                   base::Passed(&fence)),
         kWebVRFenceCheckInterval);
   } else {
     // Continue with submit immediately.
@@ -883,8 +884,9 @@ void VrShellGl::DrawFrameSubmitWhenReady(int16_t frame_index,
     task_runner_->PostDelayedTask(
         FROM_HERE,
         base::Bind(&VrShellGl::DrawFrameSubmitWhenReady,
-                   weak_ptr_factory_.GetWeakPtr(), frame_index, frame_ptr,
-                   head_pose, base::Passed(&fence)),
+                   weak_ptr_factory_.GetWeakPtr(), frame_index,
+                   base::Unretained(frame_ptr), head_pose,
+                   base::Passed(&fence)),
         kWebVRFenceCheckInterval);
     return;
   }
