@@ -264,6 +264,24 @@
       "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d677ce02_da7d80af",
+        "filename": "ui/compositor/external_begin_frame_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-11T06:30:21Z",
+      "side": 1,
+      "message": "I agree about DidFinishFrame although I\u0027d prefer that the interface be called DisplayObserver and be bound to the Display somehow and not the DisplayScheduler.\n\nHowever, the rest of ExternalBeginFrameController seems to duplicate the functionality in ExternalBFS/Client. Can you explain why a new layer of indirection is needed?",
+      "parentUuid": "3869affa_872d356a",
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
