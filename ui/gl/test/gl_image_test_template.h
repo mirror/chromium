@@ -187,8 +187,8 @@ TYPED_TEST_CASE_P(GLImageTest);
 
 TYPED_TEST_P(GLImageTest, Create) {
   // NOTE: On some drm devices (mediatek) the mininum width/height to add an fb
-  // for a bo must be 64.
-  const gfx::Size small_image_size(64, 64);
+  // for a bo must be 64, and YVU_420 in i915 requires at least 128 length.
+  const gfx::Size small_image_size(128, 128);
   const gfx::Size large_image_size(512, 512);
   const uint8_t* image_color = this->delegate_.GetImageColor();
 

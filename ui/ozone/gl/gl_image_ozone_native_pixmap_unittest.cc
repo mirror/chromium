@@ -19,7 +19,6 @@ namespace gl {
 namespace {
 
 const uint8_t kRed[] = {0xF0, 0x0, 0x0, 0xFF};
-const uint8_t kGreen[] = {0x0, 0xFF, 0x0, 0xFF};
 
 // These values are picked so that RGB -> YVU on the CPU converted
 // back to RGB on the GPU produces the original RGB values without
@@ -67,10 +66,8 @@ class GLImageNativePixmapTestDelegate {
   const uint8_t* GetImageColor() {
     if (format == gfx::BufferFormat::R_8) {
       return kRed;
-    } else if (format == gfx::BufferFormat::YVU_420) {
-      return kYvuColor;
     }
-    return kGreen;
+    return kYvuColor;
   }
 
  private:
@@ -86,10 +83,6 @@ INSTANTIATE_TYPED_TEST_CASE_P(GLImageNativePixmapScanout,
                               GLImageScanoutType);
 
 using GLImageReadWriteType = testing::Types<
-    GLImageNativePixmapTestDelegate<gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-                                    gfx::BufferFormat::R_8>>;
-
-using GLImageBindTestTypes = testing::Types<
     GLImageNativePixmapTestDelegate<gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
                                     gfx::BufferFormat::BGRA_8888>,
     GLImageNativePixmapTestDelegate<gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
@@ -108,7 +101,7 @@ INSTANTIATE_TYPED_TEST_CASE_P(DISABLED_GLImageNativePixmapReadWrite,
 
 INSTANTIATE_TYPED_TEST_CASE_P(DISABLED_GLImageNativePixmap,
                               GLImageBindTest,
-                              GLImageBindTestTypes);
+                              GLImageReadWriteType);
 
 }  // namespace
 }  // namespace gl

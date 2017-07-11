@@ -38,8 +38,8 @@ class ClientNativePixmapDmaBuf : public gfx::ClientNativePixmap {
 
   const gfx::NativePixmapHandle pixmap_handle_;
   const gfx::Size size_;
-  base::ScopedFD dmabuf_fd_;
-  void* data_;
+  std::vector<base::ScopedFD> dmabuf_fds_;
+  std::vector<void*> datas_;
 
   DISALLOW_COPY_AND_ASSIGN(ClientNativePixmapDmaBuf);
 };
