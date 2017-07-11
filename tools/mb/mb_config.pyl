@@ -1621,7 +1621,7 @@
     },
 
     'cfi': {
-      'gn_args': 'is_cfi=true',
+      'gn_args': 'is_cfi=true enable_ipc_fuzzer=true',
     },
 
     'cfi_full': {
