@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f51cee64_33a22e8b",
+        "filename": "components/autofill/core/common/password_form.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T09:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f551767c_7378b52e",
+      "range": {
+        "startLine": 143,
+        "startChar": 28,
+        "endLine": 143,
+        "endChar": 37
+      },
+      "revId": "39487fe3e0ec0653735c2bff1b485036577eb0f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a71038cc_3b17f623",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.cc",
         "patchSetId": 3
@@ -112,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "c99becd7_9ccd2025",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T09:33:54Z",
+      "side": 1,
+      "message": "I checked, and we invoke the result callback with the requested facet if and only if the result callback is invoked with success set to true.\n\nPossible failure cases include an empty cache and either |StrategyOnCacheMiss::FAIL| or an error in the network request. In both of these cases |result| is empty and |success| is false.\n\nIf success is true, this means that either we had a cache hit, or the network request succeeded. In these cases it is guaranteed that |facet_uri| is included in the results, by either the corresponding SQL (https://codesearch.chromium.org/chromium/src/components/password_manager/core/browser/android_affiliation/affiliation_database.cc?l\u003d72-74) or the extra bit of logic in affiliation fetcher (https://codesearch.chromium.org/chromium/src/components/password_manager/core/browser/android_affiliation/affiliation_fetcher.cc?l\u003d221-224).\n\nHere this is not an issue, since we return immediately when success is false and never hit this DHECK in that case. I changed the wording in affiliation_service a bit to reflect this property of the contract.",
+      "parentUuid": "589964d0_dbeef21d",
+      "revId": "39487fe3e0ec0653735c2bff1b485036577eb0f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8631bf13_9c7f1281",
         "filename": "components/password_manager/core/browser/password_store_unittest.cc",
         "patchSetId": 3
@@ -132,6 +174,30 @@
       "revId": "39487fe3e0ec0653735c2bff1b485036577eb0f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3dcbe3_65c8a92f",
+        "filename": "components/password_manager/core/browser/password_store_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T09:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8631bf13_9c7f1281",
+      "range": {
+        "startLine": 858,
+        "startChar": 17,
+        "endLine": 858,
+        "endChar": 18
+      },
+      "revId": "39487fe3e0ec0653735c2bff1b485036577eb0f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
