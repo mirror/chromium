@@ -22,6 +22,47 @@
       "revId": "c8da2ea59bb73da841b6cf2eff2155b9395dfdec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93975fc8_21f8b9b9",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-11T20:34:04Z",
+      "side": 1,
+      "message": "Just to add on what Peiyong suggested, I think you will not need to declare friend class with Peiyong\u0027s suggestion.",
+      "parentUuid": "42732955_ca987ac3",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "c8da2ea59bb73da841b6cf2eff2155b9395dfdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614aadef_71338d92",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-11T20:34:04Z",
+      "side": 1,
+      "message": "Is tab_strip actually needed here?\n\nIf yes, do you need to close all tabs at the end (like the old one in TabManager)?",
+      "revId": "c8da2ea59bb73da841b6cf2eff2155b9395dfdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
