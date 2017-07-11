@@ -149,6 +149,14 @@ bool CronetEnvironment::StartNetLog(base::FilePath::StringType file_name,
 
   base::FilePath path(file_name);
 
+  base::ScopedFILE file(base::OpenFile(path, "w"));
+  if (!file) {
+    LOG(ERROR) << "Can not start NetLog to " << path.value() << ": "
+               << strerror(errno);
+    return false;
+  }
+  file.reset();
+
   LOG(WARNING) << "Starting NetLog to " << path.value();
   PostToNetworkThread(FROM_HERE,
                       base::Bind(&CronetEnvironment::StartNetLogOnNetworkThread,
@@ -192,6 +200,8 @@ void CronetEnvironment::StopNetLogOnNetworkThread(
     file_net_log_observer_->StopObserving(
         nullptr, base::BindOnce(&SignalEvent, log_stopped_event));
     file_net_log_observer_.reset();
+  } else {
+    log_stopped_event->Signal();
   }
 }
 
