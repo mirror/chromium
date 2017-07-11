@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dfdd4ea2_ea8b7d6c",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-11T04:30:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2291e683_fe7ed329",
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a10f896f_88c5c441",
         "filename": "content/browser/service_worker/service_worker_metrics.cc",
         "patchSetId": 10
@@ -39,6 +57,30 @@
       "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e8c454_7d73c3b0",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-11T04:30:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a10f896f_88c5c441",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1f13d485_596697d5",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-11T04:30:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3dd99a9_557178a3",
+      "range": {
+        "startLine": 349,
+        "startChar": 14,
+        "endLine": 349,
+        "endChar": 23
+      },
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb3dda64_e583dd0e",
         "filename": "content/browser/service_worker/service_worker_process_manager.cc",
         "patchSetId": 10
@@ -76,6 +142,24 @@
       "writtenOn": "2017-07-11T04:08:50Z",
       "side": 1,
       "message": "BTW, I suspect that in some cases rph-\u003eHasConnection or rph-\u003eIsReady is false here, for example if the process died and the SW immediately tried to restart.\n\nI think it\u0027s a bug but I\u0027m not super inclined to fix it because once PlzNavigate ships we should be able to remove this code entirely and always use SiteInstance.",
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28c3045_6dcaa33c",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-11T04:30:40Z",
+      "side": 1,
+      "message": "OK. I\u0027d like to keep it as is.",
+      "parentUuid": "fb3dda64_e583dd0e",
       "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -96,6 +180,24 @@
       "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6a4ef1_2e33824c",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-11T04:30:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88f12ac3_dd2eea91",
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
