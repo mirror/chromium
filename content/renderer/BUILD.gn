@@ -442,7 +442,6 @@ target(link_target_type, "renderer") {
     "//components/metrics",
     "//components/metrics:single_sample_metrics",
     "//components/url_formatter",
-    "//components/variations",
     "//components/viz/client",
     "//content:resources",
     "//content/child",
