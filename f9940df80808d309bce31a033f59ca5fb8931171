@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ea4680e7_fabad63c",
+        "filename": "components/variations/variations_params_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-11T19:21:40Z",
+      "side": 1,
+      "message": "This is resolved by moving the code handling switches::kEnableFeatures into content/public/test/test_utils.cc",
+      "parentUuid": "f2fb7be1_243c714c",
+      "range": {
+        "startLine": 135,
+        "startChar": 48,
+        "endLine": 135,
+        "endChar": 63
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d1cc00e_475a2d98",
         "filename": "components/variations/variations_params_manager.h",
         "patchSetId": 2
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "ab9d30d8_f7de59ce",
+        "filename": "components/variations/variations_params_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-11T19:21:40Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "ea6d9966_6d131ede",
+      "range": {
+        "startLine": 94,
+        "startChar": 37,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3922cc4_23678a7c",
         "filename": "components/variations/variations_params_manager.h",
         "patchSetId": 2
@@ -187,6 +235,30 @@
       "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da853e73_350543f3",
+        "filename": "components/variations/variations_params_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-11T19:21:40Z",
+      "side": 1,
+      "message": "This is resolved now - the helper function in content/public/test/test_utils.h does indeed take |const base::Feature\u0026| as an argument.",
+      "parentUuid": "2199548b_2b6edba2",
+      "range": {
+        "startLine": 97,
+        "startChar": 35,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
