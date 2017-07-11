@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec8f7be5_c8c1b2d1",
+        "filename": "cc/animation/element_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-11T02:49:24Z",
+      "side": 0,
+      "message": "I traced it back, and it appears the only way that this method can be called\nis when an AnimationEvent is created and triggered via creation of AnimationEvents,\nwhich is a vector of AnimationEvent. And that in turn is created many turtles\ndown by AnimationPlayer::UpdateState. It seems the whole thing is\ndriven by LayerTreeHost::AnimateLayers. This calls TickAnimations on the animation\nhost, which eventually calls TickAnimations on each AnimationPlayer, and which in\nturn generates some of the callsites of the notify* methods you are making virtual.\n\nNext, LayerTreeHost::AnimateLayers calls UpdateAnimationState, which creates\nthe AnimationEvents and sends them around circuitously, to end up in \nNotifyAnimationPropertyUpdate.\n\nIOW, there seem to be two code paths from the same place which end up in the same\ncode.\n\nThe whole thing looks very weird and fragile to me. But perhaps I am wrong and\nit mostly makes sense. Am I misunderstanding it?\n\nIs any of this documented anywhere? Can I inpsire you to write down a skeleton of\nit as part of this patch For inspiration, this is Blink documentation week. :)",
+      "revId": "059d59a5bb73dcceb7d655c8e67b168642db2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
