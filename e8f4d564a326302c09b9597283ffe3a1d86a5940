@@ -39,6 +39,24 @@
       "revId": "e8f4d564a326302c09b9597283ffe3a1d86a5940",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ccc2cc_dcd03a29",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-11T18:49:43Z",
+      "side": 1,
+      "message": "The use-after-free was happening with |proxy_ptr|, which is dereferenced first, not with |added_bar|.\n\nI feel like checking for the return value of AddInfoBar() is a bit more future-proof.\nIt doesn\u0027t matter what caused the info bar to not be added, but it\u0027s handled. WDYT?",
+      "parentUuid": "8c6c937b_a5bd2cfe",
+      "revId": "e8f4d564a326302c09b9597283ffe3a1d86a5940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
