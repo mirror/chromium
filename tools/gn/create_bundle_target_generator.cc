@@ -41,6 +41,9 @@ void CreateBundleTargetGenerator::DoRun() {
                      &bundle_data.plugins_dir()))
     return;
 
+  if (!FillExtraAttributes())
+    return;
+
   if (!FillProductType())
     return;
 
@@ -84,6 +87,33 @@ bool CreateBundleTargetGenerator::FillBundleDir(
     return false;
   }
   bundle_dir->SwapValue(&str);
+  return true;
+}
+
+bool CreateBundleTargetGenerator::FillExtraAttributes() {
+  const Value* value = scope_->GetValue(variables::kExtraAttributes, true);
+  if (!value)
+    return true;
+
+  if (!value->VerifyTypeIs(Value::LIST, err_))
+    return false;
+
+  std::map<std::string, std::string>& extra_attributes =
+      target_->bundle_data().extra_attributes();
+  for (const auto& item : value->list_value()) {
+    std::string attribute = item.string_value();
+    if (attribute.find("=") == std::string::npos) {
+      *err_ = Err(value->origin(),
+                  "The attribute has invalid format.\n"
+                  "A valid attribute should look like {key}={value}.");
+      return false;
+    }
+
+    std::string key = attribute.substr(0, attribute.find("="));
+    std::string value = attribute.substr(attribute.find("=") + 1);
+    extra_attributes[key] = value;
+  }
+
   return true;
 }
 
