@@ -20,6 +20,7 @@
 #include "components/sync/model/sync_error.h"
 #include "components/sync/model/sync_merge_result.h"
 #include "components/sync/model/syncable_service.h"
+#include "components/sync/syncable/user_share.h"
 
 namespace syncer {
 

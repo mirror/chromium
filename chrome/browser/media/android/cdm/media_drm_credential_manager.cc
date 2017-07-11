@@ -16,6 +16,7 @@
 #include "jni/MediaDrmCredentialManager_jni.h"
 #include "media/base/android/media_drm_bridge.h"
 #include "media/base/provision_fetcher.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
 #include "widevine_cdm_version.h"  // In SHARED_INTERMEDIATE_DIR.
