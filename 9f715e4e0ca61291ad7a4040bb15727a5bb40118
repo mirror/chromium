@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f47ec1de_4e21a780",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T18:51:42Z",
+      "side": 1,
+      "message": "Why do we need this check? Maybe add a comment to clarify it?",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 59
+      },
+      "revId": "9f715e4e0ca61291ad7a4040bb15727a5bb40118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3c04dc_57d8f42d",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T18:51:42Z",
+      "side": 1,
+      "message": "Why don\u0027t we use independent platform method?",
+      "range": {
+        "startLine": 119,
+        "startChar": 39,
+        "endLine": 119,
+        "endChar": 50
+      },
+      "revId": "9f715e4e0ca61291ad7a4040bb15727a5bb40118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993e1c56_bd16652e",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T18:51:42Z",
+      "side": 1,
+      "message": "Should we remove this line when you submit the patch?",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 9
+      },
+      "revId": "9f715e4e0ca61291ad7a4040bb15727a5bb40118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc23affe_84078af3",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T18:51:42Z",
+      "side": 1,
+      "message": "No need to put On*Thread in the name, indicating the fact that it\u0027s called in a specific thread is enough.",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 45
+      },
+      "revId": "9f715e4e0ca61291ad7a4040bb15727a5bb40118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a14d1c_37e47a5e",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T18:51:42Z",
+      "side": 1,
+      "message": "use std::map until we really need it, follow the guide in https://chromium.googlesource.com/chromium/src/+/master/base/containers/",
+      "range": {
+        "startLine": 63,
+        "startChar": 11,
+        "endLine": 63,
+        "endChar": 24
+      },
+      "revId": "9f715e4e0ca61291ad7a4040bb15727a5bb40118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966d0b31_4170539b",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T18:51:42Z",
+      "side": 1,
+      "message": "render_process_info_map_",
+      "range": {
+        "startLine": 69,
+        "startChar": 23,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "9f715e4e0ca61291ad7a4040bb15727a5bb40118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286ee1d0_175ab469",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T18:51:42Z",
+      "side": 1,
+      "message": "interval_ or interval_ms_.",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 44
+      },
+      "revId": "9f715e4e0ca61291ad7a4040bb15727a5bb40118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d467cd_ca75f946",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T18:51:42Z",
+      "side": 1,
+      "message": "repeating_timer_ is confusing, just timer_?",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "9f715e4e0ca61291ad7a4040bb15727a5bb40118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499059c4_92b52bfb",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-11T18:51:42Z",
+      "side": 1,
+      "message": "total_measurement_count_?",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 34
+      },
+      "revId": "9f715e4e0ca61291ad7a4040bb15727a5bb40118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
