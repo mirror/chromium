@@ -27,6 +27,11 @@ void AppList::Show(int64_t display_id) {
     presenter_->Show(display_id);
 }
 
+void AppList::UpdateBoundsOnYPosition(int new_y_position) {
+  if (presenter_)
+    presenter_->UpdateBoundsOnYPosition(new_y_position);
+}
+
 void AppList::Dismiss() {
   if (presenter_)
     presenter_->Dismiss();
