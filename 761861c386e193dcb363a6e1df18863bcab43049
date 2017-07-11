@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbfdfc3b_f06b50be",
+        "filename": "components/password_manager/core/browser/import/password_csv_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-11T10:02:59Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 7
+      },
+      "revId": "761861c386e193dcb363a6e1df18863bcab43049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e37778a_46a9dbbf",
+        "filename": "components/password_manager/core/browser/import/password_csv_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-11T10:02:59Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 6
+      },
+      "revId": "761861c386e193dcb363a6e1df18863bcab43049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b27a9e_80c96030",
+        "filename": "components/password_manager/core/browser/import/password_csv_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-11T10:02:59Z",
+      "side": 1,
+      "message": "optional: autofill::PasswordForm is not so much longer, and makes the type clearer without the need to search for additional context.",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "761861c386e193dcb363a6e1df18863bcab43049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
