@@ -12,6 +12,8 @@ source_set("common") {
     "gl_helper_readback_support.h",
     "gl_helper_scaling.cc",
     "gl_helper_scaling.h",
+    "gpu/in_process_context_provider.cc",
+    "gpu/in_process_context_provider.h",
     "quads/resource_format.h",
     "resources/buffer_to_texture_target_map.cc",
     "resources/buffer_to_texture_target_map.h",
@@ -24,7 +26,14 @@ source_set("common") {
 
   deps = [
     "//base",
+    "//cc:cc",
+    "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/client:gles2_interface",
+    "//gpu/command_buffer/service",
+    "//gpu/ipc:ipc",
+    #"//gpu/ipc:command_buffer_sources",
+    #"//gpu/ipc:gl_in_process_context",
+    "//gpu/skia_bindings:skia_bindings",
     "//skia",
     "//ui/gfx/geometry",
   ]

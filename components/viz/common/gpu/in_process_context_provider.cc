@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/output/in_process_context_provider.h"
+#include "components/viz/common/gpu/in_process_context_provider.h"
 
 #include <stdint.h>
 
@@ -31,7 +31,7 @@
 #include "third_party/skia/include/gpu/gl/GrGLInterface.h"
 #include "ui/gfx/native_widget_types.h"
 
-namespace cc {
+namespace viz {
 
 namespace {
 
@@ -80,7 +80,7 @@ InProcessContextProvider::InProcessContextProvider(
           image_factory,
           limits,
           (shared_context ? shared_context->context_.get() : nullptr))) {
-  cache_controller_.reset(new ContextCacheController(
+  cache_controller_.reset(new cc::ContextCacheController(
       context_->GetImplementation(), base::ThreadTaskRunnerHandle::Get()));
 }
 
@@ -107,7 +107,7 @@ class GrContext* InProcessContextProvider::GrContext() {
   return gr_context_->get();
 }
 
-ContextCacheController* InProcessContextProvider::CacheController() {
+cc::ContextCacheController* InProcessContextProvider::CacheController() {
   return cache_controller_.get();
 }
 
@@ -151,4 +151,4 @@ void InProcessContextProvider::SetUpdateVSyncParametersCallback(
   context_->SetUpdateVSyncParametersCallback(callback);
 }
 
-}  // namespace cc
+}  // namespace viz

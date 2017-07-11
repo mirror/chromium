@@ -168,8 +168,6 @@ cc_component("cc") {
     "output/gl_renderer.h",
     "output/gl_renderer_draw_cache.cc",
     "output/gl_renderer_draw_cache.h",
-    "output/in_process_context_provider.cc",
-    "output/in_process_context_provider.h",
     "output/latency_info_swap_promise.cc",
     "output/latency_info_swap_promise.h",
     "output/layer_quad.cc",
