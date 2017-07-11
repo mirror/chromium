@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb3e1963_e087ca39",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-11T17:43:54Z",
+      "side": 1,
+      "message": "NotifySessionRestoreStartedLoadingTabs() is SessionRestore\u0027s private method so SessionRestoreImpl cannot call it directly. SessionRestoreImpl is not a nested class inside SessionRestore but a separate class.",
+      "parentUuid": "a379dc94_a4a5a67f",
+      "range": {
+        "startLine": 108,
+        "startChar": 29,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2ae9bd4_0609fa27",
         "filename": "chrome/browser/sessions/session_restore.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bfcf2593_f490c757",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-11T17:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2ae9bd4_0609fa27",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbb25d93_55695748",
         "filename": "chrome/browser/sessions/session_restore.h",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7acc206_c36780f9",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-11T17:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb25d93_55695748",
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "cddd730f_aa7afc89",
+        "filename": "chrome/browser/sessions/session_restore_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-11T17:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93a281d4_76cc1952",
+      "range": {
+        "startLine": 12,
+        "startChar": 37,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921ffc2c_c2f5b514",
         "filename": "chrome/browser/sessions/session_restore_observer_unittest.cc",
         "patchSetId": 3
@@ -99,6 +189,30 @@
       "writtenOn": "2017-07-11T16:58:33Z",
       "side": 1,
       "message": "Why do you need to call this directly in tests?",
+      "range": {
+        "startLine": 99,
+        "startChar": 10,
+        "endLine": 99,
+        "endChar": 31
+      },
+      "revId": "1a7de4ce752e34b77ac3f94585c3491d1824334d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e5dee8_655f6016",
+        "filename": "chrome/browser/sessions/session_restore_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-11T17:43:54Z",
+      "side": 1,
+      "message": "The session restore start signal SessionRestore::NotifySessionRestoreStartedLoadingTabs() is called only in the constructor of SessionRestoreImpl. Therefore, to emulated session restore start, I will need to construct a SessionRestoreImpl. However, creating a SessionRestoreImpl seems not viable in unit tests because it needs a Browser instance.\n\nI call the signal directly in this unit test as an alternative way to emulate the session restore start signal.",
+      "parentUuid": "921ffc2c_c2f5b514",
       "range": {
         "startLine": 99,
         "startChar": 10,
