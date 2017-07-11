@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f06854_35c31a49",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Needs curlies.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78529533_1d19615e",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Alphabetize",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "552b5049_9233ba6a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "The parens are superflous.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c694354_eede89db",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "That\u0027s better written as Restrictions.DISABLED, right?",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43bf3209_825a49e7",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "You\u0027ll now have to update tests in output_test.extjs to validate output rules for restrictions as well (see the one for state and description).",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba63dab7_ee6f86f2",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 34
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "I think we wanted to move away from controls; remove it.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5411411_7dbde90d",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 34
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "More than text boxes can be read only, right?",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d775c68_92ef0663",
+        "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "nit: it\u0027s a (singular) restriction. I know it\u0027s a pain to fix that, but that\u0027s really what it is.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f89c9fd_fa9a87bf",
+        "filename": "content/renderer/accessibility/blink_ax_tree_source.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "I think it customary to omit default so we have all possible values of the enum handled.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd3d9602_caa28bdc",
+        "filename": "content/shell/test_runner/web_ax_object_proxy.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce8e9984_ff48fe33",
+        "filename": "content/shell/test_runner/web_ax_object_proxy.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Isn\u0027t the two conditions above just restrictions !\u003d none?",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "852351aa_4b335525",
+        "filename": "content/shell/test_runner/web_ax_object_proxy.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "I don\u0027t understand this change.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "235fb1d7_0b6d1411",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXListBoxOption.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Can you not touch the selected attribute in this change? Please don\u0027t conflate the change by also changing the behavior of the selected attribute which we\u0027re not trying to tackle here.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b153af02_5158a656",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXListBoxOption.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Ditto. Please don\u0027t change selected/focus attributes. Let\u0027s do that in a followup.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "883818d3_032ee7d3",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXMenuListPopup.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Make this explicit i.e. compare it to the known enum value.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9c9d53e_d8e7d11e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Just can set focus? So, non-can set focus descendants are not disabled? Why not remove that condition?",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3f0c357_69d615b9",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 1314,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Seems no longer relevant; remove.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5864e45f_7d6a84aa",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T22:16:05Z",
+      "side": 1,
+      "message": "Still seems really arbitrary; I don\u0027t see this logic anywhere in the current code (e.g. !isLink()). Where is this coming from? My preference is to remove this logic entirely and let it fall through to the very end.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
