@@ -70,6 +70,24 @@
       "revId": "280ff7fbda380c94e19703642460a0923e33c2fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b32838b_58ca40c4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-11T09:01:44Z",
+      "side": 1,
+      "message": "Yeah, it might.\n\nAnyway, the clean up lgtm.",
+      "parentUuid": "c4d4c311_71cd2611",
+      "revId": "280ff7fbda380c94e19703642460a0923e33c2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
