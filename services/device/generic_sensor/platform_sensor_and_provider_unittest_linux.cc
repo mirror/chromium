@@ -272,11 +272,11 @@ class PlatformSensorAndProviderLinuxTest : public ::testing::Test {
   // Generates a "remove device" event by removed sensors' directory and
   // notifies the mock service about "removed" event.
   void GenerateDeviceRemovedEvent(const base::FilePath& sensor_dir) {
-    udev_device* dev = nullptr;
     DeleteFile(sensor_dir);
     bool success = base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&MockSensorDeviceManager::DeviceRemoved,
-                              base::Unretained(manager_), dev /* not used */));
+        FROM_HERE,
+        base::Bind(&MockSensorDeviceManager::DeviceRemoved,
+                   base::Unretained(manager_), nullptr /* not used */));
     ASSERT_TRUE(success);
   }
 
