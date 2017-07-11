@@ -1602,6 +1602,7 @@ split_static_library("browser") {
     "//components/update_client",
     "//components/upload_list",
     "//components/url_formatter",
+    "//components/url_log",
     "//components/url_matcher",
     "//components/user_prefs",
     "//components/variations",
