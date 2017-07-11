@@ -9,6 +9,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_samples.h"
+#include "base/metrics/metrics_hashes.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/simple_test_clock.h"
@@ -19,6 +20,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/browser_sync/profile_sync_service_mock.h"
 #include "components/password_manager/core/browser/mock_password_store.h"
+#include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/password_manager_test_utils.h"
 #include "components/password_manager/core/browser/statistics_table.h"
@@ -26,9 +28,12 @@
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
 #include "components/prefs/pref_service.h"
+#include "components/ukm/test_ukm_recorder.h"
+#include "components/ukm/ukm_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/web_contents_tester.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -94,6 +99,25 @@ std::unique_ptr<KeyedService> TestingSyncFactoryFunction(
   return base::MakeUnique<TestSyncService>(static_cast<Profile*>(context));
 }
 
+// TODO(crbug.com/738921) Replace this with generalized infrastructure.
+// Verifies that the metric |metric_name| was recorded with value |value| in the
+// single entry of |test_ukm_recorder_| exactly |expected_count| times.
+void ExpectUkmValueCount(ukm::TestUkmRecorder* test_ukm_recorder,
+                         const char* metric_name,
+                         int64_t value,
+                         int64_t expected_count) {
+  ASSERT_EQ(1U, test_ukm_recorder->entries_count());
+  const ukm::mojom::UkmEntry* entry = test_ukm_recorder->GetEntry(0);
+
+  int64_t occurrences = 0;
+  for (const ukm::mojom::UkmMetricPtr& metric : entry->metrics) {
+    if (metric->metric_hash == base::HashMetricName(metric_name) &&
+        metric->value == value)
+      ++occurrences;
+  }
+  EXPECT_EQ(expected_count, occurrences) << metric_name << ": " << value;
+}
+
 }  // namespace
 
 class ManagePasswordsBubbleModelTest : public ::testing::Test {
@@ -104,7 +128,9 @@ class ManagePasswordsBubbleModelTest : public ::testing::Test {
   void SetUp() override {
     test_web_contents_.reset(
         content::WebContentsTester::CreateTestWebContents(&profile_, nullptr));
-    mock_delegate_.reset(new testing::StrictMock<PasswordsModelDelegateMock>);
+    mock_delegate_.reset(new PasswordsModelDelegateMock);
+    ON_CALL(*mock_delegate_, GetPasswordFormMetricsRecorder())
+        .WillByDefault(Return(nullptr));
     PasswordStoreFactory::GetInstance()->SetTestingFactoryAndUse(
         profile(),
         password_manager::BuildPasswordStore<
@@ -473,3 +499,51 @@ INSTANTIATE_TEST_CASE_P(Default,
                         ManagePasswordsBubbleModelManageLinkTest,
                         ::testing::Values(TestSyncService::SyncedTypes::ALL,
                                           TestSyncService::SyncedTypes::NONE));
+
+// Verify that URL keyed metrics are properly recorded.
+TEST_F(ManagePasswordsBubbleModelTest, RecordUKMs) {
+  using DismissalReason =
+      password_manager::PasswordFormMetricsRecorder::DismissalReason;
+  using SaveBubbleTrigger =
+      password_manager::PasswordFormMetricsRecorder::SaveBubbleTrigger;
+  using password_manager::metrics_util::CredentialSourceType;
+
+  ukm::TestUkmRecorder test_ukm_recorder;
+  {
+    // Setup metrics recorder
+    ukm::SourceId source_id = test_ukm_recorder.GetNewSourceID();
+    static_cast<ukm::UkmRecorder*>(&test_ukm_recorder)
+        ->UpdateSourceURL(source_id, GURL("https://www.example.com"));
+    auto recorder = base::MakeRefCounted<
+        password_manager::PasswordFormMetricsRecorder>(
+        true /*is_main_frame_secure*/,
+        password_manager::PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+            &test_ukm_recorder, source_id));
+
+    // Exercise bubble.
+    ON_CALL(*controller(), GetPasswordFormMetricsRecorder())
+        .WillByDefault(Return(recorder.get()));
+    EXPECT_CALL(*controller(), GetCredentialSource())
+        .WillRepeatedly(Return(CredentialSourceType::kPasswordManager));
+
+    PretendPasswordWaiting();
+
+    EXPECT_CALL(*controller(), GetCredentialSource())
+        .WillRepeatedly(Return(CredentialSourceType::kPasswordManager));
+    EXPECT_CALL(*GetStore(),
+                RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
+    EXPECT_CALL(*controller(), SavePassword());
+    model()->OnSaveClicked();
+    DestroyModelExpectReason(password_manager::metrics_util::CLICKED_SAVE);
+  }
+
+  // Verify metrics.
+  ExpectUkmValueCount(&test_ukm_recorder, "Saving.Prompt.Shown", 1, 1);
+  ExpectUkmValueCount(
+      &test_ukm_recorder, "Saving.Prompt.Trigger",
+      static_cast<int64_t>(
+          SaveBubbleTrigger::kPasswordManagerSuggestionAutomatic),
+      1);
+  ExpectUkmValueCount(&test_ukm_recorder, "Saving.Prompt.Interaction",
+                      static_cast<int64_t>(DismissalReason::kAccepted), 1);
+}
