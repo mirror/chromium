@@ -114,8 +114,6 @@ void BlobBytesProvider::RequestAsFile(uint64_t source_offset,
                                       base::File file,
                                       uint64_t file_offset,
                                       RequestAsFileCallback callback) {
-  // TODO(mek): Make sure this code runs on a thread that is allowed to do
-  // file IO.
   if (!file.IsValid()) {
     std::move(callback).Run(WTF::nullopt);
     return;
