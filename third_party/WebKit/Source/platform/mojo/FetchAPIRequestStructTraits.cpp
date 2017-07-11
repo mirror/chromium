@@ -450,6 +450,20 @@ uint64_t StructTraits<blink::mojom::FetchAPIRequestDataView,
 }
 
 // static
+storage::mojom::blink::BlobPtr StructTraits<
+    blink::mojom::FetchAPIRequestDataView,
+    blink::WebServiceWorkerRequest>::blob(const blink::WebServiceWorkerRequest&
+                                              request) {
+  if (request.GetBlobDataHandle()) {
+    storage::mojom::blink::BlobPtr result;
+    request.GetBlobDataHandle()->blob()->Clone(MakeRequest(&result));
+    return result;
+  }
+
+  return nullptr;
+}
+
+// static
 WTF::String StructTraits<blink::mojom::FetchAPIRequestDataView,
                          blink::WebServiceWorkerRequest>::
     client_id(const blink::WebServiceWorkerRequest& request) {
@@ -468,6 +482,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   WTF::String method;
   WTF::HashMap<WTF::String, WTF::String> headers;
   WTF::String blobUuid;
+  storage::mojom::blink::BlobPtr blob;
   blink::Referrer referrer;
   blink::WebURLRequest::FetchCredentialsMode credentialsMode;
   blink::WebURLRequest::FetchRedirectMode redirectMode;

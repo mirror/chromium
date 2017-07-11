@@ -246,7 +246,8 @@ void ToWebServiceWorkerResponse(const ServiceWorkerResponse& response,
   }
   if (!response.blob_uuid.empty()) {
     web_response->SetBlob(blink::WebString::FromASCII(response.blob_uuid),
-                          response.blob_size);
+                          response.blob_size,
+                          storage::BlobWrapper(response.blob).ExtractPtr());
   }
   web_response->SetError(response.error);
   web_response->SetResponseTime(response.response_time);

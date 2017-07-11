@@ -29,6 +29,7 @@
 #include "net/ssl/ssl_info.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/redirect_info.h"
+#include "storage/common/blob_storage/blob_wrapper.h"  // nogncheck
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 
 #ifndef CONTENT_COMMON_RESOURCE_MESSAGES_H_
@@ -80,6 +81,17 @@ struct CONTENT_EXPORT ParamTraits<net::HashValue> {
 template <>
 struct CONTENT_EXPORT ParamTraits<storage::DataElement> {
   typedef storage::DataElement param_type;
+  static void GetSize(base::PickleSizer* s, const param_type& p);
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct CONTENT_EXPORT ParamTraits<storage::BlobWrapper> {
+  typedef storage::BlobWrapper param_type;
   static void GetSize(base::PickleSizer* s, const param_type& p);
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,

@@ -44,9 +44,16 @@ class FetchDataLoaderAsBlobHandle final : public FetchDataLoader,
     if (blob_handle) {
       DCHECK_NE(UINT64_MAX, blob_handle->size());
       if (blob_handle->GetType() != mime_type_) {
+        storage::mojom::blink::BlobPtr blob_clone;
+        if (blob_handle->blob())
+          blob_handle->blob()->Clone(MakeRequest(&blob_clone));
         // A new BlobDataHandle is created to override the Blob's type.
-        client_->DidFetchDataLoadedBlobHandle(BlobDataHandle::Create(
-            blob_handle->Uuid(), mime_type_, blob_handle->size()));
+        // TODO(mek): Since the mime type is a property of the blob itself, not
+        // just of the BlobDataHandle this should really create a new blob which
+        // references the exsting blob.
+        client_->DidFetchDataLoadedBlobHandle(
+            BlobDataHandle::Create(blob_handle->Uuid(), mime_type_,
+                                   blob_handle->size(), std::move(blob_clone)));
       } else {
         client_->DidFetchDataLoadedBlobHandle(std::move(blob_handle));
       }

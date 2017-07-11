@@ -19,6 +19,7 @@
 #include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/service_worker_modes.h"
+#include "storage/common/blob_storage/blob_wrapper.h"  // nogncheck
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerClientType.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
@@ -120,6 +121,7 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   ServiceWorkerHeaderMap headers;
   std::string blob_uuid;
   uint64_t blob_size;
+  storage::BlobWrapper blob;
   Referrer referrer;
   FetchCredentialsMode credentials_mode;
   FetchRedirectMode redirect_mode;
@@ -139,6 +141,7 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
       std::unique_ptr<ServiceWorkerHeaderMap> headers,
       const std::string& blob_uuid,
       uint64_t blob_size,
+      storage::BlobWrapper blob,
       blink::WebServiceWorkerResponseError error,
       base::Time response_time,
       bool is_in_cache_storage,
@@ -159,6 +162,7 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
   // ServiceWorkerFetchResponseCallback.
   std::string blob_uuid;
   uint64_t blob_size;
+  storage::BlobWrapper blob;
   blink::WebServiceWorkerResponseError error;
   base::Time response_time;
   bool is_in_cache_storage = false;

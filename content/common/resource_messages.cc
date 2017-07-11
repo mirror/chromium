@@ -4,6 +4,7 @@
 
 #include "content/common/resource_messages.h"
 
+#include "ipc/ipc_mojo_message_helper.h"
 #include "net/base/load_timing_info.h"
 #include "net/http/http_response_headers.h"
 
@@ -353,6 +354,52 @@ bool ParamTraits<storage::DataElement>::Read(const base::Pickle* m,
 void ParamTraits<storage::DataElement>::Log(const param_type& p,
                                             std::string* l) {
   l->append("<storage::DataElement>");
+}
+
+void ParamTraits<storage::BlobWrapper>::GetSize(base::PickleSizer* s,
+                                                const param_type& p) {
+  GetParamSize(s, p.is_bound());
+  if (p.is_bound()) {
+    s->AddUInt32();
+    s->AddAttachment();
+  }
+}
+
+void ParamTraits<storage::BlobWrapper>::Write(base::Pickle* m,
+                                              const param_type& p) {
+  WriteParam(m, p.is_bound());
+  if (p.is_bound()) {
+    auto info = storage::BlobWrapper(p).ExtractPtr().PassInterface();
+    m->WriteUInt32(info.version());
+    MojoMessageHelper::WriteMessagePipeTo(m, info.PassHandle());
+  }
+}
+
+bool ParamTraits<storage::BlobWrapper>::Read(const base::Pickle* m,
+                                             base::PickleIterator* iter,
+                                             param_type* r) {
+  bool is_bound;
+  if (!ReadParam(m, iter, &is_bound))
+    return false;
+  if (!is_bound)
+    return true;
+
+  uint32_t version;
+  if (!ReadParam(m, iter, &version))
+    return false;
+  mojo::ScopedMessagePipeHandle handle;
+  if (!MojoMessageHelper::ReadMessagePipeFrom(m, iter, &handle))
+    return false;
+  DCHECK(handle.is_valid());
+  storage::mojom::BlobPtr blob;
+  blob.Bind(storage::mojom::BlobPtrInfo(std::move(handle), version));
+  *r = storage::BlobWrapper(std::move(blob));
+  return true;
+}
+
+void ParamTraits<storage::BlobWrapper>::Log(const param_type& p,
+                                            std::string* l) {
+  l->append("<storage::BlobWrapper>");
 }
 
 void ParamTraits<scoped_refptr<content::ResourceDevToolsInfo>>::GetSize(

@@ -649,7 +649,8 @@ void CacheStorageDispatcher::PopulateWebResponseFromResponse(
 
   if (!response.blob_uuid.empty()) {
     web_response->SetBlob(blink::WebString::FromUTF8(response.blob_uuid),
-                          response.blob_size);
+                          response.blob_size,
+                          storage::BlobWrapper(response.blob).ExtractPtr());
     // Let the host know that it can release its reference to the blob.
     Send(new CacheStorageHostMsg_BlobDataHandled(response.blob_uuid));
   }

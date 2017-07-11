@@ -1940,6 +1940,7 @@ crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/callback-xhr-sync.h
 crbug.com/626703 external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
 crbug.com/626703 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
 crbug.com/626703 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
+crbug.com/626703 virtual/mojo-blobs/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
 crbug.com/626703 [ Mac ] external/wpt/css/css-flexbox-1/auto-margins-001.html [ Failure ]
 crbug.com/626703 external/wpt/workers/name-property.html [ Timeout ]
 crbug.com/626703 external/wpt/pointerevents/pointerevent_disabled_form_control-manual.html [ Timeout Pass ]
@@ -2363,6 +2364,7 @@ crbug.com/675540 virtual/off-main-thread-fetch/external/wpt/service-workers/serv
 crbug.com/658997 external/wpt/service-workers/service-worker/clients-matchall-client-types.https.html [ Skip ]
 crbug.com/658997 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/clients-matchall-client-types.https.html [ Skip ]
 crbug.com/658997 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/clients-matchall-client-types.https.html [ Skip ]
+crbug.com/658997 virtual/mojo-blobs/external/wpt/service-workers/service-worker/clients-matchall-client-types.https.html [ Skip ]
 
 crbug.com/435547 http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
 crbug.com/435547 virtual/mojo-loading/http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
@@ -2510,19 +2512,23 @@ crbug.com/508728 external/wpt/html/browsers/the-window-object/security-window/wi
 crbug.com/602693 external/wpt/service-workers/service-worker/fetch-frame-resource.https.html [ Timeout ]
 crbug.com/602693 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/fetch-frame-resource.https.html [ Timeout ]
 crbug.com/602693 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-frame-resource.https.html [ Timeout ]
+crbug.com/602693 virtual/mojo-blobs/external/wpt/service-workers/service-worker/fetch-frame-resource.https.html [ Timeout ]
 
 # This test requires a special browser flag and seems not suitable for a wpt test, see bug.
 crbug.com/691944 external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
 crbug.com/691944 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
 crbug.com/691944 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
+crbug.com/691944 virtual/mojo-blobs/external/wpt/service-workers/service-worker/update-after-oneday.https.html [ Skip ]
 
 # These tests (erroneously) see a platform-specific User-Agent header
 crbug.com/595993 external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
 crbug.com/595993 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
 crbug.com/595993 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
+crbug.com/595993 virtual/mojo-blobs/external/wpt/service-workers/service-worker/fetch-header-visibility.https.html [ Failure ]
 crbug.com/595993 external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 crbug.com/595993 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 crbug.com/595993 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
+crbug.com/595993 virtual/mojo-blobs/external/wpt/service-workers/service-worker/request-end-to-end.https.html [ Failure ]
 
 crbug.com/735883 external/wpt/service-workers/service-worker/fetch-canvas-tainting.https.html [ Pass Failure ]
 crbug.com/735883 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/fetch-canvas-tainting.https.html [ Pass Failure ]
@@ -2671,6 +2677,8 @@ crbug.com/705490 external/wpt/fetch/api/basic/error-after-response.html [ Timeou
 # Non-deterministic output, as the failing subtests dump timestamps.
 crbug.com/705490 external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
 crbug.com/705490 external/wpt/fetch/api/request/request-cache-no-store.html [ Failure ]
+crbug.com/705490 virtual/mojo-blobs/external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
+crbug.com/705490 virtual/mojo-blobs/external/wpt/fetch/api/request/request-cache-no-store.html [ Failure ]
 
 # XMLHttpRequest tests with non-deterministic results.
 crbug.com/711493 external/wpt/XMLHttpRequest/responsexml-document-properties.htm [ Failure ]
@@ -2688,6 +2696,7 @@ crbug.com/716320 external/wpt/html/infrastructure/safe-passing-of-structured-dat
 crbug.com/688486 external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 crbug.com/688486 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 crbug.com/688486 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
+crbug.com/688486 virtual/mojo-blobs/external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Failure Pass ]
 
 # Sheriff failures 2017-02-21
 crbug.com/73609 http/tests/media/video-play-stall.html [ Pass Timeout ]
