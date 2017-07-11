@@ -190,18 +190,14 @@ void RootScrollerController::ApplyRootScrollerProperties(Node& node) const {
 
 void RootScrollerController::UpdateIFrameGeometryAndLayoutSize(
     HTMLFrameOwnerElement& frame_owner) const {
-  LayoutEmbeddedContent* part = frame_owner.GetLayoutEmbeddedContent();
-  if (!part)
-    return;
+  LocalFrameView* view =
+      ToLocalFrameView(frame_owner.OwnedEmbeddedContentView());
+  view->UpdateGeometry();
 
-  part->UpdateGeometry();
+  DCHECK(document_->GetFrame() && document_->GetFrame()->View());
 
-  if (!document_->GetFrame() || !document_->GetFrame()->View())
-    return;
-
-  LocalFrameView* frame_view = document_->GetFrame()->View();
-  if (part->ChildFrameView() && (&EffectiveRootScroller() == &frame_owner))
-    part->ChildFrameView()->SetLayoutSize(frame_view->GetLayoutSize());
+  if (&EffectiveRootScroller() == frame_owner)
+    view->SetLayoutSize(document_->GetFrame()->View()->GetLayoutSize());
 }
 
 PaintLayer* RootScrollerController::RootScrollerPaintLayer() const {
