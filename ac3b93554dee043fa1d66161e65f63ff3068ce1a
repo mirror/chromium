@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "48b16d22_305256f5",
+        "filename": "ios/web/payments/payment_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-11T20:20:15Z",
+      "side": 1,
+      "message": "Because this code should follow C++ Style Guide.\n\nFrom \"Chromium Objective-C and Objective-C++ style guide\":\nFor C functions and constants defined in a namespace, use C++ style, even if most of the file is Objective-C. https://chromium.googlesource.com/chromium/src/+/master/styleguide/objective-c/objective-c.md#Objective_C_style-matches-the-language\n\nFrom \"Google C++ Style Guide\": Variables declared constexpr or const, and whose value is fixed for the duration of the program, are named with a leading \"k\" followed by mixed case.\nhttps://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Constant_Names\n\nUrl is mixed case, which is used in C++. URL is used in Objective-C. These rules are not very well followed in Chromium codebase thought :)",
+      "parentUuid": "4433253f_9f73e5d5",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6822b755_19355424",
         "filename": "ios/web/payments/payment_request.cc",
         "patchSetId": 2
