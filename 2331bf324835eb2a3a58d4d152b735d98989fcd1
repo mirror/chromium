@@ -400,6 +400,24 @@
       "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5872691d_f0891624",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-11T06:40:54Z",
+      "side": 1,
+      "message": "\u003e please do not suggest an option which you will disagree.\n\nWhat I meant was something like adding a method to emulate situation where the service is available, but D-Bus method call fails for all methods.",
+      "parentUuid": "e2b7f7a3_394bc43b",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
