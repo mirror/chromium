@@ -11,11 +11,9 @@
 #include <sys/mman.h>
 #include <xf86drm.h>
 
-#include "base/debug/crash_logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/process/memory.h"
-#include "base/process/process_metrics.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 
@@ -71,89 +69,71 @@ ClientNativePixmapDmaBuf::ImportFromDmabuf(
 ClientNativePixmapDmaBuf::ClientNativePixmapDmaBuf(
     const gfx::NativePixmapHandle& handle,
     const gfx::Size& size)
-    : pixmap_handle_(handle), size_(size), data_{0} {
+    : pixmap_handle_(handle), size_(size) {
   TRACE_EVENT0("drm", "ClientNativePixmapDmaBuf");
-  // TODO(dcastagna): support multiple fds.
-  DCHECK_EQ(1u, handle.fds.size());
-  DCHECK_GE(handle.fds.front().fd, 0);
-  dmabuf_fd_.reset(handle.fds.front().fd);
+  DCHECK_EQ(handle.planes.size(), handle.fds.size());
+  for (auto fd : handle.fds) {
+    DCHECK_GE(fd.fd, 0);
+    dmabuf_fds_.push_back(base::ScopedFD(fd.fd));
+    datas_.push_back(nullptr);
+  }
 
-  DCHECK_GE(handle.planes.back().size, 0u);
-  size_t map_size = handle.planes.back().offset + handle.planes.back().size;
-  data_ = mmap(nullptr, map_size, (PROT_READ | PROT_WRITE), MAP_SHARED,
-               dmabuf_fd_.get(), 0);
-  if (data_ == MAP_FAILED) {
-    logging::SystemErrorCode mmap_error = logging::GetLastSystemErrorCode();
-    if (mmap_error == ENOMEM)
-      base::TerminateBecauseOutOfMemory(map_size);
+  for (size_t i = 0; i < dmabuf_fds_.size(); i++) {
+    DCHECK_GE(handle.planes[i].size, 0u);
+    size_t map_size = handle.planes[i].size;
+    datas_[i] = mmap(nullptr, map_size, (PROT_READ | PROT_WRITE), MAP_SHARED,
+                     dmabuf_fds_[i].get(), handle.planes[i].offset);
+    if (datas_[i] == MAP_FAILED) {
+      logging::SystemErrorCode mmap_error = logging::GetLastSystemErrorCode();
+      if (mmap_error == ENOMEM)
+        base::TerminateBecauseOutOfMemory(map_size);
 
-    // TODO(dcastagna): Remove the following diagnostic information and the
-    // associated crash keys once crbug.com/629521 is fixed.
-    bool fd_valid = fcntl(dmabuf_fd_.get(), F_GETFD) != -1 ||
-                    logging::GetLastSystemErrorCode() != EBADF;
-    int minor = -1;
-    int major = -1;
-    struct stat buf;
-    if (!fstat(dmabuf_fd_.get(), &buf)) {
-      minor = minor(buf.st_dev);
-      major = major(buf.st_dev);
+      bool fd_valid = fcntl(dmabuf_fds_[i].get(), F_GETFD) != -1 ||
+                      logging::GetLastSystemErrorCode() != EBADF;
+      std::string mmap_params = base::StringPrintf(
+          "(addr=nullptr, length=%zu, prot=(PROT_READ | PROT_WRITE), "
+          "flags=MAP_SHARED, fd=%d[valid=%d], offset=%d)",
+          map_size, dmabuf_fds_[i].get(), fd_valid, handle.planes[i].offset);
+      std::string errno_str = logging::SystemErrorCodeToString(mmap_error);
+      LOG(ERROR) << "Failed to mmap dmabuf; mmap_params: " << mmap_params
+                 << ", buffer_size: (" << size.ToString()
+                 << "),  errno: " << errno_str;
+      LOG(ERROR) << "NativePixmapHandle plane: " << i
+                 << "stride:" << handle.planes[i].stride
+                 << " offset:" << handle.planes[i].offset
+                 << " size:" << handle.planes[i].size;
+      CHECK(false) << "Failed to mmap dmabuf.";
     }
-
-    std::string mmap_params = base::StringPrintf(
-        "(addr=nullptr, length=%zu, prot=(PROT_READ | PROT_WRITE), "
-        "flags=MAP_SHARED, fd=%d[valid=%d, minor=%d, major=%d], offset=0)",
-        map_size, dmabuf_fd_.get(), fd_valid, minor, major);
-    std::string errno_str = logging::SystemErrorCodeToString(mmap_error);
-    std::unique_ptr<base::ProcessMetrics> process_metrics(
-        base::ProcessMetrics::CreateCurrentProcessMetrics());
-    std::string number_of_fds =
-        base::StringPrintf("%d", process_metrics->GetOpenFdCount());
-    base::debug::ScopedCrashKey params_crash_key("mmap_params", mmap_params);
-    base::debug::ScopedCrashKey size_crash_key("buffer_size", size.ToString());
-    base::debug::ScopedCrashKey errno_crash_key("errno", errno_str);
-    base::debug::ScopedCrashKey number_of_fds_crash_key("number_of_fds",
-                                                        number_of_fds);
-    LOG(ERROR) << "Failed to mmap dmabuf; mmap_params: " << mmap_params
-               << ", buffer_size: (" << size.ToString()
-               << "),  errno: " << errno_str
-               << " , number_of_fds: " << number_of_fds;
-    LOG(ERROR) << "NativePixmapHandle:";
-    LOG(ERROR) << "Number of fds: " << handle.fds.size();
-    LOG(ERROR) << "Number of planes: " << handle.planes.size();
-    for (const auto& plane : handle.planes) {
-      LOG(ERROR) << "stride  " << plane.stride << " offset " << plane.offset
-                 << " size " << plane.size;
-    }
-    CHECK(false) << "Failed to mmap dmabuf.";
   }
 }
 
 ClientNativePixmapDmaBuf::~ClientNativePixmapDmaBuf() {
   TRACE_EVENT0("drm", "~ClientNativePixmapDmaBuf");
-  size_t map_size =
-      pixmap_handle_.planes.back().offset + pixmap_handle_.planes.back().size;
-  int ret = munmap(data_, map_size);
-  DCHECK(!ret);
+  for (size_t i = 0; i < dmabuf_fds_.size(); i++) {
+    int ret = munmap(datas_[i], pixmap_handle_.planes[i].size);
+    DCHECK(!ret);
+  }
 }
 
 bool ClientNativePixmapDmaBuf::Map() {
   TRACE_EVENT0("drm", "DmaBuf:Map");
-  if (data_ != nullptr) {
-    PrimeSyncStart(dmabuf_fd_.get());
-    return true;
+  for (size_t i = 0; i < dmabuf_fds_.size(); i++) {
+    if (datas_[i] == nullptr)
+      return false;
+    PrimeSyncStart(dmabuf_fds_[i].get());
   }
-  return false;
+  return true;
 }
 
 void ClientNativePixmapDmaBuf::Unmap() {
   TRACE_EVENT0("drm", "DmaBuf:Unmap");
-  PrimeSyncEnd(dmabuf_fd_.get());
+  for (auto& fd : dmabuf_fds_)
+    PrimeSyncEnd(fd.get());
 }
 
 void* ClientNativePixmapDmaBuf::GetMemoryAddress(size_t plane) const {
   DCHECK_LT(plane, pixmap_handle_.planes.size());
-  uint8_t* address = reinterpret_cast<uint8_t*>(data_);
-  return address + pixmap_handle_.planes[plane].offset;
+  return datas_[plane];
 }
 
 int ClientNativePixmapDmaBuf::GetStride(size_t plane) const {
