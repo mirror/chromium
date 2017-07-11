@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "376a7368_027a92eb",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-07-11T06:52:38Z",
+      "side": 1,
+      "message": "Please only add your name and email.",
+      "range": {
+        "startLine": 444,
+        "startChar": 41,
+        "endLine": 444,
+        "endChar": 42
+      },
+      "revId": "d4f7cecf1f0304b4e2980aef62083795504ca05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c55ca27_aca8b52b",
+        "filename": "build/config/features.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-07-11T06:52:38Z",
+      "side": 1,
+      "message": "You might not have run:\ngit cl format",
+      "range": {
+        "startLine": 28,
+        "startChar": 40,
+        "endLine": 28,
+        "endChar": 68
+      },
+      "revId": "d4f7cecf1f0304b4e2980aef62083795504ca05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51deb756_e3c2344b",
+        "filename": "build/toolchain/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-07-11T06:52:38Z",
+      "side": 1,
+      "message": "x86 simulating a 64 bit platform seems not right to me. Also, this file already has a clang_x64_v8_mips64el toolchain. Isn\u0027t that what you want?",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 1
+      },
+      "revId": "d4f7cecf1f0304b4e2980aef62083795504ca05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
