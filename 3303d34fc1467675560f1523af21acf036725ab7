@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bd2158f9_4790438a",
+        "filename": "mojo/public/cpp/bindings/lib/binding_state.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-11T20:09:03Z",
+      "side": 1,
+      "message": "SGTM - I instead changed Connector to not use a HandleSignalTracker on an invalid pipe.",
+      "parentUuid": "eb17989d_504d1d89",
+      "revId": "3303d34fc1467675560f1523af21acf036725ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f4bb307_d4e2db29",
         "filename": "mojo/public/cpp/bindings/tests/bindings_test_base.cc",
         "patchSetId": 3
@@ -57,6 +75,30 @@
       "revId": "3303d34fc1467675560f1523af21acf036725ab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1eb719_99c7b59b",
+        "filename": "mojo/public/cpp/bindings/tests/bindings_test_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-11T20:09:03Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t like it either but clang-format insists.",
+      "parentUuid": "3f4bb307_d4e2db29",
+      "range": {
+        "startLine": 29,
+        "startChar": 47,
+        "endLine": 29,
+        "endChar": 48
+      },
+      "revId": "3303d34fc1467675560f1523af21acf036725ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
