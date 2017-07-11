@@ -46,6 +46,30 @@
       "revId": "8acd94cd41a7ca7f18bf57085d6535a1a9934b97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23e2a4c_5d61714d",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-11T08:39:15Z",
+      "side": 0,
+      "message": "You\u0027ve already done a lot in this CL, but we can do more.\n\nWe can remove\n- the definition of kWrapperTypeExceptionPrototype from WrapperTypeInfo, and\n- a reference to kWrapperTypeExceptionPrototype at: https://cs.chromium.org/chromium/src/out/Debug/gen/blink/bindings/core/v8/V8DOMException.cpp?rcl\u003d347b1913b68221adc371a5cbeea627dc6571346d\u0026l\u003d40\n- optionally, we could remove |is_exception| template variable, which is used at: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl?rcl\u003d27c1e3ed283eb1ac37ad8b9b3c5954441a990e33\u0026l\u003d14  if it\u0027s not used somewhere else.",
+      "parentUuid": "29fdca32_aece1dcf",
+      "range": {
+        "startLine": 151,
+        "startChar": 25,
+        "endLine": 151,
+        "endChar": 55
+      },
+      "revId": "8acd94cd41a7ca7f18bf57085d6535a1a9934b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
