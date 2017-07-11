@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d27a567_546e7a0a",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-11T20:25:18Z",
+      "side": 1,
+      "message": "given that this isn\u0027t so much timing data but more metadata, we might consider calling it ServiceWorkerMetadata and making it a child of PageLoadMetadata. Or perhaps just make ServiceWorkerPreparationType a member of PageLoadMetadata. Would that work? We do some merging of PageLoadMetadata in the browser process side that may not make sense - I could refactor that to better accomodate this field if that\u0027s a concern.",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
