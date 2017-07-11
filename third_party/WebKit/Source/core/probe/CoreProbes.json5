@@ -143,6 +143,11 @@
         "windowCreated",
       ]
     },
+    PasswordManager: {
+      probes: [
+        "trivialPasswordManagerEventFired",
+      ]
+    },
     Performance: {
       class: "PerformanceMonitor",
       include_path: "core/frame",

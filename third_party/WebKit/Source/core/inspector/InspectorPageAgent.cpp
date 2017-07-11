@@ -74,6 +74,8 @@
 #include "platform/wtf/text/TextEncoding.h"
 #include "v8/include/v8-inspector.h"
 
+#include <base/debug/stack_trace.h>
+
 namespace blink {
 
 using protocol::Response;
@@ -386,15 +388,17 @@ InspectorPageAgent::InspectorPageAgent(
           resource_content_loader->CreateClientId()) {}
 
 void InspectorPageAgent::Restore() {
+  printf("varkor: InspectorPageAgent::Restore\n");
   if (state_->booleanProperty(PageAgentState::kPageAgentEnabled, false))
     enable();
 }
 
 Response InspectorPageAgent::enable() {
   enabled_ = true;
+  printf("varkor: InspectorPageAgent::enable\n");
+  // base::debug::StackTrace().Print();
   state_->setBoolean(PageAgentState::kPageAgentEnabled, true);
   instrumenting_agents_->addInspectorPageAgent(this);
-
   // Tell the browser the ids for all existing frames.
   for (LocalFrame* frame : *inspected_frames_) {
     frame->Client()->SetDevToolsFrameId(FrameId(frame));
@@ -681,6 +685,7 @@ void InspectorPageAgent::DidClearDocumentOfWindowObject(LocalFrame* frame) {
 void InspectorPageAgent::DomContentLoadedEventFired(LocalFrame* frame) {
   if (frame != inspected_frames_->Root())
     return;
+  printf("varkor: InspectorPageAgent::DomContentLoadedEventFired\n");
   GetFrontend()->domContentEventFired(MonotonicallyIncreasingTime());
 }
 
