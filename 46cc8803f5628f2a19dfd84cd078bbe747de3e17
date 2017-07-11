@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9aa93e3_d0c776a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T00:54:43Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "cc67ca0e_cfc9281c",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 63
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "460214b4_cb4523af",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4bdf075_feaaf035",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T00:54:43Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "460214b4_cb4523af",
+      "range": {
+        "startLine": 9,
+        "startChar": 51,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +272,30 @@
       "side": 1,
       "message": "Done. (kind of).\n\nI\u0027ve changed it so that AddNewWorker() doesn\u0027t call Start() rather than creating two functions for creating workers. (I just didn\u0027t like how long function names would\u0027ve needed to be!)\n\nIs that fine with you?",
       "parentUuid": "e4efea13_fd9ab48f",
+      "range": {
+        "startLine": 626,
+        "startChar": 2,
+        "endLine": 626,
+        "endChar": 34
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d895e9_4a520cec",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T00:54:43Z",
+      "side": 1,
+      "message": "The style in the scheduler and in Chrome is to have Create in the name if we\u0027re actually creating a new object. Since we\u0027re doing so here, we need to call this CreateAndRegisterSchedulerWorker.",
+      "parentUuid": "9f32672d_57809176",
       "range": {
         "startLine": 626,
         "startChar": 2,
