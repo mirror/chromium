@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59737d56_285f4e1b",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-11T21:08:20Z",
+      "side": 1,
+      "message": "nit: SetCurrentScreenSmooth:\n\nAlso please log the actual screen name (GetOobeScreenName(new_current-\u003escreen_id())",
+      "revId": "94372a512995bb556acfe2ff3bd5c2b63c118271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
