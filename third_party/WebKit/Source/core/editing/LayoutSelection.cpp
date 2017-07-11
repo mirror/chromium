@@ -322,7 +322,7 @@ static SelectionPaintRange CalcSelectionPaintRange(
   DCHECK(start_layout_object);
   DCHECK(end_layout_object);
   DCHECK(start_layout_object->View() == end_layout_object->View());
-
+  //
   return SelectionPaintRange(start_layout_object,
                              start_pos.ComputeEditingOffset(),
                              end_layout_object, end_pos.ComputeEditingOffset());
