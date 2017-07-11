@@ -16,6 +16,7 @@ class ChromeExtensionsDispatcherDelegate;
 class GURL;
 
 namespace blink {
+class WebFrame;
 class WebLocalFrame;
 struct WebPluginParams;
 class WebURL;
@@ -33,6 +34,13 @@ class ExtensionsGuestViewContainerDispatcher;
 class RendererPermissionsPolicyDelegate;
 class ResourceRequestPolicy;
 }
+
+namespace v8 {
+class Isolate;
+template <class T>
+class Local;
+class Object;
+}  // namespace v8
 
 class ChromeExtensionsRendererClient
     : public extensions::ExtensionsRendererClient {
@@ -80,6 +88,11 @@ class ChromeExtensionsRendererClient
   extensions::Dispatcher* extension_dispatcher() {
     return extension_dispatcher_.get();
   }
+
+  static GURL GetHandlerForPdfResource(const GURL& gurl);
+  static v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* web_frame);
 
  private:
   std::unique_ptr<ChromeExtensionsDispatcherDelegate>

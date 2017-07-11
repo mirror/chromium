@@ -13,6 +13,7 @@
 #include "content/public/common/url_constants.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
+#include "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h"
 #include "extensions/browser/url_request_util.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -178,6 +179,12 @@ ExtensionNavigationThrottle::WillStartOrRedirectRequest() {
             parent->GetSiteInstance()->GetSiteURL());
     if (parent_extension && parent_extension->is_platform_app())
       return content::NavigationThrottle::BLOCK_REQUEST;
+  }
+
+  content::NavigationThrottle::ThrottleCheckResult pdf_navigation_result;
+  if (MimeHandlerViewManagerHost::MaybeDeferNavigation(
+          navigation_handle(), &pdf_navigation_result)) {
+    return pdf_navigation_result;
   }
 
   return content::NavigationThrottle::PROCEED;
