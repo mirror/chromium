@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5e696dc_6ba2e375",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-11T19:47:08Z",
+      "side": 1,
+      "message": "Please add an enum\u003d attribute here, with an enum that has semantically meaningful labels.",
+      "range": {
+        "startLine": 634,
+        "startChar": 74,
+        "endLine": 634,
+        "endChar": 0
+      },
+      "revId": "690098864d1aebaec1ecee7d5324c466419dc7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe2d8ba_c0762e61",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-11T19:47:08Z",
+      "side": 1,
+      "message": "I would recommend still recording the false case as well.  It\u0027ll be easier to compare the values that way.",
+      "range": {
+        "startLine": 640,
+        "startChar": 19,
+        "endLine": 640,
+        "endChar": 0
+      },
+      "revId": "690098864d1aebaec1ecee7d5324c466419dc7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
