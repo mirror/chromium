@@ -306,6 +306,30 @@
       "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc99db29_379dc6e0",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-11T06:10:50Z",
+      "side": 1,
+      "message": "I\u0027ve put DCHECKs at start of method same as ApplyRootScrollerProperties.  I\u0027m going to get bokan@ (original author) to look at this.",
+      "parentUuid": "06be731b_0c296907",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 65
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
