@@ -482,8 +482,7 @@ struct MakeBindStateTypeImpl;
 
 template <typename Functor, typename... BoundArgs>
 struct MakeBindStateTypeImpl<false, Functor, BoundArgs...> {
-  static_assert(!HasRefCountedTypeAsRawPtr<
-                    typename std::decay<BoundArgs>::type...>::value,
+  static_assert(!HasRefCountedTypeAsRawPtr<BoundArgs...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
   using Type = BindState<typename std::decay<Functor>::type,
                          typename std::decay<BoundArgs>::type...>;
@@ -499,8 +498,7 @@ struct MakeBindStateTypeImpl<true, Functor, Receiver, BoundArgs...> {
   static_assert(
       !std::is_array<typename std::remove_reference<Receiver>::type>::value,
       "First bound argument to a method cannot be an array.");
-  static_assert(!HasRefCountedTypeAsRawPtr<
-                    typename std::decay<BoundArgs>::type...>::value,
+  static_assert(!HasRefCountedTypeAsRawPtr<BoundArgs...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
 
  private:

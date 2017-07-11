@@ -150,13 +150,9 @@ void ObjectProxy::CallMethodWithErrorCallback(MethodCall* method_call,
   DBusMessage* request_message = method_call->raw_message();
   dbus_message_ref(request_message);
 
-  base::Closure task = base::Bind(&ObjectProxy::StartAsyncMethodCall,
-                                  this,
-                                  timeout_ms,
-                                  request_message,
-                                  callback,
-                                  error_callback,
-                                  start_time);
+  base::Closure task = base::Bind(&ObjectProxy::StartAsyncMethodCall, this,
+                                  timeout_ms, base::Unretained(request_message),
+                                  callback, error_callback, start_time);
   statistics::AddSentMethodCall(service_name_,
                                 method_call->GetInterface(),
                                 method_call->GetMember());
@@ -293,12 +289,9 @@ void ObjectProxy::OnPendingCallIsComplete(DBusPendingCall* pending_call,
   bus_->AssertOnDBusThread();
 
   DBusMessage* response_message = dbus_pending_call_steal_reply(pending_call);
-  base::Closure task = base::Bind(&ObjectProxy::RunResponseCallback,
-                                  this,
-                                  response_callback,
-                                  error_callback,
-                                  start_time,
-                                  response_message);
+  base::Closure task = base::Bind(&ObjectProxy::RunResponseCallback, this,
+                                  response_callback, error_callback, start_time,
+                                  base::Unretained(response_message));
   bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, task);
 
   // Remove the pending call from the set.
