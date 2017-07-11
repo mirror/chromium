@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36078b42_6d2a0a22",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-11T01:00:22Z",
+      "side": 1,
+      "message": "Like dtrainor@ asked for, adding UMA in this CL would be great, since after editing the feature_list.cc file, users can start enabling the demo mode, etc., and we\u0027re a very short way away from in fact having everything available to end users. The guide for adding UMA can be found at: https://chromium.googlesource.com/chromium/src/+/master/components/feature_engagement_tracker/README.md#Configuring-UMA\n\nSadly, there\u0027s no way of using suffixes in the actions.xml file, but that is being tracked in: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d738246\n\nFeel free to take that on if you want :-)\n\nAnyway, just adding this inline-comment to the CL so that you get the cool feature of having an unresolved comment about UMA in this CL :-)",
+      "revId": "dd9c6f95c84d77cc7571bdca727b69a9b14a880c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
