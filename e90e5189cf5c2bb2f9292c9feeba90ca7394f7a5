@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef0744fa_87111d17",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/video/FullscreenVideoTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-11T08:56:05Z",
+      "side": 1,
+      "message": "As of https://crrev.com/485306, you can use a Rule for this :)",
+      "range": {
+        "startLine": 53,
+        "startChar": 31,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "e90e5189cf5c2bb2f9292c9feeba90ca7394f7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
