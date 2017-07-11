@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c9a25a_6aa7babf",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T23:06:10Z",
+      "side": 1,
+      "message": "Nit: Use nullptr rather than NULL (go ahead and fix the other one while here)",
+      "revId": "216893ef98b7376785675ef603f3ea17b5263a31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

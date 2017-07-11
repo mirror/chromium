@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "70a6b830_6a129949",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T23:06:10Z",
+      "side": 1,
+      "message": "OK, for that you\u0027d maybe want to blend the fill color with black by a small amount.\n\nAlso consider what you want to have happen for \"light\" and \"dark\" colors, e.g. maybe you really want \"blend toward opposite luma\" (which we have a function for).",
+      "parentUuid": "e274864c_46b70c77",
+      "revId": "0247a254bbfe4b86b5c7d32945d324ac6f2dbca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e213ee3e_9bfeba1d",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 17
