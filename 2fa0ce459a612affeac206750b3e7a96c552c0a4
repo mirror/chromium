@@ -69,6 +69,24 @@
       "revId": "2fa0ce459a612affeac206750b3e7a96c552c0a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97112ee3_9c2f9d61",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-11T21:40:15Z",
+      "side": 1,
+      "message": "Not sure how much sense it would make to collapse the two environments into one. MojoEnv started out deriving from ChromiumEnv, but that was changed since the two env\u0027s didn\u0027t really have anything (other than task runner stuff) in common. But yeah, it\u0027s definitely not ideal to have two completely separate Env implementations, just not sure what a collapsed env would look like.\n\nWould it be possible to at least make sure MojoEnv is also covered by leveldb_*_test tests? Not sure if that would be worth it, but if there are useful tests to subject a particular env to, it could be nice to run those on both...",
+      "parentUuid": "ab8b5559_878f7fe1",
+      "revId": "2fa0ce459a612affeac206750b3e7a96c552c0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
