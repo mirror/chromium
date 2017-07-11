@@ -68,6 +68,11 @@ class LocalWPT(object):
         self.run(['git', 'clean', '-fdx'])
         self.run(['git', 'checkout', 'origin/master'])
 
+    def remove(self):
+        """Removes the repository directory from the filesystem."""
+        _log.info('Deleting local WPT at %s.', self.path)
+        self.host.filesystem.rmtree(self.path)
+
     def create_branch_with_patch(self, branch_name, message, patch, author, force_push=False):
         """Commits the given patch and pushes to the upstream repo.
 
