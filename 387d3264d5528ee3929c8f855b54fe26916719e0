@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3517fd1c_88cd7596",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T11:31:20Z",
+      "side": 1,
+      "message": "Here I followed the const_cast pattern to avoid code duplication between the const and non-const versions. Given that const_casting a const_iterator is rather awkward, and the actual body of the const-version is actually shorter, I don\u0027t feel strongly about this and also would be fine with simple code duplication. WDYT?",
+      "range": {
+        "startLine": 492,
+        "startChar": 0,
+        "endLine": 492,
+        "endChar": 37
+      },
+      "revId": "387d3264d5528ee3929c8f855b54fe26916719e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
