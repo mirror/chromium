@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2291e683_fe7ed329",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T04:08:50Z",
+      "side": 1,
+      "message": "Seems like we should deprecate this someday, and just log StartSituation directly?",
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10f896f_88c5c441",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T04:08:50Z",
+      "side": 1,
+      "message": "don\u0027t need the \u003c\u003c part for this.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3dd99a9_557178a3",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T04:08:50Z",
+      "side": 1,
+      "message": "typo: Existing",
+      "range": {
+        "startLine": 349,
+        "startChar": 14,
+        "endLine": 349,
+        "endChar": 23
+      },
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3dda64_e583dd0e",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T04:08:50Z",
+      "side": 1,
+      "message": "BTW, I suspect that in some cases rph-\u003eHasConnection or rph-\u003eIsReady is false here, for example if the process died and the SW immediately tried to restart.\n\nI think it\u0027s a bug but I\u0027m not super inclined to fix it because once PlzNavigate ships we should be able to remove this code entirely and always use SiteInstance.",
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f12ac3_dd2eea91",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T04:08:50Z",
+      "side": 1,
+      "message": "nit: This makes UNKNOWN look like a valid value. The docu for AllocateProcess() says: \"If SERVICE_WORKER_OK is returned, |out_info| contains information about the process.\" I think we can remove the mention of UNKNOWN or else say it\u0027s only used when an error occurred.",
+      "revId": "cfc7c5d88f530e8604582d6ee4883c29ca803114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
