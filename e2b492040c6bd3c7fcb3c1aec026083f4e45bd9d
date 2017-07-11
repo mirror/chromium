@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2d938e5_301d35e9",
+        "filename": "media/mojo/interfaces/video_encode_accelerator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-11T18:09:23Z",
+      "side": 1,
+      "message": "This definition can be placed inside the interface, to match the namespacing of the C++ side.",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 53
+      },
+      "revId": "e2b492040c6bd3c7fcb3c1aec026083f4e45bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
