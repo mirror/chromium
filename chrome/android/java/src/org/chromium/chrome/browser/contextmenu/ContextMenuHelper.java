@@ -35,6 +35,7 @@ import javax.annotation.Nullable;
  */
 public class ContextMenuHelper implements OnCreateContextMenuListener {
     private static final int MAX_SHARE_DIMEN_PX = 2048;
+    private static final double MAX_WIDTH_PROPORTION = 0.75;
 
     private final WebContents mWebContents;
     private long mNativeContextMenuHelper;
@@ -214,7 +215,8 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
                 ShareHelper.shareImage(activity, result, name);
             }
         };
-        nativeRetrieveImageForShare(mNativeContextMenuHelper, callback, MAX_SHARE_DIMEN_PX);
+        nativeRetrieveImageForShare(
+                mNativeContextMenuHelper, callback, MAX_SHARE_DIMEN_PX, MAX_SHARE_DIMEN_PX);
     }
 
     /**
@@ -223,15 +225,27 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
      */
     private void getThumbnail(final Callback<Bitmap> callback) {
         if (mNativeContextMenuHelper == 0) return;
-        int maxSizePx = mActivity.getResources().getDimensionPixelSize(
-                R.dimen.context_menu_header_image_max_size);
+
+        int contextMenuWidth = (int) Math.min(
+                mActivity.getResources().getDisplayMetrics().widthPixels * MAX_WIDTH_PROPORTION,
+                mActivity.getResources().getDimensionPixelSize(R.dimen.context_menu_max_width));
+
+        int maxWidthPx = contextMenuWidth
+                - mActivity.getResources().getDimensionPixelSize(
+                          R.dimen.context_menu_header_image_width_padding);
+
+        int maxHeightPx = mActivity.getResources().getDimensionPixelSize(
+                R.dimen.context_menu_header_image_max_height);
+
         Callback<Bitmap> bitmapCallback = new Callback<Bitmap>() {
             @Override
             public void onResult(Bitmap result) {
                 callback.onResult(result);
             }
+
         };
-        nativeRetrieveImageForContextMenu(mNativeContextMenuHelper, bitmapCallback, maxSizePx);
+        nativeRetrieveImageForContextMenu(
+                mNativeContextMenuHelper, bitmapCallback, maxWidthPx, maxHeightPx);
     }
 
     @Override
@@ -259,9 +273,9 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
     private native void nativeOnStartDownload(
             long nativeContextMenuHelper, boolean isLink, boolean isDataReductionProxyEnabled);
     private native void nativeSearchForImage(long nativeContextMenuHelper);
-    private native void nativeRetrieveImageForShare(
-            long nativeContextMenuHelper, Callback<byte[]> callback, int maxSizePx);
-    private native void nativeRetrieveImageForContextMenu(
-            long nativeContextMenuHelper, Callback<Bitmap> callback, int maxSizePx);
+    private native void nativeRetrieveImageForShare(long nativeContextMenuHelper,
+            Callback<byte[]> callback, int maxWidthPx, int maxHeightPx);
+    private native void nativeRetrieveImageForContextMenu(long nativeContextMenuHelper,
+            Callback<Bitmap> callback, int maxWidthPx, int maxHeightPx);
     private native void nativeOnContextMenuClosed(long nativeContextMenuHelper);
 }
