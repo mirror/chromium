@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f8c3ba_52f28660",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-11T00:10:55Z",
+      "side": 1,
+      "message": "You never update the decision variable \u003c_____________\u003c",
+      "revId": "8db83c90c06d98cc237c17bf10b7d8d123384dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
