@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "62742102_7bf5c009",
+        "filename": "third_party/WebKit/LayoutTests/virtual/android/fast/rootscroller/browser-controls-background.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-11T14:21:17Z",
+      "side": 1,
+      "message": "I\u0027ve added a unit test to verify the style propagation itself in the latest patch. For reasons listed above I\u0027d like to keep the layout tests as well though.",
+      "parentUuid": "de216c10_dab52523",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "908116ce_0a5e5d73",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 16
@@ -245,6 +263,24 @@
       "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c98a8a7_3bd73856",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-11T14:21:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46023c2b_8c358d8a",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
