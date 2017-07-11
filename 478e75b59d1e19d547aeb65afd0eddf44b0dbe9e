@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b30d4b05_85442753",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-11T00:54:29Z",
+      "side": 1,
+      "message": "Thanks!",
+      "range": {
+        "startLine": 13,
+        "startChar": 66,
+        "endLine": 13,
+        "endChar": 72
+      },
+      "revId": "478e75b59d1e19d547aeb65afd0eddf44b0dbe9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
