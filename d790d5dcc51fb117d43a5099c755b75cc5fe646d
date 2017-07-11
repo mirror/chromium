@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4e2e391a_f03644c3",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-11T17:46:42Z",
+      "side": 1,
+      "message": "If all the tasks are posted in a single-threaded task runner I don\u0027t believe a mutex will be necessary.",
+      "parentUuid": "6c0f99ca_85aee531",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5097f140_15de94b4",
         "filename": "chrome/common/extensions/api/dial.idl",
         "patchSetId": 2
@@ -104,6 +122,24 @@
       "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2b08e7_57aeb0d6",
+        "filename": "chrome/test/data/extensions/api_test/dial/experimental/get_network_id.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-11T17:46:42Z",
+      "side": 1,
+      "message": "I don\u0027t think this would be a change detector test.  You would be exercising the function implementation, i.e. all the thread hopping in apitest.cc.  If you don\u0027t want to embed a hard coded id, you could just assert that it is non-empty.",
+      "parentUuid": "6686106d_d465d809",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
