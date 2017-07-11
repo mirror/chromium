@@ -15,6 +15,7 @@ include_rules = [
   # would include both browser and renderer components.
   "+components/spellcheck/spellcheck_build_features.h",
   "+components/supervised_user_error_page",
+  "+components/url_matcher",
   "+components/web_restrictions",
   "+content/public/common",
   "+crypto",
