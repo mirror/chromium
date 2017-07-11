@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d95de770_cdbb7311",
+        "filename": "third_party/WebKit/Source/core/html/custom/CustomElementReactionStack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-11T09:06:39Z",
+      "side": 1,
+      "message": "How does this work with incremental marking? \n\nE.g. We trace the CustomElementRegistry before allocating a CustomElementReactionStack. The registry will be black and not visited again. The stack will not be visited again (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/custom/CustomElementReactionStack.cpp?l\u003d36) and anything reachable would not be seen.\n\nI agree that it\u0027s weird but this one should have a manual WB in the current design as far as I can see.",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 42
+      },
+      "revId": "06bf6028e42a2ee85b107ef8f1e76f860a25ede4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
