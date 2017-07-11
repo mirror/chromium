@@ -64,6 +64,8 @@ component("blink") {
     "webmediaplayer_util.h",
     "webmediasource_impl.cc",
     "webmediasource_impl.h",
+    "webremoteplaybackclient_proxy.cc",
+    "webremoteplaybackclient_proxy.h",
     "websourcebuffer_impl.cc",
     "websourcebuffer_impl.h",
   ]

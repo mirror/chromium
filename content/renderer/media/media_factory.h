@@ -29,6 +29,7 @@ class WebLocalFrame;
 class WebMediaPlayer;
 class WebMediaPlayerClient;
 class WebMediaPlayerEncryptedMediaClient;
+class WebRemotePlaybackClient;
 }
 
 namespace media {
@@ -104,6 +105,7 @@ class MediaFactory {
       media::MediaLog* media_log,
       bool use_media_player,
       media::DecoderFactory* decoder_factory,
+      blink::WebRemotePlaybackClient* remote_playback_client,
       base::WeakPtr<media::MediaObserver>* out_media_observer);
 
   blink::WebMediaPlayer* CreateWebMediaPlayerForMediaStream(

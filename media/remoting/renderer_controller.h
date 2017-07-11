@@ -5,6 +5,8 @@
 #ifndef MEDIA_REMOTING_RENDERER_CONTROLLER_H_
 #define MEDIA_REMOTING_RENDERER_CONTROLLER_H_
 
+#include <memory>
+
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
@@ -13,6 +15,9 @@
 #include "media/remoting/shared_session.h"
 
 namespace media {
+
+class WebRemotePlaybackClientProxy;
+
 namespace remoting {
 
 class RpcBroker;
@@ -41,6 +46,7 @@ class RendererController final : public SharedSession::Client,
   void OnRemotePlaybackDisabled(bool disabled) override;
   void OnPlaying() override;
   void OnPaused() override;
+  void OnDataSourceInitialized(const GURL& url_after_redirects) override;
   void SetClient(MediaObserverClient* client) override;
 
   base::WeakPtr<RendererController> GetWeakPtr() {
@@ -68,6 +74,10 @@ class RendererController final : public SharedSession::Client,
   // this controller.
   void OnRendererFatalError(StopTrigger stop_trigger);
 
+  void SetRemotePlaybackClientProxy(
+      std::unique_ptr<WebRemotePlaybackClientProxy>
+          remote_playback_client_proxy);
+
  private:
   bool has_audio() const {
     return pipeline_metadata_.has_audio &&
@@ -88,6 +98,7 @@ class RendererController final : public SharedSession::Client,
   bool IsVideoCodecSupported();
   bool IsAudioCodecSupported();
   bool IsRemoteSinkAvailable();
+  bool IsAudioOrVideoSupported();
 
   // Helper to decide whether to enter or leave Remoting mode.
   bool ShouldBeRemoting();
@@ -98,6 +109,11 @@ class RendererController final : public SharedSession::Client,
   // |stop_trigger| must be the reason.
   void UpdateAndMaybeSwitch(StartTrigger start_trigger,
                             StopTrigger stop_trigger);
+
+  // Updates |remote_playback_client_proxy_| with the currently known info about
+  // the source (url, compatibility). Must be called whenever any of the info
+  // changes.
+  void UpdateRemotePlaybackClientWithSource();
 
   // Indicates whether this media element is in full screen.
   bool is_fullscreen_ = false;
@@ -143,11 +159,17 @@ class RendererController final : public SharedSession::Client,
   // Current pipeline metadata.
   PipelineMetadata pipeline_metadata_;
 
+  // Current data source information.
+  GURL url_after_redirects_;
+
   // Records session events of interest.
   SessionMetricsRecorder metrics_recorder_;
 
-  // Not own by this class. Can only be set once by calling SetClient().
+  // Not owned by this class. Can only be set once by calling SetClient().
   MediaObserverClient* client_ = nullptr;
+
+  // Can only be set once by calling SetRemotePlaybackClientProxy().
+  std::unique_ptr<WebRemotePlaybackClientProxy> remote_playback_client_proxy_;
 
   base::WeakPtrFactory<RendererController> weak_factory_;
 
