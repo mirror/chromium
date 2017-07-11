@@ -94,6 +94,30 @@
       "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c16785d_57b6582d",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-07-11T18:15:24Z",
+      "side": 0,
+      "message": "Discussed offline, thanks rch@ and wangyix@ explaining the details. Yeah, since we have the clear logic for alternative service, it is correct behavior.",
+      "parentUuid": "5551702e_5eca2ba7",
+      "range": {
+        "startLine": 935,
+        "startChar": 60,
+        "endLine": 935,
+        "endChar": 0
+      },
+      "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
