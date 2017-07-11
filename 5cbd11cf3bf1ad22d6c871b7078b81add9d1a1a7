@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd8fcf9e_a9f07cab",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-11T01:32:09Z",
+      "side": 1,
+      "message": "How do we fix it?",
+      "revId": "5cbd11cf3bf1ad22d6c871b7078b81add9d1a1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
