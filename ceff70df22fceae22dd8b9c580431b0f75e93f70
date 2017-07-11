@@ -22,6 +22,30 @@
       "revId": "ceff70df22fceae22dd8b9c580431b0f75e93f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea551e3d_023230f2",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-11T00:54:38Z",
+      "side": 1,
+      "message": "I think this is helpful as-is. The CHECK failure will always give me a SIGABRT or SIGILL in this function, which is enough to differentiate from a SIGSEGV that might be from null |this| but could also be from null |status_area_widget_| and inlined UpdateAfterShelfAlignmentChange().\n\nbtw, I think the lack of line numbers is a bug. We used to have them. I\u0027ve pinged the crash-users mailing list about it.",
+      "parentUuid": "16577809_9e5e6095",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 27
+      },
+      "revId": "ceff70df22fceae22dd8b9c580431b0f75e93f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
