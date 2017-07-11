@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "aa94c896_d4cf7cac",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-11T16:05:15Z",
+      "side": 1,
+      "message": "I find this comment somewhat redundant with the code. Instead, it\u0027d be more interesting to reference to Chrome Home, something like:\n// Test usage of MostVisitedSites mimicking Chrome Home, where a observer is installed early and once and navigations follow afterwards.\n\nI would also name the test accordingly.",
+      "revId": "0e37957da005c281f7bab45659d26ce015635f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96f2af6c_748ad617",
         "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-07-11T15:51:16Z",
       "side": 1,
       "message": "Currently, this doesn\u0027t appear to do anything. It requires sync to be enabled. I\u0027m still digging through the code, but wanted to see if you knew of any other APIs I should call, or one to set this up.",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "0e37957da005c281f7bab45659d26ce015635f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b66cf84_aa611a0c",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-11T16:05:15Z",
+      "side": 1,
+      "message": "Looks like you could even remove Refresh() because Chrome Home doesn\u0027t actually trigger it.\n\nHaving said that, it could help making the test faster, and if that\u0027s the reason why we have it, I\u0027d make sure to document.",
+      "parentUuid": "96f2af6c_748ad617",
       "range": {
         "startLine": 118,
         "startChar": 23,
