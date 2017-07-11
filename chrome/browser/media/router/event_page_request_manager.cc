@@ -9,11 +9,25 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "chrome/browser/media/router/event_page_request_manager_factory.h"
+#include "chrome/browser/media/router/media_router_factory.h"
+#include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"
 #include "extensions/browser/event_page_tracker.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/browser/process_manager_factory.h"
+#include "extensions/common/extension.h"
 
 namespace media_router {
+
+// static
+void EventPageRequestManager::BindToRequest(
+    const extensions::Extension* extension,
+    content::BrowserContext* context,
+    const service_manager::BindSourceInfo& source_info,
+    mojom::MediaRouterRequest request) {
+  EventPageRequestManagerFactory::GetApiForBrowserContext(context)
+      ->BindToMojoRequest(*extension, context, std::move(request));
+}
 
 EventPageRequestManager::~EventPageRequestManager() = default;
 
@@ -23,6 +37,27 @@ void EventPageRequestManager::Shutdown() {
 
 void EventPageRequestManager::SetExtensionId(const std::string& extension_id) {
   media_route_provider_extension_id_ = extension_id;
+}
+
+void EventPageRequestManager::BindToMojoRequest(
+    const extensions::Extension& extension,
+    content::BrowserContext* context,
+    mojom::MediaRouterRequest request) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  MediaRouterMojoImpl* media_router = static_cast<MediaRouterMojoImpl*>(
+      MediaRouterFactory::GetApiForBrowserContext(context));
+  DCHECK(media_router);
+  media_router->BindToMojoRequest(
+      std::move(request),
+      base::BindOnce(&EventPageRequestManager::OnMojoConnectionError,
+                     base::Unretained(this)));
+
+  SetExtensionId(extension.id());
+  if (!provider_version_was_recorded_) {
+    MediaRouterMojoMetrics::RecordMediaRouteProviderVersion(extension);
+    provider_version_was_recorded_ = true;
+  }
 }
 
 void EventPageRequestManager::RunOrDefer(

@@ -37,16 +37,11 @@ namespace content {
 class BrowserContext;
 }
 
-namespace extensions {
-class Extension;
-}
-
 namespace media_router {
 
 enum class MediaRouteProviderWakeReason;
 class CastMediaSinkService;
 class DialMediaSinkServiceProxy;
-class EventPageRequestManager;
 
 // MediaRouter implementation that delegates calls to the component extension.
 // Also handles the suspension and wakeup of the component extension.
@@ -55,20 +50,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                             public mojom::MediaRouter {
  public:
   ~MediaRouterMojoImpl() override;
-
-  // Sets up the MediaRouterMojoImpl instance owned by |context| to handle
-  // MediaRouterObserver requests from the component extension given by
-  // |extension|. Creates the MediaRouterMojoImpl instance if it does not
-  // exist.
-  // Called by the Mojo module registry.
-  // |extension|: The component extension, used for querying
-  //     suspension state.
-  // |context|: The BrowserContext which owns the extension process.
-  // |request|: The Mojo connection request used for binding.
-  static void BindToRequest(const extensions::Extension* extension,
-                            content::BrowserContext* context,
-                            const service_manager::BindSourceInfo& source_info,
-                            mojom::MediaRouterRequest request);
 
   // MediaRouter implementation.
   // Execution of the requests is delegated to the Do* methods, which can be
@@ -115,8 +96,34 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   scoped_refptr<MediaRouteController> GetRouteController(
       const MediaRoute::Id& route_id) override;
 
-  // TODO(crbug.com/597778): Remove this getter.
-  const std::string& media_route_provider_extension_id() const;
+  bool ShouldStartObservingSinks(const MediaSource::Id& media_source);
+  bool ShouldStopObservingMediaSinks(const MediaSource::Id& media_source);
+  bool ShouldStartObservingMediaRoutes(const MediaSource::Id& media_source);
+  bool ShouldStopObservingMediaRoutes(const MediaSource::Id& media_source);
+
+  // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
+  // with MediaRouter on a best-effort basis. This method can be only called if
+  // |media_route_provider_| is a valid handle.
+  // The extension might have become out of sync with MediaRouter due to one
+  // of few reasons:
+  // (1) The extension crashed and lost unpersisted changes.
+  // (2) The extension was updated; temporary data is cleared.
+  // (3) The extension has an unforseen bug which causes temporary data to be
+  //     persisted incorrectly on suspension.
+  void SyncStateToMediaRouteProvider();
+
+  // Binds |this| to a Mojo interface request, so that clients can acquire a
+  // handle to a MediaRouterMojoImpl instance via the Mojo service connector.
+  // Stores the ID of |extension| in |media_route_provider_extension_id_|.
+  void BindToMojoRequest(mojo::InterfaceRequest<mojom::MediaRouter> request,
+                         base::OnceClosure error_handler);
+
+  const std::string& instance_id() const { return instance_id_; }
+
+  void set_media_route_provider_for_test(
+      std::unique_ptr<mojom::MediaRouteProvider> media_route_provider) {
+    media_route_provider_ = std::move(media_route_provider);
+  }
 
   void set_instance_id_for_test(const std::string& instance_id) {
     instance_id_ = instance_id;
@@ -155,6 +162,8 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                            GetRouteControllerAfterRouteInvalidation);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoImplTest,
                            FailToCreateRouteController);
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoImplTest,
+                           SyncStateToMediaRouteProvider);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoExtensionTest,
                            DeferredBindingAndSuspension);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoExtensionTest,
@@ -216,13 +225,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   MediaRouterMojoImpl(content::BrowserContext* context,
                       FirewallCheck check_firewall = FirewallCheck::RUN);
 
-  // Binds |this| to a Mojo interface request, so that clients can acquire a
-  // handle to a MediaRouterMojoImpl instance via the Mojo service connector.
-  // Stores the ID of |extension| in |media_route_provider_extension_id_|.
-  void BindToMojoRequest(
-      mojo::InterfaceRequest<mojom::MediaRouter> request,
-      const extensions::Extension& extension);
-
   // MediaRouter implementation.
   bool RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
   void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
@@ -240,69 +242,8 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   void NotifyOfExistingRoutesIfRegistered(const MediaSource::Id& source_id,
                                           MediaRoutesObserver* observer) const;
 
-  // These calls invoke methods in the component extension via Mojo.
-  void DoCreateRoute(const MediaSource::Id& source_id,
-                     const MediaSink::Id& sink_id,
-                     const url::Origin& origin,
-                     int tab_id,
-                     std::vector<MediaRouteResponseCallback> callbacks,
-                     base::TimeDelta timeout,
-                     bool incognito);
-  void DoJoinRoute(const MediaSource::Id& source_id,
-                   const std::string& presentation_id,
-                   const url::Origin& origin,
-                   int tab_id,
-                   std::vector<MediaRouteResponseCallback> callbacks,
-                   base::TimeDelta timeout,
-                   bool incognito);
-  void DoConnectRouteByRouteId(
-      const MediaSource::Id& source_id,
-      const MediaRoute::Id& route_id,
-      const url::Origin& origin,
-      int tab_id,
-      std::vector<MediaRouteResponseCallback> callbacks,
-      base::TimeDelta timeout,
-      bool incognito);
-  void DoTerminateRoute(const MediaRoute::Id& route_id);
-  void DoDetachRoute(const MediaRoute::Id& route_id);
-  void DoSendSessionMessage(const MediaRoute::Id& route_id,
-                            const std::string& message,
-                            SendRouteMessageCallback callback);
-  void DoSendSessionBinaryMessage(const MediaRoute::Id& route_id,
-                                  std::unique_ptr<std::vector<uint8_t>> data,
-                                  SendRouteMessageCallback callback);
-  void DoStartListeningForRouteMessages(const MediaRoute::Id& route_id);
-  void DoStopListeningForRouteMessages(const MediaRoute::Id& route_id);
-  void DoStartObservingMediaSinks(const MediaSource::Id& source_id);
-  void DoStopObservingMediaSinks(const MediaSource::Id& source_id);
-  void DoStartObservingMediaRoutes(const MediaSource::Id& source_id);
-  void DoStopObservingMediaRoutes(const MediaSource::Id& source_id);
-  void DoSearchSinks(const MediaSink::Id& sink_id,
-                     const MediaSource::Id& source_id,
-                     const std::string& search_input,
-                     const std::string& domain,
-                     MediaSinkSearchResponseCallback sink_callback);
-  void DoCreateMediaRouteController(
-      const MediaRoute::Id& route_id,
-      mojom::MediaControllerRequest mojo_media_controller_request,
-      mojom::MediaStatusObserverPtr mojo_observer);
-
-  void DoProvideSinks(const std::string& provider_name,
-                      std::vector<MediaSinkInternal> sinks);
-
   // Error handler callback for |binding_| and |media_route_provider_|.
   void OnConnectionError();
-
-  // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
-  // with MediaRouter on a best-effort basis. This method can be only called if
-  // |media_route_provider_| is a valid handle.
-  // The extension might have become out of sync with MediaRouter due to one
-  // of few reasons:
-  // (1) The extension crashed and lost unpersisted changes.
-  // (2) The extension was updated; temporary data is cleared.
-  // (3) The extension has an unforseen bug which causes temporary data to be
-  //     persisted incorrectly on suspension.
-  void SyncStateToMediaRouteProvider();
 
   // mojom::MediaRouter implementation.
   void RegisterMediaRouteProvider(
@@ -355,7 +296,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // called many times but the MRPM will only be called once per registration
   // period.
   void EnsureMdnsDiscoveryEnabled();
-  void DoEnsureMdnsDiscoveryEnabled();
 
   // Callback used to enabled mDNS in the MRPM if a firewall prompt will not be
   // triggered. If a firewall prompt would be triggered, enabling mDNS won't
@@ -370,7 +310,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // discovery on sink queries an opportunity to update discovery results
   // even if the MRP SinkAvailability is marked UNAVAILABLE.
   void UpdateMediaSinks(const MediaSource::Id& source_id);
-  void DoUpdateMediaSinks(const MediaSource::Id& source_id);
 
   // Invalidates and removes controllers from |route_controllers_| whose media
   // routes do not appear in |routes|.
@@ -394,17 +333,19 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // Binds |this| to a Mojo connection stub for mojom::MediaRouter.
   std::unique_ptr<mojo::Binding<mojom::MediaRouter>> binding_;
 
+  // GUID unique to each browser run. Component extension uses this to detect
+  // when its persisted state was written by an older browser instance, and is
+  // therefore stale.
+  std::string instance_id_;
+
   // Mojo proxy object for the Media Route Provider Manager.
   // Set to null initially, and later set to the Provider Manager proxy object
   // passed in via |RegisterMediaRouteProvider()|.
   // This is set to null again when the component extension is suspended
   // if or a Mojo channel error occured.
-  mojom::MediaRouteProviderPtr media_route_provider_;
+  // mojom::MediaRouteProviderPtr media_route_provider_;
 
-  // GUID unique to each browser run. Component extension uses this to detect
-  // when its persisted state was written by an older browser instance, and is
-  // therefore stale.
-  std::string instance_id_;
+  std::unique_ptr<mojom::MediaRouteProvider> media_route_provider_;
 
   // The last reported sink availability from the media route provider manager.
   mojom::MediaRouter::SinkAvailability availability_;
@@ -420,14 +361,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   scoped_refptr<CastMediaSinkService> cast_media_sink_service_;
 
   content::BrowserContext* const context_;
-
-  // Request manager responsible for waking the component extension and calling
-  // the requests to it.
-  EventPageRequestManager* const event_page_request_manager_;
-
-  // A flag to ensure that we record the provider version once, during the
-  // initial event page wakeup attempt.
-  bool provider_version_was_recorded_ = false;
 
 #if defined(OS_WIN)
   // A pair of flags to ensure that mDNS discovery is only enabled on Windows
