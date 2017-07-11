@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7b81845d_429a457f",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-11T18:29:49Z",
+      "side": 1,
+      "message": "I\u0027m talking about the BOOL to NSNumber syntax sugar. It\u0027s probably `@(createPairing)`\n\nhttps://clang.llvm.org/docs/ObjectiveCLiterals.html#boxed-expressions",
+      "parentUuid": "2ffd8355_8902b25d",
+      "range": {
+        "startLine": 543,
+        "startChar": 34,
+        "endLine": 543,
+        "endChar": 62
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc49c47a_a642f7c7",
         "filename": "remoting/ios/keychain_wrapper.h",
         "patchSetId": 3
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "arg... So the keychain will return an empty NCFData object in-place of a string if the key is not found. So this makes sure that the object can really call dataUsingEncoding:",
       "parentUuid": "38030d33_146b26e9",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2e08f15_d1c961b3",
+        "filename": "remoting/ios/keychain_wrapper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-11T18:29:49Z",
+      "side": 1,
+      "message": "Ah okay... So is it kind of like casting an NSData into NSString?",
+      "parentUuid": "2dd4ea66_e035ebda",
       "range": {
         "startLine": 126,
         "startChar": 17,
