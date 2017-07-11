@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a6094f_acf69010",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-11T10:54:00Z",
+      "side": 1,
+      "message": "This just duplicate message summary, so I would remove and just have the summary (self contained).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "3cccde62c69093bac28fe5abb1343581b65903a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10e715f_2bd3ec31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-11T10:54:00Z",
+      "side": 1,
+      "message": "nit: please use \"Bug: xxx\" with gerrit so that it ends up with all the other tags for the CL (please also remove the blank line after when editing this CL).\n\nBTW, are there really no bug tracking the launch/implementation of ContentSuggestions that you can use to tag this CL? I see many OS\u003diOS bugs [1] that talk about ContentSuggestions, maybe there should be an umbrella bug used for changes that do not require an individual crbug.\n\n[1]: https://bugs.chromium.org/p/chromium/issues/list?can\u003d2\u0026q\u003dContentSuggestions+OS%3DiOS+\u0026colspec\u003dID+Pri+M+Stars+ReleaseBlock+Component+Status+Owner+Summary+OS+Modified\u0026x\u003dm\u0026y\u003dreleaseblock\u0026cells\u003dids",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 3
+      },
+      "revId": "3cccde62c69093bac28fe5abb1343581b65903a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
