@@ -8,6 +8,7 @@
 #include "base/logging.h"
 #include "chrome/browser/media/router/media_router_feature.h"  // nogncheck
 #include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"  // nogncheck
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "extensions/common/extension.h"

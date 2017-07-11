@@ -17,6 +17,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/platform/platform_event_dispatcher.h"
 #include "ui/events/platform/platform_event_observer.h"
@@ -716,7 +717,13 @@ class ConsecutiveOverriddenDispatcherInTheSameMessageLoopIteration
     loop->task_runner()->PostTask(
         FROM_HERE,
         base::Bind(base::IgnoreResult(&TestPlatformEventSource::Dispatch),
-                   base::Unretained(source()), *event));
+                   base::Unretained(source()),
+#if defined(OS_WIN)
+                   *event
+#else
+                   base::Unretained(*event)
+#endif
+                   ));
     run_loop.Run();
     ASSERT_EQ(2u, list->size());
     EXPECT_EQ(15, (*list)[0]);
