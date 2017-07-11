@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb6d8283_440260c1",
+        "filename": "chrome/browser/chromeos/login/oobe_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T22:22:02Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t see that pattern a lot for locals, and I don\u0027t see it used elsewhere in this file.",
+      "parentUuid": "9327197e_e4aca255",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "94372a512995bb556acfe2ff3bd5c2b63c118271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59737d56_285f4e1b",
         "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "94372a512995bb556acfe2ff3bd5c2b63c118271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7be7fa_289c68eb",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T22:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59737d56_285f4e1b",
+      "revId": "94372a512995bb556acfe2ff3bd5c2b63c118271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
