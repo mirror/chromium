@@ -36,8 +36,15 @@ def main():
   for arg, path in test_runner_path_args:
     test_runner_args.extend([arg, ResolvePath(path)])
 
-  os.execv(test_runner_path,
-           [test_runner_path] + test_runner_args + sys.argv[1:])
+  try:
+    os.execv(test_runner_path,
+             [test_runner_path] + test_runner_args + sys.argv[1:])
+  except:
+    pass
+
+  print "Resetting terminal"
+  os.execl("/bin/stty", "sane")
+  print "Reset"
 
 if __name__ == '__main__':
   sys.exit(main())
