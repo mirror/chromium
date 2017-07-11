@@ -150,6 +150,11 @@ struct PendingPaymentResponse {
 // Handler for injected JavaScript callbacks.
 - (BOOL)handleScriptCommand:(const base::DictionaryValue&)JSONCommand;
 
+// Handles creation of a PaymentRequest instance. The value of the JavaScript
+// PaymentRequest object should be provided in |message|. Returns YES if the
+// invocation was successful.
+- (BOOL)handleCreatePaymentRequest:(const base::DictionaryValue&)message;
+
 // Handles invocations of PaymentRequest.show(). The value of the JavaScript
 // PaymentRequest object should be provided in |message|. Returns YES if the
 // invocation was successful.
@@ -351,6 +356,9 @@ struct PendingPaymentResponse {
     return NO;
   }
 
+  if (command == "paymentRequest.createPaymentRequest") {
+    return [self handleCreatePaymentRequest:JSONCommand];
+  }
   if (command == "paymentRequest.requestShow") {
     return [self handleRequestShow:JSONCommand];
   }
@@ -393,7 +401,8 @@ struct PendingPaymentResponse {
       iterator->second.begin(), iterator->second.end(),
       [webPaymentRequest](
           const std::unique_ptr<payments::PaymentRequest>& paymentRequest) {
-        return paymentRequest->web_payment_request() == webPaymentRequest;
+        return paymentRequest->web_payment_request().payment_request_id ==
+               webPaymentRequest.payment_request_id;
       });
   if (found != iterator->second.end()) {
     return (*found).get();
@@ -403,6 +412,12 @@ struct PendingPaymentResponse {
       webPaymentRequest, _browserState, _activeWebState, _personalDataManager,
       self));
   return iterator->second.back().get();
+}
+
+- (BOOL)handleCreatePaymentRequest:(const base::DictionaryValue&)message {
+  payments::PaymentRequest* paymentRequest =
+      [self getOrCreatePaymentRequestFromMessage:message];
+  return paymentRequest ? YES : NO;
 }
 
 - (BOOL)handleRequestShow:(const base::DictionaryValue&)message {
@@ -721,6 +736,9 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 - (void)paymentRequestAddressNormalizationDidCompleteForPaymentRequest:
     (payments::PaymentRequest*)paymentRequest {
   web::PaymentResponse paymentResponse;
+
+  paymentResponse.payment_request_id =
+      paymentRequest->web_payment_request().payment_request_id;
 
   paymentResponse.method_name =
       base::ASCIIToUTF16(_pendingPaymentResponse.methodName);
