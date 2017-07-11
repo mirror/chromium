@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2a4372a_c7cad48c",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-11T18:38:17Z",
+      "side": 1,
+      "message": "This will only happen if 15 minutes elapses from the password entry and the |short_lived_user_context_| expires.\n\nI expect this to be a very rare scenario, and a second reauth wouldn\u0027t be disruptive at all since a long time has passed.",
+      "parentUuid": "d5712ff9_7b709a99",
+      "revId": "eaad975bbcb9e5fec5f35b40f4c9be9e03351bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8806123_3430348b",
         "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-11T09:17:08Z",
       "side": 1,
       "message": "Is this correct? We only open the app if the reauth failed?",
+      "range": {
+        "startLine": 203,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 24
+      },
+      "revId": "eaad975bbcb9e5fec5f35b40f4c9be9e03351bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65728e40_fec6241a",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-11T18:38:17Z",
+      "side": 1,
+      "message": "We have a back up flow, requiring the user to type their password the next time they unlock/sign-in (same as the sync flow). This should be very rare though.",
+      "parentUuid": "e8806123_3430348b",
       "range": {
         "startLine": 203,
         "startChar": 4,
