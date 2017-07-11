@@ -96,6 +96,7 @@ class AppMenuAdapter extends BaseAdapter {
     private static final int ENTER_ITEM_ADDL_DELAY_MS = 30;
     private static final float ENTER_STANDARD_ITEM_OFFSET_Y_DP = -10.f;
     private static final float ENTER_STANDARD_ITEM_OFFSET_X_DP = 10.f;
+    static final int ENTER_STANDARD_ITEM_TRANSLATION_ANIMATOR_POSITION = 1;
 
     private final AppMenu mAppMenu;
     private final LayoutInflater mInflater;
@@ -378,7 +379,6 @@ class AppMenuAdapter extends BaseAdapter {
     private Animator buildStandardItemEnterAnimator(final View view, int position) {
         final float offsetYPx = ENTER_STANDARD_ITEM_OFFSET_Y_DP * mDpToPx;
         final int startDelay = ENTER_ITEM_BASE_DELAY_MS + ENTER_ITEM_ADDL_DELAY_MS * position;
-
         AnimatorSet animation = new AnimatorSet();
         animation.playTogether(
                 ObjectAnimator.ofFloat(view, View.ALPHA, 0.f, 1.f),
