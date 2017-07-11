@@ -48,6 +48,10 @@ Polymer({
     },
   },
 
+  listeners: {
+    'tap': 'onDialogTap_',
+  },
+
   /** @private {?IntersectionObserver} */
   intersectionObserver_: null,
 
@@ -197,5 +201,15 @@ Polymer({
   onCancel_: function(e) {
     if (this.noCancel)
       e.preventDefault();
+  },
+
+  /** @param {!Event} */
+  onDialogTap_: function(e) {
+    if (e.target.tagName !== 'DIALOG')
+      return;
+
+    this.classList.remove('pulse');
+    setTimeout(this.classList.add.bind(this.classList, 'pulse'), 0);
+    e.preventDefault();
   },
 });
