@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4fac1de_73a9a469",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-11T20:41:30Z",
+      "side": 1,
+      "message": "This is unfortunately not OK because the the chromium typemap for the blink mojo_bindings target has private content dependencies (it\u0027s only intended for use within content).\n\nI think you should just move web_feature.mojom to its own mojom target in blink (without the goofy EXPORT stuff), and that should resolve the issue for you. Should be straightforward since it only defines an enum.",
+      "revId": "558bce0e4456bae42731392299c6b6d2868877db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f53425_05b01d85",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-11T20:41:30Z",
+      "side": 1,
+      "message": "This target has strict visibility limitations for a reason: the generated source symbols are all tagged with CONTENT_EXPORT or BLINK_PLATFORM_EXPORT, and therefore must ONLY be linked into specific targets. Your target is not one of them.",
+      "revId": "558bce0e4456bae42731392299c6b6d2868877db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
