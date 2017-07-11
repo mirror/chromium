@@ -734,4 +734,17 @@ MULTIPROCESS_TEST_MAIN(SharedMemoryTestMain) {
 #endif  // !defined(OS_IOS) && !defined(OS_ANDROID) && !defined(OS_MACOSX) &&
         // !defined(OS_FUCHSIA)
 
+TEST(SharedMemoryTest, GUIDAfterClose) {
+  const uint32_t kDataSize = 1024;
+  SharedMemory memory;
+  bool rv = memory.CreateAndMapAnonymous(kDataSize);
+  EXPECT_TRUE(rv);
+
+  base::UnguessableToken id = memory.handle().GetGUID();
+  EXPECT_FALSE(id.is_empty());
+
+  memory.Close();
+  EXPECT_EQ(id, memory.handle().GetGUID());
+}
+
 }  // namespace base

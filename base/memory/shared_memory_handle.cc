@@ -9,6 +9,9 @@ namespace base {
 SharedMemoryHandle::SharedMemoryHandle(const SharedMemoryHandle& handle) =
     default;
 
+SharedMemoryHandle::SharedMemoryHandle(const base::UnguessableToken& guid)
+    : guid_(guid) {}
+
 SharedMemoryHandle& SharedMemoryHandle::operator=(
     const SharedMemoryHandle& handle) = default;
 

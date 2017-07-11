@@ -112,7 +112,7 @@ bool SharedMemory::Unmap() {
 void SharedMemory::Close() {
   if (shm_.IsValid()) {
     shm_.Close();
-    shm_ = SharedMemoryHandle();
+    shm_ = SharedMemoryHandle(shm_.GetGUID());
   }
 }
 

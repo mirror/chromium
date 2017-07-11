@@ -231,11 +231,11 @@ SharedMemoryHandle SharedMemory::TakeHandle() {
 
 void SharedMemory::Close() {
   shm_.Close();
-  shm_ = SharedMemoryHandle();
+  shm_ = SharedMemoryHandle(shm_.GetGUID());
   if (shm_.type_ == SharedMemoryHandle::POSIX) {
     if (readonly_shm_.IsValid()) {
       readonly_shm_.Close();
-      readonly_shm_ = SharedMemoryHandle();
+      readonly_shm_ = SharedMemoryHandle(readonly_shm_.GetGUID());
     }
   }
 }

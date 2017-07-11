@@ -45,6 +45,11 @@ class BASE_EXPORT SharedMemoryHandle {
   // OS primitives.
   SharedMemoryHandle& operator=(const SharedMemoryHandle& handle);
 
+  // Creates SharedMemoryHandle only with an ID. This is used when a handle's
+  // file descriptor is no longer used e.g. after closing, but shared memory
+  // region is still alive and its ID needs to be kept.
+  explicit SharedMemoryHandle(const base::UnguessableToken& guid);
+
   // Closes the underlying OS resource.
   // The fact that this method needs to be "const" is an artifact of the
   // original interface for base::SharedMemory::CloseHandle.
