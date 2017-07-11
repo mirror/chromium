@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80f16b36_8339709a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-11T19:36:33Z",
+      "side": 1,
+      "message": "Done.\n\nI didn\u0027t know about roll-dep. Thank you very much for teaching me!",
+      "parentUuid": "8fb18135_65c65076",
+      "revId": "2fa0ce459a612affeac206750b3e7a96c552c0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f053c20_5c89ea6d",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "2fa0ce459a612affeac206750b3e7a96c552c0a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8b5559_878f7fe1",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-11T19:36:33Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve modified FilesystemErrorToStatus. I think that in the long term the two environments should collapse into one, which can then use FilesystemErrorToStatus. (I prefer this name to MakeIOError.)\n\nAsides from the obvious downside of code duplication, having 2 Env implementations means that only one of them is covered by the leveldb_*_test tests. FWIW, we\u0027re currently testing ChromiumEnv.",
+      "parentUuid": "1f053c20_5c89ea6d",
+      "revId": "2fa0ce459a612affeac206750b3e7a96c552c0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
