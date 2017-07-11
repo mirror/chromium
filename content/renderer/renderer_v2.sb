@@ -22,9 +22,12 @@
 (define bundle-id "BUNDLE_ID")
 (define component-path "COMPONENT_PATH")
 (define os-version (string->number (param "OS_VERSION")))
+(define child-pid "CHILD_PID")
 
 ; OS Version numbers
 (define mavericks 1009)
+(define yosemite 1010)
+(define el-cap 1011)
 
 ; Backwards compatibility for 10.9
 (if (not (defined? 'path))
@@ -76,7 +79,7 @@
 (allow file-read-data (path (user-homedir-path "/.CFUserTextEncoding")))
 
 ; Reads of /dev devices.
-(allow file-read-data 
+(allow file-read-data
   (path "/dev/autofs_nowait")
   (path "/dev/fd")
   (path "/dev/null")
@@ -130,7 +133,7 @@
   (global-name "com.apple.windowserver.active"))
 
 ; MacOS dropped FontServer to replace it with the (XPC based) com.apple.fonts.
-(if (= os-version mavericks)
+(if (< os-version el-cap)
   (allow mach-lookup (global-name "com.apple.FontServer")))
 
 ; sysctl
@@ -155,4 +158,6 @@
     (sysctl-name "kern.osrelease")
     (sysctl-name "kern.ostype")
     (sysctl-name "kern.osversion")
+    (sysctl-name (string-append "kern.proc.pid." (param child-pid)))
+    (sysctl-name "kern.usrstack64")
     (sysctl-name "kern.version")))
