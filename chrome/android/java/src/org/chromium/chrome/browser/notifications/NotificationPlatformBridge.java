@@ -539,6 +539,12 @@ public class NotificationPlatformBridge {
 
         boolean hasImage = image != null;
         boolean forWebApk = !webApkPackage.isEmpty();
+
+        if ("com.android.vending".equals(webApkPackage)) {
+            forWebApk = false;
+            title = "Instant App: " + title;
+
+        }
         NotificationBuilderBase notificationBuilder =
                 createNotificationBuilder(context, forWebApk, hasImage, origin)
                         .setTitle(title)
@@ -583,6 +589,7 @@ public class NotificationPlatformBridge {
         notificationBuilder.setVibrate(makeVibrationPattern(vibrationPattern));
 
         String platformTag = makePlatformTag(notificationId, origin, tag);
+
         if (forWebApk) {
             WebApkNotificationClient.notifyNotification(
                     webApkPackage, notificationBuilder, platformTag, PLATFORM_ID);

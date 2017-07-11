@@ -164,6 +164,11 @@ public class WebApkValidator {
                             + "missing call to WebApkValidator.initWithBrowserHostSignature");
             return false;
         }
+        if ("com.android.vending".equals(webappPackageName)) {
+            Log.d(TAG, "Instant app = ok for webapk");
+            return true;
+        }
+
         PackageInfo packageInfo = null;
         try {
             packageInfo = context.getPackageManager().getPackageInfo(webappPackageName,
