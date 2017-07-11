@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "6e7805b2_5b407587",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:57:54Z",
+      "side": 1,
+      "message": "You can completely disregard my previous comment, you were completely right :)",
+      "parentUuid": "7304d21b_a9d0dffb",
+      "range": {
+        "startLine": 256,
+        "startChar": 15,
+        "endLine": 256,
+        "endChar": 0
+      },
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "247ffbbe_ce27c192",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
         "patchSetId": 1

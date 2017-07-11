@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e8c7fc9_398381aa",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:57:54Z",
+      "side": 1,
+      "message": "I changed this because the previous check also compared the branding info. This would have failed for migrated data from version 1, as the branding info was empty there. I thought about adding some extra for loops to filter on the URIs, but I figured this was cleaner. WDYT?",
+      "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
