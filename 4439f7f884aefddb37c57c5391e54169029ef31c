@@ -22,6 +22,30 @@
       "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6d48ff_57c090b2",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-11T17:12:50Z",
+      "side": 1,
+      "message": "Nvm, DCHECK_GE does not support iterators as arguments.",
+      "parentUuid": "42792a30_48d1145e",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
