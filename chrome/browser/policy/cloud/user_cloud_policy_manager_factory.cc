@@ -71,7 +71,6 @@ std::unique_ptr<UserCloudPolicyManager>
 UserCloudPolicyManagerFactory::CreateForOriginalBrowserContext(
     content::BrowserContext* context,
     bool force_immediate_load,
-    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
     const scoped_refptr<base::SequencedTaskRunner>& file_task_runner,
     const scoped_refptr<base::SequencedTaskRunner>& io_task_runner) {
   UserCloudPolicyManagerFactory* factory = GetInstance();
@@ -81,7 +80,6 @@ UserCloudPolicyManagerFactory::CreateForOriginalBrowserContext(
   return factory->CreateManagerForOriginalBrowserContext(
       context,
       force_immediate_load,
-      background_task_runner,
       file_task_runner,
       io_task_runner);
 }
@@ -134,7 +132,6 @@ std::unique_ptr<UserCloudPolicyManager>
 UserCloudPolicyManagerFactory::CreateManagerForOriginalBrowserContext(
     content::BrowserContext* context,
     bool force_immediate_load,
-    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
     const scoped_refptr<base::SequencedTaskRunner>& file_task_runner,
     const scoped_refptr<base::SequencedTaskRunner>& io_task_runner) {
   DCHECK(!context->IsOffTheRecord());
@@ -144,7 +141,7 @@ UserCloudPolicyManagerFactory::CreateManagerForOriginalBrowserContext(
   DCHECK(!testing_factory_);
 
   std::unique_ptr<UserCloudPolicyStore> store(
-      UserCloudPolicyStore::Create(context->GetPath(), background_task_runner));
+      UserCloudPolicyStore::Create(context->GetPath()));
   if (force_immediate_load)
     store->LoadImmediately();
 

@@ -15,18 +15,13 @@
 #include "components/policy/core/common/cloud/cloud_policy_validator.h"
 #include "components/policy/policy_export.h"
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 namespace policy {
 
 // Base class that implements common cross-platform UserCloudPolicyStore
 // functionality.
 class POLICY_EXPORT UserCloudPolicyStoreBase : public CloudPolicyStore {
  public:
-  explicit UserCloudPolicyStoreBase(
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner);
+  UserCloudPolicyStoreBase();
   ~UserCloudPolicyStoreBase() override;
 
  protected:
@@ -43,14 +38,7 @@ class POLICY_EXPORT UserCloudPolicyStoreBase : public CloudPolicyStore {
       std::unique_ptr<enterprise_management::CloudPolicySettings> payload,
       const std::string& policy_signature_public_key);
 
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner() const {
-    return background_task_runner_;
-  }
-
  private:
-  // Task runner for background file operations.
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
-
   DISALLOW_COPY_AND_ASSIGN(UserCloudPolicyStoreBase);
 };
 

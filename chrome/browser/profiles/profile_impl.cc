@@ -484,7 +484,7 @@ ProfileImpl::ProfileImpl(
 #else
   configuration_policy_provider_ =
       policy::UserCloudPolicyManagerFactory::CreateForOriginalBrowserContext(
-          this, force_immediate_policy_load, sequenced_task_runner,
+          this, force_immediate_policy_load,
           BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 #endif
