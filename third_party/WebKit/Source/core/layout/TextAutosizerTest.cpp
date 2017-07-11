@@ -837,18 +837,18 @@ TEST_F(TextAutosizerTest, LayoutViewWidthProvider) {
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   Element* content = GetDocument().getElementById("content");
-  // (specified font-size = 16px) * (viewport width = 800px) /
+  // (specified font-size = 16px) * (body width = 800px - 16px) /
   // (window width = 320px) = 40px.
-  EXPECT_FLOAT_EQ(40.f,
+  EXPECT_FLOAT_EQ(39.2,
                   content->GetLayoutObject()->Style()->ComputedFontSize());
 
   GetDocument().getElementById("panel")->setInnerHTML("insert text");
   content->setInnerHTML(content->innerHTML());
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  // (specified font-size = 16px) * (viewport width = 800px) /
+  // (specified font-size = 16px) * (body width = 800px - 16px) /
   // (window width = 320px) = 40px.
-  EXPECT_FLOAT_EQ(40.f,
+  EXPECT_FLOAT_EQ(39.2,
                   content->GetLayoutObject()->Style()->ComputedFontSize());
 }
 
@@ -884,4 +884,36 @@ TEST_F(TextAutosizerTest, MultiColumns) {
   // (window width = 320px) < 16px.
   EXPECT_FLOAT_EQ(16.f, target->GetLayoutObject()->Style()->ComputedFontSize());
 }
+
+TEST_F(TextAutosizerTest, BodyWithMargin) {
+  Element* html = GetDocument().body()->parentElement();
+  html->setInnerHTML(
+      "<head>"
+      "  <meta name='viewport' content='width=800'>"
+      "  <style>"
+      "    html { font-size:16px;}"
+      "    body {margin:0 0 0 150px;}"
+      "  </style>"
+      "</head>"
+      "<body>"
+      "  <div id='content'>"
+      "    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do"
+      "    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim"
+      "    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut"
+      "    aliquip ex ea commodo consequat. Duis aute irure dolor in"
+      "    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla"
+      "    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in"
+      "    culpa qui officia deserunt mollit anim id est laborum."
+      "  </div>"
+      "</body>",
+      ASSERT_NO_EXCEPTION);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  Element* content = GetDocument().getElementById("content");
+  // (specified font-size = 16px) * (body width = 650px) /
+  // (window width = 320px) = 32.5px.
+  EXPECT_FLOAT_EQ(32.5,
+                  content->GetLayoutObject()->Style()->ComputedFontSize());
+}
+
 }  // namespace blink
