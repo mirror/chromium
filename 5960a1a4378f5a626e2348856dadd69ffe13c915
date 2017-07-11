@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6eaaf46_ccef672f",
+        "filename": "chrome/installer/zucchini/io_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-11T20:02:08Z",
+      "side": 1,
+      "message": "I think we only need \u003costream\u003e",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "5960a1a4378f5a626e2348856dadd69ffe13c915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2eaf670_c1c91f85",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-11T20:02:08Z",
+      "side": 1,
+      "message": "value",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 5
+      },
+      "revId": "5960a1a4378f5a626e2348856dadd69ffe13c915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d9ed70_4451d1d8",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-11T20:02:08Z",
+      "side": 1,
+      "message": "This one can go in .cc",
+      "revId": "5960a1a4378f5a626e2348856dadd69ffe13c915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5802f9ea_c4184adb",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-11T20:02:08Z",
+      "side": 1,
+      "message": "s/teats/treats",
+      "range": {
+        "startLine": 144,
+        "startChar": 35,
+        "endLine": 144,
+        "endChar": 40
+      },
+      "revId": "5960a1a4378f5a626e2348856dadd69ffe13c915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9eb1525_e9a65f41",
+        "filename": "chrome/installer/zucchini/io_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-11T20:02:08Z",
+      "side": 1,
+      "message": "Mind as well have 2 test cases.",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "5960a1a4378f5a626e2348856dadd69ffe13c915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
