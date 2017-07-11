@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d59da99_6700b765",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/2dcontext/imagebitmap/createImageBitmap-sizeOverflow.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-11T17:29:44Z",
+      "side": 1,
+      "message": "Why do we need this wrapping function?",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "1fa09accd54b2565ea7815673c2921693826cde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b0a956_4deee6cb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/2dcontext/imagebitmap/createImageBitmap-sizeOverflow.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-11T17:29:44Z",
+      "side": 1,
+      "message": "These number are a bit too random for a hand-written test. I think you should separate this into to four promise_test() That each specify a very large number for one of the four arguments.",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "1fa09accd54b2565ea7815673c2921693826cde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e513736d_fc3e78d2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/2dcontext/imagebitmap/createImageBitmap-sizeOverflow.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-11T17:29:44Z",
+      "side": 1,
+      "message": "Should just be:\ncrateImageBitmap(...).then(resolve, reject);",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "1fa09accd54b2565ea7815673c2921693826cde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131a94a1_be9bf56c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/2dcontext/imagebitmap/createImageBitmap-sizeOverflow.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-11T17:29:44Z",
+      "side": 1,
+      "message": "\"does not crash or reject the promise...\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "1fa09accd54b2565ea7815673c2921693826cde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
