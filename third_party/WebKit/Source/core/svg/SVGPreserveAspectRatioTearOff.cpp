@@ -82,7 +82,7 @@ SVGPreserveAspectRatioTearOff::SVGPreserveAspectRatioTearOff(
                                                  attribute_name) {}
 
 DEFINE_TRACE_WRAPPERS(SVGPreserveAspectRatioTearOff) {
-  visitor->TraceWrappers(contextElement());
+  visitor->TraceWrappersWithManualWriteBarrier(contextElement());
 }
 
 }  // namespace blink

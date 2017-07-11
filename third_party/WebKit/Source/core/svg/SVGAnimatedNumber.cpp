@@ -50,7 +50,7 @@ DEFINE_TRACE(SVGAnimatedNumber) {
 }
 
 DEFINE_TRACE_WRAPPERS(SVGAnimatedNumber) {
-  visitor->TraceWrappers(contextElement());
+  visitor->TraceWrappersWithManualWriteBarrier(contextElement());
 }
 
 }  // namespace blink

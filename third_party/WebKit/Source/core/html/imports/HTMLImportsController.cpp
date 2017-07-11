@@ -153,7 +153,7 @@ DEFINE_TRACE(HTMLImportsController) {
 }
 
 DEFINE_TRACE_WRAPPERS(HTMLImportsController) {
-  visitor->TraceWrappers(Master());
+  visitor->TraceWrappersWithManualWriteBarrier(Master());
 }
 
 }  // namespace blink

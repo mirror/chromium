@@ -131,7 +131,7 @@ void SVGTransformTearOff::setSkewY(float y, ExceptionState& exception_state) {
 }
 
 DEFINE_TRACE_WRAPPERS(SVGTransformTearOff) {
-  visitor->TraceWrappers(contextElement());
+  visitor->TraceWrappersWithManualWriteBarrier(contextElement());
 }
 
 }  // namespace blink

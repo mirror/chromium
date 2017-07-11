@@ -7733,7 +7733,7 @@ DEFINE_TRACE_WRAPPERS(WebGLRenderingContextBase) {
     visitor->TraceWrappers(unit.texture2d_array_binding_);
   }
   for (ExtensionTracker* tracker : extensions_) {
-    visitor->TraceWrappers(tracker);
+    visitor->TraceWrappersWithManualWriteBarrier(tracker);
   }
   CanvasRenderingContext::TraceWrappers(visitor);
 }

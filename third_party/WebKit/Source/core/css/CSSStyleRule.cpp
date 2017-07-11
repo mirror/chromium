@@ -110,8 +110,8 @@ DEFINE_TRACE(CSSStyleRule) {
 }
 
 DEFINE_TRACE_WRAPPERS(CSSStyleRule) {
-  visitor->TraceWrappers(parentRule());
-  visitor->TraceWrappers(parentStyleSheet());
+  visitor->TraceWrappersWithManualWriteBarrier(parentRule());
+  visitor->TraceWrappersWithManualWriteBarrier(parentStyleSheet());
   CSSRule::TraceWrappers(visitor);
 }
 
