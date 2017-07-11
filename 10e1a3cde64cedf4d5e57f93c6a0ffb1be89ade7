@@ -282,6 +282,30 @@
       "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06be731b_0c296907",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-11T05:33:55Z",
+      "side": 1,
+      "message": "OK, if it can never be null, this seems strictly better. It was just unclear to me that this was the case.\n\nLet\u0027s move it to the beginning to the function? Unless you intentionally want to check that view-\u003eUpdateGeometry() didn\u0027t do anything funny.",
+      "parentUuid": "2730fd11_7579c5af",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 65
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

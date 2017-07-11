@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be87c14_324c461d",
+        "filename": "third_party/WebKit/Source/core/frame/EmbeddedContentView.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-11T05:33:55Z",
+      "side": 1,
+      "message": "My main suggestion would to focus on the purpose and why, rather than the specifics.\n\nMaybe something like:\n\nCalled when the size of the view changes. Implementations of\nEmbeddedContentView should call LayoutEmbeddedContent::UpdateGeomtry\nand update any internal bookkeeping (such as triggering relayout if\nneeded).\n\n(Sorry I didn\u0027t have a very good understanding of this before, so your comment helped me understand. Btw, another common way to do this is to put the call to the LayoutEmbeddedContent::UpdateGeometry in the base class method implementation, and require\nsubclasses to delegate to it. That\u0027s what Frame::Detach() does.)",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "080bb3b61f58e53452692f89a4955863d74ba21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
