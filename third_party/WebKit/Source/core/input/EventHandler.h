@@ -283,6 +283,7 @@ class CORE_EXPORT EventHandler final
 
   bool ShouldApplyTouchAdjustment(const WebGestureEvent&) const;
 
+  bool ShouldShowIBeamForNode(const Node*, const HitTestResult&);
   OptionalCursor SelectCursor(const HitTestResult&);
   OptionalCursor SelectAutoCursor(const HitTestResult&,
                                   Node*,
