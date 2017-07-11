@@ -22,6 +22,30 @@
       "revId": "cb19255c23379e2854df92c6b9746ad45ef0b215",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9886ee_8d12dc10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-07-11T17:07:21Z",
+      "side": 1,
+      "message": "Thanks, you\u0027re right! Will actually use your descriptions and will keep it in mind for the future.",
+      "parentUuid": "c59a480a_51cf4084",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "cb19255c23379e2854df92c6b9746ad45ef0b215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

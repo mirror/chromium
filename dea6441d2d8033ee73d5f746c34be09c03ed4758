@@ -16,6 +16,24 @@
       "revId": "dea6441d2d8033ee73d5f746c34be09c03ed4758",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7194da97_3f6f1207",
+        "filename": "ios/showcase/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-07-11T17:07:21Z",
+      "side": 0,
+      "message": "Good point, it would be ideal if we juts depended on ios/chrome/browser/ui or something similar, but right now we can\u0027t, this is definitely something to take into account while building the new arch.",
+      "parentUuid": "9711a151_76ce4e2c",
+      "revId": "dea6441d2d8033ee73d5f746c34be09c03ed4758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
