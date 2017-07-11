@@ -17,6 +17,7 @@
 #include "base/metrics/statistics_recorder.h"
 #include "base/metrics/user_metrics.h"
 #include "base/stl_util.h"
+#include "base/strings/string16.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/test_simple_task_runner.h"
@@ -91,7 +92,7 @@ class MetricsServiceTest : public testing::Test {
     base::SetRecordActionTaskRunner(task_runner_);
     MetricsService::RegisterPrefs(testing_local_state_.registry());
     metrics_state_manager_ = MetricsStateManager::Create(
-        GetLocalState(), enabled_state_provider_.get(),
+        GetLocalState(), enabled_state_provider_.get(), base::string16(),
         base::Bind(&StoreNoClientInfoBackup), base::Bind(&ReturnNoBackup));
   }
 
