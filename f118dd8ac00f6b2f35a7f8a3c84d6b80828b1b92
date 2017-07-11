@@ -22,6 +22,30 @@
       "revId": "f118dd8ac00f6b2f35a7f8a3c84d6b80828b1b92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a48be9a_d57362c5",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-11T22:26:07Z",
+      "side": 1,
+      "message": "there is now :)",
+      "parentUuid": "d8ed4cdf_09767c23",
+      "range": {
+        "startLine": 88,
+        "startChar": 5,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "f118dd8ac00f6b2f35a7f8a3c84d6b80828b1b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
