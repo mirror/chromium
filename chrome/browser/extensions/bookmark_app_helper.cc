@@ -357,6 +357,9 @@ void BookmarkAppHelper::UpdateWebAppInfoFromManifest(
   if (manifest.start_url.is_valid())
     web_app_info->app_url = manifest.start_url;
 
+  if (manifest.scope.is_valid())
+    web_app_info->scope = manifest.scope;
+
   // If any icons are specified in the manifest, they take precedence over any
   // we picked up from the web_app stuff.
   if (!manifest.icons.empty()) {

@@ -117,6 +117,21 @@ scoped_refptr<Extension> ConvertWebAppToExtension(
                                              web_app.generated_icon_color));
   }
 
+  // Use the scope to create a url handler for the app.
+  auto matches = base::MakeUnique<base::ListValue>();
+  matches->AppendString(web_app.scope.spec() + "*");
+
+  auto scope_handler = base::MakeUnique<base::DictionaryValue>();
+  scope_handler->SetList(keys::kMatches, std::move(matches));
+  scope_handler->SetString(keys::kUrlHandlerTitle,
+                           base::UTF16ToUTF8(web_app.title));
+
+  auto url_handlers = base::MakeUnique<base::DictionaryValue>();
+  url_handlers->SetDictionary("", std::move(scope_handler));
+
+  root->SetDictionary(keys::kUrlHandlers, std::move(url_handlers));
+  LOG(ERROR) << "Converted manifest: " << *root;
+
   // Add the icons and linked icon information.
   auto icons = base::MakeUnique<base::DictionaryValue>();
   auto linked_icons = base::MakeUnique<base::ListValue>();

@@ -134,8 +134,12 @@ GURL UrlForExtension(const extensions::Extension* extension,
 
   GURL url;
   if (!override_url.is_empty()) {
-    DCHECK(extension->web_extent().MatchesURL(override_url) ||
-           override_url.GetOrigin() == extension->url());
+    DCHECK(
+        extension->web_extent().MatchesURL(override_url) ||
+        override_url.GetOrigin() == extension->url() ||
+        (extension->from_bookmark() &&
+         extensions::AppLaunchInfo::GetFullLaunchURL(extension).GetOrigin() ==
+             override_url.GetOrigin()));
     url = override_url;
   } else {
     url = extensions::AppLaunchInfo::GetFullLaunchURL(extension);
