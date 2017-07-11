@@ -29,14 +29,14 @@ class CommandLinePrefStoreSSLManagerTest : public testing::Test {
   base::MessageLoop message_loop_;
 };
 
-// Test that command-line settings for minimum and maximum SSL versions are
-// respected and that they do not persist to the preferences files.
+// Test that command-line settings for minimum SSL versions and TLS 1.3 variants
+// are respected and that they do not persist to the preferences files.
 TEST_F(CommandLinePrefStoreSSLManagerTest, CommandLinePrefs) {
   scoped_refptr<TestingPrefStore> local_state_store(new TestingPrefStore());
 
   base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
   command_line.AppendSwitchASCII(switches::kSSLVersionMin, "tls1.1");
-  command_line.AppendSwitchASCII(switches::kSSLVersionMax, "tls1.3");
+  command_line.AppendSwitchASCII(switches::kTLS13Variant, "draft");
 
   sync_preferences::PrefServiceMockFactory factory;
   factory.set_user_prefs(local_state_store);
@@ -64,14 +64,14 @@ TEST_F(CommandLinePrefStoreSSLManagerTest, CommandLinePrefs) {
       local_state->FindPreference(ssl_config::prefs::kSSLVersionMin);
   EXPECT_FALSE(version_min_pref->IsUserModifiable());
 
-  const PrefService::Preference* version_max_pref =
-      local_state->FindPreference(ssl_config::prefs::kSSLVersionMax);
-  EXPECT_FALSE(version_max_pref->IsUserModifiable());
+  const PrefService::Preference* tls13_variant_pref =
+      local_state->FindPreference(ssl_config::prefs::kTLS13Variant);
+  EXPECT_FALSE(tls13_variant_pref->IsUserModifiable());
 
   std::string version_min_str;
-  std::string version_max_str;
+  std::string tls13_variant_str;
   EXPECT_FALSE(local_state_store->GetString(ssl_config::prefs::kSSLVersionMin,
                                             &version_min_str));
-  EXPECT_FALSE(local_state_store->GetString(ssl_config::prefs::kSSLVersionMax,
-                                            &version_max_str));
+  EXPECT_FALSE(local_state_store->GetString(ssl_config::prefs::kTLS13Variant,
+                                            &tls13_variant_str));
 }
