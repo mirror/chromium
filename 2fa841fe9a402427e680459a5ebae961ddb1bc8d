@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f509aa25_aa3f7c03",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-11T21:51:41Z",
+      "side": 1,
+      "message": "webcontents owns contentviewcore, so I\u0027m guessing this isn\u0027t needed anymore with WebContentsDestroyed",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b8b844_220527ba",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-11T21:51:41Z",
+      "side": 1,
+      "message": "how about just call onDismissed?",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f7d6e6_8558418b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-11T21:51:41Z",
+      "side": 1,
+      "message": "I think this can probably be called multiple times now, need to change anything to make sure that\u0027s ok?",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
