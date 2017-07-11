@@ -246,35 +246,46 @@ def main():
     bt_with_offset_re = re.compile(prefix +
         'bt#(\d+): pc 0x[0-9a-f]+ sp (0x[0-9a-f]+) \((\S+),(0x[0-9a-f]+)\)$')
     bt_end_re = re.compile(prefix + 'bt#(\d+): end')
-    qemu_popen = subprocess.Popen(qemu_command, stdout=subprocess.PIPE)
-    processed_lines = []
-    success = False
-    while True:
-      line = qemu_popen.stdout.readline()
-      if not line:
-        break
-      print line,
-      if 'SUCCESS: all tests passed.' in line:
-        success = True
-      if bt_end_re.match(line.strip()):
-        if processed_lines:
-          print '----- start symbolized stack'
-          for processed in processed_lines:
-            print processed
-          print '----- end symbolized stack'
-        processed_lines = []
-      else:
-        m = bt_with_offset_re.match(line.strip())
-        if m:
-          addr2line_output = subprocess.check_output(
-              ['addr2line', '-Cipf', '--exe=' + args.test_name, m.group(4)])
-          prefix = '#%s: ' % m.group(1)
-          # addr2line outputs a second line for inlining information, offset
-          # that to align it properly after the frame index.
-          addr2line_filtered = addr2line_output.strip().replace(
-              '(inlined', ' ' * len(prefix) + '(inlined')
-          processed_lines.append('%s%s' % (prefix, addr2line_filtered))
-    qemu_popen.wait()
+
+    # Save the user's terminal flags so they can be restored, regardless of
+    # how cleanly the VM or guest OS was terminated.
+    saved_tty = subprocess.check_output(['/bin/stty', '-g']).strip()
+
+    try:
+      qemu_popen = subprocess.Popen(qemu_command, stdout=subprocess.PIPE)
+      processed_lines = []
+      success = False
+      while True:
+        line = qemu_popen.stdout.readline()
+        if not line:
+          break
+        print line,
+        if 'SUCCESS: all tests passed.' in line:
+          success = True
+        if bt_end_re.match(line.strip()):
+          if processed_lines:
+            print '----- start symbolized stack'
+            for processed in processed_lines:
+              print processed
+            print '----- end symbolized stack'
+          processed_lines = []
+        else:
+          m = bt_with_offset_re.match(line.strip())
+          if m:
+            addr2line_output = subprocess.check_output(
+                ['addr2line', '-Cipf', '--exe=' + args.test_name, m.group(4)])
+            prefix = '#%s: ' % m.group(1)
+            # addr2line outputs a second line for inlining information, offset
+            # that to align it properly after the frame index.
+            addr2line_filtered = addr2line_output.strip().replace(
+                '(inlined', ' ' * len(prefix) + '(inlined')
+            processed_lines.append('%s%s' % (prefix, addr2line_filtered))
+      qemu_popen.wait()
+
+    finally:
+      # Restore terminal settings.
+      subprocess.call(['/bin/stty', saved_tty])
+
     return 0 if success else 1
 
   return 0
