@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1227a37a_50132aab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-11T00:31:40Z",
+      "side": 1,
+      "message": "I\u0027ll let Kentaro speak to this more fully, but the main problem is that controller/ would then begin as a dumping ground, and this is very much a non-goal for controller/.",
+      "parentUuid": "c488d7cf_de81cbd8",
+      "revId": "1782b9d236497fe4f393125626eacf7e2e401ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e46e332e_a2dd7489",
         "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentCore.h",
         "patchSetId": 7
