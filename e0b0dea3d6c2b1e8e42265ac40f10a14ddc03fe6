@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51fde23b_8376cea2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T18:37:10Z",
+      "side": 1,
+      "message": "nit: remove this annotation since this method no longer returns null.",
+      "range": {
+        "startLine": 361,
+        "startChar": 5,
+        "endLine": 361,
+        "endChar": 13
+      },
+      "revId": "e0b0dea3d6c2b1e8e42265ac40f10a14ddc03fe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76a5026_d24ad1ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T18:37:10Z",
+      "side": 1,
+      "message": "nit: Let\u0027s rename history_header_view.xml to date_divided_adapter_header_view_holder.xml or something like that.",
+      "range": {
+        "startLine": 365,
+        "startChar": 43,
+        "endLine": 365,
+        "endChar": 62
+      },
+      "revId": "e0b0dea3d6c2b1e8e42265ac40f10a14ddc03fe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82781e1b_259d9712",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T18:37:10Z",
+      "side": 1,
+      "message": "nit: ..visible, the header group...\n\nSince there\u0027s a default implementation now, let\u0027s change this to something like\n\n{@link #bindViewHolderForHeaderItem(ViewHolder, HeaderItem)} will bind the HeaderItem views to the given ViewHolder. Sub-classes may override #bindViewHolderForHeaderItem and (@link #createHeader(ViewGroup)} if custom behavior is needed.",
+      "range": {
+        "startLine": 489,
+        "startChar": 36,
+        "endLine": 489,
+        "endChar": 42
+      },
+      "revId": "e0b0dea3d6c2b1e8e42265ac40f10a14ddc03fe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
