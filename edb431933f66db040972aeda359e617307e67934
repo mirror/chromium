@@ -34,6 +34,24 @@
       "revId": "edb431933f66db040972aeda359e617307e67934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f096b7_47ce3c52",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-11T12:41:45Z",
+      "side": 1,
+      "message": "Thanks, filed https://crbug.com/740924",
+      "parentUuid": "6b2d5b4a_8e359970",
+      "revId": "edb431933f66db040972aeda359e617307e67934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
