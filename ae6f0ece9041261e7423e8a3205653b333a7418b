@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb676e14_93d2fe41",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:05:45Z",
+      "side": 1,
+      "message": "This can go back to const.",
+      "range": {
+        "startLine": 749,
+        "startChar": 7,
+        "endLine": 749,
+        "endChar": 11
+      },
+      "revId": "ae6f0ece9041261e7423e8a3205653b333a7418b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b316d27_15f29e8a",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:05:45Z",
+      "side": 1,
+      "message": "Just thought of this as I missed the changes in the rest of the file.\n\nWould you be opposed to reverting these for loops and then adding this for cases that keep the threads around for too long?\n\n// We may run out of system resources if these threads are kept alive.\n// See http://crbug.com/[bug]\n\u003cvector of threads\u003e.clear();",
+      "range": {
+        "startLine": 787,
+        "startChar": 4,
+        "endLine": 787,
+        "endChar": 10
+      },
+      "revId": "ae6f0ece9041261e7423e8a3205653b333a7418b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0c02b7_f3338da6",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:05:45Z",
+      "side": 1,
+      "message": "Similarly, this one shouldn\u0027t need the reset either.",
+      "range": {
+        "startLine": 846,
+        "startChar": 4,
+        "endLine": 846,
+        "endChar": 19
+      },
+      "revId": "ae6f0ece9041261e7423e8a3205653b333a7418b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
