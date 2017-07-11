@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92768faa_ead8eec3",
+        "filename": "components/variations/variations_params_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-11T16:28:18Z",
+      "side": 1,
+      "message": "Nit: No {}",
+      "range": {
+        "startLine": 113,
+        "startChar": 15,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1cc00e_475a2d98",
+        "filename": "components/variations/variations_params_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-11T16:28:18Z",
+      "side": 1,
+      "message": "Non-const params should be last. Same for the one above.",
+      "range": {
+        "startLine": 94,
+        "startChar": 37,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3922cc4_23678a7c",
+        "filename": "components/variations/variations_params_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-11T16:28:18Z",
+      "side": 1,
+      "message": "Can this be a std::set\u003cbase::Feature\u003e?",
+      "range": {
+        "startLine": 97,
+        "startChar": 35,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
