@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8820cc34_da8098b8",
+        "filename": "tools/gn/create_bundle_target_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-11T08:35:20Z",
+      "side": 1,
+      "message": "I think that using Value::SCOPE is easier to use. That is instead of the following:\n\n  create_bundle(\"foo_app\") {\n    ...\n    extra_attributes \u003d [\n      \"foo\u003dbar\",\n      \"baz\u003dqux\",\n    ]\n  }\n\nthen it would be possible to write the following (which is better looking IMO):\n\n  create_bundle(\"foo_app\") {\n    ...\n    extra_attributes \u003d {\n      foo \u003d \"bar\"\n      baz \u003d \"qux\"\n    }\n  }\n\nThis will also correctly deal with duplicated keys (which you do not correctly deal with in your code below. I think to use Value::SCOPE, you\u0027ll need to write something like the following (untested):\n\n  // Need to get a mutable value to mark all values in the scope\n  // as used. This cannot be done on a const Scope.\n  Value* value \u003d scope_-\u003eGetMutableValue(\n      variable::kExtraAttributes, Scope::SEARCH_CURRENT, true);\n  if (!value)\n    return true;\n\n  if (!value-\u003eVerifyTypeIs(Value::SCOPE, err_))\n    return false;\n\n  Scope* scope_value \u003d value-\u003escope_value();\n\n  Scope::KeyValueMap value_map;\n  scope_value-\u003eGetCurrentScopeValues(\u0026value_map);\n  scope_value-\u003eMarkAllUsed();\n\n  std::map\u003cstd::string, std::string\u003e extra_attributes;\n  for (const auto\u0026 iter : value_map) {\n    if (!iter-\u003esecond.VerifyTypeIs(Value::STRING, err_))\n      return false;\n\n    extra_attributes.insert(std::pair\u003cstd::string, std::string\u003e(\n        iter-\u003efirst, iter-\u003esecond.string_value()));\n  }\n\n  target_-\u003ebundle_data().swap(extra_attibutes);\n  return true;",
+      "range": {
+        "startLine": 98,
+        "startChar": 27,
+        "endLine": 98,
+        "endChar": 38
+      },
+      "revId": "97388fc951f583bd541078fbbbf608ad0e1d7bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
