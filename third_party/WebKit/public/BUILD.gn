@@ -744,7 +744,6 @@ mojom("mojo_bindings") {
     "platform/referrer.mojom",
     "platform/reporting.mojom",
     "platform/site_engagement.mojom",
-    "platform/web_feature.mojom",
     "web/console_message.mojom",
     "web/window_features.mojom",
   ]
@@ -831,6 +830,17 @@ mojom("offscreen_canvas_mojo_bindings") {
   export_class_attribute_blink = "BLINK_PLATFORM_EXPORT"
   export_define_blink = "BLINK_PLATFORM_IMPLEMENTATION=1"
   export_header_blink = "third_party/WebKit/public/platform/WebCommon.h"
+}
+
+# The web_feature_mojo_bindings is separated from the rest of the mojom files
+# because the chromium typemap for blink mojo_bindings has private content
+# dependencies.
+mojom("web_feature_mojo_bindings") {
+  visibility = [ "//chrome/common:page_load_metrics_mojom" ]
+  visibility_blink = [ "//chrome/common:page_load_metrics_mojom_blink" ]
+  sources = [
+    "platform/web_feature.mojom",
+  ]
 }
 
 group("generate_mojo_bindings") {
