@@ -80,6 +80,10 @@ extern const base::Feature kCopylessPaste;
 extern const base::Feature kDesktopIOSPromotion;
 #endif  // defined(OS_WIN)
 
+#if !defined(OS_ANDROID)
+extern const base::Feature kDesktopPWAWindowing;
+#endif  // !defined(OS_ANDROID)
+
 extern const base::Feature kDisplayPersistenceToggleInPermissionPrompts;
 
 extern const base::Feature kExpectCTReporting;

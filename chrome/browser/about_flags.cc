@@ -2017,6 +2017,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-app-banners", flag_descriptions::kAppBannersName,
      flag_descriptions::kAppBannersDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kAppBanners)},
+    {"enable-desktop-pwa-windowing",
+     flag_descriptions::kEnableDesktopPWAWindowingName,
+     flag_descriptions::kEnableDesktopPWAWindowingDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kDesktopPWAWindowing)},
 #endif  // !OS_ANDROID
     {"enable-experimental-app-banners",
      flag_descriptions::kExperimentalAppBannersName,
