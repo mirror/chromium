@@ -38,7 +38,7 @@ namespace {
 std::vector<std::pair<const base::Feature*, bool>> ExperimentalFeaturesList = {
     std::make_pair(&kLocalDatabaseManagerEnabled, true),
     std::make_pair(&kV4OnlyEnabled, true),
-    std::make_pair(&kThreatDomDetailsTagAndAttributeFeature, true)};
+    std::make_pair(&kThreatDomDetailsTagAndAttributeFeature, false)};
 
 // Adds the name and the enabled/disabled status of a given feature.
 void AddFeatureAndAvailability(const base::Feature* expFeature,
