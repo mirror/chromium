@@ -14,6 +14,34 @@ class Size;
 class MediaEngagementContentsObserverTest;
 class MediaEngagementService;
 
+// This enum is used to record a histogram and should
+// not be renumbered.
+enum class InsignificantPlaybackReason {
+  // The frame size of the video is too small.
+  FRAME_SIZE_TOO_SMALL = 0,
+
+  // The player was muted.
+  AUDIO_MUTED,
+
+  // The media is not playing.
+  MEDIA_IS_NOT_PLAYING,
+
+  // No audio track was present on the media.
+  NO_AUDIO_TRACK,
+
+  // Add new items before this one, always keep this one at the end.
+  REASON_MAX,
+};
+
+enum class InsignificantHistogram {
+  // The player isn't currently significant and can't be because it
+  // doesn't meet all the criteria.
+  PLAYER_NOT_ADDED = 0,
+
+  // The player was significant but no longer meets the criteria.
+  PLAYER_REMOVED,
+};
+
 class MediaEngagementContentsObserver : public content::WebContentsObserver {
  public:
   ~MediaEngagementContentsObserver() override;
@@ -63,9 +91,10 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   // A structure containing all the information we have about a player's state.
   struct PlayerState {
     bool muted = true;
-    bool playing = false;  // Currently playing with an audio track.
+    bool playing = false;           // Currently playing.
     bool significant_size = false;  // The video track has at least a certain
                                     // frame size.
+    bool has_audio = false;         // The media has an audio track.
   };
   std::map<MediaPlayerId, PlayerState*> player_states_;
   PlayerState* GetPlayerState(const MediaPlayerId& id);
@@ -75,7 +104,16 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   // play state and size.
   void MaybeInsertSignificantPlayer(const MediaPlayerId& id);
   void MaybeRemoveSignificantPlayer(const MediaPlayerId& id);
-  bool IsSignificantPlayer(const MediaPlayerId& id);
+  std::vector<InsignificantPlaybackReason> GetInsignificantPlayerReason(
+      const MediaPlayerId& id);
+
+  // Returns whether the player is considered to be significant and logs
+  // any reasons why not to a histogram.
+  bool IsSignificantPlayerAndLog(const MediaPlayerId& id,
+                                 InsignificantHistogram histogram);
+
+  static const std::string& kHistogramSignificantNotAddedName;
+  static const std::string& kHistogramSignificantRemovedName;
 
   bool is_visible_ = false;
   bool significant_playback_recorded_ = false;
