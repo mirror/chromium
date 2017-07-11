@@ -27,6 +27,8 @@ class CreateBundleTargetGenerator : public TargetGenerator {
                      const base::StringPiece& name,
                      SourceDir* bundle_dir);
 
+  bool FillExtraAttributes();
+
   bool FillProductType();
 
   bool FillCodeSigningScript();
