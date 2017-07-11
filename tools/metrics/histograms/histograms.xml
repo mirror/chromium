@@ -19654,6 +19654,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Extensions.DeclarativeNetRequest.CreateVerifiedMatcher"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Measures the time taken to load the indexed ruleset for an extension. This
+    includes memory mapping the ruleset file and verifying it. Emitted when an
+    extension using the Declarative Net Request API is loaded.
+  </summary>
+</histogram>
+
 <histogram
     name="Extensions.DeclarativeNetRequest.IndexAndPersistRulesetDuration"
     units="ms">

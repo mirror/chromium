@@ -48,6 +48,11 @@ content::StoragePartition* GetStoragePartitionForExtensionId(
     const std::string& extension_id,
     content::BrowserContext* browser_context);
 
+// Returns true if the |extension| has an indexed ruleset on disk for the
+// declarativeNetRequest API.
+// TODO should this be in e/b/api/dnr?
+bool HasIndexedRuleset(const Extension* extension);
+
 }  // namespace util
 }  // namespace extensions
 
