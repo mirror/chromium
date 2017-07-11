@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45afb181_35f524d1",
+        "filename": "services/service_manager/tests/service_manager/service_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-11T15:25:02Z",
+      "side": 1,
+      "message": "Nit: make const",
+      "range": {
+        "startLine": 96,
+        "startChar": 13,
+        "endLine": 96,
+        "endChar": 22
+      },
+      "revId": "418afb4fcf763c9f2f14955f6ece48fa9e81bd04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
