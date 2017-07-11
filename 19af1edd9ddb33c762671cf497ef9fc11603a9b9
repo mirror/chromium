@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7011ca6_9f5e1da6",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-11T23:47:06Z",
+      "side": 1,
+      "message": "nit: it-\u003esecond.policy \u003d decision \u003d\u003d kCanChecker ? DecodePolicy::ASYNC : DecodePolicy::SYNC;",
+      "revId": "19af1edd9ddb33c762671cf497ef9fc11603a9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
