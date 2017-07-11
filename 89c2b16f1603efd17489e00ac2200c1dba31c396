@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "791fcb1b_b5f21796",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bef7cf4_1d8b48e8",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 52
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bfc3c5c_c13b6ba5",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5bda3a02_37d53c87",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bfc3c5c_c13b6ba5",
+      "range": {
+        "startLine": 821,
+        "startChar": 0,
+        "endLine": 822,
+        "endChar": 42
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b8db308_dd257b1d",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-10T17:55:13Z",
       "side": 1,
       "message": "nit: At the start of the function, DCHECK(NetworkTypePattern::Mobile().MatchesType(network-\u003etype())).",
+      "range": {
+        "startLine": 823,
+        "startChar": 0,
+        "endLine": 823,
+        "endChar": 44
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7151581d_3e3526da",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Changed this to accept an int / the enum class \"TetherIconType\" we decided to incorporate",
+      "parentUuid": "6b8db308_dd257b1d",
       "range": {
         "startLine": 823,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8657f3d2_f2cc74fe",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a95f9112_bd10750e",
+      "range": {
+        "startLine": 826,
+        "startChar": 0,
+        "endLine": 826,
+        "endChar": 74
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2308e3d_bab091ab",
         "filename": "ash/system/network/network_icon.h",
         "patchSetId": 1
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9850b84f_b263817e",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2308e3d_bab091ab",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 54
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0e5600_5a288117",
         "filename": "ash/system/tray/tray_constants.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1f51ba_c248a944",
+        "filename": "ash/system/tray/tray_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0e5600_5a288117",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 27
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "7dd3ab15_ca7f9d24",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f421ecf_cd8c1497",
+      "range": {
+        "startLine": 144,
+        "startChar": 24,
+        "endLine": 144,
+        "endChar": 36
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c96a24_fef98f28",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0677aa99_18bf2b5e",
+      "range": {
+        "startLine": 144,
+        "startChar": 17,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b00d2d0_6b238b1c",
         "filename": "ash/system/tray/tray_constants.h",
         "patchSetId": 1
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "591c17d7_58f1a89d",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b00d2d0_6b238b1c",
+      "range": {
+        "startLine": 145,
+        "startChar": 21,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ac066b2_76751b94",
         "filename": "chrome/browser/chromeos/net/DEPS",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77260f5a_af2835aa",
+        "filename": "chrome/browser/chromeos/net/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac066b2_76751b94",
+      "range": {
+        "startLine": 5,
+        "startChar": 22,
+        "endLine": 5,
+        "endChar": 37
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "7f3f9e36_7c212e22",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25ea8e6a_44eac363",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 61
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "496470a1_1271e5e3",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
         "patchSetId": 1
@@ -321,6 +585,30 @@
       "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eca1d1_6cc7d438",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-11T23:33:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "496470a1_1271e5e3",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
