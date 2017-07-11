@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "f9d91f3e_9d06b27b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_factory.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Marking unresolved for now.",
+      "parentUuid": "1fafb921_39f93955",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8719849_04c0598f",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.h",
         "patchSetId": 29
@@ -281,6 +305,30 @@
       "revId": "a993fb725b638529195134a044cb362308bc6c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "529a684f_301cee8f",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "This include still needs to be removed.",
+      "parentUuid": "36e50052_2e6b1b9f",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 60
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -375,6 +423,29 @@
       "revId": "a993fb725b638529195134a044cb362308bc6c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30dfcc17_f342b69f",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "These custom declarations and types should remain in the anonymous namespace.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -704,6 +775,30 @@
       "revId": "a993fb725b638529195134a044cb362308bc6c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4908b2a3_32d0df41",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "This still seems to be here. This code should live in the FeatureEngagementTracker itself.",
+      "parentUuid": "56f7cf86_3a07515f",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 220,
+        "endChar": 50
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

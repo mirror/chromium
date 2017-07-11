@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99b182eb_8d598a30",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Remove this type since it\u0027s not used anymore.",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6da039_0137ef58",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "\u003d default",
+      "range": {
+        "startLine": 170,
+        "startChar": 26,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c02ea2b_5f23a178",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "\u003d default\n\n\u003d default is the preferred way to declare empty constructors and destructors.",
+      "range": {
+        "startLine": 171,
+        "startChar": 36,
+        "endLine": 171,
+        "endChar": 39
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f988db_fa3ade24",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Add this to a static private string constant of this class.",
+      "range": {
+        "startLine": 178,
+        "startChar": 54,
+        "endLine": 178,
+        "endChar": 63
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819d8e81_9ad83091",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "RemoveObserver doesn\u0027t take ownership of this object. As a result, you can\u0027t call release() on it. Call get() to get the pointer.",
+      "range": {
+        "startLine": 190,
+        "startChar": 8,
+        "endLine": 190,
+        "endChar": 27
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fd0fc8_85b20bcb",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Nit instance_ -\u003e new_tab_tracker_",
+      "range": {
+        "startLine": 195,
+        "startChar": 37,
+        "endLine": 195,
+        "endChar": 46
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032e73fe_be0b1cf8",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Move this closer to its tests.",
+      "range": {
+        "startLine": 206,
+        "startChar": 6,
+        "endLine": 206,
+        "endChar": 47
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affeb2af_4bca70ca",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Prefer base::MakeUnique for all unique_ptr non-initializer list initialization",
+      "range": {
+        "startLine": 229,
+        "startChar": 39,
+        "endLine": 229,
+        "endChar": 75
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4ce571_1cc4b807",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Document here and in NewTabTracker::NotifySessionTimeMet\u0027s implementation why this one doesn\u0027t have a ShouldTriggerHelpUI() (or ShouldShowPromo() call)",
+      "range": {
+        "startLine": 300,
+        "startChar": 13,
+        "endLine": 300,
+        "endChar": 33
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd9681d_1316310b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "feature_engagement_tracker is fine.",
+      "range": {
+        "startLine": 332,
+        "startChar": 6,
+        "endLine": 332,
+        "endChar": 26
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336b990e_9a3e1a02",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Document that the feature engagement tracker does async initialization.",
+      "range": {
+        "startLine": 335,
+        "startChar": 2,
+        "endLine": 335,
+        "endChar": 33
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccb8fe8_16d12768",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Move the feature engagement tracker initialization to NewTabTrackerFeatureEngagementTrackerTest::SetUp",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 337,
+        "endChar": 0
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bab09d_e07b3f5f",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "This should be an ASSERT_TRUE",
+      "range": {
+        "startLine": 337,
+        "startChar": 6,
+        "endLine": 337,
+        "endChar": 43
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108fbee5_823b7e91",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "new_tab_tracker, here and for the rest of the file.",
+      "range": {
+        "startLine": 338,
+        "startChar": 9,
+        "endLine": 338,
+        "endChar": 17
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51c33b2_034e0492",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "This comment can be removed.",
+      "range": {
+        "startLine": 394,
+        "startChar": 4,
+        "endLine": 394,
+        "endChar": 49
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63cf7ea_04467e21",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "// Simulate passing 30 active minutes.\nHere and below.",
+      "range": {
+        "startLine": 414,
+        "startChar": 4,
+        "endLine": 414,
+        "endChar": 32
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9173e6_b4163fff",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T19:47:56Z",
+      "side": 1,
+      "message": "Remove this comment.",
+      "range": {
+        "startLine": 422,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 41
+      },
+      "revId": "d7fa588b4840d1c1556c279ed48930165a46dc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
