@@ -70,6 +70,8 @@ template <typename T>
 void VoidPolymorphic1(T t) {
 }
 
+class IncompleteType;
+
 #if defined(NCTEST_METHOD_ON_CONST_OBJECT)  // [r"fatal error: call to pointer to member function of type 'void \(\)' drops 'const' qualifier"]
 
 // Method bound to const-object.
@@ -210,6 +212,15 @@ void WontCompile() {
   const HasRef* for_raw_ptr = nullptr;
   Callback<void()> ref_count_as_raw_ptr =
       Bind(&VoidPolymorphic1<const HasRef*>, for_raw_ptr);
+}
+
+#elif defined(NCTEST_NO_RAW_PTR_FOR_INCOMPLETE_TYPES)  // [r"fatal error: incomplete type 'base::IncompleteType' used in type trait expression"]
+
+// Refcounted types should not be bound as a raw pointer.
+void WontCompile() {
+  IncompleteType* for_raw_ptr = nullptr;
+  Callback<void()> ref_count_as_raw_ptr =
+      Bind(&VoidPolymorphic1<IncompleteType*>, for_raw_ptr);
 }
 
 #elif defined(NCTEST_WEAKPTR_BIND_MUST_RETURN_VOID)  // [r"fatal error: static_assert failed \"weak_ptrs can only bind to methods without return values\""]
