@@ -75,6 +75,18 @@ unsigned short PerformanceNavigation::redirectCount() const {
   return timing.RedirectCount();
 }
 
+mojom::ServiceWorkerPreparationType
+PerformanceNavigation::GetServiceWorkerPreparationType() const {
+  if (!GetFrame())
+    return mojom::ServiceWorkerPreparationType::UNKNOWN;
+
+  DocumentLoader* document_loader = GetFrame()->Loader().GetDocumentLoader();
+  if (!document_loader)
+    return mojom::ServiceWorkerPreparationType::UNKNOWN;
+
+  return document_loader->GetServiceWorkerPreparationType();
+}
+
 ScriptValue PerformanceNavigation::toJSONForBinding(
     ScriptState* script_state) const {
   V8ObjectBuilder result(script_state);

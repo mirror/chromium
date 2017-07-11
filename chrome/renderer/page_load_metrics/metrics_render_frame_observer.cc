@@ -118,6 +118,9 @@ mojom::PageLoadTimingPtr MetricsRenderFrameObserver::GetTiming() const {
       render_frame()->GetWebFrame()->Performance();
 
   mojom::PageLoadTimingPtr timing(CreatePageLoadTiming());
+  timing->service_worker_timing->preparation_type =
+      perf.ServiceWorkerPreparationTypeForNavigation();
+
   double start = perf.NavigationStart();
   timing->navigation_start = base::Time::FromDoubleT(start);
   if (perf.ResponseStart() > 0.0)
