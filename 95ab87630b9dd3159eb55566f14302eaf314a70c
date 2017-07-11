@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6067f217_ff5f0038",
+        "filename": "chrome/browser/conflicts/enumerate_shell_extensions_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-11T13:59:25Z",
+      "side": 1,
+      "message": "implementation*",
+      "range": {
+        "startLine": 21,
+        "startChar": 29,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "95ab87630b9dd3159eb55566f14302eaf314a70c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50af7bfe_801d2c18",
+        "filename": "chrome/browser/conflicts/enumerate_shell_extensions_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-11T13:59:25Z",
+      "side": 1,
+      "message": "stays*",
+      "range": {
+        "startLine": 105,
+        "startChar": 68,
+        "endLine": 105,
+        "endChar": 72
+      },
+      "revId": "95ab87630b9dd3159eb55566f14302eaf314a70c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
