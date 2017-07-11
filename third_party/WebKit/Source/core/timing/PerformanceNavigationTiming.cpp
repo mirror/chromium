@@ -22,6 +22,7 @@ PerformanceNavigationTiming::PerformanceNavigationTiming(
     PerformanceServerTimingVector& serverTiming)
     : PerformanceResourceTiming(info ? info->InitialURL().GetString() : "",
                                 "navigation",
+                                time_origin,
                                 0.0,
                                 0.0,
                                 serverTiming),
