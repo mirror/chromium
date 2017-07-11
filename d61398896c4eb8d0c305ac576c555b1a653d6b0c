@@ -22,6 +22,30 @@
       "revId": "d61398896c4eb8d0c305ac576c555b1a653d6b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61dcbc96_175b31fc",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-11T22:04:57Z",
+      "side": 1,
+      "message": "Is this the case for iOS though? I don\u0027t think the name is necessary per this comment on the dependent CL:\n\nhttps://chromium-review.googlesource.com/c/558268/3/components/cronet/ios/ios_global_state_cronet_configuration.mm#14",
+      "parentUuid": "0fe18b5f_ef316903",
+      "range": {
+        "startLine": 47,
+        "startChar": 32,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "d61398896c4eb8d0c305ac576c555b1a653d6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
