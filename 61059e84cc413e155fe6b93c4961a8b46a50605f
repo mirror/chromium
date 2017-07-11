@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f800bd2_34dfa051",
+        "filename": "chrome/browser/chrome_browser_main_linux.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T10:58:19Z",
+      "side": 1,
+      "message": "Why not assigning here directly?",
+      "range": {
+        "startLine": 76,
+        "startChar": 31,
+        "endLine": 76,
+        "endChar": 49
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29c32e3_9040417d",
+        "filename": "chrome/browser/chrome_browser_main_linux.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T10:58:19Z",
+      "side": 1,
+      "message": "Also assign directly.",
+      "range": {
+        "startLine": 82,
+        "startChar": 10,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0ae4e8_a3614801",
+        "filename": "components/os_crypt/key_storage_config_linux.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T10:58:19Z",
+      "side": 1,
+      "message": "LazyInstance is obsolete (https://groups.google.com/a/chromium.org/forum/#!topic/cxx/j5rFewBzSBQ/discussion%5B26-50%5D)\n\nSee examples of new approach in \nhttps://codereview.chromium.org/2668813002\nhttps://codereview.chromium.org/2667993003\nhttps://codereview.chromium.org/2667513003",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b07b7e_fa31f47c",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T10:58:19Z",
+      "side": 1,
+      "message": "I\u0027m concerned that this thing is a singleton which isn\u0027t dying. It contains scoped_refptr\u003c\u003e which essentially makes |main_thread_runner| immortal for no reason.\nIn fact it\u0027s only needed on start-up. Can\u0027t you just create a config and pass where it\u0027s needed to init OSCrypt?",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9939da25_33f2f6b8",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T10:58:19Z",
+      "side": 1,
+      "message": "I don\u0027t understand the comment. How is this thread runner connected with specific password stores?",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e699603_b78ec7b2",
+        "filename": "components/os_crypt/key_storage_keyring.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-11T10:58:19Z",
+      "side": 1,
+      "message": "It\u0027s forward-declared, it\u0027s enough.",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 40
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
