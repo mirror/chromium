@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fe386ba_4f2109de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-11T18:52:24Z",
+      "side": 1,
+      "message": "^ already in cs/",
+      "revId": "12c4c9c6150ec26ebe2096165df776dbbb4ae65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3013839d_a32c55bb",
+        "filename": "chrome/browser/ui/android/context_menu_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-11T18:52:24Z",
+      "side": 1,
+      "message": "^ these changes are already in cs/",
+      "revId": "12c4c9c6150ec26ebe2096165df776dbbb4ae65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
