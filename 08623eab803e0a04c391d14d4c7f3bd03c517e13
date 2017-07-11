@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7530b879_d193cae0",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4b9d4d3_079484c0",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f085a5c3_cfc780d2",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d76e933d_3421ff15",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f085a5c3_cfc780d2",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1183a7a4_1f5df98e",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8ac6b4_84e3a4a3",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1183a7a4_1f5df98e",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "7304d21b_a9d0dffb",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:17:27Z",
+      "side": 1,
+      "message": "This is meant to indicate that the following operations are part of version zero. Since 0 is also what SQLTableBuilder::SealVersion returns here (see the DCHECK in line 260), this comment is correct in my opinion.",
+      "parentUuid": "8a25c5a9_68d4704b",
+      "range": {
+        "startLine": 256,
+        "startChar": 15,
+        "endLine": 256,
+        "endChar": 0
+      },
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "247ffbbe_ce27c192",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
         "patchSetId": 1
@@ -96,6 +174,30 @@
       "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bae419_54c60172",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:17:27Z",
+      "side": 1,
+      "message": "Done, |facet_display_name| SGTM. I briefly considered using |app_display_name| to mirror Password Form from the other CL, but given the existing use of facet_uri and the increased generality of using \"facet\" instead of \"app\" I chose facet_display_name.",
+      "parentUuid": "247ffbbe_ce27c192",
+      "range": {
+        "startLine": 279,
+        "startChar": 45,
+        "endLine": 279,
+        "endChar": 49
+      },
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "3cdb19f3_70156150",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:17:27Z",
+      "side": 1,
+      "message": "Good point. I removed this now completely, since it would be inconsistent to have these constants but still use the hard coded strings for all SQL operations. We could of course to string substitutions everywhere, but I think this rather harms readability.",
+      "parentUuid": "e0416bf7_c7c6188a",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 72
+      },
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db187498_06f2a66f",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.h",
         "patchSetId": 1
@@ -142,6 +268,30 @@
       "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d67c9a7_fcdfc875",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db187498_06f2a66f",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 70
+      },
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -194,6 +344,24 @@
       "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b13e14_5721bd6a",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-11T16:17:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fc6b279d_a0313821",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
