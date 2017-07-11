@@ -89,6 +89,11 @@ const char kCastStreamingHwEncodingDescription[] =
     "This option enables support in Cast Streaming for encoding video streams "
     "using platform hardware.";
 
+const char kCheckerImagingName[] = "CheckerImaging";
+
+const char kCheckerImagingDescription[] =
+    "Enables asynchronous decoding of images from raster for web content";
+
 const char kCloudImportName[] = "Cloud Import";
 const char kCloudImportDescription[] = "Allows the cloud-import feature.";
 

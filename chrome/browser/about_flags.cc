@@ -1091,6 +1091,14 @@ const FeatureEntry::FeatureVariation
          kClientPlaceholdersForServerLoFiEnabled,
          arraysize(kClientPlaceholdersForServerLoFiEnabled), nullptr}};
 
+const FeatureEntry::Choice kCheckerImagingChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flags_ui::kGenericExperimentChoiceEnabled,
+     cc::switches::kEnableCheckerImaging, ""},
+    {flags_ui::kGenericExperimentChoiceDisabled,
+     cc::switches::kDisableCheckerImaging, ""},
+};
+
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
 // The first line of the entry is the internal name.
@@ -3154,6 +3162,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kResourceLoadSchedulerName,
      flag_descriptions::kResourceLoadSchedulerDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kResourceLoadScheduler)},
+
+    {"enable-checkerimaging", flag_descriptions::kCheckerImagingName,
+     flag_descriptions::kCheckerImagingDescription, kOsAll,
+     MULTI_VALUE_TYPE(kCheckerImagingChoices)},
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

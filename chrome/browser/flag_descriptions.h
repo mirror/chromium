@@ -75,6 +75,9 @@ extern const char kCaptureThumbnailOnLoadFinishedDescription[];
 extern const char kCastStreamingHwEncodingName[];
 extern const char kCastStreamingHwEncodingDescription[];
 
+extern const char kCheckerImagingName[];
+extern const char kCheckerImagingDescription[];
+
 extern const char kCloudImportName[];
 extern const char kCloudImportDescription[];
 
