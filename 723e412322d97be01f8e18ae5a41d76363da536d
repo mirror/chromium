@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e193080f_fb940c50",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-11T23:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7b73426_ab6dc8eb",
+      "revId": "723e412322d97be01f8e18ae5a41d76363da536d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cfaf939_1b9a584b",
         "filename": "ui/app_list/views/search_result_page_view.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "55eedb03_eda24906",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-11T23:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cfaf939_1b9a584b",
+      "revId": "723e412322d97be01f8e18ae5a41d76363da536d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1bf06e_e3e61fe1",
         "filename": "ui/app_list/views/search_result_view.h",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-11T22:37:12Z",
       "side": 1,
       "message": "I added a comment to https://codereview.chromium.org/2933673002/ (even though it has already landed) requesting a better name than \"new design\". I would definitely like to avoid using \"new design\" in a class member variable. It looks like in this context the variable should be something like \u0027use_fullscreen_height_\u0027?",
+      "revId": "723e412322d97be01f8e18ae5a41d76363da536d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cc368a_05304763",
+        "filename": "ui/app_list/views/search_result_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-11T23:58:27Z",
+      "side": 1,
+      "message": "Oh, I see. Could I use is_fullscreen_app_list_enabled_ instead of is_new_design_?",
+      "parentUuid": "3a1bf06e_e3e61fe1",
       "revId": "723e412322d97be01f8e18ae5a41d76363da536d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
