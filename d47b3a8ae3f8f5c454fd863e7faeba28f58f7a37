@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a274d148_9d65dc78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T21:30:27Z",
+      "side": 1,
+      "message": "nit: This public method needs a JavaDoc",
+      "range": {
+        "startLine": 179,
+        "startChar": 23,
+        "endLine": 179,
+        "endChar": 33
+      },
+      "revId": "d47b3a8ae3f8f5c454fd863e7faeba28f58f7a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738d7b26_49ed4ace",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T21:30:27Z",
+      "side": 1,
+      "message": "Instead of relying on the ThumbnailProvider created in SuggetsionsDependenciesRule, can this be:\n\nmThumbnailProvider \u003d new ThumbnailProviderImpl();",
+      "range": {
+        "startLine": 51,
+        "startChar": 70,
+        "endLine": 51,
+        "endChar": 93
+      },
+      "revId": "d47b3a8ae3f8f5c454fd863e7faeba28f58f7a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93c78a4_91699fe2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T21:30:27Z",
+      "side": 1,
+      "message": "Should this be runOnUiThreadBlocking?",
+      "range": {
+        "startLine": 72,
+        "startChar": 20,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "d47b3a8ae3f8f5c454fd863e7faeba28f58f7a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
