@@ -7,12 +7,10 @@
 
 #include <vector>
 
+#include "content/public/browser/web_contents.h"
+
 class Browser;
 class GURL;
-
-namespace content {
-class WebContents;
-}
 
 namespace gfx {
 class Rect;
@@ -72,7 +70,10 @@ class TabStripModelDelegate {
   // Notifies the delegate that the specified WebContents will be added to the
   // tab strip (via insertion/appending/replacing existing) and allows it to do
   // any preparation that it deems necessary.
-  virtual void WillAddWebContents(content::WebContents* contents) = 0;
+  virtual void WillAddWebContents(
+      content::WebContents* contents,
+      base::Optional<content::WebContents::CreateParams> create_params =
+          base::nullopt) = 0;
 
   // Determines what drag actions are possible for the specified strip.
   virtual int GetDragActions() const = 0;

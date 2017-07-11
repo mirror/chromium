@@ -11,16 +11,23 @@
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
+#include "chrome/browser/lifetime/keep_alive_types.h"
+#include "chrome/browser/lifetime/scoped_keep_alive.h"
 #include "chrome/browser/page_load_metrics/metrics_web_contents_observer.h"
 #include "chrome/browser/page_load_metrics/observers/aborts_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/no_state_prefetch_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/page_load_tracker.h"
+#include "chrome/browser/prefs/session_startup_pref.h"
 #include "chrome/browser/prerender/prerender_histograms.h"
 #include "chrome/browser/prerender/prerender_origin.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/sessions/session_service_factory.h"
+#include "chrome/browser/sessions/session_service_test_helper.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_features.h"
@@ -1069,4 +1076,49 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest,
   NavigateToUntrackedUrl();
 
   histogram_tester_.ExpectUniqueSample(internal::kHistogramTotalBytes, 0, 1);
+}
+
+class SessionRestorePageLoadMetricsBrowserTest
+    : public PageLoadMetricsBrowserTest {
+ public:
+  SessionRestorePageLoadMetricsBrowserTest() {}
+
+  void SetUpOnMainThread() override {
+    PageLoadMetricsBrowserTest::SetUpOnMainThread();
+    SessionStartupPref::SetStartupPref(
+        browser()->profile(), SessionStartupPref(SessionStartupPref::LAST));
+    ASSERT_TRUE(embedded_test_server()->Start());
+#if defined(OS_CHROMEOS)
+    SessionServiceTestHelper helper(
+        SessionServiceFactory::GetForProfile(browser()->profile()));
+    helper.SetForceBrowserNotAliveWithNoWindows(true);
+    helper.ReleaseService();
+#endif
+  }
+
+  Browser* QuitBrowserAndRestore(Browser* browser) {
+    Profile* profile = browser->profile();
+
+    // Close the browser.
+    std::unique_ptr<ScopedKeepAlive> keep_alive(new ScopedKeepAlive(
+        KeepAliveOrigin::SESSION_RESTORE, KeepAliveRestartOption::DISABLED));
+    CloseBrowserSynchronously(browser);
+
+    // Create a new window, which should trigger session restore.
+    chrome::NewEmptyWindow(profile);
+    ui_test_utils::BrowserAddedObserver window_observer;
+    return window_observer.WaitForSingleNewBrowser();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(SessionRestorePageLoadMetricsBrowserTest);
+};
+
+IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
+                       RestoredTabShouldStartedInForeground) {
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL("/title1.html"));
+  QuitBrowserAndRestore(browser());
+  histogram_tester_.ExpectTotalCount(
+      page_load_metrics::internal::kPageLoadStartedInForeground, 1);
 }
