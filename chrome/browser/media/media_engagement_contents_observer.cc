@@ -4,6 +4,7 @@
 
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/media/media_engagement_service.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
@@ -14,6 +15,10 @@ constexpr base::TimeDelta kSignificantMediaPlaybackTime =
 // This is the minimum size (in px) of each dimension that a media
 // element has to be in order to be determined significant.
 const int MediaEngagementContentsObserver::kSignificantSize = 200;
+
+const std::string&
+    MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName =
+        "Media.Engagement.ScoreAtPlayback";
 
 MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     content::WebContents* web_contents,
@@ -92,6 +97,15 @@ void MediaEngagementContentsObserver::MediaStartedPlaying(
   GetPlayerState(media_player_id)->playing = true;
   MaybeInsertSignificantPlayer(media_player_id);
   UpdateTimer();
+  LogEngagementScoreToHistogram();
+}
+
+void MediaEngagementContentsObserver::LogEngagementScoreToHistogram() {
+  int percentage =
+      round(service_->GetEngagementScore(committed_origin_.GetURL()) * 100);
+  UMA_HISTOGRAM_PERCENTAGE(
+      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName,
+      percentage);
 }
 
 void MediaEngagementContentsObserver::MediaMutedStatusChanged(
