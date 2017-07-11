@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c488dc4_ee2f2e6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-11T14:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187469e0_0cb08452",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "bf50831ae9acb667f41c4fccb1d79fe92e0b52f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6b5d9a_6f1fb216",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "bf50831ae9acb667f41c4fccb1d79fe92e0b52f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf6bec7_bde60bd5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-11T14:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd6b5d9a_6f1fb216",
+      "range": {
+        "startLine": 579,
+        "startChar": 22,
+        "endLine": 579,
+        "endChar": 39
+      },
+      "revId": "bf50831ae9acb667f41c4fccb1d79fe92e0b52f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
