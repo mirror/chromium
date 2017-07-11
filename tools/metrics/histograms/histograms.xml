@@ -66798,6 +66798,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Scheduling.InvalidationToReadyToActivateDuration2"
+    units="microseconds">
+  <owner>brianderson@chromium.org</owner>
+  <summary>
+    How long it takes for the compositor to rasterize pending tree content after
+    an impl-side invalidation before it is ready for activation.
+  </summary>
+</histogram>
+
 <histogram name="Scheduling.MainAndImplFrameTimeDelta" units="microseconds">
   <obsolete>
     Replaced by MainAndImplFrameTimeDelta2, due to inefficient bucketing scheme.
@@ -66866,6 +66875,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     How long it takes the compositor to PreapreTiles, which determines what
     rasterization work to do.
+  </summary>
+</histogram>
+
+<histogram name="Scheduling.ReadyToActivateToActivationDuration2"
+    units="microseconds">
+  <owner>brianderson@chromium.org</owner>
+  <summary>
+    How long does the pending tree wait after it is ready to be activated and
+    before it is activated.
   </summary>
 </histogram>
 
@@ -89065,6 +89083,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="CloudPrint.UrlFetcherUploadSize"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="CompositorPendingTreeType" separator=".">
+  <suffix name="Main" label="Commit initiated pending tree"/>
+  <suffix name="Impl" label="Impl side invalidation initiated pending tree"/>
+  <affected-histogram name="Scheduling.ReadyToActivateToActivationDuration2"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="CompositorTimingHistoryProcess" separator="."
     ordering="prefix">
   <suffix name="Browser"/>
@@ -89081,8 +89105,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Scheduling.CommitToReadyToActivateDuration2"/>
   <affected-histogram name="Scheduling.DrawDuration2"/>
   <affected-histogram name="Scheduling.DrawInterval2"/>
+  <affected-histogram name="Scheduling.InvalidationToReadyToActivateDuration2"/>
   <affected-histogram name="Scheduling.MainAndImplFrameTimeDelta2"/>
   <affected-histogram name="Scheduling.PrepareTilesDuration2"/>
+  <affected-histogram name="Scheduling.ReadyToActivateToActivationDuration2"/>
   <affected-histogram name="Scheduling.SwapAckWasFast"/>
   <affected-histogram name="Scheduling.SwapToAckLatency2"/>
 </histogram_suffixes>

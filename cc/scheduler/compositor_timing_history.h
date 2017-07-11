@@ -78,9 +78,10 @@ class CC_EXPORT CompositorTimingHistory {
                base::TimeTicks impl_frame_time);
   void DidSubmitCompositorFrame();
   void DidReceiveCompositorFrameAck();
+  void WillInvalidateOnImplSide();
 
  protected:
-  void DidBeginMainFrame();
+  void DidBeginMainFrame(bool aborted);
 
   void SetBeginMainFrameNeededContinuously(bool active);
   void SetBeginMainFrameCommittingContinuously(bool active);
@@ -114,13 +115,16 @@ class CC_EXPORT CompositorTimingHistory {
   base::TimeTicks begin_main_frame_frame_time_;
   base::TimeTicks begin_main_frame_sent_time_;
   base::TimeTicks begin_main_frame_start_time_;
-  base::TimeTicks begin_main_frame_end_time_;
   base::TimeTicks pending_tree_main_frame_time_;
+  base::TimeTicks pending_tree_creation_time_;
+  base::TimeTicks pending_tree_ready_to_activate_time_;
   base::TimeTicks prepare_tiles_start_time_;
   base::TimeTicks activate_start_time_;
   base::TimeTicks active_tree_main_frame_time_;
   base::TimeTicks draw_start_time_;
   base::TimeTicks submit_start_time_;
+
+  bool pending_tree_is_impl_side_;
 
   // Watchdog timers.
   bool submit_ack_watchdog_enabled_;

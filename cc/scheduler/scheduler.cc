@@ -668,6 +668,7 @@ void Scheduler::ProcessScheduledActions() {
         break;
       case SchedulerStateMachine::ACTION_PERFORM_IMPL_SIDE_INVALIDATION:
         state_machine_.WillPerformImplSideInvalidation();
+        compositor_timing_history_->WillInvalidateOnImplSide();
         client_->ScheduledActionPerformImplSideInvalidation();
         break;
       case SchedulerStateMachine::ACTION_DRAW_IF_POSSIBLE:
