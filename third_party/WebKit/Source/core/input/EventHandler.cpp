@@ -136,7 +136,8 @@ bool ShouldShowIBeamForNode(const Node* node, const HitTestResult& result) {
         layout_object->IsText() && node->CanStartSelection();
   }
 
-  return HasEditableStyle(*node) || layout_object_selectable;
+  return HasEditableStyle(*node) || layout_object_selectable ||
+         result.IsOverLink();
 }
 
 }  // namespace
@@ -546,20 +547,6 @@ OptionalCursor EventHandler::SelectAutoCursor(const HitTestResult& result,
       result.IsOverLink();
   if (UseHandCursor(node, is_over_link))
     return HandCursor();
-
-  // During selection, use an I-beam no matter what we're over.
-  // If a drag may be starting or we're capturing mouse events for a particular
-  // node, don't treat this as a selection. Note calling
-  // ComputeVisibleSelectionInDOMTreeDeprecated may update layout.
-  if (mouse_event_manager_->MousePressed() &&
-      GetSelectionController().MouseDownMayStartSelect() &&
-      !mouse_event_manager_->MouseDownMayStartDrag() &&
-      !frame_->Selection()
-           .ComputeVisibleSelectionInDOMTreeDeprecated()
-           .IsNone() &&
-      !capturing_mouse_events_node_) {
-    return i_beam;
-  }
 
   if (ShouldShowIBeamForNode(node, result))
     return i_beam;
