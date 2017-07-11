@@ -223,6 +223,10 @@ class CORE_EXPORT ImageResourceContent final
 
   RefPtr<blink::Image> image_;
 
+  // Is equal to image_->Data()->size(). Cached here to avoid re-creating
+  // SharedBuffer in ClearImage().
+  size_t image_encoded_data_size_ = 0;
+
   HashCountedSet<ImageResourceObserver*> observers_;
   HashCountedSet<ImageResourceObserver*> finished_observers_;
 
