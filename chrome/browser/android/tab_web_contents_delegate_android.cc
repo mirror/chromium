@@ -13,12 +13,6 @@
 #include "chrome/browser/android/banners/app_banner_manager_android.h"
 #include "chrome/browser/android/feature_utilities.h"
 #include "chrome/browser/android/hung_renderer_infobar_delegate.h"
-
-#include "device/vr/features/features.h"
-#if BUILDFLAG(ENABLE_VR)
-#include "chrome/browser/android/vr_shell/vr_tab_helper.h"
-#endif  // BUILDFLAG(ENABLE_VR)
-
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/file_select_helper.h"
 #include "chrome/browser/infobars/infobar_service.h"
@@ -33,6 +27,7 @@
 #include "chrome/browser/ui/find_bar/find_notification_details.h"
 #include "chrome/browser/ui/find_bar/find_tab_helper.h"
 #include "chrome/browser/ui/tab_helpers.h"
+#include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/url_constants.h"
 #include "components/app_modal/javascript_dialog_manager.h"
@@ -125,11 +120,9 @@ void TabWebContentsDelegateAndroid::LoadingStateChanged(
 void TabWebContentsDelegateAndroid::RunFileChooser(
     content::RenderFrameHost* render_frame_host,
     const FileChooserParams& params) {
-#if BUILDFLAG(ENABLE_VR)
-  if (vr_shell::VrTabHelper::IsInVr(
+  if (vr::VrTabHelper::IsInVr(
           WebContents::FromRenderFrameHost(render_frame_host)))
     return;
-#endif
   FileSelectHelper::RunFileChooser(render_frame_host, params);
 }
 
