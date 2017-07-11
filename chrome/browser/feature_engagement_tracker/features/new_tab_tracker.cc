@@ -17,6 +17,7 @@
 #include "components/feature_engagement_tracker/public/feature_engagement_tracker.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
+#include "components/variations/variations_associated_data.h"
 
 using metrics::DesktopSessionDurationTracker;
 
@@ -66,7 +67,9 @@ void NewTabTracker::NotifySessionTimeMet() {
 }
 
 void NewTabTracker::ShowPromo() {
-  // TODO(crbug.com/737830): call the promo
+  std::string promo_string =
+      variations::GetVariationParamValue("NewTabInProductHelp", "promo_string");
+  // TODO(crbug.com/737830): call the promo and pass in promo_string
 
   // This line must be called when the UI dismisses.
   GetFeatureTracker()->Dismissed(feature_engagement_tracker::kIPHNewTabFeature);
