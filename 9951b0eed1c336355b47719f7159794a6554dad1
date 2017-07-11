@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3080f924_4a354958",
+        "filename": "chrome/app/chrome_exe_main_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T17:48:49Z",
+      "side": 1,
+      "message": "Isn\u0027t this MY_PID (or CURRENT_PID) ?",
+      "range": {
+        "startLine": 60,
+        "startChar": 33,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "9951b0eed1c336355b47719f7159794a6554dad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20fae4c_529737f2",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-11T17:48:49Z",
+      "side": 1,
+      "message": "Seeing this now, I\u0027m not sure these are more clear than just:\n\n(if (\u003c os-version 1011))",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "9951b0eed1c336355b47719f7159794a6554dad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
