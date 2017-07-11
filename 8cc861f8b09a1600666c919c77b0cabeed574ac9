@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4a3a59c_bf80edc8",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T19:16:03Z",
+      "side": 1,
+      "message": "Yes, and sure enough, the tests were failing because of this. :)",
+      "parentUuid": "0d261602_2fd8127e",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "8cc861f8b09a1600666c919c77b0cabeed574ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d39474bd_231b6a43",
         "filename": "base/message_loop/message_pump_fuchsia.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d588bd9c_8c3f7be3",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T19:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d39474bd_231b6a43",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 6
+      },
+      "revId": "8cc861f8b09a1600666c919c77b0cabeed574ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5a43f36_a72d1b32",
         "filename": "base/message_loop/message_pump_fuchsia.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "8cc861f8b09a1600666c919c77b0cabeed574ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2a181d_9ae2620c",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T19:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5a43f36_a72d1b32",
+      "range": {
+        "startLine": 42,
+        "startChar": 24,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "8cc861f8b09a1600666c919c77b0cabeed574ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "18ffe29e2bde61f839107810f1cabd11d573d556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281cb3d3_b10f90c3",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T19:16:03Z",
+      "side": 0,
+      "message": "Ah, I noticed that this could be simplified, to just check for the two events independently, provided we check |controller_was_destroyed| before checking the second event.",
+      "parentUuid": "ada12914_1ddf5cef",
+      "range": {
+        "startLine": 167,
+        "startChar": 25,
+        "endLine": 167,
+        "endChar": 44
+      },
+      "revId": "18ffe29e2bde61f839107810f1cabd11d573d556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
