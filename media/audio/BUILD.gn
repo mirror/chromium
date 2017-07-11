@@ -62,6 +62,8 @@ source_set("audio") {
     "audio_debug_recording_manager.h",
     "audio_device_description.cc",
     "audio_device_description.h",
+    "audio_device_info_helper.cc",
+    "audio_device_info_helper.h",
     "audio_device_name.cc",
     "audio_device_name.h",
     "audio_device_thread.cc",
