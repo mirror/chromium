@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52de3b95_294cbd5e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-11T01:45:11Z",
+      "side": 1,
+      "message": "Is this change related to enum class TextGranularity?",
+      "revId": "f1df3a532b3ae85da4949e523f8097da9b87f0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21b7a8b_0ae46835",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-11T01:45:11Z",
+      "side": 1,
+      "message": "Is this change related to enum class TextGranularity?",
+      "revId": "f1df3a532b3ae85da4949e523f8097da9b87f0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66c1ac7_61e490f7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-11T01:45:11Z",
+      "side": 1,
+      "message": "Is this change related to  enum class TextGranularity?",
+      "revId": "f1df3a532b3ae85da4949e523f8097da9b87f0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c41c9e_3c69e6cb",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-11T01:45:11Z",
+      "side": 1,
+      "message": "Is this change related to  enum class TextGranularity?",
+      "revId": "f1df3a532b3ae85da4949e523f8097da9b87f0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78b29d1_32c5183c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-11T01:45:11Z",
+      "side": 1,
+      "message": "Is this change related to  enum class TextGranularity?",
+      "revId": "f1df3a532b3ae85da4949e523f8097da9b87f0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
