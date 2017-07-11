@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3259616_2ab031d0",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T21:01:49Z",
+      "side": 1,
+      "message": "When was this attribute added to OS X? Does it need to be ifdef\u0027ed?",
+      "revId": "520ed93bdd100a0b0afc379172d49570e3ba3fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca1bdc92_5baa3b28",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-11T21:01:49Z",
+      "side": 1,
+      "message": "Considering all of the tree walking we already do browser side and extension side, would it make sense to just have a boolean attribute is_text_control and let browser accessibility and other clients handle it. An editable root doesn\u0027t seem like a Blink concept but a detail needed by screen readers. I\u0027m also thinking of an editable root that has an iframe for whatever reason.",
+      "revId": "520ed93bdd100a0b0afc379172d49570e3ba3fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
