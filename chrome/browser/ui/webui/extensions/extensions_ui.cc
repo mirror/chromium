@@ -196,6 +196,8 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
                              IDS_MD_EXTENSIONS_LOAD_ERROR_RETRY);
   source->AddLocalizedString("noErrorsToShow",
                              IDS_EXTENSIONS_ERROR_NO_ERRORS_CODE_MESSAGE);
+  source->AddLocalizedString("optionsDialogCancel",
+                             IDS_MD_EXTENSIONS_OPTIONS_DIALOG_CANCEL);
   source->AddLocalizedString("packDialogTitle",
                              IDS_MD_EXTENSIONS_PACK_DIALOG_TITLE);
   source->AddLocalizedString("packDialogBrowse",

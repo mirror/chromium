@@ -9,7 +9,7 @@ cr.define('extensions', function() {
   var MAX_WIDTH = 600;
   var MIN_HEIGHT = 300;
   var MIN_WIDTH = 300;
-  var HEADER_PADDING = 40;
+  var DIALOG_PADDING = 32;
 
   var OptionsDialog = Polymer({
     is: 'extensions-options-dialog',
@@ -37,9 +37,8 @@ cr.define('extensions', function() {
       };
 
       var onSizeChanged = function(e) {
-        var minHeaderWidth = this.$['icon-and-name-wrapper'].offsetWidth +
-            this.$['close-button'].offsetWidth + HEADER_PADDING;
-        var minWidth = Math.max(minHeaderWidth, MIN_WIDTH);
+        var minDialogWidth = this.$$('.body').offsetWidth - DIALOG_PADDING;
+        var minWidth = Math.max(minDialogWidth, MIN_WIDTH);
         this.$.main.style.height =
             bounded(MIN_HEIGHT, MAX_HEIGHT, e.height) + 'px';
         this.$.main.style.width = bounded(minWidth, MAX_WIDTH, e.width) + 'px';
