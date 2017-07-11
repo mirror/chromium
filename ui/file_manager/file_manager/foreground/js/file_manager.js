@@ -217,6 +217,13 @@ function FileManager() {
   this.gearMenuController_ = null;
 
   /**
+   * File action menu controller.
+   * @type {FileActionMenuController}
+   * @private
+   */
+  this.fileActionMenuController_ = null;
+
+  /**
    * Toolbar controller.
    * @type {ToolbarController}
    * @private
@@ -554,6 +561,11 @@ FileManager.prototype = /** @struct */ {
         this.ui_.gearMenu,
         this.directoryModel_,
         this.commandHandler_);
+    this.fileActionMenuController_ = new FileActionMenuController(
+        this.ui_.fileActionButton, this.ui_.fileActionButtonToggleRipple,
+        util.queryDecoratedElement('#file-context-menu', cr.ui.Menu),
+        this.directoryModel_, this.commandHandler_);
+
     this.toolbarController_ = new ToolbarController(
         this.ui_.toolbar,
         this.ui_.dialogNavigationList,

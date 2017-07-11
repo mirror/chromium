@@ -421,6 +421,27 @@ body.check-select #gear-button {
   display: none;
 }
 
+#file-action-button > .icon {
+  background-image: -webkit-image-set(
+      url(../images/files/ui/menu.png) 1x,
+      url(../images/files/ui/2x/menu.png) 2x);
+}
+
+body:not(.check-select) #file-action-button {
+  display: none;
+}
+
+body.check-select #file-action-button files-toggle-ripple {
+  /* these changes doesn't yet change the color of the ripple effects.
+     crbug.com/740811 */
+  --files-toggle-ripple: {
+    background-color: black;
+  };
+  --files-toggle-ripple-activated: {
+    background-color: black;
+  }
+}
+
 .cloud-import-combo-button {
   height: 32px;
   margin: 8px;
