@@ -177,6 +177,7 @@ void FakeDemuxerStream::DoRead() {
     // Config change.
     num_buffers_left_in_current_config_ = num_buffers_in_one_config_;
     UpdateVideoDecoderConfig();
+    LOG(ERROR) << " demuxer surfacing config change";
     base::ResetAndReturn(&read_cb_).Run(kConfigChanged, NULL);
     return;
   }
@@ -199,6 +200,7 @@ void FakeDemuxerStream::DoRead() {
     num_configs_left_--;
 
   num_buffers_returned_++;
+  LOG(ERROR) << " demuxer giving out buffer: " << num_buffers_returned_ << " -- num_left_in_config:" << num_buffers_left_in_current_config_;
   base::ResetAndReturn(&read_cb_).Run(kOk, buffer);
 }
 
