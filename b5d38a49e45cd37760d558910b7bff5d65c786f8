@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "334a1591_e5e8c42f",
+        "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-11T13:00:10Z",
+      "side": 1,
+      "message": "If we get an entry builder and don\u0027t add any metrics, does anything get logged? e.g. does this give us enough data for the BLOCK case (non reload).",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da4ddc9_4fb6e7d5",
+        "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-11T13:00:10Z",
+      "side": 1,
+      "message": "I\u0027m curious why these URL changes are necessary, since AFAIK GURL will canonicalize them to have a slash anyways.",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa96af9f_bbb6512d",
+        "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-11T13:00:10Z",
+      "side": 1,
+      "message": "Aside: Not for this CL, but having a method called GetSourceForUrl that takes a char * seems wrong. I think either it should take a GURL or a StringPiece and be renamed GetSourceForUrlSpec.",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59f3549_4daf4675",
+        "filename": "chrome/browser/page_load_metrics/observers/from_gws_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-11T13:00:10Z",
+      "side": 1,
+      "message": "Optional: Here and elsewhere I\u0027d be tempted to:\nif (ukm::UkmRecorder* ukm_recorder \u003d g_browser_process-\u003eukm_recorder()) {\n  ...\n}\n\nTo scope the recorder to the conditional.",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff5feaf_f1b8528a",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-11T13:00:10Z",
+      "side": 1,
+      "message": "I would prefer if this took a GURL since it should be readily available, but it seems not trivial without changing GetSourceForUrl.",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
