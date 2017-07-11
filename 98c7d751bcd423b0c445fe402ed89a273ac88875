@@ -39,6 +39,29 @@
       "revId": "98c7d751bcd423b0c445fe402ed89a273ac88875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f307f3_a4c2b8fc",
+        "filename": "base/json/json_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-11T05:03:19Z",
+      "side": 1,
+      "message": "This may be a dumb question, but why do we call ReportError() here and not between line 662 and 663?",
+      "range": {
+        "startLine": 672,
+        "startChar": 8,
+        "endLine": 672,
+        "endChar": 62
+      },
+      "revId": "98c7d751bcd423b0c445fe402ed89a273ac88875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
