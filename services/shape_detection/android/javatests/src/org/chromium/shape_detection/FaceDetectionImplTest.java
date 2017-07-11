@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.support.test.filters.SmallTest;
-import android.test.InstrumentationTestCase;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -24,11 +23,16 @@ import org.chromium.skia.mojom.ColorType;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import org.junit.Test;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.junit.runner.RunWith;
+import org.junit.Assert;
 
 /**
  * Test suite for FaceDetectionImpl.
  */
-public class FaceDetectionImplTest extends InstrumentationTestCase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class FaceDetectionImplTest {
     public static final org.chromium.skia.mojom.Bitmap MONA_LISA_BITMAP =
             mojoBitmapFromFile("mona_lisa.jpg");
     // Different versions of Android have different implementations of FaceDetector.findFaces(), so
@@ -37,8 +41,6 @@ public class FaceDetectionImplTest extends InstrumentationTestCase {
     public static final double BOUNDING_BOX_SIZE_ERROR = 5.0;
     public static enum DetectionProviderType { ANDROID, GMS_CORE }
     public static final boolean IS_GMS_CORE_SUPPORTED = isGmsCoreSupported();
-
-    public FaceDetectionImplTest() {}
 
     private static boolean isGmsCoreSupported() {
         return GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
@@ -89,27 +91,29 @@ public class FaceDetectionImplTest extends InstrumentationTestCase {
         try {
             toReturn = queue.poll(5L, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            fail("Could not get FaceDetectionResult: " + e.toString());
+            Assert.fail("Could not get FaceDetectionResult: " + e.toString());
         }
-        assertNotNull(toReturn);
+        Assert.assertNotNull(toReturn);
         return toReturn;
     }
 
     private void detectSucceedsOnValidImage(DetectionProviderType api) {
         FaceDetectionResult[] results = detect(MONA_LISA_BITMAP, api);
-        assertEquals(1, results.length);
-        assertEquals(40.0, results[0].boundingBox.width, BOUNDING_BOX_SIZE_ERROR);
-        assertEquals(40.0, results[0].boundingBox.height, BOUNDING_BOX_SIZE_ERROR);
-        assertEquals(24.0, results[0].boundingBox.x, BOUNDING_BOX_POSITION_ERROR);
-        assertEquals(20.0, results[0].boundingBox.y, BOUNDING_BOX_POSITION_ERROR);
+        Assert.assertEquals(1, results.length);
+        Assert.assertEquals(40.0, results[0].boundingBox.width, BOUNDING_BOX_SIZE_ERROR);
+        Assert.assertEquals(40.0, results[0].boundingBox.height, BOUNDING_BOX_SIZE_ERROR);
+        Assert.assertEquals(24.0, results[0].boundingBox.x, BOUNDING_BOX_POSITION_ERROR);
+        Assert.assertEquals(20.0, results[0].boundingBox.y, BOUNDING_BOX_POSITION_ERROR);
     }
 
+    @Test
     @SmallTest
     @Feature({"ShapeDetection"})
     public void testDetectValidImageWithAndroidAPI() {
         detectSucceedsOnValidImage(DetectionProviderType.ANDROID);
     }
 
+    @Test
     @SmallTest
     @Feature({"ShapeDetection"})
     public void testDetectValidImageWithGmsCore() {
@@ -118,6 +122,7 @@ public class FaceDetectionImplTest extends InstrumentationTestCase {
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"ShapeDetection"})
     public void testDetectHandlesOddWidthWithAndroidAPI() throws Exception {
@@ -127,13 +132,13 @@ public class FaceDetectionImplTest extends InstrumentationTestCase {
         Canvas canvas = new Canvas(paddedBitmap);
         canvas.drawBitmap(BitmapUtils.convertToBitmap(MONA_LISA_BITMAP), 0, 0, null);
         org.chromium.skia.mojom.Bitmap mojoBitmap = mojoBitmapFromBitmap(paddedBitmap);
-        assertEquals(1, mojoBitmap.width % 2);
+        Assert.assertEquals(1, mojoBitmap.width % 2);
 
         FaceDetectionResult[] results = detect(mojoBitmap, DetectionProviderType.ANDROID);
-        assertEquals(1, results.length);
-        assertEquals(40.0, results[0].boundingBox.width, BOUNDING_BOX_SIZE_ERROR);
-        assertEquals(40.0, results[0].boundingBox.height, BOUNDING_BOX_SIZE_ERROR);
-        assertEquals(24.0, results[0].boundingBox.x, BOUNDING_BOX_POSITION_ERROR);
-        assertEquals(20.0, results[0].boundingBox.y, BOUNDING_BOX_POSITION_ERROR);
+        Assert.assertEquals(1, results.length);
+        Assert.assertEquals(40.0, results[0].boundingBox.width, BOUNDING_BOX_SIZE_ERROR);
+        Assert.assertEquals(40.0, results[0].boundingBox.height, BOUNDING_BOX_SIZE_ERROR);
+        Assert.assertEquals(24.0, results[0].boundingBox.x, BOUNDING_BOX_POSITION_ERROR);
+        Assert.assertEquals(20.0, results[0].boundingBox.y, BOUNDING_BOX_POSITION_ERROR);
     }
 }
