@@ -21,6 +21,7 @@ include_rules = [
   "+components/url_formatter",
   "+components/viz",
 
+  "+blink/common",
   "+content/app/strings/grit",  # For generated headers
   "+content/public/browser",
   "+device/base/synchronization",
