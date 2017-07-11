@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ce3a111_51ba9be9",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-11T00:24:58Z",
+      "side": 1,
+      "message": "Thanks for the comment. I realised there would be duplicated code here and I thought about calling the new function from ConsumeShorthandGreedily. However, the code will be much more complex with very little reduction in code duplication (see below). Hence code complexity outweighs limited benefit that would exist for a short period of time only (1-2 months max). Therefore, I think it\u0027s better to keep them separate and focus on moving shorthands to API land as our goal. :)\n\nThe new function requires every component longhand to have its API impl. However, there are shorthands, where some longhand components have API but others don\u0027t. In order to handle these shorthands, the new function will need to return an indicator for each longhand to say whether it\u0027s got an API impl, so that the existing ConsumeShorthandGreedily will pick out the longhands that do not have API just yet and perform the old parsing ops. This adds complexity to both new and old code. \n\nGiven that we will soon move all shorthands to the API land, I think it\u0027s better to work on code that will help project move forward more smoothly, instead of code that will add more complexity with limited benefit that will last 1-2 months only. :)",
+      "parentUuid": "d17d550e_5187b4da",
+      "revId": "aa92db80d56c5bb196b0572ce99c0ef2436c5362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46af0971_40eb4018",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "aa92db80d56c5bb196b0572ce99c0ef2436c5362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad181b4_e63b18be",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-11T00:24:58Z",
+      "side": 1,
+      "message": "Done. I\u0027ll prepare another cl to change other names.",
+      "parentUuid": "46af0971_40eb4018",
+      "revId": "aa92db80d56c5bb196b0572ce99c0ef2436c5362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
