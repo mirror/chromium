@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1d0a93b_b61bd8f6",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 12
+      },
+      "lineNbr": 5542,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T00:06:52Z",
+      "side": 1,
+      "message": "Nit: This is the only context translators will have, so give them as much as you can; for example, \"Text shown on promotional UI appearing next to the New Tab button, which encourages users to use it.\"",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314cdd36_e21c6724",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T00:06:52Z",
+      "side": 1,
+      "message": "Nit: Prefer \u003d base::MakeUnique() to reset(new(...))",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaaa73a_5128b38f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T00:06:52Z",
+      "side": 1,
+      "message": "Nit: To avoid code duplication, consider factoring this out to a function which takes the \"normal\" color and returns the color to show (i.e. overrides it with the \"prominent button color\" when |showing_promo_|).  Then use this both here and below.",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b243481_71995b6a",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T00:06:52Z",
+      "side": 1,
+      "message": "Nit: I\u0027d call this GetVisibleBounds() in keeping with the other function names below.\n\nI\u0027d also place this after GetHitTestMask() so that the virtual function overrides were all grouped together and then the non-virtuals.",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a600b3b5_a2b3572e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T00:06:52Z",
+      "side": 1,
+      "message": "Pretty sure this doesn\u0027t work, ownership-wise.  See comments in new_tab_promo.cc.",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0d8e8f_d6eb2dee",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T00:06:52Z",
+      "side": 1,
+      "message": "This comment can\u0027t be correct, since you drop the pointer on the floor.\n\nAccording to the Widget code, by default the widget is owned by the native widget here.  If you ask the widget to close, I believe it forwards that to the native widget, which during destruction deletes the delegate (i.e. the NewTabPromo), then itself (and thus the widget).\n\nI think this also calls into question the idea of the new tab button holding this promo in a unique_ptr, as I think you then have a potential double-free.",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a587f747_39d30bfe",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T00:06:52Z",
+      "side": 1,
+      "message": "Nit: Just use auto for the variable type here to avoid restating it",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c52bde_8ced55d7",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-11T00:06:52Z",
+      "side": 1,
+      "message": "Nit: You probably want to do local handling before parent handling, in case the parent handling does something weird like tear down |this|.",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
