@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f0612cf1_18573d53",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-11T16:53:20Z",
+      "side": 1,
+      "message": "Add SensorReadingSharedBufferReader class to separate the reading functionality from the buffer. And the |temp_reading_data_| is a member variable to avoid creating it every time on stack.\n\nDone.",
+      "parentUuid": "d6a8702c_a33b1e29",
+      "range": {
+        "startLine": 49,
+        "startChar": 61,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10db0dc6_38b318ee",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 9
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "hmm, dunno if the memory allocation is important here  maybe the reading functionality should be separate from the buffer like we had in the shared_memory_seqlock_reader.cc..",
       "parentUuid": "a6b73c8c_e1864798",
+      "range": {
+        "startLine": 107,
+        "startChar": 47,
+        "endLine": 107,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7490472_f04d74a2",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-11T16:53:20Z",
+      "side": 1,
+      "message": "Thanks! Add SensorReadingSharedBufferReader class to separate the reading functionality from the buffer.\n\nDone.",
+      "parentUuid": "49239c0a_ec1492c9",
       "range": {
         "startLine": 107,
         "startChar": 47,
