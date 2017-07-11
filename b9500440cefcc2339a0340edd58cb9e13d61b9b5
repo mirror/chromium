@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "093fd0d5_3b313950",
+        "filename": "base/mac/sdk_forward_declarations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-11T15:39:36Z",
+      "side": 1,
+      "message": "Regardless, let’s be consistent about whether there are spaces around the \u003d.",
+      "revId": "b9500440cefcc2339a0340edd58cb9e13d61b9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
