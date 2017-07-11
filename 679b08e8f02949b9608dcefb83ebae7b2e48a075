@@ -22,6 +22,30 @@
       "revId": "679b08e8f02949b9608dcefb83ebae7b2e48a075",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f828a9_a10b33bd",
+        "filename": "components/os_crypt/os_crypt_mocker_linux.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-11T12:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6de1a45e_4fe488ee",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "679b08e8f02949b9608dcefb83ebae7b2e48a075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

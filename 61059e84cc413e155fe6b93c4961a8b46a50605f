@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5415ce20_422d1553",
+        "filename": "chrome/browser/chrome_browser_main_linux.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-11T12:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f800bd2_34dfa051",
+      "range": {
+        "startLine": 76,
+        "startChar": 31,
+        "endLine": 76,
+        "endChar": 49
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f29c32e3_9040417d",
         "filename": "chrome/browser/chrome_browser_main_linux.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671ed8f1_a8fdf036",
+        "filename": "chrome/browser/chrome_browser_main_linux.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-11T12:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f29c32e3_9040417d",
+      "range": {
+        "startLine": 82,
+        "startChar": 10,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7529ce46_7eac04f3",
+        "filename": "components/os_crypt/key_storage_config_linux.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-11T12:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c0ae4e8_a3614801",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b07b7e_fa31f47c",
         "filename": "components/os_crypt/key_storage_config_linux.h",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-11T10:58:19Z",
       "side": 1,
       "message": "I\u0027m concerned that this thing is a singleton which isn\u0027t dying. It contains scoped_refptr\u003c\u003e which essentially makes |main_thread_runner| immortal for no reason.\nIn fact it\u0027s only needed on start-up. Can\u0027t you just create a config and pass where it\u0027s needed to init OSCrypt?",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5685d7_a738d9aa",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-11T12:51:35Z",
+      "side": 1,
+      "message": "The initialisation happens lazily when we call (de)encrypt. That would mean passing the config for every encryption request.\nHowever, we could do some cleanup after the initialisation and that would get rid of the references.\n\nYour concern is a problem also in the current implementation, correct? What is the effect of the refptr not going away?",
+      "parentUuid": "e1b07b7e_fa31f47c",
       "range": {
         "startLine": 20,
         "startChar": 7,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "260b2ea6_48ddea85",
+        "filename": "components/os_crypt/key_storage_config_linux.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-11T12:51:35Z",
+      "side": 1,
+      "message": "gnome-keyring needs calls to arrive from the main thread. This is not true for libsecret and kwallet. As soon as we decide drop the gnome-keyring backend implementations, this reference won\u0027t be needed.",
+      "parentUuid": "9939da25_33f2f6b8",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e699603_b78ec7b2",
         "filename": "components/os_crypt/key_storage_keyring.h",
         "patchSetId": 9
@@ -137,6 +257,30 @@
       "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68318718_6c471f14",
+        "filename": "components/os_crypt/key_storage_keyring.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-11T12:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e699603_b78ec7b2",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 40
+      },
+      "revId": "61059e84cc413e155fe6b93c4961a8b46a50605f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
