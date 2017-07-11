@@ -1567,6 +1567,7 @@ component("platform") {
   public_deps = [
     ":make_platform_generated",
     "//base",
+    "//blink/common:blink_common",
     "//cc",
     "//cc/animation",
     "//cc/paint",

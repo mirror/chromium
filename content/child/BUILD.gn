@@ -218,6 +218,7 @@ target(link_target_type, "child") {
 
   deps = [
     "//base",
+    "//blink/common:blink_common",
     "//cc/paint",
     "//components/discardable_memory/client",
     "//components/discardable_memory/public/interfaces",

@@ -1531,7 +1531,6 @@ split_static_library("browser") {
     "//components/metrics:ui",
     "//components/metrics/proto:proto",
     "//components/metrics_services_manager",
-    "//components/mime_util",
     "//components/navigation_interception",
     "//components/navigation_metrics",
     "//components/net_log",
