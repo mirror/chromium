@@ -8,6 +8,9 @@
 #define COMPONENTS_SAFE_BROWSING_COMMON_SAFE_BROWSING_PREFS_H_
 
 #include "base/feature_list.h"
+#include "base/macros.h"
+#include "base/values.h"
+#include "content/public/browser/browser_context.h"
 
 class PrefRegistrySimple;
 class PrefService;
@@ -74,7 +77,7 @@ enum ExtendedReportingLevel {
   // The Legacy level of extended reporting is available, reporting happens in
   // response to security incidents.
   SBER_LEVEL_LEGACY = 1,
-  // The Scout level of extended reporting is available, some data can be
+  // The Scout level of extended reporting is available,f some data can be
   // collected to actively detect dangerous apps and sites.
   SBER_LEVEL_SCOUT = 2,
 };
@@ -168,6 +171,10 @@ void UpdateMetricsAfterSecurityInterstitial(const PrefService& prefs,
 // user. This may trigger the user to begin seeing the Scout opt-in text
 // depending on their experiment state.
 void UpdatePrefsBeforeSecurityInterstitial(PrefService* prefs);
+
+// Returns the list of preferences to be shown in the chrome://safe-browsing
+// page.
+base::ListValue GetSbPreferencesList(content::BrowserContext* context);
 
 }  // namespace safe_browsing
 
