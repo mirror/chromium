@@ -40,10 +40,6 @@
 namespace media {
 namespace {
 
-// Size of shared-memory segments we allocate.  Since we reuse them we let them
-// be on the beefy side.
-static const size_t kSharedMemorySegmentBytes = 100 << 10;
-
 #if defined(OS_ANDROID) && BUILDFLAG(USE_PROPRIETARY_CODECS)
 // Extract the SPS and PPS lists from |extra_data|. Each SPS and PPS is prefixed
 // with 0x0001, the Annex B framing bytes. The out parameters are not modified
@@ -243,6 +239,20 @@ void GpuVideoDecoder::Initialize(const VideoDecoderConfig& config,
       capabilities.flags &
       VideoDecodeAccelerator::Capabilities::SUPPORTS_DEFERRED_INITIALIZATION);
   output_cb_ = output_cb;
+
+  const int height = config.coded_size().height();
+  if (height >= 4000)  // ~4320p
+    min_shared_memory_segment_size_ = 384 * 1024;
+  else if (height >= 2000)  // ~2160p
+    min_shared_memory_segment_size_ = 192 * 1024;
+  else if (height >= 1000)  // ~1080p
+    min_shared_memory_segment_size_ = 96 * 1024;
+  else if (height >= 700)  // ~720p
+    min_shared_memory_segment_size_ = 72 * 1024;
+  else if (height >= 400)  // ~480p
+    min_shared_memory_segment_size_ = 32 * 1024;
+  else
+    min_shared_memory_segment_size_ = 16 * 1024;
 
   if (config.is_encrypted() && !supports_deferred_initialization_) {
     DVLOG(1) << __func__
@@ -745,21 +755,33 @@ void GpuVideoDecoder::ReusePictureBuffer(int64_t picture_buffer_id) {
 std::unique_ptr<base::SharedMemory> GpuVideoDecoder::GetSharedMemory(
     size_t min_size) {
   DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent();
-  if (available_shm_segments_.empty() ||
-      available_shm_segments_.back()->mapped_size() < min_size) {
-    size_t size_to_allocate = std::max(min_size, kSharedMemorySegmentBytes);
-    // CreateSharedMemory() can return NULL during Shutdown.
-    return factories_->CreateSharedMemory(size_to_allocate);
+  decoded_bytes_ += min_size;
+  ++decoded_count_;
+
+  auto it = std::lower_bound(
+      available_shm_segments_.begin(), available_shm_segments_.end(), min_size,
+      [](const std::unique_ptr<base::SharedMemory>& buf, const size_t size) {
+        return buf->mapped_size() < size;
+      });
+  if (it != available_shm_segments_.end()) {
+    auto ret = std::move(*it);
+    available_shm_segments_.erase(it);
+    return ret;
   }
-  auto ret = std::move(available_shm_segments_.back());
-  available_shm_segments_.pop_back();
+
+  ++allocation_count_;
+  auto ret = factories_->CreateSharedMemory(
+      std::max(min_shared_memory_segment_size_, min_size));
+  allocated_bytes_ += ret->mapped_size();
   return ret;
 }
 
 void GpuVideoDecoder::PutSharedMemory(
     std::unique_ptr<base::SharedMemory> shared_memory) {
   DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent();
-  available_shm_segments_.push_back(std::move(shared_memory));
+  available_shm_segments_.emplace(std::move(shared_memory));
+
+  // TODO(dalecurtis): Should we invoke some expiry of old segments here?
 }
 
 void GpuVideoDecoder::NotifyEndOfBitstreamBuffer(int32_t id) {
@@ -783,6 +805,12 @@ void GpuVideoDecoder::NotifyEndOfBitstreamBuffer(int32_t id) {
 GpuVideoDecoder::~GpuVideoDecoder() {
   DVLOG(3) << __func__;
   DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent();
+  LOG(ERROR) << __func__ << "decoded: " << decoded_bytes_ << "("
+             << decoded_count_ << ")"
+             << ", allocated: " << allocated_bytes_ << "(" << allocation_count_
+             << ")"
+             << ", ratio: "
+             << decoded_bytes_ / static_cast<double>(allocated_bytes_);
 
   if (vda_)
     DestroyVDA();
@@ -811,6 +839,10 @@ void GpuVideoDecoder::NotifyFlushDone() {
   DCHECK_EQ(state_, kDrainingDecoder);
   state_ = kDecoderDrained;
   base::ResetAndReturn(&eos_decode_cb_).Run(DecodeStatus::OK);
+
+  // Assume flush is for a config change, so drop shared memory segments in
+  // anticipation of a resize occurring.
+  available_shm_segments_.clear();
 }
 
 void GpuVideoDecoder::NotifyResetDone() {
