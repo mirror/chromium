@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b2cae80_63cc384c",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-11T01:58:54Z",
+      "side": 1,
+      "message": "\u003e typo: |expected_request|... but seems like |expected_result| is better or just |expected|?\n\nDone\n\n\u003e Also can you put a 1 /* EXPLAnATION */ comment?\n\nThis is just checking the count. So I don\u0027t think we need comment.",
+      "parentUuid": "87b28d0f_6d974cc5",
+      "revId": "6e5dbf672f4994f7628b233f069a7afab09ac42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "520fcae6_9da61725",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-11T01:23:56Z",
       "side": 1,
       "message": "I prefer we just DCHECK(UI) and force the caller to PostTask to UI. That pattern tends to lead to cleaner code IMO.",
+      "revId": "6e5dbf672f4994f7628b233f069a7afab09ac42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652d1fc5_f3b333d2",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-11T01:58:54Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);\nBrowserThread::PostTask(BrowserThread::UI, FROM_HERE,\n                        base::Bind(callback, result));\nLooks simpler.",
+      "parentUuid": "520fcae6_9da61725",
       "revId": "6e5dbf672f4994f7628b233f069a7afab09ac42c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
