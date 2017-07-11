@@ -140,6 +140,30 @@
       "revId": "d8c4d299648d995b8cc1681e4199c2cfdb5db59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c7dbc9b_a0fc7b80",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-11T19:19:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "070dac13_9348f9bb",
+      "range": {
+        "startLine": 454,
+        "startChar": 6,
+        "endLine": 454,
+        "endChar": 12
+      },
+      "revId": "d8c4d299648d995b8cc1681e4199c2cfdb5db59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
