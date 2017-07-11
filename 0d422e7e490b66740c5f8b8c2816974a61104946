@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "5c7e27d4_89973b9c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-11T14:18:36Z",
+      "side": 1,
+      "message": "Okay, I hadn\u0027t noticed that detail in the PSA. SGTM",
+      "parentUuid": "a6692507_a61862fe",
+      "range": {
+        "startLine": 776,
+        "startChar": 20,
+        "endLine": 776,
+        "endChar": 35
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84758fe7_4b55291c",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 3
@@ -469,6 +493,30 @@
       "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f27d190_675dd662",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-11T14:18:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "55d5a4be_309b6333",
+      "range": {
+        "startLine": 723,
+        "startChar": 39,
+        "endLine": 723,
+        "endChar": 74
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98b633fe_ea19aee7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-11T14:18:36Z",
+      "side": 1,
+      "message": "This is a copy-and-paste comment from another test? Why should these two renderers share the same process in this test?",
+      "range": {
+        "startLine": 709,
+        "startChar": 12,
+        "endLine": 709,
+        "endChar": 13
+      },
+      "revId": "a73e1418f154827b4227d09e89fdbade8f719c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
