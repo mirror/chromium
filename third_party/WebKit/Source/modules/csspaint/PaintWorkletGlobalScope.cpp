@@ -9,6 +9,7 @@
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSSyntaxDescriptor.h"
+#include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/inspector/MainThreadDebugger.h"
 #include "modules/csspaint/CSSPaintDefinition.h"
@@ -200,6 +201,27 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
   paint_definitions_.Set(
       name, TraceWrapperMember<CSSPaintDefinition>(this, definition));
   pending_generator_registry_->SetDefinition(name, definition);
+
+  // TODO(xidachen): the following steps should be done with a postTask.
+  Document::DocumentDefinitionMap document_definition_map =
+      GetFrame()->GetDocument()->GetDocumentDefinitionMap();
+  DocumentPaintDefinition* document_definition =
+      DocumentPaintDefinition::Create(native_invalidation_properties,
+                                      custom_invalidation_properties,
+                                      input_argument_types, has_alpha);
+  if (document_definition_map.Contains(name)) {
+    DocumentPaintDefinition* existing_document_definition =
+        document_definition_map.at(name);
+    if (!existing_document_definition)
+      return;
+    if (existing_document_definition != document_definition) {
+      // document_definition_map.at(name) = nullptr;
+      exception_state.ThrowDOMException(kNotSupportedError,
+                                        "Fill in error message");
+    }
+  }
+  document_definition_map.Set(name, TraceWrapperMember<DocumentPaintDefinition>(
+                                        this, document_definition));
 }
 
 CSSPaintDefinition* PaintWorkletGlobalScope::FindDefinition(

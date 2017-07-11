@@ -38,6 +38,7 @@
 #include "core/dom/DocumentEncodingData.h"
 #include "core/dom/DocumentInit.h"
 #include "core/dom/DocumentLifecycle.h"
+#include "core/dom/DocumentPaintDefinition.h"
 #include "core/dom/DocumentShutdownNotifier.h"
 #include "core/dom/DocumentShutdownObserver.h"
 #include "core/dom/DocumentTiming.h"
@@ -1324,6 +1325,11 @@ class CORE_EXPORT Document : public ContainerNode,
   CoreProbeSink* GetProbeSink() final;
 
   void SetFeaturePolicy(const String& feature_policy_header);
+  typedef HeapHashMap<String, TraceWrapperMember<DocumentPaintDefinition>>
+      DocumentDefinitionMap;
+  DocumentDefinitionMap GetDocumentDefinitionMap() const {
+    return document_definition_map_;
+  }
 
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
@@ -1689,6 +1695,8 @@ class CORE_EXPORT Document : public ContainerNode,
   mojom::EngagementLevel engagement_level_;
 
   Member<NetworkStateObserver> network_state_observer_;
+
+  DocumentDefinitionMap document_definition_map_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

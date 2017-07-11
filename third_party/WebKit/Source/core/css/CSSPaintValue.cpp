@@ -54,7 +54,7 @@ PassRefPtr<Image> CSSPaintValue::GetImage(const ImageResourceObserver& client,
   if (!ParseInputArguments())
     return nullptr;
 
-  return generator_->Paint(client, size, parsed_input_arguments_);
+  return generator_->Paint(document, client, size, parsed_input_arguments_);
 }
 
 bool CSSPaintValue::ParseInputArguments() {
