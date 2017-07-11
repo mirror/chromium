@@ -214,6 +214,11 @@ void ContentsView::ActivePageChanged() {
   const bool folder_active = state == AppListModel::STATE_APPS &&
                              apps_container_view_->IsInFolderView();
 
+  if (features::IsSearchResultsNewDesignEnabled()) {
+    app_list_main_view_->search_box_view()->UpdateBackground(
+        state == AppListModel::STATE_SEARCH_RESULTS);
+  }
+
   if (!is_fullscreen_app_list_enabled_) {
     app_list_main_view_->search_box_view()->back_button()->SetVisible(
         state != AppListModel::STATE_START);

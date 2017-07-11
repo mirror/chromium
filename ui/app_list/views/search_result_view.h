@@ -121,6 +121,9 @@ class APP_LIST_EXPORT SearchResultView
 
   std::unique_ptr<views::MenuRunner> context_menu_runner_;
 
+  // Whether to use new UX design for search results.
+  bool const is_new_design_;
+
   DISALLOW_COPY_AND_ASSIGN(SearchResultView);
 };
 
