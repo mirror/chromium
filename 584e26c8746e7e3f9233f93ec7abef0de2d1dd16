@@ -22,6 +22,30 @@
       "revId": "584e26c8746e7e3f9233f93ec7abef0de2d1dd16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6532b64_9b47b753",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T22:41:38Z",
+      "side": 1,
+      "message": "What about hid-detection? or tpm-error-message? password-changed? encryption-migration?\n\nI\u0027m just starting to work on OOBE/login screens, but I am willing to bet money that I am going to run into this again :P",
+      "parentUuid": "76385335_eb7296e1",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "584e26c8746e7e3f9233f93ec7abef0de2d1dd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
