@@ -35,9 +35,9 @@ template <typename T, typename U>
 struct CheckedAddFastOp {
   static const bool is_supported = false;
   template <typename V>
-  static bool Do(T, U, V*) {
-    assert(false);  // Should not be reached.
-    return false;
+  static constexpr bool Do(T, U, V*) {
+    // Force a compile failure if instantiated.
+    return CheckOnFailure::template HandleFailure<bool>();
   }
 };
 
@@ -45,9 +45,9 @@ template <typename T, typename U>
 struct CheckedSubFastOp {
   static const bool is_supported = false;
   template <typename V>
-  static bool Do(T, U, V*) {
-    assert(false);  // Should not be reached.
-    return false;
+  static constexpr bool Do(T, U, V*) {
+    // Force a compile failure if instantiated.
+    return CheckOnFailure::template HandleFailure<bool>();
   }
 };
 
@@ -55,9 +55,9 @@ template <typename T, typename U>
 struct CheckedMulFastOp {
   static const bool is_supported = false;
   template <typename V>
-  static bool Do(T, U, V*) {
-    assert(false);  // Should not be reached.
-    return false;
+  static constexpr bool Do(T, U, V*) {
+    // Force a compile failure if instantiated.
+    return CheckOnFailure::template HandleFailure<bool>();
   }
 };
 
@@ -65,9 +65,9 @@ template <typename T, typename U>
 struct ClampedAddFastOp {
   static const bool is_supported = false;
   template <typename V>
-  static V Do(T, U) {
-    assert(false);  // Should not be reached.
-    return false;
+  static constexpr V Do(T, U) {
+    // Force a compile failure if instantiated.
+    return CheckOnFailure::template HandleFailure<V>();
   }
 };
 
@@ -75,9 +75,9 @@ template <typename T, typename U>
 struct ClampedSubFastOp {
   static const bool is_supported = false;
   template <typename V>
-  static V Do(T, U) {
-    assert(false);  // Should not be reached.
-    return false;
+  static constexpr V Do(T, U) {
+    // Force a compile failure if instantiated.
+    return CheckOnFailure::template HandleFailure<V>();
   }
 };
 

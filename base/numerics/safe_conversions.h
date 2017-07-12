@@ -13,41 +13,51 @@
 
 #include "base/numerics/safe_conversions_impl.h"
 
+#if !defined(__native_client__) && (defined(__ARMEL__) || defined(__arch64__))
+#include "base/numerics/safe_conversions_arm_impl.h"
+#else
+namespace base {
+namespace internal {
+
+template <typename Dst, typename Src>
+struct SaturateFastAsmOp {
+  static const bool is_supported = false;
+  static constexpr Dst Do(Src) {
+    // Force a compile failure if instantiated.
+    return CheckOnFailure::template HandleFailure<Dst>();
+  }
+};
+
+template <typename Dst, typename Src>
+struct IsValueInRangeFastOp {
+  static const bool is_supported = false;
+  static constexpr bool Do(Src) {
+    // Force a compile failure if instantiated.
+    return CheckOnFailure::template HandleFailure<bool>();
+  }
+};
+
+}  // namespace internal
+}  // namespace base
+
+#endif
+
 namespace base {
 
 // Convenience function that returns true if the supplied value is in range
 // for the destination type.
 template <typename Dst, typename Src>
 constexpr bool IsValueInRangeForNumericType(Src value) {
-  return internal::DstRangeRelationToSrcRange<Dst>(value).IsValid();
+  return internal::IsValueInRangeFastOp<Dst, Src>::is_supported
+             ? internal::IsValueInRangeFastOp<Dst, Src>::Do(value)
+             : internal::DstRangeRelationToSrcRange<Dst>(value).IsValid();
 }
-
-// Forces a crash, like a CHECK(false). Used for numeric boundary errors.
-struct CheckOnFailure {
-  template <typename T>
-  static T HandleFailure() {
-#if defined(__GNUC__) || defined(__clang__)
-    __builtin_trap();
-#else
-    ((void)(*(volatile char*)0 = 0));
-#endif
-    return T();
-  }
-};
-
-// Simple wrapper for statically checking if a type's range is contained.
-template <typename Dst, typename Src>
-struct IsTypeInRangeForNumericType {
-  static const bool value =
-      internal::StaticDstRangeRelationToSrcRange<Dst, Src>::value ==
-      internal::NUMERIC_RANGE_CONTAINED;
-};
 
 // checked_cast<> is analogous to static_cast<> for numeric types,
 // except that it CHECKs that the specified numeric conversion will not
 // overflow or underflow. NaN source will always trigger a CHECK.
 template <typename Dst,
-          class CheckHandler = CheckOnFailure,
+          class CheckHandler = internal::CheckOnFailure,
           typename Src>
 constexpr Dst checked_cast(Src value) {
   // This throws a compile-time error on evaluating the constexpr if it can be
@@ -56,30 +66,6 @@ constexpr Dst checked_cast(Src value) {
   return IsValueInRangeForNumericType<Dst, SrcType>(value)
              ? static_cast<Dst>(static_cast<SrcType>(value))
              : CheckHandler::template HandleFailure<Dst>();
-}
-
-// as_signed<> returns the supplied integral value (or integral castable
-// Numeric template) cast as a signed integral of equivalent precision.
-// I.e. it's mostly an alias for: static_cast<std::make_signed<T>::type>(t)
-template <typename Src>
-constexpr typename std::make_signed<
-    typename base::internal::UnderlyingType<Src>::type>::type
-as_signed(const Src value) {
-  static_assert(std::is_integral<decltype(as_signed(value))>::value,
-                "Argument must be a signed or unsigned integer type.");
-  return static_cast<decltype(as_signed(value))>(value);
-}
-
-// as_unsigned<> returns the supplied integral value (or integral castable
-// Numeric template) cast as an unsigned integral of equivalent precision.
-// I.e. it's mostly an alias for: static_cast<std::make_unsigned<T>::type>(t)
-template <typename Src>
-constexpr typename std::make_unsigned<
-    typename base::internal::UnderlyingType<Src>::type>::type
-as_unsigned(const Src value) {
-  static_assert(std::is_integral<decltype(as_unsigned(value))>::value,
-                "Argument must be a signed or unsigned integer type.");
-  return static_cast<decltype(as_unsigned(value))>(value);
 }
 
 // Default boundaries for integral/float: max/infinity, lowest/-infinity, 0/NaN.
@@ -130,9 +116,15 @@ template <typename Dst,
           typename Src>
 constexpr Dst saturated_cast(Src value) {
   using SrcType = typename UnderlyingType<Src>::type;
-  return saturated_cast_impl<Dst, SaturationHandler, SrcType>(
-      value,
-      DstRangeRelationToSrcRange<Dst, SaturationHandler, SrcType>(value));
+  return !IsCompileTimeConstant(value) &&
+                 SaturateFastAsmOp<Dst, Src>::is_supported &&
+                 std::is_same<SaturationHandler<Dst>,
+                              SaturationDefaultLimits<Dst>>::value
+             ? SaturateFastAsmOp<Dst, SrcType>::Do(value)
+             : saturated_cast_impl<Dst, SaturationHandler, SrcType>(
+                   value,
+                   DstRangeRelationToSrcRange<Dst, SaturationHandler, SrcType>(
+                       value));
 }
 
 // strict_cast<> is analogous to static_cast<> for numeric types, except that
@@ -257,6 +249,8 @@ BASE_NUMERIC_COMPARISON_OPERATORS(Strict, IsNotEqual, !=);
 
 };  // namespace internal
 
+using internal::as_signed;
+using internal::as_unsigned;
 using internal::strict_cast;
 using internal::saturated_cast;
 using internal::SafeUnsignedAbs;
