@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80515e14_650d21a9",
+        "filename": "tools/gn/variables.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-12T08:28:47Z",
+      "side": 1,
+      "message": "This is no longer a \"string list\". Change to \"scope\" maybe?",
+      "range": {
+        "startLine": 1087,
+        "startChar": 24,
+        "endLine": 1087,
+        "endChar": 35
+      },
+      "revId": "7ebe9ed8cbd25b01943647df040f3af31565b8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4eb666_fed41934",
+        "filename": "tools/gn/variables.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-12T08:28:47Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1089,
+        "startChar": 26,
+        "endLine": 1089,
+        "endChar": 37
+      },
+      "revId": "7ebe9ed8cbd25b01943647df040f3af31565b8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ead8ad_342202d4",
+        "filename": "tools/gn/variables.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-12T08:28:47Z",
+      "side": 1,
+      "message": "Can you change this? This is no longer a list of attributes. Maybe something like:\n\n  The value defined in this scope will be copied to the EXTRA_ATTRIBUTES\n  property of the generated Xcode project. They are only meaningful when\n  generating with --ide\u003dxcode.",
+      "range": {
+        "startLine": 1091,
+        "startChar": 2,
+        "endLine": 1093,
+        "endChar": 69
+      },
+      "revId": "7ebe9ed8cbd25b01943647df040f3af31565b8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36da0ccc_897cedcb",
+        "filename": "tools/gn/variables.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-12T08:28:47Z",
+      "side": 1,
+      "message": "You need to put some extra information in \"create_bundle\" help too if you refer people there for more information. I would move the Example section to the \"create_bundle\" help.",
+      "range": {
+        "startLine": 1095,
+        "startChar": 2,
+        "endLine": 1095,
+        "endChar": 51
+      },
+      "revId": "7ebe9ed8cbd25b01943647df040f3af31565b8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
