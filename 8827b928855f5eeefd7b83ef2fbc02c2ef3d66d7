@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11233e99_ab97db9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-12T20:52:04Z",
+      "side": 1,
+      "message": "The name is misleading since it seems singular but returns in fact a list of signatures",
+      "revId": "8827b928855f5eeefd7b83ef2fbc02c2ef3d66d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186bceaf_7dea3b11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-12T20:52:04Z",
+      "side": 1,
+      "message": "I believe this is incorrect, you want Signature#toByteArray or Signature#toCharsString.  hashCode is an even smaller hash of this signature for the purposes of HashSet equality etc.",
+      "revId": "8827b928855f5eeefd7b83ef2fbc02c2ef3d66d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f14a3e_e1a692d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-12T20:52:04Z",
+      "side": 1,
+      "message": "Can you please document that the result\u0027s order matters?",
+      "revId": "8827b928855f5eeefd7b83ef2fbc02c2ef3d66d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef37ad0_6cca52f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-12T20:52:04Z",
+      "side": 1,
+      "message": "I don\u0027t love this because of the casting. Also, in the future, there\u0027s no guarantee that the context is in fact an Activity, might be an application context.  I wonder if there\u0027s a way to do this more along the lines of: tab.getActivity().isCustomTab()\n\nPerhaps implement ChromeActivity.asCustomTab that returns null in the base class but |this| in CustomTabActivity?",
+      "revId": "8827b928855f5eeefd7b83ef2fbc02c2ef3d66d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6cecf4_6738eb1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-12T20:52:04Z",
+      "side": 1,
+      "message": "Perhaps add an OfflinePageBridgeTest for coverage?\nchrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+      "revId": "8827b928855f5eeefd7b83ef2fbc02c2ef3d66d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2396f02f_ecfdc607",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-12T20:52:04Z",
+      "side": 1,
+      "message": "I\u0027m embarrassed that OfflinePageDownloadBridge seems to have no test coverage for the c++ side :/ so I won\u0027t require a test at this point.  But could you create a fixit bug?",
+      "revId": "8827b928855f5eeefd7b83ef2fbc02c2ef3d66d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
