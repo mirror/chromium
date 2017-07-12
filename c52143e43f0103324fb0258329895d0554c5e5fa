@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bf875a2_d1a2b69a",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-12T20:14:57Z",
+      "side": 1,
+      "message": "Can you add a comment here to remove once lint\u0027s target API is updated to 26? You can link the bug here: https://crbug.com/739746",
+      "range": {
+        "startLine": 465,
+        "startChar": 4,
+        "endLine": 465,
+        "endChar": 18
+      },
+      "revId": "c52143e43f0103324fb0258329895d0554c5e5fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
