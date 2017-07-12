@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29dfdc05_2b825956",
+        "filename": "tools/perf/core/trybot_command.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-07-12T12:43:53Z",
+      "side": 1,
+      "message": "This excludes both a \u0027Mac Builder\u0027 and an \u0027android-fyi\u0027 trybots that were previously included. I thought this was more generic and maintainable than the previous hard coded list.\n\n[1]: https://luci-milo.appspot.com/buildbot/tryserver.chromium.perf/Mac%20Builder/",
+      "revId": "25636deece548a63468fa9c6ced678abc3974d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
