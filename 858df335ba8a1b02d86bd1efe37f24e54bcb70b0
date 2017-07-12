@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80af663e_88c3645d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "It\u0027s unclear from the javadoc what would it mean to receive onInstallIntentCompleted callback with isInstalling being false?\n\nIt\u0027s not installing now, but it might start installing any second now?\nInstall intent has been completed but installation has been blocked due to user action?\nOr maybe has been blocked by an error and will not start?\n\nCan you please clarify.",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ea4247_fffdb7ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "How can you be sure the application state changes happened due to an installation as opposed to user action while install was in progress? Especially given that we wait up to 3 minutes for installation.\n\nI see use disregard state changes involving Chrome no longer being visible, but for example touching YouTube link could trigger an intent picker that would cause ActivityState.PAUSED.",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4378caa_cef83c7b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "Such a nit I feel bad about writing this: @param comments start with uppercase, as you do elsewhere, so:\n\n@param newState *T*he new state id.",
+      "range": {
+        "startLine": 46,
+        "startChar": 27,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1fd75e_40a551af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "Please add @ActivityState to newState to clarify what type it is.",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9917afc_3a6b7ab8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "While we\u0027re here we could do:\n\nTimeUnit.MINUTES.toMillis(3);\n\nSame above, but feel free to ignore me if you don\u0027t want to add more changes.",
+      "range": {
+        "startLine": 91,
+        "startChar": 66,
+        "endLine": 91,
+        "endChar": 67
+      },
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d6181b_bd630ea2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "\"Exposed to allow manual triggering in tests;\", so add @VisibleForTesting?",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7493fa36_827f0c72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "Is it possible that startMonitoring will be called with a new packageName during a monitoring of a different older packageName? Maybe document if it\u0027s ok or why it cannot happen.",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e073046_6f8b3f1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "TextUtils.isEmpty(referrer) seems safer. Especially given that in the javadoc you say \"The referrer (...), if any\", suggesting that null might be acceptable?",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda64a11_efaa30a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "newState is not used, why do we expose it?",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea811350_c5feef5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T01:25:46Z",
+      "side": 1,
+      "message": "Please ignore me, but this line is scary wrt. using mWebApkPackage if passing null as appData :/",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
