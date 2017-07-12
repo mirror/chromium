@@ -136,11 +136,20 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
     contents3_ = nav_handle3_->GetWebContents();
 
     NavigationThrottle::ThrottleCheckResult result1 =
-        tab_manager->MaybeThrottleNavigation(nav_handle1_.get());
+        tab_manager->MaybeThrottleNavigation(
+            base::Bind(&content::NavigationHandle::CallResumeForTesting,
+                       base::Unretained(nav_handle1_.get())),
+            nav_handle1_.get());
     NavigationThrottle::ThrottleCheckResult result2 =
-        tab_manager->MaybeThrottleNavigation(nav_handle2_.get());
+        tab_manager->MaybeThrottleNavigation(
+            base::Bind(&content::NavigationHandle::CallResumeForTesting,
+                       base::Unretained(nav_handle2_.get())),
+            nav_handle2_.get());
     NavigationThrottle::ThrottleCheckResult result3 =
-        tab_manager->MaybeThrottleNavigation(nav_handle3_.get());
+        tab_manager->MaybeThrottleNavigation(
+            base::Bind(&content::NavigationHandle::CallResumeForTesting,
+                       base::Unretained(nav_handle3_.get())),
+            nav_handle3_.get());
 
     // First tab starts navigation right away because there is no tab loading.
     EXPECT_EQ(content::NavigationThrottle::PROCEED, result1);

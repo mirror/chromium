@@ -979,6 +979,7 @@ void TabManager::RecordSwitchToTab(content::WebContents* contents) const {
 
 content::NavigationThrottle::ThrottleCheckResult
 TabManager::MaybeThrottleNavigation(
+    base::OnceClosure resumer,
     content::NavigationHandle* navigation_handle) {
   if (!ShouldDelayNavigation(navigation_handle)) {
     loading_contents_.insert(navigation_handle->GetWebContents());
@@ -989,8 +990,8 @@ TabManager::MaybeThrottleNavigation(
   // navigation will be delayed.
   GetWebContentsData(navigation_handle->GetWebContents())
       ->SetTabLoadingState(TAB_IS_NOT_LOADING);
-  pending_navigations_.push_back(navigation_handle);
-
+  pending_navigations_.push_back(
+      std::make_tuple(navigation_handle, std::move(resumer)));
   return content::NavigationThrottle::DEFER;
 }
 
@@ -1007,7 +1008,7 @@ void TabManager::OnDidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   auto it = pending_navigations_.begin();
   while (it != pending_navigations_.end()) {
-    content::NavigationHandle* pending_handle = *it;
+    content::NavigationHandle* pending_handle = it->first;
     if (pending_handle == navigation_handle) {
       pending_navigations_.erase(it);
       break;
@@ -1023,7 +1024,7 @@ void TabManager::OnDidStopLoading(content::WebContents* contents) {
 }
 
 void TabManager::OnWebContentsDestroyed(content::WebContents* contents) {
-  RemovePendingNavigationIfNeeded(contents);
+  RemovePendingNavigationIfNeeded(contents, nullptr);
   loading_contents_.erase(contents);
   LoadNextBackgroundTabIfNeeded();
 }
@@ -1037,41 +1038,46 @@ void TabManager::LoadNextBackgroundTabIfNeeded() {
   if (pending_navigations_.empty())
     return;
 
-  content::NavigationHandle* navigation_handle = pending_navigations_.front();
+  auto& it = pending_navigations_.front();
+  content::NavigationHandle* handle = it.first;
+  base::OnceClosure resumer = std::move(it.second);
   pending_navigations_.erase(pending_navigations_.begin());
-  ResumeNavigation(navigation_handle);
+  ResumeNavigation(handle, std::move(resumer));
 }
 
 void TabManager::ResumeTabNavigationIfNeeded(content::WebContents* contents) {
+  base::OnceClosure resumer;
   content::NavigationHandle* navigation_handle =
-      RemovePendingNavigationIfNeeded(contents);
+      RemovePendingNavigationIfNeeded(contents, &resumer);
   if (navigation_handle)
-    ResumeNavigation(navigation_handle);
+    ResumeNavigation(navigation_handle, std::move(resumer));
 }
 
-void TabManager::ResumeNavigation(
-    content::NavigationHandle* navigation_handle) {
+void TabManager::ResumeNavigation(content::NavigationHandle* navigation_handle,
+                                  base::OnceClosure resumer) {
   GetWebContentsData(navigation_handle->GetWebContents())
       ->SetTabLoadingState(TAB_IS_LOADING);
   loading_contents_.insert(navigation_handle->GetWebContents());
 
-  navigation_handle->Resume();
+  DCHECK(!resumer.is_null());
+  std::move(resumer).Run();
 }
 
 content::NavigationHandle* TabManager::RemovePendingNavigationIfNeeded(
-    content::WebContents* contents) {
-  content::NavigationHandle* navigation_handle = nullptr;
+    content::WebContents* contents,
+    base::OnceClosure* out_resumer) {
   auto it = pending_navigations_.begin();
   while (it != pending_navigations_.end()) {
-    navigation_handle = *it;
-    if ((*it)->GetWebContents() == contents) {
-      navigation_handle = *it;
+    content::NavigationHandle* navigation_handle = it->first;
+    if (navigation_handle->GetWebContents() == contents) {
+      if (out_resumer)
+        *out_resumer = std::move(it->second);
       pending_navigations_.erase(it);
-      break;
+      return navigation_handle;
     }
     it++;
   }
-  return navigation_handle;
+  return nullptr;
 }
 
 bool TabManager::IsTabLoadingForTest(content::WebContents* contents) const {
@@ -1087,8 +1093,8 @@ bool TabManager::IsTabLoadingForTest(content::WebContents* contents) const {
 
 bool TabManager::IsNavigationDelayedForTest(
     const content::NavigationHandle* navigation_handle) const {
-  for (const auto* nav : pending_navigations_) {
-    if (nav == navigation_handle)
+  for (const auto& it : pending_navigations_) {
+    if (it.first == navigation_handle)
       return true;
   }
   return false;
