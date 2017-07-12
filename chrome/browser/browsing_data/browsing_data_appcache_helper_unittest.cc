@@ -131,7 +131,7 @@ TEST_F(CannedBrowsingDataAppCacheHelperTest, Empty) {
 #define MAYBE_Delete Delete
 #endif
 
-TEST_F(CannedBrowsingDataAppCacheHelperTest, MAYBE_Delete) {
+TEST_F(CannedBrowsingDataAppCacheHelperTest, DISABLED_Delete) {
   GURL manifest1("http://example.com/manifest1.xml");
   GURL manifest2("http://foo.example.com/manifest2.xml");
   GURL manifest3("http://bar.example.com/manifest3.xml");

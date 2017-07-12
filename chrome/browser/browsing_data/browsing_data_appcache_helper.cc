@@ -143,6 +143,7 @@ void CannedBrowsingDataAppCacheHelper::DeleteAppCacheGroup(
     const GURL& manifest_url) {
   info_collection_->infos_by_origin.erase(manifest_url.GetOrigin());
   BrowsingDataAppCacheHelper::DeleteAppCacheGroup(manifest_url);
+  CHECK(false) << "is there really a use case for this?";
 }
 
 CannedBrowsingDataAppCacheHelper::~CannedBrowsingDataAppCacheHelper() {}
