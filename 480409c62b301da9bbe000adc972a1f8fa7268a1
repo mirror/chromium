@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c2a1593_eeb8a406",
+        "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T11:27:07Z",
+      "side": 1,
+      "message": "My comment about DCHECK()ing this from the other CL [1] instead of using if () from the other CL still applies: there shouldn\u0027t be any case where we call this and we don\u0027t have a core Frame.\n\n[1] https://codereview.chromium.org/2768813002/diff/1/third_party/WebKit/Source/web/WebLocalFrameImpl.cpp#newcode2168",
+      "range": {
+        "startLine": 2132,
+        "startChar": 2,
+        "endLine": 2132,
+        "endChar": 17
+      },
+      "revId": "480409c62b301da9bbe000adc972a1f8fa7268a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
