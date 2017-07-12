@@ -72,18 +72,19 @@ if (is_mac || is_ios) {
   enable_frame_pointers = true
 } else if (is_win) {
   # 64-bit Windows ABI doesn't support frame pointers.
-  if (target_cpu == "x64") {
+  if (current_cpu == "x64") {
     enable_frame_pointers = false
   } else {
     enable_frame_pointers = true
   }
 } else if (is_chromeos) {
-  # ChromeOS requires frame pointers in x64 builds, to support CWP.
-  # TODO(711784): Building ARM Thumb without frame pointers can lead to code
-  # in ChromeOS which triggers some ARM A12/A17 errata. They can be disabled
-  # on non-x64 once that is resolved.
-  enable_frame_pointers = true
-} else if (current_cpu == "arm64") {
+  # ChromeOS requires frame pointers in 64-bit builds, to support CWP.
+  if (current_cpu == "arm64" || current_cpu == "x64") {
+    enable_frame_pointers = true
+  } else {
+    enable_frame_pointers = false
+  }
+} else if (is_android && current_cpu == "arm64") {
   # Ensure that stacks from arm64 crash dumps are usable (crbug.com/391706).
   enable_frame_pointers = true
 } else {
