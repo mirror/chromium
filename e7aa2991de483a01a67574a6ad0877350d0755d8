@@ -33,6 +33,23 @@
       "revId": "e7aa2991de483a01a67574a6ad0877350d0755d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ae5372_758c4fe4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/loading/module-script-wrong-mime.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-12T10:22:23Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "e7aa2991de483a01a67574a6ad0877350d0755d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
