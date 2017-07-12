@@ -44,9 +44,6 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   explicit PaletteTray(Shelf* shelf);
   ~PaletteTray() override;
 
-  // ActionableView:
-  bool PerformAction(const ui::Event& event) override;
-
   // SessionObserver:
   void OnSessionStateChanged(session_manager::SessionState state) override;
 
@@ -59,6 +56,14 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   void HideBubbleWithView(const views::TrayBubbleView* bubble_view) override;
   void AnchorUpdated() override;
   void Initialize() override;
+  bool PerformAction(const ui::Event& event) override;
+  bool HasBubble() override;
+  void CloseBubble() override;
+  void ShowBubble() override;
+  views::TrayBubbleView* GetBubbleView() override;
+
+  // ui::EventHandler:
+  void OnGestureEvent(ui::GestureEvent* event) override;
 
   // PaletteToolManager::Delegate:
   void HidePalette() override;
@@ -90,6 +95,7 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   base::string16 GetAccessibleNameForBubble() override;
   bool ShouldEnableExtraKeyboardAccessibility() override;
   void HideBubble(const views::TrayBubbleView* bubble_view) override;
+  bool ProcessGestureEventForBubble(ui::GestureEvent* event) override;
 
   // PaletteToolManager::Delegate:
   void OnActiveToolChanged() override;

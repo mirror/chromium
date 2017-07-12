@@ -163,17 +163,6 @@ PaletteTray::~PaletteTray() {
   Shell::Get()->RemoveShellObserver(this);
 }
 
-bool PaletteTray::PerformAction(const ui::Event& event) {
-  if (bubble_) {
-    if (num_actions_in_bubble_ == 0)
-      RecordPaletteOptionsUsage(PaletteTrayOptions::PALETTE_CLOSED_NO_ACTION);
-    HidePalette();
-    return true;
-  }
-
-  return ShowPalette();
-}
-
 bool PaletteTray::ShowPalette() {
   if (bubble_)
     return false;
@@ -324,6 +313,11 @@ void PaletteTray::HideBubble(const views::TrayBubbleView* bubble_view) {
   HideBubbleWithView(bubble_view);
 }
 
+bool PaletteTray::ProcessGestureEventForBubble(ui::GestureEvent* event) {
+  return drag_controller()->ProcessGestureEvent(*event, this,
+                                                true /* is_on_bubble */);
+}
+
 void PaletteTray::HidePalette() {
   is_bubble_auto_opened_ = false;
   num_actions_in_bubble_ = 0;
@@ -383,6 +377,44 @@ void PaletteTray::Initialize() {
   // which will take care of showing the palette.
   palette_enabled_subscription_ = delegate->AddPaletteEnableListener(base::Bind(
       &PaletteTray::OnPaletteEnabledPrefChanged, weak_factory_.GetWeakPtr()));
+}
+
+bool PaletteTray::PerformAction(const ui::Event& event) {
+  if (bubble_) {
+    if (num_actions_in_bubble_ == 0)
+      RecordPaletteOptionsUsage(PaletteTrayOptions::PALETTE_CLOSED_NO_ACTION);
+    HidePalette();
+    return true;
+  }
+
+  return ShowPalette();
+}
+
+bool PaletteTray::HasBubble() {
+  return bubble_.get() != NULL;
+}
+
+void PaletteTray::CloseBubble() {
+  HidePalette();
+}
+
+void PaletteTray::ShowBubble() {
+  ShowPalette();
+}
+
+views::TrayBubbleView* PaletteTray::GetBubbleView() {
+  if (HasBubble())
+    return bubble_->bubble_view();
+  return nullptr;
+}
+
+void PaletteTray::OnGestureEvent(ui::GestureEvent* event) {
+  if (drag_controller()->ProcessGestureEvent(*event, this,
+                                             false /* is_on_bubble */)) {
+    event->SetHandled();
+  } else {
+    TrayBackgroundView::OnGestureEvent(event);
+  }
 }
 
 void PaletteTray::UpdateTrayIcon() {

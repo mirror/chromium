@@ -63,6 +63,13 @@ class ASH_EXPORT ImeMenuTray : public TrayBackgroundView,
   void HideBubbleWithView(const views::TrayBubbleView* bubble_view) override;
   void ClickedOutsideBubble() override;
   bool PerformAction(const ui::Event& event) override;
+  bool HasBubble() override;
+  void CloseBubble() override;
+  void ShowBubble() override;
+  views::TrayBubbleView* GetBubbleView() override;
+
+  // ui::EventHandler:
+  void OnGestureEvent(ui::GestureEvent* event) override;
 
   // IMEObserver:
   void OnIMERefresh() override;
@@ -79,6 +86,7 @@ class ASH_EXPORT ImeMenuTray : public TrayBackgroundView,
   base::string16 GetAccessibleNameForBubble() override;
   bool ShouldEnableExtraKeyboardAccessibility() override;
   void HideBubble(const views::TrayBubbleView* bubble_view) override;
+  bool ProcessGestureEventForBubble(ui::GestureEvent* event) override;
 
   // keyboard::KeyboardControllerObserver:
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
