@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3209c165_d0bb9c59",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-12T10:51:44Z",
+      "side": 1,
+      "message": "Nit: suggest \"UI tweaks\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "25eeb57359f13014b5b88dc18b0184a2e3336fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51b0c1f7_10ab0be2",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 3
