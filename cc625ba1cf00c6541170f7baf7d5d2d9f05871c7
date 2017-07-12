@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff364208_e087ae18",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-12T20:12:27Z",
+      "side": 1,
+      "message": "If we only move else branch, that properly needs the signature like this:\n\nbool HandleAllAppsMoveFullscreen(int* page_delta, int slot_x_delta, int slot_y_delta, int* target_slot),\n\nsince page_delta, target_slot are used after else-branch.\n\nI don\u0027t quite like this method signature for two reasons:\n(1) using two int*\n(2) HandleAllAppsMoveFullscreen needs later to be renamed to HandleAllAppsMove once bubble fullscreen deprecates.\n\nwe would better move:\nconst Index\u0026 selected \u003d GetIndexOfView(selected_view_);\nint target_slot \u003d selected.slot + slot_x_delta + slot_y_delta * cols_;\nif-else {}\nand the following, into:\n\nvoid HandleAllAppsMove(int page_delta, int slot_x_delta, int slot_y_delta);\n\nor leave as-it-is, since if-branch will deprecate.\n\nWhat do you think?",
+      "parentUuid": "f0456c10_90102361",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23a24b4d_5b724ea2",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e69c1d_bd9448b6",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-12T20:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23a24b4d_5b724ea2",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ea5e3492_3e916193",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-12T20:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c201da6_9ea2f683",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdef44eb_4cfc6fa9",
         "filename": "ui/app_list/views/apps_grid_view.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e086bb08_c87d284f",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-12T20:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdef44eb_4cfc6fa9",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "2084efc9_7edbcfc7",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-12T20:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "587b3a3c_2e8331ae",
+      "range": {
+        "startLine": 251,
+        "startChar": 44,
+        "endLine": 251,
+        "endChar": 0
+      },
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb5d7f5b_bedeb1e2",
         "filename": "ui/app_list/views/apps_grid_view.h",
         "patchSetId": 10
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "169733b2_eb309e72",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-12T20:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb5d7f5b_bedeb1e2",
+      "range": {
+        "startLine": 435,
+        "startChar": 79,
+        "endLine": 435,
+        "endChar": 0
+      },
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6723fcf9_a800fd77",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 10
@@ -127,6 +247,24 @@
       "writtenOn": "2017-07-12T18:33:36Z",
       "side": 1,
       "message": "Why do you need last_drag_vector?",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846bcb97_0412bf4a",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-12T20:12:27Z",
+      "side": 1,
+      "message": "This test is problematic in the new test setup (I am not quite sure why the old test setup could pass). The DCHECK(view) in SimulateDrag() could fail. I think in this test we should track the dragging location of apps 1. That means, for each new dragging direction, we update \"from\" as top_right + last_drag_vector, and \"to\" as top_right + drag_vector. This will make sure we are always dragging apps 1.",
+      "parentUuid": "6723fcf9_a800fd77",
       "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
