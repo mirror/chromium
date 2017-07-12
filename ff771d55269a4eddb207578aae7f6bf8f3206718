@@ -22,6 +22,29 @@
       "revId": "ff771d55269a4eddb207578aae7f6bf8f3206718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda771b1_9e141d85",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-12T18:16:38Z",
+      "side": 1,
+      "message": "Just checking against iOS seems a little narrow. Why not ensure that platform matches any of the supported platforms to catch even more errors (e.g. typos in the platform name)?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 50
+      },
+      "revId": "ff771d55269a4eddb207578aae7f6bf8f3206718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
