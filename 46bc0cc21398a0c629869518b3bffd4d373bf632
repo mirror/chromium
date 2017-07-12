@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "985d1472_d688884a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "It might be too early to put this in chrome://flags. I would make it a command line-only flag for now.",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77eedd45_13dfe46b",
         "filename": "chrome/browser/ui/browser.cc",
         "patchSetId": 7
@@ -48,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "071ca722_52369d19",
+        "filename": "chrome/browser/ui/browser.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "I don\u0027t",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4164eeb_ae924c0c",
         "filename": "chrome/browser/ui/browser_window.h",
         "patchSetId": 7
@@ -65,6 +99,40 @@
         "endLine": 179,
         "endChar": 43
       },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31054dbb_0766ac0e",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "Nix.",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a7f97d_cd1ad077",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "Nix.",
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -94,6 +162,23 @@
     },
     {
       "key": {
+        "uuid": "ee2746d9_bbd1fc19",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "This should probably be an update() method on PopupDino.",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40b36faf_9daa99ce",
         "filename": "components/neterror/resources/offline.js",
         "patchSetId": 7
@@ -111,6 +196,57 @@
         "endLine": 503,
         "endChar": 15
       },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf0c233_f6a809ca",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "- \u0027about:blank\u0027 isn\u0027t needed (you can just pass the empty string).\n- This should handle window.open returning `null` (which we might make happen on non-Touch Bar machines).\n- Does the flag disable this? It looks like it will probably just make a regular popup for all Chrome users.",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46cf7418_82e25d5f",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "This HTML can probably be simplified to just a \u003ccanvas\u003e tag.",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c702a15_cfc50f22",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "PopupDino should handle everything related to the popup game — you shouldn\u0027t need any of the other `this.popup*` properties.",
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -163,6 +299,57 @@
     },
     {
       "key": {
+        "uuid": "40075126_4a203d1f",
+        "filename": "content/browser/compositor/gpu_output_surface_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "I think this could use a comment about why it\u0027s necessary.",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f61847d_ec329ca9",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "Now that you\u0027ve figured out why events weren\u0027t making it to the RWHV, would it be possible to just send touch events instead of transforming them into mouse events?",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39799a71_42d83875",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "Do you need this variable?",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbccd3db_6b69f8f8",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 7
@@ -209,6 +396,40 @@
     },
     {
       "key": {
+        "uuid": "8b1b7376_23608c5c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2424,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "You might want a `return` here so that the event isn\u0027t also sent to `responderDelegate_`.",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df02ee7c_49c4bea8",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "Nix.",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cefaa61_5b805e34",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 7
@@ -220,6 +441,23 @@
       "writtenOn": "2017-07-12T14:03:56Z",
       "side": 1,
       "message": "no need to change this",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a3c1a7_0bb39196",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 1,
+      "message": "Nix.",
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

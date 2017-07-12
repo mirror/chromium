@@ -25,6 +25,57 @@
     },
     {
       "key": {
+        "uuid": "d44dfbfa_461aca38",
+        "filename": "build/whitespace_file.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 0,
+      "message": "Nix.",
+      "revId": "a87cc6b7d71388830b2c56fdc188dddb9b6ef9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c3b67a_b0ca57dd",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 0,
+      "message": "Nix.",
+      "revId": "a87cc6b7d71388830b2c56fdc188dddb9b6ef9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5bc0650_506f9030",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 0,
+      "message": "Nix.",
+      "revId": "a87cc6b7d71388830b2c56fdc188dddb9b6ef9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cbfcd9c_5ab8d4a7",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 7
@@ -36,6 +87,23 @@
       "writtenOn": "2017-07-12T14:03:56Z",
       "side": 0,
       "message": "no need to change this",
+      "revId": "a87cc6b7d71388830b2c56fdc188dddb9b6ef9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05910ca8_45c1027d",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-12T22:32:14Z",
+      "side": 0,
+      "message": "Nix.",
       "revId": "a87cc6b7d71388830b2c56fdc188dddb9b6ef9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
