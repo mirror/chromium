@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5541a934_15721de7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-12T05:03:42Z",
+      "side": 1,
+      "message": "Good catch, thanks!",
+      "parentUuid": "92868914_c2eba72f",
+      "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb412d3a_3c38112c",
         "filename": "third_party/WebKit/LayoutTests/fast/files/xhr-response-blob-expected.txt",
         "patchSetId": 5
@@ -51,6 +69,24 @@
       "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78810cbb_e95cc272",
+        "filename": "third_party/WebKit/LayoutTests/fast/files/xhr-response-blob-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-12T05:03:42Z",
+      "side": 1,
+      "message": "Thanks for the suggestion! I\u0027ve updated the expectation for the test, so now it passes.\n\nAs for the MIME sniffing observation, I\u0027m not sure exactly what action to take on that. Let\u0027s talk about it more later, Yoshino-san!",
+      "parentUuid": "eb7f7095_4696bfb0",
+      "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
