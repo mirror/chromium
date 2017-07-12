@@ -22,6 +22,30 @@
       "revId": "ef37503a779c1cc2b2e236f97409e24ec677b4c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5b4ef9_f703ecc7",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-12T18:31:24Z",
+      "side": 1,
+      "message": "Sounds good. I just have to add an argument to the method to know which type of feedback to show (error vs. success).",
+      "parentUuid": "a0f158c7_2a679269",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 38
+      },
+      "revId": "ef37503a779c1cc2b2e236f97409e24ec677b4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
