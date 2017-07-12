@@ -12,6 +12,7 @@
  * Interface for all callbacks to the password API.
  * @interface
  */
+
 class PasswordManager {
   /**
    * Add an observer to the list of saved passwords.
