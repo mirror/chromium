@@ -38,20 +38,15 @@ namespace blink {
 FontCache::FontCache()
     : purge_prevent_count_(0), font_manager_(sk_ref_sp(static_font_manager_)) {}
 
-static AtomicString& MutableSystemFontFamily() {
-  DEFINE_STATIC_LOCAL(AtomicString, system_font_family, ());
-  return system_font_family;
-}
-
 // static
 const AtomicString& FontCache::SystemFontFamily() {
-  return MutableSystemFontFamily();
+  return system_font_family_;
 }
 
 // static
 void FontCache::SetSystemFontFamily(const AtomicString& family_name) {
   DCHECK(!family_name.IsEmpty());
-  MutableSystemFontFamily() = family_name;
+  system_font_family_ = family_name;
 }
 
 void FontCache::GetFontForCharacter(
