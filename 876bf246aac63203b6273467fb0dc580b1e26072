@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0a072ac_5711d76d",
+        "filename": "chromeos/attestation/attestation_flow_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-12T16:29:37Z",
+      "side": 1,
+      "message": "Nit: No longer used.",
+      "revId": "876bf246aac63203b6273467fb0dc580b1e26072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6895bc_61f479a3",
+        "filename": "chromeos/attestation/attestation_flow_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-12T16:29:37Z",
+      "side": 1,
+      "message": "Nit: No longer used.",
+      "revId": "876bf246aac63203b6273467fb0dc580b1e26072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c385bb_ac806cf4",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-12T16:29:37Z",
+      "side": 1,
+      "message": "Nit: #include this in fake_cryptohome_client.h instead.",
+      "revId": "876bf246aac63203b6273467fb0dc580b1e26072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25820bd5_9360cab5",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-12T16:29:37Z",
+      "side": 1,
+      "message": "Nit: const.",
+      "revId": "876bf246aac63203b6273467fb0dc580b1e26072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7178a3_c9eeabe9",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-12T16:29:37Z",
+      "side": 1,
+      "message": "Nit: #include \u003ctuple\u003e",
+      "revId": "876bf246aac63203b6273467fb0dc580b1e26072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed6f1d3_1363b340",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-12T16:29:37Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e for std::pair.",
+      "revId": "876bf246aac63203b6273467fb0dc580b1e26072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
