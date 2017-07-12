@@ -26,7 +26,7 @@ IN_PROC_BROWSER_TEST_F(ResourceLoadingBrowserTest,
   int data = -1;
   EXPECT_TRUE(
       ExecuteScriptAndExtractInt(shell(), "getResourceNumber()", &data));
-  EXPECT_EQ(2, data);
+  EXPECT_EQ(9, data);
 }
 
 } // namespace content
