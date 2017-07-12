@@ -139,9 +139,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   net::HostPortPair GetSocketAddress() override;
   const net::HttpResponseHeaders* GetResponseHeaders() override;
   net::HttpResponseInfo::ConnectionInfo GetConnectionInfo() override;
-  void Resume() override;
-  void CancelDeferredNavigation(
-      NavigationThrottle::ThrottleCheckResult result) override;
   void RegisterThrottleForTesting(
       std::unique_ptr<NavigationThrottle> navigation_throttle) override;
   NavigationThrottle::ThrottleCheckResult CallWillStartRequestForTesting(
@@ -166,6 +163,12 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   RestoreType GetRestoreType() override;
   const GURL& GetBaseURLForDataURL() override;
   const GlobalRequestID& GetGlobalRequestID() override;
+
+  // Resume and CancelDeferredNavigation must only be called by the
+  // NavigationThrottle that is currently deferring the navigation.
+  void Resume(NavigationThrottle* resuming_throttle);
+  void CancelDeferredNavigation(NavigationThrottle* cancelling_throttle,
+                                NavigationThrottle::ThrottleCheckResult result);
 
   NavigationData* GetNavigationData() override;
 
@@ -390,6 +393,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
 
  private:
   friend class NavigationHandleImplTest;
+  friend class TestNavigationManager;
 
   NavigationHandleImpl(const GURL& url,
                        const std::vector<GURL>& redirect_chain,
@@ -405,6 +409,9 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   NavigationThrottle::ThrottleCheckResult CheckWillStartRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillRedirectRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillProcessResponse();
+
+  void Resume();
+  void CancelDeferredNavigation(NavigationThrottle::ThrottleCheckResult result);
 
   // Called when WillProcessResponse checks are done, to find the final
   // RenderFrameHost for the navigation. Checks whether the navigation should be
@@ -440,6 +447,11 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // handle the navigation following the redirect if it can be handled by an
   // existing RenderProcessHost. Otherwise, it should be null.
   void UpdateSiteURL(RenderProcessHost* post_redirect_process);
+
+  // Returns the throttle pointed to by |next_index_ - 1| i.e. the throttle that
+  // is currently deferring this navigation. If the handle is not deferred,
+  // returns nullptr.
+  NavigationThrottle* GetDeferringThrottle() const;
 
   // See NavigationHandle for a description of those member variables.
   GURL url_;

@@ -505,13 +505,13 @@ Response PageHandler::ProcessNavigation(const std::string& response,
     return Response::InvalidParams("Unknown navigation id");
 
   if (response == Page::NavigationResponseEnum::Proceed) {
-    it->second->Resume();
+    it->second->ResumeIfDeferred();
     return Response::OK();
   } else if (response == Page::NavigationResponseEnum::Cancel) {
-    it->second->CancelDeferredNavigation(content::NavigationThrottle::CANCEL);
+    it->second->CancelNavigationIfDeferred(content::NavigationThrottle::CANCEL);
     return Response::OK();
   } else if (response == Page::NavigationResponseEnum::CancelAndIgnore) {
-    it->second->CancelDeferredNavigation(
+    it->second->CancelNavigationIfDeferred(
         content::NavigationThrottle::CANCEL_AND_IGNORE);
     return Response::OK();
   }

@@ -364,7 +364,14 @@ net::HostPortPair NavigationHandleImpl::GetSocketAddress() {
   return socket_address_;
 }
 
+void NavigationHandleImpl::Resume(NavigationThrottle* resuming_throttle) {
+  DCHECK(resuming_throttle);
+  CHECK_EQ(resuming_throttle, GetDeferringThrottle());
+  Resume();
+}
+
 void NavigationHandleImpl::Resume() {
+  // TODO(csharrison): Can these be DCHECKed?
   if (state_ != DEFERRING_START && state_ != DEFERRING_REDIRECT &&
       state_ != DEFERRING_RESPONSE) {
     return;
@@ -409,6 +416,14 @@ void NavigationHandleImpl::Resume() {
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationHandle", this,
                                "Resuming");
   RunCompleteCallback(result);
+}
+
+void NavigationHandleImpl::CancelDeferredNavigation(
+    NavigationThrottle* cancelling_throttle,
+    NavigationThrottle::ThrottleCheckResult result) {
+  DCHECK(cancelling_throttle);
+  CHECK_EQ(cancelling_throttle, GetDeferringThrottle());
+  CancelDeferredNavigation(result);
 }
 
 void NavigationHandleImpl::CancelDeferredNavigation(
@@ -1233,6 +1248,12 @@ void NavigationHandleImpl::UpdateSiteURL(
   // Update the site URL and the expected process.
   site_url_ = new_site_url;
   SetExpectedProcess(post_redirect_process);
+}
+
+NavigationThrottle* NavigationHandleImpl::GetDeferringThrottle() const {
+  if (next_index_ == 0)
+    return nullptr;
+  return throttles_[next_index_ - 1].get();
 }
 
 }  // namespace content
