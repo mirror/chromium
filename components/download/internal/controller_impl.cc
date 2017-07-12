@@ -78,27 +78,28 @@ ControllerImpl::ControllerImpl(
       scheduler_(std::move(scheduler)),
       task_scheduler_(std::move(task_scheduler)),
       file_monitor_(std::move(file_monitor)),
-      initializing_internals_(false),
+      controller_state_(State::CREATED),
       weak_ptr_factory_(this) {}
 
 ControllerImpl::~ControllerImpl() = default;
 
 void ControllerImpl::Initialize() {
-  DCHECK(!startup_status_.Complete());
+  DCHECK_EQ(controller_state_, State::CREATED);
 
-  initializing_internals_ = true;
+  controller_state_ = State::INITIALIZING;
+
   driver_->Initialize(this);
   model_->Initialize(this);
   file_monitor_->Initialize(base::Bind(&ControllerImpl::OnFileMonitorReady,
                                        weak_ptr_factory_.GetWeakPtr()));
 }
 
-const StartupStatus* ControllerImpl::GetStartupStatus() {
-  return &startup_status_;
+Controller::State ControllerImpl::GetState() {
+  return controller_state_;
 }
 
 void ControllerImpl::StartDownload(const DownloadParams& params) {
-  DCHECK(startup_status_.Ok());
+  DCHECK_EQ(controller_state_, State::READY);
   DCHECK_LE(base::Time::Now(), params.scheduling_params.cancel_time);
   KillTimedOutDownloads();
 
@@ -138,7 +139,7 @@ void ControllerImpl::StartDownload(const DownloadParams& params) {
 }
 
 void ControllerImpl::PauseDownload(const std::string& guid) {
-  DCHECK(startup_status_.Ok());
+  DCHECK_EQ(controller_state_, State::READY);
 
   auto* entry = model_->Get(guid);
 
@@ -157,7 +158,7 @@ void ControllerImpl::PauseDownload(const std::string& guid) {
 }
 
 void ControllerImpl::ResumeDownload(const std::string& guid) {
-  DCHECK(startup_status_.Ok());
+  DCHECK_EQ(controller_state_, State::READY);
 
   auto* entry = model_->Get(guid);
   DCHECK(entry);
@@ -172,7 +173,7 @@ void ControllerImpl::ResumeDownload(const std::string& guid) {
 }
 
 void ControllerImpl::CancelDownload(const std::string& guid) {
-  DCHECK(startup_status_.Ok());
+  DCHECK_EQ(controller_state_, State::READY);
 
   auto* entry = model_->Get(guid);
   if (!entry)
@@ -191,7 +192,7 @@ void ControllerImpl::CancelDownload(const std::string& guid) {
 
 void ControllerImpl::ChangeDownloadCriteria(const std::string& guid,
                                             const SchedulingParams& params) {
-  DCHECK(startup_status_.Ok());
+  DCHECK_EQ(controller_state_, State::READY);
 
   auto* entry = model_->Get(guid);
   if (!entry || entry->scheduling_params == params) {
@@ -217,9 +218,11 @@ void ControllerImpl::OnStartScheduledTask(
     DownloadTaskType task_type,
     const TaskFinishedCallback& callback) {
   task_finished_callbacks_[task_type] = callback;
-  if (!startup_status_.Complete()) {
+  if (controller_state_ == State::CREATED ||
+      controller_state_ == State::INITIALIZING) {
     return;
-  } else if (!startup_status_.Ok()) {
+  } else if (controller_state_ != State::READY) {
+    // TODO(dtrainor): Once the queuing patches land, this can be fixed.
     HandleTaskFinished(task_type, false,
                        stats::ScheduledTaskStatus::ABORTED_ON_FAILED_INIT);
     return;
@@ -235,6 +238,7 @@ bool ControllerImpl::OnStopScheduledTask(DownloadTaskType task_type) {
 }
 
 void ControllerImpl::ProcessScheduledTasks() {
+  // Wait for Shakti's patch to resolve.
   if (!startup_status_.Ok()) {
     while (!task_finished_callbacks_.empty()) {
       auto it = task_finished_callbacks_.begin();
@@ -282,7 +286,7 @@ void ControllerImpl::OnDriverReady(bool success) {
 }
 
 void ControllerImpl::OnDownloadCreated(const DriverEntry& download) {
-  if (initializing_internals_)
+  if (controller_state_ != State::READY)
     return;
 
   Entry* entry = model_->Get(download.guid);
@@ -304,7 +308,7 @@ void ControllerImpl::OnDownloadCreated(const DriverEntry& download) {
 
 void ControllerImpl::OnDownloadFailed(const DriverEntry& download,
                                       FailureType failure_type) {
-  if (initializing_internals_)
+  if (controller_state_ != State::READY)
     return;
 
   Entry* entry = model_->Get(download.guid);
@@ -324,7 +328,7 @@ void ControllerImpl::OnDownloadFailed(const DriverEntry& download,
 }
 
 void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download) {
-  if (initializing_internals_)
+  if (controller_state_ != State::READY)
     return;
 
   Entry* entry = model_->Get(download.guid);
@@ -337,7 +341,7 @@ void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download) {
 }
 
 void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {
-  if (initializing_internals_)
+  if (controller_state_ != State::READY)
     return;
 
   Entry* entry = model_->Get(download.guid);
@@ -413,11 +417,16 @@ void ControllerImpl::OnItemRemoved(bool success,
 }
 
 void ControllerImpl::OnDeviceStatusChanged(const DeviceStatus& device_status) {
+  if (controller_state_ != State::READY)
+    return;
+
   UpdateDriverStates();
   ActivateMoreDownloads();
 }
 
 void ControllerImpl::AttemptToFinalizeSetup() {
+  DCHECK_EQ(controller_state_, State::INITIALIZING);
+
   if (!startup_status_.Complete())
     return;
 
@@ -425,6 +434,7 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   if (!startup_status_.Ok()) {
     // TODO(dtrainor): Recover here.  Try to clean up any disk state and, if
     // possible, any DownloadDriver data and continue with initialization?
+    controller_state_ = State::UNAVAILABLE;
 
     // If we cannot recover, notify Clients that the service is unavailable.
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -443,7 +453,7 @@ void ControllerImpl::AttemptToFinalizeSetup() {
 
   NotifyClientsOfStartup();
 
-  initializing_internals_ = false;
+  controller_state_ = State::READY;
 
   UpdateDriverStates();
   ProcessScheduledTasks();
@@ -455,6 +465,8 @@ void ControllerImpl::AttemptToFinalizeSetup() {
 }
 
 void ControllerImpl::PollActiveDriverDownloads() {
+  DCHECK_EQ(controller_state_, State::INITIALIZING);
+
   std::set<std::string> guids = driver_->GetActiveDownloads();
 
   for (auto guid : guids) {
@@ -464,6 +476,8 @@ void ControllerImpl::PollActiveDriverDownloads() {
 }
 
 void ControllerImpl::CancelOrphanedRequests() {
+  DCHECK_EQ(controller_state_, State::INITIALIZING);
+
   auto entries = model_->PeekEntries();
 
   std::vector<std::string> guids_to_remove;
@@ -485,6 +499,8 @@ void ControllerImpl::CancelOrphanedRequests() {
 }
 
 void ControllerImpl::CleanupUnknownFiles() {
+  DCHECK_EQ(controller_state_, State::INITIALIZING);
+
   auto entries = model_->PeekEntries();
   std::vector<DriverEntry> driver_entries;
   for (auto* entry : entries) {
@@ -497,6 +513,8 @@ void ControllerImpl::CleanupUnknownFiles() {
 }
 
 void ControllerImpl::ResolveInitialRequestStates() {
+  DCHECK_EQ(controller_state_, State::INITIALIZING);
+
   auto entries = model_->PeekEntries();
   for (auto* entry : entries) {
     // Pull the initial Entry::State and DriverEntry::State.
@@ -618,7 +636,7 @@ void ControllerImpl::UpdateDriverStates() {
 }
 
 void ControllerImpl::UpdateDriverState(Entry* entry) {
-  DCHECK(!initializing_internals_);
+  DCHECK_EQ(controller_state_, State::READY);
 
   if (entry->state != Entry::State::ACTIVE &&
       entry->state != Entry::State::PAUSED) {
@@ -806,7 +824,7 @@ void ControllerImpl::KillTimedOutDownloads() {
 }
 
 void ControllerImpl::ActivateMoreDownloads() {
-  if (initializing_internals_)
+  if (controller_state_ != State::READY)
     return;
 
   // Check the configuration to throttle number of downloads.
