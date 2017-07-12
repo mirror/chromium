@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8f6e150_0a1e0b34",
+        "filename": "third_party/WebKit/Source/core/animation/FontWeightConversion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e72b633_02003613",
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47f55f7b_ce4d7666",
         "filename": "third_party/WebKit/Source/core/animation/FontWeightConversion.h",
         "patchSetId": 10
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-11T20:24:37Z",
       "side": 1,
       "message": "Given that we no longer have a FontWeight type these names are a little misleading and also seems redundant. FontSelectionValue::value or even an implicit cast should be sufficient, right?",
+      "range": {
+        "startLine": 13,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 44
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91341427_feff68e3",
+        "filename": "third_party/WebKit/Source/core/animation/FontWeightConversion.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "Removed this function, replaced with implicit float conversion CSSFontWeightInterpolationType.cpp.",
+      "parentUuid": "47f55f7b_ce4d7666",
       "range": {
         "startLine": 13,
         "startChar": 26,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "40e70dbe_6c8030af",
+        "filename": "third_party/WebKit/Source/core/css/CSSSegmentedFontFace.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "Inside the same font family declared in a set of @font-faces: You would have to declare them as font-style: italic and for example font-style: oblique 30;, i.e. with a different angle to be able to distinguish them. If you declare them as font-style: oblique; and font-style: italic; they cannot be distinguished. This is an implementation simplification in CSS Fonts Level 4 to map these values on the same font matching axis. Alternatively, you can put them in different font families to control the matching behavior.",
+      "parentUuid": "ed03e2f4_79ff89ea",
+      "range": {
+        "startLine": 121,
+        "startChar": 52,
+        "endLine": 121,
+        "endChar": 68
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c6c658b_58857aaa",
         "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
         "patchSetId": 10
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-11T20:24:37Z",
       "side": 1,
       "message": "the two values here are min and max presumably? A comment explaining that would be helpful.",
+      "range": {
+        "startLine": 455,
+        "startChar": 27,
+        "endLine": 455,
+        "endChar": 43
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8d1fcb_222554fc",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "Comment added.",
+      "parentUuid": "6c6c658b_58857aaa",
       "range": {
         "startLine": 455,
         "startChar": 27,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "91f3e63f_731cb940",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceCache.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "Thank you very much!",
+      "parentUuid": "7dd62b6c_8970e257",
+      "range": {
+        "startLine": 180,
+        "startChar": 27,
+        "endLine": 180,
+        "endChar": 39
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa73ec44_20257e6a",
         "filename": "third_party/WebKit/Source/core/css/FontFaceCache.h",
         "patchSetId": 10
@@ -122,6 +236,30 @@
       "writtenOn": "2017-07-11T20:24:37Z",
       "side": 1,
       "message": "[optional suggestion] How about keeping this private and using a friend declaration to expose it for testing?",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7220654f_9792d0af",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceCache.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "According to what I found all GTest tests using a common fixture (TEST_F macro based) become their own classes and do not directly inherit from FontFaceCacheTest, so I would need to add TEST_FRIEND declarations for all tests accessing this function, which seems noisy.",
+      "parentUuid": "aa73ec44_20257e6a",
       "range": {
         "startLine": 58,
         "startChar": 9,
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "d4cdbeb0_bd5f6d7a",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceCache.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "Reformatted with //.",
+      "parentUuid": "87133677_e68b7bb6",
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be155014_af408452",
         "filename": "third_party/WebKit/Source/core/css/FontFaceCacheTest.cpp",
         "patchSetId": 10
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "2aa94086_e86abb51",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceCacheTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be155014_af408452",
+      "range": {
+        "startLine": 170,
+        "startChar": 36,
+        "endLine": 170,
+        "endChar": 64
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fe9f6b2_a19a40f2",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
         "patchSetId": 10
@@ -185,6 +365,30 @@
       "writtenOn": "2017-07-11T20:24:37Z",
       "side": 1,
       "message": "This effectively changes font-weight from using discrete values to continuous within the 0-999 range, right? Do we still clamp the values or are the full range of FontSelectionValue available?",
+      "range": {
+        "startLine": 972,
+        "startChar": 14,
+        "endLine": 972,
+        "endChar": 32
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ba6a00_d530059a",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "After this CL, they will still be clamped by the CSS parser. The parser parses font-style: values as keywords, so only the list of 100-900, bolder and lighter are supported for this property. In a later stage, we do support continuous values, but the spec says values greater than 0 and lower than 1000 are allowed, so I\u0027ll make sure the parser does not allow values outside the range.",
+      "parentUuid": "9fe9f6b2_a19a40f2",
       "range": {
         "startLine": 972,
         "startChar": 14,
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "f7a5f928_36a21761",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontDescription.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "SkiaFontStyle is used for converting a FontDescription\u0027s Stretch(), Style(), Weight() to values that can be used for matching against system fonts. So if continuous decimal values come in, the aim is discretise them to the nearest enum values that SkFontStyle currently supports. I filed the Skia bug in the comment to move SkFontStyle to continuous values so that in a future scenario we can match against variable system fonts but that\u0027s currently out of scope.\n\nSeparately, yes, the upcoming stages of this CL will turn font-stretch, and font-weight into CSS percentage/number types in CSS respectively and font-style into a combined keyword/number type which will then allow continuous values.",
+      "parentUuid": "dc02c817_3cd3ea4c",
+      "range": {
+        "startLine": 346,
+        "startChar": 18,
+        "endLine": 346,
+        "endChar": 21
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42bdb8e8_07d996be",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
         "patchSetId": 10
@@ -231,6 +459,30 @@
       "writtenOn": "2017-07-11T20:24:37Z",
       "side": 1,
       "message": "Adding a new fixed-point type seems like a bit of an overkill. Is the rational to limit the cache impact of animating font variables? Any chance we could use one of our existing fixed point types instead? Either in platform or from chromium base?",
+      "range": {
+        "startLine": 37,
+        "startChar": 32,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ee7904_1bac1ef7",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "I was unable to find a fixed point type in platform/ or base/ - only dtoa functions that allow number to string conversion with a fixed amount of digits after the point. If you have suggestions or my search was incomplete, please let me know.\n\nApart from that, the benefit of defining a new 16bit with custom 0.25 precision here is to save space in FontDescription, where we need three of these and have a goal to keep FontDescription as small as possible, while at the same representing stretch, style and weight with a suitable common type and keeping reasonable precision. Yes, the benefit is as well in avoiding floating point cache mismatches for example when animating these properties.",
+      "parentUuid": "42bdb8e8_07d996be",
       "range": {
         "startLine": 37,
         "startChar": 32,
@@ -266,6 +518,47 @@
     },
     {
       "key": {
+        "uuid": "41de4d8f_937109d9",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7089561_0b8f6141",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 13
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c06835f_a6deaf7f",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "Done here as well.",
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f169e7ed_a228d1d8",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
         "patchSetId": 10
@@ -277,6 +570,30 @@
       "writtenOn": "2017-07-11T20:24:37Z",
       "side": 1,
       "message": "Can we make these constants instead of functions?",
+      "range": {
+        "startLine": 179,
+        "startChar": 33,
+        "endLine": 179,
+        "endChar": 55
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27455f5b_cc9a8c9a",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:09:49Z",
+      "side": 1,
+      "message": "I was struggling to achieve that, advice is very welcome. Since it\u0027s a custom class type, I think the options of doing that would be to define a common base class without members, then defining a class variant with only constant members and try to initialize them as constexpr, but I doubt this would improve readability. Or alternatively, defining a new FontSelectionValueConst class that has a conversion operator to convert it to a FontSelectionValue on the fly but that would require a copy each time it\u0027s used. Please let me know what you would prefer to do here.",
+      "parentUuid": "f169e7ed_a228d1d8",
       "range": {
         "startLine": 179,
         "startChar": 33,
