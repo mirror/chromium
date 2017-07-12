@@ -15,10 +15,6 @@
 #include "components/policy/policy_export.h"
 #include "components/policy/proto/policy_signing_key.pb.h"
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 namespace policy {
 
 // Implements a cloud policy store that is stored in a simple file in the user's
@@ -34,17 +30,14 @@ class POLICY_EXPORT UserCloudPolicyStore : public UserCloudPolicyStoreBase {
  public:
   // Creates a policy store associated with a signed-in (or in the progress of
   // it) user.
-  UserCloudPolicyStore(
-      const base::FilePath& policy_file,
-      const base::FilePath& key_file,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner);
+  UserCloudPolicyStore(const base::FilePath& policy_file,
+                       const base::FilePath& key_file);
   ~UserCloudPolicyStore() override;
 
   // Factory method for creating a UserCloudPolicyStore for a profile with path
   // |profile_path|.
   static std::unique_ptr<UserCloudPolicyStore> Create(
-      const base::FilePath& profile_path,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner);
+      const base::FilePath& profile_path);
 
   // The username from signin for validation of the policy.
   std::string signin_username() const { return signin_username_; }

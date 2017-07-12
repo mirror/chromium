@@ -76,7 +76,7 @@ class CloudPolicyValidatorTest : public testing::Test {
         std::move(validator),
         base::Bind(&CloudPolicyValidatorTest::ValidationCompletion,
                    base::Unretained(this)));
-    base::RunLoop().RunUntilIdle();
+    scoped_task_environment_.RunUntilIdle();
     Mock::VerifyAndClearExpectations(this);
   }
 
@@ -86,8 +86,7 @@ class CloudPolicyValidatorTest : public testing::Test {
     EXPECT_FALSE(public_key.empty());
 
     std::unique_ptr<UserCloudPolicyValidator> validator =
-        UserCloudPolicyValidator::Create(std::move(policy_response),
-                                         base::ThreadTaskRunnerHandle::Get());
+        UserCloudPolicyValidator::Create(std::move(policy_response));
     validator->ValidateTimestamp(timestamp_, timestamp_option_);
     validator->ValidateUsername(PolicyBuilder::kFakeUsername, true);
     if (!owning_domain_.empty())

@@ -41,7 +41,6 @@ class DeviceCloudPolicyInitializerTest
       : device_cloud_policy_initializer_(
             &local_state_,
             nullptr,
-            nullptr,
             &install_attributes_,
             nullptr,
             nullptr,

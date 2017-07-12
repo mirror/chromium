@@ -100,12 +100,9 @@ UserPolicyManagerFactoryChromeOS::GetActiveDirectoryPolicyManagerForProfile(
 
 // static
 std::unique_ptr<ConfigurationPolicyProvider>
-UserPolicyManagerFactoryChromeOS::CreateForProfile(
-    Profile* profile,
-    bool force_immediate_load,
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner) {
-  return GetInstance()->CreateManagerForProfile(profile, force_immediate_load,
-                                                background_task_runner);
+UserPolicyManagerFactoryChromeOS::CreateForProfile(Profile* profile,
+                                                   bool force_immediate_load) {
+  return GetInstance()->CreateManagerForProfile(profile, force_immediate_load);
 }
 
 UserPolicyManagerFactoryChromeOS::UserPolicyManagerFactoryChromeOS()
@@ -138,8 +135,7 @@ UserPolicyManagerFactoryChromeOS::GetActiveDirectoryPolicyManager(
 std::unique_ptr<ConfigurationPolicyProvider>
 UserPolicyManagerFactoryChromeOS::CreateManagerForProfile(
     Profile* profile,
-    bool force_immediate_load,
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner) {
+    bool force_immediate_load) {
   DCHECK(cloud_managers_.find(profile) == cloud_managers_.end());
   DCHECK(active_directory_managers_.find(profile) ==
          active_directory_managers_.end());
@@ -238,8 +234,7 @@ UserPolicyManagerFactoryChromeOS::CreateManagerForProfile(
       base::MakeUnique<UserCloudPolicyStoreChromeOS>(
           chromeos::DBusThreadManager::Get()->GetCryptohomeClient(),
           chromeos::DBusThreadManager::Get()->GetSessionManagerClient(),
-          background_task_runner, account_id, policy_key_dir,
-          is_active_directory);
+          account_id, policy_key_dir, is_active_directory);
 
   scoped_refptr<base::SequencedTaskRunner> backend_task_runner =
       base::CreateSequencedTaskRunnerWithTraits(

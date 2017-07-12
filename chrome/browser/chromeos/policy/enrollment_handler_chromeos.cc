@@ -112,7 +112,6 @@ EnrollmentHandlerChromeOS::EnrollmentHandlerChromeOS(
     ServerBackedStateKeysBroker* state_keys_broker,
     chromeos::attestation::AttestationFlow* attestation_flow,
     std::unique_ptr<CloudPolicyClient> client,
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner,
     chromeos::ActiveDirectoryJoinDelegate* ad_join_delegate,
     const EnrollmentConfig& enrollment_config,
     const std::string& auth_token,
@@ -124,7 +123,6 @@ EnrollmentHandlerChromeOS::EnrollmentHandlerChromeOS(
       state_keys_broker_(state_keys_broker),
       attestation_flow_(attestation_flow),
       client_(std::move(client)),
-      background_task_runner_(background_task_runner),
       ad_join_delegate_(ad_join_delegate),
       enrollment_config_(enrollment_config),
       auth_token_(auth_token),
@@ -195,8 +193,7 @@ void EnrollmentHandlerChromeOS::OnPolicyFetched(CloudPolicyClient* client) {
 
   std::unique_ptr<DeviceCloudPolicyValidator> validator(
       DeviceCloudPolicyValidator::Create(
-          base::MakeUnique<em::PolicyFetchResponse>(*policy),
-          background_task_runner_));
+          base::MakeUnique<em::PolicyFetchResponse>(*policy)));
 
   validator->ValidateTimestamp(base::Time(),
                                CloudPolicyValidatorBase::TIMESTAMP_VALIDATED);
