@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b6370b5_ba07725b",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-12T21:42:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2de4fa1_d83b89fc",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "450b22c5f8aacc3020a2ffcfdc7363befb634090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "807270c3_28ef8641",
         "filename": "chromeos/components/tether/ble_advertiser.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c3f93c5c_e170b90e",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-12T21:42:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "807270c3_28ef8641",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "450b22c5f8aacc3020a2ffcfdc7363befb634090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fa92707_f6f63eb7",
         "filename": "chromeos/components/tether/ble_advertiser.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "450b22c5f8aacc3020a2ffcfdc7363befb634090",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c187766d_226c88ba",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-12T21:42:07Z",
+      "side": 1,
+      "message": "Good call, done. Also did added a device id param to the OnAdvertisementUnregisteredFailure function.",
+      "parentUuid": "7fa92707_f6f63eb7",
+      "range": {
+        "startLine": 50,
+        "startChar": 49,
+        "endLine": 50,
+        "endChar": 68
+      },
+      "revId": "450b22c5f8aacc3020a2ffcfdc7363befb634090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
