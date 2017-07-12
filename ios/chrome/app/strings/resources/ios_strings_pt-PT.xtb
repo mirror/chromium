@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Morada 1</translation>
 <translation id="1545749641540134597">Ler código QR</translation>
 <translation id="1580783302095112590">Correio enviado.</translation>
+<translation id="1612730193129642006">Mostrar grelha de separadores</translation>
 <translation id="1646446875146297738">Se ativar a funcionalidade "Não monitorizar", será incluído um pedido no seu tráfego de navegação. Os possíveis efeitos dependerão da resposta ao pedido por parte de um Website e da forma como o pedido é interpretado.
 
 Por exemplo, alguns Sites poderão mostrar anúncios que não sejam baseados noutros Sites visitados por si como resposta a este pedido. Muitos Sites continuarão a recolher e utilizar os seus dados de navegação com o objetivo de melhorar a segurança, fornecer conteúdos, serviços, anúncios e recomendações nos seus Sites e gerar estatísticas de relatórios. <ph name="BEGIN_LINK" />Saiba mais<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Os dados foram encriptados com a sua frase de acesso de sincronização em <ph n
 <translation id="8775144690796719618">URL inválido</translation>
 <translation id="8820817407110198400">Marcadores</translation>
 <translation id="8840513115188359703">A sessão na sua Conta Google não é terminada.</translation>
+<translation id="8881801611828450202">Pesquisar esta imagem no <ph name="SEARCH_ENGINE" /></translation>
 <translation id="8904976895050290827">Sincronização do Google Chrome</translation>
 <translation id="895541991026785598">Comunicar um problema</translation>
 <translation id="8971089644512329999">OK, compreendi</translation>
@@ -406,6 +408,7 @@ Os dados foram encriptados com a sua frase de acesso de sincronização em <ph n
 <translation id="9188680907066685419">Terminar sessão na conta gerida</translation>
 <translation id="9203116392574189331">Entrega</translation>
 <translation id="9223358826628549784">Relatório de falha enviado.</translation>
+<translation id="932327136139879170">Página inicial</translation>
 <translation id="935490618240037774">Os marcadores, o histórico, as palavras-passe e outras definições são sincronizados com a sua Conta Google para que os possa utilizar em todos os dispositivos.</translation>
 <translation id="939598580284253335">Introduzir frase de acesso</translation>
 <translation id="976982866697960176">Gerir dados sincronizados...</translation>

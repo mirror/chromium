@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Address 1</translation>
 <translation id="1545749641540134597">Scan QR Code</translation>
 <translation id="1580783302095112590">Mail sent.</translation>
+<translation id="1612730193129642006">Show Tab Grid</translation>
 <translation id="1646446875146297738">Enabling ‘Do Not Track’ means that a request will be included with your browsing traffic. Any effect depends on whether a website responds to the request, and how the request is interpreted.
 
 For example, some websites may respond to this request by showing you ads that aren't based on other websites which you've visited. Many websites will still collect and use your browsing data – for example, to improve security, to provide content, services, ads and recommendations on their websites and to generate reporting statistics. <ph name="BEGIN_LINK" />Learn more<ph name="END_LINK" /></translation>
@@ -383,11 +384,12 @@ Your data was encrypted with your sync passphrase on <ph name="TIME" />. Enter i
 <translation id="8680787084697685621">Account sign-in details are out of date.</translation>
 <translation id="8721297211384281569">Tools Menu</translation>
 <translation id="8725066075913043281">Try again</translation>
-<translation id="8730621377337864115">Finished</translation>
+<translation id="8730621377337864115">Done</translation>
 <translation id="8741995161408053644">Your Google Account may have other forms of browsing history at <ph name="BEGIN_LINK" />history.google.com<ph name="END_LINK" />.</translation>
 <translation id="8775144690796719618">Invalid URL</translation>
 <translation id="8820817407110198400">Bookmarks</translation>
 <translation id="8840513115188359703">You won't be signed out of your Google Account.</translation>
+<translation id="8881801611828450202">Search <ph name="SEARCH_ENGINE" /> for This Image</translation>
 <translation id="8904976895050290827">Chrome Sync</translation>
 <translation id="895541991026785598">Report an Issue</translation>
 <translation id="8971089644512329999">OK, got it</translation>
@@ -406,6 +408,7 @@ Your data was encrypted with your sync passphrase on <ph name="TIME" />. Enter i
 <translation id="9188680907066685419">Sign out of managed account</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">Crash report sent.</translation>
+<translation id="932327136139879170">Home</translation>
 <translation id="935490618240037774">Your bookmarks, history, passwords and other settings will be synced to your Google account so that you can use them on all of your devices.</translation>
 <translation id="939598580284253335">Enter passphrase</translation>
 <translation id="976982866697960176">Manage Synced Data…</translation>

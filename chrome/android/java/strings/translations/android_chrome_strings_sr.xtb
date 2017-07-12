@@ -176,6 +176,7 @@
 <translation id="2762000892062317888">малопре</translation>
 <translation id="2777555524387840389">Још <ph name="SECONDS" /> сек</translation>
 <translation id="2781151931089541271">Још 1 сек</translation>
+<translation id="2810645512293415242">Страница је поједностављена ради уштеде на подацима и бржег учитавања.</translation>
 <translation id="2836148919159985482">Додирните дугме Назад да бисте изашли из режима целог екрана.</translation>
 <translation id="2842985007712546952">Надређени директоријум</translation>
 <translation id="2870560284913253234">Сајт</translation>
@@ -273,7 +274,6 @@
 <translation id="3744111561329211289">Синхронизација у позадини</translation>
 <translation id="3773755127849930740"><ph name="BEGIN_LINK" />Укључите Bluetooth<ph name="END_LINK" /> да бисте омогућили упаривање</translation>
 <translation id="3789841737615482174">Инсталирај</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{Изабрана је 1 ставка}one{Изабрана је # ставка}few{Изабране су # ставке}other{Изабрано је # ставки}}</translation>
 <translation id="3810838688059735925">Видео</translation>
 <translation id="3810973564298564668">Промени</translation>
 <translation id="3819178904835489326">Избрисана преузимања: <ph name="NUMBER_OF_DOWNLOADS" /></translation>
@@ -452,6 +452,7 @@
 <translation id="5568069709869097550">Не могу да се пријавим</translation>
 <translation id="557283862590186398">Chrome тражи дозволу да приступи микрофону за овај сајт.</translation>
 <translation id="5578795271662203820">Потражи ову слику на <ph name="SEARCH_ENGINE" />-у</translation>
+<translation id="5585019845078534178">Картице</translation>
 <translation id="5595485650161345191">Измена адресе</translation>
 <translation id="5596627076506792578">Још опција</translation>
 <translation id="5620928963363755975">Пронађите датотеке и странице у Преузимањима помоћу дугмета Још опција</translation>
@@ -558,6 +559,7 @@
 <translation id="654446541061731451">Изаберите картицу за пребацивање</translation>
 <translation id="6545017243486555795">Обриши све податке</translation>
 <translation id="6550675742724504774">Опције</translation>
+<translation id="6556716549745717622">Блокирај ако сајт приказује огласе који ометају (препоручено)</translation>
 <translation id="6560414384669816528">Претрага помоћу Sogou-а</translation>
 <translation id="6566259936974865419">Chrome вам је уштедео <ph name="GIGABYTES" /> GB</translation>
 <translation id="656628257199996201">Увек преводи <ph name="SOURCE_LANGUAGE" /></translation>
@@ -592,6 +594,7 @@
 <translation id="6831043979455480757">Преведи</translation>
 <translation id="6846298663435243399">Учитавање…</translation>
 <translation id="6850830437481525139">Затворених картица: <ph name="TAB_COUNT" /></translation>
+<translation id="6856477143496886355">Картице и адресе које користе Google Payments</translation>
 <translation id="6864459304226931083">Преузми слику</translation>
 <translation id="6865313869410766144">Подаци Аутоматског попуњавања за обрасце</translation>
 <translation id="6868088497967843822">Пријавите се да би вам обележивачи, историја, лозинке и друга подешавања били доступни на свим уређајима</translation>

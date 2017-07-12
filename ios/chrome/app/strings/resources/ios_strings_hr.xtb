@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">1. adresni redak</translation>
 <translation id="1545749641540134597">Skeniranje QR koda</translation>
 <translation id="1580783302095112590">Poruka je poslana.</translation>
+<translation id="1612730193129642006">Prikaz rešetke kartice</translation>
 <translation id="1646446875146297738">Ako omogućite "Nemoj pratiti", taj će se zahtjev slati uz vaš promet pregledavanja. Učinak ovisi o tome hoće li web-lokacija reagirati na taj zahtjev i kako će se on tumačiti.
 
 Na primjer, neke web-lokacije mogu reagirati na taj zahtjev prikazivanjem oglasa koji se ne temelje na ostalim web-lokacijama koje ste posjetili. Mnoge web-lokacije i dalje će prikupljati i upotrebljavati vaše podatke o pregledavanju kako bi, primjerice, poboljšale sigurnost, pružale sadržaje, usluge, oglase i preporuke na svojim web-lokacijama te generirale statističke podatke za izvješća. <ph name="BEGIN_LINK" />Saznajte više<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Vaši su podaci šifrirani vašom šifrom za sinkronizaciju <ph name="TIME" />. 
 <translation id="8775144690796719618">Nevažeći URL</translation>
 <translation id="8820817407110198400">Knjižne oznake</translation>
 <translation id="8840513115188359703">Nećete se odjaviti s Google računa.</translation>
+<translation id="8881801611828450202">Potraži sliku na usluzi <ph name="SEARCH_ENGINE" /></translation>
 <translation id="8904976895050290827">Chrome sinkronizacija</translation>
 <translation id="895541991026785598">Prijavljivanje problema</translation>
 <translation id="8971089644512329999">Dobro, shvaćam</translation>
@@ -406,6 +408,7 @@ Vaši su podaci šifrirani vašom šifrom za sinkronizaciju <ph name="TIME" />. 
 <translation id="9188680907066685419">Odjava s upravljanog računa</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">Izvješće o rušenju programa poslano je.</translation>
+<translation id="932327136139879170">Početna stranica</translation>
 <translation id="935490618240037774">Vaše oznake, povijest, zaporke i ostale postavke sinkronizirat će se s vašim Google računom kako biste ih mogli upotrebljavati na svim svojim uređajima.</translation>
 <translation id="939598580284253335">Unesite zaporku</translation>
 <translation id="976982866697960176">Upravljanje sinkroniziranim podacima…</translation>

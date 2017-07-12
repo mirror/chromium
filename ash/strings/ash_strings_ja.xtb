@@ -118,7 +118,7 @@
 <translation id="3967919079500697218">スクリーンショットを撮る機能は、管理者によって無効にされています。</translation>
 <translation id="397105322502079400">計算しています...</translation>
 <translation id="3995138139523574647">USB-C デバイス（右奥のポート）</translation>
-<translation id="4279490309300973883">ミラーリングしています</translation>
+<translation id="4279490309300973883">ミラーリング</translation>
 <translation id="4321179778687042513">ctrl</translation>
 <translation id="4378551569595875038">接続中...</translation>
 <translation id="4421231901400348175">リモート サポート経由で <ph name="HELPER_NAME" /> と画面の制御を共有しています。</translation>
@@ -159,8 +159,10 @@
 <translation id="5744083938413354016">タップによるドラッグ</translation>
 <translation id="5777841717266010279">画面の共有を解除しますか？</translation>
 <translation id="57838592816432529">ミュート</translation>
+<translation id="5860033963881614850">オフ</translation>
 <translation id="5895138241574237353">再起動</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">オン</translation>
 <translation id="5927132638760172455">不明な受信デバイスにキャストしています</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">元に戻す</translation>
@@ -170,7 +172,6 @@
 <translation id="5978382165065462689">リモート サポート経由で画面の制御を共有しています。</translation>
 <translation id="5980301590375426705">ゲスト セッションを終了</translation>
 <translation id="6018164090099858612">ミラーモードを終了しています</translation>
-<translation id="6041154455840261787">ハイコントラスト モードが有効になりました。無効にするには、検索+Shift+H キーをもう一度押します。</translation>
 <translation id="6043212731627905357">このモニターは <ph name="DEVICE_TYPE" /> では使用できません（サポートされていません）。</translation>
 <translation id="6043994281159824495">ログアウト</translation>
 <translation id="6047696787498798094">別のユーザーに切り替えると画面の共有は解除されます。続行してもよろしいですか？</translation>
@@ -214,6 +215,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358"><ph name="TIMEOUT_SECONDS" /> 秒後に元の解像度に戻ります</translation>
+<translation id="7199454189089571166">アシスタント モード</translation>
 <translation id="7209101170223508707">CapsLock がオンになっています。
 Alt+ 検索/Shift キーを押すと解除されます。</translation>
 <translation id="7246339268451149667">指紋によるロック解除を有効にしますか？</translation>
@@ -236,7 +238,6 @@ Alt+ 検索/Shift キーを押すと解除されます。</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">設定の同期後に言語が「<ph name="FROM_LOCALE" />」から「<ph name="TO_LOCALE" />」に変更されました。</translation>
 <translation id="7904094684485781019">このアカウントの管理者がマルチ ログインを許可していません。</translation>
-<translation id="7951523953736115461">読書灯</translation>
 <translation id="7977927628060636163">モバイル ネットワークを検索しています...</translation>
 <translation id="7982789257301363584">ネットワーク</translation>
 <translation id="8000066093800657092">ネットワーク接続なし</translation>

@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Adresse 1</translation>
 <translation id="1545749641540134597">Scanner le code QR</translation>
 <translation id="1580783302095112590">E-mail envoyé.</translation>
+<translation id="1612730193129642006">Afficher la grille d'onglets</translation>
 <translation id="1646446875146297738">Si vous activez la fonctionnalité "Interdire le suivi", une demande sera incluse dans le trafic de navigation. Le résultat dépend de l'obtention d'une réponse de la part du site Web, ainsi que de la façon dont celle-ci est interprétée.
 
 Par exemple, certains sites Web peuvent répondre à cette demande en affichant des annonces qui ne sont pas déterminées en fonction des autres sites Web que vous avez consultés. Toutefois, nombre d'entre eux recueillent et utilisent vos données de navigation pour, par exemple, améliorer la sécurité, ou pour afficher du contenu, des services, des annonces et des recommandations, ou encore pour générer des rapports statistiques. <ph name="BEGIN_LINK" />En savoir plus<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Vos données ont été chiffrées avec votre phrase secrète de synchronisation 
 <translation id="8775144690796719618">URL non valide.</translation>
 <translation id="8820817407110198400">Favoris</translation>
 <translation id="8840513115188359703">Vous ne serez pas déconnecté de votre compte Google.</translation>
+<translation id="8881801611828450202">Chercher cette image sur <ph name="SEARCH_ENGINE" /></translation>
 <translation id="8904976895050290827">Synchronisation Google Chrome</translation>
 <translation id="895541991026785598">Signaler un problème</translation>
 <translation id="8971089644512329999">OK</translation>
@@ -406,6 +408,7 @@ Vos données ont été chiffrées avec votre phrase secrète de synchronisation 
 <translation id="9188680907066685419">Se déconnecter d'un compte géré</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">Le rapport d'erreur a bien été envoyé.</translation>
+<translation id="932327136139879170">Accueil</translation>
 <translation id="935490618240037774">Vos favoris, votre historique, vos mots de passe et d'autres paramètres seront synchronisés avec votre compte Google, afin que vous puissiez les utiliser sur tous vos appareils.</translation>
 <translation id="939598580284253335">Saisir la phrase secrète</translation>
 <translation id="976982866697960176">Gérer les données synchronisées…</translation>

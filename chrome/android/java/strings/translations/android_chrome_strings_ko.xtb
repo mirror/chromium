@@ -176,6 +176,7 @@
 <translation id="2762000892062317888">방금 전</translation>
 <translation id="2777555524387840389"><ph name="SECONDS" />초 남음</translation>
 <translation id="2781151931089541271">1초 남음</translation>
+<translation id="2810645512293415242">페이지가 간소화되어 데이터가 절약되고 로드 속도가 빨라졌습니다.</translation>
 <translation id="2836148919159985482">전체화면을 종료하려면 뒤로 버튼을 터치하세요.</translation>
 <translation id="2842985007712546952">상위 폴더</translation>
 <translation id="2870560284913253234">사이트</translation>
@@ -273,7 +274,6 @@
 <translation id="3744111561329211289">백그라운드 동기화</translation>
 <translation id="3773755127849930740"><ph name="BEGIN_LINK" />블루투스를 사용 설정<ph name="END_LINK" />하여 페어링을 허용하세요.</translation>
 <translation id="3789841737615482174">설치</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{1개 항목이 선택되었습니다.}other{#개 항목이 선택되었습니다.}}</translation>
 <translation id="3810838688059735925">동영상</translation>
 <translation id="3810973564298564668">관리</translation>
 <translation id="3819178904835489326">다운로드 <ph name="NUMBER_OF_DOWNLOADS" />개 삭제됨</translation>
@@ -452,6 +452,7 @@
 <translation id="5568069709869097550">로그인할 수 없음</translation>
 <translation id="557283862590186398">Chrome이 이 사이트에서 마이크에 액세스하려면 권한이 필요합니다.</translation>
 <translation id="5578795271662203820"><ph name="SEARCH_ENGINE" />에서 이 이미지 검색</translation>
+<translation id="5585019845078534178">카드</translation>
 <translation id="5595485650161345191">주소 수정</translation>
 <translation id="5596627076506792578">옵션 더보기</translation>
 <translation id="5620928963363755975">옵션 더보기 버튼을 눌러 다운로드에서 파일 및 페이지를 찾아보세요.</translation>
@@ -558,6 +559,7 @@
 <translation id="654446541061731451">공유할 탭을 선택하세요.</translation>
 <translation id="6545017243486555795">모든 데이터 삭제</translation>
 <translation id="6550675742724504774">옵션</translation>
+<translation id="6556716549745717622">사이트에 방해가 되는 광고를 표시하는 경향이 있는 경우 차단(권장)</translation>
 <translation id="6560414384669816528">Sogou로 검색</translation>
 <translation id="6566259936974865419">Chrome을 통해 <ph name="GIGABYTES" />GB를 절약했습니다.</translation>
 <translation id="656628257199996201"><ph name="SOURCE_LANGUAGE" /> 항상 번역</translation>
@@ -592,6 +594,7 @@
 <translation id="6831043979455480757">번역</translation>
 <translation id="6846298663435243399">로드 중...</translation>
 <translation id="6850830437481525139">탭 <ph name="TAB_COUNT" />개를 닫았습니다.</translation>
+<translation id="6856477143496886355">Google Payments를 사용하는 카드 및 주소</translation>
 <translation id="6864459304226931083">이미지 다운로드</translation>
 <translation id="6865313869410766144">양식 데이터 자동완성</translation>
 <translation id="6868088497967843822">로그인하면 모든 기기에서 북마크, 방문 기록, 비밀번호, 기타 설정을 사용할 수 있습니다.</translation>

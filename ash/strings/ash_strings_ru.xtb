@@ -159,8 +159,10 @@
 <translation id="5744083938413354016">Перетаскивание нажатием</translation>
 <translation id="5777841717266010279">Закрыть доступ к экрану?</translation>
 <translation id="57838592816432529">Отключить звук</translation>
+<translation id="5860033963881614850">Выкл.</translation>
 <translation id="5895138241574237353">Перезапустить</translation>
 <translation id="5901316534475909376">Shift + Esc</translation>
+<translation id="5916664084637901428">ВКЛ</translation>
 <translation id="5927132638760172455">Трансляция на неизвестное устройство</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Отменить</translation>
@@ -170,7 +172,6 @@
 <translation id="5978382165065462689">Доступ к экрану с помощью удаленного помощника</translation>
 <translation id="5980301590375426705">Выйти из гостевого режима</translation>
 <translation id="6018164090099858612">Выход из режима трансляции…</translation>
-<translation id="6041154455840261787">Режим высокой контрастности включен. Чтобы отключить его, нажмите ПОИСК + SHIFT + H.</translation>
 <translation id="6043212731627905357">Монитор не совместим с устройством <ph name="DEVICE_TYPE" />.</translation>
 <translation id="6043994281159824495">Выйти</translation>
 <translation id="6047696787498798094">Если перейти к другому пользователю, доступ к экрану будет закрыт. Продолжить?</translation>
@@ -214,6 +215,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt + Shift + K</translation>
 <translation id="7168224885072002358">Возврат к предыдущему разрешению через <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Режим помощника</translation>
 <translation id="7209101170223508707">Включен режим CAPS LOCK.
 Чтобы отключить его, нажмите Alt + Search или Shift.</translation>
 <translation id="7246339268451149667">Разрешить разблокировку с помощью отпечатка пальца?</translation>
@@ -236,7 +238,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">В результате синхронизации настроек язык изменен. Теперь используется <ph name="TO_LOCALE" />, а не <ph name="FROM_LOCALE" />.</translation>
 <translation id="7904094684485781019">Администратор этого аккаунта запретил множественный вход</translation>
-<translation id="7951523953736115461">Ночной режим</translation>
 <translation id="7977927628060636163">Поиск мобильных сетей...</translation>
 <translation id="7982789257301363584">Сеть</translation>
 <translation id="8000066093800657092">Нет сети</translation>

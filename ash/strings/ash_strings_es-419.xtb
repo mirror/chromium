@@ -159,8 +159,10 @@ Presiona Mayús o la tecla de búsqueda para cancelar la operación.</translatio
 <translation id="5744083938413354016">Función tocar y arrastrar</translation>
 <translation id="5777841717266010279">¿Dejar de compartir la pantalla?</translation>
 <translation id="57838592816432529">Silenciar</translation>
+<translation id="5860033963881614850">Desactivado</translation>
 <translation id="5895138241574237353">Reiniciar</translation>
 <translation id="5901316534475909376">Mayúscula + Esc</translation>
+<translation id="5916664084637901428">Activada</translation>
 <translation id="5927132638760172455">Transmitiendo a un receptor desconocido</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Revertir</translation>
@@ -170,7 +172,6 @@ Presiona Mayús o la tecla de búsqueda para cancelar la operación.</translatio
 <translation id="5978382165065462689">Se está compartiendo el control de la pantalla mediante la Asistencia remota.</translation>
 <translation id="5980301590375426705">Salir de la sesión de invitado</translation>
 <translation id="6018164090099858612">Saliendo del modo de espejo</translation>
-<translation id="6041154455840261787">Se habilitó el modo de contraste alto. Presiona Buscar + mayúscula + H de nuevo para desactivarlo.</translation>
 <translation id="6043212731627905357">Este monitor no es compatible con tu dispositivo <ph name="DEVICE_TYPE" />.</translation>
 <translation id="6043994281159824495">Salir ahora</translation>
 <translation id="6047696787498798094">Cuando cambies de usuario, se dejará de compartir la pantalla. ¿Quieres continuar?</translation>
@@ -214,6 +215,7 @@ Presiona Mayús o la tecla de búsqueda para cancelar la operación.</translatio
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+mayúscula+K</translation>
 <translation id="7168224885072002358">Se revertirá a la resolución anterior en <ph name="TIMEOUT_SECONDS" />.</translation>
+<translation id="7199454189089571166">Modo de asistente</translation>
 <translation id="7209101170223508707">El BLOQUEO DE MAYÚSCULAS está activado.
 Presiona Alt y la tecla de búsqueda o Mayús para cancelar la operación.</translation>
 <translation id="7246339268451149667">¿Deseas habilitar el desbloqueo mediante huella digital?</translation>
@@ -236,7 +238,6 @@ Presiona Alt y la tecla de búsqueda o Mayús para cancelar la operación.</tran
 <translation id="7814236020522506259"><ph name="HOUR" /> y <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Después de sincronizar tu configuración, el idioma se cambió de "<ph name="FROM_LOCALE" />" a "<ph name="TO_LOCALE" />".</translation>
 <translation id="7904094684485781019">El administrador de esta cuenta inhabilitó el acceso múltiple.</translation>
-<translation id="7951523953736115461">Luz nocturna</translation>
 <translation id="7977927628060636163">Buscando redes móviles…</translation>
 <translation id="7982789257301363584">Red</translation>
 <translation id="8000066093800657092">Sin red</translation>

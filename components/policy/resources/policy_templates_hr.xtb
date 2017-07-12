@@ -54,13 +54,6 @@
       dopuštena učestalost iznosi 60 sekundi.</translation>
 <translation id="1221359380862872747">Učitaj navedene URL-ove pri demonstracijskoj prijavi</translation>
 <translation id="1265053460044691532">Ograničite vrijeme koliko se dugo korisnik autentificiran putem SAML-a može izvanmrežno prijaviti</translation>
-<translation id="127699919157094139">Onemogućuje sinkronizaciju podataka u proizvodu <ph name="PRODUCT_NAME" /> pomoću usluga sinkronizacije hostiranih na Googleu i onemogućuje korisnicima promjenu te postavke.
-
-      Ako omogućite tu postavku, korisnici neće moći promijeniti ni nadjačati tu postavku u proizvodu <ph name="PRODUCT_NAME" />.
-
-      Ako se to pravilo ne postavi, Google sinkronizacija bit će dostupna i korisnici će moći odlučiti žele li je upotrebljavati.
-
-      Da biste potpuno isključili Google sinkronizaciju, preporučujemo da onemogućite uslugu Google sinkronizacija na Google Admin consoleu.</translation>
 <translation id="1291880496936992484">Upozorenje: RC4 potpuno će se ukloniti iz preglednika <ph name="PRODUCT_NAME" /> nakon verzije 52 (oko rujna 2016.) i ovo će pravilo tada prestati funkcionirati.
 
       Ako se to pravilo ne postavi ili se postavi na "False", RC4 paketi šifri u TLS-u neće biti omogućeni. U protivnom se može postaviti na "True" radi održanja kompatibilnosti sa zastarjelim poslužiteljem. To je privremena mjera i poslužitelj se treba ponovo konfigurirati.</translation>
@@ -504,6 +497,11 @@
 
       Ako se pravilo ne postavi, to ima jednak učinak kao da se omogući. Pogledajte prethodni opis.</translation>
 <translation id="285480231336205327">Omogućavanje načina visokog kontrasta</translation>
+<translation id="2854919890879212089">Određuje da <ph name="PRODUCT_NAME" /> u Pregledu ispisa upotrebljava zadani pisač sustava, a ne pisač koji je upotrijebljen zadnji put.
+
+      Ako onemogućite tu postavku ili ne postavite nikakvu vrijednost, zadani će odredišni pisač u Pregledu ispisa biti pisač koji je upotrijebljen zadnji put.
+
+      Ako omogućite tu postavku, u Pregledu ispisa upotrebljavat će se zadani pisač OS-a kao zadani odredišni pisač.</translation>
 <translation id="2872961005593481000">Isključi</translation>
 <translation id="2874209944580848064">Napomena za uređaje <ph name="PRODUCT_OS_NAME" /> koji podržavaju Androidove aplikacije:</translation>
 <translation id="2877225735001246144">Onemogući CNAME pretraživanje prilikom provjere Kerberos autentičnosti</translation>
@@ -1482,6 +1480,13 @@ Ako omogućite tu postavku, <ph name="PRODUCT_NAME" /> zanemarivat će sve opcij
 <translation id="6943577887654905793">Naziv Mac/Linux preferencije:</translation>
 <translation id="69525503251220566">Značajka pretraživanja po slici koja pruža parametre za zadanog davatelja usluge pretraživanja</translation>
 <translation id="6956272732789158625">Nemoj dopustiti nijednoj web-lokaciji da upotrebljava generiranje ključeva</translation>
+<translation id="6994082778848658360">Određuje način na koji se hardver s ugrađenim sigurnosnim elementom može upotrebljavati za pružanje dvostruke autentifikacije ako je kompatibilan s ovom značajkom. Tipka za uključivanje/isključivanje uređaja upotrebljava se za otkrivanje korisnikove fizičke prisutnosti.
+
+      Ako se odabere "Onemogućeno", dvostruka se autentifikacija ne upotrebljava.
+
+      Ako se odabere "U2F", integrirana dvostruka autentifikacija ponašat će se u skladu sa specifikacijom za FIDO U2F.
+
+      Ako se odabere "U2F_EXTENDED", integrirana dvostruka autentifikacija pružat će funkcije U2F i neka proširenja za pojedinačno atestiranje.</translation>
 <translation id="6997592395211691850">Jesu li potrebne mrežne OCSP/CRL provjere za lokalna pouzdana sidra</translation>
 <translation id="7003334574344702284">Ako je omogućeno, ovo pravilo prisilno uvozi spremljene zaporke iz prethodno zadanog preglednika. Ako je omogućeno, ovo pravilo također utječe na dijaloški okvir za uvoz. Ako je onemogućeno, spremljene se zaporke ne uvoze. Ako nije postavljeno, korisniku može biti postavljen upit želi li uvesti zaporke ili do uvoza može doći automatski.</translation>
 <translation id="7003746348783715221">Postavke za <ph name="PRODUCT_NAME" /></translation>
@@ -1669,7 +1674,6 @@ Ako omogućite tu postavku, <ph name="PRODUCT_NAME" /> zanemarivat će sve opcij
 <translation id="7713608076604149344">Ograničenja za preuzimanja</translation>
 <translation id="7715711044277116530">Postotak za skaliranje odgode zatamnjenja zaslona u načinu prezentacije</translation>
 <translation id="7717938661004793600">Konfiguriranje značajki pristupačnosti proizvoda <ph name="PRODUCT_OS_NAME" />.</translation>
-<translation id="7719251660743813569">Kontrolira hoće li se mjerni podaci upotrebe prijavljivati Googleu. Ako je to pravilo postavljeno na "istinito", sustav <ph name="PRODUCT_OS_NAME" /> prijavljivat će mjerne podatke o upotrebi. Ako to pravilo nije konfigurirano ili je postavljeno na "lažno", prijavljivanje mjernih podataka o upotrebi bit će onemogućeno.</translation>
 <translation id="7724994675283793633">To pravilo omogućuje HTTP/0.9 na priključcima osim priključka 80 za HTTP i 443 za HTTPS.
 
       To je pravilo onemogućeno prema zadanim postavkama. Ako se omogući, korisnici mogu biti izloženi sigurnosnoj poteškoći https://crbug.com/600352.
@@ -1989,6 +1993,7 @@ Ako omogućite tu postavku, <ph name="PRODUCT_NAME" /> zanemarivat će sve opcij
 <translation id="8970205333161758602">Zaustavljanje upita za odbijanje usluge <ph name="PRODUCT_FRAME_NAME" /></translation>
 <translation id="8971221018777092728">Odbrojavanje za automatsku prijavu u javnu sesiju</translation>
 <translation id="8976248126101463034">Dopusti autentifikaciju "gnubby" za hostove daljinskog pristupa</translation>
+<translation id="8976531594979650914">Upotrijebi zadani pisač sustava kao zadani</translation>
 <translation id="8992176907758534924">Ne dopuštaj web-lokacijama prikazivanje slika</translation>
 <translation id="9035964157729712237">ID-jevi proširenja za izuzimanje s crne liste</translation>
 <translation id="9042911395677044526">Omogućuje nametanje mrežne konfiguracije za primjenu po korisniku na uređaju <ph name="PRODUCT_OS_NAME" />. Mrežna je konfiguracija niz u formatu JSON, kao što je definirano formatom "Open Network Configuration" koji je opisan na adresi <ph name="ONC_SPEC_URL" /></translation>

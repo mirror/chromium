@@ -54,13 +54,6 @@
       ore. Frecvența minimă permisă este de 60 de secunde.</translation>
 <translation id="1221359380862872747">Încărcați adrese URL specificate la conectarea demonstrativă</translation>
 <translation id="1265053460044691532">Limitați intervalul de timp pentru care un utilizator autentificat prin SAML se poate conecta offline</translation>
-<translation id="127699919157094139">Dezactivează sincronizarea datelor în <ph name="PRODUCT_NAME" /> folosind serviciile de sincronizare găzduite de Google și împiedică utilizatorii să modifice această setare.
-
-      Dacă activezi această setare, utilizatorii nu o pot modifica sau anula în <ph name="PRODUCT_NAME" />.
-
-       Dacă această politică nu este configurată, utilizatorul va putea să aleagă dacă să folosească sau nu Sincronizarea Google.
-
-      Pentru a dezactiva Sincronizarea Google integral, îți recomandăm să dezactivezi Sincronizarea Google din consola Google Admin.</translation>
 <translation id="1291880496936992484">Avertisment: compatibilitatea cu RC4 va fi eliminată complet din <ph name="PRODUCT_NAME" /> după versiunea 52 (aproximativ în septembrie 2016), iar această politică nu va mai funcționa de la momentul respectiv.
 
       Dacă această politică nu este configurată sau dacă este dezactivată, suitele de codificare RC4 din TLS nu vor fi activate. În caz contrar, politica poate fi activată pentru a se menține compatibilitatea cu un server învechit. Aceasta este o măsură temporară, iar serverul trebuie să fie reconfigurat.</translation>
@@ -507,6 +500,11 @@
 
       Dacă politica nu este configurată, va fi considerată ca fiind activată. Vezi descrierea de mai sus.</translation>
 <translation id="285480231336205327">Activați modul de contrast ridicat</translation>
+<translation id="2854919890879212089">Determină <ph name="PRODUCT_NAME" /> să folosească imprimanta prestabilită pentru sistem ca opțiune prestabilită în funcția Previzualizare înainte de printare, în locul imprimantei folosite cel mai recent.
+
+      Dacă dezactivezi această setare sau nu setezi o valoare, funcția Previzualizare înainte de printare va utiliza imprimanta folosită cel mai recent ca opțiune de destinație prestabilită.
+
+      Dacă activezi această setare, funcția Previzualizare înainte de printare va folosi imprimanta prestabilită pentru sistemul de operare ca opțiune de destinație prestabilită.</translation>
 <translation id="2872961005593481000">Închide</translation>
 <translation id="2874209944580848064">Notă pentru dispozitivele <ph name="PRODUCT_OS_NAME" /> care acceptă aplicațiile Android:</translation>
 <translation id="2877225735001246144">Dezactivează căutarea CNAME la negocierea autentificării pentru Kerberos</translation>
@@ -1495,6 +1493,12 @@
 <translation id="6943577887654905793">Nume preferință Mac/Linux:</translation>
 <translation id="69525503251220566">Parametru care pune la dispoziție funcția Căutare după imagine pentru furnizorul de căutare prestabilit</translation>
 <translation id="6956272732789158625">Nu permite niciunui site să folosească generarea cheilor</translation>
+<translation id="6994082778848658360">Specifică modul în care poate fi folosit hardware-ul elementului de securitate încorporat pentru a oferi o autentificare cu doi factori, dacă se acceptă de această funcție. Butonul de pornire al dispozitivului este folosit ca să detecteze prezența fizică a utilizatorului.
+
+      Dacă selectezi „Dezactivat”, al doilea factor nu mai este oferit.
+      Dacă selectezi „U2F”, al doilea factor integrat se va comporta conform specificației FIDO U2F.
+
+      Dacă selectezi „U2F_EXTENDED”, al doilea factor integrat va oferi funcțiile U2F și anumite extensii pentru atestarea individuală.</translation>
 <translation id="6997592395211691850">Dacă verificările OCSP/CRL online sunt necesare sau nu pentru ancorele de încredere locale</translation>
 <translation id="7003334574344702284">Dacă este activată, această politică forțează importarea parolelor salvate din browserul prestabilit anterior. Dacă este activată, această politică afectează, de asemenea, caseta de dialog de importare. Dacă este dezactivată, parolele salvate nu sunt importate. În cazul în care nu este setată, utilizatorul poate fi întrebat dacă dorește importarea sau aceasta poate avea loc în mod automat.</translation>
 <translation id="7003746348783715221">Preferințe <ph name="PRODUCT_NAME" /></translation>
@@ -1683,7 +1687,6 @@ nu poate fi stabilit de utilizator din setările browserului.
 <translation id="7713608076604149344">Restricții privind descărcarea</translation>
 <translation id="7715711044277116530">Procentajul cu care se ajustează intervalul până la reducerea luminozității ecranului în modul de prezentare</translation>
 <translation id="7717938661004793600">Configurați funcțiile de accesibilitate pentru <ph name="PRODUCT_OS_NAME" />.</translation>
-<translation id="7719251660743813569">Această politică stabilește dacă statisticile de utilizare sunt raportate la Google. Dacă politica este activată, <ph name="PRODUCT_OS_NAME" /> va raporta statisticile de utilizare. Dacă politica nu este configurată sau nu este activată, raportarea statisticilor va fi dezactivată.</translation>
 <translation id="7724994675283793633">Această politică activează compatibilitatea cu HTTP/0.9 pentru HTTP pentru alte porturi decât 80 și pentru HTTPS pentru alte porturi decât 443.
 
       Această politică este dezactivată în mod prestabilit și, dacă este activată, utilizatorii sunt expuși la problema de securitate prezentată aici https://crbug.com/600352.
@@ -2000,6 +2003,7 @@ nu poate fi stabilit de utilizator din setările browserului.
 <translation id="8970205333161758602">Eliminați solicitarea de refuzare <ph name="PRODUCT_FRAME_NAME" /></translation>
 <translation id="8971221018777092728">Temporizator pentru conectarea automată la sesiunea publică</translation>
 <translation id="8976248126101463034">Permite autentificarea gnubby pentru gazdele de acces la distanță</translation>
+<translation id="8976531594979650914">Folosește imprimanta prestabilită a sistemului ca setare prestabilită</translation>
 <translation id="8992176907758534924">Nu permite niciunui site să afișeze imagini</translation>
 <translation id="9035964157729712237">ID-urile extensiilor excluse din lista neagră</translation>
 <translation id="9042911395677044526">Această politică permite trimiterea configurației rețelei pentru a fi aplicată pentru fiecare utilizator pe un dispozitiv cu <ph name="PRODUCT_OS_NAME" />. Configurația rețelei este un șir în formatul JSON, conform definirii acestuia de către formatul Open Network Configuration descris la <ph name="ONC_SPEC_URL" /></translation>

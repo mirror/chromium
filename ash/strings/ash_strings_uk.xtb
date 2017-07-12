@@ -159,8 +159,10 @@
 <translation id="5744083938413354016">Перетягування дотиком</translation>
 <translation id="5777841717266010279">Скасувати спільний доступ до екрана?</translation>
 <translation id="57838592816432529">Вимкнути звук</translation>
+<translation id="5860033963881614850">Вимк.</translation>
 <translation id="5895138241574237353">Перезапустити</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Увімкнути</translation>
 <translation id="5927132638760172455">Трансляція на невідомий приймач</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Повернути</translation>
@@ -170,7 +172,6 @@
 <translation id="5978382165065462689">Спільний доступ до екрана через віддалену допомогу.</translation>
 <translation id="5980301590375426705">Завершити сеанс у режимі гостя</translation>
 <translation id="6018164090099858612">Вихід із режиму віддзеркалення</translation>
-<translation id="6041154455840261787">Увімкнено режим високого контрасту. Щоб вимкнути його, знову натисніть Search+Shift+H.</translation>
 <translation id="6043212731627905357">Ваш пристрій <ph name="DEVICE_TYPE" /> не підтримує цей монітор.</translation>
 <translation id="6043994281159824495">Вийти зараз</translation>
 <translation id="6047696787498798094">Якщо змінити користувача, спільний доступ до екрана буде скасовано. Продовжити?</translation>
@@ -214,6 +215,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">Попередня роздільна здатність повернеться через <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Режим Помічника</translation>
 <translation id="7209101170223508707">Клавішу CAPS LOCK увімкнено.
 Натисніть Alt+клавішу пошуку або Shift, щоб скасувати.</translation>
 <translation id="7246339268451149667">Увімкнути розблокування відбитком пальця?</translation>
@@ -236,7 +238,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> і <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Після синхронізації налаштувань мову змінено. Попередня: <ph name="FROM_LOCALE" />, нова: <ph name="TO_LOCALE" />.</translation>
 <translation id="7904094684485781019">Адміністратор цього облікового запису заборонив паралельний вхід.</translation>
-<translation id="7951523953736115461">Нічний режим</translation>
 <translation id="7977927628060636163">Пошук мобільних мереж…</translation>
 <translation id="7982789257301363584">Мережа</translation>
 <translation id="8000066093800657092">Немає мережі</translation>

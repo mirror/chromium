@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Endereço 1</translation>
 <translation id="1545749641540134597">Ler código QR</translation>
 <translation id="1580783302095112590">Mensagem enviada.</translation>
+<translation id="1612730193129642006">Mostrar grade das guias</translation>
 <translation id="1646446875146297738">A ativação da opção "Não rastrear" significa que uma solicitação será incluída com seu tráfego de navegação. Qualquer efeito depende de o website responder ou não à solicitação e da forma que a solicitação é interpretada.
 
 Por exemplo, alguns websites podem reagir a esse pedido mostrando anúncios que não têm qualquer relação com os sites que você costuma visitar. Mesmo assim, alguns websites ainda vão coletar e usar seus dados de navegação para, por exemplo, melhorar a segurança, gerar conteúdo, anúncios, recomendações e relatórios de estatística. 
@@ -388,6 +389,7 @@ Seus dados foram criptografados com sua senha longa de sincronização no dia <p
 <translation id="8775144690796719618">URL inválido</translation>
 <translation id="8820817407110198400">Favoritos</translation>
 <translation id="8840513115188359703">Você não será desconectado da sua Conta do Google.</translation>
+<translation id="8881801611828450202">Pesquisar esta imagem no <ph name="SEARCH_ENGINE" /></translation>
 <translation id="8904976895050290827">Sincronização do Google Chrome</translation>
 <translation id="895541991026785598">Informar um problema</translation>
 <translation id="8971089644512329999">Ok, entendi</translation>
@@ -406,6 +408,7 @@ Seus dados foram criptografados com sua senha longa de sincronização no dia <p
 <translation id="9188680907066685419">Sair da conta gerenciada</translation>
 <translation id="9203116392574189331">Transição</translation>
 <translation id="9223358826628549784">Relatórios de erros enviados.</translation>
+<translation id="932327136139879170">Início</translation>
 <translation id="935490618240037774">Seus favoritos, histórico, senhas e outras configurações serão sincronizados com sua Conta do Google para que seja possível usá-los em todos os seus dispositivos.</translation>
 <translation id="939598580284253335">Inserir senha</translation>
 <translation id="976982866697960176">Gerenciar dados sincronizados…</translation>

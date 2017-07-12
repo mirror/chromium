@@ -159,8 +159,10 @@
 <translation id="5744083938413354016">टैप करके खींचना</translation>
 <translation id="5777841717266010279">स्‍क्रीन साझाकरण बंद करें?</translation>
 <translation id="57838592816432529">आवाज़ बंद करें</translation>
+<translation id="5860033963881614850">बंद</translation>
 <translation id="5895138241574237353">पुन: प्रारंभ करें</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">चालू</translation>
 <translation id="5927132638760172455">किसी अज्ञात प्राप्तकर्ता को कास्ट कर रहा है</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">वापस लाएं</translation>
@@ -170,7 +172,6 @@
 <translation id="5978382165065462689">आपकी स्‍क्रीन का नियंत्रण दूरस्‍थ सहायका के द्वारा साझा किया जा रहा है.</translation>
 <translation id="5980301590375426705">अतिथि सत्र से बाहर निकलें</translation>
 <translation id="6018164090099858612">मिरर मोड से बाहर निकाला जा रहा है</translation>
-<translation id="6041154455840261787">उच्च कंट्रास्ट मोड सक्षम है. उसे बंद पर टॉगल करने के लिए Search+Shift+H फिर से दबाएं.</translation>
 <translation id="6043212731627905357">यह मॉनीटर आपके <ph name="DEVICE_TYPE" /> के साथ काम नहीं कर रहा है (मॉनीटर समर्थित नहीं है).</translation>
 <translation id="6043994281159824495">अब प्रस्थान करें</translation>
 <translation id="6047696787498798094">आपके द्वारा किसी अन्‍य उपयोगकर्ता पर स्‍विच करने से स्‍क्रीन साझाकरण रुक जाएगा. क्‍या आप जारी रखना चाहते हैं?</translation>
@@ -214,6 +215,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358"><ph name="TIMEOUT_SECONDS" /> में पुराने रिज़ॉल्यूशन में वापस लौट रहा है</translation>
+<translation id="7199454189089571166">Assistant मोड</translation>
 <translation id="7209101170223508707">CAPS LOCK चालू है.
 रद्द करने के लिए Alt+Search या Shift दबाएं.</translation>
 <translation id="7246339268451149667">फ़िंगरप्रिंट अनलॉक सक्षम करें?</translation>
@@ -236,7 +238,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> और <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">आपकी सेटिंग समन्वयित करने के बाद भाषा को "<ph name="FROM_LOCALE" />" से "<ph name="TO_LOCALE" />" में बदल दिया गया है.</translation>
 <translation id="7904094684485781019">इस खाते के व्यवस्थापक ने एकाधिक प्रवेश को अस्वीकार कर दिया है.</translation>
-<translation id="7951523953736115461">नाइट लाइट</translation>
 <translation id="7977927628060636163">मोबाइल नेटवर्क खोजे जा रहे हैं...</translation>
 <translation id="7982789257301363584">नेटवर्क</translation>
 <translation id="8000066093800657092">नेटवर्क नहीं है</translation>

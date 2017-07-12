@@ -159,8 +159,10 @@
 <translation id="5744083938413354016">Μεταφορά με πάτημα</translation>
 <translation id="5777841717266010279">Να διακοπεί η κοινή χρήση οθόνης;</translation>
 <translation id="57838592816432529">Σίγαση</translation>
+<translation id="5860033963881614850">Απενεργοποιημένη</translation>
 <translation id="5895138241574237353">Επανεκκίνηση</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Ενεργό</translation>
 <translation id="5927132638760172455">Μετάδοση σε έναν άγνωστο δέκτη</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Επαναφορά</translation>
@@ -170,7 +172,6 @@
 <translation id="5978382165065462689">Κοινόχρηστος έλεγχος της οθόνης σας μέσω της απομακρυσμένης βοήθειας.</translation>
 <translation id="5980301590375426705">Έξοδος επισκέπτη</translation>
 <translation id="6018164090099858612">Έξοδος από λειτουργία κατοπτρισμού</translation>
-<translation id="6041154455840261787">Η Λειτουργία υψηλής αντίθεσης ενεργοποιήθηκε. Πατήστε Search+Shift+H ξανά για να την απενεργοποιήσετε.</translation>
 <translation id="6043212731627905357">Αυτή η οθόνη δεν είναι συμβατή με τη συσκευή σας <ph name="DEVICE_TYPE" /> (η οθόνη δεν υποστηρίζεται).</translation>
 <translation id="6043994281159824495">Έξοδος τώρα</translation>
 <translation id="6047696787498798094">Η κοινή χρήση οθόνης θα διακοπεί κατά την εναλλαγή σε άλλον χρήστη. Θέλετε να συνεχίσετε;</translation>
@@ -214,6 +215,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">Επαναφορά στην προηγούμενη ανάλυση σε <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Λειτουργία υποβοήθησης</translation>
 <translation id="7209101170223508707">Το πλήκτρο CAPS LOCK έχει ενεργοποιηθεί.
 Πατήστε Alt+Search ή Shift για ακύρωση.</translation>
 <translation id="7246339268451149667">Θέλετε να ενεργοποιήσετε το ξεκλείδωμα με δακτυλικό αποτύπωμα;</translation>
@@ -236,7 +238,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> και <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Η γλώσσα του άλλαξε από "<ph name="FROM_LOCALE" />" σε "<ph name="TO_LOCALE" />" μετά τον συγχρονισμό των ρυθμίσεών σας.</translation>
 <translation id="7904094684485781019">Ο διαχειριστής αυτού του λογαριασμού δεν έχει επιτρέψει τις πολλαπλές συνδέσεις.</translation>
-<translation id="7951523953736115461">Νυχτερινός φωτισμός</translation>
 <translation id="7977927628060636163">Αναζήτηση για δίκτυα κινητής τηλεφωνίας…</translation>
 <translation id="7982789257301363584">Δίκτυο</translation>
 <translation id="8000066093800657092">Κανένα δίκτυο</translation>

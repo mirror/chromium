@@ -159,8 +159,10 @@ Premi il tasto per la ricerca o Maiusc per annullare.</translation>
 <translation id="5744083938413354016">Trascinamento al tocco</translation>
 <translation id="5777841717266010279">Interrompere la condivisione dello schermo?</translation>
 <translation id="57838592816432529">Disattiva audio</translation>
+<translation id="5860033963881614850">Off</translation>
 <translation id="5895138241574237353">Riavvia</translation>
 <translation id="5901316534475909376">MAIUSC+ESC</translation>
+<translation id="5916664084637901428">On</translation>
 <translation id="5927132638760172455">Trasmissione a un ricevitore sconosciuto</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Ripristina</translation>
@@ -170,7 +172,6 @@ Premi il tasto per la ricerca o Maiusc per annullare.</translation>
 <translation id="5978382165065462689">Condividi il controllo dello schermo tramite Assistenza remota.</translation>
 <translation id="5980301590375426705">Esci da sessione Ospite</translation>
 <translation id="6018164090099858612">Uscita dalla modalità di mirroring</translation>
-<translation id="6041154455840261787">Modalità ad alto contrasto attivata. Premi il tasto per la ricerca+MAIUSC+H per disattivarla.</translation>
 <translation id="6043212731627905357">Questo monitor non è compatibile con il tuo dispositivo <ph name="DEVICE_TYPE" /> (il monitor non è supportato).</translation>
 <translation id="6043994281159824495">Esci ora</translation>
 <translation id="6047696787498798094">La condivisione dello schermo verrà interrotta se cambi utente. Vuoi continuare?</translation>
@@ -214,6 +215,7 @@ Premi il tasto per la ricerca o Maiusc per annullare.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">ALT + MAIUSC + K</translation>
 <translation id="7168224885072002358">Ripristino della risoluzione precedente tra <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Modalità Assistente</translation>
 <translation id="7209101170223508707">La funzione BLOC MAIUSC è attiva.
 Premi Alt+tasto per la ricerca o Maiusc per annullare.</translation>
 <translation id="7246339268451149667">Attivare lo sblocco basato su impronta digitale?</translation>
@@ -236,7 +238,6 @@ Premi Alt+tasto per la ricerca o Maiusc per annullare.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> e <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">La lingua è stata modificata da "<ph name="FROM_LOCALE" />" a "<ph name="TO_LOCALE" />" dopo la sincronizzazione delle impostazioni.</translation>
 <translation id="7904094684485781019">L'amministratore di questo account ha bloccato l'accesso simultaneo.</translation>
-<translation id="7951523953736115461">Luminosità notturna</translation>
 <translation id="7977927628060636163">Ricerca di reti mobili...</translation>
 <translation id="7982789257301363584">Rete</translation>
 <translation id="8000066093800657092">Nessuna rete</translation>

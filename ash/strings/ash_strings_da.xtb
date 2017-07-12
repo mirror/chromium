@@ -159,8 +159,10 @@ Tryk på Søg eller Shift for at annullere.</translation>
 <translation id="5744083938413354016">Tryk og træk</translation>
 <translation id="5777841717266010279">Vil du afslutte skærmdeling?</translation>
 <translation id="57838592816432529">Slå lyden fra</translation>
+<translation id="5860033963881614850">Fra</translation>
 <translation id="5895138241574237353">Genstart</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Til</translation>
 <translation id="5927132638760172455">Caster til en ukendt modtager</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Fortryd</translation>
@@ -170,7 +172,6 @@ Tryk på Søg eller Shift for at annullere.</translation>
 <translation id="5978382165065462689">Skærmdeling via Fjernsupport.</translation>
 <translation id="5980301590375426705">Afslut gæstesession</translation>
 <translation id="6018164090099858612">Lukker spejltilstand</translation>
-<translation id="6041154455840261787">Tilstanden Høj kontrast er aktiveret. Tryk på søgetasten+Shift+H igen for at slå den fra.</translation>
 <translation id="6043212731627905357">Denne skærm fungerer ikke sammen med <ph name="DEVICE_TYPE" /> (skærmen understøttes ikke).</translation>
 <translation id="6043994281159824495">Log ud nu</translation>
 <translation id="6047696787498798094">Skærmdeling ophører, når du skifter til en anden bruger. Vil du fortsætte?</translation>
@@ -214,6 +215,7 @@ Tryk på Søg eller Shift for at annullere.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">Fortryder og vender tilbage til den gamle opløsning om <ph name="TIMEOUT_SECONDS" /> sekunder.</translation>
+<translation id="7199454189089571166">Assistenttilstand</translation>
 <translation id="7209101170223508707">CAPS LOCK er slået til.
 Tryk på Alt+Søg eller Shift for at annullere.</translation>
 <translation id="7246339268451149667">Vil du aktivere oplåsning med fingeraftryk?</translation>
@@ -236,7 +238,6 @@ Tryk på Alt+Søg eller Shift for at annullere.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> og <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Sproget er blevet ændret fra "<ph name="FROM_LOCALE" />" til "<ph name="TO_LOCALE" />", efter at du har synkroniseret dine indstillinger.</translation>
 <translation id="7904094684485781019">Administratoren for denne konto tillader ikke samlet login fra flere konti.</translation>
-<translation id="7951523953736115461">Nattelys</translation>
 <translation id="7977927628060636163">Søger efter mobilnetværk...</translation>
 <translation id="7982789257301363584">Netværk</translation>
 <translation id="8000066093800657092">Intet netværk</translation>

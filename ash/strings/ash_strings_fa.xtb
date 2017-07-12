@@ -159,8 +159,10 @@
 <translation id="5744083938413354016">کشیدن با ضربه زدن</translation>
 <translation id="5777841717266010279">اشتراک‌گذاری صفحه نمایش متوقف شود؟</translation>
 <translation id="57838592816432529">بی‌صدا کردن</translation>
+<translation id="5860033963881614850">خاموش</translation>
 <translation id="5895138241574237353">راه‌اندازی مجدد</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">روشن</translation>
 <translation id="5927132638760172455">در حال فرستادن به گیرنده ناشناس</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">برگرداندن</translation>
@@ -170,7 +172,6 @@
 <translation id="5978382165065462689">به اشتراک گذاشتن کنترل صفحه‌تان از طریق راهنمایی از راه دور.</translation>
 <translation id="5980301590375426705">خروج از مهمان</translation>
 <translation id="6018164090099858612">خروج از حالت آینه</translation>
-<translation id="6041154455840261787">‏حالت تضاد بالا فعال شد. برای خاموش کردن مجدد آن، جستجو+Shift+H را فشار دهید.</translation>
 <translation id="6043212731627905357">این نمایشگر با <ph name="DEVICE_TYPE" /> سازگار نیست (نمایشگر پشتیبانی نمی‌شود).</translation>
 <translation id="6043994281159824495">خروج از سیستم هم‌اکنون</translation>
 <translation id="6047696787498798094">زمانی که به یک کاربر دیگر جابه‌جا می‌شوید، اشتراک‌گذاری صفحه نمایش متوقف می‌شود. می‌خواهید ادامه دهید؟</translation>
@@ -214,6 +215,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">برگرداندن به وضوح قدیمی در <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">حالت دستیار</translation>
 <translation id="7209101170223508707">‏CAPS LOCK روشن است.
 Alt+جستجو یا Shift را برای لغو فشار دهید.</translation>
 <translation id="7246339268451149667">باز کردن قفل با اثرانگشت فعال شود؟</translation>
@@ -236,7 +238,6 @@ Alt+جستجو یا Shift را برای لغو فشار دهید.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> و <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">بعد از همگام‌سازی تنظیمات شما، زبان از «<ph name="FROM_LOCALE" />» به «<ph name="TO_LOCALE" />» تغییر کرد.</translation>
 <translation id="7904094684485781019">سرپرست این حساب اجازه ورود چندگانه به سیستم را نمی‌دهد.</translation>
-<translation id="7951523953736115461">نور شب</translation>
 <translation id="7977927628060636163">درحال جستجوی شبکه‌های تلفن همراه…</translation>
 <translation id="7982789257301363584">شبکه</translation>
 <translation id="8000066093800657092">بدون شبکه</translation>

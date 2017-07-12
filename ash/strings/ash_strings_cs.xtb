@@ -158,8 +158,10 @@
 <translation id="5744083938413354016">Přetažení klepnutím</translation>
 <translation id="5777841717266010279">Ukončit sdílení obrazovky?</translation>
 <translation id="57838592816432529">Ztlumit</translation>
+<translation id="5860033963881614850">Vypnuto</translation>
 <translation id="5895138241574237353">Restartovat</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Zapnuto</translation>
 <translation id="5927132638760172455">Odesílání do neznámého přijímače</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Vrátit zpět</translation>
@@ -169,7 +171,6 @@
 <translation id="5978382165065462689">Ovládání obrazovky je sdíleno prostřednictvím Vzdálené pomoci.</translation>
 <translation id="5980301590375426705">Odhlásit hosta</translation>
 <translation id="6018164090099858612">Ukončování režimu zrcadlení</translation>
-<translation id="6041154455840261787">Je aktivován režim vysokého kontrastu. Vypnete jej opětovným stisknutím kombinace kláves Hledat+Shift+H.</translation>
 <translation id="6043212731627905357">Tento monitor si se zařízením <ph name="DEVICE_TYPE" /> nerozumí (monitor není podporován).</translation>
 <translation id="6043994281159824495">Odhlásit se</translation>
 <translation id="6047696787498798094">Pokud přepnete na jiného uživatele, sdílení obrazovky bude ukončeno. Chcete pokračovat?</translation>
@@ -213,6 +214,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt + Shift + K</translation>
 <translation id="7168224885072002358">Původní rozlišení bude obnoveno za <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Režim asistenta</translation>
 <translation id="7209101170223508707">CAPS LOCK je zapnutý. 
 Vypnete jej stisknutím kombinace kláves Alt + Vyhledávání nebo Shift.</translation>
 <translation id="7246339268451149667">Povolit odemknutí otiskem prstu?</translation>
@@ -235,7 +237,6 @@ Vypnete jej stisknutím kombinace kláves Alt + Vyhledávání nebo Shift.</tran
 <translation id="7814236020522506259"><ph name="HOUR" /> a <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Jazyk prohlížeče Chrome se po synchronizaci nastavení změnil z jazyka <ph name="FROM_LOCALE" /> na jazyk <ph name="TO_LOCALE" />.</translation>
 <translation id="7904094684485781019">Správce tohoto účtu zakázal vícenásobné přihlášení.</translation>
-<translation id="7951523953736115461">Noční režim</translation>
 <translation id="7977927628060636163">Vyhledávání mobilních sítí...</translation>
 <translation id="7982789257301363584">Síť</translation>
 <translation id="8000066093800657092">Žádná síť</translation>

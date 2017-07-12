@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">地址 1</translation>
 <translation id="1545749641540134597">掃描 QR 圖碼</translation>
 <translation id="1580783302095112590">已傳送郵件。</translation>
+<translation id="1612730193129642006">顯示分頁方格</translation>
 <translation id="1646446875146297738">啟用「不追蹤」選項後，您的瀏覽流量會置入一項特定的要求，其作用則視網站是否回應要求，以及網站解讀要求的方式而定。
 
 舉例來說，部分網站可能會以隨機顯示廣告的方式回應這類要求，而這些廣告並非根據您所造訪的其他網站紀錄而產生。許多網站仍會收集並使用您的瀏覽資料，藉此提升安全性、提供網站上的內容、服務、廣告和推薦項目，以及產生報告統計資料。<ph name="BEGIN_LINK" />瞭解詳情<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@
 <translation id="8775144690796719618">網址無效</translation>
 <translation id="8820817407110198400">書籤</translation>
 <translation id="8840513115188359703">您不會因此登出 Google 帳戶。</translation>
+<translation id="8881801611828450202">透過 <ph name="SEARCH_ENGINE" /> 搜尋這張圖片</translation>
 <translation id="8904976895050290827">Google Chrome 同步功能</translation>
 <translation id="895541991026785598">回報問題</translation>
 <translation id="8971089644512329999">好，我知道了</translation>
@@ -406,6 +408,7 @@
 <translation id="9188680907066685419">登出受管理的帳戶</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">當機報告已送出。</translation>
+<translation id="932327136139879170">首頁</translation>
 <translation id="935490618240037774">您的書籤、歷史紀錄、密碼和其他設定都會在您的 Google 帳戶中保持同步，以便您在所有個人裝置上使用。</translation>
 <translation id="939598580284253335">請輸入通關密語</translation>
 <translation id="976982866697960176">管理同步資料…</translation>

@@ -158,8 +158,10 @@
 <translation id="5744083938413354016">السحب بعد النقر</translation>
 <translation id="5777841717266010279">هل ترغب في إيقاف مشاركة الشاشة؟</translation>
 <translation id="57838592816432529">كتم الصوت</translation>
+<translation id="5860033963881614850">إيقاف</translation>
 <translation id="5895138241574237353">إعادة التشغيل</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">تشغيل</translation>
 <translation id="5927132638760172455">إرسال إلى مستلم غير معروف</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">التراجع عن الإجراء</translation>
@@ -169,7 +171,6 @@
 <translation id="5978382165065462689">مشاركة التحكم في شاشتك عن طريق المساعدة عن بُعد.</translation>
 <translation id="5980301590375426705">إنهاء جلسة الضيف</translation>
 <translation id="6018164090099858612">جارٍ الخروج من وضع المرآة</translation>
-<translation id="6041154455840261787">‏تم تمكين وضع التباين العالي. اضغط على "Search+Shift+H" مرة أخرى لإيقافه.</translation>
 <translation id="6043212731627905357">لا تتوافق هذه الشاشة مع <ph name="DEVICE_TYPE" /> (هذه الشاشة غير مدعومة).</translation>
 <translation id="6043994281159824495">الخروج الآن</translation>
 <translation id="6047696787498798094">سيتم إيقاف مشاركة الشاشة عند التبديل إلى مستخدم آخر. هل تريد المتابعة؟</translation>
@@ -213,6 +214,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">سيتم الرجوع إلى درجة الدقة القديمة في غضون <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">وضع المساعد</translation>
 <translation id="7209101170223508707">‏المفتاح CAPS LOCK في وضع التشغيل. اضغط على Alt+مفتاح البحث، أو اضغط على المفتاح Shift لإلغاء التشغيل.</translation>
 <translation id="7246339268451149667">هل ترغب في تمكين إلغاء القفل باستخدام بصمة الإصبع؟</translation>
 <translation id="7256634071279256947">الميكروفون الخلفي</translation>
@@ -234,7 +236,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> و<ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">تم تغيير اللغة من "<ph name="FROM_LOCALE" />" إلى "<ph name="TO_LOCALE" />" بعد مزامنة إعداداتك.</translation>
 <translation id="7904094684485781019">لقد حظر مشرف هذا الحساب إمكانية الدخول المتعدد.</translation>
-<translation id="7951523953736115461">إضاءة ليلية</translation>
 <translation id="7977927628060636163">جارٍ البحث عن شبكات الجوّال...</translation>
 <translation id="7982789257301363584">الشبكة</translation>
 <translation id="8000066093800657092">لا شبكة</translation>

@@ -159,8 +159,10 @@ Naciśnij Szukaj lub Shift, by anulować.</translation>
 <translation id="5744083938413354016">Przeciąganie dotykiem</translation>
 <translation id="5777841717266010279">Zakończyć udostępnianie ekranu?</translation>
 <translation id="57838592816432529">Wycisz</translation>
+<translation id="5860033963881614850">Wyłączone</translation>
 <translation id="5895138241574237353">Uruchom ponownie</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Włączone</translation>
 <translation id="5927132638760172455">Przesyłam do nieznanego odbiornika</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Przywróć</translation>
@@ -170,7 +172,6 @@ Naciśnij Szukaj lub Shift, by anulować.</translation>
 <translation id="5978382165065462689">Udostępnianie sterowania ekranem przy użyciu pomocy zdalnej.</translation>
 <translation id="5980301590375426705">Zakończ sesję gościa</translation>
 <translation id="6018164090099858612">Wyłączam tryb odbicia lustrzanego</translation>
-<translation id="6041154455840261787">Włączono tryb wysokiego kontrastu. Aby go wyłączyć, naciśnij ponownie klawisz wyszukiwania + Shift + H.</translation>
 <translation id="6043212731627905357">Ten monitor nie działa z Twoim urządzeniem <ph name="DEVICE_TYPE" /> (nie jest obsługiwany).</translation>
 <translation id="6043994281159824495">Wyloguj się teraz</translation>
 <translation id="6047696787498798094">Gdy zmienisz użytkownika, udostępnianie ekranu zostanie zakończone. Chcesz kontynuować?</translation>
@@ -214,6 +215,7 @@ Naciśnij Szukaj lub Shift, by anulować.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt + Shift + K</translation>
 <translation id="7168224885072002358">Powrót do wcześniejszej rozdzielczości za <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Tryb Asystenta</translation>
 <translation id="7209101170223508707">CAPS LOCK jest włączony.
 Naciśnij Alt+Szukaj lub Shift, by anulować.</translation>
 <translation id="7246339268451149667">Włączyć odblokowanie odciskiem palca?</translation>
@@ -236,7 +238,6 @@ Naciśnij Alt+Szukaj lub Shift, by anulować.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> i <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Po zsynchronizowaniu ustawień zmieniono język z „<ph name="FROM_LOCALE" />” na „<ph name="TO_LOCALE" />”.</translation>
 <translation id="7904094684485781019">Administrator tego konta zablokował możliwość wielokrotnego logowania.</translation>
-<translation id="7951523953736115461">Podświetlenie nocne</translation>
 <translation id="7977927628060636163">Szukam sieci komórkowych…</translation>
 <translation id="7982789257301363584">Sieć</translation>
 <translation id="8000066093800657092">Brak sieci</translation>

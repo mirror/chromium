@@ -159,8 +159,10 @@ Premeu Cerca o Maj per cancel·lar.</translation>
 <translation id="5744083938413354016">Tocar i arrossegar</translation>
 <translation id="5777841717266010279">Voleu deixar de compartir la pantalla?</translation>
 <translation id="57838592816432529">Silencia</translation>
+<translation id="5860033963881614850">Desactivat</translation>
 <translation id="5895138241574237353">Reinicia</translation>
 <translation id="5901316534475909376">Maj + Esc</translation>
+<translation id="5916664084637901428">Activat</translation>
 <translation id="5927132638760172455">S'està emetent a un receptor desconegut</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Reverteix</translation>
@@ -170,7 +172,6 @@ Premeu Cerca o Maj per cancel·lar.</translation>
 <translation id="5978382165065462689">Es comparteix el control de la pantalla mitjançant l'Assistència remota.</translation>
 <translation id="5980301590375426705">Surt de la sessió de convidat</translation>
 <translation id="6018164090099858612">S'està sortint del mode de rèplica</translation>
-<translation id="6041154455840261787">El mode d'alt contrast s'ha activat. Torna a prémer Cerca+Maj+H per desactivar-lo.</translation>
 <translation id="6043212731627905357">Aquest monitor i el teu <ph name="DEVICE_TYPE" /> no s'entenen (el monitor no és compatible).</translation>
 <translation id="6043994281159824495">Tanca la sessió ara</translation>
 <translation id="6047696787498798094">La pantalla es deixarà de compartir quan canvieu d'usuari. Voleu continuar?</translation>
@@ -214,6 +215,7 @@ Premeu Cerca o Maj per cancel·lar.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Maj+K</translation>
 <translation id="7168224885072002358">Es revertirà a la resolució anterior d'aquí a <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Mode assistent</translation>
 <translation id="7209101170223508707">Bloq Maj està activat.
 Premeu Alt+Cerca o Maj per cancel·lar.</translation>
 <translation id="7246339268451149667">Vols activar el desbloqueig amb empremta digital?</translation>
@@ -236,7 +238,6 @@ Premeu Alt+Cerca o Maj per cancel·lar.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> i <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">L'idioma ha canviat de "<ph name="FROM_LOCALE" />" a "<ph name="TO_LOCALE" />" després de sincronitzar la vostra configuració.</translation>
 <translation id="7904094684485781019">L'administrador d'aquest compte no ha permès l'inici de sessió múltiple.</translation>
-<translation id="7951523953736115461">Llum nocturna</translation>
 <translation id="7977927628060636163">S'estan cercant xarxes mòbils…</translation>
 <translation id="7982789257301363584">Xarxa</translation>
 <translation id="8000066093800657092">No hi ha cap xarxa</translation>

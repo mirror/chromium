@@ -147,7 +147,7 @@ Pulsa Mayús o la tecla de búsqueda para cancelar la operación.</translation>
 <translation id="5313326810920013265">Ajustes de Bluetooth</translation>
 <translation id="5331975486040154427">Dispositivo USB tipo C (puerto trasero izquierdo)</translation>
 <translation id="5397578532367286026">El administrador puede consultar el uso y el historial de este usuario (<ph name="MANAGER_EMAIL" />) en la página chrome.com.</translation>
-<translation id="5430931332414098647">Conexión instantánea mediante dispositivo portátil</translation>
+<translation id="5430931332414098647">Conexión compartida instantánea</translation>
 <translation id="5431825016875453137">OpenVPN/L2TP</translation>
 <translation id="544691375626129091">Todos los usuarios disponibles ya se han añadido a esta sesión.</translation>
 <translation id="553675580533261935">Saliendo de la sesión</translation>
@@ -159,8 +159,10 @@ Pulsa Mayús o la tecla de búsqueda para cancelar la operación.</translation>
 <translation id="5744083938413354016">Tocar y arrastrar</translation>
 <translation id="5777841717266010279">¿Dejar de compartir la pantalla?</translation>
 <translation id="57838592816432529">Silenciar</translation>
+<translation id="5860033963881614850">No</translation>
 <translation id="5895138241574237353">Reiniciar</translation>
 <translation id="5901316534475909376">Mayús+Esc</translation>
+<translation id="5916664084637901428">Activar</translation>
 <translation id="5927132638760172455">Enviando contenido a un receptor desconocido</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Deshacer</translation>
@@ -170,7 +172,6 @@ Pulsa Mayús o la tecla de búsqueda para cancelar la operación.</translation>
 <translation id="5978382165065462689">Compartiendo control de la pantalla a través de Asistencia remota.</translation>
 <translation id="5980301590375426705">Salir de la sesión de invitado</translation>
 <translation id="6018164090099858612">Saliendo del modo de proyección</translation>
-<translation id="6041154455840261787">Se ha habilitado el modo de contraste alto. Vuelve a pulsar Búsqueda+Mayús+H para desactivarlo.</translation>
 <translation id="6043212731627905357">Este monitor no se puede utilizar con tu <ph name="DEVICE_TYPE" /> (el monitor no es compatible).</translation>
 <translation id="6043994281159824495">Salir ahora</translation>
 <translation id="6047696787498798094">Cuando cambies de usuario, la pantalla dejará de compartirse. ¿Quieres continuar?</translation>
@@ -214,6 +215,7 @@ Pulsa Mayús o la tecla de búsqueda para cancelar la operación.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt + Mayús + K</translation>
 <translation id="7168224885072002358">Restableciendo la resolución anterior en <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Modo Asistente</translation>
 <translation id="7209101170223508707">El BLOQUEO DE MAYÚSCULAS está activado.
 Pulsa Alt y la tecla de búsqueda o Mayús para cancelar la operación.</translation>
 <translation id="7246339268451149667">¿Habilitar el desbloqueo con huella digital?</translation>
@@ -236,7 +238,6 @@ Pulsa Alt y la tecla de búsqueda o Mayús para cancelar la operación.</transla
 <translation id="7814236020522506259"><ph name="HOUR" /> y <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">El idioma ha cambiado de "<ph name="FROM_LOCALE" />" a "<ph name="TO_LOCALE" />" después de sincronizar tu configuración.</translation>
 <translation id="7904094684485781019">El administrador de esta cuenta ha inhabilitado el inicio de sesión múltiple.</translation>
-<translation id="7951523953736115461">Luz nocturna</translation>
 <translation id="7977927628060636163">Buscando redes móviles…</translation>
 <translation id="7982789257301363584">Red</translation>
 <translation id="8000066093800657092">Ninguna red</translation>

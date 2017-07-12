@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Alamat 1</translation>
 <translation id="1545749641540134597">Pindai Kode QR</translation>
 <translation id="1580783302095112590">Email terkirim.</translation>
+<translation id="1612730193129642006">Tampilkan Grid Tab</translation>
 <translation id="1646446875146297738">Dengan mengaktifkan 'Jangan Lacak', permintaan akan disertakan dalam lalu lintas penjelajahan Anda. Pengaruh apa pun bergantung pada apakah situs web menanggapi permintaan atau tidak, dan cara permintaan diinterpretasikan.
 
 Misalnya, beberapa situs web mungkin menanggapi permintaan ini dengan menayangkan iklan yang tidak didasarkan pada situs web lain yang telah Anda kunjungi. Banyak situs web yang masih akan mengumpulkan dan menggunakan data penjelajahan Anda - misalnya untuk meningkatkan keamanan, menyediakan konten, layanan, iklan, dan saran pada situs web mereka, serta membuat statistik laporan. <ph name="BEGIN_LINK" />Pelajari lebih lanjut<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Data Anda dienkripsi dengan frasa sandi sinkronisasi pada tanggal <ph name="TIME
 <translation id="8775144690796719618">URL tidak valid</translation>
 <translation id="8820817407110198400">Bookmark</translation>
 <translation id="8840513115188359703">Anda tidak akan keluar dari Akun Google.</translation>
+<translation id="8881801611828450202">Telusuri Gambar Ini di <ph name="SEARCH_ENGINE" /></translation>
 <translation id="8904976895050290827">Sinkronisasi Chrome</translation>
 <translation id="895541991026785598">Laporkan Masalah</translation>
 <translation id="8971089644512329999">Oke, paham</translation>
@@ -406,6 +408,7 @@ Data Anda dienkripsi dengan frasa sandi sinkronisasi pada tanggal <ph name="TIME
 <translation id="9188680907066685419">Keluar dari akun yang dikelola</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">Laporan kerusakan terkirim.</translation>
+<translation id="932327136139879170">Beranda</translation>
 <translation id="935490618240037774">Bookmark, riwayat, sandi, dan setelan lainnya akan disinkronkan ke Akun Google agar Anda dapat menggunakannya di semua perangkat.</translation>
 <translation id="939598580284253335">Masukkan frasa sandi</translation>
 <translation id="976982866697960176">Kelola Data yang Disinkronkan…</translation>

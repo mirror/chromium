@@ -159,8 +159,10 @@
 <translation id="5744083938413354016">การแตะลาก</translation>
 <translation id="5777841717266010279">ต้องการหยุดแชร์หน้าจอไหม</translation>
 <translation id="57838592816432529">ปิดเสียง</translation>
+<translation id="5860033963881614850">ปิด</translation>
 <translation id="5895138241574237353">ปิดแล้วเปิดอีกครั้ง</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">เปิด</translation>
 <translation id="5927132638760172455">กำลังแคสต์ไปยังเครื่องรับที่ไม่รู้จัก</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">ย้อนกลับ</translation>
@@ -170,7 +172,6 @@
 <translation id="5978382165065462689">กำลังแชร์การควบคุมหน้าจอผ่านความช่วยเหลือระยะไกล</translation>
 <translation id="5980301590375426705">ออกจากเซสชันผู้มาเยือน</translation>
 <translation id="6018164090099858612">กำลังออกจากโหมดมิเรอร์</translation>
-<translation id="6041154455840261787">เปิดใช้โหมดคอนทราสต์สูงอยู่ กด Search+Shift+H อีกครั้งเพื่อสลับเป็นปิด</translation>
 <translation id="6043212731627905357">จอภาพนี้ใช้งานไม่ได้กับ <ph name="DEVICE_TYPE" /> ของคุณ (ไม่รองรับจอภาพนี้)</translation>
 <translation id="6043994281159824495">ออกจากระบบเลย</translation>
 <translation id="6047696787498798094">การแชร์หน้าจอจะหยุดเมื่อคุณสลับไปเป็นผู้ใช้อีกรายหนึ่ง ต้องการดำเนินการต่อไหม</translation>
@@ -214,6 +215,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">เปลี่ยนกลับไปเป็นความละเอียดเดิมภายใน <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">โหมด Assistant</translation>
 <translation id="7209101170223508707">CAPS LOCK เปิดอยู่
 กด Alt+ค้นหา หรือ Shift เพื่อยกเลิก</translation>
 <translation id="7246339268451149667">หากต้องการเปิดใช้การปลดล็อกด้วยลายนิ้วมือ</translation>
@@ -236,7 +238,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> กับ <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">เปลี่ยนภาษาจาก "<ph name="FROM_LOCALE" />" เป็น "<ph name="TO_LOCALE" />" หลังจากซิงค์การตั้งค่าของคุณ</translation>
 <translation id="7904094684485781019">ผู้ดูแลระบบของบัญชีนี้ไม่อนุญาตการลงชื่อเข้าสู่ระบบพร้อมกันหลายบัญชี</translation>
-<translation id="7951523953736115461">แสงตอนกลางคืน</translation>
 <translation id="7977927628060636163">กำลังค้นหาเครือข่ายมือถือ...</translation>
 <translation id="7982789257301363584">เครือข่าย</translation>
 <translation id="8000066093800657092">ไม่มีเครือข่าย</translation>
