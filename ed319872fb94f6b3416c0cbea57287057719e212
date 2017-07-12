@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c265b8f_ff78b066",
+        "filename": "ios/showcase/content_suggestions/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-12T16:17:37Z",
+      "side": 1,
+      "message": "LGTM, but you will have to fight tooth and nail to prevent people and yourself to add dependency on non purely UI stuff.",
+      "revId": "ed319872fb94f6b3416c0cbea57287057719e212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
