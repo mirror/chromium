@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71e5e68c_3f4483c2",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-12T16:35:41Z",
+      "side": 1,
+      "message": "Is this comment always correct? See l.298: it looks like when |parsing_compressed_header_| is true, |curr_frame_info_| might be valid... I\u0027m confused especially since I haven\u0027t looked at this code much before.",
+      "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c16a67_2ac6d713",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-12T16:35:41Z",
+      "side": 1,
+      "message": "I defer to posciak@ for full review. Here, would a DCHECK(parsing_compressed_header_) make sense or not (in *all* cases, not just fuzzing)?",
+      "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e985861_81a77cf9",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-12T16:35:41Z",
+      "side": 1,
+      "message": "This field should be changed to const in vp9_parser.h, since it\u0027s set only in ctor, and is relied upon to be consistent throughout an instance of Vp9Parser, IIUC.",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 32
+      },
+      "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
