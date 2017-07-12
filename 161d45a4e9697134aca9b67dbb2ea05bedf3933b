@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32bad0a7_9c545121",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-12T15:40:02Z",
+      "side": 1,
+      "message": "The issue here is that the callback is created in CreateGpuMemoryBuffer() in a different thread, which means we can\u0027t use |weak_factory_| there. That\u0027s why we are creating the weak-pointer here, in |task_runner_|\u0027s thread.\n\nI have removed the conditional here, and added a comment.",
+      "parentUuid": "678a240e_2b11ad8a",
+      "revId": "161d45a4e9697134aca9b67dbb2ea05bedf3933b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f61a4956_bc23e6f7",
         "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "50ab60fa_b4485edc",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-12T15:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61a4956_bc23e6f7",
+      "revId": "161d45a4e9697134aca9b67dbb2ea05bedf3933b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74f8f7ee_f673d933",
         "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "161d45a4e9697134aca9b67dbb2ea05bedf3933b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c692b9ac_5c7a77c6",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-12T15:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f8f7ee_f673d933",
+      "revId": "161d45a4e9697134aca9b67dbb2ea05bedf3933b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
