@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f0f458_a9a69b32",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T13:48:23Z",
+      "side": 1,
+      "message": "this should not be automatic but up to the delegate",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3f86e9_bc634522",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T13:48:23Z",
+      "side": 1,
+      "message": "this should not be automatic but up to the delegate",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6762fb_0065d661",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T13:48:23Z",
+      "side": 1,
+      "message": "nit: AreKeyboardKeyAcksNeeded",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c46b332_d349649e",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T13:48:23Z",
+      "side": 1,
+      "message": "nit: s/is/are/",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde60eb9_b7cfad25",
+        "filename": "components/exo/keyboard_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T13:48:23Z",
+      "side": 1,
+      "message": "Please have the implementation of the delegate inherit from observer class instead",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fc2594_b0370a74",
+        "filename": "components/exo/keyboard_device_configuration_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T13:48:23Z",
+      "side": 1,
+      "message": "Please have the implementation of the delegate inherit from observer class instead",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52c1a2f_09fd61d5",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4091,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T13:48:23Z",
+      "side": 1,
+      "message": "WaylandExtendedKeyboardImpl as this is not a delegate",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2361d4_ab4df994",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4129,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T13:48:23Z",
+      "side": 1,
+      "message": "nit: exo code and chromium in general don\u0027t use \u0027const\u0027 unless it\u0027s a real static constant. remove \u0027const\u0027 or maybe even better avoid the temporary variable completely",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
