@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7840176b_efe0f183",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-12T00:58:51Z",
+      "side": 1,
+      "message": "The size-limiting behavior probably needs to be preserved; there is no guarantee that every input buffer maps to an output buffer.\n\nFor example, VTVDA drops all inputs until it sees a keyframe.",
+      "range": {
+        "startLine": 471,
+        "startChar": 2,
+        "endLine": 471,
+        "endChar": 72
+      },
+      "revId": "682971566a9ec4ab0c171623c0109af15bfc3aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0b30bc_d9c8ba7d",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-12T00:58:51Z",
+      "side": 1,
+      "message": "Flush().",
+      "range": {
+        "startLine": 812,
+        "startChar": 36,
+        "endLine": 812,
+        "endChar": 43
+      },
+      "revId": "682971566a9ec4ab0c171623c0109af15bfc3aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
