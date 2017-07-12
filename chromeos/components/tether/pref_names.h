@@ -39,6 +39,11 @@ extern const char kTetherNetworkGuid[];
 // value at this key is "".
 extern const char kWifiNetworkGuid[];
 
+// Scanned Tether host results. The value stored is a ListValue containing
+// DictionaryValues containing the scan results. See PersistentHostScanCache for
+// more details.
+extern const char kHostScanCache[];
+
 }  // namespace prefs
 
 }  // namespace tether
