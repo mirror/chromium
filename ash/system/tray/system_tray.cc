@@ -652,6 +652,9 @@ bool SystemTray::PerformAction(const ui::Event& event) {
 }
 
 bool SystemTray::ProcessGestureEvent(const ui::GestureEvent& event) {
+  if (event.type() == ui::ET_GESTURE_TAP_DOWN)
+    Shell::Get()->DismissAppList();
+
   if (event.type() == ui::ET_GESTURE_SCROLL_BEGIN)
     return StartGestureDrag(event);
 

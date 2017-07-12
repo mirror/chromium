@@ -544,6 +544,10 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Shows the app list on the active root window.
   void ShowAppList();
 
+  // Update the bounds of app list according to |new_y_location|. Note
+  // |new_y_location| is in the coordinate space of the screen.
+  void UpdateAppListBounds(int new_y_position);
+
   // Dismisses the app list.
   void DismissAppList();
 
