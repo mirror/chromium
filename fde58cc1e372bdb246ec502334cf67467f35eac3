@@ -70,6 +70,30 @@
       "revId": "fde58cc1e372bdb246ec502334cf67467f35eac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fdc8cb9_17a1b6bb",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T21:54:21Z",
+      "side": 1,
+      "message": "Given you are using the namespace resource_coordinator in the services directory I think it\u0027s confusing to *also* use the resource_coordinator namespace here. Generally in chrome code (meaning code under src/chrome/) we don\u0027t use namespaces. Of course you can use a namespace and there are certainly examples of this, but try to avoid using the same namespace in completely different directories like this.",
+      "parentUuid": "d76f1540_750442c2",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "fde58cc1e372bdb246ec502334cf67467f35eac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
