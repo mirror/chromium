@@ -47,6 +47,7 @@ void SubresourceFilterSafeBrowsingClient::CheckUrlOnIO(const GURL& url,
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   DCHECK(!url.is_empty());
 
+  VLOG(1) << __FUNCTION__ << ": database_manager: " << database_manager_.get();
   auto request = base::MakeUnique<SubresourceFilterSafeBrowsingClientRequest>(
       url, request_id, database_manager_, io_task_runner_, this);
   auto* raw_request = request.get();
