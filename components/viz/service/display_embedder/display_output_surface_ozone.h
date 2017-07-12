@@ -8,10 +8,10 @@
 #include <memory>
 
 #include "base/memory/weak_ptr.h"
-#include "cc/output/context_provider.h"
 #include "cc/output/in_process_context_provider.h"
 #include "cc/output/output_surface.h"
 #include "components/viz/common/gl_helper.h"
+#include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/service/display_embedder/display_output_surface.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/native_widget_types.h"
