@@ -376,6 +376,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // Used to customize behavior for virtual reality mode, such as the
   // appearance of overscroll glow and the keyboard.
   bool is_in_vr_;
+  bool paused_ = false;
 
   // ContentViewCoreImpl is our interface to the view system.
   ContentViewCoreImpl* content_view_core_;

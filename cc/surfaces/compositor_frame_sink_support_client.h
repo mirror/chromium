@@ -40,6 +40,9 @@ class CompositorFrameSinkSupportClient {
   virtual void WillDrawSurface(const LocalSurfaceId& local_surface_id,
                                const gfx::Rect& damage_rect) = 0;
 
+  // Notification that there may not be OnBeginFrame calls for some time.
+  virtual void OnBeginFramePausedChanged(bool paused) {}
+
  protected:
   virtual ~CompositorFrameSinkSupportClient() {}
 };

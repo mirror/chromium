@@ -78,6 +78,7 @@ bool ClientLayerTreeFrameSink::BindToClient(
     client->SetBeginFrameSource(synthetic_begin_frame_source_.get());
   } else {
     begin_frame_source_ = base::MakeUnique<cc::ExternalBeginFrameSource>(this);
+    begin_frame_source_->OnSetBeginFrameSourcePaused(paused_);
     client->SetBeginFrameSource(begin_frame_source_.get());
   }
 
@@ -136,6 +137,12 @@ void ClientLayerTreeFrameSink::OnBeginFrame(
     const cc::BeginFrameArgs& begin_frame_args) {
   if (begin_frame_source_)
     begin_frame_source_->OnBeginFrame(begin_frame_args);
+}
+
+void ClientLayerTreeFrameSink::OnBeginFramePausedChanged(bool paused) {
+  paused_ = paused;
+  if (begin_frame_source_)
+    begin_frame_source_->OnSetBeginFrameSourcePaused(paused);
 }
 
 void ClientLayerTreeFrameSink::ReclaimResources(

@@ -2206,10 +2206,20 @@ const cc::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
 }
 
 void RenderWidgetHostViewAndroid::OnBeginFrameSourcePausedChanged(bool paused) {
-  // The BeginFrameSources we listen to don't use this. For WebView, we signal
-  // the "paused" state to the RenderWidget when our window attaches/detaches,
-  // see |StartObservingRootWindow()| and |StopObservingRootWindow()|.
-  DCHECK(!paused);
+  DCHECK(using_browser_compositor_ || !paused);
+
+  if (paused != paused_) {
+    paused_ = paused;
+
+    if (sync_compositor_) {
+      if (host_) {
+        host_->Send(
+            new ViewMsg_SetBeginFramePaused(host_->GetRoutingID(), paused));
+      }
+    } else if (renderer_compositor_frame_sink_) {
+      renderer_compositor_frame_sink_->OnBeginFramePausedChanged(paused_);
+    }
+  }
 }
 
 void RenderWidgetHostViewAndroid::OnAnimate(base::TimeTicks begin_frame_time) {
