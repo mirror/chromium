@@ -61614,6 +61614,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Renderer4.ImageDecodeScale">
+  <owner>khushalsagar@chromium.org</owner>
+  <summary>
+    The scales at which images are decoded for rasterization in the renderer.
+    This value is recorded each time an image is decoded in the compositor and
+    records the mip level used for the decode.
+  </summary>
+</histogram>
+
 <histogram name="Renderer4.ImageDecodeTaskDurationUs" units="microseconds">
   <owner>vmpstr@chromium.org</owner>
   <summary>
