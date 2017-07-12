@@ -479,7 +479,8 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   // restrictive as possible.
   if (experimental_flags::IsThirdPartyKeyboardWorkaroundEnabled()) {
     updateText =
-        (!self.editing || ![self.text isEqualToString:fieldText.string]);
+        (!self.editing || ![self.text isEqualToString:fieldText.string] ||
+         autocompleteLength == 0);
   }
   if (updateText) {
     self.attributedText = fieldText;
