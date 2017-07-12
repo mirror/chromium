@@ -210,6 +210,30 @@
       "revId": "53b7a1150cac3ad4f38107576215ccdc8940a22d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9aa07f8_d17dfe5d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29589,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T10:57:56Z",
+      "side": 1,
+      "message": "I\u0027m a bit worried about adding the criteria as they might very likely change without us updating this.",
+      "parentUuid": "29589abf_bd6d690a",
+      "range": {
+        "startLine": 29588,
+        "startChar": 4,
+        "endLine": 29589,
+        "endChar": 16
+      },
+      "revId": "53b7a1150cac3ad4f38107576215ccdc8940a22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

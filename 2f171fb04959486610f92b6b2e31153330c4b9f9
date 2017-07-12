@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "746e6b9c_e61e82cf",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T10:57:56Z",
+      "side": 1,
+      "message": "Should that be named \"paused\" because in practice, this is what will happen. \"not playing\" sounds like we tried to add a non-playing media :)",
+      "revId": "2f171fb04959486610f92b6b2e31153330c4b9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dadf0aa_b72587a8",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T10:57:56Z",
+      "side": 1,
+      "message": "You could have the if outside of the loop to keep track of the histogram name. Something like:\n```\nconst std::string\u0026 histogram_name \u003d histogram \u003d\u003d PLAYER_NOT_ADDED ? kHistogramSignificantNotADdedName : the_other_one;\n\nfor (...)\n  UMA_HISTOGRAM_ENUMERATION(histogram_name, reason, REASON_MAX);\n```",
+      "revId": "2f171fb04959486610f92b6b2e31153330c4b9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27eebc0d_b7337a7c",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T10:57:56Z",
+      "side": 1,
+      "message": "style: here and above, I believe the current coding style is EnumName::kValue",
+      "revId": "2f171fb04959486610f92b6b2e31153330c4b9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c759de5_1a78e621",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T10:57:56Z",
+      "side": 1,
+      "message": "s/Log/Record/ ?",
+      "revId": "2f171fb04959486610f92b6b2e31153330c4b9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d872d69c_e933464c",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T10:57:56Z",
+      "side": 1,
+      "message": "`static const std::string\u0026` seems incorrect. I believe you should not make this a reference but I\u0027m confused why the compiler is okay with this and the tests are passing. `static const char*` is probably the most used pattern for things like this.",
+      "revId": "2f171fb04959486610f92b6b2e31153330c4b9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d22fb0b_2d24158a",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T10:57:56Z",
+      "side": 1,
+      "message": "I think it would be better to have a separate unit test checking for the histograms being properly recorded instead of adding this into the test for the conditions.",
+      "revId": "2f171fb04959486610f92b6b2e31153330c4b9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0036fa1_2babd5ae",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 20400,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T10:57:56Z",
+      "side": 1,
+      "message": "Paused?",
+      "revId": "2f171fb04959486610f92b6b2e31153330c4b9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
