@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1b5d65e_943fbcda",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T10:01:24Z",
+      "side": 1,
+      "message": "nit: Could we add DCHECK(best_matches_.empty()); here?\n\n(Both in theory and in practice)",
+      "revId": "350ddb8e6eb968780236238718d626bde20f49f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c568da0_c8c4ece8",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3712,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T10:01:24Z",
+      "side": 1,
+      "message": "aesthetic nit: Terribly sorry for nitpicking on this, but could we write either `URL keyed metrics`, or `URL Keyed Metrics`?",
+      "range": {
+        "startLine": 3712,
+        "startChar": 14,
+        "endLine": 3712,
+        "endChar": 31
+      },
+      "revId": "350ddb8e6eb968780236238718d626bde20f49f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8598ab_dd7fef5d",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3834,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T10:01:24Z",
+      "side": 1,
+      "message": "The approach above has way too much code duplication for my taste. I\u0027m not categorically against having small individual test methods, but if we take that approach, I would prefer creating more infrastructure for it (i.e. adding helper methods to the test fixture).\n\nHaving said that, my personal preference is much closer to the approach you have taken below, with some minor changes exemplified by PasswordFormManagerTest.SuppressedFormsHistograms, namely:\n 1.) Move everything into a test method. This will allow you having non-POD stuff as members of |kTestCases|, as well as using |observed_form_|, |saved_match_| and |psl_saved_match_| from the test fixture.\n 2.) Avoid using parametric tests, which is a nightmare to sheriffs.",
+      "revId": "350ddb8e6eb968780236238718d626bde20f49f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b32be7_4048c632",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T10:01:24Z",
+      "side": 1,
+      "message": "Merge error?",
+      "revId": "350ddb8e6eb968780236238718d626bde20f49f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8611dffb_9ac9002a",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T10:01:24Z",
+      "side": 1,
+      "message": "nit: ... have been autofilled ...",
+      "range": {
+        "startLine": 109,
+        "startChar": 26,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "350ddb8e6eb968780236238718d626bde20f49f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fbebfb_ead4e1d3",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T10:01:24Z",
+      "side": 1,
+      "message": "nit: What do you think about kManagerFillEventAutofilled to better indicate `automatic`. In fact, WDYT about calling this whole thing ManagerAutofillEvent?",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 27
+      },
+      "revId": "350ddb8e6eb968780236238718d626bde20f49f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
