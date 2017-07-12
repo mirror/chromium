@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28903560_d3aa5856",
+        "filename": "chrome/browser/resources/md_extensions/load_error.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T22:41:36Z",
+      "side": 1,
+      "message": "See question in pack_dialog.html.",
+      "revId": "9f98fe0e0b3effb20f8288f431b9ab11ede71695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf03c6b5_5bce0a5d",
+        "filename": "chrome/browser/resources/md_extensions/load_error.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T22:41:36Z",
+      "side": 1,
+      "message": "Same question here, is \"dismiss\" and \"retry\" still used?",
+      "range": {
+        "startLine": 60,
+        "startChar": 22,
+        "endLine": 60,
+        "endChar": 33
+      },
+      "revId": "9f98fe0e0b3effb20f8288f431b9ab11ede71695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e3d351_9c2eec0a",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T22:41:36Z",
+      "side": 1,
+      "message": "Isn\u0027t the action-button class already styling this button correctly? See https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/shared_style_css.html?l\u003d23-33.",
+      "revId": "9f98fe0e0b3effb20f8288f431b9ab11ede71695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f98616_6c5a82fe",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T22:41:36Z",
+      "side": 1,
+      "message": "Is this ID still used?",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "9f98fe0e0b3effb20f8288f431b9ab11ede71695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a2dd98_885b53ff",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T22:41:36Z",
+      "side": 1,
+      "message": "IDs dismiss and confirm seem unused after this change (see previous comment too). Can we remove them?",
+      "revId": "9f98fe0e0b3effb20f8288f431b9ab11ede71695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
