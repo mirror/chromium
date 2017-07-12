@@ -543,7 +543,8 @@ void PrintPreviewUI::OnInitiatorClosed() {
 }
 
 void PrintPreviewUI::OnPrintPreviewCancelled() {
-  handler_->OnPrintPreviewCancelled();
+  if (handler_)
+    handler_->OnPrintPreviewCancelled();
 }
 
 void PrintPreviewUI::OnPrintPreviewRequest(int request_id) {
@@ -559,8 +560,9 @@ void PrintPreviewUI::OnDidGetPreviewPageCount(
   DCHECK_GT(params.page_count, 0);
   if (g_testing_delegate)
     g_testing_delegate->DidGetPreviewPageCount(params.page_count);
-  handler_->SendPageCountReady(params.page_count, params.preview_request_id,
-                               params.fit_to_page_scaling);
+  if (handler_)
+    handler_->SendPageCountReady(params.page_count, params.preview_request_id,
+                                 params.fit_to_page_scaling);
 }
 
 void PrintPreviewUI::OnDidGetDefaultPageLayout(
@@ -587,7 +589,8 @@ void PrintPreviewUI::OnDidGetDefaultPageLayout(
                     printable_area.width());
   layout.SetInteger(printing::kSettingPrintableAreaHeight,
                     printable_area.height());
-  handler_->SendPageLayoutReady(layout, has_custom_page_size_style);
+  if (handler_)
+    handler_->SendPageLayoutReady(layout, has_custom_page_size_style);
 }
 
 void PrintPreviewUI::OnDidPreviewPage(int page_number,
@@ -595,7 +598,8 @@ void PrintPreviewUI::OnDidPreviewPage(int page_number,
   DCHECK_GE(page_number, 0);
   if (g_testing_delegate)
     g_testing_delegate->DidRenderPreviewPage(web_ui()->GetWebContents());
-  handler_->SendPagePreviewReady(page_number, id_, preview_request_id);
+  if (handler_)
+    handler_->SendPagePreviewReady(page_number, id_, preview_request_id);
 }
 
 void PrintPreviewUI::OnPreviewDataIsAvailable(int expected_pages_count,
@@ -608,12 +612,15 @@ void PrintPreviewUI::OnPreviewDataIsAvailable(int expected_pages_count,
                         base::TimeTicks::Now() - initial_preview_start_time_);
     UMA_HISTOGRAM_COUNTS("PrintPreview.PageCount.Initial",
                          expected_pages_count);
-    UMA_HISTOGRAM_COUNTS(
-        "PrintPreview.RegeneratePreviewRequest.BeforeFirstData",
-        handler_->regenerate_preview_request_count());
+    if (handler_) {
+      UMA_HISTOGRAM_COUNTS(
+          "PrintPreview.RegeneratePreviewRequest.BeforeFirstData",
+          handler_->regenerate_preview_request_count());
+    }
     initial_preview_start_time_ = base::TimeTicks();
   }
-  handler_->OnPrintPreviewReady(id_, preview_request_id);
+  if (handler_)
+    handler_->OnPrintPreviewReady(id_, preview_request_id);
 }
 
 void PrintPreviewUI::OnCancelPendingPreviewRequest() {
@@ -621,11 +628,13 @@ void PrintPreviewUI::OnCancelPendingPreviewRequest() {
 }
 
 void PrintPreviewUI::OnPrintPreviewFailed() {
-  handler_->OnPrintPreviewFailed();
+  if (handler_)
+    handler_->OnPrintPreviewFailed();
 }
 
 void PrintPreviewUI::OnInvalidPrinterSettings() {
-  handler_->OnInvalidPrinterSettings();
+  if (handler_)
+    handler_->OnInvalidPrinterSettings();
 }
 
 void PrintPreviewUI::OnHidePreviewDialog() {
@@ -659,8 +668,13 @@ void PrintPreviewUI::OnClosePrintPreviewDialog() {
 
 void PrintPreviewUI::OnSetOptionsFromDocument(
     const PrintHostMsg_SetOptionsFromDocument_Params& params) {
-  handler_->SendPrintPresetOptions(params.is_scaling_disabled, params.copies,
-                                   params.duplex);
+  if (handler_)
+    handler_->SendPrintPresetOptions(params.is_scaling_disabled, params.copies,
+                                     params.duplex);
+}
+
+void PrintPreviewUI::HandlerDestroyed() {
+  handler_ = nullptr;
 }
 
 // static
@@ -669,10 +683,12 @@ void PrintPreviewUI::SetDelegateForTesting(TestingDelegate* delegate) {
 }
 
 void PrintPreviewUI::SetSelectedFileForTesting(const base::FilePath& path) {
-  handler_->FileSelected(path, 0, NULL);
+  if (handler_)
+    handler_->FileSelected(path, 0, NULL);
 }
 
 void PrintPreviewUI::SetPdfSavedClosureForTesting(
     const base::Closure& closure) {
-  handler_->SetPdfSavedClosureForTesting(closure);
+  if (handler_)
+    handler_->SetPdfSavedClosureForTesting(closure);
 }

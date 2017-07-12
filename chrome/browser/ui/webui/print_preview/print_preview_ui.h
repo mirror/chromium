@@ -155,6 +155,10 @@ class PrintPreviewUI : public ConstrainedWebDialogUI {
   // Passes |closure| to PrintPreviewHandler::SetPdfSavedClosureForTesting().
   void SetPdfSavedClosureForTesting(const base::Closure& closure);
 
+  // Notifies the PrintPreviewUI that the PrintPreviewHandler has been
+  // destroyed.
+  void HandlerDestroyed();
+
  private:
   FRIEND_TEST_ALL_PREFIXES(PrintPreviewDialogControllerUnitTest,
                            TitleAfterReload);
