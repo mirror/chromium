@@ -158,19 +158,21 @@ class FileNetLogObserverTest : public ::testing::TestWithParam<bool> {
  public:
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    bounded_log_dir_ = temp_dir_.GetPath();
-    unbounded_log_path_ = bounded_log_dir_.AppendASCII("net-log.json");
+    if (IsBounded())
+      log_path_ = temp_dir_.GetPath();
+    else
+      log_path_ = temp_dir_.GetPath().AppendASCII("net-log.json");
   }
 
+  bool IsBounded() const { return GetParam(); }
+
   void CreateAndStartObserving(std::unique_ptr<base::Value> constants) {
-    bool bounded = GetParam();
-    if (bounded) {
+    if (IsBounded()) {
       logger_ = FileNetLogObserver::CreateBounded(
-          bounded_log_dir_, kLargeFileSize, kTotalNumFiles,
-          std::move(constants));
+          log_path_, kLargeFileSize, kTotalNumFiles, std::move(constants));
     } else {
-      logger_ = FileNetLogObserver::CreateUnbounded(unbounded_log_path_,
-                                                    std::move(constants));
+      logger_ =
+          FileNetLogObserver::CreateUnbounded(log_path_, std::move(constants));
     }
 
     logger_->StartObserving(&net_log_, NetLogCaptureMode::Default());
@@ -179,12 +181,11 @@ class FileNetLogObserverTest : public ::testing::TestWithParam<bool> {
   ::testing::AssertionResult ReadNetLogFromDisk(
       std::unique_ptr<base::Value>* root,
       base::ListValue** events) {
-    bool bounded = GetParam();
     std::string input;
-    if (bounded) {
-      ReadBoundedLogFiles(bounded_log_dir_, &input);
+    if (IsBounded()) {
+      ReadBoundedLogFiles(log_path_, &input);
     } else {
-      base::ReadFileToString(unbounded_log_path_, &input);
+      base::ReadFileToString(log_path_, &input);
     }
     return ParseNetLogString(input, root, events);
   }
@@ -195,30 +196,26 @@ class FileNetLogObserverTest : public ::testing::TestWithParam<bool> {
     // checking if they exist.
     base::TaskScheduler::GetInstance()->FlushForTesting();
 
-    bool bounded = GetParam();
-    if (bounded) {
-      if (base::PathExists(bounded_log_dir_.AppendASCII("constants.json")) ||
-          base::PathExists(bounded_log_dir_.AppendASCII("end_netlog.json")))
+    if (IsBounded()) {
+      if (base::PathExists(log_path_.AppendASCII("constants.json")) ||
+          base::PathExists(log_path_.AppendASCII("end_netlog.json")))
         return true;
       for (int i = 0; i < kTotalNumFiles; i++) {
-        if (base::PathExists(bounded_log_dir_.AppendASCII(
+        if (base::PathExists(log_path_.AppendASCII(
                 "event_file_" + std::to_string(i) + ".json")))
           return true;
       }
       return false;
     } else {
-      return base::PathExists(unbounded_log_path_);
+      return base::PathExists(log_path_);
     }
   }
 
  protected:
   NetLog net_log_;
   std::unique_ptr<FileNetLogObserver> logger_;
-
- private:
   base::ScopedTempDir temp_dir_;
-  base::FilePath bounded_log_dir_;
-  base::FilePath unbounded_log_path_;
+  base::FilePath log_path_;
 };
 
 // Used for tests that are exclusive to the bounded mode of FileNetLogObserver.
@@ -303,6 +300,29 @@ TEST_P(FileNetLogObserverTest, StopObservingNullClosure) {
 
   // Since the logger was explicitly stopped, its files should still exist.
   ASSERT_TRUE(LogFilesExist());
+}
+
+// Tests creating a FileNetLogObserver using an invalid (can't be written to)
+// path.
+TEST_P(FileNetLogObserverTest, InitLogWithInvalidPath) {
+  // Use a path to a non-existent directory.
+  log_path_ = temp_dir_.GetPath().AppendASCII("bogus").AppendASCII("path");
+
+  CreateAndStartObserving(nullptr);
+
+  // Send dummy event
+  AddEntries(logger_.get(), 1, kDummyEventSize);
+
+  // No log files should have been written, as the log writer will not create
+  // missing directories.
+  ASSERT_FALSE(LogFilesExist());
+
+  logger_->StopObserving(nullptr, base::OnceClosure());
+
+  logger_.reset();
+
+  // There should still be no files.
+  ASSERT_FALSE(LogFilesExist());
 }
 
 TEST_P(FileNetLogObserverTest, GeneratesValidJSONWithNoEvents) {
