@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3392e31_ff12747d",
+        "filename": "components/download/internal/controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-12T08:03:25Z",
+      "side": 1,
+      "message": "Yea, I feel that is better. In that way, we can get rid of this additional interface that doesn\u0027t do much.",
+      "parentUuid": "513ce568_fc667a79",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 4
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f24d22e5_f042b8ed",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 3
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "dfe9dce1_85c56bb3",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-12T08:03:25Z",
+      "side": 1,
+      "message": "Ahh, I see. Then we should check if we ran the above while loop at least once, otherwise call HandleTaskFinished.",
+      "parentUuid": "e686b7b9_94ff52ef",
+      "range": {
+        "startLine": 831,
+        "startChar": 2,
+        "endLine": 836,
+        "endChar": 37
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "361d03b1_471361cf",
         "filename": "components/download/internal/controller_impl.h",
         "patchSetId": 3
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "b90f9f59_df1d85bb",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-12T08:03:25Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "361d03b1_471361cf",
+      "range": {
+        "startLine": 182,
+        "startChar": 19,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90d1f000_2767f296",
         "filename": "components/download/internal/download_service_impl.cc",
         "patchSetId": 3
@@ -128,6 +200,30 @@
       "writtenOn": "2017-07-11T15:55:49Z",
       "side": 1,
       "message": "Just inline this into the if statement above?  No need for task_entry_index.\n\nAlso can you walk me through what this is doing?  Sorry I\u0027m not following it :(",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 3
+      },
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf50035_2f6bb50c",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-12T08:03:25Z",
+      "side": 1,
+      "message": "Removed and simplified. Using a map\u003ctask_type, task\u003e now.",
+      "parentUuid": "90d1f000_2767f296",
       "range": {
         "startLine": 69,
         "startChar": 2,
@@ -172,6 +268,24 @@
       "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9e19a5_c854093c",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-12T08:03:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52d6e516_50582847",
+      "revId": "fbbb9df72137d22e465291dd11619deb2821628f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
