@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b6fc73_12a4390d",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-07-12T22:56:03Z",
+      "side": 1,
+      "message": "I would prefer adding the tethered property to ONC, rather than translating a mix of NetworkState elements + ONC properties.\n\nstevenjb, what do you think?",
+      "revId": "39dbdc063d2fadfae1ffd348750d8486e3684a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
