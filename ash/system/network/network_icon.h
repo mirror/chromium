@@ -49,6 +49,14 @@ ASH_EXPORT gfx::ImageSkia GetImageForDisconnectedCellNetwork();
 ASH_EXPORT gfx::ImageSkia GetImageForNewWifiNetwork(SkColor icon_color,
                                                     SkColor badge_color);
 
+// Gets BLUE bar icons showing the signal strength which applies to mobile
+// networks unlike GetImageForNetwork(), which returns black-and-white images.
+// This function can be called even when a corresponding NetworkState* is not
+// available. |signal_strength| must range 0 (no signal) to 100 (full signal)
+// inclusive.
+ASH_EXPORT gfx::ImageSkia GetImageForBlueMobileBars(int signal_strength,
+                                                    gfx::Size size);
+
 // Returns the label for |network| based on |icon_type|. |network| cannot be
 // nullptr.
 ASH_EXPORT base::string16 GetLabelForNetwork(

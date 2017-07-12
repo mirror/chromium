@@ -195,6 +195,10 @@ const double kConnectingImageAlpha = 0.5;
 // networks.
 const int kNumNetworkImages = 5;
 
+// Images for strength arcs for wireless networks or strength bars for cellular
+// networks.
+const int kSignalToTriangleDivisor = 20;
+
 // Number of discrete images to use for alpha fade animation
 const int kNumFadeImages = 10;
 
@@ -290,6 +294,21 @@ class NetworkIconImageSource : public gfx::CanvasImageSource {
 class SignalStrengthImageSource : public gfx::CanvasImageSource {
  public:
   SignalStrengthImageSource(ImageType image_type,
+                            SkColor color,
+                            int signal_strength,
+                            const gfx::Size size)
+      : CanvasImageSource(size, false),
+        image_type_(image_type),
+        color_(color),
+        signal_strength_(signal_strength) {
+    if (image_type_ == NONE)
+      image_type_ = ARCS;
+
+    DCHECK_GE(signal_strength, 0);
+    DCHECK_LT(signal_strength, kNumNetworkImages);
+  }
+
+  SignalStrengthImageSource(ImageType image_type,
                             IconType icon_type,
                             int signal_strength)
       : CanvasImageSource(GetSizeForIconType(icon_type), false),
@@ -303,6 +322,7 @@ class SignalStrengthImageSource : public gfx::CanvasImageSource {
     DCHECK_GE(signal_strength, 0);
     DCHECK_LT(signal_strength, kNumNetworkImages);
   }
+
   ~SignalStrengthImageSource() override {}
 
   void set_color(SkColor color) { color_ = color; }
@@ -813,6 +833,20 @@ gfx::ImageSkia GetImageForNewWifiNetwork(SkColor icon_color,
   Badges badges;
   badges.bottom_right = {&kNetworkBadgeAddOtherIcon, badge_color};
   return NetworkIconImageSource::CreateImage(icon, badges);
+}
+
+gfx::ImageSkia GetImageForBlueMobileBars(int signal_strength, gfx::Size size) {
+  int triangle_portion = signal_strength / kSignalToTriangleDivisor;
+  // |triangle_portion| must be between 0 to 4 (kNumNetworkImages - 1).
+  // If signal is 100, triangle_portion will be 5, which is out of bounds.
+  triangle_portion = triangle_portion == kNumNetworkImages
+                         ? kNumNetworkImages - 1
+                         : triangle_portion;
+  SignalStrengthImageSource* source = new SignalStrengthImageSource(
+      ImageTypeForNetworkType(chromeos::kTypeTether), gfx::kGoogleBlue500,
+      triangle_portion, size);
+  gfx::ImageSkia icon = gfx::ImageSkia(source, source->size());
+  return icon;
 }
 
 base::string16 GetLabelForNetwork(const chromeos::NetworkState* network,

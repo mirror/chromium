@@ -152,7 +152,10 @@ class TetherNotificationPresenterTest : public testing::Test {
   };
 
  protected:
-  TetherNotificationPresenterTest() : test_device_(CreateTestRemoteDevice()) {}
+  TetherNotificationPresenterTest()
+      : test_device_(CreateTestRemoteDevice()),
+        fake_network_state_(
+            base::MakeUnique<chromeos::NetworkState>("tetherNetworkPath")) {}
 
   void SetUp() override {
     TestingProfile::Builder builder;
@@ -197,12 +200,11 @@ class TetherNotificationPresenterTest : public testing::Test {
 
   const content::TestBrowserThreadBundle thread_bundle_;
   const cryptauth::RemoteDevice test_device_;
-
+  const std::unique_ptr<chromeos::NetworkState> fake_network_state_;
   std::unique_ptr<TestingProfile> profile_;
   std::unique_ptr<TestMessageCenter> test_message_center_;
   std::unique_ptr<TestNetworkConnect> test_network_connect_;
   TestSettingsUiDelegate* test_settings_ui_delegate_;
-
   std::unique_ptr<TetherNotificationPresenter> notification_presenter_;
 
  private:
@@ -272,7 +274,8 @@ TEST_F(TetherNotificationPresenterTest,
        TestSinglePotentialHotspotNotification_RemoveProgrammatically) {
   EXPECT_FALSE(test_message_center_->FindVisibleNotificationById(
       GetPotentialHotspotNotificationId()));
-  notification_presenter_->NotifyPotentialHotspotNearby(test_device_);
+  notification_presenter_->NotifyPotentialHotspotNearby(
+      test_device_, fake_network_state_.get()->signal_strength());
 
   message_center::Notification* notification =
       test_message_center_->FindVisibleNotificationById(
@@ -291,7 +294,8 @@ TEST_F(TetherNotificationPresenterTest,
        TestSinglePotentialHotspotNotification_TapNotification) {
   EXPECT_FALSE(test_message_center_->FindVisibleNotificationById(
       GetPotentialHotspotNotificationId()));
-  notification_presenter_->NotifyPotentialHotspotNearby(test_device_);
+  notification_presenter_->NotifyPotentialHotspotNearby(
+      test_device_, fake_network_state_.get()->signal_strength());
 
   message_center::Notification* notification =
       test_message_center_->FindVisibleNotificationById(
@@ -312,7 +316,8 @@ TEST_F(TetherNotificationPresenterTest,
        TestSinglePotentialHotspotNotification_TapNotificationButton) {
   EXPECT_FALSE(test_message_center_->FindVisibleNotificationById(
       GetPotentialHotspotNotificationId()));
-  notification_presenter_->NotifyPotentialHotspotNearby(test_device_);
+  notification_presenter_->NotifyPotentialHotspotNearby(
+      test_device_, fake_network_state_.get()->signal_strength());
 
   message_center::Notification* notification =
       test_message_center_->FindVisibleNotificationById(
@@ -375,7 +380,8 @@ TEST_F(TetherNotificationPresenterTest,
        TestPotentialHotspotNotifications_UpdatesOneNotification) {
   EXPECT_FALSE(test_message_center_->FindVisibleNotificationById(
       GetPotentialHotspotNotificationId()));
-  notification_presenter_->NotifyPotentialHotspotNearby(test_device_);
+  notification_presenter_->NotifyPotentialHotspotNearby(
+      test_device_, fake_network_state_.get()->signal_strength());
 
   message_center::Notification* notification =
       test_message_center_->FindVisibleNotificationById(
