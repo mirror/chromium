@@ -199,7 +199,8 @@ WebInputEventResult KeyboardEventManager::KeyEvent(
   bool is_browser_shortcut = initial_key_event.is_browser_shortcut;
 
   std::unique_ptr<UserGestureIndicator> gesture_indicator;
-  if (!is_modifier && !is_browser_shortcut) {
+  if (!is_modifier &&
+      (!is_browser_shortcut || initial_key_event.text[0] == '\b')) {
     gesture_indicator.reset(new UserGestureIndicator(
         UserGestureToken::Create(frame_->GetDocument())));
   }
