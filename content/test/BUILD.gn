@@ -762,6 +762,7 @@ test("content_browsertests") {
     "//components/discardable_memory/common",
     "//components/discardable_memory/service",
     "//components/network_session_configurator/common",
+    "//components/url_log:content_browsertests",
     "//content:resources",
     "//content/app:both_for_content_tests",
     "//content/browser:for_content_tests",
