@@ -391,7 +391,7 @@ class PageLoadMetricsObserver {
       const PageLoadExtraInfo& extra_info) {}
 
   // Invoked when there is a change in either the main_frame_metadata or the
-  // subframe_metadata's loading behavior_flags.
+  // subframe_metadata.
   virtual void OnLoadingBehaviorObserved(
       const page_load_metrics::PageLoadExtraInfo& extra_info) {}
 

@@ -41,6 +41,7 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponseType.h"
+#include "public/platform/modules/serviceworker/service_worker_preparation_type.mojom-shared.h"
 
 namespace blink {
 
@@ -254,9 +255,13 @@ class WebURLResponse {
       const WebVector<WebString>&);
 
   // Whether service worker navigation preload occurred.
-  // See ServiceWorkerResponseInfo::did_navigation_preload() for
-  // details.
   BLINK_PLATFORM_EXPORT void SetDidServiceWorkerNavigationPreload(bool);
+
+  // If a service worker was dispatched a fetch event for the request for
+  // this resource, describes how the service worker started up in order
+  // to receive the fetch event. Only used for UMA purposes.
+  BLINK_PLATFORM_EXPORT void SetServiceWorkerPreparationType(
+      mojom::ServiceWorkerPreparationType);
 
   // This indicates the location of a downloaded response if the
   // WebURLRequest had the downloadToFile flag set to true. This file path
