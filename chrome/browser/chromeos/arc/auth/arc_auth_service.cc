@@ -21,6 +21,7 @@
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_browser_context_keyed_service_factory_impl.h"
 #include "components/arc/arc_features.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_util.h"
@@ -30,6 +31,14 @@
 
 namespace arc {
 namespace {
+
+struct FactoryTraits {
+  static constexpr const char* kName = "ArcAuthServiceFactory";
+  using Service = ArcAuthService;
+};
+
+using ArcAuthServiceFactory =
+    internal::ArcBrowserContextKeyedServiceFactoryImpl<FactoryTraits>;
 
 // Convers mojom::ArcSignInFailureReason into ProvisiningResult.
 ProvisioningResult ConvertArcSignInFailureReasonToProvisioningResult(
@@ -73,6 +82,12 @@ mojom::ChromeAccountType GetAccountType() {
 
 // static
 const char ArcAuthService::kArcServiceName[] = "arc::ArcAuthService";
+
+// static
+ArcAuthService* ArcAuthService::GetForBrowserContext(
+    content::BrowserContext* context) {
+  return ArcAuthServiceFactory::GetForBrowserContext(context);
+}
 
 // TODO(lhchavez): Get rid of this class once we can safely remove all the
 // deprecated interfaces and only need to care about one type of callback.
@@ -135,9 +150,9 @@ class ArcAuthService::AccountInfoNotifier {
   const AccountInfoCallback account_info_callback_;
 };
 
-ArcAuthService::ArcAuthService(Profile* profile,
+ArcAuthService::ArcAuthService(content::BrowserContext* browser_context,
                                ArcBridgeService* arc_bridge_service)
-    : profile_(profile),
+    : profile_(Profile::FromBrowserContext(browser_context)),
       arc_bridge_service_(arc_bridge_service),
       binding_(this),
       weak_ptr_factory_(this) {
