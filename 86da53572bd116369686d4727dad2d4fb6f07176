@@ -22,6 +22,30 @@
       "revId": "86da53572bd116369686d4727dad2d4fb6f07176",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45cff7dc_71b03c94",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-12T15:27:41Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b683e082_9b673fb2",
+      "range": {
+        "startLine": 197,
+        "startChar": 34,
+        "endLine": 197,
+        "endChar": 62
+      },
+      "revId": "86da53572bd116369686d4727dad2d4fb6f07176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
