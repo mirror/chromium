@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c117de6_0081f2a9",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-12T16:16:47Z",
+      "side": 1,
+      "message": "nit: Since you\u0027re not modifying PreresolveInfo, pass it as a const reference?",
+      "revId": "16b661e59a939f5d6056197848c6d451330540e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb60411_cb67aad2",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-12T16:16:47Z",
+      "side": 1,
+      "message": "Any reason not to initialize this value here inline?",
+      "revId": "16b661e59a939f5d6056197848c6d451330540e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9325bb_d8f968b1",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-12T16:16:47Z",
+      "side": 1,
+      "message": "nit: Since there is only one call site in the class, and some parameters are constants, do you need these functions to take all the parameters?",
+      "revId": "16b661e59a939f5d6056197848c6d451330540e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70d5c69_173e6b4b",
+        "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-12T16:16:47Z",
+      "side": 1,
+      "message": "A Toyota fan?\n\nI didn\u0027t know about this oddly named constant...",
+      "revId": "16b661e59a939f5d6056197848c6d451330540e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
