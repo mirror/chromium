@@ -70,6 +70,30 @@
       "revId": "eb2c2f68d4f27f31d47b1e279a3ad76a04d460ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76a215b_5002bf0d",
+        "filename": "chrome/browser/ui/browser_tab_strip_model_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-12T20:06:39Z",
+      "side": 1,
+      "message": "Yes, it seems that the CreateParams is *only* used to get \u0027initially_hidden\u0027 in  MetricsWebContentsObserver() in_foreground_(create_params ? !create_params-\u003einitially_hidden : false).\nhttps://cs.chromium.org/chromium/src/chrome/browser/page_load_metrics/metrics_web_contents_observer.cc?sq\u003dpackage:chromium\u0026l\u003d71",
+      "parentUuid": "84f8739d_a648e859",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 30
+      },
+      "revId": "eb2c2f68d4f27f31d47b1e279a3ad76a04d460ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
