@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ea9184e_68b3b135",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_load_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-12T14:35:50Z",
+      "side": 1,
+      "message": "It isn\u0027t really a behaviour change: when everything is paused, we don\u0027t access |next_reporting_time_| and |run_time_inside_window_|, and they were reset them when Resume() was called.\n\nThis just makes everything a bit cleaner.",
+      "parentUuid": "e5de10ba_370c28ec",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 7
+      },
+      "revId": "b5531853a3820d5f94fbb43e5b42e5eb03710ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5776ebfb_365b0145",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_load_tracker.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b5531853a3820d5f94fbb43e5b42e5eb03710ff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdd073f_d2cd9b9a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_load_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-12T14:35:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5776ebfb_365b0145",
+      "range": {
+        "startLine": 34,
+        "startChar": 32,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "b5531853a3820d5f94fbb43e5b42e5eb03710ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
