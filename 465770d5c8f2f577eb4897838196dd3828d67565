@@ -117,6 +117,30 @@
       "revId": "465770d5c8f2f577eb4897838196dd3828d67565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94731a00_56a7cb4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T16:42:38Z",
+      "side": 1,
+      "message": "Per our offline discussion, this method is pretty confusing. I added two new methods to ToolbarPhone, #getToolbarButtonVisibility() and #getUrlActionsTranslationXForUrlExpansionAnimation() and removed #shouldHideToolbarButtons().",
+      "parentUuid": "19fd2e60_4c27b601",
+      "range": {
+        "startLine": 855,
+        "startChar": 12,
+        "endLine": 855,
+        "endChar": 13
+      },
+      "revId": "465770d5c8f2f577eb4897838196dd3828d67565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

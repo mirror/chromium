@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb35bddd_15fd0967",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T16:42:38Z",
+      "side": 1,
+      "message": "This was the calculation ToolbarPhone used before any of my modifications for Chrome Home. I suspect that mToolbarButtonsContainer.getMeasuredWith() is always larger but maybe there\u0027s a case where it\u0027s not?",
+      "range": {
+        "startLine": 682,
+        "startChar": 45,
+        "endLine": 682,
+        "endChar": 69
+      },
+      "revId": "440e44d916daeafb9a8d37e93723e97154922108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1e94fd_aa50476d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T16:42:38Z",
+      "side": 1,
+      "message": "nit: s/url/URL for consistency, here and in a few other comments.",
+      "range": {
+        "startLine": 927,
+        "startChar": 81,
+        "endLine": 927,
+        "endChar": 84
+      },
+      "revId": "440e44d916daeafb9a8d37e93723e97154922108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
