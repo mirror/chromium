@@ -6,17 +6,18 @@
 #define CHROME_BROWSER_CHROME_BROWSER_FIELD_TRIALS_H_
 
 #include "base/macros.h"
+#include "components/variations/platform_field_trials.h"
 
 namespace base {
 class FeatureList;
 }
 
-class ChromeBrowserFieldTrials {
+class ChromeBrowserFieldTrials : public variations::PlatformFieldTrials {
  public:
   ChromeBrowserFieldTrials();
   ~ChromeBrowserFieldTrials();
 
-  void SetupFieldTrials();
+  void SetupFieldTrials() override;
 
   // Create field trials that will control feature list features. This should be
   // called during the same timing window as
@@ -24,8 +25,9 @@ class ChromeBrowserFieldTrials {
   // variations service used a seed to create field trials. This can be used to
   // prevent associating a field trial with a feature that you expect to be
   // controlled by the variations seed.
-  void SetupFeatureControllingFieldTrials(bool has_seed,
-                                          base::FeatureList* feature_list);
+  void SetupFeatureControllingFieldTrials(
+      bool has_seed,
+      base::FeatureList* feature_list) override;
 
  private:
   // Instantiates dynamic trials by querying their state, to ensure they get
