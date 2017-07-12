@@ -11,6 +11,7 @@
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseType.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_preparation_type.mojom.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -45,7 +46,9 @@ class CONTENT_EXPORT ServiceWorkerResponseInfo
       bool response_is_in_cache_storage,
       const std::string& response_cache_storage_cache_name,
       const ServiceWorkerHeaderList& cors_exposed_header_names,
-      bool did_navigation_preload);
+      bool did_navigation_preload,
+      blink::mojom::ServiceWorkerPreparationType
+          service_worker_preparation_type);
   void ResetData();
 
   // Returns true if a service worker responded to the request. If the service
@@ -92,6 +95,10 @@ class CONTENT_EXPORT ServiceWorkerResponseInfo
     return response_cache_storage_cache_name_;
   }
   bool did_navigation_preload() const { return did_navigation_preload_; }
+  blink::mojom::ServiceWorkerPreparationType service_worker_preparation_type()
+      const {
+    return service_worker_preparation_type_;
+  }
 
  private:
   ServiceWorkerResponseInfo();
@@ -108,6 +115,8 @@ class CONTENT_EXPORT ServiceWorkerResponseInfo
   std::string response_cache_storage_cache_name_;
   ServiceWorkerHeaderList cors_exposed_header_names_;
   bool did_navigation_preload_ = false;
+  blink::mojom::ServiceWorkerPreparationType service_worker_preparation_type_ =
+      blink::mojom::ServiceWorkerPreparationType::UNKNOWN;
 };
 
 }  // namespace content

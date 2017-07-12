@@ -31,9 +31,10 @@
 #ifndef WebPerformance_h
 #define WebPerformance_h
 
+#include "WebNavigationType.h"
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebPrivatePtr.h"
-#include "WebNavigationType.h"
+#include "public/platform/modules/serviceworker/service_worker_preparation_type.mojom-shared.h"
 
 #if BLINK_IMPLEMENTATION
 #include "platform/heap/Handle.h"
@@ -62,6 +63,10 @@ class WebPerformance {
   // This only returns one of {Other|Reload|BackForward}.
   // Form submits and link clicks all fall under other.
   BLINK_EXPORT WebNavigationType GetNavigationType() const;
+
+  // Describes how the service worker, if any, started up for the navigation.
+  BLINK_EXPORT blink::mojom::ServiceWorkerPreparationType
+  ServiceWorkerPreparationTypeForNavigation() const;
 
   // These functions return time in seconds (not milliseconds) since the epoch.
   BLINK_EXPORT double NavigationStart() const;

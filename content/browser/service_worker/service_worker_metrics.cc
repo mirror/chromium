@@ -95,41 +95,9 @@ std::string EventTypeToSuffix(ServiceWorkerMetrics::EventType event_type) {
   return "_UNKNOWN";
 }
 
-ServiceWorkerMetrics::WorkerPreparationType GetWorkerPreparationType(
-    EmbeddedWorkerStatus initial_worker_status,
-    ServiceWorkerMetrics::StartSituation start_situation) {
-  using Situation = ServiceWorkerMetrics::StartSituation;
-  using Preparation = ServiceWorkerMetrics::WorkerPreparationType;
-  switch (initial_worker_status) {
-    case EmbeddedWorkerStatus::STOPPED: {
-      switch (start_situation) {
-        case Situation::DURING_STARTUP:
-          return Preparation::START_DURING_STARTUP;
-        case Situation::NEW_PROCESS:
-          return Preparation::START_IN_NEW_PROCESS;
-        case Situation::EXISTING_UNREADY_PROCESS:
-          return Preparation::START_IN_EXISTING_UNREADY_PROCESS;
-        case Situation::EXISTING_READY_PROCESS:
-          return Preparation::START_IN_EXISTING_READY_PROCESS;
-        case Situation::UNKNOWN:
-          break;
-      }
-      break;
-    }
-    case EmbeddedWorkerStatus::STARTING:
-      return Preparation::STARTING;
-    case EmbeddedWorkerStatus::RUNNING:
-      return Preparation::RUNNING;
-    case EmbeddedWorkerStatus::STOPPING:
-      return Preparation::STOPPING;
-  }
-  NOTREACHED() << static_cast<int>(initial_worker_status);
-  return Preparation::UNKNOWN;
-}
-
 std::string GetWorkerPreparationSuffix(
-    ServiceWorkerMetrics::WorkerPreparationType status) {
-  using Preparation = ServiceWorkerMetrics::WorkerPreparationType;
+    blink::mojom::ServiceWorkerPreparationType status) {
+  using Preparation = blink::mojom::ServiceWorkerPreparationType;
   switch (status) {
     case Preparation::UNKNOWN:
     case Preparation::NUM_TYPES:
@@ -513,12 +481,11 @@ void ServiceWorkerMetrics::RecordActivatedWorkerPreparationForMainFrame(
     StartSituation start_situation,
     bool did_navigation_preload) {
   // Record the worker preparation type.
-  WorkerPreparationType preparation =
+  blink::mojom::ServiceWorkerPreparationType preparation =
       GetWorkerPreparationType(initial_worker_status, start_situation);
   UMA_HISTOGRAM_ENUMERATION(
-      "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type",
-      static_cast<int>(preparation),
-      static_cast<int>(WorkerPreparationType::NUM_TYPES));
+      "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type", preparation,
+      blink::mojom::ServiceWorkerPreparationType::NUM_TYPES);
   if (did_navigation_preload) {
     // TODO(falken): Consider removing this UMA if it turns out the same as
     // ServiceWorker.NavPreload.WorkerPreparationType. That UMA is logged at
@@ -528,8 +495,7 @@ void ServiceWorkerMetrics::RecordActivatedWorkerPreparationForMainFrame(
     UMA_HISTOGRAM_ENUMERATION(
         "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type_"
         "NavigationPreloadEnabled",
-        static_cast<int>(preparation),
-        static_cast<int>(WorkerPreparationType::NUM_TYPES));
+        preparation, blink::mojom::ServiceWorkerPreparationType::NUM_TYPES);
   }
 
   // Record the preparation time.
@@ -931,12 +897,12 @@ void ServiceWorkerMetrics::RecordNavigationPreloadResponse(
   }
   const bool worker_start_occurred =
       initial_worker_status != EmbeddedWorkerStatus::RUNNING;
-  const WorkerPreparationType preparation =
+  const blink::mojom::ServiceWorkerPreparationType preparation =
       GetWorkerPreparationType(initial_worker_status, start_situation);
 
   UMA_HISTOGRAM_ENUMERATION(
       "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame", preparation,
-      WorkerPreparationType::NUM_TYPES);
+      blink::mojom::ServiceWorkerPreparationType::NUM_TYPES);
   UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.NavPreload.ResponseTime_MainFrame",
                              response_start);
   UMA_HISTOGRAM_BOOLEAN("ServiceWorker.NavPreload.FinishedFirst_MainFrame",
@@ -1025,6 +991,38 @@ void ServiceWorkerMetrics::RecordUninstalledScriptImport(const GURL& url) {
                  "ServiceWorker.ContextRequestHandlerStatus."
                  "UninstalledScriptImport",
                  url));
+}
+
+blink::mojom::ServiceWorkerPreparationType
+ServiceWorkerMetrics::GetWorkerPreparationType(
+    EmbeddedWorkerStatus initial_worker_status,
+    ServiceWorkerMetrics::StartSituation start_situation) {
+  using Situation = ServiceWorkerMetrics::StartSituation;
+  using Preparation = blink::mojom::ServiceWorkerPreparationType;
+  switch (initial_worker_status) {
+    case EmbeddedWorkerStatus::STOPPED:
+      switch (start_situation) {
+        case Situation::DURING_STARTUP:
+          return Preparation::START_DURING_STARTUP;
+        case Situation::NEW_PROCESS:
+          return Preparation::START_IN_NEW_PROCESS;
+        case Situation::EXISTING_READY_PROCESS:
+          return Preparation::START_IN_EXISTING_READY_PROCESS;
+        case Situation::EXISTING_UNREADY_PROCESS:
+          return Preparation::START_IN_EXISTING_UNREADY_PROCESS;
+        case Situation::UNKNOWN:
+          return Preparation::UNKNOWN;
+      }
+      break;
+    case EmbeddedWorkerStatus::STARTING:
+      return Preparation::STARTING;
+    case EmbeddedWorkerStatus::RUNNING:
+      return Preparation::RUNNING;
+    case EmbeddedWorkerStatus::STOPPING:
+      return Preparation::STOPPING;
+  }
+  NOTREACHED();
+  return Preparation::UNKNOWN;
 }
 
 }  // namespace content
