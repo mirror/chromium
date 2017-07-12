@@ -731,6 +731,8 @@ source_set("browser") {
     "frame_host/navigation_request.h",
     "frame_host/navigation_request_info.cc",
     "frame_host/navigation_request_info.h",
+    "frame_host/navigation_throttle_sanity_checker.cc",
+    "frame_host/navigation_throttle_sanity_checker.h",
     "frame_host/navigator.cc",
     "frame_host/navigator.h",
     "frame_host/navigator_delegate.cc",
