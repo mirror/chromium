@@ -317,6 +317,24 @@
       "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5dbe48_70a11681",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T14:27:09Z",
+      "side": 1,
+      "message": "I think doing internal canonicalization is better than what is done currently, but I would still prefer a GURL interface for the following reasons. I just want to preface this by saying that this is a small issue and I realize I\u0027m bikeshedding :)\n\n1. As I mentioned in the above comment. Tests should be instantiating the url once and using that in multiple APIs e.g.\nGURL url(kExampleUrl);\nNavigateToUrl(url);\n...\nGetSourcesForUrl(url)\n...\n\nThis is nicer than:\nNavigateToUrl(GURL(kExampleUrl))\nGetSourcesForUrl(kExampleUrl)\n\nSince the latter repeats the constant. If I wanted to change the URL to another constant I\u0027d need to edit the test in two places rather than one.\n\nAdditionally, there are lots of tests that first do something like:\nconst GURL url(\"https://example.test/\");\nAnd then use |url| everywhere. These tests would need to move to the constant char* model to use this API, or repeat the raw string.\n\n2. It makes GetSourcesForUrl() \"simpler\" in the sense that current callers need less code boilerplate, but more complex in that we lose type information and the set of valid inputs increases since we\u0027re losing structure.\n\n3. Plenty of valid usages may not have easy access to a char* since most browser APIs vend GURLs (WebContents, NavigationEntry, etc). In those cases you will need to use url.spec().c_str() to get the underlying pointer, which is not great.",
+      "parentUuid": "d0b9e695_1c03b376",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
