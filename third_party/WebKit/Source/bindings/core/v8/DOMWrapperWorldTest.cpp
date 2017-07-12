@@ -52,7 +52,7 @@ Vector<RefPtr<DOMWrapperWorld>> CreateWorlds(v8::Isolate* isolate) {
 
 void WorkerThreadFunc(WorkerBackingThread* thread,
                       RefPtr<WebTaskRunner> main_thread_task_runner) {
-  thread->Initialize();
+  thread->InitializeOnThread();
 
   // Worlds on the main thread should not be visible from the worker thread.
   Vector<RefPtr<DOMWrapperWorld>> retrieved_worlds;
@@ -77,7 +77,7 @@ void WorkerThreadFunc(WorkerBackingThread* thread,
   }
   worlds.clear();
 
-  thread->Shutdown();
+  thread->ShutdownOnThread();
   main_thread_task_runner->PostTask(BLINK_FROM_HERE,
                                     CrossThreadBind(&testing::ExitRunLoop));
 }
