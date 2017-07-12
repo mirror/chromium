@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53308d8c_669daf15",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/OfflineAudioContext/offlineaudiocontext-thread-smoke-test.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-12T17:08:58Z",
+      "side": 1,
+      "message": "Apparently we had a trailing space here.",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 24
+      },
+      "revId": "b7d31067e76eaf9d356aab258399f7eb1482f3b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
