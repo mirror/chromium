@@ -16,6 +16,24 @@
       "revId": "6addae14f05b1d821f1f8c66c7f3e46f8f320384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762122ce_dba25f7e",
+        "filename": "base/json/json_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-07-12T14:14:33Z",
+      "side": 1,
+      "message": "Nope,  you are right it is called above when it returns false.",
+      "parentUuid": "74db955b_ea182cca",
+      "revId": "6addae14f05b1d821f1f8c66c7f3e46f8f320384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
