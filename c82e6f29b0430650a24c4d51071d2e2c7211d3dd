@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa8f4a8_4f1a6640",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-12T22:21:09Z",
+      "side": 1,
+      "message": "My preference here would be to use a fake that does something like:\n\nvoid HandleUserReauth() override {\n  ++reauth_count_;\n}\n\nint reauth_count() const { return reauth_count_; }\n\nAnd in tests:\nFakeEasyUnlockService* service \u003d static_cast\u003cFakeEasyUnlockService*\u003e(\n          EasyUnlockService::Get(profile()));\n\nEXPECT_TRUE(CheckPassword());\nEXPECT_EQ(1, service-\u003ereauth_count());\n\n// optionally service-\u003eResetReauthCount();\n\nEXPECT_FALSE(CheckPassword());\nEXPECT_EQ(1, service-\u003ereauth_count());\n\n\nIMHO this would be easier to read.",
+      "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee963e1_549f7002",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-12T22:21:09Z",
+      "side": 1,
+      "message": "Times(1)?",
+      "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d252c2_d41e5b57",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-12T22:21:09Z",
+      "side": 1,
+      "message": "I vaguely remember that stuff the following is not really safe with gmock (though, it\u0027s been a while since I used it):\n\nEXPECT_CALL(foo)\ndo_something_that_calls_foo\nEXPECT_CALL(foo)\n\nAre you sure this is fine?",
+      "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8883320e_bce6c2a2",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-12T22:21:09Z",
+      "side": 1,
+      "message": "nit: you could call HandleUserReauth(user_context); here.",
+      "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
