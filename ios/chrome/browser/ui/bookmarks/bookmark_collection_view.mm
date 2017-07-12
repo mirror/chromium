@@ -21,20 +21,24 @@
 #include "components/favicon_base/fallback_icon_style.h"
 #include "components/favicon_base/favicon_types.h"
 #include "components/pref_registry/pref_registry_syncable.h"
+#include "components/signin/core/browser/signin_manager.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_service_factory.h"
 #include "ios/chrome/browser/pref_names.h"
+#include "ios/chrome/browser/signin/signin_manager_factory.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view_configurator.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view_consumer.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_collection_cells.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_collection_view_background.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_home_waiting_view.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_promo_cell.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_signin_promo_cell.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
+#import "ios/chrome/browser/ui/sync/synced_sessions_bridge.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -74,15 +78,10 @@ CGFloat rowMarginTablet = 24.0;
 CGFloat rowHeight = 48.0;
 // Minimal acceptable favicon size, in points.
 CGFloat minFaviconSizePt = 16;
-
-// Delay in seconds to which the empty background view will be shown when the
-// collection view is empty.
-// This delay should not be too small to let enough time to load bookmarks
-// from network.
-const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
 }
 
 @interface BookmarkCollectionView ()<BookmarkPromoCellDelegate,
+                                     SyncedSessionsObserver,
                                      SigninPromoViewConsumer,
                                      UICollectionViewDataSource,
                                      UICollectionViewDelegateFlowLayout,
@@ -94,6 +93,9 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
 
   // True if the promo is visible.
   BOOL _promoVisible;
+
+  // True if the loading spinner background is visible.
+  BOOL _loadingSpinnerbackgroundVisible;
 
   // Mediator, helper for the sign-in promo view.
   SigninPromoViewMediator* _signinPromoViewMediator;
@@ -107,6 +109,9 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
   std::map<IntegerPair, base::CancelableTaskTracker::TaskId> _faviconLoadTasks;
   // Task tracker used for async favicon loads.
   base::CancelableTaskTracker _faviconTaskTracker;
+
+  std::unique_ptr<synced_sessions::SyncedSessionsObserverBridge>
+      _syncedSessionsObserver;
 }
 
 // Redefined to be readwrite.
@@ -120,6 +125,9 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
 // Background view of the collection view shown when there is no items.
 @property(nonatomic, strong)
     BookmarkCollectionViewBackground* emptyCollectionBackgroundView;
+// Background view showing a loading spinner.
+@property(nonatomic, strong)
+    BookmarkHomeWaitingView* loadingSpinnerBackgroundView;
 // Shadow to display over the content.
 @property(nonatomic, strong) UIView* shadow;
 
@@ -140,6 +148,7 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
 @synthesize collectionView = _collectionView;
 @synthesize editing = _editing;
 @synthesize emptyCollectionBackgroundView = _emptyCollectionBackgroundView;
+@synthesize loadingSpinnerBackgroundView = _loadingSpinnerBackgroundView;
 @synthesize loader = _loader;
 @synthesize longPressRecognizer = _longPressRecognizer;
 @synthesize browserState = _browserState;
@@ -222,6 +231,7 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
 
     [self setupViews];
     [self updateCollectionView];
+    [self initObserver];
   }
   return self;
 }
@@ -241,6 +251,7 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
     [moi self];
   });
   _faviconTaskTracker.TryCancelAll();
+  [self deallocObserver];
 }
 
 #pragma mark - BookmarkHomePrimaryView
@@ -639,6 +650,17 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
   [self.collectionView reloadData];
 }
 
+- (void)initObserver {
+  if (!_syncedSessionsObserver) {
+    _syncedSessionsObserver.reset(
+        new synced_sessions::SyncedSessionsObserverBridge(self, _browserState));
+  }
+}
+
+- (void)deallocObserver {
+  _syncedSessionsObserver.reset();
+}
+
 // Returns the bookmark node associated with |indexPath|.
 - (const BookmarkNode*)nodeAtIndexPath:(NSIndexPath*)indexPath {
   if (indexPath.section == self.folderSection)
@@ -896,19 +918,16 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
 
 #pragma mark - empty background
 
-// Schedules showing or hiding the empty bookmarks background view if the
-// collection view is empty by calling showEmptyBackgroundIfNeeded after
-// kShowEmptyBookmarksBackgroundRefreshDelay.
-// Multiple call to this method will cancel previous scheduled call to
-// showEmptyBackgroundIfNeeded before scheduling a new one.
-- (void)scheduleEmptyBackgroundVisibilityUpdate {
-  [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                           selector:@selector
-                                           (updateEmptyBackgroundVisibility)
-                                             object:nil];
-  [self performSelector:@selector(updateEmptyBackgroundVisibility)
-             withObject:nil
-             afterDelay:kShowEmptyBookmarksBackgroundRefreshDelay];
+// If the collection view is empty and account is syncing, shows the loading
+// spinner background. Otherwise, show the empty bookmarks background if needed.
+- (void)showEmptyOrLoadingSpinnerBackground {
+  const BOOL isEmpty =
+      [self isCollectionViewEmpty] && ![self shouldShowPromoCell];
+  if (isEmpty && [self isSyncing]) {
+    [self showLoadingSpinnerBackground];
+    return;
+  }
+  [self showEmptyBackgroundIfNeeded];
 }
 
 - (BOOL)isCollectionViewEmpty {
@@ -923,11 +942,10 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
   return collectionViewIsEmpty;
 }
 
-// Shows/hides empty bookmarks background view if the collections view is empty.
-- (void)updateEmptyBackgroundVisibility {
-  const BOOL showEmptyBackground =
+- (void)showEmptyBackgroundIfNeeded {
+  const BOOL isEmpty =
       [self isCollectionViewEmpty] && ![self shouldShowPromoCell];
-  [self setEmptyBackgroundVisible:showEmptyBackground];
+  [self setEmptyBackgroundVisible:isEmpty];
 }
 
 // Shows/hides empty bookmarks background view with an animation.
@@ -935,6 +953,32 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
   [UIView beginAnimations:@"alpha" context:NULL];
   self.emptyCollectionBackgroundView.alpha = emptyBackgroundVisible ? 1 : 0;
   [UIView commitAnimations];
+}
+
+// Shows loading spinner background view
+- (void)showLoadingSpinnerBackground {
+  if (!_loadingSpinnerbackgroundVisible) {
+    BookmarkHomeWaitingView* loadingSpinnerBackgroundView =
+        [[BookmarkHomeWaitingView alloc] initWithFrame:CGRectZero];
+    self.loadingSpinnerBackgroundView = loadingSpinnerBackgroundView;
+    [self.loadingSpinnerBackgroundView startWaiting];
+    self.loadingSpinnerBackgroundView.autoresizingMask =
+        UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.loadingSpinnerBackgroundView.alpha = 1;
+    self.loadingSpinnerBackgroundView.frame = self.collectionView.bounds;
+    _loadingSpinnerbackgroundVisible = true;
+
+    self.collectionView.backgroundView = self.loadingSpinnerBackgroundView;
+  }
+}
+
+// Hides loading spinner background view
+- (void)hideLoadingSpinnerBackground {
+  if (_loadingSpinnerbackgroundVisible) {
+    self.collectionView.backgroundView = self.emptyCollectionBackgroundView;
+    self.loadingSpinnerBackgroundView = nil;
+    [self showEmptyBackgroundIfNeeded];
+  }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -946,10 +990,11 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
   const BOOL isCollectionViewEmpty = [self isCollectionViewEmpty];
   self.collectionView.scrollEnabled = !isCollectionViewEmpty;
   if (isCollectionViewEmpty) {
-    [self scheduleEmptyBackgroundVisibilityUpdate];
+    [self showEmptyOrLoadingSpinnerBackground];
   } else {
     // Hide empty bookmarks now.
     [self setEmptyBackgroundVisible:NO];
+    [self hideLoadingSpinnerBackground];
   }
   return numberOfItemsInSection;
 }
@@ -960,7 +1005,7 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
   const BOOL collectionViewIsEmpty = 0 == numberOfSections;
   self.collectionView.scrollEnabled = !collectionViewIsEmpty;
   if (collectionViewIsEmpty) {
-    [self scheduleEmptyBackgroundVisibilityUpdate];
+    [self showEmptyOrLoadingSpinnerBackground];
   } else {
     // Hide empty bookmarks now.
     [self setEmptyBackgroundVisible:NO];
@@ -1279,6 +1324,29 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
 
 - (BOOL)isPromoActive {
   return NO;
+}
+
+#pragma mark - Signin status
+
+- (BOOL)isSignedIn {
+  SigninManager* signin_manager =
+      ios::SigninManagerFactory::GetForBrowserState(_browserState);
+  return signin_manager->IsAuthenticated();
+}
+
+- (BOOL)isSyncing {
+  return [self isSignedIn] &&
+         !_syncedSessionsObserver->IsFirstSyncCycleCompleted();
+}
+
+#pragma mark - Exposed to the SyncedSessionsObserver
+
+- (void)reloadSessions{}
+
+    - (void)onSyncStateChanged {
+  if (_loadingSpinnerbackgroundVisible && ![self isSyncing]) {
+    [self hideLoadingSpinnerBackground];
+  }
 }
 
 @end

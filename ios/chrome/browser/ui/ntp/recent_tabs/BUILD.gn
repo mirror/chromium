@@ -16,8 +16,6 @@ source_set("recent_tabs") {
     "sessions_sync_user_state.h",
     "synced_sessions.h",
     "synced_sessions.mm",
-    "synced_sessions_bridge.h",
-    "synced_sessions_bridge.mm",
   ]
   deps = [
     "//base",

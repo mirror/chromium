@@ -2,16 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_SYNCED_SESSIONS_BRIDGE_H_
-#define IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_SYNCED_SESSIONS_BRIDGE_H_
+#ifndef IOS_CHROME_BROWSER_UI_SYNC_SYNCED_SESSIONS_BRIDGE_H_
+#define IOS_CHROME_BROWSER_UI_SYNC_SYNCED_SESSIONS_BRIDGE_H_
 
 #import <UIKit/UIKit.h>
 
 #import "base/ios/weak_nsobject.h"
 #include "components/signin/core/browser/signin_manager_base.h"
 #include "components/sync/driver/sync_service_observer.h"
+#include "google_apis/gaia/google_service_auth_error.h"
 #import "ios/chrome/browser/sync/sync_observer_bridge.h"
-#import "ios/chrome/browser/ui/ntp/recent_tabs/synced_sessions_bridge.h"
+#import "ios/chrome/browser/ui/sync/synced_sessions_bridge.h"
 
 namespace ios {
 class ChromeBrowserState;
@@ -59,4 +60,4 @@ class SyncedSessionsObserverBridge : public SyncObserverBridge,
 
 }  // namespace synced_sessions
 
-#endif  // IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_SYNCED_SESSIONS_BRIDGE_H_
+#endif  // IOS_CHROME_BROWSER_UI_SYNC_SYNCED_SESSIONS_BRIDGE_H_
