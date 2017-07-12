@@ -129,13 +129,16 @@ def ExtractResourceIdsFromPragmaWarnings(text):
   """
   used_resources = set()
   lines = text.splitlines()
+  other_errors = []
   for ln in lines:
     match = _WHITELIST_RE.search(ln)
     if match:
       resource_id = int(match.group('resource_id'))
       used_resources.add(resource_id)
+    else:
+      other_errors.append(ln)
 
-  return used_resources
+  return '\n'.join(other_errors), used_resources
 
 
 def CaptureCommandStderr(command, env=None):

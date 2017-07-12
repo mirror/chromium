@@ -28,7 +28,8 @@ def main():
   returncode, stderr = wrapper_utils.CaptureCommandStderr(
       wrapper_utils.CommandToRun(args.command))
 
-  used_resources = wrapper_utils.ExtractResourceIdsFromPragmaWarnings(stderr)
+  stderr, used_resources = wrapper_utils.ExtractResourceIdsFromPragmaWarnings(
+                                             stderr)
   sys.stderr.write(stderr)
 
   if args.resource_whitelist:
