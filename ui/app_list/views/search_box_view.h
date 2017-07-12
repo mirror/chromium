@@ -28,6 +28,7 @@ enum SearchBoxFocus {
   FOCUS_BACK_BUTTON,    // Back button, only responds to ENTER
   FOCUS_SEARCH_BOX,     // Nothing else has partial focus
   FOCUS_MIC_BUTTON,     // Mic button, only responds to ENTER
+  FOCUS_CLOSE_BUTTON,   // Close button, only responds to ENTER
   FOCUS_CONTENTS_VIEW,  // Something outside the SearchBox is selected
 };
 
@@ -146,6 +147,7 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   views::ImageView* google_icon_;         // Owned by views hierarchy.
   SearchBoxImageButton* back_button_;     // Owned by views hierarchy.
   SearchBoxImageButton* speech_button_;   // Owned by views hierarchy.
+  SearchBoxImageButton* close_button_;    // Owned by views hierarchy.
   views::Textfield* search_box_;          // Owned by views hierarchy.
   views::View* contents_view_;            // Owned by views hierarchy.
   app_list::AppListView* app_list_view_;  // Owned by views hierarchy.
