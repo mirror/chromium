@@ -562,6 +562,10 @@ PrintPreviewHandler::PrintPreviewHandler()
 PrintPreviewHandler::~PrintPreviewHandler() {
   if (select_file_dialog_.get())
     select_file_dialog_->ListenerDestroyed();
+  if (print_preview_ui()) {
+    LOG(ERROR) << "Handler Destroyed before UI";
+    print_preview_ui()->HandlerDestroyed();
+  }
 
   UnregisterForGaiaCookieChanges();
 }
@@ -795,6 +799,9 @@ void PrintPreviewHandler::HandleGetPreview(const base::ListValue* args) {
   std::unique_ptr<base::DictionaryValue> settings =
       GetSettingsDictionary(json_str);
   CHECK(settings);
+
+  AllowJavascript();
+
   int request_id = -1;
   settings->GetInteger(printing::kPreviewRequestID, &request_id);
   CHECK_GT(request_id, -1);
@@ -1185,6 +1192,7 @@ void PrintPreviewHandler::HandleSignin(const base::ListValue* args) {
   CHECK(args->GetString(0, &callback_id));
   CHECK(!callback_id.empty());
   CHECK(args->GetBoolean(1, &add_account));
+  AllowJavascript();
 
   Profile* profile = Profile::FromBrowserContext(
       preview_web_contents()->GetBrowserContext());
@@ -1462,6 +1470,7 @@ WebContents* PrintPreviewHandler::GetInitiator() const {
 void PrintPreviewHandler::OnAddAccountToCookieCompleted(
     const std::string& account_id,
     const GoogleServiceAuthError& error) {
+  AllowJavascript();
   FireWebUIListener("reload-printer-list");
 }
 
