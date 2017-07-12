@@ -117,6 +117,9 @@ public interface AutocompleteEditTextModelBase {
     /** Called when text gets pasted. */
     void onPaste();
 
+    /** Called when View gets drawn. */
+    void onDraw();
+
     /**
      * @return The whole text including both user text and autocomplete text.
      */

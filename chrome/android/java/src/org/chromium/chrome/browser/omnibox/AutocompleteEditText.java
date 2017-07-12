@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.omnibox;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.StrictMode;
 import android.support.annotation.CallSuper;
@@ -266,6 +267,12 @@ public class AutocompleteEditText
     @Override
     public boolean super_dispatchKeyEvent(KeyEvent event) {
         return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if (mModel != null) mModel.onDraw();
     }
 
     /**

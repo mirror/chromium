@@ -447,6 +447,9 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
         mLastEditWasPaste = true;
     }
 
+    @Override
+    public void onDraw() {}
+
     /**
      * Simple span used for tracking the current autocomplete state.
      */
