@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "178237e1_9b0222ef",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T00:05:19Z",
+      "side": 1,
+      "message": "UMA_HISTOGRAM_BOOLEAN (and the other macros) require a runtime-constant name.  Please either push this down into an if-else, or use UmaHistogramBoolean.",
+      "range": {
+        "startLine": 1311,
+        "startChar": 6,
+        "endLine": 1311,
+        "endChar": 27
+      },
+      "revId": "c603578e7fb398d22ec45e195ab804bc71f2b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
