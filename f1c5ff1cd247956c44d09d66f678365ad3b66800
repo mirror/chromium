@@ -134,6 +134,57 @@
     },
     {
       "key": {
+        "uuid": "8833576c_09dddf99",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T22:45:43Z",
+      "side": 1,
+      "message": "On pre 3.18 kernels, instead of always trying the 3.18+ method, which will fail. Why not have:\n\nstatic base::Optional\u003cbool\u003e use_new_zram_interface;\nif (!use_new_zram_interface.has_value()) {\n  // call uname() to set |use_new_zram_interface|\n}\n\nif (use_new_zram_interface) {\n  ...\n} else {\n  ...\n}",
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e7f9aa_b403f3e8",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T22:45:43Z",
+      "side": 1,
+      "message": "Declare the 2 variables separately.",
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8ce80c_3d1ad31e",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T22:45:43Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bb18190_3ee8305a",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 5
