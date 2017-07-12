@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c643de24_04e9c59a",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-12T18:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2445492b_4f3dc6a7",
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb21de89_718f281a",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2017-07-12T14:57:07Z",
       "side": 1,
       "message": "neat. I didn\u0027t know you can write optional params like this.",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ae7de4_1843edef",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-12T18:50:35Z",
+      "side": 1,
+      "message": "As I recall the Google style guide didn\u0027t use to allow it (strong preference for overloading). But used sparingly, defaults can be convenient.\n\nhttps://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "parentUuid": "cb21de89_718f281a",
       "range": {
         "startLine": 61,
         "startChar": 44,
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "39b6dfcf_4840e194",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-12T18:50:35Z",
+      "side": 1,
+      "message": "Not sure.\n\nHelen, do you know the design motivation for keeping the file handles open?\n(for non-current events files).",
+      "parentUuid": "a4de86d1_1b7035b8",
+      "range": {
+        "startLine": 210,
+        "startChar": 20,
+        "endLine": 210,
+        "endChar": 30
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe9d0200_772ed3d6",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 1
@@ -106,6 +172,47 @@
     },
     {
       "key": {
+        "uuid": "6954d55e_0950cf9a",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-12T18:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe9d0200_772ed3d6",
+      "range": {
+        "startLine": 472,
+        "startChar": 22,
+        "endLine": 472,
+        "endChar": 0
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "156f3284_2f2d0816",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-12T18:50:35Z",
+      "side": 1,
+      "message": "Side-note: file_size was not counting the last 2 bytes (\",\\n\") prior to this CL.\nI went ahead and added them since it was simple; didn\u0027t change any test expectations, and I didn\u0027t feel the need to add more.",
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10c60e11_d25ce7a0",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 1
@@ -120,6 +227,24 @@
       "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402d2de8_4ed8d5b2",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-12T18:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10c60e11_d25ce7a0",
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -194,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "d1704915_15eeff7b",
+        "filename": "net/log/file_net_log_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-12T18:50:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83eff527_b2c89992",
+      "range": {
+        "startLine": 164,
+        "startChar": 28,
+        "endLine": 164,
+        "endChar": 35
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "610d1c07_dfc4f23d",
         "filename": "net/log/file_net_log_observer_unittest.cc",
         "patchSetId": 1
@@ -205,6 +354,30 @@
       "writtenOn": "2017-07-12T15:48:55Z",
       "side": 1,
       "message": "Should we also have a test with a bounded log where we can create one file but not another?  (Say we can create the constants file and first log file, but the second one fails?)  Not entirely sure it\u0027s worth the effort.",
+      "range": {
+        "startLine": 307,
+        "startChar": 7,
+        "endLine": 307,
+        "endChar": 29
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451011e7_af025fc9",
+        "filename": "net/log/file_net_log_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-12T18:50:35Z",
+      "side": 1,
+      "message": "Done.\n\nI added one where constants.json succeeds, event_file_0.json fails, and end_netlog.json fails.",
+      "parentUuid": "610d1c07_dfc4f23d",
       "range": {
         "startLine": 307,
         "startChar": 7,
