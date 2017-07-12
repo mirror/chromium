@@ -311,6 +311,16 @@ Polymer({
     },
 
     /**
+     * The selected cast mode menu item. The item with this index is bolded in
+     * the cast mode menu.
+     * @private {number|undefined}
+     */
+    selectedCastModeMenuItem_: {
+      type: Number,
+      observer: 'updateSelectedCastModeMenuItem_',
+    },
+
+    /**
      * Whether to show the user domain of sinks associated with identity.
      * @type {boolean|undefined}
      */
@@ -527,6 +537,19 @@ Polymer({
 
   get header() {
     return this.$['container-header'];
+  },
+
+  /**
+   * Calls all the functions to set the UI to a given cast mode.
+   * @param {media_router.CastMode} castMode The cast mode to set things to.
+   * @private
+   */
+  castModeSelected_(castMode) {
+    this.selectCastMode(castMode.type);
+    this.fire('cast-mode-selected', {castModeType: castMode.type});
+    this.showSinkList_();
+    this.maybeReportUserFirstAction(
+        media_router.MediaRouterUserAction.CHANGE_MODE);
   },
 
   /**
@@ -1211,6 +1234,22 @@ Polymer({
   },
 
   /**
+   * Helper function to locate the position in the |castModeList| of the
+   * CastMode object with the given type.
+   *
+   * @param {number} castModeType Type of cast mode to look for.
+   * @return {number} index of the given type, or -1 if not found.
+   */
+  findCastModeIndexByType_: function(castModeType) {
+    return this.castModeList
+        .map(function(element) {
+          return element.type;
+        })
+        .indexOf(castModeType);
+  },
+
+
+  /**
    * Helper function to return a forced CastMode, if any.
    *
    * @return {media_router.CastMode|undefined} CastMode object with
@@ -1778,6 +1817,27 @@ Polymer({
   },
 
   /**
+   * Sets up the LOCAL_FILE cast mode for display after a specific file has been
+   * selected.
+   *
+   * @param {string} fileName The name of the file that has been selected.
+   */
+  onFileDialogSuccess(fileName) {
+    /** @const */ var mode =
+        this.findCastModeByType_(media_router.CastModeType.LOCAL_FILE);
+
+    if (!mode) {
+      return;
+    }
+
+    this.castModeSelected_(mode);
+    this.headerText =
+        loadTimeData.getStringF('castLocalMediaSelectedFileTitle', fileName);
+
+    this.updateSelectedCastModeMenuItem_();
+  },
+
+  /**
    * Called when a focus event is triggered.
    *
    * @param {!Event} event The event object.
@@ -2052,47 +2112,6 @@ Polymer({
   },
 
   /**
-   * Sets up the LOCAL_FILE cast mode for display after a specific file has been
-   * selected.
-   *
-   * @param {string} fileName The name of the file that has been selected.
-   */
-  onFileDialogSuccess(fileName) {
-    /** @const */ var mode =
-        this.findCastModeByType_(media_router.CastModeType.LOCAL_FILE);
-
-    if (!mode) {
-      return;
-    }
-
-    this.castModeSelected_(mode);
-    this.headerText =
-        loadTimeData.getStringF('castLocalMediaSelectedFileTitle', fileName);
-  },
-
-  /**
-   * Calls all the functions to set the UI to a given cast mode.
-   * @param {media_router.CastMode} castMode The cast mode to set things to.
-   * @private
-   */
-  castModeSelected_(castMode) {
-    this.selectCastMode(castMode.type);
-    this.fire('cast-mode-selected', {castModeType: castMode.type});
-    this.showSinkList_();
-    this.maybeReportUserFirstAction(
-        media_router.MediaRouterUserAction.CHANGE_MODE);
-  },
-
-  /**
-   * Fires the command to open a file dialog.
-   *
-   * @private
-   */
-  selectLocalMediaFile_() {
-    this.fire('select-local-media-file');
-  },
-
-  /**
    * Called when |routeList| is updated. Rebuilds |routeMap_| and
    * |sinkToRouteMap_|.
    *
@@ -2312,6 +2331,15 @@ Polymer({
       this.userHasSelectedCastMode_ = true;
       this.rebuildSinksToShow_();
     }
+  },
+
+  /**
+   * Fires the command to open a file dialog.
+   *
+   * @private
+   */
+  selectLocalMediaFile_() {
+    this.fire('select-local-media-file');
   },
 
   /**
@@ -2565,5 +2593,17 @@ Polymer({
   updateMaxDialogHeight: function(height) {
     this.dialogHeight_ = height;
     this.updateElementPositioning_();
+  },
+
+  /**
+   * Sets the selected cast mode menu item to be in sync with the current cast
+   * mode.
+   */
+  updateSelectedCastModeMenuItem_: function() {
+    /** @const */ var curIndex =
+        this.findCastModeIndexByType_(this.shownCastModeValue_);
+    if (this.selectedCastModeMenuItem_ != curIndex) {
+      this.selectedCastModeMenuItem_ = curIndex;
+    }
   },
 });
