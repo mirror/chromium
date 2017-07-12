@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3105e950_e8ad63ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-12T16:57:39Z",
+      "side": 1,
+      "message": "Please try not to wrap the first line. Some log display apps only shows the first line.",
+      "revId": "982963f2add7b42967202ae5a09e0bf8cdf75d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb334e3_92c56d38",
+        "filename": "chrome/test/chromedriver/capabilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-12T16:57:39Z",
+      "side": 1,
+      "message": "It can be an issue if the client specifies both \"goog:chromeOptions\" and \"chromeOptions\". We\u0027d be calling ParseChromeOptions twice, possibly once in Android mode and once in desktop mode (or some other combination). I think we should ignore \"chromeOptions\" if \"goog:chromeOptions\" is specified. (We could issue an error if both are specified, but I think it\u0027s better not to, as clients might feel the need to specify both during transition.)",
+      "revId": "982963f2add7b42967202ae5a09e0bf8cdf75d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ab6508_0d094b46",
+        "filename": "chrome/test/chromedriver/capabilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-12T16:57:39Z",
+      "side": 1,
+      "message": "Let\u0027s check for goog:chromeOptions first. When the client uses both old and new keywords, we should favor the new one.",
+      "revId": "982963f2add7b42967202ae5a09e0bf8cdf75d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b639efe_3061d1ae",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-12T16:57:39Z",
+      "side": 1,
+      "message": "Similar to capabilities.cc, let\u0027s check for the new format first.",
+      "revId": "982963f2add7b42967202ae5a09e0bf8cdf75d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
