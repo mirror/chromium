@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "1658b825_bfd2d959",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-12T07:14:52Z",
+      "side": 1,
+      "message": "Gross! Maybe s/setting//?\n\nOtherwise just go back to the + version \u003d(",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3ddff46_2a54d4ba",
         "filename": "chrome/browser/resources/settings/site_settings/site_settings_behavior.js",
         "patchSetId": 8
@@ -30,6 +47,86 @@
       "writtenOn": "2017-07-12T06:52:54Z",
       "side": 1,
       "message": "nit: Do these changes impact this CL anymore? We might want to leave them out if not?",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "129f0bec_06a96b24",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-12T07:14:52Z",
+      "side": 1,
+      "message": "Why did this and images.setting change?",
+      "range": {
+        "startLine": 98,
+        "startChar": 19,
+        "endLine": 98,
+        "endChar": 51
+      },
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61d48c8_4e7fb5f6",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-12T07:14:52Z",
+      "side": 1,
+      "message": "ContentSettingProvider.PREFERENCE?",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a178969b_d3e3d8fd",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-12T07:14:52Z",
+      "side": 1,
+      "message": "IMAGES?",
+      "range": {
+        "startLine": 194,
+        "startChar": 50,
+        "endLine": 194,
+        "endChar": 60
+      },
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78952ea1_d9f0c642",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-12T07:14:52Z",
+      "side": 1,
+      "message": "Isn\u0027t everything above here representable by prefs[siteDetailsPermission.category][0].setting?\n\nProbably better to change it to that than have to update 2 different places when you change a value (even if it assumes exactly 1 origin per permission type).",
       "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
