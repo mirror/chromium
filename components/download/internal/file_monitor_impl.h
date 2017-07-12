@@ -39,7 +39,8 @@ class FileMonitorImpl : public FileMonitor {
       const Model::EntryList& known_entries,
       const std::vector<DriverEntry>& known_driver_entries) override;
   std::vector<Entry*> CleanupFilesForCompletedEntries(
-      const Model::EntryList& entries) override;
+      const Model::EntryList& entries,
+      const base::Closure& completion_callback) override;
   void DeleteFiles(const std::vector<base::FilePath>& files_to_remove,
                    stats::FileCleanupReason reason) override;
 

@@ -10,5 +10,13 @@ namespace test {
 MockController::MockController() = default;
 MockController::~MockController() = default;
 
+void MockController::Initialize(const base::Closure& callback) {
+  init_callback_ = callback;
+}
+
+void MockController::TriggerInitCompleted(bool startup_ok) {
+  init_callback_.Run();
+}
+
 }  // namespace test
 }  // namespace download
