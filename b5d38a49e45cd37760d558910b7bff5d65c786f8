@@ -353,6 +353,24 @@
       "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763b266e_9f4f1d6b",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T14:47:29Z",
+      "side": 1,
+      "message": "Hahaha, I added that API to GURL! That\u0027s some poetic justice :) I added it exactly for this purpose, but for performance reasons to avoid re-parsing url constants in production code when they are guaranteed to be canonicalized.\n\nKeeping the test as-is is OK. I just wanted to explain my reasoning.",
+      "parentUuid": "08d9d2d1_fa8cb25e",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
