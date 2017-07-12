@@ -139,6 +139,8 @@ cr.define('cr.ui.Oobe', function() {
 
       cr.ui.Bubble.decorate($('bubble'));
       login.HeaderBar.decorate($('login-header-bar'));
+      if ($('top-header'))
+        login.TopHeaderBar.decorate($('top-header'));
 
       Oobe.initializeA11yMenu();
 

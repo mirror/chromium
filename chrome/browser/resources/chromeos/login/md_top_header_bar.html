@@ -1,0 +1,26 @@
+<iron-iconset-svg name="new-note-action" size="16">
+  <svg>
+    <defs>
+      <g id="action-icon" fill="none" fill-rule="evenodd">
+        <polygon points="0 0 16 0 16 16 0 16"></polygon>
+        <path fill="#FFF" fill-rule="nonzero" d="M9.33333333,1.33333333 L4,1.33333333 C3.26333333,1.33333333 2.67333333,1.93 2.67333333,2.66666667 L2.66666667,13.3333333 C2.66666667,14.07 3.25666667,14.6666667 3.99333333,14.6666667 L12,14.6666667 C12.7366667,14.6666667 13.3333333,14.07 13.3333333,13.3333333 L13.3333333,5.33333333 L9.33333333,1.33333333 Z M10.6666667,10.6666667 L8.66666667,10.6666667 L8.66666667,12.6666667 L7.33333333,12.6666667 L7.33333333,10.6666667 L5.33333333,10.6666667 L5.33333333,9.33333333 L7.33333333,9.33333333 L7.33333333,7.33333333 L8.66666667,7.33333333 L8.66666667,9.33333333 L10.6666667,9.33333333 L10.6666667,10.6666667 Z M8.66666667,6 L8.66666667,2.33333333 L12.3333333,6 L8.66666667,6 Z"></path>
+      </g>
+    </defs>
+  </svg>
+</iron-iconset-svg>
+
+<div id="top-header" class="top-header">
+  <div id="version-labels" hidden>
+    <div id="version"></div>
+    <div id="asset-id"></div>
+    <div id="bluetooth-name" hidden></div>
+  </div>
+  <div hidden id="new-note-action-container" class="new-note-action-container">
+    <div role="button" id="new-note-action" class="new-note-action"
+        tabindex="0" i18n-values="aria-label:newLockScreenNoteButton">
+      <iron-icon icon="new-note-action:action-icon"
+          id="new-note-action-icon" class="new-note-action-icon">
+      </iron-icon>
+    </div>
+  </div>
+</div>
