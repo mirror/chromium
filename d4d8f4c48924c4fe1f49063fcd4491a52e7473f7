@@ -45,6 +45,29 @@
       "revId": "d4d8f4c48924c4fe1f49063fcd4491a52e7473f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06129c6d_36411e0b",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1168179
+      },
+      "writtenOn": "2017-07-12T15:23:27Z",
+      "side": 1,
+      "message": "What happens if two comments are added on the same piece of code? Will it be a reply? Or will it be a new comment?",
+      "range": {
+        "startLine": 574,
+        "startChar": 4,
+        "endLine": 574,
+        "endChar": 8
+      },
+      "revId": "d4d8f4c48924c4fe1f49063fcd4491a52e7473f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
