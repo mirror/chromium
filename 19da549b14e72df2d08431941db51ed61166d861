@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5904129c_7f41c589",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-12T00:46:27Z",
+      "side": 1,
+      "message": "Is this condition checking for wraparound? If so, it\u0027s broken, because NotifyEnd() does not need to be called in Decode() order. Perhaps it would be easier to use a separate int64_t counter for GC, rather than the buffer ID?",
+      "range": {
+        "startLine": 790,
+        "startChar": 6,
+        "endLine": 790,
+        "endChar": 64
+      },
+      "revId": "19da549b14e72df2d08431941db51ed61166d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
