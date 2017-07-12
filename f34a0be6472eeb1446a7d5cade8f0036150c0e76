@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab53bb96_c49e0fb0",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-07-12T14:00:24Z",
+      "side": 1,
+      "message": "Can these either be marked default here or removed because they\u0027re all default?",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 44
+      },
+      "revId": "f34a0be6472eeb1446a7d5cade8f0036150c0e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
