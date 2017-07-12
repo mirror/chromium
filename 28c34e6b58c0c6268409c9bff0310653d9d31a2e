@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c09cfcc_b506c405",
+        "filename": "chrome/browser/ui/webui/settings/on_startup_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-12T01:17:23Z",
+      "side": 1,
+      "message": "Removed\n\nDone",
+      "parentUuid": "e39ae9fb_2d93a981",
+      "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25d1a69b_b2f4e8bf",
         "filename": "chrome/browser/ui/webui/settings/on_startup_handler.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a65f30_7b1d9352",
+        "filename": "chrome/browser/ui/webui/settings/on_startup_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-12T01:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25d1a69b_b2f4e8bf",
+      "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2ac27e8e_90bfe8d5",
+        "filename": "chrome/browser/ui/webui/settings/on_startup_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-12T01:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "040e3541_f2dee818",
+      "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0654c396_a36865f2",
         "filename": "chrome/browser/ui/webui/settings_utils.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-12T00:54:37Z",
       "side": 1,
       "message": "How about moving this change to a separate CL? My rationale for similar cases is the following:\n\nIf a CL is already touching some files, then doing a small cleanup like this one in the same CL is fine. If a file is not touched by this CL otherwise, then even though the cleanup is small, it does increase the number of affected files for this CL, and probably better to do it separately.\n\nFollowing this logic, this CL could be affecting 5 files less, if this renaming is moved to a separate CL.",
+      "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f2bbff_2eeb3a31",
+        "filename": "chrome/browser/ui/webui/settings_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-12T01:17:23Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "0654c396_a36865f2",
       "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
