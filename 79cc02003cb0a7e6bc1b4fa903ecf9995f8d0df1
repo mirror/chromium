@@ -16,6 +16,24 @@
       "revId": "79cc02003cb0a7e6bc1b4fa903ecf9995f8d0df1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018588f1_09024967",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-12T14:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e49b391_b7c285e9",
+      "revId": "79cc02003cb0a7e6bc1b4fa903ecf9995f8d0df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
