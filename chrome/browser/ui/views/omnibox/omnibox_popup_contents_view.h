@@ -74,6 +74,9 @@ class OmniboxPopupContentsView : public views::View,
 
   int max_match_contents_width() const { return max_match_contents_width_; }
 
+  bool any_tail_suggestions() { return any_tail_suggestions_; }
+  base::string16 common_suggestion() { return common_suggestion_; }
+
  protected:
   OmniboxPopupContentsView(const gfx::FontList& font_list,
                            OmniboxView* omnibox_view,
@@ -162,6 +165,11 @@ class OmniboxPopupContentsView : public views::View,
   // we use the width of widest match contents to shift the suggestions so that
   // the widest suggestion just reaches the end edge.
   int max_match_contents_width_;
+
+  // The subsequent field isn't valid unless |any_tail_suggestions_|
+  // is true.
+  bool any_tail_suggestions_;
+  base::string16 common_suggestion_;
 
   DISALLOW_COPY_AND_ASSIGN(OmniboxPopupContentsView);
 };

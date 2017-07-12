@@ -85,7 +85,8 @@ OmniboxPopupContentsView::OmniboxPopupContentsView(
       ignore_mouse_drag_(false),
       size_animation_(this),
       start_margin_(0),
-      end_margin_(0) {
+      end_margin_(0),
+      any_tail_suggestions_(false) {
   // The contents is owned by the LocationBarView.
   set_owned_by_client();
 
@@ -214,6 +215,23 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
   // we have enough row views.
   const size_t result_size = model_->result().size();
   max_match_contents_width_ = 0;
+  any_tail_suggestions_ = false;
+  common_suggestion_.clear();
+  // |SetVisible()| below triggers a 'show', so get our data set-up first.
+  for (size_t i = 0; i < result_size && !any_tail_suggestions_; ++i) {
+    const AutocompleteMatch& match = GetMatchAtIndex(i);
+    if (match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
+      any_tail_suggestions_ = true;
+      int common_length;
+      base::StringToInt(
+          match.GetAdditionalInfo(kACMatchPropertyContentsStartIndex),
+          &common_length);
+      common_suggestion_ =
+          base::UTF8ToUTF16(
+              match.GetAdditionalInfo(kACMatchPropertySuggestionText))
+              .substr(0, common_length);
+    }
+  }
   for (size_t i = 0; i < result_size; ++i) {
     OmniboxResultView* view = result_view_at(i);
     const AutocompleteMatch& match = GetMatchAtIndex(i);
