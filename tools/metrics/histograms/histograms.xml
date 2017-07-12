@@ -36,7 +36,7 @@ define the following:
 
   <histogram name="FileLoadLatency"/>
 
-  <histogram_suffixes name="SuperHttpExperiment">
+  <histogram_suffixes name="SuperHttpExperiment" separator=".">
     <suffix name="SuperHttpEnabled"/>
     <suffix name="SuperHttpDisabled"/>
     <affected-histogram name="FileLoadLatency"/>
@@ -45,14 +45,14 @@ define the following:
 The complete list of histograms will be:
 
   FileLoadLatency
-  FileLoadLatency_SuperHttpEnabled
-  FileLoadLatency_SuperHttpDisabled
+  FileLoadLatency.SuperHttpEnabled
+  FileLoadLatency.SuperHttpDisabled
 
 histogram_suffixes can also be used to insert affix in the middle. Example:
 
   <histogram name="Prerender.Events"/>
 
-  <histogram_suffixes name="SuperHttpExperiment" ordering="prefix">
+  <histogram_suffixes name="HoverStatsTypes" separator="_" ordering="prefix">
     <suffix name="HoverStats50"/>
     <affected-histogram name="Prerender.Events"/>
   </histogram_suffixes>
@@ -67,6 +67,11 @@ will be inserted after the first dot separator of the affected-histogram name.
 Optionally, ordering can be specified as "prefix,N" where N indicates after
 how many dots the suffix should be inserted (default=1). The affected-histogram
 name has to have at least N dots in it.
+
+If a <histogram> or a <suffix> element is only provided so that its name can be
+extended by <histogram_suffixes>, the element should be annotated with the
+attribute base="true". This instructs tools not to treat the base name as a
+distinct histogram.
 
 Googlers: There are also a small number of private internal histograms found at
 http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
@@ -73479,8 +73484,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="SoftwareReporterCleanerDownloadStatus">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    An indication if an attempt to download the Chrome Cleanup Tool succeeded
-    or the reason why it failed.
+    An indication if an attempt to download the Chrome Cleanup Tool succeeded or
+    the reason why it failed.
   </summary>
 </histogram>
 
@@ -73504,11 +73509,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="SoftwareReporter.Cleaner.RebootResponse" enum="Boolean">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    Indicates that the user accepted to initiate a reboot to complete a run
-    of the Chrome Cleanup Tool. This is logged the user starts a reboot from
-    the cleanup card in the Settings page. We can't track when the reboot is
-    not initiated, because it can happen at any moment in the future (there is
-    no prompt blocking the user).
+    Indicates that the user accepted to initiate a reboot to complete a run of
+    the Chrome Cleanup Tool. This is logged the user starts a reboot from the
+    cleanup card in the Settings page. We can't track when the reboot is not
+    initiated, because it can happen at any moment in the future (there is no
+    prompt blocking the user).
   </summary>
 </histogram>
 
@@ -73526,8 +73531,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>ftirelo@chromium.org</owner>
   <summary>
     Whether the user accepted to upload logs from Chrome Cleanup Tool. This is
-    logged when the user accepts the Chrome prompt to start a cleanup either from
-    the prompt dialog or from the cleanup card in the Settings page.
+    logged when the user accepts the Chrome prompt to start a cleanup either
+    from the prompt dialog or from the cleanup card in the Settings page.
   </summary>
 </histogram>
 
@@ -73542,8 +73547,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="SoftwareReporterCleanupStarted">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    Indicates where the user started a cleanup from (e.g. from the prompt
-    dialog or the settings page).
+    Indicates where the user started a cleanup from (e.g. from the prompt dialog
+    or the settings page).
   </summary>
 </histogram>
 
@@ -73572,9 +73577,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     from Chrome. Success is logged when it's disconnected and no longer needed
     (the user already responded to the prompt in Chrome or the cleaner process
     terminated normally); failures are logged when the IPC is disconnected, but
-    communication between Chrome and the cleaner process is still required
-    (e.g. while Chrome is waiting for scanning results or when the cleaner is
-    waiting for the user's response from Chrome).
+    communication between Chrome and the cleaner process is still required (e.g.
+    while Chrome is waiting for scanning results or when the cleaner is waiting
+    for the user's response from Chrome).
   </summary>
 </histogram>
 
@@ -73642,8 +73647,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="SoftwareReporterNoPromptReason">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    The reason why the user has not been prompted to run the Chrome Cleanup
-    Tool (e.g. no unwanted software found, user recently prompted).
+    The reason why the user has not been prompted to run the Chrome Cleanup Tool
+    (e.g. no unwanted software found, user recently prompted).
   </summary>
 </histogram>
 
@@ -73666,8 +73671,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="SoftwareReporterPromptDialogResponse">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    The user response on the modal Chrome Cleanup Tool prompt dialog
-    (e.g. accepted, cancelled).
+    The user response on the modal Chrome Cleanup Tool prompt dialog (e.g.
+    accepted, cancelled).
   </summary>
 </histogram>
 
@@ -73719,8 +73724,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="SoftwareReporter.TaggedProfileForResetting" enum="Boolean">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    Registers when a profile is tagged for settings reset before a run of
-    the Chrome Cleanup Tool.
+    Registers when a profile is tagged for settings reset before a run of the
+    Chrome Cleanup Tool.
   </summary>
 </histogram>
 
