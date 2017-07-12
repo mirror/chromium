@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "540f7846_7beb8cd3",
+        "filename": "extensions/browser/value_store/lazy_leveldb.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-12T16:32:47Z",
+      "side": 1,
+      "message": "By calling AssertIOAllowed() in the constructor, it ensures that the current sequence can do IO. The sequence checker is then used to verify that we are still on that same sequence.\n\nLet me know if you would still prefer to add AssertIOAllowed() in the other methods.",
+      "parentUuid": "e2c29c34_d83853e7",
+      "revId": "e36f665aa006ef1851bb3760ac68ad101f6144b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f456880_548a8c43",
         "filename": "extensions/browser/value_store/leveldb_value_store.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f585c4cb_70116c37",
+        "filename": "extensions/browser/value_store/leveldb_value_store.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-12T16:32:47Z",
+      "side": 1,
+      "message": "Added AssertIOAllowed() to the constructor.",
+      "parentUuid": "2f456880_548a8c43",
+      "revId": "e36f665aa006ef1851bb3760ac68ad101f6144b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91f4f88d_691bdc74",
         "filename": "extensions/browser/value_store/value_store_frontend.h",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "e36f665aa006ef1851bb3760ac68ad101f6144b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d88bd9a_e9487da4",
+        "filename": "extensions/browser/value_store/value_store_frontend.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-12T16:32:47Z",
+      "side": 1,
+      "message": "Yes. I was just generalizing the code/comments.\n\nMaybe it wasn\u0027t warranted for this class.",
+      "parentUuid": "91f4f88d_691bdc74",
+      "revId": "e36f665aa006ef1851bb3760ac68ad101f6144b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
