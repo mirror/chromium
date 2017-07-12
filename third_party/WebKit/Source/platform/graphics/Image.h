@@ -130,6 +130,10 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
 
   virtual PassRefPtr<SharedBuffer> Data() { return encoded_image_data_; }
 
+  // Equal to |Data() ? Data()->size() : 0|.
+  // Used to avoid SharedBuffer reconstruction in Data() in BitmapImage.
+  virtual size_t DataSize() const;
+
   // Animation begins whenever someone draws the image, so startAnimation() is
   // not normally called. It will automatically pause once all observers no
   // longer want to render the image anywhere.

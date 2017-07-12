@@ -141,6 +141,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   void DestroyDecodedData() override;
 
   PassRefPtr<SharedBuffer> Data() override;
+  size_t DataSize() const override;
 
   // Notifies observers that the memory footprint has changed.
   void NotifyMemoryChanged();
@@ -183,6 +184,8 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   mutable IntSize size_;  // The size to use for the overall image (will just
                           // be the size of the first image).
   mutable IntSize size_respecting_orientation_;
+
+  size_t data_size_ = 0;
 
   size_t current_frame_;         // The index of the current frame of animation.
   Vector<FrameData, 1> frames_;  // An array of the cached frames of the
