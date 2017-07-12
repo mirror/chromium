@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6d5cb24_7adf78d9",
+        "filename": "base/json/json_parser_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-12T20:19:19Z",
+      "side": 1,
+      "message": "Maybe also test that the replacement character was returned, like in JSONParserTest.ReplaceInvalidCharacters?",
+      "revId": "954087db500ec056e128b61e8724d1b96f6580f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
