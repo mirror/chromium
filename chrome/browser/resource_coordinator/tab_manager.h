@@ -45,6 +45,7 @@ namespace resource_coordinator {
 #if defined(OS_CHROMEOS)
 class TabManagerDelegate;
 #endif
+class TabManagerStatsCollector;
 
 // The TabManager periodically updates (see
 // |kAdjustmentIntervalSeconds| in the source) the status of renderers
@@ -185,8 +186,9 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, FastShutdownSingleTabProcess);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
                            GetUnsortedTabStatsIsInVisibleWindow);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, HistogramsSessionRestoreSwitchToTab);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, DiscardTabWithNonVisibleTabs);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
+                           HistogramsSessionRestoreSwitchToTab);
 
   // Information about a Browser.
   struct BrowserInfo {
@@ -335,10 +337,6 @@ class TabManager : public TabStripModelObserver,
   void OnSessionRestoreStartedLoadingTabs();
   void OnSessionRestoreFinishedLoadingTabs();
 
-  // Records UMA histograms for the tab state when switching to a different tab
-  // during session restore.
-  void RecordSwitchToTab(content::WebContents* contents) const;
-
   // Timer to periodically update the stats of the renderers.
   base::RepeatingTimer update_timer_;
 
@@ -407,6 +405,8 @@ class TabManager : public TabStripModelObserver,
 
   class TabManagerSessionRestoreObserver;
   std::unique_ptr<TabManagerSessionRestoreObserver> session_restore_observer_;
+
+  std::unique_ptr<TabManagerStatsCollector> tab_manager_stats_collector_;
 
   // Weak pointer factory used for posting delayed tasks.
   base::WeakPtrFactory<TabManager> weak_ptr_factory_;
