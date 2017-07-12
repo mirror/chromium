@@ -101,4 +101,11 @@ void ResourceCoordinatorInterface::RemoveChildByID(
   service_->RemoveChild(child_id);
 }
 
+void ResourceCoordinatorInterface::SetProperty(
+    const mojom::PropertyType property_type,
+    std::unique_ptr<base::Value> value) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  service_->SetProperty(property_type, std::move(value));
+}
+
 }  // namespace resource_coordinator

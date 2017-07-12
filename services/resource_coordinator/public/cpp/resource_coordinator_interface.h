@@ -41,6 +41,8 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
   void SendEvent(const mojom::EventType& event_type);
   void AddChild(const ResourceCoordinatorInterface& child);
   void RemoveChild(const ResourceCoordinatorInterface& child);
+  void SetProperty(const mojom::PropertyType property_type,
+                   std::unique_ptr<base::Value> value);
 
  private:
   void ConnectToService(service_manager::Connector* connector,
