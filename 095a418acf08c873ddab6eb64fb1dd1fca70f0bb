@@ -16,6 +16,24 @@
       "revId": "095a418acf08c873ddab6eb64fb1dd1fca70f0bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9a0bfd_f3c32704",
+        "filename": "chrome/test/data/webui/settings/ensure_lazy_loaded.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-12T17:55:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "760afda1_da72fa18",
+      "revId": "095a418acf08c873ddab6eb64fb1dd1fca70f0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
