@@ -22,6 +22,30 @@
       "revId": "10b158e151ef7463e590a584c278d0b01cdcc0be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8177629_a69e011e",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3928,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-12T20:31:21Z",
+      "side": 1,
+      "message": "I am no longer sure they are in CSS, so I\u0027m reverting the comment. Don\u0027t need them at this point anyways...",
+      "parentUuid": "6c1c94c1_5c3fd3af",
+      "range": {
+        "startLine": 3928,
+        "startChar": 23,
+        "endLine": 3928,
+        "endChar": 33
+      },
+      "revId": "10b158e151ef7463e590a584c278d0b01cdcc0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
