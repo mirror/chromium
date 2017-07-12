@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6fed2c82_2427957e",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-12T22:00:06Z",
+      "side": 1,
+      "message": "Ah you\u0027re right. My mind slipped while I was testing this. I changed this function to simply cache the UserContext as you suggested.",
+      "parentUuid": "d47a7e4b_dca456a4",
+      "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0a91b03_5d32d030",
         "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26fa2d9_785d16d9",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-12T22:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0a91b03_5d32d030",
+      "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e1e2f1d_25f58570",
+        "filename": "chrome/browser/signin/easy_unlock_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-12T22:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a6688a3_21d9ad03",
+      "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61daa820_19097eaf",
         "filename": "chrome/browser/signin/easy_unlock_service.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c856b98_0bda154f",
+        "filename": "chrome/browser/signin/easy_unlock_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-12T22:00:06Z",
+      "side": 1,
+      "message": "Done. I renamed this to HandleUserReauth.",
+      "parentUuid": "61daa820_19097eaf",
+      "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
