@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5947effa_8ac4d4cb",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-12T21:34:19Z",
+      "side": 1,
+      "message": "I think it would be valuable to comment these extra flags to explain why we need them, and similarly for the TERM; otherwise it\u0027s just cargo pants. :)",
+      "revId": "419a990d21ce651181b699b36cb7e35cbd497a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d36bed3_814fca67",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-12T21:34:19Z",
+      "side": 1,
+      "message": "nit: Is the rationale for PIPE vs /dev/null simply that PIPE is already provided by Popen, so easy? I take it there\u0027s no subprocess.NULL..?",
+      "revId": "419a990d21ce651181b699b36cb7e35cbd497a77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
