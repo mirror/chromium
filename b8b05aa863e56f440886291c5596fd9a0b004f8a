@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc390edc_d23c7b98",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-12T02:26:20Z",
+      "side": 1,
+      "message": "This isn\u0027t *always* the right thing to do - sometimes \"cancel\" translates differently to different languages based on context.  Are we confident it\u0027s accurate here?",
+      "parentUuid": "43b00b54_5ee5607e",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0feb93bf_8a98ac44",
         "filename": "chrome/browser/resources/md_extensions/load_error.html",
         "patchSetId": 2
