@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "860c0a88_25437c39",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T13:43:32Z",
+      "side": 1,
+      "message": "Done-ish. I\u0027ve added private bare Resume() and Cancel*() calls which test classes can access as friends. The public methods just do the throttle check.",
+      "parentUuid": "17f5c7f7_812f365f",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9353ddba_d485b676",
         "filename": "content/browser/frame_host/navigation_handle_impl.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ab974f_cb3365b2",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T13:43:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9353ddba_d485b676",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bbf58504_456da5a9",
+        "filename": "content/public/browser/navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T13:43:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34f7e620_36f88017",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01e72f99_3ff13711",
         "filename": "content/public/browser/navigation_throttle.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c2b688da_67dc5e1e",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T13:43:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01e72f99_3ff13711",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18e94deb_f9a50400",
         "filename": "content/public/browser/navigation_throttle.h",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf74260_9ebc3ced",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T13:43:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18e94deb_f9a50400",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
