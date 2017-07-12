@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0456c10_90102361",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-12T18:33:36Z",
+      "side": 1,
+      "message": "The else block for handling full screen app list case is pretty long, consider wrap it in a separate function.",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a24b4d_5b724ea2",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-12T18:33:36Z",
+      "side": 1,
+      "message": "nit: current_page is only used once in the function and is just the same as pagination_model_.selected_page(), could get rid of the variable.",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c201da6_9ea2f683",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-12T18:33:36Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdef44eb_4cfc6fa9",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-12T18:33:36Z",
+      "side": 1,
+      "message": "nit: Create -\u003e Creates",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587b3a3c_2e8331ae",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-12T18:33:36Z",
+      "side": 1,
+      "message": "nit: Update -\u003e Updates",
+      "range": {
+        "startLine": 251,
+        "startChar": 44,
+        "endLine": 251,
+        "endChar": 0
+      },
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5d7f5b_bedeb1e2",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-12T18:33:36Z",
+      "side": 1,
+      "message": "nit: Get -\u003e Gets",
+      "range": {
+        "startLine": 435,
+        "startChar": 79,
+        "endLine": 435,
+        "endChar": 0
+      },
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6723fcf9_a800fd77",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-12T18:33:36Z",
+      "side": 1,
+      "message": "Why do you need last_drag_vector?",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
