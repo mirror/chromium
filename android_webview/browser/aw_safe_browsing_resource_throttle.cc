@@ -91,7 +91,7 @@ void AwSafeBrowsingResourceThrottle::DoApplicationResponse(
   if (!reporting) {
     AwSafeBrowsingUIManager* casted_ui_manager =
         static_cast<AwSafeBrowsingUIManager*>(ui_manager.get());
-    casted_ui_manager->set_extended_reporting_allowed(false);
+    casted_ui_manager->SetExtendedReportingAllowed(false);
   }
   // TODO(ntfschr): fully handle reporting once we add support (crbug/688629)
   bool proceed;
