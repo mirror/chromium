@@ -56,9 +56,6 @@ namespace {
 
 TabRendererData::NetworkState TabContentsNetworkState(
     WebContents* contents) {
-  if (!contents)
-    return TabRendererData::NETWORK_STATE_NONE;
-
   if (!contents->IsLoadingToDifferentDocument()) {
     content::NavigationEntry* entry =
         contents->GetController().GetLastCommittedEntry();
@@ -500,7 +497,6 @@ void BrowserTabStripController::SetTabRendererDataFromModel(
   data->network_state = TabContentsNetworkState(contents);
   data->title = contents->GetTitle();
   data->url = contents->GetURL();
-  data->loading = contents->IsLoading();
   data->crashed_status = contents->GetCrashedStatus();
   data->incognito = contents->GetBrowserContext()->IsOffTheRecord();
   data->pinned = model_->IsTabPinned(model_index);
