@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e76c96a_34221f49",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T13:18:49Z",
+      "side": 1,
+      "message": "The order in DCHECK_EQ matters - first should be the expected value and second the actual one. This is used in the message that is logged if the condition is not true. So, please swap the arguments passed to DCHECK_EQ:\nDCHECK_EQ(ios::SigninPromoViewState::SigninStarted, _signinPromoViewState);",
+      "range": {
+        "startLine": 265,
+        "startChar": 2,
+        "endLine": 265,
+        "endChar": 11
+      },
+      "revId": "1ae32160ac0ce05b2df94e7eae0e6b1cd8fd05e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

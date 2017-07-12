@@ -519,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "e63b84b6_49a102d9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T13:18:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c7053f20_193192c1",
+      "range": {
+        "startLine": 345,
+        "startChar": 26,
+        "endLine": 345,
+        "endChar": 46
+      },
+      "revId": "266252b2af24057bd96cc87701aee5a0db172ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "687155de_5f6ea822",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
         "patchSetId": 5
