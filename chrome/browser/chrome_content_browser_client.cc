@@ -2804,6 +2804,15 @@ void ChromeContentBrowserClient::GetAdditionalMappedFilesForChildProcess(
     const base::CommandLine& command_line,
     int child_process_id,
     FileDescriptorInfo* mappings) {
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  std::string process_type =
+      command_line.GetSwitchValueASCII(switches::kProcessType);
+  if (process_type != switches::kZygoteProcess) {
+    profiling::ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
+        command_line, child_process_id, mappings);
+  }
+#endif
+
 #if defined(OS_ANDROID)
   base::MemoryMappedFile::Region region;
   int fd = ui::GetMainAndroidPackFd(&region);

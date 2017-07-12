@@ -28,6 +28,9 @@
 #include "base/files/scoped_file.h"
 #include "base/process/process_metrics.h"
 #include "base/third_party/valgrind/valgrind.h"
+#include "chrome/common/profiling/profiling_constants.h"
+#include "content/public/browser/file_descriptor_info.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #endif
 
 namespace profiling {
@@ -104,6 +107,31 @@ void ProfilingProcessHost::AddSwitchesToChildCmdLine(
   // Mojo
   child_cmd_line->AppendSwitchASCII(switches::kMemlogPipe, pph->pipe_id_);
 }
+
+#if defined(OS_POSIX) && !defined(OS_MACOSX)
+void ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
+    const base::CommandLine& command_line,
+    int child_process_id,
+    content::FileDescriptorInfo* mappings) {
+  ProfilingProcessHost* pph = ProfilingProcessHost::Get();
+  if (!pph)
+    return;
+
+  pph->EnsureControlChannelExists();
+
+  mojo::edk::PlatformChannelPair data_channel;
+  mappings->Transfer(
+      kProfilingDataPipe,
+      base::ScopedFD(data_channel.PassClientHandle().release().handle));
+
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+      ->PostTask(
+          FROM_HERE,
+          base::BindOnce(&ProfilingProcessHost::AddNewSenderOnIO,
+                         base::Unretained(pph), data_channel.PassServerHandle(),
+                         child_process_id));
+}
+#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
 
 void ProfilingProcessHost::Launch() {
   mojo::edk::PlatformChannelPair control_channel;
@@ -183,6 +211,13 @@ void ProfilingProcessHost::ConnectControlChannelOnIO() {
       mojom::ProfilingControlPtrInfo(std::move(control_pipe), 0));
 
   StartProfilingMojo();
+}
+
+void ProfilingProcessHost::AddNewSenderOnIO(
+    mojo::edk::ScopedPlatformHandle handle,
+    int child_process_id) {
+  profiling_control_->AddNewSender(
+      mojo::WrapPlatformFile(handle.release().handle), child_process_id);
 }
 
 }  // namespace profiling
