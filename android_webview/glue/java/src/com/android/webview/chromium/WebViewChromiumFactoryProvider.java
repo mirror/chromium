@@ -37,6 +37,7 @@ import com.android.webview.chromium.WebViewDelegateFactory.WebViewDelegate;
 
 import org.chromium.android_webview.AwBrowserContext;
 import org.chromium.android_webview.AwBrowserProcess;
+import org.chromium.android_webview.AwBrowserState;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwContentsStatics;
@@ -395,11 +396,13 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         // return paths. (Other threads will not wake-up until we release |mLock|, whatever).
         mLock.notifyAll();
 
+        Log.e(TAG, "in startChromiumLocked, mStarted: " + mStarted);
         if (mStarted) {
             return;
         }
 
         try {
+            Log.e(TAG, "in startChromiumLocked, calling LibraryLoader.ensureInitialized()");
             LibraryLoader.get(LibraryProcessType.PROCESS_WEBVIEW).ensureInitialized();
         } catch (ProcessInitException e) {
             throw new RuntimeException("Error initializing WebView library", e);
@@ -442,7 +445,8 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         mStarted = true;
 
         // Initialize thread-unsafe singletons.
-        AwBrowserContext awBrowserContext = getBrowserContextOnUiThread();
+        AwBrowserContext awBrowserContext =
+                AwBrowserState.createBrowserContextOnUiThread(mWebViewPrefs);
         mGeolocationPermissions = new GeolocationPermissionsAdapter(
                 this, awBrowserContext.getGeolocationPermissions());
         mWebStorage = new WebStorageAdapter(this, AwQuotaManagerBridge.getInstance());
@@ -462,22 +466,6 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         synchronized (mLock) {
             ensureChromiumStartedLocked(onMainThread);
         }
-    }
-
-    // Only on UI thread.
-    AwBrowserContext getBrowserContextOnUiThread() {
-        assert mStarted;
-
-        if (BuildConfig.DCHECK_IS_ON && !ThreadUtils.runningOnUiThread()) {
-            throw new RuntimeException(
-                    "getBrowserContextOnUiThread called on " + Thread.currentThread());
-        }
-
-        if (mBrowserContext == null) {
-            mBrowserContext =
-                    new AwBrowserContext(mWebViewPrefs, ContextUtils.getApplicationContext());
-        }
-        return mBrowserContext;
     }
 
     private void setWebContentsDebuggingEnabled(boolean enable) {

@@ -18,7 +18,7 @@ import org.chromium.android_webview.AwContents;
  * and then drawn and detached from the view tree any number of times (using requestDrawGL and
  * detach respectively).
  */
-class DrawGLFunctor implements AwContents.NativeDrawGLFunctor {
+public class DrawGLFunctor implements AwContents.NativeDrawGLFunctor {
     private static final String TAG = DrawGLFunctor.class.getSimpleName();
 
     // Pointer to native side instance

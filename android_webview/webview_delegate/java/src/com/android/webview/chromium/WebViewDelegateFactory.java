@@ -35,12 +35,12 @@ import java.lang.reflect.Method;
  * running the API 21 version of the framework. At that point, we should use
  * {@link android.webkit.WebViewDelegate android.webkit.WebViewDelegate} directly instead.
  */
-class WebViewDelegateFactory {
+public class WebViewDelegateFactory {
     /**
      * Copy of {@link android.webkit.WebViewDelegate android.webkit.WebViewDelegate}'s interface.
      * See {@link WebViewDelegateFactory} for the reasons why this copy is needed.
      */
-    interface WebViewDelegate {
+    public interface WebViewDelegate {
         /** @see android.webkit.WebViewDelegate.OnTraceEnabledChangeListener */
         interface OnTraceEnabledChangeListener {
             void onTraceEnabledChange(boolean enabled);
@@ -93,7 +93,7 @@ class WebViewDelegateFactory {
      *
      * @return the created delegate
      */
-    static WebViewDelegate createProxyDelegate(android.webkit.WebViewDelegate delegate) {
+    public static WebViewDelegate createProxyDelegate(android.webkit.WebViewDelegate delegate) {
         return new ProxyDelegate(delegate);
     }
 
@@ -105,7 +105,7 @@ class WebViewDelegateFactory {
      *
      * @return the created delegate
      */
-    static WebViewDelegate createApi21CompatibilityDelegate() {
+    public static WebViewDelegate createApi21CompatibilityDelegate() {
         return new Api21CompatibilityDelegate();
     }
 
