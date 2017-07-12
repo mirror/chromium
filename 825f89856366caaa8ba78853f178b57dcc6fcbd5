@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "beeeec44_7de82251",
+        "filename": "chrome/android/java/res/layout/history_clear_browsing_data_header.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T21:11:06Z",
+      "side": 1,
+      "message": "Without this line, there is a lint issue:\n\nchrome/android/java/res/layout/history_clear_browsing_data_header.xml:12 This `FrameLayout` layout or its `FrameLayout` parent is useless; transfer the `background` attribute to the other view: UselessParent [warning]\n    \u003cFrameLayout\n    ^\n\nLint found 1 new issues.\n - For full explanation, please refer to out/Debug/gen/chrome/android/chrome_java__lint/result.xml\n - For more information about lint and how to fix lint issues, please refer to https://chromium.googlesource.com/chromium/src/+/master/build/android/docs/lint.md",
+      "parentUuid": "f1b533eb_1609d0c2",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b708e8b_19c4711b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1025a2_13d078bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T21:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b708e8b_19c4711b",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 18
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1b27c336_e064dfd0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T21:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8615b9ab_49692afd",
+      "range": {
+        "startLine": 420,
+        "startChar": 8,
+        "endLine": 420,
+        "endChar": 18
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1f8f263_c40db9e9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96781dbe_5a02bb79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T21:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1f8f263_c40db9e9",
+      "range": {
+        "startLine": 431,
+        "startChar": 8,
+        "endLine": 431,
+        "endChar": 18
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "dbd4442f_2343c8ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T21:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e605fa34_0d51258e",
+      "range": {
+        "startLine": 116,
+        "startChar": 30,
+        "endLine": 116,
+        "endChar": 38
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6d5013e_9fd437ca",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
         "patchSetId": 7
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "974ae848_0c0afde0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T21:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6d5013e_9fd437ca",
+      "range": {
+        "startLine": 493,
+        "startChar": 8,
+        "endLine": 493,
+        "endChar": 13
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c847bb7a_948a7a6d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
         "patchSetId": 7
@@ -160,6 +304,30 @@
       "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f959319f_bf41a129",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T21:11:06Z",
+      "side": 1,
+      "message": "It\u0027s probably not necessary that this can be null.",
+      "parentUuid": "c847bb7a_948a7a6d",
+      "range": {
+        "startLine": 495,
+        "startChar": 5,
+        "endLine": 495,
+        "endChar": 13
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

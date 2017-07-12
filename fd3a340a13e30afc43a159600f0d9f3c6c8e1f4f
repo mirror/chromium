@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c994bb29_61d664cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T21:11:06Z",
+      "side": 1,
+      "message": "This is added to fix info button visibility when history page is resumed from tab switch on tablet.\n\nOn tablet,\n1) Sign in to chrome\n2) Open history page and scroll until info header is not visible\n3) Switch to another tab\n4) Go back to the opened history page\n\nObserved behavior: info button shows\nExpected behavior: info button shouldn\u0027t show if scroll position is such that info header is no longer visible",
+      "revId": "fd3a340a13e30afc43a159600f0d9f3c6c8e1f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
