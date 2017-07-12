@@ -15,6 +15,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/timer/elapsed_timer.h"
 #include "build/build_config.h"
 #include "content/common/accessibility_messages.h"
 #include "content/renderer/accessibility/blink_ax_enum_conversion.h"
@@ -359,6 +360,7 @@ WebDocument RenderAccessibilityImpl::GetMainDocument() {
 void RenderAccessibilityImpl::SendPendingAccessibilityEvents() {
   TRACE_EVENT0("accessibility",
                "RenderAccessibilityImpl::SendPendingAccessibilityEvents");
+  base::ElapsedTimer timer;
 
   const WebDocument& document = GetMainDocument();
   if (document.IsNull())
@@ -442,6 +444,9 @@ void RenderAccessibilityImpl::SendPendingAccessibilityEvents() {
 
   if (had_layout_complete_messages)
     SendLocationChanges();
+
+  int64_t ms = timer.Elapsed().InMicroseconds();
+  LOG(INFO) << "blarg " << ms;
 }
 
 void RenderAccessibilityImpl::SendLocationChanges() {

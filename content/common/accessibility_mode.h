@@ -47,13 +47,16 @@ class AccessibilityMode {
   // for all accessibility nodes that come from web content.
   static constexpr uint32_t kHTML = 1 << 4;
 
+  static constexpr uint32_t kDisabled = kInlineTextBoxes | kScreenReader;
+
   constexpr AccessibilityMode() : flags_(0) {}
-  constexpr AccessibilityMode(uint32_t flags) : flags_(flags) {}
+  constexpr AccessibilityMode(uint32_t flags) : flags_(flags & ~kDisabled) {}
 
   bool has_mode(uint32_t flag) const { return (flags_ & flag) > 0; }
 
   void set_mode(uint32_t flag, bool value) {
     flags_ = value ? (flags_ | flag) : (flags_ & ~flag);
+    flags_ &= ~kDisabled;
   }
 
   uint32_t mode() const { return flags_; }
