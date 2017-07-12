@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "109a00e7_a31089f7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 27982,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-12T20:20:58Z",
+      "side": 1,
+      "message": "Done. Could you please add that to the documentation at the top of histograms.xml and/or the documentation in README.md? I vaguely remembered there being such a thing, but failed at searching for the right thing in the giant histograms.xml file to find an existing case, and didn\u0027t see it mentioned anywhere in documentation.",
+      "parentUuid": "56a67ab4_62c37769",
+      "range": {
+        "startLine": 27982,
+        "startChar": 83,
+        "endLine": 27982,
+        "endChar": 0
+      },
+      "revId": "9c5c67d218ad874b75a8c7722d62bbfd073eedb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd1eb02_5109eacf",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f9bafe31_37aa5da6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 91608,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-12T20:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cd1eb02_5109eacf",
+      "range": {
+        "startLine": 91608,
+        "startChar": 76,
+        "endLine": 91608,
+        "endChar": 0
+      },
+      "revId": "9c5c67d218ad874b75a8c7722d62bbfd073eedb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fba706b_f4cee96c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "9c5c67d218ad874b75a8c7722d62bbfd073eedb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfeaf186_6dbdfc1c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 91609,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-12T20:20:58Z",
+      "side": 1,
+      "message": "Actually renamed it to ReadVersionError as I might want to add a ReadErrors one (to match CommitErrors) in the future, and updated the label to more accurately reflect when this is used.",
+      "parentUuid": "1fba706b_f4cee96c",
+      "range": {
+        "startLine": 91609,
+        "startChar": 16,
+        "endLine": 91609,
+        "endChar": 25
+      },
+      "revId": "9c5c67d218ad874b75a8c7722d62bbfd073eedb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
