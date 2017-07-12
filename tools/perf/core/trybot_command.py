@@ -4,6 +4,7 @@
 
 import argparse
 import base64
+import collections
 import gzip
 import io
 import json
@@ -45,7 +46,7 @@ EXCLUDED_BOTS = {
     'winx64_fyi_perf_bisect',
 }
 
-INCLUDE_BOTS = [
+ALL_CONFIG_BOTS = [
     'all',
     'all-win',
     'all-mac',
@@ -134,7 +135,7 @@ def _ProcessMiloData(data):
 def _GetTrybotList(builders):
   builders = ['%s' % bot.replace('_perf_bisect', '').replace('_', '-')
               for bot in builders]
-  builders.extend(INCLUDE_BOTS)
+  builders.extend(ALL_CONFIG_BOTS)
   return sorted(builders)
 
 
@@ -146,41 +147,31 @@ def _GetBotPlatformFromTrybotName(trybot_name):
     raise TrybotError('Trybot "%s" unsupported for tryjobs.' % trybot_name)
 
 
+def _GetPlatformVariantFromBuilderName(builder):
+  platform_variant = _GetBotPlatformFromTrybotName(builder)
+  # Special case for platform variants that need special configs.
+  if platform_variant == 'win' and 'x64' in builder:
+    return 'win-x64'
+  elif platform_variant == 'android' and 'webview' in builder:
+    return 'android-webview'
+  else:
+    return platform_variant
+
+
 def _GetBuilderNames(trybot_name, builders):
   """Return platform and its available bot name as dictionary."""
-  os_names = ['linux', 'android', 'mac', 'win']
-  if 'all' not in trybot_name:
-    bot = ['%s_perf_bisect' % trybot_name.replace('-', '_')]
-    bot_platform = _GetBotPlatformFromTrybotName(trybot_name)
-    if 'x64' in trybot_name:
-      bot_platform += '-x64'
-    return {bot_platform: bot}
-
-  platform_and_bots = {}
-  for os_name in os_names:
-    platform_and_bots[os_name] = [bot for bot in builders if os_name in bot]
-
-  # Special case for Windows x64, consider it as separate platform
-  # config config should contain target_arch=x64 and --browser=release_x64.
-  win_x64_bots = [
-      win_bot for win_bot in platform_and_bots['win']
-      if 'x64' in win_bot]
-  # Separate out non x64 bits win bots
-  platform_and_bots['win'] = list(
-      set(platform_and_bots['win']) - set(win_x64_bots))
-  platform_and_bots['win-x64'] = win_x64_bots
-
-  if 'all-win' in trybot_name:
-    return {'win': platform_and_bots['win'],
-            'win-x64': platform_and_bots['win-x64']}
-  if 'all-mac' in trybot_name:
-    return {'mac': platform_and_bots['mac']}
-  if 'all-android' in trybot_name:
-    return {'android': platform_and_bots['android']}
-  if 'all-linux' in trybot_name:
-    return {'linux': platform_and_bots['linux']}
-
-  return platform_and_bots
+  if trybot_name in ALL_CONFIG_BOTS:
+    platform_prefix = trybot_name[4:]
+    platform_and_bots = collections.defaultdict(list)
+    for builder in builders:
+      platform_variant = _GetPlatformVariantFromBuilderName(builder)
+      if platform_variant.startswith(platform_prefix):
+        platform_and_bots[platform_variant].append(builder)
+    return platform_and_bots
+  else:
+    builder = '%s_perf_bisect' % trybot_name.replace('-', '_')
+    platform_variant = _GetPlatformVariantFromBuilderName(builder)
+    return {platform_variant: [builder]}
 
 
 _GIT_CMD = 'git'
@@ -425,11 +416,12 @@ E.g.,
     arguments.insert(0, 'src/tools/perf/run_benchmark')
     if bot_platform == 'android':
       arguments.insert(1, '--browser=android-chromium')
-    elif any('x64' in bot for bot in self._builder_names[bot_platform]):
+    elif bot_platform == 'android-webview':
+      arguments.insert(1, '--browser=android-webview')
+    elif bot_platform == 'win-x64':
       arguments.insert(1, '--browser=release_x64')
       target_arch = 'x64'
     else:
-
       arguments.insert(1, '--browser=release')
 
     command = ' '.join(arguments)
