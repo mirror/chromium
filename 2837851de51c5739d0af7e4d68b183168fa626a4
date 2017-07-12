@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88f4500f_ec305daa",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-12T09:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e4384b2_3fb6e0d5",
+      "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf1738d8_48c45cb3",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-10T15:20:10Z",
       "side": 1,
       "message": "Does this mean we are going to fetch every favicon twice?  One for the actual NTP, and once for this?  If I understand this correctly, any chance we can just do this once instead?",
+      "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b2594a_48dc9f4d",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-12T09:26:39Z",
+      "side": 1,
+      "message": "We do fetch each favicon twice. The thing is that it\u0027s not necessarily identical (for example we might display only 6 tiles on a small screen, so fetch only 6, but for the widget I want all 8 saved). Additionally we already re-fetch favicons every time the NTP is displayed. I\u0027m assuming we have a cache so it shouldn\u0027t have too big of an impact?",
+      "parentUuid": "bf1738d8_48c45cb3",
       "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf95bd3_74965390",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-12T09:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "247ed3d6_45ecbdbb",
+      "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
