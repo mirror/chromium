@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f38e589_91d76de9",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T09:23:00Z",
+      "side": 1,
+      "message": "this is needed so service_worker_preparation_type.mojom.h is generated (otherwise, only -shared.mojom.h was generated)",
+      "revId": "738223fb9658108bf818187267bb51e876e5bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c66f52_ce220ff0",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T09:23:00Z",
+      "side": 1,
+      "message": "this is needed for the change in chrome/common/BUILD.gn",
+      "revId": "738223fb9658108bf818187267bb51e876e5bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b57c95d_2bd1fcfe",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T09:23:00Z",
+      "side": 1,
+      "message": "this is needed for the change in chrome/common/BUILD.gn",
+      "revId": "738223fb9658108bf818187267bb51e876e5bb8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
