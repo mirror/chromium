@@ -54155,6 +54155,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Platform.EmmcLifeUsedA" enum="EmmcLifeUsed">
+  <owner>gwendal@google.com</owner>
+  <summary>
+    eMMC [5.0] Device life time estimation for type A flash. This field provides
+    an estimated indication about the device life time that is reflected by the
+    averaged wear out of memory of Type A relative to its maximum estimated
+    device life time.
+  </summary>
+</histogram>
+
+<histogram name="Platform.EmmcLifeUsedB" enum="EmmcLifeUsed">
+  <owner>gwendal@google.com</owner>
+  <summary>
+    eMMC [5.0] Device life time estimation for type B flash. This field provides
+    an estimated indication about the device life time that is reflected by the
+    averaged wear out of memory of Type A relative to its maximum estimated
+    device life time.
+  </summary>
+</histogram>
+
 <histogram name="Platform.IntelMaxMicroArchitecture"
     enum="IntelMaxMicroArchitecture">
   <owner>fbarchard@chromium.org</owner>
