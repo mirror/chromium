@@ -3,11 +3,11 @@
 # found in the LICENSE file.
 
 mojom = "//mojo/common/time.mojom"
-public_headers = [ "//base/time/time.h" ]
-traits_headers = [
+public_headers = [
+  "//base/time/time.h",
   "//ipc/ipc_message_utils.h",
-  "//mojo/common/common_custom_types_struct_traits.h",
 ]
+traits_headers = [ "//mojo/common/common_custom_types_struct_traits.h" ]
 public_deps = [
   "//ipc",
   "//mojo/common:struct_traits",
