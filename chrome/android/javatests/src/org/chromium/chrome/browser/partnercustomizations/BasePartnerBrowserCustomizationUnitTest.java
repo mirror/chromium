@@ -7,9 +7,12 @@ package org.chromium.chrome.browser.partnercustomizations;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.net.Uri;
-import android.test.AndroidTestCase;
+
+import org.junit.Before;
+import org.junit.runner.RunWith;
 
 import org.chromium.base.CommandLine;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.chrome.test.partnercustomizations.TestPartnerBrowserCustomizationsDelayedProvider;
 import org.chromium.chrome.test.partnercustomizations.TestPartnerBrowserCustomizationsProvider;
 
@@ -18,7 +21,8 @@ import java.util.concurrent.Semaphore;
 /**
  * Basic shared functionality for partner customization unit tests.
  */
-public class BasePartnerBrowserCustomizationUnitTest extends AndroidTestCase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class BasePartnerBrowserCustomizationUnitTest {
     protected static final String PARTNER_BROWSER_CUSTOMIZATIONS_PROVIDER =
             TestPartnerBrowserCustomizationsProvider.class.getName();
     protected static final String PARTNER_BROWSER_CUSTOMIZATIONS_NO_PROVIDER =
@@ -50,9 +54,8 @@ public class BasePartnerBrowserCustomizationUnitTest extends AndroidTestCase {
         getContext().getContentResolver().call(uri, "setUriPathToDelay", uriPath, null);
     }
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         CommandLine.init(null);
     }
 
