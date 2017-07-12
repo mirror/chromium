@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef33b05d_6d33355a",
+        "filename": "chrome/app/nibs/ContentBlockedPlugins.xib",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-12T17:11:36Z",
+      "side": 0,
+      "message": "🙌",
+      "revId": "830f3799083798d9b76119b4ea0130976f945940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
