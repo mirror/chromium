@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e26f3c34_1fa41d10",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-12T13:31:56Z",
+      "side": 1,
+      "message": "Sounds good, I have added that check. I also changed it so that the metric is only logged once per player otherwise if you keep pressing play/pause it will log each time.",
+      "parentUuid": "708026f6_f3abc78b",
+      "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9567836_bfcb020b",
         "filename": "chrome/browser/media/media_engagement_contents_observer.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba7f0b3_ceaa0f76",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-12T13:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9567836_bfcb020b",
+      "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a36f6cfd_3670951b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-12T13:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f57e3d5_faa030b6",
+      "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "697ddeac_95ce60da",
         "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e32d7d9_4412df4d",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-12T13:31:56Z",
+      "side": 1,
+      "message": "Filed crbug.com/741626 to fix.",
+      "parentUuid": "697ddeac_95ce60da",
+      "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
