@@ -15,6 +15,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "net/base/cache_type.h"
 #include "net/base/net_errors.h"
 
@@ -220,19 +221,17 @@ int AppCacheDiskCache::InitWithDiskBackend(
     const base::FilePath& disk_cache_directory,
     int disk_cache_size,
     bool force,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
     const net::CompletionCallback& callback) {
   return Init(net::APP_CACHE,
               disk_cache_directory,
               disk_cache_size,
               force,
-              cache_thread,
               callback);
 }
 
 int AppCacheDiskCache::InitWithMemBackend(
     int mem_cache_size, const net::CompletionCallback& callback) {
-  return Init(net::MEMORY_CACHE, base::FilePath(), mem_cache_size, false, NULL,
+  return Init(net::MEMORY_CACHE, base::FilePath(), mem_cache_size, false,
               callback);
 }
 
@@ -316,6 +315,19 @@ int AppCacheDiskCache::DoomEntry(int64_t key,
   return ActiveCall::DoomEntry(weak_factory_.GetWeakPtr(), key, callback);
 }
 
+scoped_refptr<base::SequencedTaskRunner>
+AppCacheDiskCache::GetCacheTaskRunner() {
+  // If we haven't set a runner based on the backend, anything will do. This
+  // is needed e.g. if we are deleting a cache dir too broken for backend
+  // to initialize.
+  if (!disk_cache_task_runner_)
+    disk_cache_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
+        {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+         base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+
+  return disk_cache_task_runner_;
+}
+
 AppCacheDiskCache::AppCacheDiskCache(bool use_simple_cache)
     : AppCacheDiskCacheInterface("DiskCache.AppCache"),
       use_simple_cache_(use_simple_cache),
@@ -345,7 +357,6 @@ int AppCacheDiskCache::Init(
     const base::FilePath& cache_directory,
     int cache_size,
     bool force,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
     const net::CompletionCallback& callback) {
   DCHECK(!is_initializing_or_waiting_to_initialize() && !disk_cache_.get());
   is_disabled_ = false;
@@ -358,7 +369,6 @@ int AppCacheDiskCache::Init(
       cache_directory,
       cache_size,
       force,
-      cache_thread,
       NULL,
       &(create_backend_callback_->backend_ptr_),
       base::Bind(&CreateBackendCallbackShim::Callback,
@@ -373,6 +383,9 @@ int AppCacheDiskCache::Init(
 void AppCacheDiskCache::OnCreateBackendComplete(int rv) {
   if (rv == net::OK) {
     disk_cache_ = std::move(create_backend_callback_->backend_ptr_);
+    disk_cache_task_runner_ = disk_cache_->GetCacheTaskRunner();
+  } else {
+    disk_cache_task_runner_ = nullptr;  // will create one if needed.
   }
   create_backend_callback_ = NULL;
 
