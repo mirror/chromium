@@ -101,6 +101,24 @@
       "revId": "2e62b07b42e1186f77e86ac4d54ca51e58f781f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99acd872_5bf06518",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-12T15:59:56Z",
+      "side": 1,
+      "message": "This suggestion makes sense to me, though you\u0027ll need to pass in the frame since it\u0027s a static method.\n\nI wonder, though, if all this plumbing is necessary. How granular do we need to be with the check? Could we add another scheme to the registry (`IsCSPBypassAllowedForScheme()`?), register `chrome:`, and convert the frame\u0027s client\u0027s check into a check on the page\u0027s URL?",
+      "parentUuid": "f135488f_6a9aa7c7",
+      "revId": "2e62b07b42e1186f77e86ac4d54ca51e58f781f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
