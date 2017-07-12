@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c214e305_a0ab969a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-12T16:05:46Z",
+      "side": 1,
+      "message": "can you change \"overwriting\" to something else? Something like Allow activating pending tree before 1st draw for checker images",
+      "revId": "0bc84700c2d3fd1f21310cd9b45e27152330364c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb02024_5d90e83d",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-12T16:05:46Z",
+      "side": 1,
+      "message": "Can you add a comment why we don\u0027t need ProcessScheduledActions here",
+      "revId": "0bc84700c2d3fd1f21310cd9b45e27152330364c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
