@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "e9094f70_e15b3961",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:31:09Z",
+      "side": 0,
+      "message": "Right. I think someone had migrated the renderer to the mojo interface, but didn\u0027t for other processes. Thanks for unifying things!",
+      "parentUuid": "a5b6a62d_d37ea997",
+      "range": {
+        "startLine": 500,
+        "startChar": 2,
+        "endLine": 500,
+        "endChar": 49
+      },
+      "revId": "8c387c68ef1a9b32d3efd7ef7b67b7db7702d475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33504383_a7c69e13",
         "filename": "content/browser/ppapi_plugin_process_host.h",
         "patchSetId": 5

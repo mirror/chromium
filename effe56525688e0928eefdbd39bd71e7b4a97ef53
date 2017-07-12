@@ -22,6 +22,76 @@
       "revId": "effe56525688e0928eefdbd39bd71e7b4a97ef53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1404bd_50a7e20c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:31:09Z",
+      "side": 1,
+      "message": "Yep, it\u0027s likely that UtilityThreadImpl didn\u0027t have the functionality. Maybe not a lot of experiments were run in utility threads, or someone would have asked us about why it didn\u0027t work.\n\nI\u0027m ok with this being landed without test coverage - maybe file a bug for that?",
+      "parentUuid": "10d01fe9_656073c3",
+      "range": {
+        "startLine": 18,
+        "startChar": 51,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "effe56525688e0928eefdbd39bd71e7b4a97ef53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180a87f0_d49dcb3e",
+        "filename": "content/public/child/child_thread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:31:09Z",
+      "side": 1,
+      "message": "the child process",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "effe56525688e0928eefdbd39bd71e7b4a97ef53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83df75fb_1bf396b0",
+        "filename": "content/public/gpu/content_gpu_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:31:09Z",
+      "side": 1,
+      "message": "Nit: Remove extra space since this file doesn\u0027t use two spaces between sentences in comments.",
+      "range": {
+        "startLine": 24,
+        "startChar": 29,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "effe56525688e0928eefdbd39bd71e7b4a97ef53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
