@@ -83,7 +83,8 @@ class ArcNetHostImpl : public ArcService,
   void OnInstanceClosed() override;
 
  private:
-  void DefaultNetworkSuccessCallback(const std::string& service_path,
+  void DefaultNetworkSuccessCallback(const chromeos::NetworkState* network,
+                                     const std::string& service_path,
                                      const base::DictionaryValue& dictionary);
 
   // Due to a race in Chrome, GetNetworkStateFromGuid() might not know about

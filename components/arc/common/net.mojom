@@ -70,6 +70,7 @@ struct WiFi {
   bool hidden_ssid;
   SecurityType security;
   int32 signal_strength;
+  [MinVersion=6] bool is_tethered;
 };
 
 [Extensible]

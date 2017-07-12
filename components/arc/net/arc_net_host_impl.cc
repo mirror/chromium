@@ -25,6 +25,7 @@
 #include "chromeos/network/onc/onc_utils.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/user_manager/user_manager.h"
+#include "third_party/cros_system_api/dbus/shill/dbus-constants.h"
 
 namespace {
 
@@ -173,6 +174,7 @@ arc::mojom::ConnectionStateType TranslateONCConnectionState(
 }
 
 void TranslateONCNetworkTypeDetails(const base::DictionaryValue* dict,
+                                    const chromeos::NetworkState* network,
                                     arc::mojom::NetworkConfiguration* mojo) {
   std::string type = GetStringFromOncDictionary(
       dict, onc::network_config::kType, true /* required */);
@@ -189,6 +191,8 @@ void TranslateONCNetworkTypeDetails(const base::DictionaryValue* dict,
     dict->GetDictionary(onc::network_config::kWiFi, &wifi_dict);
     DCHECK(wifi_dict);
     mojo->wifi = TranslateONCWifi(wifi_dict);
+    mojo->wifi->is_tethered =
+        (network->tethering_state() == shill::kTetheringConfirmedState);
   } else if (type == onc::network_type::kWimax) {
     mojo->type = arc::mojom::NetworkType::WIMAX;
   } else {
@@ -197,6 +201,7 @@ void TranslateONCNetworkTypeDetails(const base::DictionaryValue* dict,
 }
 
 arc::mojom::NetworkConfigurationPtr TranslateONCConfiguration(
+    const chromeos::NetworkState* network,
     const base::DictionaryValue* dict) {
   arc::mojom::NetworkConfigurationPtr mojo =
       arc::mojom::NetworkConfiguration::New();
@@ -216,7 +221,7 @@ arc::mojom::NetworkConfigurationPtr TranslateONCConfiguration(
                                           true /* required */);
   mojo->mac_address = GetStringFromOncDictionary(
       dict, onc::network_config::kMacAddress, true /* required */);
-  TranslateONCNetworkTypeDetails(dict, mojo.get());
+  TranslateONCNetworkTypeDetails(dict, network, mojo.get());
 
   return mojo;
 }
@@ -262,13 +267,14 @@ void StartDisconnectFailureCallback(
 
 void GetDefaultNetworkSuccessCallback(
     const arc::ArcNetHostImpl::GetDefaultNetworkCallback& callback,
+    const chromeos::NetworkState* network,
     const std::string& service_path,
     const base::DictionaryValue& dictionary) {
   // TODO(cernekee): Figure out how to query Chrome for the default physical
   // service if a VPN is connected, rather than just reporting the
   // default logical service in both fields.
-  callback.Run(TranslateONCConfiguration(&dictionary),
-               TranslateONCConfiguration(&dictionary));
+  callback.Run(TranslateONCConfiguration(network, &dictionary),
+               TranslateONCConfiguration(network, &dictionary));
 }
 
 void GetDefaultNetworkFailureCallback(
@@ -610,11 +616,12 @@ void ArcNetHostImpl::GetDefaultNetwork(
   std::string user_id_hash = chromeos::LoginState::Get()->primary_user_hash();
   GetManagedConfigurationHandler()->GetProperties(
       user_id_hash, default_network->path(),
-      base::Bind(&GetDefaultNetworkSuccessCallback, callback),
+      base::Bind(&GetDefaultNetworkSuccessCallback, callback, default_network),
       base::Bind(&GetDefaultNetworkFailureCallback, callback));
 }
 
 void ArcNetHostImpl::DefaultNetworkSuccessCallback(
+    const chromeos::NetworkState* network,
     const std::string& service_path,
     const base::DictionaryValue& dictionary) {
   auto* net_instance = ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service()->net(),
@@ -622,8 +629,9 @@ void ArcNetHostImpl::DefaultNetworkSuccessCallback(
   if (!net_instance)
     return;
 
-  net_instance->DefaultNetworkChanged(TranslateONCConfiguration(&dictionary),
-                                      TranslateONCConfiguration(&dictionary));
+  net_instance->DefaultNetworkChanged(
+      TranslateONCConfiguration(network, &dictionary),
+      TranslateONCConfiguration(network, &dictionary));
 }
 
 void ArcNetHostImpl::DefaultNetworkChanged(
@@ -642,7 +650,7 @@ void ArcNetHostImpl::DefaultNetworkChanged(
   GetManagedConfigurationHandler()->GetProperties(
       user_id_hash, network->path(),
       base::Bind(&ArcNetHostImpl::DefaultNetworkSuccessCallback,
-                 weak_factory_.GetWeakPtr()),
+                 weak_factory_.GetWeakPtr(), base::Unretained(network)),
       base::Bind(&DefaultNetworkFailureCallback));
 }
 
