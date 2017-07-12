@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c3600c1d_20251b3a",
+        "filename": "base/containers/small_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-12T18:40:49Z",
+      "side": 1,
+      "message": "Does it matter since we have to copy construct anyhow and then the copy is moved into the internal container? Pardon my ignorance, I am still trying to learn about universal references and such :)",
+      "parentUuid": "51512dd8_d5abdc23",
+      "range": {
+        "startLine": 423,
+        "startChar": 65,
+        "endLine": 423,
+        "endChar": 76
+      },
+      "revId": "29e3a95abaea16918decc5811e70dc72969e954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40cd7757_b4feaa99",
         "filename": "base/containers/small_map_unittest.cc",
         "patchSetId": 2
