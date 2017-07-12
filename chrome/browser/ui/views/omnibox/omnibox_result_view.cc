@@ -427,65 +427,7 @@ int OmniboxResultView::DrawRenderText(
     int max_width) const {
   DCHECK(!render_text->text().empty());
 
-  const int remaining_width = mirroring_context_->remaining_width(x);
   int right_x = x + max_width;
-
-  // Tail suggestions should appear with the leading ellipses vertically
-  // stacked.
-  if (render_text_type == CONTENTS &&
-      match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
-    // When the directionality of suggestion doesn't match the UI, we try to
-    // vertically stack the ellipsis by restricting the end edge (right_x).
-    const bool is_ui_rtl = base::i18n::IsRTL();
-    const bool is_match_contents_rtl =
-        (render_text->GetDisplayTextDirection() == base::i18n::RIGHT_TO_LEFT);
-    const int offset =
-        GetDisplayOffset(match, is_ui_rtl, is_match_contents_rtl);
-
-    std::unique_ptr<gfx::RenderText> prefix_render_text(
-        CreateRenderText(base::UTF8ToUTF16(
-            match.GetAdditionalInfo(kACMatchPropertyContentsPrefix))));
-    const int prefix_width = prefix_render_text->GetContentWidth();
-    int prefix_x = x;
-
-    const int max_match_contents_width = model_->max_match_contents_width();
-
-    if (is_ui_rtl != is_match_contents_rtl) {
-      // RTL tail suggestions appear near the left edge in LTR UI, while LTR
-      // tail suggestions appear near the right edge in RTL UI. This is
-      // against the natural horizontal alignment of the text. We reduce the
-      // width of the box for suggestion display, so that the suggestions appear
-      // in correct confines.  This reduced width allows us to modify the text
-      // alignment (see below).
-      right_x = x + std::min(remaining_width - prefix_width,
-                             std::max(offset, max_match_contents_width));
-      prefix_x = right_x;
-      // We explicitly set the horizontal alignment so that when LTR suggestions
-      // show in RTL UI (or vice versa), their ellipses appear stacked in a
-      // single column.
-      render_text->SetHorizontalAlignment(
-          is_match_contents_rtl ? gfx::ALIGN_RIGHT : gfx::ALIGN_LEFT);
-    } else {
-      // If the dropdown is wide enough, place the ellipsis at the position
-      // where the omitted text would have ended. Otherwise reduce the offset of
-      // the ellipsis such that the widest suggestion reaches the end of the
-      // dropdown.
-      const int start_offset = std::max(prefix_width,
-          std::min(remaining_width - max_match_contents_width, offset));
-      right_x = x + std::min(remaining_width, start_offset + max_width);
-      x += start_offset;
-      prefix_x = x - prefix_width;
-    }
-    prefix_render_text->SetDirectionalityMode(is_match_contents_rtl ?
-        gfx::DIRECTIONALITY_FORCE_RTL : gfx::DIRECTIONALITY_FORCE_LTR);
-    prefix_render_text->SetHorizontalAlignment(
-          is_match_contents_rtl ? gfx::ALIGN_RIGHT : gfx::ALIGN_LEFT);
-    prefix_render_text->SetDisplayRect(
-        gfx::Rect(mirroring_context_->mirrored_left_coord(
-                      prefix_x, prefix_x + prefix_width),
-                  y, prefix_width, GetTextHeight()));
-    prefix_render_text->Draw(canvas);
-  }
 
   // Set the display rect to trigger elision.
   int height = (render_text_type == DESCRIPTION && match.answer)
@@ -631,10 +573,52 @@ void OmniboxResultView::InitContentsRenderTextIfNecessary() const {
           !AutocompleteMatch::IsSearchType(match_.type) &&
           !match_.description.empty();
 
-      contents_rendertext_ = CreateClassifiedRenderText(
-          swap_match_text ? match_.description : match_.contents,
-          swap_match_text ? match_.description_class : match_.contents_class,
-          false);
+      if (swap_match_text) {
+        contents_rendertext_ = CreateClassifiedRenderText(
+            match_.description, match_.description_class, false);
+      } else {
+        base::string16 contents;
+        ACMatchClassifications contents_class;
+        if (match_.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
+          contents =
+              base::UTF8ToUTF16(
+                  match_.GetAdditionalInfo(kACMatchPropertySuggestionText)
+                      .substr(0, model_->common_suggestion().size())) +
+              match_.contents;
+          // Prefix with dim text.
+          contents_class.push_back(
+              ACMatchClassification(0, ACMatchClassification::DIM));
+          for (const auto& classification : match_.contents_class) {
+            // Shift existing classifications.
+            contents_class.push_back(ACMatchClassification(
+                model_->common_suggestion().size() + classification.offset,
+                classification.style));
+          }
+        } else {
+          contents = match_.contents;
+          if (!model_->any_tail_suggestions() ||
+              // or prefix doesn't match the tail suggestion
+              (contents.size() >= model_->common_suggestion().size() &&
+               contents.substr(0, model_->common_suggestion().size()) !=
+                   model_->common_suggestion())) {
+            contents_class = match_.contents_class;
+          } else {
+            // Insert a classification of dim for the text prefix common
+            // with the suggestion.
+            contents_class.push_back(
+                ACMatchClassification(0, ACMatchClassification::DIM));
+            for (const auto& classification : match_.contents_class) {
+              contents_class.push_back(ACMatchClassification(
+                  classification.offset, classification.style));
+            }
+            // First classification starts after common prefix.
+            if (contents_class.size() > 1)
+              contents_class[1].offset += model_->common_suggestion().size();
+          }
+        }
+        contents_rendertext_ =
+            CreateClassifiedRenderText(contents, contents_class, false);
+      }
     }
   }
 }
