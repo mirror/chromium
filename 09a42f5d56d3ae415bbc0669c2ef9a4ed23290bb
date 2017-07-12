@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14aca6f3_8f0322e9",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-12T03:29:40Z",
+      "side": 1,
+      "message": "You don\u0027t need the -1 :P, zip works for unequal ranges, it\u0027ll iterate until the shorter list is exhausted.",
+      "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
