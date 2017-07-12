@@ -181,6 +181,7 @@ test("exo_unittests") {
     "//ash/test:test_support_without_content",
     "//base",
     "//base/test:test_support",
+    "//cc:test_support",
     "//device/gamepad:test_helpers",
     "//mojo/edk/embedder:headers",
     "//testing/gtest",

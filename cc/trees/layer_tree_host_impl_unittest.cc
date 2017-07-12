@@ -8808,7 +8808,7 @@ class FrameSinkClient : public TestLayerTreeFrameSinkClient {
 TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   scoped_refptr<TestContextProvider> context_provider =
       TestContextProvider::Create();
-  FrameSinkClient test_client_(context_provider);
+  FrameSinkClient test_client(context_provider);
 
   constexpr bool synchronous_composite = true;
   constexpr bool disable_display_vsync = false;
@@ -8817,7 +8817,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
       context_provider, TestContextProvider::CreateWorker(), nullptr, nullptr,
       RendererSettings(), base::ThreadTaskRunnerHandle::Get().get(),
       synchronous_composite, disable_display_vsync, refresh_rate);
-  layer_tree_frame_sink->SetClient(&test_client_);
+  layer_tree_frame_sink->SetClient(&test_client);
 
   CreateHostImpl(DefaultSettings(), std::move(layer_tree_frame_sink));
 
