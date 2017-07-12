@@ -86,8 +86,6 @@ bool HasSingleNewTabPage(Browser* browser) {
          search::IsInstantNTP(active_tab);
 }
 
-class SessionRestoreImpl;
-
 // Pointers to SessionRestoreImpls which are currently restoring the session.
 std::set<SessionRestoreImpl*>* active_session_restorers = nullptr;
 
@@ -131,6 +129,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
 
     keep_alive_.reset(new ScopedKeepAlive(KeepAliveOrigin::SESSION_RESTORE,
                                           KeepAliveRestartOption::DISABLED));
+
+    SessionRestore::NotifySessionRestoreStartedLoadingTabs();
   }
 
   bool synchronous() const { return synchronous_; }
@@ -872,12 +872,31 @@ void SessionRestore::AddURLsToOpen(const Profile* profile,
 
 // static
 void SessionRestore::AddObserver(SessionRestoreObserver* observer) {
-  observers().AddObserver(observer);
+  observers()->AddObserver(observer);
 }
 
 // static
 void SessionRestore::RemoveObserver(SessionRestoreObserver* observer) {
-  observers().RemoveObserver(observer);
+  observers()->RemoveObserver(observer);
+}
+
+// static
+void SessionRestore::OnTabLoaderFinishedLoadingTabs() {
+  if (!session_restore_started_)
+    return;
+
+  session_restore_started_ = false;
+
+  for (auto& observer : *SessionRestore::observers())
+    observer.OnSessionRestoreFinishedLoadingTabs();
+}
+
+void SessionRestore::NotifySessionRestoreStartedLoadingTabs() {
+  if (!session_restore_started_) {
+    for (auto& observer : *observers())
+      observer.OnSessionRestoreStartedLoadingTabs();
+    session_restore_started_ = true;
+  }
 }
 
 // static
@@ -887,3 +906,6 @@ base::CallbackList<void(int)>*
 // static
 base::ObserverList<SessionRestoreObserver>* SessionRestore::observers_ =
     nullptr;
+
+// static
+bool SessionRestore::session_restore_started_ = false;
