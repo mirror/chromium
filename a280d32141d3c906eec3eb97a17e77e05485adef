@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f91d116_adcc22bc",
+        "filename": "chrome/browser/resources/media_router/elements/media_router_container/media_router_container.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-12T18:59:05Z",
+      "side": 1,
+      "message": "Does the bolding work the first time the cast mode view is shown, even if this variable doesn\u0027t have a default value?",
+      "revId": "a280d32141d3c906eec3eb97a17e77e05485adef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a985d39_7dc2d415",
+        "filename": "chrome/browser/resources/media_router/elements/media_router_container/media_router_container.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-12T18:59:05Z",
+      "side": 1,
+      "message": "Can we make the type {!media_router.CastMode}? The argument can\u0027t be null, right?",
+      "range": {
+        "startLine": 544,
+        "startChar": 12,
+        "endLine": 544,
+        "endChar": 35
+      },
+      "revId": "a280d32141d3c906eec3eb97a17e77e05485adef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b5af9e_264d7da0",
+        "filename": "chrome/browser/resources/media_router/elements/media_router_container/media_router_container.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-12T18:59:05Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "a280d32141d3c906eec3eb97a17e77e05485adef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64769f13_e4ba173b",
+        "filename": "chrome/browser/resources/media_router/elements/media_router_container/media_router_container.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2601,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-12T18:59:05Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "a280d32141d3c906eec3eb97a17e77e05485adef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
