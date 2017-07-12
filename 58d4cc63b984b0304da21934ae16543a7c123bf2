@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a8d9d34_e1e63554",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-12T10:27:04Z",
+      "side": 1,
+      "message": "That doesn\u0027t seem to be the case. Can you please elaborate further?",
+      "parentUuid": "dabb8ae7_742085e1",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ad7a96d_32c2e1b2",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-11T23:04:13Z",
       "side": 1,
       "message": "Without |frames_queued_|, this loop simplifies a lot to:\n\n  while (audio_bus_queue_.size() \u003e kMaxNumberOfFifoBuffers)\n    audio_bus_queue_.pop_front();\n\nActually, it\u0027d be much more efficient to call deque::erase() in this case:\n\n  if (audio_bus_queue_.size() \u003e kMaxNumberOfFifoBuffers) {\n    const int drop_count \u003d audio_bus_queue_.size() - kMaxNumberOfFifoBuffers;\n    audio_bus_queue_.erase(audio_bus_queue_.begin(), audio_bus_queue_.begin() + drop_count);\n  }",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 3
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f297111_f24c5a9a",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-12T10:27:04Z",
+      "side": 1,
+      "message": "Since kMaxNumberOfFifoBuffers \u003d 2, this would restrict queue size to 2 at any point of time.",
+      "parentUuid": "6ad7a96d_32c2e1b2",
       "range": {
         "startLine": 246,
         "startChar": 0,
@@ -64,6 +112,29 @@
         "startChar": 0,
         "endLine": 254,
         "endChar": 63
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f53b44_54d3522d",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-12T10:27:04Z",
+      "side": 1,
+      "message": "What should be used here instead of frames_queued_?",
+      "range": {
+        "startLine": 266,
+        "startChar": 58,
+        "endLine": 266,
+        "endChar": 59
       },
       "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
