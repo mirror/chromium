@@ -6,10 +6,20 @@ import("//mojo/public/tools/bindings/mojom.gni")
 
 mojom("interfaces") {
   sources = [
+    "histogram.mojom",
     "ukm_interface.mojom",
   ]
 
   public_deps = [
+    ":constants",
+    "//components/metrics/public/interfaces:call_stack_mojo_bindings",
+    "//mojo/common:common_custom_types",
     "//url/mojo:url_mojom_gurl",
+  ]
+}
+
+mojom("constants") {
+  sources = [
+    "constants.mojom",
   ]
 }

@@ -2,24 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_HISTOGRAM_SUBSCRIBER_H_
-#define CONTENT_BROWSER_HISTOGRAM_SUBSCRIBER_H_
+#ifndef SERVICES_METRICS_HISTOGRAMS_HISTOGRAM_SUBSCRIBER_H_
+#define SERVICES_METRICS_HISTOGRAMS_HISTOGRAM_SUBSCRIBER_H_
 
 #include <string>
 #include <vector>
 
-namespace content {
+namespace metrics {
 
 // Objects interested in receiving histograms derive from HistogramSubscriber.
 class HistogramSubscriber {
  public:
   virtual ~HistogramSubscriber() {}
 
-  // Send number of pending processes to subscriber. |end| is set to true if it
+  // Send number of pending clients to subscriber. |end| is set to true if it
   // is the last time. This is called on the UI thread.
-  virtual void OnPendingProcesses(int sequence_number,
-                                  int pending_processes,
-                                  bool end) = 0;
+  virtual void OnPendingClients(int sequence_number,
+                                int pending_clients,
+                                bool end) = 0;
 
   // Send |histogram| back to subscriber.
   // This is called on the UI thread.
@@ -28,6 +28,6 @@ class HistogramSubscriber {
       const std::vector<std::string>& pickled_histograms) = 0;
 };
 
-}  // namespace content
+}  // namespace metrics
 
-#endif  // CONTENT_BROWSER_HISTOGRAM_SUBSCRIBER_H_
+#endif  // SERVICES_METRICS_HISTOGRAMS_HISTOGRAM_SUBSCRIBER_H_

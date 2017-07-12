@@ -1,0 +1,44 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module metrics.mojom;
+
+import "components/metrics/public/interfaces/call_stack_profile_collector.mojom";
+import "mojo/common/time.mojom";
+
+
+interface HistogramCollectorClient {
+  // Request histogram data from the client. The callback will be called with
+  // an array of pickled strings containing the deltas from the last call.
+  RequestNonPersistentHistogramData() => (array<string> deltas);
+};
+
+// Collects histogram data from clients in remote services. Clients must
+// register with the collector, which will then periodically query them for
+// data.
+interface HistogramCollector {
+  // Allow child processes to register clients from which histogram data will be
+  // collected. The callback will be invoked with a handle to shared memory in
+  // which the client can write histogram data.
+  RegisterClient(HistogramCollectorClient client, Process process_type) =>
+      (handle<shared_buffer>? metrics_memory);
+
+  // Collect the latests histograms from all registered clients and update them
+  // in shared memory. The callback will be run when this call is done, or when
+  // |wait_time| has passed. In the latter case, |timed_out| will be set to
+  // true.
+  UpdateHistograms(mojo.common.mojom.TimeDelta wait_time) => (bool timed_out);
+
+  // Update the histograms synchronously. This can block the calling thread for
+  // a significant amount of time.
+  [Sync] UpdateHistogramsSync() => ();
+};
+
+interface HistogramProvider {
+  // A synchronous call to fetch a histogram by name from the metrics service.
+  // If a histogram by this name exists, returns the histogram as a JSON string,
+  // otherwise returns an empty JSON object. This method is primarily intended
+  // to be used for debugging.
+  [Sync] GetHistogram(string name) => (string histogram_json);
+};

@@ -49,6 +49,8 @@
 #include "services/file/file_service.h"
 #include "services/file/public/interfaces/constants.mojom.h"
 #include "services/file/user_id_map.h"
+#include "services/metrics/public/interfaces/constants.mojom.h"
+#include "services/metrics/service.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/interfaces/service.mojom.h"
 #include "storage/browser/database/database_tracker.h"
@@ -485,6 +487,10 @@ void BrowserContext::Initialize(
       info.factory = base::Bind(&file::CreateFileService);
       connection->AddEmbeddedService(file::mojom::kServiceName, info);
     }
+
+    service_manager::EmbeddedServiceInfo metrics_info;
+    metrics_info.factory = base::BindRepeating(&metrics::Service::Create);
+    connection->AddEmbeddedService(metrics::mojom::kServiceName, metrics_info);
 
     ContentBrowserClient::StaticServiceMap services;
     browser_context->RegisterInProcessServices(&services);

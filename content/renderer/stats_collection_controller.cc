@@ -10,9 +10,13 @@
 #include "base/metrics/statistics_recorder.h"
 #include "base/strings/string_util.h"
 #include "content/common/child_process_messages.h"
+#include "content/public/renderer/render_thread.h"
 #include "content/renderer/render_view_impl.h"
 #include "gin/handle.h"
 #include "gin/object_template_builder.h"
+#include "services/metrics/public/interfaces/constants.mojom.h"
+#include "services/metrics/public/interfaces/histogram.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
@@ -125,15 +129,14 @@ std::string StatsCollectionController::GetHistogram(
 
 std::string StatsCollectionController::GetBrowserHistogram(
     const std::string& histogram_name) {
-  RenderViewImpl *render_view_impl = NULL;
-  if (!CurrentRenderViewImpl(&render_view_impl)) {
-    NOTREACHED();
-    return std::string();
-  }
+  metrics::mojom::HistogramProviderPtr histogram_provider;
+  RenderThread::Get()->GetConnector()->BindInterface(
+      metrics::mojom::kServiceName, mojo::MakeRequest(&histogram_provider));
 
   std::string histogram_json;
-  render_view_impl->Send(new ChildProcessHostMsg_GetBrowserHistogram(
-      histogram_name, &histogram_json));
+  if (!histogram_provider->GetHistogram(histogram_name, &histogram_json)) {
+    NOTREACHED() << "HistogramProvider::GetHistogram() failed.";
+  }
   return histogram_json;
 }
 
