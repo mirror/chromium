@@ -52,6 +52,24 @@
       "revId": "059d59a5bb73dcceb7d655c8e67b168642db2928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a39d50_70756df4",
+        "filename": "cc/animation/element_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-12T15:23:24Z",
+      "side": 0,
+      "message": "This is now done. The code does not exist in the latest patch set.",
+      "parentUuid": "46e9ba97_08418d67",
+      "revId": "059d59a5bb73dcceb7d655c8e67b168642db2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
