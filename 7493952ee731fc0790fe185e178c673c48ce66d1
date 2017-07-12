@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88baed18_f2292d7e",
+        "filename": "buildbucket.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-12T19:21:00Z",
+      "side": 1,
+      "message": "Yeah, but as long as their presence isn\u0027t doing any harm, I wouldn\u0027t worry about it.",
+      "parentUuid": "2737705f_6ad125dc",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "7493952ee731fc0790fe185e178c673c48ce66d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a00e1e1_884d12ef",
         "filename": "buildbucket.config",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T18:55:46Z",
       "side": 1,
       "message": "Rietveld didn\u0027t display any bisect builders. Not sure if we want to continue that same trend now.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 44
+      },
+      "revId": "7493952ee731fc0790fe185e178c673c48ce66d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75815e4_40f751f6",
+        "filename": "buildbucket.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-12T19:21:00Z",
+      "side": 1,
+      "message": "In general I think it would be worth making them more visible. I didn\u0027t even know about perf tryjobs until recently.",
+      "parentUuid": "7a00e1e1_884d12ef",
       "range": {
         "startLine": 126,
         "startChar": 0,
