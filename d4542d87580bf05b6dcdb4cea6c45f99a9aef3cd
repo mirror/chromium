@@ -70,6 +70,30 @@
       "revId": "d4542d87580bf05b6dcdb4cea6c45f99a9aef3cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00076644_64640318",
+        "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-12T16:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bba2a865_22303856",
+      "range": {
+        "startLine": 426,
+        "startChar": 34,
+        "endLine": 426,
+        "endChar": 78
+      },
+      "revId": "d4542d87580bf05b6dcdb4cea6c45f99a9aef3cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
