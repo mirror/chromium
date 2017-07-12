@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6347d01_cde5ce4e",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/select-bidi-run.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-12T06:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbf89cc3_9dd74419",
+      "revId": "771bd9ccf2936a09bbf09b89153f067c0960cb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e35f1584_7ec55e90",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/select-bidi-run.html",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a6f095c3_7c4427d8",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/select-bidi-run.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-12T06:25:51Z",
+      "side": 1,
+      "message": "Done\n\nIntroduce StaticRange class to check selection changes.",
+      "parentUuid": "e35f1584_7ec55e90",
+      "revId": "771bd9ccf2936a09bbf09b89153f067c0960cb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "833101bd_78049a7c",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/select-bidi-run.html",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "771bd9ccf2936a09bbf09b89153f067c0960cb7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6aba241_be4b51cb",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/select-bidi-run.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-12T06:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "833101bd_78049a7c",
+      "revId": "771bd9ccf2936a09bbf09b89153f067c0960cb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
