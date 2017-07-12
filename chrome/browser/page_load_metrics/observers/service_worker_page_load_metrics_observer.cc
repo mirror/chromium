@@ -90,6 +90,8 @@ const char kHistogramServiceWorkerDomContentLoadedSearch[] =
 const char kHistogramServiceWorkerLoadSearch[] =
     "PageLoad.Clients.ServiceWorker.DocumentTiming.NavigationToLoadEventFired."
     "search";
+const char kHistogramServiceWorkerPreparationTypeSearch[] =
+    "PageLoad.Clients.ServiceWorker.PreparationType.search";
 
 const char kHistogramNoServiceWorkerFirstContentfulPaintSearch[] =
     "PageLoad.Clients.NoServiceWorker.PaintTiming."
@@ -327,6 +329,12 @@ void ServiceWorkerPageLoadMetricsObserver::OnParseStart(
     } else if (page_load_metrics::IsGoogleSearchResultUrl(info.url)) {
       PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerParseStartSearch,
                           timing.parse_timing->parse_start.value());
+      DCHECK_NE(timing.service_worker_timing->preparation_type,
+                blink::mojom::ServiceWorkerPreparationType::UNKNOWN);
+      UMA_HISTOGRAM_ENUMERATION(
+          internal::kHistogramServiceWorkerPreparationTypeSearch,
+          timing.service_worker_timing->preparation_type,
+          blink::mojom::ServiceWorkerPreparationType::NUM_TYPES);
     }
     if (IsForwardBackLoad(transition_)) {
       PAGE_LOAD_HISTOGRAM(

@@ -61,6 +61,7 @@
 #include "storage/browser/blob/blob_url_request_job.h"
 #include "storage/browser/blob/blob_url_request_job_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_preparation_type.mojom.h"
 
 namespace content {
 
@@ -424,6 +425,9 @@ TEST_F(ServiceWorkerURLRequestJobTest, Simple) {
   EXPECT_FALSE(info->service_worker_ready_time().is_null());
   EXPECT_FALSE(info->response_is_in_cache_storage());
   EXPECT_EQ(std::string(), info->response_cache_storage_cache_name());
+  EXPECT_EQ(blink::mojom::ServiceWorkerPreparationType::
+                START_IN_EXISTING_READY_PROCESS,
+            info->service_worker_preparation_type());
 }
 
 // Helper for controlling when to start a worker and respond to a fetch event.
@@ -532,14 +536,18 @@ TEST_F(ServiceWorkerURLRequestJobTest,
   histogram_tester.ExpectUniqueSample(
       "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type_"
       "NavigationPreloadEnabled",
-      static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::RUNNING),
-      1);
+      static_cast<int>(blink::mojom::ServiceWorkerPreparationType::RUNNING), 1);
   histogram_tester.ExpectUniqueSample(
       "ServiceWorker.NavPreload.FinishedFirst_MainFrame", false, 1);
   histogram_tester.ExpectTotalCount(
       "ServiceWorker.NavPreload.FinishedFirst_MainFrame_"
       "StartWorkerExistingProcess",
       0);
+
+  ServiceWorkerResponseInfo* info =
+      ServiceWorkerResponseInfo::ForRequest(request_.get());
+  EXPECT_EQ(blink::mojom::ServiceWorkerPreparationType::RUNNING,
+            info->service_worker_preparation_type());
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest,
@@ -559,7 +567,7 @@ TEST_F(ServiceWorkerURLRequestJobTest,
   histogram_tester.ExpectUniqueSample(
       "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type_"
       "NavigationPreloadEnabled",
-      static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::
+      static_cast<int>(blink::mojom::ServiceWorkerPreparationType::
                            START_IN_EXISTING_READY_PROCESS),
       1);
   histogram_tester.ExpectUniqueSample(
@@ -567,6 +575,12 @@ TEST_F(ServiceWorkerURLRequestJobTest,
   histogram_tester.ExpectUniqueSample(
       "ServiceWorker.NavPreload.FinishedFirst_MainFrame_WorkerStartOccurred",
       false, 1);
+
+  ServiceWorkerResponseInfo* info =
+      ServiceWorkerResponseInfo::ForRequest(request_.get());
+  EXPECT_EQ(blink::mojom::ServiceWorkerPreparationType::
+                START_IN_EXISTING_READY_PROCESS,
+            info->service_worker_preparation_type());
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest,
@@ -586,7 +600,7 @@ TEST_F(ServiceWorkerURLRequestJobTest,
   histogram_tester.ExpectUniqueSample(
       "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type_"
       "NavigationPreloadEnabled",
-      static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::
+      static_cast<int>(blink::mojom::ServiceWorkerPreparationType::
                            START_IN_EXISTING_READY_PROCESS),
       1);
   histogram_tester.ExpectUniqueSample(
@@ -594,6 +608,12 @@ TEST_F(ServiceWorkerURLRequestJobTest,
   histogram_tester.ExpectUniqueSample(
       "ServiceWorker.NavPreload.FinishedFirst_MainFrame_WorkerStartOccurred",
       true, 1);
+
+  ServiceWorkerResponseInfo* info =
+      ServiceWorkerResponseInfo::ForRequest(request_.get());
+  EXPECT_EQ(blink::mojom::ServiceWorkerPreparationType::
+                START_IN_EXISTING_READY_PROCESS,
+            info->service_worker_preparation_type());
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest, NavPreloadMetrics_WorkerFirst_SubFrame) {
