@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "401e8336_6c19fa09",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-12T05:36:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9c6bcd47_a7483ef0",
+      "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14aca6f3_8f0322e9",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 9
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "12c56425_3ee24f94",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-12T05:36:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ac076e06_193971ed",
+      "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c32e1e05_880993a7",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 9
@@ -86,6 +122,24 @@
       "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108fc00e_26af2112",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-12T05:36:25Z",
+      "side": 1,
+      "message": "ok, I will move the get_longest_contiguous_keywords  to a separated function and move this comment there too.",
+      "parentUuid": "c32e1e05_880993a7",
+      "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
