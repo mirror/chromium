@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89093eb9_3abbb6e4",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-12T20:16:21Z",
+      "side": 1,
+      "message": "I seem to recall there may be some subtleties here, but I don\u0027t recall off hand. mark@, thoughts?",
+      "revId": "ac892a6c3286b6d457a1c1fc974df90811867a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
