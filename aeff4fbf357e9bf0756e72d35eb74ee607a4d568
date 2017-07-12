@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d74795b_63838b16",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-12T17:04:23Z",
+      "side": 0,
+      "message": "Remove this method.",
+      "revId": "aeff4fbf357e9bf0756e72d35eb74ee607a4d568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

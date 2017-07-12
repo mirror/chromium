@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ac7f246_0cf19b03",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-12T17:04:23Z",
+      "side": 1,
+      "message": "I still find myself wanting to put this logic in the model and not the view. But I haven\u0027t yet figured out how to do that without affecting what Android is doing or putting platform ifdefs in the model code that I think would end up being more complicated and confusing.\n\nThat said, I believe we\u0027d be better off actually updating the model itself (i.e. modifying match_ instead of making copies) and doing these transformations earlier. That way the view has a consistent idea of what it is we really want to display. As at least one consequence, the accessibility text (which is pulled from match_.contents) would be the whole string.\n\nI think doing this in OmniboxPopupContentsView::UpdatePopupAppearance(), right after you determine if any matches are tail suggestions, would be a step in the right direction. It would let us keep this class simpler (just display whatever\u0027s in match_) and it would simplify the interface as you wouldn\u0027t have to pass any_tail_suggestions and common_suggestion through.",
+      "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d11094_c26fea71",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-12T17:04:23Z",
+      "side": 1,
+      "message": "Is this correct for RTL languages or do we need to do contents + prefix in that case? I *think* this is ok because the contents is laid out in a logically LTR order even for RTL content and then RenderText does the layout? But can you confirm?",
+      "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec615adb_a6f7e0bf",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-12T17:04:23Z",
+      "side": 1,
+      "message": "How about base::StartsWith(contents, common_suggest, SENSITIVE) here?\n\n(Or maybe even INSENSITIVE_ASCII on the off chance there\u0027s some simple case mismatch?)",
+      "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc903226_d4a49e9e",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-12T17:04:23Z",
+      "side": 1,
+      "message": "This is assuming that the first offset is the only one to be less than the length of the common prefix. Which I think is probably what we always see? But it\u0027d be safer to not assume that and have the dim text overwrite (remove) any classifications before the end of the common prefix. Except for the last one, whose offset would become the length of the common prefix.",
+      "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
