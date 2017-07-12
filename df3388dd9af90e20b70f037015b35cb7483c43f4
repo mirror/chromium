@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cdb84974_67b48303",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-12T01:30:36Z",
+      "side": 1,
+      "message": "Per offline chat, we have to preserve this flag during internal ARC restart. Extra unit_test and comment added.",
+      "parentUuid": "455d99cf_4dddc7d2",
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "592ae76f_7dd773a4",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "04bc8e5e_e2918879",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-12T01:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "592ae76f_7dd773a4",
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03979f4c_f6b00923",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-11T23:56:33Z",
       "side": 1,
       "message": "I think, this line is enough to get correct session start time.\nYou do not need new observers.",
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7cb36e_a2f0b847",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-12T01:30:36Z",
+      "side": 1,
+      "message": "With one small correction, we need to this inside DoBrowserLaunch once it can called outside, for example from WizardController.",
+      "parentUuid": "03979f4c_f6b00923",
       "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "a5e03eaf_dd326788",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-12T01:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c0f92a6_23f0fe6f",
+      "range": {
+        "startLine": 649,
+        "startChar": 36,
+        "endLine": 649,
+        "endChar": 0
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16c9fa22_15cd4273",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
         "patchSetId": 5
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "0484ef7f_27dde137",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-12T01:30:36Z",
+      "side": 1,
+      "message": "I think we can use 20 freely. Q to answer how fast user would activate ARC app after sign in.",
+      "parentUuid": "16c9fa22_15cd4273",
+      "range": {
+        "startLine": 652,
+        "startChar": 60,
+        "endLine": 652,
+        "endChar": 71
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "255edc88_54a8be3b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -110,6 +212,30 @@
       "writtenOn": "2017-07-11T19:52:44Z",
       "side": 1,
       "message": "Any of the *Time* histogram recording functions will record values in milliseconds.  If you want to record values in seconds, please use a *Counts* histogram instead.",
+      "range": {
+        "startLine": 1763,
+        "startChar": 61,
+        "endLine": 1763,
+        "endChar": 68
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24d076a_0d86ae13",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1763,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-12T01:30:36Z",
+      "side": 1,
+      "message": "I think ms is good. Thanks for pointing this.",
+      "parentUuid": "255edc88_54a8be3b",
       "range": {
         "startLine": 1763,
         "startChar": 61,
