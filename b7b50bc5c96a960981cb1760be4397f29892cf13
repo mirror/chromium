@@ -46,6 +46,30 @@
       "revId": "b7b50bc5c96a960981cb1760be4397f29892cf13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4d955a6_2a768240",
+        "filename": "remoting/ios/facade/remoting_oauth_authentication.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-12T23:25:56Z",
+      "side": 1,
+      "message": "It seems this message will immediately get replaced by the one in RemotingService..?\n\nFor SSO I did see callbackWithAccessToken fail once with some weird invalid_grant error (and HostListFetcher crashed the app) but couldn\u0027t repro any more...\n\nThe SSO implementation doesn\u0027t use this class at all so we may need to do the same thing in RemotingSSOAuthentication if we want to.\n\nI kind of feel like we can make callbackWithAccessToken log out if anything goes wrong, but I\u0027m not sure whether that\u0027s doing too much...",
+      "parentUuid": "2683919e_65e0e715",
+      "range": {
+        "startLine": 149,
+        "startChar": 36,
+        "endLine": 149,
+        "endChar": 76
+      },
+      "revId": "b7b50bc5c96a960981cb1760be4397f29892cf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
