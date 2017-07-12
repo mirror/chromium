@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fdc821e0_88b8df87",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-12T00:38:22Z",
+      "side": 1,
+      "message": "Done, made change and removed friend class. Note: I added a DCHECK here to make sure the WebContentsData isn\u0027t null. Because of how TabManager creates the WebContentsData (in GetWebContentsData), it seemed appropriate.",
+      "parentUuid": "93975fc8_21f8b9b9",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "c8da2ea59bb73da841b6cf2eff2155b9395dfdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "614aadef_71338d92",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 1
@@ -63,6 +87,24 @@
       "revId": "c8da2ea59bb73da841b6cf2eff2155b9395dfdec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b8b2ad_e5d1bf84",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-12T00:38:22Z",
+      "side": 1,
+      "message": "No, you\u0027re right, it\u0027s not needed; I removed it in the latest patch.\n\nFWIW, I should have closed all tabs. I removed it because no URLs were committed, but discovered not explicitly closing tabs can cause downstream tests to fail when run in batches. The new version makes sure the WebContents is destroyed, but doesn\u0027t use a TabStripModel.",
+      "parentUuid": "614aadef_71338d92",
+      "revId": "c8da2ea59bb73da841b6cf2eff2155b9395dfdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
