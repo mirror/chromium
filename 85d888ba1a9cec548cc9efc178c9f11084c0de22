@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17f5c7f7_812f365f",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-12T11:42:09Z",
+      "side": 1,
+      "message": "I think it\u0027d be better if this function took as an argument the NavigationThrottle that wants to resume the navigation, and then check inside NavigationHandleImpl whether this throttle is allowed to restart the navigation. This way, we also avoid potential misuses of Resume/CancelDeferredNavigation coming from inside content/.\n\nSince I understand it might be problematic for unit test, I think we can add an additional method CallResumeForTesting that won\u0027t take a NavigationThrottle as an argument to use in unit tests.",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9353ddba_d485b676",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-12T11:42:09Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f7e620_36f88017",
+        "filename": "content/public/browser/navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-12T11:42:09Z",
+      "side": 1,
+      "message": "As explained in navigation_handle_impl.h, I would prefer if this function and the one below just called NavigationhandleImpl::Resume and the check about throttles was done inside NavigationHandleImpl.",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e72f99_3ff13711",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-12T11:42:09Z",
+      "side": 1,
+      "message": "nit: maybe finish the sentence as \"and its associated NavigationThrottles, including this one.\" I\u0027d rather drive the point home that calling this might cause the object to be deleted.",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e94deb_f9a50400",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-12T11:42:09Z",
+      "side": 1,
+      "message": "nit: same as above.",
+      "revId": "85d888ba1a9cec548cc9efc178c9f11084c0de22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
