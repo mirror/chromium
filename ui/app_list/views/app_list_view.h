@@ -136,6 +136,10 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Called when maximize mode starts and ends.
   void OnMaximizeModeChanged(bool started);
 
+  // Update the bounds of the app list according to |new_y_position|. Note
+  // |new_y_position| is in the coordinate space of the screen.
+  void UpdateBoundsOnYPosition(int64_t new_y_position);
+
  private:
   friend class test::AppListViewTestApi;
 
