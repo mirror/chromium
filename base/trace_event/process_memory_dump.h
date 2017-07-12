@@ -143,7 +143,7 @@ class BASE_EXPORT ProcessMemoryDump {
   void AddOwnershipEdge(const MemoryAllocatorDumpGuid& source,
                         const MemoryAllocatorDumpGuid& target);
 
-  // Adds edges that can be overriden by a later or earlier call to
+  // Adds edges that can be overridden by a later or earlier call to
   // AddOwnershipEdge() with the same source and target with a different
   // |importance| value.
   void AddOverridableOwnershipEdge(const MemoryAllocatorDumpGuid& source,
@@ -151,7 +151,7 @@ class BASE_EXPORT ProcessMemoryDump {
                                    int importance);
 
   // Creates ownership edges for memory backed by base::SharedMemory. Handles
-  // the case of cross process sharing and importnace of ownership for the case
+  // the case of cross process sharing and importance of ownership for the case
   // with and without the base::SharedMemory dump provider. The new version
   // should just use global dumps created by SharedMemoryTracker and this
   // function handles the transition until we get SharedMemory IDs through mojo
