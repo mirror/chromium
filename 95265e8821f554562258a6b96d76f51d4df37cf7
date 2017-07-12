@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73cabd86_f0338a40",
+        "filename": "content/public/common/sandbox_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-12T00:51:53Z",
+      "side": 1,
+      "message": "(Optional/pedantic): Maybe SANDBOX_TYPE_NO_SANDBOX to make it super clear that this is without a sandbox.",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "95265e8821f554562258a6b96d76f51d4df37cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
