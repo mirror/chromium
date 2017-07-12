@@ -237,10 +237,7 @@ bool UpdateProcessTypeAndEnableSandbox(
 
 }  // namespace
 
-GpuProcessPolicy::GpuProcessPolicy() : GpuProcessPolicy(false) {}
-
-GpuProcessPolicy::GpuProcessPolicy(bool allow_mincore)
-    : broker_process_(NULL), allow_mincore_(allow_mincore) {}
+GpuProcessPolicy::GpuProcessPolicy() : broker_process_(NULL) {}
 
 GpuProcessPolicy::~GpuProcessPolicy() {}
 
@@ -252,12 +249,6 @@ ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
 #endif
     case __NR_ioctl:
       return Allow();
-    case __NR_mincore:
-      if (allow_mincore_) {
-        return Allow();
-      } else {
-        return SandboxBPFBasePolicy::EvaluateSyscall(sysno);
-      }
 #if defined(__i386__) || defined(__x86_64__) || defined(__mips__)
     // The Nvidia driver uses flags not in the baseline policy
     // (MAP_LOCKED | MAP_EXECUTABLE | MAP_32BIT)

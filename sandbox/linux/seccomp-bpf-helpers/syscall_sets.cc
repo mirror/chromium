@@ -489,12 +489,12 @@ bool SyscallSets::IsNetworkSocketInformation(int sysno) {
 bool SyscallSets::IsAllowedAddressSpaceAccess(int sysno) {
   switch (sysno) {
     case __NR_brk:
+    case __NR_mincore:
     case __NR_mlock:
     case __NR_munlock:
     case __NR_munmap:
       return true;
     case __NR_madvise:
-    case __NR_mincore:
     case __NR_mlockall:
 #if defined(__i386__) || defined(__x86_64__) || defined(__mips__) || \
     defined(__aarch64__)
