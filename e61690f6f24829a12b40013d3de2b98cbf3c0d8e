@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1643294_e509dfa5",
+        "filename": "third_party/WebKit/Source/build/scripts/make_runtime_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-12T20:07:26Z",
+      "side": 1,
+      "message": "Could this be named _origin_trial_controlled_features, to match the others? Other than this, they\u0027re all named with the same name as the context variable they control.",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "e61690f6f24829a12b40013d3de2b98cbf3c0d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d149e6_b4959dbb",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/RuntimeEnabledFeatures.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-12T20:07:26Z",
+      "side": 1,
+      "message": "If by chance there are no origin-trials at a given point in time, this method will be excluded -- I would expect that we\u0027d probably still want it to exist, so it can be called by other code, but just do nothing.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "e61690f6f24829a12b40013d3de2b98cbf3c0d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
