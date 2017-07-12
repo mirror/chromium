@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83bda053_8c98866e",
+        "filename": "ui/gfx/test/animation_test_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T21:47:12Z",
+      "side": 1,
+      "message": "newline between 5/6.",
+      "range": {
+        "startLine": 6,
+        "startChar": 22,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "ceeb8a573661faf3d77c93acaecd99718366fe04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fa788c_b691bbf8",
+        "filename": "ui/gfx/test/animation_test_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T21:47:12Z",
+      "side": 1,
+      "message": "Guards are now wrong.\noptional: That said, I prefer keeping this in ui/gfx/animation. I think it\u0027s easier to find code like this when it lives along side the code you want to test, just like animation/test_animation_delegate.h. I realize we aren\u0027t consistent though, so if you really want it under the test directory, leave it.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 46
+      },
+      "revId": "ceeb8a573661faf3d77c93acaecd99718366fe04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
