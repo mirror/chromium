@@ -486,6 +486,55 @@ TEST_F(ArcSessionManagerTest, IgnoreSecondErrorReporting) {
   arc_session_manager()->Shutdown();
 }
 
+TEST_F(ArcSessionManagerTest, IsDirectlyStarted) {
+  arc_session_manager()->SetProfile(profile());
+  arc_session_manager()->Initialize();
+
+  // On initial start directy started flag is not set.
+  EXPECT_FALSE(arc_session_manager()->is_directly_started());
+  arc_session_manager()->RequestEnable();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(arc_session_manager()->is_directly_started());
+  ASSERT_EQ(ArcSessionManager::State::NEGOTIATING_TERMS_OF_SERVICE,
+            arc_session_manager()->state());
+  arc_session_manager()->OnTermsOfServiceNegotiatedForTesting(true);
+  arc_session_manager()->OnProvisioningFinished(ProvisioningResult::SUCCESS);
+  EXPECT_FALSE(arc_session_manager()->is_directly_started());
+  arc_session_manager()->Shutdown();
+  EXPECT_FALSE(arc_session_manager()->is_directly_started());
+
+  // Next ARC start, directy started flag should be set.
+  arc_session_manager()->SetProfile(profile());
+  arc_session_manager()->Initialize();
+  EXPECT_FALSE(arc_session_manager()->is_directly_started());
+  arc_session_manager()->RequestEnable();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(arc_session_manager()->is_directly_started());
+
+  // Disabling ARC turns directy started flag off.
+  arc_session_manager()->RequestDisable();
+  EXPECT_FALSE(arc_session_manager()->is_directly_started());
+  arc_session_manager()->Shutdown();
+
+  // Test ARC internal restart.
+  arc_session_manager()->SetProfile(profile());
+  arc_session_manager()->Initialize();
+  arc_session_manager()->RequestEnable();
+  base::RunLoop().RunUntilIdle();
+  ASSERT_EQ(ArcSessionManager::State::NEGOTIATING_TERMS_OF_SERVICE,
+            arc_session_manager()->state());
+  arc_session_manager()->OnTermsOfServiceNegotiatedForTesting(true);
+  arc_session_manager()->StartArcForTesting();
+  EXPECT_FALSE(arc_session_manager()->is_directly_started());
+
+  // Simualate internal restart.
+  arc_session_manager()->StopAndEnableArc();
+  base::RunLoop().RunUntilIdle();
+  // directy started flag should be preserved.
+  EXPECT_FALSE(arc_session_manager()->is_directly_started());
+  arc_session_manager()->Shutdown();
+}
+
 class ArcSessionManagerArcAlwaysStartTest : public ArcSessionManagerTest {
  public:
   ArcSessionManagerArcAlwaysStartTest() = default;
