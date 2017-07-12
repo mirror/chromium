@@ -23,6 +23,11 @@ if (is_component_build) {
 }
 target(link_target_type, "command_buffer_sources") {
   visibility = [ "//gpu/*" ]
+
+  if (is_android) {
+    visibility += [ "//components/*" ]
+  }
+
   sources = [
     "gpu_in_process_thread_service.cc",
     "gpu_in_process_thread_service.h",

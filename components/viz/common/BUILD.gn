@@ -15,6 +15,12 @@ source_set("common") {
     "gl_helper_readback_support.h",
     "gl_helper_scaling.cc",
     "gl_helper_scaling.h",
+    "gpu/context_cache_controller.cc",
+    "gpu/context_cache_controller.h",
+    "gpu/context_provider.cc",
+    "gpu/context_provider.h",
+    "gpu/in_process_context_provider.cc",
+    "gpu/in_process_context_provider.h",
     "local_surface_id.cc",
     "local_surface_id.h",
     "local_surface_id_allocator.cc",
@@ -38,12 +44,23 @@ source_set("common") {
 
   deps = [
     "//base",
+    "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/client:gles2_interface",
+    "//gpu/command_buffer/service",
+    "//gpu/ipc:gl_in_process_context",
+    "//gpu/skia_bindings:skia_bindings",
     "//mojo/public/cpp/bindings",
     "//skia",
     "//ui/gfx:color_space",
     "//ui/gfx/geometry",
   ]
+
+  if (is_android) {
+    deps += [
+      "//gpu/ipc:command_buffer_sources",
+      "//gpu/ipc/common:surface_handle_type",
+    ]
+  }
 
   public_deps = [
     "//gpu/command_buffer/client",
