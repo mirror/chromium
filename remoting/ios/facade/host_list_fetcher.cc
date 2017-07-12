@@ -73,6 +73,7 @@ bool HostListFetcher::ProcessResponse(
   int response_code = request_->GetResponseCode();
   if (response_code != net::HTTP_OK) {
     LOG(ERROR) << "Hostlist request failed with error code: " << response_code;
+
     return false;
   }
 
@@ -128,7 +129,8 @@ void HostListFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
     hostlist.clear();
   }
   std::sort(hostlist.begin(), hostlist.end(), &compareHost);
-  base::ResetAndReturn(&hostlist_callback_).Run(hostlist);
+  base::ResetAndReturn(&hostlist_callback_)
+      .Run(request_->GetResponseCode(), hostlist);
 }
 
 }  // namespace remoting
