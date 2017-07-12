@@ -102,6 +102,15 @@ Polymer({
         return /** @type {chrome.settingsPrivate.PrefObject} */ ({});
       },
     },
+
+    /** @private */
+    isPartnerPowered_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.valueExists('cleanupPoweredByPartner') &&
+            loadTimeData.getBoolean('cleanupPoweredByPartner');
+      },
+    },
   },
 
   /** @private {?settings.ChromeCleanupProxy} */
@@ -139,6 +148,20 @@ Polymer({
   },
 
   /**
+   * Returns an HTML fragment containing "Powered by X®", where X is a span
+   * with the logo of the company powering the Chrome Cleaner.
+   * The place-holder logic is necessary to support languages where X would be
+   * at the start of the sentence instead of at the end.
+   * @return {string}
+   * @private
+   */
+  getPoweredByHtml_: function() {
+    var placerHolder = '__POWERED_BY_PLACEHOLDER__';
+    return this.i18n('chromeCleanupPoweredBy', placerHolder)
+        .replace(placerHolder, '<span id="powered-by"></span><span>®</span>');
+  },
+
+  /**
    * Implements the action for the only visible button in the UI, which can be
    * either to start a cleanup or to restart the computer.
    * @private
@@ -153,6 +176,15 @@ Polymer({
    */
   showFiles_: function() {
     this.showFilesToRemove_ = true;
+  },
+
+  /**
+   * @param {boolean} showFilesToRemove
+   * @param {boolean} isPartnerPowered
+   * @private
+   */
+  showPoweredBy_: function(showFilesToRemove, isPartnerPowered) {
+    return showFilesToRemove && isPartnerPowered;
   },
 
   /**
