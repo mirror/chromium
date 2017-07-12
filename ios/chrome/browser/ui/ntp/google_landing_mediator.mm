@@ -32,6 +32,7 @@
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_consumer.h"
 #import "ios/chrome/browser/ui/ntp/notification_promo_whats_new.h"
+#include "ios/chrome/browser/ui/ntp/ntp_tile_saver.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
@@ -261,6 +262,9 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 #pragma mark - MostVisitedSitesObserving
 
 - (void)onMostVisitedURLsAvailable:(const ntp_tiles::NTPTilesVector&)data {
+  // This is used by the content widget.
+  ntp_tile_saver::SaveMostVisitedToDisk(data, self);
+
   if (_mostVisitedData.size() > 0) {
     // If some content is already displayed to the user, do not update it to
     // prevent updating the all the tiles without any action from the user.
@@ -279,6 +283,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 }
 
 - (void)onIconMadeAvailable:(const GURL&)siteUrl {
+  ntp_tile_saver::UpdateSingleFavicon(siteUrl, self);
   for (size_t i = 0; i < _mostVisitedData.size(); ++i) {
     const ntp_tiles::NTPTile& ntpTile = _mostVisitedData[i];
     if (ntpTile.url == siteUrl) {
