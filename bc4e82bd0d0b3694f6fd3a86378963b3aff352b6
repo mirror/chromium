@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1bd1992b_8be357c0",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-12T15:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2d74f27_0b6a42e1",
+      "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b5c097_3974b28b",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database_unittest.cc",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836d10a4_18173ac8",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-12T15:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25b5c097_3974b28b",
+      "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -74,6 +110,30 @@
       "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac589f28_299b052b",
+        "filename": "components/test/data/password_manager/affiliation_db_v1.sql",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-12T15:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "889539c1_8266406e",
+      "range": {
+        "startLine": 19,
+        "startChar": 23,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
