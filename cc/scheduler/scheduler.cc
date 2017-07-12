@@ -70,6 +70,10 @@ void Scheduler::SetNeedsImplSideInvalidation() {
   ProcessScheduledActions();
 }
 
+void Scheduler::SetCanSkipActiveTreeFirstDraw() {
+  state_machine_.SetCanSkipActiveTreeFirstDraw();
+}
+
 base::TimeTicks Scheduler::Now() const {
   base::TimeTicks now = base::TimeTicks::Now();
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug.scheduler.now"),

@@ -463,6 +463,11 @@ void SingleThreadProxy::NotifyImageDecodeRequestFinished() {
   SetNeedsCommitOnImplThread();
 }
 
+void SingleThreadProxy::NotifyCanSkipActiveTreeFirstDraw() {
+  DCHECK(scheduler_on_impl_thread_);
+  scheduler_on_impl_thread_->SetCanSkipActiveTreeFirstDraw();
+}
+
 void SingleThreadProxy::RequestBeginMainFrameNotExpected(bool new_state) {
   if (scheduler_on_impl_thread_) {
     scheduler_on_impl_thread_->SetMainThreadWantsBeginMainFrameNotExpected(

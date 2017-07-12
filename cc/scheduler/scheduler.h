@@ -102,6 +102,8 @@ class CC_EXPORT Scheduler : public BeginFrameObserverBase {
   // be merged with the main frame and the request is assumed to be completed.
   void SetNeedsImplSideInvalidation();
 
+  void SetCanSkipActiveTreeFirstDraw();
+
   // Drawing should result in submitting a CompositorFrame to the
   // LayerTreeFrameSink and then calling this.
   void DidSubmitCompositorFrame();
