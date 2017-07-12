@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "69a990cc_c662c816",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-12T11:30:17Z",
+      "side": 1,
+      "message": "nit: Remove the last sentence since it no longer applies.",
+      "revId": "480409c62b301da9bbe000adc972a1f8fa7268a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395ba802_bdd15dd4",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-12T11:30:17Z",
+      "side": 1,
+      "message": "nit: I\u0027m thinking we might want to rename those methods eventually. NavigationRequest::Create and NavigationRequest::CreateFromBeginNavigation might be better at conveying when to use each of those. No need to do it in this patch though.",
+      "revId": "480409c62b301da9bbe000adc972a1f8fa7268a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a63e16_bff3a906",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-12T11:30:17Z",
+      "side": 1,
+      "message": "nit: this sentence should be \"This is needed to have data URLs commit ...\" -\u003e we can\u0027t navigate to about:blank from a BeginNavigation IPC so the initial comment was wrong.",
+      "revId": "480409c62b301da9bbe000adc972a1f8fa7268a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c2a1593_eeb8a406",
         "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
         "patchSetId": 8
