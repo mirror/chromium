@@ -1542,6 +1542,30 @@
     },
     {
       "key": {
+        "uuid": "f12e7a34_05514604",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-12T09:07:18Z",
+      "side": 1,
+      "message": "\"Ack\" means - I saw this, but I didn\u0027t do anything.\n\"Done\" means - I saw this and I did something about it.\nYou should have used Done.",
+      "parentUuid": "4a47a8e6_5bcee63e",
+      "range": {
+        "startLine": 60,
+        "startChar": 68,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd017685_6d53efbf",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
         "patchSetId": 3
@@ -1824,6 +1848,30 @@
     },
     {
       "key": {
+        "uuid": "6d0b7749_9f14d5a5",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-12T09:07:18Z",
+      "side": 1,
+      "message": "I did not mean the renaming, I meant these functions in general. \n\nI feel that one line functions below do not bring any value and make understanding of tests more difficult. E.g. when I encounter such a test for the first time and see SignIn(), I can vaguely assume what happens. If the test fails, I will likely have to look up the function.\n\nIt is ok to have verbose self-containing tests and I suggest inlining one-line functions.\n\nThe same argument applies to larger helpers here and I myself would inline them.",
+      "parentUuid": "80a1a3ea_e2573200",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 51
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79de00f0_689adb0c",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 3
@@ -1939,6 +1987,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff7cd8e_ac2647e8",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-12T09:07:18Z",
+      "side": 1,
+      "message": "Fair enough, I just wasn\u0027t familiar with Delegate Pattern.",
+      "parentUuid": "81c968ef_0069bf35",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 61
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -2080,6 +2152,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a435a321_8dc59a9e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-12T09:07:18Z",
+      "side": 1,
+      "message": "Not done. You expect GetPrefService()-\u003eGetString(prefs::kBreakingNewsSubscriptionDataToken) to be equal to token, thus, token is expected value.",
+      "parentUuid": "9ceabb54_01bad2f8",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 11
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
