@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a18a43ac_44362bb4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-12T18:58:26Z",
+      "side": 1,
+      "message": "Riiiight, forgot autoscroll used scroll into view.",
+      "parentUuid": "75cf43b1_5773ddc0",
+      "range": {
+        "startLine": 654,
+        "startChar": 47,
+        "endLine": 654,
+        "endChar": 73
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "821a146e_4247383d",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 18
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "855a1176_b991dbc2",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04f121c8_6ccd3ecd",
+        "filename": "third_party/WebKit/Source/platform/scroll/SmoothScrollSequencer.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-12T18:58:26Z",
+      "side": 1,
+      "message": "Ah, sorry! I hadn\u0027t realized that we might have a no-op scroll and then we won\u0027t call the animator at all. In that case, I think having it in one place here is better than in both ScrollableArea::SetScrollOffset and in ProgrammaticScrollAnimator::ScrollToOffsetWithoutAnimation. \n\nAlternatively, maybe we could avoid queuing the scroll in QueueAnimation if we determine it won\u0027t cause a scroll.\n\nI\u0027ll leave the decision to you.",
+      "parentUuid": "2f9b4308_ddf8f786",
       "range": {
         "startLine": 33,
         "startChar": 2,

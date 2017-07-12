@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e366f206_dfe10427",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-12T18:58:26Z",
+      "side": 1,
+      "message": "Hmm...I didn\u0027t appreciate how tricky this is. In general, I prefer to avoid these kinds of state variables unless absolutely necessary as they add significant complexity and potential for bugs but I can\u0027t think of a simple way out.\n\nI think perhaps the correct thing would be to convert ScrollIntoView to return the amount it needs to scroll (i.e. the expose rect). It looks like the return is used only from LayoutBox::ScrollRectToVisible. We\u0027d need to fix ScrollRectToVisible to turn the return into the next \"rect_to_scroll\" and that would depend on whether we\u0027re scrolling a Frame or a PLSA.\n\nI\u0027m also not sure how this will work with RootLayerScrolling turned on. Can you give it a try with --enable-blink-features\u003dRootLayerScrolling?\n\nPlease add a TODO+crbug here that we should get rid of this variable and move the \"next_rect_to_scroll\" calculation into ScrollRectToVisible. We can work on that in a followup.",
+      "range": {
+        "startLine": 114,
+        "startChar": 13,
+        "endLine": 114,
+        "endChar": 38
+      },
+      "revId": "82d05409af059cb913c01d9454c0b6462d78647f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
