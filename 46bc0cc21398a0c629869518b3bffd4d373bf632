@@ -163,6 +163,29 @@
     },
     {
       "key": {
+        "uuid": "bbccd3db_6b69f8f8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2403,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-12T14:11:22Z",
+      "side": 1,
+      "message": "What are the coordinates going to be on these mouse events?\n\nThis seems like an interop nightmare no if you are generating events from a system that can\u0027t handled them?\n\nPerhaps we really should have a different pointer type for these events and then we can determine them appropriately?",
+      "range": {
+        "startLine": 2403,
+        "startChar": 11,
+        "endLine": 2403,
+        "endChar": 24
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89082c24_822082cb",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 7
