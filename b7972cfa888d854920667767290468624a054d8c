@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82b4b2b4_22312791",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-12T00:32:27Z",
+      "side": 1,
+      "message": "Oh shoot, I missed this.  Even better, use a ScopedObserver to ensure you can\u0027t forget the RemoveObserver.",
+      "parentUuid": "d2dddcf5_40118afb",
+      "revId": "b7972cfa888d854920667767290468624a054d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39d33c31_eabd4bf3",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 20
