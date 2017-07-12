@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb03b5fb_bb9115e2",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T01:28:41Z",
+      "side": 1,
+      "message": "nit: Please document that this enum should be treated as append-only (because it\u0027s used to back an UMA histogram).",
+      "range": {
+        "startLine": 19,
+        "startChar": 71,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "a22fd66a9bbbf4ad0fd8f8441cbf9408853528f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e61de37_6e549d31",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T01:28:41Z",
+      "side": 1,
+      "message": "nit: enum class, perhaps?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "a22fd66a9bbbf4ad0fd8f8441cbf9408853528f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a6b6ee_37742f2c",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T01:28:41Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you need the width specification here.  Is there some value to it that I\u0027m not aware of?",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "a22fd66a9bbbf4ad0fd8f8441cbf9408853528f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4436a80d_06f24d1b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4064,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T01:28:41Z",
+      "side": 1,
+      "message": "nit: It\u0027s probably more obvious to folks working on this code; but to me, it\u0027s not clear what \"checker\" means, even after reading the histogram description.  I think this label is equivalent to \"Can defer\"?  It would be nice to clarify either here or in the histogram description what the connection is between the term \"checker\" and whether an image is decoded synchronously or asynchronously.",
+      "range": {
+        "startLine": 4064,
+        "startChar": 28,
+        "endLine": 4064,
+        "endChar": 35
+      },
+      "revId": "a22fd66a9bbbf4ad0fd8f8441cbf9408853528f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
