@@ -162,6 +162,11 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
             }
 
             @Override
+            public boolean hasTab() {
+                return false;
+            }
+
+            @Override
             public String getCurrentUrl() {
                 return null;
             }
