@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "41c4b35d_b5c9d12b",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-12T21:19:30Z",
+      "side": 1,
+      "message": "I\u0027m working based off of the descriptions at: https://chromium.googlesource.com/chromium/src/tools/gn/+/HEAD/docs/cross_compiles.md, but that documentation is surprisingly unclear, and has a recommendation that it is generally best to use current_cpu, without any explanation as to why. :)\n\nHaving discussed this with brettw, my understanding is that there are basically two forms of \"cross-compile\" that the host/current/target distinction serves:\n\nIf our output consists of multiple target architectures, e.g. we cross-compile(ish) on Linux/x64 to build for ChromeOS/x64, and include bundled PNaCl components, then:\n  - host_* is Linux/x64 throughout the build.\n  - target_* is ChromeOS/x64 across all native targets in the build.\n  - target_* is PNaCl across all the portable targets in the build.\n  - current_* is Linux/x64 when building host tools, whether for native or portable targets.\n  - current_* is ChromeOS/x64 or PNaCl for native and portable output binaries.\n\ne.g. If I\u0027m building idl_to_nacl.exe then:\n  - host is Linux/x64\n  - target is PNaCl\n  - current is Linux/x64 because idl_to_nacl.exe will run on the host as part of the build.\n\ni.e. \"current\" is usually the right thing to use, if you\u0027re thinking about the properties of an output binary.",
+      "parentUuid": "9bb14561_d630bc70",
+      "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e15b811_a5575536",
         "filename": "build/config/compiler/compiler.gni",
         "patchSetId": 2
@@ -84,6 +102,30 @@
       "writtenOn": "2017-07-12T16:34:24Z",
       "side": 1,
       "message": "I think the logic is backwards here.  We want \"arm32\" to the the special case.  By default we want frame pointers on.  AKA: if we happened to compile an x86-32 bit Chrome (not sure we actually still do this?) we\u0027d want frame pointers.\n\nSo this (untested) code:\n\n  # We need frame pointers for CWP and profiling gives a\n  # big enough benefit that the frame pointer penalty is\n  # worth it.  ...but frame pointers are broken on clang\n  # for arm32 and nobody\u0027s fixing it, so turn frame\n  # pointers off since there\u0027s no benefit to offset the\n  # frame pointer penalty.\n  # See \u003chttps://bugs.llvm.org/show_bug.cgi?id\u003d18505\u003e.\n  if (current_cpu \u003d\u003d \"arm\") {\n    enable_frame_pointers \u003d false\n  } else {\n    enable_frame_pointers \u003d true\n  }",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 3
+      },
+      "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715ff67a_e044a0c1",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-12T21:19:30Z",
+      "side": 1,
+      "message": "OK; I\u0027d musunderstood that we basically only want them for 64-bit architectures - if we want them on all architectures unless they\u0027re broken then special-casing ARM 32-bit makes more sense.",
+      "parentUuid": "3e15b811_a5575536",
       "range": {
         "startLine": 81,
         "startChar": 2,
