@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "d0075ef5_0c64bd8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-12T00:11:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2ebc2402_37e8b2f1",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e67113eb_67c55196",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
         "patchSetId": 7
@@ -189,6 +207,24 @@
       "side": 1,
       "message": "Yes. It\u0027s the source of the media element. It can be an invalid URL as some sites don\u0027t escape properly.",
       "parentUuid": "e67113eb_67c55196",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2859fe0a_4e913cd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-12T00:11:21Z",
+      "side": 1,
+      "message": "It would seem logical to validate the URL itself and throw an IllegalArgumentException, but maybe there is a different place in the code that would take care of that.  I am not sure what the Remote Playback spec implies if the src URL is not valid.",
+      "parentUuid": "e9b0c737_bb90296d",
       "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -259,6 +295,24 @@
       "side": 1,
       "message": "I think in the case of Remote Playback we must only supply two or three possible app id all of which must be valid. I removed the try/catch block.",
       "parentUuid": "69fb712e_f0e5703e",
+      "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0035c835_f13463b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-12T00:11:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cfc7c311_6ceaaaea",
       "revId": "7b8b74ce3a20ad2c038376bc229b18281d2f9f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
