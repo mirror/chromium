@@ -53,6 +53,7 @@ import org.chromium.chrome.browser.widget.ClipDrawableProgressBar.DrawingInfo;
 import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.androidoverlay.AndroidOverlayModeManager;
 import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.SPenSupport;
@@ -72,8 +73,7 @@ import java.util.List;
  */
 public class CompositorViewHolder extends FrameLayout
         implements ContentOffsetProvider, LayoutManagerHost, LayoutRenderHost, Invalidator.Host,
-                FullscreenListener {
-
+                   FullscreenListener, AndroidOverlayModeManager.Listener {
     private boolean mIsKeyboardShowing;
 
     private final Invalidator mInvalidator = new Invalidator();
@@ -446,6 +446,7 @@ public class CompositorViewHolder extends FrameLayout
         if (mFullscreenManager != null) {
             mFullscreenManager.addListener(this);
         }
+        AndroidOverlayModeManager.getInstance().addListener(this);
         requestRender();
     }
 
@@ -454,6 +455,7 @@ public class CompositorViewHolder extends FrameLayout
      */
     public void onStop() {
         if (mFullscreenManager != null) mFullscreenManager.removeListener(this);
+        AndroidOverlayModeManager.getInstance().removeListener(this);
     }
 
     @Override
@@ -477,6 +479,13 @@ public class CompositorViewHolder extends FrameLayout
     public void onToggleOverlayVideoMode(boolean enabled) {
         if (mCompositorView != null) {
             mCompositorView.setOverlayVideoMode(enabled);
+        }
+    }
+
+    @Override
+    public void onOverlayModeChanged(boolean useOverlayMode) {
+        if (mCompositorView != null) {
+            mCompositorView.setOverlayVideoMode(useOverlayMode);
         }
     }
 
