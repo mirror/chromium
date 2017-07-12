@@ -137,6 +137,7 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
       // Header bar should be always visible on Account Picker screen.
       Oobe.getInstance().headerHidden = false;
       chrome.send('hideCaptivePortal');
+
       var podRow = $('pod-row');
       podRow.handleBeforeShow();
 
@@ -496,6 +497,7 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
 
       this.lockScreenAppsState_ = state;
       $('login-header-bar').lockScreenAppsState = state;
+      $('top-header').lockScreenAppsState = state;
 
       // Reset the focused pod if app window is being shown on top of the user
       // pods. Main goal is to clear any credentials the user might have input.
