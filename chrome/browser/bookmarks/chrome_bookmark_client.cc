@@ -20,7 +20,7 @@
 #include "components/history/core/browser/url_database.h"
 
 #if defined(OS_ANDROID)
-#include "chrome/browser/android/offline_pages/offline_page_bookmark_observer.h"
+#include "chrome/browser/offline_pages/offline_page_bookmark_observer.h"
 #endif
 
 ChromeBookmarkClient::ChromeBookmarkClient(
