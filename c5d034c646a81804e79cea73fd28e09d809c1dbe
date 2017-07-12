@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bdb584e0_97939ecd",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T06:54:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "167efc45_7f3ab9ad",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d27a567_546e7a0a",
         "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "That\u0027s a good point. I was imagining eventually fields would be added like:\n- serviceWorkerStartupStart (timestamp when the browser realizes a SW is needed)\n- serviceWorkerExecutionStart (timestamp when the JS of the SW starts being executed)\n- serviceWorkerStartupEnd (timestamp when the SW finished initial script evaluation)\n\nAnd possibly other timing information like for navigation preload.\n\nBut for now it could possibly just make sense in PageLoadMetadata.",
       "parentUuid": "7d27a567_546e7a0a",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bf5823_f5cf9384",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T06:54:10Z",
+      "side": 1,
+      "message": "I explored putting it in PageLoadMetadata. But since the plumbing goes through Performance/WebPerformance in Blink, keeping it as a Timing struct inside PageLoadTiming seems better. PageLoadMetadata looks very heavily dependent on being updated via OnLoadingBehaviorObserved. I\u0027m not sure if currently where OnLoadingBehaviorObserved gets triggered we have a Performance object set up for the Frame yet. So I think it makes sense to keep it in ServiceWorkerTiming, especially since in the future we may have more fields here.",
+      "parentUuid": "d36741f5_8aeb2d1a",
       "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "a3d996dd_d95a8312",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T06:54:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e923fa97_ebbf0d2b",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee24a56e_9ee82764",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
         "patchSetId": 3
@@ -118,6 +172,24 @@
       "side": 1,
       "message": "Yes I\u0027ve been meaning to factor this out for a while :(",
       "parentUuid": "ee24a56e_9ee82764",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc96fcd7_344925e1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T06:54:10Z",
+      "side": 1,
+      "message": "I added a comment that its\u0027 only used for UMA currently. The field gets set for all requests (navigation and subresource). But the UMA is only logged for navigation (more specifically, for main frame navigations in the foreground).",
+      "parentUuid": "3c081ba9_a79668f0",
       "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
