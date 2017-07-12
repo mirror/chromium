@@ -5,7 +5,7 @@
 #ifndef ScopedCredentialInfo_h
 #define ScopedCredentialInfo_h
 
-#include "core/dom/DOMArrayBuffer.h"
+#include "core/typed_arrays/DOMArrayBuffer.h"
 #include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
