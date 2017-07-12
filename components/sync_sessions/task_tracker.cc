@@ -110,9 +110,15 @@ TaskTracker::~TaskTracker() {}
 
 TabTasks* TaskTracker::GetTabTasks(SessionID::id_type tab_id,
                                    SessionID::id_type parent_id) {
-  if (local_tab_tasks_map_.count(tab_id) > 0)
+  DVLOG(1) << "Getting tab tasks for " << tab_id << " with parent "
+           << parent_id;
+  if (local_tab_tasks_map_.count(tab_id) > 0 &&
+      (parent_id == kInvalidTabID ||
+       local_tab_tasks_map_[tab_id]->parent_id() == parent_id)) {
     return local_tab_tasks_map_[tab_id].get();
+  }
 
+  DVLOG(1) << "Creating tab tasks for " << tab_id;
   if (local_tab_tasks_map_.count(parent_id) > 0) {
     // If the parent id is set, it means this tab forked from another tab.
     // In that case, the task for the current navigation might be part of a
@@ -120,6 +126,7 @@ TabTasks* TaskTracker::GetTabTasks(SessionID::id_type tab_id,
     // parent's TabTasks object in order to simplify tracking this relationship.
     local_tab_tasks_map_[tab_id] =
         base::MakeUnique<TabTasks>(*local_tab_tasks_map_[parent_id]);
+    local_tab_tasks_map_[tab_id]->set_parent_id(parent_id);
   } else {
     local_tab_tasks_map_[tab_id] = base::MakeUnique<TabTasks>();
   }

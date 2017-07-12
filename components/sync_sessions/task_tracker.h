@@ -16,6 +16,7 @@
 #include "base/time/time.h"
 #include "components/sessions/core/session_id.h"
 #include "components/sessions/core/session_types.h"
+#include "components/sync_sessions/synced_tab_delegate.h"
 #include "ui/base/page_transition_types.h"
 
 namespace sync_sessions {
@@ -39,6 +40,9 @@ class TabTasks {
   TabTasks();
   explicit TabTasks(const TabTasks& rhs);
   virtual ~TabTasks();
+
+  SessionID::id_type parent_id() { return parent_id_; }
+  void set_parent_id(SessionID::id_type parent_id) { parent_id_ = parent_id; }
 
   // Gets root->leaf task id list for the navigation denoted by |nav_id|.
   // Returns an empty vector if |nav_id| is not found.
@@ -76,6 +80,9 @@ class TabTasks {
 
   // The most recent navigation id seen for this tab.
   int most_recent_nav_id_ = kInvalidNavID;
+
+  // The parent id for this tab (if there is one).
+  SessionID::id_type parent_id_ = kInvalidTabID;
 
   DISALLOW_ASSIGN(TabTasks);
 };
