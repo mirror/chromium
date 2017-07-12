@@ -93,6 +93,30 @@
       "revId": "e5a3c5076b5ef1687d497c7575d553688e94d1c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f9c69b_21291089",
+        "filename": "content/browser/resources/media/main.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-12T17:46:15Z",
+      "side": 1,
+      "message": "JS was never aware of this, the CSS style is for WEBMEDIAPLAYER_DESTROYED players. That event is not sent on tab close.",
+      "parentUuid": "76f7e9aa_0db42a98",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "e5a3c5076b5ef1687d497c7575d553688e94d1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
