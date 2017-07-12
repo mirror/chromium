@@ -16,6 +16,24 @@
       "revId": "dbd6c2cc86998caec95fc5f4b04a7297b78b1bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc57722_bd53f99e",
+        "filename": "ios/chrome/app/startup/ios_chrome_main.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-12T15:16:23Z",
+      "side": 1,
+      "message": "Thank you for the example. There wasn\u0027t a reason except getting the move logic correct. I like keeping it on the stack better.",
+      "parentUuid": "004013c6_9d8778a5",
+      "revId": "dbd6c2cc86998caec95fc5f4b04a7297b78b1bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
