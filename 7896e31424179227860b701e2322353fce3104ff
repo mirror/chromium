@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9b8b1bd_4b25b576",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-12T16:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06c6e816_f094537f",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 75
+      },
+      "revId": "7896e31424179227860b701e2322353fce3104ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5e055b3_3c19a51a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8013f1c8_b786abd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-12T16:30:47Z",
+      "side": 1,
+      "message": "Done (🇬🇧😢)",
+      "parentUuid": "c5e055b3_3c19a51a",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "7896e31424179227860b701e2322353fce3104ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d7eb82d_ddfa568d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "7896e31424179227860b701e2322353fce3104ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28cb1a3_a01b1ee1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-12T16:30:47Z",
+      "side": 1,
+      "message": "Agreed, I was not sure how to address that and went with the lazy option u_u. Anyway, I implemented the setVisibilityInternal() proposal, thanks!",
+      "parentUuid": "0d7eb82d_ddfa568d",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "7896e31424179227860b701e2322353fce3104ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
