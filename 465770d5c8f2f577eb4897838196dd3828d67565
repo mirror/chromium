@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c82a382e_d7a486ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T00:01:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d6e6e48_4b154d71",
+      "range": {
+        "startLine": 93,
+        "startChar": 24,
+        "endLine": 93,
+        "endChar": 36
+      },
+      "revId": "465770d5c8f2f577eb4897838196dd3828d67565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e27304cc_040898a4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-11T22:59:45Z",
       "side": 1,
       "message": "why this change?  I\u0027m worried we might have relied on this to ensure the toolbar buttons didn\u0027t get hidden incorrectly.",
+      "range": {
+        "startLine": 855,
+        "startChar": 12,
+        "endLine": 855,
+        "endChar": 13
+      },
+      "revId": "465770d5c8f2f577eb4897838196dd3828d67565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68bdbde_63b92297",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T00:01:38Z",
+      "side": 1,
+      "message": "I added this while implementing the animation to hide the toolbar buttons when the sheet was open so that the toolbar buttons didn\u0027t get set back to visible after they were already hidden e.g. when focusing the omnibox when the bottom sheet is open.\n\nPreviously, if shouldHideToolbarButtons() was true, all of the end toolbar buttons were hidden and this class could safely set the toolbar buttons container to invisible. Now, shouldHideToolbarButtons() may return true even though menu button is still visible, so this class cannot safely set the toolbar buttons container visibility.\n\nI renamed this method shouldHideToolbarButtons() to shouldHideSomeToolbarButtons() so that it\u0027s more descriptive.",
+      "parentUuid": "e27304cc_040898a4",
       "range": {
         "startLine": 855,
         "startChar": 12,
