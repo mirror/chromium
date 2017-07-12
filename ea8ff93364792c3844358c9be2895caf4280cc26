@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "7f79b4c1_c0715c1c",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T15:08:05Z",
+      "side": 1,
+      "message": "Ugh. That\u0027s super-confusing, especially since it means trying to set --ssl-version-max\u003dtls1.1 (I hope no one\u0027s doing that, but if the flag exists...) will get ignored. This needs some very clear comments throughout as to what all these settings mean in conjunction with each other. But I think you also should not set this when the variant is disabled because that doesn\u0027t make sense.",
+      "parentUuid": "1d8cee79_a4018833",
+      "revId": "ea8ff93364792c3844358c9be2895caf4280cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1101914_17da4e5f",
         "filename": "chrome/browser/prefs/chrome_command_line_pref_store_ssl_manager_unittest.cc",
         "patchSetId": 2
