@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d99b48f3_2ea3040e",
+        "filename": "jingle/glue/chrome_async_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-12T19:33:05Z",
+      "side": 1,
+      "message": "Explain in a comment why this is necessary. Also maybe move it next to MessagePumpDefault creation.",
+      "range": {
+        "startLine": 161,
+        "startChar": 3,
+        "endLine": 161,
+        "endChar": 57
+      },
+      "revId": "bf857dd64f2a389c497f7a1b6df61c3025e36ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2f375a_635b8e4c",
+        "filename": "jingle/notifier/base/xmpp_connection_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-12T19:33:05Z",
+      "side": 1,
+      "message": "please add a comment to explain why this is necessary",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "bf857dd64f2a389c497f7a1b6df61c3025e36ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
