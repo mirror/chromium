@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09568880_e2344514",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-12T17:09:54Z",
+      "side": 1,
+      "message": "std::vector\u003cconst char*\u003e should be enough to do the trick here. since second value in the pair never gets used anyway.",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96676843_34b6aeb7",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-12T17:09:54Z",
+      "side": 1,
+      "message": "Let\u0027s keep the function name more general. How about just say \"Returns the list of preferences related to Safe Browsing\"? You don\u0027t have to mention chrome://safe-browsing here.\nUp to you. Feel free to ignore.",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08562050_d55646b3",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-12T17:09:54Z",
+      "side": 1,
+      "message": "nit: s/Sb/SafeBrowsing\n\nAnd how about takes in a PrefService* instead of BrowserContext*?  It seems all the other functions in this file only takes in PrefService.",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b8492d_1743b3e9",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-12T17:09:54Z",
+      "side": 1,
+      "message": "How about a map?  std::unordered_map or std::map? Is this because vector and pair easier to handle via JS?",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d0ce00_688114e0",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-12T17:09:54Z",
+      "side": 1,
+      "message": "some indentations got removed. Is this intentional?",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02b2e6f_d8abee4d",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-12T17:09:54Z",
+      "side": 1,
+      "message": "SafeBrowsingUIHandler::SafeBrowsingUIHandler(content::BrowserContext* context)\n    :browser_context_(context) {}",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13cc5e1_9083eea7",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-12T17:09:54Z",
+      "side": 1,
+      "message": "Please keep the member in the private or protected session. Member name should end with \"_\".",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
