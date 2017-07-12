@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5200ec9b_38182181",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T17:14:51Z",
+      "side": 1,
+      "message": "For simple getters using hacker_style naming convention, you can inline their implementations into this header. You also don\u0027t need the comment on line 45.",
+      "revId": "4ff9667930f44569f67eeab59f831c58f87b76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd97ad2_b68db9f9",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T17:14:51Z",
+      "side": 1,
+      "message": "Please separate this out (add a blank line before) and a comment, since it\u0027s not the same as the other simple getters.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "4ff9667930f44569f67eeab59f831c58f87b76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6dc758_cecc44a6",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T17:14:51Z",
+      "side": 1,
+      "message": "Add a comment.",
+      "range": {
+        "startLine": 72,
+        "startChar": 39,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "4ff9667930f44569f67eeab59f831c58f87b76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d795d28b_11e666ba",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T17:14:51Z",
+      "side": 1,
+      "message": "Preserve how this was before - on line 132 earlier.",
+      "range": {
+        "startLine": 177,
+        "startChar": 14,
+        "endLine": 177,
+        "endChar": 30
+      },
+      "revId": "4ff9667930f44569f67eeab59f831c58f87b76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185ad65e_752f7e84",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T17:14:51Z",
+      "side": 1,
+      "message": "Now that you use composition, restore original comment.",
+      "range": {
+        "startLine": 193,
+        "startChar": 5,
+        "endLine": 193,
+        "endChar": 32
+      },
+      "revId": "4ff9667930f44569f67eeab59f831c58f87b76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b7d634_f6cd6b6c",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T17:14:51Z",
+      "side": 1,
+      "message": "Comment please.",
+      "range": {
+        "startLine": 223,
+        "startChar": 24,
+        "endLine": 223,
+        "endChar": 38
+      },
+      "revId": "4ff9667930f44569f67eeab59f831c58f87b76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04932f38_090d83bf",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T17:14:51Z",
+      "side": 1,
+      "message": "Nit: Move this above the sequence checker. Add a comment.",
+      "range": {
+        "startLine": 317,
+        "startChar": 2,
+        "endLine": 317,
+        "endChar": 29
+      },
+      "revId": "4ff9667930f44569f67eeab59f831c58f87b76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2194e9d_25e41a8a",
+        "filename": "components/variations/service/variations_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T17:14:51Z",
+      "side": 1,
+      "message": "Move this to a new file, field_trial_creator_unittest.cc. Same for CreateTrialsFromOutdatedSee.",
+      "range": {
+        "startLine": 310,
+        "startChar": 7,
+        "endLine": 310,
+        "endChar": 28
+      },
+      "revId": "4ff9667930f44569f67eeab59f831c58f87b76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
