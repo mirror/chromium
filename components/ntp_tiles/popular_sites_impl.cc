@@ -12,6 +12,7 @@
 #include "base/feature_list.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -202,7 +203,9 @@ PopularSitesImpl::PopularSitesImpl(
       parse_json_(std::move(parse_json)),
       is_fallback_(false),
       sites_(ParseSiteList(*prefs->GetList(kPopularSitesJsonPref))),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  CreateDefaultSections();
+}
 
 PopularSitesImpl::~PopularSitesImpl() {}
 
@@ -234,6 +237,26 @@ bool PopularSitesImpl::MaybeStartFetch(bool force_download,
 
 const PopularSites::SitesVector& PopularSitesImpl::sites() const {
   return sites_;
+}
+
+const std::vector<ExplorationSection>& PopularSitesImpl::sections() const {
+  return sections_;
+}
+
+const ExplorationSection& PopularSitesImpl::GetSection(SectionType type) const {
+  return sections()[static_cast<size_t>(SectionType::SOCIAL)];
+}
+
+const PopularSites::SitesVector& PopularSitesImpl::GetSitesForSection(
+    const ExplorationSection& section) const {
+  if (section == sections_[static_cast<size_t>(SectionType::PERSONALIZED)]) {
+    // The first section is always identical to the regular popular sites.
+    return sites();
+  }
+  // Skip the first category (PERSONALIZED) by decreasing the section index.
+  size_t section_index = static_cast<size_t>(section.type) - 1;
+  DCHECK(section_index < static_cast<size_t>(SectionType::LAST));
+  return sections_sites_[section_index];
 }
 
 GURL PopularSitesImpl::GetLastURLFetched() const {
@@ -331,6 +354,186 @@ void PopularSitesImpl::RegisterProfilePrefs(
   user_prefs->RegisterListPref(kPopularSitesJsonPref, DefaultPopularSites());
 }
 
+void PopularSitesImpl::CreateDefaultSections() {
+  const size_t kSectionCount = static_cast<size_t>(SectionType::LAST) + 1;
+  sections_.reserve(kSectionCount);
+  for (size_t i = 0; i < kSectionCount; ++i) {
+    sections_.emplace_back(ExplorationSection(static_cast<SectionType>(i)));
+  }
+  // Skip the PERSONALIZED section.
+  sections_sites_.resize(kSectionCount - 1);
+}
+
+void PopularSitesImpl::PopulateSectionsWithSampleData() {
+  SitesVector* social =
+      &sections_sites_[static_cast<size_t>(SectionType::SOCIAL) - 1];
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("Facebook"),
+                       /* url= */ GURL("https://facebook.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("Instagram"),
+                       /* url= */ GURL("https://instagram.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("Pinterest"),
+                       /* url= */ GURL("https://pinterest.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("Twitter"),
+                       /* url= */ GURL("https://twitter.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  social->emplace_back(/* title= */ base::UTF8ToUTF16("VKontakte"),
+                       /* url= */ GURL("https://vk.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+
+  SitesVector* entertainment =
+      &sections_sites_[static_cast<size_t>(SectionType::ENTERTAINMENT) - 1];
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("YouTube"),
+                              /* url= */ GURL("https://youtube.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("HotStar"),
+                              /* url= */ GURL("https://hotstar.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("CricBuzz"),
+                              /* url= */ GURL("https://cricbuzz.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("Whitty Feed"),
+                              /* url= */ GURL("https://whittyfeed.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+  entertainment->emplace_back(/* title= */ base::UTF8ToUTF16("Voot"),
+                              /* url= */ GURL("https://voot.com"),
+                              /* favicon_url= */ GURL(),
+                              /* large_icon_url= */ GURL(),
+                              /* thumbnail_url= */ GURL());
+
+  SitesVector* news =
+      &sections_sites_[static_cast<size_t>(SectionType::NEWS) - 1];
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("Times of India"),
+                     /* url= */ GURL("https://toi.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("Jagran"),
+                     /* url= */ GURL("https://jagran.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("Daily Thanthi"),
+                     /* url= */ GURL("https://dailythanthi.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("Live Hindustan"),
+                     /* url= */ GURL("https://livehindustan.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+  news->emplace_back(/* title= */ base::UTF8ToUTF16("AajTak"),
+                     /* url= */ GURL("https://aajtak.com"),
+                     /* favicon_url= */ GURL(),
+                     /* large_icon_url= */ GURL(),
+                     /* thumbnail_url= */ GURL());
+
+  SitesVector* ecommerce =
+      &sections_sites_[static_cast<size_t>(SectionType::ECOMMERCE) - 1];
+  ecommerce->emplace_back(/* title= */ base::UTF8ToUTF16("Amazon"),
+                          /* url= */ GURL("https://amazon.com"),
+                          /* favicon_url= */ GURL(),
+                          /* large_icon_url= */ GURL(),
+                          /* thumbnail_url= */ GURL());
+  ecommerce->emplace_back(/* title= */ base::UTF8ToUTF16("FlipKart"),
+                          /* url= */ GURL("https://flipkart.com"),
+                          /* favicon_url= */ GURL(),
+                          /* large_icon_url= */ GURL(),
+                          /* thumbnail_url= */ GURL());
+  ecommerce->emplace_back(/* title= */ base::UTF8ToUTF16("Snapdeal"),
+                          /* url= */ GURL("https://snapdeal.com"),
+                          /* favicon_url= */ GURL(),
+                          /* large_icon_url= */ GURL(),
+                          /* thumbnail_url= */ GURL());
+  ecommerce->emplace_back(/* title= */ base::UTF8ToUTF16("OLX"),
+                          /* url= */ GURL("https://olx.com"),
+                          /* favicon_url= */ GURL(),
+                          /* large_icon_url= */ GURL(),
+                          /* thumbnail_url= */ GURL());
+
+  SitesVector* tools =
+      &sections_sites_[static_cast<size_t>(SectionType::TOOLS) - 1];
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("Google Maps"),
+                      /* url= */ GURL("https://maps.google.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("TrueCaller"),
+                      /* url= */ GURL("https://truecaller.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("PayTm"),
+                      /* url= */ GURL("https://paytm.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("Ola"),
+                      /* url= */ GURL("https://ola.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("Bookmyshow"),
+                      /* url= */ GURL("https://bookmyshow.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+  tools->emplace_back(/* title= */ base::UTF8ToUTF16("Zomato"),
+                      /* url= */ GURL("https://zomato.com"),
+                      /* favicon_url= */ GURL(),
+                      /* large_icon_url= */ GURL(),
+                      /* thumbnail_url= */ GURL());
+
+  SitesVector* travel =
+      &sections_sites_[static_cast<size_t>(SectionType::TRAVEL) - 1];
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("MakemyTrip"),
+                       /* url= */ GURL("https://makemytrip.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("Via"),
+                       /* url= */ GURL("https://via.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("Housing"),
+                       /* url= */ GURL("https://housing.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("Redbus"),
+                       /* url= */ GURL("https://redbus.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+  travel->emplace_back(/* title= */ base::UTF8ToUTF16("Goibibo"),
+                       /* url= */ GURL("https://goibibo.com"),
+                       /* favicon_url= */ GURL(),
+                       /* large_icon_url= */ GURL(),
+                       /* thumbnail_url= */ GURL());
+}
+
 void PopularSitesImpl::FetchPopularSites() {
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("popular_sites_fetch", R"(
@@ -395,6 +598,12 @@ void PopularSitesImpl::OnJsonParsed(std::unique_ptr<base::Value> json) {
   prefs_->SetInt64(kPopularSitesLastDownloadPref,
                    base::Time::Now().ToInternalValue());
   prefs_->SetString(kPopularSitesURLPref, pending_url_.spec());
+
+  if (base::FeatureList::IsEnabled(kSiteExplorationsFeature)) {
+    // TODO(fhorschig): Remove the sample data and actually parse stuff. Unless
+    // this is done, DO NOT SUBMIT.
+    PopulateSectionsWithSampleData();
+  }
 
   sites_ = ParseSiteList(*list);
   callback_.Run(true);

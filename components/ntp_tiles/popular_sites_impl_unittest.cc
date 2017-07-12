@@ -36,6 +36,7 @@
 using testing::Eq;
 using testing::Gt;
 using testing::IsEmpty;
+using testing::Not;
 
 namespace ntp_tiles {
 namespace {
@@ -445,6 +446,126 @@ TEST_F(PopularSitesTest, ShouldOverrideDirectory) {
               Eq(base::Optional<bool>(true)));
 
   EXPECT_THAT(sites.size(), Eq(1u));
+}
+
+TEST_F(PopularSitesTest, ProvidesSectionsAndEmptySitesRightAfterConstruction) {
+  scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
+      new net::TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get()));
+  const size_t kSectionCount = static_cast<size_t>(SectionType::LAST) + 1;
+
+  auto ps = CreatePopularSites(url_request_context.get());
+  ASSERT_THAT(ps->sections().size(), Eq(kSectionCount));
+  for (const ExplorationSection& section : ps->sections()) {
+    EXPECT_THAT(section.title, Not(Eq(base::string16())));
+    EXPECT_THAT(ps->GetSitesForSection(section).size(), Eq(0ul));
+  }
+}
+
+TEST_F(PopularSitesTest, LinksPersonalizedSectionToPopularSites) {
+  scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
+      new net::TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get()));
+
+  auto ps = CreatePopularSites(url_request_context.get());
+  const PopularSites::SitesVector& personalized_sites =
+      ps->GetSitesForSection(ps->GetSection(SectionType::PERSONALIZED));
+  ASSERT_THAT(personalized_sites.size(), Eq(ps->sites().size()));
+  for (size_t i = 0; i < personalized_sites.size(); ++i) {
+    EXPECT_THAT(personalized_sites[i].title, Eq(ps->sites()[i].title));
+    EXPECT_THAT(personalized_sites[i].url, Eq(ps->sites()[i].url));
+    EXPECT_THAT(personalized_sites[i].url, Eq(ps->sites()[i].favicon_url));
+    EXPECT_THAT(personalized_sites[i].url, Eq(ps->sites()[i].large_icon_url));
+    EXPECT_THAT(personalized_sites[i].url, Eq(ps->sites()[i].thumbnail_url));
+  }
+}
+
+TEST_F(PopularSitesTest, DoesNotFetchExplorationSitesWithoutFeature) {
+  // TODO(fhorschig): This test assumes the exploration sites are integrated
+  // in the existing JSON. DO NOT SUBMIT before we know whether this is true as
+  // the test code should not fetch web sites.
+  base::test::ScopedFeatureList override_features;
+  override_features.InitAndDisableFeature(kSiteExplorationsFeature);
+
+  scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
+      new net::TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get()));
+  SetCountryAndVersion("ZZ", "9");
+  RespondWithJSON(
+      "https://www.gstatic.com/chrome/ntp/suggested_sites_ZZ_9.json",
+      {kWikipedia});
+
+  auto ps = CreatePopularSites(url_request_context.get());
+  // The first section (with non-empty test data) that is not "PERSONALIZED".
+  const ExplorationSection& social_section =
+      ps->GetSection(SectionType::SOCIAL);
+
+  base::RunLoop loop;
+  base::Optional<bool> save_success = false;
+  bool callback_was_scheduled = ps->MaybeStartFetch(
+      /*force_download=*/true, base::Bind(
+                                   [](base::Optional<bool>* save_success,
+                                      base::RunLoop* loop, bool success) {
+                                     save_success->emplace(success);
+                                     loop->Quit();
+                                   },
+                                   &save_success, &loop));
+
+  // Assert that callback was scheduled so we can wait for its completion.
+  ASSERT_TRUE(callback_was_scheduled);
+  // There should be 0 default social sites as nothing was fetched yet.
+  EXPECT_THAT(ps->GetSitesForSection(social_section).size(), Eq(0ul));
+
+  loop.Run();  // Wait for the fetch to finish and the callback to return.
+
+  EXPECT_TRUE(save_success.value());
+
+  // There should be 0 social sites as the fetch should have been omitted.
+  EXPECT_THAT(ps->GetSitesForSection(social_section).size(), Eq(0ul));
+}
+
+TEST_F(PopularSitesTest, FetchesExplorationSitesWithFeature) {
+  // TODO(fhorschig): This test assumes the exploration sites are integrated
+  // in the existing JSON. DO NOT SUBMIT before we know whether this is true as
+  // the test code should not fetch web sites.
+  base::test::ScopedFeatureList override_features;
+  override_features.InitAndEnableFeature(kSiteExplorationsFeature);
+
+  scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
+      new net::TestURLRequestContextGetter(
+          base::ThreadTaskRunnerHandle::Get()));
+  SetCountryAndVersion("ZZ", "9");
+  RespondWithJSON(
+      "https://www.gstatic.com/chrome/ntp/suggested_sites_ZZ_9.json",
+      {kWikipedia});
+
+  auto ps = CreatePopularSites(url_request_context.get());
+  // The first section (with non-empty test data) that is not "PERSONALIZED".
+  const ExplorationSection& social_section =
+      ps->GetSection(SectionType::SOCIAL);
+
+  base::RunLoop loop;
+  base::Optional<bool> save_success = false;
+  bool callback_was_scheduled = ps->MaybeStartFetch(
+      /*force_download=*/true, base::Bind(
+                                   [](base::Optional<bool>* save_success,
+                                      base::RunLoop* loop, bool success) {
+                                     save_success->emplace(success);
+                                     loop->Quit();
+                                   },
+                                   &save_success, &loop));
+
+  // Assert that callback was scheduled so we can wait for its completion.
+  ASSERT_TRUE(callback_was_scheduled);
+  // There should be 0 default social sites as nothing was fetched yet.
+  EXPECT_THAT(ps->GetSitesForSection(social_section).size(), Eq(0ul));
+
+  loop.Run();  // Wait for the fetch to finish and the callback to return.
+
+  EXPECT_TRUE(save_success.value());
+
+  // There should be 0 social sites as the fetch should have been omitted.
+  EXPECT_THAT(ps->GetSitesForSection(social_section).size(), Not(Eq(0ul)));
 }
 
 }  // namespace

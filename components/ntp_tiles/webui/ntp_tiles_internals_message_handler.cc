@@ -304,6 +304,15 @@ void NTPTilesInternalsMessageHandler::OnMostVisitedURLsAvailable(
 void NTPTilesInternalsMessageHandler::OnIconMadeAvailable(
     const GURL& site_url) {}
 
+void NTPTilesInternalsMessageHandler::OnExplorationSectionsAvailable(
+    const std::vector<ntp_tiles::ExplorationSection>& sections) {}
+
+void NTPTilesInternalsMessageHandler::OnExplorationURLsAvailable(
+    ntp_tiles::SectionType section_type,
+    const ntp_tiles::NTPTilesVector& tiles) {
+  // TODO(fhorschig): Handle message similar to |OnMostVisitedURLsAvailable|.
+}
+
 void NTPTilesInternalsMessageHandler::OnFaviconLookupDone(
     const NTPTilesVector& tiles,
     FaviconResultMap* result_map,

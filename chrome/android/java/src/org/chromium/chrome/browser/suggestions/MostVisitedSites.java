@@ -40,6 +40,34 @@ public interface MostVisitedSites {
          */
         @CalledByNative("Observer")
         void onIconMadeAvailable(String siteUrl);
+
+        /**
+         * This is called when a previously uncached icon has been fetched.
+         * Parameters guaranteed to be non-null.
+         *
+         * @param titles Array of explorations section titles.
+         * @param types The unique {@code SectionType} for each exploration section. Tiles in the
+         *              same section are related to the same topic (e.g. News, Entertainment, ...).
+         */
+        @CalledByNative("Observer")
+        void onExplorationSectionsAvailable(int[] types, String[] titles);
+
+        /**
+         * This is called when the list of most visited URLs is initially available or updated.
+         * Parameters guaranteed to be non-null.
+         *
+         * @param type The updated exploration section identified by the {@code SectionType}.
+         * @param titles Array of most visited url page titles.
+         * @param urls Array of most visited URLs, including popular URLs if
+         *             available and necessary (i.e. there aren't enough most
+         *             visited URLs).
+         * @param whitelistIconPaths The paths to the icon image files for whitelisted tiles, empty
+         *                           strings otherwise.
+         * @param sources For each tile, the {@code TileSource} that generated the tile.
+         */
+        @CalledByNative("Observer")
+        void onExplorationURLsAvailable(int type, String[] titles, String[] urls,
+                String[] whitelistIconPaths, int[] sources);
     }
 
     /**

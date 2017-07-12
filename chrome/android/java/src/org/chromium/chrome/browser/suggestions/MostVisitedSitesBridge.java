@@ -87,6 +87,22 @@ public class MostVisitedSitesBridge
                     observer.onIconMadeAvailable(siteUrl);
                 }
             }
+            @Override
+            public void onExplorationSectionsAvailable(int[] types, String[] titles) {
+                // Don't notify observer if we've already been destroyed.
+                if (mNativeMostVisitedSitesBridge != 0) {
+                    observer.onExplorationSectionsAvailable(types, titles);
+                }
+            }
+            @Override
+            public void onExplorationURLsAvailable(int type, String[] titles, String[] urls,
+                    String[] whitelistIconPaths, int[] sources) {
+                // Don't notify observer if we've already been destroyed.
+                if (mNativeMostVisitedSitesBridge != 0) {
+                    observer.onExplorationURLsAvailable(
+                            type, titles, urls, whitelistIconPaths, sources);
+                }
+            }
         };
         nativeSetObserver(mNativeMostVisitedSitesBridge, wrappedObserver, numSites);
     }

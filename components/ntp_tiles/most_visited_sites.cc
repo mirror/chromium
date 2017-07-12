@@ -56,6 +56,20 @@ bool HasHomeTile(const NTPTilesVector& tiles) {
   return false;
 }
 
+NTPTilesVector MakeTilesFromSites(const PopularSites::SitesVector& sites) {
+  // TODO(fhorschig): Apply Blacklists to these sites.
+  NTPTilesVector tiles(sites.size());
+  for (const PopularSites::Site& site : sites) {
+    NTPTile tile;
+    tile.title = site.title;
+    tile.url = site.url;
+    tile.source = TileSource::POPULAR;
+    tile.favicon_url = site.favicon_url;
+    tiles.emplace_back(std::move(tile));
+  }
+  return tiles;
+}
+
 }  // namespace
 
 MostVisitedSites::MostVisitedSites(
@@ -125,6 +139,9 @@ void MostVisitedSites::SetMostVisitedURLsObserver(Observer* observer,
     popular_sites_->MaybeStartFetch(
         false, base::Bind(&MostVisitedSites::OnPopularSitesDownloaded,
                           base::Unretained(this)));
+    if (base::FeatureList::IsEnabled(kSiteExplorationsFeature) && observer_) {
+      observer_->OnExplorationSectionsAvailable(popular_sites_->sections());
+    }
   }
 
   if (top_sites_) {
@@ -487,6 +504,12 @@ void MostVisitedSites::SaveTilesAndNotify(NTPTilesVector personal_tiles) {
   if (!observer_)
     return;
   observer_->OnMostVisitedURLsAvailable(*current_tiles_);
+  if (!popular_sites_ || !ShouldShowPopularSites() ||
+      !base::FeatureList::IsEnabled(kSiteExplorationsFeature)) {
+    return;
+  }
+  observer_->OnExplorationURLsAvailable(SectionType::PERSONALIZED,
+                                        *current_tiles_);
 }
 
 // static
@@ -513,6 +536,27 @@ void MostVisitedSites::OnPopularSitesDownloaded(bool success) {
     // Ignore callback; these icons will be seen on the *next* NTP.
     icon_cacher_->StartFetchPopularSites(popular_site, base::Closure(),
                                          base::Closure());
+  }
+
+  if (!base::FeatureList::IsEnabled(kSiteExplorationsFeature)) {
+    return;
+  }
+  for (const ExplorationSection& section : popular_sites_->sections()) {
+    if (section.type == SectionType::PERSONALIZED) {
+      continue;
+    }
+    const PopularSites::SitesVector sites =
+        popular_sites_->GetSitesForSection(section);
+    for (const auto& site : sites) {
+      // Ignore callback; these icons will be seen on the *next* NTP.
+      icon_cacher_->StartFetchPopularSites(site, base::Closure(),
+                                           base::Closure());
+    }
+    if (!observer_) {
+      continue;
+    }
+    observer_->OnExplorationURLsAvailable(section.type,
+                                          MakeTilesFromSites(std::move(sites)));
   }
 }
 

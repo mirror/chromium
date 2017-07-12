@@ -11,6 +11,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "components/ntp_tiles/exploration_section.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -62,6 +63,13 @@ class PopularSites {
 
   // Returns the list of available sites.
   virtual const SitesVector& sites() const = 0;
+
+  // Returns the cached list of available sections.
+  virtual const std::vector<ExplorationSection>& sections() const = 0;
+  // Returns the cached list of sites within a section.
+  virtual const SitesVector& GetSitesForSection(
+      const ExplorationSection& section) const = 0;
+  virtual const ExplorationSection& GetSection(SectionType type) const = 0;
 
   // Various internals exposed publicly for diagnostic pages only.
   virtual GURL GetLastURLFetched() const = 0;

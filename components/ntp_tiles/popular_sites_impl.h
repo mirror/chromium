@@ -60,6 +60,10 @@ class PopularSitesImpl : public PopularSites, public net::URLFetcherDelegate {
   bool MaybeStartFetch(bool force_download,
                        const FinishedCallback& callback) override;
   const SitesVector& sites() const override;
+  const std::vector<ExplorationSection>& sections() const override;
+  const SitesVector& GetSitesForSection(
+      const ExplorationSection& section) const override;
+  const ExplorationSection& GetSection(SectionType type) const override;
   GURL GetLastURLFetched() const override;
   GURL GetURLToFetch() override;
   std::string GetDirectoryToFetch() override;
@@ -75,6 +79,11 @@ class PopularSitesImpl : public PopularSites, public net::URLFetcherDelegate {
   // Fetch the popular sites at the given URL, overwriting any cache in prefs
   // that already exists.
   void FetchPopularSites();
+
+  // Initialize section members based on |SectionType| enum.
+  void CreateDefaultSections();
+  // Populates the section members with default data.
+  void PopulateSectionsWithSampleData();
 
   // net::URLFetcherDelegate implementation.
   void OnURLFetchComplete(const net::URLFetcher* source) override;
@@ -96,6 +105,8 @@ class PopularSitesImpl : public PopularSites, public net::URLFetcherDelegate {
   std::unique_ptr<net::URLFetcher> fetcher_;
   bool is_fallback_;
   SitesVector sites_;
+  std::vector<ExplorationSection> sections_;
+  std::vector<SitesVector> sections_sites_;
   GURL pending_url_;
 
   base::WeakPtrFactory<PopularSitesImpl> weak_ptr_factory_;
