@@ -627,6 +627,30 @@
       "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93d69b6_a1f2b400",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-12T19:49:33Z",
+      "side": 1,
+      "message": "Oh, of course. I failed to realize that limitation. My bad.\n\nGiven the overhead involved this approach seems like the best option.",
+      "parentUuid": "27455f5b_cc9a8c9a",
+      "range": {
+        "startLine": 179,
+        "startChar": 33,
+        "endLine": 179,
+        "endChar": 55
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
