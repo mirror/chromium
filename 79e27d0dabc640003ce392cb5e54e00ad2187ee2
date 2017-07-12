@@ -16,6 +16,24 @@
       "revId": "79e27d0dabc640003ce392cb5e54e00ad2187ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aed6df9_0a3c5a2e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/application-panel/resources-panel-websql.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-12T17:54:16Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "00fd6a29_15807fbc",
+      "revId": "79e27d0dabc640003ce392cb5e54e00ad2187ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
