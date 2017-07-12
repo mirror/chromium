@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5845824b_57ba0491",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T02:42:10Z",
+      "side": 1,
+      "message": "This doesn\u0027t guarantee that kHeaderMapping really has the right number of values, would it be better to write:\n\nconst char* kHeaderMapping[] \u003d { ... };\n\nand have a static assert to make it sure the arraysize matches with the num of the enums?",
+      "revId": "843c47abcf212d2e910a3f6acddd0050978ddd45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
