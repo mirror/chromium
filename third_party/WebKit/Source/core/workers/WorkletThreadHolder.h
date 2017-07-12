@@ -91,7 +91,7 @@ class WorkletThreadHolder {
   void InitializeOnWorkletThread() {
     MutexLocker locker(HolderInstanceMutex());
     DCHECK(!initialized_);
-    thread_->Initialize();
+    thread_->InitializeOnThread();
     initialized_ = true;
   }
 
@@ -107,7 +107,7 @@ class WorkletThreadHolder {
   }
 
   void ShutdownOnWorlketThread(WaitableEvent* waitable_event) {
-    thread_->Shutdown();
+    thread_->ShutdownOnThread();
     waitable_event->Signal();
   }
 
