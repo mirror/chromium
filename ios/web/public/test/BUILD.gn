@@ -16,6 +16,8 @@ source_set("test") {
     "//ios/web/public/test/fakes",
     "//ios/web/public/test/http_server",
     "//ios/web/test:test_support",
+    "//net",
+    "//net:test_support",
     "//testing/gtest",
     "//ui/base",
     "//url",
@@ -24,6 +26,8 @@ source_set("test") {
   allow_circular_includes_from = [ "//ios/web/test:test_support" ]
 
   sources = [
+    "embedded_test_server_util.h",
+    "embedded_test_server_util.mm",
     "js_test_util.h",
     "js_test_util.mm",
     "native_controller_test_util.h",

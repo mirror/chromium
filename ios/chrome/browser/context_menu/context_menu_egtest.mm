@@ -19,8 +19,11 @@
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 #import "ios/testing/wait_util.h"
 #import "ios/web/public/test/earl_grey/web_view_matchers.h"
+#import "ios/web/public/test/embedded_test_server_util.h"
 #import "ios/web/public/test/http_server/http_server.h"
 #import "ios/web/public/test/http_server/http_server_util.h"
+#include "net/test/embedded_test_server/http_request.h"
+#include "net/test/embedded_test_server/http_response.h"
 #include "url/gurl.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -31,12 +34,12 @@ using chrome_test_util::ButtonWithAccessibilityLabelId;
 using chrome_test_util::OpenLinkInNewTabButton;
 
 namespace {
-const char kUrlChromiumLogoPage[] =
-    "http://ios/testing/data/http_server_files/chromium_logo_page.html";
-const char kUrlChromiumLogoImg[] =
-    "http://ios/testing/data/http_server_files/chromium_logo.png";
-const char kUrlInitialPage[] = "http://scenarioContextMenuOpenInNewTab";
-const char kUrlDestinationPage[] = "http://destination";
+const char kUrlChromiumLogoPage[] = "/chromium_logo_page.html";
+const char kUrlChromiumLogoImg[] = "/chromium_logo.png";
+const char kUrlInitialPage[] = "/scenarioContextMenuOpenInNewTab";
+const char kUrlInitialTallPage[] =
+    "/scenarioContextMenuOpenInNewTabFromTallPage";
+const char kUrlDestinationPage[] = "/destination";
 const char kChromiumImageID[] = "chromium_image";
 const char kDestinationLinkID[] = "link";
 
@@ -102,6 +105,29 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
   chrome_test_util::SelectTabAtIndexInCurrentMode(index);
 }
 
+// This method returns reponses of normal and tall pages with link.
+std::unique_ptr<net::test_server::HttpResponse> ResponseHandler(
+    const net::test_server::HttpRequest& request) {
+  std::unique_ptr<net::test_server::BasicHttpResponse> http_response(
+      new net::test_server::BasicHttpResponse);
+  http_response->set_code(net::HTTP_OK);
+  if (request.relative_url == kUrlInitialPage) {
+    http_response->set_content("<a style='margin-left:50px' href='" +
+                               web::test::GetURL(kUrlDestinationPage).spec() +
+                               "' id='link'>link</a>");
+  } else if (request.relative_url == kUrlInitialTallPage) {
+    http_response->set_content(
+        "<div style='height:4000px'></div>"
+        "<a style='margin-left:50px' href='" +
+        web::test::GetURL(kUrlDestinationPage).spec() + "' id='link'>link</a>");
+  } else if (request.relative_url == kUrlDestinationPage) {
+    http_response->set_content(kDestinationHtml);
+  } else {
+    return NULL;
+  }
+  return std::move(http_response);
+}
+
 }  // namespace
 
 // Context menu tests for Chrome.
@@ -120,12 +146,22 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
   [super tearDown];
 }
 
+- (void)setUp {
+  [super setUp];
+  web::test::RegisterHandlerAndStart(base::Bind(&ResponseHandler));
+}
+
+- (void)tearDown {
+  web::test::ShutDownServer();
+  [super tearDown];
+}
+
 // Tests that selecting "Open Image" from the context menu properly opens the
 // image in the current tab.
 - (void)testOpenImageInCurrentTabFromContextMenu {
-  GURL pageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoPage);
-  GURL imageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoImg);
-  web::test::SetUpFileBasedHttpServer();
+  GURL pageURL = web::test::GetURL(kUrlChromiumLogoPage);
+  GURL imageURL = web::test::GetURL(kUrlChromiumLogoImg);
+
   [ChromeEarlGrey loadURL:pageURL];
   [ChromeEarlGrey waitForMainTabCount:1];
 
@@ -141,9 +177,9 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
 // Tests that selecting "Open Image in New Tab" from the context menu properly
 // opens the image in a new background tab.
 - (void)testOpenImageInNewTabFromContextMenu {
-  GURL pageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoPage);
-  GURL imageURL = web::test::HttpServer::MakeUrl(kUrlChromiumLogoImg);
-  web::test::SetUpFileBasedHttpServer();
+  GURL pageURL = web::test::GetURL(kUrlChromiumLogoPage);
+  GURL imageURL = web::test::GetURL(kUrlChromiumLogoImg);
+
   [ChromeEarlGrey loadURL:pageURL];
   [ChromeEarlGrey waitForMainTabCount:1];
 
@@ -162,15 +198,9 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
 - (void)testContextMenuOpenInNewTab {
   // Set up test simple http server.
   std::map<GURL, std::string> responses;
-  GURL initialURL = web::test::HttpServer::MakeUrl(kUrlInitialPage);
-  GURL destinationURL = web::test::HttpServer::MakeUrl(kUrlDestinationPage);
+  GURL initialURL = web::test::GetURL(kUrlInitialPage);
+  GURL destinationURL = web::test::GetURL(kUrlDestinationPage);
 
-  // The initial page contains a link to the destination page.
-  responses[initialURL] = "<a style='margin-left:50px' href='" +
-                          destinationURL.spec() + "' id='link'>link</a>";
-  responses[destinationURL] = kDestinationHtml;
-
-  web::test::SetUpSimpleHttpServer(responses);
   [ChromeEarlGrey loadURL:initialURL];
   [ChromeEarlGrey waitForMainTabCount:1];
 
@@ -191,19 +221,9 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
 - (void)testContextMenuOpenInNewTabFromTallPage {
   // Set up test simple http server.
   std::map<GURL, std::string> responses;
-  GURL initialURL =
-      web::test::HttpServer::MakeUrl("http://scenarioContextMenuOpenInNewTab");
-  GURL destinationURL = web::test::HttpServer::MakeUrl("http://destination");
+  GURL initialURL = web::test::GetURL(kUrlInitialTallPage);
+  GURL destinationURL = web::test::GetURL(kUrlDestinationPage);
 
-  // The initial page contains a link to the destination page that is below a
-  // really tall div so that scrolling is required.
-  responses[initialURL] =
-      "<div style='height:4000px'></div>"
-      "<a style='margin-left:50px' href='" +
-      destinationURL.spec() + "' id='link'>link</a>";
-  responses[destinationURL] = kDestinationHtml;
-
-  web::test::SetUpSimpleHttpServer(responses);
   [ChromeEarlGrey loadURL:initialURL];
   [ChromeEarlGrey waitForMainTabCount:1];
 
