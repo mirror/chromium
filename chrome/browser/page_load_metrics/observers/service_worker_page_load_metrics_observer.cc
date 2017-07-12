@@ -8,6 +8,7 @@
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "net/http/http_response_headers.h"
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_preparation_type.mojom.h"
 
 namespace internal {
 
@@ -90,6 +91,8 @@ const char kHistogramServiceWorkerDomContentLoadedSearch[] =
 const char kHistogramServiceWorkerLoadSearch[] =
     "PageLoad.Clients.ServiceWorker.DocumentTiming.NavigationToLoadEventFired."
     "search";
+const char kHistogramServiceWorkerPreparationTypeSearch[] =
+    "PageLoad.Clients.ServiceWorker.PreparationType.search";
 
 const char kHistogramNoServiceWorkerFirstContentfulPaintSearch[] =
     "PageLoad.Clients.NoServiceWorker.PaintTiming."
@@ -327,6 +330,12 @@ void ServiceWorkerPageLoadMetricsObserver::OnParseStart(
     } else if (page_load_metrics::IsGoogleSearchResultUrl(info.url)) {
       PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerParseStartSearch,
                           timing.parse_timing->parse_start.value());
+      DCHECK_NE(timing.service_worker_timing->preparation_type,
+                blink::mojom::ServiceWorkerPreparationType::UNKNOWN);
+      UMA_HISTOGRAM_ENUMERATION(
+          internal::kHistogramServiceWorkerPreparationTypeSearch,
+          timing.service_worker_timing->preparation_type,
+          blink::mojom::ServiceWorkerPreparationType::NUM_TYPES);
     }
     if (IsForwardBackLoad(transition_)) {
       PAGE_LOAD_HISTOGRAM(

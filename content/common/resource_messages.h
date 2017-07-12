@@ -214,6 +214,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResourceResponseInfo)
   IPC_STRUCT_TRAITS_MEMBER(is_in_cache_storage)
   IPC_STRUCT_TRAITS_MEMBER(cache_storage_cache_name)
   IPC_STRUCT_TRAITS_MEMBER(did_service_worker_navigation_preload)
+  IPC_STRUCT_TRAITS_MEMBER(service_worker_preparation_type)
   IPC_STRUCT_TRAITS_MEMBER(previews_state)
   IPC_STRUCT_TRAITS_MEMBER(effective_connection_type)
   IPC_STRUCT_TRAITS_MEMBER(certificate)
@@ -223,6 +224,10 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResourceResponseInfo)
   IPC_STRUCT_TRAITS_MEMBER(signed_certificate_timestamps)
   IPC_STRUCT_TRAITS_MEMBER(cors_exposed_header_names)
 IPC_STRUCT_TRAITS_END()
+
+IPC_ENUM_TRAITS_MAX_VALUE(
+    blink::mojom::ServiceWorkerPreparationType,
+    static_cast<int>(blink::mojom::ServiceWorkerPreparationType::NUM_TYPES) - 1)
 
 IPC_ENUM_TRAITS_MAX_VALUE(net::URLRequest::ReferrerPolicy,
                           net::URLRequest::MAX_REFERRER_POLICY - 1)

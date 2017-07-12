@@ -66,7 +66,7 @@ void ExpectNoNavPreloadWorkerStartOccurredUMA(
 
 using CrossProcessTimeDelta = ServiceWorkerMetrics::CrossProcessTimeDelta;
 using StartSituation = ServiceWorkerMetrics::StartSituation;
-using WorkerPreparationType = ServiceWorkerMetrics::WorkerPreparationType;
+using WorkerPreparationType = blink::mojom::ServiceWorkerPreparationType;
 
 TEST(ServiceWorkerMetricsTest, ActivatedWorkerPreparation) {
   base::TimeDelta time = base::TimeDelta::FromMilliseconds(123);

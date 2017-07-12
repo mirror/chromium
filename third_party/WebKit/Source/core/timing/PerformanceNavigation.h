@@ -35,6 +35,7 @@
 #include "core/dom/ContextLifecycleObserver.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
+#include "public/platform/modules/serviceworker/service_worker_preparation_type.mojom-blink.h"
 
 namespace blink {
 
@@ -64,6 +65,14 @@ class CORE_EXPORT PerformanceNavigation final
 
   unsigned short type() const;
   unsigned short redirectCount() const;
+
+  // Describes how the service worker, if any, started up for the navigation.
+  //
+  // This is currently used for page load metrics UMA only. It does not have to
+  // do with Navigation Timing 1. There is probably a better home for this
+  // function somewhere, but it's convenient here because page load metrics has
+  // access to this class.
+  mojom::ServiceWorkerPreparationType GetServiceWorkerPreparationType() const;
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 

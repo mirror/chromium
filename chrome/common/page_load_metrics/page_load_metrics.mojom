@@ -5,6 +5,7 @@
 module page_load_metrics.mojom;
 
 import "mojo/common/time.mojom";
+import "third_party/WebKit/public/platform/modules/serviceworker/service_worker_preparation_type.mojom";
 
 // TimeDeltas below relative to navigation start.
 struct DocumentTiming {
@@ -74,6 +75,15 @@ struct ParseTiming {
   mojo.common.mojom.TimeDelta? parse_blocked_on_script_execution_from_document_write_duration;
 };
 
+struct ServiceWorkerTiming {
+  // If a service worker was dispatched a fetch event in order to load the
+  // page, describes how the service worker started up in order to do so.
+  // Only describes the service worker that handled the final URL request for
+  // the page, e.g., service workers that handled intermediate redirects are
+  // not described.
+  blink.mojom.ServiceWorkerPreparationType preparation_type = UNKNOWN;
+};
+
 struct StyleSheetTiming {
   // Total time spent parsing author style sheets, before the first contentful
   // paint.
@@ -98,6 +108,7 @@ struct PageLoadTiming {
   DocumentTiming document_timing;
   PaintTiming paint_timing;
   ParseTiming parse_timing;
+  ServiceWorkerTiming service_worker_timing;
   StyleSheetTiming style_sheet_timing;
 
   // If you add additional members, also be sure to update page_load_timing.h.

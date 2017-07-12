@@ -159,37 +159,6 @@ class ServiceWorkerMetrics {
   };
 
   // Used for UMA. Append only.
-  // This enum describes how an activated worker was found and prepared (i.e.,
-  // reached the RUNNING status) in order to dispatch a fetch event to.
-  enum class WorkerPreparationType {
-    UNKNOWN = 0,
-    // The worker was already starting up. We waited for it to finish.
-    STARTING = 1,
-    // The worker was already running.
-    RUNNING = 2,
-    // The worker was stopping. We waited for it to stop, and then started it
-    // up.
-    STOPPING = 3,
-    // The worker was in the stopped state. We started it up, and startup
-    // required a new process to be created.
-    START_IN_NEW_PROCESS = 4,
-    // Deprecated 07/2017; replaced by START_IN_EXISTING_UNREADY_PROCESS and
-    // START_IN_EXISTING_READY_PROCESS.
-    //   START_IN_EXISTING_PROCESS = 5,
-    // The worker was in the stopped state. We started it up, and this occurred
-    // during browser startup.
-    START_DURING_STARTUP = 6,
-    // The worker was in the stopped state. We started it up, and it used an
-    // existing unready process.
-    START_IN_EXISTING_UNREADY_PROCESS = 7,
-    // The worker was in the stopped state. We started it up, and it used an
-    // existing ready process.
-    START_IN_EXISTING_READY_PROCESS = 8,
-    // Add new types here.
-    NUM_TYPES
-  };
-
-  // Used for UMA. Append only.
   // Describes the outcome of a time measurement taken between processes.
   enum class CrossProcessTimeDelta {
     NORMAL,
@@ -393,6 +362,10 @@ class ServiceWorkerMetrics {
   // previously installed.
   // TODO(falken): Remove after this is deprecated. https://crbug.com/737044
   static void RecordUninstalledScriptImport(const GURL& url);
+
+  static blink::mojom::ServiceWorkerPreparationType GetWorkerPreparationType(
+      EmbeddedWorkerStatus initial_worker_status,
+      ServiceWorkerMetrics::StartSituation start_situation);
 
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(ServiceWorkerMetrics);

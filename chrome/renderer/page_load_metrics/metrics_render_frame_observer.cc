@@ -182,6 +182,9 @@ mojom::PageLoadTimingPtr MetricsRenderFrameObserver::GetTiming() const {
     timing->style_sheet_timing->update_style_duration_before_fcp =
         base::TimeDelta::FromSecondsD(perf.UpdateStyleDurationBeforeFCP());
   }
+
+  timing->service_worker_timing->preparation_type =
+      perf.ServiceWorkerPreparationTypeForNavigation();
   return timing;
 }
 

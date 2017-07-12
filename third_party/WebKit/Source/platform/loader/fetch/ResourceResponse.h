@@ -41,6 +41,7 @@
 #include "platform/wtf/text/CString.h"
 #include "public/platform/WebURLResponse.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponseType.h"
+#include "public/platform/modules/serviceworker/service_worker_preparation_type.mojom-blink.h"
 
 namespace blink {
 
@@ -329,6 +330,15 @@ class PLATFORM_EXPORT ResourceResponse final {
     did_service_worker_navigation_preload_ = value;
   }
 
+  blink::mojom::ServiceWorkerPreparationType GetServiceWorkerPreparationType()
+      const {
+    return service_worker_preparation_type_;
+  }
+  void SetServiceWorkerPreparationType(
+      blink::mojom::ServiceWorkerPreparationType type) {
+    service_worker_preparation_type_ = type;
+  }
+
   Time ResponseTime() const { return response_time_; }
   void SetResponseTime(Time response_time) { response_time_ = response_time; }
 
@@ -441,6 +451,11 @@ class PLATFORM_EXPORT ResourceResponse final {
 
   // The type of the response which was fetched by the ServiceWorker.
   WebServiceWorkerResponseType service_worker_response_type_;
+
+  // If a service worker was dispatched a fetch event for the request for
+  // this resource, describes how the service worker started up in order
+  // to receive the fetch event. Only used for UMA purposes.
+  blink::mojom::ServiceWorkerPreparationType service_worker_preparation_type_;
 
   // HTTP version used in the response, if known.
   HTTPVersion http_version_;
@@ -563,6 +578,7 @@ struct CrossThreadResourceResponseData {
   Vector<KURL> url_list_via_service_worker_;
   String cache_storage_cache_name_;
   bool did_service_worker_navigation_preload_;
+  blink::mojom::ServiceWorkerPreparationType service_worker_preparation_type;
   Time response_time_;
   String remote_ip_address_;
   unsigned short remote_port_;

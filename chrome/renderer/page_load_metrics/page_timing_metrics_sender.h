@@ -43,7 +43,7 @@ class PageTimingMetricsSender {
   std::unique_ptr<base::Timer> timer_;
   mojom::PageLoadTimingPtr last_timing_;
 
-  // The the sender keep track of metadata as it comes in, because the sender is
+  // The sender keeps track of metadata as it comes in, because the sender is
   // scoped to a single committed load.
   mojom::PageLoadMetadataPtr metadata_;
 
