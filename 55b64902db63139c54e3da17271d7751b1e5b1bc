@@ -39,6 +39,24 @@
       "revId": "55b64902db63139c54e3da17271d7751b1e5b1bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570c5ac4_105379c2",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-12T19:21:54Z",
+      "side": 1,
+      "message": "As in an \"error\" configuration? Works for me.",
+      "parentUuid": "5bd31f87_94e71974",
+      "revId": "55b64902db63139c54e3da17271d7751b1e5b1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
