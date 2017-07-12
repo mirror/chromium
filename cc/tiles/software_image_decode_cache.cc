@@ -405,6 +405,11 @@ void SoftwareImageDecodeCache::DecodeImage(const ImageKey& key,
   if (!decoded_image)
     return;
 
+  int mip_level =
+      MipMapUtil::GetLevelForSize(key.src_rect().size(), key.target_size());
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Renderer4.ImageDecodeMipLevel", mip_level + 1, 1,
+                              32, 32);
+
   // At this point, it could have been the case that this image was decoded in
   // place by an already running raster task from a previous schedule. If that's
   // the case, then it would have already been placed into the cache (possibly
