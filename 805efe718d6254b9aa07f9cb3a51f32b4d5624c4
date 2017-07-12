@@ -22,6 +22,30 @@
       "revId": "805efe718d6254b9aa07f9cb3a51f32b4d5624c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa5ba44_f0ed4471",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-07-12T00:51:28Z",
+      "side": 0,
+      "message": "Certainly not all of them, butI haven\u0027t double-checked. This CL is already pretty large, so I\u0027d rather defer that to a follow-up CL.",
+      "parentUuid": "b1cf51c0_c0f9cadf",
+      "range": {
+        "startLine": 674,
+        "startChar": 38,
+        "endLine": 674,
+        "endChar": 59
+      },
+      "revId": "805efe718d6254b9aa07f9cb3a51f32b4d5624c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
