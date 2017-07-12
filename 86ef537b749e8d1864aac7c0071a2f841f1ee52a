@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9df14a7b_9f53b60a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3352,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T21:53:40Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by this function: it\u0027s called from RenderProcessGone. But at the point, the connection error should have ...\n\nAh, I guess it\u0027s because connection errors don\u0027t reset the bindings, and when we reuse the RenderFrameHost, we need to pretend it was just created. Meh.",
+      "range": {
+        "startLine": 3342,
+        "startChar": 0,
+        "endLine": 3352,
+        "endChar": 38
+      },
+      "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47ca9dd_f0a30fb2",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4204,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T21:53:40Z",
+      "side": 1,
+      "message": "Maybe this should be a binding set?",
+      "range": {
+        "startLine": 4202,
+        "startChar": 2,
+        "endLine": 4204,
+        "endChar": 49
+      },
+      "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
