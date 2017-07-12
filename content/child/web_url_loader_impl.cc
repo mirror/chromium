@@ -370,7 +370,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   Context(WebURLLoaderImpl* loader,
           ResourceDispatcher* resource_dispatcher,
           scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-          mojom::URLLoaderFactory* factory);
+          const PossiblyAssociatedURLLoaderFactory& factory);
 
   WebURLLoaderClient* client() const { return client_; }
   void set_client(WebURLLoaderClient* client) { client_ = client; }
@@ -420,8 +420,8 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   DeferState defers_loading_;
   int request_id_;
 
-  // These are owned by the Blink::Platform singleton.
-  mojom::URLLoaderFactory* url_loader_factory_;
+  // Contained factory pointers are owned by the Blink::Platform singleton.
+  PossiblyAssociatedURLLoaderFactory url_loader_factory_;
 };
 
 // A thin wrapper class for Context to ensure its lifetime while it is
@@ -459,7 +459,7 @@ WebURLLoaderImpl::Context::Context(
     WebURLLoaderImpl* loader,
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    mojom::URLLoaderFactory* url_loader_factory)
+    const PossiblyAssociatedURLLoaderFactory& url_loader_factory)
     : loader_(loader),
       client_(NULL),
       resource_dispatcher_(resource_dispatcher),
@@ -645,7 +645,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
     DCHECK(defers_loading_ == NOT_DEFERRING);
     resource_dispatcher_->StartSync(
         std::move(resource_request), request.RequestorID(), sync_load_response,
-        request.GetLoadingIPCType(), url_loader_factory_,
+        request.GetLoadingIPCType(), &url_loader_factory_,
         extra_data->TakeURLLoaderThrottles());
     return;
   }
@@ -656,7 +656,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       std::move(resource_request), request.RequestorID(), task_runner_,
       extra_data->frame_origin(),
       base::MakeUnique<WebURLLoaderImpl::RequestPeerImpl>(this),
-      request.GetLoadingIPCType(), url_loader_factory_,
+      request.GetLoadingIPCType(), &url_loader_factory_,
       extra_data->TakeURLLoaderThrottles(), std::move(consumer_handle));
 
   if (defers_loading_ != NOT_DEFERRING)
@@ -1067,11 +1067,19 @@ void WebURLLoaderImpl::RequestPeerImpl::OnCompletedRequest(
 WebURLLoaderImpl::WebURLLoaderImpl(
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    mojom::URLLoaderFactory* url_loader_factory)
+    const PossiblyAssociatedURLLoaderFactory& url_loader_factory)
     : context_(new Context(this,
                            resource_dispatcher,
                            std::move(task_runner),
                            url_loader_factory)) {}
+
+WebURLLoaderImpl::WebURLLoaderImpl(
+    ResourceDispatcher* resource_dispatcher,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    mojom::URLLoaderFactory* factory)
+    : WebURLLoaderImpl(resource_dispatcher,
+                       task_runner,
+                       PossiblyAssociatedURLLoaderFactory(factory)) {}
 
 WebURLLoaderImpl::~WebURLLoaderImpl() {
   Cancel();
