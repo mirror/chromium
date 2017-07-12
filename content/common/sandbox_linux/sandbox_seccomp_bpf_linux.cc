@@ -171,11 +171,7 @@ std::unique_ptr<SandboxBPFBasePolicy> GetGpuProcessSandbox() {
     return std::unique_ptr<SandboxBPFBasePolicy>(
         new CrosArmGpuProcessPolicy(allow_sysv_shm));
   } else {
-    bool allow_mincore = command_line.HasSwitch(switches::kUseGL) &&
-                         command_line.GetSwitchValueASCII(switches::kUseGL) ==
-                             gl::kGLImplementationEGLName;
-    return std::unique_ptr<SandboxBPFBasePolicy>(
-        new GpuProcessPolicy(allow_mincore));
+    return std::unique_ptr<SandboxBPFBasePolicy>(new GpuProcessPolicy());
   }
 }
 
