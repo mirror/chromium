@@ -67,15 +67,13 @@
 
   // New tab blocks.
   void (^newTab)() = ^{
-    [weakConsumer
-        chromeExecuteCommand:[[NewTabCommand alloc]
-                                 initWithIncognito:[weakConsumer
-                                                       isOffTheRecord]]];
+    [weakDispatcher
+        openNewTab:[[NewTabCommand alloc]
+                       initWithIncognito:[weakConsumer isOffTheRecord]]];
   };
 
   void (^newIncognitoTab)() = ^{
-    [weakConsumer
-        chromeExecuteCommand:[[NewTabCommand alloc] initWithIncognito:YES]];
+    [weakDispatcher openNewTab:[[NewTabCommand alloc] initWithIncognito:YES]];
   };
 
   const int browseLeftDescriptionID = useRTLLayout
