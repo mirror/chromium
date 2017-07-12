@@ -940,11 +940,12 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   // list. We do not use SAME_PAGE here; that case only differs in that it
   // clears the pending entry, and there is no pending entry after a load
   // failure.
+  // TODO(creis): Is it ok to change this to NEW_PAGE?
   {
     FrameNavigateParamsCapturer capturer(root);
     NavigateFrameToURL(root, error_url);
     capturer.Wait();
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
     NavigationEntry* entry = controller.GetLastCommittedEntry();
     EXPECT_EQ(PAGE_TYPE_ERROR, entry->GetPageType());
     EXPECT_EQ(2, controller.GetEntryCount());
@@ -955,14 +956,11 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(3, controller.GetEntryCount());
 
   // ... and replace it with a failed load.
-  // TODO(creis): Make this be NEW_PAGE along with the other location.replace
-  // cases.  There isn't much impact to having this be EXISTING_PAGE for now.
-  // See https://crbug.com/596707.
   {
     FrameNavigateParamsCapturer capturer(root);
     RendererLocationReplace(shell(), error_url);
     capturer.Wait();
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
     NavigationEntry* entry = controller.GetLastCommittedEntry();
     EXPECT_EQ(PAGE_TYPE_ERROR, entry->GetPageType());
     EXPECT_EQ(3, controller.GetEntryCount());
@@ -1212,8 +1210,10 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 
   {
     // location.replace().
-    // TODO(creis): Change this to be NEW_PAGE with replacement in
+    // TODO(creis): Write a meta refresh test as well, and make sure history
+    // replaceState doesn't break.
     // https://crbug.com/596707.
+    // TODO(creis): Move this to a different test.
     FrameNavigateParamsCapturer capturer(root);
     GURL frame_url(embedded_test_server()->GetURL(
         "/navigation_controller/simple_page_1.html"));
@@ -1224,7 +1224,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
         capturer.transition(),
         ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
                                   ui::PAGE_TRANSITION_CLIENT_REDIRECT)));
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
     EXPECT_FALSE(capturer.is_same_document());
   }
 
@@ -1602,7 +1602,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
         capturer.transitions()[1],
         ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
                                   ui::PAGE_TRANSITION_CLIENT_REDIRECT)));
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_types()[1]);
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_types()[1]);
   }
 }
 
@@ -4851,7 +4851,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, ReloadOriginalRequest) {
         capturer.transition(),
         ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
                                   ui::PAGE_TRANSITION_CLIENT_REDIRECT)));
-    EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, capturer.navigation_type());
+    EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, capturer.navigation_type());
   }
 
   // Modify an entry in the session history and reload the original request.
