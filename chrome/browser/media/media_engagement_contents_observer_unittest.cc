@@ -4,6 +4,7 @@
 
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/timer/mock_timer.h"
 #include "chrome/browser/media/media_engagement_score.h"
@@ -115,6 +116,15 @@ class MediaEngagementContentsObserverTest
         contents_observer_->service_->CreateEngagementScore(url);
     EXPECT_EQ(score->visits(), expected_visits);
     EXPECT_EQ(score->media_playbacks(), expected_media_playbacks);
+    delete score;
+  }
+
+  void SetScores(GURL url, int visits, int media_playbacks) {
+    MediaEngagementScore* score =
+        contents_observer_->service_->CreateEngagementScore(url);
+    score->SetVisits(visits);
+    score->SetMediaPlaybacks(media_playbacks);
+    score->Commit();
     delete score;
   }
 
@@ -325,4 +335,45 @@ TEST_F(MediaEngagementContentsObserverTest,
   EXPECT_FALSE(GetSignificantActivePlayersCount());
   EXPECT_FALSE(GetStoredPlayerStatesCount());
   EXPECT_FALSE(IsTimerRunning());
+}
+
+TEST_F(MediaEngagementContentsObserverTest, RecordScoreOnPlayback) {
+  GURL url1("https://www.google.com");
+  GURL url2("https://www.google.co.uk");
+  GURL url3("https://www.example.com");
+
+  SetScores(url1, 5, 5);
+  SetScores(url2, 5, 3);
+  SetScores(url3, 1, 1);
+  base::HistogramTester tester;
+  tester.ExpectTotalCount(
+      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0);
+
+  Navigate(url1);
+  SimulatePlaybackStarted(0);
+  tester.ExpectBucketCount(
+      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 83, 1);
+
+  Navigate(url2);
+  SimulatePlaybackStarted(0);
+  tester.ExpectBucketCount(
+      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 50, 1);
+
+  Navigate(url3);
+  SimulatePlaybackStarted(0);
+  tester.ExpectBucketCount(
+      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0, 1);
+  tester.ExpectTotalCount(
+      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 3);
+}
+
+TEST_F(MediaEngagementContentsObserverTest,
+       DoNotRecordScoreOnPlaybackOnInternalUrl) {
+  GURL url("chrome://about");
+  SetScores(url, 5, 5);
+
+  base::HistogramTester tester;
+  SimulatePlaybackStarted(0);
+  tester.ExpectTotalCount(
+      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0);
 }

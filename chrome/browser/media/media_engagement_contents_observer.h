@@ -33,6 +33,7 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   void MediaResized(const gfx::Size& size, const MediaPlayerId& id) override;
 
   static const int kSignificantSize;
+  static const std::string& kHistogramScoreAtPlaybackName;
 
  private:
   // Only MediaEngagementService can create a MediaEngagementContentsObserver.
@@ -79,6 +80,10 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
 
   bool is_visible_ = false;
   bool significant_playback_recorded_ = false;
+
+  // Logs the engagement score for the current origin to a histogram so we
+  // can identify whether the playback would have been blocked.
+  void LogEngagementScoreToHistogram();
 
   url::Origin committed_origin_;
 
