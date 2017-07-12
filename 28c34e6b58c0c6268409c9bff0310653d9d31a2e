@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e39ae9fb_2d93a981",
+        "filename": "chrome/browser/ui/webui/settings/on_startup_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T00:54:37Z",
+      "side": 1,
+      "message": "Should this observer registration happen elsewhere? Specifically, per the documentation at https://chromium.googlesource.com/chromium/src/+/lkcr/docs/webui_explainer.md#WebUIMessageHandler_OnJavascriptAllowed, onJavascriptAllowed seems to be a more appropriate place for it. Then there would be no need to check isJavascriptAllowed() inside the observer methods.",
+      "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d1a69b_b2f4e8bf",
+        "filename": "chrome/browser/ui/webui/settings/on_startup_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T00:54:37Z",
+      "side": 1,
+      "message": "Can you explain a bit why is this check being added? Was it not necessary before, but it is now?",
+      "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040e3541_f2dee818",
+        "filename": "chrome/browser/ui/webui/settings/on_startup_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T00:54:37Z",
+      "side": 1,
+      "message": "Nit: Is this temp variable necessary? Could this be inlined as follows (here and elsewhere)?\n\nFireWebUIListener(kOnStartupNtpExtensionEventName, *GetNtpExtension());",
+      "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0654c396_a36865f2",
+        "filename": "chrome/browser/ui/webui/settings_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T00:54:37Z",
+      "side": 1,
+      "message": "How about moving this change to a separate CL? My rationale for similar cases is the following:\n\nIf a CL is already touching some files, then doing a small cleanup like this one in the same CL is fine. If a file is not touched by this CL otherwise, then even though the cleanup is small, it does increase the number of affected files for this CL, and probably better to do it separately.\n\nFollowing this logic, this CL could be affecting 5 files less, if this renaming is moved to a separate CL.",
+      "revId": "28c34e6b58c0c6268409c9bff0310653d9d31a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
