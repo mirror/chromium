@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64fc1c90_ae044e43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T18:17:49Z",
+      "side": 1,
+      "message": "Just curious - how did you notice it? In the new Chromium Gerrit UI I can\u0027t see any signs of too long line here...",
+      "parentUuid": "78c7b310_9f3ce970",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 85
+      },
+      "revId": "ff771d55269a4eddb207578aae7f6bf8f3206718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fda771b1_9e141d85",
         "filename": "components/policy/tools/generate_policy_source.py",
         "patchSetId": 6
