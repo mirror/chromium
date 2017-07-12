@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f65c8e02_32ee7f83",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/select-bidi-run.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-12T07:14:20Z",
+      "side": 1,
+      "message": "nit: Rename |count| to |numberOfSelectionChanges|",
+      "revId": "2d5e058803a447a8271eebdf498c794bd62ec6cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
