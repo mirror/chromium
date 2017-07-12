@@ -246,14 +246,15 @@ def main():
     bt_with_offset_re = re.compile(prefix +
         'bt#(\d+): pc 0x[0-9a-f]+ sp (0x[0-9a-f]+) \((\S+),(0x[0-9a-f]+)\)$')
     bt_end_re = re.compile(prefix + 'bt#(\d+): end')
-    qemu_popen = subprocess.Popen(qemu_command, stdout=subprocess.PIPE)
+    qemu_popen = subprocess.Popen(
+        qemu_command, stdout=subprocess.PIPE, stdin=open('/dev/null', 'r'))
     processed_lines = []
     success = False
     while True:
       line = qemu_popen.stdout.readline()
       if not line:
         break
-      print line,
+      sys.stdout.write(line)
       if 'SUCCESS: all tests passed.' in line:
         success = True
       if bt_end_re.match(line.strip()):
