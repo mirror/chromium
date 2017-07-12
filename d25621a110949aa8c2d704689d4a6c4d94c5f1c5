@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a25d1c5_05443fa9",
+        "filename": "components/payments/core/payment_request_data_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T12:41:07Z",
+      "side": 1,
+      "message": "What do you think of adding an else clause here instead? This would mean that if |method| wasn\u0027t part of |remaining_card_networks|, was not the string \"basic-card\", it should therefore be a valid URL PMI.\n\nif (card_it !\u003d remaining_card_networks.end()) {\n\n} else if (method \u003d\u003d kBasicCardMethodName) {\n\n} else {\n  // Here |method| could be a repeated deprecated supported network (e.g., \"visa\"),\n  // some invalid string or a URL Payment Method Identifier. Capture this last category\n  // if the URL is https.\n  GURL url(method);\n  if (url.is_valid() \u0026\u0026 url.SchemeIs(url::kHttpsScheme)\n    out_payment_method_identifiers-\u003epush_back(method);\n}",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 7
+      },
+      "revId": "d25621a110949aa8c2d704689d4a6c4d94c5f1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8871df8d_52155c13",
+        "filename": "components/payments/core/payment_request_data_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T12:41:07Z",
+      "side": 1,
+      "message": "It\u0027s also used here https://cs.chromium.org/chromium/src/components/payments/content/payment_request_spec.cc?rcl\u003df8059bbc87dff273b3445a33c8e57c91d089ad31\u0026l\u003d88\n\nCould you update it and also add a test case here:\n\nhttps://cs.chromium.org/chromium/src/content/public/test/browser_test_base.h?l\u003d75\u0026ct\u003dxref_jump_to_def\n\nWhere you can verify that a valid https:// url will be available in the payment_request_spec? It\u0027s OK to expose a new getter in the spec for the url PMIs.",
+      "revId": "d25621a110949aa8c2d704689d4a6c4d94c5f1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
