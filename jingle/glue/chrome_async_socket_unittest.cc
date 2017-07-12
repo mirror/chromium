@@ -158,6 +158,8 @@ class ChromeAsyncSocketTest
   ChromeAsyncSocketTest()
       : ssl_socket_data_provider_(net::ASYNC, net::OK),
         addr_("localhost", 35) {
+    testing::GTEST_FLAG(death_test_style) = "threadsafe";
+
     // GTest death tests execute in a fork()ed but not exec()ed process.
     // On OS X a CoreFoundation-backed message loop will exit with a
     // __THE_PROCESS_HAS_FORKED_AND_YOU_CANNOT_USE_THIS_COREFOUNDATION_FUNCTIONALITY___YOU_MUST_EXEC__

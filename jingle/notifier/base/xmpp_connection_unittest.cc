@@ -76,6 +76,8 @@ class XmppConnectionTest : public testing::Test {
  protected:
   XmppConnectionTest()
       : mock_pre_xmpp_auth_(new MockPreXmppAuth()) {
+    testing::GTEST_FLAG(death_test_style) = "threadsafe";
+
     std::unique_ptr<base::MessagePump> pump(new base::MessagePumpDefault());
     message_loop_.reset(new base::MessageLoop(std::move(pump)));
 
