@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b1023a9_84d68a90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-12T14:02:52Z",
+      "side": 1,
+      "message": "This last half of this sentence doesn\u0027t match the CL anymore.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c741ff5f_2f004ced",
+        "filename": "components/autofill/core/browser/autofill_assistant.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-12T14:02:52Z",
+      "side": 1,
+      "message": "nit: don\u0027t comment out unused param in declaration, only in definition.",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0487b1d_ab07268f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-12T14:02:52Z",
+      "side": 1,
+      "message": "form.form_parsed_timestamp() and drop the extra param.",
+      "range": {
+        "startLine": 413,
+        "startChar": 6,
+        "endLine": 413,
+        "endChar": 27
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ce6a41_83a20c39",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-12T14:02:52Z",
+      "side": 1,
+      "message": "form.form_parsed_timestamp()",
+      "range": {
+        "startLine": 1410,
+        "startChar": 49,
+        "endLine": 1410,
+        "endChar": 70
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8ac996_22109913",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-12T14:02:52Z",
+      "side": 1,
+      "message": "add TODO to take FormStructure and AutofillField instead and extract signatures and timestamps inside this function instead of in the caller.",
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24d5171_55cd3009",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-12T14:02:52Z",
+      "side": 1,
+      "message": "now that the timestamp in in the FormStructure, you don\u0027t need it as an extra param in methods that take a FormStructure:\n\n* LogFieldFillStatus, above\n\n* Log(Heuristic|Server|Overall)PredictionQualityMetrics, here and below\n\nThis would be an improvement to all of the other log functions as well. That said, in the interest of getting this landed. You can defer, if you want, updating the functions that don\u0027t currently take a FormStructure to another CL.",
+      "range": {
+        "startLine": 810,
+        "startChar": 6,
+        "endLine": 810,
+        "endChar": 50
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5346ccc7_13703657",
+        "filename": "components/autofill/core/browser/payments/full_card_request.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-12T14:02:52Z",
+      "side": 1,
+      "message": "Delegate this constructor to the other?",
+      "range": {
+        "startLine": 19,
+        "startChar": 17,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e182dd74_aad2019c",
+        "filename": "components/autofill/core/browser/payments/full_card_request.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-12T14:02:52Z",
+      "side": 1,
+      "message": "nit: pass by const ref\nnit: I would prefer this as the first param, not the last (particularly if it\u0027s a pointer, which makes it look like an output param)",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 39
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
