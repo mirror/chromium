@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "aaad240a_f1075cc7",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-12T21:12:31Z",
+      "side": 1,
+      "message": "switched to using IDS_CLOSE.",
+      "parentUuid": "0fda1a9a_e9b32793",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0feb93bf_8a98ac44",
         "filename": "chrome/browser/resources/md_extensions/load_error.html",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea526946_3dae9ec5",
+        "filename": "chrome/browser/resources/md_extensions/load_error.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-12T21:12:31Z",
+      "side": 1,
+      "message": "nope, removing.",
+      "parentUuid": "0feb93bf_8a98ac44",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "1acee5d7_a5cebcc9",
+        "filename": "chrome/browser/resources/md_extensions/load_error.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-12T21:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f57e4f2_e2abbbee",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dce12d6f_0958c443",
         "filename": "chrome/browser/resources/md_extensions/load_error.html",
         "patchSetId": 2
@@ -100,6 +154,24 @@
       "writtenOn": "2017-07-12T01:08:42Z",
       "side": 1,
       "message": "Should this have a class\u003d\"action-button\"? Usually dialogs have a \"cancel\" and an \"action\" button.",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8e5345_5311e1d3",
+        "filename": "chrome/browser/resources/md_extensions/load_error.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-12T21:12:31Z",
+      "side": 1,
+      "message": "I looked in settings/ and it doesn\u0027t seem like anything is actually styling or using .action-button, so I didn\u0027t copy that class over.",
+      "parentUuid": "dce12d6f_0958c443",
       "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "bb30e166_cc8a7037",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-12T21:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4f89cd8_71ebb94d",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f8ba02e_c94cd0c0",
         "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
         "patchSetId": 2
@@ -140,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "30208f72_4877744e",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-12T21:12:31Z",
+      "side": 1,
+      "message": "This is to accommodate for each extension\u0027s ability to set a preferred-size for it\u0027s option display. Maybe we can deprecate support for this? but we can talk about that as a separate topic.",
+      "parentUuid": "8f8ba02e_c94cd0c0",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e263395_d25a5174",
         "filename": "chrome/browser/resources/md_extensions/pack_dialog.html",
         "patchSetId": 2
@@ -154,6 +262,24 @@
       "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1114a7_61225799",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-12T21:12:31Z",
+      "side": 1,
+      "message": "(See previous reply.)",
+      "parentUuid": "1e263395_d25a5174",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
