@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb82863b_e445b224",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-12T19:35:34Z",
+      "side": 1,
+      "message": "re-wrap this line so it\u0027s all on 1.",
+      "revId": "f6bcd4c8d61c52cc87c86990f6deb51f0c801d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70db2ee_5e28af6c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29674,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-12T19:35:34Z",
+      "side": 1,
+      "message": "Will there be any way to normalize these histograms? This one doesn\u0027t tell you how many times a player was not added. You won\u0027t be able to distinguish between all \"Not Added\" events record all reasons vs all the events uniformly reporting single reasons.\n\nIt could be valuable to know how many times a player was considered for adding, or a boolean histogram that records \"player not added\"/\"player added\" so you know total times players were considered, and you know how many reasons were involved in each decision not to add, and you know how many decisions were made because of each reason.\n\nSimilar for the player removed.",
+      "revId": "f6bcd4c8d61c52cc87c86990f6deb51f0c801d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be68412c_76dfd632",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29681,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-12T19:35:34Z",
+      "side": 1,
+      "message": "My concern was more around what causes the decision to be triggered. Does this happen when a player is created? Is an insignificant player periodically re-evaluated, and will record this histogram each time it\u0027s continued to be not added. Is it evaluated whenever something about the player changes.\n\nSimilarly for the PlayerRemoved. The name and summary imply a player is re-evaluated, and I\u0027d like to know something about when that\u0027s done.\n\nTo demonstrate my concern: my main interpretation of these histograms is that PlayerNotAdded is done only once per lifetime of a player (probably at a creation point). At some point later in the lifetime, it can be removed if it was significant. Part of me feels this is wrong, but I don\u0027t know. Part of me also considers that PlayerNotAdded and PlayerRemoved are somehow duals of each other, maybe the player switches between significant and not-significant, and these histograms partially track that.",
+      "range": {
+        "startLine": 29679,
+        "startChar": 3,
+        "endLine": 29681,
+        "endChar": 44
+      },
+      "revId": "f6bcd4c8d61c52cc87c86990f6deb51f0c801d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

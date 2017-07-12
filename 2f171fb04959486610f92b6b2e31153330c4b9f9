@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ad93c6a6_4485d056",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-12T19:35:34Z",
+      "side": 1,
+      "message": "Correct, the name needs to be runtime const because the macro uses a static variable to cache the histogram reference. If performance isn\u0027t critical you can use the equivalent functions to log histograms. (code search is down, so I can\u0027t find link to them)",
+      "parentUuid": "941ded9b_8d7c0e4a",
+      "revId": "2f171fb04959486610f92b6b2e31153330c4b9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27eebc0d_b7337a7c",
         "filename": "chrome/browser/media/media_engagement_contents_observer.h",
         "patchSetId": 3
