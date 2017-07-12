@@ -51,8 +51,8 @@ class CORE_EXPORT WorkerBackingThread final {
   // the caller worker script, respectively. A worker script must not call
   // any function after calling shutdown().
   // They should be called from |this| thread.
-  void Initialize();
-  void Shutdown();
+  void InitializeOnThread();
+  void ShutdownOnThread();
 
   WebThreadSupportingGC& BackingThread() {
     DCHECK(backing_thread_);
