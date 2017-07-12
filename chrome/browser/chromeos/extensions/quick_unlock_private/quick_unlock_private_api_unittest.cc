@@ -15,10 +15,13 @@
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/extensions/extension_api_unittest.h"
+#include "chrome/browser/signin/easy_unlock_service_factory.h"
+#include "chrome/browser/signin/easy_unlock_service_regular.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/login/auth/fake_extended_authenticator.h"
 #include "extensions/browser/api_test_utils.h"
 #include "extensions/browser/extension_function_dispatcher.h"
+#include "testing/gmock/include/gmock/gmock.h"
 
 using namespace extensions;
 namespace quick_unlock_private = extensions::api::quick_unlock_private;
@@ -36,6 +39,26 @@ const char* kTestUserEmail = "testuser@gmail.com";
 const char* kTestUserEmailHash = "testuser@gmail.com-hash";
 const char* kValidPassword = "valid";
 const char* kInvalidPassword = "invalid";
+
+class MockEasyUnlockService : public EasyUnlockServiceRegular {
+ public:
+  explicit MockEasyUnlockService(Profile* profile)
+      : EasyUnlockServiceRegular(profile) {}
+  ~MockEasyUnlockService() override {}
+
+  // EasyUnlockServiceRegular:
+  MOCK_METHOD1(HandleUserReauth,
+               void(const chromeos::UserContext& user_context));
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockEasyUnlockService);
+};
+
+std::unique_ptr<KeyedService> CreateEasyUnlockServiceForTest(
+    content::BrowserContext* context) {
+  return base::MakeUnique<testing::NiceMock<MockEasyUnlockService>>(
+      Profile::FromBrowserContext(context));
+}
 
 ExtendedAuthenticator* CreateFakeAuthenticator(
     AuthStatusConsumer* auth_status_consumer) {
@@ -86,6 +109,13 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
     SetModes(QuickUnlockModeList{}, CredentialList{});
 
     modes_changed_handler_ = base::Bind(&DoNothing);
+  }
+
+  TestingProfile* CreateProfile() override {
+    TestingProfile::Builder builder;
+    builder.AddTestingFactory(EasyUnlockServiceFactory::GetInstance(),
+                              &CreateEasyUnlockServiceForTest);
+    return builder.Build().release();
   }
 
   // If a mode change event is raised, fail the test.
@@ -296,7 +326,16 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
 
 // Verify that password checking works.
 TEST_F(QuickUnlockPrivateUnitTest, CheckPassword) {
+  // A successful password validation should be fed into EasyUnlock in order to
+  // prepare the setup flow.
+  testing::NiceMock<MockEasyUnlockService>* easy_unlock_service =
+      static_cast<testing::NiceMock<MockEasyUnlockService>*>(
+          EasyUnlockService::Get(profile()));
+
+  EXPECT_CALL(*easy_unlock_service, HandleUserReauth(testing::_));
   EXPECT_TRUE(CheckPassword(kValidPassword));
+
+  EXPECT_CALL(*easy_unlock_service, HandleUserReauth(testing::_)).Times(0);
   EXPECT_FALSE(CheckPassword(kInvalidPassword));
 }
 
