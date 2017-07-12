@@ -73,10 +73,6 @@ ContentClient::ContentClient()
 ContentClient::~ContentClient() {
 }
 
-bool ContentClient::CanSendWhileSwappedOut(const IPC::Message* message) {
-  return false;
-}
-
 std::string ContentClient::GetProduct() const {
   return std::string();
 }

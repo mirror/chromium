@@ -70,14 +70,6 @@ base::StringPiece AwContentClient::GetDataResource(
       resource_id, scale_factor);
 }
 
-bool AwContentClient::CanSendWhileSwappedOut(const IPC::Message* message) {
-  // For legacy API support we perform a few browser -> renderer synchronous IPC
-  // messages that block the browser. However, the synchronous IPC replies might
-  // be dropped by the renderer during a swap out, deadlocking the browser.
-  // Because of this we should never drop any synchronous IPC replies.
-  return message->type() == IPC_REPLY_ID;
-}
-
 void AwContentClient::SetGpuInfo(const gpu::GPUInfo& gpu_info) {
   gpu_fingerprint_ = gpu_info.gl_version + '|' + gpu_info.gl_vendor + '|' +
                      gpu_info.gl_renderer;

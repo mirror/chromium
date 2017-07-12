@@ -6,7 +6,10 @@
 
 #include <stdint.h>
 #include <map>
+#include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
@@ -20,7 +23,6 @@
 #include "content/common/input_messages.h"
 #include "content/common/page_messages.h"
 #include "content/common/site_isolation_policy.h"
-#include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
 #include "content/renderer/child_frame_compositing_helper.h"
 #include "content/renderer/frame_owner_properties.h"
@@ -550,4 +552,4 @@ void RenderFrameProxy::FrameFocused() {
   Send(new FrameHostMsg_FrameFocused(routing_id_));
 }
 
-}  // namespace
+}  // namespace content

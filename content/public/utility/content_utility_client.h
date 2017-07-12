@@ -13,6 +13,10 @@
 #include "services/service_manager/embedder/embedded_service_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
+namespace IPC {
+class Message;
+}
+
 namespace service_manager {
 class InterfaceRegistry;
 }

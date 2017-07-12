@@ -21,10 +21,6 @@ namespace base {
 class RefCountedMemory;
 }
 
-namespace IPC {
-class Message;
-}
-
 namespace gfx {
 class Image;
 }
@@ -128,9 +124,6 @@ class CONTENT_EXPORT ContentClient {
   };
 
   virtual void AddAdditionalSchemes(Schemes* schemes) {}
-
-  // Returns whether the given message should be sent in a swapped out renderer.
-  virtual bool CanSendWhileSwappedOut(const IPC::Message* message);
 
   // Returns a string describing the embedder product name and version,
   // of the form "productname/version", with no other slashes.

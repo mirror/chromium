@@ -13,7 +13,6 @@ namespace content {
 class LayoutTestContentClient : public ShellContentClient {
  public:
   LayoutTestContentClient() {}
-  bool CanSendWhileSwappedOut(const IPC::Message* message) override;
   bool IsSupplementarySiteIsolationModeEnabled() override;
 
  private:

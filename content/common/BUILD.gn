@@ -330,8 +330,6 @@ source_set("common") {
     "site_isolation_policy.cc",
     "site_isolation_policy.h",
     "speech_recognition_messages.h",
-    "swapped_out_messages.cc",
-    "swapped_out_messages.h",
     "task_scheduler.cc",
     "task_scheduler.h",
     "text_input_client_messages.h",
