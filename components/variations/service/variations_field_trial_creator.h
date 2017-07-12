@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
 #include "components/variations/client_filterable_state.h"
+#include "components/variations/platform_field_trials.h"
 #include "components/variations/service/ui_string_overrider.h"
 #include "components/variations/service/variations_service_client.h"
 #include "components/variations/variations_seed_store.h"
@@ -47,6 +48,13 @@ class VariationsFieldTrialCreator {
   const VariationsSeedStore& seed_store() const;
   bool create_trials_from_seed_called() const;
   void SetCreateTrialsFromSeedCalledForTesting(bool called);
+
+  bool SetupFieldTrials(std::unique_ptr<base::FieldTrialList>& field_trial_list,
+                        std::unique_ptr<base::FeatureList>& feature_list,
+                        std::vector<std::string>& variation_ids,
+                        variations::PlatformFieldTrials* platform_field_trials,
+                        std::unique_ptr<const base::FieldTrial::EntropyProvider>
+                            low_entropy_provider);
 
   // Returns all of the client state used for filtering studies.
   // As a side-effect, may update the stored permanent consistency country.

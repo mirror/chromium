@@ -652,6 +652,16 @@ std::string VariationsService::GetLatestCountry() const {
   return field_trial_creator_.GetLatestCountry();
 }
 
+bool VariationsService::SetupFieldTrials(
+    std::unique_ptr<base::FieldTrialList>& field_trial_list,
+    std::unique_ptr<base::FeatureList>& feature_list,
+    std::vector<std::string>& variation_ids,
+    variations::PlatformFieldTrials* platform_field_trials) {
+  return field_trial_creator_.SetupFieldTrials(
+      field_trial_list, feature_list, variation_ids, platform_field_trials,
+      CreateLowEntropyProvider());
+}
+
 bool VariationsService::CreateTrialsFromSeed(base::FeatureList* feature_list) {
   return field_trial_creator_.CreateTrialsFromSeed(feature_list,
                                                    CreateLowEntropyProvider());

@@ -176,6 +176,11 @@ class VariationsService
 
   std::string GetLatestCountry() const;
 
+  bool SetupFieldTrials(std::unique_ptr<base::FieldTrialList>& field_trial_list,
+                        std::unique_ptr<base::FeatureList>& feature_list,
+                        std::vector<std::string>& variation_ids,
+                        variations::PlatformFieldTrials* platform_field_trials);
+
  protected:
   // Starts the fetching process once, where |OnURLFetchComplete| is called with
   // the response.
