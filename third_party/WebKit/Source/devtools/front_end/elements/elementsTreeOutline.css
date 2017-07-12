@@ -330,6 +330,70 @@ ol li.selected:focus .webkit-html-attribute-name {
     display: block;
 }
 
+.elements-disclosure .annotation-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 2px;
+    margin-left: 2px;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    border: 1px solid white;
+    background: rgb(120,100,180);
+}
+
+/*.annotation-container .annotation-suggestion {
+    position: absolute;
+    white-space: nowrap;
+    left: 24px;
+    top: -2px;
+    padding: 0 6px;
+    background-color: #6394d2;
+    color: white;
+    z-index: 1;
+    font: 11px sans-serif;
+}
+
+.annotation-container .annotation-suggestion::before {
+    content: "";
+    background-color: #6394d2;
+    width: 4px;
+    height: 4px;
+    position: absolute;
+    display: block;
+    left: -4px;
+    top: 50%;
+    margin-top: -2px;
+}*/
+
+.annotation-attribute {
+    /*background-color: rgba(182, 212, 250, 1);
+    color: rgb(26, 31, 35);
+    border: 1px solid rgb(136, 184, 247);*/
+    background-color: rgb(150, 172, 232);
+    border-radius: 4px;
+    font-family: sans-serif;
+}
+
+.annotation-title {
+    background-color: rgb(67, 106, 214);
+    color: rgb(255, 255, 255);
+    padding: 0 4px;
+    position: relative;
+    /* margin-right: 6px; */
+}
+
+.annotation-description {
+    color: black;
+    padding: 0 4px;
+}
+
+.annotation-code {
+    font-family: monospace;
+}
+
 /** Guide line */
 li.selected {
     z-index: 0;

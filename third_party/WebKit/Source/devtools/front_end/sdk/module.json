@@ -272,6 +272,7 @@
         "NetworkManager.js",
         "NetworkRequest.js",
         "PaintProfiler.js",
+        "PasswordManagerModel.js",
         "HeapProfilerModel.js",
         "../SupportedCSSProperties.js",
         "FilmStripModel.js"

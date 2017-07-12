@@ -49,8 +49,15 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
 
     this._elementCloseTag = elementCloseTag;
 
-    if (this._node.nodeType() === Node.ELEMENT_NODE && !elementCloseTag)
+    if (this._node.nodeType() === Node.ELEMENT_NODE && !elementCloseTag) {
       this._canAddAttributes = true;
+      if (this._node.nodeName() === 'INPUT' && !this._node._attributes.find(attr => attr.name === 'autocomplete')) {
+        this._annotationContainer = true;
+      //   gutterMenuIcon.remove();
+      //   this._annotationContainer = this._gutterContainer.createChild('div', 'annotation-container');
+      //   this._annotationContainer.addEventListener('click', this._showSuggestion.bind(this));
+      }
+    }
     this._searchQuery = null;
     this._expandedChildrenLimit = Elements.ElementsTreeElement.InitialChildrenLimit;
     this._decorationsThrottler = new Common.Throttler(100);
@@ -451,6 +458,13 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
    */
   _showContextMenu(event) {
     this.treeOutline.showContextMenu(this, event);
+  }
+
+  /**
+   * @param {!Event} event
+   */
+  _showSuggestion(event) {
+    this.treeOutline.showSuggestion(this, event);
   }
 
   /**
@@ -1377,6 +1391,17 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
           var attr = attributes[i];
           tagElement.createTextChild(' ');
           this._buildAttributeDOM(tagElement, attr.name, attr.value, updateRecord, false, node);
+        }
+        if (this._annotationContainer) {
+          tagElement.createTextChild(' ');
+          var attrPlaceholder = tagElement.createChild('span', 'annotation-attribute');
+          var title = attrPlaceholder.createChild('span', 'annotation-title');
+          title.createTextChild('Tip:');
+          var description = attrPlaceholder.createChild('span', 'annotation-description');
+          description.createTextChild('Add ');
+          var code = description.createChild('span', 'annotation-code');
+          code.textContent = 'autocomplete="username"';
+          attrPlaceholder.addEventListener('dblclick', () => this.treeOutline.fulfillSuggestion(this));
         }
       }
       if (updateRecord) {
