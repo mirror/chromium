@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54500c4b_82c2560f",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-12T00:46:54Z",
+      "side": 1,
+      "message": "What do the numbers represent (i.e. what would be number[0] vs number[1])?",
+      "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5a6df9_26626157",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-12T00:46:54Z",
+      "side": 1,
+      "message": "I meant keep the outer brackets but not the inner ones. You should be able to do:\n\n    if (foo\n        or bar):",
+      "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6cd10a_62795d4a",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-12T00:46:54Z",
+      "side": 1,
+      "message": "nit: I believe you can just do zip(segments, segments[1:]).\n\nP.S. I\u0027m being nitpicky here because I think it\u0027s more idiomatic Python to manipulate ranges than directly indexing into lists. But again, nainar might disagree :P",
+      "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107eab7a_ea2f63d2",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-12T00:46:54Z",
+      "side": 1,
+      "message": "Hmm the code seems to work fine for me without the int(). What sort of error are you getting?",
+      "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f0055d_42af8fbe",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-12T00:46:54Z",
+      "side": 1,
+      "message": "This should never occur right? If so, I think it would be better to reorganise this as:\n\n   default:\n      DCHECK(v \u003e\u003d ... \u0026\u0026 v \u003c\u003d ....);\n      return static_cast\u003c....\n\nDCHECK is like an assert; it gets removed in release builds. This way, you don\u0027t incur a runtime cost for the extra if statement.",
+      "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
