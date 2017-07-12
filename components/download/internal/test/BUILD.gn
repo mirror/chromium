@@ -26,6 +26,8 @@ source_set("test_support") {
     "test_device_status_listener.h",
     "test_download_driver.cc",
     "test_download_driver.h",
+    "test_download_service.cc",
+    "test_download_service.h",
     "test_store.cc",
     "test_store.h",
   ]
