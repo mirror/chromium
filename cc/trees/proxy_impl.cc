@@ -339,6 +339,11 @@ void ProxyImpl::NotifyReadyToActivate() {
   scheduler_->NotifyReadyToActivate();
 }
 
+void ProxyImpl::NotifyCanSkipActiveTreeFirstDraw() {
+  DCHECK(IsImplThread());
+  scheduler_->SetCanSkipActiveTreeFirstDraw();
+}
+
 void ProxyImpl::NotifyReadyToDraw() {
   TRACE_EVENT0("cc", "ProxyImpl::NotifyReadyToDraw");
   DCHECK(IsImplThread());

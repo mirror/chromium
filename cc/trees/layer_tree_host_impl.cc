@@ -1089,6 +1089,10 @@ void LayerTreeHostImpl::InvalidateContentOnImplSide() {
   if (!CommitToActiveTree())
     CreatePendingTree();
 
+  // For now impl-side invalidations are used only for checker-imaging, so this
+  // pending tree does not need to be flushed as an independent update through
+  // the pipeline.
+  client_->NotifyCanSkipActiveTreeFirstDraw();
   UpdateSyncTreeAfterCommitOrImplSideInvalidation();
 }
 

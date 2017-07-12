@@ -773,7 +773,8 @@ void SchedulerStateMachine::WillActivate() {
 
   has_pending_tree_ = false;
   pending_tree_is_ready_for_activation_ = false;
-  active_tree_needs_first_draw_ = true;
+  active_tree_needs_first_draw_ = !can_skip_active_tree_first_draw_;
+  can_skip_active_tree_first_draw_ = false;
   needs_redraw_ = true;
   last_begin_frame_sequence_number_active_tree_was_fresh_ =
       last_begin_frame_sequence_number_pending_tree_was_fresh_;
@@ -860,6 +861,12 @@ void SchedulerStateMachine::DidDraw(DrawResult draw_result) {
 
 void SchedulerStateMachine::SetNeedsImplSideInvalidation() {
   needs_impl_side_invalidation_ = true;
+}
+
+void SchedulerStateMachine::SetCanSkipActiveTreeFirstDraw() {
+  DCHECK(has_pending_tree_);
+  DCHECK(current_pending_tree_is_impl_side_);
+  can_skip_active_tree_first_draw_ = true;
 }
 
 void SchedulerStateMachine::SetMainThreadWantsBeginMainFrameNotExpectedMessages(

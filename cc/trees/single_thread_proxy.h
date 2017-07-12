@@ -102,6 +102,7 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
   void NeedsImplSideInvalidation() override;
   void RequestBeginMainFrameNotExpected(bool new_state) override;
   void NotifyImageDecodeRequestFinished() override;
+  void NotifyCanSkipActiveTreeFirstDraw() override;
 
   void RequestNewLayerTreeFrameSink();
 
