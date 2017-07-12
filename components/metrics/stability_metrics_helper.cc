@@ -194,8 +194,6 @@ void StabilityMetricsHelper::LogRendererCrash(bool was_extension_process,
         UMA_HISTOGRAM_SPARSE_SLOWLY("CrashExitCodes.Extension",
                                     MapCrashExitCodeForHistogram(exit_code));
       } else {
-        IncrementPrefValue(prefs::kStabilityRendererCrashCount);
-
         UMA_HISTOGRAM_SPARSE_SLOWLY("CrashExitCodes.Renderer",
                                     MapCrashExitCodeForHistogram(exit_code));
       }

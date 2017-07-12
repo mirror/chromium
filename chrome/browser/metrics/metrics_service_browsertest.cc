@@ -96,7 +96,7 @@ class MetricsServiceBrowserTest : public InProcessBrowserTest {
     // now", since the notification is posted to all observers essentially
     // simultaneously... so busy waiting here shouldn't be too bad.
     const PrefService* prefs = g_browser_process->local_state();
-    while (!prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount)) {
+    while (!prefs->GetInteger(metrics::prefs::kStabilityLaunchCount)) {
       content::RunAllPendingInMessageLoop();
     }
   }
@@ -134,7 +134,6 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, CloseRenderersNormally) {
   const PrefService* prefs = g_browser_process->local_state();
   EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityLaunchCount));
   EXPECT_EQ(3, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
-  EXPECT_EQ(0, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
 }
 
 // Flaky on Linux. See http://crbug.com/131094
@@ -158,7 +157,6 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, MAYBE_CrashRenderers) {
   EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityLaunchCount));
   // The three tabs from OpenTabs() and the one tab to open chrome://crash/.
   EXPECT_EQ(4, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
-  EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
 
 #if defined(OS_WIN)
   histogram_tester.ExpectUniqueSample(
@@ -181,7 +179,6 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, MAYBE_CheckCrashRenderers) {
   // The three tabs from OpenTabs() and the one tab to open
   // chrome://checkcrash/.
   EXPECT_EQ(4, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
-  EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
 
 #if defined(OS_WIN)
   histogram_tester.ExpectUniqueSample(
@@ -211,7 +208,6 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, OOMRenderers) {
   // The three tabs from OpenTabs() and the one tab to open
   // chrome://memory-exhaust/.
   EXPECT_EQ(4, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
-  EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
 
 // On 64-bit, the Job object should terminate the renderer on an OOM.
 #if defined(ARCH_CPU_64_BITS)
