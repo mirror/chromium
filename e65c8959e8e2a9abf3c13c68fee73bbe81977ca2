@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a64f525_c8b39195",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-12T21:36:37Z",
+      "side": 1,
+      "message": "This will be updated once https://chromium-review.googlesource.com/c/568399/ is landed.",
+      "revId": "e65c8959e8e2a9abf3c13c68fee73bbe81977ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
