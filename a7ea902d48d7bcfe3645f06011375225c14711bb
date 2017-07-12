@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "022084cc_18030f7c",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-12T23:35:24Z",
+      "side": 1,
+      "message": "move this to the end of includes",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5693e07_de8eb703",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-12T23:35:24Z",
+      "side": 1,
+      "message": "CastAudioManager implementation. We only reference immediate parent class.",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05999a6_f78bbd92",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-12T23:35:24Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11675955_53647810",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-12T23:35:24Z",
+      "side": 1,
+      "message": "do these functions need to be members?",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6f1139_6c0fb16c",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-12T23:35:24Z",
+      "side": 1,
+      "message": "ASSERT(stream);",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
