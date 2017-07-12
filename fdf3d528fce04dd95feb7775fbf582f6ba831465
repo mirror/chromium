@@ -70,6 +70,30 @@
       "revId": "fdf3d528fce04dd95feb7775fbf582f6ba831465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26395a36_c0e7d646",
+        "filename": "components/download/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1226098
+      },
+      "writtenOn": "2017-07-12T04:51:20Z",
+      "side": 0,
+      "message": "Ok. I\u0027ll undo the deletion of these BUILD.gn files and remove the unit_tests targets from these and add the components_unittests_gtest_filter as a dependency on the download/internal and download/content/internal unit_tests.",
+      "parentUuid": "edeae429_d8b71ef9",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 1
+      },
+      "revId": "fdf3d528fce04dd95feb7775fbf582f6ba831465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
