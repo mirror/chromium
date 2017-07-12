@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "430533e0_28ee7822",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T14:43:06Z",
+      "side": 1,
+      "message": "Base on this comment and on the function name, I would expect this function to be called from [_signinPromoViewMediator signinPromoViewRemoved] from [SigninPromoView:-didMoveToSuperview:] (see documentation at https://developer.apple.com/documentation/uikit/uiview/1622433-didmovetosuperview ).\nI do not know however if that would log the histograms in all cases though.\n\nIf not, I would change this to comment to \"Called when the sign-in promo is removed from the view hierarchy (it or one of its superviews is removed).\"",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "c75d491c3f057d322c380a1cef393b21614dad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0c506a_a7e6c8c5",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T14:43:06Z",
+      "side": 1,
+      "message": "Nit: You may want to keep the dealloc and DCHECK that the state of the mediator is invalid. That may be a problem in tests though.",
+      "revId": "c75d491c3f057d322c380a1cef393b21614dad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d6ab19_17633817",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T14:43:06Z",
+      "side": 1,
+      "message": "I will let the bookmarks owners tell us if there is a better place from where we can call this method (like when the bookmarks view is being dismissed).",
+      "range": {
+        "startLine": 230,
+        "startChar": 3,
+        "endLine": 230,
+        "endChar": 27
+      },
+      "revId": "c75d491c3f057d322c380a1cef393b21614dad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4317488c_ff5e85a4",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T14:43:06Z",
+      "side": 1,
+      "message": "The comment on the method signinPromoViewRemoved is the following:\n\"// Called when the sign-in promo view is removed from its superview. ...\n- (void)signinPromoViewRemoved;\"\nHowever, in this case the sign-in promo view was not yet removed (just the mediator is destroyed).\n\nJust to make sure - will the sign-in promo view actually be removed when the collection view is reloaded?",
+      "range": {
+        "startLine": 349,
+        "startChar": 32,
+        "endLine": 349,
+        "endChar": 54
+      },
+      "revId": "c75d491c3f057d322c380a1cef393b21614dad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a4fc78_331e380f",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T14:43:06Z",
+      "side": 1,
+      "message": "I will let the iOS engineers tell us if there is a better place from where we can call this method (like when the recent tabs view are being dismissed).",
+      "range": {
+        "startLine": 185,
+        "startChar": 28,
+        "endLine": 185,
+        "endChar": 50
+      },
+      "revId": "c75d491c3f057d322c380a1cef393b21614dad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95e28e2_753dc5f7",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_overlay_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T14:43:06Z",
+      "side": 1,
+      "message": "Same comment here - maybe the recent tabs owners could tell us if there is a better place to do this call from.",
+      "range": {
+        "startLine": 184,
+        "startChar": 3,
+        "endLine": 184,
+        "endChar": 27
+      },
+      "revId": "c75d491c3f057d322c380a1cef393b21614dad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
