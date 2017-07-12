@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67d80b31_bb4b408b",
+        "filename": "ui/android/java/src/org/chromium/ui/UiUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T21:23:43Z",
+      "side": 1,
+      "message": "nit: Capitalize \"Type\" and add a period after \"recycled\".",
+      "range": {
+        "startLine": 441,
+        "startChar": 19,
+        "endLine": 441,
+        "endChar": 23
+      },
+      "revId": "e9b4ed1c5d1b5efa8d101f1e8defbec017ae3f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
