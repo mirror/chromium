@@ -435,6 +435,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
          content::ServiceWorkerFetchRequest* out) {
   std::unordered_map<std::string, std::string> headers;
   base::Optional<std::string> blob_uuid;
+  storage::mojom::BlobPtr blob;
   if (!data.ReadMode(&out->mode) ||
       !data.ReadRequestContextType(&out->request_context_type) ||
       !data.ReadFrameType(&out->frame_type) || !data.ReadUrl(&out->url) ||
@@ -453,6 +454,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
     out->blob_uuid = blob_uuid.value();
     out->blob_size = data.blob_size();
   }
+  out->blob = storage::BlobWrapper(data.TakeBlob<storage::mojom::BlobPtr>());
   out->is_reload = data.is_reload();
   return true;
 }

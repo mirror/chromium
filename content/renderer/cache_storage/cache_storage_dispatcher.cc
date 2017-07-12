@@ -26,10 +26,10 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
 #include "url/origin.h"
 
-using base::TimeTicks;
 
 namespace content {
 
+using base::TimeTicks;
 using blink::WebServiceWorkerCacheError;
 using blink::WebServiceWorkerCacheStorage;
 using blink::WebServiceWorkerRequest;
@@ -648,8 +648,13 @@ void CacheStorageDispatcher::PopulateWebResponseFromResponse(
   }
 
   if (!response.blob_uuid.empty()) {
+    auto blob = storage::BlobWrapper(response.blob).ExtractPtr();
+    auto blob_info = blob.PassInterface();
+    storage::mojom::blink::BlobPtr web_blob;
+    web_blob.Bind(storage::mojom::blink::BlobPtrInfo(blob_info.PassHandle(),
+                                                     blob_info.version()));
     web_response->SetBlob(blink::WebString::FromUTF8(response.blob_uuid),
-                          response.blob_size);
+                          response.blob_size, std::move(web_blob));
     // Let the host know that it can release its reference to the blob.
     Send(new CacheStorageHostMsg_BlobDataHandled(response.blob_uuid));
   }
