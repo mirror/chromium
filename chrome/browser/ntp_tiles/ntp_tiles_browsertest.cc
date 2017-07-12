@@ -29,6 +29,10 @@ std::string PrintTile(const std::string& title,
          testing::PrintToString(static_cast<int>(source));
 }
 
+MATCHER_P0(MatchesTopSitesTile()) {
+  return arg.source == TileSource::TOP_SITES;
+}
+
 MATCHER_P3(MatchesTile, title, url, source, PrintTile(title, url, source)) {
   return arg.title == base::ASCIIToUTF16(title) && arg.url == GURL(url) &&
          arg.source == source;
@@ -125,6 +129,19 @@ IN_PROC_BROWSER_TEST_F(NTPTilesTest, ServerRedirect) {
                                           TileSource::TOP_SITES)));
   EXPECT_THAT(tiles, Not(Contains(MatchesTile("", final_url.spec().c_str(),
                                               TileSource::TOP_SITES))));
+}
+
+// Tests that NTP tiles are received from TopSites if no navigation is done.
+IN_PROC_BROWSER_TEST_F(NTPTilesTest, LoadURL) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  const GURL page_url = embedded_test_server()->GetURL("/simple.html");
+
+  MostVisitedSitesWaiter waiter;
+  most_visited_sites_->SetMostVisitedURLsObserver(&waiter, /*num_sites=*/8);
+
+  NTPTilesVector tiles = waiter.WaitForTiles();
+  EXPECT_THAT(tiles, Contains(MatchTopSitesTile("", page_url.spec().c_str(),
+                                          TileSource::TOP_SITES)));
 }
 
 }  // namespace ntp_tiles
