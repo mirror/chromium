@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6f16efb7_9a53f0bb",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-12T14:41:38Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "003228c1_96d51ab8",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 18
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4508eccc_508e62de",
         "filename": "components/task_scheduler_util/common/variations_util.cc",
         "patchSetId": 8
@@ -141,6 +165,30 @@
       "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2bb6c82_940cf98b",
+        "filename": "components/task_scheduler_util/common/variations_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-12T14:41:38Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "8021203e_93d7d9d8",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 36
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
