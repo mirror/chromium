@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2737705f_6ad125dc",
+        "filename": "buildbucket.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-07-12T18:55:46Z",
+      "side": 1,
+      "message": "These seem pretty odd to have present",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "7493952ee731fc0790fe185e178c673c48ce66d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a00e1e1_884d12ef",
+        "filename": "buildbucket.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-07-12T18:55:46Z",
+      "side": 1,
+      "message": "Rietveld didn\u0027t display any bisect builders. Not sure if we want to continue that same trend now.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 44
+      },
+      "revId": "7493952ee731fc0790fe185e178c673c48ce66d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
