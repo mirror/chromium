@@ -8,7 +8,7 @@
 #include "base/mac/scoped_cftyperef.h"
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/strings/sys_string_conversions.h"
-#include "media/capture/video/scoped_result_callback.h"
+#include "media/base/scoped_callback_runner.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/shape_detection/barcode_detection_impl.h"
 #include "services/shape_detection/detection_utils_mac.h"
@@ -48,8 +48,8 @@ BarcodeDetectionImplMac::~BarcodeDetectionImplMac() {}
 
 void BarcodeDetectionImplMac::Detect(const SkBitmap& bitmap,
                                      DetectCallback callback) {
-  media::ScopedResultCallback<DetectCallback> scoped_callback(
-      std::move(callback), base::Bind(&RunCallbackWithNoBarcodes));
+  DetectCallback scoped_callback =
+      media::ScopedCallbackRunner(std::move(callback), nullptr);
 
   base::scoped_nsobject<CIImage> ci_image = CreateCIImageFromSkBitmap(bitmap);
   if (!ci_image)
@@ -81,7 +81,7 @@ void BarcodeDetectionImplMac::Detect(const SkBitmap& bitmap,
     result->raw_value = base::SysNSStringToUTF8(f.messageString);
     results.push_back(std::move(result));
   }
-  scoped_callback.Run(std::move(results));
+  std::move(scoped_callback).Run(std::move(results));
 }
 
 }  // namespace shape_detection
