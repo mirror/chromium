@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6af7cbb1_fd303efd",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-12T01:06:39Z",
+      "side": 1,
+      "message": "Ah I didn\u0027t realize that. Will redo this portion. Probably can\u0027t use a set then given the wraparound behavior of the bitstream buffer ids.",
+      "parentUuid": "7840176b_efe0f183",
+      "range": {
+        "startLine": 471,
+        "startChar": 2,
+        "endLine": 471,
+        "endChar": 72
+      },
+      "revId": "682971566a9ec4ab0c171623c0109af15bfc3aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd0b30bc_d9c8ba7d",
         "filename": "media/filters/gpu_video_decoder.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T00:58:51Z",
       "side": 1,
       "message": "Flush().",
+      "range": {
+        "startLine": 812,
+        "startChar": 36,
+        "endLine": 812,
+        "endChar": 43
+      },
+      "revId": "682971566a9ec4ab0c171623c0109af15bfc3aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08c5f96_693ab9ee",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-12T01:06:39Z",
+      "side": 1,
+      "message": "Err, this should be deleted I think.",
+      "parentUuid": "bd0b30bc_d9c8ba7d",
       "range": {
         "startLine": 812,
         "startChar": 36,
