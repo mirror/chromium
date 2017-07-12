@@ -22,6 +22,30 @@
       "revId": "a6ef1c3ad3040c606293111fddfedc0cf1bf0ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7099ef_ee23c50b",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-12T01:06:16Z",
+      "side": 1,
+      "message": "I\u0027m going to send a CL with a unit test to make sure the NotifyEvent is properly called. Once all the events are finished, we\u0027ll add EG tests to make sure that sequences of actions properly trigger the events (and then that the in-product help properly appears).",
+      "parentUuid": "900725ee_6b55701b",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 76
+      },
+      "revId": "a6ef1c3ad3040c606293111fddfedc0cf1bf0ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
