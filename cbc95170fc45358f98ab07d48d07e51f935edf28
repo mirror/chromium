@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5ddcbfab_26fc8625",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-12T23:01:56Z",
+      "side": 1,
+      "message": "You can use an enum in enums.xml without a corresponding enum in the code.\n\nI wouldn\u0027t use a custom counts histogram because that has exponentially-sized buckets.  I\u0027d use \nUMA_HISTOGRAM_EXACT_LINEAR, which is just like an enum histogram, just with a different name.  (Look at histogram_macros.h.)",
+      "parentUuid": "5912e76f_dc47a8ce",
+      "range": {
+        "startLine": 83,
+        "startChar": 11,
+        "endLine": 83,
+        "endChar": 33
+      },
+      "revId": "cbc95170fc45358f98ab07d48d07e51f935edf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9b9a16e_a02464fe",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Yes, it should go in the second-lowest bucket. We are only interested in the rough ranges, so that edge case is not important. But what if I would like to clarify that, are notations like \n\n[0 to 20), [20 to 40), ... etc.\n\ncommon here?",
       "parentUuid": "f9b9a16e_a02464fe",
+      "range": {
+        "startLine": 1306,
+        "startChar": 22,
+        "endLine": 1306,
+        "endChar": 23
+      },
+      "revId": "cbc95170fc45358f98ab07d48d07e51f935edf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd45904_2a99e02b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-12T23:01:56Z",
+      "side": 1,
+      "message": "I would understand that notation.",
+      "parentUuid": "baf92b0f_2f504a26",
       "range": {
         "startLine": 1306,
         "startChar": 22,
