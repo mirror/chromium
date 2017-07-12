@@ -239,6 +239,10 @@ PageInfoUI::IdentityInfo::GetSecurityDescription() const {
     case PageInfo::SITE_IDENTITY_STATUS_UNWANTED_SOFTWARE:
       return CreateSecurityDescription(IDS_PAGE_INFO_UNWANTED_SOFTWARE_SUMMARY,
                                        IDS_PAGE_INFO_UNWANTED_SOFTWARE_DETAILS);
+    case PageInfo::SITE_IDENTITY_STATUS_GOOGLE_BRANDED_PHISHING:
+      return CreateSecurityDescription(
+          IDS_PAGE_INFO_GOOGLE_BRANDED_PHISHING_SUMMARY,
+          IDS_PAGE_INFO_GOOGLE_BRANDED_PHISHING_DETAILS);
     case PageInfo::SITE_IDENTITY_STATUS_DEPRECATED_SIGNATURE_ALGORITHM:
     case PageInfo::SITE_IDENTITY_STATUS_UNKNOWN:
     case PageInfo::SITE_IDENTITY_STATUS_NO_CERT:

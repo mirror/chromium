@@ -112,6 +112,8 @@ class BaseUIManager
   virtual const GURL default_safe_page() const;
 
  protected:
+  friend class ChromePasswordProtectionService;
+
   virtual ~BaseUIManager();
 
   // Updates the whitelist URL set for |web_contents|. Called on the UI thread.

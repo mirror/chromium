@@ -79,10 +79,12 @@ class PageInfo : public TabSpecificContentSettings::SiteDataObserver,
     // is using a deprecated signature algorithm.
     SITE_IDENTITY_STATUS_DEPRECATED_SIGNATURE_ALGORITHM,
     // The website has been flagged by Safe Browsing as dangerous for
-    // containing malware, social engineering, or unwanted software.
+    // containing malware, social engineering, unwanted software, or
+    // Google-branded phishing.
     SITE_IDENTITY_STATUS_MALWARE,
     SITE_IDENTITY_STATUS_SOCIAL_ENGINEERING,
     SITE_IDENTITY_STATUS_UNWANTED_SOFTWARE,
+    SITE_IDENTITY_STATUS_GOOGLE_BRANDED_PHISHING,
   };
 
   // UMA statistics for PageInfo. Do not reorder or remove existing

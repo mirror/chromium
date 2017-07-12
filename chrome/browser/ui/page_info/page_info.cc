@@ -232,6 +232,11 @@ void GetSiteIdentityByMaliciousContentStatus(
       *details =
           l10n_util::GetStringUTF16(IDS_PAGE_INFO_UNWANTED_SOFTWARE_DETAILS);
       break;
+    case security_state::MALICIOUS_CONTENT_STATUS_GOOGLE_BRANDED_PHISHING:
+      *status = PageInfo::SITE_IDENTITY_STATUS_GOOGLE_BRANDED_PHISHING;
+      *details =
+          l10n_util::GetStringUTF16(IDS_PAGE_INFO_GOOGLE_BRANDED_PHISHING_DETAILS);
+      break;
   }
 }
 

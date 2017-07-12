@@ -33,6 +33,11 @@
 #include "chrome/browser/chromeos/policy/policy_cert_service_factory.h"
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(SAFE_BROWSING_DB_LOCAL)
+#include "base/feature_list.h"
+#include "components/safe_browsing/password_protection/password_protection_service.h"
+#endif
+
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(SecurityStateTabHelper);
 
 using safe_browsing::SafeBrowsingUIManager;
@@ -177,8 +182,19 @@ SecurityStateTabHelper::GetMaliciousContentStatus() const {
     return security_state::MALICIOUS_CONTENT_STATUS_NONE;
   scoped_refptr<SafeBrowsingUIManager> sb_ui_manager = sb_service->ui_manager();
   safe_browsing::SBThreatType threat_type;
-  if (sb_ui_manager->IsUrlWhitelistedOrPendingForWebContents(
-          entry->GetURL(), false, entry, web_contents(), false, &threat_type)) {
+  bool is_whitelisted_or_pending =
+      sb_ui_manager->IsUrlWhitelistedOrPendingForWebContents(
+          entry->GetURL(), false, entry, web_contents(), false, &threat_type);
+
+#if defined(SAFE_BROWSING_DB_LOCAL)
+  if (is_whitelisted_or_pending &&
+      threat_type == safe_browsing::SB_THREAT_TYPE_GOOGLE_BRANDED_PHISHING &&
+      base::FeatureList::IsEnabled(safe_browsing::kGoogleBrandedPhishingWarning)) {
+    return security_state::MALICIOUS_CONTENT_STATUS_GOOGLE_BRANDED_PHISHING;
+  }
+#endif
+
+  if (is_whitelisted_or_pending) {
     switch (threat_type) {
       case safe_browsing::SB_THREAT_TYPE_UNUSED:
       case safe_browsing::SB_THREAT_TYPE_SAFE:
@@ -201,6 +217,7 @@ SecurityStateTabHelper::GetMaliciousContentStatus() const {
       case safe_browsing::SB_THREAT_TYPE_API_ABUSE:
       case safe_browsing::SB_THREAT_TYPE_SUBRESOURCE_FILTER:
       case safe_browsing::SB_THREAT_TYPE_CSD_WHITELIST:
+      case safe_browsing::SB_THREAT_TYPE_GOOGLE_BRANDED_PHISHING:
         // These threat types are not currently associated with
         // interstitials, and thus resources with these threat types are
         // not ever whitelisted or pending whitelisting.

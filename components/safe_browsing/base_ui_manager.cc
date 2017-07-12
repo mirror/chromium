@@ -292,6 +292,7 @@ void BaseUIManager::AddToWhitelistUrlSet(const GURL& whitelist_url,
     site_list->Insert(whitelist_url, threat_type);
   }
 
+  LOG(ERROR)<<"Before call DidChangeVisibleSecurityState";
   // Notify security UI that security state has changed.
   web_contents->DidChangeVisibleSecurityState();
 }

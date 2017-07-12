@@ -38,6 +38,24 @@ namespace {
 // The number of user gestures we trace back for login event attribution.
 const int kPasswordEventAttributionUserGestureLimit = 2;
 
+void SetUpUnsafeResource(const GURL& phishing_url,
+                         safe_browsing::SBThreatType threat_type,
+                         const std::string& token,
+                         content::WebContents* web_contents,
+                         security_interstitials::UnsafeResource* resource) {
+  resource->url = phishing_url;
+  resource->original_url = phishing_url;
+  resource->is_subresource = false;
+  resource->threat_type = threat_type;
+  resource->threat_source =
+      safe_browsing::ThreatSource::PASSWORD_PROTECTION_SERVICE;
+  resource->web_contents_getter =
+      safe_browsing::SafeBrowsingUIManager::UnsafeResource::
+          GetWebContentsGetter(web_contents->GetRenderProcessHost()->GetID(),
+                               web_contents->GetMainFrame()->GetRoutingID());
+  resource->token = token;
+}
+
 }  // namespace
 
 ChromePasswordProtectionService::ChromePasswordProtectionService(
@@ -101,7 +119,8 @@ bool ChromePasswordProtectionService::IsIncognito() {
 bool ChromePasswordProtectionService::IsPingingEnabled(
     const base::Feature& feature,
     RequestOutcome* reason) {
-  // Don't start pinging on an invalid profile, or if user turns off Safe
+  return true;
+  /*// Don't start pinging on an invalid profile, or if user turns off Safe
   // Browsing service.
   if (!profile_ ||
       !profile_->GetPrefs()->GetBoolean(prefs::kSafeBrowsingEnabled)) {
@@ -139,7 +158,7 @@ bool ChromePasswordProtectionService::IsPingingEnabled(
     *reason = DISABLED_DUE_TO_USER_POPULATION;
   }
 
-  return allowed_all_population;
+  return allowed_all_population;*/
 }
 
 bool ChromePasswordProtectionService::IsHistorySyncEnabled() {
@@ -180,22 +199,49 @@ void ChromePasswordProtectionService::ShowPhishingInterstitial(
   if (!ui_manager_)
     return;
   security_interstitials::UnsafeResource resource;
-  resource.url = phishing_url;
-  resource.original_url = phishing_url;
-  resource.is_subresource = false;
-  resource.threat_type = SB_THREAT_TYPE_URL_PASSWORD_PROTECTION_PHISHING;
-  resource.threat_source =
-      safe_browsing::ThreatSource::PASSWORD_PROTECTION_SERVICE;
-  resource.web_contents_getter =
-      safe_browsing::SafeBrowsingUIManager::UnsafeResource::
-          GetWebContentsGetter(web_contents->GetRenderProcessHost()->GetID(),
-                               web_contents->GetMainFrame()->GetRoutingID());
-  resource.token = token;
+  SetUpUnsafeResource(phishing_url,
+                      SB_THREAT_TYPE_URL_PASSWORD_PROTECTION_PHISHING,
+                      token, web_contents, &resource);
   if (!ui_manager_->IsWhitelisted(resource)) {
     web_contents->GetController().DiscardNonCommittedEntries();
   }
   ui_manager_->DisplayBlockingPage(resource);
 }
+
+void ChromePasswordProtectionService::ShowGoogleBrandedPhishingWarning(
+      const GURL& phishing_url,
+      const std::string& token,
+      content::WebContents* web_contents) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (!ui_manager_)
+    return;
+  security_interstitials::UnsafeResource resource;
+
+  // There are 3 cases:
+  // (1) user already visited change password page/ user already changed
+  //     password --> regular social engineering security state
+  // (2) user click ignore in the warning dialog ---> google branded phishing
+  //     security state
+  // (3) user first modal warning dialog is showing --> Google branded phishing
+  //     security state.
+  SetUpUnsafeResource(phishing_url,
+                      SB_THREAT_TYPE_URL_PASSWORD_PROTECTION_PHISHING,
+                      token, web_contents, &resource);
+  if (ui_manager_->IsWhitelisted(resource)) {
+    return;
+  }
+
+  resource.threat_type = SB_THREAT_TYPE_GOOGLE_BRANDED_PHISHING;
+
+  if(!ui_manager_->IsWhitelisted(resource)) {
+    ui_manager_->AddToWhitelistUrlSet(
+        BaseUIManager::GetMainFrameWhitelistUrlForResource(resource),
+        resource.web_contents_getter.Run(),
+        true,
+        resource.threat_type);
+  }
+}
+
 
 ChromePasswordProtectionService::ChromePasswordProtectionService(
     Profile* profile)

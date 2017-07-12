@@ -40,6 +40,7 @@ class PasswordProtectionRequest;
 extern const base::Feature kPasswordFieldOnFocusPinging;
 extern const base::Feature kProtectedPasswordEntryPinging;
 extern const base::Feature kPasswordProtectionInterstitial;
+extern const base::Feature kGoogleBrandedPhishingWarning;
 extern const char kPasswordOnFocusRequestOutcomeHistogramName[];
 extern const char kPasswordEntryRequestOutcomeHistogramName[];
 extern const char kSyncPasswordEntryRequestOutcomeHistogramName[];
@@ -194,13 +195,18 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
 
   virtual bool IsHistorySyncEnabled() = 0;
 
+    // Gets the type of sync account associated with current profile or
+  // |NOT_SIGNED_IN|.
+  virtual SyncAccountType GetSyncAccountType() = 0;
+
   virtual void ShowPhishingInterstitial(const GURL& phishing_url,
                                         const std::string& token,
                                         content::WebContents* web_contents) = 0;
 
-  // Gets the type of sync account associated with current profile or
-  // |NOT_SIGNED_IN|.
-  virtual SyncAccountType GetSyncAccountType() = 0;
+  virtual void ShowGoogleBrandedPhishingWarning(
+      const GURL& phishing_url,
+      const std::string& token,
+      content::WebContents* web_contents) {}
 
   void CheckCsdWhitelistOnIOThread(const GURL& url, bool* check_result);
 

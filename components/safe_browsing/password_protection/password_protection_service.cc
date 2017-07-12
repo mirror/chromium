@@ -83,6 +83,10 @@ const base::Feature kProtectedPasswordEntryPinging{
 const base::Feature kPasswordProtectionInterstitial{
     "PasswordProtectionInterstitial", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kGoogleBrandedPhishingWarning{
+    "PasswordProtectionGoogleBrandedPhishingWarning",
+    base::FEATURE_ENABLED_BY_DEFAULT};
+
 const char kPasswordOnFocusRequestOutcomeHistogramName[] =
     "PasswordProtection.RequestOutcome.PasswordFieldOnFocus";
 const char kPasswordEntryRequestOutcomeHistogramName[] =
@@ -387,6 +391,15 @@ void PasswordProtectionService::RequestFinished(
       ShowPhishingInterstitial(request->main_frame_url(),
                                response->verdict_token(),
                                request->web_contents());
+    }
+
+    if (request->trigger_type() ==
+            LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
+            response->verdict_type() != LoginReputationClientResponse::SAFE &&
+            base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning)) {
+      ShowGoogleBrandedPhishingWarning(request->main_frame_url(),
+                                       response->verdict_token(),
+                                       request->web_contents());
     }
   }
 
