@@ -138,7 +138,8 @@ class TabManager::WebContentsData
   // Needed to access tab_data_.
   FRIEND_TEST_ALL_PREFIXES(TabManagerWebContentsDataTest, CopyState);
   FRIEND_TEST_ALL_PREFIXES(TabManagerWebContentsDataTest, TabLoadingState);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, HistogramsSessionRestoreSwitchToTab);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
+                           HistogramsSessionRestoreSwitchToTab);
 
   struct Data {
     Data();
