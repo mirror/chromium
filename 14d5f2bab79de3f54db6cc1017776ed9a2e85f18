@@ -16,6 +16,24 @@
       "revId": "14d5f2bab79de3f54db6cc1017776ed9a2e85f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ceb3c5d_d1b37573",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-12T02:57:58Z",
+      "side": 1,
+      "message": "This looks correct to me. We want or exact match, which is only the case if the major and minor version numbers are the same:\n\n!(major_version \u003d\u003d VA_MAJOR_VERSION \u0026\u0026 minor_version \u003d\u003d VA_MINOR_VERSION))\n\nis equivalent to\n\nmajor_version !\u003d VA_MAJOR_VERSION || minor_version \u003d\u003d VA_MINOR_VERSION",
+      "parentUuid": "34034f7a_cd28b95e",
+      "revId": "14d5f2bab79de3f54db6cc1017776ed9a2e85f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
