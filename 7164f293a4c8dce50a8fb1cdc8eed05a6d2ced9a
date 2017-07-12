@@ -102,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "aa69a2c9_ee33e050",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-12T20:27:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43ae7de4_1843edef",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4de86d1_1b7035b8",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 1
@@ -137,6 +161,30 @@
       "side": 1,
       "message": "Not sure.\n\nHelen, do you know the design motivation for keeping the file handles open?\n(for non-current events files).",
       "parentUuid": "a4de86d1_1b7035b8",
+      "range": {
+        "startLine": 210,
+        "startChar": 20,
+        "endLine": 210,
+        "endChar": 30
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88aca4d_3a6f2d74",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-12T20:27:56Z",
+      "side": 1,
+      "message": "Good point! I don\u0027t see why we have to keep these file handles open, since we get a new file handle each time when we switch to the next event file. I think we are fine just keeping the handle to the current event file, though I might be missing something.",
+      "parentUuid": "39b6dfcf_4840e194",
       "range": {
         "startLine": 210,
         "startChar": 20,
@@ -210,6 +258,24 @@
       "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0959a450_d27c2a7f",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-12T20:27:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "156f3284_2f2d0816",
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
