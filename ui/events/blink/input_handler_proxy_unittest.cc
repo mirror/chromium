@@ -610,6 +610,17 @@ class InputHandlerProxyEventQueueTest : public testing::TestWithParam<bool> {
     input_handler_proxy_->SetTickClockForTesting(std::move(tick_clock));
   }
 
+  bool HasDispatchedGestureUpdateEventsThisFrame() const {
+    return input_handler_proxy_
+        ->has_dispatched_gesture_update_events_this_frame_;
+  }
+
+  void SetHasDispatchedGestureUpdateEventsThisFrame(
+      bool has_dispatched_gesture_update_events_this_frame) {
+    input_handler_proxy_->has_dispatched_gesture_update_events_this_frame_ =
+        has_dispatched_gesture_update_events_this_frame;
+  }
+
  protected:
   base::test::ScopedFeatureList feature_list_;
   testing::StrictMock<MockInputHandler> mock_input_handler_;
@@ -3631,7 +3642,59 @@ TEST_P(InputHandlerProxyTest, WheelScrollingThreadStatusHistogram) {
   VERIFY_AND_RESET_MOCKS();
 }
 
+TEST_P(InputHandlerProxyEventQueueTest,
+       HasDispatchedGestureUpdateEventsThisFrame) {
+  // Handle scroll on compositor.
+  cc::InputHandlerScrollResult scroll_result_did_scroll_;
+  scroll_result_did_scroll_.did_scroll = true;
+
+  EXPECT_CALL(mock_input_handler_, ScrollBegin(testing::_, testing::_))
+      .WillOnce(testing::Return(kImplThreadScrollState));
+  EXPECT_CALL(mock_input_handler_, ScrollBy(testing::_))
+      .WillOnce(testing::Return(scroll_result_did_scroll_));
+  EXPECT_CALL(mock_input_handler_, SetNeedsAnimateInput()).Times(1);
+
+  EXPECT_EQ(false, HasDispatchedGestureUpdateEventsThisFrame());
+
+  // 1. Simulate the first gesture scroll of a frame.
+  HandleGestureEvent(WebInputEvent::kGestureScrollBegin);
+  HandleGestureEvent(WebInputEvent::kGestureScrollUpdate, -20);
+  HandleGestureEvent(WebInputEvent::kGestureScrollEnd);
+
+  // GSB and GSU should be dispatched immediately
+  testing::Mock::VerifyAndClearExpectations(&mock_input_handler_);
+  EXPECT_EQ(1ul, event_queue().size());
+  EXPECT_EQ(2ul, event_disposition_recorder_.size());
+  EXPECT_EQ(true, HasDispatchedGestureUpdateEventsThisFrame());
+
+  // 2. Simulate the second gesture scroll of a frame, which will get queued.
+  HandleGestureEvent(WebInputEvent::kGestureScrollBegin);
+  HandleGestureEvent(WebInputEvent::kGestureScrollUpdate, -20);
+  HandleGestureEvent(WebInputEvent::kGestureScrollEnd);
+  EXPECT_EQ(4ul, event_queue().size());
+  EXPECT_EQ(true, HasDispatchedGestureUpdateEventsThisFrame());
+
+  EXPECT_CALL(mock_input_handler_, ScrollBegin(testing::_, testing::_))
+      .WillOnce(testing::Return(kImplThreadScrollState));
+  EXPECT_CALL(mock_input_handler_, ScrollBy(testing::_))
+      .WillOnce(testing::Return(scroll_result_did_scroll_));
+  EXPECT_CALL(mock_input_handler_, ScrollEnd(testing::_)).Times(2);
+
+  // 3. Simulate a new frame with non-empty queue.
+  input_handler_proxy_->DeliverInputForBeginFrame();
+  testing::Mock::VerifyAndClearExpectations(&mock_input_handler_);
+  EXPECT_EQ(0ul, event_queue().size());
+  EXPECT_EQ(true, HasDispatchedGestureUpdateEventsThisFrame());
+
+  // 4. Simulate another new frame with empty queue.
+  input_handler_proxy_->DeliverInputForBeginFrame();
+  EXPECT_EQ(0ul, event_queue().size());
+  EXPECT_EQ(false, HasDispatchedGestureUpdateEventsThisFrame());
+}
+
 TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedGestureScroll) {
+  // Set the flag to simulate busy event queue.
+  SetHasDispatchedGestureUpdateEventsThisFrame(true);
   base::HistogramTester histogram_tester;
 
   // Handle scroll on compositor.
@@ -3695,6 +3758,8 @@ TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedGestureScroll) {
 }
 
 TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedGestureScrollPinchScroll) {
+  // Set the flag to simulate busy event queue.
+  SetHasDispatchedGestureUpdateEventsThisFrame(true);
   base::HistogramTester histogram_tester;
 
   // Handle scroll on compositor.
@@ -3761,6 +3826,8 @@ TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedGestureScrollPinchScroll) {
 }
 
 TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedQueueingTime) {
+  // Set the flag to simulate busy event queue.
+  SetHasDispatchedGestureUpdateEventsThisFrame(true);
   base::HistogramTester histogram_tester;
   std::unique_ptr<base::SimpleTestTickClock> tick_clock =
       base::MakeUnique<base::SimpleTestTickClock>();
@@ -3807,6 +3874,8 @@ TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedQueueingTime) {
 }
 
 TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedCoalesceScrollAndPinch) {
+  // Set the flag to simulate busy event queue.
+  SetHasDispatchedGestureUpdateEventsThisFrame(true);
   // Start scroll in the first frame.
   EXPECT_CALL(mock_input_handler_, ScrollBegin(testing::_, testing::_))
       .WillOnce(testing::Return(kImplThreadScrollState));
@@ -3862,6 +3931,8 @@ TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedCoalesceScrollAndPinch) {
 }
 
 TEST_P(InputHandlerProxyEventQueueTest, OriginalEventsTracing) {
+  // Set the flag to simulate busy event queue.
+  SetHasDispatchedGestureUpdateEventsThisFrame(true);
   // Handle scroll on compositor.
   cc::InputHandlerScrollResult scroll_result_did_scroll_;
   scroll_result_did_scroll_.did_scroll = true;
@@ -3933,6 +4004,8 @@ TEST_P(InputHandlerProxyEventQueueTest, OriginalEventsTracing) {
 }
 
 TEST_P(InputHandlerProxyEventQueueTest, GestureScrollFlingOrder) {
+  // Set the flag to simulate busy event queue.
+  SetHasDispatchedGestureUpdateEventsThisFrame(true);
   // Handle scroll on compositor.
   cc::InputHandlerScrollResult scroll_result_did_scroll_;
   scroll_result_did_scroll_.did_scroll = true;
@@ -3985,6 +4058,8 @@ TEST_P(InputHandlerProxyEventQueueTest, GestureScrollFlingOrder) {
 }
 
 TEST_P(InputHandlerProxyEventQueueTest, GestureScrollAfterFling) {
+  // Set the flag to simulate busy event queue.
+  SetHasDispatchedGestureUpdateEventsThisFrame(true);
   // Handle scroll on compositor.
   cc::InputHandlerScrollResult scroll_result_did_scroll_;
   scroll_result_did_scroll_.did_scroll = true;
@@ -4022,6 +4097,8 @@ TEST_P(InputHandlerProxyEventQueueTest, GestureScrollAfterFling) {
 }
 
 TEST_P(InputHandlerProxyEventQueueTest, TouchpadGestureScrollEndFlushQueue) {
+  // Set the flag to simulate busy event queue.
+  SetHasDispatchedGestureUpdateEventsThisFrame(true);
   // Handle scroll on compositor.
   cc::InputHandlerScrollResult scroll_result_did_scroll_;
   scroll_result_did_scroll_.did_scroll = true;
