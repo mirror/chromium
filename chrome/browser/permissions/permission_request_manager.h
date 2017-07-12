@@ -155,10 +155,9 @@ class PermissionRequestManager
   // Finalize the pending permissions request.
   void FinalizeBubble();
 
-  // Cancel any pending requests. This is called if the WebContents
-  // on which permissions calls are pending is destroyed or navigated away
-  // from the requesting page.
-  void CancelPendingQueues();
+  // Clean up any queued or active requests and hide active bubbles if possible.
+  // This is called if the WebContents is destroyed or navigates its main frame.
+  void CleanUpRequests();
 
   // Searches |requests_|, |queued_requests_| and |queued_frame_requests_| - but
   // *not* |duplicate_requests_| - for a request matching |request|, and returns
@@ -182,8 +181,13 @@ class PermissionRequestManager
   // Factory to be used to create views when needed.
   PermissionPrompt::Factory view_factory_;
 
-  // The UI surface to be used to display the permissions requests.
+  // The UI surface to be used to display the permissions requests. The view
+  // exists when both the main frame is fully loaded and the tab is active.
   std::unique_ptr<PermissionPrompt> view_;
+  bool main_frame_has_fully_loaded_;
+  // Android prompts infobars handle hiding on tab switching so we keep the
+  // view alive and have this permanently set to true.
+  bool tab_is_active_;
 
   std::vector<PermissionRequest*> requests_;
   std::deque<PermissionRequest*> queued_requests_;
@@ -191,8 +195,6 @@ class PermissionRequestManager
   // duped against it.
   std::unordered_multimap<PermissionRequest*, PermissionRequest*>
       duplicate_requests_;
-
-  bool main_frame_has_fully_loaded_;
 
   // Whether the response to each request should be persisted.
   bool persist_;
