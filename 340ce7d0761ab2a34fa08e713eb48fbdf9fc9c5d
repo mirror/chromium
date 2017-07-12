@@ -22,6 +22,30 @@
       "revId": "340ce7d0761ab2a34fa08e713eb48fbdf9fc9c5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26140b00_f6acfd3a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4064,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T16:25:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e32feb5_7f91b300",
+      "range": {
+        "startLine": 4064,
+        "startChar": 28,
+        "endLine": 4064,
+        "endChar": 40
+      },
+      "revId": "340ce7d0761ab2a34fa08e713eb48fbdf9fc9c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
