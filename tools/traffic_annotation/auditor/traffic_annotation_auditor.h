@@ -205,7 +205,7 @@ class TrafficAnnotationAuditor {
   // texts. This list includes all unique ids that are defined in
   // net/traffic_annotation/network_traffic_annotation.h and
   // net/traffic_annotation/network_traffic_annotation_test_helper.h
-  const std::map<int, std::string>& GetReservedUniqueIDs();
+  static const std::map<int, std::string>& GetReservedUniqueIDs();
 
   std::string clang_tool_raw_output() const { return clang_tool_raw_output_; };
 
@@ -217,14 +217,20 @@ class TrafficAnnotationAuditor {
     return extracted_annotations_;
   }
 
+  void set_extracted_annotations_for_test(
+      const std::vector<AnnotationInstance>& annotations) {
+    extracted_annotations_ = annotations;
+  }
+
   const std::vector<CallInstance>& extracted_calls() const {
     return extracted_calls_;
   }
 
   const std::vector<AuditorResult>& errors() const { return errors_; }
 
- private:
+  void clear_errors_for_test() { errors_.clear(); }
 
+ private:
   const base::FilePath source_path_;
   const base::FilePath build_path_;
 
