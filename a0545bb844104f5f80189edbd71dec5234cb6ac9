@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a434d75_b9483d93",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-12T20:33:43Z",
+      "side": 1,
+      "message": "Given this is shorthand for --disable-blink-features, maybe the name should include \"blink\" or \"web platform\"?",
+      "range": {
+        "startLine": 373,
+        "startChar": 5,
+        "endLine": 373,
+        "endChar": 12
+      },
+      "revId": "a0545bb844104f5f80189edbd71dec5234cb6ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cb6810_c42182d5",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-12T20:33:43Z",
+      "side": 1,
+      "message": "Offline, we had discussed that it might be clearer to rename this virtual suite. I don\u0027t remember exactly, but maybe something like \"origin-trials-with-runtimeflags-disabled\"? Or add the \"controlled\" concept in there?\n\nIf we think renaming is useful, that could be a separate CL, and files would need to move I think.",
+      "range": {
+        "startLine": 166,
+        "startChar": 29,
+        "endLine": 166,
+        "endChar": 41
+      },
+      "revId": "a0545bb844104f5f80189edbd71dec5234cb6ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
