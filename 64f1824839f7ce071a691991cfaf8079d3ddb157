@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f038de1_1585f792",
+        "filename": "content/child/indexed_db/webidbfactory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T22:25:26Z",
+      "side": 1,
+      "message": "also have an argument for base::SequencedTaskRunner argument here, and run callback on that.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 60
+      },
+      "revId": "64f1824839f7ce071a691991cfaf8079d3ddb157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9e399f_ebf9e923",
+        "filename": "content/child/indexed_db/webidbfactory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T22:25:26Z",
+      "side": 1,
+      "message": "this should change to callbacks-\u003eOnSuccess or OnError\n\nalso probably own the std::unique_ptr\u003cWebCallbacks\u003cvoid,void\u003e\u003e (as the argument).",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "64f1824839f7ce071a691991cfaf8079d3ddb157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d21414f_94d4fa12",
+        "filename": "content/child/indexed_db/webidbfactory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T22:25:26Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cWebCallbacks\u003cvoid,void\u003e\u003e here and below",
+      "range": {
+        "startLine": 131,
+        "startChar": 20,
+        "endLine": 131,
+        "endChar": 21
+      },
+      "revId": "64f1824839f7ce071a691991cfaf8079d3ddb157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a14f843_bf85c73d",
+        "filename": "content/child/indexed_db/webidbfactory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T22:25:26Z",
+      "side": 1,
+      "message": "either pass chromium::base::ThreadTaskRunnerHandle::Get() to the io thread helper or wrap the callback adapter here (and have the iothreadhelper accept a callback w/ the signature ::indexed_db::mojom::Status status)",
+      "revId": "64f1824839f7ce071a691991cfaf8079d3ddb157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5064858_b8c0d7b7",
+        "filename": "content/child/indexed_db/webidbfactory_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T22:25:26Z",
+      "side": 1,
+      "message": "ok try this - use std::unique_ptr\u003cWebCallbacks\u003cvoid,void\u003e\u003e here and below.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 40
+      },
+      "revId": "64f1824839f7ce071a691991cfaf8079d3ddb157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07202f36_92a3f4c4",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T22:25:26Z",
+      "side": 1,
+      "message": "remove this - just pass the callbacks through to the webidbfactory.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 78
+      },
+      "revId": "64f1824839f7ce071a691991cfaf8079d3ddb157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b7f682_c911f1e1",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBFactory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T22:25:26Z",
+      "side": 1,
+      "message": "Since protocol doesn\u0027t support promises, pass a std::unique_ptr\u003cWebCallbacks\u003cvoid,void\u003e\u003e here as an argument.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 63
+      },
+      "revId": "64f1824839f7ce071a691991cfaf8079d3ddb157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9056606e_dafff8c6",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/InspectorIndexedDBAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T22:25:26Z",
+      "side": 1,
+      "message": "so instead of EventListener, make this WebCallbacks\u003cvoid,void\u003e and handle OnSuccess and OnError.",
+      "range": {
+        "startLine": 191,
+        "startChar": 37,
+        "endLine": 191,
+        "endChar": 50
+      },
+      "revId": "64f1824839f7ce071a691991cfaf8079d3ddb157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
