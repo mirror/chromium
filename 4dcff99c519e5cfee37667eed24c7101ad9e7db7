@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1014c294_364578a5",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-12T16:10:01Z",
+      "side": 1,
+      "message": "Do you know any case in which TabLoader is not used? Looking at all the code paths, we found that a TabLoader is always created during session restore and it will be destroyed after loading tabs. We also notify session restore finished at the tab loader\u0027s destructor.\n\nWhen browser-side navigation is enabled, the tab loading starts even before the tab loader is created, so we move the session restore start signal here.\n\n(You can see more in the design doc: https://docs.google.com/document/d/1jwXEn7VjQc1G3fi7-UAELneTbIRXhN-PLuUp5rBMfPM/edit)",
+      "parentUuid": "4c9be1af_0c1a7f55",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "430a5b27_3c1a4249",
         "filename": "chrome/browser/sessions/session_restore.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d4929812_e2ef4aa2",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-12T16:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "430a5b27_3c1a4249",
+      "range": {
+        "startLine": 891,
+        "startChar": 11,
+        "endLine": 891,
+        "endChar": 23
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88708223_6d3c3fec",
         "filename": "chrome/browser/sessions/session_restore.h",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-12T15:29:09Z",
       "side": 1,
       "message": "If you need the class outside of the header than move the class outside the anonymous namespace (anonymous namespacing rules are subtle, and generally we don\u0027t do what you have here).",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 10
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e9ac94_fb5dac3e",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-12T16:10:01Z",
+      "side": 1,
+      "message": "I declared like this because SessionRestoreImpl class is in an anonymous namespace in file chrome/browser/sessions/session_restore.cc.\n\nShould I move SessionRestoreImpl class in session_restore.cc out of the anonymous namespace?",
+      "parentUuid": "88708223_6d3c3fec",
       "range": {
         "startLine": 26,
         "startChar": 1,
