@@ -117,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "d765ae23_7b8c035d",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-12T20:49:09Z",
+      "side": 1,
+      "message": "const ref\n\nwhat happened to the suggestion of moving SignalStrengthImageSource into the header and not adding this function? Doesn\u0027t seem like it will take a huge amount of effort.",
+      "range": {
+        "startLine": 838,
+        "startChar": 67,
+        "endLine": 838,
+        "endChar": 71
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ec9cb96_ea6c4e0f",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 8
