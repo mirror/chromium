@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62fdf6c1_39226a3f",
+        "filename": "services/resource_coordinator/coordination_unit/mock_coordination_unit_graphs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T22:41:43Z",
+      "side": 1,
+      "message": "Nit: just write nullptr",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 73
+      },
+      "revId": "ad7878606884950f1dfd8e9cea58c5c69e1f37a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
