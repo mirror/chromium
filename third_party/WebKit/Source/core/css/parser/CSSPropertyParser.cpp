@@ -2296,18 +2296,15 @@ bool CSSPropertyParser::ConsumePlaceItemsShorthand(bool important) {
   DCHECK_EQ(shorthandForProperty(CSSPropertyPlaceItems).length(),
             static_cast<unsigned>(2));
 
-  // align-items property does not allow the 'auto' value.
-  if (IdentMatches<CSSValueAuto>(range_.Peek().Id()))
-    return false;
-
   CSSValue* align_items_value =
-      CSSPropertyAlignmentUtils::ConsumeSimplifiedItemPosition(range_);
+      CSSPropertyAlignmentUtils::ConsumeSimplifiedItemPosition(
+          range_, AutoKeyword::kForbid);
   if (!align_items_value)
     return false;
   CSSValue* justify_items_value =
-      range_.AtEnd()
-          ? align_items_value
-          : CSSPropertyAlignmentUtils::ConsumeSimplifiedItemPosition(range_);
+      range_.AtEnd() ? align_items_value
+                     : CSSPropertyAlignmentUtils::ConsumeSimplifiedItemPosition(
+                           range_, AutoKeyword::kForbid, LegacyKeyword::kAllow);
   if (!justify_items_value)
     return false;
 
