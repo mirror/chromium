@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc90856f_80281284",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-12T15:06:39Z",
+      "side": 1,
+      "message": "nit: DCHECK(!webPaymentRequest.payment_request_id.empty());",
+      "revId": "b15dd71e9a05dfdde6bf7f6585c7e8bda20425c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4c3ac1_ec8832d4",
+        "filename": "ios/chrome/browser/web/resources/payment_request.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-12T15:06:39Z",
+      "side": 1,
+      "message": "There\u0027s no guarantee that this will give unique IDs. I\u0027ve always been told that unlikely events (such as a collision) will happen, at Chrome scale. We have base::GenerateGUID() that is better than this (it uses a cryptographically secure random number generator). Why not generate the ID in the C++ code and then update the object with the generated ID?",
+      "revId": "b15dd71e9a05dfdde6bf7f6585c7e8bda20425c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
