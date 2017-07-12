@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5abb8042_243305e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-12T17:37:18Z",
+      "side": 1,
+      "message": "nit: flesh out this comment a bit to provide more context.\n\npass the origin out to whom? for what purpose? in what context?",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 31
+      },
+      "revId": "60db602b38fa3c7e694bbf67c4d8227fab6b044d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
