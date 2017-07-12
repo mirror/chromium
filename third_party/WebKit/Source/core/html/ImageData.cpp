@@ -229,6 +229,38 @@ ImageData* ImageData::Create(const IntSize& size,
 }
 
 ImageData* ImageData::Create(const IntSize& size,
+                             const CanvasColorSpace color_space,
+                             const ImageDataStorageFormat storage_format) {
+  ImageDataColorSettings color_settings;
+  switch (color_space) {
+    case kLegacyCanvasColorSpace:
+      color_settings.setColorSpace(kLegacyCanvasColorSpaceName);
+      break;
+    case kSRGBCanvasColorSpace:
+      color_settings.setColorSpace(kSRGBCanvasColorSpaceName);
+      break;
+    case kRec2020CanvasColorSpace:
+      color_settings.setColorSpace(kRec2020CanvasColorSpaceName);
+      break;
+    case kP3CanvasColorSpace:
+      color_settings.setColorSpace(kP3CanvasColorSpaceName);
+  }
+
+  switch (storage_format) {
+    case kUint8ClampedArrayStorageFormat:
+      color_settings.setStorageFormat(kUint8ClampedArrayStorageFormatName);
+      break;
+    case kUint16ArrayStorageFormat:
+      color_settings.setStorageFormat(kUint16ArrayStorageFormatName);
+      break;
+    case kFloat32ArrayStorageFormat:
+      color_settings.setStorageFormat(kFloat32ArrayStorageFormatName);
+  }
+
+  return ImageData::Create(size, &color_settings);
+}
+
+ImageData* ImageData::Create(const IntSize& size,
                              NotShared<DOMArrayBufferView> data_array,
                              const ImageDataColorSettings* color_settings) {
   if (!ImageData::ValidateConstructorArguments(kParamSize | kParamData, &size,
@@ -281,7 +313,8 @@ ImageData* ImageData::CreateImageData(
     unsigned height,
     const ImageDataColorSettings& color_settings,
     ExceptionState& exception_state) {
-  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
+  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled() &&
+      !RuntimeEnabledFeatures::ColorCorrectRenderingEnabled())
     return nullptr;
 
   if (!ImageData::ValidateConstructorArguments(
@@ -503,6 +536,14 @@ ImageDataStorageFormat ImageData::GetImageDataStorageFormat(
   return kUint8ClampedArrayStorageFormat;
 }
 
+ImageDataStorageFormat ImageData::GetImageDataStorageFormat() {
+  if (data_u16_)
+    return kUint16ArrayStorageFormat;
+  if (data_f32_)
+    return kFloat32ArrayStorageFormat;
+  return kUint8ClampedArrayStorageFormat;
+}
+
 unsigned ImageData::StorageFormatDataSize(const String& storage_format_name) {
   if (storage_format_name == kUint8ClampedArrayStorageFormatName)
     return 1;
@@ -512,6 +553,18 @@ unsigned ImageData::StorageFormatDataSize(const String& storage_format_name) {
     return 4;
   NOTREACHED();
   return 1;
+}
+
+unsigned ImageData::StorageFormatDataSize(
+    const ImageDataStorageFormat storage_format) {
+  switch (storage_format) {
+    case kUint16ArrayStorageFormat:
+      return 2;
+    case kFloat32ArrayStorageFormat:
+      return 4;
+    default:
+      return 1;
+  }
 }
 
 DOMFloat32Array* ImageData::ConvertFloat16ArrayToFloat32Array(
