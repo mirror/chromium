@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "72b0592d_e9ef8b61",
+        "filename": "AUTHORS",
+        "patchSetId": 6
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-12T14:38:37Z",
+      "side": 1,
+      "message": "Our Open Source team got back to me, and Nike has not filed the CLA, but is working on it now. I\u0027ll let you know as soon as it\u0027s submitted :)",
+      "parentUuid": "9454c7f5_0c5f9c65",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ef55a47_009c6c9f",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 6
@@ -242,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "95eb9009_4ce37261",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-12T14:38:37Z",
+      "side": 1,
+      "message": "Odd considering it\u0027s not on windows and that it doesn\u0027t actually change precedence.  I suppose \u0026\u0026/|| precedence is a fairly common mistake though.  This (and a silly mistake for android) are now fixed and should be ready for more try jobs!  (The CLA is in progress now).",
+      "parentUuid": "145441d3_b87518e2",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74df4a20_63ba9b48",
         "filename": "content/test/data/page_with_touch_start_default_prevented.html",
         "patchSetId": 6
@@ -271,6 +307,24 @@
       "side": 1,
       "message": "Will investigate, contents were mostly copied from a sibling file.",
       "parentUuid": "74df4a20_63ba9b48",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f182d9_57617271",
+        "filename": "content/test/data/page_with_touch_start_default_prevented.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-12T14:38:37Z",
+      "side": 1,
+      "message": "Solved, was windows carriage returns.",
+      "parentUuid": "8c2b1baf_adad9346",
       "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
