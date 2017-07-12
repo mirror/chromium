@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "9b117bb5_a06dcff2",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-12T21:07:37Z",
+      "side": 1,
+      "message": "Thanks for investigating. We\u0027ll just keep it then.",
+      "parentUuid": "c01c713e_3af35450",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "4439f7f884aefddb37c57c5391e54169029ef31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e660ef72_ffb788aa",
         "filename": "chrome/installer/zucchini/buffer_sink.h",
         "patchSetId": 11

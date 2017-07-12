@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5436b6e2_b1ee6e7c",
+        "filename": "chrome/installer/zucchini/buffer_source.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-12T21:07:37Z",
+      "side": 1,
+      "message": "Option: Remove {}.",
+      "range": {
+        "startLine": 34,
+        "startChar": 27,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "bc3bad836017f6fbeed3dd574ea0dff24e50af43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7318adb8_fb588faf",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-12T21:07:37Z",
+      "side": 1,
+      "message": "These checks against |bytes| makes it hard to see what you\u0027re trying to do. Perhaps dump the data in region and compare against hard-coded data? One way is to have a helper function that serializes data to string (io_util is now available, you can use AsHex and PrefixSep)?",
+      "range": {
+        "startLine": 107,
+        "startChar": 23,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "bc3bad836017f6fbeed3dd574ea0dff24e50af43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
