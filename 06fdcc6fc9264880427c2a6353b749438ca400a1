@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "954af590_cf51cbf2",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-12T00:28:49Z",
+      "side": 1,
+      "message": "nit: ... number of draw ops",
+      "revId": "06fdcc6fc9264880427c2a6353b749438ca400a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
