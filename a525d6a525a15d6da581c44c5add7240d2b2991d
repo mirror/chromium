@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3ac6380_32135bd7",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T18:35:36Z",
+      "side": 1,
+      "message": "It should be better not only to log the error, but to throw away the interval, otherwise later we\u0027ll have problems with working with invalid intervals in the policy.",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 7
+      },
+      "revId": "a525d6a525a15d6da581c44c5add7240d2b2991d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2685cb54_72c06b30",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T18:35:36Z",
+      "side": 1,
+      "message": "Let\u0027s add the interval only if it\u0027s valid. You can use nullptr to indicate if the timestamp was not successfully parsed or interval doesn\u0027t have start or end.",
+      "range": {
+        "startLine": 946,
+        "startChar": 6,
+        "endLine": 946,
+        "endChar": 45
+      },
+      "revId": "a525d6a525a15d6da581c44c5add7240d2b2991d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42317b7_20bbf6e4",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T18:35:36Z",
+      "side": 1,
+      "message": "But still worth a small comment above.",
+      "range": {
+        "startLine": 816,
+        "startChar": 0,
+        "endLine": 816,
+        "endChar": 7
+      },
+      "revId": "a525d6a525a15d6da581c44c5add7240d2b2991d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57d1334_c140a7ee",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T18:35:36Z",
+      "side": 1,
+      "message": "And here",
+      "range": {
+        "startLine": 821,
+        "startChar": 0,
+        "endLine": 821,
+        "endChar": 7
+      },
+      "revId": "a525d6a525a15d6da581c44c5add7240d2b2991d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d101a71_7a465c0d",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T18:35:36Z",
+      "side": 1,
+      "message": "DeviceOffHours",
+      "range": {
+        "startLine": 841,
+        "startChar": 39,
+        "endLine": 841,
+        "endChar": 47
+      },
+      "revId": "a525d6a525a15d6da581c44c5add7240d2b2991d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37509b6f_d17137b1",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T18:35:36Z",
+      "side": 1,
+      "message": "DeviceOffHoursIntervalProto",
+      "range": {
+        "startLine": 842,
+        "startChar": 8,
+        "endLine": 842,
+        "endChar": 29
+      },
+      "revId": "a525d6a525a15d6da581c44c5add7240d2b2991d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
