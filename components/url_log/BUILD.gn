@@ -1,0 +1,68 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+component("url_log") {
+  sources = [
+    "url_log.cc",
+    "url_log.h",
+    "url_log_export.h",
+  ]
+
+  defines = [ "URL_LOG_IMPLEMENTATION" ]
+
+  deps = [
+    "//base",
+    "//url",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "url_log_unittest.cc",
+  ]
+
+  deps = [
+    ":url_log",
+    "//base",
+    "//base/test:test_support",
+    "//testing/gtest",
+  ]
+}
+
+source_set("browser_tests") {
+  testonly = true
+  sources = [
+    "url_log_browsertest.cc",
+  ]
+
+  defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
+
+  deps = [
+    ":url_log",
+    "//base",
+    "//chrome/test:test_support",
+    "//testing/gtest",
+  ]
+}
+
+source_set("content_browsertests") {
+  testonly = true
+  sources = [
+    "url_log_browsertest.cc",
+  ]
+
+  defines = [
+    "HAS_OUT_OF_PROC_TEST_RUNNER",
+    "URL_LOG_CONTENT_BROWSER_TEST",
+  ]
+
+  deps = [
+    ":url_log",
+    "//base",
+    "//content/test:browsertest_support",
+    "//content/test:test_support",
+    "//testing/gtest",
+  ]
+}
