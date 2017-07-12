@@ -225,8 +225,11 @@ void PopulateAXState(arc::mojom::AccessibilityNodeInfoData* node,
     out_data->AddIntAttribute(ui::AX_ATTR_CHECKED_STATE, checked_state);
   }
 
-  if (!GetBooleanProperty(node, AXBooleanProperty::ENABLED))
-    out_data->AddState(ui::AX_STATE_DISABLED);
+  const bool is_enabled = GetBooleanProperty(node, AXBooleanProperty::ENABLED);
+  if (!is_enabled) {
+    out_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
+                              ui::AX_RESTRICTION_DISABLED);
+  }
 }
 
 }  // namespace
