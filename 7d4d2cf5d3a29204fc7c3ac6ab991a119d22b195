@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d47a7e4b_dca456a4",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-12T19:16:34Z",
+      "side": 1,
+      "message": "When is setModes authentication called? My understanding from CL description is whenever the user attempts to update lock screen settings, in which case I\u0027m not sure this is quite right - EasyUnlockServiceRegular::OnUserReauth would launch setup app when called, which we probably do not want to do unconditionally - instead this should call a method that merely caches the user context (so it can be used when smart lock setup is requested).",
+      "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a91b03_5d32d030",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-12T19:16:34Z",
+      "side": 1,
+      "message": "can you add a test that verifies this is called on auth success?",
+      "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6688a3_21d9ad03",
+        "filename": "chrome/browser/signin/easy_unlock_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-12T19:16:34Z",
+      "side": 1,
+      "message": "maybe forward declare chromeos::UserContext instead?",
+      "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61daa820_19097eaf",
+        "filename": "chrome/browser/signin/easy_unlock_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-12T19:16:34Z",
+      "side": 1,
+      "message": "Can you document this method?\n\nAlso, I\u0027d consider renaming it, the current name suggests it\u0027s a callback/listener to some event.\nMaybe to something like SetAuthenticatedUserContext, HandleUserReauth?\n\nAlso, tests would be nice :)",
+      "revId": "7d4d2cf5d3a29204fc7c3ac6ab991a119d22b195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
