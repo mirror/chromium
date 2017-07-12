@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89080472_4f46e4b0",
+        "filename": "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T22:50:24Z",
+      "side": 1,
+      "message": "We usually prefer to avoid scoped enums for bitmasks.\n\nCan we just use uint8_t constants?\n\nmasking scoped enumerations is painful (and this is the recommended way with Mojo anyway)",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "87a18ff6d332a03020f3c0d9e6a80a5edabb633e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
