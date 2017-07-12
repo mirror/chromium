@@ -627,29 +627,26 @@ TEST_F(AuthenticationServiceTest, HandleMDMNotification) {
       ->UpdateAuthError(base::SysNSStringToUTF8([identity_ gaiaID]), error);
 
   NSDictionary* user_info1 = @{ @"foo" : @1 };
-  ON_CALL(*identity_service_, GetMDMDeviceStatus(user_info1))
-      .WillByDefault(Return(1));
   NSDictionary* user_info2 = @{ @"foo" : @2 };
-  ON_CALL(*identity_service_, GetMDMDeviceStatus(user_info2))
-      .WillByDefault(Return(2));
+
+  identity_service_->SetMockMDMDeviceStatus(1);
 
   // Notification will show the MDM dialog the first time.
-  EXPECT_CALL(*identity_service_,
-              HandleMDMNotification(identity_, user_info1, _))
-      .WillOnce(Return(true));
+  identity_service_->ResetHandleMDMNotificationCallCount();
   FireAccessTokenRefreshFailed(identity_, user_info1);
+  EXPECT_EQ(1, identity_service_->HandleMDMNotificationCallCount());
 
   // Same notification won't show the MDM dialog the second time.
-  EXPECT_CALL(*identity_service_,
-              HandleMDMNotification(identity_, user_info1, _))
-      .Times(0);
+  identity_service_->ResetHandleMDMNotificationCallCount();
   FireAccessTokenRefreshFailed(identity_, user_info1);
+  EXPECT_EQ(0, identity_service_->HandleMDMNotificationCallCount());
+
+  identity_service_->SetMockMDMDeviceStatus(2);
 
   // New notification will show the MDM dialog on the same identity.
-  EXPECT_CALL(*identity_service_,
-              HandleMDMNotification(identity_, user_info2, _))
-      .WillOnce(Return(true));
+  identity_service_->ResetHandleMDMNotificationCallCount();
   FireAccessTokenRefreshFailed(identity_, user_info2);
+  EXPECT_EQ(1, identity_service_->HandleMDMNotificationCallCount());
 }
 
 // Tests that MDM blocked notifications are correctly signing out the user if
@@ -667,28 +664,19 @@ TEST_F(AuthenticationServiceTest, HandleMDMBlockedNotification) {
       ->UpdateAuthError(base::SysNSStringToUTF8([identity_ gaiaID]), error);
 
   NSDictionary* user_info1 = @{ @"foo" : @1 };
-  ON_CALL(*identity_service_, GetMDMDeviceStatus(user_info1))
-      .WillByDefault(Return(1));
-
-  auto handle_mdm_notification_callback = [](ChromeIdentity*, NSDictionary*,
-                                             ios::MDMStatusCallback callback) {
-    callback(true /* is_blocked */);
-    return true;
-  };
+  identity_service_->SetMockMDMDeviceStatus(1);
 
   // User not signed out as |identity2_| isn't the primary account.
-  EXPECT_CALL(*identity_service_,
-              HandleMDMNotification(identity2_, user_info1, _))
-      .WillOnce(Invoke(handle_mdm_notification_callback));
+  identity_service_->ResetHandleMDMNotificationCallCount();
   FireAccessTokenRefreshFailed(identity2_, user_info1);
   EXPECT_TRUE(authentication_service_->IsAuthenticated());
+  EXPECT_EQ(1, identity_service_->HandleMDMNotificationCallCount());
 
   // User signed out as |identity_| is the primary account.
-  EXPECT_CALL(*identity_service_,
-              HandleMDMNotification(identity_, user_info1, _))
-      .WillOnce(Invoke(handle_mdm_notification_callback));
+  identity_service_->ResetHandleMDMNotificationCallCount();
   FireAccessTokenRefreshFailed(identity_, user_info1);
   EXPECT_FALSE(authentication_service_->IsAuthenticated());
+  EXPECT_EQ(1, identity_service_->HandleMDMNotificationCallCount());
 }
 
 // Tests that MDM dialog isn't shown when there is no cached MDM error.
@@ -697,11 +685,10 @@ TEST_F(AuthenticationServiceTest, ShowMDMErrorDialogNoCachedError) {
     return;
   }
 
-  EXPECT_CALL(*identity_service_, HandleMDMNotification(identity_, _, _))
-      .Times(0);
-
+  identity_service_->ResetHandleMDMNotificationCallCount();
   EXPECT_FALSE(
       authentication_service_->ShowMDMErrorDialogForIdentity(identity_));
+  EXPECT_EQ(0, identity_service_->HandleMDMNotificationCallCount());
 }
 
 // Tests that MDM dialog isn't shown when there is a cached MDM error but no
@@ -714,12 +701,10 @@ TEST_F(AuthenticationServiceTest, ShowMDMErrorDialogInvalidCachedError) {
   NSDictionary* user_info = [NSDictionary dictionary];
   SetCachedMDMInfo(identity_, user_info);
 
-  EXPECT_CALL(*identity_service_,
-              HandleMDMNotification(identity_, user_info, _))
-      .Times(0);
-
+  identity_service_->ResetHandleMDMNotificationCallCount();
   EXPECT_FALSE(
       authentication_service_->ShowMDMErrorDialogForIdentity(identity_));
+  EXPECT_EQ(0, identity_service_->HandleMDMNotificationCallCount());
 }
 
 // Tests that MDM dialog is shown when there is a cached error and a
@@ -739,10 +724,8 @@ TEST_F(AuthenticationServiceTest, ShowMDMErrorDialog) {
   NSDictionary* user_info = [NSDictionary dictionary];
   SetCachedMDMInfo(identity_, user_info);
 
-  EXPECT_CALL(*identity_service_,
-              HandleMDMNotification(identity_, user_info, _))
-      .WillOnce(Return(true));
-
+  identity_service_->ResetHandleMDMNotificationCallCount();
   EXPECT_TRUE(
       authentication_service_->ShowMDMErrorDialogForIdentity(identity_));
+  EXPECT_EQ(1, identity_service_->HandleMDMNotificationCallCount());
 }

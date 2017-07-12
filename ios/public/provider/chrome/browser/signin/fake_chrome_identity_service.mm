@@ -236,6 +236,31 @@ void FakeChromeIdentityService::GetHostedDomainForIdentity(
   FakeGetHostedDomainForIdentity(identity, callback);
 }
 
+ios::MDMDeviceStatus FakeChromeIdentityService::GetMDMDeviceStatus(
+    NSDictionary* user_info) {
+  return mock_status_;
+}
+
+void FakeChromeIdentityService::SetMockMDMDeviceStatus(
+    ios::MDMDeviceStatus mock_status) {
+  mock_status_ = mock_status;
+}
+
+bool FakeChromeIdentityService::HandleMDMNotification(
+    ChromeIdentity* identity,
+    NSDictionary* user_info,
+    ios::MDMStatusCallback callback) {
+  return true;
+}
+
+int FakeChromeIdentityService::HandleMDMNotificationCallCount() {
+  return handle_mdm_notification_call_count_;
+}
+
+void FakeChromeIdentityService::ResetHandleMDMNotificationCallCount() {
+  handle_mdm_notification_call_count_ = 0;
+}
+
 void FakeChromeIdentityService::SetUpForIntegrationTests() {}
 
 void FakeChromeIdentityService::AddIdentities(NSArray* identitiesNames) {

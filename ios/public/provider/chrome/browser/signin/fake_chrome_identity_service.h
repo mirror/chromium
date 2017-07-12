@@ -18,7 +18,7 @@ namespace ios {
 class FakeChromeIdentityService : public ChromeIdentityService {
  public:
   FakeChromeIdentityService();
-  virtual ~FakeChromeIdentityService();
+  ~FakeChromeIdentityService() override;
 
   // Convenience method that returns the instance of
   // |FakeChromeIdentityService| from the ChromeBrowserProvider.
@@ -41,29 +41,35 @@ class FakeChromeIdentityService : public ChromeIdentityService {
   void ForgetIdentity(ChromeIdentity* identity,
                       ForgetIdentityCallback callback) override;
 
-  virtual void GetAccessToken(ChromeIdentity* identity,
-                              const std::string& client_id,
-                              const std::string& client_secret,
-                              const std::set<std::string>& scopes,
-                              ios::AccessTokenCallback callback) override;
+  void GetAccessToken(ChromeIdentity* identity,
+                      const std::string& client_id,
+                      const std::string& client_secret,
+                      const std::set<std::string>& scopes,
+                      ios::AccessTokenCallback callback) override;
 
-  virtual void GetAvatarForIdentity(ChromeIdentity* identity,
-                                    GetAvatarCallback callback) override;
+  void GetAvatarForIdentity(ChromeIdentity* identity,
+                            GetAvatarCallback callback) override;
 
-  virtual UIImage* GetCachedAvatarForIdentity(
-      ChromeIdentity* identity) override;
+  UIImage* GetCachedAvatarForIdentity(ChromeIdentity* identity) override;
 
-  virtual void GetHostedDomainForIdentity(
-      ChromeIdentity* identity,
-      GetHostedDomainCallback callback) override;
+  void GetHostedDomainForIdentity(ChromeIdentity* identity,
+                                  GetHostedDomainCallback callback) override;
 
-  MOCK_METHOD1(GetMDMDeviceStatus,
-               ios::MDMDeviceStatus(NSDictionary* user_info));
+  ios::MDMDeviceStatus GetMDMDeviceStatus(NSDictionary* user_info) override;
 
-  MOCK_METHOD3(HandleMDMNotification,
-               bool(ChromeIdentity* identity,
-                    NSDictionary* user_info,
-                    ios::MDMStatusCallback callback));
+  // Sets the mocked return value for GetMDMDeviceStatus.
+  void SetMockMDMDeviceStatus(ios::MDMDeviceStatus mock_status);
+
+  bool HandleMDMNotification(ChromeIdentity* identity,
+                             NSDictionary* user_info,
+                             ios::MDMStatusCallback callback) override;
+
+  // Counts number of calls to HandleMDMNotification since last reset.
+  // You must call ResetHandleMDMNotificationCallCount() first.
+  int HandleMDMNotificationCallCount();
+
+  // Resets call count of HandleMDMNotification to 0.
+  void ResetHandleMDMNotificationCallCount();
 
   // Sets up the mock methods for integration tests.
   void SetUpForIntegrationTests();
@@ -80,6 +86,8 @@ class FakeChromeIdentityService : public ChromeIdentityService {
 
  private:
   base::scoped_nsobject<NSMutableArray> identities_;
+  ios::MDMDeviceStatus mock_status_;
+  int handle_mdm_notification_call_count_;
 };
 
 }  // namespace ios
