@@ -209,9 +209,7 @@ class MockRenderWidgetHost : public RenderWidgetHostImpl {
 
   void SetupForInputRouterTest() {
     input_router_.reset(new MockInputRouter(this));
-    legacy_widget_input_handler_ =
-        base::MakeUnique<LegacyIPCWidgetInputHandler>(
-            static_cast<LegacyInputRouterImpl*>(input_router_.get()));
+    legacy_widget_input_handler_ = nullptr;
   }
 
   MockInputRouter* mock_input_router() {
@@ -339,19 +337,6 @@ class TestView : public TestRenderWidgetHostView {
       return mock_physical_backing_size_;
     return TestRenderWidgetHostView::GetPhysicalBackingSize();
   }
-#if defined(USE_AURA)
-  ~TestView() override {
-    // Simulate the mouse exit event dispatched when an aura window is
-    // destroyed. (MakeWebMouseEventFromAuraEvent translates ET_MOUSE_EXITED
-    // into WebInputEvent::MouseMove.)
-    WebMouseEvent event =
-        SyntheticWebMouseEventBuilder::Build(WebInputEvent::kMouseMove);
-    event.SetTimeStampSeconds(
-        ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
-    rwh_->input_router()->SendMouseEvent(
-        MouseEventWithLatencyInfo(event, ui::LatencyInfo()));
-  }
-#endif
 
  protected:
   WebMouseWheelEvent unhandled_wheel_event_;
