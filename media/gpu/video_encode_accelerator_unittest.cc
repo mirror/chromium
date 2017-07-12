@@ -63,6 +63,119 @@
 namespace media {
 namespace {
 
+void vp8_ssim_parms_8x8_c(unsigned char* s,
+                          int sp,
+                          unsigned char* r,
+                          int rp,
+                          uint32_t* sum_s,
+                          uint32_t* sum_r,
+                          uint32_t* sum_sq_s,
+                          uint32_t* sum_sq_r,
+                          uint32_t* sum_sxr) {
+  int i, j;
+  for (i = 0; i < 8; i++, s += sp, r += rp) {
+    for (j = 0; j < 8; j++) {
+      *sum_s += s[j];
+      *sum_r += r[j];
+      *sum_sq_s += s[j] * s[j];
+      *sum_sq_r += r[j] * r[j];
+      *sum_sxr += s[j] * r[j];
+    }
+  }
+}
+
+static const int64_t cc1 = 26634;   // (64^2*(.01*255)^2
+static const int64_t cc2 = 239708;  // (64^2*(.03*255)^2
+
+static double similarity(uint32_t sum_s,
+                         uint32_t sum_r,
+                         uint32_t sum_sq_s,
+                         uint32_t sum_sq_r,
+                         uint32_t sum_sxr,
+                         int count) {
+  int64_t ssim_n, ssim_d;
+  int64_t c1, c2;
+
+  // scale the constants by number of pixels
+  c1 = (cc1 * count * count) >> 12;
+  c2 = (cc2 * count * count) >> 12;
+
+  ssim_n = (2 * sum_s * sum_r + c1) *
+           ((int64_t)2 * count * sum_sxr - (int64_t)2 * sum_s * sum_r + c2);
+
+  ssim_d = (sum_s * sum_s + sum_r * sum_r + c1) *
+           ((int64_t)count * sum_sq_s - (int64_t)sum_s * sum_s +
+            (int64_t)count * sum_sq_r - (int64_t)sum_r * sum_r + c2);
+
+  return ssim_n * 1.0 / ssim_d;
+}
+
+static double ssim_8x8(unsigned char* s, int sp, unsigned char* r, int rp) {
+  uint32_t sum_s = 0, sum_r = 0, sum_sq_s = 0, sum_sq_r = 0, sum_sxr = 0;
+  vp8_ssim_parms_8x8_c(s, sp, r, rp, &sum_s, &sum_r, &sum_sq_s, &sum_sq_r,
+                       &sum_sxr);
+  return similarity(sum_s, sum_r, sum_sq_s, sum_sq_r, sum_sxr, 64);
+}
+
+// We are using a 8x8 moving window with starting location of each 8x8 window
+// on the 4x4 pixel grid. Such arrangement allows the windows to overlap
+// block boundaries to penalize blocking artifacts.
+double vp8_ssim2(unsigned char* img1,
+                 unsigned char* img2,
+                 int stride_img1,
+                 int stride_img2,
+                 int width,
+                 int height) {
+  int i, j;
+  int samples = 0;
+  double ssim_total = 0;
+
+  // sample point start with each 4x4 location
+  for (i = 0; i <= height - 8;
+       i += 4, img1 += stride_img1 * 4, img2 += stride_img2 * 4) {
+    for (j = 0; j <= width - 8; j += 4) {
+      double v = ssim_8x8(img1 + j, stride_img1, img2 + j, stride_img2);
+      ssim_total += v;
+      samples++;
+    }
+  }
+  ssim_total /= samples;
+  return ssim_total;
+}
+
+static uint64_t calc_plane_error(uint8_t* orig,
+                                 int orig_stride,
+                                 uint8_t* recon,
+                                 int recon_stride,
+                                 unsigned int cols,
+                                 unsigned int rows) {
+  unsigned int row, col;
+  uint64_t total_sse = 0;
+  int diff;
+
+  for (row = 0; row < rows; row++) {
+    for (col = 0; col < cols; col++) {
+      diff = orig[col] - recon[col];
+      total_sse += diff * diff;
+    }
+
+    orig += orig_stride;
+    recon += recon_stride;
+  }
+
+  return total_sse;
+}
+
+void GenerateMseAndSsim(double* ssim,
+                        uint64_t* mse,
+                        unsigned char* buf0,
+                        unsigned char* buf1,
+                        int w,
+                        int h) {
+  *ssim = vp8_ssim2(buf0, buf1, w, w, w, h);
+  *mse = calc_plane_error(buf0, w, buf1, w, w, h);
+}
+
 const VideoPixelFormat kInputFormat = PIXEL_FORMAT_I420;
 
 // The absolute differences between original frame and decoded frame usually
@@ -442,11 +555,13 @@ class VideoEncodeAcceleratorTestEnvironment : public ::testing::Environment {
   VideoEncodeAcceleratorTestEnvironment(
       std::unique_ptr<base::FilePath::StringType> data,
       const base::FilePath& log_path,
+      const base::FilePath& frame_stats_path,
       bool run_at_fps,
       bool needs_encode_latency,
       bool verify_all_output)
       : test_stream_data_(std::move(data)),
         log_path_(log_path),
+        frame_stats_path_(frame_stats_path),
         run_at_fps_(run_at_fps),
         needs_encode_latency_(needs_encode_latency),
         verify_all_output_(verify_all_output) {}
@@ -486,14 +601,18 @@ class VideoEncodeAcceleratorTestEnvironment : public ::testing::Environment {
   bool needs_encode_latency() const { return needs_encode_latency_; }
 
   // Verify the encoder output of all testcases. This is set by the command line
-  // switch "--verify_all_output".
+  // switch "--verify_all_output". Verification is also enabled when frame stats
+  // are.
   bool verify_all_output() const { return verify_all_output_; }
+
+  const base::FilePath& frame_stats_path() const { return frame_stats_path_; }
 
   std::vector<std::unique_ptr<TestStream>> test_streams_;
 
  private:
   std::unique_ptr<base::FilePath::StringType> test_stream_data_;
   base::FilePath log_path_;
+  base::FilePath frame_stats_path_;
   std::unique_ptr<base::File> log_file_;
   bool run_at_fps_;
   bool needs_encode_latency_;
@@ -664,6 +783,7 @@ class VideoFrameQualityValidator
   void AddDecodeBuffer(const scoped_refptr<DecoderBuffer>& buffer);
   // Flush the decoder.
   void Flush();
+  void PrintResults();
 
  private:
   void InitializeCB(bool success);
@@ -686,6 +806,9 @@ class VideoFrameQualityValidator
   State decoder_state_;
   std::queue<scoped_refptr<VideoFrame>> original_frames_;
   std::queue<scoped_refptr<DecoderBuffer>> decode_buffers_;
+  std::vector<uint64_t> frame_mse_;
+  std::vector<double> frame_ssim_;
+  std::vector<gfx::Size> frame_sizes_;
   base::ThreadChecker thread_checker_;
 };
 
@@ -783,6 +906,34 @@ void VideoFrameQualityValidator::Flush() {
   }
 }
 
+void VideoFrameQualityValidator::PrintResults() {
+  if (g_env->frame_stats_path().empty())
+    return;
+
+  base::File frame_stats_file(
+      g_env->frame_stats_path(),
+      base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  LOG_ASSERT(frame_stats_file.IsValid());
+
+  std::string csv = "frame,ssim,mse,mse-samples\n";
+  frame_stats_file.WriteAtCurrentPos(csv.data(), static_cast<int>(csv.size()));
+  uint64_t mse_sum = 0;
+  double ssim_sum = 0;
+  CHECK(!frame_ssim_.empty());
+  CHECK_EQ(frame_ssim_.size(), frame_mse_.size());
+  for (size_t i = 0; i < frame_ssim_.size(); ++i) {
+    int w = frame_sizes_[i].width();
+    int h = frame_sizes_[i].height();
+    int mse_samples = w * h * 6 / 4;
+    csv = base::StringPrintf("%d,%f,%" PRIu64 ",%d\n", static_cast<int>(i),
+                             frame_ssim_[i], frame_mse_[i], mse_samples);
+    frame_stats_file.WriteAtCurrentPos(csv.data(),
+                                       static_cast<int>(csv.size()));
+    mse_sum += frame_mse_[i];
+    ssim_sum += frame_ssim_[i];
+  }
+}
+
 void VideoFrameQualityValidator::AddDecodeBuffer(
     const scoped_refptr<DecoderBuffer>& buffer) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -835,6 +986,19 @@ void VideoFrameQualityValidator::VerifyOutputFrame(
     }
   }
 
+  double ssim_y, ssim_u, ssim_v;
+  uint64_t mse_y, mse_u, mse_v;
+  int w = visible_size.width();
+  int h = visible_size.height();
+  GenerateMseAndSsim(&ssim_y, &mse_y, original_frame->data(VideoFrame::kYPlane),
+                     output_frame->data(VideoFrame::kYPlane), w, h);
+  GenerateMseAndSsim(&ssim_u, &mse_u, original_frame->data(VideoFrame::kUPlane),
+                     output_frame->data(VideoFrame::kUPlane), w / 2, h / 2);
+  GenerateMseAndSsim(&ssim_v, &mse_v, original_frame->data(VideoFrame::kVPlane),
+                     output_frame->data(VideoFrame::kVPlane), w / 2, h / 2);
+  frame_ssim_.push_back(0.8 * ssim_y + 0.1 * (ssim_u + ssim_v));
+  frame_mse_.push_back(mse_y + mse_u + mse_v);
+  frame_sizes_.push_back(visible_size);
   // Divide the difference by the size of frame.
   difference /= VideoFrame::AllocationSize(kInputFormat, visible_size);
   EXPECT_TRUE(difference <= kDecodeSimilarityThreshold)
@@ -1222,7 +1386,8 @@ void VEAClient::CreateEncoder() {
 
 void VEAClient::DecodeCompleted() {
   DCHECK(thread_checker_.CalledOnValidThread());
-
+  CHECK(quality_validator_);
+  quality_validator_->PrintResults();
   SetState(CS_VALIDATED);
 }
 
@@ -2030,8 +2195,9 @@ TEST_P(VideoEncodeAcceleratorTest, TestSimpleEncode) {
   const bool test_perf = std::get<4>(GetParam());
   const bool mid_stream_bitrate_switch = std::get<5>(GetParam());
   const bool mid_stream_framerate_switch = std::get<6>(GetParam());
-  const bool verify_output =
-      std::get<7>(GetParam()) || g_env->verify_all_output();
+  const bool verify_output = std::get<7>(GetParam()) ||
+                             g_env->verify_all_output() ||
+                             !g_env->frame_stats_path().empty();
   const bool verify_output_timestamp = std::get<8>(GetParam());
 
   std::vector<std::unique_ptr<ClientStateNotification<ClientState>>> notes;
@@ -2274,6 +2440,7 @@ int main(int argc, char** argv) {
   bool needs_encode_latency = false;
   bool verify_all_output = false;
   base::FilePath log_path;
+  base::FilePath frame_stats_path;
 
   base::CommandLine::SwitchMap switches = cmd_line->GetSwitches();
   for (base::CommandLine::SwitchMap::const_iterator it = switches.begin();
@@ -2313,6 +2480,13 @@ int main(int argc, char** argv) {
       continue;
     if (it->first == "ozone-platform" || it->first == "ozone-use-surfaceless")
       continue;
+
+    // Output per-frame metrics to a csv file.
+    if (it->first == "frame_stats") {
+      frame_stats_path = base::FilePath(
+          base::FilePath::StringType(it->second.begin(), it->second.end()));
+      continue;
+    }
     LOG(FATAL) << "Unexpected switch: " << it->first << ":" << it->second;
   }
 
@@ -2333,8 +2507,8 @@ int main(int argc, char** argv) {
       reinterpret_cast<media::VideoEncodeAcceleratorTestEnvironment*>(
           testing::AddGlobalTestEnvironment(
               new media::VideoEncodeAcceleratorTestEnvironment(
-                  std::move(test_stream_data), log_path, run_at_fps,
-                  needs_encode_latency, verify_all_output)));
+                  std::move(test_stream_data), log_path, frame_stats_path,
+                  run_at_fps, needs_encode_latency, verify_all_output)));
 
   return RUN_ALL_TESTS();
 }
