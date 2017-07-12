@@ -238,10 +238,8 @@ void ChromeSyncClient::Initialize() {
         prefs::kSavingBrowserHistoryDisabled, sync_service_url,
         content::BrowserThread::GetTaskRunnerForThread(
             content::BrowserThread::UI),
-        content::BrowserThread::GetTaskRunnerForThread(
-            content::BrowserThread::DB),
-        token_service, url_request_context_getter, web_data_service_,
-        password_store_);
+        web_data_service_->GetTaskRunner(), token_service,
+        url_request_context_getter, web_data_service_, password_store_);
   }
 }
 
@@ -531,8 +529,7 @@ ChromeSyncClient::CreateModelWorkerForGroup(syncer::ModelSafeGroup group) {
   switch (group) {
     case syncer::GROUP_DB:
       return new syncer::SequencedModelWorker(
-          BrowserThread::GetTaskRunnerForThread(BrowserThread::DB),
-          syncer::GROUP_DB);
+          web_data_service_->GetTaskRunner(), syncer::GROUP_DB);
     // TODO(stanisc): crbug.com/731903: Rename GROUP_FILE to reflect that it is
     // used only for app and extension settings.
     case syncer::GROUP_FILE:

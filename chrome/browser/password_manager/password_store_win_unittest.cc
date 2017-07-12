@@ -20,6 +20,7 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/test/base/testing_profile.h"
@@ -33,6 +34,7 @@
 #include "components/webdata/common/web_database_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "crypto/wincrypt_shim.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -134,9 +136,14 @@ class PasswordStoreWinTest : public testing::Test {
     profile_.reset(new TestingProfile());
 
     base::FilePath path = temp_dir_.GetPath().AppendASCII("web_data_test");
+    // TODO(pkasting): http://crbug.com/740773 This should likely be sequenced,
+    // not single-threaded.
+    auto db_thread = base::CreateSingleThreadTaskRunnerWithTraits(
+        {base::MayBlock(), base::TaskPriority::BACKGROUND,
+         base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
     wdbs_ = new WebDatabaseService(
         path, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::DB));
+        db_thread);
     // Need to add at least one table so the database gets created.
     wdbs_->AddTable(std::unique_ptr<WebDatabaseTable>(new LoginsTable()));
     wdbs_->LoadDatabase();
@@ -157,12 +164,7 @@ class PasswordStoreWinTest : public testing::Test {
       wdbs_->ShutdownDatabase();
       wdbs_ = nullptr;
     }
-    base::WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                             base::WaitableEvent::InitialState::NOT_SIGNALED);
-    BrowserThread::PostTask(
-        BrowserThread::DB, FROM_HERE,
-        base::Bind(&base::WaitableEvent::Signal, base::Unretained(&done)));
-    done.Wait();
+    content::RunAllBlockingPoolTasksUntilIdle();
   }
 
   base::FilePath test_login_db_file_path() const {
@@ -197,8 +199,8 @@ MATCHER(EmptyWDResult, "") {
       .empty();
 }
 
-// Hangs flakily, http://crbug.com/71385.
-TEST_F(PasswordStoreWinTest, DISABLED_ConvertIE7Login) {
+// TODO(pkasting): Test fails, don't know why, MSVC can't debug without crashing
+TEST_F(PasswordStoreWinTest, ConvertIE7Login) {
   IE7PasswordInfo password_info;
   ASSERT_TRUE(CreateIE7PasswordInfo(L"http://example.com/origin",
                                     base::Time::FromDoubleT(1),
@@ -210,14 +212,7 @@ TEST_F(PasswordStoreWinTest, DISABLED_ConvertIE7Login) {
   // This IE7 password will be retrieved by the GetLogins call.
   wds_->AddIE7Login(password_info);
 
-  // The WDS schedules tasks to run on the DB thread so we schedule yet another
-  // task to notify us that it's safe to carry on with the test.
-  WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                     base::WaitableEvent::InitialState::NOT_SIGNALED);
-  BrowserThread::PostTask(
-      BrowserThread::DB, FROM_HERE,
-      base::Bind(&WaitableEvent::Signal, base::Unretained(&done)));
-  done.Wait();
+  base::TaskScheduler::GetInstance()->FlushForTesting();
 
   store_ = CreatePasswordStore();
   EXPECT_TRUE(store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr));
@@ -305,22 +300,15 @@ TEST_F(PasswordStoreWinTest, OutstandingWDSQueries) {
   base::RunLoop().RunUntilIdle();
 }
 
-// Hangs flakily, see http://crbug.com/43836.
-TEST_F(PasswordStoreWinTest, DISABLED_MultipleWDSQueriesOnDifferentThreads) {
+// TODO(pkasting): Test fails, don't know why, MSVC can't debug without crashing
+TEST_F(PasswordStoreWinTest, MultipleWDSQueriesOnDifferentThreads) {
   IE7PasswordInfo password_info;
   ASSERT_TRUE(CreateIE7PasswordInfo(L"http://example.com/origin",
                                     base::Time::FromDoubleT(1),
                                     &password_info));
   wds_->AddIE7Login(password_info);
 
-  // The WDS schedules tasks to run on the DB thread so we schedule yet another
-  // task to notify us that it's safe to carry on with the test.
-  WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                     base::WaitableEvent::InitialState::NOT_SIGNALED);
-  BrowserThread::PostTask(
-      BrowserThread::DB, FROM_HERE,
-      base::Bind(&WaitableEvent::Signal, base::Unretained(&done)));
-  done.Wait();
+  base::TaskScheduler::GetInstance()->FlushForTesting();
 
   store_ = CreatePasswordStore();
   EXPECT_TRUE(store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr));

@@ -174,9 +174,8 @@ void IOSChromeSyncClient::Initialize() {
         *base::CommandLine::ForCurrentProcess(),
         prefs::kSavingBrowserHistoryDisabled, sync_service_url,
         web::WebThread::GetTaskRunnerForThread(web::WebThread::UI),
-        web::WebThread::GetTaskRunnerForThread(web::WebThread::DB),
-        token_service, url_request_context_getter, web_data_service_,
-        password_store_));
+        web_data_service_->GetTaskRunner(), token_service,
+        url_request_context_getter, web_data_service_, password_store_));
   }
 }
 
@@ -376,8 +375,7 @@ IOSChromeSyncClient::CreateModelWorkerForGroup(syncer::ModelSafeGroup group) {
   switch (group) {
     case syncer::GROUP_DB:
       return new syncer::SequencedModelWorker(
-          web::WebThread::GetTaskRunnerForThread(web::WebThread::DB),
-          syncer::GROUP_DB);
+          web_data_service_->GetTaskRunner(), syncer::GROUP_DB);
     case syncer::GROUP_FILE:
       // Not supported on iOS.
       return nullptr;
