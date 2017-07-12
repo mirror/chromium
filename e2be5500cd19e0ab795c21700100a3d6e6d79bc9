@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "825b9aae_5a9414c5",
+        "filename": "headless/lib/browser/headless_printing_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-12T09:16:34Z",
+      "side": 1,
+      "message": "For clarity please pull out into a separate test.",
+      "range": {
+        "startLine": 182,
+        "startChar": 15,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "e2be5500cd19e0ab795c21700100a3d6e6d79bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
