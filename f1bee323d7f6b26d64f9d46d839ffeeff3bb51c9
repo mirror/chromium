@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6268fcc_0b6acc8e",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-12T23:25:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a377a5fa_17992cec",
+      "range": {
+        "startLine": 645,
+        "startChar": 23,
+        "endLine": 645,
+        "endChar": 36
+      },
+      "revId": "f1bee323d7f6b26d64f9d46d839ffeeff3bb51c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c844553_60c0b6ee",
         "filename": "cc/tiles/tile.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T20:09:48Z",
       "side": 1,
       "message": "Do we really need this on every Tile? :/\n\nCan we put this on PictureLayerTiling instead?",
+      "range": {
+        "startLine": 163,
+        "startChar": 13,
+        "endLine": 163,
+        "endChar": 30
+      },
+      "revId": "f1bee323d7f6b26d64f9d46d839ffeeff3bb51c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7ad94b_21cb9136",
+        "filename": "cc/tiles/tile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-12T23:25:38Z",
+      "side": 1,
+      "message": "hm. Well, if you\u0027re concerned about memory it shouldn\u0027t have an impact because of bitfields. But I do agree that it\u0027s a bit weird. However, there is a lot of weirdness going on between tile/tiling/layer/tile_manager/prioritized_tiling interactions.\n\nI\u0027ve filed crbug.com/741928 to clean this up. For now, I\u0027d prefer to keep this here.",
+      "parentUuid": "5c844553_60c0b6ee",
       "range": {
         "startLine": 163,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ec134cdd_76f948a9",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-12T23:25:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a43b24fe_8d72999b",
+      "range": {
+        "startLine": 384,
+        "startChar": 42,
+        "endLine": 384,
+        "endChar": 44
+      },
+      "revId": "f1bee323d7f6b26d64f9d46d839ffeeff3bb51c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dc26d77_88d239bf",
         "filename": "cc/trees/layer_tree_impl.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "f1bee323d7f6b26d64f9d46d839ffeeff3bb51c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b4a474_46c9b6fd",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-12T23:25:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dc26d77_88d239bf",
+      "range": {
+        "startLine": 1133,
+        "startChar": 41,
+        "endLine": 1133,
+        "endChar": 50
+      },
+      "revId": "f1bee323d7f6b26d64f9d46d839ffeeff3bb51c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
