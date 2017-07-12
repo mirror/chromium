@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed753304_96c24bc5",
+        "filename": "media/audio/audio_device_info_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-07-12T08:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e321f31_27d87dbe",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "10bd984da039d28d38a1886bbc51288989723c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ba249ef_49ad9086",
         "filename": "media/audio/audio_device_info_helper.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-11T15:32:01Z",
       "side": 1,
       "message": "If it\u0027s supposed to be reusable, why is everything private?",
+      "range": {
+        "startLine": 19,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "10bd984da039d28d38a1886bbc51288989723c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d678c0f_26dda2f9",
+        "filename": "media/audio/audio_device_info_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-07-12T08:48:04Z",
+      "side": 1,
+      "message": "Added a comment",
+      "parentUuid": "2ba249ef_49ad9086",
       "range": {
         "startLine": 19,
         "startChar": 1,
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "771678e8_dec175e1",
+        "filename": "media/audio/audio_device_info_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-07-12T08:48:04Z",
+      "side": 1,
+      "message": "I intentionally made usage of AudioManager explicit, so that the callers care about its lifetime when posting the helpers to the audio thread.\n(The only reason they are in a class is a friendship with AudioManager)",
+      "parentUuid": "274b1d61_0c9d9525",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "10bd984da039d28d38a1886bbc51288989723c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb55306a_a68c27a6",
         "filename": "media/audio/audio_system_impl.cc",
         "patchSetId": 1
@@ -108,6 +180,30 @@
       "revId": "10bd984da039d28d38a1886bbc51288989723c27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "584a04d7_2341ae5b",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-07-12T08:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb55306a_a68c27a6",
+      "range": {
+        "startLine": 52,
+        "startChar": 36,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "10bd984da039d28d38a1886bbc51288989723c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
