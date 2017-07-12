@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4514c5f_94b8ee0d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 37826,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-07-12T17:53:21Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d726795",
+      "parentUuid": "53afd905_fba9c3de",
+      "range": {
+        "startLine": 37826,
+        "startChar": 62,
+        "endLine": 37826,
+        "endChar": 0
+      },
+      "revId": "797c969a2579d5255a607d9c8347687ea098209d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e816f364_a9ff8188",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "797c969a2579d5255a607d9c8347687ea098209d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22de18c3_a0f39806",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 37838,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-07-12T17:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e816f364_a9ff8188",
+      "range": {
+        "startLine": 37838,
+        "startChar": 47,
+        "endLine": 37838,
+        "endChar": 0
+      },
+      "revId": "797c969a2579d5255a607d9c8347687ea098209d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
