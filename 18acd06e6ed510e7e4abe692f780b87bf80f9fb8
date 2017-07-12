@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7b71ca8_f85614af",
+        "filename": "services/viz/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-12T15:59:04Z",
+      "side": 1,
+      "message": "I think this is gerrit pointing out trailing whitespace? Not a big deal, just an FYI",
+      "revId": "18acd06e6ed510e7e4abe692f780b87bf80f9fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
