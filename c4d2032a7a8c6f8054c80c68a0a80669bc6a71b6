@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8acfb34b_ea872bba",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T12:15:56Z",
+      "side": 1,
+      "message": "nit: I prefer the style /*escape_apostrophes\u003d*/true",
+      "revId": "c4d2032a7a8c6f8054c80c68a0a80669bc6a71b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240a89c6_132658d0",
+        "filename": "components/autofill/core/browser/autofill_save_card_infobar_delegate_mobile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T12:15:56Z",
+      "side": 1,
+      "message": "same nit as other file",
+      "revId": "c4d2032a7a8c6f8054c80c68a0a80669bc6a71b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
