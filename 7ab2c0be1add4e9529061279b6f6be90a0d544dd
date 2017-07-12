@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "940f05d7_025edf74",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-12T18:26:51Z",
+      "side": 1,
+      "message": "I like this.",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ebb61c_c56a576f",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-12T18:26:51Z",
+      "side": 1,
+      "message": "this class now has:\n\nstruct Results, struct RefreshResult, and typedef RefreshResults :\u003d vector\u003e\n\nSo the type names are a little confusing; the last two are private (and windows-only) so we can hopefully rework them pretty freely.\n\nMaybe (private) struct RefreshResult can embed a (public) struct Results?",
+      "range": {
+        "startLine": 81,
+        "startChar": 24,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3806e5a7_ce681d2b",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-12T18:26:51Z",
+      "side": 1,
+      "message": "I\u0027m unclear on what this comment means. If it\u0027s suggesting we ought to check for some invariant in the body of RefreshOnWorkerThread(), then the TODO probably belongs in the body of that function?",
+      "range": {
+        "startLine": 92,
+        "startChar": 32,
+        "endLine": 92,
+        "endChar": 43
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb8ca3d_cd380378",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-12T18:26:51Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 107,
+        "startChar": 22,
+        "endLine": 107,
+        "endChar": 32
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ffe524_6714bb0e",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-12T18:26:51Z",
+      "side": 1,
+      "message": "Instead of these members, I think we can just create the Results here?",
+      "range": {
+        "startLine": 535,
+        "startChar": 20,
+        "endLine": 535,
+        "endChar": 28
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcabe50_3f5cdff1",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-12T18:26:51Z",
+      "side": 1,
+      "message": "maybe we could flow this loop like like this (just make it about finding the match):\n\n    RefreshResult* match \u003d nullptr;\n    for (; result_index \u003c refresh_results-\u003esize(); ++result_index) {\n      const auto\u0026 result \u003d (*refresh_results)[result_index];\n      if (result.process_id \u003d\u003d process_id) {\n        match \u003d \u0026result;\n        ++result_index;\n        break;\n      }\n\n      if (result.process_id \u003e process_id) {\n        // An entry corresponding to |process_id| is missing. See above.\n        break;\n      }\n    }\n    \n    if (match) {\n      Results results \u003d match-\u003eresults;  // Copy it, assuming we embed the new type.\n      // Filter out the data we don\u0027t care about?  This could be a operation on Results even:\n      // (ClearTypes())?  However, AFAIK the right thing to do here would be to do the\n      // refresh_flags_ filtering on (refresh_results)\n      if (!TaskManagerObserver::IsResourceRefreshEnabled(REFRESH_TYPE_IDLE_WAKEUPS,\n                                                         refresh_flags_)) {\n        results-\u003eidle_wakeups.reset();\n      }\n    }",
+      "range": {
+        "startLine": 543,
+        "startChar": 9,
+        "endLine": 543,
+        "endChar": 10
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06c6807_d3a07e12",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-12T18:26:51Z",
+      "side": 1,
+      "message": "IMO we shouldn\u0027t get here unless one of these types was requested, so I don\u0027t think it needs to be conditional. And if not, we can solve this with an early return at the top of the function.\n\nWe can hopefully strengthen the check at the top of the fn:\n\nDCHECK_NE(0, refresh_flags_);\n\nto something like\n\nDCHECK_NE(0, (refresh_flags_) \u0026 (IDLE_WAKEUPS | START_TIME | CPU_TIME | PHYSICAL_MEMORY));\n\n?",
+      "range": {
+        "startLine": 579,
+        "startChar": 28,
+        "endLine": 579,
+        "endChar": 39
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
