@@ -14,6 +14,8 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/favicon/favicon_utils.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab_factory.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/ui/browser.h"
@@ -366,6 +368,9 @@ bool BrowserTabStripController::IsCompatibleWith(TabStrip* other) const {
 }
 
 void BrowserTabStripController::CreateNewTab() {
+  new_tab_help::NewTabFactory::GetInstance()
+      ->GetForProfile(browser_view_->browser()->profile())
+      ->NotifyNewTabOpened();
   model_->delegate()->AddTabAt(GURL(), -1, true);
 }
 
