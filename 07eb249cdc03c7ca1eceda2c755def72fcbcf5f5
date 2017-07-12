@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b75580_3060f9e1",
+        "filename": "ios/chrome/browser/native_app_launcher/native_app_infobar_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-12T06:43:56Z",
+      "side": 0,
+      "message": "Should this file/folder be removed too?",
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
