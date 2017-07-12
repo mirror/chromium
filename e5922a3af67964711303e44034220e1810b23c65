@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81eab042_b094cdf9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationManagerProxyImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T14:44:30Z",
+      "side": 1,
+      "message": "Would be good to comment on why we still do this here.",
+      "revId": "e5922a3af67964711303e44034220e1810b23c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f52b76_a9684ea2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationUmaTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T14:44:30Z",
+      "side": 1,
+      "message": "micro nit: please drop the excess () around this comparison",
+      "revId": "e5922a3af67964711303e44034220e1810b23c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f9d6ed_cce67795",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T14:44:30Z",
+      "side": 1,
+      "message": "Here and elsewhere, don\u0027t we need some sort of @TargetApi annotation to make findbugs happy, given that NC is a super new API?",
+      "revId": "e5922a3af67964711303e44034220e1810b23c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77861a76_e915b59f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/ChannelsUpdaterTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T14:44:30Z",
+      "side": 1,
+      "message": "Why are these tests being ran despite this annotation? (See the failing try bot..)",
+      "revId": "e5922a3af67964711303e44034220e1810b23c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
