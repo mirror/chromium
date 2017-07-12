@@ -1418,7 +1418,9 @@ void Element::AttributeChanged(const AttributeModificationParams& params) {
   InvalidateNodeListCachesInAncestors(&name, this);
 
   if (isConnected()) {
-    if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
+    UpdateDistribution();
+    AXObjectCache* cache = GetDocument().ExistingAXObjectCache();
+    if (isConnected() && cache)
       cache->HandleAttributeChanged(name, this);
   }
 
