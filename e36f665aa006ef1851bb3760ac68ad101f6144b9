@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2c29c34_d83853e7",
+        "filename": "extensions/browser/value_store/lazy_leveldb.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-12T14:15:32Z",
+      "side": 1,
+      "message": "These sequence checks may be insufficient, since these methods all cause IO.  Can we add AssertIOAllowed() here and in the other methods, as well?",
+      "revId": "e36f665aa006ef1851bb3760ac68ad101f6144b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f456880_548a8c43",
+        "filename": "extensions/browser/value_store/leveldb_value_store.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-12T14:15:32Z",
+      "side": 1,
+      "message": "Similar comment here re IO",
+      "revId": "e36f665aa006ef1851bb3760ac68ad101f6144b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f4f88d_691bdc74",
+        "filename": "extensions/browser/value_store/value_store_frontend.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-12T14:15:32Z",
+      "side": 1,
+      "message": "Isn\u0027t this still designed for use on the UI thread?",
+      "revId": "e36f665aa006ef1851bb3760ac68ad101f6144b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
