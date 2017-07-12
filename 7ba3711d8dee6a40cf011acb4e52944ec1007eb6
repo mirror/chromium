@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6badb435_bf3f41fa",
+        "filename": ".gitignore",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T14:46:16Z",
+      "side": 1,
+      "message": "Remove this your local change",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 5
+      },
+      "revId": "7ba3711d8dee6a40cf011acb4e52944ec1007eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a8b6c1_87ecd3c3",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1536,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T14:46:16Z",
+      "side": 1,
+      "message": "This comment change shouldn\u0027t be in this CL?",
+      "range": {
+        "startLine": 1536,
+        "startChar": 6,
+        "endLine": 1536,
+        "endChar": 126
+      },
+      "revId": "7ba3711d8dee6a40cf011acb4e52944ec1007eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01d7b1e_9972068a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T14:46:16Z",
+      "side": 1,
+      "message": "And this?",
+      "range": {
+        "startLine": 1552,
+        "startChar": 6,
+        "endLine": 1558,
+        "endChar": 97
+      },
+      "revId": "7ba3711d8dee6a40cf011acb4e52944ec1007eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ad51dc_43af20cc",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 5374,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T14:46:16Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 5374,
+        "startChar": 6,
+        "endLine": 5374,
+        "endChar": 253
+      },
+      "revId": "7ba3711d8dee6a40cf011acb4e52944ec1007eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee7212a_b4c9a281",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9734,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T14:46:16Z",
+      "side": 1,
+      "message": "nit: remove the line",
+      "revId": "7ba3711d8dee6a40cf011acb4e52944ec1007eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
