@@ -31,6 +31,7 @@
 #include "chrome/browser/memory/oom_memory_details.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
+#include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/ui/browser.h"
@@ -149,6 +150,7 @@ TabManager::TabManager()
 #endif
   browser_tab_strip_tracker_.Init();
   session_restore_observer_.reset(new TabManagerSessionRestoreObserver(this));
+  tab_manager_stats_collector_.reset(new TabManagerStatsCollector(this));
 }
 
 TabManager::~TabManager() {
@@ -829,7 +831,7 @@ void TabManager::ActiveTabChanged(content::WebContents* old_contents,
             GetTimeToPurge(min_time_to_purge_, max_time_to_purge_));
     // Only record switch-to-tab metrics when a switch happens, i.e.
     // |old_contents| is set.
-    RecordSwitchToTab(new_contents);
+    tab_manager_stats_collector_->RecordSwitchToTab(new_contents);
   }
 
   // An active tab is not purged.
@@ -967,14 +969,6 @@ std::vector<TabManager::BrowserInfo> TabManager::GetBrowserInfoList() const {
   }
 
   return browser_info_list;
-}
-
-void TabManager::RecordSwitchToTab(content::WebContents* contents) const {
-  if (is_session_restore_loading_tabs_) {
-    UMA_HISTOGRAM_ENUMERATION("TabManager.SessionRestore.SwitchToTab",
-                              GetWebContentsData(contents)->tab_loading_state(),
-                              TAB_LOADING_STATE_MAX);
-  }
 }
 
 content::NavigationThrottle::ThrottleCheckResult
