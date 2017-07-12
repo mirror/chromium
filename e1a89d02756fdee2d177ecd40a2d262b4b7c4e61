@@ -1107,6 +1107,30 @@
     },
     {
       "key": {
+        "uuid": "d7701aac_0ae9b292",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-12T00:26:54Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "421838f4_8636242a",
+      "range": {
+        "startLine": 1025,
+        "startChar": 30,
+        "endLine": 1025,
+        "endChar": 58
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d26581e_19c6820b",
         "filename": "net/nqe/network_quality_estimator.cc",
         "patchSetId": 27
@@ -1151,6 +1175,30 @@
       "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f526ce66_9db3b80d",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-12T00:26:54Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "68e4115f_8095b547",
+      "range": {
+        "startLine": 1042,
+        "startChar": 4,
+        "endLine": 1042,
+        "endChar": 10
+      },
+      "revId": "e1a89d02756fdee2d177ecd40a2d262b4b7c4e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
