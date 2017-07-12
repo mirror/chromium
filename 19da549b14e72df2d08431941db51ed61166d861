@@ -22,6 +22,30 @@
       "revId": "19da549b14e72df2d08431941db51ed61166d861",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c290d5a1_34a721f0",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-12T00:55:48Z",
+      "side": 1,
+      "message": "Good point. I can just use |next_bitstream_buffer_id_| instead though.",
+      "parentUuid": "5904129c_7f41c589",
+      "range": {
+        "startLine": 790,
+        "startChar": 6,
+        "endLine": 790,
+        "endChar": 64
+      },
+      "revId": "19da549b14e72df2d08431941db51ed61166d861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
