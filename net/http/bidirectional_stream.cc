@@ -213,6 +213,11 @@ void BidirectionalStream::GetLoadTimingInfo(
   *load_timing_info = load_timing_info_;
 }
 
+void BidirectionalStream::PopulateNetErrorDetails(NetErrorDetails* details) {
+  if (stream_impl_)
+    stream_impl_->PopulateNetErrorDetails(details);
+}
+
 void BidirectionalStream::OnStreamReady(bool request_headers_sent) {
   request_headers_sent_ = request_headers_sent;
   if (net_log_.IsCapturing()) {
