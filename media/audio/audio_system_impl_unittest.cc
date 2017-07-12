@@ -31,6 +31,9 @@ bool operator==(const media::AudioDeviceDescription& lhs,
          lhs.group_id == rhs.group_id;
 }
 
+// Note: these are the only unit tests covering media::AudioDeviceInfoHelper.
+// They should be converted to media::AudioSystemInfoHelper unit tests if
+// AudioSystemImpl is removed.
 class AudioSystemImplTest : public testing::TestWithParam<bool> {
  public:
   AudioSystemImplTest()
