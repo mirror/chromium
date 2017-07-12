@@ -683,7 +683,9 @@ bool IsCertificateCleared() {
 
 // Verifies that logging into a form on a web page allows the user to save and
 // then clear a password.
+// TODO(crbug.com/741758): Reenable this test.
 - (void)testClearPasswords {
+  EARL_GREY_TEST_DISABLED(@"This test is disabled on all configuration");
   ios::ChromeBrowserState* browserState =
       chrome_test_util::GetOriginalBrowserState();
   PrefService* preferences = browserState->GetPrefs();

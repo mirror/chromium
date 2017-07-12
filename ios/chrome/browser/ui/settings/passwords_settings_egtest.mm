@@ -537,7 +537,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
 // Checks that deleting a password from password details view goes back to the
 // list-of-passwords view.
+// TODO(crbug.com/741755): Reenable this test.
 - (void)testDeletion {
+  EARL_GREY_TEST_DISABLED(@"This test is disabled in all configurations");
   [self scopedEnablePasswordManagementAndViewingUI];
 
   // Save form to be deleted later.
