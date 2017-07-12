@@ -151,6 +151,30 @@
     },
     {
       "key": {
+        "uuid": "583008c5_3e2f20bf",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2216,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-12T18:33:28Z",
+      "side": 1,
+      "message": "Start/StopObservingRootWindow is basically equivalent to setting and unsetting BeginFrameSource. The BeginFrameSource from WindowAndroid is the \"real\" one that sends begin frame signals on android.\n\nIf !using_browser_compositor_ (ie webview), then there is no DelegatedFrameHostAndroid, and RenderWidgetHostViewAndroid talks directly to the BFS from window. Otherwise DelegatedFrameHostAndroid (and CompositorImpl) sits in between RenderWidgetHostViewAndroid and BFS from window.",
+      "parentUuid": "793c86f9_b84a65df",
+      "range": {
+        "startLine": 2216,
+        "startChar": 15,
+        "endLine": 2216,
+        "endChar": 19
+      },
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "999087b2_3ae53a0a",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
         "patchSetId": 4
