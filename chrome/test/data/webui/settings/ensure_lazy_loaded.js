@@ -5,6 +5,7 @@
 cr.define('settings', function() {
   function ensureLazyLoaded() {
     // Only trigger lazy loading, if we are in top-level Settings page.
+    // This is important when running tests with vulcanization on.
     if (location.href == location.origin + '/') {
       suiteSetup(function() {
         return new Promise(function(resolve, reject) {
