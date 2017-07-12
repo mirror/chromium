@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "16d250bc_7ef6dfae",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T10:44:20Z",
+      "side": 1,
+      "message": "... guarantee of lifetime of its owners, i.e. WebServiceWorker... and its Internal",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c59a5578_fd6018d2",
         "filename": "content/renderer/service_worker/thread_safe_script_container_unittest.cc",
         "patchSetId": 13
@@ -121,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "d4b13ddf_fe24a2f1",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T10:44:20Z",
+      "side": 1,
+      "message": "SimpleWatcher takes RepeatingCallback (the expected usage is this could get called multiple times, I think)",
+      "parentUuid": "fca01037_e5958787",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62fbdf14_94ce76ec",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 13
@@ -132,6 +167,23 @@
       "writtenOn": "2017-07-12T07:52:25Z",
       "side": 1,
       "message": "I\u0027m curious why the rv isn\u0027t propagated to the callback. Does the callback not need rv to be able to detect error? Or it doesn\u0027t need to know about error?",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18fb23f5_14f1b285",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T10:44:20Z",
+      "side": 1,
+      "message": "nit: no need of explicit",
       "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -166,6 +218,23 @@
       "writtenOn": "2017-07-12T07:52:25Z",
       "side": 1,
       "message": "rm ;",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d440bb_b1351276",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T10:44:20Z",
+      "side": 1,
+      "message": "You can configure TestBrowserThreadBundle with REAL_IO_THREAD to get a real IO thread",
       "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

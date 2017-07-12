@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3daf2f06_12d8b9d4",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T10:44:20Z",
+      "side": 1,
+      "message": "Would the dtor really always mean all data have been added? (E.g. what happens when browser side starts to have storage errors?)",
+      "revId": "7dc3a66ac674640372c81749c4d2178fd49f3eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
