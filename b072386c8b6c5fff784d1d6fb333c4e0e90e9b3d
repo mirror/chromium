@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50d84a97_4e0db0cc",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-12T13:02:20Z",
+      "side": 1,
+      "message": "Are you sure you want to mix HTML and non-HTML logins?",
+      "range": {
+        "startLine": 685,
+        "startChar": 35,
+        "endLine": 685,
+        "endChar": 62
+      },
+      "revId": "b072386c8b6c5fff784d1d6fb333c4e0e90e9b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
