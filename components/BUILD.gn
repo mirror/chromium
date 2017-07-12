@@ -78,7 +78,6 @@ test("components_unittests") {
     "//components/device_event_log:unit_tests",
     "//components/dom_distiller/core:unit_tests",
     "//components/doodle:unit_tests",
-    "//components/download:unit_tests",
     "//components/favicon/core:unit_tests",
     "//components/favicon_base:unit_tests",
     "//components/feature_engagement_tracker:unit_tests",
@@ -155,6 +154,16 @@ test("components_unittests") {
     "//components/webdata/common:unit_tests",
   ]
 
+  if (!is_ios) {
+    deps += [
+      "//components/download/content/internal:unit_tests",
+      "//components/download/internal:unit_tests",
+    ]
+    data_deps = [
+      "//components/download:components_unittests_gtest_filter",
+    ]
+  }
+
   if (toolkit_views && use_aura) {
     deps += [ "//components/ui_devtools/views:unit_tests" ]
   }
@@ -189,7 +198,6 @@ test("components_unittests") {
       "//components/discardable_memory/service:unit_tests",
       "//components/dom_distiller/content/browser:unit_tests",
       "//components/domain_reliability:unit_tests",
-      "//components/download/content:unit_tests",
       "//components/error_page/renderer:unit_tests",
       "//components/favicon/content:unit_tests",
       "//components/gcm_driver/instance_id:unit_tests",
@@ -231,7 +239,7 @@ test("components_unittests") {
       "//components/webcrypto:unit_tests",
     ]
 
-    data_deps = [
+    data_deps += [
       ":components_tests_pak",
       "//third_party/mesa:osmesa",
       "//ui/resources:ui_test_pak",
