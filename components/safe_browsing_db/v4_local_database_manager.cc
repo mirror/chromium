@@ -152,10 +152,15 @@ V4LocalDatabaseManager::PendingCheck::PendingCheck(
       most_severe_threat_type(SB_THREAT_TYPE_SAFE),
       stores_to_check(stores_to_check),
       urls(urls) {
+  DLOG(ERROR) << __FUNCTION__ << ": urls.size(): " << urls.size();
   for (const auto& url : urls) {
+    DLOG(ERROR) << __FUNCTION__ << ": url: " << url.spec();
+    DLOG(ERROR) << __FUNCTION__
+                << ": full_hashes.size(): " << full_hashes.size();
     V4ProtocolManagerUtil::UrlToFullHashes(url, &full_hashes);
+    DLOG(ERROR) << __FUNCTION__
+                << ": full_hashes.size(): " << full_hashes.size();
   }
-  DCHECK(full_hashes.size());
   full_hash_threat_types.assign(full_hashes.size(), SB_THREAT_TYPE_SAFE);
 }
 
@@ -197,6 +202,8 @@ V4LocalDatabaseManager::V4LocalDatabaseManager(
 
   DeleteUnusedStoreFiles();
 
+  DLOG(ERROR) << __FUNCTION__ << ": Created!";
+
   DVLOG(1) << "V4LocalDatabaseManager::V4LocalDatabaseManager: "
            << "base_path_: " << base_path_.AsUTF8Unsafe();
 }
@@ -233,6 +240,11 @@ void V4LocalDatabaseManager::CancelCheck(Client* client) {
 bool V4LocalDatabaseManager::CanCheckResourceType(
     content::ResourceType resource_type) const {
   // We check all types since most checks are fast.
+  return true;
+}
+
+bool V4LocalDatabaseManager::CanCheckSubresourceFilter() const {
+  VLOG(1) << __FUNCTION__ << ": true";
   return true;
 }
 
@@ -320,6 +332,7 @@ bool V4LocalDatabaseManager::CheckResourceUrl(const GURL& url, Client* client) {
 bool V4LocalDatabaseManager::CheckUrlForSubresourceFilter(const GURL& url,
                                                           Client* client) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(CanCheckSubresourceFilter());
 
   StoresToCheck stores_to_check(
       {GetUrlSocEngId(), GetUrlSubresourceFilterId()});
@@ -573,7 +586,6 @@ bool V4LocalDatabaseManager::GetPrefixMatches(
   DCHECK(v4_database_);
 
   const base::TimeTicks before = TimeTicks::Now();
-  DCHECK(!check->full_hashes.empty());
 
   full_hash_to_store_and_hash_prefixes->clear();
   for (const auto& full_hash : check->full_hashes) {

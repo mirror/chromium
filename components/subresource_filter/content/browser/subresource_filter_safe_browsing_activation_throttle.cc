@@ -61,6 +61,8 @@ SubresourceFilterSafeBrowsingActivationThrottle::
                            : nullptr,
                        base::OnTaskRunnerDeleter(io_task_runner_)),
       client_(client) {
+  DLOG(ERROR) << __FUNCTION__
+              << ": database_manager: " << database_manager.get();
   DCHECK(handle->IsInMainFrame());
 
   CheckCurrentUrl();

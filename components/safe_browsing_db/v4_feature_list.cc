@@ -12,7 +12,7 @@ namespace safe_browsing {
 namespace V4FeatureList {
 
 bool IsV4OnlyEnabled() {
-  return base::FeatureList::IsEnabled(kV4OnlyEnabled);
+  return base::FeatureList::IsEnabled(kV4OnlyEnabled) || true;
 }
 
 bool IsLocalDatabaseManagerEnabled() {

@@ -333,6 +333,11 @@ bool LocalSafeBrowsingDatabaseManager::CanCheckResourceType(
   return true;
 }
 
+bool LocalSafeBrowsingDatabaseManager::CanCheckSubresourceFilter() const {
+  DLOG(ERROR) << __FUNCTION__ << ": false";
+  return false;
+}
+
 bool LocalSafeBrowsingDatabaseManager::CanCheckUrl(const GURL& url) const {
   return url.SchemeIsHTTPOrHTTPS() || url.SchemeIs(url::kFtpScheme) ||
          url.SchemeIsWSOrWSS();
@@ -342,6 +347,10 @@ bool LocalSafeBrowsingDatabaseManager::CheckDownloadUrl(
     const std::vector<GURL>& url_chain,
     Client* client) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DLOG(ERROR) << __FUNCTION__ << ": enabled_: " << enabled_;
+  DLOG(ERROR) << __FUNCTION__ << ": enable_download_protection_: "
+              << enable_download_protection_;
+  DLOG(ERROR) << __FUNCTION__ << ": url_chain.size(): " << url_chain.size();
   if (!enabled_ || !enable_download_protection_)
     return true;
 
