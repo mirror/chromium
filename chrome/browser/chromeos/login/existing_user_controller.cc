@@ -55,6 +55,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/cryptohome/async_method_caller.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/dbus/session_manager_client.h"
@@ -107,6 +108,19 @@ enum LoginPasswordChangeFlow {
   LOGIN_PASSWORD_CHANGE_FLOW_CRYPTOHOME_FAILURE = 1,
 
   LOGIN_PASSWORD_CHANGE_FLOW_COUNT,  // Must be the last entry.
+};
+
+enum EcryptfsMigrationAction {
+  // Don't migrate.
+  DISALLOW_ARC_NO_MIGRATION = 0,
+  // Migrate.
+  MIGRATE = 1,
+  // Wipe the user home and start again.
+  WIPE = 2,
+  // Ask the user if migration should be performed.
+  ASK_USER = 3,
+  // Last value for validity checks.
+  COUNT
 };
 
 // Delay for transferring the auth cache to the system profile.
@@ -207,6 +221,34 @@ bool ShouldForceDircrypto(const AccountId& account_id) {
   if (UserAddingScreen::Get()->IsRunning())
     return false;
 
+  return true;
+}
+
+// Decodes the EcryptfsMigrationStrategy user policy into the
+// EcryptfsMigrationAction enum. If the policy is present, returns true and sets
+// *|out_value|. Otherwise, returns false.
+bool DecodeMigrationActionFromPolicy(
+    enterprise_management::CloudPolicySettings* policy,
+    EcryptfsMigrationAction* out_value) {
+  if (!policy->has_ecryptfsmigrationstrategy())
+    return false;
+
+  const enterprise_management::IntegerPolicyProto& policy_proto =
+      policy->ecryptfsmigrationstrategy();
+  if (!policy_proto.has_value())
+    return false;
+
+  if (policy_proto.has_policy_options() &&
+      policy_proto.policy_options().mode() ==
+          enterprise_management::PolicyOptions::UNSET)
+    return false;
+
+  if (policy_proto.value() < 0 ||
+      policy_proto.value() >= EcryptfsMigrationAction::COUNT) {
+    return false;
+  }
+
+  *out_value = static_cast<EcryptfsMigrationAction>(policy_proto.value());
   return true;
 }
 
@@ -926,7 +968,88 @@ void ExistingUserController::OnPasswordChangeDetected() {
 void ExistingUserController::OnOldEncryptionDetected(
     const UserContext& user_context,
     bool has_incomplete_migration) {
-  ShowEncryptionMigrationScreen(user_context, has_incomplete_migration);
+  if (has_incomplete_migration) {
+    // If migration was incomplete, continue migration without checking user
+    // policy.
+    ShowEncryptionMigrationScreen(user_context, has_incomplete_migration);
+  } else {
+    // Fetch user policy.
+    policy::BrowserPolicyConnectorChromeOS* connector =
+        g_browser_process->platform_part()->browser_policy_connector_chromeos();
+    // Use signin profile request context
+    net::URLRequestContextGetter* signin_profile_context_getter =
+        ProfileHelper::GetSigninProfile()->GetRequestContext();
+    pre_signin_policy_fetcher_ =
+        base::MakeUnique<policy::PreSigninPolicyFetcher>(
+            DBusThreadManager::Get()->GetCryptohomeClient(),
+            DBusThreadManager::Get()->GetSessionManagerClient(),
+            connector->device_management_service(),
+            signin_profile_context_getter, user_context.GetAccountId(),
+            cryptohome::KeyDefinition(user_context.GetKey()->GetSecret(),
+                                      std::string(), cryptohome::PRIV_DEFAULT));
+    pre_signin_policy_fetcher_->FetchPolicy(
+        base::BindOnce(&ExistingUserController::OnPolicyFetchResult,
+                       weak_factory_.GetWeakPtr(), user_context));
+  }
+}
+
+void ExistingUserController::OnPolicyFetchResult(
+    UserContext user_context,
+    policy::PreSigninPolicyFetcher::PolicyFetchResult result,
+    std::unique_ptr<enterprise_management::CloudPolicySettings>
+        policy_payload) {
+  using PolicyFetchResult = policy::PreSigninPolicyFetcher::PolicyFetchResult;
+
+  EcryptfsMigrationAction action = DISALLOW_ARC_NO_MIGRATION;
+  if (result == PolicyFetchResult::POLICY_FETCH_ERROR) {
+    VLOG(1) << "Policy pre-fetch result: User policy could not be fetched";
+    action = DISALLOW_ARC_NO_MIGRATION;
+  } else if (result == PolicyFetchResult::POLICY_FETCH_NO_POLICY) {
+    VLOG(1) << "Policy pre-fetch result: No user policy present";
+    action = ASK_USER;
+  } else if (result == PolicyFetchResult::POLICY_FETCH_SUCCESS) {
+    VLOG(1) << "Policy pre-fetch result: User policy fetched";
+    if (!DecodeMigrationActionFromPolicy(policy_payload.get(), &action)) {
+      // User policy was present, but the EcryptfsMigrationStrategy policy value
+      // was not there.
+      action = DISALLOW_ARC_NO_MIGRATION;
+    }
+  } else {
+    NOTREACHED();
+  }
+  VLOG(1) << "Migration action: " << action;
+
+  switch (action) {
+    case DISALLOW_ARC_NO_MIGRATION:
+    default:
+      user_context.SetIsForcingDircrypto(false);
+      ContinuePerformLogin(login_performer_->auth_mode(), user_context);
+      break;
+    case MIGRATE:
+      // TODO(pmarko): Reusing resume may be wrong from UI perspective, in case
+      // we show a UI mentioning "resume"/"interrupted". If that's the case,
+      // introduce an enum instead of the bool parameter to choose between
+      // ask_user/continue_interrupted_migration/start_migration.
+      // Otherwise, at least rename the bool parameter to indicate that this may
+      // not only mean resuming.
+      ShowEncryptionMigrationScreen(user_context, true);
+      break;
+    case ASK_USER:
+      ShowEncryptionMigrationScreen(user_context, false);
+      break;
+    case WIPE:
+      cryptohome::AsyncMethodCaller::GetInstance()->AsyncRemove(
+          cryptohome::Identification(user_context.GetAccountId()),
+          base::Bind(&ExistingUserController::WipePerformed,
+                     weak_factory_.GetWeakPtr(), user_context));
+      break;
+  }
+}
+
+void ExistingUserController::WipePerformed(const UserContext& user_context,
+                                           bool success,
+                                           cryptohome::MountError return_code) {
+  ContinuePerformLogin(login_performer_->auth_mode(), user_context);
 }
 
 void ExistingUserController::WhiteListCheckFailed(const std::string& email) {
