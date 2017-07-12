@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "210de4c7_40eff1d6",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T17:13:26Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "c1bea9476c7e7dc65bce3bba645cee4d4718912c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
