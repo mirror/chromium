@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "d1848b6e_80328bed",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-12T21:23:20Z",
+      "side": 1,
+      "message": "Put more concisely:\nhost - the architecture that the toolchain is running on.\ncurrent - the architecture that the binary we\u0027re currently building will run on.\ntarget - either the architecture the binary will run on (for outputs) or the architecture the binary will be configured to target (for building toolchain components).\n\ni.e. target is not always what the binary will run on.",
+      "parentUuid": "41c4b35d_b5c9d12b",
+      "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e15b811_a5575536",
         "filename": "build/config/compiler/compiler.gni",
         "patchSetId": 2
