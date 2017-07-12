@@ -199,6 +199,9 @@ class AutofillClient : public RiskDataLoader {
 
   // Shows the explanation of http not secure warning message.
   virtual void ShowHttpNotSecureExplanation() = 0;
+
+  // Whether autofill is currently supported by the client.
+  virtual bool IsAutofillSupported() = 0;
 };
 
 }  // namespace autofill
