@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "b3a9b2b8_f320882c",
+        "filename": "net/http2/hpack/decoder/hpack_varint_decoder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-12T14:45:31Z",
+      "side": 1,
+      "message": "Oops, seems like I removed the one from line 23 instead.  Sorry.  Fixing it in follow-up CL https://crrev.com/c/568102.",
+      "parentUuid": "28a05036_99586185",
+      "range": {
+        "startLine": 6,
+        "startChar": 54,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec770072_574a4576",
         "filename": "net/http2/hpack/decoder/hpack_varint_decoder_test.cc",
         "patchSetId": 2
