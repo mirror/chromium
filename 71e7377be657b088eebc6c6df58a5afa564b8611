@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad39b0cb_fa1ae783",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T20:33:24Z",
+      "side": 1,
+      "message": "can you have a test that mixes both url supported methods and basic-card, etc.",
+      "revId": "71e7377be657b088eebc6c6df58a5afa564b8611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
