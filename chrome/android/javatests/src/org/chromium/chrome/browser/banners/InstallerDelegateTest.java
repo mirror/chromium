@@ -57,12 +57,20 @@ public class InstallerDelegateTest implements InstallerDelegate.Observer {
     private boolean mInstallStarted;
 
     @Override
+    public void onInstallIntentCompleted(InstallerDelegate delegate, boolean isInstalling) {
+        Assert.assertTrue(isInstalling);
+    }
+
+    @Override
     public void onInstallFinished(InstallerDelegate delegate, boolean success) {
         mResultDelegate = delegate;
         mResultSuccess = success;
         mResultFinished = true;
         Assert.assertTrue(mInstallStarted);
     }
+
+    @Override
+    public void onApplicationStateChanged(InstallerDelegate delegate, int newState) {}
 
     @Before
     public void setUp() throws Exception {
@@ -72,8 +80,7 @@ public class InstallerDelegateTest implements InstallerDelegate.Observer {
         // InstallerDelegate's handler fails to be processed otherwise.
         mThread = new HandlerThread("InstallerDelegateTest thread");
         mThread.start();
-        mTestDelegate = new InstallerDelegate(
-                mThread.getLooper(), mPackageManager, this, MOCK_PACKAGE_NAME);
+        mTestDelegate = new InstallerDelegate(mThread.getLooper(), this);
 
         // Clear out the results from last time.
         mResultDelegate = null;
@@ -87,7 +94,7 @@ public class InstallerDelegateTest implements InstallerDelegate.Observer {
     }
 
     private void startMonitoring() {
-        mTestDelegate.start();
+        mTestDelegate.startMonitoring(MOCK_PACKAGE_NAME);
         mInstallStarted = true;
     }
 
