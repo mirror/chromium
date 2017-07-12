@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e338a3fa_042d9d07",
+        "filename": "media/audio/audio_system_info_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-12T17:52:23Z",
+      "side": 1,
+      "message": "Instead of doing this, put these methods in media::internals namespace. You can then remove the wrapping class as well since it\u0027s not adding any value and classes of statics are frowned upon by the style guide:\n\nhttps://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions\n\n\"Rather than creating classes only to group static member functions which do not share static data, use namespaces instead.\"",
+      "revId": "046a8b31c9ddce67a2a996c31a0ae7ccbaf255d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
