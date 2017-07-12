@@ -19,8 +19,10 @@ class ChromeWebClient : public web::WebClient {
   // WebClient implementation.
   std::unique_ptr<web::WebMainParts> CreateWebMainParts() override;
   void PreWebViewCreation() const override;
-  void AddAdditionalSchemes(std::vector<url::SchemeWithType>*
-                                additional_standard_schemes) const override;
+  void AddStandardSchemes(
+      std::vector<url::SchemeWithType>* schemes) const override;
+  void AddSecureSchemes(
+      std::vector<url::SchemeWithType>* schemes) const override;
   std::string GetAcceptLangs(web::BrowserState* state) const override;
   std::string GetApplicationLocale() const override;
   bool IsAppSpecificURL(const GURL& url) const override;

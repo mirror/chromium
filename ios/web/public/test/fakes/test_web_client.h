@@ -23,8 +23,8 @@ class TestWebClient : public web::WebClient {
   ~TestWebClient() override;
 
   // WebClient implementation.
-  void AddAdditionalSchemes(std::vector<url::SchemeWithType>*) const override;
-  // Returns true for kTestWebUIScheme URL scheme.
+  void AddStandardSchemes(std::vector<url::SchemeWithType>*) const override;
+  // Returns true for kTestWebUIScheme and kTestNativeContentScheme URL schemes.
   bool IsAppSpecificURL(const GURL& url) const override;
   base::RefCountedMemory* GetDataResourceBytes(int id) const override;
   NSString* GetEarlyPageScript(BrowserState* browser_state) const override;

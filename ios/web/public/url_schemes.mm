@@ -20,13 +20,21 @@ namespace {
 void AddStandardSchemeHelper(const url::SchemeWithType& scheme) {
   url::AddStandardScheme(scheme.scheme, scheme.type);
 }
+void AddSecureSchemeHelper(const url::SchemeWithType& scheme) {
+  url::AddSecureScheme(scheme.scheme, scheme.type);
+}
 }  // namespace
 
 void RegisterWebSchemes(bool lock_schemes) {
-  std::vector<url::SchemeWithType> additional_standard_schemes;
-  GetWebClient()->AddAdditionalSchemes(&additional_standard_schemes);
-  std::for_each(additional_standard_schemes.begin(),
-                additional_standard_schemes.end(), AddStandardSchemeHelper);
+  std::vector<url::SchemeWithType> standard_schemes;
+  GetWebClient()->AddStandardSchemes(&standard_schemes);
+  std::for_each(standard_schemes.begin(), standard_schemes.end(),
+                AddStandardSchemeHelper);
+
+  std::vector<url::SchemeWithType> secure_schemes;
+  GetWebClient()->AddSecureSchemes(&secure_schemes);
+  std::for_each(secure_schemes.begin(), secure_schemes.end(),
+                AddSecureSchemeHelper);
 
   // Prevent future modification of the schemes lists. This is to prevent
   // accidental creation of data races in the program. Add*Scheme aren't
