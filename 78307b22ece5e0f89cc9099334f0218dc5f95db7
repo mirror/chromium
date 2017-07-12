@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52953266_44973772",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 3549,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-12T00:05:19Z",
+      "side": 1,
+      "message": "I don\u0027t think this is always true for android, actually (we should turn it off for x86, eg). It should just be the VrTabHelper that\u0027s available everywhere now (and no longer wrapped in ifdefs).",
+      "parentUuid": "538e05b2_f28ed8aa",
+      "range": {
+        "startLine": 3549,
+        "startChar": 6,
+        "endLine": 3549,
+        "endChar": 18
+      },
+      "revId": "78307b22ece5e0f89cc9099334f0218dc5f95db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c0242d6_8601af49",
         "filename": "chrome/browser/media/android/router/media_router_dialog_controller_android.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "78307b22ece5e0f89cc9099334f0218dc5f95db7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c01671_72c26f5b",
+        "filename": "chrome/browser/media/android/router/media_router_dialog_controller_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-12T00:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c0242d6_8601af49",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 15
+      },
+      "revId": "78307b22ece5e0f89cc9099334f0218dc5f95db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
