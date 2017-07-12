@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e004c0d9_71604827",
+        "filename": "chrome/browser/metrics/chrome_stability_metrics_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-12T18:55:23Z",
+      "side": 0,
+      "message": "this code is testing all platforms so you probably want an #if !defined(OS_ANDROID) and a comment explaining why it\u0027s not relevant (or alternatively test that the other histogram value is incremented)",
+      "range": {
+        "startLine": 131,
+        "startChar": 30,
+        "endLine": 131,
+        "endChar": 39
+      },
+      "revId": "86da53572bd116369686d4727dad2d4fb6f07176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be38b7f3_91e69ea1",
+        "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-12T18:55:23Z",
+      "side": 0,
+      "message": "?\nSame concerns as with the other test though",
+      "range": {
+        "startLine": 99,
+        "startChar": 46,
+        "endLine": 99,
+        "endChar": 74
+      },
+      "revId": "86da53572bd116369686d4727dad2d4fb6f07176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b683e082_9b673fb2",
         "filename": "components/metrics/stability_metrics_helper.cc",
         "patchSetId": 1
