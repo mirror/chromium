@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53990f49_db62fa5a",
+        "filename": "chrome/browser/resource_coordinator/background_tab_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T16:44:50Z",
+      "side": 1,
+      "message": "Can we just pass the throttle to TabManager instead of a callback?",
+      "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a92095f_625676b0",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T16:44:50Z",
+      "side": 1,
+      "message": "If throttle is passed into TabManager, this can return BackgroundTabNavigationThrottle*.",
+      "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0573ff19_658bc1eb",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T16:44:50Z",
+      "side": 1,
+      "message": "If throttle is passed to TabManager, this would just be\n\nstd::vector\u003ccontent::BackgroundTabNavigationThrottle*\u003e pending_navigations_;",
+      "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f65b3d_33cecbf8",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T16:44:50Z",
+      "side": 1,
+      "message": "This may return BackgroundTabNavigationThrottle if throttle is passed to TabManager.",
+      "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
