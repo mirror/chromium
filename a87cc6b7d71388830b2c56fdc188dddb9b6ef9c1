@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2c83ad4_b8a2f3eb",
+        "filename": "build/whitespace_file.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-12T14:03:56Z",
+      "side": 0,
+      "message": "this change shouldn\u0027t be in this cl",
+      "range": {
+        "startLine": 174,
+        "startChar": 21,
+        "endLine": 174,
+        "endChar": 22
+      },
+      "revId": "a87cc6b7d71388830b2c56fdc188dddb9b6ef9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbfcd9c_5ab8d4a7",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-12T14:03:56Z",
+      "side": 0,
+      "message": "no need to change this",
+      "revId": "a87cc6b7d71388830b2c56fdc188dddb9b6ef9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
