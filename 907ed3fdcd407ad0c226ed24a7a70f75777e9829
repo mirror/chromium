@@ -16,6 +16,24 @@
       "revId": "907ed3fdcd407ad0c226ed24a7a70f75777e9829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54849196_5eeebf0d",
+        "filename": "components/download/internal/download_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T22:08:06Z",
+      "side": 1,
+      "message": "I can set it to false here.  Good call.  If OnDatabaseDestroyed failed it wouldn\u0027t set it to false.  Thanks!",
+      "parentUuid": "6504f9de_37c1e019",
+      "revId": "907ed3fdcd407ad0c226ed24a7a70f75777e9829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
