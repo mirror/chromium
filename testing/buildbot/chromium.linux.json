@@ -4212,7 +4212,7 @@
       },
       {
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": false
         },
         "test": "traffic_annotation_auditor_unittests"
       },
