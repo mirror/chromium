@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a295c7f4_b2ebf433",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-12T03:38:47Z",
+      "side": 1,
+      "message": "We call it as toolbar.",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1080e75_0a5d1d40",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-12T03:38:47Z",
+      "side": 1,
+      "message": "instead of hiding them in JS, how about adding an attribute to the menu like |on-toolbar| and hide these items using CSS?",
+      "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe49c3aa_4759cd7f",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-12T03:38:47Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we can always display the listed menu items, since they might be hidden by other reasons.",
+      "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0b9592_f32a8ef2",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_manager_ui.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-12T03:38:47Z",
+      "side": 1,
+      "message": "You can get this element inside SelectionMenuController.",
+      "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
