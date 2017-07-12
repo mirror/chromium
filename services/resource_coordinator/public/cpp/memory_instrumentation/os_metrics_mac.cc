@@ -115,6 +115,7 @@ bool GetDyldRegions(std::vector<VMRegion>* regions) {
 
         VMRegion region;
         region.size_in_bytes = seg->vmsize;
+        region.file_offset = seg->fileoff;
         region.protection_flags = protection_flags;
         region.mapped_file = image_name;
         region.start_address = slide + seg->vmaddr;
