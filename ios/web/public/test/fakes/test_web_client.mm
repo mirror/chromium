@@ -22,7 +22,7 @@ TestWebClient::TestWebClient()
 
 TestWebClient::~TestWebClient() {}
 
-void TestWebClient::AddAdditionalSchemes(
+void TestWebClient::AddStandardSchemes(
     std::vector<url::SchemeWithType>* additional_standard_schemes) const {
   url::SchemeWithType web_ui_scheme = {kTestWebUIScheme,
                                        url::SCHEME_WITHOUT_PORT};
