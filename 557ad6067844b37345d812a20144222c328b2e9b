@@ -22,6 +22,30 @@
       "revId": "557ad6067844b37345d812a20144222c328b2e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1eac48b_a60e6919",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-12T11:12:35Z",
+      "side": 1,
+      "message": "Woah gosh. Done.\n\nSadly I did miss that comment. (I wish gerrit didn\u0027t hide which CLs have comments on them inside a \u003cselect\u003e element :|). That MdTextButton::UpdatePadding() code is all a bit scary.. \n\nI tossed up DISTANCE_CONTROL_HEIGHT and DISTANCE_CONTROL_MINIMUM_HEIGHT . The latter would be a good match for `DISTANCE_DIALOG_BUTTON_MINIMUM_WIDTH`, but it doesn\u0027t really capture all the stuff MdTextButton does, since it\u0027s adding pseudofixed padding.\n\nI also considered manipulating `const int Textfield::kTextPadding \u003d 3;`. E.g. we already have DISTANCE_BUTTON_HORIZONTAL_PADDING . Sadly (for buttons) the vertical padding is dependent on the FontList that may have been overridden on the button, so the currently LayoutProvider interfaces aren\u0027t a clean fit.\n\nAlso we\u0027d be making the assumption that IF code in Chrome set a different FontList on a textfield then it also wants MD-style increased padding (i.e. maybe it doesn\u0027t want that and just wants a bigger font in the smallest textfield that fits).\n\nSo your original suggestion DISTANCE_CONTROL_HEIGHT -- sounds good :). Until we know what other use cases there may be, it\u0027s the Simplest Thing That Works, even if MdTextButton and textfield_layout.cc interpret it slightly differently.\n\nExcept there\u0027s another problem. MdTextButton applies this padding regardless of --secondary-ui-md. i.e. it \"really is\" constant, whereas there\u0027s some uncertainty whether controls elsewhere should be switching to this height before Harmony. For textfields in HTTPAuth, it\u0027s fine. Probably it\u0027s fine for the textfields/Combobox in the bookmarks dialogs. But I\u0027m not sure it extends elsewhere (e.g. all the random places in ChromeOS system UI that have textfields).\n\n\nSo... this could possibly DISTANCE_MD_CONTROL_HEIGHT to make it clear.. But we\u0027d want to rename that eventually when \"md\" is default. I\u0027m sorta out of ideas on how to improve on DISTANCE_CONTROL_HEIGHT, so I\u0027m going for that :)",
+      "parentUuid": "d80f21f0_b6fd2a86",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "557ad6067844b37345d812a20144222c328b2e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
