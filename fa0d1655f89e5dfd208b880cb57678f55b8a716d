@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de4add72_87c19426",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/application-panel/resources-panel-websql.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-12T19:59:01Z",
+      "side": 1,
+      "message": "Great. What about this one?",
+      "revId": "fa0d1655f89e5dfd208b880cb57678f55b8a716d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
