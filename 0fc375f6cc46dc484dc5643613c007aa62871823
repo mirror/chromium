@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "103b1eee_7e21ea0c",
+        "filename": "chromeos/components/tether/fake_host_scan_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:30:38Z",
+      "side": 1,
+      "message": "Nope: https://stackoverflow.com/questions/952888/map-erase-map-end",
+      "parentUuid": "32dce861_7711b95b",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "0fc375f6cc46dc484dc5643613c007aa62871823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c1ea312_f575661b",
         "filename": "chromeos/components/tether/host_scanner.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "02df16e9_be9f5f1c",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:30:38Z",
+      "side": 1,
+      "message": "I agree that it shouldn\u0027t depend on this, but I also think that the HostScanScheduler as a whole needs to be reworked. I\u0027m adding a TODO to fix this since the fix will be out of the scope of this CL.",
+      "parentUuid": "2c1ea312_f575661b",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "0fc375f6cc46dc484dc5643613c007aa62871823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2b2066b_8e408d3f",
         "filename": "chromeos/components/tether/master_host_scan_cache.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-11T22:55:35Z",
       "side": 1,
       "message": "Safe to remove this TODO?",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 7
+      },
+      "revId": "0fc375f6cc46dc484dc5643613c007aa62871823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed33eda_34dd34c7",
+        "filename": "chromeos/components/tether/master_host_scan_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:30:38Z",
+      "side": 1,
+      "message": "No, the persistent cache isn\u0027t part of this CL. I added this TODO as part of this CL.",
+      "parentUuid": "f2b2066b_8e408d3f",
       "range": {
         "startLine": 29,
         "startChar": 3,
