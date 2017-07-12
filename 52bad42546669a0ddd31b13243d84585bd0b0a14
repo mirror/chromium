@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a13b7eca_9fd8e562",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-12T13:57:41Z",
+      "side": 1,
+      "message": "Do we need to check resize behaviour for transient child windows? (since we don\u0027t check it for normal windows)",
+      "revId": "52bad42546669a0ddd31b13243d84585bd0b0a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5080e7e7_9625fe33",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-12T13:57:41Z",
+      "side": 1,
+      "message": "This is fairly difficult to read. Perhaps rearrange a little bit? e.g.\n\n  aura::Window* transient_parent \u003d transient_window_client\n      ? transient_window_client-\u003eGetTransientParent(window)\n      : nullptr;\n  return transient_parent \u003d\u003d container_ ||\n         (can_resize \u0026\u0026 transient_parent-\u003eparent() \u003d\u003d container_);",
+      "revId": "52bad42546669a0ddd31b13243d84585bd0b0a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
