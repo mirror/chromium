@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "eccc392f_095f985d",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentCore.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-12T23:36:23Z",
+      "side": 1,
+      "message": "Let me elaborate: it may not see the light of day. I was working on a CL speculatively while waiting for a review on this one. The git branch for that CL is a child of this CL\u0027s branch. After a git rebase-update with manual conflict resolution, this file got included in the current CL by mistake. \n\nThe purpose of the speculative (and I don\u0027t know if I\u0027ll be submitting it) work is to see what must be done if code in WebViewImpl (for example) moves to core/, but still needs to use the more of the WebDevToolsAgentImpl interface than is exposed by the base class in public/web. These are those methods. Please don\u0027t take it as given that I\u0027m committed to doing things this way.",
+      "parentUuid": "f3bf0659_16396958",
+      "revId": "1782b9d236497fe4f393125626eacf7e2e401ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d31bb10_07ebe7f7",
         "filename": "third_party/WebKit/Source/core/exported/WebViewBase.cpp",
         "patchSetId": 7
