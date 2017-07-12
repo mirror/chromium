@@ -178,7 +178,7 @@ class StackSamplingProfiler::SamplingThread : public Thread {
     CallStackProfiles profiles;
 
    private:
-    static StaticAtomicSequenceNumber next_collection_id_;
+    static AtomicSequenceNumber next_collection_id_;
   };
 
   // Gets the single instance of this class.
@@ -361,8 +361,8 @@ void StackSamplingProfiler::SamplingThread::TestAPI::ShutdownTaskAndSignalEvent(
   event->Signal();
 }
 
-StaticAtomicSequenceNumber StackSamplingProfiler::SamplingThread::
-    CollectionContext::next_collection_id_;
+AtomicSequenceNumber StackSamplingProfiler::SamplingThread::CollectionContext::
+    next_collection_id_;
 
 StackSamplingProfiler::SamplingThread::SamplingThread()
     : Thread("StackSamplingProfiler") {}
