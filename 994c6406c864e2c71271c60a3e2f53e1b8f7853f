@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba573fa3_a66b57bd",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-12T11:23:51Z",
+      "side": 1,
+      "message": "The delegate must be called on the UI thread, yet this is IO thread, right? Since it\u0027s directly called from OnPreresolveFinished().\n\nSince the delegate is a WeakPtr, it should not be touched one the IO thread.",
+      "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fbe1d9_8d8a0ad6",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-12T11:23:51Z",
+      "side": 1,
+      "message": "Out of curiosity, why using that instead of using virtual Preconnect and Preresolve functions in PreconnectManager, and then mocking them?",
+      "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec039fc2_958a7af9",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-12T11:23:51Z",
+      "side": 1,
+      "message": "Can you add a comment to explain why the raw pointer usage is fine here?\n\nIIUC, it\u0027s fine because even though PreresolveJob can outlive PreresolveInfo, it\u0027s only accessed on this context through a task that takes a WeakPtr to PreconnectManager, and PreresolveInfo lifetime is tied to PreconnectManager.\n\nIs it correct?",
+      "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db887974_a648cc4b",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-12T11:23:51Z",
+      "side": 1,
+      "message": "deque is evil, can you use list instead?\n\nOne example of deque badness (although it has been fixed):\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d674287\n\nAlso, about naming, what about\nqueued_jobs_\n?",
+      "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
