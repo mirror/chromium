@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c6ab703_4ac007af",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-12T12:02:41Z",
+      "side": 1,
+      "message": "This can happen in unittests where a mocked ManagePasswordsUIController does not have a form_manager. Also in regular code like the AUTOMATIC_SIGNIN_TOAST disposition case, the MPUIController does not have a form_manager and therefore, cannot determine a credential source.",
+      "parentUuid": "1c7f8c1e_08421352",
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "246a3e2e_c8843230",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c373dc8_9c61b4b3",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-12T12:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "246a3e2e_c8843230",
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b82361f5_f406190d",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-12T12:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c146189f_9730ac7f",
+      "range": {
+        "startLine": 163,
+        "startChar": 13,
+        "endLine": 163,
+        "endChar": 30
+      },
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "698174b9_090982f7",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa76982_b300f15b",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-12T12:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698174b9_090982f7",
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "683175f0_d3df7b92",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-12T12:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2945183_92d83ff0",
+      "range": {
+        "startLine": 613,
+        "startChar": 14,
+        "endLine": 613,
+        "endChar": 17
+      },
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c51d19f_3fada435",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 8
@@ -119,6 +221,30 @@
       "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b465c6_f84d562a",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-12T12:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c51d19f_3fada435",
+      "range": {
+        "startLine": 735,
+        "startChar": 14,
+        "endLine": 735,
+        "endChar": 17
+      },
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
