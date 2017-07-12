@@ -4263,6 +4263,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
   ui::PageTransition transition_type = navigation_state->GetTransitionType();
   if (provisional_data_source && provisional_data_source->IsClientRedirect()) {
+    LOG(INFO) << "*** WillSendRequest() processing CLIENT_REDIRECT.";
     transition_type = ui::PageTransitionFromInt(
         transition_type | ui::PAGE_TRANSITION_CLIENT_REDIRECT);
   }
@@ -4952,6 +4953,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     // If the page contained a client redirect (meta refresh, document.loc...),
     // set the transition appropriately.
     if (ds->IsClientRedirect()) {
+      LOG(INFO) << "*** WillSendRequest() processing CLIENT_REDIRECT.";
       params.transition = ui::PageTransitionFromInt(
           params.transition | ui::PAGE_TRANSITION_CLIENT_REDIRECT);
     }

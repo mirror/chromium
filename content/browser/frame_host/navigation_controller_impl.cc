@@ -832,6 +832,9 @@ bool NavigationControllerImpl::RendererDidNavigate(
     LoadCommittedDetails* details,
     bool is_navigation_within_page,
     NavigationHandleImpl* navigation_handle) {
+  LOG(ERROR) << "RendererDidNavigate() replaces "
+             << params.should_replace_current_entry;
+
   is_initial_navigation_ = false;
 
   // Save the previous state before we clobber it.
@@ -888,6 +891,9 @@ bool NavigationControllerImpl::RendererDidNavigate(
                                    navigation_handle);
       break;
     case NAVIGATION_TYPE_EXISTING_PAGE:
+      LOG(ERROR) << "Overriding details->did_replace_entry "
+                 << details->did_replace_entry << " --> "
+                 << details->is_same_document;
       details->did_replace_entry = details->is_same_document;
       RendererDidNavigateToExistingPage(rfh, params, details->is_same_document,
                                         was_restored, navigation_handle);

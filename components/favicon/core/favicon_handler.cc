@@ -210,6 +210,8 @@ int FaviconHandler::GetIconTypesFromHandlerType(
 }
 
 void FaviconHandler::FetchFavicon(const GURL& url) {
+  LOG(ERROR) << "--- FaviconHandler::FetchFavicon() " << url;
+
   cancelable_task_tracker_for_page_url_.TryCancelAll();
   cancelable_task_tracker_for_candidates_.TryCancelAll();
 
@@ -270,6 +272,8 @@ void FaviconHandler::SetFavicon(const GURL& icon_url,
   if (ShouldSaveFavicon())
     service_->SetFavicons(url_, icon_url, icon_type, image);
 
+  LOG(ERROR) << "MIKEL SetFavicon(): " << url_ << " icon " << icon_url;
+
   NotifyFaviconUpdated(icon_url, icon_type, image);
 }
 
@@ -311,8 +315,13 @@ void FaviconHandler::OnUpdateCandidates(
     const GURL& page_url,
     const std::vector<FaviconURL>& candidates,
     const GURL& manifest_url) {
-  if (page_url != url_)
+  LOG(ERROR) << "--- FaviconHandler::OnUpdateCandidates() " << page_url
+             << " #candidates " << candidates.size();
+
+  if (page_url != url_) {
+    LOG(ERROR) << "*** URL mismatch: " << page_url << " vs " << url_;
     return;
+  }
 
   bool manifests_feature_enabled =
       base::FeatureList::IsEnabled(kFaviconsFromWebManifest);
@@ -575,6 +584,10 @@ void FaviconHandler::OnFaviconDataForInitialURLFromFaviconService(
                       !favicon_bitmap_results.empty();
 
   if (has_valid_result) {
+    LOG(ERROR) << "FaviconHandler::"
+                  "OnFaviconDataForInitialURLFromFaviconService() got results "
+                  "for "
+               << url_;
     // The db knows the favicon (although it may be out of date). Set the
     // favicon now, and if the favicon turns out to be expired (or the wrong
     // url) we'll fetch later on. This way the user doesn't see a flash of the

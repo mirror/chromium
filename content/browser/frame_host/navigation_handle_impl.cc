@@ -786,6 +786,9 @@ void NavigationHandleImpl::DidCommitNavigation(
   DCHECK_EQ(frame_tree_node_, render_frame_host->frame_tree_node());
   CHECK_EQ(url_, params.url);
 
+  LOG(ERROR) << "NavigationHandleImpl::DidCommitNavigation() " << url_
+             << " replace? " << did_replace_entry;
+
   did_replace_entry_ = did_replace_entry;
   method_ = params.method;
   has_user_gesture_ = (params.gesture == NavigationGestureUser);

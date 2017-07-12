@@ -1437,6 +1437,10 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                validated_params.url.possibly_invalid_spec());
 
+  LOG(ERROR) << "RenderFrameHostImpl::OnDidCommitProvisionalLoad() "
+             << validated_params.url << " replaces? "
+             << validated_params.should_replace_current_entry;
+
   // Sanity-check the page transition for frame type.
   DCHECK_EQ(ui::PageTransitionIsMainFrame(validated_params.transition),
             !GetParent());

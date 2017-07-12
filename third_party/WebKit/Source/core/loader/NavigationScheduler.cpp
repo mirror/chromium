@@ -62,6 +62,10 @@ namespace blink {
 
 namespace {
 
+std::ostream& operator<<(std::ostream& os, const KURL& url) {
+  return os << url.GetString();
+}
+
 // Add new scheduled navigation types before ScheduledLastEntry
 enum ScheduledNavigationType {
   kScheduledReload,
@@ -174,6 +178,7 @@ class ScheduledURLNavigation : public ScheduledNavigation {
   }
 
   void Fire(LocalFrame* frame) override {
+    LOG(ERROR) << "ScheduledURLNavigation::Fire()";
     std::unique_ptr<UserGestureIndicator> gesture_indicator =
         CreateUserGestureIndicator();
     FrameLoadRequest request(OriginDocument(), ResourceRequest(url_), "_self",
@@ -211,6 +216,8 @@ class ScheduledRedirect final : public ScheduledURLNavigation {
   }
 
   void Fire(LocalFrame* frame) override {
+    LOG(ERROR) << "ScheduledRedirect::Fire() replaces? "
+               << ReplacesCurrentItem();
     std::unique_ptr<UserGestureIndicator> gesture_indicator =
         CreateUserGestureIndicator();
     FrameLoadRequest request(OriginDocument(), ResourceRequest(Url()), "_self");
@@ -223,6 +230,7 @@ class ScheduledRedirect final : public ScheduledURLNavigation {
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
     MaybeLogScheduledNavigationClobber(
         ScheduledNavigationType::kScheduledRedirect, frame);
+    LOG(ERROR) << "--> " << request.GetResourceRequest().Url();
     frame->Loader().Load(request);
   }
 
@@ -265,6 +273,7 @@ class ScheduledReload final : public ScheduledNavigation {
   static ScheduledReload* Create() { return new ScheduledReload; }
 
   void Fire(LocalFrame* frame) override {
+    LOG(ERROR) << "ScheduledReload::Fire()";
     std::unique_ptr<UserGestureIndicator> gesture_indicator =
         CreateUserGestureIndicator();
     ResourceRequest resource_request = frame->Loader().ResourceRequestForReload(
@@ -289,6 +298,7 @@ class ScheduledPageBlock final : public ScheduledNavigation {
   }
 
   void Fire(LocalFrame* frame) override {
+    LOG(ERROR) << "ScheduledPageBlock::Fire()";
     frame->Client()->LoadErrorPage(reason_);
   }
 
@@ -310,6 +320,7 @@ class ScheduledFormSubmission final : public ScheduledNavigation {
   }
 
   void Fire(LocalFrame* frame) override {
+    LOG(ERROR) << "ScheduledFormSubmission::Fire()";
     std::unique_ptr<UserGestureIndicator> gesture_indicator =
         CreateUserGestureIndicator();
     FrameLoadRequest frame_request =
@@ -385,6 +396,7 @@ inline bool NavigationScheduler::ShouldScheduleReload() const {
 
 inline bool NavigationScheduler::ShouldScheduleNavigation(
     const KURL& url) const {
+  LOG(ERROR) << "MIKEL ShouldScheduleNavigation() to " << url;
   return frame_->GetPage() && frame_->IsNavigationAllowed() &&
          (url.ProtocolIsJavaScript() ||
           NavigationDisablerForBeforeUnload::IsNavigationAllowed());
@@ -397,6 +409,8 @@ void NavigationScheduler::ScheduleRedirect(double delay, const KURL& url) {
     return;
   if (url.IsEmpty())
     return;
+
+  LOG(ERROR) << "MIKEL ScheduleRedirect() to " << url;
 
   // We want a new back/forward list item if the refresh timeout is > 1 second.
   if (!redirect_ || delay <= redirect_->Delay()) {
@@ -486,6 +500,7 @@ void NavigationScheduler::NavigateTask() {
   }
 
   ScheduledNavigation* redirect(redirect_.Release());
+  LOG(ERROR) << "Firing redirect.";
   redirect->Fire(frame_);
   probe::frameClearedScheduledNavigation(frame_);
 }

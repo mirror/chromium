@@ -76,6 +76,11 @@ HistoryTabHelper::CreateHistoryAddPageArgs(
   const bool consider_for_ntp_most_visited =
       navigation_handle->GetReferrer().url != kChromeContentSuggestionsReferrer;
 
+  LOG(ERROR) << "MIKEL CreateHistoryAddPageArgs() "
+             << navigation_handle->GetURL()
+             << " DidReplaceEntry()==" << navigation_handle->DidReplaceEntry()
+             << " previous==" << navigation_handle->GetPreviousURL();
+
   history::HistoryAddPageArgs add_page_args(
       navigation_handle->GetURL(), timestamp,
       history::ContextIDForWebContents(web_contents()),

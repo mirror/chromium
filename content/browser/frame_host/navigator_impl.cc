@@ -545,6 +545,9 @@ void NavigatorImpl::DidNavigate(
     RenderFrameHostImpl* render_frame_host,
     const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
     std::unique_ptr<NavigationHandleImpl> navigation_handle) {
+  LOG(ERROR) << "NavigatorImpl::DidNavigate() to " << params.url
+             << " replaces? " << params.should_replace_current_entry;
+
   FrameTreeNode* frame_tree_node = render_frame_host->frame_tree_node();
   FrameTree* frame_tree = frame_tree_node->frame_tree();
 
@@ -636,6 +639,7 @@ void NavigatorImpl::DidNavigate(
   bool did_navigate = controller_->RendererDidNavigate(
       render_frame_host, params, &details, is_navigation_within_page,
       navigation_handle.get());
+  LOG(INFO) << "details.did_replace_entry == " << details.did_replace_entry;
 
   // If the history length and/or offset changed, update other renderers in the
   // FrameTree.

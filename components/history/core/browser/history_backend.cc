@@ -448,6 +448,16 @@ int HistoryBackend::HostRankIfAvailable(const GURL& url) const {
   return it != host_ranks_.end() ? it->second : kMaxTopHosts;
 }
 
+namespace {
+
+std::ostream& operator<<(std::ostream& os, const std::vector<GURL>& urls) {
+  for (const GURL& url : urls)
+    os << url << " ";
+  return os;
+}
+
+}  // namespace
+
 void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
   if (!db_)
     return;
@@ -471,6 +481,14 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
   ui::PageTransition request_transition = request.transition;
   bool is_keyword_generated = ui::PageTransitionCoreTypeIs(
       request_transition, ui::PAGE_TRANSITION_KEYWORD_GENERATED);
+
+  RedirectList redirects = request.redirects;
+  LOG(ERROR) << "MIKEL AddPage() " << request.url
+             << " and client-redirect-flag== "
+             << ((request_transition & ui::PAGE_TRANSITION_CLIENT_REDIRECT) !=
+                 0)
+             << " and redirects #" << redirects.size() << " include "
+             << redirects;
 
   // If the user is navigating to a not-previously-typed intranet hostname,
   // change the transition to TYPED so that the omnibox will learn that this is
@@ -540,6 +558,9 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
       // chain.
       if (request.referrer.is_valid()) {
         DCHECK_EQ(request.referrer, redirects[0]);
+        // Remove? Seems to drop the original gmail.com. Or perhaps we put them
+        // in the wrong order?
+        CHECK(false) << " would drop " << *redirects.begin();
         redirects.erase(redirects.begin());
 
         // If the navigation entry for this visit has replaced that for the
@@ -588,8 +609,9 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
     }
 
     // Last, save this redirect chain for later so we can set titles & favicons
-    // on the redirected pages properly.
-    recent_redirects_.Put(request.url, redirects);
+    // on the redirected pages properly. For this we use the full original
+    // redirect chain.
+    recent_redirects_.Put(request.url, request.redirects);
   }
 
   // TODO(brettw) bug 1140015: Add an "add page" notification so the history
@@ -2133,6 +2155,8 @@ bool HistoryBackend::SetFaviconMappingsForPage(
     const std::vector<favicon_base::FaviconID>& icon_ids) {
   DCHECK_LE(icon_ids.size(), kMaxFaviconsPerPage);
   bool mappings_changed = false;
+  LOG(ERROR) << "HistoryBackend::SetFaviconMappingsForPage() for " << page_url
+             << " icon_type " << icon_type;
 
   // Two icon types are considered 'equivalent' if both types are one of
   // TOUCH_ICON, TOUCH_PRECOMPOSED_ICON or WEB_MANIFEST_ICON.

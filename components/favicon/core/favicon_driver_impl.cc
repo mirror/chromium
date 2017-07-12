@@ -57,8 +57,8 @@ FaviconDriverImpl::FaviconDriverImpl(FaviconService* favicon_service,
     return;
 
   if (kEnableTouchIcon) {
-    handlers_.push_back(base::MakeUnique<FaviconHandler>(
-        favicon_service_, this, FaviconDriverObserver::NON_TOUCH_LARGEST));
+    // handlers_.push_back(base::MakeUnique<FaviconHandler>(
+    //    favicon_service_, this, FaviconDriverObserver::NON_TOUCH_LARGEST));
     handlers_.push_back(base::MakeUnique<FaviconHandler>(
         favicon_service_, this, FaviconDriverObserver::TOUCH_LARGEST));
   } else {
