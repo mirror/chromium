@@ -66,6 +66,8 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
         startThreadIfNeeded();
         mNumOverlays++;
 
+        AndroidOverlayModeManager.getInstance().notifyOverlayModeChanged(true);
+
         DialogOverlayImpl impl = new DialogOverlayImpl(
                 client, config, mHandler, mNotifyReleasedRunnable, false /* asPanel*/);
         DialogOverlayImpl.MANAGER.bind(impl, request);
@@ -89,6 +91,9 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
         ThreadUtils.assertOnUiThread();
         assert mNumOverlays > 0;
         mNumOverlays--;
+
+        // Since MAX_OVERLAYS == 1, |nNumOberlays| will always be 0 at this point.
+        AndroidOverlayModeManager.getInstance().notifyOverlayModeChanged(false);
 
         // We don't stop the looper thread here, else android can get mad when it tries to send
         // a message from the dialog on this thread.  AndroidOverlay might have to notify us
