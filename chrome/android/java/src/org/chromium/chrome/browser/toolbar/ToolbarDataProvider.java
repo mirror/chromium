@@ -18,6 +18,11 @@ public interface ToolbarDataProvider {
     Tab getTab();
 
     /**
+     * @return Whether toolbar data provider has currently a tab related to it.
+     */
+    boolean hasTab();
+
+    /**
      * @return The current url for the current tab.
      */
     String getCurrentUrl();
