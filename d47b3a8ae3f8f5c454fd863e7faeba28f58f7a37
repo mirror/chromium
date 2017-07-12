@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "525e0ffc_598978a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-12T08:21:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a274d148_9d65dc78",
+      "range": {
+        "startLine": 179,
+        "startChar": 23,
+        "endLine": 179,
+        "endChar": 33
+      },
+      "revId": "d47b3a8ae3f8f5c454fd863e7faeba28f58f7a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "738d7b26_49ed4ace",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "06cba7f5_2b22cdb4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-12T08:21:36Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "738d7b26_49ed4ace",
+      "range": {
+        "startLine": 51,
+        "startChar": 70,
+        "endLine": 51,
+        "endChar": 93
+      },
+      "revId": "d47b3a8ae3f8f5c454fd863e7faeba28f58f7a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c93c78a4_91699fe2",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-11T21:30:27Z",
       "side": 1,
       "message": "Should this be runOnUiThreadBlocking?",
+      "range": {
+        "startLine": 72,
+        "startChar": 20,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "d47b3a8ae3f8f5c454fd863e7faeba28f58f7a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62e2402_b8895101",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-12T08:21:36Z",
+      "side": 1,
+      "message": "I guess it doesn\u0027t matter as the next line will wait until the callback helper is notified and that will happen once the thumbnail is retrieved which is asynchronous anyway.",
+      "parentUuid": "c93c78a4_91699fe2",
       "range": {
         "startLine": 72,
         "startChar": 20,
