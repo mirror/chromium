@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f0d5c93_a2c11eb9",
+        "filename": "third_party/WebKit/Source/core/dom/RangeTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-12T17:45:19Z",
+      "side": 1,
+      "message": "nit: \"ex\" is the \"height\" of \"x\" glyph, not \"width\", so the test may not do what\u0027s intended depends on fonts.\n\nBetter to use Ahem and \"2em\", or \"0\" and \"2ch\".",
+      "revId": "00447e5872a1ff018cd3974bf4a61dcfd68f0fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f14fbce_f03e7c6e",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineTextBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-12T17:45:19Z",
+      "side": 1,
+      "message": "This variable name isn\u0027t easy to understand what it really does. How about \"include_newline_space_width\"?",
+      "revId": "00447e5872a1ff018cd3974bf4a61dcfd68f0fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5534a41f_b519069d",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineTextBox.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-12T17:45:19Z",
+      "side": 1,
+      "message": "Can you add the variable name here?",
+      "revId": "00447e5872a1ff018cd3974bf4a61dcfd68f0fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
