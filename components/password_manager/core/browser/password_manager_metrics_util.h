@@ -215,6 +215,17 @@ enum ReauthToAccessPasswordInSettingsEvent {
   REAUTH_COUNT
 };
 
+// Specifies the type of PasswordFormManagers and derived classes to distinguish
+// the context in which a PasswordFormManager is being created and used.
+enum class CredentialSourceType {
+  kUnknown,
+  // This is used for form based credential management (PasswordFormManager).
+  kPasswordManager,
+  // This is used for credential management API based credential management
+  // (CredentialManagerPasswordFormManager).
+  kCredentialManagementAPI
+};
+
 // A version of the UMA_HISTOGRAM_BOOLEAN macro that allows the |name|
 // to vary over the program's runtime.
 void LogUMAHistogramBoolean(const std::string& name, bool sample);
