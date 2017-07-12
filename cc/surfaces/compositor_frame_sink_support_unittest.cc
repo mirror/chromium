@@ -11,7 +11,6 @@
 #include "cc/resources/resource_provider.h"
 #include "cc/surfaces/compositor_frame_sink_support_client.h"
 #include "cc/surfaces/frame_sink_manager.h"
-#include "cc/surfaces/surface_info.h"
 #include "cc/test/begin_frame_args_test.h"
 #include "cc/test/compositor_frame_helpers.h"
 #include "cc/test/fake_external_begin_frame_source.h"
@@ -19,6 +18,7 @@
 #include "cc/test/mock_compositor_frame_sink_support_client.h"
 #include "components/viz/common/frame_sink_id.h"
 #include "components/viz/common/surface_id.h"
+#include "components/viz/common/surfaces/surface_info.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -768,7 +768,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
   EXPECT_TRUE(called3);
 }
 
-// Check whether the SurfaceInfo object is created and populated correctly
+// Check whether the viz::SurfaceInfo object is created and populated correctly
 // after the frame submission.
 TEST_F(CompositorFrameSinkSupportTest, SurfaceInfo) {
   CompositorFrame frame = MakeCompositorFrame();
