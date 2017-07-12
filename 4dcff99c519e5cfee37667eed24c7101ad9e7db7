@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c2308f40_d579e750",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T17:37:12Z",
+      "side": 1,
+      "message": "If you follow the code path of ProcessSessionWindows you can see there are places where it ends up not calling to TabLoader.\n\n\u003e When browser-side navigation is enabled, the tab loading starts even\n\u003e before the tab loader is created, so we move the session restore start\n\u003e signal here.\n\nWhen specifically do you want to be notified? I think there are two potential points you care about:\n\n1. When session restore queries the backend for what to restore. This is what you have in this patch. Remember that the query is async, so that in actuality nothing is being restored at this point. And additionally the query may return with data that doesn\u0027t result in restoring anything (as I pointed out here).\n\n2. When session restore has gotten a response from the backend and creates it\u0027s first tab. The right place for that is likely the first time RestoreTab() is called with non-empty navigations.",
+      "parentUuid": "1014c294_364578a5",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "430a5b27_3c1a4249",
         "filename": "chrome/browser/sessions/session_restore.cc",
         "patchSetId": 5
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I declared like this because SessionRestoreImpl class is in an anonymous namespace in file chrome/browser/sessions/session_restore.cc.\n\nShould I move SessionRestoreImpl class in session_restore.cc out of the anonymous namespace?",
       "parentUuid": "88708223_6d3c3fec",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 10
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb15ee2_a1400a8d",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T17:37:12Z",
+      "side": 1,
+      "message": "Yes, move it out of the anonymous namespace.",
+      "parentUuid": "f4e9ac94_fb5dac3e",
       "range": {
         "startLine": 26,
         "startChar": 1,
