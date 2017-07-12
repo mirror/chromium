@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47bb45c0_b5e9963a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-07-12T23:43:21Z",
+      "side": 1,
+      "message": "nit: clarify in the first line that this is for Cast.",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "2307a4ed8c4c0b09ef62ced4291f8c110775a33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a451de_780a487a",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-07-12T23:43:21Z",
+      "side": 1,
+      "message": "typo: PLAYAREADY!",
+      "range": {
+        "startLine": 34,
+        "startChar": 74,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "2307a4ed8c4c0b09ef62ced4291f8c110775a33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
