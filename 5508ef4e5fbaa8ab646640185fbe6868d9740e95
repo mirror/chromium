@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b431ad0d_46d041c0",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-12T21:32:54Z",
+      "side": 1,
+      "message": "So, this is going to get weird, as this macro defines some static stuff at this location, meaning that this histogram will be tracked separately from the GPU one, even though they both have the same name.\n\nI think that for this to work as expected, it needs to be factored into its own function, or we need to split these by GPU/Sw.",
+      "range": {
+        "startLine": 435,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 29
+      },
+      "revId": "5508ef4e5fbaa8ab646640185fbe6868d9740e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
