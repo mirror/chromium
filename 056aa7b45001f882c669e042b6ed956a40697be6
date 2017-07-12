@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c56a6022_98c57b85",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T07:45:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a295c7f4_b2ebf433",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1080e75_0a5d1d40",
         "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911529f5_d5f9eba7",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T07:45:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1080e75_0a5d1d40",
+      "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "fa5167a9_9fff44fa",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T07:45:32Z",
+      "side": 1,
+      "message": "I think this is now resolved by filtering items using css selectors.",
+      "parentUuid": "fe49c3aa_4759cd7f",
+      "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f0b9592_f32a8ef2",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_manager_ui.js",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e5e7a1_7092d2c7",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_manager_ui.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T07:45:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0b9592_f32a8ef2",
+      "revId": "056aa7b45001f882c669e042b6ed956a40697be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
