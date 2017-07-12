@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "dfe7780b_c20d6170",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T04:40:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "67609dba_c4ddd8df",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4378caa_cef83c7b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
         "patchSetId": 2
@@ -236,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "12749ad0_51282254",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T04:40:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bf6a0e52_b317b180",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7493fa36_827f0c72",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
         "patchSetId": 2
@@ -268,6 +304,24 @@
       "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3039ae_6c845a16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T04:40:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88b02f66_ee56cdd5",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "835728fb_150cd767",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T04:40:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ac23e588_1a9f0471",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea811350_c5feef5e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
         "patchSetId": 2
@@ -373,6 +445,24 @@
       "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae9c608_0219641b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T04:40:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54c6ff2b_c9dbded2",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
