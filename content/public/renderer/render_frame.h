@@ -165,7 +165,7 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   virtual service_manager::BinderRegistry* GetInterfaceRegistry() = 0;
 
   // Returns the InterfaceProvider that this process can use to bind
-  // interfaces exposed to it by the application running in this frame.
+  // interfaces exposed to the document currently hosted in this frame.
   virtual service_manager::InterfaceProvider* GetRemoteInterfaces() = 0;
 
   // Returns the AssociatedInterfaceRegistry this frame can use to expose

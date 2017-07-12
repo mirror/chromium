@@ -48,6 +48,7 @@
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/frame_blame_context.h"
 #include "content/renderer/media/media_factory.h"
+#include "content/renderer/mojo/blink_interface_provider_impl.h"
 #include "content/renderer/renderer_webcookiejar_impl.h"
 #include "ipc/ipc_message.h"
 #include "ipc/ipc_platform_file.h"
@@ -684,11 +685,10 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Binds to the FrameHost in the browser.
   void BindFrame(const service_manager::BindSourceInfo& browser_info,
-                 mojom::FrameRequest request,
-                 mojom::FrameHostInterfaceBrokerPtr frame_host);
+                 mojom::FrameRequest request);
 
   // Virtual so the test render frame can flush the interface.
-  virtual mojom::FrameHostAssociatedPtr GetFrameHost();
+  virtual mojom::FrameHost* GetFrameHost();
 
   void BindFrameBindingsControl(
       mojom::FrameBindingsControlAssociatedRequest request);
@@ -827,8 +827,11 @@ class CONTENT_EXPORT RenderFrameImpl
   const RenderFrameImpl* GetLocalRoot() const;
 
   // Builds and sends DidCommitProvisionalLoad to the host.
-  void SendDidCommitProvisionalLoad(blink::WebLocalFrame* frame,
-                                    blink::WebHistoryCommitType commit_type);
+  void SendDidCommitProvisionalLoad(
+      blink::WebLocalFrame* frame,
+      blink::WebHistoryCommitType commit_type,
+      service_manager::mojom::InterfaceProviderRequest
+          remote_interfaces_request);
 
   // Swaps the current frame into the frame tree, replacing the
   // RenderFrameProxy it is associated with.  Return value indicates whether
@@ -1118,6 +1121,15 @@ class CONTENT_EXPORT RenderFrameImpl
 
   void SendUpdateFaviconURL(blink::WebIconURL::Type icon_types_mask);
 
+  // Binds a new InterfaceProvider pipe for this frame to send brokered
+  // interface requests to the browser. The InterfaceProvider pipe is re-bound
+  // any time the frame commits a navigation to a new document.
+  //
+  // Any other InterfacePtrs cached by the RenderFrameImpl may be reacquired
+  // here as well.
+  void BindRemoteInterfaceProvider(
+      service_manager::mojom::InterfaceProviderPtr provider);
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
@@ -1276,8 +1288,6 @@ class CONTENT_EXPORT RenderFrameImpl
   std::unique_ptr<service_manager::BinderRegistry> interface_registry_;
   std::unique_ptr<service_manager::InterfaceProvider> remote_interfaces_;
   std::unique_ptr<BlinkInterfaceRegistryImpl> blink_interface_registry_;
-  service_manager::mojom::InterfaceProviderRequest
-      pending_remote_interface_provider_request_;
 
   service_manager::BindSourceInfo local_info_;
   service_manager::BindSourceInfo remote_info_;
@@ -1360,7 +1370,6 @@ class CONTENT_EXPORT RenderFrameImpl
   mojo::AssociatedBinding<mojom::HostZoom> host_zoom_binding_;
   mojo::AssociatedBinding<mojom::FrameBindingsControl>
       frame_bindings_control_binding_;
-  mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker_;
 
   // Indicates whether |didAccessInitialDocument| was called.
   bool has_accessed_initial_document_;
@@ -1371,6 +1380,7 @@ class CONTENT_EXPORT RenderFrameImpl
   AssociatedInterfaceRegistryImpl associated_interfaces_;
   std::unique_ptr<AssociatedInterfaceProviderImpl>
       remote_associated_interfaces_;
+  mojom::FrameHostAssociatedPtr frame_host_;
 
   // TODO(dcheng): Remove these members.
   bool committed_first_load_ = false;

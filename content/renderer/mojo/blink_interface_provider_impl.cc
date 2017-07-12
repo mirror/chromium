@@ -10,6 +10,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/public/common/service_names.mojom.h"
+#include "content/public/renderer/render_frame.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
@@ -18,6 +19,13 @@ namespace content {
 BlinkInterfaceProviderImpl::BlinkInterfaceProviderImpl(
     base::WeakPtr<service_manager::Connector> connector)
     : connector_(connector),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      weak_ptr_factory_(this) {
+  weak_ptr_ = weak_ptr_factory_.GetWeakPtr();
+}
+
+BlinkInterfaceProviderImpl::BlinkInterfaceProviderImpl(RenderFrame* frame)
+    : frame_(frame),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_ptr_factory_(this) {
   weak_ptr_ = weak_ptr_factory_.GetWeakPtr();
@@ -35,16 +43,25 @@ void BlinkInterfaceProviderImpl::GetInterfaceInternal(
     const std::string& name,
     mojo::ScopedMessagePipeHandle handle) {
   if (!main_thread_task_runner_->BelongsToCurrentThread()) {
+    // TODO(rockot): We should consider introducing a Clone() API for
+    // InterfaceProvider so that we can maintain a TLS cache of
+    // InterfaceProviders to the same browser-side binding. This would avoid
+    // extra thread-hopping.
     main_thread_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&BlinkInterfaceProviderImpl::GetInterfaceInternal,
-                              weak_ptr_, name, base::Passed(&handle)));
+        FROM_HERE,
+        base::BindOnce(&BlinkInterfaceProviderImpl::GetInterfaceInternal,
+                       weak_ptr_, name, std::move(handle)));
     return;
   }
 
-  connector_->BindInterface(
-      service_manager::Identity(mojom::kBrowserServiceName,
-                                service_manager::mojom::kInheritUserID),
-      name, std::move(handle));
+  if (connector_) {
+    connector_->BindInterface(
+        service_manager::Identity(mojom::kBrowserServiceName,
+                                  service_manager::mojom::kInheritUserID),
+        name, std::move(handle));
+  } else {
+    frame_->GetRemoteInterfaces()->GetInterface(name, std::move(handle));
+  }
 }
 
 }  // namespace content
