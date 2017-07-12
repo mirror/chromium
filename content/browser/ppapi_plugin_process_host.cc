@@ -69,10 +69,6 @@ class PpapiPluginSandboxedProcessLauncherDelegate
   ~PpapiPluginSandboxedProcessLauncherDelegate() override {}
 
 #if defined(OS_WIN)
-  bool ShouldSandbox() override {
-    return !is_broker_;
-  }
-
   bool PreSpawnTarget(sandbox::TargetPolicy* policy) override {
     if (is_broker_)
       return true;
@@ -119,7 +115,7 @@ class PpapiPluginSandboxedProcessLauncherDelegate
 #endif  // OS_WIN
 
   SandboxType GetSandboxType() override {
-    return SANDBOX_TYPE_PPAPI;
+    return is_broker_ ? SANDBOX_TYPE_NO_SANDBOX : SANDBOX_TYPE_PPAPI;
   }
 
  private:
