@@ -432,6 +432,14 @@ void DisplayScheduler::ScheduleBeginFrameDeadline() {
     return;
   }
 
+  if (begin_frame_deadline_task_time_ ==
+      current_begin_frame_args_.frame_time +
+          current_begin_frame_args_.interval) {
+    TRACE_EVENT1("cc", "Using implicit deadline", "desired_deadline",
+                 desired_deadline);
+    return;
+  }
+
   begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
   base::TimeDelta delta =
       std::max(base::TimeDelta(), desired_deadline - base::TimeTicks::Now());
