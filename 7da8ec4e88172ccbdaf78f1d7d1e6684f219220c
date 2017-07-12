@@ -22,6 +22,30 @@
       "revId": "7da8ec4e88172ccbdaf78f1d7d1e6684f219220c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a56826b_736d1583",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-12T11:40:17Z",
+      "side": 1,
+      "message": "This logic looked weird because the omnibox was broken. The specific case was as follows iirc:\n- open a new tab\n- start typing\n- I believe the omnibox wasn\u0027t recognized as having focus and so no text like events were being processed\n\nPlease try the above.\n\nThe states we\u0027re tracking are as follows. We have ChromeVox range (you can think of it as ChromeVox focus), system focus (covered by the node\u0027s focused state), and whether we allow for them to differ to decide if a text-like event gets processed.\n\n\nIf they are the same, we clearly want to process the text like event.\n\nIf they differ though, we still sometimes want to process the event. For example, if ChromeVox range is over a on-screen keyboard key.\n\nWe also do want to process text events if the text field is not focused but ChromeVox range is on the text field. An example is an ARC++ text field.\n\nThe reason why we check top root\u0027s focus is just to ensure the root web area has focus so that background pages don\u0027t trigger text events.",
+      "parentUuid": "b029703e_5ea65d42",
+      "range": {
+        "startLine": 396,
+        "startChar": 14,
+        "endLine": 396,
+        "endChar": 44
+      },
+      "revId": "7da8ec4e88172ccbdaf78f1d7d1e6684f219220c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
