@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a732c51_7c20898a",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-12T13:04:45Z",
+      "side": 1,
+      "message": "Is there some way to lower the similarity threshold for copies, like there was in Rietveld? It would be nice to see the diff to the old card.",
+      "revId": "230cbab8cb8caab7d11d43a40aa068f888cdcf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89db947b_57c7c1d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-12T13:04:45Z",
+      "side": 1,
+      "message": "Nit: Extract this to a local variable?",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 80
+      },
+      "revId": "230cbab8cb8caab7d11d43a40aa068f888cdcf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24951320_97c04ed8",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-12T13:04:45Z",
+      "side": 1,
+      "message": "+Theresa, Matt FYI\n\nMaybe we should just call this ChromeHomeModernLayout and base the other visual changes on that flag too -- or we keep it for now and rename it once the other changes get implemented.",
+      "range": {
+        "startLine": 240,
+        "startChar": 5,
+        "endLine": 240,
+        "endChar": 32
+      },
+      "revId": "230cbab8cb8caab7d11d43a40aa068f888cdcf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
