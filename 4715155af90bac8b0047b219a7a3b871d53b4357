@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08355a95_265e6d91",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T00:06:00Z",
+      "side": 1,
+      "message": "Can we return a promise? CompactDatabase will be a long async operation, and it would be great to show when compaction is done in the UI (as well as disable issuing multiple compaction jobs at once).\n\nThe mojo call should return the status when it\u0027s done. Same for abortTransactions.",
+      "range": {
+        "startLine": 2005,
+        "startChar": 0,
+        "endLine": 2005,
+        "endChar": 28
+      },
+      "revId": "4715155af90bac8b0047b219a7a3b871d53b4357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
