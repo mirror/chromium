@@ -109,16 +109,19 @@ void WMHelper::NotifyCursorDisplayChanged(const display::Display& display) {
 }
 
 void WMHelper::NotifyMaximizeModeStarted() {
+  return;
   for (MaximizeModeObserver& observer : maximize_mode_observers_)
     observer.OnMaximizeModeStarted();
 }
 
 void WMHelper::NotifyMaximizeModeEnding() {
+  return;
   for (MaximizeModeObserver& observer : maximize_mode_observers_)
     observer.OnMaximizeModeEnding();
 }
 
 void WMHelper::NotifyMaximizeModeEnded() {
+  return;
   for (MaximizeModeObserver& observer : maximize_mode_observers_)
     observer.OnMaximizeModeEnded();
 }

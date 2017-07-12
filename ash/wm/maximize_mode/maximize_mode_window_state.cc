@@ -9,6 +9,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/screen_util.h"
 #include "ash/shell.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/maximize_mode/maximize_mode_window_manager.h"
 #include "ash/wm/screen_pinning_controller.h"
 #include "ash/wm/splitview/split_view_controller.h"
@@ -169,12 +170,16 @@ void MaximizeModeWindowState::SetDeferBoundsUpdates(bool defer_bounds_updates) {
 void MaximizeModeWindowState::OnWMEvent(wm::WindowState* window_state,
                                         const wm::WMEvent* event) {
   // Ignore events that are sent during the exit transition.
-  if (ignore_wm_events_) {
+  if (ignore_wm_events_ && event->type() != wm::WM_EVENT_MAXIMIZE) {
     return;
   }
 
   switch (event->type()) {
     case wm::WM_EVENT_TOGGLE_FULLSCREEN:
+      // Do not allow toggling fullscreen if the flag to hide titlebars (which
+      // means we will enter fullscreen automatically in maximized mode) is set.
+      if (true)
+        return;
       ToggleFullScreen(window_state, window_state->delegate());
       break;
     case wm::WM_EVENT_FULLSCREEN:
@@ -294,13 +299,22 @@ void MaximizeModeWindowState::AttachState(
   }
 
   window_state->set_can_be_dragged(false);
+  originally_fullscreen_ = window_state->IsFullscreen();
+  if (!originally_fullscreen_ && true) {
+    window_state->set_in_immersive_fullscreen(true);
+    ToggleFullScreen(window_state, window_state->delegate());
+  }
 }
 
 void MaximizeModeWindowState::DetachState(wm::WindowState* window_state) {
+  if (!originally_fullscreen_ && window_state->IsFullscreen())
+    ToggleFullScreen(window_state, window_state->delegate());
+
   // From now on, we can use the default session restore mechanism again.
   SetWindowRestoreOverrides(window_state->window(), gfx::Rect(),
                             ui::SHOW_STATE_NORMAL);
   window_state->set_can_be_dragged(true);
+  window_state->set_in_immersive_fullscreen(false);
 }
 
 void MaximizeModeWindowState::UpdateWindow(wm::WindowState* window_state,
@@ -386,6 +400,7 @@ void MaximizeModeWindowState::UpdateBounds(wm::WindowState* window_state,
   if (defer_bounds_updates_)
     return;
   gfx::Rect bounds_in_parent = GetBoundsInMaximizedMode(window_state);
+  LOG(ERROR) << bounds_in_parent.ToString();
   // If we have a target bounds rectangle, we center it and set it
   // accordingly.
   if (!bounds_in_parent.IsEmpty() &&
