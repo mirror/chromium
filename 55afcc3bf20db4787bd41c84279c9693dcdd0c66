@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7078e515_5982bb1b",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-12T22:14:46Z",
+      "side": 1,
+      "message": "The DialRegistry tracks both a listener count and an observer list.  It think it would be simpler to just have it track observers (one each for a DialAPI/dial_sink_service instance).  I think the reason for this is that the extension expects to get an event when a new event handler is added to chrome.dial.onDeviceList (crbug.com/576817).\n\nI am not sure it\u0027s worth trying to fix this since hopefully the DIAL API will be turned down shortly but a TODO could be in order.",
+      "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d6211e_b9ccc7d0",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-12T22:14:46Z",
+      "side": 1,
+      "message": "I think this will still have the same problem, because this may not get executed before another callback from the DialRegistry via OnDialDeviceEvent.\n\nI think you\u0027ll want to update OnDialDeviceEvent/OnDialError to not post tasks if the DialAPI is being shut down.",
+      "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
