@@ -424,7 +424,10 @@ E.g.,
 
     arguments.insert(0, 'src/tools/perf/run_benchmark')
     if bot_platform == 'android':
-      arguments.insert(1, '--browser=android-chromium')
+      if any('webview' in bot for bot in self._builder_names[bot_platform]):
+        arguments.insert(1, '--browser=android-webview')
+      else:
+        arguments.insert(1, '--browser=android-chromium')
     elif any('x64' in bot for bot in self._builder_names[bot_platform]):
       arguments.insert(1, '--browser=release_x64')
       target_arch = 'x64'
