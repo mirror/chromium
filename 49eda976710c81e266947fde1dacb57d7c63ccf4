@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b0814a5_78fe4f49",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5622,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T01:31:36Z",
+      "side": 1,
+      "message": "nit: Please add the attribute base\u003d\"true\" to the \u003chistogram\u003e element to reflect that this is not a complete histogram name.",
+      "range": {
+        "startLine": 5622,
+        "startChar": 0,
+        "endLine": 5622,
+        "endChar": 84
+      },
+      "revId": "49eda976710c81e266947fde1dacb57d7c63ccf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64220982_22773354",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5627,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T01:31:36Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure what \"2-quiet\" means.  It would be nice to either explain, or provide a link to some explanation if it\u0027s hard to explain briefly.",
+      "range": {
+        "startLine": 5627,
+        "startChar": 16,
+        "endLine": 5627,
+        "endChar": 23
+      },
+      "revId": "49eda976710c81e266947fde1dacb57d7c63ccf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
