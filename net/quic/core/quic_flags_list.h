@@ -195,3 +195,7 @@ QUIC_FLAG(bool,
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2,
           false)
+
+// When the flag is disabled, quic ack frames use an interval set to monitor
+// packet numbers. When enabled, they use a more efficient deque.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque, false)
