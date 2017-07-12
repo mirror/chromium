@@ -10,7 +10,11 @@
 #include "base/strings/string_number_conversions.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/profiling/memlog_sender.h"
+#include "chrome/common/profiling/profiling_constants.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
+#include "mojo/edk/embedder/platform_channel_pair.h"
 
 #if defined(OS_LINUX)
 #include <fcntl.h>
@@ -23,11 +27,18 @@
 #include "base/files/scoped_file.h"
 #include "base/process/process_metrics.h"
 #include "base/third_party/valgrind/valgrind.h"
+#include "content/public/common/content_descriptors.h"
+#include "content/public/browser/file_descriptor_info.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #endif
 
 namespace profiling {
 
 namespace {
+
+enum {
+  kProfilingDataPipe = kContentIPCDescriptorMax + 113,
+};
 
 ProfilingProcessHost* pph_singleton = nullptr;
 
@@ -68,6 +79,7 @@ base::CommandLine MakeProfilingCommandLine(const std::string& pipe_id) {
 
 ProfilingProcessHost::ProfilingProcessHost() {
   pph_singleton = this;
+  Launch();
 }
 
 ProfilingProcessHost::~ProfilingProcessHost() {
@@ -77,8 +89,6 @@ ProfilingProcessHost::~ProfilingProcessHost() {
 // static
 ProfilingProcessHost* ProfilingProcessHost::EnsureStarted() {
   static ProfilingProcessHost host;
-  if (!host.process_.IsValid())
-    host.Launch();
   return &host;
 }
 
@@ -90,52 +100,125 @@ ProfilingProcessHost* ProfilingProcessHost::Get() {
 // static
 void ProfilingProcessHost::AddSwitchesToChildCmdLine(
     base::CommandLine* child_cmd_line) {
+  // Watch out: will be called on different threads.
   ProfilingProcessHost* pph = ProfilingProcessHost::Get();
   if (!pph)
     return;
+  pph->EnsureControlChannelExists();
+
+  // TODO(brettw) this isn't correct for Posix. Redo when we can shave over
+  // Mojo
   child_cmd_line->AppendSwitchASCII(switches::kMemlogPipe, pph->pipe_id_);
 }
 
-#if defined(OS_WIN)
-void ProfilingProcessHost::Launch() {
-  base::Process process = base::Process::Current();
-  base::LaunchOptions options;
+#if defined(OS_POSIX) && !defined(OS_MACOSX)
+void ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
+    const base::CommandLine& command_line,
+    int child_process_id,
+    content::FileDescriptorInfo* mappings) {
+  ProfilingProcessHost* pph = ProfilingProcessHost::Get();
+  if (!pph)
+    return;
 
-  pipe_id_ = base::IntToString(static_cast<int>(process.Pid()));
-  base::CommandLine profiling_cmd = MakeProfilingCommandLine(pipe_id_);
+  pph->EnsureControlChannelExists();
 
-  process_ = base::LaunchProcess(profiling_cmd, options);
-  StartMemlogSender(pipe_id_);
+  mojo::edk::PlatformChannelPair data_channel;
+  mappings->Transfer(
+      kProfilingDataPipe,
+      base::ScopedFD(data_channel.PassClientHandle().release().handle));
+
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+      ->PostTask(FROM_HERE,
+                 base::BindOnce(&ProfilingProcessHost::AddNewSenderOnIO,
+                                base::Unretained(pph),
+                                data_channel.PassServerHandle(),
+                                child_process_id));
+  fprintf(stderr, "Browser: starting with child id: %d\n", child_process_id);
 }
-#elif defined(OS_POSIX)
+#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
 
 void ProfilingProcessHost::Launch() {
-  // Create the socketpair.
+  mojo::edk::PlatformChannelPair control_channel;
+  mojo::edk::HandlePassingInformation handle_passing_info;
+
+#if defined(OS_WIN)
+  base::Process process = base::Process::Current();
+  pipe_id_ = base::IntToString(static_cast<int>(process.Pid()));
+#else
+
+  // Create the socketpair for the low level memlog pipe.
   // TODO(ajwong): Should this use base/posix/unix_domain_socket_linux.h?
-  int fds[2];
-  PCHECK(socketpair(AF_UNIX, SOCK_STREAM, 0, fds) == 0);
-  PCHECK(fcntl(fds[0], F_SETFL, O_NONBLOCK) == 0);
-  PCHECK(fcntl(fds[1], F_SETFL, O_NONBLOCK) == 0);
+  int memlog_fds[2];
+  PCHECK(socketpair(AF_UNIX, SOCK_STREAM, 0, memlog_fds) == 0);
+  PCHECK(fcntl(memlog_fds[0], F_SETFL, O_NONBLOCK) == 0);
+  PCHECK(fcntl(memlog_fds[1], F_SETFL, O_NONBLOCK) == 0);
 
   // Store one end for our message sender to use.
-  pipe_id_ = base::IntToString(fds[0]);
-  base::ScopedFD child_end(fds[1]);
+  base::ScopedFD child_end(memlog_fds[1]);
+  // TODO(brettw) need to get rid of pipe_id when we can share over Mojo.
+  pipe_id_ = base::IntToString(memlog_fds[0]);
 
-  // This is a new process forked from us. No need to remap.
-  base::FileHandleMappingVector fd_map;
-  fd_map.emplace_back(std::pair<int, int>(child_end.get(), child_end.get()));
-
-  base::LaunchOptions options;
-  options.fds_to_remap = &fd_map;
-  options.kill_on_parent_death = true;
-
+  handle_passing_info.emplace_back(child_end.get(), child_end.get());
+#endif
   base::CommandLine profiling_cmd =
       MakeProfilingCommandLine(base::IntToString(child_end.get()));
-  process_ = base::LaunchProcess(profiling_cmd, options);
-  StartMemlogSender(pipe_id_);
-}
+
+  // Keep the server handle, pass the client handle to the child.
+  pending_control_connection_ = control_channel.PassServerHandle();
+  control_channel.PrepareToPassClientHandleToChildProcess(&profiling_cmd,
+                                                          &handle_passing_info);
+
+  base::LaunchOptions options;
+#if defined(OS_WIN)
+  options.handles_to_inherit = &handle_passing_info;
+#elif defined(OS_POSIX)
+  options.fds_to_remap = &handle_passing_info;
+  options.kill_on_parent_death = true;
 #else
 #error Unsupported OS.
 #endif
+
+  process_ = base::LaunchProcess(profiling_cmd, options);
+  StartMemlogSender(pipe_id_);
+}
+
+void ProfilingProcessHost::EnsureControlChannelExists() {
+  // May get called on different threads, we need to be on the IO thread to
+  // work.
+  if (!content::BrowserThread::CurrentlyOn(content::BrowserThread::IO)) {
+    content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+        ->PostTask(
+            FROM_HERE,
+            base::BindOnce(&ProfilingProcessHost::EnsureControlChannelExists,
+                           base::Unretained(this)));
+    return;
+  }
+
+  if (pending_control_connection_.is_valid())
+    ConnectControlChannelOnIO();
+}
+
+void ProfilingProcessHost::ConnectControlChannelOnIO() {
+  mojo::edk::OutgoingBrokerClientInvitation invitation;
+  mojo::ScopedMessagePipeHandle control_pipe =
+      invitation.AttachMessagePipe(kControlPipeName);
+
+  invitation.Send(
+      process_.Handle(),
+      mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
+                                  std::move(pending_control_connection_)));
+  profiling_control_.Bind(
+      mojom::ProfilingControlPtrInfo(std::move(control_pipe), 0));
+
+  StartProfilingMojo();
+}
+
+void ProfilingProcessHost::AddNewSenderOnIO(
+        mojo::edk::ScopedPlatformHandle handle,
+        int child_process_id) {
+    profiling_control_->AddNewSender(
+        mojo::WrapPlatformFile(handle.release().handle),
+        child_process_id);
+}
 
 }  // namespace profiling

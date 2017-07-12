@@ -10,24 +10,60 @@
 #include "chrome/common/profiling/memlog_sender_pipe.h"
 #include "chrome/common/profiling/memlog_stream.h"
 
+// TODO(ajwong): Hack
+#include "base/posix/global_descriptors.h"
+#include "base/strings/string_number_conversions.h"
+#include "content/public/common/content_descriptors.h"
+
 namespace profiling {
+
+namespace {
+
+enum {
+  kProfilingDataPipe = kContentIPCDescriptorMax + 113,
+};
+
+// TODO(brettw) this is a hack to allow StartProfilingMojo to work. Figure out
+// how to get the lifetime of this that allows that function call to work.
+MemlogSenderPipe* memlog_sender_pipe = nullptr;
+
+}  // namespace
 
 void InitMemlogSenderIfNecessary(const base::CommandLine& cmdline) {
   std::string pipe_id = cmdline.GetSwitchValueASCII(switches::kMemlogPipe);
-  if (!pipe_id.empty())
+  if (!pipe_id.empty()) {
+#if defined(OS_WIN)
     StartMemlogSender(pipe_id);
+#else
+    base::ScopedFD fd(
+        base::GlobalDescriptors::GetInstance()->MaybeGet(kProfilingDataPipe));
+    CHECK(!fd.is_valid()) << "Unable to open: " << fd.get();
+    StartMemlogSender(base::IntToString(fd.get()));
+#endif
+  }
 }
 
 void StartMemlogSender(const std::string& pipe_id) {
   static MemlogSenderPipe pipe(pipe_id);
   pipe.Connect();
+  memlog_sender_pipe = &pipe;
 
   StreamHeader header;
   header.signature = kStreamSignature;
-
   pipe.Send(&header, sizeof(StreamHeader));
 
   InitAllocatorShim(&pipe);
+}
+
+void StartProfilingMojo() {
+  static bool started_mojo = false;
+
+  if (!started_mojo) {
+    started_mojo = true;
+    StartMojoControlPacket start_mojo_message;
+    start_mojo_message.op = kStartMojoControlPacketType;
+    memlog_sender_pipe->Send(&start_mojo_message, sizeof(start_mojo_message));
+  }
 }
 
 }  // namespace profiling
