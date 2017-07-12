@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a668908_94fc2dac",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T23:07:20Z",
+      "side": 1,
+      "message": "Use base::TimeTicks::Now().\nHere and below.\nTimeTicks is more accurate when measuring gap between two events.",
+      "range": {
+        "startLine": 432,
+        "startChar": 20,
+        "endLine": 432,
+        "endChar": 24
+      },
+      "revId": "9de647ebdfb0987a6313516b131dc44ba17ce190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bfac264_b71ed85c",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T23:07:20Z",
+      "side": 1,
+      "message": "This would fail to catch this case:\nt\u003d0 Delayable request r0 starts.\nt\u003d100 Delayable request r1 starts.\nt\u003d101 r1 ends\nt\u003d200 Non delayable request r2 starts.\n\nFor r2, we should record 200 as the delay UMA, but with the current implementation we would not record anything.\n\nAnother option is that when a non-delayable request starts, we look at all the in-flight delayable requests, and the request with latest start_time.",
+      "range": {
+        "startLine": 449,
+        "startChar": 14,
+        "endLine": 449,
+        "endChar": 15
+      },
+      "revId": "9de647ebdfb0987a6313516b131dc44ba17ce190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6312f8c8_48e95479",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T23:07:20Z",
+      "side": 1,
+      "message": "Also, clear this in ClearInFlightRequests()?",
+      "range": {
+        "startLine": 452,
+        "startChar": 8,
+        "endLine": 452,
+        "endChar": 53
+      },
+      "revId": "9de647ebdfb0987a6313516b131dc44ba17ce190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
