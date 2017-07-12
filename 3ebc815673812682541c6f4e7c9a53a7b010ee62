@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b08a98f_57e3ab33",
+        "filename": "ui/android/java/src/org/chromium/ui/DropdownPopupWindow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:06:51Z",
+      "side": 0,
+      "message": "I suspect that this was an optimization to be able to re-use convert views rather than creating a new View for each item we are measuring. If you look at DropdownAdapter#getView(), if the convert view is null we inflate a new view. Is it possible to retrain this itemView logic?",
+      "range": {
+        "startLine": 180,
+        "startChar": 50,
+        "endLine": 180,
+        "endChar": 59
+      },
+      "revId": "3ebc815673812682541c6f4e7c9a53a7b010ee62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

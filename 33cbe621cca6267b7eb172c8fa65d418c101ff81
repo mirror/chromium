@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9e553c6_c27df0e4",
+        "filename": "ui/android/java/src/org/chromium/ui/DropdownPopupWindow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:06:51Z",
+      "side": 1,
+      "message": "nit: This is only called in one place, so we can in-line the assert and call to UiUtils rather than using this separate method.",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 35
+      },
+      "revId": "33cbe621cca6267b7eb172c8fa65d418c101ff81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2440e2_df1fcea4",
+        "filename": "ui/android/java/src/org/chromium/ui/UiUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:06:51Z",
+      "side": 1,
+      "message": "This @param appears to be out of date. There should also be an @return statement.",
+      "range": {
+        "startLine": 426,
+        "startChar": 8,
+        "endLine": 426,
+        "endChar": 13
+      },
+      "revId": "33cbe621cca6267b7eb172c8fa65d418c101ff81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
