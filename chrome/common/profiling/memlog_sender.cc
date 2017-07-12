@@ -10,9 +10,18 @@
 #include "chrome/common/profiling/memlog_sender_pipe.h"
 #include "chrome/common/profiling/memlog_stream.h"
 
+// TODO(ajwong): Hack
+#include "base/posix/global_descriptors.h"
+#include "base/strings/string_number_conversions.h"
+#include "content/public/common/content_descriptors.h"
+
 namespace profiling {
 
 namespace {
+
+enum {
+  kProfilingDataPipe = kContentIPCDescriptorMax + 113,
+};
 
 // TODO(brettw) this is a hack to allow StartProfilingMojo to work. Figure out
 // how to get the lifetime of this that allows that function call to work.
@@ -22,8 +31,17 @@ MemlogSenderPipe* memlog_sender_pipe = nullptr;
 
 void InitMemlogSenderIfNecessary(const base::CommandLine& cmdline) {
   std::string pipe_id = cmdline.GetSwitchValueASCII(switches::kMemlogPipe);
-  if (!pipe_id.empty())
+  if (!pipe_id.empty()) {
+#if defined(OS_WIN)
     StartMemlogSender(pipe_id);
+#else
+    base::ScopedFD fd(
+        base::GlobalDescriptors::GetInstance()->Get(kProfilingDataPipe));
+    // TODO(ajwong): Change the StartMemlogSender to take a Scoped-somthing
+    // instead of a string to make lifetimes more clear.
+    StartMemlogSender(base::IntToString(fd.release()));
+#endif
+  }
 }
 
 void StartMemlogSender(const std::string& pipe_id) {
