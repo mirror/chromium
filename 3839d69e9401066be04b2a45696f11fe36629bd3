@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "207c9444_beef61e4",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T04:38:06Z",
+      "side": 1,
+      "message": "Hmm, content::RenderThread::Get() should be called on the main thread..\nAdded ThreadChecker in Internal instead.",
+      "parentUuid": "139b5ecd_93b917d2",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c158f415_cc43f8cd",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 5

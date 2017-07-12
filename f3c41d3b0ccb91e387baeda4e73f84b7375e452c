@@ -141,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "1fc78714_63cdae5a",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T04:38:06Z",
+      "side": 1,
+      "message": "Thanks, as you mentioned, WebVector doesn\u0027t have move constructor for std::vector. I\u0027ll keep it in my mind and change it if it causes inefficiency.\nAdded a DCHECK for checking if streaming has done.",
+      "parentUuid": "7886c7a7_d4112394",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3734957_5784b727",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 6
