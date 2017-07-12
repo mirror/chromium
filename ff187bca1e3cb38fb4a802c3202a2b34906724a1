@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f2c4e55_fce4d38f",
+        "filename": "content/browser/media/media_interface_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T22:19:07Z",
+      "side": 1,
+      "message": "How should a reader reading this comment figure out which concrete process this service lives in?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 51
+      },
+      "revId": "ff187bca1e3cb38fb4a802c3202a2b34906724a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370a9d59_bad3552c",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T22:19:07Z",
+      "side": 1,
+      "message": "Consider using emplace",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 373,
+        "endChar": 77
+      },
+      "revId": "ff187bca1e3cb38fb4a802c3202a2b34906724a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5434ea_c5da7c5b",
+        "filename": "media/mojo/services/cdm_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T22:19:07Z",
+      "side": 1,
+      "message": "It feels a bit surprising to expose the same service through two different capabilities. Will the service implementation restrict which interfaces are exposed through its interface factory?\n\n(media_service.mojom could use an interface comment as well in a followup CL, it\u0027s not 100% clear why MediaService has its own InterfaceFactory. I\u0027m sure there are good reasons, so it\u0027d be nice if they were documented \u003d)",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "ff187bca1e3cb38fb4a802c3202a2b34906724a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
