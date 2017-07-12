@@ -135,6 +135,8 @@ RendererSchedulerImpl::RendererSchedulerImpl(
 
   default_loading_task_queue_ =
       NewLoadingTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_LOADING);
+  default_loading_control_task_queue_ = NewLoadingControlTaskQueue(
+      MainThreadTaskQueue::QueueType::DEFAULT_LOADING);
   default_timer_task_queue_ =
       NewTimerTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_TIMER);
 
@@ -354,6 +356,12 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::LoadingTaskQueue() {
   return default_loading_task_queue_;
 }
 
+scoped_refptr<MainThreadTaskQueue>
+RendererSchedulerImpl::LoadingControlTaskQueue() {
+  helper_.CheckOnValidThread();
+  return default_loading_control_task_queue_;
+}
+
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::TimerTaskQueue() {
   helper_.CheckOnValidThread();
   return default_timer_task_queue_;
@@ -406,6 +414,15 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
   return NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(queue_type)
                           .SetCanBeSuspended(true)
                           .SetCanBeBlocked(true));
+}
+
+scoped_refptr<MainThreadTaskQueue>
+RendererSchedulerImpl::NewLoadingControlTaskQueue(
+    MainThreadTaskQueue::QueueType queue_type) {
+  scoped_refptr<MainThreadTaskQueue> loading_control_task_queue(
+      NewLoadingTaskQueue(queue_type));
+  loading_control_task_queue->SetQueuePriority(TaskQueue::HIGH_PRIORITY);
+  return loading_control_task_queue;
 }
 
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
@@ -1838,6 +1855,7 @@ void RendererSchedulerImpl::SetTopLevelBlameContext(
   control_task_queue_->SetBlameContext(blame_context);
   DefaultTaskQueue()->SetBlameContext(blame_context);
   default_loading_task_queue_->SetBlameContext(blame_context);
+  default_loading_control_task_queue_->SetBlameContext(blame_context);
   default_timer_task_queue_->SetBlameContext(blame_context);
   compositor_task_queue_->SetBlameContext(blame_context);
   idle_helper_.IdleTaskRunner()->SetBlameContext(blame_context);
