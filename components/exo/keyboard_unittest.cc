@@ -10,6 +10,7 @@
 #include "components/exo/buffer.h"
 #include "components/exo/keyboard_delegate.h"
 #include "components/exo/keyboard_device_configuration_delegate.h"
+#include "components/exo/keyboard_observer.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
@@ -47,6 +48,14 @@ class MockKeyboardDeviceConfigurationDelegate
   // Overridden from KeyboardDeviceConfigurationDelegate:
   MOCK_METHOD1(OnKeyboardDestroying, void(Keyboard*));
   MOCK_METHOD1(OnKeyboardTypeChanged, void(bool));
+};
+
+class MockKeyboardObserver : public KeyboardObserver {
+ public:
+  MockKeyboardObserver() {}
+
+  // Overridden from KeyboardObserver:
+  MOCK_METHOD1(OnKeyboardDestroying, void(Keyboard*));
 };
 
 TEST_F(KeyboardTest, OnKeyboardEnter) {
@@ -250,6 +259,55 @@ TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
   keyboard.reset();
 
   maximize_mode_controller->EnableMaximizeModeWindowManager(false);
+}
+
+TEST_F(KeyboardTest, KeyboardObserver) {
+  std::unique_ptr<Surface> surface(new Surface);
+  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  gfx::Size buffer_size(10, 10);
+  std::unique_ptr<Buffer> buffer(
+      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
+  surface->Attach(buffer.get());
+  surface->Commit();
+
+  aura::client::FocusClient* focus_client =
+      aura::client::GetFocusClient(ash::Shell::GetPrimaryRootWindow());
+  focus_client->FocusWindow(nullptr);
+
+  MockKeyboardDelegate delegate;
+  auto keyboard = base::MakeUnique<Keyboard>(&delegate);
+  MockKeyboardObserver observer;
+  keyboard->AddObserver(&observer);
+
+  EXPECT_CALL(delegate, OnKeyboardDestroying(keyboard.get()));
+  EXPECT_CALL(observer, OnKeyboardDestroying(keyboard.get()));
+  keyboard.reset();
+}
+
+TEST_F(KeyboardTest, NeedKeyboardKeyAcks) {
+  std::unique_ptr<Surface> surface(new Surface);
+  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
+  gfx::Size buffer_size(10, 10);
+  std::unique_ptr<Buffer> buffer(
+      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
+  surface->Attach(buffer.get());
+  surface->Commit();
+
+  aura::client::FocusClient* focus_client =
+      aura::client::GetFocusClient(ash::Shell::GetPrimaryRootWindow());
+  focus_client->FocusWindow(nullptr);
+
+  MockKeyboardDelegate delegate;
+  auto keyboard = base::MakeUnique<Keyboard>(&delegate);
+
+  EXPECT_FALSE(keyboard->IsKeyboardKeyAcksNeeded());
+  keyboard->SetNeedKeyboardKeyAcks(true);
+  EXPECT_TRUE(keyboard->IsKeyboardKeyAcksNeeded());
+  keyboard->SetNeedKeyboardKeyAcks(false);
+  EXPECT_FALSE(keyboard->IsKeyboardKeyAcksNeeded());
+
+  EXPECT_CALL(delegate, OnKeyboardDestroying(keyboard.get()));
+  keyboard.reset();
 }
 
 }  // namespace

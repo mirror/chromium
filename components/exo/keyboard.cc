@@ -99,12 +99,12 @@ Keyboard::Keyboard(KeyboardDelegate* delegate) : delegate_(delegate) {
   helper->AddMaximizeModeObserver(this);
   helper->AddInputDeviceEventObserver(this);
   OnWindowFocused(helper->GetFocusedWindow(), nullptr);
+  AddObserver(delegate);
 }
 
 Keyboard::~Keyboard() {
-  delegate_->OnKeyboardDestroying(this);
-  if (device_configuration_delegate_)
-    device_configuration_delegate_->OnKeyboardDestroying(this);
+  for (KeyboardObserver& observer : observer_list_)
+    observer.OnKeyboardDestroying(this);
   if (focus_)
     focus_->RemoveSurfaceObserver(this);
   auto* helper = WMHelper::GetInstance();
@@ -122,6 +122,31 @@ void Keyboard::SetDeviceConfigurationDelegate(
     KeyboardDeviceConfigurationDelegate* delegate) {
   device_configuration_delegate_ = delegate;
   OnKeyboardDeviceConfigurationChanged();
+  AddObserver(delegate);
+}
+
+void Keyboard::AddObserver(KeyboardObserver* observer) {
+  observer_list_.AddObserver(observer);
+}
+
+bool Keyboard::HasObserver(KeyboardObserver* observer) const {
+  return observer_list_.HasObserver(observer);
+}
+
+void Keyboard::RemoveObserver(KeyboardObserver* observer) {
+  observer_list_.HasObserver(observer);
+}
+
+void Keyboard::SetNeedKeyboardKeyAcks(bool need_acks) {
+  is_keyboard_key_acks_needed = need_acks;
+}
+
+bool Keyboard::IsKeyboardKeyAcksNeeded() const {
+  return is_keyboard_key_acks_needed;
+}
+
+void Keyboard::AckKeyboardKey(uint32_t serial, bool handled) {
+  // TODO(yhanada): Implement this method.
 }
 
 ////////////////////////////////////////////////////////////////////////////////
