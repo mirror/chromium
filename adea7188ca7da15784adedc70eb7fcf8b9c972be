@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7daf442_18519292",
+        "filename": "content/browser/renderer_host/input/mock_input_router_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-12T00:56:00Z",
+      "side": 1,
+      "message": "I am slightly confused that this bit is originally set to None in the ctor, but reset to Auto, could you explain this?",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 52
+      },
+      "revId": "adea7188ca7da15784adedc70eb7fcf8b9c972be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
