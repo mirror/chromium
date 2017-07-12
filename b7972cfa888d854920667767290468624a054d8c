@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2dddcf5_40118afb",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-12T00:29:58Z",
+      "side": 1,
+      "message": "AddObserver calls usually need to be balanced by RemoveObserver. For this I think you want something in the ~NewTabButton() destructor like\n\nif (new_tab_promo_)\n  new_tab_promo_-\u003eRemoveObserver(this);\n\n\nSee also https://chromium-review.googlesource.com/c/565743/ for a recent fix and links to bad things that can happen when not doing RemoveObserver",
+      "revId": "b7972cfa888d854920667767290468624a054d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d33c31_eabd4bf3",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-12T00:29:58Z",
+      "side": 1,
+      "message": "OnWidgetClosing isn\u0027t always sent for a Widget. If it gives correct behaviour, I think this should go in OnWidgetDestroying. (See also https://chromium-review.googlesource.com/c/565743/  again)",
+      "revId": "b7972cfa888d854920667767290468624a054d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630b5e17_3d0d9721",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-12T00:29:58Z",
+      "side": 1,
+      "message": "I think this needs to do `new_tab_promo_ \u003d nullptr;` so a destroyed pointer isn\u0027t referenced in OnGestureEvent/GetBorderPath",
+      "revId": "b7972cfa888d854920667767290468624a054d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
