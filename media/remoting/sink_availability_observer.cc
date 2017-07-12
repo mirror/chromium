@@ -15,12 +15,12 @@ SinkAvailabilityObserver::SinkAvailabilityObserver(
 SinkAvailabilityObserver::~SinkAvailabilityObserver() {}
 
 void SinkAvailabilityObserver::OnSinkAvailable(
-    mojom::RemotingSinkCapabilities capabilities) {
-  sink_capabilities_ = capabilities;
+    mojom::RemotingSinkMetadataPtr metadata) {
+  sink_metadata_ = *metadata;
 }
 
 void SinkAvailabilityObserver::OnSinkGone() {
-  sink_capabilities_ = mojom::RemotingSinkCapabilities::NONE;
+  sink_metadata_ = mojom::RemotingSinkMetadata();
 }
 
 }  // namespace remoting

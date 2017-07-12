@@ -294,7 +294,7 @@ define('media_router_bindings', [
           remotingCommonMojom.RemotingSinkAudioCapabilities,
       RemotingSinkVideoCapabilities:
           remotingCommonMojom.RemotingSinkVideoCapabilities,
-      SinkCapabilities: remotingCommonMojom.SinkCapabilities,
+      RemotingSinkMetadata: remotingCommonMojom.RemotingSinkMetadata,
       Origin: originMojom.Origin,
       Sink: mediaRouterMojom.MediaSink,
       SinkExtraData: mediaRouterMojom.MediaSinkExtraData,

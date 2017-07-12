@@ -29,15 +29,15 @@ SharedSession::~SharedSession() {
   }
 }
 
-void SharedSession::OnSinkAvailable(
-    mojom::RemotingSinkCapabilities capabilities) {
+void SharedSession::OnSinkAvailable(mojom::RemotingSinkMetadataPtr metadata) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (capabilities == mojom::RemotingSinkCapabilities::NONE) {
+  sink_metadata_ = *metadata;
+
+  if (!remoting_enabled()) {
     OnSinkGone();
     return;
   }
-  sink_capabilities_ = capabilities;
   if (state_ == SESSION_UNAVAILABLE)
     UpdateAndNotifyState(SESSION_CAN_START);
 }
@@ -45,7 +45,7 @@ void SharedSession::OnSinkAvailable(
 void SharedSession::OnSinkGone() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  sink_capabilities_ = mojom::RemotingSinkCapabilities::NONE;
+  sink_metadata_ = mojom::RemotingSinkMetadata();
 
   if (state_ == SESSION_PERMANENTLY_STOPPED)
     return;

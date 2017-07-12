@@ -41,7 +41,7 @@ RemotingCdmFactory::CreateRemotingCdmController() {
   // the RemotingCdmController would naturally get the notification. This is to
   // avoid the possible delay on OnSinkAvailable() call from browser.
   if (sink_observer_->is_remote_decryption_available())
-    session->OnSinkAvailable(sink_observer_->sink_capabilities());
+    session->OnSinkAvailable(sink_observer_->sink_metadata());
   return base::MakeUnique<RemotingCdmController>(std::move(session));
 }
 

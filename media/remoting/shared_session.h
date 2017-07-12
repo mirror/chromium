@@ -83,17 +83,37 @@ class SharedSession final : public mojom::RemotingSource,
     return state_;
   }
 
-  mojom::RemotingSinkCapabilities sink_capabilities() const {
-    return sink_capabilities_;
+  bool has_video_capability(
+      mojom::RemotingSinkVideoCapabilities capability) const {
+    return std::find(std::begin(sink_metadata_.video_capabilities),
+                     std::end(sink_metadata_.video_capabilities),
+                     capability) != std::end(sink_metadata_.video_capabilities);
+  }
+
+  bool has_audio_capability(
+      mojom::RemotingSinkAudioCapabilities capability) const {
+    return std::find(std::begin(sink_metadata_.audio_capabilities),
+                     std::end(sink_metadata_.audio_capabilities),
+                     capability) != std::end(sink_metadata_.audio_capabilities);
+  }
+
+  bool has_feature_capability(mojom::RemotingSinkFeatures capability) const {
+    return std::find(std::begin(sink_metadata_.features),
+                     std::end(sink_metadata_.features),
+                     capability) != std::end(sink_metadata_.features);
+  }
+
+  bool remoting_enabled() const {
+    return has_feature_capability(mojom::RemotingSinkFeatures::RENDERING);
   }
 
   bool is_remote_decryption_available() const {
-    return sink_capabilities_ ==
-           mojom::RemotingSinkCapabilities::CONTENT_DECRYPTION_AND_RENDERING;
+    return has_feature_capability(
+        mojom::RemotingSinkFeatures::CONTENT_DECRYPTION);
   }
 
   // RemotingSource implementations.
-  void OnSinkAvailable(mojom::RemotingSinkCapabilities capabilities) override;
+  void OnSinkAvailable(mojom::RemotingSinkMetadataPtr metadata) override;
   void OnSinkGone() override;
   void OnStarted() override;
   void OnStartFailed(mojom::RemotingStartFailReason reason) override;
@@ -146,10 +166,9 @@ class SharedSession final : public mojom::RemotingSource,
   const mojo::Binding<mojom::RemotingSource> binding_;
   const mojom::RemoterPtr remoter_;
 
-  // When the sink is available, this describes its capabilities. When not
-  // available, this is always NONE. Updated by OnSinkAvailable/Gone().
-  mojom::RemotingSinkCapabilities sink_capabilities_ =
-      mojom::RemotingSinkCapabilities::NONE;
+  // When the sink is available for remoting, this describes its metadata. When
+  // not available, this is empty. Updated by OnSinkAvailable/Gone().
+  mojom::RemotingSinkMetadata sink_metadata_;
 
   // The current state.
   SessionState state_ = SESSION_UNAVAILABLE;

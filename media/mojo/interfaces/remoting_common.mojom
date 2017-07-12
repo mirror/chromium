@@ -40,8 +40,10 @@ enum RemotingSinkVideoCapabilities {
   CODEC_HEVC,
 };
 
-struct SinkCapabilities {
+struct RemotingSinkMetadata {
   array<RemotingSinkFeatures>  features;
-  array<RemotingSinkAudioCapabilities> audio;
-  array<RemotingSinkVideoCapabilities> video;
+  array<RemotingSinkAudioCapabilities> audio_capabilities;
+  array<RemotingSinkVideoCapabilities> video_capabilities;
+  string model_name;
+  string friendly_name;
 };
