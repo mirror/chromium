@@ -59,13 +59,18 @@ class WebClient {
   // Gives the embedder a chance to perform tasks before a web view is created.
   virtual void PreWebViewCreation() const {}
 
-  // Gives the embedder a chance to register its own standard and saveable url
-  // schemes early on in the startup sequence.
-  virtual void AddAdditionalSchemes(
-      std::vector<url::SchemeWithType>* additional_standard_schemes) const {}
+  // Gives the embedder a chance to register its own "standard" (RFC3986 syntax)
+  // url schemes early in the startup sequence.
+  virtual void AddStandardSchemes(
+      std::vector<url::SchemeWithType>* schemes) const {}
+
+  // Gives the embedder a chance to register its own secure url
+  // schemes early in the startup sequence.
+  virtual void AddSecureSchemes(
+      std::vector<url::SchemeWithType>* schemes) const {}
 
   // Returns the languages used in the Accept-Languages HTTP header.
-  // Used to decide URL formating.
+  // Used to decide URL formatting.
   virtual std::string GetAcceptLangs(BrowserState* state) const;
 
   // Returns the embedding application locale string.

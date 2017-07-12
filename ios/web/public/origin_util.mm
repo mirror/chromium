@@ -7,6 +7,7 @@
 #import <WebKit/WebKit.h>
 
 #include "base/numerics/safe_conversions.h"
+#include "base/stl_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "net/base/url_util.h"
 #include "url/gurl.h"
@@ -26,6 +27,9 @@ bool IsOriginSecure(const GURL& url) {
       IsOriginSecure(*url.inner_url())) {
     return true;
   }
+
+  if (base::ContainsValue(url::GetSecureSchemes(), url.scheme()))
+    return true;
 
   if (net::IsLocalhost(url.HostNoBracketsPiece()))
     return true;
