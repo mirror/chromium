@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08943979_a5117243",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T15:24:39Z",
+      "side": 1,
+      "message": "nit: Let\u0027s try to be consistent with this style \n\n/*requires_total\u003d*/false",
+      "revId": "43b6c3384a9a2d5e4e5b6265eaa4441db5902f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
