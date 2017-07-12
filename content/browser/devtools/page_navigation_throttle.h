@@ -35,11 +35,12 @@ class PageNavigationThrottle : public content::NavigationThrottle {
 
   // Resumes a deferred navigation request. Does nothing if a response isn't
   // expected.
-  void Resume();
+  void ResumeIfDeferred();
 
   // Cancels a deferred navigation request. Does nothing if a response isn't
   // expected.
-  void CancelDeferredNavigation(NavigationThrottle::ThrottleCheckResult result);
+  void CancelNavigationIfDeferred(
+      NavigationThrottle::ThrottleCheckResult result);
 
  private:
   // An opaque ID assigned by the PageHandler, used to allow the protocol client
@@ -50,7 +51,7 @@ class PageNavigationThrottle : public content::NavigationThrottle {
   base::WeakPtr<protocol::PageHandler> page_handler_;
 
   // Whether or not a navigation was deferred. If deferred we expect a
-  // subsequent call to AlwaysProceed, Resume or CancelDeferredNavigation.
+  // subsequent call to AlwaysProceed, Resume or CancelNavigationIfDeferred.
   bool navigation_deferred_;
 
   DISALLOW_COPY_AND_ASSIGN(PageNavigationThrottle);

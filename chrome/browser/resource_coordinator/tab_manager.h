@@ -44,6 +44,8 @@ class WebContents;
 
 namespace resource_coordinator {
 
+class BackgroundTabNavigationThrottle;
+
 #if defined(OS_CHROMEOS)
 class TabManagerDelegate;
 #endif
@@ -157,7 +159,7 @@ class TabManager : public TabStripModelObserver,
 
   // Maybe throttle a tab's navigation based on current system status.
   content::NavigationThrottle::ThrottleCheckResult MaybeThrottleNavigation(
-      content::NavigationHandle* navigation_handle);
+      BackgroundTabNavigationThrottle* throttle);
 
   // Notifies TabManager that one navigation has finished (committed, aborted or
   // replaced). TabManager should clean up the NavigationHandle objects bookkept
@@ -366,7 +368,7 @@ class TabManager : public TabStripModelObserver,
   // during session restore.
   void RecordSwitchToTab(content::WebContents* contents) const;
 
-  // Returns true if the navigation should be delayed.
+  // Returns true if the navigation should be delaying a navigation.
   bool ShouldDelayNavigation(
       content::NavigationHandle* navigation_handle) const;
 
@@ -377,11 +379,12 @@ class TabManager : public TabStripModelObserver,
   void ResumeTabNavigationIfNeeded(content::WebContents* contents);
 
   // Resume navigation.
-  void ResumeNavigation(content::NavigationHandle* navigation_handle);
+  void ResumeNavigation(BackgroundTabNavigationThrottle* throttle);
 
   // Remove the pending navigation for the provided WebContents. Return the
-  // removed navigation handle. Return nullptr if it doesn't exists.
-  content::NavigationHandle* RemovePendingNavigationIfNeeded(
+  // removed navigation handle. Return nullptr if it doesn't exists. Also
+  // returns the resumer closure if the navigation existed.
+  BackgroundTabNavigationThrottle* RemovePendingNavigationIfNeeded(
       content::WebContents* contents);
 
   // Check if the tab is loading. Use only in tests.
@@ -460,8 +463,8 @@ class TabManager : public TabStripModelObserver,
   class TabManagerSessionRestoreObserver;
   std::unique_ptr<TabManagerSessionRestoreObserver> session_restore_observer_;
 
-  // The list of navigation handles that are delayed.
-  std::vector<content::NavigationHandle*> pending_navigations_;
+  // The list of navigation throttles that are delayed.
+  std::vector<BackgroundTabNavigationThrottle*> pending_throttles_;
 
   // The tabs that are currently loading. We will consider loading the next
   // background tab when these tabs have finished loading or a background tab
