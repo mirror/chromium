@@ -16,6 +16,24 @@
       "revId": "425e350b5fce636f35c6d72c7d7f5db06f020fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be3a5d1_5df003ac",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4009,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-12T20:07:35Z",
+      "side": 1,
+      "message": "CRWWebViewContentView does it in layoutSubviews",
+      "parentUuid": "994820b2_a0f25f3e",
+      "revId": "425e350b5fce636f35c6d72c7d7f5db06f020fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
