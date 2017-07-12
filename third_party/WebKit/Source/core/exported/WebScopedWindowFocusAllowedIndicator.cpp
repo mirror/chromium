@@ -31,7 +31,7 @@
 #include "public/web/WebScopedWindowFocusAllowedIndicator.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/ScopedWindowFocusAllowedIndicator.h"
+#include "core/page/ScopedWindowFocusAllowedIndicator.h"
 #include "public/web/WebDocument.h"
 
 namespace blink {
