@@ -21,6 +21,7 @@
 #include "content/browser/frame_host/mixed_content_navigation_throttle.h"
 #include "content/browser/frame_host/navigation_controller_impl.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
+#include "content/browser/frame_host/navigation_throttle_sanity_checker.h"
 #include "content/browser/frame_host/navigator.h"
 #include "content/browser/frame_host/navigator_delegate.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
@@ -1145,7 +1146,14 @@ void NavigationHandleImpl::RegisterNavigationThrottles() {
   std::vector<std::unique_ptr<NavigationThrottle>> testing_throttles =
       std::move(throttles_);
 
-  throttles_ = GetDelegate()->CreateThrottlesForNavigation(this);
+  AddThrottle(NavigationThrottleSanityChecker::MaybeCreateThrottleFor(this));
+
+  std::vector<std::unique_ptr<NavigationThrottle>> delegate_throttles =
+      GetDelegate()->CreateThrottlesForNavigation(this);
+
+  throttles_.insert(throttles_.end(),
+                    std::make_move_iterator(delegate_throttles.begin()),
+                    std::make_move_iterator(delegate_throttles.end()));
 
   // Check for renderer-inititated main frame navigations to data URLs. This is
   // done first as it may block the main frame navigation altogether.
