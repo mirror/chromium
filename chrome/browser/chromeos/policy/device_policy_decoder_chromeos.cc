@@ -110,6 +110,46 @@ std::unique_ptr<base::Value> DecodeConnectionType(int value) {
   return base::MakeUnique<base::Value>(kConnectionTypes[value]);
 }
 
+// Parse Timestamp to Dictionary
+std::unique_ptr<base::DictionaryValue> ParseTimestamp(
+    const em::WeeklyTimestampProto& WeeklyTimestamp) {
+  std::unique_ptr<base::DictionaryValue> timestamp(new base::DictionaryValue());
+  if (WeeklyTimestamp.has_weekday() && WeeklyTimestamp.weekday().has_day()) {
+    timestamp->SetInteger("weekday", WeeklyTimestamp.weekday().day());
+  } else {
+    LOG(ERROR) << "Day of week in interval can't be absent.";
+  }
+  if (WeeklyTimestamp.has_time()) {
+    auto TimeOfDay = WeeklyTimestamp.time();
+    std::unique_ptr<base::DictionaryValue> cur_time(
+        new base::DictionaryValue());
+    if (TimeOfDay.has_hours()) {
+      int hours = TimeOfDay.hours();
+      if (!(hours >= 0 && hours <= 23)) {
+        LOG(ERROR) << "Invalid hours value: " << hours
+                   << ", the value should be in [0; 23].";
+      }
+      cur_time->SetInteger("hours", hours);
+    } else {
+      LOG(ERROR) << "Hours in interval can't be absent.";
+    }
+    if (TimeOfDay.has_minutes()) {
+      int minutes = TimeOfDay.minutes();
+      if (!(minutes >= 0 && minutes <= 59)) {
+        LOG(ERROR) << "Invalid minutes value: " << hours
+                   << ", the value should be in [0; 59].";
+      }
+      cur_time->SetInteger("minutes", minutes);
+    } else {
+      LOG(ERROR) << "Minutes in interval can't be absent.";
+    }
+    timestamp->SetDictionary("time", std::move(cur_time));
+  } else {
+    LOG(ERROR) << "Time in interval can't be absent.";
+  }
+  return timestamp;
+}
+
 void DecodeLoginPolicies(const em::ChromeDeviceSettingsProto& policy,
                          PolicyMap* policies) {
   if (policy.has_guest_mode_enabled()) {
@@ -886,6 +926,35 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
                   POLICY_LEVEL_MANDATORY, POLICY_SCOPE_MACHINE,
                   POLICY_SOURCE_CLOUD, DecodeIntegerValue(container.mode()),
                   nullptr);
+  }
+
+  if (policy.has_device_off_hours()) {
+    const em::OffHoursProto& container(policy.device_off_hours());
+    std::unique_ptr<base::DictionaryValue> offHours(
+        new base::DictionaryValue());
+
+    std::unique_ptr<base::ListValue> intervals(new base::ListValue());
+    for (const auto& entry : container.interval()) {
+      std::unique_ptr<base::DictionaryValue> interval(
+          new base::DictionaryValue());
+      if (entry.has_start()) {
+        interval->SetDictionary("start", ParseTimestamp(entry.start()));
+      }
+      if (entry.has_end()) {
+        interval->SetDictionary("end", ParseTimestamp(entry.end()));
+      }
+      intervals->Append(std::move(interval));
+    }
+    offHours->SetList("intervals", std::move(intervals));
+
+    std::unique_ptr<base::ListValue> policy(new base::ListValue());
+    for (const auto& entry : container.policy()) {
+      policy->AppendString(entry);
+    }
+    offHours->SetList("policies", std::move(policy));
+
+    policies->Set(key::kOffHours, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_MACHINE,
+                  POLICY_SOURCE_CLOUD, std::move(offHours), nullptr);
   }
 }
 
