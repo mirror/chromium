@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e994e76a_e0a09ff2",
+        "filename": "components/download/internal/download_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T21:36:14Z",
+      "side": 0,
+      "message": "Is this breaking?  Shouldn\u0027t the DownloadServiceImpl call Initialize() right away?",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 53
+      },
+      "revId": "018138b898b40be1a269e2061f4dfe18ea493c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

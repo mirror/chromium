@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d088a118_951f7e79",
+        "filename": "components/download/internal/controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T21:36:14Z",
+      "side": 1,
+      "message": "Should this just be a Closure (basically void())?  Do we need to pass success if we can just query it?  OnceCallback?",
+      "range": {
+        "startLine": 42,
+        "startChar": 23,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "964160f4952e375295df2f059c8cde3d968dec03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc9aa0d_1c447c8a",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T21:36:14Z",
+      "side": 1,
+      "message": "Do we want an early return/DCHECK here too?",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 76
+      },
+      "revId": "964160f4952e375295df2f059c8cde3d968dec03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077f0d39_d501789a",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T21:36:14Z",
+      "side": 1,
+      "message": "Do we still want to DCHECK this in the other API methods as well?",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 37
+      },
+      "revId": "964160f4952e375295df2f059c8cde3d968dec03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2750456d_e5b40556",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T21:36:14Z",
+      "side": 1,
+      "message": "Maybe add a test that makes sure our order of operations are correct?  We talked about it a bit.  Let me know if you think it still makes sense to have.",
+      "range": {
+        "startLine": 456,
+        "startChar": 2,
+        "endLine": 456,
+        "endChar": 27
+      },
+      "revId": "964160f4952e375295df2f059c8cde3d968dec03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c033273_30c1339b",
+        "filename": "components/download/internal/controller_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T21:36:14Z",
+      "side": 1,
+      "message": "Probably worth saving and checking this was called/the return value in some of the init tests right?",
+      "range": {
+        "startLine": 161,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 39
+      },
+      "revId": "964160f4952e375295df2f059c8cde3d968dec03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f595ff_989c9d2d",
+        "filename": "components/download/internal/file_monitor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T21:36:14Z",
+      "side": 1,
+      "message": "Get rid of the WeakPtrFactory and just use base::Unretained(this)?",
+      "range": {
+        "startLine": 139,
+        "startChar": 30,
+        "endLine": 139,
+        "endChar": 56
+      },
+      "revId": "964160f4952e375295df2f059c8cde3d968dec03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fdc3283_7948d685",
+        "filename": "components/download/internal/test/mock_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T21:36:14Z",
+      "side": 1,
+      "message": "Maybe remove this so we just fail?  Feel like if we\u0027re early-returning here there\u0027s probably a bug in the test or code?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "964160f4952e375295df2f059c8cde3d968dec03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
