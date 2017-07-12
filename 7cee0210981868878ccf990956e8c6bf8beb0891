@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a76cd479_23de4f23",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-12T14:41:57Z",
+      "side": 1,
+      "message": "We want both is_running and is_paused. See formula in dashboard (I\u0027ll send it to you).\n\nAdd comments.",
+      "range": {
+        "startLine": 118,
+        "startChar": 28,
+        "endLine": 118,
+        "endChar": 38
+      },
+      "revId": "7cee0210981868878ccf990956e8c6bf8beb0891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce52f42d_a1f483fe",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-12T14:41:57Z",
+      "side": 1,
+      "message": "Add comment on why this is necessary",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 29
+      },
+      "revId": "7cee0210981868878ccf990956e8c6bf8beb0891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

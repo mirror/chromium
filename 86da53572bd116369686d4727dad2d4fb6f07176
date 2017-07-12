@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b683e082_9b673fb2",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-12T14:41:57Z",
+      "side": 0,
+      "message": "Leave this in.\n\nWe don\u0027t have this exit status on Android, and we don\u0027t want to change this for other platforms.",
+      "range": {
+        "startLine": 197,
+        "startChar": 34,
+        "endLine": 197,
+        "endChar": 62
+      },
+      "revId": "86da53572bd116369686d4727dad2d4fb6f07176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
