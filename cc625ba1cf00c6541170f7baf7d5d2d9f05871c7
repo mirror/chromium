@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "463cfb04_ff3230e6",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-12T23:00:06Z",
+      "side": 1,
+      "message": "That\u0027s fine if this is something to be deprecated soon.",
+      "parentUuid": "ff364208_e087ae18",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23a24b4d_5b724ea2",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 10
@@ -268,6 +286,24 @@
       "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1e8183_db41eb6e",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-12T23:00:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "846bcb97_0412bf4a",
+      "revId": "cc625ba1cf00c6541170f7baf7d5d2d9f05871c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
