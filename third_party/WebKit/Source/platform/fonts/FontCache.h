@@ -314,6 +314,9 @@ class PLATFORM_EXPORT FontCache {
   static int32_t status_font_height_;
   static bool use_skia_font_fallback_;
 #endif
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+  static AtomicString system_font_family_;
+#endif
 
   unsigned short generation_ = 0;
   bool platform_init_ = false;
