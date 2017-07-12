@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55e0bc16_d88f2f05",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-12T19:39:31Z",
+      "side": 1,
+      "message": "webPaymentRequest is guaranteed to have been created with a non-empty payment_request_id property:\nhttps://chromium-review.googlesource.com/c/565056/4/ios/web/payments/payment_request.cc#311",
+      "parentUuid": "dc90856f_80281284",
+      "revId": "b15dd71e9a05dfdde6bf7f6585c7e8bda20425c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f4c3ac1_ec8832d4",
         "filename": "ios/chrome/browser/web/resources/payment_request.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T15:06:39Z",
       "side": 1,
       "message": "There\u0027s no guarantee that this will give unique IDs. I\u0027ve always been told that unlikely events (such as a collision) will happen, at Chrome scale. We have base::GenerateGUID() that is better than this (it uses a cryptographically secure random number generator). Why not generate the ID in the C++ code and then update the object with the generated ID?",
+      "revId": "b15dd71e9a05dfdde6bf7f6585c7e8bda20425c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6754596a_1199b2bd",
+        "filename": "ios/chrome/browser/web/resources/payment_request.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-12T19:39:31Z",
+      "side": 1,
+      "message": "I understand there\u0027s no guarantee this will be unique. However, the likelihood of a collision for outputs of guid() is extremely low. Especially given the the scale at which PaymentRequest objects are created and simultaneously maintained per WebState. My comment addresses why generating the IDs in C++ is not an option:\n\nhttps://chromium-review.googlesource.com/c/565056/2/ios%252Fchrome%252Fbrowser%252Fui%252Fpayments%252Fpayment_request_manager.mm#403",
+      "parentUuid": "3f4c3ac1_ec8832d4",
       "revId": "b15dd71e9a05dfdde6bf7f6585c7e8bda20425c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
