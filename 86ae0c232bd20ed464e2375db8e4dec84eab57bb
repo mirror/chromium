@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "504bfa5c_0bdc9c3c",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T16:36:43Z",
+      "side": 1,
+      "message": "Yes :) Let me do that in a follow-up.",
+      "parentUuid": "71e38916_12a6344d",
+      "revId": "86ae0c232bd20ed464e2375db8e4dec84eab57bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0a0d796_b7c0bae6",
         "filename": "chrome/browser/notifications/notification_permission_context.cc",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2a9519ad_1d2daabc",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T16:36:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ab5dac7_348d6f0d",
+      "revId": "86ae0c232bd20ed464e2375db8e4dec84eab57bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fce9f4ac_ecc78f24",
         "filename": "chrome/browser/notifications/notification_permission_context.cc",
         "patchSetId": 1
@@ -86,6 +122,24 @@
       "revId": "86ae0c232bd20ed464e2375db8e4dec84eab57bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f047fe_313f11d3",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T16:36:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fce9f4ac_ecc78f24",
+      "revId": "86ae0c232bd20ed464e2375db8e4dec84eab57bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
