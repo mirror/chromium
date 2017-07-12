@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f81ce79_68073497",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T00:02:11Z",
+      "side": 1,
+      "message": "This could probably live in the CC file if we wanted it to.  We could hide the fact that it\u0027s a test one.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "d7f4a304cb220f82d165506699c806a18b4346fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5556c6_1bf21ceb",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T00:02:11Z",
+      "side": 1,
+      "message": "How do we set the Observer on this class?  It might make sense to allow the TestDownloadService class to take in a Client.  I need to see what the offline prefetch folks use it for exactly.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 4
+      },
+      "revId": "d7f4a304cb220f82d165506699c806a18b4346fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddbc7f8_2f223894",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T00:02:11Z",
+      "side": 1,
+      "message": "Move implementation into CC file.",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 3
+      },
+      "revId": "d7f4a304cb220f82d165506699c806a18b4346fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
