@@ -16,6 +16,24 @@
       "revId": "1ff290f9a8196b04c8661e2eca750e9eff50c64d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f30071c_2bdb6539",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-12T13:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d55395d8_ef28d5cf",
+      "revId": "1ff290f9a8196b04c8661e2eca750e9eff50c64d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
