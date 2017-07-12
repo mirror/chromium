@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63c4b59a_3678ce2d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29678,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-12T19:43:56Z",
+      "side": 1,
+      "message": "Can you change this to something of the form of \"Media engagement scores for each [something describing what the thing being scored is, engagement origin?], recorded\". Note the \",\" before \"recorded\". Not sure if it\u0027s correct grammar but I want something to indicate that it\u0027s the score being recorded, not the thing being scored.",
+      "range": {
+        "startLine": 29678,
+        "startChar": 4,
+        "endLine": 29678,
+        "endChar": 56
+      },
+      "revId": "ce1588efb4f528fcecbcc8b79f064ca70d08ccf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
