@@ -785,6 +785,10 @@ MediaInternals::MediaInternals()
     : can_update_(false),
       owner_ids_(),
       uma_handler_(new MediaInternalsUMAHandler(this)) {
+  // TODO(sandersd): Is there ever a relevant case where TERMINATED is sent
+  // without CLOSED also being sent?
+  registrar_.Add(this, NOTIFICATION_RENDERER_PROCESS_CLOSED,
+                 NotificationService::AllBrowserContextsAndSources());
   registrar_.Add(this, NOTIFICATION_RENDERER_PROCESS_TERMINATED,
                  NotificationService::AllBrowserContextsAndSources());
 }
@@ -795,9 +799,7 @@ void MediaInternals::Observe(int type,
                              const NotificationSource& source,
                              const NotificationDetails& details) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK_EQ(type, NOTIFICATION_RENDERER_PROCESS_TERMINATED);
   RenderProcessHost* process = Source<RenderProcessHost>(source).ptr();
-
   uma_handler_->OnProcessTerminated(process->GetID());
   saved_events_by_process_.erase(process->GetID());
 }
