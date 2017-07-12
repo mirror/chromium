@@ -46,8 +46,7 @@ bool WasOnMemoryPressureCalled() {
 class TestMemoryPressureMonitor : public MemoryPressureMonitor {
  public:
   TestMemoryPressureMonitor()
-      : MemoryPressureMonitor(THRESHOLD_DEFAULT),
-        memory_in_percent_override_(0) {
+      : MemoryPressureMonitor(), memory_in_percent_override_(0) {
     // Disable any timers which are going on and set a special memory reporting
     // function.
     StopObserving();
