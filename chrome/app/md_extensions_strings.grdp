@@ -94,6 +94,9 @@
   <message name="IDS_MD_EXTENSIONS_LOAD_ERROR_RETRY" desc="The text on the button to retry loading an unpacked extension after a failed load.">
     Retry
   </message>
+  <message name="IDS_MD_EXTENSIONS_OPTIONS_DIALOG_CANCEL" desc="The label of the button to close the extension's options dialog.">
+    Cancel
+  </message>
   <message name="IDS_MD_EXTENSIONS_PACK_DIALOG_TITLE" desc="The title of the dialog to pack an extension.">
     Pack extension
   </message>
