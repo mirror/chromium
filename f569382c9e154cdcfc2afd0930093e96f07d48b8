@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a0729c5_cb5e4d82",
+        "filename": "services/resource_coordinator/memory_instrumentation/process_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-12T15:44:11Z",
+      "side": 1,
+      "message": "I guess you meant s/return/continue/ (maybe a part of you is still thinking in JS)?\nAlso add a test to cover this (i.e. some pid being null and some not null OnInit) if we don\u0027t have one yet",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "f569382c9e154cdcfc2afd0930093e96f07d48b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092cc06e_0d960793",
+        "filename": "services/resource_coordinator/memory_instrumentation/process_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-12T15:44:11Z",
+      "side": 1,
+      "message": "super small thing, emplace returns a pair of itertor,bool, where the bool tells whether the item was inserted or did exist already.\nSO if you just do:\n\nauto it_and_inserted \u003d instances_-\u003eemplace(...);\nDCHECK(it_and_inserted.second);\n\nit will have the same semantic, but do only one lookup (for the insert) in dhceck instead of 2",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 48
+      },
+      "revId": "f569382c9e154cdcfc2afd0930093e96f07d48b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
