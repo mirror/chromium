@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "7a931ef7_274a50bb",
+        "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-12T19:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5d12bfb_41b06147",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1584906e_58bd6672",
         "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
         "patchSetId": 3
@@ -212,6 +236,30 @@
       "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b950d6f8_e17add5d",
+        "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-12T19:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0c49dba_bb7a9cd3",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
