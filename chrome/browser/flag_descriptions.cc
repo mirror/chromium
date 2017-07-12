@@ -1005,13 +1005,15 @@ const char kQuicName[] = "Experimental QUIC protocol";
 
 const char kQuicDescription[] = "Enable experimental QUIC protocol support.";
 
-const char kSslVersionMaxName[] = "Maximum TLS version enabled.";
+const char kTLS13VariantName[] = "TLS 1.3";
 
-const char kSslVersionMaxDescription[] = "Set maximum enabled TLS version.";
+const char kTLS13VariantDescription[] = "Sets the TLS 1.3 variant used.";
 
-const char kSslVersionMaxTls12[] = "TLS 1.2";
+const char kTLS13VariantDisabled[] = "Disabled";
 
-const char kSslVersionMaxTls13[] = "TLS 1.3";
+const char kTLS13VariantDraft[] = "Enabled (Draft)";
+
+const char kTLS13VariantExperiment[] = "Enabled (Experiment)";
 
 const char kPassiveDocumentEventListenersDescription[] =
     "Forces touchstart, and touchmove event listeners on document level "
