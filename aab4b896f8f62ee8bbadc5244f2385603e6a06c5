@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61341010_616d3ffc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-12T10:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "327a8105_8864b003",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "aab4b896f8f62ee8bbadc5244f2385603e6a06c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aced7ed_0021d003",
         "filename": "headless/lib/headless_devtools_client_browsertest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T09:56:33Z",
       "side": 1,
       "message": "are username/password checked by the proxy? (Just want to ensure that the test also tests that these are passed on to the proxy.)",
+      "range": {
+        "startLine": 1539,
+        "startChar": 27,
+        "endLine": 1539,
+        "endChar": 38
+      },
+      "revId": "aab4b896f8f62ee8bbadc5244f2385603e6a06c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64df4609_d724629b",
+        "filename": "headless/lib/headless_devtools_client_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-12T10:12:50Z",
+      "side": 1,
+      "message": "Yes, if you put something else here it goes into an infinite loop because the server sends another 407 in response to the wrong credentials, ad infinitum.",
+      "parentUuid": "8aced7ed_0021d003",
       "range": {
         "startLine": 1539,
         "startChar": 27,
