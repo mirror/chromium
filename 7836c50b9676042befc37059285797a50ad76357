@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "786a0891_f4282ec3",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3723,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-12T12:29:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a487d6a6_aa380fbf",
+      "range": {
+        "startLine": 3723,
+        "startChar": 7,
+        "endLine": 3723,
+        "endChar": 76
+      },
+      "revId": "7836c50b9676042befc37059285797a50ad76357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e68b1122_c2c8be4f",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "86b3d1e0_3fe16fc7",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3727,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-12T12:29:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e68b1122_c2c8be4f",
+      "revId": "7836c50b9676042befc37059285797a50ad76357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d4f04ed_ee2a7673",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-12T11:33:12Z",
       "side": 1,
       "message": "nit: Insert mode `.` instead of repeat command? :-)",
+      "range": {
+        "startLine": 611,
+        "startChar": 27,
+        "endLine": 611,
+        "endChar": 28
+      },
+      "revId": "7836c50b9676042befc37059285797a50ad76357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7423fe96_d958156a",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-12T12:29:24Z",
+      "side": 1,
+      "message": "Actually, this was intentional. This allows adding \"ManagerFill.AvailableContent\" to record whether only a username or a username/password pair was available for filling.",
+      "parentUuid": "4d4f04ed_ee2a7673",
       "range": {
         "startLine": 611,
         "startChar": 27,
