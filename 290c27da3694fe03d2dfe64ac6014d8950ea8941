@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1dd42d6_7133f05b",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-12T19:01:12Z",
+      "side": 1,
+      "message": "I might have done that, but matches are const at this point. Changing it sounds large compared to the benefit.",
+      "parentUuid": "0ac7f246_0cf19b03",
+      "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89d11094_c26fea71",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T17:04:23Z",
       "side": 1,
       "message": "Is this correct for RTL languages or do we need to do contents + prefix in that case? I *think* this is ok because the contents is laid out in a logically LTR order even for RTL content and then RenderText does the layout? But can you confirm?",
+      "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82dc8056_ee6db86a",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-12T19:01:12Z",
+      "side": 1,
+      "message": "I too believe that it\u0027s ok, but haven\u0027t confirmed yet.",
+      "parentUuid": "89d11094_c26fea71",
       "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dbb1c110_5c0bc67c",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-12T19:01:12Z",
+      "side": 1,
+      "message": "\u0027StartsWith()\u0027 sounds good, but \u0027insensitive\u0027 sounds like more risk than not using it. That is, is it really worth matching something just to dim it, and make the mistake of conflating \u0027polish\u0027 with \u0027Polish\u0027 (in some language where the substitution might actually be offensive.)",
+      "parentUuid": "ec615adb_a6f7e0bf",
+      "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc903226_d4a49e9e",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-12T17:04:23Z",
       "side": 1,
       "message": "This is assuming that the first offset is the only one to be less than the length of the common prefix. Which I think is probably what we always see? But it\u0027d be safer to not assume that and have the dim text overwrite (remove) any classifications before the end of the common prefix. Except for the last one, whose offset would become the length of the common prefix.",
+      "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904b33ce_2e2bad30",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-12T19:01:12Z",
+      "side": 1,
+      "message": "I think it\u0027s guaranteed given we\u0027ve verified the prefix matches, but I guess it can\u0027t hurt to check.",
+      "parentUuid": "bc903226_d4a49e9e",
       "revId": "290c27da3694fe03d2dfe64ac6014d8950ea8941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
