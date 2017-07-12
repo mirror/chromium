@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c13d0337_fb6ed1bd",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-12T19:04:08Z",
+      "side": 1,
+      "message": "Can you elaborate on this a bit?  From a quick look at the CL, it sounds like most of the network information API is always enabled now, but just the \"download max\" subset of it requires this flag?  Worth explaining a bit in this comment, including what \"downlink max\" is.",
+      "revId": "f6c2fefce35a21f8056723a590dfc952e0988723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
