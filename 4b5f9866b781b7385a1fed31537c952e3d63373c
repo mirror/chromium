@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55b3d19a_84edf375",
+        "filename": "ios/chrome/browser/ui/sync/synced_sessions_bridge.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-12T06:20:47Z",
+      "side": 0,
+      "message": "This line is not used.  So I remove it.",
+      "revId": "4b5f9866b781b7385a1fed31537c952e3d63373c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
