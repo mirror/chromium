@@ -46,6 +46,30 @@
       "revId": "d55dac02c650876abe0acb783bd1de1dc7bd5dcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "464bbeb3_1d78cad4",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-12T03:26:01Z",
+      "side": 1,
+      "message": "Er, yes a little bit. But it also makes life easier: when someone tells you to turn on a flag, it\u0027s better if you find it but it\u0027s \"not available on your platform\", than if it isn\u0027t there and you can\u0027t tell whether you\u0027ve misspelled it or something.\n\nSo there\u0027s a trade-off (usability versus binary size). Flags isn\u0027t a user surface but there\u0027s still utility for us as developers, and the existence of the OS field in this struct (and the whole feature of \"Unavailable Experiments\") means we\u0027re encouraged to use it where possible.",
+      "parentUuid": "7f2ea260_ca47cbe3",
+      "range": {
+        "startLine": 2020,
+        "startChar": 6,
+        "endLine": 2020,
+        "endChar": 34
+      },
+      "revId": "d55dac02c650876abe0acb783bd1de1dc7bd5dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
