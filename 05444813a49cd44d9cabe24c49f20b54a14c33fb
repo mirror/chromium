@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14eaa3d3_89c04405",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T15:38:39Z",
+      "side": 1,
+      "message": "variant",
+      "revId": "05444813a49cd44d9cabe24c49f20b54a14c33fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3501cf0_4dfd804b",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store_ssl_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T15:38:39Z",
+      "side": 1,
+      "message": "Think it\u0027s worth adding a test or two that the tls13-variant command-line switch successfuly overrides field trials? Both in the enabled \u003d\u003e disabled and disabled \u003d\u003e enabled direction. (SSLConfigServiceManagerPrefTest.TLS13SSLVersionMax captures the enterprise policy hook, but about:flags \u003d\u003e command-line flag is a different beast, especially since the flag clobbers the max-version.)",
+      "revId": "05444813a49cd44d9cabe24c49f20b54a14c33fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49b8d23_771d8cc0",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T15:38:39Z",
+      "side": 1,
+      "message": "Nit: For completeness, I suppose this ought to be:\n\n  config-\u003eversion_max \u003d std::min(config-\u003eversion_max, net::SSL_PROTOCOL_VERSION_TLS1_2);",
+      "revId": "05444813a49cd44d9cabe24c49f20b54a14c33fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9100e8_f1ee2a16",
+        "filename": "components/ssl_config/ssl_config_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T15:38:39Z",
+      "side": 1,
+      "message": "Guessing you didn\u0027t mean to include this line. :-)",
+      "revId": "05444813a49cd44d9cabe24c49f20b54a14c33fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3225da2_b158bd16",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T15:38:39Z",
+      "side": 1,
+      "message": "I believe only the first setting ever actually does anything. :-/ Probably this should be DraftEnabled or ExperimentEnabled? Dunno which.",
+      "revId": "05444813a49cd44d9cabe24c49f20b54a14c33fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
