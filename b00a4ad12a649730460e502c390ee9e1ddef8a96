@@ -91,6 +91,92 @@
       "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31618a16_e8783299",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-12T17:59:04Z",
+      "side": 1,
+      "message": "Finish this sentence",
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12f5043_ff8b36ad",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-12T17:59:04Z",
+      "side": 1,
+      "message": "false?",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 19
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e152012c_8ef2cf0a",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-12T17:59:04Z",
+      "side": 1,
+      "message": "Nit: consider adding a DCHECK(loader_) like you did in LoadImage, or wrapping this in if(loader_)",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b193afa_8cf49e24",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-12T17:59:04Z",
+      "side": 1,
+      "message": "We should remember to update this logic if/when moving to cover instead of contain. In fact, this is already doing the wrong thing on Android. I\u0027ll file a bug.",
+      "range": {
+        "startLine": 237,
+        "startChar": 36,
+        "endLine": 237,
+        "endChar": 70
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
