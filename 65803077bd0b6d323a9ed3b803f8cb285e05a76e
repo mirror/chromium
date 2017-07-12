@@ -70,6 +70,30 @@
       "revId": "65803077bd0b6d323a9ed3b803f8cb285e05a76e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c363f61d_10e0b73c",
+        "filename": "base/containers/small_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-12T22:51:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3f41c8f8_350283c7",
+      "range": {
+        "startLine": 473,
+        "startChar": 27,
+        "endLine": 473,
+        "endChar": 39
+      },
+      "revId": "65803077bd0b6d323a9ed3b803f8cb285e05a76e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

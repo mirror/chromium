@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "77e96313_255e66e1",
+        "filename": "base/containers/small_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-12T22:51:16Z",
+      "side": 1,
+      "message": "I would tend to agree with Daniel since a copy and move is worse than a copy, especially since things aren\u0027t always cheaper to move than copy (e.g. big POD structs).",
+      "parentUuid": "c3600c1d_20251b3a",
+      "range": {
+        "startLine": 423,
+        "startChar": 65,
+        "endLine": 423,
+        "endChar": 76
+      },
+      "revId": "29e3a95abaea16918decc5811e70dc72969e954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40cd7757_b4feaa99",
         "filename": "base/containers/small_map_unittest.cc",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7bfeaf8f_d78721a6",
+        "filename": "base/containers/small_map_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-12T22:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40cd7757_b4feaa99",
+      "range": {
+        "startLine": 571,
+        "startChar": 4,
+        "endLine": 571,
+        "endChar": 29
+      },
+      "revId": "29e3a95abaea16918decc5811e70dc72969e954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b2d5a73_1c399679",
         "filename": "base/containers/small_map_unittest.cc",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "29e3a95abaea16918decc5811e70dc72969e954b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3e3bda_8fb3ea7d",
+        "filename": "base/containers/small_map_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-12T22:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b2d5a73_1c399679",
+      "range": {
+        "startLine": 594,
+        "startChar": 45,
+        "endLine": 594,
+        "endChar": 46
+      },
+      "revId": "29e3a95abaea16918decc5811e70dc72969e954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
