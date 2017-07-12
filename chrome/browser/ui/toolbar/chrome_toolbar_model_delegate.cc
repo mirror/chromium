@@ -76,6 +76,10 @@ bool ChromeToolbarModelDelegate::ShouldDisplayURL() const {
     }
   }
 
+  // We don't have a URL without a web content.
+  if (!GetActiveWebContents())
+    return false;
+
   return !search::IsInstantNTP(GetActiveWebContents());
 }
 
