@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b759e39_35bc6759",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T17:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c214e305_a0ab969a",
+      "revId": "0bc84700c2d3fd1f21310cd9b45e27152330364c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fb02024_5d90e83d",
         "filename": "cc/scheduler/scheduler.cc",
         "patchSetId": 1
