@@ -1,0 +1,307 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b25988dc_5924d563",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "This whole chunk could actually be replaced itself with a PlatformChannelPair too. Maybe add TODO to evaluate?",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 11
+      },
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5486187d_af0dce9e",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "FYI, this is backwards from Mojo documentation. Doesn\u0027t matter since the pipe-ends are symmetric, but it is backwards.",
+      "range": {
+        "startLine": 133,
+        "startChar": 29,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a5aaf7_fb6dbc11",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "Add comment here explaining that the kLegacy transport requires the OBCI to Send() before the IBCI Accepts. That way people have a chance of noticing the bug you ran into before triggering it on a refactor.",
+      "range": {
+        "startLine": 168,
+        "startChar": 5,
+        "endLine": 168,
+        "endChar": 25
+      },
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15032322_363aee16",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be an include somewhere for this?",
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb17b9e7_73c658c6",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be an include somewhere for this?",
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d524d0d_701791ed",
+        "filename": "chrome/common/profiling/memlog_sender.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "Can we add similar comments to the other 2 functions here? They all look a whole lot like \"start the thing\" when just given the names.",
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf5f3f2_bbb2fe02",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "Should this only continue if the error is no-such file? As opposed to say, wrong permissions or something?",
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77a54a9_e2fb4a65",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "crazy idea... use the C++11 class-member-initialization feature of assigning the value right here?",
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78f966f_b8fa0cf1",
+        "filename": "chrome/common/profiling/profiling_constants.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "rename to profiling_control",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516af0b8_5e1a74eb",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "comma splice.",
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f6347b_359c0e43",
+        "filename": "chrome/profiling/memlog_control_receiver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "space between () and {}. No semicolon.",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d27c500_42a08166",
+        "filename": "chrome/profiling/memlog_stream_parser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "Also \u003c\u003c msg_type?",
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7a3df3_0f882a4e",
+        "filename": "chrome/profiling/memlog_stream_parser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "or util -\u003e or live until",
+      "range": {
+        "startLine": 20,
+        "startChar": 53,
+        "endLine": 20,
+        "endChar": 54
+      },
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38d859f_471a086c",
+        "filename": "chrome/profiling/profiling_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "Overtime, it\u0027d be nice to remove the Globals concept and just have this be an Environment that we pass along as dependency injection.",
+      "range": {
+        "startLine": 25,
+        "startChar": 18,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e4facf_45ca5c5e",
+        "filename": "chrome/profiling/profiling_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-12T01:17:31Z",
+      "side": 1,
+      "message": "Overtime, it\u0027d be nice to remove the Globals concept and just have this be an Environment that we pass along as dependency injection.",
+      "range": {
+        "startLine": 25,
+        "startChar": 18,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "75a3434e98c049513027a74b70ad7717c836a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
