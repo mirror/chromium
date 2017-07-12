@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fff01cb9_91ace817",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-07-12T20:45:56Z",
+      "side": 1,
+      "message": "Nope, because it needs to access virtual methods from the subclass, which has not yet been constructed.",
+      "parentUuid": "44da4b7e_a680acc9",
+      "range": {
+        "startLine": 55,
+        "startChar": 43,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c953add0_d769ff7e",
         "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-12T17:55:19Z",
       "side": 1,
       "message": "no curlies :)",
+      "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cae3ac3_15714d46",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-07-12T20:45:56Z",
+      "side": 1,
+      "message": "Ugh, I thought I fixed this when Anthony mentioned it, but I must have added them back in while debugging.",
+      "parentUuid": "c953add0_d769ff7e",
       "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "cbdd6bc8_f3f90c29",
+        "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-07-12T20:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be9d5eb9_6c1b900c",
+      "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f370c1_3b099231",
         "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b877ec98_0ba3322f",
+        "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-07-12T20:45:56Z",
+      "side": 1,
+      "message": "This comment probably isn\u0027t needed anymore, since the structure has changed a bit. I\u0027ll just remove it, since it\u0027s not helping to clarify anything.\n\nIt\u0027s OK to call PopulateList in the subclass constructors, which is what we do. It would cause a problem if we called it in the base class constructor, because GetProfiles is a virtual.",
+      "parentUuid": "17f370c1_3b099231",
+      "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
