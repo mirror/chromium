@@ -233,7 +233,9 @@ def main():
        '-machine', 'q35',
        '-kernel', os.path.join(SDK_ROOT, 'kernel', 'magenta.bin'),
        '-initrd', bootfs,
-       '-append', 'TERM=xterm-256color kernel.halt_on_panic=true']
+       '-serial', 'stdio',
+       '-monitor', 'none',
+       '-append', 'TERM=dumb kernel.halt_on_panic=true']
   if int(os.environ.get('CHROME_HEADLESS', 0)) == 0:
     qemu_command += ['-enable-kvm', '-cpu', 'host,migratable=no']
   else:
@@ -246,14 +248,15 @@ def main():
     bt_with_offset_re = re.compile(prefix +
         'bt#(\d+): pc 0x[0-9a-f]+ sp (0x[0-9a-f]+) \((\S+),(0x[0-9a-f]+)\)$')
     bt_end_re = re.compile(prefix + 'bt#(\d+): end')
-    qemu_popen = subprocess.Popen(qemu_command, stdout=subprocess.PIPE)
+    qemu_popen = subprocess.Popen(
+        qemu_command, stdout=subprocess.PIPE, stdin=open('/dev/null', 'r'))
     processed_lines = []
     success = False
     while True:
       line = qemu_popen.stdout.readline()
       if not line:
         break
-      print line,
+      sys.stdout.write(line)
       if 'SUCCESS: all tests passed.' in line:
         success = True
       if bt_end_re.match(line.strip()):
@@ -275,6 +278,7 @@ def main():
               '(inlined', ' ' * len(prefix) + '(inlined')
           processed_lines.append('%s%s' % (prefix, addr2line_filtered))
     qemu_popen.wait()
+
     return 0 if success else 1
 
   return 0
