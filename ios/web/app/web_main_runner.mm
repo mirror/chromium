@@ -36,18 +36,18 @@ class WebMainRunnerImpl : public WebMainRunner {
     }
   }
 
-  int Initialize(const WebMainParams& params) override {
+  int Initialize(std::unique_ptr<WebMainParams> params) override {
     ////////////////////////////////////////////////////////////////////////
     // ContentMainRunnerImpl::Initialize()
     //
     is_initialized_ = true;
-    delegate_ = params.delegate;
+    delegate_ = params->delegate;
 
-    if (params.register_exit_manager) {
+    if (params->register_exit_manager) {
       exit_manager_.reset(new base::AtExitManager);
     }
 
-    base::CommandLine::Init(params.argc, params.argv);
+    base::CommandLine::Init(params->argc, params->argv);
     if (delegate_) {
       delegate_->BasicStartupComplete();
     }
@@ -73,7 +73,8 @@ class WebMainRunnerImpl : public WebMainRunner {
     main_loop_->Init();
     main_loop_->EarlyInitialization();
     main_loop_->MainMessageLoopStart();
-    main_loop_->CreateStartupTasks();
+    main_loop_->CreateStartupTasks(
+        std::move(params->get_task_scheduler_init_params_callback));
     int result_code = main_loop_->GetResultCode();
     if (result_code > 0)
       return result_code;
