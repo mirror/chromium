@@ -532,6 +532,30 @@
     },
     {
       "key": {
+        "uuid": "d0c80cb6_24309976",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T11:18:11Z",
+      "side": 1,
+      "message": "Per the other comments, I think that Cancel() probably isn\u0027t necessary at all. If you want to cancel the request, just destroy the object. (And then it\u0027s a separate question whether the callback should still be called in that case - probably not.)\n\nIf Cancel() does end up being necessary for some reason, then it should behave the same way as destruction IMO.",
+      "parentUuid": "9543878b_a854e528",
+      "range": {
+        "startLine": 69,
+        "startChar": 29,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a84cf0e4_d044a4c6",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -1178,6 +1202,30 @@
     },
     {
       "key": {
+        "uuid": "7391647e_9c38fe29",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T11:18:11Z",
+      "side": 1,
+      "message": "Hm. So from the server\u0027s point of view, the subscription token is the unique user identifier, right? So the server can\u0027t do the unsubscribe automatically.\n\nI think I would treat it separately, because in the case of \"resubscription with same token\", the unsubscribe isn\u0027t required at all, that can just be a \"subscribe\".",
+      "parentUuid": "8a0cf043_325fb071",
+      "range": {
+        "startLine": 176,
+        "startChar": 31,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a486e94d_fe4a8bfc",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 3
@@ -1222,6 +1270,30 @@
       "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6288ba_2724fba5",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T11:18:11Z",
+      "side": 1,
+      "message": "I think it was probably okay before, just making sure. It\u0027s not really related to concurrent subscribe/unsubscribe requests though.",
+      "parentUuid": "b043c244_8ef25b7d",
+      "range": {
+        "startLine": 194,
+        "startChar": 39,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -2049,6 +2121,30 @@
       "side": 1,
       "message": "Sorry?\nWhich one are you referring to?",
       "parentUuid": "e6c84aab_d2024051",
+      "range": {
+        "startLine": 125,
+        "startChar": 69,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "46654bb95d4e7fc44f275fdf7d9605b5b4aad49a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8189146a_835566fb",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T11:18:11Z",
+      "side": 1,
+      "message": "There\u0027s fake_token_service_ here, but also utils_.token_service_. One of the two needs to go.",
+      "parentUuid": "4e223e78_8f12a6ea",
       "range": {
         "startLine": 125,
         "startChar": 69,
