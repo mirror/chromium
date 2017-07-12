@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "127026e7_86183424",
+        "filename": "components/variations/service/field_trial_creator_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:45:12Z",
+      "side": 1,
+      "message": "It\u0027s 2017 now!\n\nAlso, remove the (c) since that\u0027s not done for new files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23023688_809fb7e7",
+        "filename": "components/variations/service/field_trial_creator_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:45:12Z",
+      "side": 1,
+      "message": "Please trim the set of includes to only ones that this file actually needs.",
+      "range": {
+        "startLine": 23,
+        "startChar": 39,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e4e5e2_b01f177a",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:45:12Z",
+      "side": 1,
+      "message": "Please rebase and include changes to these functions that happened in the meantime.\n\nFor example, https://codereview.chromium.org/2970093002/ added another field to this.\n\nAnd there might have been other changes too (I think isherman@ was recently modifying this code.) Please double check.",
+      "range": {
+        "startLine": 220,
+        "startChar": 35,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd27d39f_9950c941",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:45:12Z",
+      "side": 1,
+      "message": "isherman@ is changing this in https://chromium-review.googlesource.com/567653",
+      "range": {
+        "startLine": 325,
+        "startChar": 21,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c38818_662d6731",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:45:12Z",
+      "side": 1,
+      "message": "Nit: No (c) for new files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cba56f_3f4f6617",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:45:12Z",
+      "side": 1,
+      "message": "I think this is true for all the parameters actually. So update comment for that. (i.e. \"that objects passed to the constructor stay valid\")",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 46
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b79aff_b4423044",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-12T20:45:12Z",
+      "side": 1,
+      "message": "This parameter should be last since it gets modified by the function.",
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
