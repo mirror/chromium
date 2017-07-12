@@ -110,6 +110,24 @@
     },
     {
       "key": {
+        "uuid": "da01b768_45db059b",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2209,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-12T18:27:14Z",
+      "side": 1,
+      "message": "Actually my comment is false. The WindowBeginFrameSource does set paused \u003d true when WindowAndroid::OnVsyncPaused is called. I don\u0027t know how DCHECK(!paused) worked for the non browser compositor case before since RWHVA is directly connected to the WindowBFS and would receive the paused signal from there.",
+      "parentUuid": "9f4ded9b_67896a19",
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "793c86f9_b84a65df",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 4
