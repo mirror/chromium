@@ -388,6 +388,10 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // url we're navigating to.
   void SetExpectedProcess(RenderProcessHost* expected_process);
 
+  base::WeakPtr<NavigationHandleImpl> GetWeakPtrForTesting() {
+    return weak_factory_.GetWeakPtr();
+  }
+
  private:
   friend class NavigationHandleImplTest;
 
