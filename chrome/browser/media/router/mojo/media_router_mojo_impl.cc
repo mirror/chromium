@@ -17,14 +17,13 @@
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h"
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
-#include "chrome/browser/media/router/event_page_request_manager.h"
-#include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/issues_observer.h"
 #include "chrome/browser/media/router/media_router_factory.h"
 #include "chrome/browser/media/router/media_router_feature.h"
 #include "chrome/browser/media/router/media_routes_observer.h"
 #include "chrome/browser/media/router/media_sinks_observer.h"
 #include "chrome/browser/media/router/mojo/media_route_controller.h"
+#include "chrome/browser/media/router/mojo/media_route_provider_proxy.h"
 #include "chrome/browser/media/router/mojo/media_route_provider_util_win.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_metrics.h"
 #include "chrome/browser/media/router/route_message_observer.h"
@@ -66,13 +65,12 @@ MediaRouterMojoImpl::MediaSinksQuery::~MediaSinksQuery() = default;
 MediaRouterMojoImpl::MediaRouterMojoImpl(content::BrowserContext* context,
                                          FirewallCheck check_firewall)
     : instance_id_(base::GenerateGUID()),
+      media_route_provider_(
+          base::MakeUnique<MediaRouteProviderProxy>(context, this)),
       availability_(mojom::MediaRouter::SinkAvailability::UNAVAILABLE),
       context_(context),
-      event_page_request_manager_(
-          EventPageRequestManagerFactory::GetApiForBrowserContext(context)),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  DCHECK(event_page_request_manager_);
 #if defined(OS_WIN)
   if (check_firewall == FirewallCheck::RUN) {
     CanFirewallUseLocalPorts(
@@ -88,70 +86,27 @@ MediaRouterMojoImpl::~MediaRouterMojoImpl() {
     dial_media_sink_service_proxy_->Stop();
 }
 
-// static
-void MediaRouterMojoImpl::BindToRequest(
-    const extensions::Extension* extension,
-    content::BrowserContext* context,
-    const service_manager::BindSourceInfo& source_info,
-    mojom::MediaRouterRequest request) {
-  MediaRouterMojoImpl* impl = static_cast<MediaRouterMojoImpl*>(
-      MediaRouterFactory::GetApiForBrowserContext(context));
-  DCHECK(impl);
-
-  impl->BindToMojoRequest(std::move(request), *extension);
-}
-
 void MediaRouterMojoImpl::BindToMojoRequest(
     mojo::InterfaceRequest<mojom::MediaRouter> request,
-    const extensions::Extension& extension) {
+    base::OnceClosure error_handler) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   binding_ = base::MakeUnique<mojo::Binding<mojom::MediaRouter>>(
       this, std::move(request));
-  binding_->set_connection_error_handler(base::Bind(
-      &MediaRouterMojoImpl::OnConnectionError, base::Unretained(this)));
-
-  event_page_request_manager_->SetExtensionId(extension.id());
-  if (!provider_version_was_recorded_) {
-    MediaRouterMojoMetrics::RecordMediaRouteProviderVersion(extension);
-    provider_version_was_recorded_ = true;
-  }
+  binding_->set_connection_error_handler(std::move(error_handler));
 }
 
 void MediaRouterMojoImpl::OnConnectionError() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  event_page_request_manager_->OnMojoConnectionError();
-  media_route_provider_.reset();
   binding_.reset();
 }
 
 void MediaRouterMojoImpl::RegisterMediaRouteProvider(
     mojom::MediaRouteProviderPtr media_route_provider_ptr,
     mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-#if defined(OS_WIN)
-  // The MRPM may have been upgraded or otherwise reload such that we could be
-  // seeing an MRPM that doesn't know mDNS is enabled, even if we've told a
-  // previously registered MRPM it should be enabled. Furthermore, there may be
-  // a pending request to enable mDNS, so don't clear this flag after
-  // ExecutePendingRequests().
-  is_mdns_enabled_ = false;
-#endif
-
-  media_route_provider_ = std::move(media_route_provider_ptr);
-  media_route_provider_.set_connection_error_handler(base::Bind(
-      &MediaRouterMojoImpl::OnConnectionError, base::Unretained(this)));
-
-  auto config = mojom::MediaRouteProviderConfig::New();
-  // Enabling browser side discovery means disabling extension side discovery.
-  // We are migrating discovery from the external Media Route Provider to the
-  // Media Router (crbug.com/687383), so we need to disable it in the provider.
-  config->enable_dial_discovery = !media_router::DialLocalDiscoveryEnabled();
-  config->enable_cast_discovery = !media_router::CastDiscoveryEnabled();
-  std::move(callback).Run(instance_id_, std::move(config));
-  event_page_request_manager_->OnMojoConnectionsReady();
-  SyncStateToMediaRouteProvider();
+  static_cast<MediaRouteProviderProxy*>(media_route_provider_.get())
+      ->RegisterMediaRouteProvider(std::move(media_route_provider_ptr),
+                                   std::move(callback));
 }
 
 void MediaRouterMojoImpl::OnIssue(const IssueInfo& issue) {
@@ -266,11 +221,13 @@ void MediaRouterMojoImpl::CreateRoute(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   int tab_id = SessionTabHelper::IdForTab(web_contents);
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoCreateRoute,
-                     weak_factory_.GetWeakPtr(), source_id, sink_id, origin,
-                     tab_id, std::move(callbacks), timeout, incognito),
-      MediaRouteProviderWakeReason::CREATE_ROUTE);
+  std::string presentation_id = MediaRouterBase::CreatePresentationId();
+  auto callback = base::BindOnce(&MediaRouterMojoImpl::RouteResponseReceived,
+                                 weak_factory_.GetWeakPtr(), presentation_id,
+                                 incognito, base::Passed(&callbacks), false);
+  media_route_provider_->CreateRoute(source_id, sink_id, presentation_id,
+                                     origin, tab_id, timeout, incognito,
+                                     std::move(callback));
 }
 
 void MediaRouterMojoImpl::JoinRoute(
@@ -281,8 +238,6 @@ void MediaRouterMojoImpl::JoinRoute(
     std::vector<MediaRouteResponseCallback> callbacks,
     base::TimeDelta timeout,
     bool incognito) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
   if (!HasJoinableRoute()) {
     DVLOG_WITH_INSTANCE(1) << "No joinable routes";
     std::unique_ptr<RouteRequestResult> result = RouteRequestResult::FromError(
@@ -293,11 +248,11 @@ void MediaRouterMojoImpl::JoinRoute(
   }
 
   int tab_id = SessionTabHelper::IdForTab(web_contents);
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoJoinRoute,
-                     weak_factory_.GetWeakPtr(), source_id, presentation_id,
-                     origin, tab_id, std::move(callbacks), timeout, incognito),
-      MediaRouteProviderWakeReason::JOIN_ROUTE);
+  auto callback = base::BindOnce(&MediaRouterMojoImpl::RouteResponseReceived,
+                                 weak_factory_.GetWeakPtr(), presentation_id,
+                                 incognito, base::Passed(&callbacks), true);
+  media_route_provider_->JoinRoute(source_id, presentation_id, origin, tab_id,
+                                   timeout, incognito, std::move(callback));
 }
 
 void MediaRouterMojoImpl::ConnectRouteByRouteId(
@@ -311,41 +266,34 @@ void MediaRouterMojoImpl::ConnectRouteByRouteId(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   int tab_id = SessionTabHelper::IdForTab(web_contents);
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoConnectRouteByRouteId,
-                     weak_factory_.GetWeakPtr(), source_id, route_id, origin,
-                     tab_id, std::move(callbacks), timeout, incognito),
-      MediaRouteProviderWakeReason::CONNECT_ROUTE_BY_ROUTE_ID);
+  std::string presentation_id = MediaRouterBase::CreatePresentationId();
+  auto callback = base::BindOnce(&MediaRouterMojoImpl::RouteResponseReceived,
+                                 weak_factory_.GetWeakPtr(), presentation_id,
+                                 incognito, base::Passed(&callbacks), true);
+  media_route_provider_->ConnectRouteByRouteId(
+      source_id, route_id, presentation_id, origin, tab_id, timeout, incognito,
+      std::move(callback));
 }
 
 void MediaRouterMojoImpl::TerminateRoute(const MediaRoute::Id& route_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DVLOG(2) << "TerminateRoute " << route_id;
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoTerminateRoute,
-                     weak_factory_.GetWeakPtr(), route_id),
-      MediaRouteProviderWakeReason::TERMINATE_ROUTE);
+  auto callback = base::BindOnce(&MediaRouterMojoImpl::OnTerminateRouteResult,
+                                 weak_factory_.GetWeakPtr(), route_id);
+  media_route_provider_->TerminateRoute(route_id, std::move(callback));
 }
 
 void MediaRouterMojoImpl::DetachRoute(const MediaRoute::Id& route_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoDetachRoute,
-                     weak_factory_.GetWeakPtr(), route_id),
-      MediaRouteProviderWakeReason::DETACH_ROUTE);
+  media_route_provider_->DetachRoute(route_id);
 }
 
 void MediaRouterMojoImpl::SendRouteMessage(const MediaRoute::Id& route_id,
                                            const std::string& message,
                                            SendRouteMessageCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoSendSessionMessage,
-                     weak_factory_.GetWeakPtr(), route_id, message,
-                     std::move(callback)),
-      MediaRouteProviderWakeReason::SEND_SESSION_MESSAGE);
+  media_route_provider_->SendRouteMessage(route_id, message,
+                                          std::move(callback));
 }
 
 void MediaRouterMojoImpl::SendRouteBinaryMessage(
@@ -353,12 +301,8 @@ void MediaRouterMojoImpl::SendRouteBinaryMessage(
     std::unique_ptr<std::vector<uint8_t>> data,
     SendRouteMessageCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoSendSessionBinaryMessage,
-                     weak_factory_.GetWeakPtr(), route_id,
-                     base::Passed(std::move(data)), std::move(callback)),
-      MediaRouteProviderWakeReason::SEND_SESSION_BINARY_MESSAGE);
+  media_route_provider_->SendRouteBinaryMessage(route_id, *data,
+                                                std::move(callback));
 }
 
 void MediaRouterMojoImpl::AddIssue(const IssueInfo& issue_info) {
@@ -388,12 +332,12 @@ void MediaRouterMojoImpl::SearchSinks(
     const std::string& domain,
     MediaSinkSearchResponseCallback sink_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoSearchSinks,
-                     weak_factory_.GetWeakPtr(), sink_id, source_id,
-                     search_input, domain, std::move(sink_callback)),
-      MediaRouteProviderWakeReason::SEARCH_SINKS);
+  auto sink_search_criteria = mojom::SinkSearchCriteria::New();
+  sink_search_criteria->input = search_input;
+  sink_search_criteria->domain = domain;
+  media_route_provider_->SearchSinks(sink_id, source_id,
+                                     std::move(sink_search_criteria),
+                                     std::move(sink_callback));
 }
 
 scoped_refptr<MediaRouteController> MediaRouterMojoImpl::GetRouteController(
@@ -412,14 +356,58 @@ scoped_refptr<MediaRouteController> MediaRouterMojoImpl::GetRouteController(
       new MediaRouteController(route_id, std::move(mojo_media_controller),
                                this);
 
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoCreateMediaRouteController,
-                     weak_factory_.GetWeakPtr(), route_id,
-                     std::move(mojo_media_controller_request),
-                     route_controller->BindObserverPtr()),
-      MediaRouteProviderWakeReason::CREATE_MEDIA_ROUTE_CONTROLLER);
+  auto callback = base::BindOnce(&MediaRouterMojoImpl::OnMediaControllerCreated,
+                                 weak_factory_.GetWeakPtr(), route_id);
+  media_route_provider_->CreateMediaRouteController(
+      route_id, std::move(mojo_media_controller_request),
+      route_controller->BindObserverPtr(), std::move(callback));
   route_controllers_.emplace(route_id, route_controller.get());
   return route_controller;
+}
+
+bool MediaRouterMojoImpl::ShouldStartObservingSinks(
+    const MediaSource::Id& media_source) {
+  // No need to call MRPM if there are no sinks available.
+  if (availability_ == mojom::MediaRouter::SinkAvailability::UNAVAILABLE)
+    return false;
+
+  // No need to call MRPM if all observers have been removed in the meantime.
+  auto it = sinks_queries_.find(media_source);
+  if (it != sinks_queries_.end() &&
+      it->second->observers.might_have_observers()) {
+    it->second->is_active = true;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool MediaRouterMojoImpl::ShouldStopObservingMediaSinks(
+    const MediaSource::Id& media_source) {
+  auto it = sinks_queries_.find(media_source);
+  // No need to call MRPM if observers have been added in the meantime,
+  // or StopObservingMediaSinks has already been called.
+  LOG(ERROR) << (it != sinks_queries_.end()) << it->second->is_active
+             << !it->second->observers.might_have_observers();
+  return it != sinks_queries_.end() && it->second->is_active &&
+         !it->second->observers.might_have_observers();
+}
+
+bool MediaRouterMojoImpl::ShouldStartObservingMediaRoutes(
+    const MediaSource::Id& media_source) {
+  // No need to call MRPM if all observers have been removed in the meantime.
+  auto it = routes_queries_.find(media_source);
+  return it != routes_queries_.end() &&
+         it->second->observers.might_have_observers();
+}
+
+bool MediaRouterMojoImpl::ShouldStopObservingMediaRoutes(
+    const MediaSource::Id& media_source) {
+  // No need to call MRPM if observers have been added in the meantime,
+  // or StopObservingMediaRoutes has already been called.
+  auto it = routes_queries_.find(media_source);
+  return it != routes_queries_.end() &&
+         !it->second->observers.might_have_observers();
 }
 
 void MediaRouterMojoImpl::ProvideSinks(const std::string& provider_name,
@@ -427,11 +415,7 @@ void MediaRouterMojoImpl::ProvideSinks(const std::string& provider_name,
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DVLOG_WITH_INSTANCE(1) << "Provider [" << provider_name << "] found "
                          << sinks.size() << " devices...";
-
-  event_page_request_manager_->RunOrDefer(
-      base::Bind(&MediaRouterMojoImpl::DoProvideSinks,
-                 weak_factory_.GetWeakPtr(), provider_name, std::move(sinks)),
-      MediaRouteProviderWakeReason::PROVIDE_SINKS);
+  media_route_provider_->ProvideSinks(provider_name, std::move(sinks));
 }
 
 bool MediaRouterMojoImpl::RegisterMediaSinksObserver(
@@ -459,10 +443,7 @@ bool MediaRouterMojoImpl::RegisterMediaSinksObserver(
   } else {
     // Need to call MRPM to start observing sinks if the query is new.
     if (is_new_query) {
-      event_page_request_manager_->RunOrDefer(
-          base::BindOnce(&MediaRouterMojoImpl::DoStartObservingMediaSinks,
-                         weak_factory_.GetWeakPtr(), source_id),
-          MediaRouteProviderWakeReason::START_OBSERVING_MEDIA_SINKS);
+      media_route_provider_->StartObservingMediaSinks(source_id);
     } else if (sinks_query->cached_sink_list) {
       observer->OnSinksUpdated(*sinks_query->cached_sink_list,
                                sinks_query->origins);
@@ -482,6 +463,8 @@ void MediaRouterMojoImpl::UnregisterMediaSinksObserver(
     return;
   }
 
+  LOG(ERROR) << "________________________unregister";
+
   // If we are removing the final observer for the source, then stop
   // observing sinks for it.
   // might_have_observers() is reliable here on the assumption that this call
@@ -493,15 +476,15 @@ void MediaRouterMojoImpl::UnregisterMediaSinksObserver(
     // Otherwise, the MRPM would have discarded the queries already.
     if (availability_ !=
         mojom::MediaRouter::SinkAvailability::UNAVAILABLE) {
+      LOG(ERROR) << "________________________unregister YES";
       // The |sinks_queries_| entry will be removed in the immediate or deferred
       // |DoStopObservingMediaSinks| call.
-      event_page_request_manager_->RunOrDefer(
-          base::BindOnce(&MediaRouterMojoImpl::DoStopObservingMediaSinks,
-                         weak_factory_.GetWeakPtr(), source_id),
-          MediaRouteProviderWakeReason::STOP_OBSERVING_MEDIA_SINKS);
+      media_route_provider_->StopObservingMediaSinks(source_id);
     } else {
       sinks_queries_.erase(source_id);
     }
+  } else {
+    LOG(ERROR) << "________________________unregister NO";
   }
 }
 
@@ -520,10 +503,7 @@ void MediaRouterMojoImpl::RegisterMediaRoutesObserver(
 
   routes_query->observers.AddObserver(observer);
   if (is_new_query) {
-    event_page_request_manager_->RunOrDefer(
-        base::BindOnce(&MediaRouterMojoImpl::DoStartObservingMediaRoutes,
-                       weak_factory_.GetWeakPtr(), source_id),
-        MediaRouteProviderWakeReason::START_OBSERVING_MEDIA_ROUTES);
+    media_route_provider_->StartObservingMediaRoutes(source_id);
     // The MRPM will call MediaRouterMojoImpl::OnRoutesUpdated() soon, if there
     // are any existing routes the new observer should be aware of.
   } else if (routes_query->cached_route_list) {
@@ -569,12 +549,8 @@ void MediaRouterMojoImpl::UnregisterMediaRoutesObserver(
   // might_have_observers() is reliable here on the assumption that this call
   // is not inside the ObserverList iteration.
   it->second->observers.RemoveObserver(observer);
-  if (!it->second->observers.might_have_observers()) {
-    event_page_request_manager_->RunOrDefer(
-        base::BindOnce(&MediaRouterMojoImpl::DoStopObservingMediaRoutes,
-                       weak_factory_.GetWeakPtr(), source_id),
-        MediaRouteProviderWakeReason::STOP_OBSERVING_MEDIA_ROUTES);
-  }
+  if (!it->second->observers.might_have_observers())
+    media_route_provider_->StopObservingMediaRoutes(source_id);
 }
 
 void MediaRouterMojoImpl::RegisterIssuesObserver(IssuesObserver* observer) {
@@ -602,12 +578,8 @@ void MediaRouterMojoImpl::RegisterRouteMessageObserver(
 
   bool should_listen = !observer_list->might_have_observers();
   observer_list->AddObserver(observer);
-  if (should_listen) {
-    event_page_request_manager_->RunOrDefer(
-        base::Bind(&MediaRouterMojoImpl::DoStartListeningForRouteMessages,
-                   weak_factory_.GetWeakPtr(), route_id),
-        MediaRouteProviderWakeReason::START_LISTENING_FOR_ROUTE_MESSAGES);
-  }
+  if (should_listen)
+    media_route_provider_->StartListeningForRouteMessages(route_id);
 }
 
 void MediaRouterMojoImpl::UnregisterRouteMessageObserver(
@@ -623,10 +595,7 @@ void MediaRouterMojoImpl::UnregisterRouteMessageObserver(
   it->second->RemoveObserver(observer);
   if (!it->second->might_have_observers()) {
     message_observers_.erase(route_id);
-    event_page_request_manager_->RunOrDefer(
-        base::BindOnce(&MediaRouterMojoImpl::DoStopListeningForRouteMessages,
-                       weak_factory_.GetWeakPtr(), route_id),
-        MediaRouteProviderWakeReason::STOP_LISTENING_FOR_ROUTE_MESSAGES);
+    media_route_provider_->StopListeningForRouteMessages(route_id);
   }
 }
 
@@ -636,141 +605,6 @@ void MediaRouterMojoImpl::DetachRouteController(
   auto it = route_controllers_.find(route_id);
   if (it != route_controllers_.end() && it->second == controller)
     route_controllers_.erase(it);
-}
-
-void MediaRouterMojoImpl::DoCreateRoute(
-    const MediaSource::Id& source_id,
-    const MediaSink::Id& sink_id,
-    const url::Origin& origin,
-    int tab_id,
-    std::vector<MediaRouteResponseCallback> callbacks,
-    base::TimeDelta timeout,
-    bool incognito) {
-  std::string presentation_id = MediaRouterBase::CreatePresentationId();
-  DVLOG_WITH_INSTANCE(1) << "DoCreateRoute " << source_id << "=>" << sink_id
-                         << ", presentation ID: " << presentation_id;
-  media_route_provider_->CreateRoute(
-      source_id, sink_id, presentation_id, origin, tab_id, timeout, incognito,
-      base::Bind(&MediaRouterMojoImpl::RouteResponseReceived,
-                 base::Unretained(this), presentation_id, incognito,
-                 base::Passed(&callbacks), false));
-}
-
-void MediaRouterMojoImpl::DoJoinRoute(
-    const MediaSource::Id& source_id,
-    const std::string& presentation_id,
-    const url::Origin& origin,
-    int tab_id,
-    std::vector<MediaRouteResponseCallback> callbacks,
-    base::TimeDelta timeout,
-    bool incognito) {
-  DVLOG_WITH_INSTANCE(1) << "DoJoinRoute " << source_id
-                         << ", presentation ID: " << presentation_id;
-
-  media_route_provider_->JoinRoute(
-      source_id, presentation_id, origin, tab_id, timeout, incognito,
-      base::Bind(&MediaRouterMojoImpl::RouteResponseReceived,
-                 base::Unretained(this), presentation_id, incognito,
-                 base::Passed(&callbacks), true));
-}
-
-void MediaRouterMojoImpl::DoConnectRouteByRouteId(
-    const MediaSource::Id& source_id,
-    const MediaRoute::Id& route_id,
-    const url::Origin& origin,
-    int tab_id,
-    std::vector<MediaRouteResponseCallback> callbacks,
-    base::TimeDelta timeout,
-    bool incognito) {
-  std::string presentation_id = MediaRouterBase::CreatePresentationId();
-  DVLOG_WITH_INSTANCE(1) << "DoConnectRouteByRouteId " << source_id
-                         << ", route ID: " << route_id
-                         << ", presentation ID: " << presentation_id;
-
-  media_route_provider_->ConnectRouteByRouteId(
-      source_id, route_id, presentation_id, origin, tab_id, timeout, incognito,
-      base::Bind(&MediaRouterMojoImpl::RouteResponseReceived,
-                 base::Unretained(this), presentation_id, incognito,
-                 base::Passed(&callbacks), true));
-}
-
-void MediaRouterMojoImpl::DoTerminateRoute(const MediaRoute::Id& route_id) {
-  DVLOG_WITH_INSTANCE(1) << "DoTerminateRoute " << route_id;
-  media_route_provider_->TerminateRoute(
-      route_id,
-      base::Bind(&MediaRouterMojoImpl::OnTerminateRouteResult,
-                 base::Unretained(this), route_id));
-}
-
-void MediaRouterMojoImpl::DoDetachRoute(const MediaRoute::Id& route_id) {
-  DVLOG_WITH_INSTANCE(1) << "DoDetachRoute " << route_id;
-  media_route_provider_->DetachRoute(route_id);
-}
-
-void MediaRouterMojoImpl::DoSendSessionMessage(
-    const MediaRoute::Id& route_id,
-    const std::string& message,
-    SendRouteMessageCallback callback) {
-  DVLOG_WITH_INSTANCE(1) << "SendRouteMessage " << route_id;
-  media_route_provider_->SendRouteMessage(route_id, message,
-                                          std::move(callback));
-}
-
-void MediaRouterMojoImpl::DoSendSessionBinaryMessage(
-    const MediaRoute::Id& route_id,
-    std::unique_ptr<std::vector<uint8_t>> data,
-    SendRouteMessageCallback callback) {
-  DVLOG_WITH_INSTANCE(1) << "SendRouteBinaryMessage " << route_id;
-  media_route_provider_->SendRouteBinaryMessage(route_id, *data,
-                                                std::move(callback));
-}
-
-void MediaRouterMojoImpl::DoStartListeningForRouteMessages(
-    const MediaRoute::Id& route_id) {
-  DVLOG_WITH_INSTANCE(1) << "DoStartListeningForRouteMessages";
-  media_route_provider_->StartListeningForRouteMessages(route_id);
-}
-
-void MediaRouterMojoImpl::DoStopListeningForRouteMessages(
-    const MediaRoute::Id& route_id) {
-  DVLOG_WITH_INSTANCE(1) << "StopListeningForRouteMessages";
-  media_route_provider_->StopListeningForRouteMessages(route_id);
-}
-
-void MediaRouterMojoImpl::DoSearchSinks(
-    const MediaSink::Id& sink_id,
-    const MediaSource::Id& source_id,
-    const std::string& search_input,
-    const std::string& domain,
-    MediaSinkSearchResponseCallback sink_callback) {
-  DVLOG_WITH_INSTANCE(1) << "SearchSinks";
-  auto sink_search_criteria = mojom::SinkSearchCriteria::New();
-  sink_search_criteria->input = search_input;
-  sink_search_criteria->domain = domain;
-  media_route_provider_->SearchSinks(sink_id, source_id,
-                                     std::move(sink_search_criteria),
-                                     std::move(sink_callback));
-}
-
-void MediaRouterMojoImpl::DoProvideSinks(const std::string& provider_name,
-                                         std::vector<MediaSinkInternal> sinks) {
-  DVLOG_WITH_INSTANCE(1) << "DoProvideSinks";
-  media_route_provider_->ProvideSinks(provider_name, sinks);
-}
-
-void MediaRouterMojoImpl::DoCreateMediaRouteController(
-    const MediaRoute::Id& route_id,
-    mojom::MediaControllerRequest mojo_media_controller_request,
-    mojom::MediaStatusObserverPtr mojo_observer) {
-  DVLOG_WITH_INSTANCE(1) << "DoCreateMediaRouteController";
-  if (!mojo_media_controller_request.is_pending() || !mojo_observer.is_bound())
-    return;
-
-  media_route_provider_->CreateMediaRouteController(
-      route_id, std::move(mojo_media_controller_request),
-      std::move(mojo_observer),
-      base::Bind(&MediaRouterMojoImpl::OnMediaControllerCreated,
-                 base::Unretained(this), route_id));
 }
 
 void MediaRouterMojoImpl::OnRouteMessagesReceived(
@@ -806,12 +640,8 @@ void MediaRouterMojoImpl::OnSinkAvailabilityUpdated(
     }
   } else {
     // Sinks are now available. Tell MRPM to start all sink queries again.
-    for (const auto& source_and_query : sinks_queries_) {
-      event_page_request_manager_->RunOrDefer(
-          base::BindOnce(&MediaRouterMojoImpl::DoStartObservingMediaSinks,
-                         base::Unretained(this), source_and_query.first),
-          MediaRouteProviderWakeReason::START_OBSERVING_MEDIA_SINKS);
-    }
+    for (const auto& source_and_query : sinks_queries_)
+      media_route_provider_->StartObservingMediaSinks(source_and_query.first);
   }
 }
 
@@ -840,91 +670,20 @@ void MediaRouterMojoImpl::OnTerminateRouteResult(
   MediaRouterMojoMetrics::RecordMediaRouteProviderTerminateRoute(result_code);
 }
 
-void MediaRouterMojoImpl::DoStartObservingMediaSinks(
-    const MediaSource::Id& source_id) {
-  DVLOG_WITH_INSTANCE(1) << "DoStartObservingMediaSinks: " << source_id;
-  // No need to call MRPM if there are no sinks available.
-  if (availability_ == mojom::MediaRouter::SinkAvailability::UNAVAILABLE)
-    return;
-
-  // No need to call MRPM if all observers have been removed in the meantime.
-  auto it = sinks_queries_.find(source_id);
-  if (it == sinks_queries_.end() ||
-      !it->second->observers.might_have_observers())
-    return;
-
-  DVLOG_WITH_INSTANCE(1) << "MRPM.StartObservingMediaSinks: " << source_id;
-  media_route_provider_->StartObservingMediaSinks(source_id);
-  it->second->is_active = true;
-}
-
-void MediaRouterMojoImpl::DoStopObservingMediaSinks(
-    const MediaSource::Id& source_id) {
-  DVLOG_WITH_INSTANCE(1) << "DoStopObservingMediaSinks: " << source_id;
-
-  auto it = sinks_queries_.find(source_id);
-  // No need to call MRPM if observers have been added in the meantime,
-  // or StopObservingMediaSinks has already been called.
-  if (it == sinks_queries_.end() || !it->second->is_active ||
-      it->second->observers.might_have_observers()) {
-    return;
-  }
-
-  DVLOG_WITH_INSTANCE(1) << "MRPM.StopObservingMediaSinks: " << source_id;
-  media_route_provider_->StopObservingMediaSinks(source_id);
-  sinks_queries_.erase(source_id);
-}
-
-void MediaRouterMojoImpl::DoStartObservingMediaRoutes(
-    const MediaSource::Id& source_id) {
-  DVLOG_WITH_INSTANCE(1) << "DoStartObservingMediaRoutes";
-
-  // No need to call MRPM if all observers have been removed in the meantime.
-  auto it = routes_queries_.find(source_id);
-  if (it == routes_queries_.end() ||
-      !it->second->observers.might_have_observers())
-    return;
-
-  DVLOG_WITH_INSTANCE(1) << "MRPM.StartObservingMediaRoutes: " << source_id;
-  media_route_provider_->StartObservingMediaRoutes(source_id);
-}
-
-void MediaRouterMojoImpl::DoStopObservingMediaRoutes(
-    const MediaSource::Id& source_id) {
-  DVLOG_WITH_INSTANCE(1) << "DoStopObservingMediaRoutes";
-
-  // No need to call MRPM if observers have been added in the meantime,
-  // or StopObservingMediaRoutes has already been called.
-  auto it = routes_queries_.find(source_id);
-  if (it == routes_queries_.end() ||
-      it->second->observers.might_have_observers()) {
-    return;
-  }
-
-  DVLOG_WITH_INSTANCE(1) << "MRPM.StopObservingMediaRoutes: " << source_id;
-  media_route_provider_->StopObservingMediaRoutes(source_id);
-  routes_queries_.erase(source_id);
-}
-
 void MediaRouterMojoImpl::SyncStateToMediaRouteProvider() {
-  DCHECK(media_route_provider_);
-
   // Sink queries.
   if (availability_ != mojom::MediaRouter::SinkAvailability::UNAVAILABLE) {
-    for (const auto& it : sinks_queries_) {
-      DoStartObservingMediaSinks(it.first);
-    }
+    for (const auto& it : sinks_queries_)
+      media_route_provider_->StartObservingMediaSinks(it.first);
   }
 
   // Route queries.
-  for (const auto& it : routes_queries_) {
-    DoStartObservingMediaRoutes(it.first);
-  }
+  for (const auto& it : routes_queries_)
+    media_route_provider_->StartObservingMediaRoutes(it.first);
 
   // Route messages.
-  for (const auto& it : message_observers_) {
-    DoStartListeningForRouteMessages(it.first);
-  }
+  for (const auto& it : message_observers_)
+    media_route_provider_->StartListeningForRouteMessages(it.first);
 
 #if defined(OS_WIN)
   // The MRPM extension already turns on mDNS discovery for platforms other than
@@ -932,9 +691,8 @@ void MediaRouterMojoImpl::SyncStateToMediaRouteProvider() {
   // triggering a firewall prompt out of the context of MR from the user's
   // perspective. This particular call reminds the extension to enable mDNS
   // discovery when it wakes up, has been upgraded, etc.
-  if (should_enable_mdns_discovery_) {
-    DoEnsureMdnsDiscoveryEnabled();
-  }
+  if (should_enable_mdns_discovery_)
+    media_route_provider_->EnableMdnsDiscovery();
 #endif
 
   StartDiscovery();
@@ -945,19 +703,9 @@ void MediaRouterMojoImpl::EnsureMdnsDiscoveryEnabled() {
   if (is_mdns_enabled_)
     return;
 
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoEnsureMdnsDiscoveryEnabled,
-                     weak_factory_.GetWeakPtr()),
-      MediaRouteProviderWakeReason::ENABLE_MDNS_DISCOVERY);
+  media_route_provider_->EnableMdnsDiscovery();
+  is_mdns_enabled_ = true;
   should_enable_mdns_discovery_ = true;
-}
-
-void MediaRouterMojoImpl::DoEnsureMdnsDiscoveryEnabled() {
-  DVLOG_WITH_INSTANCE(1) << "DoEnsureMdnsDiscoveryEnabled";
-  if (!is_mdns_enabled_) {
-    media_route_provider_->EnableMdnsDiscovery();
-    is_mdns_enabled_ = true;
-  }
 }
 
 void MediaRouterMojoImpl::OnFirewallCheckComplete(
@@ -994,15 +742,6 @@ void MediaRouterMojoImpl::StartDiscovery() {
 
 void MediaRouterMojoImpl::UpdateMediaSinks(
     const MediaSource::Id& source_id) {
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoUpdateMediaSinks,
-                     weak_factory_.GetWeakPtr(), source_id),
-      MediaRouteProviderWakeReason::UPDATE_MEDIA_SINKS);
-}
-
-void MediaRouterMojoImpl::DoUpdateMediaSinks(
-    const MediaSource::Id& source_id) {
-  DVLOG_WITH_INSTANCE(1) << "DoUpdateMediaSinks: " << source_id;
   media_route_provider_->UpdateMediaSinks(source_id);
 }
 

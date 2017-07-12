@@ -25,8 +25,14 @@ namespace media_router {
 
 class MediaRouterMojoImpl;
 
+// TODO(takumif): Move MockMediaRouteProvider into its own files.
 class MockMediaRouteProvider : public mojom::MediaRouteProvider {
  public:
+  using RouteCallback =
+      base::OnceCallback<void(const base::Optional<media_router::MediaRoute>&,
+                              const base::Optional<std::string>&,
+                              media_router::RouteRequestResult::ResultCode)>;
+
   MockMediaRouteProvider();
   ~MockMediaRouteProvider() override;
 
@@ -153,7 +159,24 @@ class MockMediaRouteProvider : public mojom::MediaRouteProvider {
                     mojom::MediaStatusObserverPtr& observer,
                     CreateMediaRouteControllerCallback& callback));
 
+  // These methods execute the callbacks with the success or timeout result
+  // code. If the callback takes a route, the route set in SetRouteToReturn() is
+  // used.
+  void RouteRequestSuccess(RouteCallback& cb) const;
+  void RouteRequestTimeout(RouteCallback& cb) const;
+  void TerminateRouteSuccess(TerminateRouteCallback& cb) const;
+  void SendRouteMessageSuccess(SendRouteMessageCallback& cb) const;
+  void SendRouteBinaryMessageSuccess(SendRouteBinaryMessageCallback& cb) const;
+  void SearchSinksSuccess(SearchSinksCallback& cb) const;
+  void CreateMediaRouteControllerSuccess(
+      CreateMediaRouteControllerCallback& cb) const;
+
+  // Sets the route to pass into callbacks.
+  void SetRouteToReturn(const MediaRoute& route);
+
  private:
+  // The route that is passed into callbacks.
+  base::Optional<MediaRoute> route_;
   DISALLOW_COPY_AND_ASSIGN(MockMediaRouteProvider);
 };
 

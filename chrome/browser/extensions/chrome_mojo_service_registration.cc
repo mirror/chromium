@@ -6,8 +6,8 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "chrome/browser/media/router/event_page_request_manager.h"  // nogncheck
 #include "chrome/browser/media/router/media_router_feature.h"  // nogncheck
-#include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"  // nogncheck
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "extensions/common/extension.h"
@@ -28,7 +28,7 @@ void RegisterChromeServicesForFrame(content::RenderFrameHost* render_frame_host,
     if (extension->permissions_data()->HasAPIPermission(
             APIPermission::kMediaRouterPrivate)) {
       render_frame_host->GetInterfaceRegistry()->AddInterface(
-          base::Bind(media_router::MediaRouterMojoImpl::BindToRequest,
+          base::Bind(media_router::EventPageRequestManager::BindToRequest,
                      base::RetainedRef(extension), context));
     }
   }
