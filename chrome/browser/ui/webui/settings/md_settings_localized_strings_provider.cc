@@ -799,6 +799,7 @@ void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
       {"chromeCleanupTitleRemoved", IDS_CHROME_CLEANUP_WEBUI_TITLE_REMOVED},
       {"chromeCleanupTitleRemoving", IDS_CHROME_CLEANUP_WEBUI_TITLE_REMOVING},
       {"chromeCleanupTitleRestart", IDS_CHROME_CLEANUP_WEBUI_TITLE_RESTART},
+      {"chromeCleanupPoweredBy", IDS_CHROME_CLEANUP_WEBUI_FOOTER_POWERED_BY},
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
