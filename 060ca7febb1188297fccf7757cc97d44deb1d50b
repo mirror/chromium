@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da19fe78_7daab231",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-12T21:22:43Z",
+      "side": 1,
+      "message": "This is seems both cleaner and more comprehensive than the command-line checking it replaced. Nice work.",
+      "revId": "060ca7febb1188297fccf7757cc97d44deb1d50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
