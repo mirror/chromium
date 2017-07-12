@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85d79704_24f693f9",
+        "filename": "chrome/browser/android/password_ui_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-12T13:03:40Z",
+      "side": 1,
+      "message": "As replied in the non-public e-mail, I strongly support dropping \" (Android)\" in favour of the human readable name where available, and of an Android icon or even nothing where not.",
+      "parentUuid": "45304f82_505ced63",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 24
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b6aeeab_3b22dffb",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_utils.cc",
         "patchSetId": 1
@@ -41,6 +65,29 @@
         "startChar": 43,
         "endLine": 41,
         "endChar": 75
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852cee1b_5d177404",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-12T13:03:40Z",
+      "side": 1,
+      "message": "Why is the display name not useful for the sort key? As a user looking at the results, I would expect them to be sorted exactly by what is displayed to me (as a name).",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 46
       },
       "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "d96f17d8_39d0483e",
+        "filename": "chrome/browser/ui/webui/options/password_manager_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-12T13:03:40Z",
+      "side": 1,
+      "message": "That\u0027s worth a separate investigation. If possible, please file a bug with UI\u003eBrowser\u003ePasswords and Hotlist-TechnicalDebt.",
+      "parentUuid": "82f828b9_7cd2ee80",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d9e722c_41f008d2",
         "filename": "components/password_manager/core/browser/password_ui_utils.cc",
         "patchSetId": 1
@@ -88,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "82021d1a_982958e5",
+        "filename": "components/password_manager/core/browser/password_ui_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-12T13:03:40Z",
+      "side": 1,
+      "message": "If you don\u0027t supply the locale, does the play.google.com server find one automatically based on browser preferences? Keeping the choice to the server sounds to me like the best way to select the locale, fulfilling user\u0027s expectations based on other visits to play.google.com.",
+      "parentUuid": "2d9e722c_41f008d2",
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28dde73f_783c12aa",
         "filename": "components/password_manager/core/browser/password_ui_utils.h",
         "patchSetId": 1
@@ -99,6 +188,24 @@
       "writtenOn": "2017-07-12T11:43:14Z",
       "side": 1,
       "message": "Here I went ahead and tried to simplify the API a bit. |origin_is_clickable| would now always be true, since we now always link to the Play Store for Android credentials. Hence it could be dropped. Furthermore I removed |is_android_uri|, as I don\u0027t think this method should expose this information since its name doesn\u0027t indicate it. Furthermore it is straight forward to obtain this information using |password_manager::IsValidAndroidFacetURI| from affiliation_utils.h.\nLastly, I decided to switch to value semantics and simply return a std::pair instead of having out parameters. \n\nWe definitely could return a custom structure here, but I thought the method name is descriptive enough to know what exactly the returned pair consists of.",
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1070cb95_d20f598a",
+        "filename": "components/password_manager/core/browser/password_ui_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-12T13:03:40Z",
+      "side": 1,
+      "message": "I like all the changes you describe. In particular, the std::pair is fine, because the different types distinguish what is what very nicely.",
+      "parentUuid": "28dde73f_783c12aa",
       "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
