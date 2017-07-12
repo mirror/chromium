@@ -92096,6 +92096,23 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="ServiceWorker.NavigationPreload.ConcurrentTime"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="NavigationType" separator=".">
+  <suffix name="NewPageInPageOriginMismatch"/>
+  <suffix name="NewPageInPage"/>
+  <suffix name="NewPagePendingEntryMatches"/>
+  <suffix name="NewPageNoMatchingEntry"/>
+  <suffix name="ExistingPageSameDocumentIntendedAsNew"/>
+  <suffix name="ExistingPageDifferentDocumentIntendedAsNew"/>
+  <suffix name="ExistingPageSameDocumentRestoredBrowserInitiated"/>
+  <suffix name="ExistingPageSameDocumentBrowserInitiated"/>
+  <suffix name="ExistingPageRestoredBrowserInitiated"/>
+  <suffix name="ExistingPageBrowserInitiated"/>
+  <suffix name="ExistingPageSameDocumentRendererInitiated"/>
+  <suffix name="ExistingPageDifferentDocumentRendererInitiated"/>
+  <suffix name="NewSubFrame"/>
+  <affected-histogram name="Navigation.SecureSchemeHasSSLStatus"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="Net.BidirectionalStreamExperiment" separator=".">
   <owner>xunjieli@chromium.org</owner>
   <suffix name="QUIC" label="Bidirectional streams that use QUIC protocol"/>
