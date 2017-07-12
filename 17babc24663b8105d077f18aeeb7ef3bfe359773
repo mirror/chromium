@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03b3f06c_f4dbaaf2",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-12T14:27:53Z",
+      "side": 1,
+      "message": "One usage pattern of this call is to connect to the IdentityManager and then wait until the connection has been processed.",
+      "parentUuid": "c8342be1_8d622d1c",
+      "range": {
+        "startLine": 162,
+        "startChar": 4,
+        "endLine": 162,
+        "endChar": 22
+      },
+      "revId": "17babc24663b8105d077f18aeeb7ef3bfe359773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c571a659_862c68cb",
         "filename": "services/identity/identity_manager_unittest.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5f7deb43_7f66eff5",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-12T14:27:53Z",
+      "side": 1,
+      "message": "Yes, as it has the side effect of starting the Identity Service.",
+      "parentUuid": "c571a659_862c68cb",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 32
+      },
+      "revId": "17babc24663b8105d077f18aeeb7ef3bfe359773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab651d26_ce9ab645",
         "filename": "services/identity/identity_manager_unittest.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-12T12:40:17Z",
       "side": 1,
       "message": "Does this mean that this unit test will take 5 seconds to execute? I think that is too much for a unit test (we should move it to an integration test - maybe a browser).",
+      "range": {
+        "startLine": 231,
+        "startChar": 23,
+        "endLine": 231,
+        "endChar": 39
+      },
+      "revId": "17babc24663b8105d077f18aeeb7ef3bfe359773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2a78ae_d0cb6830",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-12T14:27:53Z",
+      "side": 1,
+      "message": "It would be 5 milliseconds. As we discussed offline though, your suggestion of a better way to test this works -- hooray!",
+      "parentUuid": "ab651d26_ce9ab645",
       "range": {
         "startLine": 231,
         "startChar": 23,
