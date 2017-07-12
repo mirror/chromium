@@ -72,6 +72,7 @@ Loaded modules:
     event_listeners
     extensions
     formatter
+    har_importer
     help
     host
     inline_editor
@@ -113,6 +114,7 @@ Loaded modules:
     event_listeners
     extensions
     formatter
+    har_importer
     help
     host
     inline_editor
@@ -157,6 +159,7 @@ Loaded modules:
     event_listeners
     extensions
     formatter
+    har_importer
     help
     host
     inline_editor
