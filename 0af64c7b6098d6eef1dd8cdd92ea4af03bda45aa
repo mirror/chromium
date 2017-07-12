@@ -16,6 +16,24 @@
       "revId": "0af64c7b6098d6eef1dd8cdd92ea4af03bda45aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116f9093_d2167ec0",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-12T21:16:46Z",
+      "side": 1,
+      "message": "There\u0027s definitely a non-zero cost here, so I\u0027d like to hear more about the advantage of moving code from there to here. Tomorrow morning might be best time to chat.",
+      "parentUuid": "c54ce7da_c7f2080e",
+      "revId": "0af64c7b6098d6eef1dd8cdd92ea4af03bda45aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
