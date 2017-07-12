@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.ntp.snippets;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
@@ -147,6 +148,13 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
         mSuggestionsBinder.updateFieldsVisibility(showHeadline, showDescription, showThumbnail,
                 showThumbnailVideoOverlay,
                 getHeaderMaxLines(horizontalStyle, verticalStyle, layout));
+
+        // Mirror the corner images in RTL layouts. They are in the correct place, but their
+        // contents must be mirrored manually as android:autoMirrored was added in API level 19.
+        if (SuggestionsConfig.useModern() && ApiCompatibilityUtils.isLayoutRtl(mRecyclerView)) {
+            itemView.findViewById(R.id.corner_top).setScaleX(-1);
+            itemView.findViewById(R.id.corner_bottom).setScaleX(-1);
+        }
     }
 
     /** If the title is empty (or contains only whitespace characters), we do not show it. */
