@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7afe0cdd_9330b908",
+        "filename": "cc/scheduler/begin_frame_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-07-12T00:50:05Z",
+      "side": 1,
+      "message": "I think putting the sequence_number comparison clause first would make it easier to understand the overall condition. The way I understood it after looking at it for a couple of minutes is:\nThe args must have greater time and either greater sequence number or a different source ID. A different source ID is much less common so I\u0027d put it second.\n\nThis will likely cause some crashes. Do you plan to collect a few crash dumps and revert this?",
+      "range": {
+        "startLine": 327,
+        "startChar": 10,
+        "endLine": 328,
+        "endChar": 71
+      },
+      "revId": "cf8cd96f6aafc037e52303d8eedd9631f5d254b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
