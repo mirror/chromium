@@ -71,12 +71,14 @@ def main():
                       help='use release configuration')
   parser.add_argument('-a', '--asan', action='store_true',
                       help='use address sanitizer')
+  parser.add_argument('-o', '--os', action='store',
+                      help='choose target os')
 
   options, extra_options_list = parser.parse_known_args()
   print options
   print extra_options_list
 
-  is_os = (sys.platform == 'darwin')
+  is_os = (os or sys.platform == 'darwin')
   if is_os:
     target_os = 'ios'
     test_target = 'cronet_test'
