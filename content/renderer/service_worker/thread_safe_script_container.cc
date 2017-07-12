@@ -1,0 +1,63 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "content/renderer/service_worker/thread_safe_script_container.h"
+
+namespace content {
+
+ThreadSafeScriptContainer::ThreadSafeScriptContainer()
+    : lock_(), waiting_cv_(&lock_), are_all_data_added_(false) {}
+
+void ThreadSafeScriptContainer::Add(const GURL& url,
+                                    std::unique_ptr<Data> data) {
+  base::AutoLock lock(lock_);
+  DCHECK(script_data_.find(url) == script_data_.end());
+  script_data_[url] = std::move(data);
+  if (url == waiting_url_)
+    waiting_cv_.Signal();
+}
+
+bool ThreadSafeScriptContainer::Exists(const GURL& url) {
+  base::AutoLock lock(lock_);
+  return script_data_.find(url) != script_data_.end();
+}
+
+bool ThreadSafeScriptContainer::Wait(const GURL& url) {
+  base::AutoLock lock(lock_);
+  DCHECK(waiting_url_.is_empty()) << "Only one thread can wait at a time.";
+  waiting_url_ = url;
+  while (script_data_.find(url) == script_data_.end()) {
+    // If waiting script hasn't been added yet though all data are received,
+    // that means something went wrong.
+    if (are_all_data_added_) {
+      waiting_url_ = GURL();
+      return false;
+    }
+    // This is possible to be waken up spuriously, so that it's necessary to
+    // check if the entry is really added.
+    waiting_cv_.Wait();
+  }
+  waiting_url_ = GURL();
+  return true;
+}
+
+std::unique_ptr<ThreadSafeScriptContainer::Data>
+ThreadSafeScriptContainer::Take(const GURL& url) {
+  base::AutoLock lock(lock_);
+  DCHECK(script_data_.find(url) != script_data_.end())
+      << "Script should be added before calling Take.";
+  auto data = std::move(script_data_[url]);
+  DCHECK(script_data_[url] == nullptr);
+  return data;
+}
+
+void ThreadSafeScriptContainer::OnAllDataAdded() {
+  base::AutoLock lock(lock_);
+  are_all_data_added_ = true;
+  waiting_cv_.Broadcast();
+}
+
+ThreadSafeScriptContainer::~ThreadSafeScriptContainer() = default;
+
+}  // namespace content
