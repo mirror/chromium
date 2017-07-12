@@ -2,19 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/vr_shell/vr_tab_helper.h"
+#include "chrome/browser/vr/vr_tab_helper.h"
 
-#include "chrome/browser/android/vr_shell/vr_shell_delegate.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/common/web_preferences.h"
-#include "device/vr/android/gvr/gvr_delegate_provider.h"
+#include "device/vr/features/features.h"
 
 using content::WebContents;
 using content::WebPreferences;
 
-DEFINE_WEB_CONTENTS_USER_DATA_KEY(vr_shell::VrTabHelper);
+DEFINE_WEB_CONTENTS_USER_DATA_KEY(vr::VrTabHelper);
 
-namespace vr_shell {
+namespace vr {
 
 VrTabHelper::VrTabHelper(content::WebContents* contents)
     : web_contents_(contents) {}
@@ -35,6 +34,7 @@ void VrTabHelper::SetIsInVr(bool is_in_vr) {
 
 /* static */
 bool VrTabHelper::IsInVr(content::WebContents* contents) {
+#if BUILDFLAG(ENABLE_VR)
   VrTabHelper* vr_tab_helper = VrTabHelper::FromWebContents(contents);
   if (!vr_tab_helper) {
     // This can only happen for unittests.
@@ -42,6 +42,9 @@ bool VrTabHelper::IsInVr(content::WebContents* contents) {
     vr_tab_helper = VrTabHelper::FromWebContents(contents);
   }
   return vr_tab_helper->is_in_vr();
+#else
+  return false;
+#endif
 }
 
-}  // namespace vr_shell
+}  // namespace vr
