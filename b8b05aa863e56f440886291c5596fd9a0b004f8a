@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "a4f89cd8_71ebb94d",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T01:28:32Z",
+      "side": 1,
+      "message": "Guessing this is not necessary anymore either, now that --shadow-elevation-2dp is gone.",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f8ba02e_c94cd0c0",
         "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
         "patchSetId": 2
