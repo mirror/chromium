@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7f8c1e_08421352",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:21:35Z",
+      "side": 1,
+      "message": "nit: Can this ever not be satisfied? Could we DCHECK_NE this?",
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246a3e2e_c8843230",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:21:35Z",
+      "side": 1,
+      "message": "Would it ever result in confusion if we omitted |display_disposition| and just remembered and used the save/update bool from the previous call to RecordPasswordBubbleShown()?\n\nI find it pretty confusing at the call sites that we are calling methods that specify one thing in their names, yet take two parameters, which are not even scoped enums which would be prefixed with the name of the enumeration.",
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c146189f_9730ac7f",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:21:35Z",
+      "side": 1,
+      "message": "Given that we use this for both saving and updating, can we name this either just `BubbleTrigger`, `SaveOrUpdateBubbleTrigger`, `PasswordBubbleTrigger`?\n\n(Although specifying `password` anywhere might be awfully redundant.)",
+      "range": {
+        "startLine": 163,
+        "startChar": 13,
+        "endLine": 163,
+        "endChar": 30
+      },
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698174b9_090982f7",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:21:35Z",
+      "side": 1,
+      "message": "nit: `BubbleDismissalReason` or `PasswordBubbleDismissalReason`?",
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2945183_92d83ff0",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:21:35Z",
+      "side": 1,
+      "message": "nit: -the",
+      "range": {
+        "startLine": 613,
+        "startChar": 14,
+        "endLine": 613,
+        "endChar": 17
+      },
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c51d19f_3fada435",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:21:35Z",
+      "side": 1,
+      "message": "nit: -the",
+      "range": {
+        "startLine": 735,
+        "startChar": 14,
+        "endLine": 735,
+        "endChar": 17
+      },
+      "revId": "e5a27b99b6ba8090c66de7292a928483b5dfa19a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
