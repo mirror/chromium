@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8056ea83_e01514b7",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-12T22:46:28Z",
+      "side": 1,
+      "message": "so when adding a new bundle, i\u0027ll need to update this array with the sha256 of the XcodeSystemResources.pkg file?",
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
