@@ -72,6 +72,7 @@ ActionsSubmenu.prototype.setActionsModel = function(actionsModel) {
   if (createFolderShortcutAction) {
     var menuItem = this.addMenuItem_({});
     menuItem.command = '#create-folder-shortcut';
+    menuItem.classList.toggle('on-toolbar', true);
     delete remainingActions[
       ActionsModel.InternalActionId.CREATE_FOLDER_SHORTCUT
     ];
@@ -94,6 +95,7 @@ ActionsSubmenu.prototype.setActionsModel = function(actionsModel) {
   if (saveForOfflineAction || offlineNotNecessaryAction) {
     var menuItem = this.addMenuItem_({});
     menuItem.command = '#toggle-pinned';
+    menuItem.classList.toggle('on-toolbar', true);
     if (saveForOfflineAction)
       delete remainingActions[ActionsModel.CommonActionId.SAVE_FOR_OFFLINE];
     if (offlineNotNecessaryAction) {
