@@ -46,6 +46,10 @@
   return NO;
 }
 
+- (NSString*)title {
+  return @"title";
+}
+
 - (CollectionViewItem*)headerItem {
   return [[CollectionViewItem alloc] init];
 }

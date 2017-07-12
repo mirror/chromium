@@ -52,8 +52,6 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
       initWithPaymentRequest:self.paymentRequest];
 
   self.viewController = [[PaymentRequestSelectorViewController alloc] init];
-  self.viewController.title = base::SysUTF16ToNSString(
-      GetShippingOptionSectionString(self.paymentRequest->shipping_type()));
   self.viewController.delegate = self;
   self.viewController.dataSource = self.mediator;
   [self.viewController loadModel];

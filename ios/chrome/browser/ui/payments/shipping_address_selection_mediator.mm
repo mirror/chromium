@@ -8,6 +8,7 @@
 
 #include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_profile.h"
+#include "components/payments/core/strings_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/payments/payment_request_util.h"
@@ -63,6 +64,11 @@ using ::payment_request_util::GetShippingAddressLabelFromAutofillProfile;
 
 - (BOOL)allowsEditMode {
   return YES;
+}
+
+- (NSString*)title {
+  return base::SysUTF16ToNSString(payments::GetShippingAddressSectionString(
+      self.paymentRequest->shipping_type()));
 }
 
 - (CollectionViewItem*)headerItem {

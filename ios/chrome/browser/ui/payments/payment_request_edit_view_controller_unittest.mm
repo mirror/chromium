@@ -34,6 +34,10 @@
 @synthesize state = _state;
 @synthesize consumer = _consumer;
 
+- (NSString*)title {
+  return @"title";
+}
+
 - (CollectionViewItem*)headerItem {
   return [[CollectionViewTextItem alloc] init];
 }

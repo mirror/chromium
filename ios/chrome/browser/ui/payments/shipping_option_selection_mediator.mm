@@ -9,6 +9,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/payments/core/currency_formatter.h"
+#include "components/payments/core/strings_util.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/ui/payments/cells/payments_text_item.h"
 #include "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -57,6 +58,11 @@
 
 - (BOOL)allowsEditMode {
   return NO;
+}
+
+- (NSString*)title {
+  return base::SysUTF16ToNSString(payments::GetShippingOptionSectionString(
+      self.paymentRequest->shipping_type()));
 }
 
 - (CollectionViewItem*)headerItem {
