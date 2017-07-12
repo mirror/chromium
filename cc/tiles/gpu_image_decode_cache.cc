@@ -1147,6 +1147,10 @@ void GpuImageDecodeCache::DecodeImageIfNecessary(const DrawImage& draw_image,
 
   TRACE_EVENT0("cc", "GpuImageDecodeCache::DecodeImage");
 
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Renderer4.ImageDecodeScale",
+                              image_data->upload_params.fPreScaleMipLevel, 0,
+                              32, 33);
+
   image_data->decode.ResetData();
   std::unique_ptr<base::DiscardableMemory> backing_memory;
   {

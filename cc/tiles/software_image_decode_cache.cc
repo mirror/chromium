@@ -443,6 +443,11 @@ SoftwareImageDecodeCache::DecodeImageInternal(const ImageKey& key,
   if (!image)
     return nullptr;
 
+  int mip_level =
+      MipMapUtil::GetLevelForSize(key.src_rect().size(), key.target_size());
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Renderer4.ImageDecodeScale", mip_level, 0, 32,
+                              33);
+
   switch (key.filter_quality()) {
     case kNone_SkFilterQuality:
     case kLow_SkFilterQuality:
