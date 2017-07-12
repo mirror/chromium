@@ -13,11 +13,15 @@
 #include "content/public/common/service_names.mojom.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
+#include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_callbacks.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 
-DEFINE_WEB_CONTENTS_USER_DATA_KEY(ResourceCoordinatorWebContentsObserver);
+DEFINE_WEB_CONTENTS_USER_DATA_KEY(
+    resource_coordinator::ResourceCoordinatorWebContentsObserver);
+
+namespace resource_coordinator {
 
 bool ResourceCoordinatorWebContentsObserver::ukm_recorder_initialized = false;
 
@@ -83,11 +87,15 @@ bool ResourceCoordinatorWebContentsObserver::IsEnabled() {
 void ResourceCoordinatorWebContentsObserver::WasShown() {
   tab_resource_coordinator_->SendEvent(
       resource_coordinator::EventType::kOnWebContentsShown);
+  tab_resource_coordinator_->SetProperty(mojom::PropertyType::kVisible,
+                                         base::MakeUnique<base::Value>(true));
 }
 
 void ResourceCoordinatorWebContentsObserver::WasHidden() {
   tab_resource_coordinator_->SendEvent(
       resource_coordinator::EventType::kOnWebContentsHidden);
+  tab_resource_coordinator_->SetProperty(mojom::PropertyType::kVisible,
+                                         base::MakeUnique<base::Value>(false));
 }
 
 void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
@@ -108,3 +116,5 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
       render_frame_host->GetProcess()->GetProcessResourceCoordinator();
   process_resource_coordinator->AddChild(*frame_resource_coordinator);
 }
+
+}  // namespace resource_coordinator
