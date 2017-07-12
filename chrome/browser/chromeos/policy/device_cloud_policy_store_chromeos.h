@@ -15,10 +15,6 @@
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 namespace chromeos {
 class InstallAttributes;
 }
@@ -38,8 +34,7 @@ class DeviceCloudPolicyStoreChromeOS
  public:
   DeviceCloudPolicyStoreChromeOS(
       chromeos::DeviceSettingsService* device_settings_service,
-      chromeos::InstallAttributes* install_attributes,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner);
+      chromeos::InstallAttributes* install_attributes);
   ~DeviceCloudPolicyStoreChromeOS() override;
 
   // CloudPolicyStore:
@@ -89,8 +84,6 @@ class DeviceCloudPolicyStoreChromeOS
 
   chromeos::DeviceSettingsService* device_settings_service_;
   chromeos::InstallAttributes* install_attributes_;
-
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
 
   base::WeakPtrFactory<DeviceCloudPolicyStoreChromeOS> weak_factory_;
 

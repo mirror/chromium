@@ -20,10 +20,6 @@
 #include "components/policy/core/common/cloud/user_cloud_policy_store_base.h"
 #include "components/signin/core/account_id/account_id.h"
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 namespace chromeos {
 class CryptohomeClient;
 }
@@ -45,7 +41,6 @@ class UserCloudPolicyStoreChromeOS : public UserCloudPolicyStoreBase {
   UserCloudPolicyStoreChromeOS(
       chromeos::CryptohomeClient* cryptohome_client,
       chromeos::SessionManagerClient* session_manager_client,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner,
       const AccountId& account_id,
       const base::FilePath& user_policy_key_dir,
       bool is_active_directory);

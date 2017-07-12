@@ -22,10 +22,6 @@
 #include "components/policy/proto/device_management_backend.pb.h"
 #include "google_apis/gaia/gaia_oauth_client.h"
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 namespace chromeos {
 
 class ActiveDirectoryJoinDelegate;
@@ -67,7 +63,6 @@ class EnrollmentHandlerChromeOS : public CloudPolicyClient::Observer,
       ServerBackedStateKeysBroker* state_keys_broker,
       chromeos::attestation::AttestationFlow* attestation_flow,
       std::unique_ptr<CloudPolicyClient> client,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner,
       chromeos::ActiveDirectoryJoinDelegate* ad_join_delegate,
       const EnrollmentConfig& enrollment_config,
       const std::string& auth_token,
@@ -199,7 +194,6 @@ class EnrollmentHandlerChromeOS : public CloudPolicyClient::Observer,
   ServerBackedStateKeysBroker* state_keys_broker_;
   chromeos::attestation::AttestationFlow* attestation_flow_;
   std::unique_ptr<CloudPolicyClient> client_;
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
   chromeos::ActiveDirectoryJoinDelegate* ad_join_delegate_ = nullptr;
   std::unique_ptr<gaia::GaiaOAuthClient> gaia_oauth_client_;
   std::unique_ptr<policy::DMTokenStorage> dm_token_storage_;

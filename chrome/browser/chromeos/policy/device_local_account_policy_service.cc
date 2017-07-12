@@ -255,7 +255,6 @@ DeviceLocalAccountPolicyService::DeviceLocalAccountPolicyService(
     chromeos::DeviceSettingsService* device_settings_service,
     chromeos::CrosSettings* cros_settings,
     AffiliatedInvalidationServiceProvider* invalidation_service_provider,
-    scoped_refptr<base::SequencedTaskRunner> store_background_task_runner,
     scoped_refptr<base::SequencedTaskRunner> extension_cache_task_runner,
     scoped_refptr<base::SequencedTaskRunner>
         external_data_service_backend_task_runner,
@@ -268,7 +267,6 @@ DeviceLocalAccountPolicyService::DeviceLocalAccountPolicyService(
       device_management_service_(nullptr),
       waiting_for_cros_settings_(false),
       orphan_extension_cache_deletion_state_(NOT_STARTED),
-      store_background_task_runner_(store_background_task_runner),
       extension_cache_task_runner_(extension_cache_task_runner),
       request_context_(request_context),
       local_accounts_subscription_(cros_settings_->AddSettingsObserver(
@@ -461,9 +459,9 @@ void DeviceLocalAccountPolicyService::UpdateAccountList() {
       broker_initialized = true;
     } else {
       std::unique_ptr<DeviceLocalAccountPolicyStore> store(
-          new DeviceLocalAccountPolicyStore(
-              it->account_id, session_manager_client_, device_settings_service_,
-              store_background_task_runner_));
+          new DeviceLocalAccountPolicyStore(it->account_id,
+                                            session_manager_client_,
+                                            device_settings_service_));
       scoped_refptr<DeviceLocalAccountExternalDataManager>
           external_data_manager =
               external_data_service_->GetExternalDataManager(it->account_id,

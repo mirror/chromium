@@ -15,10 +15,6 @@
 
 class Profile;
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 namespace content {
 class BrowserContext;
 }
@@ -71,8 +67,7 @@ class UserPolicyManagerFactoryChromeOS : public BrowserContextKeyedBaseFactory {
   // UserCloudPolicyStore at startup.
   static std::unique_ptr<ConfigurationPolicyProvider> CreateForProfile(
       Profile* profile,
-      bool force_immediate_load,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner);
+      bool force_immediate_load);
 
  private:
   friend struct base::DefaultSingletonTraits<UserPolicyManagerFactoryChromeOS>;
@@ -86,8 +81,7 @@ class UserPolicyManagerFactoryChromeOS : public BrowserContextKeyedBaseFactory {
       Profile* profile);
   std::unique_ptr<ConfigurationPolicyProvider> CreateManagerForProfile(
       Profile* profile,
-      bool force_immediate_load,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner);
+      bool force_immediate_load);
 
   // BrowserContextKeyedBaseFactory:
   void BrowserContextShutdown(content::BrowserContext* context) override;

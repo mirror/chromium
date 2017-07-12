@@ -26,10 +26,6 @@
 #include "components/policy/core/common/cloud/component_cloud_policy_service.h"
 #include "components/policy/core/common/schema_registry.h"
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 namespace chromeos {
 class DeviceSettingsService;
 class SessionManagerClient;
@@ -165,7 +161,6 @@ class DeviceLocalAccountPolicyService {
       chromeos::DeviceSettingsService* device_settings_service,
       chromeos::CrosSettings* cros_settings,
       AffiliatedInvalidationServiceProvider* invalidation_service_provider,
-      scoped_refptr<base::SequencedTaskRunner> store_background_task_runner,
       scoped_refptr<base::SequencedTaskRunner> extension_cache_task_runner,
       scoped_refptr<base::SequencedTaskRunner>
           external_data_service_backend_task_runner,
@@ -264,7 +259,6 @@ class DeviceLocalAccountPolicyService {
   // directory is being deleted.
   std::set<std::string> busy_extension_cache_directories_;
 
-  const scoped_refptr<base::SequencedTaskRunner> store_background_task_runner_;
   const scoped_refptr<base::SequencedTaskRunner> extension_cache_task_runner_;
 
   std::unique_ptr<DeviceLocalAccountExternalDataService> external_data_service_;

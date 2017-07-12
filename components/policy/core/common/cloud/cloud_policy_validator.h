@@ -17,7 +17,6 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
-#include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "components/policy/policy_export.h"
@@ -28,7 +27,7 @@
 #endif
 
 namespace base {
-class SingleThreadTaskRunner;
+class SequencedTaskRunner;
 }
 
 namespace google {
@@ -225,8 +224,7 @@ class POLICY_EXPORT CloudPolicyValidatorBase {
   CloudPolicyValidatorBase(
       std::unique_ptr<enterprise_management::PolicyFetchResponse>
           policy_response,
-      google::protobuf::MessageLite* payload,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner);
+      google::protobuf::MessageLite* payload);
 
   // Posts an asynchronous call to PerformValidation of the passed |validator|,
   // which will eventually report its result via |completion_callback|.
@@ -258,7 +256,7 @@ class POLICY_EXPORT CloudPolicyValidatorBase {
   // Performs validation, called on a background thread.
   static void PerformValidation(
       std::unique_ptr<CloudPolicyValidatorBase> self,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      scoped_refptr<base::SequencedTaskRunner> task_runner,
       const base::Closure& completion_callback);
 
   // Reports completion to the |completion_callback_|.
@@ -330,7 +328,6 @@ class POLICY_EXPORT CloudPolicyValidatorBase {
   std::string verification_key_;
   std::string owning_domain_;
   bool allow_key_rotation_;
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(CloudPolicyValidatorBase);
 };
@@ -345,15 +342,11 @@ class POLICY_EXPORT CloudPolicyValidator : public CloudPolicyValidatorBase {
   virtual ~CloudPolicyValidator() {}
 
   // Creates a new validator.
-  // |background_task_runner| is optional; if RunValidation() is used directly
-  // and StartValidation() is not used then it can be nullptr.
   static std::unique_ptr<CloudPolicyValidator> Create(
       std::unique_ptr<enterprise_management::PolicyFetchResponse>
-          policy_response,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner) {
+          policy_response) {
     return base::WrapUnique<CloudPolicyValidator>(new CloudPolicyValidator(
-        std::move(policy_response), base::MakeUnique<PayloadProto>(),
-        background_task_runner));
+        std::move(policy_response), base::MakeUnique<PayloadProto>()));
   }
 
   std::unique_ptr<PayloadProto>& payload() { return payload_; }
@@ -372,11 +365,8 @@ class POLICY_EXPORT CloudPolicyValidator : public CloudPolicyValidatorBase {
   CloudPolicyValidator(
       std::unique_ptr<enterprise_management::PolicyFetchResponse>
           policy_response,
-      std::unique_ptr<PayloadProto> payload,
-      scoped_refptr<base::SequencedTaskRunner> background_task_runner)
-      : CloudPolicyValidatorBase(std::move(policy_response),
-                                 payload.get(),
-                                 background_task_runner),
+      std::unique_ptr<PayloadProto> payload)
+      : CloudPolicyValidatorBase(std::move(policy_response), payload.get()),
         payload_(std::move(payload)) {}
 
   std::unique_ptr<PayloadProto> payload_;

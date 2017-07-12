@@ -21,10 +21,6 @@
 
 class PrefService;
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 namespace chromeos {
 
 class ActiveDirectoryJoinDelegate;
@@ -58,12 +54,9 @@ class DeviceCloudPolicyInitializer : public CloudPolicyStore::Observer {
  public:
   typedef base::Callback<void(EnrollmentStatus)> EnrollmentCallback;
 
-  // |background_task_runner| is used to execute long-running background tasks
-  // that may involve file I/O.
   DeviceCloudPolicyInitializer(
       PrefService* local_state,
       DeviceManagementService* enterprise_service,
-      const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
       chromeos::InstallAttributes* install_attributes,
       ServerBackedStateKeysBroker* state_keys_broker,
       DeviceCloudPolicyStoreChromeOS* device_store,
@@ -147,7 +140,6 @@ class DeviceCloudPolicyInitializer : public CloudPolicyStore::Observer {
 
   PrefService* local_state_;
   DeviceManagementService* enterprise_service_;
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
   chromeos::InstallAttributes* install_attributes_;
   ServerBackedStateKeysBroker* state_keys_broker_;
   DeviceCloudPolicyStoreChromeOS* device_store_;

@@ -8,9 +8,7 @@
 namespace policy {
 
 MockUserCloudPolicyStore::MockUserCloudPolicyStore()
-    : UserCloudPolicyStore(base::FilePath(),
-                           base::FilePath(),
-                           scoped_refptr<base::SequencedTaskRunner>()) {}
+    : UserCloudPolicyStore(base::FilePath(), base::FilePath()) {}
 
 MockUserCloudPolicyStore::~MockUserCloudPolicyStore() {}
 

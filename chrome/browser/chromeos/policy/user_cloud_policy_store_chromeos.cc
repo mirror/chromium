@@ -20,6 +20,7 @@
 #include "base/sequenced_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/dbus/cryptohome_client.h"
@@ -66,12 +67,10 @@ std::string ExtractDomain(const std::string& username) {
 UserCloudPolicyStoreChromeOS::UserCloudPolicyStoreChromeOS(
     chromeos::CryptohomeClient* cryptohome_client,
     chromeos::SessionManagerClient* session_manager_client,
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner,
     const AccountId& account_id,
     const base::FilePath& user_policy_key_dir,
     bool is_active_directory)
-    : UserCloudPolicyStoreBase(background_task_runner),
-      cryptohome_client_(cryptohome_client),
+    : cryptohome_client_(cryptohome_client),
       session_manager_client_(session_manager_client),
       account_id_(account_id),
       user_policy_key_dir_(user_policy_key_dir),
@@ -304,9 +303,14 @@ void UserCloudPolicyStoreChromeOS::ReloadPolicyKey(
   DCHECK(!is_active_directory_);
 
   std::string* key = new std::string();
-  background_task_runner()->PostTaskAndReply(
-      FROM_HERE, base::Bind(&UserCloudPolicyStoreChromeOS::LoadPolicyKey,
-                            cached_policy_key_path_, key),
+  scoped_refptr<base::TaskRunner> task_runner =
+      base::CreateTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+  task_runner->PostTaskAndReply(
+      FROM_HERE,
+      base::Bind(&UserCloudPolicyStoreChromeOS::LoadPolicyKey,
+                 cached_policy_key_path_, key),
       base::Bind(&UserCloudPolicyStoreChromeOS::OnPolicyKeyReloaded,
                  weak_factory_.GetWeakPtr(), base::Owned(key), callback));
 }

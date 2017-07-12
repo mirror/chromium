@@ -189,7 +189,6 @@ void CloudExternalDataPolicyObserverTest::SetUp() {
           &cros_settings_, &affiliated_invalidation_service_provider_,
           base::ThreadTaskRunnerHandle::Get(),
           base::ThreadTaskRunnerHandle::Get(),
-          base::ThreadTaskRunnerHandle::Get(),
           base::ThreadTaskRunnerHandle::Get(), nullptr));
   url_fetcher_factory_.set_remove_fetcher_on_delete(true);
 

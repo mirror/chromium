@@ -74,9 +74,8 @@ class UserCloudPolicyStoreChromeOSTest : public testing::Test {
 
     ASSERT_TRUE(tmp_dir_.CreateUniqueTempDir());
     store_.reset(new UserCloudPolicyStoreChromeOS(
-        &cryptohome_client_, &session_manager_client_,
-        base::ThreadTaskRunnerHandle::Get(), account_id_, user_policy_dir(),
-        false /* is_active_directory */));
+        &cryptohome_client_, &session_manager_client_, account_id_,
+        user_policy_dir(), false /* is_active_directory */));
     store_->AddObserver(&observer_);
 
     // Install the initial public key, so that by default the validation of
