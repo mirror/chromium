@@ -16,10 +16,10 @@
 #include "cc/surfaces/frame_sink_manager_client.h"
 #include "cc/surfaces/referenced_surface_tracker.h"
 #include "cc/surfaces/surface_client.h"
-#include "cc/surfaces/surface_info.h"
 #include "cc/surfaces/surface_resource_holder.h"
 #include "cc/surfaces/surface_resource_holder_client.h"
 #include "cc/surfaces/surfaces_export.h"
+#include "components/viz/common/surfaces/surface_info.h"
 
 namespace cc {
 
@@ -102,7 +102,7 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
   void OnBeginFrameSourcePausedChanged(bool paused) override;
 
   void UpdateNeedsBeginFramesInternal();
-  Surface* CreateSurface(const SurfaceInfo& surface_info);
+  Surface* CreateSurface(const viz::SurfaceInfo& surface_info);
 
   CompositorFrameSinkSupportClient* const client_;
 

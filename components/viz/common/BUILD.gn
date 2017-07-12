@@ -34,6 +34,7 @@ source_set("common") {
     "resources/shared_bitmap_manager.h",
     "surface_id.cc",
     "surface_id.h",
+    "surfaces/surface_info.h",
   ]
 
   deps = [

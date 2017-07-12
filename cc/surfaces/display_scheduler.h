@@ -18,10 +18,13 @@
 #include "cc/surfaces/surfaces_export.h"
 #include "components/viz/common/surface_id.h"
 
+namespace viz {
+class SurfaceInfo;
+}
+
 namespace cc {
 
 class BeginFrameSource;
-class SurfaceInfo;
 
 class CC_SURFACES_EXPORT DisplaySchedulerClient {
  public:
@@ -65,7 +68,7 @@ class CC_SURFACES_EXPORT DisplayScheduler : public BeginFrameObserverBase,
   void OnBeginFrameSourcePausedChanged(bool paused) override;
 
   // SurfaceObserver implementation.
-  void OnSurfaceCreated(const SurfaceInfo& surface_info) override;
+  void OnSurfaceCreated(const viz::SurfaceInfo& surface_info) override;
   void OnSurfaceDestroyed(const viz::SurfaceId& surface_id) override;
   bool OnSurfaceDamaged(const viz::SurfaceId& surface_id,
                         const BeginFrameAck& ack) override;

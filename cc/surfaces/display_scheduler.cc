@@ -10,7 +10,7 @@
 #include "base/stl_util.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/output/output_surface.h"
-#include "cc/surfaces/surface_info.h"
+#include "components/viz/common/surfaces/surface_info.h"
 
 namespace cc {
 
@@ -278,7 +278,7 @@ void DisplayScheduler::OnBeginFrameSourcePausedChanged(bool paused) {
     NOTIMPLEMENTED();
 }
 
-void DisplayScheduler::OnSurfaceCreated(const SurfaceInfo& surface_info) {}
+void DisplayScheduler::OnSurfaceCreated(const viz::SurfaceInfo& surface_info) {}
 
 void DisplayScheduler::OnSurfaceDestroyed(const viz::SurfaceId& surface_id) {
   auto it = surface_states_.find(surface_id);
