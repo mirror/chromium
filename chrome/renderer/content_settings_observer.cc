@@ -343,6 +343,21 @@ bool ContentSettingsObserver::AllowScriptFromSource(
   return allow || IsWhitelistedForContentSettings();
 }
 
+bool ContentSettingsObserver::AllowClientHintFromSource(
+    bool enabled_per_settings,
+    blink::WebClientHintsType type,
+    const blink::WebURL& url) {
+  // TODO(tbansal): Check the client hints rules received from the browser.
+  return false;
+}
+
+void ContentSettingsObserver::SetAllowClientHintsFromSource(
+    const bool enabled_types[blink::kWebClientHintsTypeLast + 1],
+    int64_t duration_seconds,
+    const blink::WebURL& url) {
+  // TODO (tbansal): Send it back to browser for persistence.
+}
+
 bool ContentSettingsObserver::AllowStorage(bool local) {
   blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
   if (frame->GetSecurityOrigin().IsUnique() ||

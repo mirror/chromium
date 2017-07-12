@@ -1092,6 +1092,17 @@ bool FrameFetchContext::ShouldSendClientHint(
          hints_preferences.ShouldSend(type);
 }
 
+bool FrameFetchContext::ShouldAddPersistentClientHint(WebClientHintsType type,
+                                                      const KURL& url) const {
+  if (!RuntimeEnabledFeatures::ClientHintsPersistentEnabled())
+    return false;
+
+  if (!GetContentSettingsClient())
+    return false;
+  return GetContentSettingsClient()->AllowClientHintFromSource(false, type,
+                                                               url);
+}
+
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     const ResourceRequest& request) {
   DCHECK(!IsDetached());
