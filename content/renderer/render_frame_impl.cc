@@ -1586,6 +1586,7 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_SwapIn, OnSwapIn)
     IPC_MESSAGE_HANDLER(FrameMsg_Delete, OnDeleteFrame)
     IPC_MESSAGE_HANDLER(FrameMsg_Stop, OnStop)
+    IPC_MESSAGE_HANDLER(FrameMsg_DroppedNavigation, OnDroppedNavigation)
     IPC_MESSAGE_HANDLER(FrameMsg_Collapse, OnCollapse)
     IPC_MESSAGE_HANDLER(FrameMsg_ContextMenuClosed, OnContextMenuClosed)
     IPC_MESSAGE_HANDLER(FrameMsg_CustomContextMenuAction,
@@ -4749,6 +4750,11 @@ void RenderFrameImpl::OnStop() {
 
   for (auto& observer : observers_)
     observer.OnStop();
+}
+
+void RenderFrameImpl::OnDroppedNavigation() {
+  browser_side_navigation_pending_ = false;
+  frame_->ClientDroppedNavigation();
 }
 
 void RenderFrameImpl::OnCollapse(bool collapsed) {
