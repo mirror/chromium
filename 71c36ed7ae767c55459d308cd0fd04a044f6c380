@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f92ab946_da10a95b",
+        "filename": "ui/gl/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-12T04:02:28Z",
+      "side": 1,
+      "message": "Move this into specific_include_rules just for the test file?",
+      "revId": "71c36ed7ae767c55459d308cd0fd04a044f6c380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
