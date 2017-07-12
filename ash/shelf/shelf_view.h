@@ -15,6 +15,7 @@
 #include "ash/shelf/ink_drop_button_listener.h"
 #include "ash/shelf/shelf_button_pressed_metric_tracker.h"
 #include "ash/shelf/shelf_tooltip_manager.h"
+#include "ash/shell_observer.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -67,7 +68,8 @@ class ASH_EXPORT ShelfView : public views::View,
                              public views::ContextMenuController,
                              public views::FocusTraversable,
                              public views::BoundsAnimatorObserver,
-                             public app_list::ApplicationDragAndDropHost {
+                             public app_list::ApplicationDragAndDropHost,
+                             public ShellObserver {
  public:
   ShelfView(ShelfModel* model, Shelf* shelf, ShelfWidget* shelf_widget);
   ~ShelfView() override;
@@ -100,6 +102,12 @@ class ASH_EXPORT ShelfView : public views::View,
   }
 
   AppListButton* GetAppListButton() const;
+
+  // ash::ShellObserver:
+  void OnMaximizeModeStarted() override;
+  void OnMaximizeModeEnded() override;
+  // Not used but will conflict with OnShelfAligmentChanged() if not overriden.
+  void OnShelfAlignmentChanged(aura::Window* root_window) override;
 
   // Returns true if the mouse cursor exits the area for launcher tooltip.
   // There are thin gaps between launcher buttons but the tooltip shouldn't hide
@@ -170,6 +178,12 @@ class ASH_EXPORT ShelfView : public views::View,
   ShelfView* main_shelf() { return main_shelf_; }
 
   const ShelfButton* drag_view() const { return drag_view_; }
+
+  // Helper functions to help sync up the animation in the app list button with
+  // the animations in the shelf view.
+  int GetBoundsAnimatorAnimationDuration() const;
+  bool IsBoundsAnimatorAnimating() const;
+  double GetBoundsAnimatorAppListButtonAnimationCurrentValue();
 
  private:
   friend class ash::test::ShelfViewTestAPI;
@@ -472,6 +486,12 @@ class ASH_EXPORT ShelfView : public views::View,
   // check if a repost event occurs on the same shelf item as previous one. If
   // so, the repost event should be ignored.
   int last_pressed_index_ = -1;
+
+  // True when we just enter or exit maximize mode. This is used to enforce
+  // animations when the shelf's bounds change due to entering or exiting
+  // maximize mode; animations are not used otherwised to reduce lag. Set to
+  // false at the end of the animation.
+  bool layout_changed_because_maximize_mode_ = false;
 
   // Tracks UMA metrics based on shelf button press actions.
   ShelfButtonPressedMetricTracker shelf_button_pressed_metric_tracker_;
