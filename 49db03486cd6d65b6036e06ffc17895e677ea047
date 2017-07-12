@@ -247,6 +247,30 @@
       "revId": "49db03486cd6d65b6036e06ffc17895e677ea047",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84eaaccc_559eb80d",
+        "filename": "third_party/WebKit/Source/core/svg/properties/SVGPropertyTearOff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-12T11:55:21Z",
+      "side": 1,
+      "message": "IIUC this can be a Member\u003c\u003e now.",
+      "parentUuid": "dfa87e82_2a6e4ee8",
+      "range": {
+        "startLine": 95,
+        "startChar": 29,
+        "endLine": 95,
+        "endChar": 45
+      },
+      "revId": "49db03486cd6d65b6036e06ffc17895e677ea047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
