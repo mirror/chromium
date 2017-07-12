@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "865fc752_1961d768",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-12T23:01:18Z",
+      "side": 1,
+      "message": "Titles do not end in periods",
+      "range": {
+        "startLine": 7,
+        "startChar": 58,
+        "endLine": 7,
+        "endChar": 59
+      },
+      "revId": "7f6af15b754ea1ca515995b6db241a77afba8ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79a1200_26f1d48a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-12T23:01:18Z",
+      "side": 1,
+      "message": "consistently",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 23
+      },
+      "revId": "7f6af15b754ea1ca515995b6db241a77afba8ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3356e66a_cb064f7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-12T23:01:18Z",
+      "side": 1,
+      "message": "I always remove this from the end of links to confound metrics collection.",
+      "range": {
+        "startLine": 22,
+        "startChar": 65,
+        "endLine": 22,
+        "endChar": 77
+      },
+      "revId": "7f6af15b754ea1ca515995b6db241a77afba8ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
