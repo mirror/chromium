@@ -92,6 +92,12 @@ Image::SizeAvailability Image::SetData(RefPtr<SharedBuffer> data,
   return DataChanged(all_data_received);
 }
 
+size_t Image::DataSize() const {
+  if (!encoded_image_data_)
+    return 0;
+  return encoded_image_data_->size();
+}
+
 void Image::DrawTiledBackground(GraphicsContext& ctxt,
                                 const FloatRect& dest_rect,
                                 const FloatPoint& src_point,

@@ -128,6 +128,10 @@ PassRefPtr<SharedBuffer> BitmapImage::Data() {
   return source_.Data();
 }
 
+size_t BitmapImage::DataSize() const {
+  return data_size_;
+}
+
 void BitmapImage::NotifyMemoryChanged() {
   if (GetImageObserver())
     GetImageObserver()->DecodedSizeChangedTo(this, TotalFrameBytes());
@@ -195,6 +199,8 @@ Image::SizeAvailability BitmapImage::SetData(RefPtr<SharedBuffer> data,
   int length = data->size();
   if (!length)
     return kSizeAvailable;
+
+  data_size_ = data->size();
 
   // If ImageSource::setData() fails, we know that this is a decode error.
   // Report size available so that it gets registered as such in
