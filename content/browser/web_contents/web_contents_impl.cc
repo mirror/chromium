@@ -1174,6 +1174,10 @@ WebUI* WebContentsImpl::GetCommittedWebUI() const {
   return frame_tree_.root()->current_frame_host()->web_ui();
 }
 
+PermissionManager* WebContentsImpl::GetPermissionManager() {
+  return GetBrowserContext()->GetPermissionManager();
+}
+
 void WebContentsImpl::SetUserAgentOverride(const std::string& override) {
   if (GetUserAgentOverride() == override)
     return;

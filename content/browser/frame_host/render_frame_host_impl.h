@@ -80,6 +80,16 @@ namespace base {
 class ListValue;
 }
 
+namespace blink {
+namespace mojom {
+enum class PermissionStatus;
+}
+}  // namespace blink
+
+namespace device {
+class GeolocationServiceImpl;
+}
+
 namespace gfx {
 class Range;
 }
@@ -1154,6 +1164,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // PlzNavigate: Owns the stream used in navigations to store the body of the
   // response once it has started.
   std::unique_ptr<StreamHandle> stream_handle_;
+
+  // GeolocationService which provides Geolocation.
+  std::unique_ptr<device::GeolocationServiceImpl> geolocation_service_;
 
   // Context shared for each mojom::PermissionService instance created for this
   // RFH.

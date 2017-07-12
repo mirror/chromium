@@ -54,6 +54,7 @@ namespace content {
 class FrameTreeNode;
 class InterstitialPage;
 class PageState;
+class PermissionManager;
 class RenderFrameHost;
 class RenderFrameHostImpl;
 class SessionStorageNamespace;
@@ -152,6 +153,10 @@ class CONTENT_EXPORT RenderFrameHostDelegate {
   // Returns this object cast to an InterstitialPage if it is one. Returns
   // nullptr otherwise.
   virtual InterstitialPage* GetAsInterstitialPage();
+
+  // Get the PermissionManager for the BrowserContext corresponding to the
+  // WebContents that owns this frame.
+  virtual PermissionManager* GetPermissionManager();
 
   // The render frame has requested access to media devices listed in
   // |request|, and the client should grant or deny that permission by
