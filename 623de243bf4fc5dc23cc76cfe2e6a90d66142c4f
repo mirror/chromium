@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "eda3116c_5586266c",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-12T17:35:26Z",
+      "side": 1,
+      "message": "const ref",
+      "range": {
+        "startLine": 299,
+        "startChar": 33,
+        "endLine": 299,
+        "endChar": 37
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b87e153_8f89d357",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 7
@@ -71,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "d0a214fb_34dbda93",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-12T17:35:26Z",
+      "side": 1,
+      "message": "\u003e We try to shy away from multiple constructors that call into each other if possible.\n\nI am not aware of this policy. Do you have a link to a style guide that poo-poos it? We only recently became able to delegate constructors like this (C++11) and I think it\u0027s great.\n\nI would say there should be two ctors, one which takes an IconType and sets the size and color accordingly (although storing icon_type_ seems needless), and one which takes an explicit size and color. The former delegates to the latter of course.\n\nThis might be a good time to complete the TODO(estade) in the header that says we should be exposing SignalStrengthImageSource publicly so we don\u0027t have to keep adding functions like GetImageForBlueMobileBars. The callsite of GetImageForBlueMobileBars is a better place to store hardcoded constants like 40 (I\u0027m actually surprised the message center doesn\u0027t already expose 40 as a constant anywhere except as kWebNotificationIconSize which appears to be unused).",
+      "parentUuid": "8b87e153_8f89d357",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 67
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d43d4688_893eebda",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 7
@@ -82,6 +129,30 @@
       "writtenOn": "2017-07-12T01:21:11Z",
       "side": 1,
       "message": "I think it makes sense to create a new IconType here (i.e., ICON_TYPE_NOTIFICATION). Please check with an estade@ first to be sure, though. If we do end up making a new IconType, we could eliminate the Size parameter to the constructor and add handling for this new type to GetSizeForIconType().",
+      "range": {
+        "startLine": 834,
+        "startChar": 54,
+        "endLine": 834,
+        "endChar": 76
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76386f61_47643403",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-12T17:35:26Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep using the approach that GetImageForNewWifiNetwork introduced, which is to explicitly set the color (as done below on L836) rather than introducing a new type. I wouldn\u0027t want an explosion of types for every permutation of appearance and introducing a new type means we have to audit/verify all the places we conditionally act on the type.\n\n(Also, ICON_TYPE_NOTIFICATION appears to me to be a layering violation because this file shouldn\u0027t know anything about the notification center.)",
+      "parentUuid": "d43d4688_893eebda",
       "range": {
         "startLine": 834,
         "startChar": 54,
@@ -209,6 +280,30 @@
     },
     {
       "key": {
+        "uuid": "b870b47b_ed35bbe6",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-12T17:35:26Z",
+      "side": 1,
+      "message": "\"number of bars\" is a bit of a misnomer since it\u0027s just a triangle with no distinct bars; I\u0027d call it |signal_strength| or something.",
+      "parentUuid": "ddfec3ec_1b35758e",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 71
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cdbfc13_12a62628",
         "filename": "ash/system/network/network_icon.h",
         "patchSetId": 7
@@ -289,6 +384,30 @@
       "writtenOn": "2017-07-12T01:21:11Z",
       "side": 1,
       "message": "nit: Tether",
+      "range": {
+        "startLine": 145,
+        "startChar": 17,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8116aa36_341913e0",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-12T17:35:26Z",
+      "side": 1,
+      "message": "nit: don\u0027t add this please. It\u0027s not relevant to the tray and it\u0027s already a const as kGoogleBlue500, or if you have access to a theme then GetNativeTheme()-\u003eGetSystemColor(NativeTheme::kColorId_ProminentButtonColor).",
+      "parentUuid": "ffd725f7_19791914",
       "range": {
         "startLine": 145,
         "startChar": 17,
