@@ -319,6 +319,7 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
 - (void)copySite {
   UIPasteboard* generalPasteboard = [UIPasteboard generalPasteboard];
   generalPasteboard.string = _site;
+  TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
   [self showCopyResultToast:l10n_util::GetNSString(
                                 IDS_IOS_SETTINGS_SITE_WAS_COPIED_MESSAGE)];
 }
@@ -326,6 +327,7 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
 - (void)copyUsername {
   UIPasteboard* generalPasteboard = [UIPasteboard generalPasteboard];
   generalPasteboard.string = _username;
+  TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
   [self showCopyResultToast:l10n_util::GetNSString(
                                 IDS_IOS_SETTINGS_USERNAME_WAS_COPIED_MESSAGE)];
 }
