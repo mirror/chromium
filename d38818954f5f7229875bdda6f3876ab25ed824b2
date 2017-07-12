@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb98ad5_5fc82ddf",
+        "filename": "third_party/WebKit/Source/modules/crypto/CryptoKey.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-12T00:31:34Z",
+      "side": 1,
+      "message": "Yes.",
+      "revId": "d38818954f5f7229875bdda6f3876ab25ed824b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
