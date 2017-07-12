@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "ec550c49_b3bf25d0",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-12T21:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "802a3960_406eb9cf",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "b3a1d4023f6a9f098f006a374914abe74761ec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4efb3f88_464687db",
         "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtests.mm",
         "patchSetId": 4
