@@ -1450,7 +1450,6 @@ Sources.JavaScriptSourceFrame = class extends SourceFrame.UISourceCodeFrame {
   _detectMinified() {
     if (this._prettyPrintInfobar)
       return;
-
     if (!TextUtils.isMinified(/** @type {string} */ (this.uiSourceCode().content())))
       return;
 
