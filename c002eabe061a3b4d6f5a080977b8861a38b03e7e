@@ -22,6 +22,30 @@
       "revId": "c002eabe061a3b4d6f5a080977b8861a38b03e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f928b4_95160334",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T19:01:35Z",
+      "side": 1,
+      "message": "Ooops.  I wanted to discard this comment.  Not sure what happened.\n\nAt any rate - this comment is no longer applicable.",
+      "parentUuid": "8d7a8a29_db0cb709",
+      "range": {
+        "startLine": 599,
+        "startChar": 5,
+        "endLine": 600,
+        "endChar": 12
+      },
+      "revId": "c002eabe061a3b4d6f5a080977b8861a38b03e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

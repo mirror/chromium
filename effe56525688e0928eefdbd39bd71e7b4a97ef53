@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10d01fe9_656073c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T19:01:35Z",
+      "side": 1,
+      "message": "Does that indicate a possible already-existing bug?\n\nPotential bug #1: Field trials do not get synced to the utility process.\nPotential bug #2: Field trial activations from he utility process are not reported back to the browser process.\n\nCan you confirm if these are indeed already existing bugs?\n\n\nIf the above are indeed existing bugs, then the consensus on chromium-dev (*) seems to be that with an owner guidance I should attempt to add a regression test o_O.  Can you please help with that?  Would it be okay to land the current CL as-is and work on the test later?\n\n(*) https://groups.google.com/a/chromium.org/d/topic/chromium-dev/pMa5CnpL2cs/discussion",
+      "range": {
+        "startLine": 18,
+        "startChar": 51,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "effe56525688e0928eefdbd39bd71e7b4a97ef53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
