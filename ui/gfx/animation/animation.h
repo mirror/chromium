@@ -69,6 +69,8 @@ class ANIMATION_EXPORT Animation : public AnimationContainerElement {
   // process.
   static bool ScrollAnimationsEnabledBySystem();
 
+  class AnimationTestApi;
+
  protected:
   // Invoked from Start to allow subclasses to prepare for the animation.
   virtual void AnimationStarted() {}
