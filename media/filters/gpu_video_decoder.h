@@ -8,13 +8,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <deque>
-#include <list>
-#include <map>
-#include <set>
 #include <utility>
-#include <vector>
 
+#include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -95,7 +91,7 @@ class MEDIA_EXPORT GpuVideoDecoder
   // A SHMBuffer and the DecoderBuffer its data came from.
   struct PendingDecoderBuffer;
 
-  typedef std::map<int32_t, PictureBuffer> PictureBufferMap;
+  using PictureBufferMap = base::flat_map<int32_t, PictureBuffer>;
 
   void DeliverFrame(const scoped_refptr<VideoFrame>& frame);
 
@@ -198,28 +194,19 @@ class MEDIA_EXPORT GpuVideoDecoder
   // recent picture buffers were created.
   gpu::SyncToken sync_token_;
 
-  std::map<int32_t, PendingDecoderBuffer> bitstream_buffers_in_decoder_;
+  base::flat_map<int32_t, PendingDecoderBuffer> bitstream_buffers_in_decoder_;
   PictureBufferMap assigned_picture_buffers_;
   // PictureBuffers given to us by VDA via PictureReady, which we sent forward
   // as VideoFrames to be rendered via decode_cb_, and which will be returned
   // to us via ReusePictureBuffer.
-  typedef std::map<int32_t /* picture_buffer_id */,
-                   PictureBuffer::TextureIds /* texture_id */>
-      PictureBufferTextureMap;
+  using PictureBufferTextureMap =
+      base::flat_map<int32_t /* picture_buffer_id */,
+                     PictureBuffer::TextureIds /* texture_id */>;
   PictureBufferTextureMap picture_buffers_at_display_;
 
-  struct BufferData {
-    BufferData(int32_t bbid,
-               base::TimeDelta ts,
-               const gfx::Rect& visible_rect,
-               const gfx::Size& natural_size);
-    ~BufferData();
-    int32_t bitstream_buffer_id;
-    base::TimeDelta timestamp;
-    gfx::Rect visible_rect;
-    gfx::Size natural_size;
-  };
-  std::list<BufferData> input_buffer_data_;
+  // Since PictureBuffer objects don't contain timestamps we need a second map
+  // to properly fill out the VideoFrame object upon PictureReady().
+  base::flat_map<int32_t, base::TimeDelta> bitstream_timestamp_map_;
 
   // picture_buffer_id and the frame wrapping the corresponding Picture, for
   // frames that have been decoded but haven't been requested by a Decode() yet.

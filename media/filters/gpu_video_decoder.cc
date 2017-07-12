@@ -6,7 +6,6 @@
 
 #include <algorithm>
 #include <array>
-#include <utility>
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
@@ -91,17 +90,6 @@ struct GpuVideoDecoder::PendingDecoderBuffer {
   scoped_refptr<DecoderBuffer> buffer;
   DecodeCB done_cb;
 };
-
-GpuVideoDecoder::BufferData::BufferData(int32_t bbid,
-                                        base::TimeDelta ts,
-                                        const gfx::Rect& vr,
-                                        const gfx::Size& ns)
-    : bitstream_buffer_id(bbid),
-      timestamp(ts),
-      visible_rect(vr),
-      natural_size(ns) {}
-
-GpuVideoDecoder::BufferData::~BufferData() {}
 
 GpuVideoDecoder::GpuVideoDecoder(
     GpuVideoAcceleratorFactories* factories,
@@ -478,42 +466,11 @@ void GpuVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
       PendingDecoderBuffer(std::move(shared_memory), buffer, decode_cb));
   DCHECK_LE(static_cast<int>(bitstream_buffers_in_decoder_.size()),
             kMaxInFlightDecodes);
-  RecordBufferData(bitstream_buffer, *buffer.get());
+  // Secondary mapping needed since decoders may NotifyEndOfBitstreamBuffer()
+  // before actually sending the frame over.
+  bitstream_timestamp_map_[bitstream_buffer.id()] = buffer->timestamp();
 
   vda_->Decode(bitstream_buffer);
-}
-
-void GpuVideoDecoder::RecordBufferData(const BitstreamBuffer& bitstream_buffer,
-                                       const DecoderBuffer& buffer) {
-  input_buffer_data_.push_front(BufferData(bitstream_buffer.id(),
-                                           buffer.timestamp(),
-                                           config_.visible_rect(),
-                                           config_.natural_size()));
-  // Why this value?  Because why not.  avformat.h:MAX_REORDER_DELAY is 16, but
-  // that's too small for some pathological B-frame test videos.  The cost of
-  // using too-high a value is low (192 bits per extra slot).
-  static const size_t kMaxInputBufferDataSize = 128;
-  // Pop from the back of the list, because that's the oldest and least likely
-  // to be useful in the future data.
-  if (input_buffer_data_.size() > kMaxInputBufferDataSize)
-    input_buffer_data_.pop_back();
-}
-
-void GpuVideoDecoder::GetBufferData(int32_t id,
-                                    base::TimeDelta* timestamp,
-                                    gfx::Rect* visible_rect,
-                                    gfx::Size* natural_size) {
-  for (std::list<BufferData>::const_iterator it =
-           input_buffer_data_.begin(); it != input_buffer_data_.end();
-       ++it) {
-    if (it->bitstream_buffer_id != id)
-      continue;
-    *timestamp = it->timestamp;
-    *visible_rect = it->visible_rect;
-    *natural_size = it->natural_size;
-    return;
-  }
-  NOTREACHED() << "Missing bitstreambuffer id: " << id;
 }
 
 bool GpuVideoDecoder::NeedsBitstreamConversion() const {
@@ -637,19 +594,24 @@ void GpuVideoDecoder::PictureReady(const media::Picture& picture) {
     pb.set_size(picture.visible_rect().size());
   }
 
-  // Update frame's timestamp.
-  base::TimeDelta timestamp;
-  // Some of the VDAs like DXVA, and VTVDA don't support and thus don't provide
-  // us with visible size in picture.size, passing (0, 0) instead, so for those
-  // cases drop it and use config information instead.
-  gfx::Rect visible_rect;
-  gfx::Size natural_size;
-  GetBufferData(picture.bitstream_buffer_id(), &timestamp, &visible_rect,
-                &natural_size);
-
-  if (!picture.visible_rect().IsEmpty()) {
-    visible_rect = picture.visible_rect();
+  auto ts_it = bitstream_timestamp_map_.find(picture.bitstream_buffer_id());
+  if (ts_it == bitstream_timestamp_map_.end()) {
+    DLOG(ERROR) << "Missing timestamp: " << picture.bitstream_buffer_id();
+    NotifyError(VideoDecodeAccelerator::PLATFORM_FAILURE);
+    return;
   }
+  const base::TimeDelta timestamp = ts_it->second;
+  bitstream_timestamp_map_.erase(ts_it);
+
+  // Some of the VDAs like DXVA, and VTVDA don't support and thus don't
+  // provide us with visible size in picture.size, passing (0, 0) instead, so
+  // for those cases drop it and use config information instead.
+  gfx::Rect visible_rect = config_.visible_rect();
+  gfx::Size natural_size = config_.natural_size();
+
+  if (!picture.visible_rect().IsEmpty())
+    visible_rect = picture.visible_rect();
+
   if (!gfx::Rect(pb.size()).Contains(visible_rect)) {
     LOG(WARNING) << "Visible size " << visible_rect.ToString()
                  << " is larger than coded size " << pb.size().ToString();
@@ -805,8 +767,7 @@ void GpuVideoDecoder::NotifyEndOfBitstreamBuffer(int32_t id) {
   DVLOG(3) << "NotifyEndOfBitstreamBuffer(" << id << ")";
   DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent();
 
-  std::map<int32_t, PendingDecoderBuffer>::iterator it =
-      bitstream_buffers_in_decoder_.find(id);
+  auto it = bitstream_buffers_in_decoder_.find(id);
   if (it == bitstream_buffers_in_decoder_.end()) {
     NotifyError(VideoDecodeAccelerator::PLATFORM_FAILURE);
     NOTREACHED() << "Missing bitstream buffer: " << id;
@@ -833,11 +794,8 @@ GpuVideoDecoder::~GpuVideoDecoder() {
     base::ResetAndReturn(&request_overlay_info_cb_)
         .Run(false, ProvideOverlayInfoCB());
 
-  for (std::map<int32_t, PendingDecoderBuffer>::iterator it =
-           bitstream_buffers_in_decoder_.begin();
-       it != bitstream_buffers_in_decoder_.end(); ++it) {
-    it->second.done_cb.Run(DecodeStatus::ABORTED);
-  }
+  for (auto& kv : bitstream_buffers_in_decoder_)
+    kv.second.done_cb.Run(DecodeStatus::ABORTED);
   bitstream_buffers_in_decoder_.clear();
 
   if (!pending_reset_cb_.is_null())
@@ -851,6 +809,10 @@ void GpuVideoDecoder::NotifyFlushDone() {
   state_ = kDecoderDrained;
   base::ResetAndReturn(&eos_decode_cb_).Run(DecodeStatus::OK);
 
+  // This needs to happen after the Reset() on vda_ is done to ensure pictures
+  // delivered during the reset can find their time data.
+  bitstream_timestamp_map_.clear();
+
   // Assume flush is for a config change, so drop shared memory segments in
   // anticipation of a resize occurring.
   available_shm_segments_.clear();
@@ -863,7 +825,7 @@ void GpuVideoDecoder::NotifyResetDone() {
 
   // This needs to happen after the Reset() on vda_ is done to ensure pictures
   // delivered during the reset can find their time data.
-  input_buffer_data_.clear();
+  bitstream_timestamp_map_.clear();
 
   if (!pending_reset_cb_.is_null())
     base::ResetAndReturn(&pending_reset_cb_).Run();
