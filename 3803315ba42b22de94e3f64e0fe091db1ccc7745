@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0547e429_79e5a154",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-12T01:12:35Z",
+      "side": 1,
+      "message": "is there any way we can modify this to prevent the case where there is an empty file request at the end? would simplify a bunch of logic below.",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 56
+      },
+      "revId": "3803315ba42b22de94e3f64e0fe091db1ccc7745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
