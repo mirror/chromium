@@ -180,6 +180,7 @@ void BoxPainter::PaintBoxDecorationBackgroundWithRect(
   }
 
   if (!painting_overflow_contents) {
+    CHECK(&style == &layout_box_.StyleRef());  // crbug.com/712933
     PaintInsetBoxShadow(paint_info, paint_rect, style);
 
     // The theme will tell us whether or not we should also paint the CSS
