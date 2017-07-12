@@ -34,6 +34,24 @@
       "revId": "2fdd79f198ac3b9e553ca0889c9e499e5d57d56f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f04f14_e3bba8b1",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-12T03:46:04Z",
+      "side": 1,
+      "message": "Ah right, that makes it not const, and in Chromium must be a pointer.",
+      "parentUuid": "e55b9129_353f3a45",
+      "revId": "2fdd79f198ac3b9e553ca0889c9e499e5d57d56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
