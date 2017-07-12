@@ -8754,6 +8754,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Compositing.Renderer.CheckerImagingDecision"
+    enum="CheckerImagingDecision">
+  <owner>khushalsagar@chromium.org</owner>
+  <summary>
+    The outcome for whether an image could be sucessfully deferred for
+    asynchronous decode in the renderer compositor. If not, the reason for using
+    a synchronous decode.
+  </summary>
+</histogram>
+
 <histogram
     name="Compositing.Renderer.DisplayListRecordingSource.UpdateInvalidatedAreaPerMs"
     units="pixels/ms">
