@@ -22,6 +22,30 @@
       "revId": "eb2c2f68d4f27f31d47b1e279a3ad76a04d460ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6d687e_06c2d955",
+        "filename": "chrome/browser/ui/browser_tab_strip_model_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-12T17:05:22Z",
+      "side": 1,
+      "message": "I need the CreateParams for TabHelpers::AttachTabHelpers() which create various instances of helpers. Other parts of the code still pass CreateContents through several function calls to TabHelpers::AttachTabHelpers(). I think one possible way is to store CreateParams into WebContents.\n\nbmcquade@: Do you have any suggestion for sky@\u0027s comments? Thanks.",
+      "parentUuid": "b49a6e5d_f7d17263",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 30
+      },
+      "revId": "eb2c2f68d4f27f31d47b1e279a3ad76a04d460ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
