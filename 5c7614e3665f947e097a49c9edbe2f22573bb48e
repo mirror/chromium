@@ -22,6 +22,30 @@
       "revId": "5c7614e3665f947e097a49c9edbe2f22573bb48e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7167a295_a58092d4",
+        "filename": "chrome/browser/ui/webui/ntp/ntp_resource_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-12T15:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28371d5d_50d860cf",
+      "range": {
+        "startLine": 348,
+        "startChar": 6,
+        "endLine": 348,
+        "endChar": 35
+      },
+      "revId": "5c7614e3665f947e097a49c9edbe2f22573bb48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
