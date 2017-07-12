@@ -52,6 +52,47 @@
       "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb14561_d630bc70",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000107
+      },
+      "writtenOn": "2017-07-12T16:34:24Z",
+      "side": 1,
+      "message": "I don\u0027t really understand this so feel free to ignore me, but...\n\n* I\u0027d probably at least move this to its own CL.  I don\u0027t think it\u0027s related to what we\u0027re doing here.\n* From a \"I have no idea what I\u0027m talking about\" point of view, my instinct (from experience with cross compilers) would be that \"target\" would be the machine that will run the code and \"current\" would be the machine running the compiler.  For instance, when developing for ARM Chromebooks I use my 64-bit x86 Linux box to compile code.  In that case, would \"current\" be \"x64\" and \"target\" be \"arm32\"?  If my instinct matches reality when we\u0027d want to leave this at \"target\" and not change it to \"current\".  ...but maybe my instinct is wrong since below checks against \"current_cpu \u003d\u003d \"arm\"",
+      "parentUuid": "604a373e_ec9545d2",
+      "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e15b811_a5575536",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000107
+      },
+      "writtenOn": "2017-07-12T16:34:24Z",
+      "side": 1,
+      "message": "I think the logic is backwards here.  We want \"arm32\" to the the special case.  By default we want frame pointers on.  AKA: if we happened to compile an x86-32 bit Chrome (not sure we actually still do this?) we\u0027d want frame pointers.\n\nSo this (untested) code:\n\n  # We need frame pointers for CWP and profiling gives a\n  # big enough benefit that the frame pointer penalty is\n  # worth it.  ...but frame pointers are broken on clang\n  # for arm32 and nobody\u0027s fixing it, so turn frame\n  # pointers off since there\u0027s no benefit to offset the\n  # frame pointer penalty.\n  # See \u003chttps://bugs.llvm.org/show_bug.cgi?id\u003d18505\u003e.\n  if (current_cpu \u003d\u003d \"arm\") {\n    enable_frame_pointers \u003d false\n  } else {\n    enable_frame_pointers \u003d true\n  }",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 3
+      },
+      "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
