@@ -13,6 +13,8 @@
 #include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
 #include "services/resource_coordinator/public/interfaces/service_callbacks.mojom.h"
 
+namespace resource_coordinator {
+
 class ResourceCoordinatorWebContentsObserver
     : public content::WebContentsObserver,
       public content::WebContentsUserData<
@@ -23,8 +25,7 @@ class ResourceCoordinatorWebContentsObserver
   static bool ukm_recorder_initialized;
   static bool IsEnabled();
 
-  resource_coordinator::ResourceCoordinatorInterface*
-  tab_resource_coordinator() {
+  ResourceCoordinatorInterface* tab_resource_coordinator() {
     return tab_resource_coordinator_.get();
   }
 
@@ -44,12 +45,13 @@ class ResourceCoordinatorWebContentsObserver
   friend class content::WebContentsUserData<
       ResourceCoordinatorWebContentsObserver>;
 
-  std::unique_ptr<resource_coordinator::ResourceCoordinatorInterface>
-      tab_resource_coordinator_;
+  std::unique_ptr<ResourceCoordinatorInterface> tab_resource_coordinator_;
 
-  resource_coordinator::mojom::ServiceCallbacksPtr service_callbacks_;
+  mojom::ServiceCallbacksPtr service_callbacks_;
 
   DISALLOW_COPY_AND_ASSIGN(ResourceCoordinatorWebContentsObserver);
 };
+
+}  // namespace resource_coordinator
 
 #endif  // CHROME_BROWSER_RESOURCE_COORDINATOR_RESOURCE_COORDINATOR_WEB_CONTENTS_OBSERVER_H_

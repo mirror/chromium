@@ -314,6 +314,9 @@ void TabHelpers::AttachTabHelpers(
   if (MediaEngagementService::IsEnabled())
     MediaEngagementService::CreateWebContentsObserver(web_contents);
 
-  if (ResourceCoordinatorWebContentsObserver::IsEnabled())
-    ResourceCoordinatorWebContentsObserver::CreateForWebContents(web_contents);
+  if (resource_coordinator::ResourceCoordinatorWebContentsObserver::
+          IsEnabled()) {
+    resource_coordinator::ResourceCoordinatorWebContentsObserver::
+        CreateForWebContents(web_contents);
+  }
 }
