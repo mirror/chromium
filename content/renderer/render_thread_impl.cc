@@ -76,7 +76,6 @@
 #include "content/common/content_constants_internal.h"
 #include "content/common/dom_storage/dom_storage_messages.h"
 #include "content/common/features.h"
-#include "content/common/field_trial_recorder.mojom.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
 #include "content/common/gpu_stream_constants.h"
@@ -614,8 +613,7 @@ RenderThreadImpl::RenderThreadImpl(
       renderer_scheduler_(std::move(scheduler)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
       renderer_binding_(this),
-      client_id_(1),
-      field_trial_syncer_(this) {
+      client_id_(1) {
   Init(resource_task_queue);
 }
 
@@ -632,8 +630,7 @@ RenderThreadImpl::RenderThreadImpl(
       main_message_loop_(std::move(main_message_loop)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
       is_scroll_animator_enabled_(false),
-      renderer_binding_(this),
-      field_trial_syncer_(this) {
+      renderer_binding_(this) {
   scoped_refptr<base::SingleThreadTaskRunner> test_task_counter;
   DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kRendererClientId));
@@ -771,9 +768,6 @@ void RenderThreadImpl::Init(
   GetContentClient()->renderer()->RenderThreadStarted();
 
   StartServiceManagerConnection();
-
-  field_trial_syncer_.InitFieldTrialObserving(
-      *base::CommandLine::ForCurrentProcess(), switches::kSingleProcess);
 
   GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&RenderThreadImpl::OnRendererInterfaceRequest,
@@ -1550,11 +1544,6 @@ RenderThreadImpl::GetLoadingTaskRunner() {
   return renderer_scheduler_->LoadingTaskRunner();
 }
 
-void RenderThreadImpl::SetFieldTrialGroup(const std::string& trial_name,
-                                          const std::string& group_name) {
-  field_trial_syncer_.OnSetFieldTrialGroup(trial_name, group_name);
-}
-
 void RenderThreadImpl::OnAssociatedInterfaceRequest(
     const std::string& name,
     mojo::ScopedInterfaceEndpointHandle handle) {
@@ -2145,15 +2134,6 @@ gpu::GpuChannelHost* RenderThreadImpl::GetGpuChannel() {
   if (gpu_channel_->IsLost())
     return nullptr;
   return gpu_channel_.get();
-}
-
-void RenderThreadImpl::OnFieldTrialGroupFinalized(
-    const std::string& trial_name,
-    const std::string& group_name) {
-  mojom::FieldTrialRecorderPtr field_trial_recorder;
-  GetConnector()->BindInterface(mojom::kBrowserServiceName,
-                                &field_trial_recorder);
-  field_trial_recorder->FieldTrialActivated(trial_name);
 }
 
 void RenderThreadImpl::CreateView(mojom::CreateViewParamsPtr params) {
