@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffe7bca4_58ad6627",
+        "filename": "cc/output/overlay_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-12T02:31:39Z",
+      "side": 1,
+      "message": "nit: This could be:\nif (overlay.use_output_surface_for_resource \u0026\u0026 overlay.plane_z_order)\n  bla bla",
+      "revId": "b40aa82c4feab862ac2a1077bcca6bacb02138d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac36bd22_d155a7ec",
+        "filename": "cc/output/overlay_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-12T02:31:39Z",
+      "side": 1,
+      "message": "We should be able to compare gfx::Rects, we\u0027re doing that in this file:\n\nconst gfx::Rect kOverlayClipRect(0, 0, 128, 128);\n[...]\nEXPECT_EQ(kOverlayClipRect, candidate.clip_rect);",
+      "revId": "b40aa82c4feab862ac2a1077bcca6bacb02138d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
