@@ -6,16 +6,18 @@
 import json5_generator
 import template_expander
 import make_style_builder
-
+import helper_function
 from name_utilities import enum_for_css_keyword, enum_value_name
 
 
 class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
     def __init__(self, json5_file_path):
-        super(CSSValueIDMappingsWriter, self).__init__(json5_file_path)
+        super(CSSValueIDMappingsWriter, self).__init__([json5_file_path[0]])
         self._outputs = {
             'CSSValueIDMappingsGenerated.h': self.generate_css_value_mappings,
         }
+        css_properties = [value for value in self._properties.values() if not value['longhands']]
+        helper_function.sort_keyword_css_properties(css_properties, json5_file_path[1], self.json5_file.parameters)
 
     @template_expander.use_jinja('templates/CSSValueIDMappingsGenerated.h.tmpl')
     def generate_css_value_mappings(self):

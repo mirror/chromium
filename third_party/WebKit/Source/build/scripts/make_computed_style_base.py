@@ -8,6 +8,7 @@ import math
 import json5_generator
 import template_expander
 import make_style_builder
+import helper_function
 
 from name_utilities import (
     enum_for_css_keyword, enum_type_name, enum_value_name, class_member_name, method_name,
@@ -504,6 +505,13 @@ def _reorder_fields(fields):
 
 class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def __init__(self, json5_file_paths):
+        """We sort the enum values based on each value's position in
+        the keywords as listed in CSSProperties.json5. This will ensure that if there is a continuous
+        segment in CSSProperties.json5 matching the segment in this enum then
+        the generated enum will have the same order and continuity as
+        CSSProperties.json5 and we can get the longest continuous segment.
+        Thereby reduce the switch case statement to the minimum.
+        """
         # Read CSSProperties.json5
         super(ComputedStyleBaseWriter, self).__init__([json5_file_paths[0]])
 
@@ -514,6 +522,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
                     "Shorthand '{}' cannot have a field_template.".format(property_['name'])
 
         css_properties = [value for value in self._properties.values() if not value['longhands']]
+        helper_function.sort_keyword_css_properties(css_properties, json5_file_paths[3], self.json5_file.parameters)
 
         for property_ in css_properties:
             # Set default values for extra parameters in ComputedStyleExtraFields.json5.
