@@ -627,7 +627,8 @@ void NotificationViewMD::CreateOrUpdateListItemViews(
 void NotificationViewMD::CreateOrUpdateIconView(
     const Notification& notification) {
   if (notification.type() == NOTIFICATION_TYPE_PROGRESS ||
-      notification.type() == NOTIFICATION_TYPE_MULTIPLE) {
+      notification.type() == NOTIFICATION_TYPE_MULTIPLE ||
+      notification.notifier_id().type == NotifierId::SYSTEM_COMPONENT) {
     DCHECK(!icon_view_ || right_content_->Contains(icon_view_));
     delete icon_view_;
     icon_view_ = nullptr;
@@ -646,10 +647,29 @@ void NotificationViewMD::CreateOrUpdateIconView(
 
 void NotificationViewMD::CreateOrUpdateSmallIconView(
     const Notification& notification) {
-  gfx::ImageSkia icon =
-      notification.small_image().IsEmpty()
-          ? GetProductIcon()
-          : GetMaskedIcon(notification.small_image().AsImageSkia());
+  gfx::ImageSkia icon;
+  if (notification.notifier_id().type == NotifierId::WEB_PAGE) {
+    // If the notifier is web, always show Chrome product icon.
+    icon = GetProductIcon();
+  } else if (notification.notifier_id().type == NotifierId::SYSTEM_COMPONENT) {
+    // If the notifier is system component, try to use small_image and icon,
+    // then fallback to the product icon.
+    if (!notification.small_image().IsEmpty()) {
+      icon = GetMaskedIcon(notification.small_image().AsImageSkia());
+    } else if (!notification.icon().IsEmpty()) {
+      icon = GetMaskedIcon(notification.icon().AsImageSkia());
+    } else {
+      icon = GetProductIcon();
+    }
+  } else {
+    // For other notifiers, try to use small_image then fallback to the product
+    // icon. (Same as the behavior of NotificationView.)
+    if (!notification.small_image().IsEmpty()) {
+      icon = GetMaskedIcon(notification.small_image().AsImageSkia());
+    } else {
+      icon = GetProductIcon();
+    }
+  }
   header_row_->SetAppIcon(icon);
 }
 
