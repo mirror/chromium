@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f515c208_1c7e8d15",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 69611,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T01:45:46Z",
+      "side": 1,
+      "message": "FWIW, an earlier patchset used ServiceWorker.NavigationHintPrecision, but that is a histogram we used before and deprecated as part of another experiment. I thought it\u0027d be better to create a new histogram as reuse could confuse analysis.",
+      "parentUuid": "b6f1f782_1361f712",
+      "range": {
+        "startLine": 69611,
+        "startChar": 31,
+        "endLine": 69611,
+        "endChar": 62
+      },
+      "revId": "d9e3d45678743090eb8bf07aae5742dd5a969d99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fe07d87_f54d59dc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
