@@ -640,16 +640,6 @@ bool AXObject::AccessibilityIsIgnored() {
     }
   }
 
-  if (node)
-    node->UpdateDistribution();
-
-  // TODO(aboxhall): Instead of this, propagate inert down through frames
-  Document* document = GetDocument();
-  while (document && document->LocalOwner()) {
-    document->LocalOwner()->UpdateDistribution();
-    document = document->LocalOwner()->ownerDocument();
-  }
-
   UpdateCachedAttributeValuesIfNeeded();
   return cached_is_ignored_;
 }
