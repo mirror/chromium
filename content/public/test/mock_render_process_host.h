@@ -130,6 +130,8 @@ class MockRenderProcessHost : public RenderProcessHost {
   bool MayReuseHost() override;
   bool IsUnused() override;
   void SetIsUsed() override;
+  viz::SharedBitmapAllocationNotifierImpl* GetSharedBitmapAllocationNotifier()
+      override;
 
   // IPC::Sender via RenderProcessHost.
   bool Send(IPC::Message* msg) override;
@@ -182,6 +184,8 @@ class MockRenderProcessHost : public RenderProcessHost {
       renderer_interface_;
   std::map<std::string, InterfaceBinder> binder_overrides_;
   service_manager::Identity child_identity_;
+  viz::SharedBitmapAllocationNotifierImpl
+      shared_bitmap_allocation_notifier_impl_;
   base::WeakPtrFactory<MockRenderProcessHost> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MockRenderProcessHost);
