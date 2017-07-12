@@ -612,8 +612,9 @@ void PrintPreviewUI::OnPreviewDataIsAvailable(int expected_pages_count,
         "PrintPreview.RegeneratePreviewRequest.BeforeFirstData",
         handler_->regenerate_preview_request_count());
     initial_preview_start_time_ = base::TimeTicks();
+    if (handler_)
+      handler_->OnPrintPreviewReady(id_, preview_request_id);
   }
-  handler_->OnPrintPreviewReady(id_, preview_request_id);
 }
 
 void PrintPreviewUI::OnCancelPendingPreviewRequest() {
