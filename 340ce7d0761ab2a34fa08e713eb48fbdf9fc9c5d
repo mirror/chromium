@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e32feb5_7f91b300",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4064,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T02:37:03Z",
+      "side": 1,
+      "message": "Optional nit: Perhaps \"Can decode asynchronously\"?",
+      "range": {
+        "startLine": 4064,
+        "startChar": 28,
+        "endLine": 4064,
+        "endChar": 40
+      },
+      "revId": "340ce7d0761ab2a34fa08e713eb48fbdf9fc9c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
