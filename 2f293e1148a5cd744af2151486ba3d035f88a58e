@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "68551624_b4650636",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-12T19:36:20Z",
+      "side": 1,
+      "message": "It looks like there are three paths:\n\n1. CloseContents() called by e.g. window.close()\n2. Unclean destruction as soon as capture ends (DestroyTab(this))\n3. Clean shutdown (Close() -\u003e WC::ClosePage() -\u003e CloseContents()) on navigation\n\nI wonder if #2 should be converted to #3, unless there\u0027s a reason to prevent unload handlers from running.  I don\u0027t plan on changing this behavior in this patch though.",
+      "parentUuid": "fefe66dc_dc732079",
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b173295a_e39863c4",
         "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
         "patchSetId": 3
@@ -114,6 +132,30 @@
       "side": 1,
       "message": "They should complete in 3 sec in a normal user environment. However, you cannot assume this on a bot. Non-perf bots may run under variable load/availability conditions. Issues I\u0027ve experienced in the past include:\n\n1. Debug builds can run very slowly. Especially, around page navigations/loads.\n2. Bots can be heavily loaded with multiple tasks running, causing tests to run slower.\n3. ASAN bots are always SUPER slow.\n\nI\u0027d suggest removing this and letting the normal test watchdog do all the work. Infra adjusts the watchdog based on the build/bot/other concerns.",
       "parentUuid": "7eca3f68_c091bf37",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d12bfb_41b06147",
+        "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-12T19:36:20Z",
+      "side": 1,
+      "message": "OK, done, but it will make the test harder to debug when it fails.  I added some comments to explain the possible failure modes.",
+      "parentUuid": "8596e263_7bb7019c",
       "range": {
         "startLine": 32,
         "startChar": 5,
