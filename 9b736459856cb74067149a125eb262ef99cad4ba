@@ -69,6 +69,24 @@
       "revId": "9b736459856cb74067149a125eb262ef99cad4ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36543d5_bcb11de3",
+        "filename": "third_party/WebKit/Tools/Scripts/wpt-export",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-12T20:39:31Z",
+      "side": 1,
+      "message": "Ah I got mixed up - yes that\u0027s what we want for the exporter. I don\u0027t think a lot of people are running the exporter locally, so prompting for credentials doesn\u0027t sound like it\u0027d be heavily used now.",
+      "parentUuid": "35f348d7_b5f75e2c",
+      "revId": "9b736459856cb74067149a125eb262ef99cad4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
