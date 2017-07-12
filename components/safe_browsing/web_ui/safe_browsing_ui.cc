@@ -10,14 +10,18 @@
 #include "base/values.h"
 #include "components/grit/components_resources.h"
 #include "components/grit/components_scaled_resources.h"
+#include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/features.h"
 #include "components/safe_browsing/web_ui/constants.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/user_prefs/user_prefs.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_message_handler.h"
+
 namespace safe_browsing {
+
 SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
     : content::WebUIController(web_ui) {
   // Set up the chrome://safe-browsing source.
@@ -25,9 +29,13 @@ SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
   content::WebUIDataSource* html_source = content::WebUIDataSource::Create(
       safe_browsing::kChromeUISafeBrowsingHost);
 
+  content::BrowserContext* browser_context =
+      web_ui->GetWebContents()->GetBrowserContext();
+
   // Register callback handler.
   // Handles messages from JavaScript to C++ via chrome.send().
-  web_ui->AddMessageHandler(base::MakeUnique<SafeBrowsingUIHandler>());
+  web_ui->AddMessageHandler(
+      base::MakeUnique<SafeBrowsingUIHandler>(browser_context));
 
   // Add localized string resources.
   html_source->AddLocalizedString("sbUnderConstruction",
@@ -38,24 +46,33 @@ SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
   html_source->AddResourcePath("safe_browsing.js", IDR_SAFE_BROWSING_JS);
   html_source->SetDefaultResource(IDR_SAFE_BROWSING_HTML);
 
-  content::BrowserContext* browser_context =
-      web_ui->GetWebContents()->GetBrowserContext();
   content::WebUIDataSource::Add(browser_context, html_source);
 }
 
 SafeBrowsingUI::~SafeBrowsingUI() {}
 
-SafeBrowsingUIHandler::SafeBrowsingUIHandler(){};
+SafeBrowsingUIHandler::SafeBrowsingUIHandler(content::BrowserContext* context)
+    : browser_context_(context) {}
 
 void SafeBrowsingUIHandler::ExpParamList(const base::ListValue* unused) {
   AllowJavascript();
   CallJavascriptFunction("safe_browsing.addExperiment", GetFeatureStatusList());
 }
 
+void SafeBrowsingUIHandler::SbPreferencesList(const base::ListValue* unused) {
+  AllowJavascript();
+  CallJavascriptFunction("safe_browsing.addPreferences",
+                         safe_browsing::GetSbPreferencesList(
+                             user_prefs::UserPrefs::Get(browser_context_)));
+}
+
 void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "expParamList",
       base::Bind(&SafeBrowsingUIHandler::ExpParamList, base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "sbPreferencesList", base::Bind(&SafeBrowsingUIHandler::SbPreferencesList,
+                                      base::Unretained(this)));
 }
 
 SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {}

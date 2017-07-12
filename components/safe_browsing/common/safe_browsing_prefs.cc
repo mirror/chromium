@@ -470,4 +470,29 @@ void UpdatePrefsBeforeSecurityInterstitial(PrefService* prefs) {
                     true);
 }
 
+// Returns the list of the preferences shown in chrome://safe-browsing.
+base::ListValue GetSbPreferencesList(PrefService* prefs) {
+  base::ListValue preferences_list;
+
+  // List of Safe Browsing preferences.
+  std::vector<const char*> sb_preferences_list = {
+      prefs::kSafeBrowsingEnabled,
+      prefs::kSafeBrowsingExtendedReportingOptInAllowed,
+      prefs::kSafeBrowsingExtendedReportingEnabled,
+      prefs::kSafeBrowsingScoutReportingEnabled};
+
+  // Add the status of the preferences if they are Enabled or Disabled for the
+  // user.
+  for (std::vector<const char*>::iterator it = sb_preferences_list.begin();
+       it != sb_preferences_list.end(); ++it) {
+    preferences_list.GetList().push_back(base::Value(*it));
+    if (prefs->GetBoolean(*it)) {
+      preferences_list.GetList().push_back(base::Value("Enabled"));
+    } else {
+      preferences_list.GetList().push_back(base::Value("Disabled"));
+    }
+  }
+  return preferences_list;
+}
+
 }  // namespace safe_browsing
