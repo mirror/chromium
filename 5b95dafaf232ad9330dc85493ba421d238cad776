@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6e349bf_65c98282",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-12T06:52:54Z",
+      "side": 1,
+      "message": "nit: it\u0027s a little weird to use this same constant for 2 purposes (source and indicating the selected item). We might want to have a separate constant.",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ddff46_2a54d4ba",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_behavior.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-12T06:52:54Z",
+      "side": 1,
+      "message": "nit: Do these changes impact this CL anymore? We might want to leave them out if not?",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

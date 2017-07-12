@@ -394,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "dac64369_3dd9027c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-12T06:52:54Z",
+      "side": 1,
+      "message": "I agree we will definitely want them to be defined somewhere. It\u0027s just that we probably don\u0027t want to add them to ContentSettingsProvider because embargo is handled in the permissions layer. I think the PermissionStatusSource is more likely to be what we use. Feel free to reflect that in the TODO.",
+      "parentUuid": "cd198848_dbe2e9d0",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf7e1d81_568bd5a0",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
         "patchSetId": 7
