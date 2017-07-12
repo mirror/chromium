@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f5efeaa_3721a3eb",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:16:53Z",
+      "side": 1,
+      "message": "Done\n\nI made it sync call, so that we make sure it can be deleted from |grc_tab_signal_observer_|.",
+      "parentUuid": "6380a9ce_fa46ad99",
+      "range": {
+        "startLine": 863,
+        "startChar": 17,
+        "endLine": 863,
+        "endChar": 43
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbdbcb57_b3ddb070",
         "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T10:44:15Z",
       "side": 1,
       "message": "I guess this is inherently racy right? We\u0027ll miss any events signalled before this.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 76
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba53460_6dff6f73",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:16:53Z",
+      "side": 1,
+      "message": "Correct, we will miss all event signals until the interface pointer is passed to the generator.",
+      "parentUuid": "dbdbcb57_b3ddb070",
       "range": {
         "startLine": 16,
         "startChar": 0,
@@ -71,6 +119,54 @@
     },
     {
       "key": {
+        "uuid": "3e5dac42_6d1b267d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "937326a1_03a8a48a",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 56
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe12a24a_df322a66",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:16:53Z",
+      "side": 1,
+      "message": "Done\n\nI have a small design doc https://docs.google.com/document/d/1ylmN94s_d_FPzbqagiJovcJAtKSPUdcsAh3vS-u9r6Y/edit",
+      "parentUuid": "937326a1_03a8a48a",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 56
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "654e7286_7625586b",
         "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
         "patchSetId": 5
@@ -91,6 +187,30 @@
       "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0391337a_af07bb32",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "654e7286_7625586b",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 48
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "367e4153_cc459b1b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6204709_7f885074",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 72
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9560173_c449b2cc",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 5
@@ -128,6 +272,30 @@
       "writtenOn": "2017-07-12T10:44:15Z",
       "side": 1,
       "message": "This is not directly introduced by this CL and doesn\u0027t need to be addressed now, but I think it\u0027d be better if CoordinationUnitImpl provided downcast helpers that asserted the correct type.",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 72
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b23fdd_c7df0ae3",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:16:53Z",
+      "side": 1,
+      "message": "What\u0027s the benefit? I think it\u0027s safer that we manually check the type and do the casting, having methods may result in misused call and cause runtime crash with assertion, which is hard to capture.",
+      "parentUuid": "b9560173_c449b2cc",
       "range": {
         "startLine": 39,
         "startChar": 8,
@@ -183,6 +351,54 @@
       "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d4f9dc_7a6d89fb",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96a8c85b_8fb03f5d",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a6356d8_2ae6314f",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9149e173_d4cca806",
+      "range": {
+        "startLine": 17,
+        "startChar": 70,
+        "endLine": 17,
+        "endChar": 71
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
