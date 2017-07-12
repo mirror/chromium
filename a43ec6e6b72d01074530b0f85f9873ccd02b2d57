@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f539c56_9859fa76",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-12T14:17:05Z",
+      "side": 1,
+      "message": "nit: I know it was already like this but can you rename this to aw_ui_manager",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "a43ec6e6b72d01074530b0f85f9873ccd02b2d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
