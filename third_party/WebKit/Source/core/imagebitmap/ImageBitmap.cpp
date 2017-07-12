@@ -178,6 +178,19 @@ bool DstBufferSizeHasOverflow(const ParsedOptions& options) {
 
 }  // namespace
 
+static SkColorType GetSkImageSkColorType(SkImage* image) {
+  SkColorType color_type = kN32_SkColorType;
+  if (image->colorSpace() && image->colorSpace()->gammaIsLinear())
+    color_type = kRGBA_F16_SkColorType;
+  return color_type;
+}
+
+static SkImageInfo GetSkImageSkImageInfo(SkImage* image) {
+  return SkImageInfo::Make(image->width(), image->height(),
+                           GetSkImageSkColorType(image), image->alphaType(),
+                           image->refColorSpace());
+}
+
 static PassRefPtr<Uint8Array> CopySkImageData(sk_sp<SkImage> input,
                                               const SkImageInfo& info) {
   unsigned width = static_cast<unsigned>(input->width());
@@ -191,6 +204,10 @@ static PassRefPtr<Uint8Array> CopySkImageData(sk_sp<SkImage> input,
   input->readPixels(info, dst_pixels->Data(), width * info.bytesPerPixel(), 0,
                     0);
   return dst_pixels;
+}
+
+static PassRefPtr<Uint8Array> CopySkImageData(sk_sp<SkImage> input) {
+  return CopySkImageData(input, GetSkImageSkImageInfo(input.get()));
 }
 
 static sk_sp<SkImage> NewSkImageFromRaster(const SkImageInfo& info,
@@ -662,11 +679,13 @@ ImageBitmap::ImageBitmap(const void* pixel_data,
                          uint32_t width,
                          uint32_t height,
                          bool is_image_bitmap_premultiplied,
-                         bool is_image_bitmap_origin_clean) {
-  SkImageInfo info = SkImageInfo::MakeN32(width, height,
-                                          is_image_bitmap_premultiplied
-                                              ? kPremul_SkAlphaType
-                                              : kUnpremul_SkAlphaType);
+                         bool is_image_bitmap_origin_clean,
+                         const CanvasColorParams& color_params) {
+  SkImageInfo info =
+      SkImageInfo::Make(width, height, color_params.GetSkColorType(),
+                        is_image_bitmap_premultiplied ? kPremul_SkAlphaType
+                                                      : kUnpremul_SkAlphaType,
+                        color_params.GetSkColorSpaceForSkSurfaces());
   SkPixmap pixmap(info, pixel_data, info.bytesPerPixel() * width);
   image_ = StaticBitmapImage::Create(SkImage::MakeRasterCopy(pixmap));
   if (!image_)
@@ -941,10 +960,11 @@ ImageBitmap* ImageBitmap::Create(const void* pixel_data,
                                  uint32_t width,
                                  uint32_t height,
                                  bool is_image_bitmap_premultiplied,
-                                 bool is_image_bitmap_origin_clean) {
+                                 bool is_image_bitmap_origin_clean,
+                                 const CanvasColorParams& color_params) {
   return new ImageBitmap(pixel_data, width, height,
                          is_image_bitmap_premultiplied,
-                         is_image_bitmap_origin_clean);
+                         is_image_bitmap_origin_clean, color_params);
 }
 
 void ImageBitmap::close() {
@@ -959,16 +979,27 @@ ImageBitmap* ImageBitmap::Take(ScriptPromiseResolver*, sk_sp<SkImage> image) {
   return ImageBitmap::Create(StaticBitmapImage::Create(std::move(image)));
 }
 
+CanvasColorParams ImageBitmap::GetCanvasColorParams() {
+  return CanvasColorParams(
+      GetSkImageSkImageInfo(image_->ImageForCurrentFrame().get()));
+}
+
 PassRefPtr<Uint8Array> ImageBitmap::CopyBitmapData(AlphaDisposition alpha_op,
                                                    DataColorFormat format) {
-  SkImageInfo info = SkImageInfo::Make(
-      width(), height(),
-      (format == kRGBAColorType) ? kRGBA_8888_SkColorType : kN32_SkColorType,
-      (alpha_op == kPremultiplyAlpha) ? kPremul_SkAlphaType
-                                      : kUnpremul_SkAlphaType);
-  RefPtr<Uint8Array> dst_pixels =
-      CopySkImageData(image_->ImageForCurrentFrame(), info);
-  return dst_pixels;
+  sk_sp<SkImage> sk_image = image_->ImageForCurrentFrame();
+  SkColorType color_type = GetSkImageSkColorType(sk_image.get());
+  if (color_type == kN32_SkColorType && format == kRGBAColorType)
+    color_type = kRGBA_8888_SkColorType;
+  SkImageInfo info =
+      SkImageInfo::Make(width(), height(), color_type,
+                        (alpha_op == kPremultiplyAlpha) ? kPremul_SkAlphaType
+                                                        : kUnpremul_SkAlphaType,
+                        sk_image->refColorSpace());
+  return CopySkImageData(sk_image, info);
+}
+
+PassRefPtr<Uint8Array> ImageBitmap::CopyBitmapData() {
+  return CopySkImageData(image_->ImageForCurrentFrame());
 }
 
 unsigned long ImageBitmap::width() const {
