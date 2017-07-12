@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "07b514e4_0fc0ab08",
+        "filename": "base/containers/small_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-12T23:09:31Z",
+      "side": 1,
+      "message": "Ah I see. Types that don\u0027t support move will end up being copied, so it will be 2 copies in the worst case.",
+      "parentUuid": "77e96313_255e66e1",
+      "range": {
+        "startLine": 423,
+        "startChar": 65,
+        "endLine": 423,
+        "endChar": 76
+      },
+      "revId": "29e3a95abaea16918decc5811e70dc72969e954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40cd7757_b4feaa99",
         "filename": "base/containers/small_map_unittest.cc",
         "patchSetId": 2
