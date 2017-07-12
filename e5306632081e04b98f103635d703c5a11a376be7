@@ -321,6 +321,30 @@
     },
     {
       "key": {
+        "uuid": "d69fbc24_db63c17f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T22:31:03Z",
+      "side": 1,
+      "message": "Since we refresh history when sign in state changes now, I\u0027ll change this back to ChromeSigninController.get().isSignedIn() in order not to show the info button.",
+      "parentUuid": "159a6953_93733f9f",
+      "range": {
+        "startLine": 416,
+        "startChar": 48,
+        "endLine": 416,
+        "endChar": 54
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8068c8fc_1755a3d1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
         "patchSetId": 1

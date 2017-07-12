@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df5c555c_2f6e129d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T22:31:03Z",
+      "side": 1,
+      "message": "I guess either would be fine.\n1) If we do initialize first then set visibility. initialize() will create an old header, but then set visibility will update the headers.\n2) If we set visibility first then initialize, then new header will be added, and then initialize() will create the new header again.",
+      "parentUuid": "0b7b8a2f_cc95896d",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 18
+      },
+      "revId": "fd3a340a13e30afc43a159600f0d9f3c6c8e1f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c994bb29_61d664cd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
         "patchSetId": 8
@@ -83,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b6f9a1ac_f9412885",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T22:31:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffbcd3d8_1b8fdf42",
+      "range": {
+        "startLine": 118,
+        "startChar": 27,
+        "endLine": 118,
+        "endChar": 35
+      },
+      "revId": "fd3a340a13e30afc43a159600f0d9f3c6c8e1f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b7c0531_8e26cf33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
         "patchSetId": 8
@@ -103,6 +151,30 @@
       "revId": "fd3a340a13e30afc43a159600f0d9f3c6c8e1f4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084346c1_6ad2299e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-12T22:31:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b7c0531_8e26cf33",
+      "range": {
+        "startLine": 501,
+        "startChar": 16,
+        "endLine": 501,
+        "endChar": 26
+      },
+      "revId": "fd3a340a13e30afc43a159600f0d9f3c6c8e1f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
