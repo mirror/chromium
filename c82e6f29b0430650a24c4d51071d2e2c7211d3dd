@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e48648c9_7a627f1a",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-12T23:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aa8f4a8_4f1a6640",
+      "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aee963e1_549f7002",
         "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0ee4b4_64b9d979",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-12T23:12:02Z",
+      "side": 1,
+      "message": "No longer relevant; using a fake instead as you suggested.",
+      "parentUuid": "aee963e1_549f7002",
+      "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d6ba84d7_00a828c7",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-12T23:12:02Z",
+      "side": 1,
+      "message": "No longer relevant; using a fake instead as you suggested.",
+      "parentUuid": "00d252c2_d41e5b57",
+      "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8883320e_bce6c2a2",
         "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ac4f6d_a98d7669",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-12T23:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8883320e_bce6c2a2",
+      "revId": "c82e6f29b0430650a24c4d51071d2e2c7211d3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
