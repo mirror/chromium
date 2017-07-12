@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "543f5893_3d6948cd",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-12T18:43:49Z",
+      "side": 1,
+      "message": "This sounds useful for local testing, but on the bots I think this isn\u0027t connected to an interactive terminal, so I\u0027m not sure it changes behavior there?",
+      "revId": "45edab31b6734a766afde8c0515555097ed022aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5eb10a_0b5600fb",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-12T18:43:49Z",
+      "side": 1,
+      "message": "I don\u0027t think this makes a difference. line will end in a newline, which causes print, to not prepend spaces:\n\n```\n\u003e\u003eprint 1,; print 2,\n1 2\n\u003e\u003e\u003e print \u0027asf\\n\u0027,; print \u0027asdfas\\n\u0027,\nasf\nasdfas\n```\n\nWhy do you think this makes a difference?\n\n(The loop header could be `for line in iter(qemu_popen.stdout.readline, \u0027\u0027):` instead of `while True` maybe, but that too should do the same thing as currently while being slightly more pythonic -- https://bugs.python.org/issue3907)",
+      "revId": "45edab31b6734a766afde8c0515555097ed022aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
