@@ -1223,7 +1223,7 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
   switch (action) {
     case OverscrollAction::NEW_TAB: {
       NewTabCommand* command = [[NewTabCommand alloc] initWithIncognito:NO];
-      [[self view] chromeExecuteCommand:command];
+      [self.dispatcher openNewTab:command];
     } break;
     case OverscrollAction::CLOSE_TAB:
       [self.dispatcher closeCurrentTab];
