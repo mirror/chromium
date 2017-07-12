@@ -14,6 +14,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "chrome/common/pref_names.h"
@@ -124,6 +125,14 @@ void CertReportHelper::FinishCertCollection(
   certificate_reporting::ErrorReport report(request_url_.host(), ssl_info_);
 
   report.AddNetworkTimeInfo(g_browser_process->network_time_tracker());
+
+#if defined(OS_WIN)
+  report.SetIsEnterpriseManaged(base::win::IsEnterpriseManaged());
+#elif defined(OS_CHROMEOS)
+  report.SetIsEnterpriseManaged(g_browser_process->platform_part()
+                                    ->browser_policy_connector_chromeos()
+                                    ->IsEnterpriseManaged());
+#endif
 
   report.SetInterstitialInfo(
       interstitial_reason_, user_proceeded,
