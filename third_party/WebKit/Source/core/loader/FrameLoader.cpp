@@ -1390,6 +1390,13 @@ NavigationPolicy FrameLoader::ShouldContinueForRedirectNavigationPolicy(
       WebTriggeringEventInfo::kNotFromEvent, form);
 }
 
+void FrameLoader::ClientDroppedNavigation() {
+  if (!provisional_document_loader_ || provisional_document_loader_->DidStart())
+    return;
+
+  DetachDocumentLoader(provisional_document_loader_);
+}
+
 NavigationPolicy FrameLoader::CheckLoadCanStart(
     FrameLoadRequest& frame_load_request,
     FrameLoadType type,
