@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "10556a2b_086e4b03",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1170679
+      },
+      "writtenOn": "2017-07-12T21:32:15Z",
+      "side": 1,
+      "message": "Thanks for the explanation. My take is that current_cpu is the right thing to use, but it requires cooperation from the toolchain to set it correctly. In our case, target_cpu should work as well, and it\u0027s independent from the toolchain. This is my understanding based on the following two paragraphs:\n\n\"For the default toolchain, target_cpu and current_cpu are the same. For a secondary toolchain, current_cpu is set based on the toolchain definition and target_cpu remains the same.\"\n\n\"Be sure you understand the differences between host_cpu, target_cpu, current_cpu, and toolchain_cpu (and the os equivalents). The first two are set as described above. You are responsible for making sure that current_cpu is set appropriately in your toolchain definitions;\"\n\nThat said, I am happy with the change.",
+      "parentUuid": "d1848b6e_80328bed",
+      "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e15b811_a5575536",
         "filename": "build/config/compiler/compiler.gni",
         "patchSetId": 2
