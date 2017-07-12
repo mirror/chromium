@@ -6,45 +6,30 @@
 #define CONTENT_BROWSER_MEMORY_SWAP_METRICS_OBSERVER_H_
 
 #include "base/time/time.h"
-#include "base/timer/timer.h"
+#include "content/common/content_export.h"
 
 namespace content {
 
-// This class observes system's swapping behavior to collect metrics.
+// This class observes the system's swapping behavior, with metrics provided by
+// a SwapMetricsDriver.
 // Metrics can be platform-specific.
-class SwapMetricsObserver {
+class CONTENT_EXPORT SwapMetricsObserver {
  public:
-  // This returns nullptr when swap metrics are not available on the system.
-  static SwapMetricsObserver* GetInstance();
+  virtual ~SwapMetricsObserver();
 
-  // Starts observing swap metrics.
-  void Start();
-
-  // Stop observing swap metrics.
-  void Stop();
+  virtual void SwapsInPerSecond(double swaps_in_per_sec,
+                                base::TimeDelta interval) {}
+  virtual void SwapsOutPerSecond(double swaps_out_per_sec,
+                                 base::TimeDelta interval) {}
+  virtual void DecompressedPagesPerSecond(double decompressed_pages_per_sec,
+                                          base::TimeDelta interval) {}
+  virtual void CompressedPagesPerSecond(double compressed_pages_per_sec,
+                                        base::TimeDelta interval) {}
 
  protected:
   SwapMetricsObserver();
-  virtual ~SwapMetricsObserver();
-
-  // Periodically called to update swap metrics.
-  void UpdateMetrics();
-
-  // Platform-dependent parts of UpdateMetrics(). |interval| is the elapsed time
-  // since the last UpdateMetrics() call. |interval| will be zero when this
-  // function is called for the first time.
-  virtual void UpdateMetricsInternal(base::TimeDelta interval) = 0;
 
  private:
-  // The interval between metrics updates.
-  base::TimeDelta update_interval_;
-
-  // A periodic timer to update swap metrics.
-  base::RepeatingTimer timer_;
-
-  // Holds the last TimeTicks when swap metrics are updated.
-  base::TimeTicks last_ticks_;
-
   DISALLOW_COPY_AND_ASSIGN(SwapMetricsObserver);
 };
 
