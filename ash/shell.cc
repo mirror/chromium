@@ -485,6 +485,10 @@ void Shell::ShowAppList() {
                       .id());
 }
 
+void Shell::UpdateAppListBounds(int new_y_position) {
+  app_list_->UpdateBoundsOnYPosition(new_y_position);
+}
+
 void Shell::DismissAppList() {
   app_list_->Dismiss();
 }

@@ -104,7 +104,12 @@ void StatusAreaWidgetDelegate::OnGestureEvent(ui::GestureEvent* event) {
   views::Widget* target_widget =
       static_cast<views::View*>(event->target())->GetWidget();
   Shelf* shelf = Shelf::ForWindow(target_widget->GetNativeWindow());
-  if (shelf->ProcessGestureEvent(*event))
+
+  ui::GestureEvent event_in_screen(*event);
+  gfx::Point location_in_screen(event->location());
+  View::ConvertPointToScreen(this, &location_in_screen);
+  event_in_screen.set_location(location_in_screen);
+  if (shelf->ProcessGestureEvent(event_in_screen))
     event->StopPropagation();
   else
     views::AccessiblePaneView::OnGestureEvent(event);

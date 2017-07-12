@@ -36,4 +36,7 @@ interface AppListPresenter {
 
   // Starts a voice interaction session.
   StartVoiceInteractionSession();
+
+  // Update the bounds of the app list according to |new_y_position|.
+  UpdateBoundsOnYPosition(int64 new_y_position);
 };
