@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e66dfad_3f923e73",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "These comments describe how these may be called by callers, which could change (and would make these immediately outdated).\n\nMove these comments to the sites that will invoke these methods.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29dc1fa_b8dfb63e",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "Remove this comment as it restates what the code does.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 78
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74effced_37a0fde8",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "Comments of this style that describe what a method does go in the header file.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78db448c_a3e95cbf",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "Remove stray comment.",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb971581_98c5c948",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "Where is this type used?",
+      "range": {
+        "startLine": 57,
+        "startChar": 17,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd06524_4260f776",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "Follow the style and group with the const chars above.",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e00b7d8_8f1f0f84",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "This variable is write-only, so it can probably be removed.",
+      "range": {
+        "startLine": 162,
+        "startChar": 17,
+        "endLine": 162,
+        "endChar": 25
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04684b94_768f751b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "These tests don\u0027t seem to do anything with the profile_. Are they needed?",
+      "range": {
+        "startLine": 195,
+        "startChar": 11,
+        "endLine": 195,
+        "endChar": 19
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec70a3b_6ba2c02c",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "What does the MockFeatureEngagementTracker do with the profile? Isn\u0027t it a keyed service?",
+      "range": {
+        "startLine": 288,
+        "startChar": 69,
+        "endLine": 288,
+        "endChar": 77
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c5b811_b75e5b66",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:51:16Z",
+      "side": 1,
+      "message": "Remove this reset. The tearing down of the test object will automatically reset this unique_ptr.",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 40
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
