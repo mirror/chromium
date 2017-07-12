@@ -175,7 +175,7 @@ int ShellBrowserMainParts::PreCreateThreads() {
             switches::kCrashDumpsDir);
     breakpad::CrashDumpObserver::GetInstance()->RegisterClient(
         base::MakeUnique<breakpad::CrashDumpManager>(
-            crash_dumps_dir, kAndroidMinidumpDescriptor));
+            crash_dumps_dir, kAndroidMinidumpDescriptor, nullptr));
   }
 
   return 0;
