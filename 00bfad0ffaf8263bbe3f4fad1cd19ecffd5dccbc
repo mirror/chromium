@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77890395_bb1f4a96",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Ah, that sounds good. Updated.",
+      "parentUuid": "44f2362e_2f963361",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16d250bc_7ef6dfae",
         "filename": "content/renderer/service_worker/thread_safe_script_container.h",
         "patchSetId": 13
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "d35c51f2_e94a7f31",
+        "filename": "content/renderer/service_worker/thread_safe_script_container_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59a5578_fd6018d2",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9443ee39_82ed28e4",
         "filename": "content/renderer/service_worker/thread_safe_script_container_unittest.cc",
         "patchSetId": 13
@@ -67,6 +103,24 @@
       "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62f3162_bd739114",
+        "filename": "content/renderer/service_worker/thread_safe_script_container_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Thanks, added \"utf-8\". For script_text and meta_data, it might be a bit difficult to create nested WebVector in a line. Added comment instead.",
+      "parentUuid": "9443ee39_82ed28e4",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "61368510_66bb1281",
+        "filename": "content/renderer/service_worker/thread_safe_script_container_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07e3671a_083d65a6",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc10c2eb_234a489e",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 13
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "ffcd5ef6_56e2a1ad",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Yes, it\u0027s correct.\nUpdated, thanks!",
+      "parentUuid": "bc10c2eb_234a489e",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "119b5337_6fa22f00",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 13
@@ -118,6 +208,24 @@
       "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e6f4ed_19c5a1fb",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "It\u0027s safe because |watcher_| is a member of |this|.\nUpdated comment.",
+      "parentUuid": "119b5337_6fa22f00",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +264,47 @@
     },
     {
       "key": {
+        "uuid": "83173e4d_89adca77",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "It\u0027s because |watcher_| calls the callback repeatedly until all data has been received.",
+      "parentUuid": "fca01037_e5958787",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c25aa70_47f02b9f",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "It also means mismatching ReadDataRaw and it shouldn\u0027t happen, so changed to NOTRACHED().",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 27
+      },
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62fbdf14_94ce76ec",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 13
@@ -170,6 +319,24 @@
       "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5204b51a_4096b4f4",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Good question. I originally thought it should not fail because rv !\u003d MOJO_RESULT_OK means mojo::BeginReadDataRaw wasn\u0027t called before mojo::EndReadDataRaw, but if so DCHECK seems appropriate.\nChanged to DCHECK.",
+      "parentUuid": "62fbdf14_94ce76ec",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +374,24 @@
     },
     {
       "key": {
+        "uuid": "a7814f95_caaedb55",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5063c5f9_7045863d",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d34c818a_d92fc244",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
         "patchSetId": 13
@@ -221,6 +406,24 @@
       "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832b6803_e46a555d",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d34c818a_d92fc244",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +461,24 @@
     },
     {
       "key": {
+        "uuid": "23fbfcad_18422672",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood what\u0027s TestBrowserThreadBundle. We don\u0027t need it for unit tests in content/renderer/.\nInstead, added base::MessageLoop.",
+      "parentUuid": "189cbf3e_b4c25a7b",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca9084fd_e6af0b6d",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 13
@@ -272,6 +493,24 @@
       "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba5c2db_6508315e",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T10:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca9084fd_e6af0b6d",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
