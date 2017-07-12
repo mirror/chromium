@@ -108,6 +108,29 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     self.Fail('conformance/offscreencanvas/offscreencanvas-resize.html',
         bug=709484)
 
+    # Skia does not preserve color values if the pixel is transparent (alpha=0)
+    # in an unpremul->premul->unpremul round trip.
+    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/'\
+        'tex-2d-rgb-rgb-unsigned_byte.html', bug=737625)
+    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/'\
+        'tex-2d-rgb-rgb-unsigned_short_5_6_5.html', bug=737625)
+    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/'\
+        'tex-2d-rgba-rgba-unsigned_byte.html', bug=737625)
+    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/'\
+        'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html', bug=737625)
+    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/'\
+        'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html', bug=737625)
+    self.Fail('conformance/textures/image_bitmap_from_image_data/'\
+        'tex-2d-rgb-rgb-unsigned_byte.html', bug=737625)
+    self.Fail('conformance/textures/image_bitmap_from_image_data/'\
+        'tex-2d-rgb-rgb-unsigned_short_5_6_5.html', bug=737625)
+    self.Fail('conformance/textures/image_bitmap_from_image_data/'\
+        'tex-2d-rgba-rgba-unsigned_byte.html', bug=737625)
+    self.Fail('conformance/textures/image_bitmap_from_image_data/'\
+        'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html', bug=737625)
+    self.Fail('conformance/textures/image_bitmap_from_image_data/'\
+        'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html', bug=737625)
+
     self.Fail('conformance/glsl/misc/uninitialized-local-global-variables.html',
         bug=1966) # angle bug ID
 

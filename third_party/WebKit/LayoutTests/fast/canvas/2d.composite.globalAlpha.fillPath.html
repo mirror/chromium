@@ -5,7 +5,7 @@
 <title>Test that canvas2d context fills with the globalAlpha property when applied</title>
 <script src="../../resources/testharness.js"></script>
 <script src="../../resources/testharnessreport.js"></script>
-<canvas width="100" height="100"></canvas>
+<canvas width="2" height="2"></canvas>
 <script>
 test(function() {
     function assertPixelApprox(ctx, x, y, r, g, b, a, pos, colour, tolerance) {
@@ -15,12 +15,12 @@ test(function() {
     }
     var ctx = document.querySelector('canvas').getContext('2d');
     ctx.fillStyle = '#0f0';
-    ctx.fillRect(0, 0, 100, 100);
+    ctx.fillRect(0, 0, 2, 2);
     ctx.globalAlpha = 0.01; // avoid any potential alpha = 0 optimisations.
     ctx.beginPath();
     ctx.fillStyle = '#f00';
-    ctx.rect(0, 0, 100, 100);
+    ctx.rect(0, 0, 2, 2);
     ctx.fill();
-    assertPixelApprox(ctx, 50, 25, 2, 253, 0, 255, "50,25", "2,253,0,255", 2);
+    assertPixelApprox(ctx, 1, 1, 2, 253, 0, 255, "1,1", "2,253,0,255", 2);
 });
 </script>

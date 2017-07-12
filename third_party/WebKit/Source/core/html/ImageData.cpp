@@ -634,7 +634,8 @@ DOMArrayBufferBase* ImageData::BufferBase() const {
 }
 
 CanvasColorParams ImageData::GetCanvasColorParams() {
-  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
+  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled() &&
+      !RuntimeEnabledFeatures::ColorCorrectRenderingEnabled())
     return CanvasColorParams();
   CanvasColorSpace color_space =
       ImageData::GetCanvasColorSpace(color_settings_.colorSpace());
@@ -762,6 +763,8 @@ ImageData::ImageData(const IntSize& size,
   if (color_settings) {
     color_settings_.setColorSpace(color_settings->colorSpace());
     color_settings_.setStorageFormat(color_settings->storageFormat());
+  } else if (RuntimeEnabledFeatures::ColorCorrectRenderingEnabled()) {
+    color_settings_.setColorSpace(kSRGBCanvasColorSpaceName);
   }
 
   ImageDataStorageFormat storage_format =

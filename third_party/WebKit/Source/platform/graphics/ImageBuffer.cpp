@@ -344,6 +344,88 @@ void ImageBuffer::FlushGpu(FlushReason reason) {
   }
 }
 
+static bool Logging() {
+  return false;
+}
+
+static void PrintSkImage(sk_sp<SkImage> input, int errorId = 0) {
+  if (!Logging())
+    return;
+  // find out the color space
+  SkColorSpace* color_space = input->colorSpace();
+  std::stringstream cstr;
+  if (!color_space)
+    cstr << "Legacy Color Space";
+  else if (SkColorSpace::Equals(color_space, SkColorSpace::MakeSRGB().get()))
+    cstr << "SRGB Color Space";
+  else if (SkColorSpace::Equals(color_space,
+                                SkColorSpace::MakeSRGBLinear().get()))
+    cstr << "Linear SRGB Color Space";
+  else if (SkColorSpace::Equals(
+               color_space,
+               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                     SkColorSpace::kDCIP3_D65_Gamut)
+                   .get()))
+    cstr << "P3 Color Space";
+  else if (SkColorSpace::Equals(
+               color_space,
+               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                     SkColorSpace::kRec2020_Gamut)
+                   .get()))
+    cstr << "Rec2020 Color Space";
+  cstr << ", ";
+  if (input->alphaType() == kPremul_SkAlphaType)
+    cstr << "Premul";
+  else
+    cstr << "Unpremul";
+
+  LOG(ERROR) << "Printing SkImage in ImageBuffer @" << errorId << " :"
+             << input->width() << "," << input->height() << " @ " << cstr.str();
+  SkColorType color_type = kN32_SkColorType;
+  if (input->colorSpace() && input->refColorSpace()->gammaIsLinear())
+    color_type = kRGBA_F16_SkColorType;
+  SkImageInfo info =
+      SkImageInfo::Make(input->width(), input->height(), color_type,
+                        input->alphaType(), input->refColorSpace());
+
+  std::stringstream str;
+  std::unique_ptr<uint8_t[]> read_pixels(
+      new uint8_t[input->width() * input->height() * info.bytesPerPixel()]());
+  input->readPixels(info, read_pixels.get(),
+                    input->width() * info.bytesPerPixel(), 0, 0);
+  for (int i = 0; i < input->width() * input->height(); i++) {
+    if (i > 0 && i % input->width() == 0)
+      str << "\n";
+    str << "[";
+    for (int j = 0; j < info.bytesPerPixel(); j++)
+      str << (int)(read_pixels[i * info.bytesPerPixel() + j]) << ",";
+    str << "] ";
+  }
+  LOG(ERROR) << str.str();
+}
+
+static void PrintPixels(const void* input,
+                        int width,
+                        int height,
+                        int pixel_size = 4,
+                        int errorId = 0) {
+  if (!Logging())
+    return;
+  LOG(ERROR) << "Printing Pixels in ImageBuffer @" << errorId << " :" << width
+             << "," << height;
+  const unsigned char* data = static_cast<const unsigned char*>(input);
+  std::stringstream str;
+  for (int i = 0; i < width * height; i++) {
+    if (i % width == 0)
+      str << "\n";
+    str << "[";
+    for (int j = 0; j < pixel_size; j++)
+      str << (int)(data[i * pixel_size + j]) << ",";
+    str << "] ";
+  }
+  LOG(ERROR) << str.str();
+}
+
 bool ImageBuffer::GetImageData(Multiply multiplied,
                                const IntRect& rect,
                                WTF::ArrayBufferContents& contents) const {
@@ -370,6 +452,7 @@ bool ImageBuffer::GetImageData(Multiply multiplied,
 
   sk_sp<SkImage> snapshot = surface_->NewImageSnapshot(
       kPreferNoAcceleration, kSnapshotReasonGetImageData);
+  PrintSkImage(snapshot, 455);
   if (!snapshot)
     return false;
 
@@ -397,12 +480,14 @@ bool ImageBuffer::GetImageData(Multiply multiplied,
           ? kRGBA_F16_SkColorType
           : kRGBA_8888_SkColorType;
 
-  SkImageInfo info = SkImageInfo::Make(
-      rect.Width(), rect.Height(), color_type, alpha_type,
-      surface_->color_params().GetSkColorSpaceForSkSurfaces());
-
+  sk_sp<SkColorSpace> color_space =
+      surface_->color_params().GetSkColorSpaceForSkSurfaces();
+  SkImageInfo info = SkImageInfo::Make(rect.Width(), rect.Height(), color_type,
+                                       alpha_type, color_space);
+  PrintSkImage(snapshot, 485);
   snapshot->readPixels(info, result.Data(), bytes_per_pixel * rect.Width(),
                        rect.X(), rect.Y());
+  PrintPixels(result.Data(), rect.Width(), rect.Height(), 4, 490);
   gpu_readback_invoked_in_current_frame_ = true;
   result.Transfer(contents);
   return true;

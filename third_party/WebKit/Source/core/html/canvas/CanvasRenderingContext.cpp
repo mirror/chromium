@@ -56,7 +56,10 @@ CanvasRenderingContext::CanvasRenderingContext(
       color_space = kSRGBCanvasColorSpace;
       pixel_format = kRGBA8CanvasPixelFormat;
     }
-
+    color_params_ = CanvasColorParams(color_space, pixel_format);
+  } else if (RuntimeEnabledFeatures::ColorCorrectRenderingEnabled()) {
+    CanvasColorSpace color_space = kSRGBCanvasColorSpace;
+    CanvasPixelFormat pixel_format = kRGBA8CanvasPixelFormat;
     color_params_ = CanvasColorParams(color_space, pixel_format);
   }
 

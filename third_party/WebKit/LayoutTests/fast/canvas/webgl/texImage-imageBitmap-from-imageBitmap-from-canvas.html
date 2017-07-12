@@ -76,6 +76,7 @@ function generateTest()
         var p9 = createImageBitmap(bitmap, {colorSpaceConversion: "none"}).then(function(imageBitmap) { bitmaps.colorSpaceNone = imageBitmap });
         var p10 = createImageBitmap(bitmap, {colorSpaceConversion: "default"}).then(function(imageBitmap) { bitmaps.colorSpaceDefault = imageBitmap });
         Promise.all([p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]).then(function() {
+        // Promise.all([p1]).then(function() {
             var alphaVal = 0.5;
             var testPassed = runTest(bitmaps, alphaVal, false);
             if (testPassed)

@@ -37,11 +37,125 @@
 
 namespace blink {
 
+static bool Logging() {
+  return false;
+}
+
+static void PrintSkImage(sk_sp<SkImage> input, int errorId = 0) {
+  if (!Logging())
+    return;
+  // find out the color space
+  SkColorSpace* color_space = input->colorSpace();
+  std::stringstream cstr;
+  if (!color_space)
+    cstr << "Legacy Color Space";
+  else if (SkColorSpace::Equals(color_space, SkColorSpace::MakeSRGB().get()))
+    cstr << "SRGB Color Space";
+  else if (SkColorSpace::Equals(color_space,
+                                SkColorSpace::MakeSRGBLinear().get()))
+    cstr << "Linear SRGB Color Space";
+  else if (SkColorSpace::Equals(
+               color_space,
+               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                     SkColorSpace::kDCIP3_D65_Gamut)
+                   .get()))
+    cstr << "P3 Color Space";
+  else if (SkColorSpace::Equals(
+               color_space,
+               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                     SkColorSpace::kRec2020_Gamut)
+                   .get()))
+    cstr << "Rec2020 Color Space";
+  cstr << ", ";
+  if (input->alphaType() == kPremul_SkAlphaType)
+    cstr << "Premul";
+  else
+    cstr << "Unpremul";
+
+  LOG(ERROR) << "Printing SkImage in BRC2D @" << errorId << " :"
+             << input->width() << "," << input->height() << " @ " << cstr.str();
+  SkColorType color_type = kN32_SkColorType;
+  if (input->colorSpace() && input->refColorSpace()->gammaIsLinear())
+    color_type = kRGBA_F16_SkColorType;
+  SkImageInfo info =
+      SkImageInfo::Make(input->width(), input->height(), color_type,
+                        input->alphaType(), input->refColorSpace());
+
+  std::stringstream str;
+  std::unique_ptr<uint8_t[]> read_pixels(
+      new uint8_t[input->width() * input->height() * info.bytesPerPixel()]());
+  input->readPixels(info, read_pixels.get(),
+                    input->width() * info.bytesPerPixel(), 0, 0);
+  for (int i = 0; i < input->width() * input->height(); i++) {
+    if (i > 0 && i % input->width() == 0)
+      str << "\n";
+    str << "[";
+    for (int j = 0; j < info.bytesPerPixel(); j++)
+      str << (int)(read_pixels[i * info.bytesPerPixel() + j]) << ",";
+    str << "] ";
+  }
+  LOG(ERROR) << str.str();
+}
+
+static void PrintImageData(ImageData* input, int errorId = 0) {
+  if (!Logging())
+    return;
+  LOG(ERROR) << "Printing ImageData in BRC2D @" << errorId << " :"
+             << input->width() << "," << input->height();
+  unsigned char* data =
+      static_cast<unsigned char*>(input->BufferBase()->Data());
+  std::stringstream str;
+  for (int i = 0; i < input->width() * input->height(); i++) {
+    if (i > 0 && i % input->width() == 0)
+      str << "\n";
+    str << "[";
+    for (int j = 0; j < 4; j++)
+      str << (int)(data[i * 4 + j]) << ",";
+    str << "] ";
+  }
+  LOG(ERROR) << str.str();
+}
+
+static void PrintPixels(const void* input,
+                        int width,
+                        int height,
+                        int pixel_size = 4,
+                        int errorId = 0) {
+  if (!Logging())
+    return;
+  LOG(ERROR) << "Printing Pixels in BRC2D @" << errorId << " :" << width << ","
+             << height;
+  const unsigned char* data = static_cast<const unsigned char*>(input);
+  std::stringstream str;
+  for (int i = 0; i < width * height; i++) {
+    if (i % width == 0)
+      str << "\n";
+    str << "[";
+    for (int j = 0; j < pixel_size; j++)
+      str << (int)(data[i * pixel_size + j]) << ",";
+    str << "] ";
+  }
+  LOG(ERROR) << str.str();
+}
+
+struct ParsedOptions {
+  bool flip_y = false;
+  bool premultiply_alpha = true;
+  bool should_scale_input = false;
+  unsigned resize_width = 0;
+  unsigned resize_height = 0;
+  IntRect crop_rect;
+  SkFilterQuality resize_quality = kLow_SkFilterQuality;
+  CanvasColorParams color_params;
+  bool color_canvas_extensions_enabled = false;
+};
+
 BaseRenderingContext2D::BaseRenderingContext2D()
     : clip_antialiasing_(kNotAntiAliased), color_management_enabled_(false) {
-  state_stack_.push_back(CanvasRenderingContext2DState::Create());
   color_management_enabled_ =
-      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
+      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled() ||
+      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
+  state_stack_.push_back(CanvasRenderingContext2DState::Create());
 }
 
 BaseRenderingContext2D::~BaseRenderingContext2D() {}
@@ -1293,6 +1407,7 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
     }
   }
 
+  PrintSkImage(image->ImageForCurrentFrame(), 1300);
   Draw(
       [this, &image_source, &image, &src_rect, dst_rect](
           PaintCanvas* c, const PaintFlags* flags)  // draw lambda
@@ -1652,9 +1767,12 @@ ImageData* BaseRenderingContext2D::getImageData(
   DOMArrayBufferView* array_buffer_view =
       ImageData::ConvertPixelsFromCanvasPixelFormatToImageDataStorageFormat(
           contents, PixelFormat(), storage_format);
-  return ImageData::Create(image_data_rect.Size(),
-                           NotShared<DOMArrayBufferView>(array_buffer_view),
-                           &color_settings);
+  PrintPixels(array_buffer_view->BufferBase(), sw, sh, 4, 1770);
+  ImageData* image_data = ImageData::Create(
+      image_data_rect.Size(), NotShared<DOMArrayBufferView>(array_buffer_view),
+      &color_settings);
+  PrintImageData(image_data, 1780);
+  return image_data;
 }
 
 void BaseRenderingContext2D::putImageData(ImageData* data,
