@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56a67ab4_62c37769",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 27982,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T19:30:25Z",
+      "side": 1,
+      "message": "nit: Please add base\u003d\"true\" to the \u003chistogram\u003e element to reflect that this is not a complete histogram name.",
+      "range": {
+        "startLine": 27982,
+        "startChar": 83,
+        "endLine": 27982,
+        "endChar": 0
+      },
+      "revId": "9c5c67d218ad874b75a8c7722d62bbfd073eedb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd1eb02_5109eacf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 91608,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T19:30:25Z",
+      "side": 1,
+      "message": "nit: Please alphabetize.",
+      "range": {
+        "startLine": 91608,
+        "startChar": 76,
+        "endLine": 91608,
+        "endChar": 0
+      },
+      "revId": "9c5c67d218ad874b75a8c7722d62bbfd073eedb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fba706b_f4cee96c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 91609,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T19:30:25Z",
+      "side": 1,
+      "message": "nit: Should this be \"ReadErrors\" (plural) to match \"CommitErrors\" above?",
+      "range": {
+        "startLine": 91609,
+        "startChar": 16,
+        "endLine": 91609,
+        "endChar": 25
+      },
+      "revId": "9c5c67d218ad874b75a8c7722d62bbfd073eedb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
