@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9c6bcd47_a7483ef0",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-12T04:29:21Z",
+      "side": 1,
+      "message": "nit: Isn\u0027t the line length 130 or something for Python? In any case, \"numbers.\" should fit on the previous line.",
+      "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14aca6f3_8f0322e9",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 9
@@ -31,6 +48,23 @@
       "side": 1,
       "message": "okay, I just want to be clear it will be clearer if I put -1 because it signify that I only take the first n-1 element. wdyt.",
       "parentUuid": "14aca6f3_8f0322e9",
+      "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32e1e05_880993a7",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-12T04:29:21Z",
+      "side": 1,
+      "message": "I think the \"meat\" of this function should be moved to a helper function - the content is drifting away from just \"generate\" the mappings to also include a ton of calculation. It\u0027d be clearer to split it up (and this documentation will make more sense next to a function named something like \"get_longest_contiguous_keywords\")",
       "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
