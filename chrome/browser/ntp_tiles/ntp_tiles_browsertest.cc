@@ -8,6 +8,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/history/core/browser/top_sites.h"
 #include "components/ntp_tiles/most_visited_sites.h"
 #include "components/ntp_tiles/ntp_tile.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -97,6 +98,28 @@ IN_PROC_BROWSER_TEST_F(NTPTilesTest, LoadURL) {
   // the next set of tiles that the waiter retrieves.
   most_visited_sites_->SetMostVisitedURLsObserver(&waiter, /*num_sites=*/8);
 
+  NTPTilesVector tiles = waiter.WaitForTiles();
+  EXPECT_THAT(tiles, Contains(MatchesTile("OK", page_url.spec().c_str(),
+                                          TileSource::TOP_SITES)));
+}
+
+// Tests usage of MostVisitedSites mimicking Chrome Home, where an observer is
+// installed early and once and navigations follow afterwards.
+IN_PROC_BROWSER_TEST_F(NTPTilesTest, NavigateAfterSettingObserver) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  const GURL page_url = embedded_test_server()->GetURL("/simple.html");
+
+  // Register the observer before doing the navigation.
+  MostVisitedSitesWaiter waiter;
+  most_visited_sites_->SetMostVisitedURLsObserver(&waiter, /*num_sites=*/8);
+
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), page_url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+
+  // TODO(crbug.com/741431): When Refresh calls SyncWithHistory() for signed
+  // out users, replace the call below with most_visited_sites_->Refresh().
+  most_visited_sites_->top_sites()->SyncWithHistory();
   NTPTilesVector tiles = waiter.WaitForTiles();
   EXPECT_THAT(tiles, Contains(MatchesTile("OK", page_url.spec().c_str(),
                                           TileSource::TOP_SITES)));
