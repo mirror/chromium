@@ -360,6 +360,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     [model addItem:[self signInTextItem]
         toSectionWithIdentifier:SectionIdentifierSignIn];
   } else {
+    [_signinPromoViewMediator signinPromoViewRemoved];
     _signinPromoViewMediator = nil;
     [model addItem:[self accountCellItem]
         toSectionWithIdentifier:SectionIdentifierSignIn];
@@ -1036,6 +1037,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 #pragma mark SettingsControllerProtocol
 
 - (void)settingsWillBeDismissed {
+  [_signinPromoViewMediator signinPromoViewRemoved];
+  _signinPromoViewMediator = nil;
   [_signinInteractionController cancel];
   [self stopBrowserStateServiceObservers];
 }
