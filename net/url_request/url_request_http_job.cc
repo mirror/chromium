@@ -1509,6 +1509,10 @@ void URLRequestHttpJob::RecordPerfHistograms(CompletionCause reason) {
   UMA_HISTOGRAM_TIMES("Net.HttpJob.TotalTime", total_time);
 
   if (reason == FINISHED) {
+    size_t priority = (size_t)request()->priority();
+    UMA_HISTOGRAM_TIMES(
+        base::StringPrintf("Net.HttpJob.TotalTimeSuccess.Priority%d", priority),
+        total_time);
     UMA_HISTOGRAM_TIMES("Net.HttpJob.TotalTimeSuccess", total_time);
   } else {
     UMA_HISTOGRAM_TIMES("Net.HttpJob.TotalTimeCancel", total_time);
