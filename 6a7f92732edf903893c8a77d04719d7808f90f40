@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e156d3f2_4521ac8e",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2571,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T00:21:57Z",
+      "side": 1,
+      "message": "Nice test. As always, I like the rhythm of comment/action/expectation.",
+      "revId": "6a7f92732edf903893c8a77d04719d7808f90f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
