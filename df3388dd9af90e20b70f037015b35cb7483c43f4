@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "a5f08aeb_fb57f43d",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T01:37:40Z",
+      "side": 1,
+      "message": "Since it\u0027s fairly cheap to add extra range (due to exponentially sized buckets), I\u0027d recommend extending the upper end to 10 minutes or even an hour, to better capture the long tail.  Or, if you\u0027re not interested in the long tail, then I\u0027d recommend reducing the bucket count.\n\nIn terms of what you\u0027re trying to understand: I don\u0027t think I asked my question clearly enough, sorry.  How do you plan to use this information?  Suppose most users activate an ARC app within 5 seconds -- how does this affect your decision making?  What if the number is closer to 50 seconds?  Are you just wanting a sanity-check that users don\u0027t get super stuck here?",
+      "parentUuid": "0484ef7f_27dde137",
+      "range": {
+        "startLine": 652,
+        "startChar": 60,
+        "endLine": 652,
+        "endChar": 71
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "255edc88_54a8be3b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -245,6 +269,30 @@
       "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aefa46f_6061d798",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1763,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-12T01:37:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a24d076a_0d86ae13",
+      "range": {
+        "startLine": 1763,
+        "startChar": 61,
+        "endLine": 1763,
+        "endChar": 68
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
