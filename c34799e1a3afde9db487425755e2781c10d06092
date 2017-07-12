@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "39e044e6_53c8f7be",
+        "filename": "cc/surfaces/compositor_frame_sink_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-12T18:24:54Z",
+      "side": 1,
+      "message": "nit: don\u0027t need the braces",
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e58bfdc_a3870e4f",
+        "filename": "cc/surfaces/compositor_frame_sink_support_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-12T18:24:54Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer if the method wasn\u0027t implemented (\u003d 0) for consistency with the rest of the code",
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e594977_ae4b0099",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-12T18:24:54Z",
+      "side": 1,
+      "message": "nit: rename to begin_frames_paused_ or something like that",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 14
+      },
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71c38b96_dd4247c4",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 4
@@ -36,6 +93,46 @@
     },
     {
       "key": {
+        "uuid": "9f4ded9b_67896a19",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2209,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-12T18:24:54Z",
+      "side": 1,
+      "message": "I think you want this condition to be DCHECK(!paused || using_browser_compositor_) which means !paused implies using_browser_compositor_. If we\u0027re not using browser compositor, the BFS is WindowBeginFrameSource (window_android.cc) and that doesn\u0027t set the paused to true. If we\u0027re using browser compositor we can get paused is true from the code path you just added.",
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793c86f9_b84a65df",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2216,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-12T18:24:54Z",
+      "side": 1,
+      "message": "I want to echo Bo\u0027s comment about reconciling this with the existing pausing mechanism.\n\nBo, can you clarify if there\u0027s a need to pause/unpause on Stop/StartObservingRootWindow *in addition* to the BFS pause signal? The BFS pause signal is based on OnVsyncPaused from WindowAndroid but I don\u0027t know how that correlates with the observing root window state.",
+      "range": {
+        "startLine": 2216,
+        "startChar": 15,
+        "endLine": 2216,
+        "endChar": 19
+      },
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "999087b2_3ae53a0a",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
         "patchSetId": 4
@@ -47,6 +144,52 @@
       "writtenOn": "2017-07-12T18:17:34Z",
       "side": 1,
       "message": "begin_frame_paused_, and move it next to the other begin frame variables",
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1649ae_56284a86",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-12T18:24:54Z",
+      "side": 1,
+      "message": "nit: rename to begin_frames_paused_ or something like that",
+      "range": {
+        "startLine": 379,
+        "startChar": 7,
+        "endLine": 379,
+        "endChar": 14
+      },
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8314d326_88c5630e",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-12T18:24:54Z",
+      "side": 1,
+      "message": "nit: space between final and {}",
+      "range": {
+        "startLine": 49,
+        "startChar": 52,
+        "endLine": 49,
+        "endChar": 53
+      },
       "revId": "c34799e1a3afde9db487425755e2781c10d06092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
