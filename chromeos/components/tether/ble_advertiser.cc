@@ -20,7 +20,49 @@ namespace {
 
 uint8_t kInvertedConnectionFlag = 0x01;
 
+void OnAdvertisementUnregistered(const std::string& associated_device_id) {
+  PA_LOG(ERROR) << "Unregistered advertisement for device ID: "
+                << cryptauth::RemoteDevice::TruncateDeviceIdForLogs(
+                       associated_device_id);
+}
+
+void OnAdvertisementUnregisteredFailure(
+    const std::string& associated_device_id,
+    device::BluetoothAdvertisement::ErrorCode error_code) {
+  PA_LOG(ERROR) << "Error unregistering advertisement. "
+                << "Device ID: \""
+                << cryptauth::RemoteDevice::TruncateDeviceIdForLogs(
+                       associated_device_id)
+                << "\", Error code: " << error_code;
+}
+
 }  // namespace
+
+// TODO (hansberry): Remove this workaround once crbug.com/741050 has been
+// resolved.
+// static
+void BleAdvertiser::IndividualAdvertisement::OnAdvertisementRegistered(
+    base::WeakPtr<BleAdvertiser::IndividualAdvertisement>
+        individual_advertisement,
+    const std::string& associated_device_id,
+    scoped_refptr<device::BluetoothAdvertisement> advertisement) {
+  // It's possible that the IndividualAdvertisement that registered this
+  // BluetoothAdvertisement has been destroyed before being able to own the
+  // BluetoothAdvertisement. If the IndividualAdvertisement still exists, simply
+  // give it the BluetoothAdvertisement it registered. If not, unregister the
+  // BluetoothAdvertisement, because otherwise it will remain registered
+  // forever.
+  if (individual_advertisement.get()) {
+    individual_advertisement->OnAdvertisementRegisteredCallback(advertisement);
+  } else {
+    PA_LOG(WARNING) << "BluetoothAdvertisement registered, but the "
+                    << "IndividualAdvertisement which registered it no longer "
+                    << "exists. Unregistering the BluetoothAdvertisement.";
+    advertisement->Unregister(
+        base::Bind(&OnAdvertisementUnregistered, associated_device_id),
+        base::Bind(&OnAdvertisementUnregisteredFailure, associated_device_id));
+  }
+}
 
 BleAdvertiser::IndividualAdvertisement::IndividualAdvertisement(
     const std::string& device_id,
@@ -103,8 +145,8 @@ void BleAdvertiser::IndividualAdvertisement::AdvertiseIfPossible() {
 
   adapter_->RegisterAdvertisement(
       std::move(advertisement_data),
-      base::Bind(&IndividualAdvertisement::OnAdvertisementRegisteredCallback,
-                 weak_ptr_factory_.GetWeakPtr()),
+      base::Bind(&OnAdvertisementRegistered, weak_ptr_factory_.GetWeakPtr(),
+                 device_id_),
       base::Bind(&IndividualAdvertisement::OnAdvertisementErrorCallback,
                  weak_ptr_factory_.GetWeakPtr()));
 }
