@@ -12,7 +12,9 @@
 #include "core/probe/CoreProbes.h"
 #include "core/timing/WorkerGlobalScopePerformance.h"
 #include "core/workers/WorkerClients.h"
+#include "core/workers/WorkerContentSettingsClient.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerSettings.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/Supplementable.h"
 #include "platform/WebTaskRunner.h"
@@ -22,6 +24,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebMixedContent.h"
 #include "public/platform/WebMixedContentContextType.h"
+#include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebWorkerFetchContext.h"
 
@@ -153,10 +156,32 @@ bool WorkerFetchContext::ShouldBlockFetchByMixedContentCheck(
     const ResourceRequest& resource_request,
     const KURL& url,
     SecurityViolationReportingPolicy reporting_policy) const {
-  // TODO(horo): We need more detailed check which is implemented in
-  // MixedContentChecker::ShouldBlockFetch().
-  return MixedContentChecker::IsMixedContent(global_scope_->GetSecurityOrigin(),
-                                             url);
+  if (!MixedContentChecker::IsMixedContent(global_scope_->GetSecurityOrigin(),
+                                           url)) {
+    return false;
+  }
+
+  // TODO: If the parent frame is sub frame return true;
+
+  WorkerSettings* settings =
+      ToWorkerGlobalScope(global_scope_)->GetWorkerSettings();
+
+  bool strict_mode =
+      ToWorkerGlobalScope(global_scope_)->GetInsecureRequestPolicy() &
+          kBlockAllMixedContent ||
+      settings->GetStrictMixedContentChecking();
+  bool should_ask_embedder =
+      !strict_mode && (!settings->GetStrictlyBlockBlockableMixedContent() ||
+                       settings->GetAllowRunningOfInsecureContent());
+  bool allowed =
+      should_ask_embedder &&
+      WorkerContentSettingsClient::From(*global_scope_)
+          ->AllowRunningInsecureContent(false, GetSecurityOrigin(), url);
+  if (allowed) {
+    web_context_->DidRunInsecureContent(WebSecurityOrigin(GetSecurityOrigin()),
+                                        url);
+  }
+  return !allowed;
 }
 
 bool WorkerFetchContext::ShouldBlockFetchAsCredentialedSubresource(
