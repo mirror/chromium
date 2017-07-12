@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32f11143_5e0ed1ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:54:06Z",
+      "side": 1,
+      "message": "Keep the first line as one single line (like a title). 72 Characters is the target length.\n\nAdd any extra details two lines before the title.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "bcc0a9a96f917fa23411621b017a9c612dcbbd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888de114_a5281374",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T23:54:06Z",
+      "side": 1,
+      "message": "Remove this include.",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "bcc0a9a96f917fa23411621b017a9c612dcbbd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
