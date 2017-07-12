@@ -22,6 +22,30 @@
       "revId": "65803077bd0b6d323a9ed3b803f8cb285e05a76e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037cc0b6_54b91092",
+        "filename": "base/containers/small_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-12T00:03:16Z",
+      "side": 1,
+      "message": "Except that |x| may have already moved from |args|.  If we basically assume std::pair is always value_type then we could replace |x.first| above with the first argument, but otherwise I thought we\u0027d have to construct |x|.\n\nI missed that above though because calling emplace(1, 100) doesn\u0027t move 100.  Calling emplace(1, MoveOnlyType(100)) will make std::move(x) necessary though.",
+      "parentUuid": "d374f606_854af1ad",
+      "range": {
+        "startLine": 473,
+        "startChar": 27,
+        "endLine": 473,
+        "endChar": 39
+      },
+      "revId": "65803077bd0b6d323a9ed3b803f8cb285e05a76e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
