@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a084724_0d43658e",
+        "filename": "chrome/browser/ui/webui/settings/on_startup_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T20:58:12Z",
+      "side": 1,
+      "message": "Could the contents of this method, passed this point be replaced with simply this line?\n\nResolveJavascriptCallback(*callback_id, *GetNtpExtension());",
+      "revId": "ba3473993811a4b1103a8f6abfea2a326642fb22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
