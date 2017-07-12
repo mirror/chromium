@@ -83,6 +83,8 @@ class MEDIA_EXPORT AUAudioInputStream
   double GetVolume() override;
   bool IsMuted() override;
 
+  bool GetMutedCheckSupport();
+
   // Returns the current hardware sample rate for the default input device.
   static int HardwareSampleRate();
 
@@ -296,6 +298,8 @@ class MEDIA_EXPORT AUAudioInputStream
 
   // Callback to send statistics info.
   AudioManager::LogCallback log_callback_;
+
+  bool muted_checking_is_supported_;
 
   // Used to ensure DevicePropertyChangedOnMainThread() is not called when
   // this object is destroyed.

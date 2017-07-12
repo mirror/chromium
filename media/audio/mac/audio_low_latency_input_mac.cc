@@ -246,6 +246,7 @@ AUAudioInputStream::AUAudioInputStream(
       largest_glitch_frames_(0),
       glitches_detected_(0),
       log_callback_(log_callback),
+      muted_checking_is_supported_(true),
       weak_factory_(this) {
   DCHECK(manager_);
   CHECK(!log_callback_.Equals(AudioManager::LogCallback()));
@@ -490,6 +491,10 @@ bool AUAudioInputStream::Open() {
   // The master channel is 0, Left and right are channels 1 and 2.
   // And the master channel is not counted in |number_of_channels_in_frame_|.
   number_of_channels_in_frame_ = GetNumberOfChannelsFromStream();
+
+  muted_checking_is_supported_ = GetMutedCheckSupport();
+  if (!muted_checking_is_supported_)
+    LOG(WARNING) << "Device does not support checking master mute state";
 
   return true;
 }
@@ -739,14 +744,12 @@ bool AUAudioInputStream::IsMuted() {
   // Verify that we have a valid device.
   DCHECK_NE(input_device_id_, kAudioObjectUnknown) << "Device ID is unknown";
 
+  if (!muted_checking_is_supported_)
+    return false;
+
   AudioObjectPropertyAddress property_address = {
       kAudioDevicePropertyMute, kAudioDevicePropertyScopeInput,
       kAudioObjectPropertyElementMaster};
-
-  if (!AudioObjectHasProperty(input_device_id_, &property_address)) {
-    DLOG(ERROR) << "Device does not support checking master mute state";
-    return false;
-  }
 
   UInt32 muted = 0;
   UInt32 size = sizeof(muted);
@@ -754,6 +757,17 @@ bool AUAudioInputStream::IsMuted() {
       input_device_id_, &property_address, 0, nullptr, &size, &muted);
   DLOG_IF(WARNING, result != noErr) << "Failed to get mute state";
   return result == noErr && muted != 0;
+}
+
+bool AUAudioInputStream::GetMutedCheckSupport() {
+  // Verify that we have a valid device.
+  DCHECK_NE(input_device_id_, kAudioObjectUnknown) << "Device ID is unknown";
+
+  AudioObjectPropertyAddress property_address = {
+      kAudioDevicePropertyMute, kAudioDevicePropertyScopeInput,
+      kAudioObjectPropertyElementMaster};
+
+  return AudioObjectHasProperty(input_device_id_, &property_address);
 }
 
 // static
