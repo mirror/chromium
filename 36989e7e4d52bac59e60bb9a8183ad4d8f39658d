@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a096a0b_242e7f37",
+        "filename": "media/capture/video/video_capture_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-12T07:39:40Z",
+      "side": 1,
+      "message": "Not your fault, but in this file (and in the two unit test \nfiles media/capture/video/*video_capture_device_unittest.cc), \nwe should:\n\ns/base::OnceCallback\u003cvoid(mojom::PhotoStatePtr)/mojom::GetPhotoStateCallback/\ns/base::OnceCallback\u003cvoid(bool)\u003e/mojom::SetOptionsCallback/\ns/base::OnceCallback\u003cvoid(mojom::BlobPtr blob)\u003e/mojom::TakePhotoCallback/\n\nwhere applicable. These base::Callbacks are defined around \n[1] on ToT -- with the current changes, it\u0027ll probably move \naround a bit and be a base::CallbackOnce.\n\n\n[1] https://cs.chromium.org/chromium/src/out/Debug/gen/media/capture/mojo/image_capture.mojom.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d110",
+      "range": {
+        "startLine": 278,
+        "startChar": 27,
+        "endLine": 278,
+        "endChar": 72
+      },
+      "revId": "36989e7e4d52bac59e60bb9a8183ad4d8f39658d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
