@@ -9,6 +9,7 @@ include_rules = [
   "+components/url_formatter",
   "+components/variations",
   "+components/viz/client",
+  "+components/viz/common/gpu",
   "+components/viz/common/quads",
   "+components/viz/common/resources",
 

@@ -1,6 +1,7 @@
 include_rules = [
   "+cc",
   "-cc/blink",
+  "+components/viz/common/gpu",
   "+components/viz/common/quads",
   "+components/viz/common/resources",
   "+components/viz/host",

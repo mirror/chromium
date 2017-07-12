@@ -14,7 +14,7 @@
 #include "content/browser/compositor/owned_mailbox.h"
 #include "content/common/content_export.h"
 
-namespace cc {
+namespace viz {
 class ContextProvider;
 }
 
@@ -32,7 +32,7 @@ namespace content {
 // Create and manages texture mailbox to be used by Reflector.
 class CONTENT_EXPORT ReflectorTexture {
  public:
-  explicit ReflectorTexture(cc::ContextProvider* provider);
+  explicit ReflectorTexture(viz::ContextProvider* provider);
   ~ReflectorTexture();
 
   void CopyTextureFullImage(const gfx::Size& size);

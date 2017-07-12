@@ -8,8 +8,8 @@
 #include "base/macros.h"
 #include "cc/ipc/compositor_frame.mojom.h"
 #include "cc/ipc/frame_sink_manager.mojom.h"
-#include "cc/output/context_provider.h"
 #include "cc/surfaces/surface_id.h"
+#include "components/viz/common/gpu/context_provider.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 

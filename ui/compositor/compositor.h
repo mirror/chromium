@@ -37,10 +37,13 @@ namespace base {
 class SingleThreadTaskRunner;
 }
 
+namespace viz {
+class ContextProvider;
+}
+
 namespace cc {
 class AnimationHost;
 class AnimationTimeline;
-class ContextProvider;
 class FrameSinkManager;
 class Layer;
 class LayerTreeDebugState;
@@ -153,7 +156,7 @@ class COMPOSITOR_EXPORT ContextFactory {
 
   // Return a reference to a shared offscreen context provider usable from the
   // main thread.
-  virtual scoped_refptr<cc::ContextProvider>
+  virtual scoped_refptr<viz::ContextProvider>
   SharedMainThreadContextProvider() = 0;
 
   // Destroys per-compositor data.

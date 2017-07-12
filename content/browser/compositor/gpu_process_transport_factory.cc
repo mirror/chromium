@@ -105,7 +105,7 @@
 #include "content/browser/compositor/vulkan_browser_compositor_output_surface.h"
 #endif
 
-using cc::ContextProvider;
+using viz::ContextProvider;
 using gpu::gles2::GLES2Interface;
 
 namespace {
@@ -832,8 +832,7 @@ cc::FrameSinkManager* GpuProcessTransportFactory::GetFrameSinkManager() {
 
 viz::GLHelper* GpuProcessTransportFactory::GetGLHelper() {
   if (!gl_helper_ && !per_compositor_data_.empty()) {
-    scoped_refptr<cc::ContextProvider> provider =
-        SharedMainThreadContextProvider();
+    scoped_refptr<ContextProvider> provider = SharedMainThreadContextProvider();
     if (provider.get())
       gl_helper_.reset(
           new viz::GLHelper(provider->ContextGL(), provider->ContextSupport()));
@@ -861,7 +860,7 @@ void GpuProcessTransportFactory::SetCompositorSuspendedForRecycle(
 }
 #endif
 
-scoped_refptr<cc::ContextProvider>
+scoped_refptr<ContextProvider>
 GpuProcessTransportFactory::SharedMainThreadContextProvider() {
   if (shared_main_thread_contexts_)
     return shared_main_thread_contexts_;
@@ -936,7 +935,7 @@ void GpuProcessTransportFactory::OnLostMainThreadSharedContext() {
   // new resources are created if needed.
   // Kill shared contexts for both threads in tandem so they are always in
   // the same share group.
-  scoped_refptr<cc::ContextProvider> lost_shared_main_thread_contexts =
+  scoped_refptr<ContextProvider> lost_shared_main_thread_contexts =
       shared_main_thread_contexts_;
   shared_main_thread_contexts_  = NULL;
 
