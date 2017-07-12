@@ -335,6 +335,24 @@
       "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d9d2d1_fa8cb25e",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-12T14:39:03Z",
+      "side": 1,
+      "message": "Thanks for the explanation! I\u0027d suggest raising this concern on ukm-team@. To properly address this, the fix would be to update the test APIs to no longer take char*.\n\nMy preference is to keep the APIs as they are, for reasons I\u0027ve stated earlier (keep the test code simpler), but if ukm-team@ feels differently you are welcome to drive the change there.\n\nOne more bit of info that is probably relevant to this discussion: GURL implementers seem to have decided that comparison by string is fine and should be supported without callers having to wrap the stringpiece in a temporary GURL(), as GURL provides the following:\n\nbool operator\u003d\u003d(const GURL\u0026 x, const base::StringPiece\u0026 spec);\n(in addition to operator\u003d\u003d taking only GURLs)\n\nGiven that GURL itself provides the ability to compare GURL and stringpiece/char*, this suggests to me that higher layer libraries are probably also fine to take char*/stringpiece for comparing with GURL.\n\nI do agree with you that there are some cases where we need to use more structured types for comparison (such as if we were inspecting particular components of URLs, etc), but when we\u0027re writing tests that are really just using URLs as identifiers, using char* seems totally fine to me.",
+      "parentUuid": "ab5dbe48_70a11681",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
