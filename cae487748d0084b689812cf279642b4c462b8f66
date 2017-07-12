@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75cf43b1_5773ddc0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-12T02:18:50Z",
+      "side": 1,
+      "message": "Yes, it can be called from https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutBox.cpp?l\u003d1049\nand\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/editing/Editor.cpp?l\u003d1619\n\nI only realized it after I failed some tests.",
+      "parentUuid": "83cd4a63_23c42102",
+      "range": {
+        "startLine": 654,
+        "startChar": 47,
+        "endLine": 654,
+        "endChar": 73
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "821a146e_4247383d",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-10T23:25:04Z",
       "side": 1,
       "message": "Why do we consider a \"smooth scroll due to style\" smooth only if its sequenced?",
+      "range": {
+        "startLine": 676,
+        "startChar": 7,
+        "endLine": 676,
+        "endChar": 29
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b259cdc_cfdafbd1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-12T02:18:50Z",
+      "side": 1,
+      "message": "Done. (Thanks for pointing this out. It might be one of the remaining if-branch when I was debugging with smooth_scroll and sequenced_scroll.)",
+      "parentUuid": "821a146e_4247383d",
       "range": {
         "startLine": 676,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aa5ad850_5c5725d2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-12T02:18:50Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d690dca1_8450a6fa",
+      "range": {
+        "startLine": 638,
+        "startChar": 30,
+        "endLine": 638,
+        "endChar": 49
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd6d0d69_45699894",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 18
@@ -91,6 +163,30 @@
       "revId": "cae487748d0084b689812cf279642b4c462b8f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acbd999_8d0d0fe8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1799,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-12T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd6d0d69_45699894",
+      "range": {
+        "startLine": 1799,
+        "startChar": 6,
+        "endLine": 1799,
+        "endChar": 40
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "77e30c63_520447a7",
+        "filename": "third_party/WebKit/Source/platform/scroll/ProgrammaticScrollAnimator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-12T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733458fc_6633f9f0",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 28
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855a1176_b991dbc2",
         "filename": "third_party/WebKit/Source/platform/scroll/SmoothScrollSequencer.cpp",
         "patchSetId": 18
@@ -137,6 +257,30 @@
       "revId": "cae487748d0084b689812cf279642b4c462b8f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9b4308_ddf8f786",
+        "filename": "third_party/WebKit/Source/platform/scroll/SmoothScrollSequencer.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-12T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "855a1176_b991dbc2",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
