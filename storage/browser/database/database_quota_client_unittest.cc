@@ -7,6 +7,7 @@
 #include <map>
 
 #include "base/bind.h"
+#include "base/callback_helpers.h"
 #include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/run_loop.h"
@@ -37,7 +38,11 @@ static const storage::StorageType kPerm = storage::kStorageTypePersistent;
 class MockDatabaseTracker : public DatabaseTracker {
  public:
   MockDatabaseTracker()
-      : DatabaseTracker(base::FilePath(), false, NULL, NULL, NULL),
+      : DatabaseTracker(base::FilePath(),
+                        false,
+                        nullptr,
+                        nullptr,
+                        base::ThreadTaskRunnerHandle::Get()),
         delete_called_count_(0),
         async_delete_(false) {}
 
@@ -76,8 +81,9 @@ class MockDatabaseTracker : public DatabaseTracker {
     ++delete_called_count_;
     if (async_delete()) {
       base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::Bind(&MockDatabaseTracker::AsyncDeleteDataForOrigin,
-                                this, callback));
+          FROM_HERE,
+          base::BindOnce(&MockDatabaseTracker::AsyncDeleteDataForOrigin, this,
+                         callback));
       return net::ERR_IO_PENDING;
     }
     return net::OK;
@@ -140,8 +146,9 @@ class DatabaseQuotaClientTest : public testing::Test {
     usage_ = 0;
     client->GetOriginUsage(
         origin, type,
-        base::Bind(&DatabaseQuotaClientTest::OnGetOriginUsageComplete,
-                   weak_factory_.GetWeakPtr()));
+        base::AdaptCallbackForRepeating(
+            base::BindOnce(&DatabaseQuotaClientTest::OnGetOriginUsageComplete,
+                           weak_factory_.GetWeakPtr())));
     base::RunLoop().RunUntilIdle();
     return usage_;
   }
@@ -150,8 +157,9 @@ class DatabaseQuotaClientTest : public testing::Test {
                                           storage::StorageType type) {
     origins_.clear();
     client->GetOriginsForType(
-        type, base::Bind(&DatabaseQuotaClientTest::OnGetOriginsComplete,
-                         weak_factory_.GetWeakPtr()));
+        type, base::AdaptCallbackForRepeating(
+                  base::BindOnce(&DatabaseQuotaClientTest::OnGetOriginsComplete,
+                                 weak_factory_.GetWeakPtr())));
     base::RunLoop().RunUntilIdle();
     return origins_;
   }
@@ -162,8 +170,9 @@ class DatabaseQuotaClientTest : public testing::Test {
     origins_.clear();
     client->GetOriginsForHost(
         type, host,
-        base::Bind(&DatabaseQuotaClientTest::OnGetOriginsComplete,
-                   weak_factory_.GetWeakPtr()));
+        base::AdaptCallbackForRepeating(
+            base::BindOnce(&DatabaseQuotaClientTest::OnGetOriginsComplete,
+                           weak_factory_.GetWeakPtr())));
     base::RunLoop().RunUntilIdle();
     return origins_;
   }
@@ -174,8 +183,9 @@ class DatabaseQuotaClientTest : public testing::Test {
     delete_status_ = storage::kQuotaStatusUnknown;
     client->DeleteOriginData(
         origin, type,
-        base::Bind(&DatabaseQuotaClientTest::OnDeleteOriginDataComplete,
-                   weak_factory_.GetWeakPtr()));
+        base::AdaptCallbackForRepeating(
+            base::BindOnce(&DatabaseQuotaClientTest::OnDeleteOriginDataComplete,
+                           weak_factory_.GetWeakPtr())));
     base::RunLoop().RunUntilIdle();
     return delete_status_ == storage::kQuotaStatusOk;
   }
@@ -202,8 +212,7 @@ class DatabaseQuotaClientTest : public testing::Test {
 };
 
 TEST_F(DatabaseQuotaClientTest, GetOriginUsage) {
-  DatabaseQuotaClient client(base::ThreadTaskRunnerHandle::Get().get(),
-                             mock_tracker());
+  DatabaseQuotaClient client(mock_tracker());
 
   EXPECT_EQ(0, GetOriginUsage(&client, kOriginA, kTemp));
   EXPECT_EQ(0, GetOriginUsage(&client, kOriginA, kPerm));
@@ -217,8 +226,7 @@ TEST_F(DatabaseQuotaClientTest, GetOriginUsage) {
 }
 
 TEST_F(DatabaseQuotaClientTest, GetOriginsForHost) {
-  DatabaseQuotaClient client(base::ThreadTaskRunnerHandle::Get().get(),
-                             mock_tracker());
+  DatabaseQuotaClient client(mock_tracker());
 
   EXPECT_EQ(kOriginA.host(), kOriginB.host());
   EXPECT_NE(kOriginA.host(), kOriginOther.host());
@@ -242,8 +250,7 @@ TEST_F(DatabaseQuotaClientTest, GetOriginsForHost) {
 }
 
 TEST_F(DatabaseQuotaClientTest, GetOriginsForType) {
-  DatabaseQuotaClient client(base::ThreadTaskRunnerHandle::Get().get(),
-                             mock_tracker());
+  DatabaseQuotaClient client(mock_tracker());
 
   EXPECT_TRUE(GetOriginsForType(&client, kTemp).empty());
   EXPECT_TRUE(GetOriginsForType(&client, kPerm).empty());
@@ -257,8 +264,7 @@ TEST_F(DatabaseQuotaClientTest, GetOriginsForType) {
 }
 
 TEST_F(DatabaseQuotaClientTest, DeleteOriginData) {
-  DatabaseQuotaClient client(base::ThreadTaskRunnerHandle::Get().get(),
-                             mock_tracker());
+  DatabaseQuotaClient client(mock_tracker());
 
   // Perm deletions are short circuited in the Client and
   // should not reach the DatabaseTracker.
