@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b86ba7ee_890d1575",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T18:10:43Z",
+      "side": 1,
+      "message": "You are right, was not necessary. Removed.",
+      "parentUuid": "476260d0_9e1d9ebb",
+      "revId": "ac89eb050f3bd9a04cc12c2afbef2e46d69e3bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ad2a8ee_06ed6a8c",
         "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.js",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T01:27:56Z",
       "side": 1,
       "message": "optional: maybe try binding to pointer-down? that\u0027ll make the pulse effect look more responsive (and also fire immediately if the mouse button is held down).",
+      "revId": "ac89eb050f3bd9a04cc12c2afbef2e46d69e3bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d117cf_5426a5a2",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T18:10:43Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6ad2a8ee_06ed6a8c",
       "revId": "ac89eb050f3bd9a04cc12c2afbef2e46d69e3bd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
