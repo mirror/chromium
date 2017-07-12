@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41496e6e_caa03bef",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-12T21:22:16Z",
+      "side": 1,
+      "message": "sadly, I didn\u0027t figure out the way to enable this test yet. Mouse drag flip page can work properly in production code.\nWill open a bug to investigate why it fails in test later.\n\nThis is the last test case not opened for fullscreen app list.",
+      "revId": "1744ffb16da8a6e82062af94d891e8462a34fc3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
