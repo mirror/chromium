@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c2b579_7d414b55",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T20:09:48Z",
+      "side": 0,
+      "message": "Can you keep this comment and DCHECK. I think this still holds true.",
+      "range": {
+        "startLine": 642,
+        "startChar": 27,
+        "endLine": 642,
+        "endChar": 28
+      },
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
