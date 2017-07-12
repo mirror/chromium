@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a11fc03c_94cebeff",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:17:11Z",
+      "side": 1,
+      "message": "Actually, the slightly wordier:\nOutput.RESTRICTION_STATE_MAP \u003d {};\nOutput.RESTRICTION_STATE_MAP[chrome.automation.Restriction.DISABLED] \u003d\n    \u0027aria_disabled_true\u0027;",
+      "parentUuid": "6f01702b_5c454506",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43bf3209_825a49e7",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 34
