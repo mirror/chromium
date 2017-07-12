@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d50758af_e76003eb",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T02:04:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb03b5fb_bb9115e2",
+      "range": {
+        "startLine": 19,
+        "startChar": 71,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "a22fd66a9bbbf4ad0fd8f8441cbf9408853528f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e61de37_6e549d31",
         "filename": "cc/tiles/checker_image_tracker.cc",
         "patchSetId": 3
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "1b632f5d_bb8f43f4",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T02:04:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e61de37_6e549d31",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "a22fd66a9bbbf4ad0fd8f8441cbf9408853528f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7decd00d_b7a95787",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T02:04:31Z",
+      "side": 1,
+      "message": "I just saw this in a few other places in code. Not necessary.",
+      "parentUuid": "86a6b6ee_37742f2c",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "a22fd66a9bbbf4ad0fd8f8441cbf9408853528f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4436a80d_06f24d1b",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-12T01:28:41Z",
       "side": 1,
       "message": "nit: It\u0027s probably more obvious to folks working on this code; but to me, it\u0027s not clear what \"checker\" means, even after reading the histogram description.  I think this label is equivalent to \"Can defer\"?  It would be nice to clarify either here or in the histogram description what the connection is between the term \"checker\" and whether an image is decoded synchronously or asynchronously.",
+      "range": {
+        "startLine": 4064,
+        "startChar": 28,
+        "endLine": 4064,
+        "endChar": 35
+      },
+      "revId": "a22fd66a9bbbf4ad0fd8f8441cbf9408853528f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe771ca_2923b500",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4064,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T02:04:31Z",
+      "side": 1,
+      "message": "I updated the label to \"Can async decode.\" Does that read better? Also added a comment in the histogram to describe what exactly it means.",
+      "parentUuid": "4436a80d_06f24d1b",
       "range": {
         "startLine": 4064,
         "startChar": 28,
