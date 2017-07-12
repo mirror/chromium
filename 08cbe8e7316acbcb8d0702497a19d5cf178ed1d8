@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee837ff3_64694cc1",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T15:52:05Z",
+      "side": 1,
+      "message": "This probably needs a comment.",
+      "revId": "08cbe8e7316acbcb8d0702497a19d5cf178ed1d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
