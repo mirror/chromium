@@ -14,6 +14,7 @@
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/sequence_checker.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "extensions/browser/value_store/lazy_leveldb.h"
 #include "extensions/browser/value_store/value_store.h"
@@ -72,6 +73,8 @@ class LeveldbValueStore : public ValueStore,
 
   // Commits the changes in |batch| to the database.
   ValueStore::Status WriteToDb(leveldb::WriteBatch* batch);
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(LeveldbValueStore);
 };
