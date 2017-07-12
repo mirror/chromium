@@ -319,7 +319,7 @@ TEST_P(AppsGridViewTest, RemoveSelectedLastApp) {
   EXPECT_TRUE(apps_grid_view_->IsSelectedView(view));
 }
 
-TEST_F(AppsGridViewTest, MouseDragWithFolderDisabled) {
+TEST_P(AppsGridViewTest, MouseDragWithFolderDisabled) {
   model_->SetFoldersEnabled(false);
   const int kTotalItems = 4;
   model_->PopulateApps(kTotalItems);
@@ -368,7 +368,7 @@ TEST_F(AppsGridViewTest, MouseDragWithFolderDisabled) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_F(AppsGridViewTest, MouseDragItemIntoFolder) {
+TEST_P(AppsGridViewTest, MouseDragItemIntoFolder) {
   size_t kTotalItems = 3;
   model_->PopulateApps(kTotalItems);
   EXPECT_EQ(model_->top_level_item_list()->item_count(), kTotalItems);
@@ -415,7 +415,7 @@ TEST_F(AppsGridViewTest, MouseDragItemIntoFolder) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_F(AppsGridViewTest, MouseDragMaxItemsInFolder) {
+TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
   // Create and add a folder with 15 items in it.
   size_t kTotalItems = kMaxFolderItems - 1;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
@@ -460,7 +460,7 @@ TEST_F(AppsGridViewTest, MouseDragMaxItemsInFolder) {
 
 // Check that moving items around doesn't allow a drop to happen into a full
 // folder.
-TEST_F(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
+TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
   // Create and add a folder with 16 items in it.
   size_t kTotalItems = kMaxFolderItems;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
@@ -509,9 +509,11 @@ TEST_F(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_F(AppsGridViewTest, MouseDragItemReorder) {
-  // Using a simulated 2x2 layout for the test.
-  apps_grid_view_->SetLayout(2, 2);
+TEST_P(AppsGridViewTest, MouseDragItemReorder) {
+  // Using a simulated 2x2 layout for the test. If fullscreen app list is
+  // enabled, rows_per_page passed should be 3 as the first row is occupied by
+  // suggested apps.
+  apps_grid_view_->SetLayout(2, test_with_fullscreen_ ? 3 : 2);
   model_->PopulateApps(4);
   EXPECT_EQ(4u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(std::string("Item 0,Item 1,Item 2,Item 3"),
@@ -574,7 +576,7 @@ TEST_F(AppsGridViewTest, MouseDragItemReorder) {
             model_->GetModelContent());
 }
 
-TEST_F(AppsGridViewTest, MouseDragFolderReorder) {
+TEST_P(AppsGridViewTest, MouseDragFolderReorder) {
   size_t kTotalItems = 2;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
   model_->PopulateAppWithId(kTotalItems);
@@ -631,7 +633,7 @@ TEST_P(AppsGridViewTest, MouseDragWithCancelDeleteAddItem) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_F(AppsGridViewTest, MouseDragFlipPage) {
+TEST_P(AppsGridViewTest, MouseDragFlipPage) {
   test_api_->SetPageFlipDelay(10);
   GetPaginationModel()->SetTransitionDurations(10, 10);
 
@@ -643,10 +645,15 @@ TEST_F(AppsGridViewTest, MouseDragFlipPage) {
   EXPECT_EQ(0, GetPaginationModel()->selected_page());
 
   gfx::Point from = GetItemTileRectAt(0, 0).CenterPoint();
-  gfx::Point to =
-      gfx::Point(apps_grid_view_->width(), apps_grid_view_->height() / 2);
+  gfx::Point to;
+  if (!test_with_fullscreen_) {
+    to = gfx::Point(apps_grid_view_->width(), apps_grid_view_->height() / 2);
+  } else {
+    to = gfx::Point(apps_grid_view_->width() / 2, apps_grid_view_->height());
+  }
 
-  // Drag to right edge.
+  // If not |test_with_fullscreen_|, drag to right edge; otherwise drag to
+  // bottom edge.
   page_flip_waiter.Reset();
   SimulateDrag(AppsGridView::MOUSE, from, to);
 
@@ -659,8 +666,13 @@ TEST_F(AppsGridViewTest, MouseDragFlipPage) {
 
   apps_grid_view_->EndDrag(true);
 
-  // Now drag to the left edge and test the other direction.
-  to.set_x(0);
+  // Now if not |test_with_fullscreen_|, drag to the left edge; otherwise drag
+  // to top edge.
+  if (!test_with_fullscreen_) {
+    to.set_x(0);
+  } else {
+    to.set_y(0);
+  }
 
   page_flip_waiter.Reset();
   SimulateDrag(AppsGridView::MOUSE, from, to);
@@ -674,7 +686,7 @@ TEST_F(AppsGridViewTest, MouseDragFlipPage) {
   apps_grid_view_->EndDrag(true);
 }
 
-TEST_F(AppsGridViewTest, SimultaneousDragWithFolderDisabled) {
+TEST_P(AppsGridViewTest, SimultaneousDragWithFolderDisabled) {
   model_->SetFoldersEnabled(false);
   const int kTotalItems = 4;
   model_->PopulateApps(kTotalItems);

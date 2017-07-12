@@ -31,7 +31,6 @@
 #include "ui/app_list/views/suggestions_container_view.h"
 #include "ui/app_list/views/tile_item_view.h"
 #include "ui/app_list/views/top_icon_animation_view.h"
-#include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -43,7 +42,6 @@
 #include "ui/views/border.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/view_model_utils.h"
-#include "ui/views/widget/widget.h"
 
 namespace app_list {
 
@@ -1338,15 +1336,6 @@ void AppsGridView::ExtractDragLocation(const ui::LocatedEvent& event,
   // coordinates because |drag_view_| has a scale transform and location
   // could have integer round error and causes jitter.
   *drag_point = event.root_location();
-
-  // GetWidget() could be NULL for tests.
-  if (GetWidget()) {
-    aura::Window::ConvertPointToTarget(
-        GetWidget()->GetNativeWindow()->GetRootWindow(),
-        GetWidget()->GetNativeWindow(), drag_point);
-  }
-
-  views::View::ConvertPointFromWidget(this, drag_point);
 }
 
 void AppsGridView::CalculateDropTarget() {
@@ -2098,11 +2087,19 @@ bool AppsGridView::EnableFolderDragDropUI() {
 AppsGridView::Index AppsGridView::GetNearestTileIndexForPoint(
     const gfx::Point& point) const {
   gfx::Rect bounds = GetContentsBounds();
+  bounds.Inset(0, GetHeightOnTopOfAllAppsTiles(), 0, 0);
   const gfx::Size total_tile_size = GetTotalTileSize();
   int col = ClampToRange((point.x() - bounds.x()) / total_tile_size.width(), 0,
                          cols_ - 1);
-  int row = ClampToRange((point.y() - bounds.y()) / total_tile_size.height(), 0,
-                         rows_per_page_ - 1);
+  int row = rows_per_page_;
+  if (is_fullscreen_app_list_enabled_ &&
+      pagination_model_.selected_page() == 0) {
+    row = ClampToRange((point.y() - bounds.y()) / total_tile_size.height(), 0,
+                       rows_per_page_ - 2);
+  } else {
+    row = ClampToRange((point.y() - bounds.y()) / total_tile_size.height(), 0,
+                       rows_per_page_ - 1);
+  }
   return Index(pagination_model_.selected_page(), row * cols_ + col);
 }
 
