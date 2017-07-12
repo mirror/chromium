@@ -32,6 +32,8 @@ const char kConvertedFromUserScript[] = "converted_from_user_script";
 const char kCss[] = "css";
 const char kCtrlKey[] = "ctrlKey";
 const char kCurrentLocale[] = "current_locale";
+const char kDeclarativeNetRequestRulesetLocation[] =
+    "declarative_net_request_rules";
 const char kDefaultLocale[] = "default_locale";
 const char kDescription[] = "description";
 const char kDevToolsPage[] = "devtools_page";
@@ -731,6 +733,34 @@ const char kPermissionUnknownOrMalformed[] =
     "Permission '*' is unknown or URL pattern is malformed.";
 const char kReservedMessageFound[] =
     "Reserved key * found in message catalog.";
+const char kRulesFileIsNotList[] = "*: Rules file does not have a valid list.";
+const char kRulesFileDuplicateID[] =
+    "*: Rule at index * does not have a unique ID.";
+const char kRulesFileDuplicateResourceType[] =
+    "*: Rule at index * includes and excludes the same resource";
+// Don't surface the actual error to the user, since it's an implementation
+// detail.
+const char kRulesFileErrorPersisting[] = "*: Rules file could not be parsed.";
+const char kRulesFileRedirectRuleKeyEmpty[] =
+    "*: Rule at index * does not specify the value for * key. This is required "
+    "for redirect rules.";
+const char kRulesFileInvalidKey[] =
+    "*: Rule at index * has an invalid value for * key. This should be greater "
+    "than or equal to *.";
+const char kRulesFileJSONParseError[] =
+    "*: Rule at index * could not be parsed.";
+const char kRulesFileRuleNotMeaningful[] = "*: Rule at index * is invalid.";
+const char kRulesetLocationNotString[] =
+    "Invalid value for key '*': It should be a string.";
+const char kRulesetLocationRefersParent[] =
+    "Invalid value for key '*': It should not refer to the parent directory.";
+const char kRulesetLocationNotJSON[] =
+    "Invalid value for key '*': It should be a json file.";
+const char kRulesetLocationIsAbsolutePath[] =
+    "Invalid value for key '*': It should be a path relative to the extension "
+    "directory.";
+const char kRulesetLocationIsInvalidPath[] =
+    "Invalid value for key '*': The provided path is invalid.";
 const char kUnrecognizedManifestKey[] = "Unrecognized manifest key '*'.";
 const char kUnrecognizedManifestProperty[] =
     "Unrecognized property '*' of manifest key '*'.";
