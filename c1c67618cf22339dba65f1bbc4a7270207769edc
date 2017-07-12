@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53475ce1_692a8907",
+        "filename": "ui/file_manager/file_manager/background/js/test_util_base.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-12T19:20:46Z",
+      "side": 1,
+      "message": "Could you mention what does it mean if Array\u003cstring\u003e is specified?\nYou can copy the description of deepQuerySelectorAll_.",
+      "revId": "c1c67618cf22339dba65f1bbc4a7270207769edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5314d7_875e0c1b",
+        "filename": "ui/file_manager/file_manager/background/js/test_util_base.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-12T19:20:46Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c1c67618cf22339dba65f1bbc4a7270207769edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
