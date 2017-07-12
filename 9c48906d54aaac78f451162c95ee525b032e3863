@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3fbe897_2ac31950",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-07-12T06:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c26a7a7_efc6a552",
+      "revId": "9c48906d54aaac78f451162c95ee525b032e3863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "345790d9_5bd32df2",
         "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/MojoUtils.java",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1cac7a0a_a874f342",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/MojoUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-07-12T06:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "345790d9_5bd32df2",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 66
+      },
+      "revId": "9c48906d54aaac78f451162c95ee525b032e3863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5970289f_5b7d22f5",
         "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/MojoUtils.java",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "9c48906d54aaac78f451162c95ee525b032e3863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443f7934_b158ba4c",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/MojoUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-07-12T06:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5970289f_5b7d22f5",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "9c48906d54aaac78f451162c95ee525b032e3863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
