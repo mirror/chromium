@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94d225c6_1f80b9b6",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 8
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-12T12:07:44Z",
+      "side": 1,
+      "message": "In this case you need to define style variables in main.html inside \u003cstyle is\u003d\"custom-style\"\u003e\nSee: https://www.polymer-project.org/2.0/docs/devguide/custom-css-properties",
+      "revId": "76e43fc4fe0d7f55df1a21ef2937074fa4eeb821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc2eea2_27773713",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-12T12:07:44Z",
+      "side": 1,
+      "message": "nit: Hiding item with on-toolbar when its from toolbar sounds opposite to me.\nHow about \u0027hide-on-toolbar\u0027 or something like it?",
+      "range": {
+        "startLine": 165,
+        "startChar": 40,
+        "endLine": 165,
+        "endChar": 50
+      },
+      "revId": "76e43fc4fe0d7f55df1a21ef2937074fa4eeb821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503a3a32_b41470a5",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-12T12:07:44Z",
+      "side": 1,
+      "message": "visibleif and invisibleif are used only for body attributes about application types.\nLet\u0027s not use it for this dynamic state about the toolbar.",
+      "range": {
+        "startLine": 169,
+        "startChar": 72,
+        "endLine": 169,
+        "endChar": 93
+      },
+      "revId": "76e43fc4fe0d7f55df1a21ef2937074fa4eeb821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
