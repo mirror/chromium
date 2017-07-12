@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db4a4225_19ae485d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T23:26:02Z",
+      "side": 1,
+      "message": "s/completition/completion/",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 42
+      },
+      "revId": "d68ef42e416cc8b8ae561e02bc43d04f94c5328e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3057bf_8dc48e52",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T23:26:02Z",
+      "side": 1,
+      "message": "s/\u003c\u003d/\u003c/",
+      "range": {
+        "startLine": 821,
+        "startChar": 36,
+        "endLine": 821,
+        "endChar": 37
+      },
+      "revId": "d68ef42e416cc8b8ae561e02bc43d04f94c5328e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4daf34cf_44d54515",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T23:26:02Z",
+      "side": 1,
+      "message": "s/\u003c\u003d/\u003c/",
+      "range": {
+        "startLine": 844,
+        "startChar": 35,
+        "endLine": 844,
+        "endChar": 36
+      },
+      "revId": "d68ef42e416cc8b8ae561e02bc43d04f94c5328e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
