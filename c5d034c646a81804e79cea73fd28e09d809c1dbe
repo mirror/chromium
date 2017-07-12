@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "167efc45_7f3ab9ad",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T02:10:24Z",
+      "side": 1,
+      "message": "nit: please remove",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d27a567_546e7a0a",
         "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
         "patchSetId": 3
@@ -13,6 +30,40 @@
       "writtenOn": "2017-07-11T20:25:18Z",
       "side": 1,
       "message": "given that this isn\u0027t so much timing data but more metadata, we might consider calling it ServiceWorkerMetadata and making it a child of PageLoadMetadata. Or perhaps just make ServiceWorkerPreparationType a member of PageLoadMetadata. Would that work? We do some merging of PageLoadMetadata in the browser process side that may not make sense - I could refactor that to better accomodate this field if that\u0027s a concern.",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833344c6_798d92d0",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T02:10:24Z",
+      "side": 1,
+      "message": "?",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee24a56e_9ee82764",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T02:10:24Z",
+      "side": 1,
+      "message": "This is used only for navigation request and for metrics purpose, right? Can you add a comment about that?\n\nA bit orthogonal, but wondering if these SW-related fields (which look a bit random) should be factored out into a separate struct to give a better structural view.",
       "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
