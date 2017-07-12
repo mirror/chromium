@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "937ada3a_89ca156f",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1170679
+      },
+      "writtenOn": "2017-07-12T21:00:22Z",
+      "side": 1,
+      "message": "Did we find out if current_cpu is the right parameter to test?",
+      "range": {
+        "startLine": 85,
+        "startChar": 26,
+        "endLine": 85,
+        "endChar": 37
+      },
+      "revId": "7bc442d95cf07dfe7960b58a6cb1d5a5e1a53914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
