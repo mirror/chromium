@@ -22,6 +22,30 @@
       "revId": "a2fec929c2b19bf8cdfbed7dc674001e72ff4b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5dd39a_dd6a0a8f",
+        "filename": "base/atomic_sequence_num.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-12T01:17:05Z",
+      "side": 1,
+      "message": "As its copy constructor is explicitly deleted, `\u003d 0` causes a compile error.",
+      "parentUuid": "3c7381b4_9c810e46",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "a2fec929c2b19bf8cdfbed7dc674001e72ff4b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
