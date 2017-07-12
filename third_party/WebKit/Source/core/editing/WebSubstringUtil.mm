@@ -60,9 +60,10 @@
 
 using namespace blink;
 
-static NSAttributedString* attributedSubstringFromRange(
-    const EphemeralRange& range,
-    float fontScale) {
+namespace {
+
+NSAttributedString* AttributedSubstringFromRange(const EphemeralRange& range,
+                                                 float font_scale) {
   NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
   NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
   size_t length = range.EndPosition().ComputeOffsetInContainerNode() -
@@ -78,21 +79,21 @@ static NSAttributedString* attributedSubstringFromRange(
 
   for (TextIterator it(range.StartPosition(), range.EndPosition());
        !it.AtEnd() && [string length] < length; it.Advance()) {
-    unsigned numCharacters = it.length();
-    if (!numCharacters)
+    unsigned num_characters = it.length();
+    if (!num_characters)
       continue;
 
     Node* container = it.CurrentContainer();
-    LayoutObject* layoutObject = container->GetLayoutObject();
-    DCHECK(layoutObject);
-    if (!layoutObject)
+    LayoutObject* layout_object = container->GetLayoutObject();
+    DCHECK(layout_object);
+    if (!layout_object)
       continue;
 
-    const ComputedStyle* style = layoutObject->Style();
-    FontPlatformData fontPlatformData =
+    const ComputedStyle* style = layout_object->Style();
+    FontPlatformData font_platform_data =
         style->GetFont().PrimaryFont()->PlatformData();
-    fontPlatformData.text_size_ *= fontScale;
-    NSFont* font = toNSFont(fontPlatformData.CtFont());
+    font_platform_data.text_size_ *= font_scale;
+    NSFont* font = toNSFont(font_platform_data.CtFont());
     // If the platform font can't be loaded, or the size is incorrect comparing
     // to the computed style, it's likely that the site is using a web font.
     // For now, just use the default font instead.
@@ -100,12 +101,12 @@ static NSAttributedString* attributedSubstringFromRange(
     // to use the font.
     // TODO(shuchen): Support scaling the font as necessary according to CSS
     // transforms, not just pinch-zoom.
-    if (!font || floor(fontPlatformData.size()) !=
+    if (!font || floor(font_platform_data.size()) !=
                      floor([[font fontDescriptor] pointSize])) {
       font = [NSFont systemFontOfSize:style->GetFont()
                                           .GetFontDescription()
                                           .ComputedSize() *
-                                      fontScale];
+                                      font_scale];
     }
     [attrs setObject:font forKey:NSFontAttributeName];
 
@@ -128,26 +129,28 @@ static NSAttributedString* attributedSubstringFromRange(
                                        length:characters.Size()] autorelease];
     [string replaceCharactersInRange:NSMakeRange(position, 0)
                           withString:substring];
-    [string setAttributes:attrs range:NSMakeRange(position, numCharacters)];
-    position += numCharacters;
+    [string setAttributes:attrs range:NSMakeRange(position, num_characters)];
+    position += num_characters;
   }
   return [string autorelease];
 }
 
-WebPoint getBaselinePoint(LocalFrameView* frameView,
+WebPoint GetBaselinePoint(LocalFrameView* frame_view,
                           const EphemeralRange& range,
                           NSAttributedString* string) {
-  IntRect stringRect = frameView->ContentsToViewport(ComputeTextRect(range));
-  IntPoint stringPoint = stringRect.MinXMaxYCorner();
+  IntRect string_rect = frame_view->ContentsToViewport(ComputeTextRect(range));
+  IntPoint string_point = string_rect.MinXMaxYCorner();
 
   // Adjust for the font's descender. AppKit wants the baseline point.
   if ([string length]) {
     NSDictionary* attributes = [string attributesAtIndex:0 effectiveRange:NULL];
     if (NSFont* font = [attributes objectForKey:NSFontAttributeName])
-      stringPoint.Move(0, ceil([font descender]));
+      string_point.Move(0, ceil([font descender]));
   }
-  return stringPoint;
+  return string_point;
 }
+
+}  // namespace
 
 namespace blink {
 
@@ -173,9 +176,9 @@ NSAttributedString* WebSubstringUtil::AttributedWordAtPoint(
   const EphemeralRange word_range = selection.ToNormalizedEphemeralRange();
 
   // Convert to NSAttributedString.
-  NSAttributedString* string = attributedSubstringFromRange(
+  NSAttributedString* string = AttributedSubstringFromRange(
       word_range, frame->GetPage()->GetVisualViewport().Scale());
-  baseline_point = getBaselinePoint(frame->View(), word_range, string);
+  baseline_point = GetBaselinePoint(frame->View(), word_range, string);
   return string;
 }
 
@@ -204,10 +207,10 @@ NSAttributedString* WebSubstringUtil::AttributedSubstringInRange(
   if (ephemeral_range.IsNull())
     return nil;
 
-  NSAttributedString* result = attributedSubstringFromRange(
+  NSAttributedString* result = AttributedSubstringFromRange(
       ephemeral_range, frame->GetPage()->GetVisualViewport().Scale());
   if (baseline_point)
-    *baseline_point = getBaselinePoint(frame->View(), ephemeral_range, result);
+    *baseline_point = GetBaselinePoint(frame->View(), ephemeral_range, result);
   return result;
 }
 
