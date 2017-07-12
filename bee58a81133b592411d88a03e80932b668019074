@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e0b1362_9f43844a",
+        "filename": "base/value_iterators.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-12T20:46:45Z",
+      "side": 1,
+      "message": "Nit: the copyright block shouldn\u0027t have a \"(c)\" these days (other file too).",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392d32d0_5c3746d6",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-12T20:46:45Z",
+      "side": 1,
+      "message": "\"overlaod\"",
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762e0c34_38c932c0",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-12T20:46:45Z",
+      "side": 1,
+      "message": "Can you add in these comments that the type must be a DICTIONARY?",
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f1c290_9de14b33",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-12T20:46:45Z",
+      "side": 1,
+      "message": "I think a DictEnd() function would be a good idea.\n  auto found \u003d value.FindKey(\"foo\");\n  if (found !\u003d value.DictEnd())\nI\u0027m still paranoid about code bloat for the inline STL iterators on all dictionary operations.",
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e536e6ea_246d6c74",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-12T20:46:45Z",
+      "side": 1,
+      "message": "For each of these cases, we should be explicit about where end iterators come from (see previous comment).",
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
