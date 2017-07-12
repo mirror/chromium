@@ -22,6 +22,30 @@
       "revId": "51a354aed5941fed25e06365e681c13200291065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00226589_bcd0ad34",
+        "filename": "content/public/browser/browser_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T16:40:59Z",
+      "side": 0,
+      "message": "Yay enum classes \\o/",
+      "parentUuid": "46ab5014_bc94b0b8",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 53
+      },
+      "revId": "51a354aed5941fed25e06365e681c13200291065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

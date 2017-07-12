@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e493b986_48e6b959",
+        "filename": "content/common/push_messaging.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T16:40:59Z",
+      "side": 1,
+      "message": "We\u0027ll keep the separate mojom struct, but I\u0027d definitely love to fix the other enums. Getting rid of them requires onion soup however, let\u0027s do that separately. (Should be fine to keep the TODO.)",
+      "parentUuid": "54bb2a70_e2699ec9",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "b0f683c5d1434765b8a0781ac08d4517738181cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67474c78_b74598d1",
         "filename": "content/renderer/push_messaging/push_messaging_client.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "b0f683c5d1434765b8a0781ac08d4517738181cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fcb792_954511d6",
+        "filename": "content/renderer/push_messaging/push_messaging_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-12T16:40:59Z",
+      "side": 1,
+      "message": "Yes -- we\u0027re using that type, so we should include it.",
+      "parentUuid": "67474c78_b74598d1",
+      "revId": "b0f683c5d1434765b8a0781ac08d4517738181cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
