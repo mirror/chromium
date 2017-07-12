@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4c4ce8c_eee7588c",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "ContainsKey(script_data_, url) could be more readable.",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0969f6ab_e72371ef",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "\"Only one thread can wait at a time.\" seems to miss the point of this assertion. How about \"The script container is unexpectedly shared by worker threads.\"?",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9eab007_030ad030",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "How about clarifying thread affinity by function name like AddOnIOThread?",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee80410_e6b925a1",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "nit: These would be slightly more readable if there is a blank line before the comments.",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8734eb_196876b9",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "\"Only one thread can wait at a time.\" sounds like multiple worker threads may call Wait() but only one thread can call it at a time.\n\nHow about clarifying this container is created per worker thread in the class-level comment and removing this phrase?",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdd4cb6_d71f23f3",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "Can you add a comment like \"Returns nullptr if the script for |url| is already taken.\"",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5968ece7_898b67bb",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "ditto(thread affinity)",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f5682f_f0968db7",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "|is_completed_| doesn\u0027t exist. |are_all_data_added_|?",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a193c01_27147937",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "\"const base::Closure\u0026 callback\"?",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9bd21ae_843173c0",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t know this macro. This looks neat :)",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6a910a_f018d33b",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "DCHECK(running_receivers_-\u003efind(script_url) \u003d\u003d running_receivers.end());\n  or\nDCHECK(!base::Contains(running_receivers_, script_url));",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d88a2c2_0c086f39",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "std::map is not used? Maybe you need to include \u003cvector\u003e instead.",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7440f209_14112503",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T13:19:41Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "5df387052508c02a7b56327c0e162c726b9929df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
