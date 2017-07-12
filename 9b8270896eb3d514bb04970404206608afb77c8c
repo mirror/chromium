@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d385cdf1_14a0be9d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-12T06:51:43Z",
+      "side": 1,
+      "message": "I\u0027m trying to figure out what we could tell with these UMAs. For Finch-control group we will see 0 throttled counts, and for enabled group unthrottled UMA should look similar to control group... or since we categorize these by the time when peak usage is recorded, and since some pages might finish being loaded while the tab is backgrounded we might expect smaller numbers?  Do we want to also record the stats when the tab becomes foregrounded for the first time?",
+      "revId": "9b8270896eb3d514bb04970404206608afb77c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
