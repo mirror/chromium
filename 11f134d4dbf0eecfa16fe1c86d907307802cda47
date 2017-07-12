@@ -16,6 +16,24 @@
       "revId": "11f134d4dbf0eecfa16fe1c86d907307802cda47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640e35ea_702d2b0e",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-12T18:39:41Z",
+      "side": 0,
+      "message": "Good catch, it wasn\u0027t there anymore.\nBrought it back in ChildProcessLauncherHelper.populateServiceBundle().",
+      "parentUuid": "3399575b_6a54b8e7",
+      "revId": "11f134d4dbf0eecfa16fe1c86d907307802cda47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
