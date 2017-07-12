@@ -1,6 +1,10 @@
 include_rules = [
   "-storage/browser",
 
+  # TODO(hintzed): This is probably evil, so I'll revert it once I know
+  # where to plug in the CORSURLLoader.
+  "+content/renderer/net",
+
   "+components/discardable_memory/common",
   "+components/viz/common/quads",
   "+components/viz/common/resources",
