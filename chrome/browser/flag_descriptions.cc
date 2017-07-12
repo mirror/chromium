@@ -1765,14 +1765,10 @@ const char kFillOnAccountSelectDescription[] =
     "Filling of passwords when an account is explicitly selected by the user "
     "rather than autofilling credentials on page load.";
 
-#if defined(OS_ANDROID)
-
 const char kTabsInCbdName[] = "Enable tabs for the Clear Browsing Data dialog.";
 
 const char kTabsInCbdDescription[] =
     "Enables a basic and an advanced tab for the Clear Browsing Data dialog.";
-
-#endif  // defined(OS_ANDROID)
 
 const char kNotificationsNativeFlagName[] = "Enable native notifications.";
 

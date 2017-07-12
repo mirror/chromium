@@ -14,6 +14,7 @@
 #include "base/metrics/field_trial_params.h"
 #include "chrome/common/chrome_features.h"
 #include "components/autofill/core/browser/autofill_experiments.h"
+#include "components/browsing_data/core/features.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/ntp_snippets/features.h"
 #include "components/offline_pages/core/offline_page_feature.h"
@@ -46,7 +47,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &features::kSimplifiedFullscreenUI,
     &features::kVrShell,
     &features::kWebPayments,
-    &features::kTabsInCbd,
     &kAndroidPayIntegrationV1,
     &kAndroidPayIntegrationV2,
     &kAndroidPaymentApps,
@@ -93,6 +93,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kWebVrAutopresent,
     &kWebVRCardboardSupport,
     &kXGEOVisibleNetworks,
+    &browsing_data::kTabsInCbd,
     &ntp_snippets::kIncreasedVisibility,
     &ntp_snippets::kForeignSessionsSuggestionsFeature,
     &ntp_snippets::kNotificationsFeature,

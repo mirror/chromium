@@ -41,13 +41,13 @@ const int kMaxTimesHistoryNoticeShown = 1;
 
 // TODO(msramek): Get the list of deletion preferences from the JS side.
 const char* kCounterPrefs[] = {
-  browsing_data::prefs::kDeleteBrowsingHistory,
-  browsing_data::prefs::kDeleteCache,
-  browsing_data::prefs::kDeleteDownloadHistory,
-  browsing_data::prefs::kDeleteFormData,
-  browsing_data::prefs::kDeleteHostedAppsData,
-  browsing_data::prefs::kDeleteMediaLicenses,
-  browsing_data::prefs::kDeletePasswords,
+    browsing_data::prefs::kDeleteBrowsingHistory,
+    browsing_data::prefs::kDeleteCache,
+    browsing_data::prefs::kDeleteDownloadHistory,
+    browsing_data::prefs::kDeleteFormData,
+    browsing_data::prefs::kDeleteHostedAppsData,
+    browsing_data::prefs::kDeleteMediaLicenses,
+    browsing_data::prefs::kDeletePasswords,
 };
 
 const char kRegisterableDomainField[] = "registerableDomain";
@@ -118,32 +118,33 @@ void ClearBrowsingDataHandler::HandleClearBrowsingData(
     site_data_mask &= ~ChromeBrowsingDataRemoverDelegate::DATA_TYPE_PLUGIN_DATA;
 
   int remove_mask = 0;
+
   if (prefs->GetBoolean(prefs::kAllowDeletingBrowserHistory)) {
-    if (prefs->GetBoolean(browsing_data::prefs::kDeleteBrowsingHistory))
+    if (browsing_data::GetDeleteBrowsingHistory(prefs))
       remove_mask |= ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY;
-    if (prefs->GetBoolean(browsing_data::prefs::kDeleteDownloadHistory))
+    if (browsing_data::GetDeleteDownloads(prefs))
       remove_mask |= content::BrowsingDataRemover::DATA_TYPE_DOWNLOADS;
   }
 
-  if (prefs->GetBoolean(browsing_data::prefs::kDeleteCache))
+  if (browsing_data::GetDeleteCache(prefs))
     remove_mask |= content::BrowsingDataRemover::DATA_TYPE_CACHE;
 
   int origin_mask = 0;
-  if (prefs->GetBoolean(browsing_data::prefs::kDeleteCookies)) {
+  if (browsing_data::GetDeleteCookies(prefs)) {
     remove_mask |= site_data_mask;
     origin_mask |= content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB;
   }
 
-  if (prefs->GetBoolean(browsing_data::prefs::kDeletePasswords))
+  if (browsing_data::GetDeletePasswords(prefs))
     remove_mask |= ChromeBrowsingDataRemoverDelegate::DATA_TYPE_PASSWORDS;
 
-  if (prefs->GetBoolean(browsing_data::prefs::kDeleteFormData))
+  if (browsing_data::GetDeleteFormData(prefs))
     remove_mask |= ChromeBrowsingDataRemoverDelegate::DATA_TYPE_FORM_DATA;
 
-  if (prefs->GetBoolean(browsing_data::prefs::kDeleteMediaLicenses))
+  if (browsing_data::GetDeleteMediaLicenses(prefs))
     remove_mask |= content::BrowsingDataRemover::DATA_TYPE_MEDIA_LICENSES;
 
-  if (prefs->GetBoolean(browsing_data::prefs::kDeleteHostedAppsData)) {
+  if (browsing_data::GetDeleteHostedAppsData(prefs)) {
     remove_mask |= site_data_mask;
     origin_mask |= content::BrowsingDataRemover::ORIGIN_TYPE_PROTECTED_WEB;
   }
@@ -151,11 +152,11 @@ void ClearBrowsingDataHandler::HandleClearBrowsingData(
   // Record the deletion of cookies and cache.
   content::BrowsingDataRemover::CookieOrCacheDeletionChoice choice =
       content::BrowsingDataRemover::NEITHER_COOKIES_NOR_CACHE;
-  if (prefs->GetBoolean(browsing_data::prefs::kDeleteCookies)) {
-    choice = prefs->GetBoolean(browsing_data::prefs::kDeleteCache)
+  if (browsing_data::GetDeleteCookies(prefs)) {
+    choice = browsing_data::GetDeleteCache(prefs)
                  ? content::BrowsingDataRemover::BOTH_COOKIES_AND_CACHE
                  : content::BrowsingDataRemover::ONLY_COOKIES;
-  } else if (prefs->GetBoolean(browsing_data::prefs::kDeleteCache)) {
+  } else if (browsing_data::GetDeleteCache(prefs)) {
     choice = content::BrowsingDataRemover::ONLY_CACHE;
   }
 
@@ -164,7 +165,8 @@ void ClearBrowsingDataHandler::HandleClearBrowsingData(
       content::BrowsingDataRemover::MAX_CHOICE_VALUE);
 
   // Record the circumstances under which passwords are deleted.
-  if (prefs->GetBoolean(browsing_data::prefs::kDeletePasswords)) {
+  if (browsing_data::GetDeletePasswords(prefs)) {
+    DCHECK(browsing_data::IsAdvancedTab(prefs));
     static const char* other_types[] = {
         browsing_data::prefs::kDeleteBrowsingHistory,
         browsing_data::prefs::kDeleteDownloadHistory,
@@ -183,9 +185,6 @@ void ClearBrowsingDataHandler::HandleClearBrowsingData(
         checked_other_types);
   }
 
-  int period_selected =
-      prefs->GetInteger(browsing_data::prefs::kDeleteTimePeriod);
-
   std::string webui_callback_id;
   CHECK_EQ(2U, args->GetSize());
   CHECK(args->GetString(0, &webui_callback_id));
@@ -201,8 +200,9 @@ void ClearBrowsingDataHandler::HandleClearBrowsingData(
   base::OnceClosure callback =
       base::BindOnce(&ClearBrowsingDataHandler::OnClearingTaskFinished,
                      weak_ptr_factory_.GetWeakPtr(), webui_callback_id);
+
   browsing_data::TimePeriod time_period =
-      static_cast<browsing_data::TimePeriod>(period_selected);
+      browsing_data::GetDeleteTimePeriod(prefs);
 
   browsing_data_important_sites_util::Remove(
       remove_mask, origin_mask, time_period, std::move(filter_builder), remover,
@@ -263,7 +263,7 @@ void ClearBrowsingDataHandler::OnClearingTaskFinished(
       // 2. The notice has been shown less than |kMaxTimesHistoryNoticeShown|.
       notice_shown_times < kMaxTimesHistoryNoticeShown &&
       // 3. The selected data types contained browsing history.
-      prefs->GetBoolean(browsing_data::prefs::kDeleteBrowsingHistory);
+      browsing_data::GetDeleteBrowsingHistory(prefs);
 
   if (show_notice) {
     // Increment the preference.

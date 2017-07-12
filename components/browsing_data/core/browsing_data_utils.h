@@ -76,6 +76,42 @@ bool GetDeletionPreferenceFromDataType(
 // This only happens the first time this method is called.
 void MigratePreferencesToBasic(PrefService* prefs);
 
+// Whether the basic tab is currently selected.
+bool IsBasicTab(PrefService* prefs);
+
+// Whether the advanced tab is currently selected.
+bool IsAdvancedTab(PrefService* prefs);
+
+// Whether browsing history is currently selected for deletion.
+bool GetDeleteBrowsingHistory(PrefService* prefs);
+
+// Whether cache is currently selected for deletion.
+bool GetDeleteCache(PrefService* prefs);
+
+// Whether cookies are currently selected for deletion.
+bool GetDeleteCookies(PrefService* prefs);
+
+// Whether site settings are currently selected for deletion.
+bool GetDeleteSiteSettings(PrefService* prefs);
+
+// Whether passwords are currently selected for deletion.
+bool GetDeletePasswords(PrefService* prefs);
+
+// Whether form data is currently selected for deletion.
+bool GetDeleteFormData(PrefService* prefs);
+
+// Whether downloads are currently selected for deletion.
+bool GetDeleteDownloads(PrefService* prefs);
+
+// Whether media licenses are currently selected for deletion.
+bool GetDeleteMediaLicenses(PrefService* prefs);
+
+// Whether hosted apps data is currently selected for deletion.
+bool GetDeleteHostedAppsData(PrefService* prefs);
+
+// Get the TimePeriod that is currently selected for deletion.
+browsing_data::TimePeriod GetDeleteTimePeriod(PrefService* prefs);
+
 }  // namespace browsing_data
 
 #endif  // COMPONENTS_BROWSING_DATA_CORE_BROWSING_DATA_UTILS_H_

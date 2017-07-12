@@ -4,6 +4,8 @@
 
 #include "components/browsing_data/core/pref_names.h"
 
+#include "base/feature_list.h"
+#include "components/browsing_data/core/features.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 
 namespace browsing_data {
@@ -83,13 +85,12 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
   registry->RegisterInt64Pref(prefs::kLastClearBrowsingDataTime, 0);
 #endif  // !defined(OS_IOS)
 
-#if defined(OS_ANDROID)
-  registry->RegisterIntegerPref(kLastClearBrowsingDataTab, 0);
-#endif
-
-  registry->RegisterBooleanPref(
-      kPreferencesMigratedToBasic, false,
-      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+  if (base::FeatureList::IsEnabled(browsing_data::kTabsInCbd)) {
+    registry->RegisterIntegerPref(kLastClearBrowsingDataTab, 0);
+    registry->RegisterBooleanPref(
+        kPreferencesMigratedToBasic, false,
+        user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+  }
 }
 
 }  // namespace prefs

@@ -191,8 +191,6 @@ extern const base::Feature kSupervisedUserCreation;
 extern const base::Feature kSyzyasanDeferredFree;
 #endif
 
-extern const base::Feature kTabsInCbd;
-
 extern const base::Feature kUseGoogleLocalNtp;
 
 extern const base::Feature kUseGroupedPermissionInfobars;
