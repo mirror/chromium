@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52e42560_29bfdba2",
+        "filename": "components/os_crypt/key_storage_config_linux.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-12T12:41:42Z",
+      "side": 1,
+      "message": "optional: use \u003ddefault;",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 15
+      },
+      "revId": "372696e7172eed8181b2372221602f35c54ef993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93b200e_42ba90a3",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-12T12:41:42Z",
+      "side": 1,
+      "message": "Seems like it\u0027s read-only. Therefore, you can make it const\u0026. Now it looks more like an out param.",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "372696e7172eed8181b2372221602f35c54ef993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
