@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ea349d2_7d67375f",
+        "filename": "build/sanitizers/tsan_suppressions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-12T20:15:56Z",
+      "side": 1,
+      "message": "Reference a crbug here?",
+      "range": {
+        "startLine": 265,
+        "startChar": 6,
+        "endLine": 265,
+        "endChar": 0
+      },
+      "revId": "a6d36f5593a0ee65fd4e92e20482762bbf2353f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
