@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb94bed9_7f5d8bc1",
+        "filename": "third_party/WebKit/Source/core/editing/LinkSelectionTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-12T01:45:18Z",
+      "side": 1,
+      "message": "How about testing |EventHandler::ShouldSHowIBeamForNode()| in \"EventHandlerTest.cpp\".\n\nThis is a kind of integration test and I would like to avoid to use delayed tasks which takes 50ms.",
+      "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcc4643_ddb22fce",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-12T01:45:18Z",
+      "side": 1,
+      "message": "We don\u0027t need to use |layout_object_selectable|.\nWe could write:\n\nif (layout_object-\u003eIsText() \u0026\u0026 node-\u003eCanStartSelection())\n  return true;",
+      "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40429c8c_61f718db",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-12T01:45:18Z",
+      "side": 1,
+      "message": "nit: Please remove an extra blank line.",
+      "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
