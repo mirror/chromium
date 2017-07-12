@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10c3cce2_4d4723d6",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2231,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T12:30:49Z",
+      "side": 1,
+      "message": "s/dummy/dummy_primary_account_id",
+      "range": {
+        "startLine": 2231,
+        "startChar": 25,
+        "endLine": 2231,
+        "endChar": 30
+      },
+      "revId": "bf00a36baf0b9d469b15751f42dd52d14eb49808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02845db_c1a8ca6c",
+        "filename": "chrome/browser/extensions/api/identity/identity_apitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T12:30:49Z",
+      "side": 1,
+      "message": "s/dummy/dummy_primary_account_id",
+      "range": {
+        "startLine": 565,
+        "startChar": 37,
+        "endLine": 565,
+        "endChar": 42
+      },
+      "revId": "bf00a36baf0b9d469b15751f42dd52d14eb49808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79090315_a194b33e",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T12:30:49Z",
+      "side": 1,
+      "message": "I think this should be \"sentinel\" as that is the primary account id.",
+      "range": {
+        "startLine": 244,
+        "startChar": 35,
+        "endLine": 244,
+        "endChar": 41
+      },
+      "revId": "bf00a36baf0b9d469b15751f42dd52d14eb49808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42c8451_6d83a00c",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-12T12:30:49Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 256,
+        "startChar": 19,
+        "endLine": 256,
+        "endChar": 34
+      },
+      "revId": "bf00a36baf0b9d469b15751f42dd52d14eb49808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
