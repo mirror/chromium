@@ -8,6 +8,7 @@
 #include "extensions/renderer/bindings/api_binding_test_util.h"
 #include "extensions/renderer/bindings/api_bindings_system.h"
 #include "extensions/renderer/bindings/api_bindings_system_unittest.h"
+#include "gin/arguments.h"
 #include "gin/handle.h"
 
 namespace extensions {
@@ -23,6 +24,7 @@ class APIBindingJSUtilUnittest : public APIBindingsSystemTest {
         new APIBindingJSUtil(bindings_system()->type_reference_map(),
                              bindings_system()->request_handler(),
                              bindings_system()->event_handler(),
+                             bindings_system()->exception_handler(),
                              base::Bind(&RunFunctionOnGlobalAndIgnoreResult)));
   }
 
@@ -30,6 +32,11 @@ class APIBindingJSUtilUnittest : public APIBindingsSystemTest {
       v8::Local<v8::Context> context,
       v8::Local<v8::Object>* secondary_parent) override {
     return context->Global();
+  }
+
+  void AddConsoleError(v8::Local<v8::Context> context,
+                       const std::string& error) override {
+    console_errors_.push_back(error);
   }
 
   std::string GetExposedError(v8::Local<v8::Context> context) {
@@ -56,7 +63,13 @@ class APIBindingJSUtilUnittest : public APIBindingsSystemTest {
     return bindings_system()->request_handler()->last_error();
   }
 
+  const std::vector<std::string>& console_errors() const {
+    return console_errors_;
+  }
+
  private:
+  std::vector<std::string> console_errors_;
+
   DISALLOW_COPY_AND_ASSIGN(APIBindingJSUtilUnittest);
 };
 
@@ -189,6 +202,61 @@ TEST_F(APIBindingJSUtilUnittest, TestSendRequestWithOptions) {
                                      base::ListValue(), std::string());
   EXPECT_EQ("true", GetStringPropertyFromObject(context->Global(), context,
                                                 "callbackCalled"));
+}
+
+TEST_F(APIBindingJSUtilUnittest, TestExceptionHandling) {
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+
+  gin::Handle<APIBindingJSUtil> util = CreateUtil();
+  v8::Local<v8::Object> v8_util = util.ToV8().As<v8::Object>();
+
+  ASSERT_TRUE(console_errors().empty());
+  const char kHandleException[] =
+      "try {\n"
+      "  throw new Error('some error');\n"
+      "} catch (e) {\n"
+      "  obj.handleException('handled', e);\n"
+      "}";
+  CallFunctionOnObject(context, v8_util, kHandleException);
+  ASSERT_EQ(1u, console_errors().size());
+  EXPECT_EQ("handled: Error: some error", console_errors()[0]);
+
+  struct ErrorInfo {
+    std::string full_message;
+    std::string exception_message;
+  };
+
+  auto custom_handler = [](const v8::FunctionCallbackInfo<v8::Value>& info) {
+    gin::Arguments arguments(info);
+    std::string full_message;
+    ASSERT_TRUE(arguments.GetNext(&full_message));
+    v8::Local<v8::Object> error_object;
+    ASSERT_TRUE(arguments.GetNext(&error_object));
+
+    ASSERT_TRUE(info.Data()->IsExternal());
+    ErrorInfo* error_out =
+        static_cast<ErrorInfo*>(info.Data().As<v8::External>()->Value());
+    error_out->full_message = full_message;
+    error_out->exception_message = GetStringPropertyFromObject(
+        error_object, arguments.GetHolderCreationContext(), "message");
+  };
+
+  ErrorInfo error_info;
+  v8::Local<v8::Function> v8_handler =
+      v8::Function::New(context, custom_handler,
+                        v8::External::New(isolate(), &error_info))
+          .ToLocalChecked();
+  v8::Local<v8::Function> add_handler = FunctionFromString(
+      context,
+      "(function(util, handler) { util.setExceptionHandler(handler); })");
+  v8::Local<v8::Value> args[] = {v8_util, v8_handler};
+  RunFunction(add_handler, context, arraysize(args), args);
+
+  CallFunctionOnObject(context, v8_util, kHandleException);
+  EXPECT_EQ(1u, console_errors().size());
+  EXPECT_EQ("handled: Error: some error", error_info.full_message);
+  EXPECT_EQ("\"some error\"", error_info.exception_message);
 }
 
 }  // namespace extensions
