@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "344c43f4_c4ad4f36",
+        "filename": "components/exo/keyboard_extension_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-12T13:14:13Z",
+      "side": 1,
+      "message": "Thank you for your advice. I added KeyboardObserver interface.",
+      "parentUuid": "9be992e9_3c12f9fd",
+      "revId": "dc720d7ec8b6110eee98a16c857876fa700d0dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d805b860_835b0b68",
         "filename": "components/exo/keyboard_extension_delegate.h",
         "patchSetId": 4
