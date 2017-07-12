@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa1bc46_c1088a1a",
+        "filename": "ios/chrome/browser/ui/settings/clear_browsing_data_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-12T21:06:31Z",
+      "side": 1,
+      "message": "how does this happen?",
+      "revId": "bfc0f625fcce9bfd052533023c95e5ae1b7f5a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
