@@ -14,12 +14,11 @@ SharedBitmapAllocationNotifierImpl::SharedBitmapAllocationNotifierImpl(
     : manager_(manager), binding_(this) {}
 
 SharedBitmapAllocationNotifierImpl::~SharedBitmapAllocationNotifierImpl() {
-  for (const auto& id : owned_bitmaps_)
-    manager_->ChildDeletedSharedBitmap(id);
+  ChildDied();
 }
 
 void SharedBitmapAllocationNotifierImpl::Bind(
-    cc::mojom::SharedBitmapAllocationNotifierAssociatedRequest request) {
+    cc::mojom::SharedBitmapAllocationNotifierRequest request) {
   binding_.Bind(std::move(request));
 }
 
@@ -32,6 +31,9 @@ void SharedBitmapAllocationNotifierImpl::DidAllocateSharedBitmap(
       std::move(buffer), &memory_handle, &size, NULL);
   DCHECK_EQ(result, MOJO_RESULT_OK);
   this->ChildAllocatedSharedBitmap(size, memory_handle, id);
+  last_shared_bitmap_sequence_number_++;
+  for (SharedBitmapAllocationObserver& observer : observers_)
+    observer.DidAllocateSharedBitmap(last_shared_bitmap_sequence_number_);
 }
 
 void SharedBitmapAllocationNotifierImpl::DidDeleteSharedBitmap(
@@ -46,6 +48,24 @@ void SharedBitmapAllocationNotifierImpl::ChildAllocatedSharedBitmap(
     const SharedBitmapId& id) {
   if (manager_->ChildAllocatedSharedBitmap(buffer_size, handle, id))
     owned_bitmaps_.insert(id);
+}
+
+void SharedBitmapAllocationNotifierImpl::ChildDied() {
+  for (const auto& id : owned_bitmaps_)
+    manager_->ChildDeletedSharedBitmap(id);
+  owned_bitmaps_.clear();
+  binding_.Close();
+}
+
+void SharedBitmapAllocationNotifierImpl::AddObserver(
+    SharedBitmapAllocationObserver* observer) {
+  observers_.AddObserver(observer);
+  observer->DidAllocateSharedBitmap(last_shared_bitmap_sequence_number_);
+}
+
+void SharedBitmapAllocationNotifierImpl::RemoveObserver(
+    SharedBitmapAllocationObserver* observer) {
+  observers_.RemoveObserver(observer);
 }
 
 }  // namespace viz
