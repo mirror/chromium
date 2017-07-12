@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f035665_88e4dfaa",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-12T14:10:00Z",
+      "side": 1,
+      "message": "ok it seems we are very close (not in this CL though, no worries) to be able to get rid also of this \\o/",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 69
+      },
+      "revId": "e69279b735f14638105b57155374d083f151511c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
