@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c9be1af_0c1a7f55",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T15:29:09Z",
+      "side": 1,
+      "message": "I think this is a good location to notify observers, but it\u0027s much different from the old location and has a much different meaning. In particular during async session restore the observers are notified *before* the actual data has been fetched, which may come back with no tabs. Additionally, notifying here means it\u0027s entirely possible that you don\u0027t notify in certain situations (because TabLoader may not be used).",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430a5b27_3c1a4249",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T15:29:09Z",
+      "side": 1,
+      "message": "Generally it\u0027s less error prone to set state before calling observers. (it doesn\u0027t really matter here, but it\u0027s a good pattern to try to follow).",
+      "range": {
+        "startLine": 891,
+        "startChar": 11,
+        "endLine": 891,
+        "endChar": 23
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88708223_6d3c3fec",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T15:29:09Z",
+      "side": 1,
+      "message": "If you need the class outside of the header than move the class outside the anonymous namespace (anonymous namespacing rules are subtle, and generally we don\u0027t do what you have here).",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 10
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
