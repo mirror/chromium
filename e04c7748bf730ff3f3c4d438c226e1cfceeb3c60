@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7261f48a_c04c7044",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-12T04:40:28Z",
+      "side": 1,
+      "message": "In general in comments/descriptions we wrap variables names in || to  be clear it\u0027s referring to code (i.e. |workers_|).",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 42
+      },
+      "revId": "e04c7748bf730ff3f3c4d438c226e1cfceeb3c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1fa08f_15c7e54c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-12T04:40:28Z",
+      "side": 1,
+      "message": "Technically this isn\u0027t \"adding\" a lock. It\u0027s covering |workers_| under the existing |idle_workers_stack_lock_| repurposed to cover both.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "e04c7748bf730ff3f3c4d438c226e1cfceeb3c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20b571b_8da99796",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-12T04:40:28Z",
+      "side": 1,
+      "message": "Move this member above |workers_| (it was previously down here because it was specific to |idle_workers_stack_|.",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 29
+      },
+      "revId": "e04c7748bf730ff3f3c4d438c226e1cfceeb3c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
