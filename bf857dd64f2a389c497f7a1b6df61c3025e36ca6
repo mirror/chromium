@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7f9441b_22fdf3a4",
+        "filename": "jingle/glue/chrome_async_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-12T20:15:10Z",
+      "side": 1,
+      "message": "\u003e Explain in a comment why this is necessary. Also maybe move it next to MessagePumpDefault creation.\n\nDone. I actually removed the MessagePumpDefault creation because just setting the mode to \"threadsafe\" would fix the CoreFoundation problem too.",
+      "parentUuid": "d99b48f3_2ea3040e",
+      "range": {
+        "startLine": 161,
+        "startChar": 3,
+        "endLine": 161,
+        "endChar": 57
+      },
+      "revId": "bf857dd64f2a389c497f7a1b6df61c3025e36ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee2f375a_635b8e4c",
         "filename": "jingle/notifier/base/xmpp_connection_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "bf857dd64f2a389c497f7a1b6df61c3025e36ca6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29847cd_93634bd9",
+        "filename": "jingle/notifier/base/xmpp_connection_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-12T20:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2f375a_635b8e4c",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "bf857dd64f2a389c497f7a1b6df61c3025e36ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
