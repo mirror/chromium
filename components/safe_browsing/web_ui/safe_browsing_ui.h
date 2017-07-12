@@ -19,9 +19,11 @@
 namespace safe_browsing {
 class SafeBrowsingUIHandler : public content::WebUIMessageHandler {
  public:
-  SafeBrowsingUIHandler();
+  content::BrowserContext* browser_context;
+  SafeBrowsingUIHandler(content::BrowserContext*);
   ~SafeBrowsingUIHandler() override;
   void ExpParamList(const base::ListValue* args);
+  void SbPreferencesList(const base::ListValue* args);
   void RegisterMessages() override;
 
  private:
