@@ -415,6 +415,21 @@ void KeyboardController::RemoveObserver(KeyboardControllerObserver* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
+void KeyboardController::ResetKeyboardUi(std::unique_ptr<KeyboardUI> ui) {
+  CHECK(ui);
+
+  // The contianer window should have been created already when
+  // |Shell:CreateKeyboard| is called.
+  DCHECK(container_);
+  ui_->HideKeyboardContainer(container_.get());
+  ui_->EnsureCaretInWorkArea();
+
+  ChangeState(KeyboardControllerState::INITIAL);
+  ui_ = std::move(ui);
+
+  LoadKeyboardUiInBackground();
+}
+
 void KeyboardController::SetKeyboardMode(KeyboardMode mode) {
   if (keyboard_mode_ == mode)
     return;

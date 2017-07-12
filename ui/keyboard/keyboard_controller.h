@@ -115,6 +115,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   KeyboardUI* ui() { return ui_.get(); }
 
+  // Sets the active keyboard UI. Calling this method destroys the previous
+  // KeyboardUI. The argument must not be nullptr.
+  void ResetKeyboardUi(std::unique_ptr<KeyboardUI> ui);
+
   void set_keyboard_locked(bool lock) { keyboard_locked_ = lock; }
 
   bool keyboard_locked() const { return keyboard_locked_; }
