@@ -19,7 +19,7 @@
 - (CGFloat)heightThatFitsButtonsUnderOtherWidgets:(CGFloat)heightOfFirstLine
                                            layout:(BOOL)layout;
 - (CGFloat)minimumInfobarHeight;
-- (NSString*)stripMarkersFromString:(NSString*)string;
+- (NSString*)copyStripMarkersFromString:(NSString*)string;
 - (const std::vector<std::pair<NSUInteger, NSRange>>&)linkRanges;
 @end
 
@@ -68,7 +68,7 @@ class InfoBarViewTest : public PlatformTest {
       NSString* input,
       NSString* expectedOutput,
       const std::vector<std::pair<NSUInteger, NSRange>>& expectedRanges) {
-    NSString* output = [infobarView_ stripMarkersFromString:input];
+    NSString* output = [infobarView_ copyStripMarkersFromString:input];
     EXPECT_NSEQ(expectedOutput, output);
     const std::vector<std::pair<NSUInteger, NSRange>>& ranges =
         [infobarView_ linkRanges];

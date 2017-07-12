@@ -208,7 +208,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 - (CGFloat)minimumInfobarHeight;
 // Returns |string| stripped of the markers specifying the links and fills
 // |linkRanges_| with the ranges of the enclosed links.
-- (NSString*)stripMarkersFromString:(NSString*)string;
+- (NSString*)copyStripMarkersFromString:(NSString*)string;
 // Returns the ranges of the links and the associated tags.
 - (const std::vector<std::pair<NSUInteger, NSRange>>&)linkRanges;
 @end
@@ -716,7 +716,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
   [imageViewContainer_ setClipsToBounds:NO];
 }
 
-- (NSString*)stripMarkersFromString:(NSString*)string {
+- (NSString*)copyStripMarkersFromString:(NSString*)string {
   linkRanges_.clear();
   for (;;) {
     // Find the opening marker, followed by the tag between parentheses.
@@ -768,7 +768,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 - (void)addLabel:(NSString*)text action:(void (^)(NSUInteger))action {
   markedLabel_ = [text copy];
   if (action)
-    text = [self stripMarkersFromString:text];
+    text = [self copyStripMarkersFromString:text];
   if ([label_ superview]) {
     [label_ removeFromSuperview];
   }
