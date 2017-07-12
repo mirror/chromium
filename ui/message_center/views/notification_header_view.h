@@ -30,6 +30,7 @@ class NotificationHeaderView : public views::CustomButton {
   void SetSettingsButtonEnabled(bool enabled);
   void SetCloseButtonEnabled(bool enabled);
   void SetControlButtonsVisible(bool visible);
+  void SetAccentColor(SkColor color);
   void ClearProgress();
   void ClearOverflowIndicator();
   void ClearTimestamp();

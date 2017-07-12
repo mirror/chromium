@@ -303,6 +303,10 @@ void NotificationHeaderView::SetControlButtonsVisible(bool visible) {
   }
 }
 
+void NotificationHeaderView::SetAccentColor(SkColor color) {
+  app_name_view_->SetEnabledColor(color);
+}
+
 bool NotificationHeaderView::IsExpandButtonEnabled() {
   return expand_button_->visible();
 }
