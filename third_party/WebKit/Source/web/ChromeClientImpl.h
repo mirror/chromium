@@ -206,6 +206,7 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
 
   void ShowVirtualKeyboardOnElementFocus(LocalFrame&) override;
 
+  bool ShouldUseViewportLayers() const override { return true; }
   void RegisterViewportLayers() const override;
 
   void ShowUnhandledTapUIIfNeeded(IntPoint, Node*, bool) override;

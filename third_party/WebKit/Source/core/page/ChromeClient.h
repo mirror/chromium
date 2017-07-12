@@ -320,6 +320,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   // Input method editor related functions.
   virtual void ShowVirtualKeyboardOnElementFocus(LocalFrame&) {}
 
+  virtual bool ShouldUseViewportLayers() const { return false; }
   virtual void RegisterViewportLayers() const {}
 
   virtual void ShowUnhandledTapUIIfNeeded(IntPoint, Node*, bool) {}
