@@ -419,8 +419,12 @@ void SafeBrowsingDatabase::GetDownloadUrlPrefixes(
     const std::vector<GURL>& urls,
     std::vector<SBPrefix>* prefixes) {
   std::vector<SBFullHash> full_hashes;
-  for (size_t i = 0; i < urls.size(); ++i)
+  DVLOG(1) << __FUNCTION__ << ": urls.size(): " << urls.size();
+  for (size_t i = 0; i < urls.size(); ++i) {
+    DVLOG(1) << __FUNCTION__ << ": url: " << urls[i].spec();
     UrlToFullHashes(urls[i], false, &full_hashes);
+    DVLOG(1) << __FUNCTION__ << ": full_hashes.size(): " << full_hashes.size();
+  }
 
   for (size_t i = 0; i < full_hashes.size(); ++i)
     prefixes->push_back(full_hashes[i].prefix);

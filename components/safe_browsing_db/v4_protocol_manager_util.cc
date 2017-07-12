@@ -301,6 +301,7 @@ void V4ProtocolManagerUtil::UpdateHeaders(net::HttpRequestHeaders* headers) {
 void V4ProtocolManagerUtil::UrlToFullHashes(
     const GURL& url,
     std::vector<FullHash>* full_hashes) {
+  DVLOG(1) << __FUNCTION__ << ": full_hashes.size(): " << full_hashes->size();
   std::string canon_host, canon_path, canon_query;
   CanonicalizeUrl(url, &canon_host, &canon_path, &canon_query);
 
@@ -314,10 +315,13 @@ void V4ProtocolManagerUtil::UrlToFullHashes(
   std::vector<std::string> paths;
   GeneratePathVariantsToCheck(canon_path, canon_query, &paths);
   for (const std::string& host : hosts) {
+    DVLOG(1) << __FUNCTION__ << ": host: " << host;
     for (const std::string& path : paths) {
+      DVLOG(1) << __FUNCTION__ << ": path: " << path;
       full_hashes->push_back(crypto::SHA256HashString(host + path));
     }
   }
+  DVLOG(1) << __FUNCTION__ << ": full_hashes.size(): " << full_hashes->size();
 }
 
 // static
