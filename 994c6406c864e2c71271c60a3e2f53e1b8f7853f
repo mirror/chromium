@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b77e08b_3274470c",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-12T12:32:00Z",
+      "side": 1,
+      "message": "Oops, that\u0027s a bug. Thanks for noticing this!\nIt\u0027s sad that tests weren\u0027t able to catch this because everything is executed inside of a single thread and DCHECK_CURRENTLY_ON doesn\u0027t work. It could be a good idea to use a real IO thread in tests, WDYT?",
+      "parentUuid": "ba573fa3_a66b57bd",
+      "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95fbe1d9_8d8a0ad6",
         "filename": "chrome/browser/predictors/preconnect_manager.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b49ae1e_15d80e22",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-12T12:32:00Z",
+      "side": 1,
+      "message": "That\u0027s a valid option too. It\u0027s a little bit strange to mock the class that we are testing though. And we will have to make these methods public that seems to be unfortunate.\nDone",
+      "parentUuid": "95fbe1d9_8d8a0ad6",
+      "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e62f50d1_eae88759",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-12T12:32:00Z",
+      "side": 1,
+      "message": "Correct!\nComment added, thanks.",
+      "parentUuid": "ec039fc2_958a7af9",
+      "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db887974_a648cc4b",
         "filename": "chrome/browser/predictors/preconnect_manager.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad873db_540025f3",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-12T12:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db887974_a648cc4b",
+      "revId": "994c6406c864e2c71271c60a3e2f53e1b8f7853f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
