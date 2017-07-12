@@ -183,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "240007b0_9afad533",
+        "filename": "third_party/WebKit/Source/core/svg/SVGAngleTearOff.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T07:13:45Z",
+      "side": 1,
+      "message": "I realized now that this is broken on HEAD. \n\nIncremental wrapper tracing + creating a detached tear off + AttachToSVGElementAttribute() is broken as we currently don\u0027t do the write barrier.\n\nI need to think about this a bit.",
+      "parentUuid": "e391997f_a8d15768",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 46
+      },
+      "revId": "c56fa0862a3330be802269a80b6832be6a126435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01b823cc_c538cc81",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 3
