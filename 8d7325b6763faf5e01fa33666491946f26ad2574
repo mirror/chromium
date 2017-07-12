@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ee09d5_d9b8429b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T13:32:01Z",
+      "side": 1,
+      "message": "style: Should be accompanied by a \"// static\" comment in the .cc file.",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 8
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e23ae3_58c28db7",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T13:32:01Z",
+      "side": 1,
+      "message": "style: SetExtractedAnnotationsForTest",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 41
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2824a2dc_10d4e16e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T13:32:01Z",
+      "side": 1,
+      "message": "style: ClearErrorsForTest",
+      "range": {
+        "startLine": 231,
+        "startChar": 7,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d28147_fd5c4e47",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T13:32:01Z",
+      "side": 1,
+      "message": "private:",
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1febf1_c90d3ba5",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T13:32:01Z",
+      "side": 1,
+      "message": "This should be further up, just after the class.",
+      "range": {
+        "startLine": 162,
+        "startChar": 56,
+        "endLine": 162,
+        "endChar": 67
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8c15a6_330df853",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T13:32:01Z",
+      "side": 1,
+      "message": "This should have been done via polymorphism.\n\nclass InstanceBase {  // or something\n public:\n  virtual ~InstanceBase();  // otherwise you\u0027ll get memory leaks\n  AuditorResult::ResultType Deserialize() \u003d 0;\n}\n\nand then\n\nTrafficAnnotationAuditorTest::Deserialize(InstanceBase instance);",
+      "range": {
+        "startLine": 174,
+        "startChar": 19,
+        "endLine": 174,
+        "endChar": 30
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f922b811_8b4e491d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T13:32:01Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 178,
+        "startChar": 37,
+        "endLine": 178,
+        "endChar": 61
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1635b85_1d546324",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T13:32:01Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 234,
+        "startChar": 37,
+        "endLine": 234,
+        "endChar": 55
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
