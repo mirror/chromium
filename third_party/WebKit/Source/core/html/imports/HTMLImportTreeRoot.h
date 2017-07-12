@@ -14,7 +14,7 @@ namespace blink {
 class HTMLImportChild;
 class KURL;
 
-class HTMLImportTreeRoot final : public HTMLImport {
+class HTMLImportTreeRoot final : public HTMLImport, public TraceWrapperBase {
  public:
   static HTMLImportTreeRoot* Create(Document*);
 
@@ -33,13 +33,14 @@ class HTMLImportTreeRoot final : public HTMLImport {
   HTMLImportChild* Find(const KURL&) const;
 
   DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   explicit HTMLImportTreeRoot(Document*);
 
   void RecalcTimerFired(TimerBase*);
 
-  Member<Document> document_;
+  TraceWrapperMember<Document> document_;
   TaskRunnerTimer<HTMLImportTreeRoot> recalc_timer_;
 
   // List of import which has been loaded or being loaded.
