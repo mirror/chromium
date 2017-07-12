@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78c7b310_9f3ce970",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-12T18:11:31Z",
+      "side": 1,
+      "message": "Nit: Please wrap at 72 characters.\n\nhttps://chris.beams.io/posts/git-commit/",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 85
+      },
+      "revId": "ff771d55269a4eddb207578aae7f6bf8f3206718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
