@@ -1157,6 +1157,8 @@ component("platform") {
     "instrumentation/PlatformInstrumentation.h",
     "instrumentation/resource_coordinator/FrameResourceCoordinator.cpp",
     "instrumentation/resource_coordinator/FrameResourceCoordinator.h",
+    "instrumentation/resource_coordinator/RendererResourceCoordinator.cpp",
+    "instrumentation/resource_coordinator/RendererResourceCoordinator.h",
     "instrumentation/tracing/MemoryCacheDumpProvider.cpp",
     "instrumentation/tracing/MemoryCacheDumpProvider.h",
     "instrumentation/tracing/TraceEvent.h",
