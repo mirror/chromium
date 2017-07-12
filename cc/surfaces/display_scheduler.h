@@ -16,7 +16,7 @@
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/surfaces/surface_observer.h"
 #include "cc/surfaces/surfaces_export.h"
-#include "components/viz/common/surface_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 
 namespace cc {
 

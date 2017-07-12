@@ -10,8 +10,8 @@
 #include "cc/surfaces/display.h"
 #include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
-#include "components/viz/common/frame_sink_id.h"
-#include "components/viz/common/local_surface_id_allocator.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/local_surface_id_allocator.h"
 
 namespace cc {
 

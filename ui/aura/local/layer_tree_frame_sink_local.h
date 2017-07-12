@@ -10,8 +10,8 @@
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/surfaces/compositor_frame_sink_support_client.h"
-#include "components/viz/common/frame_sink_id.h"
-#include "components/viz/common/local_surface_id_allocator.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "ui/aura/window_port.h"
 #include "ui/base/property_data.h"
 
