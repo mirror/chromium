@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3dadbc5_7fe3a624",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-12T15:21:00Z",
+      "side": 1,
+      "message": "I usually use nonnull for arguments without which the object cannot work. Disabling the cache is fine.",
+      "parentUuid": "225401ee_a4491bd2",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "a88ec47f887ed6624339d628c688182fa1f83d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bba3af1_3f668410",
         "filename": "ios/chrome/browser/ui/favicon/favicon_attributes_provider.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a88ec47f887ed6624339d628c688182fa1f83d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd81d278_5c472300",
+        "filename": "ios/chrome/browser/ui/favicon/favicon_attributes_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-12T15:21:00Z",
+      "side": 1,
+      "message": "Indeed...\nDone.",
+      "parentUuid": "1bba3af1_3f668410",
+      "range": {
+        "startLine": 84,
+        "startChar": 10,
+        "endLine": 84,
+        "endChar": 62
+      },
+      "revId": "a88ec47f887ed6624339d628c688182fa1f83d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
