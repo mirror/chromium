@@ -32,7 +32,6 @@
 #include "cc/input/input_handler.h"
 #include "cc/layers/layer.h"
 #include "cc/output/compositor_frame.h"
-#include "cc/output/context_provider.h"
 #include "cc/output/output_surface.h"
 #include "cc/output/output_surface_client.h"
 #include "cc/output/output_surface_frame.h"
@@ -47,6 +46,7 @@
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "components/viz/common/gl_helper.h"
+#include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display_embedder/compositor_overlay_candidate_validator_android.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
@@ -782,7 +782,7 @@ void CompositorImpl::OnGpuChannelEstablished(
 void CompositorImpl::InitializeDisplay(
     std::unique_ptr<cc::OutputSurface> display_output_surface,
     scoped_refptr<cc::VulkanContextProvider> vulkan_context_provider,
-    scoped_refptr<cc::ContextProvider> context_provider) {
+    scoped_refptr<ContextProvider> context_provider) {
   DCHECK(layer_tree_frame_sink_request_pending_);
 
   pending_frames_ = 0;
