@@ -16,6 +16,24 @@
       "revId": "1258be62e664ae5ef1f4ebc6a328437b6da22c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbdeddd_b13beefd",
+        "filename": "cc/animation/animation_target.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-12T16:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1404836c_4e5e6407",
+      "revId": "1258be62e664ae5ef1f4ebc6a328437b6da22c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
