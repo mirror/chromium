@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b340421f_e9f061a7",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-12T00:46:30Z",
+      "side": 1,
+      "message": "used TriggerBannerFlowWithNavigation, as it might not cause the banner to be shown",
+      "parentUuid": "9f12bba0_c512c34a",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 36
+      },
+      "revId": "7580ac2fe123c2a86fa16cc5838f657c7f7d21b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bdd3c75_ce6b5b96",
         "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "7580ac2fe123c2a86fa16cc5838f657c7f7d21b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1c79b7_03493c8c",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-12T00:46:30Z",
+      "side": 1,
+      "message": "Cool, good points. Used TriggerBannerFlow with |trigger_task|",
+      "parentUuid": "5bdd3c75_ce6b5b96",
+      "range": {
+        "startLine": 244,
+        "startChar": 6,
+        "endLine": 244,
+        "endChar": 7
+      },
+      "revId": "7580ac2fe123c2a86fa16cc5838f657c7f7d21b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
