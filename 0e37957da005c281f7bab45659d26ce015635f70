@@ -129,6 +129,30 @@
       "revId": "0e37957da005c281f7bab45659d26ce015635f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955afa82_05272206",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-12T12:14:53Z",
+      "side": 1,
+      "message": "After offline discussion, it looks that Refresh() is a no-op when no one is signed in, which may be a bug (crbug.com/741431).\n\nDo see any value in finishing this test and landing it marked DISABLED with a reference to that bug? Just so the review doesn\u0027t get lost? Or better to just have a bug to complete the test blocked by the bug referenced in the start of this comment?",
+      "parentUuid": "17e06c8f_d0686f6a",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "0e37957da005c281f7bab45659d26ce015635f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
