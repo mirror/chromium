@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a75999b2_15a225bd",
+        "filename": "chromeos/components/tether/keep_alive_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-12T22:44:34Z",
+      "side": 1,
+      "message": "This created a crash; we should\u0027ve used device_copy.GetDeviceId. Created a fix here: https://chromium-review.googlesource.com/c/569068/\n\nHow did this not get caught by the pre-submit tests?",
+      "range": {
+        "startLine": 98,
+        "startChar": 41,
+        "endLine": 98,
+        "endChar": 54
+      },
+      "revId": "a451dfec089978bf3b2d508000d58e80b2b0af68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
