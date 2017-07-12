@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1ea9729_803b0fa4",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-12T20:42:37Z",
+      "side": 1,
+      "message": "It\u0027s not generally a good idea to recompute the plane offsets, since they are not required to be packed exactly the same as these methods assume. In the specific case of ExternalMemory VideoFrames, it is true that the correct values are not passed to the constructor, but I would consider exposing the offsets from VideoFrame anyway.",
+      "revId": "cacbd447865d43174b7f21fbc9629b6dd5171b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37978e0_5d94cc84",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-12T20:42:37Z",
+      "side": 1,
+      "message": "This naming is logical, but it\u0027s different from what //media/mojo has been using so far. We have: MojoFooService implements the Mojo interface, MojoFoo implements the media interface. That would make this MojoVideoEncodeAccelerator, which I think makes more sense anyway.",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "cacbd447865d43174b7f21fbc9629b6dd5171b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
