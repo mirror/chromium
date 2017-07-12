@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9cb1cf6_0b3efe40",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-12T13:49:09Z",
+      "side": 1,
+      "message": "Not sure. I just uploaded it with similarity\u003d40 and the uploader recognizes what happened, but it\u0027s not displayed here.",
+      "parentUuid": "4a732c51_7c20898a",
+      "revId": "230cbab8cb8caab7d11d43a40aa068f888cdcf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89db947b_57c7c1d1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7352b3ad_a7f031e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-12T13:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89db947b_57c7c1d1",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 80
+      },
+      "revId": "230cbab8cb8caab7d11d43a40aa068f888cdcf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24951320_97c04ed8",
         "filename": "chrome/browser/android/chrome_feature_list.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-12T13:04:45Z",
       "side": 1,
       "message": "+Theresa, Matt FYI\n\nMaybe we should just call this ChromeHomeModernLayout and base the other visual changes on that flag too -- or we keep it for now and rename it once the other changes get implemented.",
+      "range": {
+        "startLine": 240,
+        "startChar": 5,
+        "endLine": 240,
+        "endChar": 32
+      },
+      "revId": "230cbab8cb8caab7d11d43a40aa068f888cdcf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "386969e0_3c0d341a",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-12T13:49:09Z",
+      "side": 1,
+      "message": "ChromeHomeModernLayout is fine for me, but also happy to land early with SuggestionsHomeModernLayout and rename it later.",
+      "parentUuid": "24951320_97c04ed8",
       "range": {
         "startLine": 240,
         "startChar": 5,
