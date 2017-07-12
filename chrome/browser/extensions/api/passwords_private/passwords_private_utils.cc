@@ -4,47 +4,32 @@
 
 #include "chrome/browser/extensions/api/passwords_private/passwords_private_utils.h"
 
-#include "base/strings/string_util.h"
+#include <string>
+#include <tuple>
+#include <utility>
+
 #include "chrome/grit/generated_resources.h"
 #include "components/autofill/core/common/password_form.h"
+#include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
 #include "components/password_manager/core/browser/password_ui_utils.h"
 #include "ui/base/l10n/l10n_util.h"
-
-namespace {
-
-constexpr char kAndroidAppScheme[] = "android://";
-constexpr char kPlayStoreAppPrefix[] =
-    "https://play.google.com/store/apps/details?id=";
-
-}  // namespace
+#include "url/gurl.h"
 
 namespace extensions {
 
 api::passwords_private::UrlCollection CreateUrlCollectionFromForm(
     const autofill::PasswordForm& form) {
-  bool is_android_uri = false;
+  std::string shown_origin;
   GURL link_url;
-  bool origin_is_clickable = false;
-  api::passwords_private::UrlCollection urls;
+  std::tie(shown_origin, link_url) =
+      password_manager::GetShownOriginAndLinkUrl(form);
 
+  api::passwords_private::UrlCollection urls;
   urls.origin = form.signon_realm;
-  urls.shown = password_manager::GetShownOriginAndLinkUrl(
-      form, &is_android_uri, &link_url, &origin_is_clickable);
+  urls.shown = std::move(shown_origin);
   urls.link = link_url.spec();
 
-  if (is_android_uri) {
-    if (!origin_is_clickable) {
-      // If the origin is not clickable, link to the PlayStore. Use that
-      // |urls.shown| is the result of |GetHumanReadableOriginForAndroidUri| and
-      // does not contain the base64 hash anymore.
-      urls.link = urls.shown;
-      // e.g. android://com.example.r => r.example.com.
-      urls.shown = password_manager::StripAndroidAndReverse(urls.shown);
-      // Turn human unfriendly string into a clickable link to the PlayStore.
-      base::ReplaceFirstSubstringAfterOffset(&urls.link, 0, kAndroidAppScheme,
-                                             kPlayStoreAppPrefix);
-    }
-
+  if (password_manager::IsValidAndroidFacetURI(form.signon_realm)) {
     // Currently we use "direction=rtl" in CSS to elide long origins from the
     // left. This does not play nice with appending strings that end in
     // punctuation symbols, which is why the bidirectional override tag is

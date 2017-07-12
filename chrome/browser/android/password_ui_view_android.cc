@@ -30,21 +30,14 @@ namespace {
 // Returns the human readable version of the origin string displayed in
 // Chrome settings for |form|.
 std::string GetDisplayOriginForSettings(const autofill::PasswordForm& form) {
-  bool is_android_uri = false;
-  bool is_clickable = false;
-  GURL link_url;  // TODO(crbug.com/617094) Also display link_url.
-  std::string human_readable_origin =
-      password_manager::GetShownOriginAndLinkUrl(form, &is_android_uri,
-                                                 &link_url,
-                                                 &is_clickable);
-  if (!is_clickable) {
-    DCHECK(is_android_uri);
-    human_readable_origin = password_manager::StripAndroidAndReverse(
-        human_readable_origin);
-    human_readable_origin = human_readable_origin +
-        l10n_util::GetStringUTF8(IDS_PASSWORDS_ANDROID_URI_SUFFIX);
-  }
-  return human_readable_origin;
+  // TODO(crbug.com/617094) Also display link_url.
+  std::string shown_origin =
+      password_manager::GetShownOriginAndLinkUrl(form).first;
+  // Append " (Android)" for Android credentials.
+  return password_manager::IsValidAndroidFacetURI(form.signon_realm)
+             ? shown_origin +
+                   l10n_util::GetStringUTF8(IDS_PASSWORDS_ANDROID_URI_SUFFIX)
+             : shown_origin;
 }
 
 }  // namespace

@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/passwords/password_manager_presenter.h"
 
 #include <algorithm>
+#include <tuple>
 #include <utility>
 
 #include "base/bind.h"
@@ -41,6 +42,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
+#include "url/gurl.h"
 
 #if defined(OS_WIN)
 #include "chrome/browser/password_manager/password_manager_util_win.h"
@@ -64,16 +66,6 @@ const char kSortKeyPartsSeparator = ' ';
 // this character should be alphabetically smaller than real federations.
 const char kSortKeyNoFederationSymbol = '-';
 
-// Helper function that returns the type of the entry (non-Android credentials,
-// Android w/ affiliated web realm (i.e. clickable) or w/o web realm).
-std::string GetEntryTypeCode(bool is_android_uri, bool is_clickable) {
-  if (!is_android_uri)
-    return "0";
-  if (is_clickable)
-    return "1";
-  return "2";
-}
-
 // Creates key for sorting password or password exception entries. The key is
 // eTLD+1 followed by the reversed list of domains (e.g.
 // secure.accounts.example.com => example.com.com.example.accounts.secure) and
@@ -82,14 +74,23 @@ std::string GetEntryTypeCode(bool is_android_uri, bool is_clickable) {
 // affiliated web realm) is also appended to the key.
 std::string CreateSortKey(const autofill::PasswordForm& form,
                           PasswordEntryType entry_type) {
-  bool is_android_uri = false;
-  bool is_clickable = false;
+  std::string origin;
   GURL link_url;
-  std::string origin = password_manager::GetShownOriginAndLinkUrl(
-      form, &is_android_uri, &link_url, &is_clickable);
+  std::tie(origin, link_url) = password_manager::GetShownOriginAndLinkUrl(form);
 
-  if (!is_clickable)  // e.g. android://com.example.r => r.example.com.
-    origin = password_manager::StripAndroidAndReverse(origin);
+  const auto facet_uri =
+      password_manager::FacetURI::FromPotentiallyInvalidSpec(form.signon_realm);
+  const bool is_android_uri = facet_uri.IsValidAndroidFacetURI();
+
+  if (is_android_uri) {
+    // In case of Android credentials |GetShownOriginAndLinkURl| might return
+    // the app display name, e.g. the Play Store name of the given application.
+    // This is not useful to create a sort key, which is why origin is set to
+    // the reversed android package name in this case, e.g. com.example.android
+    // => android.example.com.
+    origin = password_manager::SplitByDotAndReverse(
+        facet_uri.android_package_name());
+  }
 
   std::string site_name =
       net::registry_controlled_domains::GetDomainAndRegistry(
@@ -114,9 +115,7 @@ std::string CreateSortKey(const autofill::PasswordForm& form,
 
   // Since Android and non-Android entries shouldn't be merged into one entry,
   // add the entry type code to the sort key.
-  key +=
-      kSortKeyPartsSeparator + GetEntryTypeCode(is_android_uri, is_clickable);
-  return key;
+  return key += kSortKeyPartsSeparator + std::to_string(is_android_uri);
 }
 
 // Finds duplicates of |form| in |duplicates|, removes them from |store| and
