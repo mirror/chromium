@@ -46,6 +46,53 @@
       "revId": "e5a3c5076b5ef1687d497c7575d553688e94d1c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01178fab_7aaff529",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-12T00:45:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3da1349_804535b2",
+      "range": {
+        "startLine": 788,
+        "startChar": 23,
+        "endLine": 788,
+        "endChar": 59
+      },
+      "revId": "e5a3c5076b5ef1687d497c7575d553688e94d1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76f7e9aa_0db42a98",
+        "filename": "content/browser/resources/media/main.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-12T00:45:51Z",
+      "side": 1,
+      "message": "IIRC, you might still want some visual notification that the player is destroyed. -- wasn\u0027t there a specific CSS style for the label for a destroyed player? If we remove this method, will JS still reliably get the notification to use that style for the player?",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "e5a3c5076b5ef1687d497c7575d553688e94d1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
