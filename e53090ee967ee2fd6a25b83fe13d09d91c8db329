@@ -16,6 +16,24 @@
       "revId": "e53090ee967ee2fd6a25b83fe13d09d91c8db329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff77741_337fe187",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_tablet_ntp_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-12T08:47:13Z",
+      "side": 0,
+      "message": "That\u0027s dead code apparently, this code is all used to find a cell that is not used at all!",
+      "parentUuid": "9a88acc9_4abbdf72",
+      "revId": "e53090ee967ee2fd6a25b83fe13d09d91c8db329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

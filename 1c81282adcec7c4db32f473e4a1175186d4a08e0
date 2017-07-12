@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b89209_4c7ecfd6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-12T08:47:13Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed.",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "1c81282adcec7c4db32f473e4a1175186d4a08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
