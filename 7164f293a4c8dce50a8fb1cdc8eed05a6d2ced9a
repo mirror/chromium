@@ -170,6 +170,30 @@
     },
     {
       "key": {
+        "uuid": "83eff527_b2c89992",
+        "filename": "net/log/file_net_log_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-12T16:11:15Z",
+      "side": 1,
+      "message": "It\u0027s allowed by the style guide, but isn\u0027t consistent with prevailing net/ style (Except the quic code, which does a number of things net/ generally doesn\u0027t do).  Of course, same can be said for single line ifs with braces, and I no longer call those out.",
+      "parentUuid": "e98b15e1_910e0681",
+      "range": {
+        "startLine": 164,
+        "startChar": 28,
+        "endLine": 164,
+        "endChar": 35
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "610d1c07_dfc4f23d",
         "filename": "net/log/file_net_log_observer_unittest.cc",
         "patchSetId": 1
