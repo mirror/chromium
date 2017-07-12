@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc6de732_5e4799a1",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-12T04:17:32Z",
+      "side": 1,
+      "message": "Please update the comment.",
+      "revId": "b4314c54468b5ed5c6210763e1a8e4aa930d2284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
