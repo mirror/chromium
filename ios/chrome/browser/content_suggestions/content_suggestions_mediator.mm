@@ -106,6 +106,7 @@ const NSInteger kMaxNumMostVisitedTiles = 8;
 - (instancetype)
 initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
       largeIconService:(favicon::LargeIconService*)largeIconService
+        largeIconCache:(LargeIconCache*)largeIconCache
        mostVisitedSite:
            (std::unique_ptr<ntp_tiles::MostVisitedSites>)mostVisitedSites {
   self = [super init];
@@ -116,7 +117,8 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
     _sectionInformationByCategory = [[NSMutableDictionary alloc] init];
     _faviconMediator = [[ContentSuggestionsFaviconMediator alloc]
         initWithContentService:contentService
-              largeIconService:largeIconService];
+              largeIconService:largeIconService
+                largeIconCache:largeIconCache];
 
     _mostVisitedSectionInfo = MostVisitedSectionInformation();
     _logoSectionInfo = LogoSectionInformation();

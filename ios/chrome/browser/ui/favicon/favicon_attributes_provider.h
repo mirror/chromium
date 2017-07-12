@@ -13,6 +13,7 @@ class LargeIconService;
 }  // namespace favicon
 
 @class FaviconViewProvider;
+class LargeIconCache;
 class GURL;
 
 // Object to fetch favicon attributes by URL - an image or a fallback icon if
@@ -38,6 +39,9 @@ class GURL;
 @property(nonatomic, readonly) CGFloat minSize;
 // Expected favicon size (in points). Will downscale favicon to this.
 @property(nonatomic, readonly) CGFloat faviconSize;
+// Whether to use a cache. Using a cache makes the |completion| block to be
+// called synchronously and potentially multiple times. Default is NO.
+@property(nonatomic, assign) LargeIconCache* cache;
 
 @end
 
