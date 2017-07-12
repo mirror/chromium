@@ -888,6 +888,7 @@ bool NavigationControllerImpl::RendererDidNavigate(
                                    navigation_handle);
       break;
     case NAVIGATION_TYPE_EXISTING_PAGE:
+      // TODO(creis): Try to remove this.
       details->did_replace_entry = details->is_same_document;
       RendererDidNavigateToExistingPage(rfh, params, details->is_same_document,
                                         was_restored, navigation_handle);
