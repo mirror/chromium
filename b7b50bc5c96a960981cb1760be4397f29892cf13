@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b85efe4_d56e2d2f",
+        "filename": "remoting/ios/facade/remoting_oauth_authentication.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-12T22:55:58Z",
+      "side": 1,
+      "message": "Could this message gets collided with \"[Authentication Failed] Please login again.\"?",
+      "range": {
+        "startLine": 149,
+        "startChar": 36,
+        "endLine": 149,
+        "endChar": 76
+      },
+      "revId": "b7b50bc5c96a960981cb1760be4397f29892cf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
