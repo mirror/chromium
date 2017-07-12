@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84ee3155_b2fe822c",
+        "filename": "third_party/WebKit/Source/core/css/CSSRule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T19:31:47Z",
+      "side": 1,
+      "message": "Here is the manual WB.",
+      "revId": "049540173a5410a4b1b175f2a2a69fb25efe0d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8847195_d5190ca6",
+        "filename": "third_party/WebKit/Source/core/css/CSSRule.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T19:31:47Z",
+      "side": 1,
+      "message": "We actually had the manual WB already here (see below). Just moved wrapper tracing into this class too. We cannot use TraceWrapperMember because the fields are declared in a union.\n\n(Such declarations will also make incremental oilpan marking harder.)",
+      "range": {
+        "startLine": 104,
+        "startChar": 13,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "049540173a5410a4b1b175f2a2a69fb25efe0d8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
