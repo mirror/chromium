@@ -790,6 +790,11 @@ void VideoFrame::AddDestructionObserver(const base::Closure& callback) {
   done_callbacks_.push_back(callback);
 }
 
+void VideoFrame::AddDestructionObserver(base::OnceClosure callback) {
+  DCHECK(!callback.is_null());
+  done_once_callbacks_.push_back(std::move(callback));
+}
+
 gpu::SyncToken VideoFrame::UpdateReleaseSyncToken(SyncTokenClient* client) {
   DCHECK(HasTextures());
   base::AutoLock locker(release_sync_token_lock_);
@@ -963,6 +968,9 @@ VideoFrame::~VideoFrame() {
 
   for (auto& callback : done_callbacks_)
     base::ResetAndReturn(&callback).Run();
+
+  for (auto& callback : done_once_callbacks_)
+    std::move(callback).Run();
 }
 
 // static
