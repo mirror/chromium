@@ -47,6 +47,40 @@
       "revId": "a2a7a3ca8cb5454f7ca88f6f1cd1d7739b73f5ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e91497dd_71799a2e",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T22:04:05Z",
+      "side": 1,
+      "message": "typo: \"durin gthis\" -\u003e \"during this\"",
+      "revId": "a2a7a3ca8cb5454f7ca88f6f1cd1d7739b73f5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5699058_15f4ba72",
+        "filename": "content/common/input_messages.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T22:04:05Z",
+      "side": 1,
+      "message": "nit: typo compsitor-\u003ecompositor",
+      "revId": "a2a7a3ca8cb5454f7ca88f6f1cd1d7739b73f5ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
