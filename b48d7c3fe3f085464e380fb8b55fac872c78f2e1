@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c85df7c_39535846",
+        "filename": "android_webview/browser/aw_safe_browsing_blocking_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-12T12:59:29Z",
+      "side": 1,
+      "message": "Replaced with inline call. Done.",
+      "parentUuid": "9a7a1191_ddcfd51f",
+      "revId": "b48d7c3fe3f085464e380fb8b55fac872c78f2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "282cd3a6_7bb6ac89",
         "filename": "android_webview/browser/aw_safe_browsing_ui_manager.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-11T21:18:48Z",
       "side": 1,
       "message": "Your patch forgot to use this value. This is used to allow apps to opt out of reporting with WebViewClient#onSafeBrowsingHit() (replying with #showBlockingPage(/* allowReporting */ false)).\n\nMaybe we can update the setter method to change the PrefService instead of a boolean member.\n\nSee: https://cs.chromium.org/chromium/src/android_webview/browser/aw_safe_browsing_resource_throttle.cc?sq\u003dpackage:chromium\u0026l\u003d94",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "b48d7c3fe3f085464e380fb8b55fac872c78f2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aea898a_d408c1c9",
+        "filename": "android_webview/browser/aw_safe_browsing_ui_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-12T12:59:29Z",
+      "side": 1,
+      "message": "Yes, thanks for catching this! I\u0027ve modified the setter (in the webview ui manager) to update the prefservice. It seems to be better to have all config prefs in one place (as opposed to dedicated booleans in the ui manager class).",
+      "parentUuid": "282cd3a6_7bb6ac89",
       "range": {
         "startLine": 71,
         "startChar": 7,
