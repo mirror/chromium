@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6504f9de_37c1e019",
+        "filename": "components/download/internal/download_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-12T22:00:26Z",
+      "side": 1,
+      "message": "nit: Shall we set is_initialized_ to false here, or in OnDatabaseDestroyed?",
+      "revId": "907ed3fdcd407ad0c226ed24a7a70f75777e9829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
