@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a88acc9_4abbdf72",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_tablet_ntp_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-12T08:35:58Z",
+      "side": 0,
+      "message": "I don\u0027t see this ported to the new class. Is it no longer used?",
+      "revId": "e53090ee967ee2fd6a25b83fe13d09d91c8db329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
