@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e94eac3c_19d13078",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T14:47:55Z",
+      "side": 1,
+      "message": "Disclaimer - I haven\u0027t really looked into the PostTask migrations much yet.\n\nHowever, on Android, this request is almost always going to come from the Clear Browsing Data dialog, and the UI will block until it gets the callback. So this probably wants to have a higher priority.",
+      "range": {
+        "startLine": 631,
+        "startChar": 40,
+        "endLine": 631,
+        "endChar": 50
+      },
+      "revId": "642d8f766317f71fe6251690c5f1ebe27bffeddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -189,6 +189,30 @@
       "revId": "b0d8cda36548bcefb1911896a3aea294139d6aa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84f947e_6e9ea153",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-12T14:47:55Z",
+      "side": 1,
+      "message": "I generally agree with Alexandr\u0027s assessment. If you can\u0027t directly tell whether precache exists, we\u0027re not going to save much performance here.",
+      "parentUuid": "2a06c89a_9a2aa094",
+      "range": {
+        "startLine": 632,
+        "startChar": 24,
+        "endLine": 632,
+        "endChar": 49
+      },
+      "revId": "b0d8cda36548bcefb1911896a3aea294139d6aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
