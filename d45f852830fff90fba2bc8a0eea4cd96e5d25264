@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ec8d84e_f922a920",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-12T04:32:11Z",
+      "side": 1,
+      "message": "Nit: I wouldn\u0027t put specific things in here as I think we\u0027ll be experimenting with all these things. Instead you could say something vague like \"Enable experimental windowing features for desktop PWAs\".",
+      "range": {
+        "startLine": 298,
+        "startChar": 21,
+        "endLine": 298,
+        "endChar": 25
+      },
+      "revId": "d45f852830fff90fba2bc8a0eea4cd96e5d25264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
