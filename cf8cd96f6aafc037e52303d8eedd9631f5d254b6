@@ -22,6 +22,30 @@
       "revId": "cf8cd96f6aafc037e52303d8eedd9631f5d254b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9b6c4a_38d5b369",
+        "filename": "cc/scheduler/begin_frame_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-12T01:04:51Z",
+      "side": 1,
+      "message": "The source id comparison is first because we\u0027re want to check (args.source_id \u003d\u003d last_begin_frame_args_.source_id) implies (args.sequence_number \u003e last_begin_frame_args_.sequence_number). (!A || B) is the boolean expression for A implies B. Another way of writing this is if (A) CHECK(B) but I thought the former way was clearer.\n\nThe BeginFrameSource makes two guarantees to its observers according to the comment above BeginFrameObserver:\n1. Either the parent source id will change or sequence numbers will be monotonically increasing if the source remains the same.\n2. Frame times will always be monotonically increasing regardless of the parent source.\n\nYes, I\u0027ll revert this once we have some crash reports.",
+      "parentUuid": "7afe0cdd_9330b908",
+      "range": {
+        "startLine": 327,
+        "startChar": 10,
+        "endLine": 328,
+        "endChar": 71
+      },
+      "revId": "cf8cd96f6aafc037e52303d8eedd9631f5d254b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
