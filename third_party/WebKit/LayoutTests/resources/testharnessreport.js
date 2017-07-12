@@ -23,6 +23,10 @@
         testRunner.setCanOpenWindows();
         testRunner.setCloseRemainingWindowsWhenComplete(true);
         testRunner.setDumpJavaScriptDialogs(false);
+
+        if (document.URL.indexOf("service-workers/service-worker/fetch-event-referrer-policy.https.html") >= 0) {
+            testRunner.overridePreference('WebKitAllowRunningInsecureContent', true);
+        }
     }
 
     // Disable the default output of testharness.js.  The default output formats
