@@ -59,6 +59,8 @@ BackgroundTabNavigationThrottle::~BackgroundTabNavigationThrottle() {}
 content::NavigationThrottle::ThrottleCheckResult
 BackgroundTabNavigationThrottle::WillStartRequest() {
   return g_browser_process->GetTabManager()->MaybeThrottleNavigation(
+      base::BindOnce(&BackgroundTabNavigationThrottle::Resume,
+                     base::Unretained(this)),
       navigation_handle());
 }
 
