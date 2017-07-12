@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "097da59c_ea62361b",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-12T03:06:20Z",
+      "side": 1,
+      "message": "I meant both \"versions\" (old and new). I\u0027ve changed it to \"all\".",
+      "parentUuid": "9cf0d66c_e16b45d1",
+      "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc33a0a_95dc05eb",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889b905b_a655ed4b",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-12T03:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebc33a0a_95dc05eb",
+      "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1d443201_13c7bf21",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-12T03:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a751d64f_79a78736",
+      "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "456fbbdb_bad50b70",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-12T02:47:16Z",
       "side": 1,
       "message": "s/shorthand/longhand",
+      "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24197a7e_20836bf6",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-12T03:06:20Z",
+      "side": 1,
+      "message": "Good catch. I meant \"shorthand\", but I should add \"longhand\" too.",
+      "parentUuid": "456fbbdb_bad50b70",
       "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
