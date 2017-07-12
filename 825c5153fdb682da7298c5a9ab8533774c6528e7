@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3fbba33_1e33882a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-12T14:35:37Z",
+      "side": 0,
+      "message": "Please leave it. These errors should never happen. We could probably put NOTREACHED here.",
+      "range": {
+        "startLine": 598,
+        "startChar": 0,
+        "endLine": 602,
+        "endChar": 41
+      },
+      "revId": "825c5153fdb682da7298c5a9ab8533774c6528e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
