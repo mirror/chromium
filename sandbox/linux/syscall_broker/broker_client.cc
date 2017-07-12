@@ -14,12 +14,11 @@
 #include <utility>
 
 #include "base/logging.h"
-#include "base/pickle.h"
-#include "base/posix/unix_domain_socket_linux.h"
 #include "build/build_config.h"
 #include "sandbox/linux/syscall_broker/broker_channel.h"
 #include "sandbox/linux/syscall_broker/broker_common.h"
 #include "sandbox/linux/syscall_broker/broker_policy.h"
+#include "sandbox/linux/syscall_broker/broker_simple_message.h"
 
 #if defined(OS_ANDROID) && !defined(MSG_CMSG_CLOEXEC)
 #define MSG_CMSG_CLOEXEC 0x40000000
@@ -68,56 +67,55 @@ int BrokerClient::PathAndFlagsSyscall(IPCCommand syscall_type,
     }
   }
 
-  base::Pickle write_pickle;
-  write_pickle.WriteInt(syscall_type);
-  write_pickle.WriteString(pathname);
-  write_pickle.WriteInt(flags);
-  RAW_CHECK(write_pickle.size() <= kMaxMessageLength);
+  // Message structure:
+  //   int:    syscall_type
+  //   char[]: pathname, including '\0' terminator
+  //   int:    flags
+  BrokerSimpleMessage message;
+  CHECK(message.AddIntToMessage(syscall_type));
+  CHECK(message.AddDataToMessage(pathname, strlen(pathname) + 1));
+  CHECK(message.AddIntToMessage(flags));
 
   int returned_fd = -1;
-  uint8_t reply_buf[kMaxMessageLength];
+  BrokerSimpleMessage reply;
 
-  // Send a request (in write_pickle) as well that will include a new
-  // temporary socketpair (created internally by SendRecvMsg()).
-  // Then read the reply on this new socketpair in reply_buf and put an
-  // eventual attached file descriptor in |returned_fd|.
-  ssize_t msg_len = base::UnixDomainSocket::SendRecvMsgWithFlags(
-      ipc_channel_.get(), reply_buf, sizeof(reply_buf), recvmsg_flags,
-      &returned_fd, write_pickle);
+  // Send a request as well that will include a new temporary socketpair
+  // (created internally by SendRecvMsg()).  Then read the reply on this new
+  // socketpair in |reply| and put an eventual attached file descriptor in
+  // |returned_fd|.
+  ssize_t msg_len = BrokerSimpleMessage::SendRecvMsgWithFlags(
+      ipc_channel_.get(), &reply, recvmsg_flags, &returned_fd, message);
   if (msg_len <= 0) {
     if (!quiet_failures_for_tests_)
       RAW_LOG(ERROR, "Could not make request to broker process");
     return -ENOMEM;
   }
 
-  base::Pickle read_pickle(reinterpret_cast<char*>(reply_buf), msg_len);
-  base::PickleIterator iter(read_pickle);
-  int return_value = -1;
-  // Now deserialize the return value and eventually return the file
-  // descriptor.
-  if (iter.ReadInt(&return_value)) {
-    switch (syscall_type) {
-      case COMMAND_ACCESS:
-        // We should never have a fd to return.
-        RAW_CHECK(returned_fd == -1);
-        return return_value;
-      case COMMAND_OPEN:
-        if (return_value < 0) {
-          RAW_CHECK(returned_fd == -1);
-          return return_value;
-        } else {
-          // We have a real file descriptor to return.
-          RAW_CHECK(returned_fd >= 0);
-          return returned_fd;
-        }
-      default:
-        RAW_LOG(ERROR, "Unsupported command");
-        return -ENOSYS;
-    }
-  } else {
-    RAW_LOG(ERROR, "Could not read pickle");
+  // Reply should be a simple integer type.
+  int return_value;
+  if (!reply.ReadInt(&return_value)) {
+    RAW_LOG(ERROR, "Could not read reply");
     NOTREACHED();
     return -ENOMEM;
+  }
+
+  switch (syscall_type) {
+    case COMMAND_ACCESS:
+      // We should never have a fd to return.
+      RAW_CHECK(returned_fd == -1);
+      return return_value;
+    case COMMAND_OPEN:
+      if (return_value < 0) {
+        RAW_CHECK(returned_fd == -1);
+        return return_value;
+      } else {
+        // We have a real file descriptor to return.
+        RAW_CHECK(returned_fd >= 0);
+        return returned_fd;
+      }
+    default:
+      RAW_LOG(ERROR, "Unsupported command");
+      return -ENOSYS;
   }
 }
 
