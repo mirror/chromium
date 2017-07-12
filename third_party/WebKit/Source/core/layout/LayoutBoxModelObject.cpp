@@ -501,9 +501,11 @@ void LayoutBoxModelObject::InvalidateStickyConstraints() {
   // previous frame.
   DisableCompositingQueryAsserts disabler;
   if (const PaintLayer* ancestor_overflow_layer =
-          enclosing->AncestorOverflowLayer())
-    ancestor_overflow_layer->GetScrollableArea()
-        ->InvalidateAllStickyConstraints();
+          enclosing->AncestorOverflowLayer()) {
+    if (PaintLayerScrollableArea* ancestor_scrollable_area =
+            ancestor_overflow_layer->GetScrollableArea())
+      ancestor_scrollable_area->InvalidateAllStickyConstraints();
+  }
 }
 
 void LayoutBoxModelObject::CreateLayerAfterStyleChange() {
