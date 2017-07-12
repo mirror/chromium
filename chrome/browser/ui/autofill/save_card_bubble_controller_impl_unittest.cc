@@ -160,7 +160,7 @@ TEST_F(SaveCardBubbleControllerImplTest,
 
 TEST_F(SaveCardBubbleControllerImplTest,
        PropagateShouldRequestCvcFromUserWhenTrue) {
-  ShowUploadBubble(true /* should_cvc_be_requested */);
+  ShowUploadBubble(/*should_cvc_be_requested=*/true);
   EXPECT_TRUE(controller()->ShouldRequestCvcFromUser());
 }
 
@@ -203,7 +203,7 @@ TEST_F(SaveCardBubbleControllerImplTest,
 TEST_F(SaveCardBubbleControllerImplTest,
        Metrics_Upload_FirstShow_ShowBubble_RequestCvc) {
   base::HistogramTester histogram_tester;
-  ShowUploadBubble(true /* should_cvc_be_requested */);
+  ShowUploadBubble(/*should_cvc_be_requested=*/true);
 
   EXPECT_THAT(
       histogram_tester.GetAllSamples(
@@ -212,8 +212,23 @@ TEST_F(SaveCardBubbleControllerImplTest,
                   Bucket(AutofillMetrics::SAVE_CARD_PROMPT_SHOWN, 1)));
 }
 
-TEST_F(SaveCardBubbleControllerImplTest, Metrics_Upload_Reshows_ShowBubble) {
+TEST_F(SaveCardBubbleControllerImplTest,
+       Metrics_Upload_Reshows_ShowBubble_NotRequestCvc) {
   ShowUploadBubble();
+
+  base::HistogramTester histogram_tester;
+  CloseAndReshowBubble();
+
+  EXPECT_THAT(
+      histogram_tester.GetAllSamples(
+          "Autofill.SaveCreditCardPrompt.Upload.Reshows"),
+      ElementsAre(Bucket(AutofillMetrics::SAVE_CARD_PROMPT_SHOW_REQUESTED, 1),
+                  Bucket(AutofillMetrics::SAVE_CARD_PROMPT_SHOWN, 1)));
+}
+
+TEST_F(SaveCardBubbleControllerImplTest,
+       Metrics_Upload_Reshows_ShowBubble_RequestCvc) {
+  ShowUploadBubble(/*should_cvc_be_requested=*/true);
 
   base::HistogramTester histogram_tester;
   CloseAndReshowBubble();
@@ -337,8 +352,17 @@ TEST_F(SaveCardBubbleControllerImplTest,
   ShowLocalBubble();
 
   base::HistogramTester histogram_tester;
-  // Fake-navigate after bubble has been visible for a long time.
-  controller()->set_elapsed(base::TimeDelta::FromMinutes(1));
+  // The bubble should still stick around for up to kSurviveNavigationSeconds
+  // (5) seconds regardless of navigation.
+  controller()->set_elapsed(base::TimeDelta::FromSeconds(3));
+
+  controller()->SimulateNavigation();
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.SaveCreditCardPrompt.Local.FirstShow", 0);
+
+  // Wait 3 more seconds (6 total); bubble should go away on next navigation.
+  controller()->set_elapsed(base::TimeDelta::FromSeconds(6));
 
   controller()->SimulateNavigation();
 
@@ -353,12 +377,71 @@ TEST_F(SaveCardBubbleControllerImplTest,
   CloseAndReshowBubble();
 
   base::HistogramTester histogram_tester;
-  // Fake-navigate after bubble has been visible for a long time.
-  controller()->set_elapsed(base::TimeDelta::FromMinutes(1));
+  // The bubble should still stick around for up to kSurviveNavigationSeconds
+  // (5) seconds regardless of navigation.
+  controller()->set_elapsed(base::TimeDelta::FromSeconds(3));
+
+  controller()->SimulateNavigation();
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.SaveCreditCardPrompt.Local.Reshows", 0);
+
+  // Wait 3 more seconds (6 total); bubble should go away on next navigation.
+  controller()->set_elapsed(base::TimeDelta::FromSeconds(6));
+
   controller()->SimulateNavigation();
 
   histogram_tester.ExpectUniqueSample(
       "Autofill.SaveCreditCardPrompt.Local.Reshows",
+      AutofillMetrics::SAVE_CARD_PROMPT_END_NAVIGATION_SHOWING, 1);
+}
+
+TEST_F(SaveCardBubbleControllerImplTest,
+       Metrics_Upload_FirstShow_NavigateWhileShowing) {
+  ShowUploadBubble();
+
+  base::HistogramTester histogram_tester;
+  // The bubble should still stick around for up to kSurviveNavigationSeconds
+  // (5) seconds regardless of navigation.
+  controller()->set_elapsed(base::TimeDelta::FromSeconds(3));
+
+  controller()->SimulateNavigation();
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.SaveCreditCardPrompt.Upload.FirstShow", 0);
+
+  // Wait 3 more seconds (6 total); bubble should go away on next navigation.
+  controller()->set_elapsed(base::TimeDelta::FromSeconds(6));
+
+  controller()->SimulateNavigation();
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.SaveCreditCardPrompt.Upload.FirstShow",
+      AutofillMetrics::SAVE_CARD_PROMPT_END_NAVIGATION_SHOWING, 1);
+}
+
+TEST_F(SaveCardBubbleControllerImplTest,
+       Metrics_Upload_Reshows_NavigateWhileShowing) {
+  ShowUploadBubble();
+  CloseAndReshowBubble();
+
+  base::HistogramTester histogram_tester;
+  // The bubble should still stick around for up to kSurviveNavigationSeconds
+  // (5) seconds regardless of navigation.
+  controller()->set_elapsed(base::TimeDelta::FromSeconds(3));
+
+  controller()->SimulateNavigation();
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.SaveCreditCardPrompt.Upload.Reshows", 0);
+
+  // Wait 3 more seconds (6 total); bubble should go away on next navigation.
+  controller()->set_elapsed(base::TimeDelta::FromSeconds(6));
+
+  controller()->SimulateNavigation();
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.SaveCreditCardPrompt.Upload.Reshows",
       AutofillMetrics::SAVE_CARD_PROMPT_END_NAVIGATION_SHOWING, 1);
 }
 
@@ -391,6 +474,60 @@ TEST_F(SaveCardBubbleControllerImplTest,
   histogram_tester.ExpectUniqueSample(
       "Autofill.SaveCreditCardPrompt.Local.Reshows",
       AutofillMetrics::SAVE_CARD_PROMPT_END_NAVIGATION_HIDDEN, 1);
+}
+
+TEST_F(SaveCardBubbleControllerImplTest,
+       Metrics_Upload_FirstShow_NavigateWhileHidden) {
+  ShowUploadBubble();
+
+  base::HistogramTester histogram_tester;
+  controller()->OnBubbleClosed();
+  // Fake-navigate after bubble has been visible for a long time.
+  controller()->set_elapsed(base::TimeDelta::FromMinutes(1));
+  controller()->SimulateNavigation();
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.SaveCreditCardPrompt.Upload.FirstShow",
+      AutofillMetrics::SAVE_CARD_PROMPT_END_NAVIGATION_HIDDEN, 1);
+}
+
+TEST_F(SaveCardBubbleControllerImplTest,
+       Metrics_Upload_Reshows_NavigateWhileHidden) {
+  ShowUploadBubble();
+  CloseAndReshowBubble();
+
+  base::HistogramTester histogram_tester;
+  controller()->OnBubbleClosed();
+  // Fake-navigate after bubble has been visible for a long time.
+  controller()->set_elapsed(base::TimeDelta::FromMinutes(1));
+  controller()->SimulateNavigation();
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.SaveCreditCardPrompt.Upload.Reshows",
+      AutofillMetrics::SAVE_CARD_PROMPT_END_NAVIGATION_HIDDEN, 1);
+}
+
+TEST_F(SaveCardBubbleControllerImplTest, Metrics_Local_FirstShow_LearnMore) {
+  ShowLocalBubble();
+
+  base::HistogramTester histogram_tester;
+  controller()->OnLearnMoreClicked();
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.SaveCreditCardPrompt.Local.FirstShow",
+      AutofillMetrics::SAVE_CARD_PROMPT_DISMISS_CLICK_LEARN_MORE, 1);
+}
+
+TEST_F(SaveCardBubbleControllerImplTest, Metrics_Local_Reshows_LearnMore) {
+  ShowLocalBubble();
+  CloseAndReshowBubble();
+
+  base::HistogramTester histogram_tester;
+  controller()->OnLearnMoreClicked();
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.SaveCreditCardPrompt.Local.Reshows",
+      AutofillMetrics::SAVE_CARD_PROMPT_DISMISS_CLICK_LEARN_MORE, 1);
 }
 
 TEST_F(SaveCardBubbleControllerImplTest, Metrics_Upload_FirstShow_LearnMore) {
@@ -521,6 +658,22 @@ TEST_F(SaveCardBubbleControllerImplTest, OnlyOneActiveBubble_UploadThenLocal) {
       histogram_tester
           .GetAllSamples("Autofill.SaveCreditCardPrompt.Local.FirstShow")
           .empty());
+}
+
+TEST_F(SaveCardBubbleControllerImplTest, TestInputCvcIsValid) {
+  // Note: Assumes 3-digit CVC.  InputCvcIsValid(~) handles string trimming.
+  EXPECT_FALSE(controller()->InputCvcIsValid(base::ASCIIToUTF16("text")));
+  EXPECT_FALSE(controller()->InputCvcIsValid(base::ASCIIToUTF16("")));
+  EXPECT_FALSE(controller()->InputCvcIsValid(base::ASCIIToUTF16("1")));
+  EXPECT_FALSE(controller()->InputCvcIsValid(base::ASCIIToUTF16("12")));
+  EXPECT_FALSE(controller()->InputCvcIsValid(base::ASCIIToUTF16("12 ")));
+  EXPECT_FALSE(controller()->InputCvcIsValid(base::ASCIIToUTF16("1234")));
+  EXPECT_FALSE(controller()->InputCvcIsValid(base::ASCIIToUTF16("12345")));
+  EXPECT_FALSE(controller()->InputCvcIsValid(base::ASCIIToUTF16("1x3")));
+  EXPECT_TRUE(controller()->InputCvcIsValid(base::ASCIIToUTF16("123")));
+  EXPECT_TRUE(controller()->InputCvcIsValid(base::ASCIIToUTF16("123 ")));
+  EXPECT_TRUE(controller()->InputCvcIsValid(base::ASCIIToUTF16(" 123")));
+  EXPECT_TRUE(controller()->InputCvcIsValid(base::ASCIIToUTF16("999")));
 }
 
 }  // namespace autofill
