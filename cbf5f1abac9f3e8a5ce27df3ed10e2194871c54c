@@ -16,6 +16,24 @@
       "revId": "cbf5f1abac9f3e8a5ce27df3ed10e2194871c54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34a4b2f_7205a473",
+        "filename": "third_party/WebKit/Source/build/scripts/css_properties.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-12T06:36:00Z",
+      "side": 1,
+      "message": "Hmm, I moved _first_enum_value up with this one, and also prepended _alias_offset with an underscore so they\u0027re consistent. I don\u0027t know any good way to make constants in python either :/",
+      "parentUuid": "aedd295e_6a471a17",
+      "revId": "cbf5f1abac9f3e8a5ce27df3ed10e2194871c54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
