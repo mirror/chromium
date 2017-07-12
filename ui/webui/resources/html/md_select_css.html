@@ -36,6 +36,12 @@
         width: calc(var(--md-select-width, 200px) + 2 * var(--md-select-side-padding));
       }
 
+      /* Adjust for 3px md-select-underline and 1px additional bottom padding
+       *  to keep the md-select vertically centered. */
+      .md-select.with-underline {
+        margin-top: 4px;
+      }
+
       /* Mirroring paper-dropdown-menu disabled style. */
       .md-select[disabled] {
         pointer-events: none;
