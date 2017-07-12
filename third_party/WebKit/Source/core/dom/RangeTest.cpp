@@ -10,6 +10,7 @@
 #include "core/dom/NodeList.h"
 #include "core/dom/Text.h"
 #include "core/editing/EditingTestBase.h"
+#include "core/editing/FrameSelection.h"
 #include "core/editing/VisibleUnits.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLBodyElement.h"
@@ -252,6 +253,24 @@ TEST_F(RangeTest, ToPosition) {
   range.setStart(position, ASSERT_NO_EXCEPTION);
   EXPECT_EQ(position, range.StartPosition());
   EXPECT_EQ(position, range.EndPosition());
+}
+
+TEST_F(RangeTest, BoundingRectMustIndependentFromSelection) {
+  GetDocument().body()->setInnerHTML(
+      "<div style='width: 2ex;letter-spacing: 5px;'>xx xx </div>");
+  Node* const div = GetDocument().QuerySelector("div");
+  // "x^x
+  //  x|x "
+  Range* const range =
+      Range::Create(GetDocument(), div->firstChild(), 1, div->firstChild(), 4);
+  const FloatRect rect_before = range->BoundingRect();
+  Selection().SetSelection(SelectionInDOMTree::Builder()
+                               .SetBaseAndExtent(EphemeralRange(range))
+                               .Build());
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  DCHECK_EQ(Selection().SelectedText(), "x x");
+  const FloatRect rect_after = range->BoundingRect();
+  EXPECT_EQ(rect_before, rect_after);
 }
 
 }  // namespace blink
