@@ -13,9 +13,9 @@
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/observer_list_threadsafe.h"
+#include "base/sequence_checker.h"
 #include "base/strings/string16.h"
 #include "base/synchronization/lock.h"
-#include "base/threading/thread_checker.h"
 #include "build/build_config.h"
 #include "components/storage_monitor/storage_info.h"
 
@@ -93,7 +93,8 @@ class StorageMonitor {
   // stack. Before the callback is run, calls to |GetAllAvailableStorages| and
   // |GetStorageInfoForPath| may not return the correct results. In addition,
   // registered observers will not be notified on device attachment/detachment.
-  // Should be invoked on the UI thread; callbacks will be run on the UI thread.
+  // Should be invoked on the main sequence; callbacks will be run on the main
+  // sequence.
   void EnsureInitialized(base::Closure callback);
 
   // Return true if the storage monitor has already been initialized.
@@ -153,7 +154,7 @@ class StorageMonitor {
   virtual void Init() = 0;
 
   // Called by subclasses to mark the storage monitor as
-  // fully initialized. Must be called on the UI thread.
+  // fully initialized. Must be called on the main sequence.
   void MarkInitialized();
 
  private:
@@ -174,8 +175,8 @@ class StorageMonitor {
   scoped_refptr<base::ObserverListThreadSafe<RemovableStorageObserver>>
       observer_list_;
 
-  // Used to make sure we call initialize from the same thread as creation.
-  base::ThreadChecker thread_checker_;
+  // Used to make sure we call initialize from the same sequence as creation.
+  SEQUENCE_CHECKER(sequence_checker_);
 
   bool initializing_;
   bool initialized_;
