@@ -1,0 +1,25 @@
+module blink.mojom;
+
+enum ServiceWorkerPreparationType {
+  UNKNOWN,
+  // The worker was already starting up. We waited for it to finish.
+  STARTING,
+  // The worker was already running.
+  RUNNING,
+  // The worker was stopping. We waited for it to stop, and then started it
+  // up.
+  STOPPING,
+  // The worker was in the stopped state. We started it up, and startup
+  // required a new process to be created.
+  START_IN_NEW_PROCESS,
+  // The worker was in the stopped state. We started it up, and it used an
+  // existing process.
+  START_IN_EXISTING_PROCESS,
+  // The worker was in the stopped state. We started it up, and this occurred
+  // during browser startup.
+  START_DURING_STARTUP,
+  START_IN_EXISTING_UNREADY_PROCESS,
+  START_IN_EXISTING_READY_PROCESS,
+  // Add new types here.
+  NUM_TYPES
+};
