@@ -43,6 +43,8 @@
 #include "components/browser_watcher/exit_code_watcher_win.h"
 #include "components/browser_watcher/window_hang_monitor_win.h"
 
+#error
+
 namespace {
 
 // Use the same log facility as Chrome for convenience.
