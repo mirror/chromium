@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edad065f_93611cc4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-12T14:10:21Z",
+      "side": 1,
+      "message": "remove this now",
+      "revId": "5030c97dc050025f3982f0d6ecd1b6c7082fbff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3df0b98_8270c6b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-12T14:10:21Z",
+      "side": 1,
+      "message": "I wonder if we could have a static method on the TabularContextMenuViewPager that could allow us to share this (something like getContextMenuWidthPx).  We could have it take a Resources ref and it could be shared between the two.\n\nIt is somewhat sad as it wouldn\u0027t be able to share the padding member var in the other class, but I think consistent and avoiding drift is worth it.",
+      "range": {
+        "startLine": 229,
+        "startChar": 12,
+        "endLine": 229,
+        "endChar": 25
+      },
+      "revId": "5030c97dc050025f3982f0d6ecd1b6c7082fbff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
