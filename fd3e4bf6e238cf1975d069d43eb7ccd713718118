@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15428768_fd40ac16",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading_shared_buffer_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-12T18:50:43Z",
+      "side": 1,
+      "message": "What happens if the buffer/seqlock is destroyed while the reader is still live?\n(I think there was a base::SharedMemory::IsHandleValid() in the shared_memory_seqlock_reader.., maybe something similar can be done here?)",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "fd3e4bf6e238cf1975d069d43eb7ccd713718118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0329f79d_5b412faf",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading_shared_buffer_reader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-12T18:50:43Z",
+      "side": 1,
+      "message": "nit: better name buffer_seq_lock_ (non-owning)",
+      "range": {
+        "startLine": 27,
+        "startChar": 44,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "fd3e4bf6e238cf1975d069d43eb7ccd713718118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
