@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3fe31b8a_5e173ab5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T20:55:43Z",
+      "side": 1,
+      "message": "I\u0027ve opened a bug here: https://crbug.com/741840",
+      "parentUuid": "ae1404bd_50a7e20c",
+      "range": {
+        "startLine": 18,
+        "startChar": 51,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "effe56525688e0928eefdbd39bd71e7b4a97ef53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "180a87f0_d49dcb3e",
         "filename": "content/public/child/child_thread.h",
         "patchSetId": 5
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "279ba37d_060bfab0",
+        "filename": "content/public/child/child_thread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T20:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "180a87f0_d49dcb3e",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "effe56525688e0928eefdbd39bd71e7b4a97ef53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83df75fb_1bf396b0",
         "filename": "content/public/gpu/content_gpu_client.h",
         "patchSetId": 5
@@ -92,6 +140,30 @@
       "revId": "effe56525688e0928eefdbd39bd71e7b4a97ef53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec9aba8_a6db5658",
+        "filename": "content/public/gpu/content_gpu_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T20:55:43Z",
+      "side": 1,
+      "message": "Done.  A deep grained-habit I guess... (although it makes me cringe that I managed to mangle this comment into a mixture of styles - after my changes some sentences were separated by a single space and some by two spaces).",
+      "parentUuid": "83df75fb_1bf396b0",
+      "range": {
+        "startLine": 24,
+        "startChar": 29,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "effe56525688e0928eefdbd39bd71e7b4a97ef53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
