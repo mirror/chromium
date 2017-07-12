@@ -34,6 +34,24 @@
       "revId": "a355f97c2b9962a162f7e96f92303deaa9fc97c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3e68b6d_d728171f",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-12T01:14:01Z",
+      "side": 0,
+      "message": "Thanks, LGTM.",
+      "parentUuid": "8dcb50b5_61ed1b88",
+      "revId": "a355f97c2b9962a162f7e96f92303deaa9fc97c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
