@@ -197,6 +197,30 @@
     },
     {
       "key": {
+        "uuid": "fad95741_e5a27dc4",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-12T21:51:34Z",
+      "side": 1,
+      "message": "Addressed in this follow-up: https://chromium-review.googlesource.com/c/568911/",
+      "parentUuid": "f88aca4d_3a6f2d74",
+      "range": {
+        "startLine": 210,
+        "startChar": 20,
+        "endLine": 210,
+        "endChar": 30
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe9d0200_772ed3d6",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 1
