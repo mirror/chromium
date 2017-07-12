@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f12bba0_c512c34a",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T00:28:58Z",
+      "side": 1,
+      "message": "Perhaps TriggerBannerWithNavigation",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 36
+      },
+      "revId": "7580ac2fe123c2a86fa16cc5838f657c7f7d21b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdd3c75_ce6b5b96",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T00:28:58Z",
+      "side": 1,
+      "message": "I find this super unclear.\n\nCan you clarify that |task| will be executed and it is expected to somehow trigger the banner flow in |manager|, i.e. it either triggers DidFinishLoad() or OnEngagementIncreased(). Also document that this method will block and wait until the manager is finished.\n\nPerhaps a better name is TriggerBannerWithTask() or TriggerBanner with an argument |trigger_task|",
+      "range": {
+        "startLine": 244,
+        "startChar": 6,
+        "endLine": 244,
+        "endChar": 7
+      },
+      "revId": "7580ac2fe123c2a86fa16cc5838f657c7f7d21b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
