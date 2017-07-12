@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "853a873a_562098bb",
+        "filename": "components/ssl_config/ssl_config_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T01:36:18Z",
+      "side": 0,
+      "message": "We can break about:flags since that was newly-added with TLS 1.3, but I don\u0027t think breaking the command-line flag is quite yet warranted. (It doesn\u0027t make sense to have ssl-version-min and not ssl-version-max.) Also having admin policy and prefs we can\u0027t easily test with equivalent command-line flags is awkward.\n\nAlso there\u0027s a bunch of comments that are no longer true with this gone.",
+      "revId": "fdff71f429b22fb5b38ecdb87d798b8697ddca1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b54cea89_799457b7",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T01:36:18Z",
+      "side": 1,
+      "message": "Nit: variant\n\nAlthough having \"TLS 1.3 variant enabled\" be set to \"Disabled\" is a little odd. WDYT about either:\na) Disabled \u003d\u003e None\nb) Just call this \"TLS 1.3\" and the options maybe \"Default\", \"Disabled\", \"Enabled (draft version)\", \"Enabled (experimental variant)\".\n\nPoking around about:flags randomly, (b) seems to match what folks do?",
+      "range": {
+        "startLine": 1008,
+        "startChar": 42,
+        "endLine": 1008,
+        "endChar": 49
+      },
+      "revId": "ea8ff93364792c3844358c9be2895caf4280cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee967fb1_5a2b4dfa",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T01:36:18Z",
+      "side": 1,
+      "message": "Comment? In particular, I think it\u0027s worth mentioning the motivation (about:flags).",
+      "revId": "ea8ff93364792c3844358c9be2895caf4280cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bee7220_32e4978f",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T01:36:18Z",
+      "side": 1,
+      "message": "If it\u0027s kTLS13VariantDisabled, you shouldn\u0027t set this. (Also worth adding a test here.)",
+      "revId": "ea8ff93364792c3844358c9be2895caf4280cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1101914_17da4e5f",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store_ssl_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T01:36:18Z",
+      "side": 1,
+      "message": "It\u0027s still worth testing that kSSLVersionMax as a command-line switch is honored when switches are involved. That kTLS13Variant implicitly sets TLS 1.3 probably should be a separate test.\n\nEdit: See comment elsewhere about removing the switch.",
+      "revId": "ea8ff93364792c3844358c9be2895caf4280cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a735e7d_d3cd54e1",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T01:36:18Z",
+      "side": 1,
+      "message": "base::StartsWith.\n\nI suspect without the base is only because of Koenig lookup on base::CompareCase::INSENSITIVE_ASCII which... is hilarious.",
+      "range": {
+        "startLine": 198,
+        "startChar": 6,
+        "endLine": 198,
+        "endChar": 16
+      },
+      "revId": "ea8ff93364792c3844358c9be2895caf4280cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b420e6_5581dd4b",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T01:36:18Z",
+      "side": 1,
+      "message": "This seems like it\u0027ll be awkward if we do \"experiment2\" or something. The constants being defined elsewhere also means it\u0027s not obvious this sort of thing will happen. :-/",
+      "revId": "ea8ff93364792c3844358c9be2895caf4280cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f04a97_a462a9f1",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T01:36:18Z",
+      "side": 1,
+      "message": "(Stray change?)",
+      "revId": "ea8ff93364792c3844358c9be2895caf4280cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179e25a9_6cf856ae",
+        "filename": "net/ssl/ssl_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-12T01:36:18Z",
+      "side": 1,
+      "message": "Perhaps add \"This only takes affect if TLS 1.3 is also enabled via version_min and version_max.\" Both so the default is less worrying and because you\u0027re using different semantics for the flags and SSLConfig.",
+      "revId": "ea8ff93364792c3844358c9be2895caf4280cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
