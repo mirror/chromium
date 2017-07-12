@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbf89cc3_9dd74419",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/select-bidi-run.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-12T05:24:40Z",
+      "side": 1,
+      "message": "Could you rename this to something \"moveToRightUntilSelectionChange\" ?",
+      "revId": "771bd9ccf2936a09bbf09b89153f067c0960cb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35f1584_7ec55e90",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/select-bidi-run.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-12T05:24:40Z",
+      "side": 1,
+      "message": "Should we check selection.anchorNode/focusNode immutability to avoid\n accidentally jumping onto same offset but another node?",
+      "revId": "771bd9ccf2936a09bbf09b89153f067c0960cb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833101bd_78049a7c",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/select-bidi-run.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-12T05:24:40Z",
+      "side": 1,
+      "message": "Could you rename |count| to |(character)offset| because count sounds\n number of mouse move event rather than offset of characters.",
+      "revId": "771bd9ccf2936a09bbf09b89153f067c0960cb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
