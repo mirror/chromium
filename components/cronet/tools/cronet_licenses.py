@@ -6,7 +6,7 @@
 """Generates the contents of an Cronet LICENSE file for the third-party code.
 
 It makes use of src/tools/licenses.py and the README.chromium files on which
-it depends. Based on android_webview/tools/webview_licenses.py.
+it depends.
 """
 
 import optparse
