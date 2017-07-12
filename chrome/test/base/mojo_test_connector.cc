@@ -219,18 +219,13 @@ MojoTestConnector::MojoTestConnector(
       catalog_contents_(std::move(catalog_contents)) {}
 
 void MojoTestConnector::Init() {
-  // In single-process test mode, browser code will initialize the EDK and IPC.
-  // Otherwise we ensure it's initialized here.
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          content::kSingleProcessTestsFlag)) {
-    mojo::edk::Init();
-    ipc_thread_ = base::MakeUnique<base::Thread>("IPC thread");
-    ipc_thread_->StartWithOptions(base::Thread::Options(
-        base::MessageLoop::TYPE_IO, 0));
-    ipc_support_ = base::MakeUnique<mojo::edk::ScopedIPCSupport>(
-        ipc_thread_->task_runner(),
-        mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);
-  }
+  mojo::edk::Init();
+  ipc_thread_ = base::MakeUnique<base::Thread>("IPC thread");
+  ipc_thread_->StartWithOptions(
+      base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
+  ipc_support_ = base::MakeUnique<mojo::edk::ScopedIPCSupport>(
+      ipc_thread_->task_runner(),
+      mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);
 }
 
 service_manager::mojom::ServiceRequest

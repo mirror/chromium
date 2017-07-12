@@ -48,30 +48,6 @@ const base::FilePath::CharType kMashCatalogFilename[] =
 const base::FilePath::CharType kMusCatalogFilename[] =
     FILE_PATH_LITERAL("mus_browser_tests_catalog.json");
 
-class MashTestSuite : public ChromeTestSuite {
- public:
-  MashTestSuite(int argc, char** argv) : ChromeTestSuite(argc, argv) {}
-
-  void SetMojoTestConnector(std::unique_ptr<MojoTestConnector> connector) {
-    mojo_test_connector_ = std::move(connector);
-  }
-
-  MojoTestConnector* mojo_test_connector() {
-    return mojo_test_connector_.get();
-  }
-
- private:
-  // ChromeTestSuite:
-  void Shutdown() override {
-    mojo_test_connector_.reset();
-    ChromeTestSuite::Shutdown();
-  }
-
-  std::unique_ptr<MojoTestConnector> mojo_test_connector_;
-
-  DISALLOW_COPY_AND_ASSIGN(MashTestSuite);
-};
-
 // Used to setup the command line for passing a mojo channel to tests.
 class MashTestLauncherDelegate : public ChromeTestLauncherDelegate {
  public:
@@ -83,21 +59,10 @@ class MashTestLauncherDelegate : public ChromeTestLauncherDelegate {
   }
   ~MashTestLauncherDelegate() override {}
 
-  MojoTestConnector* GetMojoTestConnectorForSingleProcess() {
-    // This is only called for single process tests, in which case we need
-    // the TestSuite to own the MojoTestConnector.
-    DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
-        content::kSingleProcessTestsFlag));
-    DCHECK(test_suite_);
-    test_suite_->SetMojoTestConnector(
-        base::MakeUnique<MojoTestConnector>(ReadCatalogManifest(), config_));
-    return test_suite_->mojo_test_connector();
-  }
-
  private:
   // ChromeTestLauncherDelegate:
   int RunTestSuite(int argc, char** argv) override {
-    test_suite_.reset(new MashTestSuite(argc, argv));
+    test_suite_.reset(new ChromeTestSuite(argc, argv));
     content::GetContentMainParams()->env_mode = aura::Env::Mode::MUS;
     const int result = test_suite_->Run();
     test_suite_.reset();
@@ -139,24 +104,11 @@ class MashTestLauncherDelegate : public ChromeTestLauncherDelegate {
 
   MojoTestConnector::Config config_;
 
-  std::unique_ptr<MashTestSuite> test_suite_;
+  std::unique_ptr<ChromeTestSuite> test_suite_;
   std::unique_ptr<MojoTestConnector> mojo_test_connector_;
 
   DISALLOW_COPY_AND_ASSIGN(MashTestLauncherDelegate);
 };
-
-std::unique_ptr<content::ServiceManagerConnection>
-    CreateServiceManagerConnection(MashTestLauncherDelegate* delegate) {
-  delegate->GetMojoTestConnectorForSingleProcess()->Init();
-  std::unique_ptr<content::ServiceManagerConnection> connection(
-      content::ServiceManagerConnection::Create(
-          delegate->GetMojoTestConnectorForSingleProcess()
-              ->InitBackgroundServiceManager(),
-          base::ThreadTaskRunnerHandle::Get()));
-  connection->Start();
-  connection->GetConnector()->StartService(mash::session::mojom::kServiceName);
-  return connection;
-}
 
 void StartEmbeddedService(service_manager::mojom::ServiceRequest request) {
   // The UI service requires this to be TYPE_UI, so we just always use TYPE_UI
@@ -222,17 +174,6 @@ bool RunMashBrowserTests(int argc, char** argv, int* exit_code) {
     parallel_jobs /= 2U;
   }
   MashTestLauncherDelegate delegate;
-  // --single_process and no service pipe token indicate we were run directly
-  // from the command line. In this case we have to start up
-  // ServiceManagerConnection as though we were embedded.
-  content::ServiceManagerConnection::Factory service_manager_connection_factory;
-  if (command_line->HasSwitch(content::kSingleProcessTestsFlag) &&
-      !command_line->HasSwitch(service_manager::switches::kServicePipeToken)) {
-    service_manager_connection_factory =
-        base::Bind(&CreateServiceManagerConnection, &delegate);
-    content::ServiceManagerConnection::SetFactoryForTest(
-        &service_manager_connection_factory);
-  }
   *exit_code = LaunchChromeTests(parallel_jobs, &delegate, argc, argv);
   return true;
 }
