@@ -391,7 +391,9 @@ NSAttributedString* CreateClassifiedAttributedString(
                contentsOffset:(CGFloat)contentsOffset
                         image:(NSImage*)image
                   answerImage:(NSImage*)answerImage
-                 forDarkTheme:(BOOL)isDarkTheme {
+                 forDarkTheme:(BOOL)isDarkTheme
+           anyTailSuggestions:(BOOL)anyTailSuggestions
+             commonSuggestion:(const base::string16&)commonSuggestion {
   if ((self = [super init])) {
     image_ = [image retain];
     answerImage_ = [answerImage retain];
@@ -420,9 +422,46 @@ NSAttributedString* CreateClassifiedAttributedString(
           [CreateAnswerLine(match.answer->second_line(), isDarkTheme) retain];
       maxLines_ = match.answer->second_line().num_text_lines();
     } else {
-      contents_ = [CreateClassifiedAttributedString(
-          match.contents, ContentTextColor(isDarkTheme), match.contents_class,
-          isDarkTheme) retain];
+      // If tail suggestion, re-create this? yes
+      if (match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
+        base::string16 suggestion = base::UTF8ToUTF16(
+            match.GetAdditionalInfo(kACMatchPropertySuggestionText));
+        int suggestion_length;
+        base::StringToInt(
+            match.GetAdditionalInfo(kACMatchPropertyContentsStartIndex),
+            &suggestion_length);
+        ACMatchClassifications contents_class;
+        contents_class.push_back(
+            ACMatchClassification(0, ACMatchClassification::DIM));
+        for (const auto& classification : match.contents_class) {
+          contents_class.push_back(ACMatchClassification(
+              classification.offset + suggestion_length, classification.style));
+        }
+        contents_ = [CreateClassifiedAttributedString(
+            suggestion.substr(0, suggestion_length) + match.contents,
+            ContentTextColor(isDarkTheme), contents_class, isDarkTheme) retain];
+      } else {
+        ACMatchClassifications contents_class;
+        if (anyTailSuggestions &&
+            match.contents.size() >= commonSuggestion.size() &&
+            match.contents.substr(0, commonSuggestion.size()) ==
+                commonSuggestion) {
+          // Insert a classification of dim for the text prefix common
+          // with the suggestion.
+          contents_class.push_back(
+              ACMatchClassification(0, ACMatchClassification::DIM));
+          for (const auto& classification : match.contents_class)
+            contents_class.push_back(classification);
+          // First classification starts after common prefix.
+          if (contents_class.size() > 1)
+            contents_class[1].offset += commonSuggestion.size();
+        } else {
+          contents_class = match.contents_class;
+        }
+        contents_ = [CreateClassifiedAttributedString(
+            match.contents, ContentTextColor(isDarkTheme), contents_class,
+            isDarkTheme) retain];
+      }
       if (!match.description.empty()) {
         // Swap the contents and description of non-search suggestions in
         // vertical layouts.
@@ -452,6 +491,14 @@ NSAttributedString* CreateClassifiedAttributedString(
 
 - (CGFloat)getMatchContentsWidth {
   return [contents_ size].width;
+}
+
+- (size_t)commonPrefixLength:(const base::string16&)lhs
+                         rhs:(const base::string16&)rhs {
+  size_t n = 0;
+  while (n < lhs.size() && n < rhs.size() && lhs[n] == rhs[n])
+    ++n;
+  return n;
 }
 
 @end
@@ -522,7 +569,8 @@ NSAttributedString* CreateClassifiedAttributedString(
   // For matches lacking description in vertical layout, center vertically.
   if (isVerticalLayout && descriptionMaxWidth == 0)
     origin.y += halfLineHeight;
-
+#if 0
+  // Tail suggestions are no longer shifted
   if ([cellData matchType] == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
     // Tail suggestions are rendered with a prefix (usually ellipsis), which
     // appear vertically stacked.
@@ -531,6 +579,7 @@ NSAttributedString* CreateClassifiedAttributedString(
                           withContentsMaxWidth:&contentsMaxWidth
                                   forDarkTheme:isDarkTheme];
   }
+#endif
   origin.x += [self drawMatchPart:[cellData contents]
                         withFrame:cellFrame
                            origin:origin
