@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad24256_8340cc6b",
+        "filename": "ios/chrome/browser/ui/payments/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-12T14:47:11Z",
+      "side": 1,
+      "message": "Prefer \"accessibility\" in plain letters.",
+      "range": {
+        "startLine": 222,
+        "startChar": 5,
+        "endLine": 222,
+        "endChar": 25
+      },
+      "revId": "2339ca7601e655079cc2a1e2f766f07872bad9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d8285c_659d27dc",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-12T14:47:11Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "2339ca7601e655079cc2a1e2f766f07872bad9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de113b8d_34977986",
+        "filename": "ios/chrome/browser/ui/payments/payments_a11y_egtest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-12T14:47:11Z",
+      "side": 1,
+      "message": "Is this true? This is the instance method, not the class method.",
+      "revId": "2339ca7601e655079cc2a1e2f766f07872bad9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53a49e5_c9ef6cc4",
+        "filename": "ios/testing/data/http_server_files/payment_request.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-12T14:47:11Z",
+      "side": 1,
+      "message": "Should this wrap?",
+      "range": {
+        "startLine": 137,
+        "startChar": 76,
+        "endLine": 137,
+        "endChar": 94
+      },
+      "revId": "2339ca7601e655079cc2a1e2f766f07872bad9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
