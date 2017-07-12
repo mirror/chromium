@@ -194,8 +194,72 @@ class IdentityManagerTest : public service_manager::test::ServiceTest {
   DISALLOW_COPY_AND_ASSIGN(IdentityManagerTest);
 };
 
+// Tests that the Identity Service delays responding to consumers until its
+// internal state is stable after startup.
+TEST_F(IdentityManagerTest, StartupBeforeInternalStateStable) {
+  EXPECT_FALSE(token_service()->AreAllCredentialsLoaded());
+  AccountInfo sentinel;
+  sentinel.account_id = "sentinel";
+  primary_account_info_ = sentinel;
+
+  // Make a call to the IdentityManager before the Identity Service has reached
+  // an internal stable state, and verify that the IdentityManager does not yet
+  // respond.
+  base::RunLoop run_loop;
+  GetIdentityManager()->GetPrimaryAccountInfo(
+      base::Bind(&IdentityManagerTest::OnReceivedPrimaryAccountInfo,
+                 base::Unretained(this), run_loop.QuitClosure()));
+
+  // Spin the run loop long enough for the above request to reach the Identity
+  // Service and for the Identity Manager to process it *if* it were started up
+  // in response. Note that it's not possible to wait on |run_loop| here since
+  // the behavior we're looking to verify is that the above callback is *not*
+  // invoked at this point. It's also not possible to use
+  // FlushIdentityManagerForTesting(), as the Identity Service might not even
+  // bind the IdentityManager request before initialization.
+  base::RunLoop run_loop2;
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, run_loop2.QuitClosure(),
+      base::TimeDelta::FromMilliseconds(500));
+  run_loop2.Run();
+
+  // Verify that the callback to GetPrimaryAccountInfo() was not invoked.
+  EXPECT_TRUE(primary_account_info_);
+  EXPECT_EQ("sentinel", primary_account_info_->account_id);
+
+  // Put the Identity Service in an internal stable state.
+  token_service()->LoadCredentials("dummy");
+  EXPECT_TRUE(token_service()->AreAllCredentialsLoaded());
+
+  // Verify that the IdentityManager now responds to our earlier call.
+  run_loop.Run();
+  EXPECT_FALSE(primary_account_info_);
+}
+
+// Tests that the Identity Service immediately responds to consumers if first
+// connected to after its internal dependencies have reached a stable state.
+TEST_F(IdentityManagerTest, StartupAfterInternalStateStable) {
+  EXPECT_FALSE(token_service()->AreAllCredentialsLoaded());
+  token_service()->LoadCredentials("dummy");
+  EXPECT_TRUE(token_service()->AreAllCredentialsLoaded());
+  AccountInfo sentinel;
+  sentinel.account_id = "sentinel";
+  primary_account_info_ = sentinel;
+
+  // Connect to the Identity Manager (causing the Identity Service to be started
+  // up), and verify that the Identity Manager responds immediately.
+  base::RunLoop run_loop;
+  GetIdentityManager()->GetPrimaryAccountInfo(
+      base::Bind(&IdentityManagerTest::OnReceivedPrimaryAccountInfo,
+                 base::Unretained(this), run_loop.QuitClosure()));
+  run_loop.Run();
+  EXPECT_FALSE(primary_account_info_);
+}
+
 // Tests that the Identity Manager destroys itself on SigninManager shutdown.
 TEST_F(IdentityManagerTest, SigninManagerShutdown) {
+  token_service()->LoadCredentials("dummy");
+
   base::RunLoop run_loop;
   SetIdentityManagerConnectionErrorHandler(run_loop.QuitClosure());
 
@@ -209,6 +273,8 @@ TEST_F(IdentityManagerTest, SigninManagerShutdown) {
 
 // Check that the primary account info is null if not signed in.
 TEST_F(IdentityManagerTest, GetPrimaryAccountInfoNotSignedIn) {
+  token_service()->LoadCredentials("dummy");
+
   base::RunLoop run_loop;
   GetIdentityManager()->GetPrimaryAccountInfo(
       base::Bind(&IdentityManagerTest::OnReceivedPrimaryAccountInfo,
@@ -220,6 +286,8 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountInfoNotSignedIn) {
 // Check that the primary account info has expected values if signed in without
 // a refresh token available.
 TEST_F(IdentityManagerTest, GetPrimaryAccountInfoSignedInNoRefreshToken) {
+  token_service()->LoadCredentials("dummy");
+
   signin_manager()->SetAuthenticatedAccountInfo(kTestGaiaId, kTestEmail);
   base::RunLoop run_loop;
   GetIdentityManager()->GetPrimaryAccountInfo(
@@ -238,6 +306,8 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountInfoSignedInNoRefreshToken) {
 // Check that the primary account info has expected values if signed in with a
 // refresh token available.
 TEST_F(IdentityManagerTest, GetPrimaryAccountInfoSignedInRefreshToken) {
+  token_service()->LoadCredentials("dummy");
+
   signin_manager()->SetAuthenticatedAccountInfo(kTestGaiaId, kTestEmail);
   token_service()->UpdateCredentials(
       signin_manager()->GetAuthenticatedAccountId(), kTestRefreshToken);
@@ -258,6 +328,8 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountInfoSignedInRefreshToken) {
 // Check that GetPrimaryAccountWhenAvailable() returns immediately in the
 // case where the primary account is available when the call is received.
 TEST_F(IdentityManagerTest, GetPrimaryAccountWhenAvailableSignedIn) {
+  token_service()->LoadCredentials("dummy");
+
   signin_manager()->SetAuthenticatedAccountInfo(kTestGaiaId, kTestEmail);
   token_service()->UpdateCredentials(
       signin_manager()->GetAuthenticatedAccountId(), kTestRefreshToken);
@@ -283,6 +355,8 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountWhenAvailableSignedIn) {
 // info in the case where the primary account is made available *after* the
 // call is received.
 TEST_F(IdentityManagerTest, GetPrimaryAccountWhenAvailableSignInLater) {
+  token_service()->LoadCredentials("dummy");
+
   AccountInfo account_info;
   AccountState account_state;
 
@@ -321,6 +395,8 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountWhenAvailableSignInLater) {
 // info in the case where signin is done before the call is received but the
 // refresh token is made available only *after* the call is received.
 TEST_F(IdentityManagerTest, GetPrimaryAccountWhenAvailableTokenAvailableLater) {
+  token_service()->LoadCredentials("dummy");
+
   AccountInfo account_info;
   AccountState account_state;
 
@@ -369,6 +445,8 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountWhenAvailableTokenAvailableLater) {
 #if !defined(OS_CHROMEOS)
 TEST_F(IdentityManagerTest,
        GetPrimaryAccountWhenAvailableAuthenticationAvailableLater) {
+  token_service()->LoadCredentials("dummy");
+
   AccountInfo account_info;
   AccountState account_state;
 
@@ -424,6 +502,8 @@ TEST_F(IdentityManagerTest,
 // info to all callers in the case where the primary account is made available
 // after multiple overlapping calls have been received.
 TEST_F(IdentityManagerTest, GetPrimaryAccountWhenAvailableOverlappingCalls) {
+  token_service()->LoadCredentials("dummy");
+
   AccountInfo account_info1;
   AccountState account_state1;
   base::RunLoop run_loop;
@@ -476,6 +556,8 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountWhenAvailableOverlappingCalls) {
 // Check that the account info for a given GAIA ID is null if that GAIA ID is
 // unknown.
 TEST_F(IdentityManagerTest, GetAccountInfoForUnknownGaiaID) {
+  token_service()->LoadCredentials("dummy");
+
   base::RunLoop run_loop;
   GetIdentityManager()->GetAccountInfoFromGaiaId(
       kTestGaiaId,
@@ -488,6 +570,8 @@ TEST_F(IdentityManagerTest, GetAccountInfoForUnknownGaiaID) {
 // Check that the account info for a given GAIA ID has expected values if that
 // GAIA ID is known and there is no refresh token available for it.
 TEST_F(IdentityManagerTest, GetAccountInfoForKnownGaiaIdNoRefreshToken) {
+  token_service()->LoadCredentials("dummy");
+
   std::string account_id =
       account_tracker()->SeedAccountInfo(kTestGaiaId, kTestEmail);
   base::RunLoop run_loop;
@@ -507,6 +591,8 @@ TEST_F(IdentityManagerTest, GetAccountInfoForKnownGaiaIdNoRefreshToken) {
 // Check that the account info for a given GAIA ID has expected values if that
 // GAIA ID is known and has a refresh token available.
 TEST_F(IdentityManagerTest, GetAccountInfoForKnownGaiaIdRefreshToken) {
+  token_service()->LoadCredentials("dummy");
+
   std::string account_id =
       account_tracker()->SeedAccountInfo(kTestGaiaId, kTestEmail);
   token_service()->UpdateCredentials(account_id, kTestRefreshToken);
@@ -527,6 +613,8 @@ TEST_F(IdentityManagerTest, GetAccountInfoForKnownGaiaIdRefreshToken) {
 // Check that the expected error is received if requesting an access token when
 // not signed in.
 TEST_F(IdentityManagerTest, GetAccessTokenNotSignedIn) {
+  token_service()->LoadCredentials("dummy");
+
   base::RunLoop run_loop;
   GetIdentityManager()->GetAccessToken(
       kTestGaiaId, ScopeSet(), "dummy_consumer",
@@ -541,6 +629,8 @@ TEST_F(IdentityManagerTest, GetAccessTokenNotSignedIn) {
 // Check that the expected access token is received if requesting an access
 // token when signed in.
 TEST_F(IdentityManagerTest, GetAccessTokenSignedIn) {
+  token_service()->LoadCredentials("dummy");
+
   signin_manager()->SetAuthenticatedAccountInfo(kTestGaiaId, kTestEmail);
   std::string account_id = signin_manager()->GetAuthenticatedAccountId();
   token_service()->UpdateCredentials(account_id, kTestRefreshToken);

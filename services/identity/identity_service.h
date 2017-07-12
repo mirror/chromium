@@ -5,12 +5,16 @@
 #ifndef SERVICES_IDENTITY_IDENTITY_SERVICE_H_
 #define SERVICES_IDENTITY_IDENTITY_SERVICE_H_
 
+#include <vector>
+
+#include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager_base.h"
 #include "services/identity/public/interfaces/identity_manager.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 
 class AccountTrackerService;
+class SigninManagerBase;
 class ProfileOAuth2TokenService;
 
 namespace identity {
@@ -38,9 +42,20 @@ class IdentityService : public service_manager::Service {
   void ShutDown();
   bool IsShutDown();
 
+  // Returns whether all internal dependencies have finished initialization.
+  bool IsInitializationComplete();
+
+  // Binds |request| to a new IdentityManager instance.
+  void BindIdentityManagerRequest(mojom::IdentityManagerRequest request);
+
   AccountTrackerService* account_tracker_;
   SigninManagerBase* signin_manager_;
   ProfileOAuth2TokenService* token_service_;
+
+  // Requests that have come in to connect to the Identity Manager before
+  // initialization is complete. These requests will be serviced once
+  // initialization is complete.
+  std::vector<mojom::IdentityManagerRequest> pending_identity_manager_requests_;
 
   std::unique_ptr<base::CallbackList<void()>::Subscription>
       signin_manager_shutdown_subscription_;
