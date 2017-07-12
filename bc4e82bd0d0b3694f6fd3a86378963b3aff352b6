@@ -16,6 +16,64 @@
       "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d74f27_0b6a42e1",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T09:25:16Z",
+      "side": 1,
+      "message": "One disadvantage of this solution is that if the expectation fails, there will be no extra information in the test logs to indicate why.\n\nI would propose the following:\n  1) Keep using EXPECT_THAT (which prints really nice logs).\n  2) Rename this method to better reflect it is taking branding into account (sorry, to early in the morning for me to recommend names).\n  3) For AffiliationDatabaseTest.MigrateFromVersion1, introduce a helper lambda locally like this:\n\nconst auto WithoutBrandingInfo \u003d [](AffiliatedFacetsWithUpdateTime foos) {\n   for (auto\u0026 foo : foos)\n      foo.branding_info \u003d FacetBrandingInfo()\n   return foos;\n}\n// ...\nExpectEquivalenceClassesAreEqual(WithoutBrandingInfo(TestEquivalenceClass1()), affiliations[0]);",
+      "parentUuid": "4e8c7fc9_398381aa",
+      "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b5c097_3974b28b",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T09:25:16Z",
+      "side": 1,
+      "message": "nit: Can we somehow check the version here?",
+      "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889539c1_8266406e",
+        "filename": "components/test/data/password_manager/affiliation_db_v1.sql",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T09:25:16Z",
+      "side": 1,
+      "message": "nit: Could we explicitly specify a value for |id| here?",
+      "range": {
+        "startLine": 19,
+        "startChar": 23,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "bc4e82bd0d0b3694f6fd3a86378963b3aff352b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
