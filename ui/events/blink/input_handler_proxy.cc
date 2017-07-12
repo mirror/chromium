@@ -327,16 +327,22 @@ void InputHandlerProxy::HandleInputEventWithLatencyInfo(
 
   if (has_ongoing_compositor_scroll_fling_pinch_) {
     const auto& gesture_event = ToWebGestureEvent(event_with_callback->event());
+    // TODO(chongz): Check if we could remove |is_from_set_non_blocking_touch|
+    // and |is_scroll_end_from_wheel| logic.
+    // |has_dispatched_gesture_update_events_this_frame_| along should be
+    // sufficient.
     bool is_from_set_non_blocking_touch =
         gesture_event.source_device == blink::kWebGestureDeviceTouchscreen &&
         gesture_event.is_source_touch_event_set_non_blocking;
     bool is_scroll_end_from_wheel =
         gesture_event.source_device == blink::kWebGestureDeviceTouchpad &&
         gesture_event.GetType() == blink::WebGestureEvent::kGestureScrollEnd;
-    if (is_from_set_non_blocking_touch || is_scroll_end_from_wheel) {
+    if (is_from_set_non_blocking_touch || is_scroll_end_from_wheel ||
+        !has_dispatched_gesture_update_events_this_frame_) {
       // Gesture events was already delayed by blocking events in rAF aligned
-      // queue. We want to avoid additional one frame delay by flushing the
-      // VSync queue immediately.
+      // queue, or we haven't send any gesture update events this frame yet. We
+      // want to avoid additional one frame delay by flushing the VSync queue
+      // immediately.
       // The first GSU latency was tracked by:
       // |smoothness.tough_scrolling_cases:first_gesture_scroll_update_latency|.
       compositor_event_queue_->Queue(std::move(event_with_callback),
@@ -402,9 +408,13 @@ void InputHandlerProxy::DispatchSingleInputEvent(
     case blink::WebGestureEvent::kGestureScrollBegin:
     case blink::WebGestureEvent::kGestureFlingStart:
     case blink::WebGestureEvent::kGesturePinchBegin:
+      has_ongoing_compositor_scroll_fling_pinch_ = disposition == DID_HANDLE;
+      break;
+
     case blink::WebGestureEvent::kGestureScrollUpdate:
     case blink::WebGestureEvent::kGesturePinchUpdate:
       has_ongoing_compositor_scroll_fling_pinch_ = disposition == DID_HANDLE;
+      has_dispatched_update_events_this_frame_ = true;
       break;
 
     case blink::WebGestureEvent::kGestureScrollEnd:
@@ -1437,6 +1447,12 @@ void InputHandlerProxy::UpdateRootLayerStateForSynchronousInputHandler(
 }
 
 void InputHandlerProxy::DeliverInputForBeginFrame() {
+  // |DeliverInputForBeginFrame()| could be called from
+  // 1. |LTHI::WillBeginImplFrame()| for low latency mode;
+  // 2. |LTHI::CommitComplete()| for high latency mode when impl thread is idle.
+  // We should reset |has_dispatched_gesture_update_events_this_frame_| since
+  // they both indicate we are in a new frame.
+  has_dispatched_gesture_update_events_this_frame_ = false;
   DispatchQueuedInputEvents();
 }
 
