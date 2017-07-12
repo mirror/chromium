@@ -82,6 +82,29 @@
     },
     {
       "key": {
+        "uuid": "b2c5f399_3e8166a7",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-12T21:35:55Z",
+      "side": 1,
+      "message": "NSNaturalTextAlignment for RTL. Code search isn\u0027t working for me right now, but maybe it makes sense to bake this into TextFieldUtils?",
+      "range": {
+        "startLine": 111,
+        "startChar": 63,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11895752_8fbcef42",
         "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
         "patchSetId": 1
@@ -98,6 +121,52 @@
         "startChar": 12,
         "endLine": 140,
         "endChar": 34
+      },
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b5f0ac_924f3dbb",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-12T21:35:55Z",
+      "side": 1,
+      "message": "NSNaturalTextAlignment",
+      "range": {
+        "startLine": 208,
+        "startChar": 73,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1200eb84_2c212897",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-12T21:35:55Z",
+      "side": 1,
+      "message": "cocoa_l10n_util::FlipAllSubviewsIfNecessary(self.window.contentView) should do it for RTL along with the label alignments :)",
+      "range": {
+        "startLine": 222,
+        "startChar": 50,
+        "endLine": 222,
+        "endChar": 0
       },
       "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
