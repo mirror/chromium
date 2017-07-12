@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d25f023_226087dd",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-12T05:38:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "166aae8a_be389b91",
+      "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e69ab7c_65ae9bc1",
         "filename": "build/android/lint/suppressions.xml",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94998b62_fadf4280",
+        "filename": "build/android/lint/suppressions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-12T05:38:43Z",
+      "side": 1,
+      "message": "It is a new condition for O which it looks like our version of the linter doesn\u0027t handle yet.",
+      "parentUuid": "6e69ab7c_65ae9bc1",
+      "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d82de6c8_05cb89c7",
+        "filename": "remoting/android/java/res/drawable-v26/ic_launcher_background.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-12T05:38:43Z",
+      "side": 1,
+      "message": "It looks like we can remove it, I think this is an artifact of playing with the image editor in Android Studio but not needed for the current implementation, good catch :)",
+      "parentUuid": "efebc832_18d2595e",
+      "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e0dc73d_697b54ba",
         "filename": "remoting/android/java/res/mipmap-anydpi-v26/ic_launcher_round.xml",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d00c11_fa746680",
+        "filename": "remoting/android/java/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-12T05:38:43Z",
+      "side": 1,
+      "message": "It does if we decided to support round icons.  AFAICT round icons are only supported on API level 25 (26+ will use adaptive icons) so I am going to remove this and keep our package size smaller.",
+      "parentUuid": "7e0dc73d_697b54ba",
+      "revId": "33b6a72fd7901a183530a3e7ff063f600f48dc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
