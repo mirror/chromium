@@ -1434,12 +1434,11 @@ void CacheStorageCache::CreateBackend(ErrorCallback callback) {
                          base::Passed(std::move(backend_ptr))));
 
   // TODO(jkarlin): Use the cache task runner that ServiceWorkerCacheCore
-  // has for disk caches.
-  int rv = disk_cache::CreateCacheBackend(
-      cache_type, net::CACHE_BACKEND_SIMPLE, path_, kMaxCacheBytes,
-      false, /* force */
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::CACHE).get(), NULL,
-      backend, create_cache_callback);
+  // has for disk caches. ### check the reasoning behind this
+  int rv =
+      disk_cache::CreateCacheBackend(cache_type, net::CACHE_BACKEND_SIMPLE,
+                                     path_, kMaxCacheBytes, false, /* force */
+                                     NULL, backend, create_cache_callback);
   if (rv != net::ERR_IO_PENDING)
     create_cache_callback.Run(rv);
 }
