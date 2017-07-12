@@ -5,9 +5,8 @@
 package org.chromium.chrome.browser.notifications;
 
 import android.app.Notification;
-
-import org.chromium.chrome.browser.notifications.channels.Channel;
-import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
+import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
 
 import java.util.List;
 
@@ -22,13 +21,13 @@ public interface NotificationManagerProxy {
     void cancel(int id);
     void cancel(String tag, int id);
     void cancelAll();
-    void createNotificationChannel(Channel channel);
-    void createNotificationChannelGroup(ChannelDefinitions.ChannelGroup channelGroup);
-    List<Channel> getNotificationChannels();
+    void createNotificationChannel(NotificationChannel channel);
+    void createNotificationChannelGroup(NotificationChannelGroup channelGroup);
+    List<NotificationChannel> getNotificationChannels();
     void deleteNotificationChannel(String id);
 
     void notify(int id, Notification notification);
     void notify(String tag, int id, Notification notification);
 
-    Channel getNotificationChannel(String channelId);
+    NotificationChannel getNotificationChannel(String channelId);
 }

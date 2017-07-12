@@ -9,12 +9,15 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
+import android.annotation.TargetApi;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.filters.SmallTest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,8 +25,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
 import org.chromium.base.test.util.InMemorySharedPreferences;
+import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.chrome.browser.notifications.NotificationManagerProxy;
-import org.chromium.chrome.test.util.browser.notifications.MockNotificationManagerProxy;
+import org.chromium.chrome.browser.notifications.NotificationManagerProxyImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,25 +37,36 @@ import java.util.List;
  */
 @RunWith(BlockJUnit4ClassRunner.class)
 public class ChannelsUpdaterTest {
-    private NotificationManagerProxy mMockNotificationManager;
+    private NotificationManagerProxy mNotificationManagerProxy;
     private InMemorySharedPreferences mMockSharedPreferences;
     private ChannelsInitializer mChannelsInitializer;
     private Resources mMockResources;
 
     @Before
     public void setUp() throws Exception {
-        mMockNotificationManager = new MockNotificationManagerProxy();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        mNotificationManagerProxy = new NotificationManagerProxyImpl(
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
 
-        // Mock the resources to prevent nullpointers on string resource lookups (none of these
-        // tests need the real strings, if they did this would need to be an instrumentation test).
-        mMockResources = mock(Resources.class);
-        when(mMockResources.getString(any(Integer.class))).thenReturn("");
+        mMockResources = context.getResources();
 
-        mChannelsInitializer = new ChannelsInitializer(mMockNotificationManager, mMockResources);
+        mChannelsInitializer =
+                new ChannelsInitializer(mNotificationManagerProxy, context.getResources());
         mMockSharedPreferences = new InMemorySharedPreferences();
+
+        // Delete any channels that may already have been initialized. Cleaning up here rather than
+        // in tearDown in case tests running before these ones caused channels to be created.
+        for (NotificationChannel channel : mNotificationManagerProxy.getNotificationChannels()) {
+            if (!channel.getId().equals(NotificationChannel.DEFAULT_CHANNEL_ID)) {
+                mNotificationManagerProxy.deleteNotificationChannel(channel.getId());
+            }
+        }
     }
 
     @Test
+    @SmallTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     public void testShouldUpdateChannels_returnsFalsePreO() throws Exception {
         ChannelsUpdater updater = new ChannelsUpdater(
                 false /* isAtLeastO */, mMockSharedPreferences, mChannelsInitializer, 0);
@@ -59,6 +74,9 @@ public class ChannelsUpdaterTest {
     }
 
     @Test
+    @SmallTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     public void testShouldUpdateChannels_returnsTrueIfOAndNoSavedVersionInPrefs() throws Exception {
         ChannelsUpdater updater = new ChannelsUpdater(
                 true /* isAtLeastO */, mMockSharedPreferences, mChannelsInitializer, 0);
@@ -66,6 +84,9 @@ public class ChannelsUpdaterTest {
     }
 
     @Test
+    @SmallTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     public void testShouldUpdateChannels_returnsTrueIfOAndDifferentVersionInPrefs()
             throws Exception {
         mMockSharedPreferences.edit().putInt(ChannelsUpdater.CHANNELS_VERSION_KEY, 4).apply();
@@ -75,6 +96,9 @@ public class ChannelsUpdaterTest {
     }
 
     @Test
+    @SmallTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     public void testShouldUpdateChannels_returnsFalseIfOAndSameVersionInPrefs() throws Exception {
         mMockSharedPreferences.edit().putInt(ChannelsUpdater.CHANNELS_VERSION_KEY, 3).apply();
         ChannelsUpdater updater = new ChannelsUpdater(
@@ -83,23 +107,29 @@ public class ChannelsUpdaterTest {
     }
 
     @Test
+    @SmallTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     public void testUpdateChannels_noopPreO() throws Exception {
         ChannelsUpdater updater = new ChannelsUpdater(
                 false /* isAtLeastO */, mMockSharedPreferences, mChannelsInitializer, 21);
         updater.updateChannels();
 
-        assertThat(mMockNotificationManager.getNotificationChannels(), hasSize(0));
+        assertThat(mNotificationManagerProxy.getNotificationChannels(), hasSize(0));
         assertThat(mMockSharedPreferences.getInt(ChannelsUpdater.CHANNELS_VERSION_KEY, -1), is(-1));
     }
 
     @Test
+    @SmallTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     public void testUpdateChannels_createsExpectedChannelsAndUpdatesPref() throws Exception {
         ChannelsUpdater updater = new ChannelsUpdater(
                 true /* isAtLeastO */, mMockSharedPreferences, mChannelsInitializer, 21);
         updater.updateChannels();
 
-        assertThat(mMockNotificationManager.getNotificationChannels(), hasSize((greaterThan(0))));
-        assertThat(getChannelIds(mMockNotificationManager.getNotificationChannels()),
+        assertThat(mNotificationManagerProxy.getNotificationChannels(), hasSize((greaterThan(0))));
+        assertThat(getChannelIds(mNotificationManagerProxy.getNotificationChannels()),
                 containsInAnyOrder(ChannelDefinitions.CHANNEL_ID_BROWSER,
                         ChannelDefinitions.CHANNEL_ID_DOWNLOADS,
                         ChannelDefinitions.CHANNEL_ID_INCOGNITO,
@@ -108,28 +138,32 @@ public class ChannelsUpdaterTest {
     }
 
     @Test
+    @SmallTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     public void testUpdateChannels_deletesLegacyChannelsAndCreatesExpectedOnes() throws Exception {
         // Set up any legacy channels.
         for (String id : ChannelDefinitions.getLegacyChannelIds()) {
-            mMockNotificationManager.createNotificationChannel(
-                    new Channel(id, id, NotificationManager.IMPORTANCE_LOW,
-                            ChannelDefinitions.CHANNEL_GROUP_ID_GENERAL));
+            NotificationChannel channel =
+                    new NotificationChannel(id, id, NotificationManager.IMPORTANCE_LOW);
+            channel.setGroup(ChannelDefinitions.CHANNEL_GROUP_ID_GENERAL);
+            mNotificationManagerProxy.createNotificationChannel(channel);
         }
 
         ChannelsUpdater updater = new ChannelsUpdater(true /* isAtLeastO */, mMockSharedPreferences,
-                new ChannelsInitializer(mMockNotificationManager, mMockResources), 12);
+                new ChannelsInitializer(mNotificationManagerProxy, mMockResources), 12);
         updater.updateChannels();
 
-        assertThat(getChannelIds(mMockNotificationManager.getNotificationChannels()),
+        assertThat(getChannelIds(mNotificationManagerProxy.getNotificationChannels()),
                 containsInAnyOrder(ChannelDefinitions.CHANNEL_ID_BROWSER,
                         ChannelDefinitions.CHANNEL_ID_DOWNLOADS,
                         ChannelDefinitions.CHANNEL_ID_INCOGNITO,
                         ChannelDefinitions.CHANNEL_ID_SITES, ChannelDefinitions.CHANNEL_ID_MEDIA));
     }
 
-    private static List<String> getChannelIds(List<Channel> channels) {
+    private static List<String> getChannelIds(List<NotificationChannel> channels) {
         List<String> ids = new ArrayList<>();
-        for (Channel ch : channels) {
+        for (NotificationChannel ch : channels) {
             ids.add(ch.getId());
         }
         return ids;

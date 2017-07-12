@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.notifications.channels;
 
+import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
 import android.content.res.Resources;
 
 import org.chromium.chrome.browser.notifications.NotificationManagerProxy;
@@ -64,8 +66,11 @@ public class ChannelsInitializer {
             throw new IllegalStateException("Could not initialize channel: " + channelId);
         }
         // Channel group must be created before the channel.
-        mNotificationManager.createNotificationChannelGroup(
-                ChannelDefinitions.getChannelGroupForChannel(predefinedChannel));
-        mNotificationManager.createNotificationChannel(predefinedChannel.toChannel(mResources));
+        NotificationChannelGroup channelGroup =
+                ChannelDefinitions.getChannelGroupForChannel(predefinedChannel)
+                        .toNotificationChannelGroup(mResources);
+        mNotificationManager.createNotificationChannelGroup(channelGroup);
+        NotificationChannel channel = predefinedChannel.toNotificationChannel(mResources);
+        mNotificationManager.createNotificationChannel(channel);
     }
 }
