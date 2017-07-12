@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fe5876e_058f9756",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-12T19:14:42Z",
+      "side": 1,
+      "message": "To do this I am figuring we\u0027d need to do some mix/subset of:\n\n- merge/map from LayerAnimationElement::AnimatableProperty to cc::TargetProperty\n- review every LayerAnimationElement subclass in layer_animation_element.cc\n- revise LayerAnimator logic that mutates animation queue to maintain the union mentioned below\n\nI recognize the patch as currently written will produce a transform/effect node for every layer for which we create a LayerAnimator. Is that every layer in CrOS? Is that too expensive, or potentially ok?\n\nIn the failing browser test for ScreenlockApi extension it appears there are ballpark 150 layers.",
+      "range": {
+        "startLine": 153,
+        "startChar": 45,
+        "endLine": 153,
+        "endChar": 58
+      },
+      "revId": "faeb903a219c93fd5211fe595b2f3b0497e46481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
