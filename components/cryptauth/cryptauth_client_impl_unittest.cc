@@ -276,6 +276,25 @@ TEST_F(CryptAuthClientTest, FindEligibleUnlockDevicesFailure) {
   EXPECT_EQ(kStatus403Error, error_message);
 }
 
+TEST_F(CryptAuthClientTest, FindEligibleForPromotionSuccess) {
+  ExpectRequest(
+      "https://www.testgoogleapis.com/cryptauth/v1/deviceSync/"
+      "findeligibleforpromotion?alt=proto");
+
+  FindEligibleForPromotionResponse result_proto;
+  client_->FindEligibleForPromotion(
+      FindEligibleForPromotionRequest(),
+      base::Bind(&SaveResult<FindEligibleForPromotionResponse>, &result_proto),
+      base::Bind(&NotCalled<std::string>),
+      PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+
+  FindEligibleForPromotionRequest expected_request;
+  EXPECT_TRUE(expected_request.ParseFromString(serialized_request_));
+
+  FindEligibleForPromotionResponse response_proto;
+  FinishApiCallFlow(&response_proto);
+}
+
 TEST_F(CryptAuthClientTest, SendDeviceSyncTickleSuccess) {
   ExpectRequest(
       "https://www.testgoogleapis.com/cryptauth/v1/deviceSync/"
