@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47dd64f3_3100f43f",
+        "filename": "extensions/renderer/api_activity_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T14:02:59Z",
+      "side": 1,
+      "message": "nit: this won\u0027t be torn down in the event of ASSERT_EQ failing (since that does an early return), and will leave it on for the remainder of the test process. You might consider a scoped variable of some kind to ensure that it is reset on all exit paths. (e.g. with base::AutoReset, or a little class in this file).",
+      "revId": "03a3a524d98ef8cc781b36d6652cb820e1a4035c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
