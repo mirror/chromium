@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "70a6ba6e_f3e1ff78",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-12T23:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ddcbfab_26fc8625",
+      "range": {
+        "startLine": 83,
+        "startChar": 11,
+        "endLine": 83,
+        "endChar": 33
+      },
+      "revId": "cbc95170fc45358f98ab07d48d07e51f935edf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9b9a16e_a02464fe",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -188,6 +212,30 @@
       "revId": "cbc95170fc45358f98ab07d48d07e51f935edf28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48428678_36bd0d7e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-12T23:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd45904_2a99e02b",
+      "range": {
+        "startLine": 1306,
+        "startChar": 22,
+        "endLine": 1306,
+        "endChar": 23
+      },
+      "revId": "cbc95170fc45358f98ab07d48d07e51f935edf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
