@@ -56,7 +56,7 @@ class ControllerImpl : public Controller,
 
   // Controller implementation.
   void Initialize() override;
-  const StartupStatus* GetStartupStatus() override;
+  State GetState() override;
   void StartDownload(const DownloadParams& params) override;
   void PauseDownload(const std::string& guid) override;
   void ResumeDownload(const std::string& guid) override;
@@ -179,6 +179,13 @@ class ControllerImpl : public Controller,
   // Kills the downloads which have surpassed their cancel_after time.
   void KillTimedOutDownloads();
 
+  // Recovery methods.  This is used to destroy any service state.
+  void StartRecovery();
+  void OnFileMonitorFinishedRecovery(std::vector<base::FilePath> removed_files);
+  void OnModelFinishedRecovery(std::vector<base::FilePath> removed_files,
+                               std::vector<std::string> driver_guids);
+  void OnDriverFinishedRecovery();
+
   Configuration* config_;
 
   // The directory in which the downloaded files are stored.
@@ -194,11 +201,7 @@ class ControllerImpl : public Controller,
   std::unique_ptr<FileMonitor> file_monitor_;
 
   // Internal state.
-  // Is set to true if this class is currently in the process of initializing
-  // it's internal state.  This will be false until |startup_status_| signals it
-  // is complete *and* all internal structures are set up.  This is to prevent
-  // outside signals from triggering state updates before we are ready.
-  bool initializing_internals_;
+  State controller_state_;
   StartupStatus startup_status_;
   std::set<std::string> externally_active_downloads_;
   std::map<std::string, DownloadParams::StartCallback> start_callbacks_;

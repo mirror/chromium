@@ -25,6 +25,7 @@ struct Entry;
 class FileMonitor {
  public:
   using InitCallback = base::Callback<void(bool)>;
+  using RecoverCallback = base::Callback<void(std::vector<base::FilePath>)>;
 
   // Creates the file directory for the downloads if it doesn't exist.
   virtual void Initialize(const InitCallback& callback) = 0;
