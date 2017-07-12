@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba18e1ea_a6267abe",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T13:51:44Z",
+      "side": 1,
+      "message": "I think It might be simpler to early return when length\u003d\u003d0.",
+      "range": {
+        "startLine": 702,
+        "startChar": 25,
+        "endLine": 702,
+        "endChar": 0
+      },
+      "revId": "e689edf60c3df81628417603987facdb2a4e1f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51195042_e5356533",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T13:51:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e689edf60c3df81628417603987facdb2a4e1f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac06e01_b6ac0092",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T13:51:44Z",
+      "side": 1,
+      "message": "remove this line if this is test code.",
+      "revId": "e689edf60c3df81628417603987facdb2a4e1f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
