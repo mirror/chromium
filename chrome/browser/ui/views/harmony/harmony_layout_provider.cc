@@ -30,10 +30,19 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
       // margin we need to subtract out the padding.
       return kVisibleMargin - kHarmonyLayoutUnit / 4;
     }
+    case views::DistanceMetric::DISTANCE_CONTROL_HEIGHT:
+      // This happens to be the default font size (12) plus kHarmonyLayoutUnit.
+      // But font size is different to the font _height_, so the way controls
+      // adapt for font height is only loosely linked to this constant.
+      return 28;
     case views::DISTANCE_RELATED_BUTTON_HORIZONTAL:
       return kHarmonyLayoutUnit / 2;
     case views::DISTANCE_RELATED_CONTROL_HORIZONTAL:
       return kHarmonyLayoutUnit;
+    case DISTANCE_DIALOG_INPUT_FIELD_HORIZONTAL_INDENT:
+      return 0;
+    case DISTANCE_INPUT_LABEL_MINIMIUM_WIDTH:
+      return kHarmonyLayoutUnit * 7;
     case DISTANCE_RELATED_CONTROL_HORIZONTAL_SMALL:
       return kHarmonyLayoutUnit;
     case views::DISTANCE_RELATED_CONTROL_VERTICAL:

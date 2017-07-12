@@ -61,6 +61,9 @@ enum DistanceMetric {
   // The distance between a dialog's edge and the close button in the upper
   // trailing corner.
   DISTANCE_CLOSE_BUTTON_MARGIN,
+  // The preferred default height of controls when they appear in a standard
+  // layout.
+  DISTANCE_CONTROL_HEIGHT,
   // Margin between the bottom edge of a dialog and a contained button.
   DISTANCE_DIALOG_BUTTON_BOTTOM_MARGIN,
   // The default minimum width of a dialog button.

@@ -29,6 +29,10 @@ int ChromeLayoutProvider::GetDistanceMetric(int metric) const {
       return 48;
     case DISTANCE_CONTROL_LIST_VERTICAL:
       return GetDistanceMetric(views::DISTANCE_UNRELATED_CONTROL_VERTICAL);
+    case DISTANCE_DIALOG_INPUT_FIELD_HORIZONTAL_INDENT:
+      return 30;
+    case DISTANCE_INPUT_LABEL_MINIMIUM_WIDTH:
+      return 0;
     case DISTANCE_RELATED_CONTROL_HORIZONTAL_SMALL:
       return 8;
     case DISTANCE_RELATED_CONTROL_VERTICAL_SMALL:

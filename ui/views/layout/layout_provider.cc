@@ -74,6 +74,8 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
       return 0;
     case DistanceMetric::DISTANCE_CLOSE_BUTTON_MARGIN:
       return 7;
+    case DistanceMetric::DISTANCE_CONTROL_HEIGHT:
+      return 28;
     case DistanceMetric::DISTANCE_RELATED_BUTTON_HORIZONTAL:
       return 6;
     case DistanceMetric::DISTANCE_RELATED_CONTROL_HORIZONTAL:

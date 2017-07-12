@@ -17,6 +17,11 @@ enum ChromeDistanceMetric {
   DISTANCE_BUTTON_MINIMUM_WIDTH = views::VIEWS_DISTANCE_END,
   // Vertical spacing between a list of multiple controls in one column.
   DISTANCE_CONTROL_LIST_VERTICAL,
+  // Horizontal indent of input fields on a web-modal dialog, relative to the
+  // dialog title and message. Not used for bubbles.
+  DISTANCE_DIALOG_INPUT_FIELD_HORIZONTAL_INDENT,
+  // Minimum width of the Label labeling a Textfield.
+  DISTANCE_INPUT_LABEL_MINIMIUM_WIDTH,
   // Smaller horizontal spacing between other controls that are logically
   // related.
   DISTANCE_RELATED_CONTROL_HORIZONTAL_SMALL,

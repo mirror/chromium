@@ -220,8 +220,9 @@ void MdTextButton::UpdatePadding() {
       label()->font_list().GetFontSize() -
       style::GetFont(style::CONTEXT_BUTTON_MD, style::STYLE_PRIMARY)
           .GetFontSize();
-  const int kBaseHeight = 28;
-  int target_height = std::max(kBaseHeight + size_delta * 2,
+  LayoutProvider* provider = LayoutProvider::Get();
+  const int base_height = provider->GetDistanceMetric(DISTANCE_CONTROL_HEIGHT);
+  int target_height = std::max(base_height + size_delta * 2,
                                label()->font_list().GetFontSize() * 2);
 
   int label_height = label()->GetPreferredSize().height();
@@ -231,8 +232,8 @@ void MdTextButton::UpdatePadding() {
 
   // TODO(estade): can we get rid of the platform style border hoopla if
   // we apply the MD treatment to all buttons, even GTK buttons?
-  const int horizontal_padding = LayoutProvider::Get()->GetDistanceMetric(
-      DISTANCE_BUTTON_HORIZONTAL_PADDING);
+  const int horizontal_padding =
+      provider->GetDistanceMetric(DISTANCE_BUTTON_HORIZONTAL_PADDING);
   SetBorder(CreateEmptyBorder(top_padding, horizontal_padding, bottom_padding,
                               horizontal_padding));
 }
