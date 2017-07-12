@@ -16,6 +16,24 @@
       "revId": "be71d2fd707d865f012ee9968e361cc12bc52e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be914542_1352fe46",
+        "filename": "third_party/WebKit/Source/core/page/ScopedWindowFocusAllowedIndicator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-12T23:06:51Z",
+      "side": 1,
+      "message": "- This class is a helper for ExecutionContext member functions.  So this file may be put to a directory same as ExecutionContext.",
+      "parentUuid": "3e1416bb_3ef7a450",
+      "revId": "be71d2fd707d865f012ee9968e361cc12bc52e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
