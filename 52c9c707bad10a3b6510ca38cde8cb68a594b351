@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec7201b6_28a360ad",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-12T18:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09568880_e2344514",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96676843_34b6aeb7",
         "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbba789b_f55157c0",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-12T18:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "96676843_34b6aeb7",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b0053fd8_f2dafcac",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-12T18:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08562050_d55646b3",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b8492d_1743b3e9",
         "filename": "components/safe_browsing/features.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-12T17:09:54Z",
       "side": 1,
       "message": "How about a map?  std::unordered_map or std::map? Is this because vector and pair easier to handle via JS?",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6f3f8b_be5ada8c",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-12T18:21:21Z",
+      "side": 1,
+      "message": "It would be the same in terms of being handled via JS, since I pass a base::ListValue instead of the vector. I initially went for a vector, cos very few elements, contiguous memory, and only one iteration begining-\u003eend instead of random look ups. But std::unordered_map would also be a good idea since the first element is a pointer.",
+      "parentUuid": "a6b8492d_1743b3e9",
       "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f9f892f6_2d5e3f78",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-12T18:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3d0ce00_688114e0",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02b2e6f_d8abee4d",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a61fdf73_c56da3e8",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-12T18:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f02b2e6f_d8abee4d",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d13cc5e1_9083eea7",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c36f17_6400837f",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-12T18:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d13cc5e1_9083eea7",
+      "revId": "52c9c707bad10a3b6510ca38cde8cb68a594b351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
