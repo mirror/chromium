@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5631025f_feae7e52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80af663e_88c3645d",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25ea4247_fffdb7ed",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T01:25:46Z",
       "side": 1,
       "message": "How can you be sure the application state changes happened due to an installation as opposed to user action while install was in progress? Especially given that we wait up to 3 minutes for installation.\n\nI see use disregard state changes involving Chrome no longer being visible, but for example touching YouTube link could trigger an intent picker that would cause ActivityState.PAUSED.",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67609dba_c4ddd8df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not that well versed on this. For now, I\u0027ve directly matched the existing functionality that\u0027s been there for about 3 years now. Maybe we should investigate this a little further.",
+      "parentUuid": "25ea4247_fffdb7ed",
       "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ca751c18_286c7fae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4378caa_cef83c7b",
+      "range": {
+        "startLine": 46,
+        "startChar": 27,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b1fd75e_40a551af",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd408fa_4d19b7ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b1fd75e_40a551af",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "5ddb6c89_69dfe881",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9917afc_3a6b7ab8",
+      "range": {
+        "startLine": 91,
+        "startChar": 66,
+        "endLine": 91,
+        "endChar": 67
+      },
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29d6181b_bd630ea2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
         "patchSetId": 2
@@ -110,6 +212,24 @@
       "writtenOn": "2017-07-12T01:25:46Z",
       "side": 1,
       "message": "\"Exposed to allow manual triggering in tests;\", so add @VisibleForTesting?",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6a0e52_b317b180",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "@VisibleForTesting is only needed if the method isn\u0027t called in non test code (otherwise it gets stripped out and the test crashes).",
+      "parentUuid": "29d6181b_bd630ea2",
       "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "88b02f66_ee56cdd5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "Should be impossible because there\u0027s a 1-1 relationship between an app banner infobar delegate and the app it\u0027s trying to install.",
+      "parentUuid": "7493fa36_827f0c72",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e073046_6f8b3f1b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
         "patchSetId": 2
@@ -147,6 +285,24 @@
       "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58277d5a_c143e381",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e073046_6f8b3f1b",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "ac23e588_1a9f0471",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "In case another observer cares about the state. Seems safest to expose it for now.",
+      "parentUuid": "fda64a11_efaa30a2",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea811350_c5feef5e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
         "patchSetId": 2
@@ -178,6 +352,24 @@
       "writtenOn": "2017-07-12T01:25:46Z",
       "side": 1,
       "message": "Please ignore me, but this line is scary wrt. using mWebApkPackage if passing null as appData :/",
+      "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c6ff2b_c9dbded2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-12T04:13:46Z",
+      "side": 1,
+      "message": "I dislike all of this WebAPK specialisation as much as you and I want to get rid of as much as if as possible......",
+      "parentUuid": "ea811350_c5feef5e",
       "revId": "858df335ba8a1b02d86bd1efe37f24e54bcb70b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
