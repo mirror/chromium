@@ -372,7 +372,9 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
   // VideoFrameMetadata), clients should not assume the data pointers are
   // valid.
   void AddDestructionObserver(const base::Closure& callback);
-
+  // TODO(mcasas): migrate users of the previous method to this one,
+  // https://crbug.com/740794
+  void AddDestructionObserver(base::OnceClosure callback);
   // Returns a dictionary of optional metadata.  This contains information
   // associated with the frame that downstream clients might use for frame-level
   // logging, quality/performance optimizations, signaling, etc.
@@ -543,6 +545,7 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
 #endif
 
   std::vector<base::Closure> done_callbacks_;
+  std::vector<base::OnceClosure> done_once_callbacks_;
 
   base::TimeDelta timestamp_;
 
