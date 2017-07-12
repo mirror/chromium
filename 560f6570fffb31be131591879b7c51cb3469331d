@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "755cf974_9fbc2a99",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-12T15:34:44Z",
+      "side": 1,
+      "message": "Can you add a comment for what we discussed as the reason behind these conditionals?",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 56
+      },
+      "revId": "560f6570fffb31be131591879b7c51cb3469331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
