@@ -60,6 +60,29 @@
     },
     {
       "key": {
+        "uuid": "a4de86d1_1b7035b8",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-12T15:48:55Z",
+      "side": 1,
+      "message": "Not related to this CL, but why do we need to keep all these files handles around?  Is this just to prevent the OS from destroying them?  If so, maybe document that?",
+      "range": {
+        "startLine": 210,
+        "startChar": 20,
+        "endLine": 210,
+        "endChar": 30
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe9d0200_772ed3d6",
         "filename": "net/log/file_net_log_observer.cc",
         "patchSetId": 1
@@ -94,6 +117,52 @@
       "writtenOn": "2017-07-12T14:57:07Z",
       "side": 1,
       "message": "optional nit: maybe get rid of the curly braces",
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f09ad33_8f1dd40d",
+        "filename": "net/log/file_net_log_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-12T15:48:55Z",
+      "side": 1,
+      "message": "nit:  In net/, I think we generally use braces for all if/elses.",
+      "range": {
+        "startLine": 164,
+        "startChar": 28,
+        "endLine": 164,
+        "endChar": 35
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610d1c07_dfc4f23d",
+        "filename": "net/log/file_net_log_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-12T15:48:55Z",
+      "side": 1,
+      "message": "Should we also have a test with a bounded log where we can create one file but not another?  (Say we can create the constants file and first log file, but the second one fails?)  Not entirely sure it\u0027s worth the effort.",
+      "range": {
+        "startLine": 307,
+        "startChar": 7,
+        "endLine": 307,
+        "endChar": 29
+      },
       "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
