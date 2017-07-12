@@ -75,8 +75,9 @@ void CdmSessionAdapter::GetStatusForPolicy(
   cdm_->GetStatusForPolicy(min_hdcp_version, std::move(promise));
 }
 
-WebContentDecryptionModuleSessionImpl* CdmSessionAdapter::CreateSession() {
-  return new WebContentDecryptionModuleSessionImpl(this);
+std::unique_ptr<WebContentDecryptionModuleSessionImpl>
+CdmSessionAdapter::CreateSession() {
+  return base::MakeUnique<WebContentDecryptionModuleSessionImpl>(this);
 }
 
 bool CdmSessionAdapter::RegisterSession(
