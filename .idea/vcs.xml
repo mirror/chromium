@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/breakpad/src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/buildtools" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/autodiscovery" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/dom_perf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/mach_ports" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/memory_test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/mozilla_js_tests" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/page_cycler" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/selenium_core" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/tab_switching" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/google_apis/internal" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/internal_gyp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/native_client" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/remoting/internal" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/sdch/open-vcdiff" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/angle" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/bidichecker" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/catapult" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/chromite" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/cros_system_api" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/depot_tools" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/ffmpeg" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/flac" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/gles2_conform" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/hunspell_dictionaries" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/icu" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/khronos_glcts" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/libjpeg_turbo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/libsrtp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/libyuv" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/lss" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/openmax_dl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/pdfium" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/pyelftools" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/scons-2.0.1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/skia" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/swiftshader" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/webpagereplay" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/webrtc" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/xdg-utils" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tools/gyp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tools/swarming_client" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/v8" vcs="Git" />
+  </component>
+</project>
