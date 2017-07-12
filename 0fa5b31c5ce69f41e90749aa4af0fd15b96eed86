@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "233d2225_5315309e",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-12T20:52:30Z",
+      "side": 1,
+      "message": "Hmm, this DCHECK is failing on bots because ready_state_ is kErrorOccurred.\n\nHow about moving the code related to |streamer_| at Lines 246--260 to after |if (!script_state) return  false| at Line 272--273?\nThis will avoid the DCHECK failure (because ready_state_ is checked first at Line 264), and is probably safer because we don\u0027t modify |this| unless the (non-modifying) checks on ready_state_ and document/ScriptState pass.",
+      "revId": "0fa5b31c5ce69f41e90749aa4af0fd15b96eed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
