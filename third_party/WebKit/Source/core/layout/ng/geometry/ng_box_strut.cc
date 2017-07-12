@@ -18,6 +18,42 @@ bool NGBoxStrut::operator==(const NGBoxStrut& other) const {
          std::tie(inline_start, inline_end, block_start, block_end);
 }
 
+NGPhysicalBoxStrut NGBoxStrut::ConvertToPhysical(
+    NGWritingMode writing_mode,
+    TextDirection direction) const {
+  switch (writing_mode) {
+    case kHorizontalTopBottom:
+      if (direction == TextDirection::kLtr)
+        return NGPhysicalBoxStrut(block_start, inline_end, block_end,
+                                  inline_start);
+      else
+        return NGPhysicalBoxStrut(block_start, inline_start, block_end,
+                                  inline_end);
+    case kVerticalRightLeft:
+    case kSidewaysRightLeft:
+      if (direction == TextDirection::kLtr)
+        return NGPhysicalBoxStrut(inline_start, block_start, inline_end,
+                                  block_end);
+      else
+        return NGPhysicalBoxStrut(inline_end, block_start, inline_start,
+                                  block_end);
+    case kVerticalLeftRight:
+      if (direction == TextDirection::kLtr)
+        return NGPhysicalBoxStrut(inline_start, block_end, inline_end,
+                                  block_start);
+      else
+        return NGPhysicalBoxStrut(inline_end, block_end, inline_start,
+                                  block_start);
+    case kSidewaysLeftRight:
+      if (direction == TextDirection::kLtr)
+        return NGPhysicalBoxStrut(inline_end, block_end, inline_start,
+                                  block_start);
+      else
+        return NGPhysicalBoxStrut(inline_start, block_end, inline_end,
+                                  block_start);
+  }
+}
+
 // Converts physical dimensions to logical ones per
 // https://drafts.csswg.org/css-writing-modes-3/#logical-to-physical
 NGBoxStrut NGPhysicalBoxStrut::ConvertToLogical(NGWritingMode writing_mode,
