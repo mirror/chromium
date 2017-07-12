@@ -3125,7 +3125,7 @@
             ]
         }
     ],
-    "TLS13Negotiation": [
+    "TLS13Variant": [
         {
             "platforms": [
                 "android",
@@ -3137,10 +3137,7 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "NegotiateTLS13"
-                    ]
+                    "name": "DraftEnabled"
                 }
             ]
         }
