@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71cefcb2_3c18c7d1",
+        "filename": "ios/web/public/test/embedded_test_server_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-12T17:54:47Z",
+      "side": 1,
+      "message": "We should not use globals.\n\nHow about starting a design doc to propose EmbeddedTestServer infrastructure for EG, ios_web_inttests and ios_web_view_inttests? ios_web_view_inttests has some infrastructure, but we should come up with common vision of using EmbeddedTestServer on ios. Designing test helpers is something that we should get baxley@ involved and give ios team a change to comment on design.",
+      "range": {
+        "startLine": 17,
+        "startChar": 21,
+        "endLine": 17,
+        "endChar": 39
+      },
+      "revId": "c937f1c9b64809ff8102bc90eafdb4fd33dec3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
