@@ -16,6 +16,24 @@
       "revId": "bfc0f625fcce9bfd052533023c95e5ae1b7f5a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d965f0a_603d96a7",
+        "filename": "ios/chrome/browser/ui/settings/clear_browsing_data_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-12T21:50:40Z",
+      "side": 1,
+      "message": "There\u0027s a code path that clears the browsing data when the user logs out of their account. IIRC it is behind a feature flag currently, but I figured better safe than sorry.",
+      "parentUuid": "baa1bc46_c1088a1a",
+      "revId": "bfc0f625fcce9bfd052533023c95e5ae1b7f5a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
