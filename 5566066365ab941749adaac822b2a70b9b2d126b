@@ -16,6 +16,24 @@
       "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a3b35d_eaaba3b0",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-12T01:33:42Z",
+      "side": 1,
+      "message": "IIUC at this point in the rules the distinction is minimal but technically I think we should be using the configuration under which the rule is currently being evaluated, which is \"current\" - the \"target\" is, I think, only different from \"current\" in the BUILDCONFIG, where we need to understand the host and target toolchain properties.\n\nBut having read the GN docs I\u0027m afraid I\u0027m still not really sure.",
+      "parentUuid": "bdfd4295_75758341",
+      "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
