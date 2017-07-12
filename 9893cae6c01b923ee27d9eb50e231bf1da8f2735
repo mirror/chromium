@@ -16,6 +16,24 @@
       "revId": "9893cae6c01b923ee27d9eb50e231bf1da8f2735",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890d0a54_636176c4",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-12T00:57:03Z",
+      "side": 1,
+      "message": "I can go either way, but I made it more explicit because the request was being std::move()\u0027ed at the end of the code block. Felt it would aid in readability this way. Let me know if you\u0027d rather this be put back to auto\u0026.",
+      "parentUuid": "9edaf7d5_f691161b",
+      "revId": "9893cae6c01b923ee27d9eb50e231bf1da8f2735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
