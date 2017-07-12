@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "afe70c30_fb078664",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-12T20:32:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed611061_03c71f55",
+      "revId": "9b736459856cb74067149a125eb262ef99cad4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24fafba9_90453146",
         "filename": "third_party/WebKit/Tools/Scripts/wpt-export",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T19:11:39Z",
       "side": 1,
       "message": "The credentials are still required here (is that intentional?)",
+      "revId": "9b736459856cb74067149a125eb262ef99cad4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f348d7_b5f75e2c",
+        "filename": "third_party/WebKit/Tools/Scripts/wpt-export",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-12T20:32:33Z",
+      "side": 1,
+      "message": "Yep, it\u0027s intentional here -- if I omit this and run wpt-export, it errors out with an KeyError that\u0027s not very helpful. If I include required\u003dTrue here and run wpt-export without --credentials-json, then it will complain specifically that --credentials-json is required.\n\nDoes this seem like what we want? Also, when I run wpt-export locally, what Gerrit credentials should I use? Do you think it\u0027d be a good idea to prompt for credentials if --credentials-json isn\u0027t given for the exporter?",
+      "parentUuid": "24fafba9_90453146",
       "revId": "9b736459856cb74067149a125eb262ef99cad4ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
