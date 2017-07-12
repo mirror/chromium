@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "524421c5_672751a8",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-12T14:11:49Z",
+      "side": 1,
+      "message": "Simplify a bit to \"The Contents.json file must not be copied\"\n\n(As written, this comment can be interpreted to say that Contents.json contains a list of files that must not be copied.)",
+      "revId": "7a084179bf6d8b9a6c223741975567500b06f0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
