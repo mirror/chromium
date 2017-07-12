@@ -104,6 +104,24 @@
       "revId": "723e412322d97be01f8e18ae5a41d76363da536d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414a725f_a5f6f7b2",
+        "filename": "ui/app_list/views/search_result_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-12T00:03:27Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "c1cc368a_05304763",
+      "revId": "723e412322d97be01f8e18ae5a41d76363da536d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
