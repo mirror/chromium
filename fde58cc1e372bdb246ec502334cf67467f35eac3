@@ -94,6 +94,30 @@
       "revId": "fde58cc1e372bdb246ec502334cf67467f35eac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bbfb81_62b94711",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-12T23:11:16Z",
+      "side": 1,
+      "message": "I moved ResourceCoordinatorWebContentsObserver out of resource_coordinator namespace.",
+      "parentUuid": "4fdc8cb9_17a1b6bb",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "fde58cc1e372bdb246ec502334cf67467f35eac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
