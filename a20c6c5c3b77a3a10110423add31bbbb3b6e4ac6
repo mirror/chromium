@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70c4b21d_e0c5a4f5",
+        "filename": "ash/system/tray/tray_event_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "Is the reason that you have to change PointerWatcher to use NativeView because the hit target you want for the virtual keyboard isn\u0027t the same as its views::Widget? If so, you might say that in the CL description and a comment here.\n\nSide-comment: I have a hard time understanding the virtual keyboard code. The fact that it adds and removes an ash container dynamically is strange. I had to ask Sadrul if the keyboard is hosted in a widget or not -- I couldn\u0027t figure it out from code search. :-(",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dca4f2f_bc6af659",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "nit: Don\u0027t put tests in a \"test\" namespace. I only use that namespace for test utility classes (like AshTestBase).\n\nIf possible put all the code in the anonymous namespace, which will make linking just a little bit faster.",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a0a335_d5449bab",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "I would add a comment saying something like \"Simulate the virtual keyboard being open. In production the virtual keyboard container only exists while the keyboard is open.\" Or something similar.\n\noptional: It might be a little clearer if you created the container only in the test for virtual keyboard clicks.",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e686de_9771dc90",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "Do you have to create your own menu container? AshTestBase creates one for you, which you can access via RootWindowController::GetContainer().",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe197bf4_1cdba087",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "This might be clearer if it was named popup_widget_ (and the window popup_window_). I initially confused it with a widget in the status area.\n\nAlso, it might be clearer to create this only in the test of popup clicks.",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51c649d_141df1e2",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "Do you have to create your own StatusAreaWidget? AshTestBase makes one for you, which you can access via StatusAreaWidgetTestHelper.",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5c466c_3c4afacb",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "optional: This is fine, but for test code I\u0027m OK with making the member variables protected and just using them directly in the tests. It avoids some typing for these sorts of accessors.",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65527806_95428a2f",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "Thank you for adding test coverage, not only for your bug but also for the other cases!\n\nThese are nice tests -- I like how they are short and have the pattern of comment/action/expectation.",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea6c984_0811d58e",
+        "filename": "chrome/browser/ui/ash/app_list/app_list_presenter_delegate_mus.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "nit: ( after \u0026\u0026 not needed",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a800b4_af747cc6",
+        "filename": "ui/views/pointer_watcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-12T17:30:23Z",
+      "side": 1,
+      "message": "super-nit: I would also comment that the Widget might not be a top-level widget (since you had to add calls to GetTopLevelWidgetForNativeView in many places).",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
