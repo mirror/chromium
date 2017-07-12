@@ -174,6 +174,24 @@
     },
     {
       "key": {
+        "uuid": "c16a0afd_33ec19d4",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-12T21:25:52Z",
+      "side": 1,
+      "message": "It makes no practical difference because they both happen in side the same call stack. But is this one actually earlier? I would expect WebContentsObserver one to come earlier since at that point, WebContentsImpl is still alive, and user data to be deleted after WebContentsImpl destructor has run.",
+      "parentUuid": "17d44779_c90dd502",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8b8b844_220527ba",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
         "patchSetId": 6
