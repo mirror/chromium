@@ -146,6 +146,30 @@
     },
     {
       "key": {
+        "uuid": "e98b15e1_910e0681",
+        "filename": "net/log/file_net_log_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-12T16:09:22Z",
+      "side": 1,
+      "message": "rch@ convinced me the other day that no braces for single-statement if/else is okay. He\u0027s being using the no braces style for single-statement if/else.\n\nI don\u0027t feel strong about it. The style guide isn\u0027t explicit. https://google.github.io/styleguide/cppguide.html#Conditionals",
+      "parentUuid": "9f09ad33_8f1dd40d",
+      "range": {
+        "startLine": 164,
+        "startChar": 28,
+        "endLine": 164,
+        "endChar": 35
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "610d1c07_dfc4f23d",
         "filename": "net/log/file_net_log_observer_unittest.cc",
         "patchSetId": 1
