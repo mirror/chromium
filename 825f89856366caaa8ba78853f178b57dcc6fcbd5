@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1b533eb_1609d0c2",
+        "filename": "chrome/android/java/res/layout/history_clear_browsing_data_header.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:26:00Z",
+      "side": 1,
+      "message": "nit: This shouldn\u0027t be necessary",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b708e8b_19c4711b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:26:00Z",
+      "side": 1,
+      "message": "To circle back on this, can you grab a quick video or swing by my desk and demo this?  I\u0027m wondering if all history items get removed and if a loading view is shown.",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 18
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8615b9ab_49692afd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:26:00Z",
+      "side": 1,
+      "message": "I don\u0027t think we should initialize() each time we set the privacy disclaimer visibility.\n\nWe call #setPrivacyDisclaimerVisibility from #hasOtherFormsOfBrowsingData which is called separately from the main history query. With this initialize call, I think we will:\n\n1) Open history\n2) Issue a query\n3) Get results, display them\n4) Get a call to #hasOtherFormsOfBrowsingData\n5) Call initialize() which will kick off another history query",
+      "range": {
+        "startLine": 420,
+        "startChar": 8,
+        "endLine": 420,
+        "endChar": 18
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f8f263_c40db9e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:26:00Z",
+      "side": 1,
+      "message": "Similarly, I don\u0027t think we want an initialize() call here.",
+      "range": {
+        "startLine": 431,
+        "startChar": 8,
+        "endLine": 431,
+        "endChar": 18
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e605fa34_0d51258e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:26:00Z",
+      "side": 1,
+      "message": "nit: Let\u0027s add a JavaDoc for this constructor",
+      "range": {
+        "startLine": 116,
+        "startChar": 30,
+        "endLine": 116,
+        "endChar": 38
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d5013e_9fd437ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:26:00Z",
+      "side": 1,
+      "message": "nit: blank line before this one.",
+      "range": {
+        "startLine": 493,
+        "startChar": 8,
+        "endLine": 493,
+        "endChar": 13
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c847bb7a_948a7a6d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T15:26:00Z",
+      "side": 1,
+      "message": "@Nullable here is referring to headerItems, correct? If so, it would go in front of the param:\n\n\naddHeaders(@Nullable List\u003cHeaderItem\u003e headerItems)\n\nWe probably shouldn\u0027t allow the list to be null, though. Is there a use case where clients would need or want to call this with null?",
+      "range": {
+        "startLine": 495,
+        "startChar": 5,
+        "endLine": 495,
+        "endChar": 13
+      },
+      "revId": "825f89856366caaa8ba78853f178b57dcc6fcbd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
