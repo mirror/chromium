@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acef0996_80f60377",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_browser_tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-12T18:52:27Z",
+      "side": 1,
+      "message": "Should you reset run_loop_ to nullptr in TearDown?",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "e8bb81b91b1a2fe45821f0ea4a098a1f7b2bb866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5152f19_8dbb092c",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_browser_tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-12T18:52:27Z",
+      "side": 1,
+      "message": "nit: Add a message to the assertion since the default for EXPECT_TRUE won\u0027t be very helpful.\n\nEXPECT_TRUE(...) \u003c\u003c \"Request method must be POST or OPTIONS. It is \" \u003c\u003c request.method \u003c\u003c \".\";",
+      "range": {
+        "startLine": 36,
+        "startChar": 68,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "e8bb81b91b1a2fe45821f0ea4a098a1f7b2bb866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d19b37_66b71cfc",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_browser_tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-12T18:52:27Z",
+      "side": 1,
+      "message": "nit: Maybe remove report_received_callback_ and directly call the quit closure?",
+      "range": {
+        "startLine": 56,
+        "startChar": 38,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "e8bb81b91b1a2fe45821f0ea4a098a1f7b2bb866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea83d1f_7a48dc33",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_browser_tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-12T18:52:27Z",
+      "side": 1,
+      "message": "Optionally add a DCHECK_CURRENTLY_ON(BrowserThread::IO).",
+      "range": {
+        "startLine": 74,
+        "startChar": 52,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "e8bb81b91b1a2fe45821f0ea4a098a1f7b2bb866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654131fb_f499dd37",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_browser_tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-12T18:52:27Z",
+      "side": 1,
+      "message": "Is the idea that ReportRequestHandler() already does assertions so we don\u0027t need to do anything after this?",
+      "range": {
+        "startLine": 115,
+        "startChar": 18,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "e8bb81b91b1a2fe45821f0ea4a098a1f7b2bb866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
