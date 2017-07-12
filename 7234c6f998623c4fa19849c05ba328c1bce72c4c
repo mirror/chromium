@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3b8813ef_4aec7bd6",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-12T21:52:27Z",
+      "side": 1,
+      "message": "Why should this EG test be different from all other EG tests? In offline conversation I mentioned that non of EG tests (or other ios-specific tests) use this style. Also :: does not add anything to readability.",
+      "parentUuid": "943fa129_155dae07",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "7234c6f998623c4fa19849c05ba328c1bce72c4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79d73d57_a54ae921",
         "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
         "patchSetId": 7

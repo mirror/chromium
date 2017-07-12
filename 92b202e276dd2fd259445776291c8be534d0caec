@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54467241_25d3a7a8",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-12T21:52:27Z",
+      "side": 1,
+      "message": "Sorry, missed in the previous round. Please add comments per Style Guide: \"Every non-trivial interface, public and private, should have an accompanying comment describing its purpose and how it fits into the larger picture.\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b117bc3_5c009d8c",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-12T21:52:27Z",
+      "side": 1,
+      "message": "s/testUrl/testURL",
+      "range": {
+        "startLine": 106,
+        "startChar": 34,
+        "endLine": 106,
+        "endChar": 41
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18df2421_48fc78db",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-12T21:52:27Z",
+      "side": 1,
+      "message": "Do you even need these properties? They are not used anywhere and can be replaced by ivars.",
+      "range": {
+        "startLine": 115,
+        "startChar": 21,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89869fe_97b16b54",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-12T21:52:27Z",
+      "side": 1,
+      "message": "Could you please explain in the comments what are you trying to achieve by scrolling 2x of kScrollDisplacement",
+      "range": {
+        "startLine": 197,
+        "startChar": 9,
+        "endLine": 197,
+        "endChar": 49
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd096248_566dd766",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-12T21:52:27Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 213,
+        "startChar": 9,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
