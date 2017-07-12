@@ -33,13 +33,13 @@ def main():
   # Reinstall VrCore
   # TODO(bsheedy): Change this to work if VrCore is still installed as a system
   # app
-  dev.Install(os.path.join(host_paths.DIR_SOURCE_ROOT, 'third_party',
+  """dev.Install(os.path.join(host_paths.DIR_SOURCE_ROOT, 'third_party',
                            'gvr-android-sdk', 'test-apks', 'vr_services',
-                           'vr_services_current.apk'))
+                           'vr_services_current.apk'))"""
 
   # Install the NFC simulator APK
   # TODO(bsheedy): Find a better way to get path to generated APK
-  dev.Install(os.path.join(host_paths.DIR_SOURCE_ROOT, 'out', 'Release',
+  dev.Install(os.path.join(host_paths.DIR_SOURCE_ROOT, 'out', 'Debug',
                            'apks', 'VrNfcSimulator.apk'))
 
   # Setup VrCore

@@ -21,5 +21,4 @@ _top_level_dir = os.path.dirname(os.path.realpath(__file__))
 def Config(benchmark_subdirs):
   return chromium_config.ChromiumConfig(
       top_level_dir=_top_level_dir,
-      benchmark_dirs=[os.path.join(_top_level_dir, subdir)
-                      for subdir in benchmark_subdirs])
+      benchmark_dirs=[_top_level_dir])
