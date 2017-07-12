@@ -16,6 +16,24 @@
       "revId": "838686008c4578c83f682c3cf7ffdb2b2b175972",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52dc2408_a02aaa47",
+        "filename": "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-12T23:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d51729e7_e0e65925",
+      "revId": "838686008c4578c83f682c3cf7ffdb2b2b175972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
