@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97f9b37c_875175e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-12T23:00:25Z",
+      "side": 1,
+      "message": "I agree with you. Is this something you would like to see this addressed in this CL? I could always have the TabWebContentsDelegateAndroid.getContentVideoViewEmbedder() call AOMM.notifyOverlayModeChanged(), and remove the contents of onToggle (and add a deprecated tag).",
+      "parentUuid": "5b665a0e_50d4caf2",
+      "range": {
+        "startLine": 486,
+        "startChar": 16,
+        "endLine": 486,
+        "endChar": 36
+      },
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "579bd670_f52f570e",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
         "patchSetId": 1
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "58824fe2_468a1e34",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-12T23:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78deab66_9b4a307f",
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2625b93_0bd95229",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
         "patchSetId": 1
@@ -70,6 +112,24 @@
       "writtenOn": "2017-07-12T15:11:20Z",
       "side": 1,
       "message": "maybe setOverlayMode()?  the fact that it notifies folks is a side-effect.  one calls this when one wants to cause a change to the mode.",
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba505d1b_2f6b9501",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-12T23:00:25Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "c2625b93_0bd95229",
       "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "5b56c7bb_f63f334a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-12T23:00:25Z",
+      "side": 1,
+      "message": "Changed the condition",
+      "parentUuid": "35c7bd6a_6c42b393",
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64aba171_49c24a0f",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayProviderImpl.java",
         "patchSetId": 1
@@ -113,6 +191,30 @@
       "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ae4e81_5021fd45",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-12T23:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64aba171_49c24a0f",
+      "range": {
+        "startLine": 95,
+        "startChar": 37,
+        "endLine": 95,
+        "endChar": 49
+      },
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
