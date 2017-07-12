@@ -261,7 +261,7 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
     request->pending_responses.insert({client, ResponseType::kOSDump});
     auto os_callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpResponse,
                                   base::Unretained(this), client);
-    client->RequestOSMemoryDump({pid}, os_callback);
+    client->RequestOSMemoryDump({base::kNullProcessId}, os_callback);
 #endif  // !defined(OS_LINUX)
   }
 
@@ -415,12 +415,21 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
       os_dumps[extra_pid] = extra_dump;
     }
 
+#if defined(OS_LINUX)
     for (auto& kv : response.second.os_dumps) {
       const base::ProcessId pid = kv.first;
       const OSMemDump dump = kv.second;
       DCHECK_EQ(0u, os_dumps.count(pid));
       os_dumps[pid] = dump;
     }
+#else
+    const OSMemDumpMap& extra_os_dumps = response.second.os_dumps;
+    DCHECK_LE(extra_os_dumps.size(), 1u);
+    if (extra_os_dumps.size() == 1u) {
+      DCHECK_EQ(base::kNullProcessId, extra_os_dumps.begin()->first);
+      os_dumps[pid] = extra_os_dumps.begin()->second;
+    }
+#endif
   }
 
   std::map<base::ProcessId, mojom::ProcessMemoryDumpPtr> finalized_pmds;
