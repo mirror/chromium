@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "193126f6_0b922897",
+        "filename": "third_party/WebKit/Source/modules/mediasource/SourceBuffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-12T20:04:21Z",
+      "side": 1,
+      "message": "I prefer this style of receiving the notification via a common parse-warning path and enums indicating the specific warning. At lower layers you\u0027ve separated the warnings out into 2 callbacks - that feels heavier and I think it could be simplified to match this style. Your consumers of the warning callbacks always care about both warnings - I think that will continue to be true for future warnings as well.",
+      "range": {
+        "startLine": 1044,
+        "startChar": 19,
+        "endLine": 1044,
+        "endChar": 37
+      },
+      "revId": "5b55a7471868cbdb9b9188067e2de91dc8ce3b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d5b8f4_1a8595e0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15779,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-12T20:04:21Z",
+      "side": 1,
+      "message": "Friendly reminder to double check these when you rebase.",
+      "range": {
+        "startLine": 15779,
+        "startChar": 14,
+        "endLine": 15779,
+        "endChar": 18
+      },
+      "revId": "5b55a7471868cbdb9b9188067e2de91dc8ce3b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
