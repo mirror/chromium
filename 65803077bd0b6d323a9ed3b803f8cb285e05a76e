@@ -46,6 +46,30 @@
       "revId": "65803077bd0b6d323a9ed3b803f8cb285e05a76e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f41c8f8_350283c7",
+        "filename": "base/containers/small_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T09:10:46Z",
+      "side": 1,
+      "message": "Ah, sorry. I missed that we\u0027re using x to check if it\u0027s already in the map. I guess this is unavoidable.",
+      "parentUuid": "037cc0b6_54b91092",
+      "range": {
+        "startLine": 473,
+        "startChar": 27,
+        "endLine": 473,
+        "endChar": 39
+      },
+      "revId": "65803077bd0b6d323a9ed3b803f8cb285e05a76e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

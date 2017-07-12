@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51512dd8_d5abdc23",
+        "filename": "base/containers/small_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T09:10:46Z",
+      "side": 1,
+      "message": "Given that we can\u0027t perfectly forward in emplace(), I guess we should just duplicate now \u003d( Otherwise, if we\u0027re still using the internal vector buffer, then it needs to copy construct from |x| here.\n\nSorry for the churn.",
+      "range": {
+        "startLine": 423,
+        "startChar": 65,
+        "endLine": 423,
+        "endChar": 76
+      },
+      "revId": "29e3a95abaea16918decc5811e70dc72969e954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40cd7757_b4feaa99",
+        "filename": "base/containers/small_map_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T09:10:46Z",
+      "side": 1,
+      "message": "Please remove this line (I guess this is copy and pasted from the original, but the original shouldn\u0027t have it either \u003d)",
+      "range": {
+        "startLine": 571,
+        "startChar": 4,
+        "endLine": 571,
+        "endChar": 29
+      },
+      "revId": "29e3a95abaea16918decc5811e70dc72969e954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2d5a73_1c399679",
+        "filename": "base/containers/small_map_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T09:10:46Z",
+      "side": 1,
+      "message": "Just make the loop counter variables size_t type to avoid this cast.",
+      "range": {
+        "startLine": 594,
+        "startChar": 45,
+        "endLine": 594,
+        "endChar": 46
+      },
+      "revId": "29e3a95abaea16918decc5811e70dc72969e954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
