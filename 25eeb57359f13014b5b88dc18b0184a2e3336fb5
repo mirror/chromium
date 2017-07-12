@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a08f63f3_290f66b9",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5726,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-12T13:24:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51b0c1f7_10ab0be2",
+      "range": {
+        "startLine": 5726,
+        "startChar": 134,
+        "endLine": 5726,
+        "endChar": 135
+      },
+      "revId": "25eeb57359f13014b5b88dc18b0184a2e3336fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "284c79fd_269cb091",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-07-12T10:51:09Z",
       "side": 1,
       "message": "Nit: duplicate space",
+      "range": {
+        "startLine": 5772,
+        "startChar": 10,
+        "endLine": 5772,
+        "endChar": 11
+      },
+      "revId": "25eeb57359f13014b5b88dc18b0184a2e3336fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2afe84ec_98ccf2d6",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5772,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-12T13:24:35Z",
+      "side": 1,
+      "message": "Two spaces is actually the norm. Updated the other two locations.",
+      "parentUuid": "284c79fd_269cb091",
       "range": {
         "startLine": 5772,
         "startChar": 10,
