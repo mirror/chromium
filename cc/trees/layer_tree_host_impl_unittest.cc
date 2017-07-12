@@ -1495,6 +1495,73 @@ TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), overflow->CurrentScrollOffset());
 }
 
+TEST_F(LayerTreeHostImplTest, IsElementInList) {
+  ElementId element_id(42);
+  // Totally absent initially.
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+
+  SetupRootLayerImpl(LayerImpl::Create(host_impl_->active_tree(), 1));
+  LayerImpl* root = host_impl_->active_tree()->root_layer_for_testing();
+  root->SetElementId(element_id);
+  host_impl_->active_tree()->BuildPropertyTreesForTesting();
+  // Should see present in active tree, but not in pending.
+  EXPECT_TRUE(host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+
+  host_impl_->CreatePendingTree();
+  auto pending_root_owned = LayerImpl::Create(host_impl_->pending_tree(), 1);
+  auto* pending_root = pending_root_owned.get();
+  host_impl_->pending_tree()->SetRootLayerForTesting(
+      std::move(pending_root_owned));
+  pending_root->SetBounds(gfx::Size(50, 50));
+  pending_root->SetElementId(element_id);
+  pending_root->test_properties()->force_render_surface = true;
+  host_impl_->pending_tree()->BuildPropertyTreesForTesting();
+  // Should now see present in both pending and active.
+  EXPECT_TRUE(host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_TRUE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+
+  root->SetElementId(ElementId());
+  host_impl_->active_tree()->BuildPropertyTreesForTesting();
+  // Having cleared in active, we should now see present only in pending.
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_TRUE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+
+  host_impl_->ActivateSyncTree();
+  root->SetElementId(ElementId());
+  host_impl_->active_tree()->BuildPropertyTreesForTesting();
+  // Having swapped pending to become active, and then cleared from
+  // active, we should see the element in pending (actually, the
+  // recycle tree) but not in active.
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_TRUE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+}
+
+static LayerImpl* AddAnimatableLayer(LayerTreeImpl* tree, LayerImpl* root) {
+  root->test_properties()->AddChild(LayerImpl::Create(tree, 2));
+  LayerImpl* child = root->test_properties()->children[0];
+  child->SetBounds(gfx::Size(10, 10));
+  child->draw_properties().visible_layer_rect = gfx::Rect(10, 10);
+  child->SetDrawsContent(true);
+  // The layer to which we'll be subsequently adding an animation must
+  // have a transform node for the animation to be considered present
+  // in the tree and ticked. We force a render surface as a proxy to
+  // produce a transform node.
+  child->test_properties()->force_render_surface = true;
+  tree->SetElementIdsForTesting();
+  tree->BuildPropertyTreesForTesting();
+  return child;
+}
+
 TEST_F(LayerTreeHostImplTest, AnimationSchedulingPendingTree) {
   EXPECT_FALSE(host_impl_->CommitToActiveTree());
 
@@ -1507,15 +1574,7 @@ TEST_F(LayerTreeHostImplTest, AnimationSchedulingPendingTree) {
   root->SetBounds(gfx::Size(50, 50));
   root->test_properties()->force_render_surface = true;
 
-  root->test_properties()->AddChild(
-      LayerImpl::Create(host_impl_->pending_tree(), 2));
-  LayerImpl* child = root->test_properties()->children[0];
-  child->SetBounds(gfx::Size(10, 10));
-  child->draw_properties().visible_layer_rect = gfx::Rect(10, 10);
-  child->SetDrawsContent(true);
-
-  host_impl_->pending_tree()->SetElementIdsForTesting();
-
+  LayerImpl* child = AddAnimatableLayer(host_impl_->pending_tree(), root);
   AddAnimatedTransformToElementWithPlayer(child->element_id(), timeline(), 10.0,
                                           3, 0);
   host_impl_->pending_tree()->BuildPropertyTreesForTesting();
@@ -1563,13 +1622,7 @@ TEST_F(LayerTreeHostImplTest, AnimationSchedulingActiveTree) {
   root->SetBounds(gfx::Size(50, 50));
   root->test_properties()->force_render_surface = true;
 
-  root->test_properties()->AddChild(
-      LayerImpl::Create(host_impl_->active_tree(), 2));
-  LayerImpl* child = root->test_properties()->children[0];
-  child->SetBounds(gfx::Size(10, 10));
-  child->draw_properties().visible_layer_rect = gfx::Rect(10, 10);
-  child->SetDrawsContent(true);
-  host_impl_->active_tree()->SetElementIdsForTesting();
+  LayerImpl* child = AddAnimatableLayer(host_impl_->active_tree(), root);
 
   // Add a translate from 6,7 to 8,9.
   TransformOperations start;
@@ -1629,15 +1682,7 @@ TEST_F(LayerTreeHostImplTest, AnimationSchedulingCommitToActiveTree) {
   host_impl_->active_tree()->SetRootLayerForTesting(std::move(root_owned));
   root->SetBounds(gfx::Size(50, 50));
 
-  auto child_owned = LayerImpl::Create(host_impl_->active_tree(), 2);
-  auto* child = child_owned.get();
-  root->test_properties()->AddChild(std::move(child_owned));
-  child->SetBounds(gfx::Size(10, 10));
-  child->draw_properties().visible_layer_rect = gfx::Rect(10, 10);
-  child->SetDrawsContent(true);
-
-  host_impl_->active_tree()->SetElementIdsForTesting();
-
+  LayerImpl* child = AddAnimatableLayer(host_impl_->active_tree(), root);
   AddAnimatedTransformToElementWithPlayer(child->element_id(), timeline(), 10.0,
                                           3, 0);
 
@@ -1673,14 +1718,7 @@ TEST_F(LayerTreeHostImplTest, AnimationSchedulingOnLayerDestruction) {
   LayerImpl* root = *host_impl_->active_tree()->begin();
   root->SetBounds(gfx::Size(50, 50));
 
-  root->test_properties()->AddChild(
-      LayerImpl::Create(host_impl_->active_tree(), 2));
-  LayerImpl* child = root->test_properties()->children[0];
-  child->SetBounds(gfx::Size(10, 10));
-  child->draw_properties().visible_layer_rect = gfx::Rect(10, 10);
-  child->SetDrawsContent(true);
-
-  host_impl_->active_tree()->SetElementIdsForTesting();
+  LayerImpl* child = AddAnimatableLayer(host_impl_->active_tree(), root);
 
   // Add a translate animation.
   TransformOperations start;

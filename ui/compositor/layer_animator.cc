@@ -57,6 +57,14 @@ LayerAnimator::LayerAnimator(base::TimeDelta transition_duration)
       animation_metrics_reporter_(nullptr) {
   animation_player_ =
       cc::AnimationPlayer::Create(cc::AnimationIdProvider::NextPlayerId());
+  // The animator keeps this player around in advance of any actual
+  // animations coming into existence. Individual animations are
+  // kicked off by LayerAnimationElement instantiation. We mark the
+  // player as one that will change animating properties ahead of
+  // actual need so that it will report true for the various property
+  // specific has-potentially-animating method checks which, in turn,
+  // lead to creation of transform/effect nodes for the involved layer.
+  animation_player_->SetWillChangeAnimatingProperties(true);
 }
 
 LayerAnimator::~LayerAnimator() {
