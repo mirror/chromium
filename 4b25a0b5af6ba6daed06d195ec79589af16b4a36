@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad882938_41baaa97",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-12T06:38:10Z",
+      "side": 1,
+      "message": "To stay consistent with these tapDone, clearPasswordStore local helper methods, would it be better to keep tapBackArrow but change its implementation? Or are the other methods going to be removed later too?",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 15
+      },
+      "revId": "4b25a0b5af6ba6daed06d195ec79589af16b4a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
