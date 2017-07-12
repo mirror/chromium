@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3074868d_34da6d7a",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1979,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-12T21:19:52Z",
+      "side": 1,
+      "message": "Nit: I wonder if this would read more clearly separating out the Aura stuff into its own block, like:\n\n  bool init \u003d !initialized_ \u0026\u0026 details.is_add;\n  if (init) {\n    ... common stuff ...\n  }\n\n#if defined(USE_AURA)\n  if (init) {\n    ...\n  } else if (fullsceen_control_host_) {\n    ...\n  }\n#endif\n\nNot sure.",
+      "revId": "f03fd97a1bc44bd316d228d5d7682f674bd09147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
