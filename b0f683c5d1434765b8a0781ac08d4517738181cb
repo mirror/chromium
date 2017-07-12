@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54bb2a70_e2699ec9",
+        "filename": "content/common/push_messaging.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-12T16:24:29Z",
+      "side": 1,
+      "message": "Presumably this TODO is still needed because of e.g. PushPermissionStatus?",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "b0f683c5d1434765b8a0781ac08d4517738181cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67474c78_b74598d1",
+        "filename": "content/renderer/push_messaging/push_messaging_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-12T16:24:29Z",
+      "side": 1,
+      "message": "Is this for mojo::MakeRequest(\u0026push_messaging_manager_)?",
+      "revId": "b0f683c5d1434765b8a0781ac08d4517738181cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

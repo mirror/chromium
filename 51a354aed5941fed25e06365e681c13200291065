@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46ab5014_bc94b0b8",
+        "filename": "content/public/browser/browser_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-12T16:24:29Z",
+      "side": 0,
+      "message": "Oh, that\u0027s why incremental compiles always took so long after changes to push_messaging_status.h! Glad to see this becoming a forward declaration :)",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 53
+      },
+      "revId": "51a354aed5941fed25e06365e681c13200291065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
