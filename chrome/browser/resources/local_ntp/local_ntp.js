@@ -88,6 +88,7 @@ var IDS = {
   FAKEBOX: 'fakebox',
   FAKEBOX_INPUT: 'fakebox-input',
   FAKEBOX_TEXT: 'fakebox-text',
+  FAKEBOX_SPEECH: 'fakebox-speech',
   LOGO: 'logo',
   NOTIFICATION: 'mv-notice',
   NOTIFICATION_CLOSE_BUTTON: 'mv-notice-x',
@@ -131,6 +132,9 @@ var numColumnsShown = 0;
  * @type {Object}
  */
 var ntpApiHandle;
+
+
+var speechRecognition;
 
 
 /** @type {number} @const */
@@ -485,7 +489,8 @@ function isFakeboxFocused() {
  * @return {boolean} True if the click occurred in an enabled fakebox.
  */
 function isFakeboxClick(event) {
-  return $(IDS.FAKEBOX).contains(event.target);
+  return $(IDS.FAKEBOX).contains(event.target) &&
+      !$(IDS.FAKEBOX_SPEECH).contains(event.target);
 }
 
 
@@ -526,6 +531,36 @@ function handlePostMessage(event) {
   }
   // TODO(treib): Should we also handle the 'loaded' message from the iframe
   // here? We could hide the page until it arrives, to avoid flicker.
+}
+
+function initSpeech() {
+  console.log('initializing speech');
+  speechRecognition = new webkitSpeechRecognition();
+  speechRecognition.continuous = false;
+  speechRecognition.interimResults = true;
+  speechRecognition.lang = 'en-US';
+  speechRecognition.maxAlternatives = 4;
+  // speechRecognition.onerror = handleSpeechRecognitionError_;
+  // speechRecognition.onnomatch = handleSpeechRecognitionOnNoMatch_;
+  // speechRecognition.onend = handleSpeechRecognitionEnd_;
+  speechRecognition.onresult = handleSpeechRecognitionResult;
+  // speechRecognition.onaudiostart = handleSpeechRecognitionAudioStart_;
+  // speechRecognition.onspeechstart = handleSpeechRecognitionSpeechStart_;
+}
+
+
+function handleSpeechRecognitionResult(event) {
+  /** @const */ var results = event.results;
+  /** @const */ var resultsLength = results.length;
+  console.log('results: ' + resultsLength);
+  for (let j = 0; j < resultsLength; j++) {
+    /** @const */ var resultTranscript = results[j][0].transcript;
+    console.log(resultTranscript);
+    // speech.interimResult_ += resultTranscript;
+    // if (results[j][0].confidence > 0.5) {
+    //   speech.finalResult_ += resultTranscript;
+    // }
+  }
 }
 
 
@@ -578,6 +613,15 @@ function init() {
 
     $(IDS.FAKEBOX_TEXT).textContent =
         configData.translatedStrings.searchboxPlaceholder;
+
+    $(IDS.FAKEBOX_SPEECH).onmousedown = function(event) {
+      console.log('speech!');
+      if (!speechRecognition) {
+        initSpeech();
+      }
+      console.log('starting');
+      speechRecognition.start();
+    };
 
     // Listener for updating the key capture state.
     document.body.onmousedown = function(event) {
