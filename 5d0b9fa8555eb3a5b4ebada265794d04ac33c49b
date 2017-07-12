@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35db507f_10b2ae10",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-12T22:42:38Z",
+      "side": 0,
+      "message": "By looking at it as a user and by the Elements inspector - the ripple looks like it\u0027s 36px.",
+      "parentUuid": "fd1d82af_dd395b67",
+      "revId": "5d0b9fa8555eb3a5b4ebada265794d04ac33c49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67987a70_bb309017",
         "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T01:37:20Z",
       "side": 0,
       "message": "You\u0027ve removed on-keypress\u003d\"onCloseKeypress_\". Is this accidental?",
+      "revId": "5d0b9fa8555eb3a5b4ebada265794d04ac33c49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4859a2c9_fccf9026",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-12T22:42:38Z",
+      "side": 0,
+      "message": "Yes, I\u0027d mixed two different bug fixes and that\u0027s related to the other one. Putting it back for this CL.",
+      "parentUuid": "67987a70_bb309017",
       "revId": "5d0b9fa8555eb3a5b4ebada265794d04ac33c49b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
