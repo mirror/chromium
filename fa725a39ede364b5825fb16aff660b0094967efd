@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad8370b2_1f2e33b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-12T22:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b1023a9_84d68a90",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c741ff5f_2f004ced",
         "filename": "components/autofill/core/browser/autofill_assistant.h",
         "patchSetId": 26
@@ -45,6 +69,30 @@
       "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ac4698_53fdab65",
+        "filename": "components/autofill/core/browser/autofill_assistant.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-12T22:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c741ff5f_2f004ced",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "453563b1_8b591131",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-12T22:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0487b1d_ab07268f",
+      "range": {
+        "startLine": 413,
+        "startChar": 6,
+        "endLine": 413,
+        "endChar": 27
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62ce6a41_83a20c39",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 26
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f161882c_06f490cc",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-12T22:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62ce6a41_83a20c39",
+      "range": {
+        "startLine": 1410,
+        "startChar": 49,
+        "endLine": 1410,
+        "endChar": 70
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c8ac996_22109913",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 26
@@ -108,6 +204,24 @@
       "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516b699b_cee9f327",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-12T22:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c8ac996_22109913",
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "e9a528f7_107adf86",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-12T22:05:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f24d5171_55cd3009",
+      "range": {
+        "startLine": 810,
+        "startChar": 6,
+        "endLine": 810,
+        "endChar": 50
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5346ccc7_13703657",
         "filename": "components/autofill/core/browser/payments/full_card_request.cc",
         "patchSetId": 26
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "78e01c76_39b8b02e",
+        "filename": "components/autofill/core/browser/payments/full_card_request.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-12T22:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5346ccc7_13703657",
+      "range": {
+        "startLine": 19,
+        "startChar": 17,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e182dd74_aad2019c",
         "filename": "components/autofill/core/browser/payments/full_card_request.h",
         "patchSetId": 26
@@ -168,6 +330,30 @@
       "writtenOn": "2017-07-12T14:02:52Z",
       "side": 1,
       "message": "nit: pass by const ref\nnit: I would prefer this as the first param, not the last (particularly if it\u0027s a pointer, which makes it look like an output param)",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 39
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098699f7_2e584fd1",
+        "filename": "components/autofill/core/browser/payments/full_card_request.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-12T22:05:47Z",
+      "side": 1,
+      "message": "Put as the first param. But using const ref will make it very hard to initialize the object in tests.",
+      "parentUuid": "e182dd74_aad2019c",
       "range": {
         "startLine": 36,
         "startChar": 24,
