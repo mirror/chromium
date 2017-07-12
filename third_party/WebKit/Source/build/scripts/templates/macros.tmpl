@@ -8,6 +8,15 @@
 {%- endmacro %}
 
 
+{% macro source_files_for_generated_file(template_file, input_files) %}
+// Generated from template: {{template_file}}
+// and input files:
+{% for input in input_files|sort %}
+// {{input}}
+{% endfor %}
+{%- endmacro %}
+
+
 {% macro trie_leaf(index, object, return_macro, lowercase_data) %}
 {% set name, value = object.items()[0] %}
 {% if name|length %}

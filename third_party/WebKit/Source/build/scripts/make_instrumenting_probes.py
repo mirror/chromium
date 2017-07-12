@@ -241,7 +241,7 @@ template_context = {
     "config": config,
     "method_name": method_name,
     "name": base_name,
-    "input_file": os.path.basename(input_path)
+    "input_files": [os.path.basename(input_path)]
 }
 cpp_template = jinja_env.get_template("/InstrumentingProbesImpl.cpp.tmpl")
 cpp_file = open(output_dirpath + "/" + base_name + "Impl.cpp", "w")
