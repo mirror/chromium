@@ -21,6 +21,7 @@
 #include "content/browser/frame_host/mixed_content_navigation_throttle.h"
 #include "content/browser/frame_host/navigation_controller_impl.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
+#include "content/browser/frame_host/navigation_throttle_sanity_checker.h"
 #include "content/browser/frame_host/navigator.h"
 #include "content/browser/frame_host/navigator_delegate.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
@@ -1136,6 +1137,12 @@ void NavigationHandleImpl::RunCompleteCallback(
 }
 
 void NavigationHandleImpl::RegisterNavigationThrottles() {
+  std::unique_ptr<content::NavigationThrottle>
+      navigation_throttle_sanity_checker =
+          NavigationThrottleSanityChecker::MaybeCreateThrottleFor(this);
+  if (navigation_throttle_sanity_checker)
+    throttles_.insert(throttles_.begin(),
+                      std::move(navigation_throttle_sanity_checker));
   // Register the navigation throttles. The vector returned by
   // CreateThrottlesForNavigation is not assigned to throttles_ directly because
   // it would overwrite any throttles previously added with
