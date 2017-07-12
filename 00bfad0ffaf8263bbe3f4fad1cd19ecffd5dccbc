@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6ddde19f_e657cd3f",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T11:01:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16d250bc_7ef6dfae",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c59a5578_fd6018d2",
         "filename": "content/renderer/service_worker/thread_safe_script_container_unittest.cc",
         "patchSetId": 13
@@ -357,6 +375,24 @@
     },
     {
       "key": {
+        "uuid": "c36ca90f_c844c217",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T11:01:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18fb23f5_14f1b285",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5063c5f9_7045863d",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
         "patchSetId": 13
@@ -438,6 +474,24 @@
       "writtenOn": "2017-07-12T10:44:20Z",
       "side": 1,
       "message": "You can configure TestBrowserThreadBundle with REAL_IO_THREAD to get a real IO thread",
+      "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816f99ad_db9cd0db",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-12T11:01:13Z",
+      "side": 1,
+      "message": "IIUC, TestBrowserThreadBundle is only for mocking browser process. Also, we need to create worker thread at least, so I felt it\u0027s simpler to use base::Thread directly.\nWhat do you think?",
+      "parentUuid": "99d440bb_b1351276",
       "revId": "00bfad0ffaf8263bbe3f4fad1cd19ecffd5dccbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
