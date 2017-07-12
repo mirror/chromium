@@ -868,7 +868,8 @@ bool PaintLayer::UpdateSize() {
 
 void PaintLayer::UpdateSizeAndScrollingAfterLayout() {
   bool did_resize = UpdateSize();
-  if (GetLayoutObject().HasOverflowClip()) {
+  UpdateScrollableArea();
+  if (scrollable_area_) {
     scrollable_area_->UpdateAfterLayout();
     if (did_resize)
       scrollable_area_->VisibleSizeChanged();
@@ -1566,10 +1567,15 @@ void PaintLayer::UpdateStackingNode() {
     stacking_node_ = nullptr;
 }
 
+bool PaintLayer::RequiresScrollableArea() const {
+  return GetLayoutBox() && GetLayoutObject().HasOverflowClip();
+}
+
 void PaintLayer::UpdateScrollableArea() {
-  DCHECK(!scrollable_area_);
   if (RequiresScrollableArea())
     scrollable_area_ = PaintLayerScrollableArea::Create(*this);
+  else
+    scrollable_area_.Clear();
 }
 
 bool PaintLayer::HasOverflowControls() const {
@@ -3060,6 +3066,7 @@ bool PaintLayer::AttemptDirectCompositingUpdate(
         kCompositingUpdateAfterGeometryChange);
   }
 
+  UpdateScrollableArea();
   if (scrollable_area_)
     scrollable_area_->UpdateAfterStyleChange(old_style);
 
@@ -3073,6 +3080,7 @@ void PaintLayer::StyleDidChange(StyleDifference diff,
 
   stacking_node_->StyleDidChange(old_style);
 
+  UpdateScrollableArea();
   if (scrollable_area_)
     scrollable_area_->UpdateAfterStyleChange(old_style);
 
@@ -3230,7 +3238,7 @@ void PaintLayer::ComputeSelfHitTestRects(LayerHitTestRects& rects) const {
       // composited then the entire contents as well as they may be on another
       // composited layer. Skip reporting contents for non-composited layers as
       // they'll get projected to the same layer as the bounding box.
-      if (GetCompositingState() != kNotComposited)
+      if (GetCompositingState() != kNotComposited && scrollable_area_)
         rect.push_back(scrollable_area_->OverflowRect());
 
       rects.Set(this, rect);
