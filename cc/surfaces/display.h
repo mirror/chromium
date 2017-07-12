@@ -44,6 +44,13 @@ class ResourceProvider;
 class SoftwareRenderer;
 class TextureMailboxDeleter;
 
+class CC_SURFACES_EXPORT DisplayObserver {
+ public:
+  virtual ~DisplayObserver() {}
+
+  virtual void OnDisplayDidFinishFrame(const BeginFrameAck& ack) = 0;
+};
+
 // A Display produces a surface that can be used to draw to a physical display
 // (OutputSurface). The client is responsible for creating and sizing the
 // surface IDs used to draw into the display and deciding when to draw.
@@ -64,6 +71,9 @@ class CC_SURFACES_EXPORT Display : public DisplaySchedulerClient,
 
   void Initialize(DisplayClient* client, SurfaceManager* surface_manager);
 
+  void AddObserver(DisplayObserver* observer);
+  void RemoveObserver(DisplayObserver* observer);
+
   // device_scale_factor is used to communicate to the external window system
   // what scale this was rendered at.
   void SetLocalSurfaceId(const viz::LocalSurfaceId& id,
@@ -82,6 +92,7 @@ class CC_SURFACES_EXPORT Display : public DisplaySchedulerClient,
   bool SurfaceDamaged(const viz::SurfaceId& surface_id,
                       const BeginFrameAck& ack) override;
   void SurfaceDiscarded(const viz::SurfaceId& surface_id) override;
+  void DidFinishFrame(const BeginFrameAck& ack) override;
 
   // OutputSurfaceClient implementation.
   void SetNeedsRedrawRect(const gfx::Rect& damage_rect) override;
@@ -107,6 +118,7 @@ class CC_SURFACES_EXPORT Display : public DisplaySchedulerClient,
   const RendererSettings settings_;
 
   DisplayClient* client_ = nullptr;
+  base::ObserverList<DisplayObserver> observers_;
   SurfaceManager* surface_manager_ = nullptr;
   const viz::FrameSinkId frame_sink_id_;
   viz::SurfaceId current_surface_id_;

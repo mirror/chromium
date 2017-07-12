@@ -52,6 +52,8 @@ class FakeDisplaySchedulerClient : public DisplaySchedulerClient {
 
   void SurfaceDiscarded(const viz::SurfaceId& surface_id) override {}
 
+  void DidFinishFrame(const BeginFrameAck& ack) override {}
+
   int draw_and_swap_count() const { return draw_and_swap_count_; }
 
   void SetNextDrawAndSwapFails() { next_draw_and_swap_fails_ = true; }

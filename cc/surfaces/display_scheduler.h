@@ -11,6 +11,7 @@
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/observer_list.h"
 #include "base/single_thread_task_runner.h"
 #include "cc/output/renderer_settings.h"
 #include "cc/scheduler/begin_frame_source.h"
@@ -33,6 +34,7 @@ class CC_SURFACES_EXPORT DisplaySchedulerClient {
   virtual bool SurfaceDamaged(const viz::SurfaceId& surface_id,
                               const BeginFrameAck& ack) = 0;
   virtual void SurfaceDiscarded(const viz::SurfaceId& surface_id) = 0;
+  virtual void DidFinishFrame(const BeginFrameAck& ack) = 0;
 };
 
 class CC_SURFACES_EXPORT DisplayScheduler : public BeginFrameObserverBase,
