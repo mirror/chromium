@@ -22,6 +22,30 @@
       "revId": "653667cfaf73a73c6e9c449d8f7d8412c79cfa31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d0e625_1b1065ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-12T23:12:41Z",
+      "side": 0,
+      "message": "Added back.",
+      "parentUuid": "a27d1743_f3383678",
+      "range": {
+        "startLine": 218,
+        "startChar": 26,
+        "endLine": 218,
+        "endChar": 27
+      },
+      "revId": "653667cfaf73a73c6e9c449d8f7d8412c79cfa31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
