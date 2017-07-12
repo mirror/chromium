@@ -534,6 +534,16 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
                        test_case.redirected_to_url, root_http,
                        report_request_headers));
 
+    // Wait for IO loop to clear.
+    base::RunLoop run_loop1;
+    content::BrowserThread::PostTaskAndReply(content::BrowserThread::IO,
+                                             FROM_HERE,
+                                             // Flush IO thread...
+                                             base::BindOnce(&base::DoNothing),
+                                             // ... and UI thread.
+                                             run_loop1.QuitClosure());
+    run_loop1.Run();
+
     // Navigate to first url.
     ui_test_utils::NavigateToURL(browser(), test_case.original_url);
 
@@ -558,14 +568,14 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
 
     // Ensure that the response headers have been reported to the UI thread
     // and unregistration has been processed on the IO thread.
-    base::RunLoop run_loop;
+    base::RunLoop run_loop2;
     content::BrowserThread::PostTaskAndReply(content::BrowserThread::IO,
                                              FROM_HERE,
                                              // Flush IO thread...
                                              base::BindOnce(&base::DoNothing),
                                              // ... and UI thread.
-                                             run_loop.QuitClosure());
-    run_loop.Run();
+                                             run_loop2.QuitClosure());
+    run_loop2.Run();
 
     // Check if header exists and X-Chrome-Connected is correctly provided.
     ASSERT_EQ(1u, request_headers.count(test_case.original_url.spec()));
