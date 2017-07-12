@@ -12,9 +12,11 @@ group("vr_perf_tests") {
     "//chrome/android/shared_preference_files/test/",
     "//third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
   ]
-  data_deps = [
-    "//chrome/android:vr_nfc_simulator_apk",
-  ]
+  if (is_android) {
+    data_deps = [
+      "//chrome/android:vr_nfc_simulator_apk",
+    ]
+  }
   deps = [
     "//tools/perf:perf",
   ]
