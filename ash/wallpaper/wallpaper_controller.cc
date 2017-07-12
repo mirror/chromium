@@ -9,6 +9,7 @@
 
 #include "ash/ash_switches.h"
 #include "ash/display/window_tree_host_manager.h"
+#include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
@@ -22,6 +23,9 @@
 #include "base/logging.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/pref_service.h"
+#include "components/prefs/scoped_user_pref_update.h"
 #include "components/wallpaper/wallpaper_color_calculator.h"
 #include "components/wallpaper/wallpaper_resizer.h"
 #include "ui/display/manager/display_manager.h"
@@ -145,6 +149,10 @@ WallpaperController::~WallpaperController() {
   Shell::Get()->RemoveShellObserver(this);
 }
 
+void WallpaperController::RegisterPrefs(PrefRegistrySimple* registry) {
+  registry->RegisterListPref(prefs::kUserWallpaperColors);
+}
+
 void WallpaperController::BindRequest(
     mojom::WallpaperControllerRequest request) {
   bindings_.AddBinding(this, std::move(request));
@@ -252,6 +260,11 @@ void WallpaperController::OnSessionStateChanged(
     MoveToUnlockedContainer();
   else
     MoveToLockedContainer();
+}
+
+void WallpaperController::OnActiveUserSessionChanged(
+    const AccountId& account_id) {
+  active_user_pref_service_ = Shell::Get()->GetActiveUserPrefService();
 }
 
 // static
@@ -397,6 +410,7 @@ void WallpaperController::UpdateWallpaper(bool clear_cache) {
 
 void WallpaperController::SetProminentColors(
     const std::vector<SkColor>& colors) {
+  CacheUserProminentColors(colors);
   if (prominent_colors_ == colors)
     return;
 
@@ -435,6 +449,18 @@ bool WallpaperController::ShouldCalculateColors() const {
          Shell::Get()->session_controller()->GetSessionState() ==
              session_manager::SessionState::ACTIVE &&
          !image.isNull();
+}
+
+void WallpaperController::CacheUserProminentColors(const std::vector<SkColor>& colors) {
+  if (!active_user_pref_service_)
+    return;
+  ListPrefUpdate wallpaper_colors_update(active_user_pref_service_,
+                                        prefs::kUserWallpaperColors);
+  base::ListValue* wallpaper_colors = wallpaper_colors_update.Get();
+  DCHECK(wallpaper_colors);
+  wallpaper_colors->Clear();
+  for (SkColor color : colors)
+    wallpaper_colors->AppendDouble(static_cast<double>(color));
 }
 
 bool WallpaperController::MoveToLockedContainer() {

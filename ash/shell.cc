@@ -326,6 +326,7 @@ bool Shell::ShouldUseIMEService() {
 // static
 void Shell::RegisterPrefs(PrefRegistrySimple* registry) {
   NightLightController::RegisterPrefs(registry);
+  WallpaperController::RegisterPrefs(registry);
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(

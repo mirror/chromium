@@ -21,6 +21,9 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "ui/compositor/compositor_lock.h"
 
+class PrefRegistrySimple;
+class PrefService;
+
 namespace base {
 class SequencedTaskRunner;
 }
@@ -63,6 +66,8 @@ class ASH_EXPORT WallpaperController
   WallpaperController();
   ~WallpaperController() override;
 
+  static void RegisterPrefs(PrefRegistrySimple* registry);
+
   // Binds the mojom::WallpaperController interface request to this object.
   void BindRequest(mojom::WallpaperControllerRequest request);
 
@@ -100,6 +105,7 @@ class ASH_EXPORT WallpaperController
 
   // SessionObserver:
   void OnSessionStateChanged(session_manager::SessionState state) override;
+  void OnActiveUserSessionChanged(const AccountId& account_id) override;
 
   // Returns the maximum size of all displays combined in native
   // resolutions.  Note that this isn't the bounds of the display who
@@ -169,6 +175,8 @@ class ASH_EXPORT WallpaperController
   // system state (e.g. wallpaper image, SessionState, etc.).
   bool ShouldCalculateColors() const;
 
+  void CacheUserProminentColors(const std::vector<SkColor>& colors);
+
   // Move all wallpaper widgets to the locked container.
   // Returns true if the wallpaper moved.
   bool MoveToLockedContainer();
@@ -206,6 +214,10 @@ class ASH_EXPORT WallpaperController
 
   // Caches the color profiles that need to do wallpaper color extracting.
   const std::vector<color_utils::ColorProfile> color_profiles_;
+
+  // The pref service of the currently active user. Can be null in
+  // ash_unittests.
+  PrefService* active_user_pref_service_ = nullptr;
 
   gfx::Size current_max_display_size_;
 

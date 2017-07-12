@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/interfaces/constants.mojom.h"
 #include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/shelf/shelf_constants.h"
@@ -53,6 +54,7 @@
 #include "chrome/browser/chromeos/login/ui/login_feedback.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_display.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
+#include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
@@ -128,10 +130,10 @@ const char kNoLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.NONE";
 const char kBackgroundLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.BACKGROUND";
 const char kForegroundLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.FOREGROUND";
 
-// The alpha value for the signin screen background.
 // TODO(crbug.com/732566): Move all constants related to views-based signin
 // screen to a separate file.
-constexpr int kLoginTranslucentAlpha = 76;
+constexpr SkColor kSigninDefaultColor = SK_ColorBLACK;
+constexpr int kSigninTranslucentAlpha = 76;
 
 class CallOnReturn {
  public:
@@ -287,8 +289,6 @@ SigninScreenHandler::SigninScreenHandler(
       lock_screen_apps::StateController::IsEnabled()) {
     lock_screen_apps_observer_.Add(lock_screen_apps::StateController::Get());
   }
-  if (WallpaperManager::HasInstance())
-    WallpaperManager::Get()->AddObserver(this);
 }
 
 SigninScreenHandler::~SigninScreenHandler() {
@@ -308,8 +308,6 @@ SigninScreenHandler::~SigninScreenHandler() {
   network_state_informer_->RemoveObserver(this);
   proximity_auth::ScreenlockBridge::Get()->SetLockHandler(nullptr);
   proximity_auth::ScreenlockBridge::Get()->SetFocusedUser(EmptyAccountId());
-  if (WallpaperManager::HasInstance())
-    WallpaperManager::Get()->RemoveObserver(this);
 }
 
 void SigninScreenHandler::DeclareLocalizedValues(
@@ -866,7 +864,29 @@ void SigninScreenHandler::ReloadGaia(bool force_reload) {
   gaia_screen_handler_->ReloadGaia(force_reload);
 }
 
-void SigninScreenHandler::SetSigninScreenColors(SkColor dark_muted_color) {
+void SigninScreenHandler::SetSigninScreenColors(const AccountId& account_id) {
+  const user_manager::User* user =
+      user_manager::UserManager::Get()->FindUser(account_id);
+  //DCHECK(user);
+  if (user) {
+    LOG(ERROR) << "reach 0";
+  }
+  LOG(ERROR) << "reach 10";
+  LOG(ERROR) << "reach 1";
+  if (!chromeos::ProfileHelper::Get()->GetProfileByUser(user)) {
+    LOG(ERROR) << "reach 4";
+    return;
+  }
+  LOG(ERROR) << "reach 5";
+  const base::ListValue* wallpaper_colors = chromeos::ProfileHelper::Get()->GetProfileByUser(user)->GetPrefs()->GetList(ash::prefs::kUserWallpaperColors);
+  SkColor dark_muted_color = kSigninDefaultColor;
+  if (wallpaper_colors && !wallpaper_colors->GetList().empty()) {
+    //ColorProfile color_profile(LumaRange::DARK, SaturationRange::MUTED);
+    LOG(ERROR) << "reach 2";
+    dark_muted_color = static_cast<SkColor>(wallpaper_colors->GetList()[3].GetDouble());
+    LOG(ERROR) << "reach 3";
+  }
+  LOG(ERROR) << "reach 7";
   // The dark muted color should have 100% opacity.
   dark_muted_color = SkColorSetA(dark_muted_color, 0xFF);
   SkColor base_color = color_utils::GetResultingPaintColor(
@@ -875,7 +895,7 @@ void SigninScreenHandler::SetSigninScreenColors(SkColor dark_muted_color) {
       dark_muted_color);
   SkColor background_color =
       SkColorSetA(base_color, ash::kShelfTranslucentAlpha);
-  SkColor scroll_color = SkColorSetA(base_color, kLoginTranslucentAlpha);
+  SkColor scroll_color = SkColorSetA(base_color, kSigninTranslucentAlpha);
   CallJS("login.AccountPickerScreen.setOverlayColors",
          color_utils::SkColorToRgbaString(dark_muted_color),
          color_utils::SkColorToRgbaString(scroll_color),
@@ -920,14 +940,6 @@ void SigninScreenHandler::OnCurrentScreenChanged(OobeScreen current_screen,
     // Restore active IME state if returning to user pod row screen.
     input_method::InputMethodManager::Get()->SetState(ime_state_);
   }
-}
-
-void SigninScreenHandler::OnWallpaperColorsChanged() {
-  base::Optional<SkColor> color = WallpaperManager::Get()->prominent_color();
-  // If color extraction fails, use transparent as default.
-  if (!color.has_value())
-    color = SK_ColorTRANSPARENT;
-  SetSigninScreenColors(color.value());
 }
 
 void SigninScreenHandler::ClearAndEnablePassword() {
@@ -1190,6 +1202,7 @@ void SigninScreenHandler::HandleShutdownSystem() {
 void SigninScreenHandler::HandleLoadWallpaper(const AccountId& account_id) {
   if (delegate_)
     delegate_->LoadWallpaper(account_id);
+  SetSigninScreenColors(account_id);
 }
 
 void SigninScreenHandler::HandleRebootSystem() {
@@ -1410,6 +1423,7 @@ void SigninScreenHandler::HandleFocusPod(const AccountId& account_id) {
                                           ime_state_.get());
     lock_screen_utils::SetKeyboardSettings(account_id);
     WallpaperManager::Get()->SetUserWallpaperDelayed(account_id);
+    SetSigninScreenColors(account_id);
 
     bool use_24hour_clock = false;
     if (user_manager::known_user::GetBooleanPref(

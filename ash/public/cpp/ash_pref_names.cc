@@ -34,6 +34,9 @@ const char kNightLightScheduleType[] = "ash.night_light.schedule_type";
 const char kNightLightCustomStartTime[] = "ash.night_light.custom_start_time";
 const char kNightLightCustomEndTime[] = "ash.night_light.custom_end_time";
 
+// A dictionary pref that maps usernames to wallpaper prominent colors.
+const char kUserWallpaperColors[] = "user_wallpaper_colors";
+
 }  // namespace prefs
 
 }  // namespace ash
