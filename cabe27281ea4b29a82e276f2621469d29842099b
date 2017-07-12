@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9393663e_38ab370d",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T19:17:28Z",
+      "side": 1,
+      "message": "What makes Unretained safe? Do we need to reset the callback in Destroy?",
+      "revId": "cabe27281ea4b29a82e276f2621469d29842099b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ff0f81_674b9755",
+        "filename": "gpu/command_buffer/service/passthrough_program_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T19:17:28Z",
+      "side": 1,
+      "message": "nit: you can add a NOTREACHED() here.",
+      "revId": "cabe27281ea4b29a82e276f2621469d29842099b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263f2406_04181f24",
+        "filename": "gpu/command_buffer/service/passthrough_program_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T19:17:28Z",
+      "side": 1,
+      "message": "nit: ditto NOTREACHED()",
+      "revId": "cabe27281ea4b29a82e276f2621469d29842099b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
