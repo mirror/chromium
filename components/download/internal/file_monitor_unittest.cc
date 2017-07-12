@@ -26,7 +26,10 @@ namespace download {
 class FileMonitorTest : public testing::Test {
  public:
   FileMonitorTest()
-      : task_runner_(new base::TestSimpleTaskRunner), handle_(task_runner_) {
+      : task_runner_(new base::TestSimpleTaskRunner),
+        handle_(task_runner_),
+        completion_callback_called_(false),
+        weak_factory_(this) {
     EXPECT_TRUE(scoped_temp_dir_.CreateUniqueTempDir());
     download_dir_ = scoped_temp_dir_.GetPath();
     base::TimeDelta keep_alive_time = base::TimeDelta::FromHours(12);
@@ -35,6 +38,8 @@ class FileMonitorTest : public testing::Test {
   }
   ~FileMonitorTest() override = default;
 
+  void CompletionCallback() { completion_callback_called_ = true; }
+
  protected:
   base::FilePath CreateTemporaryFile(std::string file_name);
 
@@ -42,7 +47,9 @@ class FileMonitorTest : public testing::Test {
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle handle_;
   base::FilePath download_dir_;
+  bool completion_callback_called_;
   std::unique_ptr<FileMonitor> monitor_;
+  base::WeakPtrFactory<FileMonitorTest> weak_factory_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FileMonitorTest);
@@ -127,12 +134,15 @@ TEST_F(FileMonitorTest, TestCleanupFilesForCompletedEntries) {
 
   std::vector<Entry*> entries = {&entry1, &entry2};
   std::vector<Entry*> entries_to_remove =
-      monitor_->CleanupFilesForCompletedEntries(entries);
+      monitor_->CleanupFilesForCompletedEntries(
+          entries, base::Bind(&FileMonitorTest::CompletionCallback,
+                              weak_factory_.GetWeakPtr()));
   task_runner_->RunUntilIdle();
 
   EXPECT_EQ(1u, entries_to_remove.size());
   EXPECT_FALSE(base::PathExists(entry1.target_file_path));
   EXPECT_TRUE(base::PathExists(entry2.target_file_path));
+  EXPECT_TRUE(completion_callback_called_);
 }
 
 }  // namespace download

@@ -30,9 +30,6 @@ class DownloadServiceImplTest : public testing::Test {
     auto config = base::MakeUnique<Configuration>();
     auto controller = base::MakeUnique<test::MockController>();
     controller_ = controller.get();
-
-    EXPECT_CALL(*controller_, Initialize()).Times(1);
-
     service_ = base::MakeUnique<DownloadServiceImpl>(std::move(config),
                                                      std::move(controller));
   }
@@ -94,6 +91,7 @@ TEST_F(DownloadServiceImplTest, TestApiPassThrough) {
   service_->ResumeDownload(params.guid);
   service_->CancelDownload(params.guid);
   service_->ChangeDownloadCriteria(params.guid, scheduling_params);
+  controller_->TriggerInitCompleted(true);
 }
 
 }  // namespace download

@@ -85,8 +85,9 @@ class MockFileMonitor : public FileMonitor {
   void Initialize(const FileMonitor::InitCallback& callback) override;
   MOCK_METHOD2(DeleteUnknownFiles,
                void(const Model::EntryList&, const std::vector<DriverEntry>&));
-  MOCK_METHOD1(CleanupFilesForCompletedEntries,
-               std::vector<Entry*>(const Model::EntryList&));
+  MOCK_METHOD2(CleanupFilesForCompletedEntries,
+               std::vector<Entry*>(const Model::EntryList&,
+                                   const base::Closure&));
   MOCK_METHOD2(DeleteFiles,
                void(const std::vector<base::FilePath>&,
                     stats::FileCleanupReason));
@@ -157,6 +158,14 @@ class DownloadServiceControllerImplTest : public testing::Test {
   }
 
  protected:
+  void OnInitCompleted(bool success) {}
+
+  void InitializeController() {
+    controller_->Initialize(
+        base::Bind(&DownloadServiceControllerImplTest::OnInitCompleted,
+                   base::Unretained(this)));
+  }
+
   DownloadParams MakeDownloadParams() {
     DownloadParams params;
     params.client = DownloadClient::TEST;
@@ -193,7 +202,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
 TEST_F(DownloadServiceControllerImplTest, SuccessfulInitModelFirst) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(0);
 
-  controller_->Initialize();
+  InitializeController();
   EXPECT_TRUE(store_->init_called());
   EXPECT_FALSE(controller_->GetStartupStatus()->Complete());
 
@@ -204,7 +213,6 @@ TEST_F(DownloadServiceControllerImplTest, SuccessfulInitModelFirst) {
 
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   driver_->MakeReady();
   EXPECT_TRUE(controller_->GetStartupStatus()->Complete());
@@ -217,7 +225,7 @@ TEST_F(DownloadServiceControllerImplTest, SuccessfulInitModelFirst) {
 TEST_F(DownloadServiceControllerImplTest, SuccessfulInitDriverFirst) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(0);
 
-  controller_->Initialize();
+  InitializeController();
   EXPECT_TRUE(store_->init_called());
   EXPECT_FALSE(controller_->GetStartupStatus()->Complete());
 
@@ -228,7 +236,6 @@ TEST_F(DownloadServiceControllerImplTest, SuccessfulInitDriverFirst) {
 
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>());
   EXPECT_TRUE(controller_->GetStartupStatus()->Complete());
@@ -251,9 +258,8 @@ TEST_F(DownloadServiceControllerImplTest, SuccessfulInitWithExistingDownload) {
       *client_,
       OnServiceInitialized(testing::UnorderedElementsAreArray(expected_guids)));
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
-  controller_->Initialize();
+  InitializeController();
   driver_->MakeReady();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
 
@@ -274,11 +280,10 @@ TEST_F(DownloadServiceControllerImplTest, UnknownFileDeletion) {
   std::vector<DriverEntry> dentries = {dentry1, dentry3};
 
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
   EXPECT_CALL(*file_monitor_, DeleteUnknownFiles(_, _)).Times(1);
 
   driver_->AddTestData(dentries);
-  controller_->Initialize();
+  InitializeController();
   driver_->MakeReady();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
 
@@ -293,9 +298,9 @@ TEST_F(DownloadServiceControllerImplTest,
 
   std::vector<Entry> entries = {entry1, entry2, entry3};
 
-  EXPECT_CALL(*file_monitor_, CleanupFilesForCompletedEntries(_)).Times(1);
+  EXPECT_CALL(*file_monitor_, CleanupFilesForCompletedEntries(_, _)).Times(2);
 
-  controller_->Initialize();
+  InitializeController();
   driver_->MakeReady();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   controller_->OnStartScheduledTask(DownloadTaskType::CLEANUP_TASK,
@@ -307,7 +312,7 @@ TEST_F(DownloadServiceControllerImplTest,
 TEST_F(DownloadServiceControllerImplTest, FailedInitWithBadModel) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(0);
 
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(false, base::MakeUnique<std::vector<Entry>>());
   driver_->MakeReady();
 
@@ -320,9 +325,8 @@ TEST_F(DownloadServiceControllerImplTest, GetOwnerOfDownload) {
 
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
-  controller_->Initialize();
+  InitializeController();
   driver_->MakeReady();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
 
@@ -336,10 +340,9 @@ TEST_F(DownloadServiceControllerImplTest, GetOwnerOfDownload) {
 TEST_F(DownloadServiceControllerImplTest, AddDownloadAccepted) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   // Set up the Controller.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>());
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -350,7 +353,6 @@ TEST_F(DownloadServiceControllerImplTest, AddDownloadAccepted) {
               StartCallback(params.guid, DownloadParams::StartResult::ACCEPTED))
       .Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
   controller_->StartDownload(params);
 
   // TODO(dtrainor): Compare the full DownloadParams with the full Entry.
@@ -368,13 +370,12 @@ TEST_F(DownloadServiceControllerImplTest, AddDownloadAccepted) {
 TEST_F(DownloadServiceControllerImplTest, AddDownloadFailsWithBackoff) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   Entry entry = test::BuildBasicEntry();
   std::vector<Entry> entries = {entry};
 
   // Set up the Controller.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -398,13 +399,12 @@ TEST_F(DownloadServiceControllerImplTest,
        AddDownloadFailsWithDuplicateGuidInModel) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   Entry entry = test::BuildBasicEntry();
   std::vector<Entry> entries = {entry};
 
   // Set up the Controller.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -425,17 +425,15 @@ TEST_F(DownloadServiceControllerImplTest, AddDownloadFailsWithDuplicateCall) {
   testing::InSequence sequence;
 
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
 
   // Set up the Controller.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>());
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
 
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   // Trigger the download twice.
   DownloadParams params = MakeDownloadParams();
@@ -458,10 +456,9 @@ TEST_F(DownloadServiceControllerImplTest, AddDownloadFailsWithDuplicateCall) {
 TEST_F(DownloadServiceControllerImplTest, AddDownloadFailsWithBadClient) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   // Set up the Controller.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>());
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -481,10 +478,9 @@ TEST_F(DownloadServiceControllerImplTest, AddDownloadFailsWithBadClient) {
 TEST_F(DownloadServiceControllerImplTest, AddDownloadFailsWithClientCancel) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   // Set up the Controller.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>());
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -506,10 +502,9 @@ TEST_F(DownloadServiceControllerImplTest, AddDownloadFailsWithClientCancel) {
 TEST_F(DownloadServiceControllerImplTest, AddDownloadFailsWithInternalError) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   // Set up the Controller.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>());
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -538,11 +533,10 @@ TEST_F(DownloadServiceControllerImplTest, Pause) {
 
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(3);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(3);
 
   // Set the network status to disconnected so no entries will be polled from
   // the scheduler.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
 
@@ -585,9 +579,8 @@ TEST_F(DownloadServiceControllerImplTest, Resume) {
 
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(2);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(2);
 
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
 
@@ -625,9 +618,8 @@ TEST_F(DownloadServiceControllerImplTest, Cancel) {
               OnDownloadFailed(entry.guid, Client::FailureReason::CANCELLED))
       .Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(2);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(2);
 
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
 
@@ -651,9 +643,8 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadFailed) {
               OnDownloadFailed(entry.guid, Client::FailureReason::NETWORK))
       .Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(2);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(2);
 
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
 
@@ -684,7 +675,7 @@ TEST_F(DownloadServiceControllerImplTest, RetryOnFailure) {
       DeviceStatus(BatteryStatus::CHARGING, NetworkStatus::UNMETERED));
 
   driver_->AddTestData(dentries);
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -717,9 +708,8 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadSucceeded) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*client_, OnDownloadSucceeded(entry.guid, _, _)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(2);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(2);
 
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
 
@@ -747,7 +737,7 @@ TEST_F(DownloadServiceControllerImplTest, CleanupTaskScheduledAtEarliestTime) {
   entry2.completion_time = base::Time::Now() - base::TimeDelta::FromMinutes(2);
   std::vector<Entry> entries = {entry1, entry2};
 
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
 
@@ -773,9 +763,8 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadUpdated) {
 
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
 
@@ -820,7 +809,7 @@ TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
 
   // Set up the Controller.
   driver_->AddTestData(dentries);
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -929,7 +918,7 @@ TEST_F(DownloadServiceControllerImplTest, StartupRecovery) {
   device_status_listener_->SetDeviceStatus(
       DeviceStatus(BatteryStatus::CHARGING, NetworkStatus::UNMETERED));
 
-  controller_->Initialize();
+  InitializeController();
   driver_->AddTestData(driver_entries);
   driver_->MakeReady();
   store_->AutomaticallyTriggerAllFutureCallbacks(true);
@@ -1029,7 +1018,7 @@ TEST_F(DownloadServiceControllerImplTest, ExistingExternalDownload) {
       DeviceStatus(BatteryStatus::CHARGING, NetworkStatus::UNMETERED));
 
   driver_->AddTestData(dentries);
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -1073,7 +1062,7 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
       DeviceStatus(BatteryStatus::CHARGING, NetworkStatus::UNMETERED));
 
   driver_->AddTestData(dentries);
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -1150,7 +1139,7 @@ TEST_F(DownloadServiceControllerImplTest, CancelTimeTest) {
 
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
 
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
@@ -1174,13 +1163,12 @@ TEST_F(DownloadServiceControllerImplTest, ThrottlingConfigMaxRunning) {
   config_->max_running_downloads = 1u;
 
   // Setup the controller.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   store_->AutomaticallyTriggerAllFutureCallbacks(true);
 
   // Hit the max running configuration threshold, nothing should be called.
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(0);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
 
@@ -1202,7 +1190,7 @@ TEST_F(DownloadServiceControllerImplTest, ThrottlingConfigMaxConcurrent) {
   config_->max_running_downloads = 1u;
 
   // Setup the controller.
-  controller_->Initialize();
+  InitializeController();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
   store_->AutomaticallyTriggerAllFutureCallbacks(true);
 
