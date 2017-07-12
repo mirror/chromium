@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0565ed73_74c131ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-12T14:23:05Z",
+      "side": 1,
+      "message": "Depends what you mean by \u0027wrong\u0027. Will we have unnecessarily turned VR mode on and off? Yes. However, screen brightness flickering in an extremely rare exceptional case is probably fine, if it means less brightness flickering while entering VR, which is what this move does.",
+      "parentUuid": "6364a005_c9f8ce50",
+      "revId": "3ff634cf32059c8315996c800734ec5117548ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51e7f721_50e019ad",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "3ff634cf32059c8315996c800734ec5117548ae7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1c3d6e_ff68d5ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-12T14:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51e7f721_50e019ad",
+      "range": {
+        "startLine": 1020,
+        "startChar": 30,
+        "endLine": 1020,
+        "endChar": 46
+      },
+      "revId": "3ff634cf32059c8315996c800734ec5117548ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
