@@ -3876,6 +3876,14 @@
       }
     ]
   },
+  "ClangToTLinux": {
+    "scripts": [
+      {
+        "name": "check_gn_headers",
+        "script": "check_gn_headers.py"
+      }
+    ]
+  },
   "ClangToTLinux tester": {
     "gtest_tests": [
       {
