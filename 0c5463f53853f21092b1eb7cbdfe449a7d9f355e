@@ -1,0 +1,335 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f1bc048_195e226a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "Per our offline discussion, I think this should now be just a straight Subscribe(token) call? I.e. this should be a single if(!IsSubscribed() || NeedsToResubscribe))",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861cbfb9_dc232b88",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ab9a25_275160dd",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "This is not true anymore I think: It doesn\u0027t get called if the request is destroyed before it finishes.",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89bddc0_9d9bab8b",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "If this is shared with the remote suggestions fetcher, maybe move it to a common place? (ntp_snippets_constants.h/cc)",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a94447_c31f32ea",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "nit: request_ \u003d nullptr; ?\n(I don\u0027t have a good reason, but I think that style is more common)",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180e0124_9f290540",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "/*is_authenticated\u003d*/",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71182aa0_df234e8f",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "Hm, this might not be safe here: If the subscription_token has changed in the meantime, we should cancel the old request. (Probably it\u0027s fine to just always replace the old request; this should be rare anyway.)",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ea6136_61ba9712",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "I think AuthInProgress should go away here too",
+      "range": {
+        "startLine": 176,
+        "startChar": 78,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa4adfa_1ac96571",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "If a request is in flight, cancel and restart it?",
+      "range": {
+        "startLine": 223,
+        "startChar": 3,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c99b09_10edd727",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 233,
+        "startChar": 3,
+        "endLine": 233,
+        "endChar": 0
+      },
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920f642a_46431b74",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "Not needed if you include the header",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3f8eed_1a1e2699",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "FWIW, Tim doesn\u0027t like this pattern (inheriting from something that isn\u0027t supposed to be part of the public interface). For an alternative design, see: https://cs.chromium.org/chromium/src/chrome/browser/search/one_google_bar/one_google_bar_service.cc?rcl\u003dfdef07af60a8b45e9b481cfa2c06dcc2710fc9bb\u0026l\u003d15",
+      "range": {
+        "startLine": 35,
+        "startChar": 64,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d32fa2_c141610a",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "I think right now, this is never actually called with different tokens, right? If so, do we even need it?",
+      "range": {
+        "startLine": 52,
+        "startChar": 79,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2876cd2c_d3dcc6d4",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "const char[], not std::string, otherwise this introduces static initializers. (Those are forbidden in live code at least, not sure about tests)",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60208b50_5075c54f",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "nit: I find these tests a bit hard to read. Could you try splitting them up into \"setup\"/\"code under test\"/\"verify expectations\" phases? Optimally with a 1-line comment for each, something like: (not sure this is all 100% accurate for this test)\n// Create manager and subscribe.\n// Sign in. This should trigger a resubscribe.\n// Check that we are now subscribed with authentication.",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d03c2b_1b70e79a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "Unnecessary changes?",
+      "range": {
+        "startLine": 40,
+        "startChar": 51,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e682125c_89533a97",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_status_service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-12T15:03:13Z",
+      "side": 1,
+      "message": "Here too",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
