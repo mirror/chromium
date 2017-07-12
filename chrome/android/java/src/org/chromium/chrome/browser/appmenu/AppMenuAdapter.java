@@ -103,6 +103,7 @@ class AppMenuAdapter extends BaseAdapter {
     private final int mNumMenuItems;
     private final Integer mHighlightedItemId;
     private final float mDpToPx;
+    private boolean mAnchorAtBottom;
 
     // Use a single PulseDrawable to spawn the other drawables so that the ConstantState gets
     // shared.  This allows the animation to stay in step even as the views are recycled and the
@@ -292,6 +293,13 @@ class AppMenuAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * @param anchorAtBottom Whether app menu is anchored at bottom.
+     */
+    void setAnchorAtBottom(boolean anchorAtBottom) {
+        mAnchorAtBottom = anchorAtBottom;
+    }
+
     private void setupCheckBox(AppMenuItemIcon button, final MenuItem item) {
         button.setChecked(item.isChecked());
 
@@ -380,9 +388,12 @@ class AppMenuAdapter extends BaseAdapter {
         final int startDelay = ENTER_ITEM_BASE_DELAY_MS + ENTER_ITEM_ADDL_DELAY_MS * position;
 
         AnimatorSet animation = new AnimatorSet();
-        animation.playTogether(
-                ObjectAnimator.ofFloat(view, View.ALPHA, 0.f, 1.f),
-                ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, offsetYPx, 0.f));
+        if (mAnchorAtBottom) {
+            animation.playTogether(ObjectAnimator.ofFloat(view, View.ALPHA, 0.f, 1.f));
+        } else {
+            animation.playTogether(ObjectAnimator.ofFloat(view, View.ALPHA, 0.f, 1.f),
+                    ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, offsetYPx, 0.f));
+        }
         animation.setDuration(ENTER_ITEM_DURATION_MS);
         animation.setStartDelay(startDelay);
         animation.setInterpolator(BakedBezierInterpolator.FADE_IN_CURVE);

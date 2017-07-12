@@ -239,6 +239,7 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         // list view.
         mAdapter = new AppMenuAdapter(
                 this, menuItems, LayoutInflater.from(context), highlightedItemId);
+        mAdapter.setAnchorAtBottom(anchorAtBottom);
 
         ViewGroup contentView =
                 (ViewGroup) LayoutInflater.from(context).inflate(R.layout.app_menu_layout, null);
