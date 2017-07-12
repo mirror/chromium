@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a60605d2_970f15f0",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-07-12T06:53:42Z",
+      "side": 0,
+      "message": "we cannot release the fd here because...",
+      "range": {
+        "startLine": 72,
+        "startChar": 42,
+        "endLine": 72,
+        "endChar": 61
+      },
+      "revId": "c3dec2b9fe8e3e3008b75ee9d8b67229fafc0b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2ea067_8c1e6b43",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-07-12T06:53:42Z",
+      "side": 0,
+      "message": "it is also needed here.\n\nAs commented above the declaration of |scoped_fd|,\nit seems we need to keep two fds[0] handles.",
+      "range": {
+        "startLine": 83,
+        "startChar": 42,
+        "endLine": 83,
+        "endChar": 62
+      },
+      "revId": "c3dec2b9fe8e3e3008b75ee9d8b67229fafc0b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
