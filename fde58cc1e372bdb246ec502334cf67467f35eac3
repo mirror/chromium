@@ -22,6 +22,30 @@
       "revId": "fde58cc1e372bdb246ec502334cf67467f35eac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfbe09a_65619eaf",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-12T18:28:09Z",
+      "side": 1,
+      "message": "Whenever there is doubt about whether or not to remove something it is better to err on the side of caution and not make the change. In other words it\u0027s better to not try to fix what\u0027s not broken.\n\nIf you look at other files in this directory, such as tab_manager.*, they are similarly wrapped in the resource_coordinator namespace.\n\nThe C++ style guide also promotes using namespaces in these cases:\nhttps://google.github.io/styleguide/cppguide.html#Namespaces",
+      "parentUuid": "f0ab2fa8_5042477b",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "fde58cc1e372bdb246ec502334cf67467f35eac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
