@@ -1760,6 +1760,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Arc.FirstAppLaunchRequest.TimeDelta" units="ms">
+  <owner>yusukes@google.com</owner>
+  <owner>khmel@google.com</owner>
+  <summary>
+    Elapsed time from the when UI is shown after login to when the user
+    activates first ARC app.
+  </summary>
+</histogram>
+
 <histogram name="Arc.FirstComplianceReportTime.SinceSignIn" units="ms">
   <owner>alexchau@google.com</owner>
   <owner>emaxx@google.com</owner>
@@ -81124,8 +81133,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>sorin@chromium.org</owner>
   <summary>
     True if a new BITS job was created to download the url, or false, if an
-    existing job was found in the BITS queue. The metric is recorded when
-    the component updater background downloader is asked to download a CRX.
+    existing job was found in the BITS queue. The metric is recorded when the
+    component updater background downloader is asked to download a CRX.
   </summary>
 </histogram>
 
