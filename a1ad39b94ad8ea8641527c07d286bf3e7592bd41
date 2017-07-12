@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dbb3e605_4f687327",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T02:26:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fda9d600_e98699a3",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "a1ad39b94ad8ea8641527c07d286bf3e7592bd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90f26c2d_89f5ba54",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f7395132_c5efec38",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T02:26:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90f26c2d_89f5ba54",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 56
+      },
+      "revId": "a1ad39b94ad8ea8641527c07d286bf3e7592bd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac72efb0_68b0a873",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2017-07-11T12:45:13Z",
       "side": 1,
       "message": "Can this be just \u0027LocalActivityResolver activity_resolver_;\u0027 now?",
+      "revId": "a1ad39b94ad8ea8641527c07d286bf3e7592bd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2cc828f_caca530a",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T02:26:37Z",
+      "side": 1,
+      "message": "I merged the class into here, because the class is very small. WDYT?",
+      "parentUuid": "ac72efb0_68b0a873",
       "revId": "a1ad39b94ad8ea8641527c07d286bf3e7592bd41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -16,6 +16,24 @@
       "revId": "a8283ee78bf919fb2c785d4741c7677bec6a855b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92bef19_1c0decb9",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T02:26:37Z",
+      "side": 0,
+      "message": "Thank you for pointing this out.\nRevising all of them, and I think it\u0027s natural to do this AFTER BCKS migration.\nWill send another CL later.",
+      "parentUuid": "bfd40695_3247f0e0",
+      "revId": "a8283ee78bf919fb2c785d4741c7677bec6a855b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
