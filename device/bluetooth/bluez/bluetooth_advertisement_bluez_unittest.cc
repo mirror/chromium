@@ -236,6 +236,12 @@ TEST_F(BluetoothAdvertisementBlueZTest, RegisterTooManyFailed) {
   current_advertisement = CreateAdvertisement();
   ExpectError(BluetoothAdvertisement::ERROR_ADVERTISEMENT_ALREADY_EXISTS);
   EXPECT_FALSE(current_advertisement);
+
+  // But it should succeed again once we unregister one advertisement.
+  UnregisterAdvertisement(advertisements[0]);
+  ExpectSuccess();
+  current_advertisement = CreateAdvertisement();
+  ExpectSuccess();
 }
 
 TEST_F(BluetoothAdvertisementBlueZTest, DoubleUnregisterFailed) {

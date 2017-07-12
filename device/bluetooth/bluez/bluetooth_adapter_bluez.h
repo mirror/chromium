@@ -435,6 +435,13 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterBlueZ
       const std::string& error_name,
       const std::string& error_message);
 
+  // Gets the number of registered advertisements currently held by the adapter.
+  // This also cleans up the unregistered advertisements as it is no longer
+  // needed to be managed by this adapter.
+  // This method is called everytime RegisterAdvertisement is called to count
+  // and limit the number of advertisements allowed.
+  int GetNumRegisteredAdvertisements();
+
   InitCallback init_callback_;
 
   bool initialized_;
