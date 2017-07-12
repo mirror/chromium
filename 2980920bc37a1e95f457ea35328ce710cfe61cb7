@@ -88,6 +88,29 @@
     },
     {
       "key": {
+        "uuid": "a2c709b2_86c4bc72",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 5790,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-12T21:57:06Z",
+      "side": 1,
+      "message": "This name is perhaps more generic than it could be.  I can easily imagine other UseCounter logging improvements that you\u0027d also want to call \"test\" before using them.  Consider something more specific like Blink.UseCounter.Features_TestBrowserProcessLogging (if that\u0027s indeed the only difference).",
+      "range": {
+        "startLine": 5790,
+        "startChar": 0,
+        "endLine": 5790,
+        "endChar": 72
+      },
+      "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b45e843_56bc8edc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 20
