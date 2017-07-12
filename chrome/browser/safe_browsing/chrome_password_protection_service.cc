@@ -7,6 +7,7 @@
 #include "base/feature_list.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
+#include "build/build_config.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
@@ -16,8 +17,11 @@
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
+#include "chrome/browser/ui/tab_modal_confirm_dialog.h"
+#include "chrome/browser/ui/views/safe_browsing/password_protection_warning_dialog.h"
 #include "chrome/common/pref_names.h"
 #include "components/browser_sync/profile_sync_service.h"
+#include "components/constrained_window/constrained_window_views.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/password_protection/password_protection_request.h"
@@ -128,8 +132,9 @@ bool ChromePasswordProtectionService::IsPingingEnabled(
     bool allowed_extended_reporting = base::GetFieldTrialParamByFeatureAsBool(
         feature, "extended_reporting", false);
     if (IsExtendedReporting() && allowed_extended_reporting)
-      return true;  // Ping enabled because this user opted in extended
-                    // reporting.
+      return true;
+    // Ping enabled because this user opted in extended
+    // reporting.
 
     bool allowed_history_sync =
         base::GetFieldTrialParamByFeatureAsBool(feature, "history_sync", false);
@@ -177,8 +182,10 @@ void ChromePasswordProtectionService::ShowPhishingInterstitial(
     const std::string& token,
     content::WebContents* web_contents) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   if (!ui_manager_)
     return;
+
   security_interstitials::UnsafeResource resource;
   resource.url = phishing_url;
   resource.original_url = phishing_url;
@@ -195,6 +202,36 @@ void ChromePasswordProtectionService::ShowPhishingInterstitial(
     web_contents->GetController().DiscardNonCommittedEntries();
   }
   ui_manager_->DisplayBlockingPage(resource);
+}
+
+void ChromePasswordProtectionService::ShowModalWarningDialog(
+    content::WebContents* web_contents,
+    const LoginReputationClientRequest* request_proto,
+    const LoginReputationClientResponse* response_proto) {
+  DCHECK(request_proto);
+  DCHECK(response_proto);
+  // Do nothing if there is already a warning showing for this WebContents.
+  if (web_contents_to_proto_map().find(web_contents) !=
+      web_contents_to_proto_map().end())
+    return;
+
+  web_contents_to_proto_map().insert(std::make_pair(
+      web_contents,
+      std::make_pair(LoginReputationClientRequest(*request_proto),
+                     LoginReputationClientResponse(*response_proto))));
+#if !defined(OS_MACOSX)
+  PasswordProtectionWarningDialog* dialog = new PasswordProtectionWarningDialog(
+      web_contents,
+      base::Bind(&ChromePasswordProtectionService::OnModalWarningDone,
+                 GetWeakPtr(), web_contents));
+  constrained_window::ShowWebModalDialogViews(dialog, web_contents);
+#else
+//  TODO(jialiul): Implement and initiate warning dialog for Mac OS.
+#endif  // !OS_MACOSX
+  UMA_HISTOGRAM_ENUMERATION(kSyncPasswordWarningDialogHistogramName,
+                            PasswordProtectionService::SHOWN,
+                            PasswordProtectionService::MAX_ACTION);
+  // TODO(jialiul): May start collecting resources for post-warning report.
 }
 
 ChromePasswordProtectionService::ChromePasswordProtectionService(

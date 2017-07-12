@@ -4,6 +4,7 @@
 #include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 
 #include "base/memory/ref_counted.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
 #include "chrome/browser/signin/account_fetcher_service_factory.h"
@@ -19,6 +20,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/password_manager/core/browser/password_reuse_detector.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/password_protection/password_protection_request.h"
 #include "components/signin/core/browser/account_tracker_service.h"
@@ -69,7 +71,8 @@ class MockChromePasswordProtectionService
       : ChromePasswordProtectionService(profile),
         is_incognito_(false),
         is_extended_reporting_(false),
-        is_history_sync_enabled_(false) {}
+        is_history_sync_enabled_(false),
+        is_warning_showing_(false) {}
   bool IsExtendedReporting() override { return is_extended_reporting_; }
   bool IsIncognito() override { return is_incognito_; }
   bool IsHistorySyncEnabled() override { return is_history_sync_enabled_; }
@@ -97,6 +100,15 @@ class MockChromePasswordProtectionService
                     LoginReputationClientResponse* verdict,
                     const base::Time& receive_time) override {}
 
+  void ShowModalWarningDialog(
+      content::WebContents* web_contents,
+      const LoginReputationClientRequest* request_proto,
+      const LoginReputationClientResponse* response_proto) override {
+    is_warning_showing_ = true;
+  }
+
+  bool is_warning_showing() { return is_warning_showing_; }
+
  protected:
   friend class ChromePasswordProtectionServiceTest;
 
@@ -104,6 +116,7 @@ class MockChromePasswordProtectionService
   bool is_incognito_;
   bool is_extended_reporting_;
   bool is_history_sync_enabled_;
+  bool is_warning_showing_;
 };
 
 class ChromePasswordProtectionServiceTest
@@ -163,10 +176,13 @@ class ChromePasswordProtectionServiceTest
             {"history_sync", allowed_for_history_sync ? "true" : "false"}};
   }
 
-  void InitializeRequest(LoginReputationClientRequest::TriggerType type) {
-    request_ = new PasswordProtectionRequest(web_contents(), GURL(kPhishingURL),
-                                             GURL(), GURL(), std::string(),
-                                             type, true, service_.get(), 0);
+  void InitializeRequest(LoginReputationClientRequest::TriggerType type,
+                         bool is_sync_password = false) {
+    request_ = new PasswordProtectionRequest(
+        web_contents(), GURL(kPhishingURL), GURL(), GURL(),
+        is_sync_password ? std::string(password_manager::kSyncPasswordDomain)
+                         : std::string(),
+        type, true, service_.get(), 0);
   }
 
   void InitializeVerdict(LoginReputationClientResponse::VerdictType type) {
@@ -447,6 +463,32 @@ TEST_F(ChromePasswordProtectionServiceTest,
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&MockSafeBrowsingUIManager::InvokeOnBlockingPageComplete,
                      service_->ui_manager(), resource.callback));
+}
+
+TEST_F(ChromePasswordProtectionServiceTest,
+       ShowModalWarningOnSyncPasswordReuse) {
+  // Enables kGoogleBrandedPhishingWarning feature.
+  scoped_feature_list_.InitAndEnableFeature(kGoogleBrandedPhishingWarning);
+
+  InitializeRequest(LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
+                    true /* is_sync_password*/);
+  InitializeVerdict(LoginReputationClientResponse::PHISHING);
+
+  RequestFinished(request_.get(), std::move(verdict_));
+  EXPECT_TRUE(service_->is_warning_showing());
+}
+
+TEST_F(ChromePasswordProtectionServiceTest,
+       NoModalWarningShownOnSavedPasswordReuse) {
+  // Enables kGoogleBrandedPhishingWarning feature.
+  scoped_feature_list_.InitAndEnableFeature(kGoogleBrandedPhishingWarning);
+
+  InitializeRequest(LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
+                    false /* is_sync_password*/);
+  InitializeVerdict(LoginReputationClientResponse::PHISHING);
+
+  RequestFinished(request_.get(), std::move(verdict_));
+  EXPECT_FALSE(service_->is_warning_showing());
 }
 
 TEST_F(ChromePasswordProtectionServiceTest, NoInterstitialOnOtherVerdicts) {

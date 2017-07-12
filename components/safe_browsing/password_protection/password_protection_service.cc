@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <string>
+#include <unordered_map>
 
 #include "base/base64.h"
 #include "base/bind.h"
@@ -83,12 +84,19 @@ const base::Feature kProtectedPasswordEntryPinging{
 const base::Feature kPasswordProtectionInterstitial{
     "PasswordProtectionInterstitial", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kGoogleBrandedPhishingWarning{
+    "PasswordProtectionGoogleBrandedPhishingWarning",
+    base::FEATURE_ENABLED_BY_DEFAULT};
+
 const char kPasswordOnFocusRequestOutcomeHistogramName[] =
     "PasswordProtection.RequestOutcome.PasswordFieldOnFocus";
 const char kPasswordEntryRequestOutcomeHistogramName[] =
     "PasswordProtection.RequestOutcome.ProtectedPasswordEntry";
 const char kSyncPasswordEntryRequestOutcomeHistogramName[] =
     "PasswordProtection.RequestOutcome.SyncPasswordEntry";
+const char kSyncPasswordWarningDialogHistogramName[] =
+    "PasswordProtection.PasswordProtection.ModalWarningDialogAction."
+    "SyncPasswordEntry";
 
 PasswordProtectionService::PasswordProtectionService(
     const scoped_refptr<SafeBrowsingDatabaseManager>& database_manager,
@@ -121,6 +129,16 @@ bool PasswordProtectionService::CanGetReputationOfURL(const GURL& url) {
   const std::string hostname = url.HostNoBrackets();
   return !net::IsLocalhost(hostname) && !net::IsHostnameNonUnique(hostname) &&
          hostname.find('.') != std::string::npos;
+}
+
+void PasswordProtectionService::OnModalWarningDone(
+    content::WebContents* web_contents,
+    WarningDialogAction action) {
+  UMA_HISTOGRAM_ENUMERATION(kSyncPasswordWarningDialogHistogramName, action,
+                            MAX_ACTION);
+  // TODO(jialiul): Need to update security state, send post-warning report and
+  // other things.
+  web_contents_to_proto_map_.erase(web_contents);
 }
 
 // We cache both types of pings under the same content settings type (
@@ -387,6 +405,14 @@ void PasswordProtectionService::RequestFinished(
       ShowPhishingInterstitial(request->main_frame_url(),
                                response->verdict_token(),
                                request->web_contents());
+    }
+    if (request->trigger_type() ==
+            LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
+        response->verdict_type() != LoginReputationClientResponse::SAFE &&
+        request->IsSyncPasswordReuse() &&
+        base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning)) {
+      ShowModalWarningDialog(request->web_contents(), request->request_proto(),
+                             response.get());
     }
   }
 

@@ -1,4 +1,5 @@
 include_rules = [
   "+mojo",
   "+components/chrome_cleaner",
+  "+chrome/browser/ui/views/safe_browsing/password_protection_warning_dialog.h",
 ]

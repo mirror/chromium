@@ -52997,6 +52997,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PasswordProtection.ModalWarningDialogAction"
+    enum="PasswordProtectionWarningDialogAction">
+  <owner>jialiul@chromium.org</owner>
+  <owner>nparker@chromium.org</owner>
+  <summary>
+    Track whether a password protection modal warning dialog has shown, and
+    user's interaction with this dialog.
+  </summary>
+</histogram>
+
 <histogram base="true"
     name="PasswordProtection.NumberOfCachedVerdictBeforeShutdown" units="count">
   <owner>jialiul@chromium.org</owner>
@@ -81115,8 +81125,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>sorin@chromium.org</owner>
   <summary>
     True if a new BITS job was created to download the url, or false, if an
-    existing job was found in the BITS queue. The metric is recorded when
-    the component updater background downloader is asked to download a CRX.
+    existing job was found in the BITS queue. The metric is recorded when the
+    component updater background downloader is asked to download a CRX.
   </summary>
 </histogram>
 
@@ -95017,14 +95027,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="PasswordProtectionTrigger" separator=".">
-  <affected-histogram
-      name="PasswordProtection.NumberOfCachedVerdictBeforeShutdown"/>
   <suffix name="PasswordFieldOnFocus"
       label="Password protection triggered by password field on focus event."/>
   <suffix name="ProtectedPasswordEntry"
       label="Password protection triggered by saved password reuse event."/>
   <suffix name="SyncPasswordEntry"
       label="Password protectiontriggered by sync password reuse event."/>
+  <affected-histogram name="PasswordProtection.ModalWarningDialogAction"/>
+  <affected-histogram
+      name="PasswordProtection.NumberOfCachedVerdictBeforeShutdown"/>
   <affected-histogram name="PasswordProtection.RequestOutcome"/>
   <affected-histogram name="PasswordProtection.Verdict"/>
 </histogram_suffixes>

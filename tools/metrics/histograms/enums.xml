@@ -29003,6 +29003,13 @@ from previous Chrome versions.
   <int value="3" label="Phishing"/>
 </enum>
 
+<enum name="PasswordProtectionWarningDialogAction">
+  <int value="0" label="Shown"/>
+  <int value="1" label="Change password"/>
+  <int value="2" label="Ignore"/>
+  <int value="3" label="Close"/>
+</enum>
+
 <enum name="PasswordReusePasswordFieldDetected">
   <int value="0" label="No password field"/>
   <int value="1" label="Has password field"/>
