@@ -22,6 +22,30 @@
       "revId": "825c5153fdb682da7298c5a9ab8533774c6528e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88568d4_77eddf21",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-12T16:25:22Z",
+      "side": 0,
+      "message": "I don\u0027t know... What about ERROR_BAD_GPOS, why was it handled above, although it can\u0027t happen here? Can ERROR_LOCAL_IO actually happen during Join? If not, what happens if we make a code change in authpolicyd? What if a new error gets added, do you want to add it here as well every time?\n\nIMHO having to think about 25 (and counting) different error cases and whether they can occur or not isn\u0027t worth the trouble.",
+      "parentUuid": "c3fbba33_1e33882a",
+      "range": {
+        "startLine": 598,
+        "startChar": 0,
+        "endLine": 602,
+        "endChar": 41
+      },
+      "revId": "825c5153fdb682da7298c5a9ab8533774c6528e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
