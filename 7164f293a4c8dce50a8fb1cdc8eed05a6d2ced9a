@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4152a611_29bf347a",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-12T14:57:07Z",
+      "side": 1,
+      "message": "optional nit: maybe get rid of the curly braces.",
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb21de89_718f281a",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-12T14:57:07Z",
+      "side": 1,
+      "message": "neat. I didn\u0027t know you can write optional params like this.",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe9d0200_772ed3d6",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-12T14:57:07Z",
+      "side": 1,
+      "message": "optional nit: maybe get rid of the curly braces",
+      "range": {
+        "startLine": 472,
+        "startChar": 22,
+        "endLine": 472,
+        "endChar": 0
+      },
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c60e11_d25ce7a0",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-12T14:57:07Z",
+      "side": 1,
+      "message": "optional nit: maybe get rid of the curly braces",
+      "revId": "7164f293a4c8dce50a8fb1cdc8eed05a6d2ced9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
