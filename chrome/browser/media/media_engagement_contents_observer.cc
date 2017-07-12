@@ -4,6 +4,7 @@
 
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/media/media_engagement_service.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
@@ -18,6 +19,12 @@ constexpr base::TimeDelta kSignificantMediaPlaybackTime =
 // This is the minimum size (in px) of each dimension that a media
 // element has to be in order to be determined significant.
 const int MediaEngagementContentsObserver::kSignificantSize = 200;
+
+const char* MediaEngagementContentsObserver::kHistogramSignificantNotAddedName =
+    "Media.Engagement.SignificantPlayers.PlayerNotAdded";
+
+const char* MediaEngagementContentsObserver::kHistogramSignificantRemovedName =
+    "Media.Engagement.SignificantPlayers.PlayerRemoved";
 
 MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     content::WebContents* web_contents,
@@ -89,10 +96,10 @@ MediaEngagementContentsObserver::GetPlayerState(const MediaPlayerId& id) {
 void MediaEngagementContentsObserver::MediaStartedPlaying(
     const MediaPlayerInfo& media_player_info,
     const MediaPlayerId& media_player_id) {
-  if (!media_player_info.has_audio)
-    return;
+  PlayerState* state = GetPlayerState(media_player_id);
+  state->playing = true;
+  state->has_audio = media_player_info.has_audio;
 
-  GetPlayerState(media_player_id)->playing = true;
   MaybeInsertSignificantPlayer(media_player_id);
   UpdateTimer();
 }
@@ -135,10 +142,25 @@ void MediaEngagementContentsObserver::DidUpdateAudioMutingState(bool muted) {
   UpdateTimer();
 }
 
-bool MediaEngagementContentsObserver::IsSignificantPlayer(
+std::vector<InsignificantPlaybackReason>
+MediaEngagementContentsObserver::GetInsignificantPlayerReason(
     const MediaPlayerId& id) {
   PlayerState* state = GetPlayerState(id);
-  return !state->muted && state->playing && state->significant_size;
+  std::vector<InsignificantPlaybackReason> reasons;
+
+  if (state->muted)
+    reasons.push_back(InsignificantPlaybackReason::kAudioMuted);
+
+  if (!state->playing)
+    reasons.push_back(InsignificantPlaybackReason::kMediaPaused);
+
+  if (!state->significant_size)
+    reasons.push_back(InsignificantPlaybackReason::kFrameSizeTooSmall);
+
+  if (!state->has_audio)
+    reasons.push_back(InsignificantPlaybackReason::kNoAudioTrack);
+
+  return reasons;
 }
 
 void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
@@ -157,12 +179,33 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
   service_->RecordPlayback(committed_origin_.GetURL());
 }
 
+bool MediaEngagementContentsObserver::IsSignificantPlayerAndRecord(
+    const MediaPlayerId& id,
+    InsignificantHistogram histogram) {
+  std::vector<InsignificantPlaybackReason> reasons =
+      GetInsignificantPlayerReason(id);
+
+  for (auto reason : reasons) {
+    if (histogram == InsignificantHistogram::kPlayerNotAdded) {
+      UMA_HISTOGRAM_ENUMERATION(
+          MediaEngagementContentsObserver::kHistogramSignificantNotAddedName,
+          static_cast<int>(reason), InsignificantPlaybackReason::kReasonMax);
+    } else if (histogram == InsignificantHistogram::kPlayerRemoved) {
+      UMA_HISTOGRAM_ENUMERATION(
+          MediaEngagementContentsObserver::kHistogramSignificantRemovedName,
+          static_cast<int>(reason), InsignificantPlaybackReason::kReasonMax);
+    }
+  }
+
+  return reasons.empty();
+}
+
 void MediaEngagementContentsObserver::MaybeInsertSignificantPlayer(
     const MediaPlayerId& id) {
   if (significant_players_.find(id) != significant_players_.end())
     return;
 
-  if (IsSignificantPlayer(id))
+  if (IsSignificantPlayerAndRecord(id, InsignificantHistogram::kPlayerNotAdded))
     significant_players_.insert(id);
 }
 
@@ -171,7 +214,7 @@ void MediaEngagementContentsObserver::MaybeRemoveSignificantPlayer(
   if (significant_players_.find(id) == significant_players_.end())
     return;
 
-  if (!IsSignificantPlayer(id))
+  if (!IsSignificantPlayerAndRecord(id, InsignificantHistogram::kPlayerRemoved))
     significant_players_.erase(id);
 }
 
