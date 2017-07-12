@@ -22,7 +22,7 @@ function testBlob(blobURL, blobType, doneFunction) {
 
 testBlob("resources/UTF8.txt", "text/plain", function() {
     testBlob("resources/does_not_exist.txt", "", function() {
-        testBlob("resources/empty-file", "", function() {
+        testBlob("resources/empty-file", "text/plain", function() {
             if (window.testRunner)
                 testRunner.notifyDone();
         })
