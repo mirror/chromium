@@ -14,7 +14,7 @@
 #include "cc/surfaces/display.h"
 #include "cc/surfaces/display_client.h"
 #include "cc/surfaces/frame_sink_manager.h"
-#include "components/viz/common/local_surface_id_allocator.h"
+#include "components/viz/common/surfaces/local_surface_id_allocator.h"
 
 namespace base {
 class SingleThreadTaskRunner;

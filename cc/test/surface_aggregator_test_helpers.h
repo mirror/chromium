@@ -11,7 +11,7 @@
 
 #include "cc/quads/draw_quad.h"
 #include "cc/quads/render_pass.h"
-#include "components/viz/common/surface_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/size.h"
 

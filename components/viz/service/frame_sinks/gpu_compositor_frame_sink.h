@@ -13,8 +13,8 @@
 #include "cc/ipc/compositor_frame_sink.mojom.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/compositor_frame_sink_support_client.h"
-#include "components/viz/common/local_surface_id.h"
-#include "components/viz/common/surface_id.h"
+#include "components/viz/common/surfaces/local_surface_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/service/frame_sinks/gpu_compositor_frame_sink_delegate.h"
 #include "mojo/public/cpp/bindings/binding.h"
 

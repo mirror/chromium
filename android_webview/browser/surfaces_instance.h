@@ -11,9 +11,9 @@
 #include "base/memory/ref_counted.h"
 #include "cc/surfaces/compositor_frame_sink_support_client.h"
 #include "cc/surfaces/display_client.h"
-#include "components/viz/common/frame_sink_id.h"
-#include "components/viz/common/frame_sink_id_allocator.h"
-#include "components/viz/common/surface_id.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/frame_sink_id_allocator.h"
+#include "components/viz/common/surfaces/surface_id.h"
 
 namespace cc {
 class BeginFrameSource;

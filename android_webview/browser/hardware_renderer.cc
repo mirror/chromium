@@ -17,7 +17,7 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/frame_sink_manager.h"
-#include "components/viz/common/local_surface_id_allocator.h"
+#include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "ui/gfx/transform.h"
 #include "ui/gl/gl_bindings.h"
 

@@ -16,7 +16,7 @@
 #include "cc/quads/render_pass.h"
 #include "cc/resources/transferable_resource.h"
 #include "cc/surfaces/surfaces_export.h"
-#include "components/viz/common/surface_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "ui/gfx/color_space.h"
 
 namespace cc {
