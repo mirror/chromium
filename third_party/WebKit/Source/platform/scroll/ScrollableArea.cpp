@@ -173,7 +173,7 @@ ScrollResult ScrollableArea::UserScroll(ScrollGranularity granularity,
 void ScrollableArea::SetScrollOffset(const ScrollOffset& offset,
                                      ScrollType scroll_type,
                                      ScrollBehavior behavior) {
-  if (scroll_type != kSequencedSmoothScroll && scroll_type != kClampingScroll &&
+  if (scroll_type != kSequencedScroll && scroll_type != kClampingScroll &&
       scroll_type != kAnchoringScroll) {
     if (SmoothScrollSequencer* sequencer = GetSmoothScrollSequencer())
       sequencer->AbortAnimations();
@@ -198,7 +198,7 @@ void ScrollableArea::SetScrollOffset(const ScrollOffset& offset,
     case kProgrammaticScroll:
       ProgrammaticScrollHelper(clamped_offset, behavior, false);
       break;
-    case kSequencedSmoothScroll:
+    case kSequencedScroll:
       ProgrammaticScrollHelper(clamped_offset, behavior, true);
       break;
     case kUserScroll:
@@ -234,17 +234,17 @@ void ScrollableArea::SetScrollOffsetSingleAxis(ScrollbarOrientation orientation,
   ScrollableArea::SetScrollOffset(new_offset, scroll_type, behavior);
 }
 
-void ScrollableArea::ProgrammaticScrollHelper(
-    const ScrollOffset& offset,
-    ScrollBehavior scroll_behavior,
-    bool sequenced_for_smooth_scroll) {
+void ScrollableArea::ProgrammaticScrollHelper(const ScrollOffset& offset,
+                                              ScrollBehavior scroll_behavior,
+                                              bool is_sequenced_scroll) {
   CancelScrollAnimation();
 
   if (scroll_behavior == kScrollBehaviorSmooth) {
-    GetProgrammaticScrollAnimator().AnimateToOffset(
-        offset, sequenced_for_smooth_scroll);
+    GetProgrammaticScrollAnimator().AnimateToOffset(offset,
+                                                    is_sequenced_scroll);
   } else {
-    GetProgrammaticScrollAnimator().ScrollToOffsetWithoutAnimation(offset);
+    GetProgrammaticScrollAnimator().ScrollToOffsetWithoutAnimation(
+        offset, is_sequenced_scroll);
   }
 }
 
@@ -274,7 +274,8 @@ LayoutRect ScrollableArea::ScrollIntoView(const LayoutRect& rect_in_content,
                                           const ScrollAlignment& align_x,
                                           const ScrollAlignment& align_y,
                                           bool is_smooth,
-                                          ScrollType) {
+                                          ScrollType,
+                                          bool is_for_scroll_sequence) {
   // TODO(bokan): This should really be implemented here but ScrollAlignment is
   // in Core which is a dependency violation.
   NOTREACHED();
