@@ -8,6 +8,7 @@
 
 #include <string>
 
+#include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
@@ -146,8 +147,18 @@ base::CommandLine GenerateChromeWatcherCommandLine(
     DWORD main_thread_id,
     HANDLE on_initialized_event) {
   base::CommandLine command_line(chrome_exe);
+  // Always put the process type first, for consistency and ease of finding it.
   command_line.AppendSwitchASCII(switches::kProcessType,
                                  switches::kWatcherProcess);
+
+  // Copy logging switches over.
+  static const char* const kSwitchNames[] = {switches::kEnableLogging,
+                                             switches::kV, switches::kVModule};
+  base::CommandLine current_command_line =
+      *base::CommandLine::ForCurrentProcess();
+  command_line.CopySwitchesFrom(current_command_line, kSwitchNames,
+                                arraysize(kSwitchNames));
+
   command_line.AppendSwitchASCII(kMainThreadIdSwitch,
                                  base::UintToString(main_thread_id));
   AppendHandleSwitch(kOnIninitializedEventHandleSwitch, on_initialized_event,
