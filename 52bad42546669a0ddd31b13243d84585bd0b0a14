@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7807c07d_aa2ceeac",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-12T16:14:42Z",
+      "side": 1,
+      "message": "Either this or change tests in a few places (e.g. WindowModalityControllerTest.TouchEvent) that expect the hit-testing to be precise and not fuzzed. I thought this would be better to limit any unexpected side effects but I will research the actual call sites some more.\nMy logic was more or less: the purpose of this targeter is to make window resizing easier with mouse and touch, so let\u0027s not expand the hit-test for all cases, do it just for resize. This way transient child windows that are not \"really\" windows (e.g. a status widget in browser that cannot be moved / dragged on its own) are not benefiting from the expanded hit-test region.",
+      "parentUuid": "a13b7eca_9fd8e562",
+      "revId": "52bad42546669a0ddd31b13243d84585bd0b0a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5080e7e7_9625fe33",
         "filename": "ui/wm/core/easy_resize_window_targeter.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "52bad42546669a0ddd31b13243d84585bd0b0a14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2739b017_56ae6853",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-12T16:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5080e7e7_9625fe33",
+      "revId": "52bad42546669a0ddd31b13243d84585bd0b0a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
