@@ -96,14 +96,27 @@ class TestShelfObserver : public ShelfObserver {
   // ShelfObserver implementation.
   void OnShelfIconPositionsChanged() override {
     icon_positions_changed_ = true;
+
+    // Check that when shelf icon positions change the animation time is as
+    // expected.
+    if (expected_animation_duration_.has_value()) {
+      EXPECT_EQ(*expected_animation_duration_,
+                shelf_->GetShelfViewForTesting()
+                    ->GetBoundsAnimatorAnimationDuration());
+    }
   }
 
   bool icon_positions_changed() const { return icon_positions_changed_; }
   void Reset() { icon_positions_changed_ = false; }
+  void set_expected_animation_duration(int expected_animation_duration) {
+    expected_animation_duration_ = expected_animation_duration;
+  }
 
  private:
   Shelf* shelf_;
   bool icon_positions_changed_ = false;
+  // The expected animation duration for shelf items.
+  base::Optional<int> expected_animation_duration_;
 
   DISALLOW_COPY_AND_ASSIGN(TestShelfObserver);
 };
@@ -1970,6 +1983,42 @@ TEST_F(ShelfViewTest, TestHideOverflow) {
   generator.set_current_location(GetButtonCenter(button_on_overflow_shelf));
   generator.DragMouseTo(GetButtonCenter(button_on_overflow_shelf1));
   EXPECT_TRUE(test_api_->IsShowingOverflowBubble());
+}
+
+// Verify the animations of the shelf items are as long as expected.
+TEST_F(ShelfViewTest, TestShelfItemsAnimations) {
+  TestShelfObserver observer(shelf_view_->shelf());
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  ShelfID first_app_id = AddAppShortcut();
+  ShelfID second_app_id = AddAppShortcut();
+
+  // Set the animation duration for shelf items.
+  const int animation_duration = 100;
+  test_api_->SetAnimationDuration(animation_duration);
+
+  // The shelf items should animate if they are moved within the shelf, either
+  // by swapping or if the items need to be rearranged due to an item getting
+  // ripped off.
+  observer.set_expected_animation_duration(animation_duration);
+  generator.set_current_location(GetButtonCenter(first_app_id));
+  generator.DragMouseTo(GetButtonCenter(second_app_id));
+  generator.DragMouseBy(0, 50);
+  test_api_->RunMessageLoopUntilAnimationsDone();
+
+  // The shelf items should not animate when the whole shelf and its contents
+  // have to move.
+  observer.set_expected_animation_duration(1);
+  shelf_view_->shelf()->SetAlignment(SHELF_ALIGNMENT_LEFT);
+  test_api_->RunMessageLoopUntilAnimationsDone();
+
+  // The shelf items should animate if we are entering or exiting maximize mode.
+  observer.set_expected_animation_duration(animation_duration);
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      true);
+  test_api_->RunMessageLoopUntilAnimationsDone();
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      false);
+  test_api_->RunMessageLoopUntilAnimationsDone();
 }
 
 class ShelfViewVisibleBoundsTest : public ShelfViewTest,

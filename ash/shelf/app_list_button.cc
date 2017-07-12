@@ -311,6 +311,7 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   const bool is_maximize_mode = Shell::Get()
                                     ->maximize_mode_controller()
                                     ->IsMaximizeModeWindowManagerEnabled();
+  const bool is_animating = shelf_view_->IsBoundsAnimatorAnimating();
   gfx::PointF circle_center(GetCircleCenterPoint());
 
   // Paint the circular background.
@@ -319,7 +320,7 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   bg_flags.setAntiAlias(true);
   bg_flags.setStyle(cc::PaintFlags::kFill_Style);
 
-  if (is_maximize_mode) {
+  if (is_maximize_mode || is_animating) {
     // Draw the maximize mode app list background. It will look something like
     // [1] when the shelf is horizontal and [2] when the shelf is vertical,
     // where 1. is the back button and 2. is the app launcher circle.
@@ -366,8 +367,18 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     // TODO(sammiequon): Check if the back button should be flipped in RTL.
     gfx::ImageSkia back_button =
         CreateVectorIcon(kShelfBackIcon, SK_ColorTRANSPARENT);
+
+    // Fades the back button in or out.
+    double current_animation_value =
+        shelf_view_->GetBoundsAnimatorAppListButtonAnimationCurrentValue();
+    int opacity = shelf_view_->IsBoundsAnimatorAnimating()
+                      ? static_cast<int>((is_maximize_mode
+                                              ? current_animation_value
+                                              : 1.0 - current_animation_value) *
+                                         255.0)
+                      : 255;
     canvas->DrawImageInt(back_button, back_center.x() - back_button.width() / 2,
-                         back_center.y() - back_button.height() / 2);
+                         back_center.y() - back_button.height() / 2, opacity);
   } else {
     canvas->DrawCircle(circle_center, kAppListButtonRadius, bg_flags);
   }
@@ -385,7 +396,6 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     gfx::ScopedCanvas scoped_canvas(canvas);
     const float dsf = canvas->UndoDeviceScaleFactor();
     circle_center.Scale(dsf);
-
     cc::PaintFlags fg_flags;
     fg_flags.setAntiAlias(true);
     fg_flags.setStyle(cc::PaintFlags::kStroke_Style);
@@ -426,24 +436,25 @@ gfx::Point AppListButton::GetCircleCenterPoint() const {
   const bool is_maximize_mode = Shell::Get()
                                     ->maximize_mode_controller()
                                     ->IsMaximizeModeWindowManagerEnabled();
+  const bool is_animating = shelf_view_->IsBoundsAnimatorAnimating();
 
   ShelfAlignment alignment = shelf_->alignment();
   if (alignment == SHELF_ALIGNMENT_BOTTOM ||
       alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) {
-    if (is_maximize_mode) {
+    if (is_maximize_mode || is_animating) {
       return gfx::Point(width() - kShelfButtonSize / 2.f,
                         kShelfButtonSize / 2.f);
     }
     return gfx::Point(x_mid, x_mid);
   } else if (alignment == SHELF_ALIGNMENT_RIGHT) {
-    if (is_maximize_mode) {
+    if (is_maximize_mode || is_animating) {
       return gfx::Point(kShelfButtonSize / 2.f,
                         height() - kShelfButtonSize / 2.f);
     }
     return gfx::Point(y_mid, y_mid);
   } else {
     DCHECK_EQ(alignment, SHELF_ALIGNMENT_LEFT);
-    if (is_maximize_mode) {
+    if (is_maximize_mode || is_animating) {
       return gfx::Point(width() - kShelfButtonSize / 2.f,
                         height() - kShelfButtonSize / 2.f);
     }

@@ -253,6 +253,7 @@ ShelfView::ShelfView(ShelfModel* model, Shelf* shelf, ShelfWidget* shelf_widget)
   DCHECK(model_);
   DCHECK(shelf_);
   DCHECK(shelf_widget_);
+  Shell::Get()->AddShellObserver(this);
   bounds_animator_.reset(new views::BoundsAnimator(this));
   bounds_animator_->AddObserver(this);
   set_context_menu_controller(this);
@@ -260,6 +261,7 @@ ShelfView::ShelfView(ShelfModel* model, Shelf* shelf, ShelfWidget* shelf_widget)
 }
 
 ShelfView::~ShelfView() {
+  Shell::Get()->RemoveShellObserver(this);
   bounds_animator_->RemoveObserver(this);
   model_->RemoveObserver(this);
 }
@@ -727,6 +729,25 @@ void ShelfView::LayoutToIdealBounds() {
 void ShelfView::UpdateShelfItemBackground(SkColor color) {
   GetAppListButton()->UpdateShelfItemBackground(color);
   overflow_button_->UpdateShelfItemBackground(color);
+}
+
+int ShelfView::GetBoundsAnimatorAnimationDuration() const {
+  DCHECK(bounds_animator_);
+  return bounds_animator_->GetAnimationDuration();
+}
+
+bool ShelfView::IsBoundsAnimatorAnimating() const {
+  DCHECK(bounds_animator_);
+  return bounds_animator_->IsAnimating();
+}
+
+double ShelfView::GetBoundsAnimatorAppListButtonAnimationCurrentValue() {
+  DCHECK(bounds_animator_);
+  const gfx::SlideAnimation* animation = bounds_animator_->GetAnimationForView(
+      static_cast<views::View*>(GetAppListButton()));
+  if (!animation)
+    return 0.0;
+  return animation->GetCurrentValue();
 }
 
 void ShelfView::UpdateAllButtonsVisibilityInOverflowMode() {
@@ -1466,13 +1487,33 @@ gfx::Size ShelfView::CalculatePreferredSize() const {
   return gfx::Size(kShelfSize, last_button_bounds.bottom());
 }
 
+void ShelfView::OnMaximizeModeStarted() {
+  layout_changed_because_maximize_mode_ = true;
+}
+
+void ShelfView::OnMaximizeModeEnded() {
+  layout_changed_because_maximize_mode_ = true;
+}
+
+void ShelfView::OnShelfAlignmentChanged(aura::Window* root_window) {}
+
 void ShelfView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
   // This bounds change is produced by the shelf movement and all content has
   // to follow. Using an animation at that time would produce a time lag since
   // the animation of the BoundsAnimator has itself a delay before it arrives
   // at the required location. As such we tell the animator to go there
   // immediately.
-  BoundsAnimatorDisabler disabler(bounds_animator_.get());
+  auto disabler =
+      base::MakeUnique<BoundsAnimatorDisabler>(bounds_animator_.get());
+
+  // If this is called because we are entering or exiting maximize mode, use the
+  // regular animation time.
+  if (layout_changed_because_maximize_mode_) {
+    disabler.reset();
+    AnimateToIdealBounds();
+    return;
+  }
+
   LayoutToIdealBounds();
   shelf_->NotifyShelfIconPositionsChanged();
 
@@ -1807,6 +1848,9 @@ void ShelfView::OnBoundsAnimatorProgressed(views::BoundsAnimator* animator) {
 }
 
 void ShelfView::OnBoundsAnimatorDone(views::BoundsAnimator* animator) {
+  if (layout_changed_because_maximize_mode_)
+    layout_changed_because_maximize_mode_ = false;
+
   if (snap_back_from_rip_off_view_ && animator == bounds_animator_.get()) {
     if (!animator->IsAnimating(snap_back_from_rip_off_view_)) {
       // Coming here the animation of the ShelfButton is finished and the
