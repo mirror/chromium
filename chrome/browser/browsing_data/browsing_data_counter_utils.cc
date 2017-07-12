@@ -10,10 +10,10 @@
 #include "chrome/browser/browsing_data/cache_counter.h"
 #include "chrome/browser/browsing_data/media_licenses_counter.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/browsing_data/core/features.h"
 #include "components/browsing_data/core/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/strings/grit/components_strings.h"
@@ -45,7 +45,7 @@ bool AreCountersEnabled() {
 
 bool IsSiteDataCounterEnabled() {
   // Only use the site data counter for the new CBD ui.
-  return base::FeatureList::IsEnabled(features::kTabsInCbd);
+  return base::FeatureList::IsEnabled(browsing_data::kTabsInCbd);
 }
 
 // A helper function to display the size of cache in units of MB or higher.

@@ -9,10 +9,12 @@
 #include "base/message_loop/message_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
 #include "components/browsing_data/core/counters/autofill_counter.h"
 #include "components/browsing_data/core/counters/passwords_counter.h"
+#include "components/browsing_data/core/features.h"
 #include "components/browsing_data/core/pref_names.h"
 #include "components/password_manager/core/browser/test_password_store.h"
 #include "components/prefs/pref_service.h"
@@ -39,12 +41,14 @@ class BrowsingDataUtilsTest : public testing::Test {
   ~BrowsingDataUtilsTest() override {}
 
   void SetUp() override {
+    feature_list.InitAndEnableFeature(browsing_data::kTabsInCbd);
     browsing_data::prefs::RegisterBrowserUserPrefs(prefs_.registry());
   }
 
   PrefService* prefs() { return &prefs_; }
 
  private:
+  base::test::ScopedFeatureList feature_list;
   base::MessageLoop loop_;
   sync_preferences::TestingPrefServiceSyncable prefs_;
 };

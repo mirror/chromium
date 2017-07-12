@@ -17,9 +17,9 @@
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/mock_settings_observer.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/browsing_data/core/features.h"
 #include "components/content_settings/core/browser/content_settings_details.h"
 #include "components/content_settings/core/browser/cookie_settings.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
@@ -1737,7 +1737,7 @@ TEST_F(HostContentSettingsMapTest, ClearSettingsForOneTypeWithPredicate) {
 TEST_F(HostContentSettingsMapTest, ClearSettingsWithTimePredicate) {
   base::test::ScopedFeatureList feature_list;
   // Enable kTabsInCbd to activate last_modified timestmap recording.
-  feature_list.InitAndEnableFeature(features::kTabsInCbd);
+  feature_list.InitAndEnableFeature(browsing_data::kTabsInCbd);
 
   TestingProfile profile;
   auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);
@@ -1796,7 +1796,7 @@ TEST_F(HostContentSettingsMapTest, ClearSettingsWithTimePredicate) {
 
 TEST_F(HostContentSettingsMapTest, GetSettingLastModified) {
   base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(features::kTabsInCbd);
+  feature_list.InitAndEnableFeature(browsing_data::kTabsInCbd);
 
   TestingProfile profile;
   auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);
@@ -1839,7 +1839,7 @@ TEST_F(HostContentSettingsMapTest, GetSettingLastModified) {
 
 TEST_F(HostContentSettingsMapTest, LastModifiedIsNotRecordedWhenDisabled) {
   base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndDisableFeature(features::kTabsInCbd);
+  feature_list.InitAndDisableFeature(browsing_data::kTabsInCbd);
 
   TestingProfile profile;
   auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);

@@ -4,11 +4,13 @@
 
 #include "components/browsing_data/core/browsing_data_utils.h"
 
+#include "base/feature_list.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "components/browsing_data/core/counters/autofill_counter.h"
 #include "components/browsing_data/core/counters/history_counter.h"
 #include "components/browsing_data/core/counters/passwords_counter.h"
+#include "components/browsing_data/core/features.h"
 #include "components/browsing_data/core/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/strings/grit/components_strings.h"
@@ -281,6 +283,67 @@ void MigratePreferencesToBasic(PrefService* prefs) {
                       prefs->GetInteger(prefs::kDeleteTimePeriod));
     prefs->SetBoolean(prefs::kPreferencesMigratedToBasic, true);
   }
+}
+
+bool IsBasicTab(PrefService* prefs) {
+  static const bool enabled = base::FeatureList::IsEnabled(kTabsInCbd);
+  return enabled && prefs->GetInteger(prefs::kLastClearBrowsingDataTab) ==
+                        static_cast<int>(ClearBrowsingDataTab::BASIC);
+}
+
+bool IsAdvancedTab(PrefService* prefs) {
+  return !IsBasicTab(prefs);
+}
+
+bool GetDeleteBrowsingHistory(PrefService* prefs) {
+  return IsBasicTab(prefs)
+             ? prefs->GetBoolean(prefs::kDeleteBrowsingHistoryBasic)
+             : prefs->GetBoolean(prefs::kDeleteBrowsingHistory);
+}
+
+bool GetDeleteCache(PrefService* prefs) {
+  return IsBasicTab(prefs) ? prefs->GetBoolean(prefs::kDeleteCacheBasic)
+                           : prefs->GetBoolean(prefs::kDeleteCache);
+}
+
+bool GetDeleteCookies(PrefService* prefs) {
+  return IsBasicTab(prefs) ? prefs->GetBoolean(prefs::kDeleteCookiesBasic)
+                           : prefs->GetBoolean(prefs::kDeleteCookies);
+}
+
+bool GetDeleteSiteSettings(PrefService* prefs) {
+  return IsAdvancedTab(prefs) && prefs->GetBoolean(prefs::kDeleteSiteSettings);
+}
+
+bool GetDeletePasswords(PrefService* prefs) {
+  return IsAdvancedTab(prefs) && prefs->GetBoolean(prefs::kDeletePasswords);
+}
+
+bool GetDeleteFormData(PrefService* prefs) {
+  return IsAdvancedTab(prefs) && prefs->GetBoolean(prefs::kDeleteFormData);
+}
+
+bool GetDeleteDownloads(PrefService* prefs) {
+  return IsAdvancedTab(prefs) &&
+         prefs->GetBoolean(prefs::kDeleteDownloadHistory);
+}
+
+bool GetDeleteMediaLicenses(PrefService* prefs) {
+  return IsAdvancedTab(prefs) && prefs->GetBoolean(prefs::kDeleteMediaLicenses);
+}
+
+bool GetDeleteHostedAppsData(PrefService* prefs) {
+  return IsAdvancedTab(prefs) &&
+         prefs->GetBoolean(prefs::kDeleteHostedAppsData);
+}
+
+TimePeriod GetDeleteTimePeriod(PrefService* prefs) {
+  int time_period = IsBasicTab(prefs)
+                        ? prefs->GetInteger(prefs::kDeleteTimePeriodBasic)
+                        : prefs->GetInteger(prefs::kDeleteTimePeriod);
+  DCHECK_GE(time_period, 0);
+  DCHECK_LE(time_period, static_cast<int>(TimePeriod::TIME_PERIOD_LAST));
+  return static_cast<TimePeriod>(time_period);
 }
 
 }  // namespace browsing_data

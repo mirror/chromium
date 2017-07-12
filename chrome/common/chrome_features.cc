@@ -96,15 +96,6 @@ const base::Feature kTabStripKeyboardFocus{"TabStripKeyboardFocus",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_MACOSX)
 
-const base::Feature kTabsInCbd {
-  "TabsInCBD",
-#if defined(OS_ANDROID)
-      base::FEATURE_ENABLED_BY_DEFAULT
-#else
-      base::FEATURE_DISABLED_BY_DEFAULT
-#endif
-};
-
 // If enabled, we'll only take thumbnails of unknown URLs (i.e. URLs that are
 // not (yet) part of TopSites) if they have an interesting transition type, i.e.
 // one that qualifies for inclusion in TopSites.

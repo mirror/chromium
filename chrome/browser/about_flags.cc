@@ -40,6 +40,7 @@
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/autofill/core/common/autofill_util.h"
 #include "components/browser_sync/browser_sync_switches.h"
+#include "components/browsing_data/core/features.h"
 #include "components/cloud_devices/common/cloud_devices_switches.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
@@ -2551,11 +2552,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"important-sites-in-cbd", flag_descriptions::kImportantSitesInCbdName,
      flag_descriptions::kImportantSitesInCbdDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kImportantSitesInCbd)},
-#if defined(OS_ANDROID)
     {"tabs-in-cbd", flag_descriptions::kTabsInCbdName,
-     flag_descriptions::kTabsInCbdDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(features::kTabsInCbd)},
-#endif  // OS_ANDROID
+     flag_descriptions::kTabsInCbdDescription, kOsAll,
+     FEATURE_VALUE_TYPE(browsing_data::kTabsInCbd)},
     {"passive-listener-default",
      flag_descriptions::kPassiveEventListenerDefaultName,
      flag_descriptions::kPassiveEventListenerDefaultDescription, kOsAll,

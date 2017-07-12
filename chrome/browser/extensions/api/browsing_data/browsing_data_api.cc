@@ -143,9 +143,7 @@ ExtensionFunction::ResponseAction BrowsingDataSettingsFunction::Run() {
       extension_browsing_data_api_constants::kExtensionsKey, false);
 
   // Fill deletion time period.
-  int period_pref = prefs_->GetInteger(browsing_data::prefs::kDeleteTimePeriod);
-  browsing_data::TimePeriod period =
-      static_cast<browsing_data::TimePeriod>(period_pref);
+  browsing_data::TimePeriod period = browsing_data::GetDeleteTimePeriod(prefs_);
   double since = 0;
   if (period != browsing_data::TimePeriod::ALL_TIME) {
     base::Time time = browsing_data::CalculateBeginDeleteTime(period);
@@ -200,19 +198,19 @@ ExtensionFunction::ResponseAction BrowsingDataSettingsFunction::Run() {
 
   SetDetails(selected.get(), permitted.get(),
              extension_browsing_data_api_constants::kHistoryKey,
-             prefs_->GetBoolean(browsing_data::prefs::kDeleteBrowsingHistory));
+             browsing_data::GetDeleteBrowsingHistory(prefs_));
   SetDetails(selected.get(), permitted.get(),
              extension_browsing_data_api_constants::kDownloadsKey,
-             prefs_->GetBoolean(browsing_data::prefs::kDeleteDownloadHistory));
+             browsing_data::GetDeleteDownloads(prefs_));
   SetDetails(selected.get(), permitted.get(),
              extension_browsing_data_api_constants::kCacheKey,
-             prefs_->GetBoolean(browsing_data::prefs::kDeleteCache));
+             browsing_data::GetDeleteCache(prefs_));
   SetDetails(selected.get(), permitted.get(),
              extension_browsing_data_api_constants::kFormDataKey,
-             prefs_->GetBoolean(browsing_data::prefs::kDeleteFormData));
+             browsing_data::GetDeleteFormData(prefs_));
   SetDetails(selected.get(), permitted.get(),
              extension_browsing_data_api_constants::kPasswordsKey,
-             prefs_->GetBoolean(browsing_data::prefs::kDeletePasswords));
+             browsing_data::GetDeletePasswords(prefs_));
 
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue);
   result->Set(extension_browsing_data_api_constants::kOptionsKey,
