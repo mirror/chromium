@@ -29,6 +29,7 @@ class HighResolutionTimerManager;
 class MemoryPressureMonitor;
 class MessageLoop;
 class PowerMonitor;
+class SingleThreadTaskRunner;
 class SystemMonitor;
 namespace trace_event {
 class TraceEventSystemStatsMonitor;
@@ -173,6 +174,11 @@ class CONTENT_EXPORT BrowserMainLoop {
   const base::FilePath& startup_trace_file() const {
     return startup_trace_file_;
   }
+
+  // Returns the task runner for compositor tasks. On Mac this will be the task
+  // runner provided by WindowResizeHelperMac, otherwise it will be the thread
+  // task runner.
+  scoped_refptr<base::SingleThreadTaskRunner> GetCompositorTaskRunner();
 
   gpu::GpuChannelEstablishFactory* gpu_channel_establish_factory() const;
 
