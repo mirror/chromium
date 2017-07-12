@@ -49,6 +49,10 @@ class WebRuntimeFeatures {
   // Source/platform/RuntimeEnabledFeatures.in.
   BLINK_PLATFORM_EXPORT static void EnableTestOnlyFeatures(bool);
 
+  // Enable features with non-empty origin_trial_feature_name in
+  // Source/platform/RuntimeEnabledFeatures.in.
+  BLINK_PLATFORM_EXPORT static void EnableOriginTrialControlledFeatures(bool);
+
   // Enables a feature by its string identifier from
   // Source/platform/RuntimeEnabledFeatures.in.
   // Note: We use std::string instead of WebString because this API can
