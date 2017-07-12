@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2c500e3c_1475e0a5",
+        "filename": "third_party/WebKit/Source/core/editing/LinkSelectionTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-12T10:48:47Z",
+      "side": 1,
+      "message": "In PS6 I added two unit tests for ShouldShowIBeamForNode(). ShouldShowIBeamForNode() is private so I had to use FRIEND_TEST_ALL_PREFIXES() to be able to reach it from EventHandlerTest.\n\nUnit testing ShouldShowIBeamForNode() does not involve dragging, which this bug is about, so I think we need this integration test too.",
+      "parentUuid": "94aadf0d_8372fcea",
+      "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddcc4643_ddb22fce",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 5
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "ddcc4643_ddb22fce",
+      "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af7e0547_4c13b8e6",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-12T10:48:47Z",
+      "side": 1,
+      "message": "Done in PS6.",
+      "parentUuid": "ea31d061_d4372410",
       "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
