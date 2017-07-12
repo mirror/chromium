@@ -50,6 +50,11 @@ class SearchBoxDataProvider implements ToolbarDataProvider {
     }
 
     @Override
+    public boolean hasTab() {
+        return mTab != null;
+    }
+
+    @Override
     public int getPrimaryColor() {
         return 0;
     }
