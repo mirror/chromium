@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "60a0519e_9d9b95c8",
+        "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-12T21:33:46Z",
+      "side": 1,
+      "message": "yep, that\u0027s correct.\nAs an aside, I wonder with our tooling it may end up being better for us to have a single dummy metric for these sorts of things... but we can see if that\u0027s needed. We could also handle that entirely server side if we felt we needed it and didn\u0027t want to add extra client complexity.",
+      "parentUuid": "663a953d_67198575",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da4ddc9_4fb6e7d5",
         "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
         "patchSetId": 6

@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d7b5bed_c1952649",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-12T21:33:46Z",
+      "side": 1,
+      "message": "should we rename this to be PageLoad.FromGoogleSearch?",
+      "range": {
+        "startLine": 398,
+        "startChar": 13,
+        "endLine": 398,
+        "endChar": 29
+      },
+      "revId": "40992f8979b5144c554f1514e236b9d6631360f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f3763a_7cc39461",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-12T21:33:46Z",
+      "side": 1,
+      "message": "I think I would just be explicit and say 1",
+      "range": {
+        "startLine": 414,
+        "startChar": 21,
+        "endLine": 414,
+        "endChar": 22
+      },
+      "revId": "40992f8979b5144c554f1514e236b9d6631360f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724a5404_fce6bad8",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-12T21:33:46Z",
+      "side": 1,
+      "message": "similar",
+      "revId": "40992f8979b5144c554f1514e236b9d6631360f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
