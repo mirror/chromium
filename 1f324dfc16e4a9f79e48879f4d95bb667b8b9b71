@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12c9a2fc_81e57564",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94f06854_35c31a49",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78529533_1d19615e",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
         "patchSetId": 34
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-11T22:16:05Z",
       "side": 1,
       "message": "Alphabetize",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54009bf2_93a24c73",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78529533_1d19615e",
       "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e8c27d6f_30f6a5c1",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Done ... I was following the style from the block below.",
+      "parentUuid": "552b5049_9233ba6a",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c694354_eede89db",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 34
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-11T22:16:05Z",
       "side": 1,
       "message": "That\u0027s better written as Restrictions.DISABLED, right?",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f01702b_5c454506",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Yes, although that doesn\u0027t work in an object initializer like this. So it becomes:\nOutput.RESTRICTIONS_STATE_MAP \u003d {};\nOutput.RESTRICTIONS_STATE_MAP[Restrictions.DISABLED] \u003d \u0027aria_disabled_true\u0027;\n\nI\u0027m assuming you\u0027re ok with that otherwise you wouldn\u0027t have suggested it.",
+      "parentUuid": "7c694354_eede89db",
       "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "167a4a16_ac2a87c8",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 34
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba63dab7_ee6f86f2",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5411411_7dbde90d",
         "filename": "chrome/common/extensions/api/automation.idl",
         "patchSetId": 34
@@ -115,6 +205,24 @@
       "writtenOn": "2017-07-11T22:16:05Z",
       "side": 1,
       "message": "More than text boxes can be read only, right?",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "147cae50_cd6a7fba",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 34
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "True for aria-readonly only. Will fix the comment.",
+      "parentUuid": "d5411411_7dbde90d",
       "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "4fdaa369_18f94a23",
+        "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
+        "patchSetId": 34
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d775c68_92ef0663",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f89c9fd_fa9a87bf",
         "filename": "content/renderer/accessibility/blink_ax_tree_source.cc",
         "patchSetId": 34
@@ -149,6 +275,24 @@
       "writtenOn": "2017-07-11T22:16:05Z",
       "side": 1,
       "message": "I think it customary to omit default so we have all possible values of the enum handled.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5f80a1e_b6e0c298",
+        "filename": "content/renderer/accessibility/blink_ax_tree_source.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f89c9fd_fa9a87bf",
       "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "fe7c8a20_c32a0d57",
+        "filename": "content/shell/test_runner/web_ax_object_proxy.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd3d9602_caa28bdc",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce8e9984_ff48fe33",
         "filename": "content/shell/test_runner/web_ax_object_proxy.cc",
         "patchSetId": 34
@@ -183,6 +345,24 @@
       "writtenOn": "2017-07-11T22:16:05Z",
       "side": 1,
       "message": "Isn\u0027t the two conditions above just restrictions !\u003d none?",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d0f49df_767371a5",
+        "filename": "content/shell/test_runner/web_ax_object_proxy.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce8e9984_ff48fe33",
       "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -257,6 +437,24 @@
     },
     {
       "key": {
+        "uuid": "2f265335_9e47eef6",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXMenuListPopup.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Maybe you mean return _parent \u0026\u0026 parent_-\u003eRestriction() \u003d\u003d kDisabled ? kDisabled : kNone;\n?",
+      "parentUuid": "883818d3_032ee7d3",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c9d53e_d8e7d11e",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 34
@@ -268,6 +466,24 @@
       "writtenOn": "2017-07-11T22:16:05Z",
       "side": 1,
       "message": "Just can set focus? So, non-can set focus descendants are not disabled? Why not remove that condition?",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bcc78d7_14917c77",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Well, that\u0027s what the spec says. The point of marking groups disabled in the first place is really so that controls within them are all disabled. There\u0027s not much point it marking non-focusable elements disabled. So I think we should follow the spec and we\u0027ll be fine here.",
+      "parentUuid": "d9c9d53e_d8e7d11e",
       "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -291,6 +507,24 @@
     },
     {
       "key": {
+        "uuid": "1cc2c5cc_dfee7d55",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 1314,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3f0c357_69d615b9",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5864e45f_7d6a84aa",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 34
@@ -302,6 +536,24 @@
       "writtenOn": "2017-07-11T22:16:05Z",
       "side": 1,
       "message": "Still seems really arbitrary; I don\u0027t see this logic anywhere in the current code (e.g. !isLink()). Where is this coming from? My preference is to remove this logic entirely and let it fall through to the very end.",
+      "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2655f912_f53de764",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-12T02:00:01Z",
+      "side": 1,
+      "message": "I went through the ARIA 1.1 RDF so that we can support aria-readonly only on the roles the spec expects it to support it. Firefox does a good job of supporting properties only on roles that they should be, and this will make the 2 browsers more similar, a win for authors.",
+      "parentUuid": "5864e45f_7d6a84aa",
       "revId": "1f324dfc16e4a9f79e48879f4d95bb667b8b9b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
