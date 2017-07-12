@@ -93,6 +93,30 @@
       "revId": "465770d5c8f2f577eb4897838196dd3828d67565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19fd2e60_4c27b601",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-12T14:36:57Z",
+      "side": 1,
+      "message": "While this has moved around a bit, the button container visibility predates the mass upstreaming:\n\nhttps://chromium.googlesource.com/chromium/src/+/7497635a7cfdae2866d2aa7a3bd2894c895b8360/chrome/android/java_staging/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java#707\n\nWe were always updating the visibility, but your changes recently introduced the shouldHideToolbarButtons.\n\nD\u0027oh...I just realized that BottomToolbarPhone is the only place that sets this to true, so this is a no-op for previous cases.  Sigh...sounds good.",
+      "parentUuid": "e68bdbde_63b92297",
+      "range": {
+        "startLine": 855,
+        "startChar": 12,
+        "endLine": 855,
+        "endChar": 13
+      },
+      "revId": "465770d5c8f2f577eb4897838196dd3828d67565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
