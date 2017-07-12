@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69e5071f_e16214ba",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 8
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T13:09:28Z",
+      "side": 1,
+      "message": "Done.\nMade it share the style for other buttons in the selection mode.",
+      "parentUuid": "94d225c6_1f80b9b6",
+      "revId": "76e43fc4fe0d7f55df1a21ef2937074fa4eeb821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc2eea2_27773713",
         "filename": "ui/file_manager/file_manager/main.html",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "038ac105_0f3eba2c",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T13:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc2eea2_27773713",
+      "range": {
+        "startLine": 165,
+        "startChar": 40,
+        "endLine": 165,
+        "endChar": 50
+      },
+      "revId": "76e43fc4fe0d7f55df1a21ef2937074fa4eeb821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "503a3a32_b41470a5",
         "filename": "ui/file_manager/file_manager/main.html",
         "patchSetId": 8
@@ -62,6 +104,30 @@
       "revId": "76e43fc4fe0d7f55df1a21ef2937074fa4eeb821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5548e9_901ae223",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-12T13:09:28Z",
+      "side": 1,
+      "message": "Oops, sorry, I missed to delete those from the old revision.",
+      "parentUuid": "503a3a32_b41470a5",
+      "range": {
+        "startLine": 169,
+        "startChar": 72,
+        "endLine": 169,
+        "endChar": 93
+      },
+      "revId": "76e43fc4fe0d7f55df1a21ef2937074fa4eeb821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
