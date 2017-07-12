@@ -62,6 +62,10 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_switches.h"
 
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+#include "chrome/common/profiling/memlog_sender.h"
+#endif
+
 #if defined(OS_WIN)
 #include <atlbase.h>
 #include <malloc.h>
@@ -1069,6 +1073,9 @@ void ChromeMainDelegate::ZygoteForked() {
   // this up for the browser process in a different manner.
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  profiling::InitMemlogSenderIfNecessary(*command_line);
+#endif  // ENABLE_OOP_HEAP_PROFILING
   std::string process_type =
       command_line->GetSwitchValueASCII(switches::kProcessType);
   breakpad::InitCrashReporter(process_type);

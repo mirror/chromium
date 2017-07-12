@@ -25,7 +25,7 @@ const int kReadBufferSize = 1024 * 64;
 }  // namespace
 
 MemlogReceiverPipe::MemlogReceiverPipe(base::ScopedFD fd)
-    : fd_(std::move(fd)), read_buffer_(new char[kReadBufferSize]) {
+    : controller_(FROM_HERE), fd_(std::move(fd)), read_buffer_(new char[kReadBufferSize]) {
   static std::vector<base::ScopedFD> dummy_instance;
   dummy_for_receive_ = &dummy_instance;
 }
@@ -43,10 +43,14 @@ void MemlogReceiverPipe::ReadUntilBlocking() {
           base::BindOnce(&MemlogStreamReceiver::OnStreamData, receiver_,
                          std::move(read_buffer_), bytes_read));
       read_buffer_.reset(new char[kReadBufferSize]);
+//      fprintf(stderr, "read %zu bytes from %d\n", bytes_read, fd_.get());
       return;
     } else if (bytes_read == 0) {
       // Other end closed the pipe.
+      fprintf(stderr, "fd %d closed\n", fd_.get());
       if (receiver_) {
+        controller_.StopWatchingFileDescriptor();
+        DCHECK(receiver_task_runner_);
         receiver_task_runner_->PostTask(
             FROM_HERE,
             base::BindOnce(&MemlogStreamReceiver::OnStreamComplete, receiver_));
@@ -54,14 +58,11 @@ void MemlogReceiverPipe::ReadUntilBlocking() {
       return;
     } else {
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
+        controller_.StopWatchingFileDescriptor();
         PLOG(ERROR) << "Problem reading socket.";
       }
     }
   } while (bytes_read > 0);
-}
-
-int MemlogReceiverPipe::GetRemoteProcessID() {
-  return 1;  // TODO(ajwong): Record the originating process ID somehow.
 }
 
 void MemlogReceiverPipe::SetReceiver(

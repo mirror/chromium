@@ -1658,8 +1658,10 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
   command_line->CopySwitchesFrom(browser_command_line, kCommonSwitchNames,
                                  arraysize(kCommonSwitchNames));
 #if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
-  if (process_type != switches::kZygoteProcess) {
+  if (process_type != switches::kZygoteProcess &&
+      process_type != switches::kGpuProcess) {
     profiling::ProfilingProcessHost::AddSwitchesToChildCmdLine(command_line);
+    fprintf(stderr, "added switches to cmd %s\n", command_line->GetCommandLineString().c_str());
   }
 #endif
 
@@ -2804,6 +2806,16 @@ void ChromeContentBrowserClient::GetAdditionalMappedFilesForChildProcess(
     const base::CommandLine& command_line,
     int child_process_id,
     FileDescriptorInfo* mappings) {
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  std::string process_type =
+      command_line.GetSwitchValueASCII(switches::kProcessType);
+  if (process_type != switches::kZygoteProcess &&
+      process_type != switches::kGpuProcess) {
+    profiling::ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
+        command_line, child_process_id, mappings);
+  }
+#endif
+
 #if defined(OS_ANDROID)
   base::MemoryMappedFile::Region region;
   int fd = ui::GetMainAndroidPackFd(&region);

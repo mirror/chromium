@@ -25,17 +25,20 @@ MemlogReceiverPipeServer::MemlogReceiverPipeServer(
 MemlogReceiverPipeServer::~MemlogReceiverPipeServer() {}
 
 void MemlogReceiverPipeServer::Start() {
-  // Create Mojo Message Pipe here.
   io_runner_->PostTask(FROM_HERE,
-                       base::Bind(&MemlogReceiverPipeServer::StartOnIO, this));
-  // TODO(ajwong): Add mojo service here.
+                       base::BindOnce(&MemlogReceiverPipeServer::OnNewPipe,
+                                      this,
+                                      std::move(first_pipe_),
+                                      0));
 }
 
-void MemlogReceiverPipeServer::StartOnIO() {
-  scoped_refptr<MemlogReceiverPipe> pipe(
-      pipe_poller_.CreatePipe(std::move(first_pipe_)));
-  on_new_connection_.Run(pipe);
-  pipe->ReadUntilBlocking();
+void MemlogReceiverPipeServer::OnNewPipe(base::ScopedFD pipe, int sender_pid) {
+  DCHECK(io_runner_->RunsTasksInCurrentSequence());
+
+  scoped_refptr<MemlogReceiverPipe> receiver_pipe(
+      pipe_poller_.CreatePipe(std::move(pipe)));
+  on_new_connection_.Run(receiver_pipe, sender_pid);
+  receiver_pipe->ReadUntilBlocking();
 }
 
 MemlogReceiverPipeServer::PipePoller::PipePoller() : controller_(FROM_HERE) {}
@@ -45,10 +48,11 @@ MemlogReceiverPipeServer::PipePoller::~PipePoller() {}
 scoped_refptr<MemlogReceiverPipe>
 MemlogReceiverPipeServer::PipePoller::CreatePipe(base::ScopedFD fd) {
   int raw_fd = fd.get();
+  fprintf(stderr, "Watching %d\n", raw_fd);
   scoped_refptr<MemlogReceiverPipe> pipe(new MemlogReceiverPipe(std::move(fd)));
   pipes_[raw_fd] = pipe;
   base::MessageLoopForIO::current()->WatchFileDescriptor(
-      raw_fd, true, base::MessageLoopForIO::WATCH_READ, &controller_, this);
+      raw_fd, true, base::MessageLoopForIO::WATCH_READ, &pipe->controller_, this);
   return pipe;
 }
 
