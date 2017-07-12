@@ -625,7 +625,10 @@ by a child template that "extends" this file.
             android:theme="@android:style/Theme.NoDisplay"
             android:noHistory="true"
             android:excludeFromRecents="true"
-            android:enableVrMode="@string/gvr_vr_mode_component">
+            {% if enable_vr == "true" %}
+            android:enableVrMode="@string/gvr_vr_mode_component"
+            {% endif %}
+            >
             {{ self.supports_vr() }}
         </activity>
 
