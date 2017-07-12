@@ -366,10 +366,6 @@ NSAttributedString* CreateClassifiedAttributedString(
                   origin:(NSPoint)origin
             withMaxWidth:(int)maxWidth
             forDarkTheme:(BOOL)isDarkTheme;
-- (CGFloat)drawMatchPrefixWithFrame:(NSRect)cellFrame
-                          tableView:(OmniboxPopupMatrix*)tableView
-               withContentsMaxWidth:(int*)contentsMaxWidth
-                       forDarkTheme:(BOOL)isDarkTheme;
 - (void)drawMatchWithFrame:(NSRect)cellFrame inView:(NSView*)controlView;
 @end
 
@@ -391,7 +387,9 @@ NSAttributedString* CreateClassifiedAttributedString(
                contentsOffset:(CGFloat)contentsOffset
                         image:(NSImage*)image
                   answerImage:(NSImage*)answerImage
-                 forDarkTheme:(BOOL)isDarkTheme {
+                 forDarkTheme:(BOOL)isDarkTheme
+           anyTailSuggestions:(BOOL)anyTailSuggestions
+             commonSuggestion:(const base::string16&)commonSuggestion {
   if ((self = [super init])) {
     image_ = [image retain];
     answerImage_ = [answerImage retain];
@@ -420,9 +418,45 @@ NSAttributedString* CreateClassifiedAttributedString(
           [CreateAnswerLine(match.answer->second_line(), isDarkTheme) retain];
       maxLines_ = match.answer->second_line().num_text_lines();
     } else {
-      contents_ = [CreateClassifiedAttributedString(
-          match.contents, ContentTextColor(isDarkTheme), match.contents_class,
-          isDarkTheme) retain];
+      if (match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
+        ACMatchClassifications contents_class;
+        contents_class.push_back(
+            ACMatchClassification(0, ACMatchClassification::DIM));
+        for (const auto& classification : match.contents_class) {
+          contents_class.push_back(ACMatchClassification(
+              commonSuggestion.size() + classification.offset,
+              classification.style));
+        }
+        contents_ = [CreateClassifiedAttributedString(
+            commonSuggestion + match.contents, ContentTextColor(isDarkTheme),
+            contents_class, isDarkTheme) retain];
+      } else {
+        ACMatchClassifications contents_class;
+        if (anyTailSuggestions &&
+            base::StartsWith(match.contents, commonSuggestion,
+                             base::CompareCase::SENSITIVE)) {
+          // Insert a classification of dim for the text prefix common
+          // with the suggestion. Fix up any others.
+          contents_class.push_back(
+              ACMatchClassification(0, ACMatchClassification::DIM));
+          size_t i = 0;
+          while (i < match.contents_class.size() &&
+                 contents_class[i].offset < commonSuggestion.size())
+            ++i;
+          if (i > 0) {
+            contents_class.push_back(ACMatchClassification(
+                match.contents_class[i - 1].offset + commonSuggestion.size(),
+                match.contents_class[i - 1].style));
+          }
+          for (; i < match.contents_class.size(); ++i)
+            contents_class.push_back(match.contents_class[i]);
+        } else {
+          contents_class = match.contents_class;
+        }
+        contents_ = [CreateClassifiedAttributedString(
+            match.contents, ContentTextColor(isDarkTheme), contents_class,
+            isDarkTheme) retain];
+      }
       if (!match.description.empty()) {
         // Swap the contents and description of non-search suggestions in
         // vertical layouts.
@@ -522,15 +556,6 @@ NSAttributedString* CreateClassifiedAttributedString(
   // For matches lacking description in vertical layout, center vertically.
   if (isVerticalLayout && descriptionMaxWidth == 0)
     origin.y += halfLineHeight;
-
-  if ([cellData matchType] == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
-    // Tail suggestions are rendered with a prefix (usually ellipsis), which
-    // appear vertically stacked.
-    origin.x += [self drawMatchPrefixWithFrame:cellFrame
-                                     tableView:tableView
-                          withContentsMaxWidth:&contentsMaxWidth
-                                  forDarkTheme:isDarkTheme];
-  }
   origin.x += [self drawMatchPart:[cellData contents]
                         withFrame:cellFrame
                            origin:origin
@@ -577,54 +602,6 @@ NSAttributedString* CreateClassifiedAttributedString(
            withMaxWidth:descriptionMaxWidth
            forDarkTheme:isDarkTheme];
   }
-}
-
-- (CGFloat)drawMatchPrefixWithFrame:(NSRect)cellFrame
-                          tableView:(OmniboxPopupMatrix*)tableView
-               withContentsMaxWidth:(int*)contentsMaxWidth
-                       forDarkTheme:(BOOL)isDarkTheme {
-  OmniboxPopupCellData* cellData =
-      base::mac::ObjCCastStrict<OmniboxPopupCellData>([self objectValue]);
-  CGFloat offset = 0.0f;
-  CGFloat remainingWidth =
-      [OmniboxPopupCell getTextContentAreaWidth:[tableView contentMaxWidth]];
-  CGFloat prefixWidth = [[cellData prefix] size].width;
-
-  CGFloat prefixOffset = 0.0f;
-  if (base::i18n::IsRTL() != [cellData isContentsRTL]) {
-    // The contents is rendered between the contents offset extending towards
-    // the start edge, while prefix is rendered in opposite direction. Ideally
-    // the prefix should be rendered at |contentsOffset_|. If that is not
-    // sufficient to render the widest suggestion, we increase it to
-    // |maxMatchContentsWidth|.  If |remainingWidth| is not sufficient to
-    // accommodate that, we reduce the offset so that the prefix gets rendered.
-    prefixOffset = std::min(
-        remainingWidth - prefixWidth,
-        std::max([cellData contentsOffset], [tableView maxMatchContentsWidth]));
-    offset = std::max<CGFloat>(0.0, prefixOffset - *contentsMaxWidth);
-  } else { // The direction of contents is same as UI direction.
-    // Ideally the offset should be |contentsOffset_|. If the max total width
-    // (|prefixWidth| + |maxMatchContentsWidth|) from offset will exceed the
-    // |remainingWidth|, then we shift the offset to the left , so that all
-    // tail suggestions are visible.
-    // We have to render the prefix, so offset has to be at least |prefixWidth|.
-    offset =
-        std::max(prefixWidth,
-                 std::min(remainingWidth - [tableView maxMatchContentsWidth],
-                          [cellData contentsOffset]));
-    prefixOffset = offset - prefixWidth;
-  }
-  *contentsMaxWidth = std::min((int)ceilf(remainingWidth - prefixWidth),
-                               *contentsMaxWidth);
-  NSPoint origin = NSMakePoint(
-      prefixOffset + kMaterialTextStartOffset + [tableView contentLeftPadding],
-      0);
-  [self drawMatchPart:[cellData prefix]
-            withFrame:cellFrame
-               origin:origin
-         withMaxWidth:prefixWidth
-         forDarkTheme:isDarkTheme];
-  return offset;
 }
 
 - (CGFloat)drawMatchPart:(NSAttributedString*)attributedString

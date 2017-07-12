@@ -42,12 +42,15 @@ TEST_VIEW(OmniboxPopupCellTest, control_);
 
 TEST_F(OmniboxPopupCellTest, Image) {
   AutocompleteMatch match;
+  base::string16 empty;
   cellData_.reset([[OmniboxPopupCellData alloc]
-       initWithMatch:match
-      contentsOffset:0
-               image:[NSImage imageNamed:NSImageNameInfo]
-         answerImage:nil
-        forDarkTheme:NO]);
+           initWithMatch:match
+          contentsOffset:0
+                   image:[NSImage imageNamed:NSImageNameInfo]
+             answerImage:nil
+            forDarkTheme:NO
+      anyTailSuggestions:false
+        commonSuggestion:empty]);
   [cell_ setObjectValue:cellData_];
   [control_ display];
 }
@@ -56,11 +59,14 @@ TEST_F(OmniboxPopupCellTest, Title) {
   AutocompleteMatch match;
   match.contents =
       base::ASCIIToUTF16("The quick brown fox jumps over the lazy dog.");
+  base::string16 empty;
   cellData_.reset([[OmniboxPopupCellData alloc] initWithMatch:match
                                                contentsOffset:0
                                                         image:nil
                                                   answerImage:nil
-                                                 forDarkTheme:NO]);
+                                                 forDarkTheme:NO
+                                           anyTailSuggestions:false
+                                             commonSuggestion:empty]);
   [cell_ setObjectValue:cellData_];
   [control_ display];
 }
@@ -83,11 +89,14 @@ TEST_F(OmniboxPopupCellTest, AnswerStyle) {
   AutocompleteMatch match;
   match.answer = SuggestionAnswer::ParseAnswer(dictionary);
   EXPECT_TRUE(match.answer);
+  base::string16 empty;
   cellData_.reset([[OmniboxPopupCellData alloc] initWithMatch:match
                                                contentsOffset:0
                                                         image:nil
                                                   answerImage:nil
-                                                 forDarkTheme:NO]);
+                                                 forDarkTheme:NO
+                                           anyTailSuggestions:false
+                                             commonSuggestion:empty]);
   EXPECT_NSEQ([[cellData_ description] string], finalString);
   size_t length = [[[cellData_ description] string] length];
   EXPECT_EQ(length, 8UL);
@@ -140,11 +149,14 @@ TEST_F(OmniboxPopupCellTest, DefinitionAnswerStyle) {
   AutocompleteMatch match;
   match.answer = SuggestionAnswer::ParseAnswer(dictionary);
   EXPECT_TRUE(match.answer);
+  base::string16 empty;
   cellData_.reset([[OmniboxPopupCellData alloc] initWithMatch:match
                                                contentsOffset:0
                                                         image:nil
                                                   answerImage:nil
-                                                 forDarkTheme:NO]);
+                                                 forDarkTheme:NO
+                                           anyTailSuggestions:false
+                                             commonSuggestion:empty]);
   EXPECT_NSEQ([[cellData_ description] string], finalString);
   size_t length = [[[cellData_ description] string] length];
   EXPECT_EQ(length, 31UL);

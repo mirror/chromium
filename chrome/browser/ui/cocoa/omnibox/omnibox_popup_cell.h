@@ -46,7 +46,9 @@ class OmniboxPopupViewMac;
                contentsOffset:(CGFloat)contentsOffset
                         image:(NSImage*)image
                   answerImage:(NSImage*)answerImage
-                 forDarkTheme:(BOOL)isDarkTheme;
+                 forDarkTheme:(BOOL)isDarkTheme
+           anyTailSuggestions:(BOOL)anyTailSuggestions
+             commonSuggestion:(const base::string16&)commonSuggestion;
 
 // Returns the width of the match contents.
 - (CGFloat)getMatchContentsWidth;

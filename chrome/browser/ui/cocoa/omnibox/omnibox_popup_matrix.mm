@@ -7,6 +7,7 @@
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
+#include "base/strings/string_number_conversions.h"
 #import "chrome/browser/ui/cocoa/omnibox/omnibox_popup_cell.h"
 #include "chrome/browser/ui/cocoa/omnibox/omnibox_popup_view_mac.h"
 #include "chrome/browser/ui/cocoa/omnibox/omnibox_view_mac.h"
@@ -37,17 +38,34 @@ const NSInteger kMiddleButtonNumber = 2;
   BOOL isDarkTheme = [tableView hasDarkTheme];
   CGFloat maxMatchContentsWidth = 0.0f;
   CGFloat contentsOffset = -1.0f;
+  BOOL anyTailSuggestions = false;
+  base::string16 commonSuggestion;
+  for (const AutocompleteMatch& match : result) {
+    if (match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
+      anyTailSuggestions = true;
+      int commonLength;
+      base::StringToInt(
+          match.GetAdditionalInfo(kACMatchPropertyContentsStartIndex),
+          &commonLength);
+      commonSuggestion = base::UTF8ToUTF16(match.GetAdditionalInfo(
+                                               kACMatchPropertySuggestionText))
+                             .substr(0, commonLength);
+      break;
+    }
+  }
   for (const AutocompleteMatch& match : result) {
     if (match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL &&
         contentsOffset < 0.0f)
       contentsOffset = [OmniboxPopupCell computeContentsOffset:match];
     base::scoped_nsobject<OmniboxPopupCellData> cellData(
         [[OmniboxPopupCellData alloc]
-             initWithMatch:match
-            contentsOffset:contentsOffset
-                     image:popupView.ImageForMatch(match)
-               answerImage:(match.answer ? answerImage : nil)
-              forDarkTheme:isDarkTheme]);
+                 initWithMatch:match
+                contentsOffset:contentsOffset
+                         image:popupView.ImageForMatch(match)
+                   answerImage:(match.answer ? answerImage : nil)forDarkTheme
+                              :isDarkTheme
+            anyTailSuggestions:anyTailSuggestions
+              commonSuggestion:commonSuggestion]);
     if (isDarkTheme)
       [cellData setIncognitoImage:popupView.ImageForMatch(match)];
     [array addObject:cellData];
