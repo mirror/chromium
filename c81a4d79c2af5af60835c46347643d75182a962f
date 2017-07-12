@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7b34eb0_4d1cb0bc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-12T04:59:52Z",
+      "side": 1,
+      "message": "The intent of this method is to know how many tasks can be scheduled and *actually* run in parallel. Using |worker_capacity_| is wrong the minute it becomes dynamic as the capacity will grow beyond the number of (non-blocked) tasks that can run in parallel.\n\nMaybe we need to store params.max_threads() in a member as well?",
+      "range": {
+        "startLine": 358,
+        "startChar": 29,
+        "endLine": 358,
+        "endChar": 62
+      },
+      "revId": "c81a4d79c2af5af60835c46347643d75182a962f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30987d85_68f6f81f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-12T04:59:52Z",
+      "side": 1,
+      "message": "were",
+      "range": {
+        "startLine": 136,
+        "startChar": 10,
+        "endLine": 136,
+        "endChar": 13
+      },
+      "revId": "c81a4d79c2af5af60835c46347643d75182a962f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
