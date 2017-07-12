@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c1c94c1_5c3fd3af",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3928,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-12T19:47:07Z",
+      "side": 1,
+      "message": "These are handled in InspectorInputAgent - please adjust there as well.",
+      "range": {
+        "startLine": 3928,
+        "startChar": 23,
+        "endLine": 3928,
+        "endChar": 33
+      },
+      "revId": "10b158e151ef7463e590a584c278d0b01cdcc0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
