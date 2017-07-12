@@ -1535,6 +1535,7 @@ test("browser_tests") {
       "../browser/ui/views/chrome_cleaner_dialog_browsertest_win.cc",
       "../browser/ui/views/extensions/chooser_dialog_view_browsertest.cc",
       "../browser/ui/views/hung_renderer_view_browsertest.cc",
+      "../browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
       "../browser/ui/webui/bidi_checker_web_ui_test.cc",
       "../browser/ui/webui/bidi_checker_web_ui_test.h",
       "../browser/ui/webui/bookmarks_ui_browsertest.cc",
