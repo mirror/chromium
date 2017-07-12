@@ -457,6 +457,12 @@ void PasswordFormManager::Update(
                       old_primary_key ? &old_primary_key.value() : nullptr);
 }
 
+void PasswordFormManager::UpdateUsername(const base::string16& new_username) {
+  pending_credentials_.username_value = new_username;
+  // Check if the username already exists.
+  is_new_login_ = !FindBestSavedMatch(&pending_credentials_);
+}
+
 void PasswordFormManager::PresaveGeneratedPassword(
     const autofill::PasswordForm& form) {
   form_saver()->PresaveGeneratedPassword(form);
