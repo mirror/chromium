@@ -128,6 +128,30 @@
       "revId": "7836c50b9676042befc37059285797a50ad76357",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35aa965d_ac0fc929",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T13:03:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7423fe96_d958156a",
+      "range": {
+        "startLine": 611,
+        "startChar": 27,
+        "endLine": 611,
+        "endChar": 28
+      },
+      "revId": "7836c50b9676042befc37059285797a50ad76357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
