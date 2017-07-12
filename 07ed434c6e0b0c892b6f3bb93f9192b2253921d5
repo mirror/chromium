@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44da4b7e_a680acc9",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T17:55:19Z",
+      "side": 1,
+      "message": "Init() can\u0027t be called here?",
+      "range": {
+        "startLine": 55,
+        "startChar": 43,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c953add0_d769ff7e",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T17:55:19Z",
+      "side": 1,
+      "message": "no curlies :)",
+      "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9d5eb9_6c1b900c",
+        "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T17:55:19Z",
+      "side": 1,
+      "message": "mention |clickable|",
+      "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f370c1_3b099231",
+        "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-12T17:55:19Z",
+      "side": 1,
+      "message": "this comment is slightly confusing (create vs. construct-time). Also PopulateList is called in the constructor sometimes. Is this ok?",
+      "revId": "07ed434c6e0b0c892b6f3bb93f9192b2253921d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
