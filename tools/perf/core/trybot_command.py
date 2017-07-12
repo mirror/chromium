@@ -9,6 +9,7 @@ import io
 import json
 import logging
 import os
+import pipes
 import platform
 import subprocess
 import tempfile
@@ -639,5 +640,6 @@ E.g.,
     for bot in self._builder_names[bot_platform]:
       git_try_command.extend(['-b', bot])
 
-    RunGit(git_try_command, error_msg_on_fail)
+    print '===>', ' '.join(pipes.quote(a) for a in git_try_command)
+    #RunGit(git_try_command, error_msg_on_fail)
     print 'Perf Try job sent to rietveld for %s platform.' % bot_platform
