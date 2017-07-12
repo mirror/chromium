@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5c2966c_90427790",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-12T21:03:30Z",
+      "side": 1,
+      "message": "It doesn\u0027t have any effect. Reverted.",
+      "parentUuid": "91e767ee_bd3dc383",
+      "revId": "d3527536cf3b7ffc30503feb1fabfe56a7674d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21ff5aa8_639965e9",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-12T20:56:11Z",
       "side": 1,
       "message": "?",
+      "range": {
+        "startLine": 290,
+        "startChar": 11,
+        "endLine": 290,
+        "endChar": 12
+      },
+      "revId": "d3527536cf3b7ffc30503feb1fabfe56a7674d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfcabb13_edd41a9d",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-12T21:03:30Z",
+      "side": 1,
+      "message": "Reverted - this was meant to be temporary, so that I could \"bake in\" the solution by looping it for an hour and looking for flakes.",
+      "parentUuid": "21ff5aa8_639965e9",
       "range": {
         "startLine": 290,
         "startChar": 11,
