@@ -49,6 +49,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
@@ -300,6 +301,13 @@ bool AwContentRendererClient::IsLinkVisited(unsigned long long link_hash) {
 void AwContentRendererClient::AddSupportedKeySystems(
     std::vector<std::unique_ptr<::media::KeySystemProperties>>* key_systems) {
   AwAddKeySystems(key_systems);
+}
+
+void AwContentRendererClient::
+    SetRuntimeFeaturesDefaultsBeforeBlinkInitialization() {
+  // Disable the CSS4 4 and 8 hex color feature for the web view.
+  // TODO(crbug.com/618472): enable this feature for the web view.
+  blink::WebRuntimeFeatures::EnableCSSHexAlphaColor(false);
 }
 
 std::unique_ptr<blink::WebSocketHandshakeThrottle>
