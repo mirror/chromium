@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb5ea14_ab324b5a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3330,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-12T14:49:32Z",
+      "side": 1,
+      "message": "Does this need to be USER_VISIBLE?  It\u0027s coming at the end of a network operation, so we\u0027ve already been waiting for an unbounded amount of time.",
+      "range": {
+        "startLine": 3330,
+        "startChar": 49,
+        "endLine": 3330,
+        "endChar": 61
+      },
+      "revId": "a2a3ad1156354c4aac68c722d339eaf65fd2c84f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874a2a9b_3bf26d0a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3344,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-12T14:49:32Z",
+      "side": 1,
+      "message": "Why did you change this to a class method?",
+      "revId": "a2a3ad1156354c4aac68c722d339eaf65fd2c84f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ae6f65_46c12914",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3364,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-12T14:49:32Z",
+      "side": 1,
+      "message": "Does PHPhotoLibrary call the completionHandler on the same thread that made the original call?\n\n(I\u0027m trying to figure out why the old code posted the tempfile deletion task to the FILE thread, if we were already on the FILE thread.)",
+      "revId": "a2a3ad1156354c4aac68c722d339eaf65fd2c84f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
