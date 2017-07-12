@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "044ddc7b_97ede499",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T21:46:09Z",
+      "side": 1,
+      "message": "nit: Let\u0027s pass another parameter into the adapter constructor. I also wonder if we should actually pass in whether ChromeHome is enabled. On the NTP UI, the menu button will be visible soon, so the anchor view won\u0027t always be at the bottom. We should show a consistent animation regardless of where the anchor view is.\n\nAppMenuHandler has a hook to an Activity. We could pass another parameter to both AppMenu\u0027s constructor and this class\u0027s constructor e.g. translateMenuItemsOnShow\n\nWhere translateMenuItemsOnShow \u003d !(activity instanceof ChromeActivity) || ((ChromeActivity) activity).getBottomSheet() \u003d\u003d null.\n\nI should have caught this and suggested it the first time around, sorry.",
+      "range": {
+        "startLine": 299,
+        "startChar": 35,
+        "endLine": 299,
+        "endChar": 49
+      },
+      "revId": "2a3ba43a7f7e60f6c9bb31e54faf507657a4be99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616375eb_8f906c33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T21:46:09Z",
+      "side": 1,
+      "message": "nit: let\u0027s move this inside the if-else block right above where it\u0027s used.",
+      "range": {
+        "startLine": 387,
+        "startChar": 20,
+        "endLine": 387,
+        "endChar": 29
+      },
+      "revId": "2a3ba43a7f7e60f6c9bb31e54faf507657a4be99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0521c3_91513307",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T21:46:09Z",
+      "side": 1,
+      "message": "We should probably also skip the start delay if we\u0027re not animating the translation X. The startDelay is used to give the effect of the menu items sliding in. Since the startDelay is based on item position, it\u0027s helping to convey the \"top to bottom motion\" that UX would like to avoid.",
+      "range": {
+        "startLine": 398,
+        "startChar": 32,
+        "endLine": 398,
+        "endChar": 42
+      },
+      "revId": "2a3ba43a7f7e60f6c9bb31e54faf507657a4be99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
