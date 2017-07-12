@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd25453_3c31b42b",
+        "filename": "chrome/gpu/chrome_content_gpu_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T18:50:11Z",
+      "side": 0,
+      "message": "This is now handled by the new code in ChildThreadImpl::Init",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 3
+      },
+      "revId": "8c387c68ef1a9b32d3efd7ef7b67b7db7702d475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1721c90f_7331072d",
+        "filename": "components/variations/child_process_field_trial_syncer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T18:50:11Z",
+      "side": 0,
+      "message": "This is now handled by the new code in ChildThreadImpl::Init",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "8c387c68ef1a9b32d3efd7ef7b67b7db7702d475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5b6a62d_d37ea997",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T18:50:11Z",
+      "side": 0,
+      "message": "It seems that mojom::FieldTrialRecorderPtr::FieldTrialActivated (trigerred by the new ChildThreadImpl::OnFieldTrialGroupFinalized - moved from the old RenderThreadImpl and GpuThreadImpl) is more or less equivalent.  I see that the implementation of this mojo interface looks like this:\n\nvoid FieldTrialRecorder::FieldTrialActivated(const std::string\u0026 trial_name) {\n  DCHECK(thread_checker_.CalledOnValidThread());\n  // Activate the trial in the browser process to match its state in the\n  // renderer. This is done by calling FindFullName which finalizes the group\n  // and activates the trial.\n  base::FieldTrialList::FindFullName(trial_name);\n}",
+      "range": {
+        "startLine": 500,
+        "startChar": 2,
+        "endLine": 500,
+        "endChar": 49
+      },
+      "revId": "8c387c68ef1a9b32d3efd7ef7b67b7db7702d475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33504383_a7c69e13",
+        "filename": "content/browser/ppapi_plugin_process_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T18:50:11Z",
+      "side": 0,
+      "message": "After this CL unified handling happens in ChildThreadImpl.",
+      "range": {
+        "startLine": 150,
+        "startChar": 7,
+        "endLine": 150,
+        "endChar": 60
+      },
+      "revId": "8c387c68ef1a9b32d3efd7ef7b67b7db7702d475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

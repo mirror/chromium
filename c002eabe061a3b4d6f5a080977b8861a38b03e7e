@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d7a8a29_db0cb709",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T18:50:11Z",
+      "side": 1,
+      "message": "This is important to 1) fix to preserve the behavior of GpuChildThread and ChromeContentGpuClient::Initialize (I think this is just about performance optimization), but also to 2) make sure things work fine in various testing modes - unit tests, RenderViewTests, etc.  For example - running\n\n$ extensions_unittests --gtest_filter\u003d*SandboxedUnpackerTest.SkipHashCheck*\n\nwith the current patchset will currently crash:\n\n    base::FieldTrialList::GetInitiallyActiveFieldTrials(...) base/metrics/fie\nld_trial.cc:719:3\n    variations::ChildProcessFieldTrialSyncer::InitFieldTrialObserving(...) components/variations/child_process_field_trial_syncer.cc:41:3\n    content::ChildThreadImpl::Init(...) content/child/child_thread_impl.cc:605:26\n    content::UtilityThreadImpl::UtilityThreadImpl(...) content/utility/utility_thread_impl.cc:29:7\n    content::InProcessUtilityThread::InitInternal() content/utility/in_process_utility_thread.cc:52:39\n\nThe direct cause of the crash is that FieldTrialList::global_ has not been initialized in the unit test process.  The indirect cause of the crash is that content::ChildThreadImpl::Init tries to use variations::ChildProcessFieldTrialSyncer, even when the child thread is in the same process (browser process OR unit tests process).\n\n\nAlso - note that currently variations::ChildProcessFieldTrialSyncer checks for a single-process cmdline switch.  Maybe we can add a new abstract virtual method to ChildThreadImpl (GetSingleProcessSwitch or IsSingleProcessMode) that derived classes could implement/override.  I see that switches used by ppapi, renderthreadimpl, gpuchildthread are defined in //content, so this could work here, but I am not quite sure what to do about the UtilityThreadImpl.\n\n\nHmmm - maybe we could just inspect presence of kProcessType?",
+      "range": {
+        "startLine": 599,
+        "startChar": 5,
+        "endLine": 600,
+        "endChar": 12
+      },
+      "revId": "c002eabe061a3b4d6f5a080977b8861a38b03e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
