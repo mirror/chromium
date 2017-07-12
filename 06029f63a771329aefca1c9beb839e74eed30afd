@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "b065670e_322f4d87",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-12T19:07:30Z",
+      "side": 1,
+      "message": "Creating this variable on the stack is essentially free while pre-allocating it has added size and complexity to this patch. I would like to reiterate my support for version 10 of this change.",
+      "parentUuid": "f0612cf1_18573d53",
+      "range": {
+        "startLine": 49,
+        "startChar": 61,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10db0dc6_38b318ee",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 9
