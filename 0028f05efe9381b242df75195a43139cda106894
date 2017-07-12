@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d640027_b39ff95e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T11:10:18Z",
+      "side": 1,
+      "message": "Nit: this",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9decb9e_067c4fda",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T11:10:18Z",
+      "side": 1,
+      "message": "Nit: prefer using A \u003d B; instead of typedef B A; in new code",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 39
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9345f149_8e40706e",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T11:10:18Z",
+      "side": 1,
+      "message": "UMA_HISTOGRAM_ENUMERATION supports scoped enums, so just use the scoped enum directly. Ditto for the kNumberOfFeatures cast in the header.",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 67
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d1c7f6_df016d3b",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_observer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T11:10:18Z",
+      "side": 1,
+      "message": "Question for the page_load_metrics OWNERS: we register 20+ observers when initializing the page load tracker, but only one observer cares about this message. Would it make sense for PageLoadTracker to just talk to it directly? The observer pattern doesn\u0027t seem so useful in that case.\n\n(this interface seems to have several other single-observer methods)",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 49
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348edf2e_f9ad0155",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T11:10:18Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why we need to wrap this in a struct? Also, just to make sure I\u0027m not missing anything, there\u0027s nothing that currently sends this from the renderer, right?",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
