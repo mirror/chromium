@@ -6,15 +6,19 @@
 
 #include "base/macros.h"
 #include "chrome/app/chrome_command_ids.h"
+#include "chrome/browser/custom_handlers/protocol_handler_registry.h"
+#include "chrome/browser/custom_handlers/protocol_handler_registry_factory.h"
 #include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 #include "components/zoom/zoom_controller.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/web_contents_tester.h"
+#include "device/vr/features/features.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 using content::SiteInstance;
@@ -147,6 +151,36 @@ TEST_F(BrowserUnitTest, DisableZoomOnCrashedTab) {
   EXPECT_FALSE(command_updater->IsCommandEnabled(IDC_ZOOM_MINUS));
   EXPECT_FALSE(chrome::CanZoomIn(contents));
   EXPECT_FALSE(chrome::CanZoomOut(contents));
+}
+
+TEST_F(BrowserUnitTest, RegisterProtocolHandlerInVR) {
+  TabStripModel* tab_strip_model = browser()->tab_strip_model();
+
+  WebContents* contents = CreateTestWebContents();
+  vr::VrTabHelper::CreateForWebContents(contents);
+  tab_strip_model->AppendWebContents(contents, true);
+  WebContentsTester::For(contents)->NavigateAndCommit(GURL("about:blank"));
+
+  ProtocolHandlerRegistry* registry =
+      ProtocolHandlerRegistryFactory::GetForBrowserContext(
+          contents->GetBrowserContext());
+
+  std::string protocol("mailto");
+  GURL gurl("http://www.toplevel.example/");
+  size_t num_handlers = registry->GetHandlersFor(protocol).size();
+
+  vr::VrTabHelper* vr_tab_helper = vr::VrTabHelper::FromWebContents(contents);
+  vr_tab_helper->SetIsInVr(true);
+
+  content::WebContentsDelegate* delegate =
+      static_cast<content::WebContentsDelegate*>(browser());
+  delegate->RegisterProtocolHandler(contents, protocol, gurl, false);
+  EXPECT_EQ(num_handlers, registry->GetHandlersFor(protocol).size());
+
+  vr_tab_helper->SetIsInVr(false);
+
+  delegate->RegisterProtocolHandler(contents, protocol, gurl, false);
+  EXPECT_EQ(num_handlers + 1, registry->GetHandlersFor(protocol).size());
 }
 
 class BrowserBookmarkBarTest : public BrowserWithTestWindowTest {
