@@ -1491,6 +1491,11 @@ bool NetworkQualityEstimator::ReadCachedNetworkQualityEstimate() {
   if (!params_->persistent_cache_reading_enabled())
     return false;
 
+  if (current_network_id_.type !=
+      NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI) {
+    return false;
+  }
+
   nqe::internal::CachedNetworkQuality cached_network_quality;
 
   const bool cached_estimate_available = network_quality_store_->GetById(
@@ -1827,6 +1832,8 @@ void NetworkQualityEstimator::MaybeUpdateNetworkQualityFromCache(
   if (!params_->persistent_cache_reading_enabled())
     return;
   if (network_id != current_network_id_)
+    return;
+  if (network_id.type != NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI)
     return;
 
   // Since the cached network quality is for the current network, add it to
