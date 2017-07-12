@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0fda1a9a_e9b32793",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T17:00:22Z",
+      "side": 1,
+      "message": "Yes. For the dialog\u0027s \"cancel\" button, we\u0027ve already been using the generic IDS_CANCEL in quite a few UIs (see [1]), and have not seen any translation bug filed against it. Same holds for a few more very common strings, see [2].\n\n[1] https://cs.chromium.org/search/?q\u003dIDS_CANCEL+file:%5Esrc/chrome/browser/ui/webui/+package:%5Echromium$\u0026type\u003dcs\n[2] https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc?q\u003dmd_settings_localized\u0026dr\u003dC\u0026l\u003d81,85,87,88,95",
+      "parentUuid": "dc390edc_d23c7b98",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0feb93bf_8a98ac44",
         "filename": "chrome/browser/resources/md_extensions/load_error.html",
         "patchSetId": 2
