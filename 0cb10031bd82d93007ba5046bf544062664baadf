@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2c1f391_524b635f",
+        "filename": "content/browser/renderer_host/cursor_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Correct. And done.",
+      "parentUuid": "8624b2ff_082673bc",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "440dbc02_275466fe",
         "filename": "content/browser/renderer_host/cursor_manager.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-11T23:38:38Z",
       "side": 1,
       "message": "Is that correct when we have A(B(C)) and C is going away?  Seems like the cursor should be set to whatever B was using previously, but I\u0027m guessing B will end up calling UpdateViewUnderCursor anyway?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aaad47d_051b6979",
+        "filename": "content/browser/renderer_host/cursor_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "You are right, but it\u0027s complicated to figure out if it is over a different widget. I expect that this will usually be right, and in any case it will update properly as soon as there is a mouse move.",
+      "parentUuid": "440dbc02_275466fe",
       "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "374fd4b2_30a8f440",
+        "filename": "content/browser/renderer_host/cursor_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1793dff8_1a74f2bf",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bfd779a_1023b2e3",
         "filename": "content/browser/renderer_host/cursor_manager.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea252f2_63ff7677",
+        "filename": "content/browser/renderer_host/cursor_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bfd779a_1023b2e3",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "b81dd83e_cb2e560e",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done. I had thought it might be better to do it this way because TestRWHV needs a RenderWidgetHostImpl, but it does look like mocking out what it needs is cleaner than having all of those overrides.",
+      "parentUuid": "8a8ec39f_8bb153bf",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31195869_6a9a168e",
         "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
         "patchSetId": 6
@@ -118,6 +208,24 @@
       "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cefbbd_1025a53f",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31195869_6a9a168e",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "926abd31_502892ad",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea142700_566c6f25",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "320cf5c3_4f4fd299",
         "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
         "patchSetId": 6
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "8b27ea44_bb027655",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "320cf5c3_4f4fd299",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f76cbcf_b1b8f35f",
         "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
         "patchSetId": 6
@@ -166,6 +310,24 @@
       "writtenOn": "2017-07-11T23:38:38Z",
       "side": 1,
       "message": "It might be more accurate to move up the \"delete child_view1\" here and do it before this line?",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe7f28e_58a6284c",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "I have turned these into unique_ptrs to simplify them, since the destructors aren\u0027t relevant to the test anyway.",
+      "parentUuid": "9f76cbcf_b1b8f35f",
       "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "a0e177d4_40e733cc",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5506,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d17c404_ef52403c",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49b874fe_7c8e9f27",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 6
@@ -203,6 +383,24 @@
       "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e4ad0f_42271a6b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5530,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b874fe_7c8e9f27",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "17136ea8_ff4c5890",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5534,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9088ec7b_a3ef3312",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "458e086f_ffbd17e1",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 6
@@ -237,6 +453,24 @@
       "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c83661_f1d158bb",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5563,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-12T23:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "458e086f_ffbd17e1",
+      "revId": "0cb10031bd82d93007ba5046bf544062664baadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
