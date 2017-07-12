@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60705b68_62d01cf3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-12T23:38:43Z",
+      "side": 1,
+      "message": "This looks a bit odd to ask if it hasTab and then get it in the same statement.  Maybe the isOfflinePage is what we should be moving in this case, which would encompass both conditions.",
+      "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11492aa7_d4f6531a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-12T23:38:43Z",
+      "side": 1,
+      "message": "if we are converting all callers within this class to use mToolbarDataProvider directly, we should probably make this method final.",
+      "range": {
+        "startLine": 1249,
+        "startChar": 11,
+        "endLine": 1249,
+        "endChar": 30
+      },
+      "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff310b40_e2bf36d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-12T23:38:43Z",
+      "side": 1,
+      "message": "should we just do:\n\nurl \u003d url \u003d\u003d null ? \"\" : url;\n\nhere to keep the logic the same instead of doing it for the original url below?",
+      "range": {
+        "startLine": 2112,
+        "startChar": 15,
+        "endLine": 2112,
+        "endChar": 18
+      },
+      "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

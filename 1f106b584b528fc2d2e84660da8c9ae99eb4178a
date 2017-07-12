@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a91947c_b28f84cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-12T23:38:43Z",
+      "side": 0,
+      "message": "why remove this check?  I think there are cases where we post the zero suggest start request, so there might be cases where the only tab is deleted before that gets run.",
+      "range": {
+        "startLine": 1122,
+        "startChar": 61,
+        "endLine": 1122,
+        "endChar": 62
+      },
+      "revId": "1f106b584b528fc2d2e84660da8c9ae99eb4178a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73817b8_c47d8ba0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-12T23:38:43Z",
+      "side": 0,
+      "message": "this seems to be a change in behavior (even if a no-op).  For these kinds of changes, I think it is better to have more isolated changes.",
+      "range": {
+        "startLine": 1451,
+        "startChar": 52,
+        "endLine": 1451,
+        "endChar": 75
+      },
+      "revId": "1f106b584b528fc2d2e84660da8c9ae99eb4178a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
