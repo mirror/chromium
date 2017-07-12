@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c0f628e_f4d5ee80",
+        "filename": "components/safe_browsing_db/database_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T00:53:58Z",
+      "side": 1,
+      "message": "nit: We usually capitalize \"Subresource\" rather than \"SubResource\".",
+      "revId": "e8ada21b83dc84e75e770bebd10915c0981d6afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca43525_25198545",
+        "filename": "components/safe_browsing_db/test_database_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-12T00:53:58Z",
+      "side": 1,
+      "message": "We might need to override this in our fake DB manager:\nhttps://cs.chromium.org/chromium/src/components/subresource_filter/content/browser/fake_safe_browsing_database_manager.h?type\u003dcs\u0026q\u003dfake_safe_browsing\u0026l\u003d6",
+      "revId": "e8ada21b83dc84e75e770bebd10915c0981d6afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
