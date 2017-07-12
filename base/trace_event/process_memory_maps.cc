@@ -20,6 +20,7 @@ const uint32_t ProcessMemoryMaps::VMRegion::kProtectionFlagsMayshare = 128;
 ProcessMemoryMaps::VMRegion::VMRegion()
     : start_address(0),
       size_in_bytes(0),
+      file_offset(0),
       module_timestamp(0),
       protection_flags(0),
       byte_stats_private_dirty_resident(0),
@@ -47,6 +48,8 @@ void ProcessMemoryMaps::AsValueInto(TracedValue* value) const {
 
     value->SetString("sa", StringPrintf(kHexFmt, region.start_address));
     value->SetString("sz", StringPrintf(kHexFmt, region.size_in_bytes));
+    if (region.size_in_bytes)
+      value->SetString("fo", StringPrintf(kHexFmt, region.file_offset));
     if (region.module_timestamp)
       value->SetString("ts", StringPrintf(kHexFmt, region.module_timestamp));
     value->SetInteger("pf", region.protection_flags);
