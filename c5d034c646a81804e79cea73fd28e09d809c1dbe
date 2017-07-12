@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d36741f5_8aeb2d1a",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T02:24:14Z",
+      "side": 1,
+      "message": "That\u0027s a good point. I was imagining eventually fields would be added like:\n- serviceWorkerStartupStart (timestamp when the browser realizes a SW is needed)\n- serviceWorkerExecutionStart (timestamp when the JS of the SW starts being executed)\n- serviceWorkerStartupEnd (timestamp when the SW finished initial script evaluation)\n\nAnd possibly other timing information like for navigation preload.\n\nBut for now it could possibly just make sense in PageLoadMetadata.",
+      "parentUuid": "7d27a567_546e7a0a",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "833344c6_798d92d0",
         "filename": "net/http/http_stream_factory_impl.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "e923fa97_ebbf0d2b",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T02:24:14Z",
+      "side": 1,
+      "message": "Will revert. This DCHECK keeps crashing locally, it\u0027s unrelated to this CL.",
+      "parentUuid": "833344c6_798d92d0",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee24a56e_9ee82764",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
         "patchSetId": 3
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-12T02:10:24Z",
       "side": 1,
       "message": "This is used only for navigation request and for metrics purpose, right? Can you add a comment about that?\n\nA bit orthogonal, but wondering if these SW-related fields (which look a bit random) should be factored out into a separate struct to give a better structural view.",
+      "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c081ba9_a79668f0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-12T02:24:14Z",
+      "side": 1,
+      "message": "Yes I\u0027ve been meaning to factor this out for a while :(",
+      "parentUuid": "ee24a56e_9ee82764",
       "revId": "c5d034c646a81804e79cea73fd28e09d809c1dbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
