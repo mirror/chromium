@@ -16,6 +16,24 @@
       "revId": "9eab5a87ad8b6515b49976621464fea9845d45d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b84f9e_48f04b49",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-07-12T06:15:02Z",
+      "side": 1,
+      "message": "Network quiet will be notified only on main thread. Added a DCHECK to verify this.",
+      "parentUuid": "a94285fd_a3e2f176",
+      "revId": "9eab5a87ad8b6515b49976621464fea9845d45d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
