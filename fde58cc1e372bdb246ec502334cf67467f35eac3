@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0ab2fa8_5042477b",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-12T18:22:04Z",
+      "side": 1,
+      "message": "Let\u0027s remove this namespace for now, I am actually not sure whether to add it.",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "fde58cc1e372bdb246ec502334cf67467f35eac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
