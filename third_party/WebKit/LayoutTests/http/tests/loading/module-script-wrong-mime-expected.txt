@@ -1,0 +1,13 @@
+main frame - didStartProvisionalLoadForFrame
+main frame - didCommitLoadForFrame
+module-script-wrong-mime.txt has MIME type text/plain
+CONSOLE WARNING: hogefuga2
+CONSOLE ERROR: Failed to load module script: the server responded with anon-JavaScript MIME type of "text/plain".
+CONSOLE ERROR: aaa
+main frame - didFinishDocumentLoadForFrame
+main frame - didHandleOnloadEventsForFrame
+main frame - didFinishLoadForFrame
+This is a testharness.js-based test.
+PASS module script with invalid mime type shouldn't have run. 
+Harness: the test ran to completion.
+
