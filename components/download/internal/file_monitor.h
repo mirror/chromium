@@ -6,7 +6,9 @@
 #define COMPONENTS_DOWNLOAD_INTERNAL_FILE_MONITOR_H_
 
 #include <memory>
+#include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "components/download/internal/model.h"
@@ -25,6 +27,8 @@ struct Entry;
 class FileMonitor {
  public:
   using InitCallback = base::Callback<void(bool)>;
+  using HardRecoverCallback =
+      base::Callback<void(std::pair<bool, std::set<base::FilePath>>)>;
 
   // Creates the file directory for the downloads if it doesn't exist.
   virtual void Initialize(const InitCallback& callback) = 0;
@@ -41,8 +45,12 @@ class FileMonitor {
       const Model::EntryList& entries) = 0;
 
   // Deletes a list of files and logs UMA.
-  virtual void DeleteFiles(const std::vector<base::FilePath>& files_to_remove,
+  virtual void DeleteFiles(const std::set<base::FilePath>& files_to_remove,
                            stats::FileCleanupReason reason) = 0;
+
+  // Deletes all files and returns a list of files removed.  This is a hard
+  // reset on this directory.
+  virtual void HardRecover(const HardRecoverCallback& callback) = 0;
 
   virtual ~FileMonitor() = default;
 };
