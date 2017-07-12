@@ -68,6 +68,40 @@
       "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63afba2_d939614b",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-12T21:25:26Z",
+      "side": 1,
+      "message": "nit: WebFEature -\u003e WebFeature",
+      "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b45e843_56bc8edc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 73399,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-12T21:25:26Z",
+      "side": 1,
+      "message": "looks like a formatting tool re-wrapped a bunch of lines in this file. we should revert any changes not related to our own change, unless these reformats address lint errors.",
+      "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

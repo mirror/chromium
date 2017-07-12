@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "51761d35_ef0a71ef",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_observer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-12T21:25:26Z",
+      "side": 1,
+      "message": "Thanks! Good question. I see tracking of web features observed on a page as a core part of page load metrics infrastructure. I expect additional observers to be interested in using this new API soon. So I think declaring it here makes sense.",
+      "parentUuid": "1300928f_69018404",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 49
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "348edf2e_f9ad0155",
         "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
         "patchSetId": 19
