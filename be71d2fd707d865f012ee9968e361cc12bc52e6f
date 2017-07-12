@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e1416bb_3ef7a450",
+        "filename": "third_party/WebKit/Source/core/page/ScopedWindowFocusAllowedIndicator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-12T23:04:04Z",
+      "side": 1,
+      "message": "This class is not so related to Page and FocusController.\n\n- This is related to DOMWindow.  So core/frame/ is a candidate destination.\n- This class is used only by Notification. Moving this to modules/notifications/ and moving WebScopedWindowFocusAllowIndicator to modules/exported/ would be another option.",
+      "revId": "be71d2fd707d865f012ee9968e361cc12bc52e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
