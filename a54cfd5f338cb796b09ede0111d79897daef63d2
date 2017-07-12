@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9974fec1_8827e3d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T14:48:49Z",
+      "side": 1,
+      "message": "Can we skip adding the translation Y here when building the item enter animation?\n\nThis class has a reference to AppMenu, so maybe we could expose a method in AppMenu or pass a parameter during construction of this class to control whether TRANSLATION_Y is done as part of\nthe standard item animation.",
+      "range": {
+        "startLine": 386,
+        "startChar": 50,
+        "endLine": 386,
+        "endChar": 63
+      },
+      "revId": "a54cfd5f338cb796b09ede0111d79897daef63d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
