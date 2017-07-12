@@ -495,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "6e57bb58_522a2c62",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-12T12:12:57Z",
+      "side": 1,
+      "message": "PS: The choice of this data type mirrors what WebKit decided to use for reasons of keeping FontDescription compact.",
+      "parentUuid": "a6ee7904_1bac1ef7",
+      "range": {
+        "startLine": 37,
+        "startChar": 32,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "ec4741742b1779e3641cec9187175d6a2e4d3106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7089561_0b8f6141",
         "filename": "third_party/WebKit/Source/platform/fonts/FontSelectionTypes.h",
         "patchSetId": 10
