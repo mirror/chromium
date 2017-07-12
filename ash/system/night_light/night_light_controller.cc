@@ -9,6 +9,7 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "base/command_line.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -78,6 +79,30 @@ class NightLightControllerDelegateImpl : public NightLightController::Delegate {
   DISALLOW_COPY_AND_ASSIGN(NightLightControllerDelegateImpl);
 };
 
+// The color temperature ranges used for the corresponding UMA histogram.
+enum class ColorTemperatureRanges {
+  kRange0To20 = 0,
+  kRange20To40 = 1,
+  kRange40To60 = 2,
+  kRange60To80 = 3,
+  kRange80To100 = 4,
+  kRangesCount = 5,
+};
+
+// Returns the color temperature range in which |temperature| resides.
+ColorTemperatureRanges GetTemperatureRange(float temperature) {
+  if (temperature >= 0.8f)
+    return ColorTemperatureRanges::kRange80To100;
+  if (temperature >= 0.6f)
+    return ColorTemperatureRanges::kRange60To80;
+  if (temperature >= 0.4f)
+    return ColorTemperatureRanges::kRange40To60;
+  if (temperature >= 0.2f)
+    return ColorTemperatureRanges::kRange20To40;
+
+  return ColorTemperatureRanges::kRange0To20;
+}
+
 // Applies the given |layer_temperature| to all the layers of the root windows
 // with the given |animation_duration|.
 // |layer_temperature| is the ui::Layer floating-point value in the range of
@@ -94,6 +119,10 @@ void ApplyColorTemperatureToLayers(float layer_temperature,
 
     layer->SetLayerTemperature(layer_temperature);
   }
+
+  UMA_HISTOGRAM_ENUMERATION("Ash.NightLight.Temperature",
+                            GetTemperatureRange(layer_temperature),
+                            ColorTemperatureRanges::kRangesCount);
 }
 
 }  // namespace
@@ -337,6 +366,9 @@ void NightLightController::OnScheduleTypePrefChanged() {
   DCHECK(active_user_pref_service_);
   NotifyClientWithScheduleChange();
   Refresh(true /* did_schedule_change */);
+
+  UMA_HISTOGRAM_ENUMERATION("Ash.NightLight.ScheduleType", GetScheduleType(),
+                            ScheduleType::kCount);
 }
 
 void NightLightController::OnCustomSchedulePrefsChanged() {
@@ -362,6 +394,11 @@ void NightLightController::Refresh(bool did_schedule_change) {
       RefreshScheduleTimer(GetCustomStartTime().ToTimeToday(),
                            GetCustomEndTime().ToTimeToday(),
                            did_schedule_change);
+      return;
+
+    default:
+      NOTREACHED();
+      SetScheduleType(ScheduleType::kNone);
       return;
   }
 }
