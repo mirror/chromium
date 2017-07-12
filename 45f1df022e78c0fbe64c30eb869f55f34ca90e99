@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c1ad788_0315c475",
+        "filename": "third_party/WebKit/Source/core/editing/LinkSelectionTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-12T07:23:17Z",
+      "side": 1,
+      "message": "This bug is related to \"link selections\", so it felt right to put the test in this file. I mimicked the another test of the file. Not sure we this 50ms was needed.",
+      "parentUuid": "fb94bed9_7f5d8bc1",
+      "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddcc4643_ddb22fce",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ea31d061_d4372410",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-12T07:23:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ddcc4643_ddb22fce",
+      "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40429c8c_61f718db",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf8162a_a23cd90d",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-12T07:23:17Z",
+      "side": 1,
+      "message": "I added it explicitly actually, to separate the 3 different returns cases - Hand, I-beam and Pointer.",
+      "parentUuid": "40429c8c_61f718db",
+      "revId": "45f1df022e78c0fbe64c30eb869f55f34ca90e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
