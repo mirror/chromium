@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cc923e8b_7d35e1ac",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleDeclaration.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T19:58:45Z",
+      "side": 1,
+      "message": "Split into separate CL at https://chromium-review.googlesource.com/c/568496",
+      "parentUuid": "3e64d64d_295a13c5",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 46
+      },
+      "revId": "c56fa0862a3330be802269a80b6832be6a126435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "defd417f_c4dbbdce",
         "filename": "third_party/WebKit/Source/core/css/CSSStyleRule.cpp",
         "patchSetId": 3
@@ -106,6 +130,24 @@
       "writtenOn": "2017-07-12T02:27:53Z",
       "side": 1,
       "message": "Can we make HTMLImportTreeRoot::document_ a TraceWrapperMember and make HTMLImportsController trace in HTMLImportTreeRoot?",
+      "revId": "c56fa0862a3330be802269a80b6832be6a126435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebdb961_6bc34911",
+        "filename": "third_party/WebKit/Source/core/html/imports/HTMLImportsController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T19:58:45Z",
+      "side": 1,
+      "message": "Split into separate CL at https://chromium-review.googlesource.com/c/568493/",
+      "parentUuid": "ceca51e6_e370f5f9",
       "revId": "c56fa0862a3330be802269a80b6832be6a126435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -207,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "3a837358_28666d0d",
+        "filename": "third_party/WebKit/Source/core/svg/SVGAngleTearOff.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T19:58:45Z",
+      "side": 1,
+      "message": "Separate CL landed already https://chromium-review.googlesource.com/c/567500/",
+      "parentUuid": "240007b0_9afad533",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 46
+      },
+      "revId": "c56fa0862a3330be802269a80b6832be6a126435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01b823cc_c538cc81",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 3
@@ -218,6 +284,24 @@
       "writtenOn": "2017-07-12T02:27:53Z",
       "side": 1,
       "message": "for (auto tracker : extensions_) {\n  visitor-\u003eTraceWrappers(tracker);\n}\n\nwould work?",
+      "revId": "c56fa0862a3330be802269a80b6832be6a126435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5340424d_343d14ca",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 7736,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T19:58:45Z",
+      "side": 1,
+      "message": "Separate CL at https://chromium-review.googlesource.com/c/568819/",
+      "parentUuid": "01b823cc_c538cc81",
       "revId": "c56fa0862a3330be802269a80b6832be6a126435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

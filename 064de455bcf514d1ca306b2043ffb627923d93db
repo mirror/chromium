@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48d06e75_8f0012de",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 6939,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T19:58:45Z",
+      "side": 1,
+      "message": "This one can probably be fixed since I think we can include the needed files now. Will try in a follow up.",
+      "range": {
+        "startLine": 6939,
+        "startChar": 11,
+        "endLine": 6939,
+        "endChar": 46
+      },
+      "revId": "064de455bcf514d1ca306b2043ffb627923d93db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83419a8c_b58d1166",
+        "filename": "third_party/WebKit/Source/core/html/custom/CustomElementRegistry.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T19:58:45Z",
+      "side": 1,
+      "message": "Not sure what to do about this one.\n\nStatic lazy initializers don\u0027t play well with incremental marking/tracing.",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "064de455bcf514d1ca306b2043ffb627923d93db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
