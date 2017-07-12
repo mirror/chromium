@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6380a9ce_fa46ad99",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T10:44:15Z",
+      "side": 1,
+      "message": "Nit: please add a comment to describe why Unretained() is safe here. I guess it\u0027s because |tab_resource_coordinator| is a web contents user data, and so the service call will automatically get cancelled if |contents| goes away.\n\n(I assume that it\u0027s not possible for a WebContents to outlive a TabManager as well)",
+      "range": {
+        "startLine": 863,
+        "startChar": 17,
+        "endLine": 863,
+        "endChar": 43
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdbcb57_b3ddb070",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T10:44:15Z",
+      "side": 1,
+      "message": "I guess this is inherently racy right? We\u0027ll miss any events signalled before this.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 76
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937326a1_03a8a48a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T10:44:15Z",
+      "side": 1,
+      "message": "Please use find(): operator[] will create the element if it does not exist (and set it to a null pointer, which will proceed to crash below). But maybe this can\u0027t happen?\n\nTo be honest, I\u0027m a bit lost in the GRC services setup: it looks like the renderer doesn\u0027t talk directly to this code, but talks to the GRC service (which lives... in the browser process?), which I guess forwards to this eventually. Since the GRC service is attaching the coordination unit ID, maybe this is OK... but there\u0027s a lot of handwaving here.\n\n(I looked for any README.md in //services/resource_coordinator but didn\u0027t find anything. In general, I find the current GRC code to be somewhat abstract and opaque. It would be good to have an overview of the system)",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 56
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654e7286_7625586b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T10:44:15Z",
+      "side": 1,
+      "message": "How are deleted WebContents removed from this map?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 48
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6204709_7f885074",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T10:44:15Z",
+      "side": 1,
+      "message": "Please move this change to the CL where it\u0027s actually implemented and used, so it can be security reviewed.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 72
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9560173_c449b2cc",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T10:44:15Z",
+      "side": 1,
+      "message": "This is not directly introduced by this CL and doesn\u0027t need to be addressed now, but I think it\u0027d be better if CoordinationUnitImpl provided downcast helpers that asserted the correct type.",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 72
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a8c85b_8fb03f5d",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T10:44:15Z",
+      "side": 1,
+      "message": "Nit: interested",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9149e173_d4cca806",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T10:44:15Z",
+      "side": 1,
+      "message": "Nit: no comma here",
+      "range": {
+        "startLine": 17,
+        "startChar": 70,
+        "endLine": 17,
+        "endChar": 71
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
