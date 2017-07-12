@@ -1738,6 +1738,11 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
       host->delegate()->UpdateDeviceScaleFactor(display.device_scale_factor());
   }
 
+  if (changed_metric & DisplayObserver::DISPLAY_METRIC_COLOR_SPACE) {
+    if (browser_compositor_)
+      browser_compositor_->SetDisplayColorSpace(display.color_space());
+  }
+
   UpdateBackingStoreProperties();
 }
 
