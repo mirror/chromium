@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2e8f7da_46063ad7",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7464bfec_73d8e694",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cde5b91_00eb5173",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97dd8165_f0821124",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Fixed, thank you!",
+      "parentUuid": "9cde5b91_00eb5173",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4433cd49_7bc10f8e",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done, thank you for linking the style guide :)",
+      "parentUuid": "4a5f4091_9748fea9",
+      "range": {
+        "startLine": 118,
+        "startChar": 34,
+        "endLine": 118,
+        "endChar": 41
+      },
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7396ca13_a39e809d",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 7
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "79cb91a4_9380758f",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7396ca13_a39e809d",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d00149b_d0962f56",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 7
@@ -90,6 +168,24 @@
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853925d3_e7c76aa5",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d00149b_d0962f56",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "0523a6d9_0daa1cf9",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Thanks, I didn\u0027t know that was a thing! Fixed",
+      "parentUuid": "47c9bf79_747b90d8",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 23
+      },
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "041cf748_5075d011",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 7
@@ -130,6 +250,24 @@
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b115fd3_93f7d723",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "041cf748_5075d011",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "498bdd7c_5faf1540",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fefd5e8b_a6f84672",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01f6fa75_507980e9",
         "filename": "chrome/browser/resources/settings/site_settings/site_settings_behavior.js",
         "patchSetId": 7
@@ -185,6 +341,24 @@
     },
     {
       "key": {
+        "uuid": "0266ecab_c008e92b",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_behavior.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Reverted changes to this file since we are now using the RawSiteException (and thus don\u0027t need to convert it to a SiteException via this method).",
+      "parentUuid": "01f6fa75_507980e9",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a4aa901_e30fb5b1",
         "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
         "patchSetId": 7
@@ -196,6 +370,24 @@
       "writtenOn": "2017-07-10T03:12:38Z",
       "side": 1,
       "message": "That might be the wrong type as ContentSettings won\u0027t know about embargo, etc. I think it\u0027s ok to leave the TODO out for now.",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd198848_dbe2e9d0",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Yeah - the reason why I made this a TODO instead of just doing it was to explore the possibility of adding all the sources in ContentSettingProvider to match the sources we actually have. Do you think we should leave it out regardless?",
+      "parentUuid": "7a4aa901_e30fb5b1",
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "de016fae_d5d56913",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done, good idea!",
+      "parentUuid": "bf7e1d81_568bd5a0",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e009e4ac_25e2a302",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 7
@@ -233,6 +443,24 @@
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc77279_a814af84",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e009e4ac_25e2a302",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +487,30 @@
     },
     {
       "key": {
+        "uuid": "71664a27_af28ca9e",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "It isn\u0027t (as discussed offline) :) Removed!",
+      "parentUuid": "556be194_3e9229fa",
+      "range": {
+        "startLine": 18,
+        "startChar": 50,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3efb5104_b6569e76",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 7
@@ -273,6 +525,24 @@
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b520330_58f0a3ab",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3efb5104_b6569e76",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +563,24 @@
     },
     {
       "key": {
+        "uuid": "9709cef0_cb1b733a",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68186917_ef7ff745",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6873708_dabca7f1",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 7
@@ -307,6 +595,24 @@
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613cc79a_ec55f9ca",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6873708_dabca7f1",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -327,6 +633,24 @@
     },
     {
       "key": {
+        "uuid": "f3ebf1fb_80ca3c8f",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5b1c5fe_0ddfbb39",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0deb45d6_297f8ae6",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 7
@@ -341,6 +665,24 @@
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fc5deb_ae938a7f",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "SGTM! Done \u0026 done below for ExceptionListPref too.",
+      "parentUuid": "0deb45d6_297f8ae6",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -367,6 +709,30 @@
     },
     {
       "key": {
+        "uuid": "e2c4c138_93019186",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "It did, just in a non-test file (site_settings_prefs_browser_proxy.js). I couldn\u0027t find any usage of it outside of tests, so I moved it here.",
+      "parentUuid": "4ef5c85c_080ba58f",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53e366a2_c66dff77",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 7
@@ -381,6 +747,24 @@
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9662849a_fe5ebd25",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53e366a2_c66dff77",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -401,6 +785,24 @@
     },
     {
       "key": {
+        "uuid": "cfb8d299_ad182b2b",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Not normally - you\u0027d have to have a test that \n- Didn\u0027t set all the default preferences it needed via browserProxy.setPrefs()\n- Calls getDefaultValueForContentType().\n\nBut yeah I don\u0027t think it would normally fail if something was added/removed :(",
+      "parentUuid": "1634c632_a3c599cb",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb86a697_22bf8583",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 7
@@ -415,6 +817,24 @@
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ff1d68_8ebd84ab",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb86a697_22bf8583",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

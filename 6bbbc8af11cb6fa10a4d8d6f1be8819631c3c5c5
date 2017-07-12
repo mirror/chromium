@@ -51,6 +51,24 @@
       "revId": "6bbbc8af11cb6fa10a4d8d6f1be8819631c3c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6fb0ba1_52a2b1c3",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-12T05:38:20Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like it\u0027s being removed for me? D:\n\nMaybe Gerrit is stuffing up, I\u0027ve never used dependent CLs on it before - this change is meant to branch off of https://chromium-review.googlesource.com/c/563137.",
+      "parentUuid": "35ee80e9_04438a84",
+      "revId": "6bbbc8af11cb6fa10a4d8d6f1be8819631c3c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
