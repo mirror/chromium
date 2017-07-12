@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebae18de_1aae76a6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-12T08:42:26Z",
+      "side": 1,
+      "message": "My understanding is that\n 1. blink stops revalidation on redirect (in Resource::WillFollowRedirect).\n 2. SyncResourceHandler handles redirects without consulting blink\n 3. Thus there must not be a sync revalidation request\n\nIs that correct? Is it equivalent to what you are saying in this comment and the issue description?\n\nExamining new_options_.synchronous_policy is slightly easier to understand based on my understanding (Of course, it\u0027s equivalent with your condition, considering the above condition).\n\nBy the way, what do you think about merging the condition with above one, like\n\nif (options_.synchronous_policy \u003d\u003d kRequestSynchronously ||\n    new_options.synchronous_policy \u003d\u003d kRequestSynchronously) {\n  return false;\n}\n\n\n?",
+      "revId": "45b965c656433aeda661f3e1e13fcd86e5c51b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
