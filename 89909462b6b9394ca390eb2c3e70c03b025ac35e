@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55012bc1_29ee9ee5",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "Wrong comment.",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 79
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87cf0d0_f3590d8a",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "It seems we don\u0027t really need this value at all. Since signal strength is 0-100, we can just divide 100 / kNumNetworkImages to get the divisor. (And yes, we should have 25, not 20 - see below.)",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 40
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf26a303_baef0091",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "const gfx::Size\u0026",
+      "range": {
+        "startLine": 299,
+        "startChar": 28,
+        "endLine": 299,
+        "endChar": 43
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c423d80_548138d7",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "Since we have two constructors, we should just call into the other one here instead of having two separate but identical constructors.",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 3
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75d91b4_ed6f3236",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "This isn\u0027t your code, but please change this to kNumNetworkImages.",
+      "range": {
+        "startLine": 428,
+        "startChar": 24,
+        "endLine": 428,
+        "endChar": 45
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec9cb96_ea6c4e0f",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "Let\u0027s just call this normalized_signal_strength. Add a comment stating that this is from 0-4 while the |signal_strength| parameter is 0-100.",
+      "range": {
+        "startLine": 839,
+        "startChar": 6,
+        "endLine": 839,
+        "endChar": 22
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3441bc8f_1a718978",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "This should be signal_strength * kNumNetworkImages / 100, which will make this 0-4.",
+      "range": {
+        "startLine": 839,
+        "startChar": 25,
+        "endLine": 839,
+        "endChar": 67
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f8dd2c_f2c6916c",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "No need for this sentence since it is clear that a NetworkState* is not needed.",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 13
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3ade4d_a59a1473",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "range from",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6237ce2c_63067407",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "nit: Echoing with estade@ said, we shouldn\u0027t really mention bars since the icon is actually just a triangle.\n\nAlso, no need to write BLUE in all caps. Lower-case is fine.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 68
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d77ed89_5a433b1e",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "nit: Add comment which explains that this is the mean value of NetworkState\u0027s signal_strength() range.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55edf601_edfef983",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "nit: Add a comment which states that this is the length in pixels of one side of the notification icon.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ac5094_c13cbc57",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "Now that we are using signal strength (an int) instead of a NetworkState, you don\u0027t need to use an actual NetworkState at all. Just add a constant value in the anonymous namespace (e.g., kTestNetworkSignalStrength \u003d 50;) and use it where needed.",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 73
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f4ba00_2a846c27",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T19:24:21Z",
+      "side": 1,
+      "message": "nit: When you remove this, leave the newline that was here before. We generally leave a newline between test constants and instance fields.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 68
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
