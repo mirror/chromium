@@ -22,6 +22,30 @@
       "revId": "dbd37199c526bd26c3216ae6dbac5a1e639ebfb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97693f7_a495f06c",
+        "filename": "components/metrics/machine_id_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-12T05:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1354e0b2_06d63f84",
+      "range": {
+        "startLine": 21,
+        "startChar": 24,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "dbd37199c526bd26c3216ae6dbac5a1e639ebfb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
