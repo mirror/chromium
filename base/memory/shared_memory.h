@@ -210,6 +210,10 @@ class BASE_EXPORT SharedMemory {
   // failure.
   SharedMemoryHandle GetReadOnlyHandle();
 
+  // Returns an ID for a mapped region. This is same as the handler's GUID. This
+  // returns a valid ID even after Close as long as the regions is not unmapped.
+  const UnguessableToken& mapped_id() const { return mapped_id_; }
+
  private:
 #if defined(OS_POSIX) && !defined(OS_NACL) && !defined(OS_ANDROID) && \
     !defined(OS_FUCHSIA) && (!defined(OS_MACOSX) || defined(OS_IOS))
@@ -240,6 +244,7 @@ class BASE_EXPORT SharedMemory {
   void* memory_ = nullptr;
   bool read_only_ = false;
   size_t requested_size_ = 0;
+  base::UnguessableToken mapped_id_;
 
   DISALLOW_COPY_AND_ASSIGN(SharedMemory);
 };
