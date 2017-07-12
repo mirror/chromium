@@ -1,0 +1,249 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e9a8e70_c0b96f19",
+        "filename": "components/pdf/common/pdf.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Maybe SetListener, since AddListener can imply we are adding a listener to a list of listeners.",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbac3254_2cef93c1",
+        "filename": "components/pdf/common/pdf.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Did you by any chance mean copy?",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 45
+      },
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0954f2b4_6cca0869",
+        "filename": "components/pdf/renderer/pepper_pdf_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Add parameter names.",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9a052b_516eed49",
+        "filename": "content/public/renderer/pepper_plugin_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Document? Maybe mention which touch events they are used for?",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54720593_cff96900",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "You can omit this in C++ code.",
+      "range": {
+        "startLine": 1472,
+        "startChar": 2,
+        "endLine": 1472,
+        "endChar": 9
+      },
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e22b02b_90eeddb0",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Does this need to call ScalePoint()?",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a976b8_ac30750f",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3591,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "It may be helpful to describe what this is trying to do.",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad305f1_529afc5a",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3595,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Can this be const auto\u0026 ?",
+      "range": {
+        "startLine": 3595,
+        "startChar": 9,
+        "endLine": 3595,
+        "endChar": 13
+      },
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee81593_9fcbf67a",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3989,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Do we need this? ExtendSelection() already has its own selection invalidator.",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b7213a_adbbc9bf",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3996,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Time for a new sentence?",
+      "range": {
+        "startLine": 3996,
+        "startChar": 42,
+        "endLine": 3996,
+        "endChar": 56
+      },
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b546137_d4c199f8",
+        "filename": "pdf/pdfium/pdfium_engine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Should be grouped with the other PDFEngine implementations above.",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf3d18f_c4acda06",
+        "filename": "ppapi/c/private/ppb_pdf.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Avoid passing by value?",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e7290a_63c3c211",
+        "filename": "ppapi/c/private/ppp_pdf.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-12T00:09:27Z",
+      "side": 1,
+      "message": "Avoid passing by value?",
+      "revId": "644d87d389950f806fe93c2b2e01df2011e078cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
