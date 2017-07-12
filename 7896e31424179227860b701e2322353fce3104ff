@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06c6e816_f094537f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-12T15:58:09Z",
+      "side": 1,
+      "message": "You could move this into the constructor to make it more symmetric with the unregistration?",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 75
+      },
+      "revId": "7896e31424179227860b701e2322353fce3104ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e055b3_3c19a51a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-12T15:58:09Z",
+      "side": 1,
+      "message": "Nit: The American spelling \"personalized\" seems to be more common.",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "7896e31424179227860b701e2322353fce3104ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7eb82d_ddfa568d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-12T15:58:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t feel right. Maybe computeVisibility() should be an abstract protected method in the base class, and updateVisibility() could be called by subclasses if visibility (potentially) changed. Or we split it up into protected setVisibilityInternal() and a public setVisibility() method that is only in subclasses that allow clients to change visibility.",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "7896e31424179227860b701e2322353fce3104ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
