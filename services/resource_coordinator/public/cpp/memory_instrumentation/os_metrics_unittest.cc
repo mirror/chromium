@@ -168,6 +168,7 @@ TEST(OSMetricsTest, ParseProcSmaps) {
 
   EXPECT_EQ(0x00400000UL, regions_1[0].start_address);
   EXPECT_EQ(0x004be000UL - 0x00400000UL, regions_1[0].size_in_bytes);
+  EXPECT_EQ(0UL, regions_1[0].file_offset);
   EXPECT_EQ(kProtR | kProtX, regions_1[0].protection_flags);
   EXPECT_EQ("/file/1", regions_1[0].mapped_file);
   EXPECT_EQ(162 * 1024UL, regions_1[0].byte_stats_proportional_resident);
@@ -179,6 +180,7 @@ TEST(OSMetricsTest, ParseProcSmaps) {
 
   EXPECT_EQ(0xff000000UL, regions_1[1].start_address);
   EXPECT_EQ(0xff800000UL - 0xff000000UL, regions_1[1].size_in_bytes);
+  EXPECT_EQ(0x1080UL, regions_1[1].file_offset);
   EXPECT_EQ(kProtW, regions_1[1].protection_flags);
   EXPECT_EQ("/file/name with space", regions_1[1].mapped_file);
   EXPECT_EQ(128 * 1024UL, regions_1[1].byte_stats_proportional_resident);
@@ -200,6 +202,7 @@ TEST(OSMetricsTest, ParseProcSmaps) {
   ASSERT_EQ(1UL, regions_2.size());
   EXPECT_EQ(0x7fe7ce79c000UL, regions_2[0].start_address);
   EXPECT_EQ(0x7fe7ce7a8000UL - 0x7fe7ce79c000UL, regions_2[0].size_in_bytes);
+  EXPECT_EQ(0UL, regions_2[0].file_offset);
   EXPECT_EQ(0U, regions_2[0].protection_flags);
   EXPECT_EQ("", regions_2[0].mapped_file);
   EXPECT_EQ(32 * 1024UL, regions_2[0].byte_stats_proportional_resident);
@@ -244,6 +247,7 @@ TEST(OSMetricsTest, TestWinModuleReading) {
   for (const VMRegion& region : dump.process_mmaps()->vm_regions()) {
     EXPECT_NE(0u, region.start_address);
     EXPECT_NE(0u, region.size_in_bytes);
+    EXPECT_EQ(0u, region.file_offset);
 
     if (region.mapped_file.find(executable_name) != std::string::npos)
       found_executable = true;
@@ -277,6 +281,7 @@ TEST(OSMetricsTest, TestMachOReading) {
   for (const VMRegion& region : dump.process_mmaps()->vm_regions()) {
     EXPECT_NE(0u, region.start_address);
     EXPECT_NE(0u, region.size_in_bytes);
+    EXPECT_NE(0u, region.file_offset);
 
     EXPECT_LT(region.size_in_bytes, 1ull << 32);
     uint32_t required_protection_flags =

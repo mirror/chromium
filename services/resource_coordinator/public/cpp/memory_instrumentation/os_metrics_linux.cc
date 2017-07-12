@@ -61,8 +61,11 @@ bool ParseSmapsHeader(const char* header_line,
   char protection_flags[5] = {0};
   char mapped_file[kMaxLineSize];
 
-  if (sscanf(header_line, "%" SCNx64 "-%" SCNx64 " %4c %*s %*s %*s%4095[^\n]\n",
-             &region->start_address, &end_addr, protection_flags,
+  if (sscanf(header_line,
+             "%" SCNx64 "-%" SCNx64 " %4c %" SCNx64 " %*s %*s%4095[^\n]\n",
+             &region->start_address, &end_addr,
+             protection_flags,
+             &region->file_offset,
              mapped_file) != 4)
     return false;
 
