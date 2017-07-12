@@ -304,10 +304,8 @@ void ExternalBeginFrameSource::RemoveObserver(BeginFrameObserver* obs) {
   DCHECK(observers_.find(obs) != observers_.end());
 
   observers_.erase(obs);
-  if (observers_.empty()) {
-    last_begin_frame_args_ = BeginFrameArgs();
+  if (observers_.empty())
     client_->OnNeedsBeginFrames(false);
-  }
 }
 
 bool ExternalBeginFrameSource::IsThrottled() const {
@@ -324,6 +322,13 @@ void ExternalBeginFrameSource::OnSetBeginFrameSourcePaused(bool paused) {
 }
 
 void ExternalBeginFrameSource::OnBeginFrame(const BeginFrameArgs& args) {
+  CHECK(!last_begin_frame_args_.IsValid() ||
+        (args.frame_time > last_begin_frame_args_.frame_time &&
+         (args.source_id != last_begin_frame_args_.source_id ||
+          args.sequence_number > last_begin_frame_args_.sequence_number)))
+      << "\nargs: " << args.AsValue()->ToString()
+      << "\nlast_begin_frame_args_: "
+      << last_begin_frame_args_.AsValue()->ToString();
   last_begin_frame_args_ = args;
   std::unordered_set<BeginFrameObserver*> observers(observers_);
   for (auto* obs : observers) {
