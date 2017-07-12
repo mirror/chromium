@@ -140,6 +140,7 @@ void SubresourceFilterSafeBrowsingActivationThrottle::OnCheckUrlResultOnUI(
 void SubresourceFilterSafeBrowsingActivationThrottle::CheckCurrentUrl() {
   if (!database_client_)
     return;
+  CHECK(false);
   check_results_.emplace_back();
   size_t id = check_results_.size() - 1;
   io_task_runner_->PostTask(
