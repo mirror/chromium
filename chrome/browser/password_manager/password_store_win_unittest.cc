@@ -18,9 +18,12 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/sequenced_task_runner.h"
+#include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/threading/sequenced_task_runner_handle.h"
+#include "base/task_runner_util.h"
+#include "base/task_scheduler/task_scheduler.h"
+#include "base/test/scoped_task_environment.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/os_crypt/ie7_password_win.h"
@@ -31,15 +34,12 @@
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/webdata/common/web_database_service.h"
-#include "content/public/browser/browser_thread.h"
-#include "content/public/test/test_browser_thread_bundle.h"
 #include "crypto/wincrypt_shim.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using autofill::PasswordForm;
 using base::WaitableEvent;
-using content::BrowserThread;
 using password_manager::LoginDatabase;
 using password_manager::PasswordFormData;
 using password_manager::PasswordStore;
@@ -80,8 +80,10 @@ class MockWebDataServiceConsumer : public WebDataServiceConsumer {
 class PasswordStoreWinTest : public testing::Test {
  protected:
   PasswordStoreWinTest()
-      : test_browser_thread_bundle_(
-            content::TestBrowserThreadBundle::REAL_DB_THREAD) {}
+      : main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        web_data_task_runner_(base::CreateSingleThreadTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
+            base::SingleThreadTaskRunnerThreadMode::SHARED)) {}
 
   bool CreateIE7PasswordInfo(const std::wstring& url,
                              const base::Time& created,
@@ -134,15 +136,13 @@ class PasswordStoreWinTest : public testing::Test {
     profile_.reset(new TestingProfile());
 
     base::FilePath path = temp_dir_.GetPath().AppendASCII("web_data_test");
-    wdbs_ = new WebDatabaseService(
-        path, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::DB));
+    wdbs_ =
+        new WebDatabaseService(path, main_task_runner_, web_data_task_runner_);
     // Need to add at least one table so the database gets created.
     wdbs_->AddTable(std::unique_ptr<WebDatabaseTable>(new LoginsTable()));
     wdbs_->LoadDatabase();
     wds_ = new PasswordWebDataService(
-        wdbs_, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
-        WebDataServiceBase::ProfileErrorCallback());
+        wdbs_, main_task_runner_, WebDataServiceBase::ProfileErrorCallback());
     wds_->Init();
   }
 
@@ -159,8 +159,8 @@ class PasswordStoreWinTest : public testing::Test {
     }
     base::WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                              base::WaitableEvent::InitialState::NOT_SIGNALED);
-    BrowserThread::PostTask(
-        BrowserThread::DB, FROM_HERE,
+    web_data_task_runner_->PostTask(
+        FROM_HERE,
         base::Bind(&base::WaitableEvent::Signal, base::Unretained(&done)));
     done.Wait();
   }
@@ -171,12 +171,13 @@ class PasswordStoreWinTest : public testing::Test {
 
   PasswordStoreWin* CreatePasswordStore() {
     return new PasswordStoreWin(
-        base::SequencedTaskRunnerHandle::Get(),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::DB),
+        main_task_runner_,
         base::MakeUnique<LoginDatabase>(test_login_db_file_path()), wds_.get());
   }
 
-  content::TestBrowserThreadBundle test_browser_thread_bundle_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> web_data_task_runner_;
 
   base::ScopedTempDir temp_dir_;
   std::unique_ptr<TestingProfile> profile_;
@@ -186,7 +187,7 @@ class PasswordStoreWinTest : public testing::Test {
 };
 
 ACTION(QuitUIMessageLoop) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(main_task_runner_->RunsTasksInCurrentSequence());
   base::MessageLoop::current()->QuitWhenIdle();
 }
 
@@ -210,13 +211,12 @@ TEST_F(PasswordStoreWinTest, DISABLED_ConvertIE7Login) {
   // This IE7 password will be retrieved by the GetLogins call.
   wds_->AddIE7Login(password_info);
 
-  // The WDS schedules tasks to run on the DB thread so we schedule yet another
-  // task to notify us that it's safe to carry on with the test.
+  // The WDS schedules tasks to run on its own task runner so we schedule yet
+  // another task to notify us that it's safe to carry on with the test.
   WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                      base::WaitableEvent::InitialState::NOT_SIGNALED);
-  BrowserThread::PostTask(
-      BrowserThread::DB, FROM_HERE,
-      base::Bind(&WaitableEvent::Signal, base::Unretained(&done)));
+  web_data_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&WaitableEvent::Signal, base::Unretained(&done)));
   done.Wait();
 
   store_ = CreatePasswordStore();
@@ -313,13 +313,12 @@ TEST_F(PasswordStoreWinTest, DISABLED_MultipleWDSQueriesOnDifferentThreads) {
                                     &password_info));
   wds_->AddIE7Login(password_info);
 
-  // The WDS schedules tasks to run on the DB thread so we schedule yet another
-  // task to notify us that it's safe to carry on with the test.
+  // The WDS schedules tasks to run on its own task runner so we schedule yet
+  // another task to notify us that it's safe to carry on with the test.
   WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                      base::WaitableEvent::InitialState::NOT_SIGNALED);
-  BrowserThread::PostTask(
-      BrowserThread::DB, FROM_HERE,
-      base::Bind(&WaitableEvent::Signal, base::Unretained(&done)));
+  web_data_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&WaitableEvent::Signal, base::Unretained(&done)));
   done.Wait();
 
   store_ = CreatePasswordStore();
@@ -377,11 +376,7 @@ TEST_F(PasswordStoreWinTest, DISABLED_MultipleWDSQueriesOnDifferentThreads) {
 
   wds_->GetIE7Login(password_info, &wds_consumer);
 
-  // Run the MessageLoop twice: once for the GetIE7Login that PasswordStoreWin
-  // schedules on the DB thread and once for the one we just scheduled on the UI
-  // thread.
-  base::RunLoop().Run();
-  base::RunLoop().Run();
+  scoped_task_environment_.RunUntilIdle();
 }
 
 TEST_F(PasswordStoreWinTest, EmptyLogins) {
