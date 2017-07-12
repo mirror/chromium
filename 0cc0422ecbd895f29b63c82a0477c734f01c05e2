@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4e809f2_c20da307",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-12T18:08:37Z",
+      "side": 1,
+      "message": "Not sure if the hit test will still put a node in the result if we\u0027re over the resizer, but it might be safer to put the early-out for the resizer control before we check for link selection above.",
+      "range": {
+        "startLine": 399,
+        "startChar": 6,
+        "endLine": 399,
+        "endChar": 19
+      },
+      "revId": "0cc0422ecbd895f29b63c82a0477c734f01c05e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
