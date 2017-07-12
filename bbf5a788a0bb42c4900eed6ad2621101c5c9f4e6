@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f0dc34_48efa024",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T02:48:32Z",
+      "side": 1,
+      "message": "Could you split this into three cases?\n- directly_started \u003d true\n- directly_started \u003d false\n- internal restart",
+      "revId": "bbf5a788a0bb42c4900eed6ad2621101c5c9f4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039c3593_e035b54d",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T02:48:32Z",
+      "side": 1,
+      "message": "nit: StartArcForTesting() is missing?",
+      "revId": "bbf5a788a0bb42c4900eed6ad2621101c5c9f4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e2a586_eeb034cb",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T02:48:32Z",
+      "side": 1,
+      "message": "Make sure the state is ACTIVE?",
+      "revId": "bbf5a788a0bb42c4900eed6ad2621101c5c9f4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b02a99_4639e3d3",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T02:48:32Z",
+      "side": 1,
+      "message": "nit/optional: Maybe move this into L649? (or inline in UMA_HISTOGRAM_CUSTOM_TIMES\u0027s arg?)\nIf it is necessary to be record the time here, maybe good to add comment about it.",
+      "revId": "bbf5a788a0bb42c4900eed6ad2621101c5c9f4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
