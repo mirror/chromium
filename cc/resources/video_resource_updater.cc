@@ -417,7 +417,9 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
           upload_pixels_.resize(needed_size);
 
         media::SkCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(
-            video_frame.get(), &upload_pixels_[0], bytes_per_row);
+            video_frame.get(),
+            media::SkCanvasVideoRenderer::ConvertingSize::CODED,
+            &upload_pixels_[0], bytes_per_row);
 
         resource_provider_->CopyToResource(plane_resource.resource_id(),
                                            &upload_pixels_[0],

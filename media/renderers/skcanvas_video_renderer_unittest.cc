@@ -495,6 +495,70 @@ TEST_F(SkCanvasVideoRendererTest, Video_Translate_Rotation_270) {
   EXPECT_EQ(SK_ColorBLACK, bitmap.getColor(kWidth / 2, kHeight - 1));
 }
 
+namespace {
+
+size_t getArrayIndex(size_t x, size_t y, size_t bytes_per_row) {
+  return (bytes_per_row * y) + (4 * x);
+}
+
+SkColor getSkColor(uint8_t* color) {
+  return *reinterpret_cast<SkColor*>(color);
+}
+
+}  // namespace
+
+TEST_F(SkCanvasVideoRendererTest, CroppedFrameConvertCoded) {
+  gfx::Size frame_size = cropped_frame()->coded_size();
+  size_t bytes_per_row = frame_size.width() * 4;
+  size_t needed_size = bytes_per_row * frame_size.height();
+  std::vector<uint8_t> upload_pixels;
+  upload_pixels.resize(needed_size);
+  SkCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(
+      cropped_frame().get(), SkCanvasVideoRenderer::ConvertingSize::CODED,
+      &upload_pixels[0], bytes_per_row);
+
+  // Check the corners.
+  const gfx::Rect crop_rect = cropped_frame()->visible_rect();
+  EXPECT_EQ(SK_ColorBLACK, getSkColor(&upload_pixels[getArrayIndex(
+                               crop_rect.x(), crop_rect.y(), bytes_per_row)]));
+  EXPECT_EQ(
+      SK_ColorRED,
+      getSkColor(
+          &upload_pixels[getArrayIndex(crop_rect.x() + crop_rect.width() - 1,
+                                       crop_rect.y(), bytes_per_row)]));
+  EXPECT_EQ(SK_ColorGREEN,
+            getSkColor(&upload_pixels[getArrayIndex(
+                crop_rect.x(), crop_rect.y() + crop_rect.height() - 1,
+                bytes_per_row)]));
+  EXPECT_EQ(SK_ColorBLUE,
+            getSkColor(&upload_pixels[getArrayIndex(
+                crop_rect.x() + crop_rect.width() - 1,
+                crop_rect.y() + crop_rect.height() - 1, bytes_per_row)]));
+}
+
+TEST_F(SkCanvasVideoRendererTest, CroppedFrameConvertVisible) {
+  gfx::Size frame_size = cropped_frame()->visible_rect().size();
+  size_t bytes_per_row = frame_size.width() * 4;
+  size_t needed_size = bytes_per_row * frame_size.height();
+  std::vector<uint8_t> upload_pixels;
+  upload_pixels.resize(needed_size);
+  SkCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(
+      cropped_frame().get(), SkCanvasVideoRenderer::ConvertingSize::VISUAL,
+      &upload_pixels[0], bytes_per_row);
+
+  // Check the corners.
+  EXPECT_EQ(SK_ColorBLACK,
+            getSkColor(&upload_pixels[getArrayIndex(0, 0, bytes_per_row)]));
+  EXPECT_EQ(SK_ColorRED, getSkColor(&upload_pixels[getArrayIndex(
+                             frame_size.width() - 1, 0, bytes_per_row)]));
+  EXPECT_EQ(SK_ColorGREEN, getSkColor(&upload_pixels[getArrayIndex(
+                               0, frame_size.height() - 1, bytes_per_row)]));
+  EXPECT_EQ(
+      SK_ColorBLUE,
+      getSkColor(&upload_pixels[getArrayIndex(
+          frame_size.width() - 1, frame_size.height() - 1, bytes_per_row)]));
+}
+
 TEST_F(SkCanvasVideoRendererTest, HighBits) {
   // Copy cropped_frame into a highbit frame.
   scoped_refptr<VideoFrame> frame(VideoFrame::CreateFrame(
