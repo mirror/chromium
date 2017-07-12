@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aedd295e_6a471a17",
+        "filename": "third_party/WebKit/Source/build/scripts/css_properties.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-12T06:21:38Z",
+      "side": 1,
+      "message": "super nit: is there a way to make this more \"constant\"y? idk what constants should look like in Python tho.",
+      "revId": "cbf5f1abac9f3e8a5ce27df3ed10e2194871c54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
