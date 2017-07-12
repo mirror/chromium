@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2650e16_2e779efd",
+        "filename": "chrome/browser/ssl/cert_report_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-12T20:33:54Z",
+      "side": 1,
+      "message": "nit: Reverse the order so that includes are sorted? (and also it\u0027ll be the same order with the change on line 134)",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "247d8689721cd1995317d72a05c022e6676f02ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299aa9e6_1ddc6989",
+        "filename": "components/certificate_reporting/cert_logger.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-12T20:33:54Z",
+      "side": 1,
+      "message": "nit: This comment sounds a bit Chrome specific. Can we reword it? E.g.\n\nTrue if the machine is enterprise managed. Currently only available for Windows and ChromeOS clients.",
+      "revId": "247d8689721cd1995317d72a05c022e6676f02ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ff100e_e5584d12",
+        "filename": "components/certificate_reporting/error_report_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-12T20:33:54Z",
+      "side": 1,
+      "message": "This will still pass if ParseFromString fails but somehow still returns true. Can we initialize it to true and check that it becomes false on Windows and ChromeOS?\n\nSounds very unintuitive, but I can\u0027t think of a better way of doing it short of mocking the IsEnterpriseManaged() calls.",
+      "range": {
+        "startLine": 262,
+        "startChar": 51,
+        "endLine": 262,
+        "endChar": 0
+      },
+      "revId": "247d8689721cd1995317d72a05c022e6676f02ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
