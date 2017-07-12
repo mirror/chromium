@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b869563d_c85ed35d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T20:31:56Z",
+      "side": 1,
+      "message": "nit: Either \"Returns true if the navigation should be delayed.\" or \"Returns true if it should delay a navigation.\"",
+      "revId": "ca41d419c109d2b3b8ab7352e4b801d647d505f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cc4b00_a1d2d4e8",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T20:31:56Z",
+      "side": 1,
+      "message": "s/navigation handle/NavigationThrottle",
+      "range": {
+        "startLine": 385,
+        "startChar": 13,
+        "endLine": 385,
+        "endChar": 30
+      },
+      "revId": "ca41d419c109d2b3b8ab7352e4b801d647d505f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a890b2_3ef42df5",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T20:31:56Z",
+      "side": 1,
+      "message": "This line can be removed now.",
+      "revId": "ca41d419c109d2b3b8ab7352e4b801d647d505f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1592d557_19dab968",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T20:31:56Z",
+      "side": 1,
+      "message": "Maybe update this comment to:\nThe list of navigations that are delayed.",
+      "revId": "ca41d419c109d2b3b8ab7352e4b801d647d505f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536b8d71_60352d12",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T20:31:56Z",
+      "side": 1,
+      "message": "I prefer to still call it |pending_navigations_| here. It is \"navigation\" that can be pending, not \"throttle\". And for TabManager, it does not really care whether it is throttle or handle stored here. It just cares if there are tabs whose navigations are delayed.",
+      "range": {
+        "startLine": 467,
+        "startChar": 48,
+        "endLine": 467,
+        "endChar": 66
+      },
+      "revId": "ca41d419c109d2b3b8ab7352e4b801d647d505f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
