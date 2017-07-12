@@ -575,7 +575,8 @@ struct PendingPaymentResponse {
     DLOG(ERROR) << "JS message parameter 'payment_details' is missing";
     return NO;
   }
-  if (!paymentDetails.FromDictionaryValue(*paymentDetailsData)) {
+  if (!paymentDetails.FromDictionaryValue(*paymentDetailsData,
+                                          false /* requires_total */)) {
     DLOG(ERROR) << "JS message parameter 'payment_details' is invalid";
     return NO;
   }
