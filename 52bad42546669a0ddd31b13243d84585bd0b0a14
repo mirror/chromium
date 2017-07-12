@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5f66f831_a0b115e3",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-12T19:22:12Z",
+      "side": 1,
+      "message": "Sounds reasonable. Maybe check can_resize for non-transient windows too (separate CL)?",
+      "parentUuid": "7807c07d_aa2ceeac",
+      "revId": "52bad42546669a0ddd31b13243d84585bd0b0a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5080e7e7_9625fe33",
         "filename": "ui/wm/core/easy_resize_window_targeter.cc",
         "patchSetId": 4
