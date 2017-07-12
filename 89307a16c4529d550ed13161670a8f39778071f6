@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11a6d0b1_9799481c",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T19:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca9c7c2d_5deb5afc",
+      "revId": "89307a16c4529d550ed13161670a8f39778071f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb56e719_dab6aef0",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T18:41:12Z",
       "side": 1,
       "message": "You might get some extra data that you don\u0027t expect here. Specifically, when we want to get a scaled image, we first get the original image. So, anytime you\u0027d see a mip level \u003e 1, you will also have one recorded with level \u003d\u003d 1.",
+      "revId": "89307a16c4529d550ed13161670a8f39778071f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d95e81_e83e9172",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T19:05:56Z",
+      "side": 1,
+      "message": "Good point. I moved it to DecodeImage which should only be called by the Decode task. The other option I was considering was GetDecodedImageForDraw, but since every raster task will call it, it will probably skew the data and will be inconsistent with the GPU cache.",
+      "parentUuid": "fb56e719_dab6aef0",
       "revId": "89307a16c4529d550ed13161670a8f39778071f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "89307a16c4529d550ed13161670a8f39778071f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc36687_0fb78e9f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 61622,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T19:05:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5ed4fa5_d6fe1583",
+      "revId": "89307a16c4529d550ed13161670a8f39778071f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
