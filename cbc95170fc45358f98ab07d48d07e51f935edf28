@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe4ac3c0_a30a1e8e",
+        "filename": "ash/public/interfaces/night_light_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-12T22:07:41Z",
+      "side": 1,
+      "message": "Put standard warning here about the limits on how this enum can be modified.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 19
+      },
+      "revId": "cbc95170fc45358f98ab07d48d07e51f935edf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314b1d38_9b601341",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-12T22:07:41Z",
+      "side": 1,
+      "message": "Why do you need an enum for this?  Can\u0027t you simply emit the value floor(temperature*5) to a histogram with 5 buckets?\n\nIf you choose to keep an enum, put the standard warning here.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "range": {
+        "startLine": 83,
+        "startChar": 11,
+        "endLine": 83,
+        "endChar": 33
+      },
+      "revId": "cbc95170fc45358f98ab07d48d07e51f935edf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b9a16e_a02464fe",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-12T22:07:41Z",
+      "side": 1,
+      "message": "BTW, this label is unclear: does 20 go in the lowest bucket or the second-lowest bucket?\n\nOr is the question in effect moot because these were originally floating point values and the likelihood of hitting exactly \"20\" is nearly zero?",
+      "range": {
+        "startLine": 1306,
+        "startChar": 22,
+        "endLine": 1306,
+        "endChar": 23
+      },
+      "revId": "cbc95170fc45358f98ab07d48d07e51f935edf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf611ef_fa344fef",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2225,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-12T22:07:41Z",
+      "side": 1,
+      "message": "Please state when this is emitted.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded\n\nditto below",
+      "range": {
+        "startLine": 2225,
+        "startChar": 45,
+        "endLine": 2225,
+        "endChar": 49
+      },
+      "revId": "cbc95170fc45358f98ab07d48d07e51f935edf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
