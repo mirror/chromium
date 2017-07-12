@@ -22,6 +22,30 @@
       "revId": "0cc0422ecbd895f29b63c82a0477c734f01c05e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8327af_ae0b4489",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-12T19:18:16Z",
+      "side": 1,
+      "message": "Done. See PS10. I moved this block above the link selection check.",
+      "parentUuid": "a4e809f2_c20da307",
+      "range": {
+        "startLine": 399,
+        "startChar": 6,
+        "endLine": 399,
+        "endChar": 19
+      },
+      "revId": "0cc0422ecbd895f29b63c82a0477c734f01c05e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
