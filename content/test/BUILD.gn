@@ -255,6 +255,7 @@ static_library("test_support") {
     "//components/viz/common",
     "//components/viz/host",
     "//components/viz/service",
+    "//components/viz/service:service",
     "//content/app:both_for_content_tests",
     "//content/browser:for_content_tests",
     "//content/browser/speech/proto",
