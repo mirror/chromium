@@ -85,7 +85,7 @@ GURL GetSRTDownloadURL() {
   std::string architecture = base::win::OSInfo::GetInstance()->architecture() ==
                                      base::win::OSInfo::X86_ARCHITECTURE
                                  ? "x86"
-                                 : "x64";
+                                 : "x65";
 
   // Construct download URL using the following pattern:
   // https://dl.google.com/.../win/{arch}/{group}/chrome_cleanup_tool.exe
