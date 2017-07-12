@@ -13,6 +13,7 @@
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/cryptohome/homedir_methods.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
+#include "chromeos/dbus/cryptohome/rpc.pb.h"
 #include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/login/auth/auth_status_consumer.h"
@@ -89,9 +90,9 @@ void ExtendedAuthenticatorImpl::CreateMount(
 
   cryptohome::Identification id(account_id);
   cryptohome::Authorization auth(keys.front());
-  cryptohome::MountParameters mount(false);
+  cryptohome::MountRequest mount;
   for (size_t i = 0; i < keys.size(); i++) {
-    mount.create_keys.push_back(keys[i]);
+    KeyDefinitionToKey(keys[i], mount.mutable_create()->add_keys());
   }
   UserContext context(account_id);
   Key key(keys.front().secret);
@@ -191,7 +192,7 @@ void ExtendedAuthenticatorImpl::DoAuthenticateToMount(
   cryptohome::Identification id(user_context.GetAccountId());
   const Key* const key = user_context.GetKey();
   cryptohome::Authorization auth(key->GetSecret(), key->GetLabel());
-  cryptohome::MountParameters mount(false);
+  cryptohome::MountRequest mount;
 
   cryptohome::HomedirMethods::GetInstance()->MountEx(
       id,

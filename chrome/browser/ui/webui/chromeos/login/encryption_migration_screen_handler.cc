@@ -27,6 +27,7 @@
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/cryptohome/async_method_caller.h"
 #include "chromeos/cryptohome/homedir_methods.h"
+#include "chromeos/dbus/cryptohome/rpc.pb.h"
 #include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager/power_supply_properties.pb.h"
@@ -495,10 +496,10 @@ void EncryptionMigrationScreenHandler::StartMigration() {
   initial_battery_percent_ = *current_battery_percent_;
 
   // Mount the existing eCryptfs vault to a temporary location for migration.
-  cryptohome::MountParameters mount(false);
-  mount.to_migrate_from_ecryptfs = true;
+  cryptohome::MountRequest mount;
+  mount.set_to_migrate_from_ecryptfs(true);
   if (IsArcKiosk()) {
-    mount.public_mount = true;
+    mount.set_public_mount(true);
     cryptohome::HomedirMethods::GetInstance()->MountEx(
         cryptohome::Identification(user_context_.GetAccountId()),
         cryptohome::Authorization(cryptohome::KeyDefinition()), mount,

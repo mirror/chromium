@@ -60,6 +60,7 @@
 #include "url/gurl.h"
 
 using ::testing::Invoke;
+using ::testing::Property;
 using ::testing::Return;
 using ::testing::WithArg;
 using ::testing::_;
@@ -284,17 +285,13 @@ class CryptohomeAuthenticatorTest : public testing::Test {
     const cryptohome::KeyDefinition auth_key(transformed_key_.GetSecret(),
                                              std::string(),
                                              cryptohome::PRIV_DEFAULT);
-    cryptohome::MountParameters mount(false /* ephemeral */);
-    if (expect_create_attempt) {
-      mount.create_keys.push_back(cryptohome::KeyDefinition(
-          transformed_key_.GetSecret(),
-          kCryptohomeGAIAKeyLabel,
-          cryptohome::PRIV_DEFAULT));
-    }
     EXPECT_CALL(
         *mock_homedir_methods_,
         MountEx(cryptohome::Identification(user_context_.GetAccountId()),
-                cryptohome::Authorization(auth_key), mount, _))
+                cryptohome::Authorization(auth_key),
+                Property(&cryptohome::MountRequest::has_create,
+                         expect_create_attempt),
+                _))
         .Times(1)
         .RetiresOnSaturation();
   }
