@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f787cf3_c37ebdf2",
+        "filename": "components/variations/service/field_trial_creator_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-12T21:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "127026e7_86183424",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23023688_809fb7e7",
         "filename": "components/variations/service/field_trial_creator_unittest.cc",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f2cad62b_df0d9c56",
+        "filename": "components/variations/service/field_trial_creator_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-12T21:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23023688_809fb7e7",
+      "range": {
+        "startLine": 23,
+        "startChar": 39,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3e4e5e2_b01f177a",
         "filename": "components/variations/service/variations_field_trial_creator.cc",
         "patchSetId": 19
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-12T20:45:12Z",
       "side": 1,
       "message": "Please rebase and include changes to these functions that happened in the meantime.\n\nFor example, https://codereview.chromium.org/2970093002/ added another field to this.\n\nAnd there might have been other changes too (I think isherman@ was recently modifying this code.) Please double check.",
+      "range": {
+        "startLine": 220,
+        "startChar": 35,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a9af15_a50e6176",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-12T21:54:13Z",
+      "side": 1,
+      "message": "I think I got everything, should I add isherman@ so he can take a look?",
+      "parentUuid": "d3e4e5e2_b01f177a",
       "range": {
         "startLine": 220,
         "startChar": 35,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7edf068b_e2cf679c",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-12T21:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd27d39f_9950c941",
+      "range": {
+        "startLine": 325,
+        "startChar": 21,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c38818_662d6731",
         "filename": "components/variations/service/variations_field_trial_creator.h",
         "patchSetId": 19
@@ -114,6 +210,30 @@
       "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d871e0c_d3982f4d",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-12T21:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c38818_662d6731",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "103e3e41_1d54ff0f",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-12T21:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0cba56f_3f4f6617",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 46
+      },
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4b79aff_b4423044",
         "filename": "components/variations/service/variations_field_trial_creator.h",
         "patchSetId": 19
@@ -154,6 +298,24 @@
       "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76bc947_b25a49aa",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-12T21:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4b79aff_b4423044",
+      "revId": "ab6434564d3f2f25992f58b73d32d00f9189f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
