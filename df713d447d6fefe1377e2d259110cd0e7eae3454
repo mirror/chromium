@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd27965_71f37dcd",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T18:13:10Z",
+      "side": 1,
+      "message": "Could we avoid the UV clamping if the uv rect is (0,0)x(1,1), since we can rely on the wrap modes in that case. This would avoid the extra per-pixel cost.",
+      "revId": "df713d447d6fefe1377e2d259110cd0e7eae3454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f7c23e_208f8aa8",
+        "filename": "cc/output/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T18:13:10Z",
+      "side": 1,
+      "message": "Can you add test cases for shaders that use UV clamping?",
+      "revId": "df713d447d6fefe1377e2d259110cd0e7eae3454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
