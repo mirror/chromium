@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cc41b249_d5896f08",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-12T18:50:45Z",
+      "side": 1,
+      "message": "Great comment! I did not think of code paths which do not create TabLoader.\n\nThe right place to put the session restore start signal should be the points in the SessionRestoreImpl which always create TabLoader. This is to make sure there is no session restore start signal without any stop signal (while a stop signal without start signal is fine).\n\nHow about moving the start signal to the following 2 places?\n\n1. ProcessSessionWindows(): right after the first \u0027if (windows-\u003eempty()) { return ... }\u0027 https://cs.chromium.org/chromium/src/chrome/browser/sessions/session_restore.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d376\n\n2. RestoreForeignSession(): beginning of the function.\nhttps://cs.chromium.org/chromium/src/chrome/browser/sessions/session_restore.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d172\n\nSessionRestoreDelegate::RestoreTabs() is called only in FinishedTabCreation with \"succeeded \u003d\u003d true\". However, putting session restore start signal in FinishedTabCreation will be too late af it is after the first page navigation when using browser-side navigation.\n\nFinishedTabCreation() is called in only 2 functions: RestoreForeignSession(), ProcessSessionWindows().",
+      "parentUuid": "c2308f40_d579e750",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "430a5b27_3c1a4249",
         "filename": "chrome/browser/sessions/session_restore.cc",
         "patchSetId": 5
@@ -188,6 +212,30 @@
       "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f82c99_43a8706d",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-12T18:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cb15ee2_a1400a8d",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 10
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
