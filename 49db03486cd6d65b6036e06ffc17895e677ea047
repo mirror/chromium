@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f7d45076_27507621",
+        "filename": "third_party/WebKit/Source/core/svg/SVGAngleTearOff.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T11:51:50Z",
+      "side": 1,
+      "message": "Well, a real write barrier in ScriptWrappable would need object start, which is not available (yet) as ScriptWrappable is not the left-most class in the hierarchy and the other base class has properties.\n\nIt\u0027s not a problem though, since ScriptWrappable doesn\u0027t have any TraceWrapperMember fields.",
+      "parentUuid": "f84fceea_c9135622",
+      "range": {
+        "startLine": 139,
+        "startChar": 19,
+        "endLine": 139,
+        "endChar": 32
+      },
+      "revId": "49db03486cd6d65b6036e06ffc17895e677ea047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5557f16_c4744cf9",
         "filename": "third_party/WebKit/Source/core/svg/SVGAnimatedEnumerationBase.h",
         "patchSetId": 1
@@ -60,6 +84,24 @@
       "writtenOn": "2017-07-12T11:35:34Z",
       "side": 1,
       "message": "I\u0027m just curious but what happens if you forget writing this method? Do we hit some compile error?",
+      "revId": "49db03486cd6d65b6036e06ffc17895e677ea047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c59d72e_b5b1161a",
+        "filename": "third_party/WebKit/Source/core/svg/SVGAnimatedEnumerationBase.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T11:51:50Z",
+      "side": 1,
+      "message": "I would assume that we would take the path of ScriptWrappable-\u003eTraceWrapperBase which both have empty TraceWrappers() implementation.\n\nI don\u0027t see how we enforce this method as we are dealing with multiple inheritance :/",
+      "parentUuid": "a5557f16_c4744cf9",
       "revId": "49db03486cd6d65b6036e06ffc17895e677ea047",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +143,30 @@
       "side": 1,
       "message": "If it stopped being the left-most class, we\u0027ll hit CHECK(this-\u003eheader()), right?",
       "parentUuid": "a2d4882e_5eb9f9ec",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 40
+      },
+      "revId": "49db03486cd6d65b6036e06ffc17895e677ea047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0219fe7_75e39029",
+        "filename": "third_party/WebKit/Source/core/svg/properties/SVGPropertyTearOff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T11:51:50Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "6ce1cc56_beeecdd4",
       "range": {
         "startLine": 71,
         "startChar": 28,
@@ -157,6 +223,30 @@
       "revId": "49db03486cd6d65b6036e06ffc17895e677ea047",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0d01be_4e3e79bb",
+        "filename": "third_party/WebKit/Source/core/svg/properties/SVGPropertyTearOff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-12T11:51:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dfa87e82_2a6e4ee8",
+      "range": {
+        "startLine": 95,
+        "startChar": 29,
+        "endLine": 95,
+        "endChar": 45
+      },
+      "revId": "49db03486cd6d65b6036e06ffc17895e677ea047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
