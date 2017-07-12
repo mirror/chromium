@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be553412_d1116871",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-12T19:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e62873aa_a1922960",
+      "range": {
+        "startLine": 1068,
+        "startChar": 70,
+        "endLine": 1068,
+        "endChar": 79
+      },
+      "revId": "54b8bdb16e931520d224127de27917fda3a06688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6819c081_ee15c20a",
         "filename": "media/filters/source_buffer_stream.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T01:00:39Z",
       "side": 1,
       "message": "nit: Consider adding a TODO to add RAPPOR or UseCounter for these occurrences so we can understand how often this occurs or if a major site is hitting this path that we can reach out to.",
+      "range": {
+        "startLine": 1076,
+        "startChar": 4,
+        "endLine": 1076,
+        "endChar": 13
+      },
+      "revId": "54b8bdb16e931520d224127de27917fda3a06688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55fa3c8_efb6031e",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-12T19:43:33Z",
+      "side": 1,
+      "message": "I don\u0027t think its worth it in this case. From the crashes we can tell its not really a widespread or frequent problem. This is just one of million ways folks can mess up muxing. IMO the MEDIA_LOG is a good hint for devs to go fix their content.",
+      "parentUuid": "6819c081_ee15c20a",
       "range": {
         "startLine": 1076,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "54b8bdb16e931520d224127de27917fda3a06688",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5022722_b138a30c",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4166,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-12T19:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd588b6_9fb5a6ec",
+      "range": {
+        "startLine": 4166,
+        "startChar": 54,
+        "endLine": 4166,
+        "endChar": 59
+      },
+      "revId": "54b8bdb16e931520d224127de27917fda3a06688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
