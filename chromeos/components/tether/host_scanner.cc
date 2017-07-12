@@ -90,8 +90,13 @@ void HostScanner::OnTetherAvailabilityResponse(
     }
 
     if (scanned_device_list_so_far.size() == 1) {
-      notification_presenter_->NotifyPotentialHotspotNearby(
-          scanned_device_list_so_far.at(0).remote_device);
+      const cryptauth::RemoteDevice& remote_device =
+          scanned_device_list_so_far.at(0).remote_device;
+      int32_t signal_strength;
+      NormalizeDeviceStatus(scanned_device_list_so_far.at(0).device_status,
+                            nullptr, nullptr, &signal_strength);
+      notification_presenter_->NotifyPotentialHotspotNearby(remote_device,
+                                                            signal_strength);
     } else {
       notification_presenter_->NotifyMultiplePotentialHotspotsNearby();
     }
