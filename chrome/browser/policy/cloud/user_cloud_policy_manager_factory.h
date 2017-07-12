@@ -66,7 +66,6 @@ class UserCloudPolicyManagerFactory : public BrowserContextKeyedBaseFactory {
   CreateForOriginalBrowserContext(
       content::BrowserContext* context,
       bool force_immediate_load,
-      const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
       const scoped_refptr<base::SequencedTaskRunner>& file_task_runner,
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner);
 
@@ -100,7 +99,6 @@ class UserCloudPolicyManagerFactory : public BrowserContextKeyedBaseFactory {
   CreateManagerForOriginalBrowserContext(
       content::BrowserContext* context,
       bool force_immediate_load,
-      const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
       const scoped_refptr<base::SequencedTaskRunner>& file_task_runner,
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner);
 

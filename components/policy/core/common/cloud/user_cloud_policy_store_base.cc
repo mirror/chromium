@@ -20,12 +20,9 @@ void DecodePolicy(const enterprise_management::CloudPolicySettings& policy,
                   base::WeakPtr<CloudExternalDataManager> external_data_manager,
                   PolicyMap* policies);
 
-UserCloudPolicyStoreBase::UserCloudPolicyStoreBase(
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner)
-    : background_task_runner_(background_task_runner) {}
+UserCloudPolicyStoreBase::UserCloudPolicyStoreBase() {}
 
-UserCloudPolicyStoreBase::~UserCloudPolicyStoreBase() {
-}
+UserCloudPolicyStoreBase::~UserCloudPolicyStoreBase() {}
 
 std::unique_ptr<UserCloudPolicyValidator>
 UserCloudPolicyStoreBase::CreateValidator(
@@ -33,8 +30,7 @@ UserCloudPolicyStoreBase::CreateValidator(
     CloudPolicyValidatorBase::ValidateTimestampOption timestamp_option) {
   // Configure the validator.
   std::unique_ptr<UserCloudPolicyValidator> validator =
-      UserCloudPolicyValidator::Create(std::move(policy),
-                                       background_task_runner_);
+      UserCloudPolicyValidator::Create(std::move(policy));
   validator->ValidatePolicyType(dm_protocol::kChromeUserPolicyType);
   validator->ValidateAgainstCurrentPolicy(
       policy_.get(),

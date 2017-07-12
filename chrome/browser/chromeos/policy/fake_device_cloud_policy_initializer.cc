@@ -16,8 +16,6 @@ FakeDeviceCloudPolicyInitializer::FakeDeviceCloudPolicyInitializer()
     : DeviceCloudPolicyInitializer(
           nullptr,  // local_state
           nullptr,  // enterprise_service
-          // background_task_runner
-          scoped_refptr<base::SequencedTaskRunner>(nullptr),
           nullptr,  // install_attributes
           nullptr,  // state_keys_broker
           nullptr,  // device_store

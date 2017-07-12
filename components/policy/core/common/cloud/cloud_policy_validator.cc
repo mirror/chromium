@@ -11,9 +11,9 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
@@ -156,8 +156,7 @@ void CloudPolicyValidatorBase::ValidateAgainstCurrentPolicy(
 
 CloudPolicyValidatorBase::CloudPolicyValidatorBase(
     std::unique_ptr<em::PolicyFetchResponse> policy_response,
-    google::protobuf::MessageLite* payload,
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner)
+    google::protobuf::MessageLite* payload)
     : status_(VALIDATION_OK),
       policy_(std::move(policy_response)),
       payload_(payload),
@@ -168,8 +167,7 @@ CloudPolicyValidatorBase::CloudPolicyValidatorBase(
       device_id_option_(DEVICE_ID_REQUIRED),
       canonicalize_user_(false),
       verification_key_(GetPolicyVerificationKey()),
-      allow_key_rotation_(false),
-      background_task_runner_(background_task_runner) {
+      allow_key_rotation_(false) {
   DCHECK(!verification_key_.empty());
 }
 
@@ -177,7 +175,10 @@ CloudPolicyValidatorBase::CloudPolicyValidatorBase(
 void CloudPolicyValidatorBase::PostValidationTask(
     std::unique_ptr<CloudPolicyValidatorBase> validator,
     const base::Closure& completion_callback) {
-  const auto task_runner = validator->background_task_runner_;
+  scoped_refptr<base::TaskRunner> task_runner =
+      base::CreateTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
   task_runner->PostTask(
       FROM_HERE,
       base::Bind(&CloudPolicyValidatorBase::PerformValidation,

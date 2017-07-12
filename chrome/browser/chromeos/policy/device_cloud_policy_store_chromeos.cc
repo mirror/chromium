@@ -29,11 +29,9 @@ namespace policy {
 
 DeviceCloudPolicyStoreChromeOS::DeviceCloudPolicyStoreChromeOS(
     chromeos::DeviceSettingsService* device_settings_service,
-    chromeos::InstallAttributes* install_attributes,
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner)
+    chromeos::InstallAttributes* install_attributes)
     : device_settings_service_(device_settings_service),
       install_attributes_(install_attributes),
-      background_task_runner_(background_task_runner),
       weak_factory_(this) {
   device_settings_service_->AddObserver(this);
   device_settings_service_->SetDeviceMode(install_attributes_->GetMode());
@@ -117,8 +115,7 @@ DeviceCloudPolicyStoreChromeOS::CreateValidator(
     const em::PolicyFetchResponse& policy) {
   std::unique_ptr<DeviceCloudPolicyValidator> validator(
       DeviceCloudPolicyValidator::Create(
-          base::MakeUnique<em::PolicyFetchResponse>(policy),
-          background_task_runner_));
+          base::MakeUnique<em::PolicyFetchResponse>(policy)));
   validator->ValidateDomain(install_attributes_->GetDomain());
   validator->ValidatePolicyType(dm_protocol::kChromeDevicePolicyType);
   validator->ValidatePayload();

@@ -46,7 +46,6 @@ namespace policy {
 DeviceCloudPolicyInitializer::DeviceCloudPolicyInitializer(
     PrefService* local_state,
     DeviceManagementService* enterprise_service,
-    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
     chromeos::InstallAttributes* install_attributes,
     ServerBackedStateKeysBroker* state_keys_broker,
     DeviceCloudPolicyStoreChromeOS* device_store,
@@ -56,7 +55,6 @@ DeviceCloudPolicyInitializer::DeviceCloudPolicyInitializer(
     chromeos::system::StatisticsProvider* statistics_provider)
     : local_state_(local_state),
       enterprise_service_(enterprise_service),
-      background_task_runner_(background_task_runner),
       install_attributes_(install_attributes),
       state_keys_broker_(state_keys_broker),
       device_store_(device_store),
@@ -110,7 +108,7 @@ void DeviceCloudPolicyInitializer::StartEnrollment(
   enrollment_handler_.reset(new EnrollmentHandlerChromeOS(
       device_store_, install_attributes_, state_keys_broker_,
       attestation_flow_.get(), CreateClient(device_management_service),
-      background_task_runner_, ad_join_delegate, enrollment_config, auth_token,
+      ad_join_delegate, enrollment_config, auth_token,
       install_attributes_->GetDeviceId(), manager_->GetDeviceRequisition(),
       base::Bind(&DeviceCloudPolicyInitializer::EnrollmentCompleted,
                  base::Unretained(this), enrollment_callback)));

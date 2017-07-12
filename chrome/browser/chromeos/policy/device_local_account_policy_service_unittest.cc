@@ -166,7 +166,7 @@ void DeviceLocalAccountPolicyServiceTestBase::CreatePolicyService() {
       &device_settings_test_helper_, &device_settings_service_, &cros_settings_,
       &affiliated_invalidation_service_provider_,
       base::ThreadTaskRunnerHandle::Get(), extension_cache_task_runner_,
-      base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get(),
+      base::ThreadTaskRunnerHandle::Get(),
       new net::TestURLRequestContextGetter(
           base::ThreadTaskRunnerHandle::Get())));
 }

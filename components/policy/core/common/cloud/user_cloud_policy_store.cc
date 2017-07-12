@@ -13,8 +13,8 @@
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/sequenced_task_runner.h"
 #include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/policy/proto/cloud_policy.pb.h"
 #include "components/policy/proto/device_management_backend.pb.h"
@@ -169,27 +169,20 @@ void StorePolicyToDiskOnBackgroundThread(
 
 }  // namespace
 
-UserCloudPolicyStore::UserCloudPolicyStore(
-    const base::FilePath& policy_path,
-    const base::FilePath& key_path,
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner)
-    : UserCloudPolicyStoreBase(background_task_runner),
-      policy_path_(policy_path),
-      key_path_(key_path),
-      weak_factory_(this) {}
+UserCloudPolicyStore::UserCloudPolicyStore(const base::FilePath& policy_path,
+                                           const base::FilePath& key_path)
+    : policy_path_(policy_path), key_path_(key_path), weak_factory_(this) {}
 
 UserCloudPolicyStore::~UserCloudPolicyStore() {}
 
 // static
 std::unique_ptr<UserCloudPolicyStore> UserCloudPolicyStore::Create(
-    const base::FilePath& profile_path,
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner) {
+    const base::FilePath& profile_path) {
   base::FilePath policy_path =
       profile_path.Append(kPolicyDir).Append(kPolicyCacheFile);
   base::FilePath key_path =
       profile_path.Append(kPolicyDir).Append(kKeyCacheFile);
-  return base::WrapUnique(
-      new UserCloudPolicyStore(policy_path, key_path, background_task_runner));
+  return base::WrapUnique(new UserCloudPolicyStore(policy_path, key_path));
 }
 
 void UserCloudPolicyStore::SetSigninUsername(const std::string& username) {
@@ -207,10 +200,14 @@ void UserCloudPolicyStore::LoadImmediately() {
 }
 
 void UserCloudPolicyStore::Clear() {
-  background_task_runner()->PostTask(
+  scoped_refptr<base::TaskRunner> task_runner =
+      base::CreateTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+  task_runner->PostTask(
       FROM_HERE,
       base::Bind(base::IgnoreResult(&base::DeleteFile), policy_path_, false));
-  background_task_runner()->PostTask(
+  task_runner->PostTask(
       FROM_HERE,
       base::Bind(base::IgnoreResult(&base::DeleteFile), key_path_, false));
   policy_.reset();
@@ -225,15 +222,17 @@ void UserCloudPolicyStore::Load() {
   // Cancel any pending Load/Store/Validate operations.
   weak_factory_.InvalidateWeakPtrs();
 
+  scoped_refptr<base::TaskRunner> task_runner =
+      base::CreateTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
   // Start a new Load operation and have us get called back when it is
   // complete.
   base::PostTaskAndReplyWithResult(
-      background_task_runner().get(),
-      FROM_HERE,
+      task_runner.get(), FROM_HERE,
       base::Bind(&LoadPolicyFromDisk, policy_path_, key_path_),
       base::Bind(&UserCloudPolicyStore::PolicyLoaded,
-                 weak_factory_.GetWeakPtr(),
-                 true));
+                 weak_factory_.GetWeakPtr(), true));
 }
 
 void UserCloudPolicyStore::PolicyLoaded(bool validate_in_background,
@@ -432,9 +431,13 @@ void UserCloudPolicyStore::StorePolicyAfterValidation(
     return;
   }
 
+  scoped_refptr<base::TaskRunner> task_runner =
+      base::CreateTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
   // Persist the validated policy (just fire a task - don't bother getting a
   // reply because we can't do anything if it fails).
-  background_task_runner()->PostTask(
+  task_runner->PostTask(
       FROM_HERE, base::Bind(&StorePolicyToDiskOnBackgroundThread, policy_path_,
                             key_path_, *validator->policy()));
 

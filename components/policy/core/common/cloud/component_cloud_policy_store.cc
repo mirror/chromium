@@ -303,8 +303,7 @@ bool ComponentCloudPolicyStore::ValidatePolicy(
     time_not_before = stored_policy_times_iter->second;
 
   std::unique_ptr<ComponentCloudPolicyValidator> validator(
-      ComponentCloudPolicyValidator::Create(
-          std::move(proto), scoped_refptr<base::SequencedTaskRunner>()));
+      ComponentCloudPolicyValidator::Create(std::move(proto)));
   validator->ValidateTimestamp(time_not_before,
                                CloudPolicyValidatorBase::TIMESTAMP_VALIDATED);
   validator->ValidateUsername(username_, true);
