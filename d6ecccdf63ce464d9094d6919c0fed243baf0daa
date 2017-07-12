@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daa5b66e_686781ad",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Add logging if timestamp is not valid/missing some fields.\n\nAlso, let\u0027s check timestamp validity (not 36:813) here + below that |start \u003c\u003d finish|.",
+      "range": {
+        "startLine": 114,
+        "startChar": 39,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc5a3eb_7294a6cd",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "nit: combine IFs and aviod temporary DayOfWeek",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 4
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01df0d34_2f2d8319",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Avoid using new T (instead of new T()) - These two mean something different if T does not have a user-defined constructor",
+      "range": {
+        "startLine": 921,
+        "startChar": 47,
+        "endLine": 921,
+        "endChar": 66
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bfd93d_a56e4c8f",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Remove reference to Google code here.",
+      "range": {
+        "startLine": 816,
+        "startChar": 0,
+        "endLine": 817,
+        "endChar": 79
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7008e8_71fb64c0",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "And here",
+      "range": {
+        "startLine": 823,
+        "startChar": 0,
+        "endLine": 824,
+        "endChar": 79
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088c0c14_b1e87ffc",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "policies are not applied",
+      "range": {
+        "startLine": 851,
+        "startChar": 40,
+        "endLine": 851,
+        "endChar": 52
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7127c9e9_59f2f0e4",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Use space instead of tabs here and below.",
+      "range": {
+        "startLine": 3152,
+        "startChar": 0,
+        "endLine": 3152,
+        "endChar": 1
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9640be28_05796bed",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Extra space here and below.",
+      "range": {
+        "startLine": 3154,
+        "startChar": 20,
+        "endLine": 3154,
+        "endChar": 21
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182f0dd3_6a083520",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3156,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Define some interval?",
+      "range": {
+        "startLine": 3156,
+        "startChar": 17,
+        "endLine": 3156,
+        "endChar": 18
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5aa422_b8969d94",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 9764,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Better rename it to \u0027DeviceOffHours\u0027, as it\u0027s only for ChromeOS devices.",
+      "range": {
+        "startLine": 9764,
+        "startChar": 15,
+        "endLine": 9764,
+        "endChar": 23
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da00319_0b7bce32",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 9783,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Add indentation to distinguish.\n\u0027enum\u0027: [\u0027DAY_OF_WEEK_UNSPECIFIED\u0027...\n         \u0027WEDNESDAY\u0027, ...",
+      "range": {
+        "startLine": 9783,
+        "startChar": 22,
+        "endLine": 9783,
+        "endChar": 23
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18f2ca1_4342ba3e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 9807,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Change to 62, as no functionality will be ready in 61 that has branch point in about a week.",
+      "range": {
+        "startLine": 9807,
+        "startChar": 34,
+        "endLine": 9807,
+        "endChar": 36
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56315fa7_22ac5918",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 9848,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "\u0027policy\u0027 ?",
+      "range": {
+        "startLine": 9848,
+        "startChar": 9,
+        "endLine": 9848,
+        "endChar": 16
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e04b66_80dbddfe",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 9853,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "During the defined time intervals, some policies are not applied.",
+      "range": {
+        "startLine": 9853,
+        "startChar": 17,
+        "endLine": 9853,
+        "endChar": 120
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc03a34_ab7b9c3c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10854,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Accidental change?",
+      "range": {
+        "startLine": 10854,
+        "startChar": 26,
+        "endLine": 10854,
+        "endChar": 58
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac36af0_6643d5d6",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10857,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-12T13:00:13Z",
+      "side": 1,
+      "message": "Also?",
+      "range": {
+        "startLine": 10857,
+        "startChar": 26,
+        "endLine": 10857,
+        "endChar": 61
+      },
+      "revId": "d6ecccdf63ce464d9094d6919c0fed243baf0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
