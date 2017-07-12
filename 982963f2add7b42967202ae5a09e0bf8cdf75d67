@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "cb79de7a_cc2402b5",
+        "filename": "chrome/test/chromedriver/capabilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-07-12T17:01:22Z",
+      "side": 1,
+      "message": "Good point, I was only thinking when about when they specify one. I will make the change.",
+      "parentUuid": "6bb334e3_92c56d38",
+      "revId": "982963f2add7b42967202ae5a09e0bf8cdf75d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70ab6508_0d094b46",
         "filename": "chrome/test/chromedriver/capabilities.cc",
         "patchSetId": 1
