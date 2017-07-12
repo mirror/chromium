@@ -25,7 +25,7 @@
                          selector:(SEL)selector
                           command:(int)commandID;
 
-// The object that should be sent via -chromeExecuteCommand: when this item is
+// The object that should be sent via ChromeExecuteCcommand when this item is
 // tapped.
 - (id)command;
 
