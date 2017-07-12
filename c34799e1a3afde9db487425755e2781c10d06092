@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71c38b96_dd4247c4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-12T18:17:34Z",
+      "side": 1,
+      "message": "need to reconcile this and the one below with the new code.\n\nI think this one can be removed, but might need to keep the StopObservingRootWindow one. Should de-dup the code though.",
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee455df_144271bf",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2209,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-12T18:17:34Z",
+      "side": 1,
+      "message": "using_browser_compositor_ \u003d\u003d !sync_compositor_, so from the look of things, this DCHECK shouldn\u0027t hold",
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999087b2_3ae53a0a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-12T18:17:34Z",
+      "side": 1,
+      "message": "begin_frame_paused_, and move it next to the other begin frame variables",
+      "revId": "c34799e1a3afde9db487425755e2781c10d06092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
