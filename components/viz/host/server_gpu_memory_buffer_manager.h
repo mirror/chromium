@@ -9,11 +9,12 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequenced_task_runner.h"
+#include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "components/viz/host/viz_host_export.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl.h"
 #include "gpu/ipc/host/gpu_memory_buffer_support.h"
 
 namespace ui {
@@ -42,6 +43,10 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
 
   void DestroyAllGpuMemoryBufferForClient(int client_id);
 
+  // Allocates gpu memory buffer. The callback is called with the handle to the
+  // allocated buffer, and a callback that should be used as the destruction
+  // callback if a GpuMemoryBufferImpl is created from the handle. It is safe to
+  // call the destruction callback from any thread.
   void AllocateGpuMemoryBuffer(
       gfx::GpuMemoryBufferId id,
       int client_id,
@@ -49,7 +54,9 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
       gfx::BufferFormat format,
       gfx::BufferUsage usage,
       gpu::SurfaceHandle surface_handle,
-      base::OnceCallback<void(const gfx::GpuMemoryBufferHandle&)> callback);
+      base::OnceCallback<
+          void(const gfx::GpuMemoryBufferHandle&,
+               const gpu::GpuMemoryBufferImpl::DestructionCallback&)> callback);
 
   // Overridden from gpu::GpuMemoryBufferManager:
   std::unique_ptr<gfx::GpuMemoryBuffer> CreateGpuMemoryBuffer(
@@ -66,10 +73,15 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
 
  private:
   uint64_t ClientIdToTracingId(int client_id) const;
+  gpu::GpuMemoryBufferImpl::DestructionCallback CreateBufferDestructionCallback(
+      gfx::GpuMemoryBufferId id,
+      int client_id);
   void OnGpuMemoryBufferAllocated(
       int client_id,
       size_t buffer_size_in_bytes,
-      base::OnceCallback<void(const gfx::GpuMemoryBufferHandle&)> callback,
+      base::OnceCallback<
+          void(const gfx::GpuMemoryBufferHandle&,
+               const gpu::GpuMemoryBufferImpl::DestructionCallback&)> callback,
       const gfx::GpuMemoryBufferHandle& handle);
 
   ui::mojom::GpuService* gpu_service_;
@@ -92,7 +104,7 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
   std::unordered_set<int> pending_buffers_;
 
   const gpu::GpuMemoryBufferConfigurationSet native_configurations_;
-  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   base::WeakPtrFactory<ServerGpuMemoryBufferManager> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServerGpuMemoryBufferManager);

@@ -6,7 +6,7 @@
 
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
-#include "base/threading/sequenced_task_runner_handle.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl.h"
@@ -18,6 +18,17 @@
 
 namespace viz {
 
+namespace {
+
+void OnGpuMemoryBufferDestroyed(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    const gpu::GpuMemoryBufferImpl::DestructionCallback& callback,
+    const gpu::SyncToken& sync_token) {
+  task_runner->PostTask(FROM_HERE, base::Bind(callback, sync_token));
+}
+
+}  // namespace
+
 ServerGpuMemoryBufferManager::BufferInfo::BufferInfo() = default;
 ServerGpuMemoryBufferManager::BufferInfo::~BufferInfo() = default;
 
@@ -27,7 +38,7 @@ ServerGpuMemoryBufferManager::ServerGpuMemoryBufferManager(
     : gpu_service_(gpu_service),
       client_id_(client_id),
       native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
-      task_runner_(base::SequencedTaskRunnerHandle::Get()),
+      task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_factory_(this) {}
 
 ServerGpuMemoryBufferManager::~ServerGpuMemoryBufferManager() {}
@@ -39,8 +50,15 @@ void ServerGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
     gpu::SurfaceHandle surface_handle,
-    base::OnceCallback<void(const gfx::GpuMemoryBufferHandle&)> callback) {
+    base::OnceCallback<
+        void(const gfx::GpuMemoryBufferHandle&,
+             const gpu::GpuMemoryBufferImpl::DestructionCallback&)> callback) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  // If this function is called from CreateGpuMemoryBuffer(), then a destruction
+  // callback for the GpuMemoryBufferImpl will be created after returning from
+  // this function. |weak_factory_| cannot be used in CreateGpuMemoryBuffer(),
+  // since it can be called on any thread. That's why the destruction callback
+  // is created here.
   if (gpu::GetNativeGpuMemoryBufferType() != gfx::EMPTY_BUFFER) {
     const bool is_native = native_configurations_.find(std::make_pair(
                                format, usage)) != native_configurations_.end();
@@ -75,7 +93,9 @@ void ServerGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
   }
 
   task_runner_->PostTask(FROM_HERE,
-                         base::BindOnce(std::move(callback), buffer_handle));
+                         base::BindOnce(std::move(callback), buffer_handle,
+                                        CreateBufferDestructionCallback(
+                                            buffer_handle.id, client_id)));
 }
 
 std::unique_ptr<gfx::GpuMemoryBuffer>
@@ -90,13 +110,18 @@ ServerGpuMemoryBufferManager::CreateGpuMemoryBuffer(
       base::WaitableEvent::ResetPolicy::MANUAL,
       base::WaitableEvent::InitialState::NOT_SIGNALED);
   DCHECK(!task_runner_->RunsTasksInCurrentSequence());
+  gpu::GpuMemoryBufferImpl::DestructionCallback destruction_callback;
   auto reply_callback = base::BindOnce(
-      [](gfx::GpuMemoryBufferHandle* handle, base::WaitableEvent* wait_event,
-         const gfx::GpuMemoryBufferHandle& allocated_buffer_handle) {
-        *handle = allocated_buffer_handle;
+      [](gfx::GpuMemoryBufferHandle* out_handle,
+         gpu::GpuMemoryBufferImpl::DestructionCallback* out_callback,
+         base::WaitableEvent* wait_event,
+         const gfx::GpuMemoryBufferHandle& allocated_buffer_handle,
+         const gpu::GpuMemoryBufferImpl::DestructionCallback& callback) {
+        *out_handle = allocated_buffer_handle;
+        *out_callback = callback;
         wait_event->Signal();
       },
-      &handle, &wait_event);
+      &handle, &destruction_callback, &wait_event);
   // We block with a WaitableEvent until the callback is run. So using
   // base::Unretained() is safe here.
   auto allocate_callback =
@@ -108,10 +133,8 @@ ServerGpuMemoryBufferManager::CreateGpuMemoryBuffer(
   wait_event.Wait();
   if (handle.is_null())
     return nullptr;
-  return gpu::GpuMemoryBufferImpl::CreateFromHandle(
-      handle, size, format, usage,
-      base::Bind(&ServerGpuMemoryBufferManager::DestroyGpuMemoryBuffer,
-                 weak_factory_.GetWeakPtr(), id, client_id_));
+  return gpu::GpuMemoryBufferImpl::CreateFromHandle(handle, size, format, usage,
+                                                    destruction_callback);
 }
 
 void ServerGpuMemoryBufferManager::SetDestructionSyncToken(
@@ -204,19 +227,36 @@ uint64_t ServerGpuMemoryBufferManager::ClientIdToTracingId(
          1;
 }
 
+gpu::GpuMemoryBufferImpl::DestructionCallback
+ServerGpuMemoryBufferManager::CreateBufferDestructionCallback(
+    gfx::GpuMemoryBufferId id,
+    int client_id) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  // The destruction callback can be called on any thread. So use an
+  // intermediate callback here as the destruction callback, which bounces off
+  // onto the |task_runner_| thread to do the real work.
+  return base::Bind(
+      &OnGpuMemoryBufferDestroyed, task_runner_,
+      base::Bind(&ServerGpuMemoryBufferManager::DestroyGpuMemoryBuffer,
+                 weak_factory_.GetWeakPtr(), id, client_id));
+}
+
 void ServerGpuMemoryBufferManager::OnGpuMemoryBufferAllocated(
     int client_id,
     size_t buffer_size_in_bytes,
-    base::OnceCallback<void(const gfx::GpuMemoryBufferHandle&)> callback,
+    base::OnceCallback<
+        void(const gfx::GpuMemoryBufferHandle&,
+             const gpu::GpuMemoryBufferImpl::DestructionCallback&)> callback,
     const gfx::GpuMemoryBufferHandle& handle) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  gpu::GpuMemoryBufferImpl::DestructionCallback destroy_callback;
   if (pending_buffers_.find(client_id) == pending_buffers_.end()) {
     // The client has been destroyed since the allocation request was made.
     if (!handle.is_null()) {
       gpu_service_->DestroyGpuMemoryBuffer(handle.id, client_id,
                                            gpu::SyncToken());
     }
-    std::move(callback).Run(gfx::GpuMemoryBufferHandle());
+    std::move(callback).Run(gfx::GpuMemoryBufferHandle(), destroy_callback);
     return;
   }
   if (!handle.is_null()) {
@@ -225,8 +265,9 @@ void ServerGpuMemoryBufferManager::OnGpuMemoryBufferAllocated(
     buffer_info.buffer_size_in_bytes = buffer_size_in_bytes;
     allocated_buffers_[client_id].insert(
         std::make_pair(handle.id, buffer_info));
+    destroy_callback = CreateBufferDestructionCallback(handle.id, client_id);
   }
-  std::move(callback).Run(handle);
+  std::move(callback).Run(handle, destroy_callback);
 }
 
 }  // namespace viz
