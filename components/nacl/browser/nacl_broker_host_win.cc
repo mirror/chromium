@@ -29,11 +29,8 @@ class NaClBrokerSandboxedProcessLauncherDelegate
     : public content::SandboxedProcessLauncherDelegate {
  public:
   NaClBrokerSandboxedProcessLauncherDelegate() {}
-  ~NaClBrokerSandboxedProcessLauncherDelegate() override {}
 
-  bool ShouldSandbox() override {
-    return false;
-  }
+  SandboxType GetSandboxType() override { return SANDBOX_TYPE_NO_SANDBOX; }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(NaClBrokerSandboxedProcessLauncherDelegate);
