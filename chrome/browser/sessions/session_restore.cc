@@ -86,10 +86,10 @@ bool HasSingleNewTabPage(Browser* browser) {
          search::IsInstantNTP(active_tab);
 }
 
-class SessionRestoreImpl;
-
 // Pointers to SessionRestoreImpls which are currently restoring the session.
 std::set<SessionRestoreImpl*>* active_session_restorers = nullptr;
+
+}  // namespace
 
 // SessionRestoreImpl ---------------------------------------------------------
 
@@ -170,6 +170,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
   std::vector<Browser*> RestoreForeignSession(
       std::vector<const sessions::SessionWindow*>::const_iterator begin,
       std::vector<const sessions::SessionWindow*>::const_iterator end) {
+    SessionRestore::NotifySessionRestoreStartedLoadingTabs();
+
     std::vector<Browser*> browsers;
     std::vector<RestoredTab> created_contents;
     // Create a browser instance to put the restored tabs in.
@@ -377,6 +379,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
           ->StartScavengingUnusedSessionStorage();
       return FinishedTabCreation(false, false, created_contents);
     }
+
+    SessionRestore::NotifySessionRestoreStartedLoadingTabs();
 
 #if defined(OS_CHROMEOS)
     chromeos::BootTimesRecorder::Get()->AddLoginTimeMarker(
@@ -744,8 +748,6 @@ class SessionRestoreImpl : public content::NotificationObserver {
   DISALLOW_COPY_AND_ASSIGN(SessionRestoreImpl);
 };
 
-}  // namespace
-
 // SessionRestore -------------------------------------------------------------
 
 // static
@@ -872,12 +874,31 @@ void SessionRestore::AddURLsToOpen(const Profile* profile,
 
 // static
 void SessionRestore::AddObserver(SessionRestoreObserver* observer) {
-  observers().AddObserver(observer);
+  observers()->AddObserver(observer);
 }
 
 // static
 void SessionRestore::RemoveObserver(SessionRestoreObserver* observer) {
-  observers().RemoveObserver(observer);
+  observers()->RemoveObserver(observer);
+}
+
+// static
+void SessionRestore::OnTabLoaderFinishedLoadingTabs() {
+  if (!session_restore_started_)
+    return;
+
+  session_restore_started_ = false;
+  for (auto& observer : *SessionRestore::observers())
+    observer.OnSessionRestoreFinishedLoadingTabs();
+}
+
+void SessionRestore::NotifySessionRestoreStartedLoadingTabs() {
+  if (session_restore_started_)
+    return;
+
+  session_restore_started_ = true;
+  for (auto& observer : *observers())
+    observer.OnSessionRestoreStartedLoadingTabs();
 }
 
 // static
@@ -887,3 +908,6 @@ base::CallbackList<void(int)>*
 // static
 base::ObserverList<SessionRestoreObserver>* SessionRestore::observers_ =
     nullptr;
+
+// static
+bool SessionRestore::session_restore_started_ = false;
