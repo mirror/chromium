@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "b7446ed5_8136d4eb",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-12T02:03:38Z",
+      "side": 1,
+      "message": "We\u0027re not really interested in the long tail in this case. Since the tab restoration takes only a minute or two worst case, 1 hour is probably overkill here. We should probably reduce the bucket count instead.",
+      "parentUuid": "71cb602b_da3ace3f",
+      "range": {
+        "startLine": 652,
+        "startChar": 60,
+        "endLine": 652,
+        "endChar": 71
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "255edc88_54a8be3b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
