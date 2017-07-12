@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43b00b54_5ee5607e",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T01:08:42Z",
+      "side": 1,
+      "message": "No need for a new string. Use the generic IDS_CANCEL instead. See example at https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d85.",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0feb93bf_8a98ac44",
+        "filename": "chrome/browser/resources/md_extensions/load_error.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T01:08:42Z",
+      "side": 1,
+      "message": "Is this still necessary?",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f57e4f2_e2abbbee",
+        "filename": "chrome/browser/resources/md_extensions/load_error.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T01:08:42Z",
+      "side": 1,
+      "message": "Use double quotes in HTML.",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce12d6f_0958c443",
+        "filename": "chrome/browser/resources/md_extensions/load_error.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T01:08:42Z",
+      "side": 1,
+      "message": "Should this have a class\u003d\"action-button\"? Usually dialogs have a \"cancel\" and an \"action\" button.",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8ba02e_c94cd0c0",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T01:08:42Z",
+      "side": 1,
+      "message": "I was hoping we can get rid of this logic entirely with cr-dialog. Can you briefly explain why we need to execute any JS to handle size changes?",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e263395_d25a5174",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T01:08:42Z",
+      "side": 1,
+      "message": "Same question here. Should this be the \"action-button\"?",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
