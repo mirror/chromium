@@ -37,8 +37,8 @@ class CC_SURFACES_EXPORT DirectLayerTreeFrameSink
       const viz::FrameSinkId& frame_sink_id,
       FrameSinkManager* frame_sink_manager,
       Display* display,
-      scoped_refptr<ContextProvider> context_provider,
-      scoped_refptr<ContextProvider> worker_context_provider,
+      scoped_refptr<viz::ContextProvider> context_provider,
+      scoped_refptr<viz::ContextProvider> worker_context_provider,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       viz::SharedBitmapManager* shared_bitmap_manager);
   DirectLayerTreeFrameSink(

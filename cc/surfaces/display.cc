@@ -84,8 +84,8 @@ void Display::Initialize(DisplayClient* client,
 
   if (auto* context = output_surface_->context_provider()) {
     // This depends on assumptions that Display::Initialize will happen
-    // on the same callstack as the ContextProvider being created/initialized
-    // or else it could miss a callback before setting this.
+    // on the same callstack as the viz::ContextProvider being
+    // created/initialized or else it could miss a callback before setting this.
     context->SetLostContextCallback(base::Bind(
         &Display::DidLoseContextProvider,
         // Unretained is safe since the callback is unset in this class'
