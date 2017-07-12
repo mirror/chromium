@@ -52,6 +52,24 @@
       "revId": "ee62e68f8a4a91cba75c4ee81ecd8f164252ab51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63b4c0f_2c104d80",
+        "filename": "content/browser/compositor/surface_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-12T15:45:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d7526403_0478a2c8",
+      "revId": "ee62e68f8a4a91cba75c4ee81ecd8f164252ab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
