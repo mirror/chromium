@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "76747714_1d7092c3",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-12T20:21:38Z",
+      "side": 1,
+      "message": "We settled this to copy construction (because of patch) and move assignment.",
+      "parentUuid": "4b4dad96_dfa224e3",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e933cbb_7726e108",
         "filename": "chrome/installer/zucchini/buffer_sink.h",
         "patchSetId": 7
@@ -1119,6 +1143,30 @@
       "side": 1,
       "message": "Creating new instances of BufferSource() to support jump seems hacky. How about instantiating it once as \"trunk\", use .Clone() to create \"branches\" that looks ahead?\n\nNote that pointer extraction will use lots of random access and interpreting raw bytes. BufferSource, as is, won\u0027t accommodate that.  So you\u0027d have to use something else later on (and duplicate code).",
       "parentUuid": "92bc8ff6_52e39c86",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 19
+      },
+      "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5478a2_e8885145",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-12T20:21:38Z",
+      "side": 1,
+      "message": "Having branching BufferSource is what I meant.\nFor pointer extraction (random access), we will keep using Bufferview directly like we do in Google3.",
+      "parentUuid": "98c92445_18aea17e",
       "range": {
         "startLine": 21,
         "startChar": 6,
