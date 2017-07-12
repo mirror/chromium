@@ -16,6 +16,24 @@
       "revId": "45b965c656433aeda661f3e1e13fcd86e5c51b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d833ee6_1a49ae7b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-12T19:58:34Z",
+      "side": 1,
+      "message": "\u003e Is that correct?\nYes: if the new request is sync, then it shouldn\u0027t revalidation.\n\n\u003e Is it equivalent?\nAlso: if the existing Resource is sync, then the new request shouldn\u0027t revalidate the Resource, because we forbid revalidation of redirected Resources in DetermineRevalidationPolicy().\n\n\u003e merging the condition with above one\nSounds good, done (and added comments for providing contexts).",
+      "parentUuid": "ebae18de_1aae76a6",
+      "revId": "45b965c656433aeda661f3e1e13fcd86e5c51b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
