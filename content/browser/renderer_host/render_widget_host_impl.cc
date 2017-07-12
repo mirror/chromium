@@ -2588,6 +2588,18 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
   auto new_surface_properties =
       RenderWidgetSurfaceProperties::FromCompositorFrame(frame);
 
+  uint32_t max_sequence_number = 0;
+  for (const auto& resource : frame.resource_list)
+    max_sequence_number =
+        std::max(max_sequence_number, resource.shared_bitmap_sequence_number);
+
+  if (max_sequence_number > last_shared_bitmap_sequence_number_) {
+    saved_frame_.frame = std::move(frame);
+    saved_frame_.local_surface_id = local_surface_id;
+    saved_frame_.max_shared_bitmap_sequence_number = max_sequence_number;
+    return;
+  }
+
   if (local_surface_id == last_local_surface_id_ &&
       new_surface_properties != last_surface_properties_) {
     bad_message::ReceivedBadMessage(
@@ -2693,5 +2705,17 @@ device::mojom::WakeLock* RenderWidgetHostImpl::GetWakeLock() {
   return wake_lock_.get();
 }
 #endif
+
+void RenderWidgetHostImpl::DidAllocateSharedBitmap(
+    uint32_t last_shared_bitmap_sequence_number) {
+  last_shared_bitmap_sequence_number_ = last_shared_bitmap_sequence_number;
+  if (saved_frame_.local_surface_id.is_valid() &&
+      last_shared_bitmap_sequence_number >=
+          saved_frame_.max_shared_bitmap_sequence_number) {
+    SubmitCompositorFrame(saved_frame_.local_surface_id,
+                          std::move(saved_frame_.frame));
+    saved_frame_.local_surface_id = viz::LocalSurfaceId();
+  }
+}
 
 }  // namespace content
