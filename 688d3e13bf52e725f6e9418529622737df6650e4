@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "708026f6_f3abc78b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T11:07:27Z",
+      "side": 1,
+      "message": "I was thinking about this and wondering whether we should skip muted and no-audio track videos. The idea is that we want to know how many videos would be allowed to play with the engagement score. Recording the value for videos that would be allowed to autoplay muted might add a lot of noise. We can also have two different buckets. WDYT?",
+      "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9567836_bfcb020b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T11:07:27Z",
+      "side": 1,
+      "message": "Same as previous CL: I don\u0027t think using a reference is correct here.",
+      "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f57e3d5_faa030b6",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T11:07:27Z",
+      "side": 1,
+      "message": "Usually, we use `Record` instead of `Log`. I think :)",
+      "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697ddeac_95ce60da",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-12T11:07:27Z",
+      "side": 1,
+      "message": "I completely missed that in previous CLs. It looks like CreateEngagementScore returns a pointer but it is always used on the stack. I think we should therefore return an object instead. It should probably be done in a follow-up CL though.",
+      "revId": "688d3e13bf52e725f6e9418529622737df6650e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
