@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9d06944_caa90007",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T19:31:43Z",
+      "side": 1,
+      "message": "There are settings-dropdown-menu instances that don\u0027t have a label next to them, and will be pushed down unnecessarily, see http://imgur.com/a/fQlIr.\n\nThe more I look at this problem the more I think that the best way to address this bug is to add a margin on the specific md-select instances you care about (Clear browsing data?).  Also in the bug there is a screenshot of the \"Page zoom\" select not being aligned with the label, but:\n\n1) page zoom select is not a settings-dropdown-menu, so this CL does not affect it.\n2) Can a user tell that the text is slightly misaligned without drawing a line (see http://imgur.com/a/2ef4N)? The distance between the select and the label is sufficiently long where I don\u0027t think a 1px misalignment matters as much.\n\nAlso the proposed solution \"fixes\" the issue assuming that the label only takes up one line (which might not be the case everywhere for all languages).",
+      "revId": "bd51a5a8ea6ac60d9530addd425e971e17614840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5048ff60_271e3a8e",
+        "filename": "ui/webui/resources/html/md_select_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-12T19:31:43Z",
+      "side": 1,
+      "message": "Tried this change locally. I think we should add a \"height: 0\" within the .md-select-underline {} block below. The underline should have just 1px height (because of the border). Not sure why it has 2px height + 1px border currently.\n\nThen margin-top should be 2px instead of 4px (but also see other comment suggesting that margin-top should be added elsewhere).",
+      "revId": "bd51a5a8ea6ac60d9530addd425e971e17614840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
