@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "09d799a4_908749a7",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T17:44:50Z",
+      "side": 1,
+      "message": "Regarding multiple constructors, I checked the style guide and didn\u0027t see it, but I\u0027ve heard this in reviews for other Chrome OS folks (stevenjb@ in particular comes to mind as someone who has stressed this).\n\nThat being said, I\u0027m not personally opposed to it, so your suggestions SGTM :)",
+      "parentUuid": "d0a214fb_34dbda93",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 67
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d43d4688_893eebda",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 7
@@ -153,6 +177,30 @@
       "side": 1,
       "message": "I\u0027d prefer to keep using the approach that GetImageForNewWifiNetwork introduced, which is to explicitly set the color (as done below on L836) rather than introducing a new type. I wouldn\u0027t want an explosion of types for every permutation of appearance and introducing a new type means we have to audit/verify all the places we conditionally act on the type.\n\n(Also, ICON_TYPE_NOTIFICATION appears to me to be a layering violation because this file shouldn\u0027t know anything about the notification center.)",
       "parentUuid": "d43d4688_893eebda",
+      "range": {
+        "startLine": 834,
+        "startChar": 54,
+        "endLine": 834,
+        "endChar": 76
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2636c62e_0bdc7186",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T17:44:50Z",
+      "side": 1,
+      "message": "Sounds good - thanks!",
+      "parentUuid": "76386f61_47643403",
       "range": {
         "startLine": 834,
         "startChar": 54,
