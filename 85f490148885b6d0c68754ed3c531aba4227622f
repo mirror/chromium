@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77383138_d8a90994",
+        "filename": "third_party/WebKit/Source/devtools/front_end/data_grid/DataGrid.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-12T01:41:58Z",
+      "side": 1,
+      "message": "Will this work for detached tree fragments? Can we check whether we\u0027re attached straight away?",
+      "revId": "85f490148885b6d0c68754ed3c531aba4227622f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
