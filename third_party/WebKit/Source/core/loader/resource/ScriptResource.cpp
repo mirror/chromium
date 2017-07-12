@@ -137,10 +137,18 @@ void ScriptResource::CheckResourceIntegrity(Document& document) {
     return;
   }
 
-  CHECK(!!ResourceBuffer());
+  // Annoying edge case: If a resource actually has zero bytes then it will not
+  // typically have a resource buffer, but we still need to check integrity
+  // because people might want to assert a zero-length resource.
+  CHECK(EncodedSize() + DecodedSize() == 0 || ResourceBuffer());
+  const char* data = nullptr;
+  size_t data_length = 0;
+  if (ResourceBuffer()) {
+    data = ResourceBuffer()->Data();
+    data_length = ResourceBuffer()->size();
+  }
   bool passed = SubresourceIntegrity::CheckSubresourceIntegrity(
-      IntegrityMetadata(), document, ResourceBuffer()->Data(),
-      ResourceBuffer()->size(), Url(), *this);
+      IntegrityMetadata(), document, data, data_length, Url(), *this);
   SetIntegrityDisposition(passed ? ResourceIntegrityDisposition::kPassed
                                  : ResourceIntegrityDisposition::kFailed);
   DCHECK_NE(IntegrityDisposition(), ResourceIntegrityDisposition::kNotChecked);
