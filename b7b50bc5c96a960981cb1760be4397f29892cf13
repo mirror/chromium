@@ -22,6 +22,30 @@
       "revId": "b7b50bc5c96a960981cb1760be4397f29892cf13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2683919e_65e0e715",
+        "filename": "remoting/ios/facade/remoting_oauth_authentication.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-12T23:12:43Z",
+      "side": 1,
+      "message": "This is in the case where they might be trying to login the first time so to login again might not make sense. Also I am not sure this codepath ever gets executed when using the SSO lib so this is chromium only. Thoughts?",
+      "parentUuid": "1b85efe4_d56e2d2f",
+      "range": {
+        "startLine": 149,
+        "startChar": 36,
+        "endLine": 149,
+        "endChar": 76
+      },
+      "revId": "b7b50bc5c96a960981cb1760be4397f29892cf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
