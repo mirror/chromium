@@ -16,6 +16,24 @@
       "revId": "046a8b31c9ddce67a2a996c31a0ae7ccbaf255d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aabeab8_f2064c70",
+        "filename": "media/audio/audio_system_info_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-07-12T19:23:16Z",
+      "side": 1,
+      "message": "Hmm, will it be possible to use them in //services/audio (namespace audio) if they are in \u0027internal\u0027 namespace?\n\nThey are wrapped in the class to be friends with AudioManager, since we closed all its device info methods for public usage.\n\nYes, I\u0027m aware of this style guide rule :(",
+      "parentUuid": "e338a3fa_042d9d07",
+      "revId": "046a8b31c9ddce67a2a996c31a0ae7ccbaf255d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
