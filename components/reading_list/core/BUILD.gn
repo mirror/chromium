@@ -25,6 +25,7 @@ source_set("core") {
   ]
   deps = [
     "//base",
+    "//components/feature_engagement_tracker",
     "//components/keyed_service/core",
     "//components/prefs",
     "//components/reading_list/features:flags",
