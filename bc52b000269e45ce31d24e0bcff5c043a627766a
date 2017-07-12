@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f51f2cfb_7fd1f383",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T19:22:59Z",
+      "side": 1,
+      "message": "Sure. I don\u0027t think it will matter much. The early outs after this are super rare.",
+      "parentUuid": "1a908b59_14778a41",
+      "revId": "bc52b000269e45ce31d24e0bcff5c043a627766a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45a6b4c4_879cd6c8",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "bc52b000269e45ce31d24e0bcff5c043a627766a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77377861_1b891b4d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 61620,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-12T19:22:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45a6b4c4_879cd6c8",
+      "revId": "bc52b000269e45ce31d24e0bcff5c043a627766a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
