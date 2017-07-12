@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "173f5899_7475de8d",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-12T19:44:53Z",
+      "side": 1,
+      "message": "These hard coded trues are placeholders for the switch in the other CL.",
+      "revId": "f0cfb9f7c2363fd7da157a99243e1f021c691ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2318093_620ce9f9",
+        "filename": "ash/wm/maximize_mode/maximize_mode_window_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-12T19:44:53Z",
+      "side": 1,
+      "message": "This was so maximize mode can handle the arc++ windows. Will this affect other things? Also, it should be\n\nif ( ...-\u003eallow_set_bounds_direct() \u0026\u0026 flag_not_enabled) return false;",
+      "revId": "f0cfb9f7c2363fd7da157a99243e1f021c691ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3baee16_53594dce",
+        "filename": "components/exo/wm_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-12T19:44:53Z",
+      "side": 1,
+      "message": "Just for now to test.",
+      "range": {
+        "startLine": 112,
+        "startChar": 9,
+        "endLine": 112,
+        "endChar": 0
+      },
+      "revId": "f0cfb9f7c2363fd7da157a99243e1f021c691ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
