@@ -1,0 +1,803 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed95a2d1_ad449f6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "nit space at end of sentence",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e30f089_5864438d",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "We prefer enum classes now, especially since your enum names are short\n\nShouldn\u0027t this be EcryptFSMigrationAction?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1781d466_8cd2fe64",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Don\u0027t think we need to be explicit about values",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d00fb1c_9f6979da",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Could combine this with the value bounds checking below",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44df462_e547de55",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "I think early return here would be more readable.",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb024df_959ad47b",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Why not get a pointer to the device_management_service here?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242808d9_0be68e7d",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Why not signin_profile_request_context or signin_profile_context?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101de4a4_a2041049",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "I don\u0027t understand this block of code. Why are the actions different for various failures? At a minimum, this deserves a comment.",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850153b9_ffdad97b",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Is this the right default?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91bbfeb_1b00c6ba",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Why is this also not DISALLOW_ARC_NO_MIGRATION?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb7fac6_ce8b007c",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Let\u0027s add some newlines after each break?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810eacf1_f114385c",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Is there a bug?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f0996f_f489fa15",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Do we need to do any error checking in this function?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe3e903_4efd49a3",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "enum class",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849feda3_9c606c34",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Can shorten names with enum class",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4868b2_62c6fe5b",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "I think we prefer early return here",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b1abca_071be09b",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c3c95f_cc98bfca",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Drop {}",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f46e53_607ae2b0",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be part of LoadPolicyKey? Also looks like LoadPolicyKey could error out and we\u0027ve actually not loaded the policy key",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773d08c6_832e9334",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Why not use PostTaskAndReplyWithResult instead?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695dd686_8ae324f4",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "I think it makes more sense for key to be the return value.",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1235f41d_3e314116",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we be calling SampleValidationFailure here too?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5333a937_428dec2b",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Invert this and early return?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480b5f1b_9857438f",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Let\u0027s call this cached_policy_key()",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ebe2c9_99fdbe05",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "nit newline after this line",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05553692_90e49a48",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "No early return here? Is that safe?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae611fb_03b1b044",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Can use auto here",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a45514_6358a602",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "nit period",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210a5229_8a9ff6e8",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "early return?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9887a5_65b74a8d",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Can we do this more explicitly from test code?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b420bd5_9383b7f5",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "sp cached",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467691bd_65978bd8",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Use auto here",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57434ded_bf297ee3",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "sp cached",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfdbee5a_3185d238",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Concerned about the number of LOG(ERROR) this CL adds. Should this be a VLOG(1)?",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b64e33_496f20c7",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "I think ok to drop comment here as well.",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad91b5cb_d239edce",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "enum class",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0dafb8_3f9cba38",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Shorten these names.",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205456cd_e949518c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Do we pass in callbacks by value now? I don\u0027t remember what the latest recommendation is.",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46211a4d_0e4fdf24",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "\u003d default.\n\nalso initialize these with the definition in the private section",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c2300c_931dad25",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Add comment that we pass ownership of mock_homedir_methods_",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17eb3054_a1c07531",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592d0489_ccf60461",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "nit const method",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a60ecc6_cd228dae",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "nit const method",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8202cb18_ba19c211",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba38456f_35065d7b",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Use auto",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004d9759_a56e9f89",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "\u003d nullptr",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70eb226_bd793227",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-12T22:02:24Z",
+      "side": 1,
+      "message": "Please add comments for all tests indicating what is being tested.",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
