@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "chrome/profiling/backtrace_storage.h"
+#include "chrome/profiling/memlog_control_receiver.h"
 #include "chrome/profiling/memlog_receiver_pipe_server.h"
 
 namespace base {
@@ -21,10 +22,10 @@ namespace profiling {
 
 // Manages all connections and logging for each process. Pipes are supplied by
 // the pipe server and this class will connect them to a parser and logger.
-class MemlogConnectionManager {
+class MemlogConnectionManager : public MemlogControlReceiver {
  public:
   MemlogConnectionManager();
-  ~MemlogConnectionManager();
+  ~MemlogConnectionManager() override;
 
   // Starts listening for connections.
   void StartConnections(const std::string& pipe_id);
@@ -32,8 +33,12 @@ class MemlogConnectionManager {
  private:
   struct Connection;
 
+  // MemlogControlReceiver implementation.
+  void OnStartMojoControl() override;
+
   // Called by the pipe server when a new pipe is created.
-  void OnNewConnection(scoped_refptr<MemlogReceiverPipe> new_pipe);
+  void OnNewConnection(scoped_refptr<MemlogReceiverPipe> new_pipe,
+                       int sender_pid);
 
   // Notification that a connection is complete. Unlike OnNewConnection which
   // is signaled by the pipe server, this is signaled by the allocation tracker

@@ -32,6 +32,7 @@ class MemlogReceiverPipe
   void SetReceiver(scoped_refptr<base::TaskRunner> task_runner,
                    scoped_refptr<MemlogStreamReceiver> receiver);
 
+    base::MessageLoopForIO::FileDescriptorWatcher controller_;
  private:
   friend class base::RefCountedThreadSafe<MemlogReceiverPipe>;
   ~MemlogReceiverPipe();

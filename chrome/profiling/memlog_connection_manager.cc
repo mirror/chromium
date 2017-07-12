@@ -22,7 +22,11 @@ struct MemlogConnectionManager::Connection {
         pipe(p),
         tracker(std::move(complete_cb)) {}
 
-  ~Connection() {}
+  ~Connection() {
+    // The parser may outlive this class because it's refcounted, make sure no
+    // callbacks are issued.
+    parser->DisconnectReceivers();
+  }
 
   base::Thread thread;
 
@@ -36,7 +40,7 @@ MemlogConnectionManager::MemlogConnectionManager() {}
 MemlogConnectionManager::~MemlogConnectionManager() {
   // Clear the callback since the server is refcounted and may outlive us.
   server_->set_on_new_connection(
-      base::RepeatingCallback<void(scoped_refptr<MemlogReceiverPipe>)>());
+      MemlogReceiverPipeServer::NewConnectionCallback());
 }
 
 void MemlogConnectionManager::StartConnections(const std::string& pipe_id) {
@@ -47,25 +51,37 @@ void MemlogConnectionManager::StartConnections(const std::string& pipe_id) {
   server_->Start();
 }
 
-void MemlogConnectionManager::OnNewConnection(
-    scoped_refptr<MemlogReceiverPipe> new_pipe) {
-  int remote_process = new_pipe->GetRemoteProcessID();
+void MemlogConnectionManager::OnStartMojoControl() {
+  ProfilingGlobals::Get()->GetIORunner()->PostTask(
+      FROM_HERE,
+      base::Bind(
+          &ProfilingProcess::EnsureMojoStarted,
+          base::Unretained(ProfilingGlobals::Get()->GetProfilingProcess())));
+  ProfilingGlobals::Get()->GetIORunner()->PostTask(
+      FROM_HERE,
+      base::Bind(
+          &ProfilingProcess::AttachPipeServer,
+          base::Unretained(ProfilingGlobals::Get()->GetProfilingProcess()),
+          server_));
+}
 
+void MemlogConnectionManager::OnNewConnection(
+    scoped_refptr<MemlogReceiverPipe> new_pipe, int sender_pid) {
   // Task to post to clean up the connection. Don't need to retain |this| since
   // it wil be called by objects owned by the MemlogConnectionManager.
   AllocationTracker::CompleteCallback complete_cb = base::BindOnce(
       &MemlogConnectionManager::OnConnectionCompleteThunk,
       base::Unretained(this), base::MessageLoop::current()->task_runner(),
-      remote_process);
+      sender_pid);
 
   std::unique_ptr<Connection> connection = base::MakeUnique<Connection>(
-      std::move(complete_cb), remote_process, new_pipe);
+      std::move(complete_cb), sender_pid, new_pipe);
   connection->thread.Start();
 
-  connection->parser = new MemlogStreamParser(&connection->tracker);
+  connection->parser = new MemlogStreamParser(this, &connection->tracker);
   new_pipe->SetReceiver(connection->thread.task_runner(), connection->parser);
 
-  connections_[remote_process] = std::move(connection);
+  connections_[sender_pid] = std::move(connection);
 }
 
 void MemlogConnectionManager::OnConnectionComplete(int process_id) {
