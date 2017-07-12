@@ -8,7 +8,7 @@
 #include "bindings/core/v8/ArrayBufferOrArrayBufferView.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/ContextLifecycleObserver.h"
-#include "core/dom/DOMArrayBuffer.h"
+#include "core/typed_arrays/DOMArrayBuffer.h"
 #include "modules/webauth/AuthenticationAssertionOptions.h"
 #include "modules/webauth/ScopedCredentialInfo.h"
 #include "platform/bindings/ScriptWrappable.h"

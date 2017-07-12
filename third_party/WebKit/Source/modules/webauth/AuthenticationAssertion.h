@@ -5,7 +5,7 @@
 #ifndef AuthenticationAssertion_h
 #define AuthenticationAssertion_h
 
-#include "core/dom/DOMArrayBuffer.h"
+#include "core/typed_arrays/DOMArrayBuffer.h"
 #include "modules/webauth/ScopedCredential.h"
 #include "platform/bindings/ScriptWrappable.h"
 

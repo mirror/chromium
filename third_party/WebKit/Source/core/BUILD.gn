@@ -202,6 +202,7 @@ component("core") {
     "//third_party/WebKit/Source/core/style:svg_style",
     "//third_party/WebKit/Source/core/svg",
     "//third_party/WebKit/Source/core/timing",
+    "//third_party/WebKit/Source/core/typed_arrays",
     "//third_party/WebKit/Source/core/workers",
     "//third_party/WebKit/Source/core/xml",
     "//third_party/WebKit/Source/core/xmlhttprequest",
