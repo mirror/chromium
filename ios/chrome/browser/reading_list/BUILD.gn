@@ -43,6 +43,7 @@ source_set("reading_list") {
     "//ios/chrome/browser/bookmarks",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/favicon",
+    "//ios/chrome/browser/feature_engagement_tracker",
     "//ios/chrome/browser/history",
     "//ios/chrome/common",
     "//ios/web",
