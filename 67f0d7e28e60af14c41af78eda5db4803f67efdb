@@ -46,6 +46,30 @@
       "revId": "67f0d7e28e60af14c41af78eda5db4803f67efdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65dcebb_87460fa2",
+        "filename": "chrome/browser/printing/print_job_worker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-12T16:35:02Z",
+      "side": 1,
+      "message": "\u003e The other reason is I want to handle multiple window.print() from different iframes. Because TabAndroid::Print() could be called several times during a printing life cycle, we don\u0027t want to change |render_{process, frame}_id| when there is an ongoing job. If a printing job started, PrintingControllerImpl.java will discard following window.print() until the printing job finished, so |mRender{Process, Frame}Id| in PrintingControllerImpl.java won\u0027t be wrongly updated during the printing job.\n\nEach job has its delegate which hold the process and frame ids, doesn\u0027t that cover the multi frame use case and not wrongly update the controller?",
+      "parentUuid": "fa956009_8e5f6dfe",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 28
+      },
+      "revId": "67f0d7e28e60af14c41af78eda5db4803f67efdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
