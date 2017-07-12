@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0fca525_510f297a",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-12T16:02:47Z",
+      "side": 1,
+      "message": "nit: I believe the semantic difference between existing GetEnterpriseDomain() and new GetDisplayDomain() could be highlighted by the following rename:\nGetEnterpriseDomain() \u003d\u003e GetEnterpriseEnrollmentDomain()\nGetDisplayDomain() \u003d\u003e GetEnterpriseDisplayDomain()\n\nI.e. the former is (IIUC) the domain of the user who enrolled the device, while the latter is the fancy string to be displayed.\n\nAnd it will be good to propagate these detailed names through the code that uses them - because even today it\u0027s non-trivial to understand the meaning of the \"domain\".\n\nWDYT?",
+      "range": {
+        "startLine": 81,
+        "startChar": 14,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27bd56bc_e7b3553e",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-12T16:02:47Z",
+      "side": 1,
+      "message": "nit: The comment reads like the function returns \"\" if no display domain is specified. Meanwhile, it\u0027s actually defaulting to the enrollment domain.",
+      "range": {
+        "startLine": 83,
+        "startChar": 67,
+        "endLine": 84,
+        "endChar": 16
+      },
+      "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da7f370_2d347516",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-12T16:02:47Z",
+      "side": 1,
+      "message": "Suggesting GetEnterpriseDisplayDomain() - same comment as in gaia_screen_handler.cc.\nAlso please update the comment in the line above.",
+      "range": {
+        "startLine": 104,
+        "startChar": 12,
+        "endLine": 104,
+        "endChar": 31
+      },
+      "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922a3733_0890b406",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-12T16:02:47Z",
+      "side": 1,
+      "message": "nit: Better to rename the function too, to avoid confusion between \"normal\" enterprise domain and the \"display\" enterprise domain:\nstd::string GetEnterpriseDisplayDomain()",
+      "range": {
+        "startLine": 120,
+        "startChar": 12,
+        "endLine": 120,
+        "endChar": 31
+      },
+      "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
