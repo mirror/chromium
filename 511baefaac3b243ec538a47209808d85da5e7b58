@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3979cfae_4f12889e",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T17:18:55Z",
+      "side": 1,
+      "message": "nit: here too, const doesn\u0027t do anything",
+      "revId": "511baefaac3b243ec538a47209808d85da5e7b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289682e5_6dd0688b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T17:18:55Z",
+      "side": 1,
+      "message": "nit: this constructor should be explicit",
+      "revId": "511baefaac3b243ec538a47209808d85da5e7b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
