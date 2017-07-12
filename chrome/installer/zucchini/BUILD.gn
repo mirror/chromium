@@ -7,10 +7,13 @@ import("//testing/test.gni")
 
 static_library("zucchini_lib") {
   sources = [
+    "bit_manip.h",
     "buffer_view.h",
     "disassembler.cc",
     "disassembler.h",
     "image_utils.h",
+    "label_manager.cc",
+    "label_manager.h",
     "typed_value.h",
   ]
 
@@ -41,6 +44,8 @@ if (is_win) {
 test("zucchini_unittests") {
   sources = [
     "buffer_view_unittest.cc",
+    "image_utils_unittest.cc",
+    "label_manager_unittest.cc",
     "typed_value_unittest.cc",
   ]
 
