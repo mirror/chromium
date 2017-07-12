@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e6ab2e5_902274e8",
+        "filename": "chrome/android/java/res/layout/signin_promo.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "I think it would be better to add RobotoRegularStyle to styles.xml (similar to https://cs.chromium.org/chromium/src/chrome/android/java/res/values-v17/styles.xml?l\u003d576\u0026rcl\u003df8059bbc87dff273b3445a33c8e57c91d089ad31). It would remove the need for the comment as well.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 39
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfee5d7_6706c785",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "Please use ContextUtils.getAppSharedPreferences instead of context.getSharedPreference.\n\nLike here: https://cs.chromium.org/chromium/src/components/signin/core/browser/android/java/src/org/chromium/components/signin/ChromeSigninController.java?l\u003d53\u0026rcl\u003df8059bbc87dff273b3445a33c8e57c91d089ad31",
+      "range": {
+        "startLine": 38,
+        "startChar": 30,
+        "endLine": 38,
+        "endChar": 58
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39960698_8e542f00",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "There\u0027s no need to commit this.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03fcff1f_e347bd6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "I think it makes sense to move this part to class description. This method can have shorter description. Dismissible part can be moved to param description. Also, I think it makes sense to replace \"cached accounts which have been previously signed in\" with \"Google accounts on the device\".",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 88
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1cb888_90e9e2d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "It makes sense to mention that \"X\" button will be hidden if null is passed here.",
+      "range": {
+        "startLine": 70,
+        "startChar": 32,
+        "endLine": 71,
+        "endChar": 90
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76772c48_e446fd02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "Common convention is to pass Context as a first parameter.",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc825d73_1315fb24",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "Add @Nullable from android.support.annotation.",
+      "range": {
+        "startLine": 74,
+        "startChar": 40,
+        "endLine": 74,
+        "endChar": 63
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0959387d_8e266a6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "We should use mProfileDataCache to get this info.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 77
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec43f53_88056e45",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "Please use standard placeholder format.",
+      "range": {
+        "startLine": 2242,
+        "startChar": 20,
+        "endLine": 2242,
+        "endChar": 24
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8addac64_3af3a5c8",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-12T12:49:07Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 2245,
+        "startChar": 12,
+        "endLine": 2245,
+        "endChar": 16
+      },
+      "revId": "1fabc7740388b904c0484bbecfe0cfec72667acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
