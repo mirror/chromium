@@ -277,17 +277,20 @@ inline void EventDispatcher::DispatchEventPostProcess(
   bool is_click = event_->IsMouseEvent() &&
                   ToMouseEvent(*event_).type() == EventTypeNames::click;
   if (is_click) {
-    // Fire an accessibility event indicating a node was clicked on.  This is
-    // safe if m_event->target()->toNode() returns null.
-    if (AXObjectCache* cache = node_->GetDocument().ExistingAXObjectCache())
-      cache->HandleClicked(event_->target()->ToNode());
+    node_->UpdateDistribution();
+    if (node_) {
+      // Fire an accessibility event indicating a node was clicked on.  This is
+      // safe if m_event->target()->toNode() returns null.
+      if (AXObjectCache* cache = node_->GetDocument().ExistingAXObjectCache())
+        cache->HandleClicked(event_->target()->ToNode());
 
-    // Pass the data from the PreDispatchEventHandler to the
-    // PostDispatchEventHandler.
-    // This may dispatch an event, and node_ and event_ might be altered.
-    if (activation_target) {
-      activation_target->PostDispatchEventHandler(
-          event_.Get(), pre_dispatch_event_handler_result);
+      // Pass the data from the PreDispatchEventHandler to the
+      // PostDispatchEventHandler.
+      // This may dispatch an event, and node_ and event_ might be altered.
+      if (activation_target) {
+        activation_target->PostDispatchEventHandler(
+            event_.Get(), pre_dispatch_event_handler_result);
+      }
     }
     // TODO(tkent): Is it safe to kick DefaultEventHandler() with such altered
     // event_?

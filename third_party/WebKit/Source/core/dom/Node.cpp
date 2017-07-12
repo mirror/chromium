@@ -722,6 +722,7 @@ void Node::UpdateDistribution() {
   // Extra early out to avoid spamming traces.
   if (isConnected() && !GetDocument().ChildNeedsDistributionRecalc())
     return;
+
   TRACE_EVENT0("blink", "Node::updateDistribution");
   ScriptForbiddenScope forbid_script;
   Node& root = ShadowIncludingRoot();
@@ -871,7 +872,11 @@ bool Node::IsInert() const {
   if (!isConnected() || !CanParticipateInFlatTree())
     return true;
 
-  DCHECK(!ChildNeedsDistributionRecalc());
+  DCHECK(!NeedsDistributionRecalc());
+  // If distribution is needed, risk a false positive instead of a crash
+  // caused by forcing distribution.
+  if (NeedsDistributionRecalc())
+    return true;
 
   const HTMLDialogElement* dialog = GetDocument().ActiveModalDialog();
   if (dialog && this != GetDocument() &&
