@@ -9,6 +9,7 @@ import io
 import json
 import logging
 import os
+import pipes
 import platform
 import subprocess
 import tempfile
@@ -422,9 +423,13 @@ E.g.,
           'through command line since it may contain references to your local '
           'directory')
 
+    print '~~~', self._builder_names[bot_platform]
     arguments.insert(0, 'src/tools/perf/run_benchmark')
     if bot_platform == 'android':
-      arguments.insert(1, '--browser=android-chromium')
+      if any('webview' in bot for bot in self._builder_names[bot_platform]):
+        arguments.insert(1, '--browser=android-webview')
+      else:
+        arguments.insert(1, '--browser=android-chromium')
     elif any('x64' in bot for bot in self._builder_names[bot_platform]):
       arguments.insert(1, '--browser=release_x64')
       target_arch = 'x64'
@@ -639,5 +644,6 @@ E.g.,
     for bot in self._builder_names[bot_platform]:
       git_try_command.extend(['-b', bot])
 
-    RunGit(git_try_command, error_msg_on_fail)
+    print '===>', ' '.join(pipes.quote(a) for a in git_try_command)
+    #RunGit(git_try_command, error_msg_on_fail)
     print 'Perf Try job sent to rietveld for %s platform.' % bot_platform
