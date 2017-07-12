@@ -46,6 +46,30 @@
       "revId": "fdf3d528fce04dd95feb7775fbf582f6ba831465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edeae429_d8b71ef9",
+        "filename": "components/download/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-12T04:39:48Z",
+      "side": 0,
+      "message": "No just keep the highlighted target.  You can remove the \"unit_tests\" target though.  You\u0027ll probably have to make both the download/internal and download/content/internal unit_tests targets depend on the components_unittests_gtest_filter target though.",
+      "parentUuid": "3f6a9f62_8ca4bed5",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 1
+      },
+      "revId": "fdf3d528fce04dd95feb7775fbf582f6ba831465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
