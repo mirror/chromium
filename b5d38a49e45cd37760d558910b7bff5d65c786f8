@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e257c440_a35e93aa",
+        "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-12T14:00:04Z",
+      "side": 1,
+      "message": "Ah, sure - there should be no change in behavior.",
+      "parentUuid": "24a1ebb0_e7a2fc84",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa96af9f_bbb6512d",
         "filename": "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
         "patchSetId": 6
@@ -278,6 +296,24 @@
       "side": 1,
       "message": "Agree to disagree :) I don\u0027t think GURL(\u003cstring\u003e) is too much boilerplate, and these types of methods are exactly why tests become fragile when using char *s or strings that don\u0027t represent canonicalized URLs.\n\nIn this particular case, I think using a scoped test var is also nicer than a global const char*, which is repeated in the test and could become out of sync when edits are made.",
       "parentUuid": "9e773799_5300592e",
+      "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b9e695_1c03b376",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-12T14:00:04Z",
+      "side": 1,
+      "message": "It\u0027s a good point re: URL canonicalization. To address that I think I\u0027d rather modify GetSourceForUrl to convert to GURL internally. I tend to prefer making test utilities as simple to use as possible, so rather than requiring every call site to wrap a constant in GURL(), we can do that once in the GetSourceForUrl impl. How does that sound?",
+      "parentUuid": "3068a04d_56e121e4",
       "revId": "b5d38a49e45cd37760d558910b7bff5d65c786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
