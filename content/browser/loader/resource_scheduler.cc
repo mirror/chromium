@@ -399,6 +399,7 @@ class ResourceScheduler::Client {
         did_scheduler_yield_(false),
         yielding_scheduler_enabled_(yielding_scheduler_enabled),
         max_requests_before_yielding_(max_requests_before_yielding),
+        last_scheduled_and_started_delayable_request_(nullptr),
         weak_ptr_factory_(this) {}
 
   ~Client() {}
@@ -410,6 +411,28 @@ class ResourceScheduler::Client {
     if (should_start == START_REQUEST) {
       // New requests can be started synchronously without issue.
       StartRequest(request, START_SYNC, RequestStartTrigger::NONE);
+      if (RequestAttributesAreSet(request->attributes(), kAttributeDelayable)) {
+        // If the current request is a delayable request then update
+        // |last_scheduled_and_started_delayable_request_| and the corresponding
+        // timestamp.
+        last_scheduled_and_started_delayable_request_ = request;
+        last_scheduled_and_started_delayable_request_timestamp_ =
+            base::Time::Now();
+      } else {
+        // If the current request is non-delayable, check if
+        // |last_scheduled_and_started_delayable_request_| is set.
+        // If so, record the time interval between now and
+        // |last_scheduled_and_started_delayable_request_timestamp_|. This
+        // implies that waiting for a bit before starting the non-delayable
+        // request
+        if (last_scheduled_and_started_delayable_request_) {
+          UMA_HISTOGRAM_TIMES(
+              "ResourceScheduler.InterarrivalTime."
+              "SpontaneousDelayableToNonDelayableStart",
+              base::Time::Now() -
+                  last_scheduled_and_started_delayable_request_timestamp_);
+        }
+      }
     } else {
       pending_requests_.Insert(request);
       if (should_start == YIELD_SCHEDULER)
@@ -423,6 +446,10 @@ class ResourceScheduler::Client {
       DCHECK(!base::ContainsKey(in_flight_requests_, request));
     } else {
       EraseInFlightRequest(request);
+      // Clear up |last_scheduled_and_started_delayable_request_| if it matches
+      // this request.
+      if (request == last_scheduled_and_started_delayable_request_)
+        last_scheduled_and_started_delayable_request_ = nullptr;
 
       // Removing this request may have freed up another to load.
       LoadAnyStartablePendingRequests(
@@ -929,6 +956,14 @@ class ResourceScheduler::Client {
 
   // The number of requests that can start before yielding.
   int max_requests_before_yielding_;
+
+  // The last delayable request that was started as soon as it was scheduled
+  // without being put in the pending queue.
+  ScheduledResourceRequest* last_scheduled_and_started_delayable_request_;
+
+  // The time at which |last_scheduled_and_started_delayable_request_| was
+  // started.
+  base::Time last_scheduled_and_started_delayable_request_timestamp_;
 
   base::WeakPtrFactory<ResourceScheduler::Client> weak_ptr_factory_;
 };
