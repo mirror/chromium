@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dcc98461_78c62680",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T16:02:36Z",
+      "side": 1,
+      "message": "I\u0027ve checked with people using Gerrit and they say that this is how Gerrit tracks things.  I\u0027ll double-check again when I get into office today.",
+      "parentUuid": "f24ca2a3_067e11e7",
+      "revId": "cd34a9cadebe9310be9c9ef0e1e177de0540d3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7252699e_b327d532",
         "filename": "components/variations/variations_params_manager.cc",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "58a57ecc_ed6a46ed",
+        "filename": "components/variations/variations_params_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T16:02:36Z",
+      "side": 1,
+      "message": "Done (here and in the header file and in content/public/test/test_utils.cc)",
+      "parentUuid": "7252699e_b327d532",
+      "range": {
+        "startLine": 100,
+        "startChar": 23,
+        "endLine": 100,
+        "endChar": 39
+      },
+      "revId": "cd34a9cadebe9310be9c9ef0e1e177de0540d3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a49572c0_df45955c",
         "filename": "content/public/test/test_utils.h",
         "patchSetId": 8
@@ -62,6 +104,30 @@
       "revId": "cd34a9cadebe9310be9c9ef0e1e177de0540d3a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381ef72c_25acfb25",
+        "filename": "content/public/test/test_utils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-12T16:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a49572c0_df45955c",
+      "range": {
+        "startLine": 93,
+        "startChar": 37,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "cd34a9cadebe9310be9c9ef0e1e177de0540d3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
