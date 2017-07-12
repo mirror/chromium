@@ -755,7 +755,10 @@ TEST_F(TaskSchedulerWorkerPoolHistogramTest, NumTasksBeforeDetach) {
 
   // Verify that counts were recorded to the histogram as expected.
   const auto* histogram = worker_pool_->num_tasks_before_detach_histogram();
-  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(0));
+  // Note: there'll be a thread that detaches after running no tasks. This
+  // thread was the one created to maintain an idle thread after posting the
+  // task via |task_runner_for_top_idle|
+  EXPECT_EQ(1, histogram->SnapshotSamples()->GetCount(0));
   EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(1));
   EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(2));
   EXPECT_EQ(1, histogram->SnapshotSamples()->GetCount(3));
@@ -775,6 +778,57 @@ TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, InitOne) {
   worker_pool->Start(SchedulerWorkerPoolParams(8U, TimeDelta::Max()));
   ASSERT_TRUE(worker_pool);
   EXPECT_EQ(1U, worker_pool->NumberOfAliveWorkersForTesting());
+  worker_pool->JoinForTesting();
+}
+
+// Verify that the SchedulerPool attempts to keep one idle standby thread if
+// possible (i.e. there's available worker capacity for it)
+TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, VerifyStandbyThread) {
+  size_t worker_capacity = 3;
+
+  TaskTracker task_tracker;
+  DelayedTaskManager delayed_task_manager;
+  delayed_task_manager.Start(make_scoped_refptr(new TestSimpleTaskRunner));
+  auto worker_pool = MakeUnique<SchedulerWorkerPoolImpl>(
+      "StandbyThreadWorkerPool", ThreadPriority::NORMAL, &task_tracker,
+      &delayed_task_manager);
+  worker_pool->Start(
+      SchedulerWorkerPoolParams(worker_capacity, kReclaimTimeForDetachTests));
+  ASSERT_TRUE(worker_pool);
+  EXPECT_EQ(1U, worker_pool->NumberOfAliveWorkersForTesting());
+
+  auto task_runner =
+      worker_pool->CreateTaskRunnerWithTraits({WithBaseSyncPrimitives()});
+
+  WaitableEvent running_task(WaitableEvent::ResetPolicy::AUTOMATIC,
+                             WaitableEvent::InitialState::NOT_SIGNALED);
+  WaitableEvent barrier(WaitableEvent::ResetPolicy::MANUAL,
+                        WaitableEvent::InitialState::NOT_SIGNALED);
+
+  RepeatingCallback<void()> closure = BindRepeating(
+      [](WaitableEvent* running_task, WaitableEvent* barrier) {
+        running_task->Signal();
+        barrier->Wait();
+      },
+      Unretained(&running_task), Unretained(&barrier));
+
+  // There should be one idle thread until we reach worker capacity
+  for (size_t i = 0; i < worker_capacity; ++i) {
+    EXPECT_EQ(i + 1U, worker_pool->NumberOfAliveWorkersForTesting());
+    task_runner->PostTask(FROM_HERE, closure);
+    running_task.Wait();
+  }
+
+  // There should not be an extra idle thread if it means going above capacity
+  EXPECT_EQ(worker_capacity, worker_pool->NumberOfAliveWorkersForTesting());
+
+  barrier.Signal();
+  // Give time for a worker to detach. Verify that the pool attempts to keep one
+  // idle active worker.
+  PlatformThread::Sleep(kReclaimTimeForDetachTests + kExtraTimeToWaitForDetach);
+  EXPECT_EQ(1U, worker_pool->NumberOfAliveWorkersForTesting());
+
+  worker_pool->DisallowWorkerDetachmentForTesting();
   worker_pool->JoinForTesting();
 }
 
