@@ -231,6 +231,13 @@ class MetaBuildWrapper(object):
                            ' do compiles')
     subp.set_defaults(func=self.CmdAudit)
 
+    subp = subps.add_parser('buildbucket',
+                            help='Print buildbucket.config for gerrit.')
+    subp.add_argument('-f', '--config-file', metavar='PATH',
+                      default=self.default_config,
+                      help='path to config file (default is %(default)s)')
+    subp.set_defaults(func=self.CmdBuildbucket)
+
     subp = subps.add_parser('help',
                             help='Get help on a subcommand.')
     subp.add_argument(nargs='?', action='store', dest='subcommand',
@@ -363,6 +370,24 @@ class MetaBuildWrapper(object):
     ret, _, _ = self.Run(cmd, force_verbose=False, buffer_output=False)
 
     return ret
+
+  def CmdBuildbucket(self, print_ok=True):
+    self.ReadConfigFile()
+
+    self.Print('# This file was generated using "tools/mb/mb.py buildbucket".')
+    self.Print('[bucket "luci.chromium.try"]')
+    self.Print('\tbuilder = LUCI linux_chromium_rel_ng')
+
+    # The chromium_presubmit bot does not use mb.
+    self.masters['tryserver.chromium.linux']['chromium_presubmit'] = ''
+
+    for master in sorted(self.masters):
+      if master.startswith('tryserver.'):
+        self.Print('[bucket "master.%s"]' % master)
+        for bot in sorted(self.masters[master]):
+          self.Print('\tbuilder = %s' % bot)
+
+    return 0
 
   def CmdValidate(self, print_ok=True):
     errs = []

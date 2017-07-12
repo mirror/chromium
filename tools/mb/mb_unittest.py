@@ -220,6 +220,24 @@ GYP_HACKS_CONFIG = """\
 }
 """
 
+TRYSERVER_CONFIG = """\
+{
+  'masters': {
+    'not_a_tryserver': {
+      'fake_builder': 'fake_config',
+    },
+    'tryserver.chromium.linux': {
+      'try_builder': 'fake_config',
+    },
+    'tryserver.chromium.mac': {
+      'try_builder2': 'fake_config',
+    },
+  },
+  'configs': {},
+  'mixins': {},
+}
+"""
+
 
 class UnitTest(unittest.TestCase):
   def fake_mbw(self, files=None, win32=False):
@@ -554,6 +572,20 @@ class UnitTest(unittest.TestCase):
                     "GYP_LINK_CONCURRENCY=1\n"
                     "LLVM_FORCE_HEAD_REVISION=1\n"
                     "python build/gyp_chromium -G output_dir=_path_\n"))
+
+  def test_buildbucket(self):
+    mbw = self.fake_mbw()
+    mbw.files[mbw.default_config] = TRYSERVER_CONFIG
+    self.check(['buildbucket'], mbw=mbw,
+               ret=0,
+               out=('# This file was generated using "tools/mb/mb.py buildbucket".\n'
+                    '[bucket "luci.chromium.try"]\n'
+                    '\tbuilder = LUCI linux_chromium_rel_ng\n'
+                    '[bucket "master.tryserver.chromium.linux"]\n'
+                    '\tbuilder = chromium_presubmit\n'
+                    '\tbuilder = try_builder\n'
+                    '[bucket "master.tryserver.chromium.mac"]\n'
+                    '\tbuilder = try_builder2\n'))
 
 
 if __name__ == '__main__':
