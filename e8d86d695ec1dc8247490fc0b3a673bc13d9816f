@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bedbab1_12f9f2ff",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T21:29:04Z",
+      "side": 1,
+      "message": "That\u0027s a source_set, not a component. Don\u0027t you want to depend on //gpu instead? Otherwise you\u0027ll get duplicate definitions.",
+      "revId": "e8d86d695ec1dc8247490fc0b3a673bc13d9816f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fbe310_e94600e8",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T21:29:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e8d86d695ec1dc8247490fc0b3a673bc13d9816f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbe0ece_c8e4462a",
+        "filename": "gpu/ipc/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T21:29:04Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be needed, see comment in components/viz/common/BUILD.gn.",
+      "revId": "e8d86d695ec1dc8247490fc0b3a673bc13d9816f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

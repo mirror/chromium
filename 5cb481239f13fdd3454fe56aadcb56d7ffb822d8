@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5371d808_b164db1c",
+        "filename": "components/viz/common/gpu/context_cache_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T21:29:04Z",
+      "side": 0,
+      "message": "Don\u0027t you need a VIZ_EXPORT or something?",
+      "revId": "5cb481239f13fdd3454fe56aadcb56d7ffb822d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189a36d0_8ff50cfc",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T21:29:04Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "5cb481239f13fdd3454fe56aadcb56d7ffb822d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc77cb7e_bc284731",
+        "filename": "components/viz/common/gpu/in_process_context_provider.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-12T21:29:04Z",
+      "side": 0,
+      "message": "And here",
+      "revId": "5cb481239f13fdd3454fe56aadcb56d7ffb822d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
