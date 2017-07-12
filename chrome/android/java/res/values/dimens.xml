@@ -474,8 +474,9 @@
     <dimen name="sad_tab_bullet_leading_offset">1dp</dimen>
 
     <!-- Context Menu Dimensions -->
+    <dimen name="context_menu_header_image_width_padding">15dp</dimen>
     <dimen name="context_menu_header_image_min_size">56dp</dimen>
-    <dimen name="context_menu_header_image_max_size">56dp</dimen>
+    <dimen name="context_menu_header_image_max_height">150dp</dimen>
     <dimen name="context_menu_max_width">500dp</dimen>
     <dimen name="context_menu_min_padding">20dp</dimen>
 
