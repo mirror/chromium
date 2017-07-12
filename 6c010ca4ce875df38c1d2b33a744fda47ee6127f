@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23c8de0_f5c18745",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T22:42:33Z",
+      "side": 1,
+      "message": "Please file a bug in component: Internals\u003eNetwork justifying why this is needed.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "6c010ca4ce875df38c1d2b33a744fda47ee6127f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26242f14_fbb70e14",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T22:42:33Z",
+      "side": 1,
+      "message": "#include \"base/metrics/histogram.h\"",
+      "range": {
+        "startLine": 1514,
+        "startChar": 43,
+        "endLine": 1514,
+        "endChar": 52
+      },
+      "revId": "6c010ca4ce875df38c1d2b33a744fda47ee6127f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7ec72e_8548fddd",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T22:42:33Z",
+      "side": 1,
+      "message": "Just inline \"request()-\u003epriority()\" instead of first storing in temp variable?",
+      "range": {
+        "startLine": 1515,
+        "startChar": 70,
+        "endLine": 1515,
+        "endChar": 78
+      },
+      "revId": "6c010ca4ce875df38c1d2b33a744fda47ee6127f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd18350_eeb5f31f",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T22:42:33Z",
+      "side": 1,
+      "message": "s/priority++/++priority/\nhttps://google.github.io/styleguide/cppguide.html#Preincrement_and_Predecrement",
+      "range": {
+        "startLine": 821,
+        "startChar": 40,
+        "endLine": 821,
+        "endChar": 48
+      },
+      "revId": "6c010ca4ce875df38c1d2b33a744fda47ee6127f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f79f14b_59787263",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T22:42:33Z",
+      "side": 1,
+      "message": "Instead of 5, is it possible to use RequestPrioritySize::NUM_PRIORITIES -1?\n\nAlso, if you go that way, # include \"net/base/request_priority.h\"",
+      "range": {
+        "startLine": 821,
+        "startChar": 37,
+        "endLine": 821,
+        "endChar": 38
+      },
+      "revId": "6c010ca4ce875df38c1d2b33a744fda47ee6127f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854c8db2_72eb1616",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-12T22:42:33Z",
+      "side": 1,
+      "message": "use explicit static_cast\nhttps://google.github.io/styleguide/cppguide.html#Casting",
+      "range": {
+        "startLine": 834,
+        "startChar": 49,
+        "endLine": 834,
+        "endChar": 64
+      },
+      "revId": "6c010ca4ce875df38c1d2b33a744fda47ee6127f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
