@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21405613_d9fa90bd",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1230685
+      },
+      "writtenOn": "2017-07-12T17:03:34Z",
+      "side": 1,
+      "message": "nit: should this switch statement be a standalone function? e.g. GetMaxSupportedImageSize(type,outX,OutY); (returning false if the image type isn\u0027t recognized?) it feels like ScaledownIfNeeded shouldn\u0027t have too much knowledge of specific image types.",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 8
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f913a794_2dbecf51",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1230685
+      },
+      "writtenOn": "2017-07-12T17:03:34Z",
+      "side": 1,
+      "message": "nit: once you\u0027ve copied image into the member variable shouldn\u0027t you use it instead of the image parameter? But maybe that\u0027s just me... :)",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 8
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e890d8_81602fe4",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1230685
+      },
+      "writtenOn": "2017-07-12T17:03:34Z",
+      "side": 1,
+      "message": "Any chance of a division by 0 error here? Or are images guaranteed to be \u003e0 pixels?",
+      "range": {
+        "startLine": 193,
+        "startChar": 62,
+        "endLine": 193,
+        "endChar": 76
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd98e044_1658add5",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1230685
+      },
+      "writtenOn": "2017-07-12T17:03:34Z",
+      "side": 1,
+      "message": "Is there a constant MS_PER_SECOND or something instead of the naked 1000?",
+      "range": {
+        "startLine": 206,
+        "startChar": 32,
+        "endLine": 206,
+        "endChar": 36
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
