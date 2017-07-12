@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5281a3a_04303663",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T17:39:45Z",
+      "side": 1,
+      "message": "OnGpuMemoryBufferDestroyed? Describes when the function is called more than what it does but given that it has to takes a GpuMemoryBufferImpl::DestructionCallback maybe that\u0027s a good idea",
+      "revId": "ca923b41036c89993bd0d4597638eeb4cf5b6b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788fa9ac_a25ac1ca",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T17:39:45Z",
+      "side": 1,
+      "message": "I find this really confusing. Can we have the allocate function return a destruction callback instead?",
+      "revId": "ca923b41036c89993bd0d4597638eeb4cf5b6b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
