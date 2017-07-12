@@ -15,6 +15,7 @@
 #include "base/process/kill.h"
 #include "base/process/process_handle.h"
 #include "base/supports_user_data.h"
+#include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
 #include "content/common/content_export.h"
 #include "content/public/common/bind_interface_helpers.h"
 #include "ipc/ipc_channel_proxy.h"
@@ -388,6 +389,12 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // function can only be called on the browser's UI thread (and the |task| will
   // be posted back on the UI thread).
   void PostTaskWhenProcessIsReady(base::OnceClosure task);
+
+  // Returns the SharedBitmapAllocationNotifier associated with this processs.
+  // SharedBitmapAllocationNotifier manages viz::SharedBitmaps created by this
+  // process and can notify observers when a new SharedBitmap is allocated.
+  virtual viz::SharedBitmapAllocationNotifierImpl*
+  GetSharedBitmapAllocationNotifier() = 0;
 
   // Static management functions -----------------------------------------------
 
