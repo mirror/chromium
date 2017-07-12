@@ -67,6 +67,91 @@
       "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363f33f0_1880e462",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T19:42:53Z",
+      "side": 1,
+      "message": "No actual navigation/loading/destroy happen in the tests here. I think you can just do the following:\n\nthrottle1_ \u003d base::MakeUnique\u003cBackgroundTabNavigationThrottle\u003e(nav_handle1_);\nNavigationThrottle::ThrottleCheckResult result1 \u003d \n    tab_manager-\u003eMaybeThrottleNavigation(throttle1_.get());",
+      "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c6fa0e_bab4f7e2",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T19:42:53Z",
+      "side": 1,
+      "message": "The test is not actually doing any actual navigation. It is just using the WebContentsObserver\u0027s API to notify TabManager navigation started (but no actual navigation).",
+      "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c268ad74_dd48a510",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T19:42:53Z",
+      "side": 1,
+      "message": "Similarly, here the notification happens, but no actual navigation is finished.",
+      "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafb2838_7a986def",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T19:42:53Z",
+      "side": 1,
+      "message": "Similarly here, no actual loading is done.",
+      "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0542df3_b0f082c4",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T19:42:53Z",
+      "side": 1,
+      "message": "And no WebContents is actually destroyed.",
+      "revId": "ac29376036cf31091104d7ff3768d0ca8be32c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
