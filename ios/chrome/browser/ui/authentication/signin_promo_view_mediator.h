@@ -33,8 +33,8 @@ enum class SigninPromoViewState {
   SigninStarted,
   // Sign-in buttons has been used at least once.
   UsedAtLeastOnce,
-  // Sign-in promo has been closed.
-  Closed,
+  // Sign-in promo has been closed, or dismiss.
+  Invalid,
 };
 }  // namespace ios
 
@@ -83,6 +83,10 @@ enum class SigninPromoViewState {
 
 // Called when the sign-in promo view is closed.
 - (void)signinPromoViewClosed;
+
+// Called when the sign-in promo view is removed from its superview. The
+// mediator should not be used after this called.
+- (void)signinPromoViewRemoved;
 
 @end
 

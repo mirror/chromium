@@ -180,6 +180,10 @@ const CGFloat kSubtitleMinimunLineHeight = 24.0;
   return self;
 }
 
+- (void)dealloc {
+  [_signinPromoViewMediator signinPromoViewRemoved];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
   CGRect containerFrame = [_container frame];
@@ -203,6 +207,7 @@ const CGFloat kSubtitleMinimunLineHeight = 24.0;
     [_signinPromoView removeFromSuperview];
     _signinPromoView = nil;
     _signinPromoViewMediator.consumer = nil;
+    [_signinPromoViewMediator signinPromoViewRemoved];
     _signinPromoViewMediator = nil;
     [self updateText];
     [self updateButtonTarget];
