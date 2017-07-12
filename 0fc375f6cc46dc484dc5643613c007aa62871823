@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3b4b0433_e6238148",
+        "filename": "chromeos/components/tether/fake_host_scan_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-12T17:16:22Z",
+      "side": 1,
+      "message": "Discussed offline; I meant to erase() using the key and not an iterator.",
+      "parentUuid": "103b1eee_7e21ea0c",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "0fc375f6cc46dc484dc5643613c007aa62871823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c1ea312_f575661b",
         "filename": "chromeos/components/tether/host_scanner.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I agree that it shouldn\u0027t depend on this, but I also think that the HostScanScheduler as a whole needs to be reworked. I\u0027m adding a TODO to fix this since the fix will be out of the scope of this CL.",
       "parentUuid": "2c1ea312_f575661b",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "0fc375f6cc46dc484dc5643613c007aa62871823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c43ed845_d232dec2",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-12T17:16:22Z",
+      "side": 1,
+      "message": "sgtm, thanks.",
+      "parentUuid": "02df16e9_be9f5f1c",
       "range": {
         "startLine": 55,
         "startChar": 9,
