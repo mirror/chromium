@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de9b3198_1ea1ae58",
+        "filename": "components/password_manager/core/browser/password_ui_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-12T11:43:14Z",
+      "side": 0,
+      "message": "This is now dead code.",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "0743280a9fc0858d4ad6df41ef1057c845adb2c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45304f82_505ced63",
+        "filename": "chrome/browser/android/password_ui_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-12T11:43:14Z",
+      "side": 1,
+      "message": "Here we should discuss whether we want to keep on doing it. Appending \" (Android)\" does not play nicely with the current RTL display of the settings page which is needed to elide long origins from the left for security reasons. Furthermore this certainly seems not necessary for credentials where we have the app display name available.\n\nThe only case where it makes sense is if we don\u0027t have a display name available. E.g., it might be confusing to users that mediaclient.netflix.com is not a real URL and links to the Play Store if clicked on. Do you happen to know how passwords.google.com handles this?",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 24
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6aeeab_3b22dffb",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-12T11:43:14Z",
+      "side": 1,
+      "message": "Same issue with appending \" (Android)\" as above.",
+      "range": {
+        "startLine": 41,
+        "startChar": 43,
+        "endLine": 41,
+        "endChar": 75
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f828b9_7cd2ee80",
+        "filename": "chrome/browser/ui/webui/options/password_manager_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-12T11:43:14Z",
+      "side": 1,
+      "message": "As the old settings page is not available in new Chromium builds anymore this is likely dead code.",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9e722c_41f008d2",
+        "filename": "components/password_manager/core/browser/password_ui_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-12T11:43:14Z",
+      "side": 1,
+      "message": "Here it might be worthwhile to later add support for a user\u0027s locale. From simple experimenting it seems like this can be controlled via the \u0027hl\u0027 query parameter, e.g. https://play.google.com/store/apps/details?id\u003dcom.netflix.mediaclient\u0026hl\u003dde shows the German Play Store page for Netflix. However, I would like to do this in a more principled way. Is there an API available to do this?\n\nThe affiliation API actually supports providing a locale, but this is currently not used. WDYT?",
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28dde73f_783c12aa",
+        "filename": "components/password_manager/core/browser/password_ui_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-12T11:43:14Z",
+      "side": 1,
+      "message": "Here I went ahead and tried to simplify the API a bit. |origin_is_clickable| would now always be true, since we now always link to the Play Store for Android credentials. Hence it could be dropped. Furthermore I removed |is_android_uri|, as I don\u0027t think this method should expose this information since its name doesn\u0027t indicate it. Furthermore it is straight forward to obtain this information using |password_manager::IsValidAndroidFacetURI| from affiliation_utils.h.\nLastly, I decided to switch to value semantics and simply return a std::pair instead of having out parameters. \n\nWe definitely could return a custom structure here, but I thought the method name is descriptive enough to know what exactly the returned pair consists of.",
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
