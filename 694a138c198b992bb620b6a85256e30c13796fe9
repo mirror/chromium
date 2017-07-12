@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c74ec9f_77a2d4cc",
+        "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-12T12:02:56Z",
+      "side": 1,
+      "message": "Can you please add a comment clarifying that which of the two URLs get represented is an implementation detail that could change, but we specify here for documentation purposes?",
+      "range": {
+        "startLine": 106,
+        "startChar": 38,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "694a138c198b992bb620b6a85256e30c13796fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
