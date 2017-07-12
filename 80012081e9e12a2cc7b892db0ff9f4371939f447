@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b665a0e_50d4caf2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-12T15:11:20Z",
+      "side": 1,
+      "message": "this makes me a little nervous.  it seems okay to me as a staging step, but want to be sure that there\u0027s a plan to get rid of the duplicate functionality in onToggle sooner rather than later.",
+      "range": {
+        "startLine": 486,
+        "startChar": 16,
+        "endLine": 486,
+        "endChar": 36
+      },
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579bd670_f52f570e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-12T15:11:20Z",
+      "side": 1,
+      "message": "i think that the formal definition is pretty much the \u0027e.g\u0027 below.  the fact that it\u0027s used for other, hard to summarize, purposes by users of ChromeFullscreenManager is something we\u0027re going to fix.  we should end up with a very clear idea of what overlay mode means!  :)",
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78deab66_9b4a307f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-12T15:11:20Z",
+      "side": 1,
+      "message": "\"(e.g., the compositor\u0027s output surface should support alpha and not be marked eOpaque)\"",
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2625b93_0bd95229",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-12T15:11:20Z",
+      "side": 1,
+      "message": "maybe setOverlayMode()?  the fact that it notifies folks is a side-effect.  one calls this when one wants to cause a change to the mode.",
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c7bd6a_6c42b393",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-12T15:11:20Z",
+      "side": 1,
+      "message": "maybe assert MAX_OVERLAYS \u003d\u003d 1, since this code breaks otherwise.",
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64aba171_49c24a0f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-12T15:11:20Z",
+      "side": 1,
+      "message": "s/Ober/Over",
+      "range": {
+        "startLine": 95,
+        "startChar": 37,
+        "endLine": 95,
+        "endChar": 49
+      },
+      "revId": "80012081e9e12a2cc7b892db0ff9f4371939f447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
