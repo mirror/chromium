@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "27929688_23d569ff",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-12T13:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9decb9e_067c4fda",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 39
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9345f149_8e40706e",
         "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
         "patchSetId": 19
@@ -59,6 +83,30 @@
       "writtenOn": "2017-07-12T11:10:18Z",
       "side": 1,
       "message": "UMA_HISTOGRAM_ENUMERATION supports scoped enums, so just use the scoped enum directly. Ditto for the kNumberOfFeatures cast in the header.",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 67
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491d81ab_5a881dec",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-12T13:44:17Z",
+      "side": 1,
+      "message": "The reason I had to cast is to use bitset which only takes int.\nBut I guess I can cast it there.",
+      "parentUuid": "9345f149_8e40706e",
       "range": {
         "startLine": 21,
         "startChar": 22,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1300928f_69018404",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_observer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-12T13:44:17Z",
+      "side": 1,
+      "message": "I was actually wondering the same thing. But I vaguely remember talking to @rbyers about this and he said other observers (who are interested in use counter feature usage) could be implementing it in the future.\n\nRick, please correct me if I am wrong.",
+      "parentUuid": "b3d1c7f6_df016d3b",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 49
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "348edf2e_f9ad0155",
         "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
         "patchSetId": 19
@@ -105,6 +177,30 @@
       "writtenOn": "2017-07-12T11:10:18Z",
       "side": 1,
       "message": "It\u0027s not clear to me why we need to wrap this in a struct? Also, just to make sure I\u0027m not missing anything, there\u0027s nothing that currently sends this from the renderer, right?",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2de96d9_b8f04685",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-12T13:44:17Z",
+      "side": 1,
+      "message": "I wrapped it because PageLoadMetadata wrapped it. \n\nIt is not yet sending it across IPC yet, but it will be after this CL is landed. https://chromium-review.googlesource.com/c/550520/",
+      "parentUuid": "348edf2e_f9ad0155",
       "range": {
         "startLine": 112,
         "startChar": 0,
