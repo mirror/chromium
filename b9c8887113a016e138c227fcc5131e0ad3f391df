@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "822d90c8_2d983c01",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T18:43:37Z",
+      "side": 1,
+      "message": "I guess the purpose of this virtual function is purely for testing? Although it is working, I just don\u0027t feel it is the best way. \n\nSo this function would send metrics to GRC. In test, this would just terminate, or quit the RunLoop. How about using a delegate pattern. In production code, this delegate send metrics to GRC. In test, you can have a different delegate, which does the termination for you.",
+      "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb2ee5b_e4020ff5",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T18:43:37Z",
+      "side": 1,
+      "message": "This seems to be deprecated. Is there another way of doing this?\n\nhttps://cs.chromium.org/chromium/src/content/public/browser/notification_types.h?gsn\u003dNOTIFICATION_NAV_ENTRY_COMMITTED\u0026l\u003d45",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 49
+      },
+      "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "868cc72c_c12bcdca",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
         "patchSetId": 14
@@ -42,6 +82,40 @@
         "endLine": 85,
         "endChar": 55
       },
+      "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a930b82b_386dc7f1",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T18:43:37Z",
+      "side": 1,
+      "message": "Instead of explicitly creating a RunLoop, running it and waiting for it to be quit here, can we create a helper function like Wait(), that encapsulate the waiting logic? That would be more readable.",
+      "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e70752_6527423c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-12T18:43:37Z",
+      "side": 1,
+      "message": "Where does this come from? ToT does not have this.",
       "revId": "b9c8887113a016e138c227fcc5131e0ad3f391df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
