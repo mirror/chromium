@@ -7,8 +7,11 @@
 # This file is shared with all modules' BUILD files which shouldn't need access
 # to the huge and slow lists of sources. If sharing is necessary, make a
 # separate .gni.
+import("//build/config/jumbo.gni")
 import("//build/split_static_library.gni")
 import("//third_party/WebKit/Source/config.gni")
+
+blink_modules_output_dir = "$root_gen_dir/blink/modules"
 
 # Defines a part of blink modules. This is either a source set or a static
 # library with defaults for commonly-used values.
@@ -19,17 +22,17 @@ import("//third_party/WebKit/Source/config.gni")
 #   visibility
 #      Normal meaning if defined. If undefined, defaults to everything in core.
 template("blink_modules_sources") {
-  if (is_component_build) {
-    target_type = "source_set"
-  } else {
-    if (!defined(invoker.split_count)) {
-      target_type = "static_library"
+  jumbo_target(target_name) {
+    if (is_component_build) {
+      target_type = "source_set"
     } else {
-      target_type = "split_static_library"
+      if (!defined(invoker.split_count)) {
+        target_type = "static_library"
+      } else {
+        target_type = "split_static_library"
+      }
     }
-  }
 
-  target(target_type, target_name) {
     # The visibility will get overridden by forward_variables_from below if the
     # invoker defined it.
     visibility = [ "//third_party/WebKit/Source/modules/*" ]
