@@ -2,6 +2,305 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f084c18_12757459",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "nit: This int doesn\u0027t display anything ;). Instead, just describe the value itself: \"The number of bars to display for medium signal strength.\"\n\nAlso, \"fars\" -\u003e \"bars\".",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 55
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6028eb5a_c348532e",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "nit: No need for this comment. This is a constructor and it takes a Size object, so the comment is just explaining what is already there.",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 48
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b87e153_8f89d357",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "We try to shy away from multiple constructors that call into each other if possible. Instead, just have the two places that create a SignalStrengthImageSource and pass GetSizeForIconType(icon_type).",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 67
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43d4688_893eebda",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "I think it makes sense to create a new IconType here (i.e., ICON_TYPE_NOTIFICATION). Please check with an estade@ first to be sure, though. If we do end up making a new IconType, we could eliminate the Size parameter to the constructor and add handling for this new type to GetSizeForIconType().",
+      "range": {
+        "startLine": 834,
+        "startChar": 54,
+        "endLine": 834,
+        "endChar": 76
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a23ea50_93ba0c34",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Please use a constant for this.",
+      "range": {
+        "startLine": 835,
+        "startChar": 32,
+        "endLine": 835,
+        "endChar": 34
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417bbf57_6aa9a03c",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Likewise, if we made a new IconType, we could just add a change to GetDefaultColorForIconType().",
+      "range": {
+        "startLine": 836,
+        "startChar": 0,
+        "endLine": 836,
+        "endChar": 36
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5547d707_ca3ad744",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Replace with source-\u003esize().",
+      "range": {
+        "startLine": 837,
+        "startChar": 47,
+        "endLine": 837,
+        "endChar": 64
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fd004a_428a9729",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Please mention that this applies to mobile networks and mention that this is in contrast to GetImageForNetwork(), which returns black-and-white images. Also note that this function can be called even when a corresponding NetworkState* is not available.",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfec3ec_1b35758e",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "nit: The @param style is only used by JavaScript code. In C++, there\u0027s no conventional way to talk about parameters. We just enclose them in |\u0027s. For example: \"|number_of_bars| must be in the range [0, 4]\"",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 71
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdbfc13_12a62628",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Instead of number of bars, let\u0027s just use signal strength (0 to 100, inclusive). Number of bars is an implementation detail of this class.",
+      "range": {
+        "startLine": 54,
+        "startChar": 63,
+        "endLine": 54,
+        "endChar": 77
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac8d226_8a8c329a",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Use an int (non-const, no reference). You don\u0027t need to pass any primitives by reference.",
+      "range": {
+        "startLine": 54,
+        "startChar": 52,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703b5a3b_deb503a4",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Sorry about going back and forth, but I don\u0027t think this function is actually necessary. See my other comments.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 41
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd725f7_19791914",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "nit: Tether",
+      "range": {
+        "startLine": 145,
+        "startChar": 17,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2e5574_0c675843",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 7
@@ -13,6 +312,300 @@
       "writtenOn": "2017-07-11T23:33:40Z",
       "side": 1,
       "message": "I did not know how to put this in the anonymous namespace since the enum class \"TetherIconType\" is private to TetherNotificationPresenter, so I made it a private function -- got any ideas?",
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ee286b_51c717a4",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "What you did was fine (but no longer applicable since I\u0027m having you remove this enum). In the future, though, make this a static function.",
+      "parentUuid": "dd2e5574_0c675843",
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ddcab2_751af321",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Also no longer applicable, but this is hard to read. Instead:\n\nif (strength \u003c 24)\n  return ICON_TYPE_0_BARS;\nif (strength \u003c 50)\n  return ICON_TYPE_1_BAR;\n...\nreturn ICON_TYPE_4_BARS;\n\nIn general, I consider it an anti-pattern to use nested tertiary operators.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 29
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e01bf32_0963999d",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "nit: Always start with a capital letter and end with a period.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 50
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eb647c_814216c5",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "You can just pass the signal strength here.",
+      "range": {
+        "startLine": 107,
+        "startChar": 55,
+        "endLine": 107,
+        "endChar": 76
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24f8713_2d04ebff",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Sorry to go back and forth on this as well, but let\u0027s just pass signal strength here. I had forgotten that we don\u0027t necessarily have a NetworkState* here.",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 49
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefb58bb_e8d85804",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Since we are using signal strength, we can eliminate this enum. Sorry!",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 4
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b555d3c_09d13492",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Let\u0027s have two static functions:\n\n(1) CreateNotification() like you added with all the parameters, except that it takes a signal strength instead of a TetherIconType.\n(2) CreateNotificationWithMediumSignalStrengthIcon(), which only takes id, title, and message. Internally, this function can pass 50 as the signal strength (but declare it as a constant in the anonymous namespace).",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 46
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eedf0ba_7ac52945",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Make this const and initialize it in the initializer list of TetherNotificationPresenterTest\u0027s constructor.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 25
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68b0941_b0afd1b4",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Since this will be const, move it up to the other const variables.",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 62
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccf1550_937665b2",
+        "filename": "chromeos/components/tether/host_scan_cache.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Remove this. If we were to need a NetworkStateHandler (we don\u0027t - see my later comments), we would pass it into the constructor of whatever class needs it.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 40
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98ffc65_33b9cc4b",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "Here, let\u0027s just use NormalizeDeviceStatus() with the 0th element of |scanned_device_list_so_far| and pass the resulting signal strength to the function.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 52
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2266158a_1814a501",
+        "filename": "chromeos/components/tether/host_scanner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "You also don\u0027t need this - see below.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c019e276_38b7e17f",
+        "filename": "chromeos/components/tether/notification_presenter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-12T01:21:11Z",
+      "side": 1,
+      "message": "nit: Also add a description about signal strength.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 76
+      },
       "revId": "623de243bf4fc5dc23cc76cfe2e6a90d66142c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
