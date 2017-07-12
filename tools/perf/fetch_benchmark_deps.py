@@ -97,8 +97,7 @@ def main(args, output):
           'No benchmark name is specified. Fetching all benchmark deps. '
           'Press enter to continue...')
     for b in benchmark_finders.GetAllBenchmarks():
-      print >> output, ('Fetch dependencies for benchmark %s:'
-                        % benchmark.Name())
+      print >> output, ('Fetch dependencies for benchmark %s' % b.Name())
       FetchDepsForBenchmark(b, output)
 
 if __name__ == '__main__':
