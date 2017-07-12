@@ -22,6 +22,30 @@
       "revId": "642d8f766317f71fe6251690c5f1ebe27bffeddd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb9d76f_0920118e",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-12T15:42:43Z",
+      "side": 1,
+      "message": "Thanks for the insight. It deserves at least USER_VISIBLE priority indeed. Not USER_BLOCKING for me though because it\u0027s not affecting UI directly. (according to the priorities description from https://cs.chromium.org/chromium/src/base/task_scheduler/task_traits.h?l\u003d23\u0026gs\u003dcpp%253Abase%253A%253Aenum-TaskPriority%2540chromium%252F..%252F..%252Fbase%252Ftask_scheduler%252Ftask_traits.h%257Cdef\u0026gsn\u003dTaskPriority\u0026ct\u003dxref_usages)",
+      "parentUuid": "e94eac3c_19d13078",
+      "range": {
+        "startLine": 631,
+        "startChar": 40,
+        "endLine": 631,
+        "endChar": 50
+      },
+      "revId": "642d8f766317f71fe6251690c5f1ebe27bffeddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
