@@ -19,6 +19,7 @@
 #include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_method_data.h"
 #include "third_party/libphonenumber/phonenumber_api.h"
+#include "url/url_constants.h"
 
 namespace payments {
 namespace data_util {
@@ -91,12 +92,14 @@ BasicCardResponse GetBasicCardResponseFromAutofillCreditCard(
   return response;
 }
 
-void ParseBasicCardSupportedNetworks(
+void ParseSupportedMethods(
     const std::vector<PaymentMethodData>& method_data,
     std::vector<std::string>* out_supported_networks,
-    std::set<std::string>* out_basic_card_specified_networks) {
+    std::set<std::string>* out_basic_card_specified_networks,
+    std::vector<std::string>* out_payment_method_identifiers) {
   DCHECK(out_supported_networks->empty());
   DCHECK(out_basic_card_specified_networks->empty());
+  DCHECK(out_payment_method_identifiers->empty());
 
   const std::set<std::string> kBasicCardNetworks{
       "amex",       "diners", "discover", "jcb",
@@ -109,6 +112,12 @@ void ParseBasicCardSupportedNetworks(
     for (const std::string& method : method_data_entry.supported_methods) {
       if (method.empty())
         continue;
+
+      // If a method starts with "https" add it to the url-based payment
+      // method identifiers.
+      if (!method.compare(0, strlen(url::kHttpsScheme), url::kHttpsScheme)) {
+        out_payment_method_identifiers->push_back(method);
+      }
 
       const char kBasicCardMethodName[] = "basic-card";
       // If a card network is specified right in "supportedMethods", add it.
