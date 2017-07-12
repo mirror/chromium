@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "800cb1ec_5cce456b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-12T16:27:03Z",
+      "side": 0,
+      "message": "Why is the callsite here no longer needed?",
+      "revId": "d4b2912b759a8d3b86d8ee4db273818d92d92847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
