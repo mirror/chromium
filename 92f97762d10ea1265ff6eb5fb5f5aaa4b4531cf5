@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cf0d66c_e16b45d1",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-12T02:47:16Z",
+      "side": 1,
+      "message": "nit: \u0027both\u0027 is no longer appropriate as their are 3 methods",
+      "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc33a0a_95dc05eb",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-12T02:47:16Z",
+      "side": 1,
+      "message": "please add why/how they expect these implementations (i.e. that the functions call through to the longhand APIs)",
+      "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a751d64f_79a78736",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-12T02:47:16Z",
+      "side": 1,
+      "message": "nit: s/deprecated/removed (they are kinda already deprecated)",
+      "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456fbbdb_bad50b70",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-12T02:47:16Z",
+      "side": 1,
+      "message": "s/shorthand/longhand",
+      "revId": "92f97762d10ea1265ff6eb5fb5f5aaa4b4531cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
