@@ -22,6 +22,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/password_manager/core/browser/password_bubble_experiment.h"
+#include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_manager_constants.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
@@ -216,6 +217,12 @@ void ManagePasswordsBubbleModel::InteractionKeeper::ReportInteractions(
     if (update_password_submission_event_ != metrics_util::NO_UPDATE_SUBMISSION)
       LogUpdatePasswordSubmissionEvent(update_password_submission_event_);
   }
+
+  // Record UKM statistics on dismissal reason.
+  if (model->delegate_ && model->delegate_->GetPasswordFormMetricsRecorder()) {
+    model->delegate_->GetPasswordFormMetricsRecorder()->RecordUIDismissalReason(
+        dismissal_reason_);
+  }
 }
 
 ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
@@ -317,6 +324,11 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
         NOTREACHED();
         break;
     }
+  }
+
+  if (delegate_ && delegate_->GetPasswordFormMetricsRecorder()) {
+    delegate_->GetPasswordFormMetricsRecorder()->RecordPasswordBubbleShown(
+        delegate_->GetCredentialSource(), display_disposition);
   }
   metrics_util::LogUIDisplayDisposition(display_disposition);
   interaction_keeper_.reset(new InteractionKeeper(std::move(interaction_stats),
