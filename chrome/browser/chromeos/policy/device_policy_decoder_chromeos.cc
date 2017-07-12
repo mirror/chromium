@@ -110,6 +110,31 @@ std::unique_ptr<base::Value> DecodeConnectionType(int value) {
   return base::MakeUnique<base::Value>(kConnectionTypes[value]);
 }
 
+// Parse Timestamp to Dictionary
+std::unique_ptr<base::DictionaryValue> ParseTimestamp(
+    const em::WeeklyTimestampProto& WeeklyTimestamp) {
+  std::unique_ptr<base::DictionaryValue> timestamp(new base::DictionaryValue());
+  if (WeeklyTimestamp.has_weekday()) {
+    if (WeeklyTimestamp.weekday().has_day()) {
+      auto DayOfWeek = WeeklyTimestamp.weekday().day();
+      timestamp->SetInteger("weekday", DayOfWeek);
+    }
+  }
+  if (WeeklyTimestamp.has_time()) {
+    auto TimeOfDay = WeeklyTimestamp.time();
+    std::unique_ptr<base::DictionaryValue> cur_time(
+        new base::DictionaryValue());
+    if (TimeOfDay.has_hours()) {
+      cur_time->SetInteger("hours", TimeOfDay.hours());
+    }
+    if (TimeOfDay.has_minutes()) {
+      cur_time->SetInteger("minutes", TimeOfDay.minutes());
+    }
+    timestamp->SetDictionary("time", std::move(cur_time));
+  }
+  return timestamp;
+}
+
 void DecodeLoginPolicies(const em::ChromeDeviceSettingsProto& policy,
                          PolicyMap* policies) {
   if (policy.has_guest_mode_enabled()) {
@@ -886,6 +911,35 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
                   POLICY_LEVEL_MANDATORY, POLICY_SCOPE_MACHINE,
                   POLICY_SOURCE_CLOUD, DecodeIntegerValue(container.mode()),
                   nullptr);
+  }
+
+  if (policy.has_off_hours()) {
+    const em::OffHoursProto& container(policy.off_hours());
+    std::unique_ptr<base::DictionaryValue> offHours(
+        new base::DictionaryValue());
+
+    std::unique_ptr<base::ListValue> intervals(new base::ListValue);
+    for (const auto& entry : container.interval()) {
+      std::unique_ptr<base::DictionaryValue> interval(
+          new base::DictionaryValue());
+      if (entry.has_start()) {
+        interval->SetDictionary("start", ParseTimestamp(entry.start()));
+      }
+      if (entry.has_end()) {
+        interval->SetDictionary("end", ParseTimestamp(entry.end()));
+      }
+      intervals->Append(std::move(interval));
+    }
+    offHours->SetList("intervals", std::move(intervals));
+
+    std::unique_ptr<base::ListValue> policy(new base::ListValue);
+    for (const auto& entry : container.policy()) {
+      policy->AppendString(entry);
+    }
+    offHours->SetList("policies", std::move(policy));
+
+    policies->Set(key::kOffHours, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_MACHINE,
+                  POLICY_SOURCE_CLOUD, std::move(offHours), nullptr);
   }
 }
 

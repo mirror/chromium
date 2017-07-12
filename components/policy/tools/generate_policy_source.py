@@ -87,6 +87,8 @@ class PolicyDetails:
       if self.is_device_only and platform != 'chrome_os':
         raise RuntimeError('is_device_only is only allowed for Chrome OS: "%s"'
                            % p)
+      if platform == 'ios':
+        raise RuntimeError('iOS is not supported')
 
       split_result = version_range.split('-')
       if len(split_result) != 2:

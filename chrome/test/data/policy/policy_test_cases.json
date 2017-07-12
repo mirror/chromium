@@ -3147,5 +3147,16 @@
   },
 
   "SkipMetadataCheck": {
-  }
+  },
+
+	"OffHours": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "OffHours": {
+        "interval": [],
+        "policy": ["a", "b"]
+			}
+		}
+	}
+
 }
