@@ -22,6 +22,30 @@
       "revId": "52ab51a23f981d03ae07bd0d5f03cfc5af5804cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3455df6d_34619bcc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItem.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-12T17:12:29Z",
+      "side": 1,
+      "message": "I think it\u0027s nice to have it a visibly conscious decision in the actual item. it would also be a class for just 3 lines so... meh. Will remember to move it if I have other things to centralise :)",
+      "parentUuid": "7a7591b6_cbcfe677",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "52ab51a23f981d03ae07bd0d5f03cfc5af5804cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
