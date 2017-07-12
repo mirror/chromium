@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab774a79_2ee8c360",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading_shared_buffer_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-12T20:07:52Z",
+      "side": 1,
+      "message": "At place where SensorReadingSharedBufferReader is used, added code to check if the shared buffer handle is valid.\n\nDone",
+      "parentUuid": "15428768_fd40ac16",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "fd3e4bf6e238cf1975d069d43eb7ccd713718118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0329f79d_5b412faf",
         "filename": "services/device/public/cpp/generic_sensor/sensor_reading_shared_buffer_reader.h",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "fd3e4bf6e238cf1975d069d43eb7ccd713718118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70237e7f_84fea2f1",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading_shared_buffer_reader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-12T20:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0329f79d_5b412faf",
+      "range": {
+        "startLine": 27,
+        "startChar": 44,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "fd3e4bf6e238cf1975d069d43eb7ccd713718118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
