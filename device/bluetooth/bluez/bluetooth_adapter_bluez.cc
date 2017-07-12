@@ -67,6 +67,11 @@ namespace {
 const char kAgentPath[] = "/org/chromium/bluetooth_agent";
 const char kGattApplicationObjectPath[] = "/gatt_application";
 
+// The number of advertisements allowed to be registered at a time.
+// This is hardcoded as a temporary hack until we can plumb through the real
+// max value provided by bluez (crbug.com/736487).
+const int kMaxAdvertisements = 5;
+
 void OnUnregisterAgentError(const std::string& error_name,
                             const std::string& error_message) {
   // It's okay if the agent didn't exist, it means we never saw an adapter.
@@ -504,10 +509,30 @@ void BluetoothAdapterBlueZ::CreateL2capService(
                  base::Bind(callback, socket), error_callback);
 }
 
+int BluetoothAdapterBlueZ::GetNumRegisteredAdvertisements() {
+  // Copies the advertisement list temporarily since we need to iterate
+  // and clean up the unregistered ones.
+  std::vector<scoped_refptr<BluetoothAdvertisementBlueZ>> temp_advertisements =
+      advertisements_;
+  advertisements_.clear();
+  for (const auto& adv : temp_advertisements) {
+    if (adv->provider()) {
+      advertisements_.push_back(adv);
+    }
+  }
+  return advertisements_.size();
+}
+
 void BluetoothAdapterBlueZ::RegisterAdvertisement(
     std::unique_ptr<device::BluetoothAdvertisement::Data> advertisement_data,
     const CreateAdvertisementCallback& callback,
     const AdvertisementErrorCallback& error_callback) {
+  int num_advertisements = GetNumRegisteredAdvertisements();
+  if (num_advertisements >= kMaxAdvertisements) {
+    error_callback.Run(device::BluetoothAdvertisement::ErrorCode::
+                           ERROR_ADVERTISEMENT_ALREADY_EXISTS);
+    return;
+  }
   scoped_refptr<BluetoothAdvertisementBlueZ> advertisement(
       new BluetoothAdvertisementBlueZ(std::move(advertisement_data), this));
   advertisement->Register(base::Bind(callback, advertisement), error_callback);

@@ -29,8 +29,7 @@ void UnregisterFailure(device::BluetoothAdvertisement::ErrorCode error) {
 device::BluetoothAdvertisement::ErrorCode GetErrorCodeFromErrorStrings(
     const std::string& error_name,
     const std::string& error_message) {
-  if (error_name == bluetooth_advertising_manager::kErrorFailed ||
-      error_name == bluetooth_advertising_manager::kErrorAlreadyExists) {
+  if (error_name == bluetooth_advertising_manager::kErrorAlreadyExists) {
     return device::BluetoothAdvertisement::ErrorCode::
         ERROR_ADVERTISEMENT_ALREADY_EXISTS;
   } else if (error_name ==
