@@ -19,6 +19,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/browser_sync/profile_sync_service_mock.h"
 #include "components/password_manager/core/browser/mock_password_store.h"
+#include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/password_manager_test_utils.h"
 #include "components/password_manager/core/browser/statistics_table.h"
@@ -26,9 +27,12 @@
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
 #include "components/prefs/pref_service.h"
+#include "components/ukm/test_ukm_recorder.h"
+#include "components/ukm/ukm_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/web_contents_tester.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -104,7 +108,9 @@ class ManagePasswordsBubbleModelTest : public ::testing::Test {
   void SetUp() override {
     test_web_contents_.reset(
         content::WebContentsTester::CreateTestWebContents(&profile_, nullptr));
-    mock_delegate_.reset(new testing::StrictMock<PasswordsModelDelegateMock>);
+    mock_delegate_.reset(new PasswordsModelDelegateMock);
+    ON_CALL(*mock_delegate_, GetPasswordFormMetricsRecorder())
+        .WillByDefault(Return(nullptr));
     PasswordStoreFactory::GetInstance()->SetTestingFactoryAndUse(
         profile(),
         password_manager::BuildPasswordStore<
@@ -473,3 +479,55 @@ INSTANTIATE_TEST_CASE_P(Default,
                         ManagePasswordsBubbleModelManageLinkTest,
                         ::testing::Values(TestSyncService::SyncedTypes::ALL,
                                           TestSyncService::SyncedTypes::NONE));
+
+// Verify that URL keyed metrics are properly recorded.
+TEST_F(ManagePasswordsBubbleModelTest, RecordUKMs) {
+  using BubbleDismissalReason =
+      password_manager::PasswordFormMetricsRecorder::BubbleDismissalReason;
+  using BubbleTrigger =
+      password_manager::PasswordFormMetricsRecorder::BubbleTrigger;
+  using password_manager::metrics_util::CredentialSourceType;
+
+  ukm::TestUkmRecorder test_ukm_recorder;
+  {
+    // Setup metrics recorder
+    ukm::SourceId source_id = test_ukm_recorder.GetNewSourceID();
+    static_cast<ukm::UkmRecorder*>(&test_ukm_recorder)
+        ->UpdateSourceURL(source_id, GURL("https://www.example.com/"));
+    auto recorder = base::MakeRefCounted<
+        password_manager::PasswordFormMetricsRecorder>(
+        true /*is_main_frame_secure*/,
+        password_manager::PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+            &test_ukm_recorder, source_id));
+
+    // Exercise bubble.
+    ON_CALL(*controller(), GetPasswordFormMetricsRecorder())
+        .WillByDefault(Return(recorder.get()));
+    ON_CALL(*controller(), GetCredentialSource())
+        .WillByDefault(Return(CredentialSourceType::kPasswordManager));
+
+    PretendPasswordWaiting();
+
+    EXPECT_CALL(*GetStore(),
+                RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
+    EXPECT_CALL(*controller(), SavePassword());
+    model()->OnSaveClicked();
+    DestroyModelExpectReason(password_manager::metrics_util::CLICKED_SAVE);
+  }
+
+  // Verify metrics.
+  const ukm::UkmSource* source =
+      test_ukm_recorder.GetSourceForUrl("https://www.example.com/");
+  ASSERT_TRUE(source);
+  test_ukm_recorder.ExpectMetric(
+      *source, "PasswordForm",
+      password_manager::internal::kUkmSavingPromptShown, 1);
+  test_ukm_recorder.ExpectMetric(
+      *source, "PasswordForm",
+      password_manager::internal::kUkmSavingPromptTrigger,
+      static_cast<int64_t>(BubbleTrigger::kPasswordManagerSuggestionAutomatic));
+  test_ukm_recorder.ExpectMetric(
+      *source, "PasswordForm",
+      password_manager::internal::kUkmSavingPromptInteraction,
+      static_cast<int64_t>(BubbleDismissalReason::kAccepted));
+}
