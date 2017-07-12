@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "71cb602b_da3ace3f",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-12T01:49:10Z",
+      "side": 1,
+      "message": "Extended it to 1 hour as you recommended.\n\nAnd seconds answer is taken from Design doc:\n\n\"Do we have data for how long users generally take to launch an app after login? The distribution of that would be really useful for distributing resources between tab restore and android boot.\"\nhttps://docs.google.com/document/d/1WOaYdXthLZPFoYjX7ooujvD_873zzaEebcKK98qi3kQ/edit#heading\u003dh.lcnwfpcaorc4",
+      "parentUuid": "a5f08aeb_fb57f43d",
+      "range": {
+        "startLine": 652,
+        "startChar": 60,
+        "endLine": 652,
+        "endChar": 71
+      },
+      "revId": "df3388dd9af90e20b70f037015b35cb7483c43f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "255edc88_54a8be3b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
