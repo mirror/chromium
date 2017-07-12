@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29b9238e_fb69029d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializationTag.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "I\u0027d add, a mention of the tags before width/height, so that it\u0027s clear where they appear in the format.\n\ne.g.\n\n// tags terminated by ImageSerializationTag::kEnd (see SerializedColorParams.h),\n// width:uint32_t, height:uint32_t,\n// pixelDataLength:uint32_t, data:byte[pixelDataLength]",
+      "revId": "e8cd1cf22b5e1779cf501ab602310de4a04beedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f98095_47fe00fe",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializationTag.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "similar here, and also add in the width/height in the appropriate place in the order (it\u0027s missing here for some reason)",
+      "revId": "e8cd1cf22b5e1779cf501ab602310de4a04beedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84aef822_3a7b68c7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "Clarify that this tag is only valid for ImageBitmap in the comment. (If it makes long comments wrap more nicely, you can space out the tags and put line comments before them.)",
+      "revId": "e8cd1cf22b5e1779cf501ab602310de4a04beedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e921635c_486e739a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "nit: the enum type will be inferred (here and when being read). I can see a reasonable case for explicitly specifying the type in the read case (because it\u0027s slightly non-obvious what the type is), but here I\u0027d suggest leaving the type parameter out. Especially for the ones where we use an explicit member of the enum class.\n\ni.e.\n\nWriteUint32Enum(ImageSerializationTag::kCanvasColorSpaceTag);\n\nconveys the same information as\n\nWriteUint32Enum\u003cImageSerializationTag\u003e(\n    ImageSerializationTag::kCanvasColorSpaceTag);\n\n(here and below)",
+      "revId": "e8cd1cf22b5e1779cf501ab602310de4a04beedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4095f0_1a77c531",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "nit: zero-pad bytes to two digits for consistency (0xd and 0x4 on this line; 0x5 on the next line)",
+      "revId": "e8cd1cf22b5e1779cf501ab602310de4a04beedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105da9d3_189742a3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "Could you also add decode tests for ways the format could be invalid? (e.g. illegal tags, out-of-range color space enum, incorrect byte size, etc.)\n\nI\u0027d like to confirm that these are rejected without crashing. InvalidImageBitmapDecode below has some examples.",
+      "revId": "e8cd1cf22b5e1779cf501ab602310de4a04beedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5c7743_ef91df73",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "nit: for consistency, |break;| even at the end of the last case.",
+      "revId": "e8cd1cf22b5e1779cf501ab602310de4a04beedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37d5adc_75397fea",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "super-nit: we don\u0027t usually pass by const value (because it doesn\u0027t actually change anything). Like the ones below taking |unsigned|, just pass without a qualifier. (\"CanvasColorSpace\" here, for instance)\n\nhere and below",
+      "revId": "e8cd1cf22b5e1779cf501ab602310de4a04beedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99b8ab8_ea0831f5",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "nit: is this newline change spurious?",
+      "revId": "e8cd1cf22b5e1779cf501ab602310de4a04beedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

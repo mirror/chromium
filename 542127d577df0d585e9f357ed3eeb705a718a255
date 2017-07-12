@@ -527,6 +527,24 @@
     },
     {
       "key": {
+        "uuid": "0d0efefe_b48b0a44",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T15:11:30Z",
+      "side": 1,
+      "message": "Can I assume that this half-float format is stable (i.e., Skia is committed to supporting it in the future)? Once we start writing to disk, we\u0027ll need to be able to convert from this format to whatever representation Skia uses in the future. :)",
+      "parentUuid": "a1608ce1_c068e14f",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1360d77_ae207951",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
         "patchSetId": 9
