@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d613fca_c3a056d0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-12T05:25:43Z",
+      "side": 0,
+      "message": "Isn\u0027t this still not done? i.e. we still don\u0027t always ensure one thread is alive?",
+      "revId": "c81a4d79c2af5af60835c46347643d75182a962f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
