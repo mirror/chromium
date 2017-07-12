@@ -46,6 +46,30 @@
       "revId": "eb2c2f68d4f27f31d47b1e279a3ad76a04d460ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f8739d_a648e859",
+        "filename": "chrome/browser/ui/browser_tab_strip_model_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T19:18:37Z",
+      "side": 1,
+      "message": "When I looked at hte code it seemed only one place place needed the create_params, and it would be better to make that code call into the WebContents for the state it needs.",
+      "parentUuid": "7f6d687e_06c2d955",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 30
+      },
+      "revId": "eb2c2f68d4f27f31d47b1e279a3ad76a04d460ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
