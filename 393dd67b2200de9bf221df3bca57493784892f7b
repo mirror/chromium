@@ -16,6 +16,24 @@
       "revId": "393dd67b2200de9bf221df3bca57493784892f7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47def25c_8e579eca",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-12T19:59:54Z",
+      "side": 1,
+      "message": "Yes, scroll_translation is created iff the frame scrolls, and a scroll node is created iff scroll_translation is created.",
+      "parentUuid": "767fc10c_d2caecce",
+      "revId": "393dd67b2200de9bf221df3bca57493784892f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

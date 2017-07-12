@@ -16,6 +16,24 @@
       "revId": "d4b2912b759a8d3b86d8ee4db273818d92d92847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a92e14_d26111bf",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-12T19:59:54Z",
+      "side": 0,
+      "message": "Non-RLS non-composited iframe\u0027s LayoutView now reports full document rect. The rect should be translated and clipped by frame scroll to map to the actual invalidation rect on backing. It will result in over invalidation if not deleted.\n\nI believe this code was added because previously non-RLS non-composited LayoutView reports clipped rect in the unscrolled space, i.e. already in the embedder\u0027s space. The invalidation rect would be wrong if we applied scroll \u0026 clip again.",
+      "parentUuid": "800cb1ec_5cce456b",
+      "revId": "d4b2912b759a8d3b86d8ee4db273818d92d92847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
