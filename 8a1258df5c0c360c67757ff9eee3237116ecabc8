@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b08b3481_5f4ee01c",
+        "filename": "chrome/browser/profiles/profile_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-12T16:23:52Z",
+      "side": 1,
+      "message": "Why does the profile need to own this? Just so it\u0027s destroyed with the profile? Could we make it a BrowserContextKeyedService instead?",
+      "range": {
+        "startLine": 295,
+        "startChar": 54,
+        "endLine": 295,
+        "endChar": 75
+      },
+      "revId": "8a1258df5c0c360c67757ff9eee3237116ecabc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
