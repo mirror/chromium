@@ -20,6 +20,7 @@
 #include "base/rand_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
@@ -1509,6 +1510,12 @@ void URLRequestHttpJob::RecordPerfHistograms(CompletionCause reason) {
   UMA_HISTOGRAM_TIMES("Net.HttpJob.TotalTime", total_time);
 
   if (reason == FINISHED) {
+    int priority = request()->priority();
+    base::HistogramBase* histogram = base::Histogram::FactoryGet(
+        base::StringPrintf("Net.HttpJob.TotalTimeSuccess.Priority%d", priority),
+        1, 10 * 1000 /* 10 seconds */, 50 /* Number of buckets */,
+        base::HistogramBase::kUmaTargetedHistogramFlag);
+    histogram->Add(total_time.InMilliseconds());
     UMA_HISTOGRAM_TIMES("Net.HttpJob.TotalTimeSuccess", total_time);
   } else {
     UMA_HISTOGRAM_TIMES("Net.HttpJob.TotalTimeCancel", total_time);
