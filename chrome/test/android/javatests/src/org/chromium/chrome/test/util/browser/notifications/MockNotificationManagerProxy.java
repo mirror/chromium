@@ -5,10 +5,10 @@
 package org.chromium.chrome.test.util.browser.notifications;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
 
 import org.chromium.chrome.browser.notifications.NotificationManagerProxy;
-import org.chromium.chrome.browser.notifications.channels.Channel;
-import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,8 +26,8 @@ import javax.annotation.Nullable;
  */
 public class MockNotificationManagerProxy implements NotificationManagerProxy {
     private static final String KEY_SEPARATOR = ":";
-    private List<Channel> mChannels;
-    private Set<ChannelDefinitions.ChannelGroup> mNotificationChannelGroups;
+    private List<NotificationChannel> mChannels;
+    private Set<NotificationChannelGroup> mNotificationChannelGroups;
     /**
      * Holds a notification and the arguments passed to #notify and #cancel.
      */
@@ -99,28 +99,28 @@ public class MockNotificationManagerProxy implements NotificationManagerProxy {
     }
 
     @Override
-    public void createNotificationChannel(Channel channel) {
+    public void createNotificationChannel(NotificationChannel channel) {
         mChannels.add(channel);
     }
 
     @Override
-    public void createNotificationChannelGroup(ChannelDefinitions.ChannelGroup channelGroup) {
+    public void createNotificationChannelGroup(NotificationChannelGroup channelGroup) {
         mNotificationChannelGroups.add(channelGroup);
     }
 
     @Override
-    public List<Channel> getNotificationChannels() {
+    public List<NotificationChannel> getNotificationChannels() {
         return mChannels;
     }
 
-    public List<ChannelDefinitions.ChannelGroup> getNotificationChannelGroups() {
+    public List<NotificationChannelGroup> getNotificationChannelGroups() {
         return new ArrayList<>(mNotificationChannelGroups);
     }
 
     @Override
     public void deleteNotificationChannel(String id) {
-        for (Iterator<Channel> it = mChannels.iterator(); it.hasNext();) {
-            Channel channel = it.next();
+        for (Iterator<NotificationChannel> it = mChannels.iterator(); it.hasNext();) {
+            NotificationChannel channel = it.next();
             if (id.equals(channel.getId())) it.remove();
         }
     }
@@ -137,8 +137,8 @@ public class MockNotificationManagerProxy implements NotificationManagerProxy {
     }
 
     @Override
-    public Channel getNotificationChannel(String channelId) {
-        for (Channel channel : mChannels) {
+    public NotificationChannel getNotificationChannel(String channelId) {
+        for (NotificationChannel channel : mChannels) {
             if (channel.getId().equals(channelId)) return channel;
         }
         return null;
