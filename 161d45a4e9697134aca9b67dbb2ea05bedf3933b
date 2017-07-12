@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "678a240e_2b11ad8a",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T14:21:10Z",
+      "side": 1,
+      "message": "why use the same weak pointer now instead of one per buffer?",
+      "revId": "161d45a4e9697134aca9b67dbb2ea05bedf3933b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61a4956_bc23e6f7",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T14:21:10Z",
+      "side": 1,
+      "message": "nit: just inline this below? it always feels a bit ugly when we have to use variable prefixes such as \"real\" and if nothing else makes the variable not provide much value",
+      "revId": "161d45a4e9697134aca9b67dbb2ea05bedf3933b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f8f7ee_f673d933",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T14:21:10Z",
+      "side": 1,
+      "message": "nit: took me a some time to see what is going on here. maybe easier to read the code if we added a function to anonymous namespace for this?",
+      "revId": "161d45a4e9697134aca9b67dbb2ea05bedf3933b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
