@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "95d35f7d_dc8ff5d3",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1184744
+      },
+      "writtenOn": "2017-07-12T02:14:40Z",
+      "side": 1,
+      "message": "Wang Qing \u003cwangqing-hf@loongson.cn\u003e",
+      "parentUuid": "376a7368_027a92eb",
+      "range": {
+        "startLine": 444,
+        "startChar": 41,
+        "endLine": 444,
+        "endChar": 42
+      },
+      "revId": "d4f7cecf1f0304b4e2980aef62083795504ca05c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c55ca27_aca8b52b",
         "filename": "build/config/features.gni",
         "patchSetId": 1
