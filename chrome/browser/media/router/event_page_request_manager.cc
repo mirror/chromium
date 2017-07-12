@@ -9,13 +9,27 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "chrome/browser/media/router/event_page_request_manager_factory.h"
+#include "chrome/browser/media/router/media_router_factory.h"
+#include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"
 #include "extensions/browser/event_page_tracker.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/browser/process_manager_factory.h"
+#include "extensions/common/extension.h"
 
 namespace media_router {
 
 EventPageRequestManager::~EventPageRequestManager() = default;
+
+// static
+void EventPageRequestManager::BindToRequest(
+    const extensions::Extension* extension,
+    content::BrowserContext* context,
+    const service_manager::BindSourceInfo& source_info,
+    mojom::MediaRouterRequest request) {
+  EventPageRequestManagerFactory::GetApiForBrowserContext(context)
+      ->BindToMojoRequest(extension, context, std::move(request));
+}
 
 void EventPageRequestManager::Shutdown() {
   event_page_tracker_ = nullptr;
@@ -74,6 +88,27 @@ EventPageRequestManager::EventPageRequestManager(
     content::BrowserContext* context)
     : event_page_tracker_(extensions::ProcessManager::Get(context)),
       weak_factory_(this) {}
+
+void EventPageRequestManager::BindToMojoRequest(
+    const extensions::Extension* extension,
+    content::BrowserContext* context,
+    mojom::MediaRouterRequest request) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  MediaRouterMojoImpl* media_router = static_cast<MediaRouterMojoImpl*>(
+      MediaRouterFactory::GetApiForBrowserContext(context));
+  DCHECK(media_router);
+  media_router->BindToMojoRequest(
+      std::move(request),
+      base::BindOnce(&EventPageRequestManager::OnMojoConnectionError,
+                     base::Unretained(this)));
+
+  SetExtensionId(extension->id());
+  if (!provider_version_was_recorded_) {
+    MediaRouterMojoMetrics::RecordMediaRouteProviderVersion(*extension);
+    provider_version_was_recorded_ = true;
+  }
+}
 
 void EventPageRequestManager::EnqueueRequest(base::OnceClosure request) {
   pending_requests_.push_back(std::move(request));

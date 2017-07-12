@@ -12,7 +12,9 @@
 #include "base/gtest_prod_util.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_metrics.h"
+#include "chrome/common/media_router/mojo/media_router.mojom.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
 
 namespace content {
 class BrowserContext;
@@ -20,6 +22,11 @@ class BrowserContext;
 
 namespace extensions {
 class EventPageTracker;
+class Extension;
+}  // namespace extensions
+
+namespace service_manager {
+struct BindSourceInfo;
 }
 
 namespace media_router {
@@ -30,6 +37,21 @@ namespace media_router {
 class EventPageRequestManager : public KeyedService {
  public:
   ~EventPageRequestManager() override;
+
+  // Associates the EventPageRequestManager for |context| with |extension|.
+  // Sets up the MediaRouterMojoImpl instance owned by |context| to handle
+  // MediaRouterObserver requests from the component extension given by
+  // |extension|. Creates the MediaRouterMojoImpl instance if it does not
+  // exist.
+  // Called by the Mojo module registry.
+  // |extension|: The component extension, used for querying
+  //     suspension state.
+  // |context|: The BrowserContext which owns the extension process.
+  // |request|: The Mojo connection request used for binding.
+  static void BindToRequest(const extensions::Extension* extension,
+                            content::BrowserContext* context,
+                            const service_manager::BindSourceInfo& source_info,
+                            mojom::MediaRouterRequest request);
 
   // KeyedService:
   void Shutdown() override;
@@ -58,6 +80,14 @@ class EventPageRequestManager : public KeyedService {
 
  protected:
   explicit EventPageRequestManager(content::BrowserContext* context);
+
+  // Binds MediaRouterMojoImpl to a Mojo interface request, so that clients can
+  // acquire a handle to a MediaRouter instance via the Mojo service connector.
+  // Associates the request manager with |extension|, and binds the
+  // MediaRouterMojoImpl instance owned by |context| to |request|.
+  virtual void BindToMojoRequest(const extensions::Extension* extension,
+                                 content::BrowserContext* context,
+                                 mojom::MediaRouterRequest request);
 
  private:
   friend class EventPageRequestManagerFactory;
@@ -121,6 +151,10 @@ class EventPageRequestManager : public KeyedService {
   int wakeup_attempt_count_ = 0;
 
   bool mojo_connections_ready_ = false;
+
+  // A flag to ensure that we record the provider version once, during the
+  // initial event page wakeup attempt.
+  bool provider_version_was_recorded_ = false;
 
   // Records the current reason the extension is being woken up.  Is set to
   // MediaRouteProviderWakeReason::TOTAL_COUNT if there is no pending reason.
