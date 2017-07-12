@@ -22,6 +22,30 @@
       "revId": "e5a3c5076b5ef1687d497c7575d553688e94d1c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3da1349_804535b2",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-12T00:25:29Z",
+      "side": 1,
+      "message": "CLOSED means that the process exited. TERMINATED means the the Host is being destructed.\n\nWe only care about process exit, but I have not been able to prove that we are guaranteed to get the CLOSED message in every case.",
+      "parentUuid": "6e069919_ca727a76",
+      "range": {
+        "startLine": 788,
+        "startChar": 23,
+        "endLine": 788,
+        "endChar": 59
+      },
+      "revId": "e5a3c5076b5ef1687d497c7575d553688e94d1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
