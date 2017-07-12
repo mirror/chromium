@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "2684ca5c_c0f19938",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-12T22:11:50Z",
+      "side": 1,
+      "message": "1. I think this is problematic, and I think the code is currently buggy here. There is no guarantee RestoreTab() creates a tab. This is why I suggest you put the notification in RestoreTab after the early outs.\n\n2. RestoreForeignSession uses RestoreTab(), so putting the notification there should cover that case.\n\nRestoreForeignTab doesn\u0027t call RestoreTab, so you need to special case it.",
+      "parentUuid": "cc41b249_d5896f08",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "4dcff99c519e5cfee37667eed24c7101ad9e7db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "430a5b27_3c1a4249",
         "filename": "chrome/browser/sessions/session_restore.cc",
         "patchSetId": 5
