@@ -541,9 +541,12 @@ void ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext() {
 
 void ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript(
     size_t script_size,
-    size_t cached_metadata_size) {
+    size_t cached_metadata_size,
+    bool loaded_script_on_worker_thread) {
   DCHECK(worker_global_scope_);
   worker_global_scope_->CountScript(script_size, cached_metadata_size);
+  if (loaded_script_on_worker_thread)
+    Client().WorkerScriptLoaded();
 }
 
 void ServiceWorkerGlobalScopeProxy::WillEvaluateImportedScript(

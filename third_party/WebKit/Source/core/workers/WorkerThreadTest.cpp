@@ -36,8 +36,10 @@ class MockWorkerReportingProxy final : public WorkerReportingProxy {
   MOCK_METHOD0(WillDestroyWorkerGlobalScope, void());
   MOCK_METHOD0(DidTerminateWorkerThread, void());
 
-  void WillEvaluateWorkerScript(size_t script_size,
-                                size_t cached_metadata_size) override {
+  void WillEvaluateWorkerScript(
+      size_t script_size,
+      size_t cached_metadata_size,
+      bool /* loaded_script_on_worker_thread */) override {
     script_evaluation_event_.Signal();
     WillEvaluateWorkerScriptMock(script_size, cached_metadata_size);
   }

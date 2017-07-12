@@ -70,7 +70,8 @@ class CORE_EXPORT WorkerReportingProxy {
   // Invoked when the worker script is about to be evaluated. This is called
   // after didInitializeWorkerContext().
   virtual void WillEvaluateWorkerScript(size_t script_size,
-                                        size_t cached_metadata_size) {}
+                                        size_t cached_metadata_size,
+                                        bool script_loaded_on_worker_thread) {}
 
   // Invoked when an imported script is about to be evaluated. This is called
   // after willEvaluateWorkerScript().

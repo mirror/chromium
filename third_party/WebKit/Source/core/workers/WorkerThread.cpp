@@ -460,6 +460,7 @@ void WorkerThread::InitializeOnWorkerThread(
 
   String source_code;
   std::unique_ptr<Vector<char>> cached_meta_data;
+  bool script_loaded_on_worker_thread;
   if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
       GetInstalledScriptsManager() &&
       GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
@@ -473,9 +474,11 @@ void WorkerThread::InitializeOnWorkerThread(
     DCHECK(!cached_meta_data);
     source_code = std::move(script_data->source_text);
     cached_meta_data = std::move(script_data->meta_data);
+    script_loaded_on_worker_thread = true;
   } else {
     source_code = std::move(given_source_code);
     cached_meta_data = std::move(given_cached_meta_data);
+    script_loaded_on_worker_thread = false;
   }
   DCHECK(!source_code.IsNull());
 
@@ -485,7 +488,8 @@ void WorkerThread::InitializeOnWorkerThread(
           script_url, cached_meta_data.get());
   worker_reporting_proxy_.WillEvaluateWorkerScript(
       source_code.length(),
-      cached_meta_data.get() ? cached_meta_data->size() : 0);
+      cached_meta_data.get() ? cached_meta_data->size() : 0,
+      script_loaded_on_worker_thread);
   bool success = worker_global_scope->ScriptController()->Evaluate(
       ScriptSourceCode(source_code, script_url), nullptr, handler,
       v8_cache_options);
