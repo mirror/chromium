@@ -888,7 +888,12 @@ bool NavigationControllerImpl::RendererDidNavigate(
                                    navigation_handle);
       break;
     case NAVIGATION_TYPE_EXISTING_PAGE:
-      details->did_replace_entry = details->is_same_document;
+      // In-page navigations always replace the previous entry.  This is the
+      // case for history.replaceState(), as well as back and forward across
+      // fragment entries and history.pushState() entries.
+      if (details->is_same_document)
+        details->did_replace_entry = true;
+
       RendererDidNavigateToExistingPage(rfh, params, details->is_same_document,
                                         was_restored, navigation_handle);
       break;
