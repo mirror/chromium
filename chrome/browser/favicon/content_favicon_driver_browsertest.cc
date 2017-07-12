@@ -295,6 +295,69 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
             GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
 }
 
+IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
+                       LoadFaviconDespiteLocationHrefAssign) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL(
+      "/favicon/page_with_location_href_assign.html");
+  GURL landing_url =
+      embedded_test_server()->GetURL("/favicon/page_with_favicon.html");
+
+  PendingTaskWaiter waiter(web_contents());
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  waiter.Wait();
+
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
+  EXPECT_NE(
+      nullptr,
+      GetFaviconForPageURL(landing_url, favicon_base::FAVICON).bitmap_data);
+}
+
+IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
+                       LoadFaviconDespiteFragmentLocationOverride) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL(
+      "/favicon/page_with_location_override.html");
+  GURL url_with_fragment = embedded_test_server()->GetURL(
+      "/favicon/page_with_location_override.html#foo");
+
+  PendingTaskWaiter waiter(web_contents());
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  waiter.Wait();
+
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(url_with_fragment, favicon_base::FAVICON)
+                .bitmap_data);
+}
+
+IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
+                       LoadFaviconDespiteHashOverride) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url =
+      embedded_test_server()->GetURL("/favicon/page_with_hash_override.html");
+  GURL url_with_fragment = embedded_test_server()->GetURL(
+      "/favicon/page_with_hash_override.html#foo");
+
+  PendingTaskWaiter waiter(web_contents());
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  waiter.Wait();
+
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
+  EXPECT_NE(nullptr,
+            GetFaviconForPageURL(url_with_fragment, favicon_base::FAVICON)
+                .bitmap_data);
+}
+
 #if defined(OS_ANDROID)
 IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
                        LoadIconFromWebManifestDespitePushState) {
