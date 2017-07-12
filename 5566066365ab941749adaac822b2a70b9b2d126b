@@ -34,6 +34,24 @@
       "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604a373e_ec9545d2",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1170679
+      },
+      "writtenOn": "2017-07-12T01:41:28Z",
+      "side": 1,
+      "message": "I have no experience with the Chrome naming conventions, but in a cross compile environment, target is the CPU where the code will actually run (you compile for this target), while current may be the architecture where it is compiled. We want to configure based on the target architecture.\n\nBut as I said, I don\u0027t know the chrome naming convention.",
+      "parentUuid": "26a3b35d_eaaba3b0",
+      "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
