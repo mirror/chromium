@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a94285fd_a3e2f176",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-12T05:22:17Z",
+      "side": 1,
+      "message": "Does this work with off-main-thread fetching?",
+      "revId": "9eab5a87ad8b6515b49976621464fea9845d45d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
