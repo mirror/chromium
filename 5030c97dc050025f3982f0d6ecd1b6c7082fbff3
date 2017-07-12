@@ -39,6 +39,52 @@
       "revId": "5030c97dc050025f3982f0d6ecd1b6c7082fbff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ade576d_bf1bad35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T14:57:44Z",
+      "side": 1,
+      "message": "I think this 2 * is in the wrong spot. Right now this is:\n\nResources#getDimensionPixelSize(2 * R.dimen.context_menu_header_image_width_padding), which will multiply the int for R.dimen.context_menu_header_image_width_padding by 2 then try to get the dimension pixel size for that the new int. Calling #getDimensionPixelSize() with an invalid id may result in a Resources#NotFoundException (https://developer.android.com/reference/android/content/res/Resources.html#getDimensionPixelSize(int))\n\nYou should retrieve R.dimen.context_menu_header_image_width_padding then multiply by two.",
+      "range": {
+        "startLine": 237,
+        "startChar": 26,
+        "endLine": 237,
+        "endChar": 27
+      },
+      "revId": "5030c97dc050025f3982f0d6ecd1b6c7082fbff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c75811e_599785fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-12T14:57:44Z",
+      "side": 1,
+      "message": "nit: Resources is used a number of times, so it would be helpful to introduce a variable Resources res \u003d mActivity.getResources() and use \"res\" when retrieving dimensions throughout this method.",
+      "range": {
+        "startLine": 239,
+        "startChar": 36,
+        "endLine": 239,
+        "endChar": 48
+      },
+      "revId": "5030c97dc050025f3982f0d6ecd1b6c7082fbff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
