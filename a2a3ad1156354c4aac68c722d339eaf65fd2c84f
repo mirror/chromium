@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49f9d0c1_7c084726",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3330,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-12T15:38:36Z",
+      "side": 1,
+      "message": "Changed to BACKGROUND.",
+      "parentUuid": "7fb5ea14_ab324b5a",
+      "range": {
+        "startLine": 3330,
+        "startChar": 49,
+        "endLine": 3330,
+        "endChar": 61
+      },
+      "revId": "a2a3ad1156354c4aac68c722d339eaf65fd2c84f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "874a2a9b_3bf26d0a",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "afef6c1c_dbf0e427",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3344,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-12T15:38:36Z",
+      "side": 1,
+      "message": "Because it does not use \"self\". This also make it in my mind safer to call on a random thread. I can change it back to an instance method if you prefer (I only found that all this code is executed on random background threads anyway after making the change).",
+      "parentUuid": "874a2a9b_3bf26d0a",
+      "revId": "a2a3ad1156354c4aac68c722d339eaf65fd2c84f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65ae6f65_46c12914",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "a2a3ad1156354c4aac68c722d339eaf65fd2c84f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b638c8_56eb4d91",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3364,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-12T15:38:36Z",
+      "side": 1,
+      "message": "You\u0027re right, there is no guarantee it is executed on the same thread. It happens that AssertIOAllowed() default to \"allowed\" if called from a thread where no thread-restrictions have been initialized (all threads created by the runtime and not by Chrome).\n\nFixed to use another PostTask here. Does not need to be explicitly sequenced with the previous one, so no need to use base::CreateSequencedTaskRunnerWithTraits.",
+      "parentUuid": "65ae6f65_46c12914",
+      "revId": "a2a3ad1156354c4aac68c722d339eaf65fd2c84f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
