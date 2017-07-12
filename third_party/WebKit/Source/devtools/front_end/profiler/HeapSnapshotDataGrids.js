@@ -414,8 +414,6 @@ Profiler.HeapSnapshotViewportDataGrid = class extends Profiler.HeapSnapshotSorta
    * @return {number}
    */
   _nodeHeight(node) {
-    if (!node.revealed)
-      return 0;
     var result = node.nodeSelfHeight();
     if (!node.expanded)
       return result;

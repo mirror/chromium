@@ -1363,6 +1363,8 @@ DataGrid.DataGridNode = class extends Common.Object {
   get revealed() {
     if (this._revealed !== undefined)
       return this._revealed;
+    if (!this.parent)
+      return false;
 
     var currentAncestor = this.parent;
     while (currentAncestor && !currentAncestor._isRoot) {
