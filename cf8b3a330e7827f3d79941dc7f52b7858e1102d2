@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5110fab_3d04462c",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-12T01:59:31Z",
+      "side": 1,
+      "message": "Any sequence of number, I guess",
+      "parentUuid": "54500c4b_82c2560f",
+      "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e5a6df9_26626157",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 8
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "233b5bfb_9c2fd117",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-12T01:59:31Z",
+      "side": 1,
+      "message": "sure, sometimes I use zip because it is obvious sometimes I just write literally because it is not obvious to me. Thanks for pointing it out",
+      "parentUuid": "0d6cd10a_62795d4a",
+      "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "107eab7a_ea2f63d2",
         "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
         "patchSetId": 8
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "d53c5f3e_59851e08",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-12T01:59:31Z",
+      "side": 1,
+      "message": "ok let me retry",
+      "parentUuid": "107eab7a_ea2f63d2",
+      "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68f0055d_42af8fbe",
         "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
         "patchSetId": 8
@@ -81,6 +135,24 @@
       "writtenOn": "2017-07-12T00:46:54Z",
       "side": 1,
       "message": "This should never occur right? If so, I think it would be better to reorganise this as:\n\n   default:\n      DCHECK(v \u003e\u003d ... \u0026\u0026 v \u003c\u003d ....);\n      return static_cast\u003c....\n\nDCHECK is like an assert; it gets removed in release builds. This way, you don\u0027t incur a runtime cost for the extra if statement.",
+      "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609cd8be_49371d7a",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-12T01:59:31Z",
+      "side": 1,
+      "message": "what about the default value, v is user input so I think it wont be in compile time",
+      "parentUuid": "68f0055d_42af8fbe",
       "revId": "cf8b3a330e7827f3d79941dc7f52b7858e1102d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
