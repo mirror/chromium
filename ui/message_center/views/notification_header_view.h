@@ -30,9 +30,12 @@ class NotificationHeaderView : public views::CustomButton {
   void SetSettingsButtonEnabled(bool enabled);
   void SetCloseButtonEnabled(bool enabled);
   void SetControlButtonsVisible(bool visible);
+  void SetAccentColor(SkColor color);
+  void ClearAppIcon();
   void ClearProgress();
   void ClearOverflowIndicator();
   void ClearTimestamp();
+  void ClearAccentColor();
   bool IsExpandButtonEnabled();
   bool IsSettingsButtonEnabled();
   bool IsCloseButtonEnabled();
@@ -53,6 +56,8 @@ class NotificationHeaderView : public views::CustomButton {
   // Update visibility for both |summary_text_view_| and |timestamp_view_|.
   void UpdateSummaryTextVisibility();
 
+  SkColor accent_color_;
+
   views::Label* app_name_view_ = nullptr;
   views::Label* summary_text_divider_ = nullptr;
   views::Label* summary_text_view_ = nullptr;
@@ -69,6 +74,7 @@ class NotificationHeaderView : public views::CustomButton {
   bool has_progress_ = false;
   bool has_overflow_indicator_ = false;
   bool has_timestamp_ = false;
+  bool is_expanded_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationHeaderView);
 };
