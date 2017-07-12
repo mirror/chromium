@@ -8,6 +8,8 @@ source_set("toolbar") {
     "keyboard_accessory_view.h",
     "keyboard_accessory_view.mm",
     "keyboard_accessory_view_protocol.h",
+    "keyboard_assist/toolbar_assistive_keyboard_views.h",
+    "keyboard_assist/toolbar_assistive_keyboard_views.mm",
     "new_keyboard_accessory_view.h",
     "new_keyboard_accessory_view.mm",
     "new_tab_button.h",
