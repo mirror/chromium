@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdfd4295_75758341",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-12T01:28:57Z",
+      "side": 1,
+      "message": "why the switch from target to current?",
+      "revId": "5566066365ab941749adaac822b2a70b9b2d126b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
