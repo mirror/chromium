@@ -9,6 +9,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
+#include "content/common/possibly_associated_interface_ptr.h"
+#include "content/common/possibly_associated_url_loader_factory.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
@@ -52,6 +54,10 @@ struct CONTENT_EXPORT StreamOverrideParameters {
 class CONTENT_EXPORT WebURLLoaderImpl
     : public NON_EXPORTED_BASE(blink::WebURLLoader) {
  public:
+  WebURLLoaderImpl(
+      ResourceDispatcher* resource_dispatcher,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      const PossiblyAssociatedURLLoaderFactory& url_loader_factory);
   WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                    mojom::URLLoaderFactory* url_loader_factory);
