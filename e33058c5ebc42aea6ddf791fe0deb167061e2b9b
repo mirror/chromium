@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385806a6_fee086c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T16:28:52Z",
+      "side": 1,
+      "message": "The important part of this change is handling the string, so discuss that instead.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 57
+      },
+      "revId": "e33058c5ebc42aea6ddf791fe0deb167061e2b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356249b0_a1047d16",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T16:28:52Z",
+      "side": 1,
+      "message": "Add this call in when we actually need it.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 68
+      },
+      "revId": "e33058c5ebc42aea6ddf791fe0deb167061e2b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e443587_2ab30332",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1834,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-12T16:28:52Z",
+      "side": 1,
+      "message": "IDS_NEWTAB_PROMO_2?",
+      "range": {
+        "startLine": 1834,
+        "startChar": 60,
+        "endLine": 1834,
+        "endChar": 61
+      },
+      "revId": "e33058c5ebc42aea6ddf791fe0deb167061e2b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
