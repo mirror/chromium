@@ -11,9 +11,9 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
-#include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/test/scoped_task_environment.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "net/base/net_errors.h"
 #include "net/base/test_completion_callback.h"
@@ -97,7 +97,7 @@ void CheckNotificationReceived(TestObserver* observer,
 class TestQuotaManagerProxy : public storage::QuotaManagerProxy {
  public:
   TestQuotaManagerProxy()
-      : QuotaManagerProxy(NULL, NULL), registered_client_(NULL) {}
+      : QuotaManagerProxy(nullptr, nullptr), registered_client_(nullptr) {}
 
   void RegisterClient(storage::QuotaClient* client) override {
     EXPECT_FALSE(registered_client_);
@@ -137,7 +137,7 @@ class TestQuotaManagerProxy : public storage::QuotaManagerProxy {
   void SimulateQuotaManagerDestroyed() {
     if (registered_client_) {
       registered_client_->OnQuotaManagerDestroyed();
-      registered_client_ = NULL;
+      registered_client_ = nullptr;
     }
   }
 
@@ -186,14 +186,15 @@ class DatabaseTracker_TestHelper_Test {
  public:
   static void TestDeleteOpenDatabase(bool incognito_mode) {
     // Initialize the tracker database.
+    base::test::ScopedTaskEnvironment scoped_task_environment;
     base::ScopedTempDir temp_dir;
     ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
     scoped_refptr<MockSpecialStoragePolicy> special_storage_policy =
         new MockSpecialStoragePolicy;
     special_storage_policy->AddProtected(GURL(kOrigin2Url));
-    scoped_refptr<DatabaseTracker> tracker(
-        new DatabaseTracker(temp_dir.GetPath(), incognito_mode,
-                            special_storage_policy.get(), NULL, NULL));
+    scoped_refptr<DatabaseTracker> tracker(new DatabaseTracker(
+        temp_dir.GetPath(), incognito_mode, special_storage_policy.get(),
+        nullptr, base::SequencedTaskRunnerHandle::Get()));
 
     // Create and open three databases.
     int64_t database_size = 0;
@@ -284,14 +285,15 @@ class DatabaseTracker_TestHelper_Test {
 
   static void TestDatabaseTracker(bool incognito_mode) {
     // Initialize the tracker database.
+    base::test::ScopedTaskEnvironment scoped_task_environment;
     base::ScopedTempDir temp_dir;
     ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
     scoped_refptr<MockSpecialStoragePolicy> special_storage_policy =
         new MockSpecialStoragePolicy;
     special_storage_policy->AddProtected(GURL(kOrigin2Url));
-    scoped_refptr<DatabaseTracker> tracker(
-        new DatabaseTracker(temp_dir.GetPath(), incognito_mode,
-                            special_storage_policy.get(), NULL, NULL));
+    scoped_refptr<DatabaseTracker> tracker(new DatabaseTracker(
+        temp_dir.GetPath(), incognito_mode, special_storage_policy.get(),
+        nullptr, base::SequencedTaskRunnerHandle::Get()));
 
     // Add two observers.
     TestObserver observer1;
@@ -425,15 +427,16 @@ class DatabaseTracker_TestHelper_Test {
     const base::string16 kName = ASCIIToUTF16("name");
     const base::string16 kDescription = ASCIIToUTF16("description");
 
+    base::test::ScopedTaskEnvironment scoped_task_environment;
     base::ScopedTempDir temp_dir;
     ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
 
     // Initialize the tracker with a QuotaManagerProxy
     scoped_refptr<TestQuotaManagerProxy> test_quota_proxy(
         new TestQuotaManagerProxy);
-    scoped_refptr<DatabaseTracker> tracker(
-        new DatabaseTracker(temp_dir.GetPath(), false /* incognito */, NULL,
-                            test_quota_proxy.get(), NULL));
+    scoped_refptr<DatabaseTracker> tracker(new DatabaseTracker(
+        temp_dir.GetPath(), false /* incognito */, nullptr,
+        test_quota_proxy.get(), base::SequencedTaskRunnerHandle::Get()));
     EXPECT_TRUE(test_quota_proxy->registered_client_);
 
     // Create a database and modify it a couple of times, close it,
@@ -521,7 +524,7 @@ class DatabaseTracker_TestHelper_Test {
     const base::string16 kDescription = ASCIIToUTF16("database_description");
 
     // Initialize the tracker database.
-    base::MessageLoop message_loop;
+    base::test::ScopedTaskEnvironment scoped_task_environment;
     base::ScopedTempDir temp_dir;
     ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
     base::FilePath origin1_db_dir;
@@ -531,8 +534,8 @@ class DatabaseTracker_TestHelper_Test {
           new MockSpecialStoragePolicy;
       special_storage_policy->AddSessionOnly(GURL(kOrigin2Url));
       scoped_refptr<DatabaseTracker> tracker(new DatabaseTracker(
-          temp_dir.GetPath(), false, special_storage_policy.get(), NULL,
-          base::ThreadTaskRunnerHandle::Get().get()));
+          temp_dir.GetPath(), false, special_storage_policy.get(), nullptr,
+          base::SequencedTaskRunnerHandle::Get()));
 
       // Open two new databases.
       tracker->DatabaseOpened(kOrigin1, kDB1, kDescription, 0, &database_size);
@@ -566,7 +569,8 @@ class DatabaseTracker_TestHelper_Test {
 
     // At this point, the database tracker should be gone. Create a new one.
     scoped_refptr<DatabaseTracker> tracker(
-        new DatabaseTracker(temp_dir.GetPath(), false, NULL, NULL, NULL));
+        new DatabaseTracker(temp_dir.GetPath(), false, nullptr, nullptr,
+                            base::SequencedTaskRunnerHandle::Get()));
 
     // Get all data for all origins.
     std::vector<OriginInfo> origins_info;
@@ -595,7 +599,7 @@ class DatabaseTracker_TestHelper_Test {
     const base::string16 kDescription = ASCIIToUTF16("database_description");
 
     // Initialize the tracker database.
-    base::MessageLoop message_loop;
+    base::test::ScopedTaskEnvironment scoped_task_environment;
     base::ScopedTempDir temp_dir;
     ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
     base::FilePath origin1_db_dir;
@@ -605,8 +609,8 @@ class DatabaseTracker_TestHelper_Test {
           new MockSpecialStoragePolicy;
       special_storage_policy->AddSessionOnly(GURL(kOrigin2Url));
       scoped_refptr<DatabaseTracker> tracker(new DatabaseTracker(
-          temp_dir.GetPath(), false, special_storage_policy.get(), NULL,
-          base::ThreadTaskRunnerHandle::Get().get()));
+          temp_dir.GetPath(), false, special_storage_policy.get(), nullptr,
+          base::SequencedTaskRunnerHandle::Get()));
       tracker->SetForceKeepSessionState();
 
       // Open two new databases.
@@ -641,7 +645,8 @@ class DatabaseTracker_TestHelper_Test {
 
     // At this point, the database tracker should be gone. Create a new one.
     scoped_refptr<DatabaseTracker> tracker(
-        new DatabaseTracker(temp_dir.GetPath(), false, NULL, NULL, NULL));
+        new DatabaseTracker(temp_dir.GetPath(), false, nullptr, nullptr,
+                            base::SequencedTaskRunnerHandle::Get()));
 
     // Get all data for all origins.
     std::vector<OriginInfo> origins_info;
@@ -665,10 +670,12 @@ class DatabaseTracker_TestHelper_Test {
 
     // Initialize a tracker database, no need to put it on disk.
     const bool kUseInMemoryTrackerDatabase = true;
+    base::test::ScopedTaskEnvironment scoped_task_environment;
     base::ScopedTempDir temp_dir;
     ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
     scoped_refptr<DatabaseTracker> tracker(new DatabaseTracker(
-        temp_dir.GetPath(), kUseInMemoryTrackerDatabase, NULL, NULL, NULL));
+        temp_dir.GetPath(), kUseInMemoryTrackerDatabase, nullptr, nullptr,
+        base::SequencedTaskRunnerHandle::Get()));
 
     // Starts off with no databases.
     std::vector<OriginInfo> infos;
@@ -710,10 +717,12 @@ class DatabaseTracker_TestHelper_Test {
 
     // Initialize a tracker database, no need to put it on disk.
     const bool kUseInMemoryTrackerDatabase = true;
+    base::test::ScopedTaskEnvironment scoped_task_environment;
     base::ScopedTempDir temp_dir;
     ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
     scoped_refptr<DatabaseTracker> tracker(new DatabaseTracker(
-        temp_dir.GetPath(), kUseInMemoryTrackerDatabase, NULL, NULL, NULL));
+        temp_dir.GetPath(), kUseInMemoryTrackerDatabase, nullptr, nullptr,
+        base::SequencedTaskRunnerHandle::Get()));
 
     // Setup to observe OnScheduledForDelete notifications.
     TestObserver observer(false, true);
