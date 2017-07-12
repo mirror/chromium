@@ -60,6 +60,7 @@
 #include "url/gurl.h"
 
 using ::testing::Invoke;
+using ::testing::Property;
 using ::testing::Return;
 using ::testing::WithArg;
 using ::testing::_;
@@ -127,6 +128,13 @@ bool CreateOwnerKeyInSlot(PK11SlotInfo* slot) {
       kOwnerPrivateKey, kOwnerPrivateKey + arraysize(kOwnerPrivateKey));
   return crypto::ImportNSSKeyFromPrivateKeyInfo(
              slot, key, true /* permanent */) != nullptr;
+}
+
+MATCHER_P(IsSameProto, expected, "") {
+  std::string expected_serialized, arg_serialized;
+  return expected.SerializeToString(&expected_serialized) &&
+         arg.SerializeToString(&arg_serialized) &&
+         expected_serialized == arg_serialized;
 }
 
 }  // namespace
@@ -284,17 +292,17 @@ class CryptohomeAuthenticatorTest : public testing::Test {
     const cryptohome::KeyDefinition auth_key(transformed_key_.GetSecret(),
                                              std::string(),
                                              cryptohome::PRIV_DEFAULT);
-    cryptohome::MountParameters mount(false /* ephemeral */);
+    cryptohome::MountRequest mount;
     if (expect_create_attempt) {
-      mount.create_keys.push_back(cryptohome::KeyDefinition(
-          transformed_key_.GetSecret(),
-          kCryptohomeGAIAKeyLabel,
-          cryptohome::PRIV_DEFAULT));
+      KeyDefinitionToKey(cryptohome::KeyDefinition(transformed_key_.GetSecret(),
+                                                   kCryptohomeGAIAKeyLabel,
+                                                   cryptohome::PRIV_DEFAULT),
+                         mount.mutable_create()->add_keys());
     }
     EXPECT_CALL(
         *mock_homedir_methods_,
         MountEx(cryptohome::Identification(user_context_.GetAccountId()),
-                cryptohome::Authorization(auth_key), mount, _))
+                cryptohome::Authorization(auth_key), IsSameProto(mount), _))
         .Times(1)
         .RetiresOnSaturation();
   }
