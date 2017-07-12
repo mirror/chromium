@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee2da750_387f4667",
+        "filename": "ios/showcase/core/app_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-07-12T21:22:35Z",
+      "side": 1,
+      "message": "Not initializing ICU was causing l10n operations to break some tests before. I\u0027ve now ran all the eg tests to make sure it won\u0027t happen again.",
+      "range": {
+        "startLine": 38,
+        "startChar": 20,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "d1d47a352747a95cebbd795145426cc663bab738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
