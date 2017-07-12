@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b3766962_f7b09d06",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-12T17:06:04Z",
+      "side": 1,
+      "message": "That makes sense why removing it is necessary. I used a ScopedObserver as Peter recommended.",
+      "parentUuid": "82b4b2b4_22312791",
+      "revId": "b7972cfa888d854920667767290468624a054d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39d33c31_eabd4bf3",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 20
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b56df31c_24ae4b8d",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-12T17:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d33c31_eabd4bf3",
+      "revId": "b7972cfa888d854920667767290468624a054d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "630b5e17_3d0d9721",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 20
@@ -68,6 +104,24 @@
       "revId": "b7972cfa888d854920667767290468624a054d8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5b2102_699277ca",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-12T17:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "630b5e17_3d0d9721",
+      "revId": "b7972cfa888d854920667767290468624a054d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
