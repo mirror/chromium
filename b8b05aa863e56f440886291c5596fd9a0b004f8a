@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "0d1505bd_41023e1f",
+        "filename": "chrome/browser/resources/md_extensions/load_error.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-12T22:27:58Z",
+      "side": 1,
+      "message": "based on offline discussion with dpapad, decided to add .action-button so that the \"Enter\" key is bound to the confirm buttons.",
+      "parentUuid": "7b8e5345_5311e1d3",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4f89cd8_71ebb94d",
         "filename": "chrome/browser/resources/md_extensions/options_dialog.html",
         "patchSetId": 2
