@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "09af6442_85535ad5",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-12T16:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "039c3593_e035b54d",
+      "revId": "bbf5a788a0bb42c4900eed6ad2621101c5c9f4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73e2a586_eeb034cb",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 8
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "fe0845aa_786baf1a",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-12T16:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73e2a586_eeb034cb",
+      "revId": "bbf5a788a0bb42c4900eed6ad2621101c5c9f4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93b02a99_4639e3d3",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
         "patchSetId": 8
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-12T02:48:32Z",
       "side": 1,
       "message": "nit/optional: Maybe move this into L649? (or inline in UMA_HISTOGRAM_CUSTOM_TIMES\u0027s arg?)\nIf it is necessary to be record the time here, maybe good to add comment about it.",
+      "revId": "bbf5a788a0bb42c4900eed6ad2621101c5c9f4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3578627_2fab4673",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-12T16:52:53Z",
+      "side": 1,
+      "message": "Time is also used at L635",
+      "parentUuid": "93b02a99_4639e3d3",
       "revId": "bbf5a788a0bb42c4900eed6ad2621101c5c9f4e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

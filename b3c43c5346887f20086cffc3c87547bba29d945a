@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dd9fc34_e6bdae05",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-12T16:52:53Z",
+      "side": 1,
+      "message": "Looks like this logic is incorrect (at lest for tests). RequestStop may call inline callback OnSessionStopped. We may have some actions there and for example restart ARC and next state_ \u003d State::STOPPING would overwrite state_ with incorrect value",
+      "revId": "b3c43c5346887f20086cffc3c87547bba29d945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a840032e_8f558746",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-12T16:52:53Z",
+      "side": 1,
+      "message": "Without this, StopAndEnableArc is broken. It calls StopArc and as result prefs below are reset which prevents restarting ARC.",
+      "range": {
+        "startLine": 954,
+        "startChar": 7,
+        "endLine": 954,
+        "endChar": 20
+      },
+      "revId": "b3c43c5346887f20086cffc3c87547bba29d945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
