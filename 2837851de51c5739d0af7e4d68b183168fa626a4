@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "447798b9_cae30b8b",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-12T15:07:51Z",
+      "side": 1,
+      "message": "Any way to confirm this first?",
+      "parentUuid": "a6b2594a_48dc9f4d",
+      "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "247ed3d6_45ecbdbb",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
         "patchSetId": 3
