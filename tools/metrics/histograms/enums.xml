@@ -22988,6 +22988,8 @@ from previous Chrome versions.
   <int value="-5052940" label="enable-simplified-fullscreen"/>
   <int value="-2953333" label="AndroidHistoryManager:disabled"/>
   <int value="-2371418" label="disable-display-list-2d-canvas"/>
+  <int value="-2" label="SuggestionsHomeModernLayout:enabled"/>
+  <int value="-1" label="SuggestionsHomeModernLayout:disabled"/>
   <int value="0" label="BAD_FLAG_FORMAT">
     Command-line flag doesn't start with two dashes.
   </int>
