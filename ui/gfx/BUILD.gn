@@ -585,6 +585,8 @@ static_library("test_support") {
     "image/image_unittest_util.h",
     "image/image_unittest_util_ios.mm",
     "image/image_unittest_util_mac.mm",
+    "test/animation_test_api.cc",
+    "test/animation_test_api.h",
     "test/fontconfig_util_linux.cc",
     "test/fontconfig_util_linux.h",
     "test/gfx_util.cc",
