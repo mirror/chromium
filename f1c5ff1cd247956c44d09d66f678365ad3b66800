@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc7e245a_dffc447a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-07-12T10:02:45Z",
+      "side": 1,
+      "message": "/sys can be replaced with sysfs.",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e114ccd7_8de4b498",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-07-12T10:02:45Z",
+      "side": 1,
+      "message": "Please provide the link to the Zram change in the commit message.",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40d1cac_06dbcd44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-07-12T10:02:45Z",
+      "side": 1,
+      "message": "Please provide the TEST\u003d field.",
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ecfc984_bc426ccc",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-07-12T10:02:45Z",
+      "side": 1,
+      "message": "The return value is not used currently.",
+      "range": {
+        "startLine": 486,
+        "startChar": 12,
+        "endLine": 486,
+        "endChar": 16
+      },
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8acf4f3c_904c3033",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-07-12T10:02:45Z",
+      "side": 1,
+      "message": "This example line alone doesn\u0027t help understanding entries in mm_stat, maybe you can list the name for each entry and provide link to the zram kernel documentation.\nex: orig_data_size compr_data_size mem_used_total mem_limit mem_used_max same_pages pages_compacted",
+      "range": {
+        "startLine": 946,
+        "startChar": 5,
+        "endLine": 946,
+        "endChar": 54
+      },
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a01873_cfaa6fec",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-07-12T10:02:45Z",
+      "side": 1,
+      "message": "As mm_stat, consider provide kernel documentation link and names of each entry.",
+      "range": {
+        "startLine": 971,
+        "startChar": 5,
+        "endLine": 971,
+        "endChar": 61
+      },
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb18190_3ee8305a",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-07-12T10:02:45Z",
+      "side": 1,
+      "message": "Maybe you shall set SwapInfo\u0027s data to 0 on every failed case.",
+      "range": {
+        "startLine": 1027,
+        "startChar": 13,
+        "endLine": 1027,
+        "endChar": 18
+      },
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
