@@ -226,11 +226,15 @@ void Vp9Parser::Reset() {
 Vp9Parser::Result Vp9Parser::ParseNextFrame(Vp9FrameHeader* fhdr) {
   DCHECK(fhdr);
   DVLOG(2) << "ParseNextFrame";
+  FrameInfo frame_info;
 
   // If |curr_frame_info_| is valid, uncompressed header was parsed into
   // |curr_frame_header_| and we are awaiting context update to proceed with
   // compressed header parsing.
-  if (!curr_frame_info_.IsValid()) {
+  if (curr_frame_info_.IsValid()) {
+    frame_info = curr_frame_info_;
+    curr_frame_info_.Reset();
+  } else {
     if (frames_.empty()) {
       // No frames to be decoded, if there is no more stream, request more.
       if (!stream_)
@@ -244,37 +248,35 @@ Vp9Parser::Result Vp9Parser::ParseNextFrame(Vp9FrameHeader* fhdr) {
       }
     }
 
-    curr_frame_info_ = frames_.front();
+    frame_info = frames_.front();
     frames_.pop_front();
 
     memset(&curr_frame_header_, 0, sizeof(curr_frame_header_));
 
     Vp9UncompressedHeaderParser uncompressed_parser(&context_);
-    if (!uncompressed_parser.Parse(curr_frame_info_.ptr, curr_frame_info_.size,
+    if (!uncompressed_parser.Parse(frame_info.ptr, frame_info.size,
                                    &curr_frame_header_))
       return kInvalidStream;
 
     if (curr_frame_header_.header_size_in_bytes == 0) {
       // Verify padding bits are zero.
       for (off_t i = curr_frame_header_.uncompressed_header_size;
-           i < curr_frame_info_.size; i++) {
-        if (curr_frame_info_.ptr[i] != 0) {
+           i < frame_info.size; i++) {
+        if (frame_info.ptr[i] != 0) {
           DVLOG(1) << "Padding bits are not zeros.";
           return kInvalidStream;
         }
       }
       *fhdr = curr_frame_header_;
-      curr_frame_info_.Reset();
       return kOk;
     }
     if (curr_frame_header_.uncompressed_header_size +
             curr_frame_header_.header_size_in_bytes >
-        base::checked_cast<size_t>(curr_frame_info_.size)) {
+        base::checked_cast<size_t>(frame_info.size)) {
       DVLOG(1) << "header_size_in_bytes="
                << curr_frame_header_.header_size_in_bytes
                << " is larger than bytes left in buffer: "
-               << curr_frame_info_.size -
-                      curr_frame_header_.uncompressed_header_size;
+               << frame_info.size - curr_frame_header_.uncompressed_header_size;
       return kInvalidStream;
     }
   }
@@ -293,6 +295,7 @@ Vp9Parser::Result Vp9Parser::ParseNextFrame(Vp9FrameHeader* fhdr) {
     if (context_to_load.needs_client_update()) {
       DVLOG(3) << "waiting frame_context_idx=" << frame_context_idx
                << " to update";
+      curr_frame_info_ = frame_info;
       return kAwaitingRefresh;
     }
     curr_frame_header_.initial_frame_context =
@@ -300,7 +303,7 @@ Vp9Parser::Result Vp9Parser::ParseNextFrame(Vp9FrameHeader* fhdr) {
 
     Vp9CompressedHeaderParser compressed_parser;
     if (!compressed_parser.Parse(
-            curr_frame_info_.ptr + curr_frame_header_.uncompressed_header_size,
+            frame_info.ptr + curr_frame_header_.uncompressed_header_size,
             curr_frame_header_.header_size_in_bytes, &curr_frame_header_)) {
       return kInvalidStream;
     }
@@ -322,7 +325,6 @@ Vp9Parser::Result Vp9Parser::ParseNextFrame(Vp9FrameHeader* fhdr) {
   UpdateSlots();
 
   *fhdr = curr_frame_header_;
-  curr_frame_info_.Reset();
   return kOk;
 }
 
