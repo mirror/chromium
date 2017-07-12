@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a76cc806_7cbbf31d",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-12T23:55:35Z",
+      "side": 1,
+      "message": "Ah I see sorry about that--that\u0027s fine I\u0027ll change these.",
+      "parentUuid": "3b8813ef_4aec7bd6",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "7234c6f998623c4fa19849c05ba328c1bce72c4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79d73d57_a54ae921",
         "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
         "patchSetId": 7
@@ -117,6 +141,30 @@
       "revId": "7234c6f998623c4fa19849c05ba328c1bce72c4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a035a89_9f1181a0",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-12T23:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47f6798b_d32bb7b1",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "7234c6f998623c4fa19849c05ba328c1bce72c4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

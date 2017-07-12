@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71d490e6_5313c263",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-12T23:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54467241_25d3a7a8",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b117bc3_5c009d8c",
         "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "92b202e276dd2fd259445776291c8be534d0caec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e29d4e4_3f7452d4",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-12T23:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b117bc3_5c009d8c",
+      "range": {
+        "startLine": 106,
+        "startChar": 34,
+        "endLine": 106,
+        "endChar": 41
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0e38aa40_3d4b89d4",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-12T23:55:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18df2421_48fc78db",
+      "range": {
+        "startLine": 115,
+        "startChar": 21,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d89869fe_97b16b54",
         "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7826a111_cb94f05e",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-12T23:55:35Z",
+      "side": 1,
+      "message": "This is actually unnecessary. I had originally copied this line from another similar test file.",
+      "parentUuid": "d89869fe_97b16b54",
+      "range": {
+        "startLine": 197,
+        "startChar": 9,
+        "endLine": 197,
+        "endChar": 49
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd096248_566dd766",
         "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-12T21:52:27Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 213,
+        "startChar": 9,
+        "endLine": 213,
+        "endChar": 49
+      },
+      "revId": "92b202e276dd2fd259445776291c8be534d0caec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3feb80_e979a5d0",
+        "filename": "ios/chrome/browser/ui/payments/payments_accessibility_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-12T23:55:35Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "cd096248_566dd766",
       "range": {
         "startLine": 213,
         "startChar": 9,
