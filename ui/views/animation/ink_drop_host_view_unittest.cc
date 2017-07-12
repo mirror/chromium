@@ -14,6 +14,7 @@
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/test/animation_test_api.h"
 #include "ui/views/animation/test/ink_drop_host_view_test_api.h"
 
 namespace views {
@@ -55,11 +56,18 @@ class InkDropHostViewTest : public testing::Test {
   // Provides internal access to |host_view_| test target.
   InkDropHostViewTestApi test_api_;
 
+  std::unique_ptr<base::AutoReset<gfx::Animation::RichAnimationRenderMode>>
+      animation_mode_reset_;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(InkDropHostViewTest);
 };
 
-InkDropHostViewTest::InkDropHostViewTest() : test_api_(&host_view_) {}
+InkDropHostViewTest::InkDropHostViewTest()
+    : test_api_(&host_view_),
+      animation_mode_reset_(
+          gfx::test::AnimationTestApi::SetRichAnimationRenderMode(
+              gfx::Animation::RichAnimationRenderMode::FORCE_DISABLED)) {}
 
 InkDropHostViewTest::~InkDropHostViewTest() {}
 
