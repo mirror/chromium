@@ -24,48 +24,13 @@ void ParamTraits<gfx::ColorSpace>::GetSize(base::PickleSizer* s,
 
 void ParamTraits<gfx::ColorSpace>::Write(base::Pickle* m,
                                          const gfx::ColorSpace& p) {
-  WriteParam(m, p.primaries_);
-  WriteParam(m, p.transfer_);
-  WriteParam(m, p.matrix_);
-  WriteParam(m, p.range_);
-  WriteParam(m, p.icc_profile_id_);
-  if (p.primaries_ == gfx::ColorSpace::PrimaryID::CUSTOM) {
-    m->WriteBytes(reinterpret_cast<const char*>(p.custom_primary_matrix_),
-                  sizeof(p.custom_primary_matrix_));
-  }
-  if (p.transfer_ == gfx::ColorSpace::TransferID::CUSTOM) {
-    m->WriteBytes(reinterpret_cast<const char*>(p.custom_transfer_params_),
-                  sizeof(p.custom_transfer_params_));
-  }
+  p.Serialize(m);
 }
 
 bool ParamTraits<gfx::ColorSpace>::Read(const base::Pickle* m,
                                         base::PickleIterator* iter,
                                         gfx::ColorSpace* r) {
-  if (!ReadParam(m, iter, &r->primaries_))
-    return false;
-  if (!ReadParam(m, iter, &r->transfer_))
-    return false;
-  if (!ReadParam(m, iter, &r->matrix_))
-    return false;
-  if (!ReadParam(m, iter, &r->range_))
-    return false;
-  if (!ReadParam(m, iter, &r->icc_profile_id_))
-    return false;
-  if (r->primaries_ == gfx::ColorSpace::PrimaryID::CUSTOM) {
-    const char* data = nullptr;
-    if (!iter->ReadBytes(&data, sizeof(r->custom_primary_matrix_)))
-      return false;
-    memcpy(r->custom_primary_matrix_, data, sizeof(r->custom_primary_matrix_));
-  }
-  if (r->transfer_ == gfx::ColorSpace::TransferID::CUSTOM) {
-    const char* data = nullptr;
-    if (!iter->ReadBytes(&data, sizeof(r->custom_transfer_params_)))
-      return false;
-    memcpy(r->custom_transfer_params_, data,
-           sizeof(r->custom_transfer_params_));
-  }
-  return true;
+  return r->ReadFromPickle(iter);
 }
 
 void ParamTraits<gfx::ColorSpace>::Log(const gfx::ColorSpace& p,
