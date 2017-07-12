@@ -19,7 +19,6 @@
 #include "base/test/simple_test_tick_clock.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
@@ -660,26 +659,6 @@ TEST_F(TabManagerTest, DiscardTabWithNonVisibleTabs) {
   // Tabs with a committed URL must be closed explicitly to avoid DCHECK errors.
   tab_strip1.CloseAllTabs();
   tab_strip2.CloseAllTabs();
-}
-
-TEST_F(TabManagerTest, OnSessionRestoreStartedAndFinishedLoadingTabs) {
-  std::unique_ptr<content::WebContents> test_contents(
-      WebContentsTester::CreateTestWebContents(browser_context(), nullptr));
-
-  std::vector<SessionRestoreDelegate::RestoredTab> restored_tabs{
-      SessionRestoreDelegate::RestoredTab(test_contents.get(), false, false,
-                                          false)};
-
-  TabManager* tab_manager = g_browser_process->GetTabManager();
-  EXPECT_FALSE(tab_manager->IsSessionRestoreLoadingTabs());
-
-  TabLoader::RestoreTabs(restored_tabs, base::TimeTicks());
-  EXPECT_TRUE(tab_manager->IsSessionRestoreLoadingTabs());
-
-  WebContentsTester::For(test_contents.get())
-      ->NavigateAndCommit(GURL("about:blank"));
-  WebContentsTester::For(test_contents.get())->TestSetIsLoading(false);
-  EXPECT_FALSE(tab_manager->IsSessionRestoreLoadingTabs());
 }
 
 TEST_F(TabManagerTest, HistogramsSessionRestoreSwitchToTab) {
