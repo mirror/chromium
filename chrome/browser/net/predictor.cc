@@ -833,9 +833,9 @@ void Predictor::PreconnectUrlOnIOThread(
   }
   UMA_HISTOGRAM_ENUMERATION("Net.PreconnectMotivation", motivation,
                             UrlInfo::MAX_MOTIVATED);
-  content::PreconnectUrl(profile_io_data_->GetResourceContext(), url,
-                         first_party_for_cookies, count, allow_credentials,
-                         request_motivation);
+  content::PreconnectUrl(
+      profile_io_data_->GetResourceContext()->GetRequestContext(), url,
+      first_party_for_cookies, count, allow_credentials, request_motivation);
 }
 
 void Predictor::PredictFrameSubresources(const GURL& url,
@@ -1056,10 +1056,10 @@ void Predictor::StartSomeQueuedResolutions() {
       return;
     }
 
-    int status =
-        content::PreresolveUrl(profile_io_data_->GetResourceContext(), url,
-                               base::Bind(&Predictor::OnLookupFinished,
-                                          io_weak_factory_->GetWeakPtr(), url));
+    int status = content::PreresolveUrl(
+        profile_io_data_->GetResourceContext()->GetRequestContext(), url,
+        base::Bind(&Predictor::OnLookupFinished, io_weak_factory_->GetWeakPtr(),
+                   url));
     if (status == net::ERR_IO_PENDING) {
       // Will complete asynchronously.
       num_pending_lookups_++;

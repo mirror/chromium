@@ -92,7 +92,9 @@ void AuthPrewarmer::DoPrewarm() {
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&content::PreconnectUrl,
-                     ProfileHelper::GetSigninProfile()->GetResourceContext(),
+                     ProfileHelper::GetSigninProfile()
+                         ->GetRequestContext()
+                         ->GetURLRequestContext(),
                      url, url, kConnectionsNeeded, true,
                      net::HttpRequestInfo::EARLY_LOAD_MOTIVATED));
   if (!completion_callback_.is_null()) {
