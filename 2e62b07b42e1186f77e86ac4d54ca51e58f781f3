@@ -119,6 +119,24 @@
       "revId": "2e62b07b42e1186f77e86ac4d54ca51e58f781f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac943a7_65d6a3ee",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-12T16:16:59Z",
+      "side": 1,
+      "message": "One potential issue with that is that it wouldn\u0027t allow component extensions to bypass CSP.  I\u0027m not sure if something like ChromeVox would rely on that or not.",
+      "parentUuid": "99acd872_5bf06518",
+      "revId": "2e62b07b42e1186f77e86ac4d54ca51e58f781f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
