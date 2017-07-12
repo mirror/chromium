@@ -82,7 +82,7 @@ TEST_F(BufferTest, IsLost) {
       layer_tree_frame_sink_holder, resource_id, false, true, &resource);
   ASSERT_TRUE(rv);
 
-  scoped_refptr<cc::ContextProvider> context_provider =
+  scoped_refptr<viz::ContextProvider> context_provider =
       aura::Env::GetInstance()
           ->context_factory()
           ->SharedMainThreadContextProvider();
