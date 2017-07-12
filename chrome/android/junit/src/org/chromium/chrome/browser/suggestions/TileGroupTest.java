@@ -421,6 +421,9 @@ public class TileGroupTest {
         }
 
         @Override
+        public void onColumnNumberChanged(int numColumns) {}
+
+        @Override
         public void onLoadingComplete(Tile[] tiles) {}
 
         @Override

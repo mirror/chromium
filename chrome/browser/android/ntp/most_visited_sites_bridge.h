@@ -28,6 +28,10 @@ class MostVisitedSitesBridge {
   void OnHomePageStateChanged(JNIEnv* env,
                               const base::android::JavaParamRef<jobject>& obj);
 
+  void OnColumnNumberChanged(JNIEnv* env,
+                             const base::android::JavaParamRef<jobject>& obj,
+                             jint num_cols);
+
   void SetObserver(JNIEnv* env,
                    const base::android::JavaParamRef<jobject>& obj,
                    const base::android::JavaParamRef<jobject>& j_observer,

@@ -72,6 +72,13 @@ public interface MostVisitedSites {
     void destroy();
 
     /**
+     * TODO(oskopek): Comment.
+     *
+     * @param numColumns The number of columns.
+     */
+    void onColumnNumberChanged(int numColumns);
+
+    /**
      * Sets the recipient for events from {@link MostVisitedSites}. The observer may be notified
      * synchronously or asynchronously.
      * @param observer The observer to be notified.

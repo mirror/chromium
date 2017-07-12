@@ -568,10 +568,11 @@ TEST_P(MostVisitedSitesTest, ShouldReturnMostPopularPageIfOneTileRequested) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_P(MostVisitedSitesTest, ShouldContainHomePageInFirstFourTiles) {
+TEST_P(MostVisitedSitesTest, ShouldContainHomePageInFirstRow) {
   FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
   home_page_client->SetHomePageEnabled(true);
   DisableRemoteSuggestions();
+  const size_t columns = 4;
   EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
       .WillRepeatedly(InvokeCallbackArgument<0>((MostVisitedURLList{
           MakeMostVisitedURL("Site 1", "http://site1/"),
@@ -587,11 +588,41 @@ TEST_P(MostVisitedSitesTest, ShouldContainHomePageInFirstFourTiles) {
   std::vector<NTPTile> tiles;
   EXPECT_CALL(mock_observer_, OnMostVisitedURLsAvailable(_))
       .WillOnce(SaveArg<0>(&tiles));
+  most_visited_sites_->OnColumnNumberChanged(columns);
   most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
                                                   /*num_sites=*/8);
   base::RunLoop().RunUntilIdle();
   // Assert that the home page tile is in the first four tiles.
-  EXPECT_THAT(tiles[3], MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE));
+  EXPECT_THAT(tiles[columns - 1],
+              MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE));
+}
+
+TEST_P(MostVisitedSitesTest, ShouldContainHomePageInFirstShorterRow) {
+  FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
+  home_page_client->SetHomePageEnabled(true);
+  DisableRemoteSuggestions();
+  const size_t columns = 3;
+  EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
+      .WillRepeatedly(InvokeCallbackArgument<0>((MostVisitedURLList{
+          MakeMostVisitedURL("Site 1", "http://site1/"),
+          MakeMostVisitedURL("Site 2", "http://site2/"),
+          MakeMostVisitedURL("Site 3", "http://site3/"),
+          MakeMostVisitedURL("Site 4", "http://site4/"),
+      })));
+  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
+  EXPECT_CALL(*mock_top_sites_, IsBlacklisted(Eq(GURL(kHomePageUrl))))
+      .Times(AnyNumber())
+      .WillRepeatedly(Return(false));
+  std::vector<NTPTile> tiles;
+  EXPECT_CALL(mock_observer_, OnMostVisitedURLsAvailable(_))
+      .WillOnce(SaveArg<0>(&tiles));
+  most_visited_sites_->OnColumnNumberChanged(columns);
+  most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
+                                                  /*num_sites=*/8);
+  base::RunLoop().RunUntilIdle();
+  // Assert that the home page tile is in the first four tiles.
+  EXPECT_THAT(tiles[columns - 1],
+              MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE));
 }
 
 TEST_P(MostVisitedSitesTest, ShouldDeduplicateHomePageWithTopSites) {

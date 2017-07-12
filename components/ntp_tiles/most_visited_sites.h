@@ -147,6 +147,9 @@ class MostVisitedSites : public history::TopSitesObserver,
   // if the request resulted in the set of tiles changing.
   void Refresh();
 
+  // Changes the number of columns used for displaying tiles.
+  void OnColumnNumberChanged(size_t num_cols);
+
   // Forces a rebuild of the current tiles to update the pinned home page.
   void OnHomePageStateChanged();
 
@@ -246,6 +249,9 @@ class MostVisitedSites : public history::TopSitesObserver,
 
   // The maximum number of most visited sites to return.
   size_t num_sites_;
+
+  // The number of columns the sites will be arranged in.
+  size_t num_cols_;
 
   std::unique_ptr<
       suggestions::SuggestionsService::ResponseCallbackList::Subscription>

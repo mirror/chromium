@@ -33,9 +33,6 @@ namespace {
 const base::Feature kDisplaySuggestionsServiceTiles{
     "DisplaySuggestionsServiceTiles", base::FEATURE_ENABLED_BY_DEFAULT};
 
-// The maximum index of the home page tile.
-const size_t kMaxHomeTileIndex = 3;
-
 // Determine whether we need any tiles from PopularSites to fill up a grid of
 // |num_tiles| tiles.
 bool NeedPopularSites(const PrefService* prefs, int num_tiles) {
@@ -73,6 +70,7 @@ MostVisitedSites::MostVisitedSites(
       supervisor_(std::move(supervisor)),
       observer_(nullptr),
       num_sites_(0u),
+      num_cols_(0u),
       top_sites_observer_(this),
       mv_source_(TileSource::TOP_SITES),
       top_sites_weak_ptr_factory_(this) {
@@ -149,6 +147,12 @@ void MostVisitedSites::SetMostVisitedURLsObserver(Observer* observer,
 
 void MostVisitedSites::Refresh() {
   suggestions_service_->FetchSuggestionsData();
+}
+
+void MostVisitedSites::OnColumnNumberChanged(size_t num_cols) {
+  DCHECK(num_cols);
+  num_cols_ = num_cols;
+  BuildCurrentTiles();
 }
 
 void MostVisitedSites::OnHomePageStateChanged() {
@@ -416,11 +420,10 @@ NTPTilesVector MostVisitedSites::InsertHomeTile(
   while (index < tiles.size() && new_tiles.size() < num_sites_) {
     bool hosts_are_equal = tiles[index].url.host() == home_page_url.host();
 
-    // Add the home tile to the first four tiles
-    // or at the position of a tile that has the same host
-    // and is ranked higher.
+    // Add the home tile to the last column of the first row of tiles or at the
+    // position of a tile that has the same host and is ranked higher.
     // TODO(fhorschig): Introduce a more sophisticated deduplication.
-    if (!home_tile_added && (index >= kMaxHomeTileIndex || hosts_are_equal)) {
+    if (!home_tile_added && (index >= (num_cols_ - 1) || hosts_are_equal)) {
       new_tiles.push_back(std::move(home_tile));
       home_tile_added = true;
       continue;  // Do not advance the current tile index.

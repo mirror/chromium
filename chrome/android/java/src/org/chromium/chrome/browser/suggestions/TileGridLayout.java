@@ -29,6 +29,8 @@ public class TileGridLayout extends FrameLayout {
     private int mMaxColumns;
     private int mExtraVerticalSpacing;
 
+    private int mNumColumns;
+
     /**
      * Constructor for inflating from XML.
      *
@@ -59,6 +61,15 @@ public class TileGridLayout extends FrameLayout {
      */
     public void setMaxColumns(int columns) {
         mMaxColumns = columns;
+    }
+
+    /**
+     * TODO(oskopek): Comment.
+     *
+     * @return The number of columns tiles will be layed out to.
+     */
+    public int getColumnNumber() {
+        return mNumColumns;
     }
 
     /**
@@ -115,6 +126,7 @@ public class TileGridLayout extends FrameLayout {
         int numColumns = MathUtils.clamp(
                 (gridWidth + mMinHorizontalSpacing) / (childWidth + mMinHorizontalSpacing), 1,
                 mMaxColumns);
+        mNumColumns = numColumns;
 
         // Ensure column spacing isn't greater than mMaxHorizontalSpacing.
         int gridWidthMinusColumns = Math.max(0, gridWidth - numColumns * childWidth);

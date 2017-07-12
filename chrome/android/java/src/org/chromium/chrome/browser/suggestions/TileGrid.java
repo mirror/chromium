@@ -44,6 +44,7 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
         mTileGroup = new TileGroup(ContextUtils.getApplicationContext(), uiDelegate,
                 contextMenuManager, tileGroupDelegate,
                 /* observer = */ this, offlinePageBridge, getTileTitleLines());
+        mTileGroup.onColumnNumberChanged(MAX_TILE_COLUMNS);
         mTileGroup.startObserving(getMaxTileRows() * MAX_TILE_COLUMNS);
     }
 
@@ -78,6 +79,11 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
     @Override
     public void onTileIconChanged(Tile tile) {
         if (isVisible()) notifyItemChanged(0, new ViewHolder.UpdateIconViewCallback(tile));
+
+        // TODO(oskopek): Figure out how when to call this?
+        if (isVisible()) {
+            notifyItemChanged(0, new ViewHolder.UpdateColumnNumberCallback(mTileGroup));
+        }
     }
 
     @Override
@@ -148,6 +154,23 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
             public void onResult(NewTabPageViewHolder holder) {
                 assert holder instanceof ViewHolder;
                 ((ViewHolder) holder).updateTiles(mTileGroup);
+            }
+        }
+
+        /**
+         * Callback to update the number of columns the tiles are rendered in, in the view holder.
+         */
+        public static class UpdateColumnNumberCallback extends PartialBindCallback {
+            private final TileGroup mTileGroup;
+
+            public UpdateColumnNumberCallback(TileGroup tileGroup) {
+                mTileGroup = tileGroup;
+            }
+
+            @Override
+            public void onResult(NewTabPageViewHolder holder) {
+                assert holder instanceof ViewHolder;
+                mTileGroup.onColumnNumberChanged(((ViewHolder) holder).mLayout.getColumnNumber());
             }
         }
 

@@ -68,6 +68,13 @@ public class TileGroup implements MostVisitedSites.Observer {
         void setMostVisitedSitesObserver(MostVisitedSites.Observer observer, int maxResults);
 
         /**
+         * TODO(oskopek): Comment.
+         *
+         * @param numColumns The number of columns tiles will be rendered in.
+         */
+        void onColumnNumberChanged(int numColumns);
+
+        /**
          * Called when the NTP has completely finished loading (all views will be inflated
          * and any dependent resources will have been loaded).
          * @param tiles The tiles owned by the {@link TileGroup}. Used to record metrics.
@@ -251,6 +258,7 @@ public class TileGroup implements MostVisitedSites.Observer {
         LargeIconCallback iconCallback =
                 new LargeIconCallbackImpl(siteUrl, /* trackLoadTask = */ false);
         mUiDelegate.getImageFetcher().makeLargeIconRequest(siteUrl, mMinIconSize, iconCallback);
+        mObserver.onTileCountChanged();
     }
 
     /**
@@ -261,6 +269,15 @@ public class TileGroup implements MostVisitedSites.Observer {
     public void startObserving(int maxResults) {
         mObserver.onLoadTaskAdded();
         mTileGroupDelegate.setMostVisitedSitesObserver(this, maxResults);
+    }
+
+    /**
+     * TODO(oskopek): Comment.
+     *
+     * @param numColumns The number of columns tiles will be rendered in.
+     */
+    public void onColumnNumberChanged(int numColumns) {
+        mTileGroupDelegate.onColumnNumberChanged(numColumns);
     }
 
     /**

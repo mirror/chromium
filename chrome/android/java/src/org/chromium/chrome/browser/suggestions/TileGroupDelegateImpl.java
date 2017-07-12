@@ -81,6 +81,13 @@ public class TileGroupDelegateImpl implements TileGroup.Delegate {
     }
 
     @Override
+    public void onColumnNumberChanged(int numColumns) {
+        assert !mIsDestroyed;
+
+        mMostVisitedSites.onColumnNumberChanged(numColumns);
+    }
+
+    @Override
     public void setMostVisitedSitesObserver(MostVisitedSites.Observer observer, int maxResults) {
         assert !mIsDestroyed;
 

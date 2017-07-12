@@ -62,6 +62,11 @@ public class MostVisitedSitesBridge
     }
 
     @Override
+    public void onColumnNumberChanged(int numColumns) {
+        nativeOnColumnNumberChanged(mNativeMostVisitedSitesBridge, numColumns);
+    }
+
+    @Override
     public void setObserver(final Observer observer, int numSites) {
         Observer wrappedObserver = new Observer() {
             @Override
@@ -123,6 +128,8 @@ public class MostVisitedSitesBridge
     private native long nativeInit(Profile profile);
     private native void nativeDestroy(long nativeMostVisitedSitesBridge);
     private native void nativeOnHomePageStateChanged(long nativeMostVisitedSitesBridge);
+    private native void nativeOnColumnNumberChanged(
+            long nativeMostVisitedSitesBridge, int numColumns);
     private native void nativeSetObserver(
             long nativeMostVisitedSitesBridge, MostVisitedSites.Observer observer, int numSites);
     private native void nativeSetHomePageClient(

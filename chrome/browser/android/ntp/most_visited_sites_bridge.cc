@@ -211,6 +211,13 @@ void MostVisitedSitesBridge::OnHomePageStateChanged(
   most_visited_->OnHomePageStateChanged();
 }
 
+void MostVisitedSitesBridge::OnColumnNumberChanged(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    jint num_cols) {
+  most_visited_->OnColumnNumberChanged(num_cols);
+}
+
 void MostVisitedSitesBridge::SetObserver(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
