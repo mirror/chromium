@@ -46,6 +46,30 @@
       "revId": "947c0013fc968862e5801955b208111e3386cfcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eecca56d_fe6da1d1",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-12T01:10:54Z",
+      "side": 1,
+      "message": "We will be upstreaming the support lib along with our long term support release, which is planned to be in December 2017.",
+      "parentUuid": "7ed7fa34_e62d4ec2",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 94
+      },
+      "revId": "947c0013fc968862e5801955b208111e3386cfcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
