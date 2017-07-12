@@ -22,20 +22,28 @@ execute all our tests.
 """
 
 import argparse
+import collections
+import itertools
 import json
 import os
+import subprocess
 
 from core import path_util
 path_util.AddTelemetryToPath()
 
 from telemetry.util import bot_utils
 
+from telemetry import decorators
 
 def get_sharding_map_path():
   return os.path.join(
       path_util.GetChromiumSrcDir(), 'tools', 'perf', 'core',
       'benchmark_sharding_map.json')
 
+def get_avg_times_path():
+  return os.path.join(
+      path_util.GetChromiumSrcDir(), 'tools', 'perf', 'core',
+      'desktop_benchmark_avg_times.json')
 
 def load_benchmark_sharding_map():
   with open(get_sharding_map_path()) as f:
@@ -89,6 +97,156 @@ def get_sorted_benchmark_list_by_time(all_benchmarks):
   return runtime_list, new_benchmarks
 
 
+def ShouldBenchmarkBeScheduled(benchmark, platform=None):
+  disabled_tags = decorators.GetDisabledAttributes(benchmark)
+  enabled_tags = decorators.GetEnabledAttributes(benchmark)
+
+  # Don't run benchmarks which are disabled on all platforms.
+  if 'all' in disabled_tags:
+    return False
+
+  if platform is not None:
+    # If we're not on android, don't run mobile benchmarks.
+    if platform != 'android' and 'android' in enabled_tags:
+      return False
+
+    # If we're on android, don't run benchmarks disabled on mobile
+    if platform == 'android' and 'android' in disabled_tags:
+      return False
+
+  return True
+
+
+
+
+from core.test_timings_generator import get_story_times_path
+
+
+def get_story_avg_times():
+  # Format is {} benchmark -> {} story name -> time (seconds)
+  with open(get_story_times_path()) as f:
+    return json.load(f)
+
+
+class Tmp(object):
+  def __getattr__(self, name):
+    return None
+
+def shard_all_benchmarks(num_devices, all_benchmarks, builder):
+  with open(get_avg_times_path()) as f:
+    times = json.load(f)
+  r_story_times = {}
+
+  plat = None
+  if 'win' in builder.lower():
+    plat = 'win'
+  elif 'mac' in builder.lower():
+    plat = 'mac'
+  elif 'android' in builder.lower():
+    plat = 'android'
+  elif 'linux' in builder.lower():
+    plat = 'linux'
+
+  story_times = get_story_avg_times()
+  story_times = story_times.setdefault(plat, {}).setdefault(builder, {})
+
+  executed_stories = []
+  stories_per_benchmark = {}
+  for b in all_benchmarks:
+    if not (ShouldBenchmarkBeScheduled(
+        b, 'android') or ShouldBenchmarkBeScheduled(b, 'win')):
+      continue
+
+    # pass in Tmp() because otherwise it breaks sometimes.
+    stories = b().CreateStorySet(Tmp()).stories
+
+    tag_filter = b.options.get('story_tag_filter')
+    if tag_filter:
+      stories = filter(lambda story: tag_filter in story.tags, stories)
+
+    if b.Name() not in times:
+      #print 'benchmark %s not scheduled; exiting' % b.Name()
+      continue
+    stories_per_benchmark[b.Name()] = [story.name for story in stories]
+
+    for story in stories:
+      story_name = story.name
+      if story.grouping_keys:
+        story_name += '@%s' % str(story.grouping_keys)
+
+      tup = (b.Name(), story_name)
+      time = None
+      if story_times.get(b.Name()):
+        benchmark_times = story_times[b.Name()]
+        if not story_name in benchmark_times:
+          time = 0
+          continue
+        time = benchmark_times[story_name]
+      else:
+        time = 0
+
+      r_story_times[tup] = time
+      executed_stories.append(tup)
+
+  total_time = 0
+  for story_tup in executed_stories:
+    time = r_story_times[story_tup]
+    if isinstance(time, list):
+      time = sum(time)
+    total_time += time
+
+  chunk_size = total_time / num_devices
+
+  sharded = []
+  so_far = 0
+  extra = 0
+  buildup = []
+  for i, name in enumerate(executed_stories):
+    time = r_story_times[name]
+    if isinstance(time, list):
+      time = sum(time)
+    if so_far + extra > chunk_size:
+      print 'skipped after adding', r_story_times[executed_stories[i-1]]
+      extra = (so_far + extra) - chunk_size
+      sharded.append(buildup)
+      buildup = []
+      so_far = 0
+    so_far += time
+    buildup.append(name)
+  def mb_sum(x):
+    if isinstance(x, list):
+      return sum(x)
+    return x
+
+  for i, thing in enumerate(sharded):
+    continue
+    print 'SHARD %d takes %d' % (i+1, sum(
+        mb_sum(r_story_times[tup]) for tup in thing))
+    #for tup in thing:
+      #print tup[0], tup[1], r_story_times[tup]
+  results = [collections.defaultdict(list) for _ in range(len(sharded))]
+  for i, shard in enumerate(sharded):
+    for name, story_name in shard:
+      results[i][name].append(story_name)
+
+  per_device = {}
+  benchmark_end = {}
+  for i, result in enumerate(results):
+    per_device[i] = result
+    for name in sorted(result.keys()):
+      if len(result[name]) == len(stories_per_benchmark[name]):
+        result[name] = {}
+      else:
+        val = benchmark_end.get(name, -1) + 1
+        result[name] = {
+            "begin": val,
+            "end": len(result[name]) + val,
+        }
+        benchmark_end[name] = result[name]["end"]
+
+  return results
+
+
 # Returns a map of benchmark name to shard it is on.
 def shard_benchmarks(num_shards, all_benchmarks):
   benchmark_to_shard_dict = {}
@@ -122,23 +280,27 @@ def regenerate(
   sharding_map[u'all_benchmarks'] = [b.Name() for b in benchmarks]
 
   for name, config in waterfall_configs.items():
+    if 'fyi' in name:
+      continue
     for builder, tester in config['testers'].items():
       if not tester.get('swarming'):
         continue
 
-      if builder not in builder_names:
+      if builder_names and builder not in builder_names:
         continue
       per_builder = {}
 
-      devices = tester['swarming_dimensions'][0]['device_ids']
+      devices = sorted(tester['swarming_dimensions'][0]['device_ids'])
       shard_number = len(devices)
-      shard = shard_benchmarks(shard_number, benchmarks)
+      shards = shard_all_benchmarks(shard_number, benchmarks, builder)
 
-      for name, index in shard.items():
+      for index, shard in enumerate(shards):
         device = devices[index]
-        device_map = per_builder.get(device, {'benchmarks': []})
-        device_map['benchmarks'].append(name)
+        device_map = per_builder.get(device, {'benchmarks': {}})
+        for benchmark, value in shard.items():
+          device_map['benchmarks'][benchmark] = value
         per_builder[device] = device_map
+
       sharding_map[builder] = per_builder
 
 
@@ -146,9 +308,6 @@ def regenerate(
     if name == 'all_benchmarks':
       builder_values.sort()
       continue
-
-    for value in builder_values.values():
-      value['benchmarks'].sort()
 
   if not dry_run:
     with open(get_sharding_map_path(), 'w') as f:
@@ -183,6 +342,10 @@ def get_args():
   parser.add_argument(
       '--verbose', action='store_true',
       help='Determines how verbose the script is.')
+  parser.add_argument('--refresh-times', action='store_true')
+  parser.add_argument('--platforms', action='append', default=None)
+  parser.add_argument('--swarming-py-path')
+  parser.add_argument('--buildnum-offset')
   return parser
 
 
