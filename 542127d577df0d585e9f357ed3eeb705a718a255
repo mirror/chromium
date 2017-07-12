@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c251835b_fc3cfd4b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializationTag.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc0d4a7b_a5d96da4",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac39b8b9_f1aca1c5",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c436f1ae_0a2c0fbb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac39b8b9_f1aca1c5",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6b41f73c_28bd4ec7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f774d12_711ba56d",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "683736f4_fa961193",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bb8335_71b8be08",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "683736f4_fa961193",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "68515d83_b96a2559",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21de4672_7ccc89c9",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eadad09b_ac2de79c",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c30eb81_e6283623",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eadad09b_ac2de79c",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3fc0bdbb_ea414508",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e088a68_0c09e8e6",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84522898_9b5d9a63",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
         "patchSetId": 9
@@ -135,6 +261,24 @@
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357edfd0_16b3714c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84522898_9b5d9a63",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "745aaf14_29f02942",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed3b242e_5faf0016",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1400a51_5b9c4b79",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
         "patchSetId": 9
@@ -169,6 +331,24 @@
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052782e8_41315fd3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1400a51_5b9c4b79",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "f1e88824_922c2299",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de69af9e_292ccf7d",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3be84b9_0d5adefd",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.h",
         "patchSetId": 9
@@ -203,6 +401,24 @@
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccf7938_e9237f51",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3be84b9_0d5adefd",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "7010bffa_182451b2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3104b8d8_ce0db65e",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a104317_596799d1",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
         "patchSetId": 9
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "5209b32b_38f85954",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a104317_596799d1",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cab70e54_3a67e0e2",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
         "patchSetId": 9
@@ -251,6 +503,24 @@
       "writtenOn": "2017-07-11T18:26:35Z",
       "side": 1,
       "message": "The meaning of these numbers isn\u0027t obvious to me. Is it the float representation of red in P3? If so, would it be clearer to do the comparison on floats?\n\n[\"No, but I\u0027ll expand the comment.\" is a perfectly reasonable answer. :)]",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1608ce1_c068e14f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": ":) No, because these values are in internal Skia half float format and it is not easy to compare them (unless there is a half float format supported by Blink). I\u0027ll add some comments.",
+      "parentUuid": "cab70e54_3a67e0e2",
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "e2750fea_4e81611f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Decode tests added for ImageData and ImageBitmap.",
+      "parentUuid": "d1360d77_ae207951",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff87f06b_df8664e9",
         "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
         "patchSetId": 9
@@ -288,6 +576,24 @@
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68763d76_b099818c",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff87f06b_df8664e9",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "9187987d_eeddfb43",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9b46afd_e329905e",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5514700_cba0abbb",
         "filename": "third_party/WebKit/Source/core/html/ImageData.h",
         "patchSetId": 9
@@ -322,6 +646,24 @@
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817d07c6_8a877a82",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5514700_cba0abbb",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "9c8cdb98_407c2972",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "905e832a_1514779f",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f77dd69_36e80339",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 9
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "5bad3e46_27e9a0ce",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f77dd69_36e80339",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5868021_1a47ad37",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
         "patchSetId": 9
@@ -370,6 +748,24 @@
       "writtenOn": "2017-07-11T18:26:35Z",
       "side": 1,
       "message": "Does !info.colorSpace() imply that we want RGBA8 storage, or could we have F16 data with no color space? If it is possible, fix this early return. If not, maybe a DCHECK would help clarify this for future readers?",
+      "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a86be93_5675e3c9",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-12T14:48:29Z",
+      "side": 1,
+      "message": "When there is no color space information, the SkImage is in legacy mode and the color type is kN32_SkColorType (which translates to kRGBA8 canvas pixel format). There is nothing to DCHECK on as I understand. I\u0027ll add some comments though.",
+      "parentUuid": "b5868021_1a47ad37",
       "revId": "542127d577df0d585e9f357ed3eeb705a718a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
