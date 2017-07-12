@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "115f0ea8_62f23009",
+        "filename": "cc/output/overlay_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T07:27:05Z",
+      "side": 1,
+      "message": "Not without changing the \"else\" case and breaking unit tests.",
+      "parentUuid": "ffe7bca4_58ad6627",
+      "revId": "b40aa82c4feab862ac2a1077bcca6bacb02138d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac36bd22_d155a7ec",
         "filename": "cc/output/overlay_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b40aa82c4feab862ac2a1077bcca6bacb02138d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee49db8_7a2ede06",
+        "filename": "cc/output/overlay_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-12T07:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac36bd22_d155a7ec",
+      "revId": "b40aa82c4feab862ac2a1077bcca6bacb02138d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
