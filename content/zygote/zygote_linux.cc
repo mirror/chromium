@@ -593,6 +593,7 @@ base::ProcessId Zygote::ReadArgsAndFork(base::PickleIterator iter,
     base::GlobalDescriptors::Key key;
     if (!iter.ReadUInt32(&key))
       return -1;
+    LOG(ERROR) << "Got descriptor key: " << key << " for fd: " << fds[i].get();
     mapping.push_back(base::GlobalDescriptors::Descriptor(key, fds[i].get()));
   }
 
