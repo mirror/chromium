@@ -16,6 +16,24 @@
       "revId": "7a084179bf6d8b9a6c223741975567500b06f0bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9fb80a_5f5ffaaa",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-12T15:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "524421c5_672751a8",
+      "revId": "7a084179bf6d8b9a6c223741975567500b06f0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
