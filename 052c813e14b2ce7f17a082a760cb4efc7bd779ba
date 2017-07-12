@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92f3d3f6_33f17905",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-12T16:44:35Z",
+      "side": 1,
+      "message": "The reasoning for why you do this check wasn\u0027t isn\u0027t immediately obvious to me. A comment would be nice.",
+      "range": {
+        "startLine": 116,
+        "startChar": 19,
+        "endLine": 116,
+        "endChar": 20
+      },
+      "revId": "052c813e14b2ce7f17a082a760cb4efc7bd779ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e218d6_adc7a5f1",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-12T16:44:35Z",
+      "side": 1,
+      "message": "Would be good to explain via a comment what is means if parent_id is different, how this situation would arise.",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 27
+      },
+      "revId": "052c813e14b2ce7f17a082a760cb4efc7bd779ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c063e0_6b075b1e",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-12T16:44:35Z",
+      "side": 1,
+      "message": "Can you rename to parent_tab_id_? There are so many different ids flying around here.",
+      "range": {
+        "startLine": 85,
+        "startChar": 21,
+        "endLine": 85,
+        "endChar": 31
+      },
+      "revId": "052c813e14b2ce7f17a082a760cb4efc7bd779ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29baf758_80948e00",
+        "filename": "components/sync_sessions/task_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-12T16:44:35Z",
+      "side": 1,
+      "message": "Can you rename this as well?",
+      "range": {
+        "startLine": 105,
+        "startChar": 43,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "052c813e14b2ce7f17a082a760cb4efc7bd779ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d74888_97aa3d0c",
+        "filename": "components/sync_sessions/task_tracker_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-12T16:44:35Z",
+      "side": 1,
+      "message": "Oh cool! I didn\u0027t know about this, thanks!",
+      "range": {
+        "startLine": 256,
+        "startChar": 14,
+        "endLine": 256,
+        "endChar": 25
+      },
+      "revId": "052c813e14b2ce7f17a082a760cb4efc7bd779ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
