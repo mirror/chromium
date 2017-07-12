@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73d27e80_d2e2dbb4",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-12T06:21:35Z",
+      "side": 1,
+      "message": "Actually, module scripts in XHTML are NOT executed if they fall into this if block, i.e. 1st Clause, Step 23 of \"prepare a script\", and the code at Lines 1127--1134 are wrongly placed (by me).\nSo probably we can just move the code at Lines 1127--1134 to here (with some changes).\n\nOr do we want to disable all module scripts in XHTML for consistency? (e.g. supporting only async module scripts in XHTML might lead unnecessarily async module scripts as workaround)",
+      "revId": "273234a86c49e0f5a53257072cef61f66cb5fe9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
