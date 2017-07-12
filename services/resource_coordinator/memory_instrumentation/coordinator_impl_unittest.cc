@@ -324,20 +324,20 @@ TEST_F(CoordinatorImplTest, OsDumps) {
           }));
   EXPECT_CALL(renderer_client, RequestOSMemoryDump(_, _)).Times(0);
 #else
-  EXPECT_CALL(browser_client, RequestOSMemoryDump(Contains(1), _))
+  EXPECT_CALL(browser_client, RequestOSMemoryDump(_, _))
       .WillOnce(Invoke(
           [](const std::vector<base::ProcessId>& pids,
              const MockClientProcess::RequestOSMemoryDumpCallback& callback) {
             std::unordered_map<base::ProcessId, OSMemDump> results;
-            results[1].resident_set_kb = 1;
+            results[0].resident_set_kb = 1;
             callback.Run(true, results);
           }));
-  EXPECT_CALL(renderer_client, RequestOSMemoryDump(Contains(2), _))
+  EXPECT_CALL(renderer_client, RequestOSMemoryDump(_, _))
       .WillOnce(Invoke(
           [](const std::vector<base::ProcessId>& pids,
              const MockClientProcess::RequestOSMemoryDumpCallback& callback) {
             std::unordered_map<base::ProcessId, OSMemDump> results;
-            results[2].resident_set_kb = 2;
+            results[0].resident_set_kb = 2;
             callback.Run(true, results);
           }));
 #endif  // defined(OS_LINUX)

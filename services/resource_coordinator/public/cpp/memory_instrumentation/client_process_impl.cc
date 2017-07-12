@@ -14,6 +14,7 @@
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/coordinator.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -178,16 +179,7 @@ void ClientProcessImpl::OnProcessMemoryDumpDone(
     base::trace_event::MemoryDumpCallbackResult result;
 
     CreateDumpSummary(process_dumps, &result);
-
-    process_memory_dump->os_dump = result.os_dump;
     process_memory_dump->chrome_dump = result.chrome_dump;
-    for (const auto& kv : result.extra_processes_dumps) {
-      const base::ProcessId pid = kv.first;
-      const base::trace_event::MemoryDumpCallbackResult::OSMemDump&
-          os_mem_dump = kv.second;
-      DCHECK_EQ(0u, process_memory_dump->extra_processes_dumps.count(pid));
-      process_memory_dump->extra_processes_dumps[pid] = os_mem_dump;
-    }
   }
   callback.Run(success, dump_guid, std::move(process_memory_dump));
 }
@@ -207,10 +199,31 @@ void ClientProcessImpl::RequestGlobalMemoryDump_NoCallback(
 }
 
 void ClientProcessImpl::RequestOSMemoryDump(
-    const std::vector<base::ProcessId>& ids,
+    const std::vector<base::ProcessId>& pids,
     const RequestOSMemoryDumpCallback& callback) {
   using OSMemDump = base::trace_event::MemoryDumpCallbackResult::OSMemDump;
   std::unordered_map<base::ProcessId, OSMemDump> results;
+  bool success = true;
+  for (const auto& pid : pids) {
+    mojom::RawOSMemDump dump;
+    if (!OSMetrics::FillOSMemoryDump(pid, &dump)) {
+      success = false;
+      continue;
+    }
+    results[pid].resident_set_kb = dump.resident_set_kb;
+    results[pid].platform_private_footprint.phys_footprint_bytes =
+        dump.platform_private_footprint.phys_footprint_bytes;
+    results[pid].platform_private_footprint.internal_bytes =
+        dump.platform_private_footprint.internal_bytes;
+    results[pid].platform_private_footprint.compressed_bytes =
+        dump.platform_private_footprint.compressed_bytes;
+    results[pid].platform_private_footprint.rss_anon_bytes =
+        dump.platform_private_footprint.rss_anon_bytes;
+    results[pid].platform_private_footprint.vm_swap_bytes =
+        dump.platform_private_footprint.vm_swap_bytes;
+    results[pid].platform_private_footprint.private_bytes =
+        dump.platform_private_footprint.private_bytes;
+  }
   callback.Run(true, results);
 }
 
