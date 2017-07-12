@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dd88fdb_2c4eb492",
+        "filename": "extensions/renderer/bindings/api_binding_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T23:13:00Z",
+      "side": 1,
+      "message": "nit: The code doesn\u0027t seem to handle nullptr gracefully. Should this be supplying a non-null ExceptionHandler?",
+      "revId": "99e06a13597d1e888afbfe190d2c42896dc4446c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528e609c_6742dc02",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-12T23:13:00Z",
+      "side": 1,
+      "message": "nit: Why move this TryCatch inside the loop? It seems like it still ought to work outside the loop, especially since the exception handler is expected to clear it. Keeping it outside saves the work of having to register/unregister the TryCatch with the isolate.",
+      "revId": "99e06a13597d1e888afbfe190d2c42896dc4446c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
