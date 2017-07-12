@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright 2017 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<org.chromium.chrome.browser.signin.SigninPromoView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:chrome="http://schemas.android.com/apk/res-auto"
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center_horizontal"
+    android:id="@+id/signin_promo_view_container"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp">
+
+    <FrameLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <ImageView
+            android:contentDescription="@null"
+            android:id="@+id/signin_promo_image"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/signin_promo_account_image_size"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_width="@dimen/signin_promo_account_image_size"
+            android:scaleType="fitCenter" />
+
+        <ImageButton
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/close"
+            android:id="@+id/signin_promo_close_button"
+            android:layout_gravity="top|end"
+            android:layout_height="24dp"
+            android:layout_width="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btn_close"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/signin_promo_description"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_width="wrap_content"
+        android:lineSpacingMultiplier="1.4"
+        android:text="@string/signin_promo_settings"
+        android:textColor="@color/default_text_color"
+        android:textSize="14sp" />
+
+    <org.chromium.ui.widget.ButtonCompat
+        android:id="@+id/signin_promo_button_continue"
+        android:layout_height="36dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginEnd="@dimen/signin_promo_button_margin"
+        android:layout_marginStart="@dimen/signin_promo_button_margin"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:text="@string/signin_promo_continue_as"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        chrome:buttonColor="@color/light_active_color"
+        chrome:buttonRaised="false" />
+
+    <Button
+        style="@style/ButtonCompatBorderlessRegular"
+        android:id="@+id/signin_promo_button_choose_account"
+        android:layout_height="36dp"
+        android:layout_marginEnd="@dimen/signin_promo_button_margin"
+        android:layout_marginStart="@dimen/signin_promo_button_margin"
+        android:layout_width="match_parent"
+        android:text="@string/signin_promo_choose_account"
+        android:textAllCaps="false"
+        android:textColor="@color/light_active_color"
+        android:textSize="14sp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@android:id/summary"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@android:id/widget_frame"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone" />
+</org.chromium.chrome.browser.signin.SigninPromoView>
