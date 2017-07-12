@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be1db066_4857d7d5",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptCreationParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T00:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40e6febe_c91a9a31",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73ce1d31_7caa3395",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptCreationParams.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e1276bb9_1e386d08",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptCreationParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T00:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73ce1d31_7caa3395",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "910c6dcc_a164be8b",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974ec73d_92c354c2",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T00:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "910c6dcc_a164be8b",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "d15bb82d_f0391ca3",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T00:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb06a269_9a5e894a",
+      "range": {
+        "startLine": 76,
+        "startChar": 22,
+        "endLine": 76,
+        "endChar": 23
+      },
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08d61830_0a17abe4",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
         "patchSetId": 6
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-11T14:38:21Z",
       "side": 1,
       "message": "Do we have a case where entry-\u003eclients are updated while being iterated? If so, can we forbid them?",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ae3288_330a13d0",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T00:46:21Z",
+      "side": 1,
+      "message": "Done. We don\u0027t have the case. I added DCHECK() in AddClient() to forbid such usage.",
+      "parentUuid": "08d61830_0a17abe4",
       "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "afa897c5_e41dcfe1",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T00:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5b5fe77_f736bb28",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "188fcfaa_1ec4adee",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapTest.cpp",
         "patchSetId": 6
@@ -153,6 +273,24 @@
       "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e6e907_22f34058",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T00:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "188fcfaa_1ec4adee",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "6ccc9482_25f943f1",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T00:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3196205d_d4afa07b",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd247246_7a492008",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapTest.cpp",
         "patchSetId": 6
@@ -187,6 +343,24 @@
       "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7957219f_f78959f0",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-12T00:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd247246_7a492008",
+      "revId": "07ea44bc050b6199f3cc509e271c2602e8b8a532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
