@@ -28,10 +28,13 @@ class AutofillMetrics;
 }
 
 namespace content {
-class MediaInternals;
 class RenderFrameImpl;
 class RenderWidgetHostLatencyTracker;
 }  // namespace content
+
+namespace media {
+class WatchTimeRecorder;
+}
 
 namespace resource_coordinator {
 class CoordinationUnitManager;
@@ -95,9 +98,9 @@ class METRICS_EXPORT UkmRecorder {
   friend translate::TranslateRankerImpl;
   friend TestRecordingHelper;
   friend UkmInterface;
-  friend content::MediaInternals;
   friend content::RenderFrameImpl;
   friend content::RenderWidgetHostLatencyTracker;
+  friend media::WatchTimeRecorder;
   friend password_manager::PasswordManagerMetricsRecorder;
   friend password_manager::PasswordFormMetricsRecorder;
   friend resource_coordinator::CoordinationUnitManager;

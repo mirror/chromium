@@ -32,6 +32,10 @@ namespace media {
 class SwitchableAudioRendererSink;
 class SurfaceManager;
 
+namespace mojom {
+class WatchTimeRecorderProvider;
+}
+
 // Holds parameters for constructing WebMediaPlayerImpl without having
 // to plumb arguments through various abstraction layers.
 class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
@@ -65,7 +69,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       base::TimeDelta max_keyframe_distance_to_disable_background_video_mse,
       bool enable_instant_source_buffer_gc,
       bool allow_suspend,
-      bool embedded_media_experience_enabled);
+      bool embedded_media_experience_enabled,
+      mojom::WatchTimeRecorderProvider* provider);
 
   ~WebMediaPlayerParams();
 
@@ -130,6 +135,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return request_routing_token_cb_;
   }
 
+  mojom::WatchTimeRecorderProvider* watch_time_recorder_provider() const {
+    return watch_time_recorder_provider_;
+  }
+
  private:
   DeferLoadCB defer_load_cb_;
   scoped_refptr<SwitchableAudioRendererSink> audio_renderer_sink_;
@@ -149,6 +158,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   bool enable_instant_source_buffer_gc_;
   const bool allow_suspend_;
   const bool embedded_media_experience_enabled_;
+  mojom::WatchTimeRecorderProvider* watch_time_recorder_provider_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };

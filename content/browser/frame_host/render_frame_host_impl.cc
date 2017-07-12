@@ -113,6 +113,7 @@
 #include "media/mojo/interfaces/media_service.mojom.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
 #include "media/mojo/services/media_interface_provider.h"
+#include "media/mojo/services/watch_time_recorder.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
@@ -2942,6 +2943,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
     GetInterfaceRegistry()->AddInterface(
         base::Bind(&AuthenticatorImpl::Create, base::Unretained(this)));
   }
+
+  GetInterfaceRegistry()->AddInterface(
+      base::Bind(&media::WatchTimeRecorder::CreateWatchTimeRecorderProvider));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {

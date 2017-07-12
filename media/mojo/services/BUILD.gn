@@ -65,6 +65,8 @@ source_set("lib") {
     "mojo_video_decoder_service.h",
     "test_mojo_media_client.cc",
     "test_mojo_media_client.h",
+    "watch_time_recorder.cc",
+    "watch_time_recorder.h",
   ]
 
   defines = [ "MEDIA_MOJO_IMPLEMENTATION" ]
@@ -90,6 +92,7 @@ source_set("lib") {
     "//media/mojo/common",
     "//media/mojo/common:mojo_shared_buffer_video_frame",
     "//mojo/common",
+    "//services/metrics/public/cpp:metrics_cpp",
     "//services/service_manager/public/interfaces",
   ]
 
