@@ -16,6 +16,24 @@
       "revId": "ba3473993811a4b1103a8f6abfea2a326642fb22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d93d3ee_9b6245bb",
+        "filename": "chrome/browser/ui/webui/settings/on_startup_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-12T22:48:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a084724_0d43658e",
+      "revId": "ba3473993811a4b1103a8f6abfea2a326642fb22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
