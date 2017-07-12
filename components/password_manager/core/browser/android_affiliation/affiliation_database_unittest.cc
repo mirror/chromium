@@ -9,11 +9,14 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
+#include "base/path_service.h"
+#include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
 #include "sql/test/scoped_error_expecter.h"
 #include "sql/test/test_helpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/sqlite/sqlite3.h"
+#include "url/gurl.h"
 
 namespace password_manager {
 
@@ -27,6 +30,8 @@ const char kTestFacetURI5[] = "https://epsilon.example.com";
 const char kTestFacetURI6[] = "https://zeta.example.com";
 
 const char kTestAndroidFacetURI[] = "android://hash@com.example.android";
+const char kTestAndroidPlayName[] = "Test Android App";
+const char kTestAndroidIconURL[] = "https://example.com/icon.png";
 
 const int64_t kTestTimeUs1 = 1000000;
 const int64_t kTestTimeUs2 = 2000000;
@@ -36,8 +41,7 @@ void ExpectEquivalenceClassesAreEqual(
     const AffiliatedFacetsWithUpdateTime& expectation,
     const AffiliatedFacetsWithUpdateTime& reality) {
   EXPECT_EQ(expectation.last_update_time, reality.last_update_time);
-  EXPECT_THAT(reality.facets,
-              testing::UnorderedElementsAreArray(expectation.facets));
+  EXPECT_TRUE(AreEquivalenceClassesEqual(reality.facets, expectation.facets));
 }
 
 AffiliatedFacetsWithUpdateTime TestEquivalenceClass1() {
@@ -65,7 +69,8 @@ AffiliatedFacetsWithUpdateTime TestEquivalenceClass3() {
   AffiliatedFacetsWithUpdateTime affiliation;
   affiliation.last_update_time = base::Time::FromInternalValue(kTestTimeUs3);
   affiliation.facets = {
-      {FacetURI::FromCanonicalSpec(kTestAndroidFacetURI)},
+      {FacetURI::FromCanonicalSpec(kTestAndroidFacetURI),
+       FacetBrandingInfo{kTestAndroidPlayName, GURL(kTestAndroidIconURL)}},
   };
   return affiliation;
 }
@@ -313,6 +318,62 @@ TEST_F(AffiliationDatabaseTest, Delete) {
 
   AffiliationDatabase::Delete(db_path());
   EXPECT_TRUE(base::IsDirectoryEmpty(db_path().DirName()));
+}
+
+TEST_F(AffiliationDatabaseTest, MigrateFromVersion1) {
+  // Close and delete the current database and create it from scratch with the
+  // SQLite statement stored in affiliation_db_v1.sql.
+  CloseDatabase();
+  AffiliationDatabase::Delete(db_path());
+  base::FilePath src_root_dir;
+  ASSERT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &src_root_dir));
+  base::FilePath sql_path_v1 = src_root_dir.AppendASCII("components")
+                                   .AppendASCII("test")
+                                   .AppendASCII("data")
+                                   .AppendASCII("password_manager")
+                                   .AppendASCII("affiliation_db_v1.sql");
+  ASSERT_TRUE(sql::test::CreateDatabaseFromSQL(db_path(), sql_path_v1));
+
+  // Re-open the database, triggering the migration.
+  OpenDatabase();
+
+  std::vector<AffiliatedFacetsWithUpdateTime> affiliations;
+  db().GetAllAffiliations(&affiliations);
+  ASSERT_EQ(3u, affiliations.size());
+  ExpectEquivalenceClassesAreEqual(TestEquivalenceClass1(), affiliations[0]);
+  ExpectEquivalenceClassesAreEqual(TestEquivalenceClass2(), affiliations[1]);
+  ExpectEquivalenceClassesAreEqual(TestEquivalenceClass3(), affiliations[2]);
+  // There was no branding information in version 1, thus we expect it to be
+  // empty after the migration.
+  EXPECT_EQ(FacetBrandingInfo(), affiliations[2].facets[0].branding_info);
+}
+
+TEST_F(AffiliationDatabaseTest, InitializeFromVersion2) {
+  // Close and delete the current database and create it from scratch with the
+  // SQLite statement stored in affiliation_db_v2.sql.
+  CloseDatabase();
+  AffiliationDatabase::Delete(db_path());
+  base::FilePath src_root_dir;
+  ASSERT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &src_root_dir));
+  base::FilePath sql_path_v2 = src_root_dir.AppendASCII("components")
+                                   .AppendASCII("test")
+                                   .AppendASCII("data")
+                                   .AppendASCII("password_manager")
+                                   .AppendASCII("affiliation_db_v2.sql");
+  ASSERT_TRUE(sql::test::CreateDatabaseFromSQL(db_path(), sql_path_v2));
+
+  // Re-open the database.
+  OpenDatabase();
+
+  // Expect the migration to be a no-op that does not modify the existing data.
+  std::vector<AffiliatedFacetsWithUpdateTime> affiliations;
+  db().GetAllAffiliations(&affiliations);
+  ASSERT_EQ(3u, affiliations.size());
+  ExpectEquivalenceClassesAreEqual(TestEquivalenceClass1(), affiliations[0]);
+  ExpectEquivalenceClassesAreEqual(TestEquivalenceClass2(), affiliations[1]);
+  ExpectEquivalenceClassesAreEqual(TestEquivalenceClass3(), affiliations[2]);
+  EXPECT_EQ(TestEquivalenceClass3().facets[0].branding_info,
+            affiliations[2].facets[0].branding_info);
 }
 
 }  // namespace password_manager
