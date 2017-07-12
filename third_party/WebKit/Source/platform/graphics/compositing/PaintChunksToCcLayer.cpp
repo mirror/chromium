@@ -19,8 +19,8 @@ namespace blink {
 
 namespace {
 
-constexpr gfx::Rect g_large_rect(-200000, -200000, 400000, 400000);
 void AppendDisplayItemToCcDisplayItemList(const DisplayItem& display_item,
+                                          const gfx::Rect& visual_rect,
                                           cc::DisplayItemList& list) {
   DCHECK(DisplayItem::IsDrawingType(display_item.GetType()));
 
@@ -30,11 +30,7 @@ void AppendDisplayItemToCcDisplayItemList(const DisplayItem& display_item,
     return;
   cc::PaintOpBuffer* buffer = list.StartPaint();
   buffer->push<cc::DrawRecordOp>(std::move(record));
-  // TODO(trchen): Pass correct visual rect here.
-  // The visual rect of the item can be used by cc to skip replaying items
-  // that can't be seen. To workaround a space conversion bug, the optimization
-  // is suppressed by passing a large rect.
-  list.EndPaintOfUnpaired(g_large_rect);
+  list.EndPaintOfUnpaired(visual_rect);
 }
 
 void AppendRestore(cc::DisplayItemList& list, size_t n) {
@@ -47,10 +43,13 @@ void AppendRestore(cc::DisplayItemList& list, size_t n) {
 class ConversionContext {
  public:
   ConversionContext(const PropertyTreeState& layer_state,
+                    const gfx::Vector2dF& layer_offset,
                     cc::DisplayItemList& cc_list)
       : current_transform_(layer_state.Transform()),
         current_clip_(layer_state.Clip()),
         current_effect_(layer_state.Effect()),
+        layer_state_(layer_state),
+        layer_offset_(layer_offset),
         cc_list_(cc_list) {}
   ~ConversionContext();
 
@@ -149,6 +148,9 @@ class ConversionContext {
     const EffectPaintPropertyNode* effect;
   };
   Vector<StateEntry> state_stack_;
+
+  const PropertyTreeState& layer_state_;
+  const gfx::Vector2dF& layer_offset_;
 
   cc::DisplayItemList& cc_list_;
 };
@@ -347,8 +349,14 @@ void ConversionContext::Convert(const Vector<const PaintChunk*>& paint_chunks,
                   chunk_state.Transform(), current_transform_))));
       cc_list_.EndPaintOfPairedBegin();
     }
-    for (const auto& item : display_items.ItemsInPaintChunk(chunk))
-      AppendDisplayItemToCcDisplayItemList(item, cc_list_);
+    for (const auto& item : display_items.ItemsInPaintChunk(chunk)) {
+      FloatClipRect visual_rect(FloatRect(item.VisualRect()));
+      GeometryMapper::LocalToAncestorVisualRect(chunk_state, layer_state_,
+                                                visual_rect);
+      AppendDisplayItemToCcDisplayItemList(
+          item, gfx::ToEnclosingRect(visual_rect.Rect() - layer_offset_),
+          cc_list_);
+    }
     if (transformed)
       AppendRestore(cc_list_, 1);
   }
@@ -372,7 +380,8 @@ scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
     cc_list->EndPaintOfPairedBegin();
   }
 
-  ConversionContext(layer_state, *cc_list).Convert(paint_chunks, display_items);
+  ConversionContext(layer_state, layer_offset, *cc_list)
+      .Convert(paint_chunks, display_items);
 
   if (need_translate)
     AppendRestore(*cc_list, 1);
@@ -392,7 +401,8 @@ scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
     if (auto record = params.tracking.under_invalidation_record) {
       cc::PaintOpBuffer* buffer = cc_list->StartPaint();
       buffer->push<cc::DrawRecordOp>(record);
-      cc_list->EndPaintOfUnpaired(g_large_rect);
+      constexpr gfx::Rect large_rect(-200000, -200000, 400000, 400000);
+      cc_list->EndPaintOfUnpaired(large_rect);
     }
   }
 
