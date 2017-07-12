@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "81181ac4_09252f05",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-12T12:11:04Z",
+      "side": 1,
+      "message": "sadrul@, I have added this change based on your wip CL https://crrev.com/2967573002. PTAL.",
+      "revId": "902db82391bf4811e4a9a91b6ef35d6125d3439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7b1072d_94a88ced",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
         "patchSetId": 16
@@ -13,6 +30,30 @@
       "writtenOn": "2017-07-12T01:47:39Z",
       "side": 1,
       "message": "Drive-by concern: by making this a strong binding, then the lifetime of it is non-deterministic relative to other parts of the gpu/viz service. It may not be safe to reach into other parts of gpu code without explicit lifetime management.",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "902db82391bf4811e4a9a91b6ef35d6125d3439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6080ed2_0fb30759",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-12T12:11:04Z",
+      "side": 1,
+      "message": "Are you suggesting to use a mojo::Binding and explicitly delete GpuJpegDecodeAccelerator?\n\nWe already have a connection error handler in GpuJpegDecodeAcceleratorHost that would ensure we don\u0027t make calls on GpuJpegDecodeAccelerator, if it got deleted.\n\nIf you could further elaborate the point you are trying to make here?",
+      "parentUuid": "c7b1072d_94a88ced",
       "range": {
         "startLine": 62,
         "startChar": 32,
