@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79a99c9c_093fbeea",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-07-12T18:55:30Z",
+      "side": 1,
+      "message": "Would much rather have this added to mb_config.pyl in a new top-level \u0027luci\u0027 section. Dirk, what do you think about adding a section like that to mb_config?",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 0
+      },
+      "revId": "55b64902db63139c54e3da17271d7751b1e5b1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd31f87_94e71974",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-07-12T18:55:30Z",
+      "side": 1,
+      "message": "Why not? Couldn\u0027t it just have an empty configuration in that file?",
+      "revId": "55b64902db63139c54e3da17271d7751b1e5b1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
