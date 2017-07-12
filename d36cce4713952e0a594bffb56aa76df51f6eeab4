@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048bd34b_cfc0fa71",
+        "filename": "chrome/browser/extensions/api/messaging/native_message_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-12T21:20:50Z",
+      "side": 1,
+      "message": "As far as I can tell (with codesearch broken :-( ) this creates non-persistent watcher. See FileDescriptorWatcher::Controller::Watcher::StartWatching() . It passes persistent\u003dfalse when calling MessageLoopForIO::WatchFileDescriptor().\nThat\u0027s why we need to create a new watcher every time.",
+      "range": {
+        "startLine": 213,
+        "startChar": 22,
+        "endLine": 213,
+        "endChar": 66
+      },
+      "revId": "d36cce4713952e0a594bffb56aa76df51f6eeab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
