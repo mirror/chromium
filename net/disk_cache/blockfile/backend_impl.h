@@ -25,10 +25,6 @@
 #include "net/disk_cache/blockfile/trace.h"
 #include "net/disk_cache/disk_cache.h"
 
-namespace base {
-class SingleThreadTaskRunner;
-}  // namespace base
-
 namespace net {
 class NetLog;
 }  // namespace net
@@ -55,9 +51,11 @@ class NET_EXPORT_PRIVATE BackendImpl : public Backend {
   friend class Eviction;
  public:
   BackendImpl(const base::FilePath& path,
-              const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
               net::NetLog* net_log);
   // mask can be used to limit the usable size of the hash table, for testing.
+  BackendImpl(const base::FilePath& path, uint32_t mask, net::NetLog* net_log);
+
+  // Can be used to provide a thread --- for testing only.
   BackendImpl(const base::FilePath& path,
               uint32_t mask,
               const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
@@ -297,6 +295,7 @@ class NET_EXPORT_PRIVATE BackendImpl : public Backend {
   size_t DumpMemoryStats(
       base::trace_event::ProcessMemoryDump* pmd,
       const std::string& parent_absolute_name) const override;
+  scoped_refptr<base::SequencedTaskRunner> GetCacheTaskRunner() override;
 
  private:
   using EntriesMap = std::unordered_map<CacheAddr, EntryImpl*>;
