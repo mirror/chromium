@@ -16,6 +16,24 @@
       "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a8edb3_94972d1d",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-12T03:32:37Z",
+      "side": 1,
+      "message": "okay, I just want to be clear it will be clearer if I put -1 because it signify that I only take the first n-1 element. wdyt.",
+      "parentUuid": "14aca6f3_8f0322e9",
+      "revId": "09a42f5d56d3ae415bbc0669c2ef9a4ed23290bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
