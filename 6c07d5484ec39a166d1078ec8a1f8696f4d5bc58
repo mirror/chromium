@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "515f71b4_4500965e",
+        "filename": "base/synchronization/waitable_event_watcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-12T22:35:55Z",
+      "side": 1,
+      "message": "Can this just be bool did_callback \u003d false;",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 46
+      },
+      "revId": "6c07d5484ec39a166d1078ec8a1f8696f4d5bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
