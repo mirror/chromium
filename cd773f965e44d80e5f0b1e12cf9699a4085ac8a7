@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f650554c_32e4708a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-12T01:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f9d60d0_f5fe7bed",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 61
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f1aba17_395390d4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "122082f9_85be0ea3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-12T01:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f1aba17_395390d4",
+      "range": {
+        "startLine": 235,
+        "startChar": 34,
+        "endLine": 235,
+        "endChar": 73
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "079b1ea3_10800f54",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-11T23:22:01Z",
       "side": 1,
       "message": "is this now specific to images or would we use this for other things?  I\u0027m wondering if we should update the name.",
+      "range": {
+        "startLine": 1737,
+        "startChar": 56,
+        "endLine": 1737,
+        "endChar": 63
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08100e6_4271d5dd",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-12T01:58:32Z",
+      "side": 1,
+      "message": "the specs don\u0027t specify Image, which I thought was weird too considering how we specify Link.\nI reverted all the string changes and will be implementing them later at a different patch.",
+      "parentUuid": "079b1ea3_10800f54",
       "range": {
         "startLine": 1737,
         "startChar": 56,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f7a451b7_05fd5981",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-12T01:58:32Z",
+      "side": 1,
+      "message": "Ellipsis removed for later patch.",
+      "parentUuid": "07870a1b_13a30885",
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "168f1376_32723ba8",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 3
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "3ba0cf28_5a359837",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-12T01:58:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "168f1376_32723ba8",
+      "range": {
+        "startLine": 1741,
+        "startChar": 18,
+        "endLine": 1741,
+        "endChar": 19
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fdc5b04_ebd5f7ad",
         "filename": "chrome/browser/ui/android/context_menu_helper.cc",
         "patchSetId": 3
@@ -125,6 +239,24 @@
       "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2523169_ff7d8043",
+        "filename": "chrome/browser/ui/android/context_menu_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-12T01:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fdc5b04_ebd5f7ad",
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +280,30 @@
       "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88da055e_2a7d1682",
+        "filename": "chrome/browser/ui/android/context_menu_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-12T01:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427a197a_61f492aa",
+      "range": {
+        "startLine": 110,
+        "startChar": 11,
+        "endLine": 110,
+        "endChar": 26
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
