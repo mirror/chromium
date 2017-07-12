@@ -544,13 +544,8 @@ void ChromeBrowserMainExtraPartsMetrics::PostBrowserStart() {
 #endif  // defined(OS_WIN)
 
 #if defined(OS_WIN)
-  // TODO(isherman): The delay below is currently needed to avoid (flakily)
-  // breaking some tests, including all of the ProcessMemoryMetricsEmitterTest
-  // tests. Figure out why there is a dependency and fix the tests.
   base::CreateSequencedTaskRunnerWithTraits(background_task_traits)
-      ->PostDelayedTask(FROM_HERE,
-                        base::BindOnce(&RecordIsPinnedToTaskbarHistogram),
-                        base::TimeDelta::FromSeconds(45));
+      ->PostTask(FROM_HERE, base::BindOnce(&RecordIsPinnedToTaskbarHistogram));
 #endif  // defined(OS_WIN)
 
   display_count_ = display::Screen::GetScreen()->GetNumDisplays();
