@@ -58,6 +58,7 @@ class UiSceneManager {
   void OnGLInitialized();
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(UiInterface::Direction direction);
+  void OnFirstWebVrFrameAvailable();
 
   void OnSecurityIconClickedForTesting();
   void OnExitPromptPrimaryButtonClickedForTesting();

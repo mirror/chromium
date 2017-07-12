@@ -460,10 +460,11 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool show_toast) {
   }
 
   web_vr_mode_ = web_vr;
-  web_vr_autopresentation_expected_ = false;
   web_vr_show_toast_ = show_toast;
-  if (!web_vr_mode_)
+  if (!web_vr_mode_) {
+    web_vr_autopresentation_expected_ = false;
     web_vr_autopresentation_ = false;
+  }
   scene_->set_showing_splash_screen(false);
   ConfigureScene();
 
@@ -476,7 +477,16 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool show_toast) {
   }
 }
 
+void UiSceneManager::OnFirstWebVrFrameAvailable() {
+  web_vr_autopresentation_expected_ = false;
+  ConfigureScene();
+}
+
 void UiSceneManager::ConfigureScene() {
+  // We disable WebVR rendering if we're expecting to auto present so that we
+  // can continue to show the 2D splash screen while the site submits the first
+  // WebVR frame.
+  scene_->SetWebVrRenderingEnabled(!web_vr_autopresentation_expected_);
   // Splash screen.
   scene_->set_showing_splash_screen(web_vr_autopresentation_expected_);
   splash_screen_icon_->SetEnabled(web_vr_autopresentation_expected_);

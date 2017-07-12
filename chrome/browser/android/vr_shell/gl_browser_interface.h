@@ -41,6 +41,7 @@ class GlBrowserInterface {
   virtual void OnContentPaused(bool enabled) = 0;
   virtual void ToggleCardboardGamepad(bool enabled) = 0;
   virtual void OnGLInitialized() = 0;
+  virtual void OnFirstWebVrFrameAvailable() = 0;
 };
 
 }  // namespace vr_shell

@@ -410,6 +410,11 @@ void VrShellGl::OnWebVRFrameAvailable() {
   TRACE_EVENT1("gpu", "VrShellGl::OnWebVRFrameAvailable", "frame", frame_index);
   pending_frames_.pop();
 
+  if (!first_web_vr_frame_received_) {
+    browser_->OnFirstWebVrFrameAvailable();
+    first_web_vr_frame_received_ = true;
+  }
+
   DrawFrame(frame_index);
 }
 
@@ -1261,6 +1266,7 @@ void VrShellGl::SetWebVrMode(bool enabled) {
 
   if (!enabled) {
     closePresentationBindings();
+    first_web_vr_frame_received_ = false;
   }
 }
 
