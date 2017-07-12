@@ -16,6 +16,24 @@
       "revId": "a9b7a898b1efb7b5cb451a1f3914e7affc9f36b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a29e8e_85075709",
+        "filename": "ios/chrome/browser/ui/toolbar/new_keyboard_accessory_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-12T16:03:03Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d738106#c5",
+      "parentUuid": "e54f204a_12d5f840",
+      "revId": "a9b7a898b1efb7b5cb451a1f3914e7affc9f36b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
