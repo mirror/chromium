@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/time/clock.h"
+#include "components/feature_engagement_tracker/public/event_constants.h"
 #include "components/prefs/pref_service.h"
 #include "components/reading_list/core/reading_list_model_storage.h"
 #include "components/reading_list/core/reading_list_pref_names.h"
@@ -17,7 +18,8 @@
 ReadingListModelImpl::ReadingListModelImpl(
     std::unique_ptr<ReadingListModelStorage> storage,
     PrefService* pref_service,
-    std::unique_ptr<base::Clock> clock)
+    std::unique_ptr<base::Clock> clock,
+    feature_engagement_tracker::FeatureEngagementTracker* tracker)
     : entries_(base::MakeUnique<ReadingListEntries>()),
       unread_entry_count_(0),
       read_entry_count_(0),
@@ -26,6 +28,7 @@ ReadingListModelImpl::ReadingListModelImpl(
       pref_service_(pref_service),
       has_unseen_(false),
       loaded_(false),
+      feature_engagement_tracker_(tracker),
       weak_ptr_factory_(this) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(clock_);
@@ -329,6 +332,14 @@ const ReadingListEntry& ReadingListModelImpl::AddEntry(
   DCHECK(url.SchemeIsHTTPOrHTTPS());
   RemoveEntryByURL(url);
 
+  if (source != reading_list::ADDED_VIA_SYNC) {
+    // Send the "Added Item to Reading List" event to the
+    // FeatureEngagementTracker. This event is only sent on user-initiated
+    // actions. Otherwise, syncing the user's reading list could potentially
+    // interfere with the FeatureEngagementTracker's accuracy.
+    feature_engagement_tracker_->NotifyEvent(
+        feature_engagement_tracker::events::kAddedItemToReadingList);
+  }
   std::string trimmed_title = base::CollapseWhitespaceASCII(title, false);
 
   ReadingListEntry entry(url, trimmed_title, clock_->Now());
