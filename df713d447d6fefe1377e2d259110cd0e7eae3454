@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d8c7064_0fb5ec3d",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-12T22:00:31Z",
+      "side": 1,
+      "message": "that\u0027s great idea! Done.",
+      "parentUuid": "9dd27965_71f37dcd",
+      "revId": "df713d447d6fefe1377e2d259110cd0e7eae3454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15f7c23e_208f8aa8",
         "filename": "cc/output/gl_renderer_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T18:13:10Z",
       "side": 1,
       "message": "Can you add test cases for shaders that use UV clamping?",
+      "revId": "df713d447d6fefe1377e2d259110cd0e7eae3454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6be6b3_2b00dfb1",
+        "filename": "cc/output/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-12T22:00:31Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "15f7c23e_208f8aa8",
       "revId": "df713d447d6fefe1377e2d259110cd0e7eae3454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
