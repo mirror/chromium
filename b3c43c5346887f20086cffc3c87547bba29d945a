@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3646c118_83d4a22f",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T17:14:39Z",
+      "side": 1,
+      "message": "Good catch! Thank you for the fix.\nCould you add comment about what you find, too?",
+      "parentUuid": "1dd9fc34_e6bdae05",
+      "revId": "b3c43c5346887f20086cffc3c87547bba29d945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a840032e_8f558746",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 9
@@ -36,6 +54,47 @@
         "endLine": 954,
         "endChar": 20
       },
+      "revId": "b3c43c5346887f20086cffc3c87547bba29d945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8cb13c_f831ead4",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T17:14:39Z",
+      "side": 1,
+      "message": "Could you comment that this is for enterprise\u0027s reenable case in comment?",
+      "parentUuid": "a840032e_8f558746",
+      "range": {
+        "startLine": 954,
+        "startChar": 7,
+        "endLine": 954,
+        "endChar": 20
+      },
+      "revId": "b3c43c5346887f20086cffc3c87547bba29d945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5dd30d_a4b561f4",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-12T17:14:39Z",
+      "side": 1,
+      "message": "Could you comment that this is just because Fake implementation synchronously calls the callback in ArcSession?",
       "revId": "b3c43c5346887f20086cffc3c87547bba29d945a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
