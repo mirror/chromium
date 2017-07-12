@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1c281ba_18c09e2d",
+        "filename": "tools/perf/contrib/vr_benchmarks/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-12T20:31:52Z",
+      "side": 1,
+      "message": "I think it\u0027d make sense to assert that is_android is true in this file and put the conditional in src/BUILD.gn.",
+      "revId": "19a313ef9b418ae830495064f254ca17ab3fa9a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
