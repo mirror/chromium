@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0f158c7_2a679269",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1116004
+      },
+      "writtenOn": "2017-07-12T17:33:54Z",
+      "side": 1,
+      "message": "Can this call, and the one below, be added to showCopyResultToast: so you only have to change it in one location?",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 38
+      },
+      "revId": "ef37503a779c1cc2b2e236f97409e24ec677b4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
