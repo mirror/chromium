@@ -91,6 +91,30 @@
       "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3de715_5dde0ff5",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-12T02:37:18Z",
+      "side": 1,
+      "message": "MSAN tests failed even with this change. Please see https://codereview.chromium.org/2881713002/, which got reverted as well.",
+      "parentUuid": "2ee5dd82_4552ef4a",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 15
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
