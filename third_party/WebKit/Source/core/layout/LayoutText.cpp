@@ -331,7 +331,9 @@ static FloatRect LocalQuadForTextBox(InlineTextBox* box,
                                      unsigned start,
                                      unsigned end) {
   unsigned real_end = std::min(box->end() + 1, end);
-  LayoutRect r = box->LocalSelectionRect(start, real_end);
+  const bool consider_current_selection = false;
+  LayoutRect r =
+      box->LocalSelectionRect(start, real_end, consider_current_selection);
   if (r.Height()) {
     // Change the height and y position (or width and x for vertical text)
     // because selectionRect uses selection-specific values.
