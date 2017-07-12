@@ -176,7 +176,10 @@ void MaximizeModeController::EnableMaximizeModeWindowManager(
     return;
 
   if (should_enable) {
+    initializing_maximize_window_manager_ = true;
     maximize_mode_window_manager_.reset(new MaximizeModeWindowManager());
+    initializing_maximize_window_manager_ = false;
+
     // TODO(jonross): Move the maximize mode notifications from ShellObserver
     // to MaximizeModeController::Observer
     Shell::Get()->metrics()->RecordUserMetricsAction(UMA_MAXIMIZE_MODE_ENABLED);

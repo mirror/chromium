@@ -27,6 +27,11 @@ MaximizeModeEventHandler::MaximizeModeEventHandler() {}
 MaximizeModeEventHandler::~MaximizeModeEventHandler() {}
 
 bool MaximizeModeEventHandler::ToggleFullscreen(const ui::TouchEvent& event) {
+  // Do not allow toggling full screen mode if we are hiding title bars in
+  // tablet mode.
+  if (true)
+    return false;
+
   if (event.type() != ui::ET_TOUCH_PRESSED)
     return false;
 

@@ -267,11 +267,6 @@ bool MaximizeModeWindowManager::ShouldHandleWindow(aura::Window* window) {
   if (window->GetProperty(aura::client::kAlwaysOnTopKey))
     return false;
 
-  // If the changing bounds in the maximized/fullscreen is allowed, then
-  // let the client manage it even in maximized mode.
-  if (wm::GetWindowState(window)->allow_set_bounds_direct())
-    return false;
-
   return window->type() == aura::client::WINDOW_TYPE_NORMAL;
 }
 

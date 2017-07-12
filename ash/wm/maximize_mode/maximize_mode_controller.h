@@ -93,6 +93,10 @@ class ASH_EXPORT MaximizeModeController
   // Binds the mojom::TouchViewManager interface request to this object.
   void BindRequest(mojom::TouchViewManagerRequest request);
 
+  bool initializing_maximize_window_manager() const {
+    return initializing_maximize_window_manager_;
+  }
+
   // ShellObserver:
   void OnMaximizeModeStarted() override;
   void OnMaximizeModeEnded() override;
@@ -202,6 +206,11 @@ class ASH_EXPORT MaximizeModeController
 
   // Tracks when the lid is closed. Used to prevent entering maximize mode.
   bool lid_is_closed_;
+
+  // Some events that are called by the MaximizeModeWindowManager constructor
+  // need to be handled differently. This tracks if
+  // |maximize_mode_window_manager_| is being initialized.
+  bool initializing_maximize_window_manager_ = false;
 
   // Tracks smoothed accelerometer data over time. This is done when the hinge
   // is approaching vertical to remove abrupt acceleration that can lead to
