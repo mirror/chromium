@@ -16,6 +16,24 @@
       "revId": "9b8270896eb3d514bb04970404206608afb77c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c649c0_17dbc068",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-07-12T07:31:43Z",
+      "side": 1,
+      "message": "I think this histogram is not for side-by-side comparison between Finch groups, but just to understand how often throttling happened in each experiment group.\n\n\u003e Do we want to also record the stats when the tab becomes foregrounded for the first time?\n\nCould you elaborate a bit why this is useful?",
+      "parentUuid": "d385cdf1_14a0be9d",
+      "revId": "9b8270896eb3d514bb04970404206608afb77c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
