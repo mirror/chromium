@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a487d6a6_aa380fbf",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3723,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:33:12Z",
+      "side": 1,
+      "message": "phrasing nit: The matching stored credentials, or nullptr if none.",
+      "range": {
+        "startLine": 3723,
+        "startChar": 7,
+        "endLine": 3723,
+        "endChar": 76
+      },
+      "revId": "7836c50b9676042befc37059285797a50ad76357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68b1122_c2c8be4f",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3727,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:33:12Z",
+      "side": 1,
+      "message": "nit: Note that your |observed_form| is a function of |is_http_basic_auth|.",
+      "revId": "7836c50b9676042befc37059285797a50ad76357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4f04ed_ee2a7673",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:33:12Z",
+      "side": 1,
+      "message": "nit: Insert mode `.` instead of repeat command? :-)",
+      "range": {
+        "startLine": 611,
+        "startChar": 27,
+        "endLine": 611,
+        "endChar": 28
+      },
+      "revId": "7836c50b9676042befc37059285797a50ad76357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

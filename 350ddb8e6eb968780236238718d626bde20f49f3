@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "af459e9c_bf800bb0",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3834,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-12T11:33:12Z",
+      "side": 1,
+      "message": "Looks great, and much more compact. Thanks!",
+      "parentUuid": "d0de8a22_840effc2",
+      "revId": "350ddb8e6eb968780236238718d626bde20f49f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54b32be7_4048c632",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 2
