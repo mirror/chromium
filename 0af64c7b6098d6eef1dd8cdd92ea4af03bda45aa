@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c54ce7da_c7f2080e",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-12T20:01:48Z",
+      "side": 1,
+      "message": "I still think we\u0027ll be better off with the processing here. We can simply make this a non-const copy.\n\nIf you don\u0027t think this is a good approach, let me know and we can discuss. But the const-ness of some variable shouldn\u0027t stop us.",
+      "revId": "0af64c7b6098d6eef1dd8cdd92ea4af03bda45aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
