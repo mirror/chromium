@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e49b391_b7c285e9",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-12T13:57:22Z",
+      "side": 1,
+      "message": "Nit: empty line missing after burly brace.",
+      "revId": "79cc02003cb0a7e6bc1b4fa903ecf9995f8d0df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
