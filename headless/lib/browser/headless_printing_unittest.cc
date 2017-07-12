@@ -179,6 +179,11 @@ TEST(PageRangeTextToPagesTest, General) {
   EXPECT_EQ(expected_pages, pages);
   EXPECT_EQ(PM::PRINT_NO_ERROR, status);
 
+  status = PM::PageRangeTextToPages("1-10", 5, &pages);
+  expected_pages = {0, 1, 2, 3, 4};
+  EXPECT_EQ(expected_pages, pages);
+  EXPECT_EQ(PM::PRINT_NO_ERROR, status);
+
   status = PM::PageRangeTextToPages("1-3,9-10,4-6", 5, &pages);
   EXPECT_EQ(PM::LIMIT_ERROR, status);
 
