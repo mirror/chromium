@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "37297421_d7783d1f",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-13T18:18:13Z",
+      "side": 1,
+      "message": "Ack - the naming of these header pieces is unfortunate to those (like me) new to vp9 bitstream parsing. Since there are mentions of both a compressed header and uncompressed header, and an option \"parsing_compressed_header_\", I assumed incorrectly that a parser either produces an uncompressed header from the raw bitstream, or decompresses a compressed header and produces an uncompressed header. It\u0027s quite obvious, though, from looking at the FrameInfo member hierarchy, and especially (thanks to fgalligan@ for link) section 5.25 of https://storage.googleapis.com/downloads.webmproject.org/docs/vp9/vp9-bitstream-specification-v0.6-20160331-draft.pdf, that there are always both headers in a frame, but this Vp9Parser has the optional ability to parse the compressed header (though production use doesn\u0027t do this yet (https://cs.chromium.org/chromium/src/media/gpu/vaapi_video_decode_accelerator.cc?sq\u003dpackage:chromium\u0026l\u003d262), nor does the fuzzer always parse the compressed header yet IIUC -- it has a TODO to handle kAwaitingRefresh to provide the context needed to continue to l.301 and parse the compressed header in at least some cases.)\n\nPerhaps rename |curr_frame_info_| to something like |partial_frame_info_pending_compressed_header_| would help clarify. WDYT?",
+      "parentUuid": "881b03b5_f1ff3f3a",
+      "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2c16a67_2ac6d713",
         "filename": "media/filters/vp9_parser.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "DCHECK(parsing_compressed_header_) could be added to l.235.\nIt doesn\u0027t make sense to add the DCHECK at this line.",
       "parentUuid": "f2c16a67_2ac6d713",
+      "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933bbce5_716503d0",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-13T18:18:13Z",
+      "side": 1,
+      "message": "I understand better now. Please add the DCHECK to l.235.",
+      "parentUuid": "356b1fe0_ebcb1956",
       "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
