@@ -34,6 +34,24 @@
       "revId": "b48b2bd7cdcf4ac7cc7425333d948838bd1735fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f526af8e_994e9227",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-13T05:05:38Z",
+      "side": 1,
+      "message": "https://developer.android.com/reference/android/content/pm/ApplicationInfo.html#targetSdkVersion\n\nand the check should happen in webviewchromium.java, not here",
+      "parentUuid": "8e63eb52_546e1e06",
+      "revId": "b48b2bd7cdcf4ac7cc7425333d948838bd1735fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
