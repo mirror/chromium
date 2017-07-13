@@ -65,6 +65,7 @@ static const char kUrlNotSupportedForWebApkMessage[] =
 static const char kInIncognitoMessage[] =
     "the page is loaded in an incognito window";
 static const char kNotOfflineCapable[] = "the page does not work offline";
+static const char kNoGesture[] = "no gesture associated with call to prompt";
 }  // namespace
 
 void LogErrorToConsole(content::WebContents* web_contents,
@@ -155,6 +156,9 @@ void LogErrorToConsole(content::WebContents* web_contents,
       break;
     case NOT_OFFLINE_CAPABLE:
       pattern = kNotOfflineCapable;
+      break;
+    case NO_GESTURE:
+      pattern = kNoGesture;
       break;
   }
 
