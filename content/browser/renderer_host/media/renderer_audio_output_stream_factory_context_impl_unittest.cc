@@ -25,6 +25,7 @@
 #include "media/audio/audio_system_impl.h"
 #include "media/audio/audio_thread_impl.h"
 #include "media/audio/fake_audio_log_factory.h"
+#include "media/audio/local_audio_system.h"
 #include "media/audio/simple_sources.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/media_switches.h"
@@ -303,10 +304,11 @@ class RendererAudioOutputStreamFactoryIntegrationTest : public Test {
         log_factory_(),
         audio_manager_(
             new MockAudioManager(base::MakeUnique<media::AudioThreadImpl>(),
-                                 &log_factory_)),
-        audio_system_(media::AudioSystemImpl::Create(audio_manager_.get())) {
-    media_stream_manager_ =
-        base::MakeUnique<MediaStreamManager>(audio_system_.get());
+                                 &log_factory_)) {
+    audio_system_ = base::MakeUnique<media::AudioSystemImpl>(
+        base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()));
+    media_stream_manager_ = base::MakeUnique<MediaStreamManager>(
+        audio_system_.get(), audio_manager_->GetTaskRunner());
   }
 
   ~RendererAudioOutputStreamFactoryIntegrationTest() override {

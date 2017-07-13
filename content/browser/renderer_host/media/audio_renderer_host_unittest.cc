@@ -29,6 +29,7 @@
 #include "media/audio/audio_system_impl.h"
 #include "media/audio/fake_audio_log_factory.h"
 #include "media/audio/fake_audio_manager.h"
+#include "media/audio/local_audio_system.h"
 #include "media/audio/test_audio_thread.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/media_switches.h"
@@ -236,12 +237,13 @@ class AudioRendererHostTest : public testing::Test {
       : log_factory(base::MakeUnique<media::FakeAudioLogFactory>()),
         audio_manager_(base::MakeUnique<FakeAudioManagerWithAssociations>(
             log_factory.get())),
-        audio_system_(media::AudioSystemImpl::Create(audio_manager_.get())),
+        audio_system_(base::MakeUnique<media::AudioSystemImpl>(
+            base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()))),
         render_process_host_(&browser_context_, &auth_run_loop_) {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseFakeDeviceForMediaStream);
-    media_stream_manager_ =
-        base::MakeUnique<MediaStreamManager>(audio_system_.get());
+    media_stream_manager_ = base::MakeUnique<MediaStreamManager>(
+        audio_system_.get(), audio_manager_->GetTaskRunner());
     host_ = new MockAudioRendererHost(
         &auth_run_loop_, render_process_host_.GetID(), audio_manager_.get(),
         audio_system_.get(), &mirroring_manager_, media_stream_manager_.get(),

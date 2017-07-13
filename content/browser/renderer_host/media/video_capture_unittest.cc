@@ -28,6 +28,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/test/test_content_browser_client.h"
 #include "media/audio/audio_system_impl.h"
+#include "media/audio/local_audio_system.h"
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_thread.h"
 #include "media/base/media_switches.h"
@@ -117,7 +118,8 @@ class VideoCaptureTest : public testing::Test,
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
         audio_manager_(new media::MockAudioManager(
             base::MakeUnique<media::TestAudioThread>())),
-        audio_system_(media::AudioSystemImpl::Create(audio_manager_.get())),
+        audio_system_(base::MakeUnique<media::AudioSystemImpl>(
+            base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()))),
         task_runner_(base::ThreadTaskRunnerHandle::Get()),
         opened_session_id_(kInvalidMediaCaptureSessionId),
         observer_binding_(this) {}
@@ -130,8 +132,8 @@ class VideoCaptureTest : public testing::Test,
         switches::kUseFakeDeviceForMediaStream);
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseFakeUIForMediaStream);
-    media_stream_manager_ =
-        base::MakeUnique<MediaStreamManager>(audio_system_.get());
+    media_stream_manager_ = base::MakeUnique<MediaStreamManager>(
+        audio_system_.get(), audio_manager_->GetTaskRunner());
 
     // Create a Host and connect it to a simulated IPC channel.
     host_.reset(new VideoCaptureHost(media_stream_manager_.get()));

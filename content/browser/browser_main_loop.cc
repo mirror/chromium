@@ -103,6 +103,7 @@
 #include "media/audio/audio_manager.h"
 #include "media/audio/audio_system_impl.h"
 #include "media/audio/audio_thread_impl.h"
+#include "media/audio/local_audio_system.h"
 #include "media/base/media.h"
 #include "media/base/user_input_monitor.h"
 #include "media/midi/midi_service.h"
@@ -1525,7 +1526,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   {
     TRACE_EVENT0("startup",
       "BrowserMainLoop::BrowserThreadsStarted:InitMediaStreamManager");
-    media_stream_manager_.reset(new MediaStreamManager(audio_system_.get()));
+    media_stream_manager_.reset(new MediaStreamManager(
+        audio_system_.get(), audio_manager_->GetTaskRunner()));
   }
 
   {
@@ -1776,7 +1778,8 @@ void BrowserMainLoop::CreateAudioManager() {
   }
   CHECK(audio_manager_);
 
-  audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
+  audio_system_ = base::MakeUnique<media::AudioSystemImpl>(
+      base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()));
   CHECK(audio_system_);
 }
 
