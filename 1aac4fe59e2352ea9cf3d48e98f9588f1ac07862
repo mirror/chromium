@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5cdfdcb_6dedc976",
+        "filename": "chrome/browser/media/router/event_page_request_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-13T00:51:41Z",
+      "side": 1,
+      "message": "What guarantees this EPRM still exists when the callback is run?",
+      "range": {
+        "startLine": 103,
+        "startChar": 69,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "1aac4fe59e2352ea9cf3d48e98f9588f1ac07862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369a5f29_84965152",
+        "filename": "chrome/browser/media/router/mojo/media_route_provider_proxy.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-13T00:51:41Z",
+      "side": 1,
+      "message": "Some thoughts:\n\n1) Because it isn\u0027t clear to me how Android will use this API eventually, we might have to shift some code around this class and MediaRouterMojoImpl at a later point.\n2) I am tempted to suggest MediaRouteProviderProxy should inherit MediaRouterMojoImpl instead of implementing mojo::MediaRouteProvider. Essentially this class becomes the entry point for calls from the extension on desktop, and also what gets returned by MediaRouterFactory on desktop. This allows us to override RegisterMediaRouteProvider() and not have to do static_cast in MRMojoImpl. We might need to rearrange the MR -\u003e MRP calls though, since we\u0027d also be overriding the C++ MediaRouter methods in this class.\n\nLet\u0027s have a chat tomorrow to go through this in more detail.",
+      "revId": "1aac4fe59e2352ea9cf3d48e98f9588f1ac07862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3293e644_8342da7f",
+        "filename": "chrome/browser/media/router/mojo/media_route_provider_proxy.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-13T00:51:41Z",
+      "side": 1,
+      "message": "These are very similar to their MediaRouterMojoImpl counterparts.... The less boilerplate code there is, the better.",
+      "range": {
+        "startLine": 248,
+        "startChar": 59,
+        "endLine": 248,
+        "endChar": 0
+      },
+      "revId": "1aac4fe59e2352ea9cf3d48e98f9588f1ac07862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b469f283_5fa767aa",
+        "filename": "chrome/browser/media/router/mojo/media_route_provider_proxy.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-13T00:51:41Z",
+      "side": 1,
+      "message": "nit: s/A class that forwards/Forwards",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "1aac4fe59e2352ea9cf3d48e98f9588f1ac07862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
