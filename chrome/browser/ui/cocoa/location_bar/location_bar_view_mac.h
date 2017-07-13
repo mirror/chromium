@@ -58,7 +58,6 @@ class LocationBarViewMac : public LocationBar,
   ~LocationBarViewMac() override;
 
   // Overridden from LocationBar:
-  void ShowFirstRunBubble() override;
   GURL GetDestinationURL() const override;
   WindowOpenDisposition GetWindowOpenDisposition() const override;
   ui::PageTransition GetPageTransition() const override;
@@ -218,8 +217,6 @@ class LocationBarViewMac : public LocationBar,
   // Updates visibility of the content settings icons based on the current
   // tab contents state.
   bool RefreshContentSettingsDecorations();
-
-  void ShowFirstRunBubbleInternal();
 
   // Updates the translate decoration in the omnibox with the current translate
   // state.

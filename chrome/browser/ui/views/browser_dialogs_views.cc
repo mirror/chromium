@@ -64,6 +64,10 @@ void HideTaskManager() {
   task_manager::TaskManagerView::Hide();
 }
 
+void ShowFirstRunBubble(Browser* browser) {
+  FirstRunBubble::ShowBubble(browser);
+}
+
 }  // namespace chrome
 
 #if defined(OS_CHROMEOS)

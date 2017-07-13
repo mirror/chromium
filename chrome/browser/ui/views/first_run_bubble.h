@@ -1,9 +1,12 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_UI_VIEWS_FIRST_RUN_BUBBLE_H_
 #define CHROME_BROWSER_UI_VIEWS_FIRST_RUN_BUBBLE_H_
+
+#include "ui/gfx/geometry/point.h"
+#include "ui/gfx/native_widget_types.h"
 
 #include <memory>
 
@@ -18,11 +21,28 @@ class EventMonitor;
 
 class Browser;
 
-class FirstRunBubble : public views::BubbleDialogDelegateView,
-                       public views::LinkListener {
+class Browser;
+
+namespace views {
+class WidgetDelegate;
+class View;
+}  // namespace views
+
+class FirstRunBubble {
  public:
-  // |browser| is the opening browser and is NULL in unittests.
-  static FirstRunBubble* ShowBubble(Browser* browser, views::View* anchor_view);
+  static void ShowBubble(Browser* browser);
+  static views::WidgetDelegate* ShowBubbleForTest(views::View* anchor_view);
+};
+
+class FirstRunBubbleView : public views::BubbleDialogDelegateView,
+                           public views::LinkListener {
+ public:
+  explicit FirstRunBubbleView(Browser* browser);
+  ~FirstRunBubbleView() override;
+
+  void UpdateAnchors(views::View* anchor_view,
+                     const gfx::Point& anchor_point,
+                     gfx::NativeWindow parent_window);
 
  protected:
   // views::BubbleDialogDelegateView overrides:
@@ -30,15 +50,12 @@ class FirstRunBubble : public views::BubbleDialogDelegateView,
   int GetDialogButtons() const override;
 
  private:
-  FirstRunBubble(Browser* browser, views::View* anchor_view);
-  ~FirstRunBubble() override;
-
   // This class observes keyboard events, mouse clicks and touch down events
   // targeted towards the anchor widget and dismisses the first run bubble
   // accordingly.
   class FirstRunBubbleCloser : public ui::EventHandler {
    public:
-    FirstRunBubbleCloser(FirstRunBubble* bubble, views::View* anchor_view);
+    FirstRunBubbleCloser(FirstRunBubbleView* bubble, gfx::NativeWindow parent);
     ~FirstRunBubbleCloser() override;
 
     // ui::EventHandler overrides.
@@ -50,7 +67,7 @@ class FirstRunBubble : public views::BubbleDialogDelegateView,
     void CloseBubble();
 
     // The bubble instance.
-    FirstRunBubble* bubble_;
+    FirstRunBubbleView* bubble_;
 
     std::unique_ptr<views::EventMonitor> event_monitor_;
 
@@ -61,9 +78,9 @@ class FirstRunBubble : public views::BubbleDialogDelegateView,
   void LinkClicked(views::Link* source, int event_flags) override;
 
   Browser* browser_;
-  FirstRunBubbleCloser bubble_closer_;
+  std::unique_ptr<FirstRunBubbleCloser> bubble_closer_;
 
-  DISALLOW_COPY_AND_ASSIGN(FirstRunBubble);
+  DISALLOW_COPY_AND_ASSIGN(FirstRunBubbleView);
 };
 
 #endif  // CHROME_BROWSER_UI_VIEWS_FIRST_RUN_BUBBLE_H_

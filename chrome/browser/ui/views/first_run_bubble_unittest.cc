@@ -73,7 +73,7 @@ void FirstRunBubbleTest::CreateAndCloseBubbleOnEventTest(ui::Event* event) {
   anchor_widget.Show();
 
   FirstRunBubble* delegate =
-      FirstRunBubble::ShowBubble(nullptr, anchor_widget.GetContentsView());
+      FirstRunBubble::ShowBubbleForTest(anchor_widget.GetContentsView());
   EXPECT_TRUE(delegate);
 
   anchor_widget.GetContentsView()->RequestFocus();
