@@ -1,0 +1,18 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//base/mojom/values.mojom"
+public_headers = [ "//base/values.h" ]
+traits_headers = [ "//base/mojom/values_struct_traits.h" ]
+public_deps = [
+  "//base",
+]
+sources = [
+  "values_struct_traits.cc",
+  "values_struct_traits.h",
+]
+type_mappings = [
+  "base.mojom.Value=base::Value[move_only]",
+  "base.mojom.InternalDictValueDoNotUse=base::DictionaryValue[move_only]",
+]

@@ -6,6 +6,7 @@
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_suite.h"
 #include "build/build_config.h"
+#include "mojo/edk/embedder/embedder.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
@@ -17,6 +18,8 @@ int main(int argc, char** argv) {
   base::android::TestSystemMessageHandlerLink::RegisterJNI(
       base::android::AttachCurrentThread());
 #endif  // defined(OS_ANDROID)
+
+  mojo::edk::Init();
 
   base::TestSuite test_suite(argc, argv);
   return base::LaunchUnitTests(
