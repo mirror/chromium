@@ -24,8 +24,7 @@ class MODULES_EXPORT CompositorWorkerGlobalScope final
  public:
   static CompositorWorkerGlobalScope* Create(
       CompositorWorkerThread*,
-      std::unique_ptr<WorkerThreadStartupData>,
-      double time_origin);
+      std::unique_ptr<WorkerThreadStartupData>);
   ~CompositorWorkerGlobalScope() override;
 
   void Dispose() override;
@@ -53,7 +52,6 @@ class MODULES_EXPORT CompositorWorkerGlobalScope final
   CompositorWorkerGlobalScope(const KURL&,
                               const String& user_agent,
                               CompositorWorkerThread*,
-                              double time_origin,
                               std::unique_ptr<SecurityOrigin::PrivilegeData>,
                               WorkerClients*);
 

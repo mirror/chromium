@@ -113,7 +113,6 @@ class MODULES_EXPORT ServiceWorkerGlobalScope final : public WorkerGlobalScope {
   ServiceWorkerGlobalScope(const KURL&,
                            const String& user_agent,
                            ServiceWorkerThread*,
-                           double time_origin,
                            std::unique_ptr<SecurityOrigin::PrivilegeData>,
                            WorkerClients*);
   void importScripts(const Vector<String>& urls, ExceptionState&) override;

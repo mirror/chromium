@@ -76,7 +76,6 @@ ServiceWorkerGlobalScope* ServiceWorkerGlobalScope::Create(
   // passed along to the created 'context'.
   ServiceWorkerGlobalScope* context = new ServiceWorkerGlobalScope(
       startup_data->script_url_, startup_data->user_agent_, thread,
-      MonotonicallyIncreasingTime(),
       std::move(startup_data->starter_origin_privilege_data_),
       startup_data->worker_clients_);
 
@@ -97,14 +96,12 @@ ServiceWorkerGlobalScope::ServiceWorkerGlobalScope(
     const KURL& url,
     const String& user_agent,
     ServiceWorkerThread* thread,
-    double time_origin,
     std::unique_ptr<SecurityOrigin::PrivilegeData>
         starter_origin_privilege_data,
     WorkerClients* worker_clients)
     : WorkerGlobalScope(url,
                         user_agent,
                         thread,
-                        time_origin,
                         std::move(starter_origin_privilege_data),
                         worker_clients),
       did_evaluate_script_(false),
