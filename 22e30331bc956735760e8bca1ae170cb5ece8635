@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1083e409_03c3c236",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-13T01:31:47Z",
+      "side": 1,
+      "message": "There are few other places where StartRequest() is called. May be move this code block to within StartRequest()?",
+      "range": {
+        "startLine": 418,
+        "startChar": 10,
+        "endLine": 418,
+        "endChar": 33
+      },
+      "revId": "22e30331bc956735760e8bca1ae170cb5ece8635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931906ce_cbae4cb0",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-13T01:31:47Z",
+      "side": 1,
+      "message": "If we just use existing |pending_requests_| struct, then this call and the call to insert in the multimap can be removed. As such, these two have 2 * O(log N) overhead.",
+      "range": {
+        "startLine": 422,
+        "startChar": 8,
+        "endLine": 422,
+        "endChar": 38
+      },
+      "revId": "22e30331bc956735760e8bca1ae170cb5ece8635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c253db97_13579b23",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-13T01:31:47Z",
+      "side": 1,
+      "message": "s/request/|request|/",
+      "range": {
+        "startLine": 580,
+        "startChar": 13,
+        "endLine": 580,
+        "endChar": 20
+      },
+      "revId": "22e30331bc956735760e8bca1ae170cb5ece8635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea50a1b2_19493c14",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-13T01:31:47Z",
+      "side": 1,
+      "message": "I am still not sure if this is necessary. If number of delayable requests are small (~10), then a linear search might be as efficient as a multimap (with almost 0 extra memory overhead) even though asymptotically multimap has better complexity.\n\nCan we maybe just do a performance comparison using a release build of Chrome? With data in hand, it might be possible to make a case to the OWNERS.",
+      "range": {
+        "startLine": 974,
+        "startChar": 7,
+        "endLine": 974,
+        "endChar": 15
+      },
+      "revId": "22e30331bc956735760e8bca1ae170cb5ece8635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
