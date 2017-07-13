@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0405cae_51a9b22e",
+        "filename": "components/download/internal/controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T17:10:45Z",
+      "side": 1,
+      "message": "Is there a OnceClosure?",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "dce0e35afee6e23e92f17f831c6cc4d7b9032b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dd6b33_df663ece",
+        "filename": "components/download/internal/download_service_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T17:10:45Z",
+      "side": 1,
+      "message": "Still use seq1?",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 24
+      },
+      "revId": "dce0e35afee6e23e92f17f831c6cc4d7b9032b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
