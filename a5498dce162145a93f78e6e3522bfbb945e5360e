@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8deb833_449c2b20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Okay, I\u0027ve changed it to only add the channel in getSiteChannels if the channel has a valid site channel id - this also avoids the need to check the channel\u0027s group.",
+      "parentUuid": "969d2571_fcfeb366",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd676a4b_454123e7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "185c1983_bf03cdcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Thanks yes that\u0027s more elegant! Done.",
+      "parentUuid": "dd676a4b_454123e7",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b9b3153_01c9acdd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-13T13:16:46Z",
       "side": 1,
       "message": "What\u0027s the long term plan for this?",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342699c9_1af03edd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be necessary once upgrade code is in place. However there might still be edge cases where the upgrade code hasn\u0027t run yet. In those cases, I guess we should really initialize the channel through native, but this might be an acceptable simpler alternative as a fallback, what do you think? (Also we might want to employ this strategy if/when we allow notifications in incognito but don\u0027t want to create channels for them.)",
+      "parentUuid": "1b9b3153_01c9acdd",
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a77d0f38_e57e5f72",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb2d5b10_8ef1fd47",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7e81a9e_cdc3c285",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2726e68_977a3a37",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7e81a9e_cdc3c285",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6c17a8ad_8c4bd64a",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da94403f_ba1e388a",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa1f8797_56d539e8",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e387b07_1310c8d7",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa1f8797_56d539e8",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "1ce6b55a_d6a7cea2",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b94a6386_b0c6498c",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6b83ace_c8fd985f",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 5
@@ -152,6 +296,24 @@
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1885a8b2_33834990",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b83ace_c8fd985f",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "af358ed9_4c7be02c",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "argh, force of habit! It\u0027s two lines long now I am erasing by iterator though.",
+      "parentUuid": "f94e0cbd_591ccb32",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d39627e4_f7b1e567",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 5
@@ -186,6 +366,24 @@
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a8da40_63125728",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d39627e4_f7b1e567",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "7e470723_5bb4865e",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f649c6f1_20a8ddbb",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e36afeb_df9c569d",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 5
@@ -220,6 +436,24 @@
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2acace_20764486",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e36afeb_df9c569d",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "fe28327b_d4596fe8",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5f8b7c7_a405d486",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9b02308_f3b2619b",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 5
@@ -254,6 +506,24 @@
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8200cb9_fe296997",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9b02308_f3b2619b",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "4b39bcd1_426002d5",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31729c52_7d10f5a9",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db4041b6_bf9df9a9",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 5
@@ -288,6 +576,24 @@
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda7946b_b1b767b5",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Changed to cached_channels_.emplace(channel.origin, std::move(channel)); - assume this is what you mean..",
+      "parentUuid": "db4041b6_bf9df9a9",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "41653014_395e4681",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe8b5463_82f6bff8",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fa30d04_885deb2d",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
         "patchSetId": 5
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "5acaf1a7_e1217c02",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa30d04_885deb2d",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a6d08a5_fac7cefe",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
         "patchSetId": 5
@@ -336,6 +678,24 @@
       "writtenOn": "2017-07-13T13:16:46Z",
       "side": 1,
       "message": "Why do we store the timestamp as a string and not as a base::Time? We should treat it as a base::Time until the very last pieces where it\u0027ll become a string.",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7c83db_b8b6a70f",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Because I wanted to keep as much logic as possible out of the bridge, which constructs and accepts these NotificationChannel objects. If I made this a base::Time then the bridge would have to do the conversions between timestamps \u0026 strings, and I\u0027d prefer to keep the bridge just as a dumb layer that passes things on. (It\u0027s true it is still doing some conversions anyway, but jstring-string seems more trivial than jstring-Time..) \n\nSo that was the reasoning, along with the feeling that this is just an internal implementation detail of the class, but I don\u0027t feel very strongly about it. Is your main concern type-safety or does performance come into it too? (Are base::Times smaller in memory than std::strings?). I\u0027m open to changing this if you have a strong preference.",
+      "parentUuid": "3a6d08a5_fac7cefe",
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "68742358_5a16de56",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79e99e8_cc8d8987",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9de000ea_e1ced479",
         "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
         "patchSetId": 5
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "ada9e787_14565b8b",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9de000ea_e1ced479",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2685518_7ae65047",
         "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
         "patchSetId": 5
@@ -390,6 +786,24 @@
       "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8942f7b4_957325d5",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T14:59:24Z",
+      "side": 1,
+      "message": "renamed the second one to InitChannelsProviderWithClock",
+      "parentUuid": "d2685518_7ae65047",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
