@@ -27,7 +27,8 @@ bool AudioWorklet::NeedsToCreateGlobalScope() {
   return GetNumberOfGlobalScopes() == 0;
 }
 
-WorkletGlobalScopeProxy* AudioWorklet::CreateGlobalScope() {
+WorkletGlobalScopeProxy* AudioWorklet::CreateGlobalScope(
+    int global_scope_instance_count) {
   DCHECK(NeedsToCreateGlobalScope());
   AudioWorkletThread::EnsureSharedBackingThread();
 
