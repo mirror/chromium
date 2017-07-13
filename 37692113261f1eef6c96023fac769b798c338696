@@ -45,6 +45,30 @@
       "revId": "37692113261f1eef6c96023fac769b798c338696",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad29a33_0bd0038f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-13T17:13:28Z",
+      "side": 1,
+      "message": "Looks like we currently dont have any menu/toolbar customizations for that one. We set the toolbar to black and use the title, but UIType for the others are mostly about customizing the menu.",
+      "parentUuid": "1681274e_7d636ee4",
+      "range": {
+        "startLine": 87,
+        "startChar": 31,
+        "endLine": 87,
+        "endChar": 49
+      },
+      "revId": "37692113261f1eef6c96023fac769b798c338696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
