@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ccde63d_93c707bf",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-13T17:53:12Z",
+      "side": 1,
+      "message": "Is this method the same as the one in master_host_scan_cache_unittest? If so, please also dedupe this. If there are any other things that can be easily deduped, please also move those.",
+      "range": {
+        "startLine": 22,
+        "startChar": 52,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "5eee0e6fe2a93d584f94b07976e5312dec18bbf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936bf0ba_c5279d66",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-13T17:53:12Z",
+      "side": 1,
+      "message": "Is this needed? Didn\u0027t VerifyPersistentCacheMatchesInMemoryCache verify this?",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 11
+      },
+      "revId": "5eee0e6fe2a93d584f94b07976e5312dec18bbf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

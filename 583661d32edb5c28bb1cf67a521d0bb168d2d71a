@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5cf4449d_c5cf5d14",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-13T17:53:12Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "e76fcfb6_83c61e20",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537cbae7_dcca9ff6",
         "filename": "chromeos/components/tether/persistent_host_scan_cache.cc",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab1a6be_5c1089ba",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-13T17:53:12Z",
+      "side": 1,
+      "message": "Discussed offline -- I didn\u0027t realize emplace() was copying the entry.",
+      "parentUuid": "3f308fd0_52e2cbea",
+      "range": {
+        "startLine": 133,
+        "startChar": 42,
+        "endLine": 133,
+        "endChar": 47
+      },
+      "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
