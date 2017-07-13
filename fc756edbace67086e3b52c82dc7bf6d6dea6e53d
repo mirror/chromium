@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "761c33d7_58d8c4b8",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-13T21:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2b4a2dc_1c2bde75",
+      "range": {
+        "startLine": 44,
+        "startChar": 26,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "fc756edbace67086e3b52c82dc7bf6d6dea6e53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fe42624_68ec5478",
         "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T20:26:38Z",
       "side": 1,
       "message": "Does this flow need to be this complicated? Can we instead do something like this?\n\nkey \u003d GetKeyFromPrefs();\nif (!key) {\n  key \u003d GenKey();\n  SaveKey(key);\n}\n\nInitializeWithKey(key);\n\nIt would get rid of all these async calls. None of these functions look like they need to be async.",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 80
+      },
+      "revId": "fc756edbace67086e3b52c82dc7bf6d6dea6e53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e28f93_06d6b4d3",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-13T21:05:52Z",
+      "side": 1,
+      "message": "yeah, good point",
+      "parentUuid": "7fe42624_68ec5478",
       "range": {
         "startLine": 175,
         "startChar": 2,
