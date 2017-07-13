@@ -90,6 +90,7 @@ public class SnippetsBridge implements SuggestionsSource {
 
     @Override
     public boolean areRemoteSuggestionsEnabled() {
+        assert mNativeSnippetsBridge != 0;
         return nativeAreRemoteSuggestionsEnabled(mNativeSnippetsBridge);
     }
 
@@ -111,6 +112,7 @@ public class SnippetsBridge implements SuggestionsSource {
 
     @Override
     public void fetchRemoteSuggestions() {
+        assert mNativeSnippetsBridge != 0;
         nativeReloadSuggestions(mNativeSnippetsBridge);
     }
 
@@ -193,6 +195,7 @@ public class SnippetsBridge implements SuggestionsSource {
     @Override
     public void fetchSuggestions(@CategoryInt int category, String[] displayedSuggestionIds,
             Callback<List<SnippetArticle>> callback) {
+        assert mNativeSnippetsBridge != 0;
         nativeFetch(mNativeSnippetsBridge, category, displayedSuggestionIds, callback);
     }
 
