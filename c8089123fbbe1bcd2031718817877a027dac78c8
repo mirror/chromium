@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aa27db1_534bd236",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-07-13T18:30:33Z",
+      "side": 1,
+      "message": "I read 496468 to refer to name validation more broadly; perhaps that is incorrect.",
+      "parentUuid": "3aa7125f_a767a802",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 26
+      },
+      "revId": "c8089123fbbe1bcd2031718817877a027dac78c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6d31ed7_75a0bd93",
         "filename": "net/dns/host_resolver_proc.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T18:12:00Z",
       "side": 1,
       "message": "This changes the meaning of the histogram enough that I wonder if we should just get rid of it and add a new one instead - just log valid_hostname for all DNSDomainFromDotWithValidityCheck checks (Or possibly only log if when DNSDomainFrom* returns true.  When it returns false, behavior is not clearly documented).",
+      "range": {
+        "startLine": 141,
+        "startChar": 46,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "c8089123fbbe1bcd2031718817877a027dac78c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c240f099_fb8cd13a",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-07-13T18:30:33Z",
+      "side": 1,
+      "message": "With these lines, I intended to retain the existing behavior. (Perhaps I have failed. :) ) In the status quo, |valid_hostname|\u0027s value (whatever it may be) gets logged at the end of the function body, on lines 261 - 262.\n\nGiven this comment and the previous one, it occurs to me that I might be better off changing this CL as follows:\n\n* undo the current changes\n\n* change |DNSDomainFromDot| from:\n\nbool DNSDomainFromDot(const base::StringPiece\u0026 dotted, std::string* out) {\n  bool ignored;\n  return DNSDomainFromDotWithValidityCheck(dotted, out, \u0026ignored);\n}\n\nto:\n\nbool DNSDomainFromDot(const base::StringPiece\u0026 dotted, std::string* out) {\n  bool valid_hostname;\n  return DNSDomainFromDotWithValidityCheck(dotted, out, \u0026valid_hostname) \u0026\u0026 valid_hostname;\n}\n\nthus affecting all callers (whether in this file or in dns_transaction.cc).\n\nWhat do you think?",
+      "parentUuid": "c6d31ed7_75a0bd93",
       "range": {
         "startLine": 141,
         "startChar": 46,
