@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a47e6087_ad5c09e9",
+        "filename": "chrome/browser/resources/plugin_metadata/plugins_win.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-13T23:04:11Z",
+      "side": 1,
+      "message": "This change is for testing purposes only, not for landing.",
+      "revId": "d59b58919d50229beed3d6f6d906baca5fe1f3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fa030b_c9d45a67",
+        "filename": "tools/grit/grit_info.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-13T23:04:11Z",
+      "side": 1,
+      "message": "This makes grit_info.py compatible with grit.py, to make the template easier. It appears to be safe to ignore the -p value in this case.",
+      "revId": "d59b58919d50229beed3d6f6d906baca5fe1f3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
