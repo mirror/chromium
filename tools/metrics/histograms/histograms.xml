@@ -25807,6 +25807,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="false" name="InProductHelp.ShouldTriggerHelpUI"
+    enum="TriggerHelpUIResult">
+  <owner>nyquist@chromium.org</owner>
+  <owner>xingliu@chromium.org</owner>
+  <summary>
+    Records if in-product help is shown to the user, and the failure reasons if
+    in-product help is not shown, across all in-product help features.
+  </summary>
+</histogram>
+
 <histogram base="true" name="InProductHelp.ShouldTriggerHelpUI"
     enum="TriggerHelpUIResult">
   <owner>nyquist@chromium.org</owner>
