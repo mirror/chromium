@@ -164,7 +164,8 @@ void EnrollmentDialogView::InitDialog() {
   label->SetMultiLine(true);
   label->SetAllowCharacterBreak(true);
 
-  views::GridLayout* grid_layout = views::GridLayout::CreatePanel(this);
+  views::GridLayout* grid_layout = new views::GridLayout(this);
+  SetLayoutManager(layout);
 
   views::ColumnSet* columns = grid_layout->AddColumnSet(0);
   columns->AddColumn(views::GridLayout::FILL,  // Horizontal resize.
