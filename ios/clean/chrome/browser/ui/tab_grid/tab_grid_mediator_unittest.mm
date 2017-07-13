@@ -39,7 +39,7 @@ class TabGridMediatorTest : public PlatformTest {
   void InsertWebStateAt(int index) {
     auto web_state = base::MakeUnique<web::TestWebState>();
     TabIdTabHelper::CreateForWebState(web_state.get());
-    web_state_list_->InsertWebState(index, std::move(web_state));
+    web_state_list_->InsertWebState(index, std::move(web_state), false);
   }
 
   void SetConsumer() {
