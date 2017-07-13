@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "881b03b5_f1ff3f3a",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-07-13T03:50:57Z",
+      "side": 1,
+      "message": "Yes. This comment is saying the same thing (l.298). It explains what does |curr_frame_info_.IsValid()| mean.",
+      "parentUuid": "71e5e68c_3f4483c2",
+      "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2c16a67_2ac6d713",
         "filename": "media/filters/vp9_parser.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T16:35:41Z",
       "side": 1,
       "message": "I defer to posciak@ for full review. Here, would a DCHECK(parsing_compressed_header_) make sense or not (in *all* cases, not just fuzzing)?",
+      "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356b1fe0_ebcb1956",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-07-13T03:50:57Z",
+      "side": 1,
+      "message": "DCHECK(parsing_compressed_header_) could be added to l.235.\nIt doesn\u0027t make sense to add the DCHECK at this line.",
+      "parentUuid": "f2c16a67_2ac6d713",
       "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff962604_4e863c65",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-07-13T03:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e985861_81a77cf9",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 32
+      },
+      "revId": "7836e4ea074a900a209bafa35dbbcdcb5e4049f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
