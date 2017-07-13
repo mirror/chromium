@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "410f9e2b_34f02bac",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-13T20:52:39Z",
+      "side": 1,
+      "message": "When in_process_ is not true, where we update gpu_preferences? I feel we should\ndo it in the same place for both in process gpu and out process gpu.",
+      "range": {
+        "startLine": 623,
+        "startChar": 4,
+        "endLine": 623,
+        "endChar": 78
+      },
+      "revId": "286aef6b1b93218962a1505c67d54084011fc500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
