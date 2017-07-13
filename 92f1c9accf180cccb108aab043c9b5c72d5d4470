@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75bacf59_92076c11",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-13T23:56:54Z",
+      "side": 1,
+      "message": "\u003d 0",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6cf25d_0a939a7c",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-13T23:56:54Z",
+      "side": 1,
+      "message": "\u003d false",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8970a290_cef3d51a",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-13T23:56:54Z",
+      "side": 1,
+      "message": "\u003d 0",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
