@@ -112,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "7adae3b5_6f0c333a",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T20:22:51Z",
+      "side": 1,
+      "message": "Agreed that views lifetimes is kind of strange at the moment and could probably use some cleaning up.\n\nIt would certainly be unexpected to the C++ developer to see a C++ new call not grant ownership.",
+      "parentUuid": "39eff3ae_552d5bab",
+      "range": {
+        "startLine": 75,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 68
+      },
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "987a154e_54fbdaed",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 26
