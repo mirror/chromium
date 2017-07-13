@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa3dc1e0_f59c1f99",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-13T02:32:50Z",
+      "side": 1,
+      "message": "Please document why we do this:\n// fetch-event-referrer-policy.https.html intentiontially loads mixed content in order to test the referrer policy, so WebKitAllowRunningInsecureContent must be set to true or else the load would be blocked.",
+      "revId": "9258c4e52c63c37895497d17864ee04f753634bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
