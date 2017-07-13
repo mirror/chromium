@@ -60,20 +60,24 @@ class CORE_EXPORT WorkerReportingProxy {
   virtual void PostMessageToPageInspector(int session_id, const String&) {}
 
   // Invoked when the new WorkerGlobalScope is created. This is called after
-  // didLoadWorkerScript().
+  // DidLoadWorkerScript().
   virtual void DidCreateWorkerGlobalScope(WorkerOrWorkletGlobalScope*) {}
 
   // Invoked when the WorkerGlobalScope is initialized. This is called after
-  // didCreateWorkerGlobalScope().
+  // DidCreateWorkerGlobalScope().
   virtual void DidInitializeWorkerContext() {}
 
+  // Invoked when the worker script is loaded on the worker thread. This is
+  // called after DidInitializeWorkerContext().
+  virtual void DidLoadScript() {}
+
   // Invoked when the worker script is about to be evaluated. This is called
-  // after didInitializeWorkerContext().
+  // after DidInitializeWorkerContext() or DidLoadScript().
   virtual void WillEvaluateWorkerScript(size_t script_size,
                                         size_t cached_metadata_size) {}
 
   // Invoked when an imported script is about to be evaluated. This is called
-  // after willEvaluateWorkerScript().
+  // after WillEvaluateWorkerScript().
   virtual void WillEvaluateImportedScript(size_t script_size,
                                           size_t cached_metadata_size) {}
 
