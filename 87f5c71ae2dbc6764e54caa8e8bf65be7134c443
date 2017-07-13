@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6a5829d_1185fdab",
+        "filename": "chrome/browser/search/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-13T09:29:08Z",
+      "side": 1,
+      "message": "Are these really public? Seems to me that dependents shouldn\u0027t need to know anything about :local_ntp_code_generate",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3843ada_be866f96",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-13T09:29:08Z",
+      "side": 1,
+      "message": "I don\u0027t know if Chromium Python files are supposed to follow the Google Python style guide, but I\u0027d assume it\u0027s a good idea. An easy start would be to apply the google/yapf formatter:\n\n  $ sudo apt-get install python-pip  # if you don\u0027t have pip(1)\n  $ sudo pip install yapf            # if you don\u0027t have yapf(1)\n  $ yapf -i generate_integrity_header.py",
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbcf4e6d_e879de82",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-13T09:29:08Z",
+      "side": 1,
+      "message": "1. optparse.OptionParser is replaced by argparse.ArgumentParser in more recent Python code. You\u0027d add_argument() for {input,output}_path:\n\n  parser.add_argument(\"input_path\", help\u003d\"\")\n  parser.add_argument(\"output_path\", help\u003d\"\")\n  args \u003d parser.parse_args()\n  # use args.input_path and args.output_path\n\n2. Google Python style only wants modules imported, so no from x import y here. (it\u0027s OK when y is a child module)",
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c01b0bd_794db6cb",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-13T09:29:08Z",
+      "side": 1,
+      "message": "You want os.path.basename(), right?",
+      "range": {
+        "startLine": 20,
+        "startChar": 21,
+        "endLine": 20,
+        "endChar": 49
+      },
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300ff10f_b21279cc",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-13T09:29:08Z",
+      "side": 1,
+      "message": "Optional: rather than these specific replacements, you could use `re.sub(\"\\W\", \"_\", input_filename.upper())`",
+      "range": {
+        "startLine": 27,
+        "startChar": 40,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1500ef29_e8d8d098",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-13T09:29:08Z",
+      "side": 1,
+      "message": "Optional: You\u0027re not using an include guard for the header. Might be nice to wrap it in \"#ifndef define_name\"",
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fc140e_41077161",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-13T09:29:08Z",
+      "side": 1,
+      "message": "__doc__ isn\u0027t very meaningful without a file-level docstring :) You could add one or remove this (if you keep it, consider changing to description\u003d__doc__ and letting the parser generate its own usage string)",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
