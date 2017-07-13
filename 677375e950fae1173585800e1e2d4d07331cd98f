@@ -34,6 +34,24 @@
       "revId": "677375e950fae1173585800e1e2d4d07331cd98f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f49dcb_e25af41c",
+        "filename": "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T18:04:12Z",
+      "side": 1,
+      "message": "It\u0027s tough for me to say how you should solve this, as I\u0027m not familiar with the Clank model.  If you can have tabs with non-web content, and they can be associated with URLs like chrome://newtab, that seems like it contradicts the view that if there is no web contents there can be no URL; rather, it seems like if there are no web contents, any associated URL would have to be found elsewhere.\n\nThe idea of there being no web contents seems like a Clank-specific one, and I wonder whether it wouldn\u0027t actually be better to handle this case in Clank-specific code.  The conditional here seems not only unnecessary but confusing for non-Clank cases, so it makes me a little uncomfortable to add it here.  If there\u0027s a Clank override of this delegate, or some similar place, that would be a good spot to put this check and then fall back on the cross platform code afterwards.",
+      "parentUuid": "64c62a54_7f797ca4",
+      "revId": "677375e950fae1173585800e1e2d4d07331cd98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
