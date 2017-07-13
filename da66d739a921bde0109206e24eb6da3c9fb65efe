@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19c574a0_0c569de2",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-07-13T20:29:50Z",
+      "side": 1,
+      "message": "nit: (style) in Chromium, we use 2 spaces for indent everywhere, except arguments are 4 spaces.\nHere the top indent level is 4, and nested is 2 - let\u0027s make it consistent. (All argument indents are correct.)\n\nSorry, didn\u0027t notice this earlier.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "da66d739a921bde0109206e24eb6da3c9fb65efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
