@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0911a8dd_e1ee20b0",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2838,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:40:55Z",
+      "side": 1,
+      "message": "nit: autofilling the/a password",
+      "revId": "f0c468f266849e97c233d322d708342d3cefc81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ed4e6e_d197c710",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2842,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:40:55Z",
+      "side": 1,
+      "message": "The next test has the same pattern. What do you think of fixing that as well?",
+      "revId": "f0c468f266849e97c233d322d708342d3cefc81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
