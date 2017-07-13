@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "19cd2465_2a6186d6",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:13:50Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b4632964_fb80a83b",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "b980b4b5d4408bea7e83cbf1f70e7143edb41716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e04beaba_c2bc3446",
         "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
         "patchSetId": 2
