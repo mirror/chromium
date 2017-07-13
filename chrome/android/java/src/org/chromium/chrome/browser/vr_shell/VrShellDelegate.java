@@ -1139,6 +1139,9 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     private void cancelPendingVrEntry() {
         // Ensure we can't asynchronously enter VR after trying to exit it.
         mEnterVrHandler.removeCallbacksAndMessages(null);
+
+        if (mInVr) return;
+
         mDonSucceeded = false;
         removeOverlayView();
         mVrClassesWrapper.setVrModeEnabled(mActivity, false);
