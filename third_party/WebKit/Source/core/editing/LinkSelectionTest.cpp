@@ -113,11 +113,7 @@ String LinkSelectionTestBase::GetSelectionText() {
 
 class TestFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
-  MOCK_METHOD4(LoadURLExternally,
-               void(const WebURLRequest&,
-                    WebNavigationPolicy,
-                    const WebString& downloadName,
-                    bool shouldReplaceCurrentEntry));
+  MOCK_METHOD2(DownloadURL, void(const WebURLRequest&, const WebString&));
 };
 
 class LinkSelectionTest : public LinkSelectionTestBase {
@@ -221,10 +217,7 @@ TEST_F(LinkSelectionTest, HandCursorOverLinkAfterContextMenu) {
 }
 
 TEST_F(LinkSelectionTest, SingleClickWithAltStartsDownload) {
-  EXPECT_CALL(
-      test_frame_client_,
-      LoadURLExternally(_, WebNavigationPolicy::kWebNavigationPolicyDownload,
-                        WebString(), _));
+  EXPECT_CALL(test_frame_client_, DownloadURL(_, _));
   EmulateMouseClick(left_point_in_link_, WebMouseEvent::Button::kLeft,
                     WebInputEvent::kAltKey);
 }
@@ -242,10 +235,7 @@ TEST_F(LinkSelectionTest, SingleClickWithAltStartsDownloadWhenTextSelected) {
                                   selection_rect.MaxXMaxYCorner());
   EXPECT_FALSE(GetSelectionText().IsEmpty());
 
-  EXPECT_CALL(
-      test_frame_client_,
-      LoadURLExternally(_, WebNavigationPolicy::kWebNavigationPolicyDownload,
-                        WebString(), _));
+  EXPECT_CALL(test_frame_client_, DownloadURL(_, WebString()));
   EmulateMouseClick(left_point_in_link_, WebMouseEvent::Button::kLeft,
                     WebInputEvent::kAltKey);
 }
