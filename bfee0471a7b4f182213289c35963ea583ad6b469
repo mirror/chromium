@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb91020_f28af6c2",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-13T01:35:37Z",
+      "side": 1,
+      "message": "p_segment -\u003e longest_segment",
+      "revId": "bfee0471a7b4f182213289c35963ea583ad6b469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24238e35_66233c0a",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-13T01:35:37Z",
+      "side": 1,
+      "message": "p_segment -\u003e longest_segment",
+      "revId": "bfee0471a7b4f182213289c35963ea583ad6b469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb38978_3e8c727a",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-13T01:35:37Z",
+      "side": 1,
+      "message": "p_segment -\u003e longest_segment",
+      "revId": "bfee0471a7b4f182213289c35963ea583ad6b469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
