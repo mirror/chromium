@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e417d01_3bb207ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T20:08:07Z",
+      "side": 1,
+      "message": "Nit, if you can, limit lines in the description to 72 characters.",
+      "range": {
+        "startLine": 12,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 144
+      },
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a69954b_989d496b",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 26
@@ -13,6 +36,52 @@
       "writtenOn": "2017-07-13T19:48:43Z",
       "side": 1,
       "message": "Nit: I\u0027d remove \"closed or\" since it will always be destroyed during destruction, not during the closing phase preceding destruction.",
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cea0b5a_d02fc12a",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T20:08:07Z",
+      "side": 1,
+      "message": "Since the constructor in this case does not grant ownership, it should be made private and the ownership needs to be documented in NewTabPromo.\n\nHave a static factory method perform the creation and return a raw pointer.\n\nNewTabPromo::CreateAndGet(...)? Or something with a better name that indicates the caller doesn\u0027t own the pointer.",
+      "range": {
+        "startLine": 75,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 68
+      },
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7e6a72_b55cc66b",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T20:08:07Z",
+      "side": 1,
+      "message": "Remove the trailing underscore.\nLocal variables do not have a trailing underscore.",
+      "range": {
+        "startLine": 75,
+        "startChar": 15,
+        "endLine": 75,
+        "endChar": 29
+      },
       "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +119,29 @@
       "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6666f4f1_890e26f2",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T20:08:07Z",
+      "side": 1,
+      "message": "For future changes, perform this sort of cleanup in a separate change and mark this change as dependent on the cleanup. This makes reverts in the event anything goes wrong easier.",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 21
+      },
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
