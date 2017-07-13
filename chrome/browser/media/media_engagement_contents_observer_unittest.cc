@@ -4,6 +4,7 @@
 
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/timer/mock_timer.h"
 #include "build/build_config.h"
@@ -52,8 +53,8 @@ class MediaEngagementContentsObserverTest
     return contents_observer_->player_states_.size();
   }
 
-  void SimulatePlaybackStarted(int id) {
-    content::WebContentsObserver::MediaPlayerInfo player_info(true, true);
+  void SimulatePlaybackStarted(int id, bool has_audio) {
+    content::WebContentsObserver::MediaPlayerInfo player_info(true, has_audio);
     SimulatePlaybackStarted(player_info, id);
   }
 
@@ -62,6 +63,8 @@ class MediaEngagementContentsObserverTest
         std::make_pair(nullptr /* RenderFrameHost */, id);
     contents_observer_->MediaResized(size, player_id);
   }
+
+  void SimulatePlaybackStarted(int id) { SimulatePlaybackStarted(id, true); }
 
   void SimulateResizeEventSignificantSize(int id) {
     SimulateResizeEvent(id, MediaEngagementContentsObserver::kSignificantSize);
@@ -155,6 +158,19 @@ class MediaEngagementContentsObserverTest
 
   void ForceUpdateTimer() { contents_observer_->UpdateTimer(); }
 
+  void ExpectNotAddedBucketCount(InsignificantPlaybackReason reason,
+                                 int count) {
+    histogram_tester_.ExpectBucketCount(
+        MediaEngagementContentsObserver::kHistogramSignificantNotAddedName,
+        static_cast<int>(reason), count);
+  }
+
+  void ExpectRemovedBucketCount(InsignificantPlaybackReason reason, int count) {
+    histogram_tester_.ExpectBucketCount(
+        MediaEngagementContentsObserver::kHistogramSignificantRemovedName,
+        static_cast<int>(reason), count);
+  }
+
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
@@ -162,6 +178,8 @@ class MediaEngagementContentsObserverTest
   base::test::ScopedFeatureList scoped_feature_list_;
 
   base::MockTimer* playback_timer_;
+
+  base::HistogramTester histogram_tester_;
 };
 
 // TODO(mlamouri): test that visits are not recorded multiple times when a
@@ -234,6 +252,43 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   SimulateSignificantPlayer(1);
   EXPECT_TRUE(AreConditionsMet());
+}
+
+TEST_F(MediaEngagementContentsObserverTest, RecordInsignificantReason) {
+  // Play the media.
+  SimulatePlaybackStarted(0);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::kFrameSizeTooSmall, 2);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::kAudioMuted, 1);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::kCount, 2);
+
+  // Resize the frame to full size.
+  SimulateResizeEventSignificantSize(0);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::kCount, 2);
+
+  // Resize the frame size.
+  SimulateResizeEvent(0, gfx::Size(1, 1));
+  SimulateResizeEventSignificantSize(0);
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::kFrameSizeTooSmall, 1);
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::kCount, 1);
+
+  // Pause the player.
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::kMediaPaused, 0);
+  SimulatePlaybackStopped(0);
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::kMediaPaused, 1);
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::kCount, 2);
+  SimulatePlaybackStarted(0);
+
+  // Mute the player.
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::kAudioMuted, 0);
+  SimulateMutedStateChange(0, true);
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::kAudioMuted, 1);
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::kCount, 3);
+
+  // Start a video only player.
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::kNoAudioTrack, 0);
+  SimulatePlaybackStarted(2, false);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::kNoAudioTrack, 2);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::kCount, 4);
 }
 
 TEST_F(MediaEngagementContentsObserverTest, EnsureCleanupAfterNavigation) {
