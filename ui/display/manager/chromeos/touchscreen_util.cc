@@ -8,7 +8,7 @@
 
 #include "base/files/file_util.h"
 #include "base/logging.h"
-#include "base/strings/string_util.h"
+#include "ui/display/manager/chromeos/display_util.h"
 #include "ui/events/devices/input_device.h"
 
 namespace display {
@@ -23,20 +23,6 @@ void Associate(ManagedDisplayInfo* display,
                const ui::TouchscreenDevice* device) {
   display->AddInputDevice(device->id);
   display->set_touch_support(Display::TOUCH_SUPPORT_AVAILABLE);
-}
-
-// Returns true if |path| is likely a USB device.
-bool IsDeviceConnectedViaUsb(const base::FilePath& path) {
-  std::vector<base::FilePath::StringType> components;
-  path.GetComponents(&components);
-
-  for (const auto& component : components) {
-    if (base::StartsWith(component, "usb",
-                         base::CompareCase::INSENSITIVE_ASCII))
-      return true;
-  }
-
-  return false;
 }
 
 // Returns the UDL association score between |display| and |device|. A score <=

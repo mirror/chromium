@@ -372,6 +372,10 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::FindMirrorMode(
   if (!internal_native_info || !external_native_info)
     return false;
 
+  // Disallow hardware mirroring to UDL devices since it won't work.
+  if (IsDeviceConnectedViaUsb(external_display->display->sys_path()))
+    return false;
+
   // Check if some external display resolution can be mirrored on internal.
   // Prefer the modes in the order they're present in DisplaySnapshot, assuming
   // this is the order in which they look better on the monitor.

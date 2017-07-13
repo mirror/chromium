@@ -6,8 +6,10 @@
 
 #include <stddef.h>
 
+#include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "ui/display/types/display_snapshot.h"
 
@@ -71,6 +73,20 @@ int GetDisplayPower(const std::vector<DisplaySnapshot*>& displays,
 
 bool IsPhysicalDisplayType(DisplayConnectionType type) {
   return !(type & DISPLAY_CONNECTION_TYPE_NETWORK);
+}
+
+bool IsDeviceConnectedViaUsb(const base::FilePath& path) {
+  std::vector<base::FilePath::StringType> components;
+  path.GetComponents(&components);
+
+  for (const auto& component : components) {
+    if (base::StartsWith(component, "usb",
+                         base::CompareCase::INSENSITIVE_ASCII)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 }  // namespace display

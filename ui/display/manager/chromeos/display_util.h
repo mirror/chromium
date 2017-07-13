@@ -12,6 +12,10 @@
 #include "ui/display/manager/display_manager_export.h"
 #include "ui/display/types/display_constants.h"
 
+namespace base {
+class FilePath;
+}
+
 namespace display {
 
 class DisplaySnapshot;
@@ -34,6 +38,9 @@ GetDisplayPower(const std::vector<DisplaySnapshot*>& displays,
 // display. Currently only DISPLAY_CONNECTION_TYPE_NETWORK return false.
 // All other types return true.
 bool IsPhysicalDisplayType(DisplayConnectionType type);
+
+// Returns true if |path| is likely a USB device.
+bool IsDeviceConnectedViaUsb(const base::FilePath& path);
 
 }  // namespace display
 
