@@ -2016,11 +2016,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
                                transition:transition];
 }
 
-- (void)setLastTapPoint:(id)sender {
-  NewTabCommand* command = base::mac::ObjCCast<NewTabCommand>(sender);
-  if (!command)
-    return;
-
+- (void)setLastTapPoint:(NewTabCommand*)command {
   if (CGPointEqualToPoint(command.originPoint, CGPointZero)) {
     _lastTapPoint = CGPointZero;
   } else {
@@ -2713,6 +2709,16 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   [_toolbarController showToolsMenuPopupWithConfiguration:configuration];
 }
 
+- (void)openNewTab:(NewTabCommand*)command {
+  // Ensure that the right mode is showing.
+  if ([self isCurrentSetIncognito] != command.incognito)
+    [self setActiveCardSet:[self inactiveCardSet]];
+  [self setLastTapPoint:command];
+  [self dismissWithNewTabAnimation:GURL(kChromeUINewTabURL)
+                           atIndex:NSNotFound
+                        transition:ui::PAGE_TRANSITION_TYPED];
+}
+
 - (IBAction)chromeExecuteCommand:(id)sender {
   int command = [sender tag];
 
@@ -2727,16 +2733,6 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
     case IDC_CLOSE_ALL_INCOGNITO_TABS:
       DCHECK([self isCurrentSetIncognito]);
       [self removeAllCardsFromSet:_activeCardSet];
-      break;
-    case IDC_NEW_INCOGNITO_TAB:
-    case IDC_NEW_TAB:
-      // Ensure that the right mode is showing.
-      if ([self isCurrentSetIncognito] != (command == IDC_NEW_INCOGNITO_TAB))
-        [self setActiveCardSet:[self inactiveCardSet]];
-      [self setLastTapPoint:sender];
-      [self dismissWithNewTabAnimation:GURL(kChromeUINewTabURL)
-                               atIndex:NSNotFound
-                            transition:ui::PAGE_TRANSITION_TYPED];
       break;
     case IDC_TOGGLE_TAB_SWITCHER:
       [self dismissWithSelectedTabAnimation];
@@ -3482,16 +3478,14 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 
   // New tab blocks.
   void (^newTab)() = ^{
-    [weakSelf
-        chromeExecuteCommand:[[NewTabCommand alloc]
-                                 initWithIncognito:[weakSelf
-                                                       isCurrentSetIncognito]]];
-
+    [weakSelf.dispatcher
+        openNewTab:[[NewTabCommand alloc]
+                       initWithIncognito:[weakSelf isCurrentSetIncognito]]];
   };
 
   void (^newIncognitoTab)() = ^{
-    [weakSelf
-        chromeExecuteCommand:[[NewTabCommand alloc] initWithIncognito:YES]];
+    [weakSelf.dispatcher
+        openNewTab:[[NewTabCommand alloc] initWithIncognito:YES]];
   };
 
   return @[

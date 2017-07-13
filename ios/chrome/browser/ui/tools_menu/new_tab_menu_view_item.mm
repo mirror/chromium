@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/tools_menu/new_tab_menu_view_item.h"
 
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/new_tab_command.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -20,11 +21,14 @@
   return NO;
 }
 
-- (id)command {
+- (void)executeCommandWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   UIView* view = self.tableViewCell;
   CGPoint center = [view.superview convertPoint:view.center toView:view.window];
-  return [[NewTabCommand alloc] initWithIncognito:self.isIncognito
-                                      originPoint:center];
+  NewTabCommand* command =
+      [[NewTabCommand alloc] initWithIncognito:self.isIncognito
+                                   originPoint:center];
+  [dispatcher openNewTab:command];
 }
 
 @end
