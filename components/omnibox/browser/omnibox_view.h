@@ -123,6 +123,7 @@ class OmniboxView {
   // Selects all the text in the edit.  Use this in place of SetSelAll() to
   // avoid selecting the "phantom newline" at the end of the edit.
   virtual void SelectAll(bool reversed) = 0;
+  virtual void SelectNone() {}
 
   // Reverts the edit and popup back to their unedited state (permanent text
   // showing, popup closed, no user input in progress).
