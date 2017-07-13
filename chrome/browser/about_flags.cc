@@ -3175,6 +3175,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAsyncImageDecodingDescription, kOsAll,
      MULTI_VALUE_TYPE(kAsyncImageDecodingChoices)},
 
+#if defined(OS_CHROMEOS)
+    {"use-cros-midi-service", flag_descriptions::kUseCrosMidiServiceName,
+     flag_descriptions::kUseCrosMidiServiceNameDescription, kOsCrOS,
+     FEATURE_VALUE_TYPE(midi::features::kMidiManagerCros)},
+#endif  // defined(OS_CHROMEOS)
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
