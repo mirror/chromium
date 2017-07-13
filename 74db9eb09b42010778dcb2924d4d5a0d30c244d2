@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5662cb63_0ea5c525",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-13T16:33:39Z",
+      "side": 1,
+      "message": "Note how the total passed into the native code is a PaymentItem type.",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "74db9eb09b42010778dcb2924d4d5a0d30c244d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb7b30b_0ff02eaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-13T16:33:39Z",
+      "side": 1,
+      "message": "No need to have the extra step of getCurrencyAmountFromPaymentItem(), IMHO. Do this instead:\n\n   @CalledByNative\n    private static String getCurrencyFromPaymentItem(PaymentItem item) {\n        return item.amount.currency;\n    }\n\n    @CalledByNative\n    private static String getValueFromPaymentItem(PaymentItem item) {\n        return item.amount.value;\n    }",
+      "revId": "74db9eb09b42010778dcb2924d4d5a0d30c244d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78265f5_5db6380c",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-13T16:33:39Z",
+      "side": 1,
+      "message": "I\u0027m fairly certain this will not work, because |jtotal| is PaymentItem, not CurrencyAmount. See ServiceWorkerPaymentAppBridge.java. If you follow my advice to use getCurrencyFromPaymentItem() instead, then this will work.",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 133,
+        "endChar": 26
+      },
+      "revId": "74db9eb09b42010778dcb2924d4d5a0d30c244d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35e3e85_63a728e0",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-13T16:33:39Z",
+      "side": 1,
+      "message": "By the way, we should also be setting currency_system parameter here and in modifiers.",
+      "range": {
+        "startLine": 134,
+        "startChar": 21,
+        "endLine": 134,
+        "endChar": 26
+      },
+      "revId": "74db9eb09b42010778dcb2924d4d5a0d30c244d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68eb3eb2_3c78d77d",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-13T16:33:39Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 136,
+        "startChar": 20,
+        "endLine": 136,
+        "endChar": 26
+      },
+      "revId": "74db9eb09b42010778dcb2924d4d5a0d30c244d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aae2aff_d50996ba",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-13T16:33:39Z",
+      "side": 1,
+      "message": "Please rename this to jmodifier_total to avoid confusion with the function parameter |jtotal| above.",
+      "range": {
+        "startLine": 143,
+        "startChar": 32,
+        "endLine": 143,
+        "endChar": 38
+      },
+      "revId": "74db9eb09b42010778dcb2924d4d5a0d30c244d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76387ee_57c36369",
+        "filename": "content/browser/payments/payment_app_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-13T16:33:39Z",
+      "side": 1,
+      "message": "Why are all the values blank, btw?",
+      "range": {
+        "startLine": 225,
+        "startChar": 17,
+        "endLine": 225,
+        "endChar": 21
+      },
+      "revId": "74db9eb09b42010778dcb2924d4d5a0d30c244d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
