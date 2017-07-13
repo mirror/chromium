@@ -54,6 +54,8 @@ class ASH_EXPORT DisplayConfigurationController
                           display::Display::Rotation rotation,
                           display::Display::RotationSource source);
 
+  display::Display::Rotation GetTargetRotation(int64_t display_id);
+
   // Sets the primary display id.
   void SetPrimaryDisplayId(int64_t display_id);
 
