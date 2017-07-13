@@ -413,10 +413,14 @@ void DesktopNativeWidgetAura::InitNativeWidget(
   // Animations on TYPE_WINDOW are handled by the OS. Additionally if we animate
   // these windows the size of the window gets augmented, effecting restore
   // bounds and maximized windows in bad ways.
-  if (params.type == Widget::InitParams::TYPE_WINDOW &&
-      !params.remove_standard_frame) {
+  if (params.type == Widget::InitParams::TYPE_WINDOW
+#if !defined(USE_X11)
+      && !params.remove_standard_frame
+#endif
+      ) {
     content_window_->SetProperty(aura::client::kAnimationsDisabledKey, true);
   }
+
   content_window_->SetType(GetAuraWindowTypeForWidgetType(params.type));
   content_window_->Init(params.layer_type);
   wm::SetShadowElevation(content_window_, wm::ShadowElevation::NONE);
