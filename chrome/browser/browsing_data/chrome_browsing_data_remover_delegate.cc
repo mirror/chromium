@@ -349,7 +349,6 @@ ChromeBrowsingDataRemoverDelegate::ChromeBrowsingDataRemoverDelegate(
       clear_http_auth_cache_(sub_task_forward_callback_),
       clear_platform_keys_(sub_task_forward_callback_),
 #if defined(OS_ANDROID)
-      clear_precache_history_(sub_task_forward_callback_),
       clear_offline_page_data_(sub_task_forward_callback_),
 #endif
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -1115,7 +1114,6 @@ bool ChromeBrowsingDataRemoverDelegate::AllDone() {
          !clear_http_auth_cache_.is_pending() &&
          !clear_platform_keys_.is_pending() &&
 #if defined(OS_ANDROID)
-         !clear_precache_history_.is_pending() &&
          !clear_offline_page_data_.is_pending() &&
 #endif
 #if BUILDFLAG(ENABLE_WEBRTC)
