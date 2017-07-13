@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08176277_bfe15834",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-13T00:44:32Z",
+      "side": 1,
+      "message": "You link to a bug titled: \"Regression: HTML5 video looks blurry,\". This CL description doesn\u0027t say anything about fixing that behavior, but it mentions only performance optimization.\n\nCan you please make clear in the CL what is that you\u0027re fixing, if you\u0027re fixing something?\n\nIs this part of a patch set intended to fix 615325?",
+      "revId": "887ba5387642a1eda71234781b8fb9af540799c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417c5a1e_9442ed9f",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-13T00:44:32Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be easier to pass a gfx::Size frame_size as a parameter?",
+      "revId": "887ba5387642a1eda71234781b8fb9af540799c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
