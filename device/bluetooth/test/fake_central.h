@@ -49,6 +49,9 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
                              const std::string& service_id,
                              const std::string& peripheral_address,
                              AddFakeCharacteristicCallback callback) override;
+  void RemoveFakeCharacteristic(const std::string& identifier,
+                                const std::string& service_id,
+                                const std::string& peripheral_address) override;
   void AddFakeDescriptor(const device::BluetoothUUID& characteristic_uuid,
                          const std::string& characteristic_id,
                          const std::string& service_id,
