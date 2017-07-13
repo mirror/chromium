@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "0ad5cf38_0abbfed5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T12:41:11Z",
+      "side": 1,
+      "message": "prefernces -\u003e preferences",
+      "revId": "eaf26ed189eb040ba5cd315c40b9cf4c887c730d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "324f8292_1430ff73",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 3
@@ -66,6 +83,23 @@
       "side": 1,
       "message": "You are right. It seems that it is possible to implement DispatchDidReceiveResponse in BaseFetchContext class, and then move this code to BaseFetchContext::DispatchDidReceiveResponse(). \n\nIIUC, FrameFetchContext is probably not enough. I believe FrameFetchContext::DispatchDidReceiveResponse() is only called for main frame responses (not all responses). I will update the CL tomorrow.",
       "parentUuid": "324f8292_1430ff73",
+      "revId": "eaf26ed189eb040ba5cd315c40b9cf4c887c730d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e702a70_9faa5373",
+        "filename": "third_party/WebKit/public/platform/WebContentSettingsClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T12:41:11Z",
+      "side": 1,
+      "message": "how about placing this outside of the chunk of Allow.* methods?",
       "revId": "eaf26ed189eb040ba5cd315c40b9cf4c887c730d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
