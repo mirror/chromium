@@ -16,6 +16,24 @@
       "revId": "c1c76df8a53082b40e5cf97ad156ec5130d0560c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d40428_6b6cd5dc",
+        "filename": "cc/ipc/filter_operation_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-13T22:24:49Z",
+      "side": 1,
+      "message": "Thanks. I do not need to \"using\" this. I can call this directly below: EnumTraits\u003cskia::mojom::BlurTileMode, SkBlurImageFilter::TileMode\u003e::ToMojom(operation.blur_tile_mode())",
+      "parentUuid": "648f507b_cd55be89",
+      "revId": "c1c76df8a53082b40e5cf97ad156ec5130d0560c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
