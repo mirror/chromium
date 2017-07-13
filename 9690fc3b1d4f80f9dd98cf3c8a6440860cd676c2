@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c3da80_0982eb1b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-07-13T15:46:30Z",
+      "side": 1,
+      "message": "I think we should directly check if reporter_engine \u003d\u003d \"2\", so that we don\u0027t show the logo for invalid flag values. At this point, this shouldn\u0027t be a concern (we should have validated before), but just in case.\n\nOne alternative that I like more is to add a new field to the reporter invocation that is parsed from the command line and validated only once.",
+      "range": {
+        "startLine": 213,
+        "startChar": 24,
+        "endLine": 213,
+        "endChar": 74
+      },
+      "revId": "9690fc3b1d4f80f9dd98cf3c8a6440860cd676c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
