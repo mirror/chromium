@@ -22,6 +22,30 @@
       "revId": "9e7a4da13aace9418645b9c05b4b69c246b492bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3fe1f5_eb453004",
+        "filename": "chrome/test/data/android/webvr_instrumentation/html/test_presentation_promise_unresolved_during_don.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-13T18:38:31Z",
+      "side": 1,
+      "message": "We\u0027re assuming that if the promise is neither resolved nor rejected within on second, then the code is properly holding off on doing anything with it until the DON flow is completed (or exited), which is normally a bad/flaky idea. We\u0027re doing it this way despite that for several reasons:\n1. If the promise does resolve/reject, it does so well under a second (almost instantly)\n2. If this does end up being flaky, it will do so by passing when it should have failed - not ideal, but better than failing flakily.\n3. As far as I\u0027m aware, there isn\u0027t a better way to do this, as the DON flow is handled in a different application altogether, and doesn\u0027t have its own timeout or anything. So, we have to have some sort of timeout to know when to end the test.",
+      "parentUuid": "be2f1990_f56763ec",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "9e7a4da13aace9418645b9c05b4b69c246b492bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
