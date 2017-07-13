@@ -29671,6 +29671,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Engagement.ScoreAtStartup" units="%">
+  <owner>beccahughes@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    The distribution of media engagement scores recorded at Chrome startup. It
+    is converted to a percentage so should be divided by 100 to get the actual
+    score.
+  </summary>
+</histogram>
+
 <histogram name="Media.FallbackHardwareAudioBitsPerChannel">
   <owner>dalecurtis@chromium.org</owner>
   <summary>
@@ -73372,8 +73382,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="SoftwareReporterCleanerDownloadStatus">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    An indication if an attempt to download the Chrome Cleanup Tool succeeded
-    or the reason why it failed.
+    An indication if an attempt to download the Chrome Cleanup Tool succeeded or
+    the reason why it failed.
   </summary>
 </histogram>
 
@@ -73397,11 +73407,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="SoftwareReporter.Cleaner.RebootResponse" enum="Boolean">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    Indicates that the user accepted to initiate a reboot to complete a run
-    of the Chrome Cleanup Tool. This is logged the user starts a reboot from
-    the cleanup card in the Settings page. We can't track when the reboot is
-    not initiated, because it can happen at any moment in the future (there is
-    no prompt blocking the user).
+    Indicates that the user accepted to initiate a reboot to complete a run of
+    the Chrome Cleanup Tool. This is logged the user starts a reboot from the
+    cleanup card in the Settings page. We can't track when the reboot is not
+    initiated, because it can happen at any moment in the future (there is no
+    prompt blocking the user).
   </summary>
 </histogram>
 
@@ -73419,8 +73429,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>ftirelo@chromium.org</owner>
   <summary>
     Whether the user accepted to upload logs from Chrome Cleanup Tool. This is
-    logged when the user accepts the Chrome prompt to start a cleanup either from
-    the prompt dialog or from the cleanup card in the Settings page.
+    logged when the user accepts the Chrome prompt to start a cleanup either
+    from the prompt dialog or from the cleanup card in the Settings page.
   </summary>
 </histogram>
 
@@ -73435,8 +73445,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="SoftwareReporterCleanupStarted">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    Indicates where the user started a cleanup from (e.g. from the prompt
-    dialog or the settings page).
+    Indicates where the user started a cleanup from (e.g. from the prompt dialog
+    or the settings page).
   </summary>
 </histogram>
 
@@ -73465,9 +73475,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     from Chrome. Success is logged when it's disconnected and no longer needed
     (the user already responded to the prompt in Chrome or the cleaner process
     terminated normally); failures are logged when the IPC is disconnected, but
-    communication between Chrome and the cleaner process is still required
-    (e.g. while Chrome is waiting for scanning results or when the cleaner is
-    waiting for the user's response from Chrome).
+    communication between Chrome and the cleaner process is still required (e.g.
+    while Chrome is waiting for scanning results or when the cleaner is waiting
+    for the user's response from Chrome).
   </summary>
 </histogram>
 
@@ -73535,8 +73545,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="SoftwareReporterNoPromptReason">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    The reason why the user has not been prompted to run the Chrome Cleanup
-    Tool (e.g. no unwanted software found, user recently prompted).
+    The reason why the user has not been prompted to run the Chrome Cleanup Tool
+    (e.g. no unwanted software found, user recently prompted).
   </summary>
 </histogram>
 
@@ -73559,8 +73569,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="SoftwareReporterPromptDialogResponse">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    The user response on the modal Chrome Cleanup Tool prompt dialog
-    (e.g. accepted, cancelled).
+    The user response on the modal Chrome Cleanup Tool prompt dialog (e.g.
+    accepted, cancelled).
   </summary>
 </histogram>
 
@@ -73612,8 +73622,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="SoftwareReporter.TaggedProfileForResetting" enum="Boolean">
   <owner>ftirelo@chromium.org</owner>
   <summary>
-    Registers when a profile is tagged for settings reset before a run of
-    the Chrome Cleanup Tool.
+    Registers when a profile is tagged for settings reset before a run of the
+    Chrome Cleanup Tool.
   </summary>
 </histogram>
 
