@@ -474,7 +474,8 @@ class LayerTreeTestLayerTreeFrameSinkClient
 
   // TestLayerTreeFrameSinkClient implementation.
   std::unique_ptr<OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<ContextProvider> compositor_context_provider) override {
+      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      override {
     return hooks_->CreateDisplayOutputSurfaceOnThread(
         std::move(compositor_context_provider));
   }
@@ -877,8 +878,8 @@ void LayerTreeTest::RequestNewLayerTreeFrameSink() {
 std::unique_ptr<TestLayerTreeFrameSink> LayerTreeTest::CreateLayerTreeFrameSink(
     const RendererSettings& renderer_settings,
     double refresh_rate,
-    scoped_refptr<ContextProvider> compositor_context_provider,
-    scoped_refptr<ContextProvider> worker_context_provider) {
+    scoped_refptr<viz::ContextProvider> compositor_context_provider,
+    scoped_refptr<viz::ContextProvider> worker_context_provider) {
   constexpr bool disable_display_vsync = false;
   bool synchronous_composite =
       !HasImplThread() &&
@@ -892,7 +893,7 @@ std::unique_ptr<TestLayerTreeFrameSink> LayerTreeTest::CreateLayerTreeFrameSink(
 
 std::unique_ptr<OutputSurface>
 LayerTreeTest::CreateDisplayOutputSurfaceOnThread(
-    scoped_refptr<ContextProvider> compositor_context_provider) {
+    scoped_refptr<viz::ContextProvider> compositor_context_provider) {
   // By default the Display shares a context with the LayerTreeHostImpl.
   return FakeOutputSurface::Create3d(std::move(compositor_context_provider));
 }

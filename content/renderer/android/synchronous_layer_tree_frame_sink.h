@@ -28,7 +28,6 @@ class SkCanvas;
 namespace cc {
 class BeginFrameSource;
 class CompositorFrameSinkSupport;
-class ContextProvider;
 class Display;
 class FrameSinkManager;
 }  // namespace cc
@@ -39,6 +38,7 @@ class Sender;
 }  // namespace IPC
 
 namespace viz {
+class ContextProvider;
 class LocalSurfaceIdAllocator;
 }
 
@@ -71,8 +71,8 @@ class SynchronousLayerTreeFrameSink
       public cc::CompositorFrameSinkSupportClient {
  public:
   SynchronousLayerTreeFrameSink(
-      scoped_refptr<cc::ContextProvider> context_provider,
-      scoped_refptr<cc::ContextProvider> worker_context_provider,
+      scoped_refptr<viz::ContextProvider> context_provider,
+      scoped_refptr<viz::ContextProvider> worker_context_provider,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       viz::SharedBitmapManager* shared_bitmap_manager,
       int routing_id,

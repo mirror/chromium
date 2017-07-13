@@ -12,7 +12,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread.h"
 #include "cc/base/switches.h"
-#include "cc/output/context_provider.h"
 #include "cc/output/output_surface_client.h"
 #include "cc/output/output_surface_frame.h"
 #include "cc/output/texture_mailbox_deleter.h"
@@ -23,6 +22,7 @@
 #include "cc/surfaces/display_scheduler.h"
 #include "cc/surfaces/frame_sink_manager.h"
 #include "cc/test/pixel_test_output_surface.h"
+#include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/local_surface_id_allocator.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "gpu/command_buffer/client/context_support.h"
@@ -270,7 +270,7 @@ std::unique_ptr<Reflector> InProcessContextFactory::CreateReflector(
 void InProcessContextFactory::RemoveReflector(Reflector* reflector) {
 }
 
-scoped_refptr<cc::ContextProvider>
+scoped_refptr<viz::ContextProvider>
 InProcessContextFactory::SharedMainThreadContextProvider() {
   if (shared_main_thread_contexts_ &&
       shared_main_thread_contexts_->ContextGL()->GetGraphicsResetStatusKHR() ==

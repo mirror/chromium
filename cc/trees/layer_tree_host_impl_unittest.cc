@@ -8786,11 +8786,12 @@ void ShutdownReleasesContext_Callback(
 class FrameSinkClient : public TestLayerTreeFrameSinkClient {
  public:
   explicit FrameSinkClient(
-      scoped_refptr<ContextProvider> display_context_provider)
+      scoped_refptr<viz::ContextProvider> display_context_provider)
       : display_context_provider_(std::move(display_context_provider)) {}
 
   std::unique_ptr<OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<ContextProvider> compositor_context_provider) override {
+      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      override {
     return FakeOutputSurface::Create3d(std::move(display_context_provider_));
   }
 
@@ -8802,7 +8803,7 @@ class FrameSinkClient : public TestLayerTreeFrameSinkClient {
   void DisplayDidDrawAndSwap() override {}
 
  private:
-  scoped_refptr<ContextProvider> display_context_provider_;
+  scoped_refptr<viz::ContextProvider> display_context_provider_;
 };
 
 TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
@@ -8834,7 +8835,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   host_impl_->DrawLayers(&frame);
   host_impl_->DidDrawAllLayers(frame);
 
-  // The CopyOutputResult's callback has a ref on the ContextProvider and a
+  // The CopyOutputResult's callback has a ref on the viz::ContextProvider and a
   // texture in a texture mailbox.
   EXPECT_FALSE(context_provider->HasOneRef());
   EXPECT_EQ(1u, context_provider->TestContext3d()->NumTextures());

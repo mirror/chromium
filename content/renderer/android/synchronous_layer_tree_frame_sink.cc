@@ -14,7 +14,6 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/output/compositor_frame.h"
-#include "cc/output/context_provider.h"
 #include "cc/output/layer_tree_frame_sink_client.h"
 #include "cc/output/output_surface.h"
 #include "cc/output/output_surface_frame.h"
@@ -26,6 +25,7 @@
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/display.h"
 #include "cc/surfaces/frame_sink_manager.h"
+#include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/local_surface_id_allocator.h"
 #include "content/common/android/sync_compositor_messages.h"
 #include "content/common/view_messages.h"
@@ -106,8 +106,8 @@ class SynchronousLayerTreeFrameSink::SoftwareOutputSurface
 };
 
 SynchronousLayerTreeFrameSink::SynchronousLayerTreeFrameSink(
-    scoped_refptr<cc::ContextProvider> context_provider,
-    scoped_refptr<cc::ContextProvider> worker_context_provider,
+    scoped_refptr<viz::ContextProvider> context_provider,
+    scoped_refptr<viz::ContextProvider> worker_context_provider,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     viz::SharedBitmapManager* shared_bitmap_manager,
     int routing_id,

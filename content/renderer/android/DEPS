@@ -1,3 +1,4 @@
 include_rules = [
+  "+components/viz/common/gpu"
   "+third_party/libphonenumber",  # For phone number detection.
 ]
