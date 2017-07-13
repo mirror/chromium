@@ -914,6 +914,7 @@ bool CSPDirectiveList::AllowScriptHash(
     if (!CheckHashedAttributes(OperativeDirective(script_src_.Get())))
       return false;
   }
+
   return CheckHash(OperativeDirective(script_src_.Get()), hash_value);
 }
 
