@@ -2310,6 +2310,11 @@ test("base_unittests") {
     "//base/test:test_shared_library",
   ]
 
+  if (!is_ios) {
+    sources += [ "mojo/values_struct_traits_unittest.cc" ]
+    deps += [ "//base/mojo:test_interfaces" ]
+  }
+
   if (is_ios || is_mac) {
     deps += [ ":base_unittests_arc" ]
   }
