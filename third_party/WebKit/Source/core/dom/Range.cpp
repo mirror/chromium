@@ -1686,13 +1686,13 @@ void Range::UpdateSelectionIfAddedToSelection() {
   DCHECK(endContainer()->isConnected());
   DCHECK(endContainer()->GetDocument() == OwnerDocument());
   EventDispatchForbiddenScope no_events;
-  selection.SetSelection(SelectionInDOMTree::Builder()
-                             .Collapse(StartPosition())
-                             .Extend(EndPosition())
-                             .Build(),
-                         FrameSelection::kCloseTyping |
-                             FrameSelection::kClearTypingStyle |
-                             FrameSelection::kDoNotSetFocus);
+  selection.SetSelection(SetSelectionData::Builder()
+                             .SetSelection(SelectionInDOMTree::Builder()
+                                               .Collapse(StartPosition())
+                                               .Extend(EndPosition())
+                                               .Build())
+                             .SetDoNotSetFocus(true)
+                             .Build());
   selection.CacheRangeOfDocument(this);
 }
 

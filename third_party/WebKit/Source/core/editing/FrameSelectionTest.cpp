@@ -63,8 +63,7 @@ TEST_F(FrameSelectionTest, FirstEphemeralRangeOf) {
   Selection().SetSelection(SelectionInDOMTree::Builder()
                                .SetBaseAndExtent(EphemeralRange(
                                    Position(text, 3), Position(text, 6)))
-                               .Build(),
-                           0);
+                               .Build());
   sample->setAttribute(HTMLNames::styleAttr, "display:none");
   // Move |VisibleSelection| before "abc".
   UpdateAllLifecyclePhases();
@@ -165,11 +164,11 @@ TEST_F(FrameSelectionTest, ModifyExtendWithFlatTree) {
   Node* const two = FlatTreeTraversal::FirstChild(*host);
   // Select "two" for selection in DOM tree
   // Select "twoone" for selection in Flat tree
-  Selection().SetSelection(
+  Selection().SetSelection(ConvertToSelectionInDOMTree(
       SelectionInFlatTree::Builder()
           .Collapse(PositionInFlatTree(host, 0))
           .Extend(PositionInFlatTree(GetDocument().body(), 2))
-          .Build());
+          .Build()));
   Selection().Modify(FrameSelection::kAlterationExtend, kDirectionForward,
                      TextGranularity::kWord);
   EXPECT_EQ(Position(two, 0), VisibleSelectionInDOMTree().Start());
@@ -357,11 +356,15 @@ TEST_F(FrameSelectionTest, SelectionOnRangeHidesHandles) {
           .SetIsHandleVisible(false)
           .Build());
 
-  Selection().SetSelection(SelectionInDOMTree::Builder()
-                               .SetBaseAndExtent(EphemeralRange(
-                                   Position(text, 0), Position(text, 12)))
-                               .Build(),
-                           0);
+  Selection().SetSelection(
+      SetSelectionData::Builder()
+          .SetSelection(SelectionInDOMTree::Builder()
+                            .SetBaseAndExtent(EphemeralRange(
+                                Position(text, 0), Position(text, 12)))
+                            .Build())
+          .SetShouldCloseTyping(false)
+          .SetShouldClearTypingStyle(false)
+          .Build());
 
   EXPECT_FALSE(Selection().IsHandleVisible())
       << "After SetSelection on Range, handles shouldn't be present.";
@@ -372,11 +375,13 @@ TEST_F(FrameSelectionTest, SelectionOnRangeHidesHandles) {
           .SetIsHandleVisible(true)
           .Build());
 
-  Selection().SetSelection(SelectionInDOMTree::Builder()
-                               .SetBaseAndExtent(EphemeralRange(
-                                   Position(text, 0), Position(text, 12)))
-                               .Build(),
-                           0);
+  Selection().SetSelection(
+      SetSelectionData::Builder()
+          .SetSelection(SelectionInDOMTree::Builder()
+                            .SetBaseAndExtent(EphemeralRange(
+                                Position(text, 0), Position(text, 12)))
+                            .Build())
+          .Build());
 
   EXPECT_FALSE(Selection().IsHandleVisible())
       << "After SetSelection on Range, handles shouldn't be present.";
@@ -449,11 +454,11 @@ TEST_F(FrameSelectionTest, RangeInShadowTree) {
   EXPECT_TRUE(Selection().IsHidden());
 
   Node* text_node = shadow_root->firstChild();
-  Selection().SetSelection(
+  Selection().SetSelection(ConvertToSelectionInDOMTree(
       SelectionInFlatTree::Builder()
           .SetBaseAndExtent(PositionInFlatTree(text_node, 0),
                             PositionInFlatTree(text_node, 3))
-          .Build());
+          .Build()));
   EXPECT_EQ_SELECTED_TEXT("hey");
   EXPECT_TRUE(Selection().GetSelectionInDOMTree().IsRange());
   EXPECT_TRUE(Selection().SelectionHasFocus());

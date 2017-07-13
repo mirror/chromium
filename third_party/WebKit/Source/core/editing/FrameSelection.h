@@ -65,6 +65,64 @@ enum class CaretVisibility;
 
 enum class HandleVisibility { kNotVisible, kVisible };
 
+class CORE_EXPORT SetSelectionData final {
+  STACK_ALLOCATED();
+
+ public:
+  class CORE_EXPORT Builder;
+
+  SetSelectionData();
+
+  const SelectionInDOMTree& Selection() const { return selection_; }
+  CursorAlignOnScroll GetCursorAlignOnScroll() const {
+    return cursor_align_on_scroll_;
+  }
+  TextGranularity Granularity() const { return granularity_; }
+  EUserTriggered GetUserTriggered() const { return user_triggered_; }
+  bool DoNotSetFocus() const { return do_not_set_focus_; }
+  bool DoNotClearStrategy() const { return do_not_clear_strategy_; }
+  bool IsUserTriggered() const { return user_triggered_ == kUserTriggered; }
+  bool ShouldCloseTyping() const { return should_close_typing_; }
+  bool ShouldClearTypingStyle() const { return should_clear_typing_style_; }
+
+ private:
+  const SelectionInDOMTree selection_;
+  CursorAlignOnScroll cursor_align_on_scroll_ = CursorAlignOnScroll::kIfNeeded;
+  TextGranularity granularity_ = TextGranularity::kCharacter;
+  bool should_close_typing_ = true;
+  bool should_clear_typing_style_ = true;
+  bool do_not_set_focus_ = false;
+  bool do_not_clear_strategy_ = false;
+  EUserTriggered user_triggered_ = kNotUserTriggered;
+
+  DISALLOW_COPY_AND_ASSIGN(SetSelectionData);
+};
+
+class CORE_EXPORT SetSelectionData::Builder final {
+  STACK_ALLOCATED();
+
+ public:
+  explicit Builder(const SelectionInDOMTree&);
+  explicit Builder(const SetSelectionData&);
+  Builder();
+
+  SetSelectionData Build() const;
+
+  Builder& SetCursorAlignOnScroll(CursorAlignOnScroll);
+  Builder& SetDoNotSetFocus(bool);
+  Builder& SetDoNotClearStrategy(bool);
+  Builder& SetGranularity(TextGranularity);
+  Builder& SetSelection(const SelectionInDOMTree&);
+  Builder& SetShouldCloseTyping(bool);
+  Builder& SetShouldClearTypingStyle(bool);
+  Builder& SetUserTriggered(EUserTriggered);
+
+ private:
+  SetSelectionData data_;
+
+  DISALLOW_COPY_AND_ASSIGN(Builder);
+};
+
 class CORE_EXPORT FrameSelection final
     : public GarbageCollectedFinalized<FrameSelection>,
       public SynchronousMutationObserver {
@@ -78,19 +136,6 @@ class CORE_EXPORT FrameSelection final
   ~FrameSelection();
 
   enum EAlteration { kAlterationMove, kAlterationExtend };
-  enum SetSelectionOption {
-    // 1 << 0 is reserved for EUserTriggered
-    kCloseTyping = 1 << 1,
-    kClearTypingStyle = 1 << 2,
-    kDoNotSetFocus = 1 << 3,
-    kDoNotClearStrategy = 1 << 4,
-  };
-  // Union of values in SetSelectionOption and EUserTriggered
-  typedef unsigned SetSelectionOptions;
-  static inline EUserTriggered SelectionOptionsToUserTriggered(
-      SetSelectionOptions options) {
-    return static_cast<EUserTriggered>(options & kUserTriggered);
-  }
 
   bool IsAvailable() const { return LifecycleContext(); }
   // You should not call |document()| when |!isAvailable()|.
@@ -110,15 +155,8 @@ class CORE_EXPORT FrameSelection final
   // layout.
   const VisibleSelection& ComputeVisibleSelectionInDOMTreeDeprecated() const;
 
-  void SetSelection(const SelectionInDOMTree&,
-                    SetSelectionOptions = kCloseTyping | kClearTypingStyle,
-                    CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded,
-                    TextGranularity = TextGranularity::kCharacter);
-
-  void SetSelection(const SelectionInFlatTree&,
-                    SetSelectionOptions = kCloseTyping | kClearTypingStyle,
-                    CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded,
-                    TextGranularity = TextGranularity::kCharacter);
+  void SetSelection(const SetSelectionData&);
+  void SetSelection(const SelectionInDOMTree&);
   void SelectAll(EUserTriggered = kNotUserTriggered);
   void Clear();
   bool IsHidden() const;
@@ -128,13 +166,8 @@ class CORE_EXPORT FrameSelection final
   // functions.
   // setSelectionDeprecated() returns true if didSetSelectionDeprecated() should
   // be called.
-  bool SetSelectionDeprecated(const SelectionInDOMTree&,
-                              SetSelectionOptions = kCloseTyping |
-                                                    kClearTypingStyle,
-                              TextGranularity = TextGranularity::kCharacter);
-  void DidSetSelectionDeprecated(
-      SetSelectionOptions = kCloseTyping | kClearTypingStyle,
-      CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded);
+  bool SetSelectionDeprecated(const SetSelectionData&);
+  void DidSetSelectionDeprecated(const SetSelectionData&);
 
   // Call this after doing user-triggered selections to make it easy to delete
   // the frame you entirely selected.

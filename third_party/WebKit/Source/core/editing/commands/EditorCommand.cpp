@@ -409,8 +409,11 @@ static bool ExpandSelectionToGranularity(LocalFrame& frame,
   if (new_range.IsCollapsed())
     return false;
   frame.Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build(),
-      FrameSelection::kCloseTyping);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build())
+          .SetShouldClearTypingStyle(false)
+          .Build());
   return true;
 }
 
@@ -813,11 +816,13 @@ static bool ExecuteDeleteToMark(LocalFrame& frame,
       frame.GetEditor().Mark().ToNormalizedEphemeralRange();
   if (mark.IsNotNull()) {
     frame.Selection().SetSelection(
-        SelectionInDOMTree::Builder()
-            .SetBaseAndExtent(
-                UnionEphemeralRanges(mark, frame.GetEditor().SelectedRange()))
-            .Build(),
-        FrameSelection::kCloseTyping);
+        SetSelectionData::Builder()
+            .SetSelection(SelectionInDOMTree::Builder()
+                              .SetBaseAndExtent(UnionEphemeralRanges(
+                                  mark, frame.GetEditor().SelectedRange()))
+                              .Build())
+            .SetShouldClearTypingStyle(false)
+            .Build());
   }
   frame.GetEditor().PerformDelete();
   frame.GetEditor().SetMark(
@@ -1791,10 +1796,13 @@ static bool ExecuteSelectToMark(LocalFrame& frame,
   if (mark.IsNull() || selection.IsNull())
     return false;
   frame.Selection().SetSelection(
-      SelectionInDOMTree::Builder()
-          .SetBaseAndExtent(UnionEphemeralRanges(mark, selection))
-          .Build(),
-      FrameSelection::kCloseTyping);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder()
+                  .SetBaseAndExtent(UnionEphemeralRanges(mark, selection))
+                  .Build())
+          .SetShouldClearTypingStyle(false)
+          .Build());
   return true;
 }
 

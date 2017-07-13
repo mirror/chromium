@@ -341,7 +341,12 @@ void InputMethodController::SelectComposition() const {
   // The composition can start inside a composed character sequence, so we have
   // to override checks. See <http://bugs.webkit.org/show_bug.cgi?id=15781>
   GetFrame().Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(), 0);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build())
+          .SetShouldCloseTyping(false)
+          .SetShouldClearTypingStyle(false)
+          .Build());
 }
 
 bool InputMethodController::FinishComposingText(
@@ -375,8 +380,10 @@ bool InputMethodController::FinishComposingText(
             .SetBaseAndExtent(old_selection_range)
             .SetIsHandleVisible(is_handle_visible)
             .Build();
-    GetFrame().Selection().SetSelection(selection,
-                                        FrameSelection::kCloseTyping);
+    GetFrame().Selection().SetSelection(SetSelectionData::Builder()
+                                            .SetSelection(selection)
+                                            .SetShouldClearTypingStyle(true)
+                                            .Build());
     return true;
   }
 
@@ -688,7 +695,18 @@ void InputMethodController::SetComposition(
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   // We shouldn't close typing in the middle of setComposition.
-  SetEditableSelectionOffsets(selected_range, kNotUserTriggered);
+  if (GetEditor().CanEdit()) {
+    const EphemeralRange range = EphemeralRangeForOffsets(selected_range);
+    if (range.IsNotNull()) {
+      GetFrame().Selection().SetSelection(
+          SetSelectionData::Builder()
+              .SetSelection(
+                  SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build())
+              .SetShouldCloseTyping(false)
+              .SetShouldClearTypingStyle(false)
+              .Build());
+    }
+  }
 
   if (underlines.IsEmpty()) {
     GetDocument().Markers().AddCompositionMarker(
@@ -799,23 +817,21 @@ EphemeralRange InputMethodController::EphemeralRangeForOffsets(
 }
 
 bool InputMethodController::SetSelectionOffsets(
-    const PlainTextRange& selection_offsets,
-    FrameSelection::SetSelectionOptions options) {
+    const PlainTextRange& selection_offsets) {
   const EphemeralRange range = EphemeralRangeForOffsets(selection_offsets);
   if (range.IsNull())
     return false;
 
   GetFrame().Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(), options);
+      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build());
   return true;
 }
 
 bool InputMethodController::SetEditableSelectionOffsets(
-    const PlainTextRange& selection_offsets,
-    FrameSelection::SetSelectionOptions options) {
+    const PlainTextRange& selection_offsets) {
   if (!GetEditor().CanEdit())
     return false;
-  return SetSelectionOffsets(selection_offsets, options);
+  return SetSelectionOffsets(selection_offsets);
 }
 
 PlainTextRange InputMethodController::CreateRangeForSelection(

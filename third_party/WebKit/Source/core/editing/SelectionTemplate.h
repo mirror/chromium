@@ -133,6 +133,8 @@ using SelectionInFlatTree = SelectionTemplate<EditingInFlatTreeStrategy>;
 CORE_EXPORT std::ostream& operator<<(std::ostream&, const SelectionInDOMTree&);
 CORE_EXPORT std::ostream& operator<<(std::ostream&, const SelectionInFlatTree&);
 
+SelectionInDOMTree ConvertToSelectionInDOMTree(const SelectionInFlatTree&);
+
 }  // namespace blink
 
 #endif  // SelectionTemplate_h

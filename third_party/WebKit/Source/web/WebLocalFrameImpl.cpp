@@ -1213,8 +1213,7 @@ void WebLocalFrameImpl::SelectRange(
                              .SetAffinity(VP_DEFAULT_AFFINITY)
                              .SetIsHandleVisible(show_handles)
                              .SetIsDirectional(false)
-                             .Build(),
-                         kNotUserTriggered);
+                             .Build());
 }
 
 WebString WebLocalFrameImpl::RangeAsText(const WebRange& web_range) {

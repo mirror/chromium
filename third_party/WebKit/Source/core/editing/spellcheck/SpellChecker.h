@@ -74,7 +74,7 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   void MarkMisspellingsForMovingParagraphs(const VisibleSelection&);
   void RespondToChangedContents();
   void RespondToChangedSelection(const Position& old_selection_start,
-                                 FrameSelection::SetSelectionOptions);
+                                 const SetSelectionData&);
   Optional<std::pair<Node*, SpellCheckMarker*>>
   GetSpellCheckMarkerTouchingSelection();
   void ReplaceMisspelledRange(const String&);
