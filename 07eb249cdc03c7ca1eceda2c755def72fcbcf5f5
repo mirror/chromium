@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dc9ef2a_5447bac9",
+        "filename": "ash/shell/window_watcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-13T20:13:21Z",
+      "side": 0,
+      "message": "This comment is so old I\u0027m nuking it.",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
