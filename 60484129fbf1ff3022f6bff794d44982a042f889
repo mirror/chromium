@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4451ad5_664f17d4",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T23:27:20Z",
+      "side": 1,
+      "message": "As discussed offline, discarding the return value of this method and not calling CancelPermissionRequest on connection error is why the Android test is failing.",
+      "revId": "60484129fbf1ff3022f6bff794d44982a042f889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
