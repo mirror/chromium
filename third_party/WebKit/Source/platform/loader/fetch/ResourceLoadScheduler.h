@@ -64,9 +64,20 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   ~ResourceLoadScheduler() {}
   DECLARE_TRACE();
 
-  // Stops all operations including observing throttling signals.
-  // ResourceLoadSchedulerClient::Run() will not be called once this method is
-  // called. This method can be called multiple times safely.
+  // Changes the internal state to kSuspended to stop calling
+  // ResourceLoadSchedulerCient::Run() even though the throttling budget allows
+  // until Resume() is called. This will be called when many requests including
+  // one in the pending queue are planned to be canceled at once.
+  void Suspend();
+
+  // Changes the internal state to kRunning to start calling
+  // ResourceLoadSchedulerCient::Run() again if the throttling budget allows.
+  void Resume();
+
+  // Changes the internal state to kShutdown to stop all operations including
+  // observing throttling signals. ResourceLoadSchedulerClient::Run() will not
+  // be called once this method is called. This method can be called multiple
+  // times safely.
   void Shutdown();
 
   // Makes a request. This may synchronously call
@@ -87,6 +98,14 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   void OnThrottlingStateChanged(WebFrameScheduler::ThrottlingState) override;
 
  private:
+  // An internal running state that can transit by calling Suspend(), Resume(),
+  // and Shutdown().
+  enum class State {
+    kRunning,
+    kSuspended,
+    kShutdown,
+  };
+
   ResourceLoadScheduler(FetchContext*);
 
   // Generates the next ClientId.
@@ -101,8 +120,7 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   void SetOutstandingLimitAndMaybeRun(size_t limit);
 
   // A flag to indicate an internal running state.
-  // TODO(toyoshim): We may want to use enum once we start to have more states.
-  bool is_shutdown_ = false;
+  State state_ = State::kRunning;
 
   // A mutable flag to indicate if the throttling and scheduling are enabled.
   // Can be modified by field trial flags or for testing.

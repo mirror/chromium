@@ -68,11 +68,24 @@ DEFINE_TRACE(ResourceLoadScheduler) {
   visitor->Trace(context_);
 }
 
+void ResourceLoadScheduler::Suspend() {
+  DCHECK_EQ(State::kRunning, state_);
+  if (state_ == State::kRunning)
+    state_ = State::kSuspended;
+}
+
+void ResourceLoadScheduler::Resume() {
+  DCHECK_EQ(State::kSuspended, state_);
+  if (state_ == State::kSuspended)
+    state_ = State::kRunning;
+  MaybeRun();
+}
+
 void ResourceLoadScheduler::Shutdown() {
   // Do nothing if the feature is not enabled, or Shutdown() was already called.
-  if (is_shutdown_)
+  if (state_ == State::kShutdown)
     return;
-  is_shutdown_ = true;
+  state_ = State::kShutdown;
 
   if (!is_enabled_)
     return;
@@ -88,7 +101,7 @@ void ResourceLoadScheduler::Request(ResourceLoadSchedulerClient* client,
                                     ThrottleOption option,
                                     ResourceLoadScheduler::ClientId* id) {
   *id = GenerateClientId();
-  if (is_shutdown_)
+  if (state_ == State::kShutdown)
     return;
 
   if (!is_enabled_ || option == ThrottleOption::kCanNotBeThrottled) {
@@ -152,8 +165,8 @@ ResourceLoadScheduler::ClientId ResourceLoadScheduler::GenerateClientId() {
 
 void ResourceLoadScheduler::MaybeRun() {
   // Requests for keep-alive loaders could be remained in the pending queue,
-  // but ignore them once Shutdown() is called.
-  if (is_shutdown_)
+  // but ignore them when the internal state is not kRunning.
+  if (state_ != State::kRunning)
     return;
 
   while (!pending_request_queue_.empty()) {
