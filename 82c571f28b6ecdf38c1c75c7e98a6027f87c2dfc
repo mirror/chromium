@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "935cac30_9b47c3d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-13T21:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17a64fbe_07272530",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "82c571f28b6ecdf38c1c75c7e98a6027f87c2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d070c90_3ffd1465",
         "filename": "chromeos/components/tether/ble_advertiser.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "82c571f28b6ecdf38c1c75c7e98a6027f87c2dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f90653_d1814ae4",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-13T21:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d070c90_3ffd1465",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "82c571f28b6ecdf38c1c75c7e98a6027f87c2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
