@@ -45,7 +45,7 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
 
   // Get the center point of the app list button circle used to draw its
   // background and ink drops.
-  gfx::Point GetAppListButtonCenterPoint() const;
+  gfx::Point GetCircleCenterPoint() const;
   // Get the center point of the app list button back arrow. Returns an empty
   // gfx::Point if the back arrow is not shown.
   gfx::Point GetBackButtonCenterPoint() const;

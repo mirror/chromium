@@ -157,5 +157,10 @@ ShelfViewTestAPI::shelf_button_pressed_metric_tracker() {
   return &(shelf_view_->shelf_button_pressed_metric_tracker_);
 }
 
+double ShelfViewTestAPI::GetAnimationDuration() const {
+  DCHECK(shelf_view_->bounds_animator_);
+  return shelf_view_->bounds_animator_->GetAnimationDuration();
+}
+
 }  // namespace test
 }  // namespace ash
