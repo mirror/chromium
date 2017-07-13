@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c54c61dc_24f65460",
+        "filename": "base/value_iterators.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T11:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e0b1362_9f43844a",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "392d32d0_5c3746d6",
         "filename": "base/values.h",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "bee58a81133b592411d88a03e80932b668019074",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecb243a_88ee73cc",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T11:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "392d32d0_5c3746d6",
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d4587222_f22054d4",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T11:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "762e0c34_38c932c0",
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27f1c290_9de14b33",
         "filename": "base/values.h",
         "patchSetId": 8
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "06b0b6f0_328ea2a8",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T11:53:45Z",
+      "side": 1,
+      "message": "Done. \n\nRegarding Code Bloat: I suggest we re-evaluate once we remove the unique_ptrs from DictStorage. In order to do that safely, the vast majority of current Get(WithoutPathExpansion) and Set(WithoutPathExpansion) calls need to be migrated to use FindKey and SetKey. \n\nThis entails a lot of usages of Value::dict_iterator in the codebase, which means we should be able to get a good feeling for the implied binary bloat when we experimentally typedef Value::dict_iterator to DictStorage::iterator. Only if that bloat is reasonable we should remove DictItems. WDYT?",
+      "parentUuid": "27f1c290_9de14b33",
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e536e6ea_246d6c74",
         "filename": "base/values.h",
         "patchSetId": 8
@@ -90,6 +168,24 @@
       "revId": "bee58a81133b592411d88a03e80932b668019074",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e5e86a_bf6fabf7",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T11:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e536e6ea_246d6c74",
+      "revId": "bee58a81133b592411d88a03e80932b668019074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
