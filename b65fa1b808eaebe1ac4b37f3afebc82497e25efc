@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "574eb466_1adbf66b",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-13T19:27:44Z",
+      "side": 1,
+      "message": "I managed to put the \u003cextensionoptions\u003e element directly in div.body, and adjusted the sizing logic accordingly. PTAL.",
+      "parentUuid": "04cc876e_b12bdcb3",
+      "revId": "b65fa1b808eaebe1ac4b37f3afebc82497e25efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d56e0cbf_2c7064ca",
         "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "b65fa1b808eaebe1ac4b37f3afebc82497e25efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece72883_4b916036",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-13T19:27:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d56e0cbf_2c7064ca",
+      "revId": "b65fa1b808eaebe1ac4b37f3afebc82497e25efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
