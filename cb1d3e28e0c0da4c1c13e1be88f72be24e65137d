@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8560a94e_d0e02e16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-13T21:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e417d01_3bb207ee",
+      "range": {
+        "startLine": 12,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 144
+      },
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a69954b_989d496b",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 26
