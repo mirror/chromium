@@ -151,6 +151,17 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool IsCurrentlyAnimatingProperty(TargetProperty::Type target_property,
                                     ElementListType list_type) const;
 
+  // Whether this player is likely to change animating properties such
+  // as opacity or transform.
+  bool WillChangeAnimatingProperties() const;
+  // Sets whether this player is likely to change animating properties
+  // such as opacity or transform. Clients of the animation system
+  // that would like to create a player and reuse it ongoing for
+  // multiple animations may set this to force animation system to
+  // allocate transform and effect nodes for element ids associated
+  // with this player.
+  void SetWillChangeAnimatingProperties(bool);
+
   bool HasElementInActiveList() const;
   gfx::ScrollOffset ScrollOffsetForAnimation() const;
 
@@ -222,6 +233,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool is_ticking_;
 
   bool scroll_offset_animation_was_interrupted_;
+
+  bool will_change_animating_properties_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };
