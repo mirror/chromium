@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f41570a8_48f64206",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T14:27:16Z",
+      "side": 1,
+      "message": "Note that \"extern const char\" is a way more common pattern in chrome (when the values are defined in .cc).\nI guess the reason is that currently every .cc file gets its own global const char* pointer. I have no idea if it matters or not for performance. Just FYI.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "1c035a6f10b0f00fc3279cb2a2168199d8e0ef36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
