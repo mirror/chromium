@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/webui/options/password_manager_handler.h"
 
 #include <memory>
+#include <tuple>
 #include <utility>
 
 #include "base/bind.h"
@@ -46,6 +47,7 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/common/origin_util.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "url/gurl.h"
 
 namespace options {
 
@@ -65,20 +67,20 @@ const char kFederationField[] = "federation";
 // Android URI, and whether the origin is secure.
 void CopyOriginInfoOfPasswordForm(const autofill::PasswordForm& form,
                                   base::DictionaryValue* entry) {
-  bool is_android_uri = false;
-  bool origin_is_clickable = false;
+  bool is_android_uri =
+      password_manager::IsValidAndroidFacetURI(form.signon_realm);
+  std::string shown_origin;
   GURL link_url;
-  entry->SetString(
-      kShownOriginField,
-      password_manager::GetShownOriginAndLinkUrl(
-          form, &is_android_uri, &link_url, &origin_is_clickable));
+  std::tie(shown_origin, link_url) =
+      password_manager::GetShownOriginAndLinkUrl(*form);
+  entry->SetString(kShownOriginField, shown_origin);
   DCHECK(link_url.is_valid());
-  entry->SetString(
-      kUrlField, url_formatter::FormatUrl(
-                     link_url, url_formatter::kFormatUrlOmitNothing,
-                     net::UnescapeRule::SPACES, nullptr, nullptr, nullptr));
+  entry->SetString(kUrlField,
+                   url_formatter::FormatUrl(
+                       link_url, url_formatter::kFormatUrlOmitNothing,
+                       net::UnescapeRule::SPACES, nullptr, nullptr, nullptr));
   entry->SetBoolean(kIsAndroidUriField, is_android_uri);
-  entry->SetBoolean(kIsClickable, origin_is_clickable);
+  entry->SetBoolean(kIsClickable, true);
   entry->SetBoolean(kIsSecureField, content::IsOriginSecure(link_url));
 }
 
