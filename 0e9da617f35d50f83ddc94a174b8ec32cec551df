@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ce696e7_66e82651",
+        "filename": "components/certificate_reporting/error_report_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-13T21:17:48Z",
+      "side": 1,
+      "message": "looks like this and the test below are identical (unless I\u0027m missing something); can you just combine them both into an `#if defined(OS_WIN) || defined(OS_CHROMEOS)`?",
+      "range": {
+        "startLine": 283,
+        "startChar": 19,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "0e9da617f35d50f83ddc94a174b8ec32cec551df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
