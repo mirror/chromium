@@ -151,6 +151,17 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool IsCurrentlyAnimatingProperty(TargetProperty::Type target_property,
                                     ElementListType list_type) const;
 
+  bool WillChangeAnimatingProperties() const;
+  // TODO(wkorman): Should we instead use TargetProperties bitset and
+  // check the actual property involved? Seems like LayerAnimator may
+  // animate nearly all of the possible TargetProperty values (except
+  // perhaps SCROLL_OFFSET). But we could be more granular and so
+  // potentially performant if we also fiddle things so that the
+  // player in the LayerAnimator instance is kept up to date to
+  // reflect union of animated properties for any layer animation
+  // elements in its animation queue.
+  void SetWillChangeAnimatingProperties(bool);
+
   bool HasElementInActiveList() const;
   gfx::ScrollOffset ScrollOffsetForAnimation() const;
 
@@ -222,6 +233,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool is_ticking_;
 
   bool scroll_offset_animation_was_interrupted_;
+
+  bool will_change_animating_properties_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };
