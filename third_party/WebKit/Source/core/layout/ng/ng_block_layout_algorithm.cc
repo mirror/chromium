@@ -134,6 +134,8 @@ Optional<MinMaxContentSize> NGBlockLayoutAlgorithm::ComputeMinMaxContentSize()
     if (node.IsOutOfFlowPositioned())
       continue;
     MinMaxContentSize child_sizes;
+    if (node.IsOutOfFlowPositioned())
+      continue;
     if (node.IsInline()) {
       // From |NGBlockLayoutAlgorithm| perspective, we can handle |NGInlineNode|
       // almost the same as |NGBlockNode|, because an |NGInlineNode| includes
