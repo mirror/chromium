@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22a68341_80429837",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to change this file? Is it something that will be on my local machine?",
+      "parentUuid": "07277732_4b2f335e",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af273b4f_380825d7",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a78fd3_d9651748",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af273b4f_380825d7",
+      "range": {
+        "startLine": 632,
+        "startChar": 0,
+        "endLine": 632,
+        "endChar": 36
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "22351cc1_9266f832",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b591ff0_1c5517a2",
+      "range": {
+        "startLine": 634,
+        "startChar": 0,
+        "endLine": 643,
+        "endChar": 15
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b92cb10b_65125797",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa70515_07c95704",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b92cb10b_65125797",
+      "range": {
+        "startLine": 982,
+        "startChar": 0,
+        "endLine": 982,
+        "endChar": 25
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "db8936e0_f4df3d94",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa37363c_28adb4d9",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 1
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca6146c_345552c0",
         "filename": "ash/system/network/network_icon.h",
         "patchSetId": 9
@@ -137,6 +257,30 @@
       "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf3d3ae_43dafd93",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca6146c_345552c0",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 1
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5b34f498_94e23a97",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23b8822e_939dbdfb",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d3a6432_bf1d0f0d",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 9
@@ -183,6 +351,30 @@
       "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f8845e_77e10183",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d3a6432_bf1d0f0d",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 55
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "c3c2ab42_a16a511c",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdaf5e59_90bb2d2a",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fde665ca_32a5396b",
         "filename": "chromeos/components/tether/host_scanner.cc",
         "patchSetId": 9
@@ -229,6 +445,30 @@
       "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b495ba4d_ce483540",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T16:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fde665ca_32a5396b",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
