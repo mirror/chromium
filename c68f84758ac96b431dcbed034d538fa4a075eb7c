@@ -22,6 +22,30 @@
       "revId": "c68f84758ac96b431dcbed034d538fa4a075eb7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6510b196_d28d90b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-13T16:11:34Z",
+      "side": 1,
+      "message": "Ooops.... sorry about that.\n\nMoved to the common try {} finally {} idiom for TraceEvent.",
+      "parentUuid": "4c2db6b5_2ec18a4d",
+      "range": {
+        "startLine": 189,
+        "startChar": 22,
+        "endLine": 189,
+        "endChar": 23
+      },
+      "revId": "c68f84758ac96b431dcbed034d538fa4a075eb7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
