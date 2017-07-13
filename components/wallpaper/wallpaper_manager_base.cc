@@ -170,8 +170,6 @@ void AssertCalledOnWallpaperSequence() {
 #endif
 }
 
-const char kWallpaperSequenceTokenName[] = "wallpaper-sequence";
-
 const char kSmallWallpaperSuffix[] = "_small";
 const char kLargeWallpaperSuffix[] = "_large";
 

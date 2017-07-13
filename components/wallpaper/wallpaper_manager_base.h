@@ -86,9 +86,6 @@ void WALLPAPER_EXPORT AssertCalledOnWallpaperSequence();
 
 class WallpaperManagerBrowserTest;
 
-// Name of wallpaper sequence token.
-WALLPAPER_EXPORT extern const char kWallpaperSequenceTokenName[];
-
 // File path suffices of resized small or large wallpaper.
 // TODO(bshe): Use the same sub folder system as custom wallpapers use.
 // crbug.com/174928
@@ -593,9 +590,6 @@ class WALLPAPER_EXPORT WallpaperManagerBase {
   int loaded_wallpapers_for_test_;
 
   base::ThreadChecker thread_checker_;
-
-  // Sequence token associated with wallpaper operations.
-  base::SequencedWorkerPool::SequenceToken sequence_token_;
 
   // Wallpaper sequenced task runner.
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
