@@ -66,6 +66,13 @@ typedef NSString* NSTouchBarCustomizationIdentifier;
 
 @end
 
+@interface NSPopoverTouchBarItem : NSTouchBarItem
+
+@property(strong) NSImage* collapsedRepresentationImage;
+@property(strong) NSTouchBar* popoverTouchBar;
+
+@end
+
 @interface NSGroupTouchBarItem : NSTouchBarItem
 
 + (NSGroupTouchBarItem*)groupItemWithIdentifier:

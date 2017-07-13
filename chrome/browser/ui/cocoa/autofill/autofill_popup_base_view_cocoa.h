@@ -10,11 +10,13 @@
 #import "ui/base/cocoa/base_view.h"
 
 namespace autofill {
+class AutofillPopupController;
 class AutofillPopupViewDelegate;
 }
 
 @interface AutofillPopupBaseViewCocoa : BaseView {
  @private
+  autofill::AutofillPopupController* popup_controller_;  // weak
   autofill::AutofillPopupViewDelegate* popup_delegate_;  // weak
 }
 
@@ -26,6 +28,7 @@ class AutofillPopupViewDelegate;
 - (NSColor*)subtextColor;
 
 - (id)initWithDelegate:(autofill::AutofillPopupViewDelegate*)delegate
+            controller:(autofill::AutofillPopupController*)controller
                  frame:(NSRect)frame;
 
 // Informs the view that its delegate has been (or will imminently be)

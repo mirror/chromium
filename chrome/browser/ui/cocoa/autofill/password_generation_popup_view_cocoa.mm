@@ -72,7 +72,8 @@ NSColor* HelpLinkColor() {
 - (id)initWithController:
     (autofill::PasswordGenerationPopupController*)controller
                    frame:(NSRect)frame {
-  if (self = [super initWithDelegate:controller frame:frame]) {
+  if (self =
+          [super initWithDelegate:controller controller:nullptr frame:frame]) {
     controller_ = controller;
 
     passwordSection_.reset([[NSView alloc] initWithFrame:NSZeroRect]);
