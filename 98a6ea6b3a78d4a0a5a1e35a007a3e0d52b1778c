@@ -567,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "e80708f7_e3252a14",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T18:30:41Z",
+      "side": 1,
+      "message": "Personally I prefer this longer name, but I don\u0027t have a strong opinion :)",
+      "parentUuid": "c1876719_5f9cd74f",
+      "range": {
+        "startLine": 85,
+        "startChar": 29,
+        "endLine": 85,
+        "endChar": 75
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c32b6dba_5481319b",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 12
@@ -649,6 +673,30 @@
       "side": 1,
       "message": "khorimoto@",
       "parentUuid": "e6ee14a7_915c74d1",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a43321_ccea01a5",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T18:30:41Z",
+      "side": 1,
+      "message": "Nope - they should be moved. Thanks!",
+      "parentUuid": "b0895491_78ae02d8",
       "range": {
         "startLine": 80,
         "startChar": 2,

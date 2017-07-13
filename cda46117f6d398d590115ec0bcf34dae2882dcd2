@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4e2bab_5d010628",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T18:30:41Z",
+      "side": 1,
+      "message": "/* is_opaque */",
+      "range": {
+        "startLine": 646,
+        "startChar": 30,
+        "endLine": 646,
+        "endChar": 35
+      },
+      "revId": "cda46117f6d398d590115ec0bcf34dae2882dcd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea754dd_68d2cb9f",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T18:30:41Z",
+      "side": 1,
+      "message": "No semicolon. Does this compile?",
+      "range": {
+        "startLine": 663,
+        "startChar": 50,
+        "endLine": 663,
+        "endChar": 51
+      },
+      "revId": "cda46117f6d398d590115ec0bcf34dae2882dcd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f43370_fcfbc0b7",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T18:30:41Z",
+      "side": 1,
+      "message": "nit: Space between ) and {.",
+      "range": {
+        "startLine": 663,
+        "startChar": 47,
+        "endLine": 663,
+        "endChar": 49
+      },
+      "revId": "cda46117f6d398d590115ec0bcf34dae2882dcd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073f8f1e_8ab47b4a",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T18:30:41Z",
+      "side": 1,
+      "message": "nit: No quotes necessary. estade@, do we use |\u0027s here, or just nothing?",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 4
+      },
+      "revId": "cda46117f6d398d590115ec0bcf34dae2882dcd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcb65cf_d3d34adc",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T18:30:41Z",
+      "side": 1,
+      "message": "nit: Newline before this.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 1
+      },
+      "revId": "cda46117f6d398d590115ec0bcf34dae2882dcd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a657a183_c1189913",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T18:30:41Z",
+      "side": 1,
+      "message": "int normalized_signal_strength \u003d signal_strength / 25;\nreturn std::min(std::max(normalized_signal_strength, 0), 4);",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "cda46117f6d398d590115ec0bcf34dae2882dcd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
