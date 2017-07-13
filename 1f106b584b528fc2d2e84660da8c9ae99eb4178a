@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4422c44_a8cb0749",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-13T17:02:05Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4a91947c_b28f84cb",
+      "range": {
+        "startLine": 1122,
+        "startChar": 61,
+        "endLine": 1122,
+        "endChar": 62
+      },
+      "revId": "1f106b584b528fc2d2e84660da8c9ae99eb4178a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e73817b8_c47d8ba0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1f106b584b528fc2d2e84660da8c9ae99eb4178a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc3263c_73566545",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-13T17:02:05Z",
+      "side": 0,
+      "message": "Done.\n\nThis was a no-op, because of how getSecurityLevel() is implemented for offline page (always returns NONE). I\u0027ll move that to a separate change.",
+      "parentUuid": "e73817b8_c47d8ba0",
+      "range": {
+        "startLine": 1451,
+        "startChar": 52,
+        "endLine": 1451,
+        "endChar": 75
+      },
+      "revId": "1f106b584b528fc2d2e84660da8c9ae99eb4178a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
