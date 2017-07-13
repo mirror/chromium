@@ -9760,6 +9760,107 @@
 
       If this policy is left not set, the device will behave as if 'DisallowArc' was chosen.''',
     },
+    {
+      'name': 'DeviceOffHours',
+      'type': 'dict',
+      'schema': {
+        'type': 'object',
+        'properties': {
+          'interval': {
+            'type': 'array',
+            'items': {
+              'type': 'object',
+              'id': 'DeviceOffHoursIntervals',
+              'properties': {
+                'start': {
+                  'type': 'object',
+                  'id': 'WeeklyTimestamp',
+                  'properties': {
+                    'weekly': {
+                      'type': 'string',
+                      'id': 'DayOfWeek',
+                      'enum': [
+                        'DAY_OF_WEEK_UNSPECIFIED',
+                        'MONDAY',
+                        'TUESDAY',
+                        'WEDNESDAY',
+                        'THURSDAY',
+                        'FRIDAY',
+                        'SATURDAY',
+                        'SUNDAY'
+                      ],
+                    },
+                    'time' : {
+                      'type': 'object',
+                      'id': 'TimeOfDay',
+                      'properties': {
+                        'hours': { 'type': 'integer' },
+                        'minutes': { 'type': 'integer' },
+                      }
+                    },
+                  }
+                },
+                'end': {
+                  '$ref': 'WeeklyTimestamp'
+                },
+              },
+            },
+          },
+          'policy': {
+            'type': 'array',
+            'items': { 'type':'string' }
+          },
+        },
+      },
+      'supported_on': ['chrome_os:62-'],
+      'device_only': True,
+      'features': {
+        'dynamic_refresh': True,
+      },
+      'example_value': {
+        'interval':
+        [
+          {
+            'start' : {
+              'weekday' : 1,
+              'time': {
+                'hours' : 3,
+                'minutes' : 34,
+              },
+            },
+            'end': {
+              'weekday' : 1,
+              'time': {
+                'hours' : 6,
+                'minutes' : 2,
+              },
+            },
+          },
+          {
+            'start' : {
+              'weekday' : 3,
+              'time': {
+                'hours' : 10,
+                'minutes' : 44,
+              },
+            },
+            'end': {
+              'weekday' : 3,
+              'time': {
+                'hours' : 16,
+                'minutes' : 0,
+              },
+            },
+          },
+        ],
+        'policy': ['a', 'b'],
+      },
+      'id': 376,
+      'caption': '''Off hours intervals when some policies are released''',
+      'tags': [],
+      'desc': '''During the defined time intervals, some policies are not applied.''',
+    },
+
   ],
   'messages': {
     # Messages that are not associated to any policies.

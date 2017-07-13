@@ -3147,5 +3147,48 @@
   },
 
   "SkipMetadataCheck": {
+  },
+
+  "DeviceOffHours": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "DeviceOffHours": {
+        "interval": [
+          {
+            "start" : {
+              "weekday" : 1,
+              "time": {
+                "hours" : 3,
+                "minutes" : 34
+              }
+            },
+            "end": {
+              "weekday" : 1,
+              "time": {
+                "hours" : 6,
+                "minutes" : 2
+              }
+            }
+          },
+          {
+            "start" : {
+              "weekday" : 3,
+              "time": {
+                "hours" : 10,
+                "minutes" : 44
+              }
+            },
+            "end": {
+              "weekday" : 3,
+              "time": {
+                "hours" : 16,
+                "minutes" : 0
+              }
+            }
+          }
+        ],
+        "policy": ["a", "b"]
+      }
+    }
   }
 }
