@@ -16,6 +16,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
+#include "public/platform/modules/notifications/WebNotificationConstants.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
@@ -30,24 +31,59 @@ constexpr char kIcon500x500[] = "500x500.png";
 
 // This mirrors the definition in NotificationImageLoader.cpp.
 constexpr unsigned long kImageFetchTimeoutInMs = 90000;
-
 static_assert(kImageFetchTimeoutInMs > 1000.0,
               "kImageFetchTimeoutInMs must be greater than 1000ms.");
 
-class NotificationImageLoaderTest : public ::testing::Test {
+constexpr char kIcon3000x1000[] = "3000x1000.png";
+constexpr char kIcon3000x2000[] = "3000x2000.png";
+
+// Version of the NotificationImageLoader that quits the run loop when loading
+// and resizing of the image has completed.
+class TestNotificationImageLoader : public NotificationImageLoader {
  public:
-  NotificationImageLoaderTest()
-      : page_(DummyPageHolder::Create()),
-        // Use an arbitrary type, since it only affects which UMA bucket we use.
-        loader_(
-            new NotificationImageLoader(NotificationImageLoader::Type::kIcon)) {
+  explicit TestNotificationImageLoader(Type type)
+      : NotificationImageLoader(type) {}
+
+  ~TestNotificationImageLoader() override = default;
+
+  // Spins a run loop until the signal that the image load has been completed
+  // has been received.
+  void WaitForImageLoadCompleteSignal() {
+    DCHECK(!waiting_);
+    waiting_ = true;
+
+    testing::EnterRunLoop();
   }
 
+  // Called when the image has been loaded, will exit the run loop if it's been
+  // previously entered by WaitForImageLoadCompleteSignal().
+  void SignalImageLoadCompleteForTesting() override {
+    if (!waiting_)
+      return;
+
+    testing::ExitRunLoop();
+    waiting_ = false;
+  }
+
+ private:
+  bool waiting_ = false;
+};
+
+class NotificationImageLoaderTest : public ::testing::Test {
+ public:
+  NotificationImageLoaderTest() : page_(DummyPageHolder::Create()) {}
+
   ~NotificationImageLoaderTest() override {
+    DCHECK(loader_);
+
     loader_->Stop();
     Platform::Current()
         ->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
+  }
+
+  void CreateLoaderWithType(NotificationImageLoader::Type type) {
+    loader_ = new TestNotificationImageLoader(type);
   }
 
   // Registers a mocked URL. When fetched it will be loaded form the test data
@@ -60,14 +96,17 @@ class NotificationImageLoaderTest : public ::testing::Test {
 
   // Callback for the NotificationImageLoader. This will set the state of the
   // load as either success or failed based on whether the bitmap is empty.
-  void ImageLoaded(const SkBitmap& bitmap) {
-    if (!bitmap.empty())
+  void ImageLoaded(const SkBitmap& image) {
+    image_ = image;
+
+    if (!image.empty())
       loaded_ = LoadState::kLoadSuccessful;
     else
       loaded_ = LoadState::kLoadFailed;
   }
 
   void LoadImage(const KURL& url) {
+    DCHECK(loader_);
     loader_->Start(
         Context(), url,
         Bind(&NotificationImageLoaderTest::ImageLoaded, WTF::Unretained(this)));
@@ -78,20 +117,24 @@ class NotificationImageLoaderTest : public ::testing::Test {
 
  protected:
   HistogramTester histogram_tester_;
-
- private:
   std::unique_ptr<DummyPageHolder> page_;
-  Persistent<NotificationImageLoader> loader_;
+  Persistent<TestNotificationImageLoader> loader_;
   LoadState loaded_ = LoadState::kNotLoaded;
+  SkBitmap image_;
 };
 
 TEST_F(NotificationImageLoaderTest, SuccessTest) {
+  CreateLoaderWithType(NotificationImageLoader::Type::kIcon);
+
   KURL url = RegisterMockedURL(kIcon500x500);
   LoadImage(url);
   histogram_tester_.ExpectTotalCount("Notifications.LoadFinishTime.Icon", 0);
   histogram_tester_.ExpectTotalCount("Notifications.LoadFileSize.Icon", 0);
   histogram_tester_.ExpectTotalCount("Notifications.LoadFailTime.Icon", 0);
+
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  loader_->WaitForImageLoadCompleteSignal();
+
   EXPECT_EQ(LoadState::kLoadSuccessful, Loaded());
   histogram_tester_.ExpectTotalCount("Notifications.LoadFinishTime.Icon", 1);
   histogram_tester_.ExpectUniqueSample("Notifications.LoadFileSize.Icon", 7439,
@@ -100,6 +143,8 @@ TEST_F(NotificationImageLoaderTest, SuccessTest) {
 }
 
 TEST_F(NotificationImageLoaderTest, TimeoutTest) {
+  CreateLoaderWithType(NotificationImageLoader::Type::kIcon);
+
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
       platform;
 
@@ -126,6 +171,86 @@ TEST_F(NotificationImageLoaderTest, TimeoutTest) {
   // Should log a non-zero failure time.
   histogram_tester_.ExpectTotalCount("Notifications.LoadFailTime.Icon", 1);
   histogram_tester_.ExpectBucketCount("Notifications.LoadFailTime.Icon", 0, 0);
+}
+
+TEST_F(NotificationImageLoaderTest, BadgeIsScaledDown) {
+  CreateLoaderWithType(NotificationImageLoader::Type::kBadge);
+
+  KURL url = RegisterMockedURL(kIcon500x500);
+  LoadImage(url);
+
+  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  loader_->WaitForImageLoadCompleteSignal();
+
+  ASSERT_EQ(LoadState::kLoadSuccessful, Loaded());
+
+  ASSERT_FALSE(image_.drawsNothing());
+  ASSERT_EQ(kWebNotificationMaxBadgeSizePx, image_.width());
+  ASSERT_EQ(kWebNotificationMaxBadgeSizePx, image_.height());
+}
+
+TEST_F(NotificationImageLoaderTest, IconIsScaledDown) {
+  CreateLoaderWithType(NotificationImageLoader::Type::kIcon);
+
+  KURL url = RegisterMockedURL(kIcon500x500);
+  LoadImage(url);
+
+  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  loader_->WaitForImageLoadCompleteSignal();
+
+  ASSERT_EQ(LoadState::kLoadSuccessful, Loaded());
+
+  ASSERT_FALSE(image_.drawsNothing());
+  ASSERT_EQ(kWebNotificationMaxIconSizePx, image_.width());
+  ASSERT_EQ(kWebNotificationMaxIconSizePx, image_.height());
+}
+
+TEST_F(NotificationImageLoaderTest, ActionIconIsScaledDown) {
+  CreateLoaderWithType(NotificationImageLoader::Type::kActionIcon);
+
+  KURL url = RegisterMockedURL(kIcon500x500);
+  LoadImage(url);
+
+  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  loader_->WaitForImageLoadCompleteSignal();
+
+  ASSERT_EQ(LoadState::kLoadSuccessful, Loaded());
+
+  ASSERT_FALSE(image_.drawsNothing());
+  ASSERT_EQ(kWebNotificationMaxActionIconSizePx, image_.width());
+  ASSERT_EQ(kWebNotificationMaxActionIconSizePx, image_.height());
+}
+
+TEST_F(NotificationImageLoaderTest, DownscalingPreserves3_1AspectRatio) {
+  CreateLoaderWithType(NotificationImageLoader::Type::kImage);
+
+  KURL url = RegisterMockedURL(kIcon3000x1000);
+  LoadImage(url);
+
+  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  loader_->WaitForImageLoadCompleteSignal();
+
+  ASSERT_EQ(LoadState::kLoadSuccessful, Loaded());
+
+  ASSERT_FALSE(image_.drawsNothing());
+  ASSERT_EQ(kWebNotificationMaxImageWidthPx, image_.width());
+  ASSERT_EQ(kWebNotificationMaxImageWidthPx / 3, image_.height());
+}
+
+TEST_F(NotificationImageLoaderTest, DownscalingPreserves3_2AspectRatio) {
+  CreateLoaderWithType(NotificationImageLoader::Type::kImage);
+
+  KURL url = RegisterMockedURL(kIcon3000x2000);
+  LoadImage(url);
+
+  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  loader_->WaitForImageLoadCompleteSignal();
+
+  ASSERT_EQ(LoadState::kLoadSuccessful, Loaded());
+
+  ASSERT_FALSE(image_.drawsNothing());
+  ASSERT_EQ(kWebNotificationMaxImageHeightPx * 3 / 2, image_.width());
+  ASSERT_EQ(kWebNotificationMaxImageHeightPx, image_.height());
 }
 
 }  // namspace

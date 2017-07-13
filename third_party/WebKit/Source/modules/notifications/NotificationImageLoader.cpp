@@ -6,13 +6,16 @@
 
 #include <memory>
 #include "core/dom/ExecutionContext.h"
+#include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/image-decoders/ImageDecoder.h"
 #include "platform/image-decoders/ImageFrame.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceLoadPriority.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/threading/BackgroundTaskRunner.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/Threading.h"
@@ -38,6 +41,8 @@
     NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, ActionIcon, value, max) \
   }
 
+namespace blink {
+
 namespace {
 
 // 99.9% of all images were fetched successfully in 90 seconds.
@@ -45,55 +50,10 @@ const unsigned long kImageFetchTimeoutInMs = 90000;
 
 }  // namespace
 
-namespace blink {
-
 NotificationImageLoader::NotificationImageLoader(Type type)
     : type_(type), stopped_(false), start_time_(0.0) {}
 
-NotificationImageLoader::~NotificationImageLoader() {}
-
-// static
-SkBitmap NotificationImageLoader::ScaleDownIfNeeded(const SkBitmap& image,
-                                                    Type type) {
-  int max_width_px = 0, max_height_px = 0;
-  switch (type) {
-    case Type::kImage:
-      max_width_px = kWebNotificationMaxImageWidthPx;
-      max_height_px = kWebNotificationMaxImageHeightPx;
-      break;
-    case Type::kIcon:
-      max_width_px = kWebNotificationMaxIconSizePx;
-      max_height_px = kWebNotificationMaxIconSizePx;
-      break;
-    case Type::kBadge:
-      max_width_px = kWebNotificationMaxBadgeSizePx;
-      max_height_px = kWebNotificationMaxBadgeSizePx;
-      break;
-    case Type::kActionIcon:
-      max_width_px = kWebNotificationMaxActionIconSizePx;
-      max_height_px = kWebNotificationMaxActionIconSizePx;
-      break;
-  }
-  DCHECK_GT(max_width_px, 0);
-  DCHECK_GT(max_height_px, 0);
-  // TODO(peter): Explore doing the scaling on a background thread.
-  if (image.width() > max_width_px || image.height() > max_height_px) {
-    double scale =
-        std::min(static_cast<double>(max_width_px) / image.width(),
-                 static_cast<double>(max_height_px) / image.height());
-    double start_time = MonotonicallyIncreasingTimeMS();
-    // TODO(peter): Try using RESIZE_BETTER for large images.
-    SkBitmap scaled_image =
-        skia::ImageOperations::Resize(image, skia::ImageOperations::RESIZE_BEST,
-                                      std::lround(scale * image.width()),
-                                      std::lround(scale * image.height()));
-    NOTIFICATION_HISTOGRAM_COUNTS(LoadScaleDownTime, type,
-                                  MonotonicallyIncreasingTimeMS() - start_time,
-                                  1000 * 10 /* 10 seconds max */);
-    return scaled_image;
-  }
-  return image;
-}
+NotificationImageLoader::~NotificationImageLoader() = default;
 
 void NotificationImageLoader::Start(
     ExecutionContext* execution_context,
@@ -165,12 +125,15 @@ void NotificationImageLoader::DidFinishLoading(
       // The |ImageFrame*| is owned by the decoder.
       ImageFrame* image_frame = decoder->FrameBufferAtIndex(0);
       if (image_frame) {
-        (*image_callback_)(image_frame->Bitmap());
+        image_ = image_frame->Bitmap();
+        DCHECK_GT(image_.width(), 0);
+        DCHECK_GT(image_.height(), 0);
+        ScaleDownIfNeeded();
         return;
       }
     }
   }
-  RunCallbackWithEmptyBitmap();
+  RunCallback();
 }
 
 void NotificationImageLoader::DidFail(const ResourceError& error) {
@@ -178,20 +141,87 @@ void NotificationImageLoader::DidFail(const ResourceError& error) {
                                 MonotonicallyIncreasingTimeMS() - start_time_,
                                 1000 * 60 * 60 /* 1 hour max */);
 
-  RunCallbackWithEmptyBitmap();
+  RunCallback();
 }
 
 void NotificationImageLoader::DidFailRedirectCheck() {
-  RunCallbackWithEmptyBitmap();
+  RunCallback();
 }
 
-void NotificationImageLoader::RunCallbackWithEmptyBitmap() {
+void NotificationImageLoader::ScaleDownIfNeeded() {
+  int max_width_px = 0, max_height_px = 0;
+  switch (type_) {
+    case Type::kImage:
+      max_width_px = kWebNotificationMaxImageWidthPx;
+      max_height_px = kWebNotificationMaxImageHeightPx;
+      break;
+    case Type::kIcon:
+      max_width_px = kWebNotificationMaxIconSizePx;
+      max_height_px = kWebNotificationMaxIconSizePx;
+      break;
+    case Type::kBadge:
+      max_width_px = kWebNotificationMaxBadgeSizePx;
+      max_height_px = kWebNotificationMaxBadgeSizePx;
+      break;
+    case Type::kActionIcon:
+      max_width_px = kWebNotificationMaxActionIconSizePx;
+      max_height_px = kWebNotificationMaxActionIconSizePx;
+      break;
+  }
+  DCHECK_GT(max_width_px, 0);
+  DCHECK_GT(max_height_px, 0);
+
+  if (image_.width() > max_width_px || image_.height() > max_height_px) {
+    RefPtr<WebTaskRunner> task_runner =
+        Platform::Current()->CurrentThread()->GetWebTaskRunner();
+
+    BackgroundTaskRunner::PostOnBackgroundThread(
+        FROM_HERE,
+        CrossThreadBind(&NotificationImageLoader::ScaleDownOnBackgroundThread,
+                        WrapCrossThreadPersistent(this), std::move(task_runner),
+                        max_width_px, max_height_px));
+    return;
+  }
+
+  RunCallback();
+}
+
+void NotificationImageLoader::ScaleDownOnBackgroundThread(
+    RefPtr<WebTaskRunner> task_runner,
+    int max_width_px,
+    int max_height_px) {
+  DCHECK(!task_runner->RunsTasksInCurrentSequence());
+  double scale = std::min(static_cast<double>(max_width_px) / image_.width(),
+                          static_cast<double>(max_height_px) / image_.height());
+
+  double start_time = MonotonicallyIncreasingTimeMS();
+
+  // TODO(peter): Try using RESIZE_BETTER for large images.
+  SkBitmap scaled_image =
+      skia::ImageOperations::Resize(image_, skia::ImageOperations::RESIZE_BEST,
+                                    std::lround(scale * image_.width()),
+                                    std::lround(scale * image_.height()));
+
+  NOTIFICATION_HISTOGRAM_COUNTS(LoadScaleDownTime, type_,
+                                MonotonicallyIncreasingTimeMS() - start_time,
+                                1000 * 10 /* 10 seconds max */);
+
+  image_ = scaled_image;
+
+  task_runner->PostTask(FROM_HERE,
+                        CrossThreadBind(&NotificationImageLoader::RunCallback,
+                                        WrapCrossThreadPersistent(this)));
+}
+
+void NotificationImageLoader::RunCallback() {
+  SignalImageLoadCompleteForTesting();
+
   // If this has been stopped it is not desirable to trigger further work,
   // there is a shutdown of some sort in progress.
   if (stopped_)
     return;
 
-  (*image_callback_)(SkBitmap());
+  (*image_callback_)(image_);
 }
 
 }  // namespace blink

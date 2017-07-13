@@ -32,8 +32,6 @@ constexpr char kIcon100x100[] = "100x100.png";
 constexpr char kIcon110x110[] = "110x110.png";
 constexpr char kIcon120x120[] = "120x120.png";
 constexpr char kIcon500x500[] = "500x500.png";
-constexpr char kIcon3000x1000[] = "3000x1000.png";
-constexpr char kIcon3000x2000[] = "3000x2000.png";
 
 class NotificationResourcesLoaderTest : public ::testing::Test {
  public:
@@ -116,70 +114,6 @@ TEST_F(NotificationResourcesLoaderTest, LoadMultipleResources) {
   ASSERT_EQ(110, Resources()->action_icons[0].width());
   ASSERT_FALSE(Resources()->action_icons[1].drawsNothing());
   ASSERT_EQ(120, Resources()->action_icons[1].width());
-}
-
-TEST_F(NotificationResourcesLoaderTest, LargeIconsAreScaledDown) {
-  WebNotificationData notification_data;
-  notification_data.icon = RegisterMockedURL(kIcon500x500);
-  notification_data.badge = notification_data.icon;
-  notification_data.actions =
-      WebVector<WebNotificationAction>(static_cast<size_t>(1));
-  notification_data.actions[0].icon = notification_data.icon;
-
-  ASSERT_FALSE(Resources());
-
-  Loader()->Start(GetExecutionContext(), notification_data);
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
-
-  ASSERT_TRUE(Resources());
-
-  ASSERT_FALSE(Resources()->icon.drawsNothing());
-  ASSERT_EQ(kWebNotificationMaxIconSizePx, Resources()->icon.width());
-  ASSERT_EQ(kWebNotificationMaxIconSizePx, Resources()->icon.height());
-
-  ASSERT_FALSE(Resources()->badge.drawsNothing());
-  ASSERT_EQ(kWebNotificationMaxBadgeSizePx, Resources()->badge.width());
-  ASSERT_EQ(kWebNotificationMaxBadgeSizePx, Resources()->badge.height());
-
-  ASSERT_EQ(1u, Resources()->action_icons.size());
-  ASSERT_FALSE(Resources()->action_icons[0].drawsNothing());
-  ASSERT_EQ(kWebNotificationMaxActionIconSizePx,
-            Resources()->action_icons[0].width());
-  ASSERT_EQ(kWebNotificationMaxActionIconSizePx,
-            Resources()->action_icons[0].height());
-}
-
-TEST_F(NotificationResourcesLoaderTest, DownscalingPreserves3_1AspectRatio) {
-  WebNotificationData notification_data;
-  notification_data.image = RegisterMockedURL(kIcon3000x1000);
-
-  ASSERT_FALSE(Resources());
-
-  Loader()->Start(GetExecutionContext(), notification_data);
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
-
-  ASSERT_TRUE(Resources());
-
-  ASSERT_FALSE(Resources()->image.drawsNothing());
-  ASSERT_EQ(kWebNotificationMaxImageWidthPx, Resources()->image.width());
-  ASSERT_EQ(kWebNotificationMaxImageWidthPx / 3, Resources()->image.height());
-}
-
-TEST_F(NotificationResourcesLoaderTest, DownscalingPreserves3_2AspectRatio) {
-  WebNotificationData notification_data;
-  notification_data.image = RegisterMockedURL(kIcon3000x2000);
-
-  ASSERT_FALSE(Resources());
-
-  Loader()->Start(GetExecutionContext(), notification_data);
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
-
-  ASSERT_TRUE(Resources());
-
-  ASSERT_FALSE(Resources()->image.drawsNothing());
-  ASSERT_EQ(kWebNotificationMaxImageHeightPx * 3 / 2,
-            Resources()->image.width());
-  ASSERT_EQ(kWebNotificationMaxImageHeightPx, Resources()->image.height());
 }
 
 TEST_F(NotificationResourcesLoaderTest, EmptyDataYieldsEmptyResources) {
