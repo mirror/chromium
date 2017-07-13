@@ -208,6 +208,11 @@ void WindowManagerState::SetCursorLocation(const gfx::Point& display_pixels,
   display->platform_display()->MoveCursorTo(display_pixels);
 }
 
+void WindowManagerState::SetCursorOnKeyList(
+    std::vector<::ui::mojom::EventMatcherPtr> show_cursor_matchers) {
+  event_dispatcher()->SetCursorOnKeyList(std::move(show_cursor_matchers));
+}
+
 void WindowManagerState::SetDragDropSourceWindow(
     DragSource* drag_source,
     ServerWindow* window,
@@ -657,6 +662,10 @@ void WindowManagerState::OnMouseCursorLocationChanged(
   }
   // If the display the |point_in_display| is on has been deleted, keep the old
   // cursor location.
+}
+
+void WindowManagerState::OnEventChangesCursorVisibility(bool visible) {
+  cursor_state_.SetCursorVisible(visible);
 }
 
 void WindowManagerState::DispatchInputEventToWindow(ServerWindow* target,
