@@ -38,6 +38,9 @@ class FakeRemoteGattService : public device::BluetoothRemoteGattService {
       const device::BluetoothUUID& characteristic_uuid,
       mojom::CharacteristicPropertiesPtr properties);
 
+  // Removes a fake characteristic with |identifier| from this service.
+  void RemoveFakeCharacteristic(const std::string& characteristic_id);
+
   // device::BluetoothGattService overrides:
   std::string GetIdentifier() const override;
   device::BluetoothUUID GetUUID() const override;
