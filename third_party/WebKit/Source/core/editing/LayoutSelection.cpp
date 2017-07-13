@@ -275,7 +275,7 @@ static void UpdateLayoutObjectState(const SelectionPaintRange& new_range,
 }
 
 std::pair<int, int> LayoutSelection::SelectionStartEnd() {
-  Commit();
+  DCHECK(!HasPendingSelection());
   if (paint_range_.IsNull())
     return std::make_pair(-1, -1);
   return std::make_pair(paint_range_.StartOffset(), paint_range_.EndOffset());
@@ -328,6 +328,10 @@ static SelectionPaintRange CalcSelectionPaintRange(
   return SelectionPaintRange(start_layout_object,
                              start_pos.ComputeEditingOffset(),
                              end_layout_object, end_pos.ComputeEditingOffset());
+}
+
+void LayoutSelection::SetHasPendingSelection() {
+  has_pending_selection_ = true;
 }
 
 void LayoutSelection::Commit() {
