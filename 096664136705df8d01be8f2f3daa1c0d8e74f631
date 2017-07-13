@@ -476,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "c2bc40b7_fd050864",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-13T22:14:41Z",
+      "side": 1,
+      "message": "Since I use getline() now, there\u0027s no buffer size problem anymore ?",
+      "parentUuid": "f3731ece_2f48d93c",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aa0a662_b6564fac",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
