@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cda55f25_59e96742",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading_shared_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T18:04:15Z",
+      "side": 1,
+      "message": "Replace this with buffer_-\u003eseqlock.value(). The compiler will inline the address calculation while buffer_seq_lock_ just takes up space in the object.",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "70b60d03b7d5090868665ed659f9950fa7e93acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83667431_7e9538fb",
         "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
         "patchSetId": 13
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "Filed a bug and added TODO.\n\nThis CL started with a simple idea: extracting the already existed sensor buffer reading code into somewhere so that it can be reused and we don\u0027t have to write similar logic again and again. As this CL evolves, we found two kinds of approach can be applied here: the common sensor buffer reading code can either be put into the SensorReading struct or have a separate sensor buffer reader class which handles the reading. From my point of view, as long as the approach can serve the purpose of code reuse and the solution is reasonably clean, then it is good. I think both approaches fulfill this requirement, so I am fine with either approach.\n\nCurrently this CL blocks some of my other CLs, so I would like to resolve this quickly so that my other CLs can make progress.\n\nDone.",
       "parentUuid": "83667431_7e9538fb",
+      "range": {
+        "startLine": 118,
+        "startChar": 43,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "70b60d03b7d5090868665ed659f9950fa7e93acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649be48a_dc6dfe8b",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T18:04:15Z",
+      "side": 1,
+      "message": "I agree an initialize method that takes the mojo::SharedMemoryHandle and returns false (or nullptr) on failure is a clean way to encapsulate the shared memory logic and avoids keeping either the handle or buffer pointer in the SensorProxy object.\n\nSince the SensorReadingSharedBufferReader owns the handle it does not need to check it for validity on every read as it knows it has not closed it.",
+      "parentUuid": "02764b39_9c782e6e",
       "range": {
         "startLine": 118,
         "startChar": 43,
