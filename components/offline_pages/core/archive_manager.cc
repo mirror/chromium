@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
+#include "base/guid.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
@@ -19,6 +20,8 @@
 namespace offline_pages {
 
 namespace {
+
+const base::FilePath::CharType kMHTMLExtension[] = FILE_PATH_LITERAL("mhtml");
 
 using StorageStatsCallback =
     base::Callback<void(const ArchiveManager::StorageStats& storage_stats)>;
@@ -78,6 +81,17 @@ void GetStorageStatsImpl(const base::FilePath& archive_dir,
   task_runner->PostTask(FROM_HERE, base::Bind(callback, storage_stats));
 }
 
+void MoveFile(const base::FilePath& src_path,
+              const base::FilePath& dest_path,
+              scoped_refptr<base::SequencedTaskRunner> task_runner,
+              const base::Callback<void(const base::FilePath&)>& callback) {
+  bool result = base::Move(src_path, dest_path);
+  base::FilePath result_path;
+  if (result)
+    result_path = dest_path;
+  task_runner->PostTask(FROM_HERE, base::Bind(callback, result_path));
+}
+
 }  // namespace
 
 // protected and used for testing.
@@ -129,6 +143,16 @@ void ArchiveManager::GetStorageStats(
     const StorageStatsCallback& callback) const {
   task_runner_->PostTask(
       FROM_HERE, base::Bind(GetStorageStatsImpl, archives_dir_,
+                            base::ThreadTaskRunnerHandle::Get(), callback));
+}
+
+void ArchiveManager::ImportArchive(
+    const base::FilePath& src_path,
+    const base::Callback<void(const base::FilePath&)>& callback) {
+  base::FilePath dest_path =
+      archives_dir_.Append(base::GenerateGUID()).AddExtension(kMHTMLExtension);
+  task_runner_->PostTask(
+      FROM_HERE, base::Bind(MoveFile, src_path, dest_path,
                             base::ThreadTaskRunnerHandle::Get(), callback));
 }
 

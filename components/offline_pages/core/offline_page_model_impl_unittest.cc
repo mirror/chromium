@@ -159,6 +159,8 @@ class OfflinePageModelImplTest
       const ClientId& client_id,
       const std::string& request_origin);
 
+  void ImportPage(const OfflinePageModel::ImportPageParams& import_page_params);
+
   void DeletePage(int64_t offline_id, const DeletePageCallback& callback) {
     std::vector<int64_t> offline_ids;
     offline_ids.push_back(offline_id);
@@ -175,6 +177,8 @@ class OfflinePageModelImplTest
 
   MultipleOfflinePageItemResult GetPagesByFinalURL(const GURL& url);
   MultipleOfflinePageItemResult GetPagesByAllURLS(const GURL& url);
+
+  const base::FilePath& temp_path() const { return temp_dir_.GetPath(); }
 
   OfflinePageModelImpl* model() { return model_.get(); }
 
@@ -408,6 +412,13 @@ std::pair<SavePageResult, int64_t> OfflinePageModelImplTest::SavePage(
                             std::move(archiver));
   PumpLoop();
   return std::make_pair(last_save_result_, last_save_offline_id_);
+}
+
+void OfflinePageModelImplTest::ImportPage(
+    const OfflinePageModel::ImportPageParams& import_page_params) {
+  model()->ImportPage(
+      import_page_params,
+      base::Bind(&OfflinePageModelImplTest::OnSavePageDone, AsWeakPtr()));
 }
 
 MultipleOfflinePageItemResult OfflinePageModelImplTest::GetAllPages() {
@@ -748,6 +759,36 @@ TEST_F(OfflinePageModelImplTest, SavePageOnBackground) {
   EXPECT_TRUE(archiver_ptr->create_archive_params().remove_popup_overlay);
 
   PumpLoop();
+}
+
+TEST_F(OfflinePageModelImplTest, ImportPage) {
+  // Create an archive file in another directory for import.
+  base::ScopedTempDir temp_src_dir;
+  ASSERT_TRUE(temp_src_dir.CreateUniqueTempDir());
+  ASSERT_NE(temp_path(), temp_src_dir.GetPath());
+  base::FilePath src_path;
+  ASSERT_TRUE(
+      base::CreateTemporaryFileInDir(temp_src_dir.GetPath(), &src_path));
+
+  OfflinePageModel::ImportPageParams import_page_params;
+  import_page_params.url = kTestUrl;
+  import_page_params.client_id = kTestClientId1;
+  import_page_params.original_url = kTestUrl2;
+  import_page_params.title = kTestTitle;
+  import_page_params.file_path = src_path;
+  import_page_params.file_size = kTestFileSize;
+  ImportPage(import_page_params);
+
+  PumpLoop();
+
+  const std::vector<OfflinePageItem>& offline_pages = GetAllPages();
+  ASSERT_EQ(1UL, offline_pages.size());
+  EXPECT_EQ(kTestUrl, offline_pages[0].url);
+  EXPECT_EQ(kTestClientId1, offline_pages[0].client_id);
+  EXPECT_EQ(kTestUrl2, offline_pages[0].original_url);
+  EXPECT_EQ(kTestTitle, offline_pages[0].title);
+  EXPECT_EQ(temp_path(), offline_pages[0].file_path.DirName());
+  EXPECT_EQ(kTestFileSize, offline_pages[0].file_size);
 }
 
 TEST_F(OfflinePageModelImplTest, MarkPageAccessed) {

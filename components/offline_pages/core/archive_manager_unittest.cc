@@ -14,6 +14,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
+#include "base/guid.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -45,6 +46,7 @@ class ArchiveManagerTest : public testing::Test {
   void GetAllArchivesCallback(const std::set<base::FilePath>& archive_paths);
   void GetStorageStatsCallback(
       const ArchiveManager::StorageStats& storage_sizes);
+  void ImportArchiveCallback(const base::FilePath& archive_path);
 
   ArchiveManager* manager() { return manager_.get(); }
   const base::FilePath& temp_path() const { return temp_dir_.GetPath(); }
@@ -54,6 +56,9 @@ class ArchiveManagerTest : public testing::Test {
   }
   ArchiveManager::StorageStats last_storage_sizes() const {
     return last_storage_sizes_;
+  }
+  const base::FilePath& last_imported_archive_path() const {
+    return last_imported_archive_path_;
   }
   base::HistogramTester* histogram_tester() { return histogram_tester_.get(); }
 
@@ -66,6 +71,7 @@ class ArchiveManagerTest : public testing::Test {
   CallbackStatus callback_status_;
   std::set<base::FilePath> last_archvie_paths_;
   ArchiveManager::StorageStats last_storage_sizes_;
+  base::FilePath last_imported_archive_path_;
   std::unique_ptr<base::HistogramTester> histogram_tester_;
 };
 
@@ -108,6 +114,11 @@ void ArchiveManagerTest::GetAllArchivesCallback(
 void ArchiveManagerTest::GetStorageStatsCallback(
     const ArchiveManager::StorageStats& storage_sizes) {
   last_storage_sizes_ = storage_sizes;
+}
+
+void ArchiveManagerTest::ImportArchiveCallback(
+    const base::FilePath& archive_path) {
+  last_imported_archive_path_ = archive_path;
 }
 
 TEST_F(ArchiveManagerTest, EnsureArchivesDirCreated) {
@@ -284,6 +295,44 @@ TEST_F(ArchiveManagerTest, GetStorageStats) {
   EXPECT_GT(last_storage_sizes().free_disk_space, 0);
   EXPECT_EQ(last_storage_sizes().total_archives_size,
             base::ComputeDirectorySize(temp_path()));
+}
+
+TEST_F(ArchiveManagerTest, ImportArchive) {
+  // Create a file in another directory for it to be moved to archive directory.
+  base::ScopedTempDir temp_src_dir;
+  ASSERT_TRUE(temp_src_dir.CreateUniqueTempDir());
+  ASSERT_NE(temp_path(), temp_src_dir.GetPath());
+  base::FilePath src_path;
+  ASSERT_TRUE(
+      base::CreateTemporaryFileInDir(temp_src_dir.GetPath(), &src_path));
+
+  manager()->ImportArchive(
+      src_path, base::Bind(&ArchiveManagerTest::ImportArchiveCallback,
+                           base::Unretained(this)));
+  PumpLoop();
+
+  // The file should be moved.
+  EXPECT_FALSE(base::PathExists(src_path));
+  EXPECT_TRUE(base::PathExists(last_imported_archive_path()));
+
+  // Validate the final path.
+  EXPECT_EQ(temp_path(), last_imported_archive_path().DirName());
+  EXPECT_EQ(".mhtml", last_imported_archive_path().Extension());
+}
+
+TEST_F(ArchiveManagerTest, ImportArchiveFailure) {
+  base::FilePath non_existent_src_file =
+      temp_path().Append(base::GenerateGUID());
+  ASSERT_FALSE(base::PathExists(non_existent_src_file));
+
+  manager()->ImportArchive(
+      non_existent_src_file,
+      base::Bind(&ArchiveManagerTest::ImportArchiveCallback,
+                 base::Unretained(this)));
+  PumpLoop();
+
+  // The empty file path should be returned on failure.
+  EXPECT_TRUE(last_imported_archive_path().empty());
 }
 
 }  // namespace offline_pages

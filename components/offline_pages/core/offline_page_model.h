@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include "base/strings/string16.h"
 #include "base/supports_user_data.h"
 #include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/offline_page_archiver.h"
@@ -20,6 +21,10 @@
 #include "components/offline_pages/core/offline_page_types.h"
 
 class GURL;
+
+namespace base {
+class FilePath;
+}  // namespace base
 
 namespace offline_pages {
 
@@ -82,6 +87,32 @@ class OfflinePageModel : public base::SupportsUserData {
     std::string request_origin;
   };
 
+  // Describes the parameters to control how to import an archive page.
+  struct ImportPageParams {
+    ImportPageParams();
+    ImportPageParams(const ImportPageParams& other);
+    ~ImportPageParams();
+
+    // The last committed URL of the page to save.
+    GURL url;
+
+    // The identification used by the client.
+    ClientId client_id;
+
+    // The original URL of the page to save. Empty if no redirect occurs.
+    GURL original_url;
+
+    // The title of the page.
+    base::string16 title;
+
+    // The path to the archive file. The file will be moved over to the archive
+    // directory.
+    base::FilePath file_path;
+
+    // The size of the archive file.
+    int64_t file_size = 0;
+  };
+
   // Information about a deleted page.
   struct DeletedPageInfo {
     DeletedPageInfo(int64_t offline_id,
@@ -136,6 +167,10 @@ class OfflinePageModel : public base::SupportsUserData {
   virtual void SavePage(const SavePageParams& save_page_params,
                         std::unique_ptr<OfflinePageArchiver> archiver,
                         const SavePageCallback& callback) = 0;
+
+  // Attempts to import an offline page from an archive.
+  virtual void ImportPage(const ImportPageParams& import_page_params,
+                          const SavePageCallback& callback) = 0;
 
   // Marks that the offline page related to the passed |offline_id| has been
   // accessed. Its access info, including last access time and access count,

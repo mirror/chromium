@@ -63,6 +63,14 @@ class ArchiveManager {
       const base::Callback<void(const StorageStats& storage_sizes)>& callback)
       const;
 
+  // Imports an archive by moving it from other directory to archive directory.
+  // The target file name will be auto generated based on GUID to prevent any
+  // name collision. It will be returned in the callback if the move succeeds.
+  // Otherwise, the empty file path is returned in the callback.
+  virtual void ImportArchive(
+      const base::FilePath& src_path,
+      const base::Callback<void(const base::FilePath&)>& callback);
+
  protected:
   ArchiveManager();
 
