@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "625205c6_2c27f058",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-13T13:45:12Z",
+      "side": 1,
+      "message": "The idea is for the coordinator and dispatcher to contain all public API that this component vends.",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9deb52_96c73f42",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-13T13:45:12Z",
+      "side": 1,
+      "message": "Current thinking is that it\u0027s ok to use whatever tab helpers you need, but it\u0027s not ok to directly pull in other UI components.\n\nIn this case, I expect that PasswordController will be refactored into a tab helper.  If it turns out to be more of a UI class, then we\u0027d want to add a new provider protocol for this.\n\n(I believe it\u0027s more model-ish because a PasswordController is specific to a single WebState/Tab.  UI components tend to be specific to a single window.)",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f598e01a_a904aef0",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-13T13:45:12Z",
+      "side": 1,
+      "message": "Went with \"requirements\" as a subdirectory that contains protocols for all of the external functionality that this component needs.",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c44f7f1_0b36fc7c",
+        "filename": "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-13T13:45:12Z",
+      "side": 1,
+      "message": "Snackbars are likely to be used by more than just this one component.  I expect that eventually this protocol will move from activity_services/requirements into something like snackbar/public.",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
