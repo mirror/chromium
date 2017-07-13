@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "258cc051_a69004a4",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:33:52Z",
+      "side": 1,
+      "message": "If you don\u0027t mind tagging this with TODO(https://crbug.com/742517), I\u0027m going to try to address this soon.",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 71
+      },
+      "revId": "9a07d91c475f86882e972d97584a36489261a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
