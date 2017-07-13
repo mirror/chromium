@@ -46,6 +46,30 @@
       "revId": "7da8ec4e88172ccbdaf78f1d7d1e6684f219220c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c83fa55_a2d239d9",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-13T01:48:07Z",
+      "side": 1,
+      "message": "It\u0027s very hard for me to debug because I am only able to use the Linux build that shows text along the top (doesn\u0027t actually read it out, despite me having installed the speech pack).\n\nWhen I follow those steps (Ctrl+N, then press a letter), it focuses Omni and types the letter. It seems to not read out the letter (it doesn\u0027t show the letter at the top), but it reads out all subsequent letters. This happens on both master and in my CL. So it doesn\u0027t look like my CL changes this.\n\nThe explanation makes sense. I think if we put the return statement first, it says \"If the text field is not focused, return. Else, set the ChromeVox range to the current system focus.\" If I put it after, it says \"Set the ChromeVox range to the current system focus. Then, if the text field is not focused, return.\" That doesn\u0027t make sense because if the Omnibox is being edited and is NEITHER system-focused NOR ChromeVox-focused, you are going you ChromeVox-focus it. So I think the way I have it is correct.\n\nIf you disagree, please advise on how I can fix it so that my CL https://chromium-review.googlesource.com/c/563143 (that alters the text selection in Omnibox while it is not focused) can land without breaking SpokenFeedbackTest.FocusToolbar.\n\nPlease note that I am not trying to add new functionality to the Omnibox, I am simply trying to revert back to its previous behaviour due to having introduced a bug, and the revert is blocked on the ChromeVox test breakage.",
+      "parentUuid": "5a56826b_736d1583",
+      "range": {
+        "startLine": 396,
+        "startChar": 14,
+        "endLine": 396,
+        "endChar": 44
+      },
+      "revId": "7da8ec4e88172ccbdaf78f1d7d1e6684f219220c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
