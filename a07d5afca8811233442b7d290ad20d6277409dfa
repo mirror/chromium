@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "0c29a942_f97d2de1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T09:17:21Z",
+      "side": 1,
+      "message": "Didn\u0027t dig much in the C++ code, but what\u0027s the TL;DR, esp. regarding the interaction with onMostVisitedSitesAvailable? Can both be called when the feature is enabled? How are we supposed to mix the data?\n\nOr maybe we can remove the current call and only have one for explore, then when only personalized is return and the feature is disabled we show the current tile grid?",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85198823_53152ac0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T09:17:21Z",
+      "side": 1,
+      "message": "How do we expect whitelisticonpaths to work here? Will sections be populated from whitelist too?",
+      "range": {
+        "startLine": 99,
+        "startChar": 29,
+        "endLine": 99,
+        "endChar": 47
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1af7075b_d42521cb",
         "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
         "patchSetId": 1
@@ -122,6 +168,30 @@
       "writtenOn": "2017-07-13T08:31:41Z",
       "side": 1,
       "message": "Not \"MostLikely\", it\u0027s completely unrelated to that.",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f439ace9_df08a065",
+        "filename": "components/ntp_tiles/constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T09:17:21Z",
+      "side": 1,
+      "message": "also, why \"NTP\" ?",
+      "parentUuid": "1bf62b1b_b761514f",
       "range": {
         "startLine": 22,
         "startChar": 5,
