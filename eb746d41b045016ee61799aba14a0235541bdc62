@@ -16,6 +16,143 @@
       "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a240215_ba8cc5b5",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T15:11:11Z",
+      "side": 1,
+      "message": "nit: You can also use NetToMojoIOBuffer and NetToMojoPendingBuffer to save a bit of common code (though not much as they\u0027re a thin wrapper)",
+      "parentUuid": "a01281d7_ef2a65f7",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52775978_e5b69230",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T15:11:11Z",
+      "side": 1,
+      "message": "nit: might we want to use more detailed error code and record metrics just in case?",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fd00f0_10ab7e7f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T15:11:11Z",
+      "side": 1,
+      "message": "nit: I slightly prefer having a helper method like below and call it (here and line 221)\n\nvoid CompleteIfNeeded() {\n  if (body_handle_.is_valid() || meta_data_sender_)\n    return;\n  CompleteTransfer(kSuccess);\n}",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8d7747_ca4881a0",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T15:11:11Z",
+      "side": 1,
+      "message": "Do we need this weakptr? Just accessing owner-\u003escript_cache_map() works?",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635f8d40_20ee7923",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T15:11:11Z",
+      "side": 1,
+      "message": "nit: no { } for one-line body",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600440da_317bc303",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T15:11:11Z",
+      "side": 1,
+      "message": ".empty() ?",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c664ad_cc5cb9d6",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T15:11:11Z",
+      "side": 1,
+      "message": "This code setting around .end() and is_main_script() probably deserves some short comment...",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21497950_4590de93",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T15:11:11Z",
+      "side": 1,
+      "message": "This is not a simple getter, please use CamelCase\n\nIsSendingMainScript() ?",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
