@@ -16,6 +16,47 @@
       "revId": "55de7695990d4a81a3c2995fd587ab30c817fed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6420f4a8_60c78e0a",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1128954
+      },
+      "writtenOn": "2017-07-13T14:26:53Z",
+      "side": 1,
+      "message": "I agree. A colloquial tone, yet not too casual.",
+      "parentUuid": "3cc76462_63a141ae",
+      "revId": "55de7695990d4a81a3c2995fd587ab30c817fed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a235c65_27c87da4",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5466,
+      "author": {
+        "id": 1128954
+      },
+      "writtenOn": "2017-07-13T14:26:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure if \"Hangouts Meet device\" is the approved branding for the box, so maybe avoid it like:\n\"... this device to run Hangouts Meet?\"",
+      "range": {
+        "startLine": 5466,
+        "startChar": 48,
+        "endLine": 5466,
+        "endChar": 73
+      },
+      "revId": "55de7695990d4a81a3c2995fd587ab30c817fed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
