@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fae9643b_a88e19e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5142f4ea_f0113032",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "020825d9_0ab2288c",
         "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "64721e6b_1b645e1d",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "020825d9_0ab2288c",
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cea8260_f4fa80e7",
         "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f0d5d5_d685a6ec",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cea8260_f4fa80e7",
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "127c7a61_909ed226",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 1,
+      "message": "it seems to work fine using the colon. I don\u0027t really understand why, though...",
+      "parentUuid": "3dfba506_f1ad8a1f",
+      "range": {
+        "startLine": 110,
+        "startChar": 22,
+        "endLine": 110,
+        "endChar": 23
+      },
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2c5f399_3e8166a7",
         "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
         "patchSetId": 1
@@ -102,6 +186,30 @@
       "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097827bd_7f63726f",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2c5f399_3e8166a7",
+      "range": {
+        "startLine": 111,
+        "startChar": 63,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "222e9978_ffbc270b",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11895752_8fbcef42",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 34
+      },
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45b5f0ac_924f3dbb",
         "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
         "patchSetId": 1
@@ -148,6 +280,30 @@
       "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e174d1b2_b18415b1",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 1,
+      "message": "Rolled into TextFieldUtils :)",
+      "parentUuid": "45b5f0ac_924f3dbb",
+      "range": {
+        "startLine": 208,
+        "startChar": 73,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "b6e6a301_89f47e09",
+        "filename": "chrome/browser/ui/cocoa/content_settings/blocked_plugin_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1200eb84_2c212897",
+      "range": {
+        "startLine": 222,
+        "startChar": 50,
+        "endLine": 222,
+        "endChar": 0
+      },
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "536cf805_0dd68942",
         "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
         "patchSetId": 1
@@ -188,6 +368,24 @@
       "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450f076d_e2a552d7",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 1,
+      "message": "I don\u0027t know, but this has been broken since it was added. It\u0027s quite hard to tell when the \"learn more\" link is actually populated in the model :(",
+      "parentUuid": "536cf805_0dd68942",
+      "revId": "63512507946d85517dc235e1bfbaf28503db4edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

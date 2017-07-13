@@ -16,6 +16,24 @@
       "revId": "830f3799083798d9b76119b4ea0130976f945940",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cf3dd95_a876b9c4",
+        "filename": "chrome/app/nibs/ContentBlockedPlugins.xib",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-13T19:31:37Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "ef33b05d_6d33355a",
+      "revId": "830f3799083798d9b76119b4ea0130976f945940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
