@@ -298,7 +298,9 @@ class RemoteSuggestionsFetcherImplTestBase : public testing::Test {
     fetcher_->SetClockForTesting(mock_task_runner_->GetMockClock());
   }
 
-  void SignIn() { utils_.fake_signin_manager()->SignIn(kTestEmail); }
+  void SignIn() {
+    utils_.fake_signin_manager()->SignIn(kTestEmail, "user", "password");
+  }
 
   void IssueRefreshToken() {
     fake_token_service_->GetDelegate()->UpdateCredentials(kTestEmail, "token");
