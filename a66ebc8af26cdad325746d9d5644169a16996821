@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0abc4e26_57867aed",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-13T23:29:50Z",
+      "side": 1,
+      "message": "The logs from the compile step on the Linux x64 build give a warning here:\n\n../../net/http/http_server_properties_manager.cc:1437:5: error: variable \u0027entry_dict\u0027 is uninitialized when used here [-Werror,-Wuninitialized]\n    entry_dict-\u003eSetStringWithoutPathExpansion(\n    ^~~~~~~~~~\n../../net/http/http_server_properties_manager.cc:1435:38: note: initialize the variable \u0027entry_dict\u0027 to silence this warning\n    base::DictionaryValue* entry_dict;\n                                     ^\n                                      \u003d nullptr\n1 error generated.\n\nhttps://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Fchromium%2FLinux_x64%2F44132%2F%2B%2Frecipes%2Fsteps%2Fcompile%2F0%2Fstdout\n\nSo this is likely the bit that should be changed before relanding.",
+      "revId": "a66ebc8af26cdad325746d9d5644169a16996821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
