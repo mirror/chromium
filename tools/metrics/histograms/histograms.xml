@@ -19655,6 +19655,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram
+    name="Extensions.DeclarativeNetRequest.CreateVerifiedMatcherDuration"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Measures the time taken to load the indexed ruleset for an extension. This
+    includes memory mapping the ruleset file and verifying it. Emitted when an
+    extension using the Declarative Net Request API is loaded.
+  </summary>
+</histogram>
+
+<histogram
     name="Extensions.DeclarativeNetRequest.IndexAndPersistRulesetDuration"
     units="ms">
   <owner>karandeepb@chromium.org</owner>
@@ -19692,6 +19703,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Extensions.DeclarativeNetRequest.LoadRulesetResult"
+    enum="LoadRulesetResult">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Records the result of loading an extension ruleset for the Declarative Net
+    Request API. Emitted whenever an extension with a ruleset is loaded.
+  </summary>
+</histogram>
+
 <histogram name="Extensions.DeclarativeNetRequest.ManifestRulesCount">
   <owner>karandeepb@chromium.org</owner>
   <summary>
@@ -19700,6 +19720,39 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     json ruleset is indexed. This may happen when a packed extension is
     installed, an unpacked extension is loaded, an extension's ruleset is re-
     indexed, due to corruption etc.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.DeclarativeNetRequest.RulesEvaluationDuration"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Measures the time taken to evaluate a network request against all the
+    declarative rules corresponding to all the active extensions. Emmitted
+    during the OnBeforeRequest stage of a network request.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.DeclarativeNetRequest.ShouldBlockRequestDuration"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Measures the time taken to evaluate whether a network request should be
+    blocked considering the Declarative Net Request ruleset for a single
+    extension. Emitted whenever a network request is matched against the
+    declarative rules for a given extension.
+  </summary>
+</histogram>
+
+<histogram
+    name="Extensions.DeclarativeNetRequest.ShouldRedirectRequestDuration"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Measures the time taken to evaluate whether a network request should be
+    redirected considering the Declarative Net Request ruleset for a single
+    extension. Emitted whenever a network request is matched against the
+    declarative rules for a given extension.
   </summary>
 </histogram>
 
