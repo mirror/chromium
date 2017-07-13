@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d6f23b6_7ecd7804",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Maybe change this to:\n/** Calling this method fires the \u0027settings-section-expanded\u0027 event. */",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 9
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11bec0f_5d037308",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Maybe change this to chrome://md-settings, then we can just call |ensureLazyLoaded| in |setUp| on line 38. This will then behave the same in vulcanized and unvulcanized.",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 67
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6d073e_f6d5bc89",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "This will be common for many tests, move to accessibility_browsertest.js",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd125df5_6296b073",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Please don\u0027t copy/paste code. Instead consider moving this to passwords_and_autofill_fake_data.js",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 1
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fceac5_7f74259d",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "It might be possible to remove this and replace w/ |ensureLazyLoaded|",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 5
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76511fbb_a4054cdc",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Not necessary in this CL, but worth considering in a follow up:\n\nA lot of this code seems like it will be the same for other settings pages, maybe we can factor it out to make it easier to write a test?",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 7
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7caf4b4c_3f7b44c5",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Can this be written more succinctly?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ed5e46_787ac21e",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Is this necessary? (if so, then keep it and refactor |basePasswordExpectations|, but if it can be removed then no need to refactor)",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf8539b_77548f4f",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Likely not needed b/c we\u0027re waiting for the resolve anyways",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 26
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842204c2_018d7533",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Probably enough to say:\n// Set list of passwords.",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 77
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726268f0_6832c6a3",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Nit: remove comment",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cfe5a5_e3b5e6f5",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Should be good enough to remove this section and only test 0 and 100 items",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 5
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

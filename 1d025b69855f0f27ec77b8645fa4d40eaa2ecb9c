@@ -518,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "dc0b561a_f3e00fb9",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "+1 for using PolymerTest.clearBody. I might still argue that clearBody shouldn\u0027t know about vulcanization, but there\u0027s probably a good reason to do it this way, so this is fine as long as we don\u0027t duplicate the code.",
+      "parentUuid": "f544d477_405572e5",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "1d025b69855f0f27ec77b8645fa4d40eaa2ecb9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11dee5e5_910f3197",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 1
@@ -565,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "dceecbad_322fa077",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Yes, update elsewhere also. Thanks!",
+      "parentUuid": "eb473882_118297b8",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 39
+      },
+      "revId": "1d025b69855f0f27ec77b8645fa4d40eaa2ecb9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "769d460b_8ba7f9aa",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 1
@@ -600,6 +648,30 @@
       "side": 1,
       "message": "When I remove this suiteSetup, ReferenceError: PasswordManagerImpl is not defined--it\u0027d be nice to take a look at this together",
       "parentUuid": "769d460b_8ba7f9aa",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 22
+      },
+      "revId": "1d025b69855f0f27ec77b8645fa4d40eaa2ecb9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507aff52_87ab4a1c",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "I just replied above, let\u0027s try that and see if it fixes the issue",
+      "parentUuid": "c1dde969_8ec43d69",
       "range": {
         "startLine": 63,
         "startChar": 15,
@@ -1058,6 +1130,30 @@
     },
     {
       "key": {
+        "uuid": "c029ddb6_6697ac28",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "ON second thought, I think having a test with 100 is enough becuase there will already be node recycling happening as well as virtual scrolling. I was being paranoid about the 1000 test. That should be tested elsewhere and is not up to a11y testing to verify that iron-list works well, just that it\u0027s accessible.\n\nIMO: Keep the name as is, and remove the 1000 node test. WDYT?",
+      "parentUuid": "40a0800b_a3f7e8da",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 37
+      },
+      "revId": "1d025b69855f0f27ec77b8645fa4d40eaa2ecb9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e74b242_d1788de7",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 1
@@ -1078,6 +1174,30 @@
       "revId": "1d025b69855f0f27ec77b8645fa4d40eaa2ecb9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130d4bf3_a1381537",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-13T18:24:39Z",
+      "side": 1,
+      "message": "Looks like you shortened it w/o issues.",
+      "parentUuid": "8e74b242_d1788de7",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "1d025b69855f0f27ec77b8645fa4d40eaa2ecb9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
