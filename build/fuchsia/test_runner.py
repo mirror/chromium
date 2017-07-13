@@ -100,10 +100,9 @@ def AddToManifest(manifest_file, target_name, source, mapper):
     raise Exception('%s does not exist' % source)
 
 
-def BuildBootfs(output_directory, runtime_deps_path, test_name, gtest_filter,
-                gtest_repeat, test_launcher_batch_limit,
-                test_launcher_filter_file, test_launcher_jobs,
-                single_process_tests, dry_run):
+def BuildBootfs(output_directory, runtime_deps_path, test_name, gtest_args,
+                test_launcher_batch_limit, test_launcher_filter_file,
+                test_launcher_jobs, single_process_tests, dry_run):
   with open(runtime_deps_path) as f:
     lines = f.readlines()
 
@@ -158,10 +157,10 @@ def BuildBootfs(output_directory, runtime_deps_path, test_name, gtest_filter,
   if test_launcher_jobs:
     autorun_file.write(' --test-launcher-jobs=%d' %
                        test_launcher_jobs)
-  if gtest_filter:
-    autorun_file.write(' --gtest_filter=' + gtest_filter)
-  if gtest_repeat:
-    autorun_file.write(' --gtest_repeat=' + gtest_repeat)
+
+  for arg in gtest_args:
+    autorun_file.write(' "%s"' % arg);
+
   autorun_file.write('\n')
   # If shutdown happens too soon after the test completion, log statements from
   # the end of the run will be lost, so sleep for a bit before shutting down.
@@ -241,10 +240,20 @@ def main():
                       help='Sets the number of parallel test jobs.')
   parser.add_argument('--test_launcher_summary_output',
                       help='Currently ignored for 2-sided roll.')
+  parser.add_argument('gtest_args', nargs='*',
+                      help='Arguments for the test process.')
   args = parser.parse_args()
 
+  gtest_args = []
+  if args.gtest_filter:
+    gtest_args.append('--gtest_filter=' + args.gtest_filter)
+  if args.gtest_repeat:
+    gtest_args.append('--gtest_repeat=' + args.gtest_repeat)
+  if args.gtest_args:
+    gtest_args.extend(args.gtest_args)
+
   bootfs = BuildBootfs(args.output_directory, args.runtime_deps_path,
-                       args.test_name, args.gtest_filter, args.gtest_repeat,
+                       args.test_name, gtest_args,
                        args.test_launcher_batch_limit,
                        args.test_launcher_filter_file, args.test_launcher_jobs,
                        args.single_process_tests, args.dry_run)
