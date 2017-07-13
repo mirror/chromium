@@ -119,6 +119,8 @@ source_set("audio") {
     "fake_audio_output_stream.h",
     "fake_audio_worker.cc",
     "fake_audio_worker.h",
+    "local_audio_system.cc",
+    "local_audio_system.h",
     "null_audio_sink.cc",
     "null_audio_sink.h",
     "sample_rates.cc",

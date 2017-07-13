@@ -2,26 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_AUDIO_AUDIO_SYSTEM_IMPL_H_
-#define MEDIA_AUDIO_AUDIO_SYSTEM_IMPL_H_
-
-#include <memory>
+#ifndef MEDIA_AUDIO_LOCAL_AUDIO_SYSTEM_H_
+#define MEDIA_AUDIO_LOCAL_AUDIO_SYSTEM_H_
 
 #include "media/audio/audio_system.h"
-
-namespace base {
-class SingleThreadTaskRunner;
-}
+#include "media/base/media_export.h"
 
 namespace media {
+class AudioManager;
 
-class MEDIA_EXPORT AudioSystemImpl : public AudioSystem {
+class MEDIA_EXPORT LocalAudioSystem : public AudioSystemNonThreadSafe {
  public:
-  // non_thread_safe->GetTaskRunner() message loop should stop before
-  // AudioSystemImpl destruction
-  AudioSystemImpl(std::unique_ptr<AudioSystemNonThreadSafe> non_thread_safe);
-
-  ~AudioSystemImpl() override;
+  LocalAudioSystem(AudioManager* audio_manager);
+  ~LocalAudioSystem() override;
 
   // AudioSystem implementation.
   void GetInputStreamParameters(const std::string& device_id,
@@ -45,22 +38,16 @@ class MEDIA_EXPORT AudioSystemImpl : public AudioSystem {
       const std::string& input_device_id,
       OnInputDeviceInfoCallback on_input_device_info_cb) override;
 
+  // AudioSystemNonThreadSafe implementation.
+  base::SingleThreadTaskRunner* GetTaskRunner() override;
+
  private:
-  base::SingleThreadTaskRunner* task_runner() {
-    return non_thread_safe_->GetTaskRunner();
-  }
+  AudioParameters ComputeInputParameters(const std::string& device_id);
+  AudioParameters ComputeOutputParameters(const std::string& device_id);
 
-  // No-op if called on task_runner() thread, otherwise binds |callback| to the
-  // current loop.
-  template <typename... Args>
-  base::OnceCallback<void(Args...)> MaybeBindToCurrentLoop(
-      base::OnceCallback<void(Args...)> callback);
-
-  std::unique_ptr<AudioSystemNonThreadSafe> const non_thread_safe_;
-
-  DISALLOW_COPY_AND_ASSIGN(AudioSystemImpl);
+  AudioManager* const audio_manager_;
 };
 
 }  // namespace media
 
-#endif  // MEDIA_AUDIO_AUDIO_SYSTEM_IMPL_H_
+#endif  // MEDIA_AUDIO_LOCAL_AUDIO_SYSTEM_H_

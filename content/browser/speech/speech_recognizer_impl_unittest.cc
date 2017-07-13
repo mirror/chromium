@@ -21,6 +21,7 @@
 #include "media/audio/audio_system_impl.h"
 #include "media/audio/fake_audio_input_stream.h"
 #include "media/audio/fake_audio_output_stream.h"
+#include "media/audio/local_audio_system.h"
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_input_controller_factory.h"
 #include "media/audio/test_audio_thread.h"
@@ -69,7 +70,8 @@ class SpeechRecognizerImplTest : public SpeechRecognitionEventListener,
         base::MakeUnique<media::TestAudioThread>(true)));
     audio_manager_->SetInputStreamParameters(
         media::AudioParameters::UnavailableDeviceParams());
-    audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
+    audio_system_ = base::MakeUnique<media::AudioSystemImpl>(
+        base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()));
     recognizer_ = new SpeechRecognizerImpl(
         this, audio_system_.get(), audio_manager_.get(), kTestingSessionId,
         false, false, sr_engine);

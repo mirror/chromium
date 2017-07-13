@@ -26,6 +26,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "media/audio/audio_device_description.h"
 #include "media/audio/audio_system_impl.h"
+#include "media/audio/local_audio_system.h"
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_thread.h"
 #include "media/base/media_switches.h"
@@ -89,9 +90,10 @@ class MediaDevicesDispatcherHostTest : public testing::TestWithParam<GURL> {
                            kDefaultAudioDeviceID));
     audio_manager_.reset(new media::MockAudioManager(
         base::MakeUnique<media::TestAudioThread>()));
-    audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
-    media_stream_manager_ =
-        base::MakeUnique<MediaStreamManager>(audio_system_.get());
+    audio_system_ = base::MakeUnique<media::AudioSystemImpl>(
+        base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()));
+    media_stream_manager_ = base::MakeUnique<MediaStreamManager>(
+        audio_system_.get(), audio_manager_->GetTaskRunner());
 
     host_ = base::MakeUnique<MediaDevicesDispatcherHost>(
         kProcessId, kRenderId, browser_context_.GetMediaDeviceIDSalt(),

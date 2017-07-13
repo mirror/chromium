@@ -13,6 +13,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "media/audio/audio_device_description.h"
 #include "media/audio/audio_thread_impl.h"
+#include "media/audio/local_audio_system.h"
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_thread.h"
 #include "media/base/test_helpers.h"
@@ -68,7 +69,8 @@ class AudioSystemImplTest : public testing::TestWithParam<bool> {
         base::Bind(get_device_descriptions,
                    base::Unretained(&output_device_descriptions_)));
 
-    audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
+    audio_system_ = base::MakeUnique<AudioSystemImpl>(
+        base::MakeUnique<LocalAudioSystem>(audio_manager_.get()));
     EXPECT_EQ(AudioSystem::Get(), audio_system_.get());
   }
 
@@ -241,9 +243,8 @@ TEST_P(AudioSystemImplTest, GetInputDeviceDescriptionsNoInputDevices) {
   EXPECT_EQ(1, static_cast<int>(output_device_descriptions_.size()));
   EXPECT_CALL(*this, DeviceDescriptionsReceived());
   audio_system_->GetDeviceDescriptions(
-      base::Bind(&AudioSystemImplTest::OnGetDeviceDescriptions,
-                 base::Unretained(this), input_device_descriptions_),
-      true);
+      true, base::Bind(&AudioSystemImplTest::OnGetDeviceDescriptions,
+                       base::Unretained(this), input_device_descriptions_));
   WaitForCallback();
 }
 
@@ -258,9 +259,8 @@ TEST_P(AudioSystemImplTest, GetInputDeviceDescriptions) {
   EXPECT_EQ(1, static_cast<int>(output_device_descriptions_.size()));
   EXPECT_CALL(*this, DeviceDescriptionsReceived());
   audio_system_->GetDeviceDescriptions(
-      base::Bind(&AudioSystemImplTest::OnGetDeviceDescriptions,
-                 base::Unretained(this), input_device_descriptions_),
-      true);
+      true, base::Bind(&AudioSystemImplTest::OnGetDeviceDescriptions,
+                       base::Unretained(this), input_device_descriptions_));
   WaitForCallback();
 }
 
@@ -271,9 +271,8 @@ TEST_P(AudioSystemImplTest, GetOutputDeviceDescriptionsNoInputDevices) {
   EXPECT_EQ(1, static_cast<int>(input_device_descriptions_.size()));
   EXPECT_CALL(*this, DeviceDescriptionsReceived());
   audio_system_->GetDeviceDescriptions(
-      base::Bind(&AudioSystemImplTest::OnGetDeviceDescriptions,
-                 base::Unretained(this), output_device_descriptions_),
-      false);
+      false, base::Bind(&AudioSystemImplTest::OnGetDeviceDescriptions,
+                        base::Unretained(this), output_device_descriptions_));
   WaitForCallback();
 }
 
@@ -288,9 +287,8 @@ TEST_P(AudioSystemImplTest, GetOutputDeviceDescriptions) {
   EXPECT_EQ(1, static_cast<int>(input_device_descriptions_.size()));
   EXPECT_CALL(*this, DeviceDescriptionsReceived());
   audio_system_->GetDeviceDescriptions(
-      base::Bind(&AudioSystemImplTest::OnGetDeviceDescriptions,
-                 base::Unretained(this), output_device_descriptions_),
-      false);
+      false, base::Bind(&AudioSystemImplTest::OnGetDeviceDescriptions,
+                        base::Unretained(this), output_device_descriptions_));
   WaitForCallback();
 }
 

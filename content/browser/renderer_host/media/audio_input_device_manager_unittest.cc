@@ -22,6 +22,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "media/audio/audio_system_impl.h"
 #include "media/audio/audio_thread_impl.h"
+#include "media/audio/local_audio_system.h"
 #include "media/audio/mock_audio_manager.h"
 #include "media/base/media_switches.h"
 #include "media/base/test_helpers.h"
@@ -84,7 +85,8 @@ class MAYBE_AudioInputDeviceManagerTest : public testing::Test {
   void SetUp() override {
     Initialize();
 
-    audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
+    audio_system_ = base::MakeUnique<media::AudioSystemImpl>(
+        base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()));
     manager_ = new AudioInputDeviceManager(audio_system_.get());
     audio_input_listener_.reset(new MockAudioInputDeviceManagerListener());
     manager_->RegisterListener(audio_input_listener_.get());
