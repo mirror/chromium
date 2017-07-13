@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4113fa0_c2ce62a3",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontStyleRangeValue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-13T08:35:15Z",
+      "side": 1,
+      "message": "Yes, this data type captures the parsing result of parsing font-style in @font-faces, compare https://drafts.csswg.org/css-fonts-4/#font-prop-desc - So, if there is an oblique keyword, then either one or two angle values can follow this keyword. That\u0027s why it\u0027s called oblique_values here. But yes, the angles do describe the slope capabilities of the @font-face.",
+      "parentUuid": "f1501fc7_38b3afa5",
+      "revId": "f085404873d9f2576e1295e71415db4971737b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e38bb02_f0e3ecba",
         "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "f085404873d9f2576e1295e71415db4971737b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f87b08b_96e96eeb",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-13T08:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e38bb02_f0e3ecba",
+      "range": {
+        "startLine": 503,
+        "startChar": 56,
+        "endLine": 503,
+        "endChar": 63
+      },
+      "revId": "f085404873d9f2576e1295e71415db4971737b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
