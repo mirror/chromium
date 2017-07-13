@@ -22,6 +22,52 @@
       "revId": "f79aa526a3df08f81be4d6e98af673aa5cfa61b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f80679_70425d17",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-07-13T12:31:06Z",
+      "side": 1,
+      "message": "can you check if we have to reset it to true in some other place as well. For ex: when controls are hidden, we make it false. And if we exit fullscreen in this state, do we need to reset it to true ?",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 25
+      },
+      "revId": "f79aa526a3df08f81be4d6e98af673aa5cfa61b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d66401_cc1b70a7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-07-13T12:31:06Z",
+      "side": 1,
+      "message": "do we need \u0026\u0026 here?",
+      "range": {
+        "startLine": 600,
+        "startChar": 31,
+        "endLine": 600,
+        "endChar": 32
+      },
+      "revId": "f79aa526a3df08f81be4d6e98af673aa5cfa61b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
