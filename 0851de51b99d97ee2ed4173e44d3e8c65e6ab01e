@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc0dbf14_5df237f7",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-13T00:56:03Z",
+      "side": 1,
+      "message": "I already commented on this method in the other CL and I\u0027m not quite sure why you didn\u0027t address this already.\n\nAllowOverlay returning true at this level is completely fine. As you well know, it just means that the compositor will consider the VideoFrame originating from this picture as an overlay. DrmOverlayValidator will be used to determine if it can actually be scanned out. If leaving this to true break anything, we need to fix whatever is broken in ozone/overlay validation.",
+      "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
