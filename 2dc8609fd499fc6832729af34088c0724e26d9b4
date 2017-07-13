@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edcf1fb3_7ceac52a",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-13T19:11:25Z",
+      "side": 1,
+      "message": "This should just be called \"args\" or \"child_args\" or some such, it\u0027s not specific to gtest.",
+      "range": {
+        "startLine": 243,
+        "startChar": 23,
+        "endLine": 243,
+        "endChar": 33
+      },
+      "revId": "2dc8609fd499fc6832729af34088c0724e26d9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
