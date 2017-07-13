@@ -16,7 +16,9 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
+#include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/media/webrtc/webrtc_rtp_dump_writer.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -282,9 +284,11 @@ TEST_F(WebRtcRtpDumpHandlerTest, DumpsCleanedUpIfNotReleased) {
   handler_->StopDump(RTP_DUMP_BOTH,
                      base::Bind(&WebRtcRtpDumpHandlerTest::OnStopDumpFinished,
                                 base::Unretained(this)));
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   base::RunLoop().RunUntilIdle();
 
   handler_.reset();
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   base::RunLoop().RunUntilIdle();
 
   EXPECT_FALSE(base::PathExists(incoming_dump));
@@ -309,6 +313,7 @@ TEST_F(WebRtcRtpDumpHandlerTest, DumpDeletedIfEndDumpFailed) {
                      base::Bind(&WebRtcRtpDumpHandlerTest::OnStopDumpFinished,
                                 base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
+  base::TaskScheduler::GetInstance()->FlushForTesting();
 
   EXPECT_FALSE(base::PathExists(incoming_dump));
   EXPECT_TRUE(base::PathExists(outgoing_dump));
@@ -317,6 +322,7 @@ TEST_F(WebRtcRtpDumpHandlerTest, DumpDeletedIfEndDumpFailed) {
                      base::Bind(&WebRtcRtpDumpHandlerTest::OnStopDumpFinished,
                                 base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   EXPECT_FALSE(base::PathExists(outgoing_dump));
 }
 
@@ -324,7 +330,6 @@ TEST_F(WebRtcRtpDumpHandlerTest, StopOngoingDumpsWhileStoppingDumps) {
   std::string error;
   EXPECT_TRUE(handler_->StartDump(RTP_DUMP_BOTH, &error));
 
-  testing::InSequence s;
   EXPECT_CALL(*this, OnStopDumpFinished(true, testing::_));
   EXPECT_CALL(*this, OnStopOngoingDumpsFinished());
 
@@ -336,6 +341,7 @@ TEST_F(WebRtcRtpDumpHandlerTest, StopOngoingDumpsWhileStoppingDumps) {
       base::Bind(&WebRtcRtpDumpHandlerTest::OnStopOngoingDumpsFinished,
                  base::Unretained(this)));
 
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   base::RunLoop().RunUntilIdle();
 
   WebRtcRtpDumpHandler::ReleasedDumps dumps(handler_->ReleaseDumps());
@@ -353,6 +359,7 @@ TEST_F(WebRtcRtpDumpHandlerTest, StopOngoingDumpsWhileDumping) {
       base::Bind(&WebRtcRtpDumpHandlerTest::OnStopOngoingDumpsFinished,
                  base::Unretained(this)));
 
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   base::RunLoop().RunUntilIdle();
 
   WebRtcRtpDumpHandler::ReleasedDumps dumps(handler_->ReleaseDumps());
@@ -370,6 +377,7 @@ TEST_F(WebRtcRtpDumpHandlerTest, StopOngoingDumpsWhenAlreadyStopped) {
     handler_->StopDump(RTP_DUMP_BOTH,
                        base::Bind(&WebRtcRtpDumpHandlerTest::OnStopDumpFinished,
                                   base::Unretained(this)));
+    base::TaskScheduler::GetInstance()->FlushForTesting();
     base::RunLoop().RunUntilIdle();
   }
 
@@ -395,6 +403,7 @@ TEST_F(WebRtcRtpDumpHandlerTest, StopOngoingDumpsWhileStoppingOneDump) {
       base::Bind(&WebRtcRtpDumpHandlerTest::OnStopOngoingDumpsFinished,
                  base::Unretained(this)));
 
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   base::RunLoop().RunUntilIdle();
 
   WebRtcRtpDumpHandler::ReleasedDumps dumps(handler_->ReleaseDumps());
