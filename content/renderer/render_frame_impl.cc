@@ -2616,13 +2616,6 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
   return nullptr;
 }
 
-void RenderFrameImpl::LoadURLExternally(
-    const blink::WebURLRequest& request,
-    blink::WebNavigationPolicy policy,
-    blink::WebTriggeringEventInfo triggering_event_info) {
-  LoadURLExternally(request, policy, triggering_event_info, false);
-}
-
 void RenderFrameImpl::LoadErrorPage(int reason) {
   blink::WebURLError error;
   error.unreachable_url = frame_->GetDocument().Url();
@@ -3327,19 +3320,6 @@ void RenderFrameImpl::DownloadURL(const blink::WebURLRequest& request,
   params.suggested_name = suggested_name.Utf16();
 
   Send(new FrameHostMsg_DownloadUrl(params));
-}
-
-void RenderFrameImpl::LoadURLExternally(
-    const blink::WebURLRequest& request,
-    blink::WebNavigationPolicy policy,
-    blink::WebTriggeringEventInfo triggering_event_info,
-    bool should_replace_current_entry) {
-  Referrer referrer(RenderViewImpl::GetReferrerFromRequest(frame_, request));
-  DCHECK_NE(policy, blink::kWebNavigationPolicyDownload);
-  OpenURL(request.Url(), IsHttpPost(request),
-          GetRequestBodyForWebURLRequest(request),
-          GetWebURLRequestHeaders(request), referrer, policy,
-          should_replace_current_entry, false, triggering_event_info);
 }
 
 void RenderFrameImpl::WillSendSubmitEvent(const blink::WebFormElement& form) {
@@ -5531,13 +5511,31 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
       DownloadURL(info.url_request, blink::WebString());
       return blink::kWebNavigationPolicyIgnore;
     } else {
-      LoadURLExternally(info.url_request, info.default_policy,
-                        info.triggering_event_info);
+      Referrer referrer(
+          RenderViewImpl::GetReferrerFromRequest(frame_, info.url_request));
+      OpenURL(url, IsHttpPost(info.url_request),
+              GetRequestBodyForWebURLRequest(info.url_request),
+              GetWebURLRequestHeaders(info.url_request), referrer,
+              info.default_policy, false, false, info.triggering_event_info);
       return blink::kWebNavigationPolicyIgnore;
     }
   }
 
-  return info.default_policy;
+  if (info.default_policy == blink::kWebNavigationPolicyDownload) {
+    DownloadURL(info.url_request, blink::WebString());
+    return blink::kWebNavigationPolicyIgnore;
+  }
+
+  if (info.default_policy == blink::kWebNavigationPolicyCurrentTab)
+    return blink::kWebNavigationPolicyCurrentTab;
+
+  OpenURL(url, IsHttpPost(info.url_request),
+          GetRequestBodyForWebURLRequest(info.url_request),
+          GetWebURLRequestHeaders(info.url_request),
+          RenderViewImpl::GetReferrerFromRequest(frame_, info.url_request),
+          info.default_policy, info.replaces_current_history_item, false,
+          info.triggering_event_info);
+  return blink::kWebNavigationPolicyIgnore;
 }
 
 void RenderFrameImpl::OnGetSavableResourceLinks() {
