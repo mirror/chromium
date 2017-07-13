@@ -2828,23 +2828,18 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
   login_form.password_value = base::ASCIIToUTF16("mypassword");
   password_store->AddLogin(login_form);
 
-  // Logins are added asynchronously to the password store. Spin the message
-  // loop to make sure the |password_store| had a chance to store the
-  // |login_form|.
-  base::RunLoop run_loop;
-  run_loop.RunUntilIdle();
-
   // Now, navigate to the hidden password form and verify whether username and
   // password is autofilled.
   NavigateToFile("/password/password_form.html");
 
+  CheckElementValue("hidden_password_form_username", "myusername");
+
   // Let the user interact with the page, so that DOM gets modification events,
-  // needed for autofilling fields.
+  // needed for autofilling password.
   content::SimulateMouseClickAt(
       WebContents(), 0, blink::WebMouseEvent::Button::kLeft, gfx::Point(1, 1));
 
-  CheckElementValue("hidden_password_form_username", "myusername");
-  CheckElementValue("hidden_password_form_password", "mypassword");
+  WaitForElementValue("hidden_password_form_password", "mypassword");
 }
 
 // Test whether the password form with the problematic invisible password field
