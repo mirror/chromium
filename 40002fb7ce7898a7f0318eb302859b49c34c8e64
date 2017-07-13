@@ -39,6 +39,23 @@
       "revId": "40002fb7ce7898a7f0318eb302859b49c34c8e64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14ee339_d1876bdf",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-13T19:16:16Z",
+      "side": 1,
+      "message": "cernekee@ is correct (I din\u0027t actually review this before, was just speaking in generalities), you shouldn\u0027t pass an unowned pointer to an asynchronous callback like this, there is no guarantee that it will still be valid (the use of Unretained() here should be a hint - it shouldn\u0027t be used lightly).\n\nIf you don\u0027t want to add WiFi.TetheringState to ONC, then you will need to do the NetworkState lookup in DefaultNetworkSuccessCallback, but since you don\u0027t already do a NetworkState lookup there, it probably would be better to just do the ONC translation.",
+      "revId": "40002fb7ce7898a7f0318eb302859b49c34c8e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
