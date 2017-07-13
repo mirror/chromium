@@ -125,6 +125,7 @@
 #include "content/browser/resolve_proxy_msg_helper.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_dispatcher_host.h"
+#include "content/browser/shared_worker/content_setting_instance.h"
 #include "content/browser/shared_worker/shared_worker_message_filter.h"
 #include "content/browser/shared_worker/worker_storage_partition.h"
 #include "content/browser/site_instance_impl.h"
@@ -1656,6 +1657,8 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&PushMessagingManager::BindRequest,
                  base::Unretained(push_messaging_manager_.get())));
+
+  registry->AddInterface(base::Bind(&ContentSettingInstance::Create, GetID()));
 
   registry->AddInterface(
       base::Bind(&BackgroundFetchServiceImpl::Create, GetID(),

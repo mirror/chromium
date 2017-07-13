@@ -98,6 +98,8 @@ class WebSharedWorkerClient {
       WebServiceWorkerNetworkProvider*) {
     return nullptr;
   }
+
+  virtual int GetId() { return 0; }
 };
 
 }  // namespace blink

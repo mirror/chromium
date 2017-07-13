@@ -8,6 +8,8 @@ blink_core_sources("workers") {
   sources = [
     "AbstractWorker.cpp",
     "AbstractWorker.h",
+    "ContentSettingInstanceClient.cpp",
+    "ContentSettingInstanceClient.h",
     "DedicatedWorkerGlobalScope.cpp",
     "DedicatedWorkerGlobalScope.h",
     "DedicatedWorkerMessagingProxy.cpp",
