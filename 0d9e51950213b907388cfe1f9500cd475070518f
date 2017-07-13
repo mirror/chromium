@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48f66cda_a616e147",
+        "filename": "third_party/WebKit/LayoutTests/fast/alignment/parse-place-items.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "I think we should move this case to the \"invalid values\" section, since \u0027auto\u0027 is no valid for justify-items hence place-items should parse it as invalid as well. Additionally, the spec has been updated accordingly for this specific shorthand\u0027s syntax",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3372f4ca_eae437a9",
+        "filename": "third_party/WebKit/LayoutTests/fast/alignment/parse-place-items.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae29c0d4_c92ac9d1",
+        "filename": "third_party/WebKit/Source/core/css/CSSGradientValue.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "I don\u0027t get why this change has anything to do with alignment.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085eb504_728fdca2",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValueMappings.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "This is not correct. We must define a new kItemPositionLegacy enum value.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89eaf3dd_71708826",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2301,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the best approach. Defining parsing logic depending on binary allow/forbid flags looks like unnecessary complex. As I commented before, we must define a new value \"legacy\" which should be valid only for justify-items longhand.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5b3e51_db9e1c2c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2307,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df0345c_16be39d7",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAlignmentUtils.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57652ed5_90941889",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAlignmentUtils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "As I commented before, I\u0027d rather use a new value for the item position enumeration and handle as any other alignment value during parsing.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93178c1c_1d3eed62",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentOptions.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "Again, this change has nothing to do with alignment.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb91aa6_8522c80f",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentResponse.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-13T09:56:04Z",
+      "side": 1,
+      "message": "Unrelated change as well.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
