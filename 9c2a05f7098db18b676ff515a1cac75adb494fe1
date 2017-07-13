@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "819dcc1c_d144f965",
+        "filename": "components/history/core/browser/history_match.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-13T16:54:19Z",
+      "side": 1,
+      "message": "Add comments for these fields (or update the big comment above to describe all three fields).",
+      "revId": "9c2a05f7098db18b676ff515a1cac75adb494fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1601d132_06a7dffa",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-13T16:54:19Z",
+      "side": 1,
+      "message": "What\u0027s going in the constructor vs. set below feels a bit arbitrary. Did you consider either a) also removing input_location from the constructor? or b) passing in a match_template parameter to the constructor and pulling all four values out of it?\n\nI don\u0027t feel strongly about it and I don\u0027t have a good sense of what would work well, just wanted to see if you had any thoughts.",
+      "revId": "9c2a05f7098db18b676ff515a1cac75adb494fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e757189_70fff78c",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-13T16:54:19Z",
+      "side": 1,
+      "message": "Do we not need to determine the other match_in_* values in this case?",
+      "revId": "9c2a05f7098db18b676ff515a1cac75adb494fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
