@@ -6,6 +6,7 @@
 #define COMPONENTS_DOWNLOAD_INTERNAL_SCHEDULER_DEVICE_STATUS_LISTENER_H_
 
 #include "base/power_monitor/power_observer.h"
+#include "base/timer/timer.h"
 #include "components/download/internal/scheduler/device_status.h"
 #include "net/base/network_change_notifier.h"
 
@@ -23,6 +24,7 @@ class DeviceStatusListener
   };
 
   DeviceStatusListener();
+  DeviceStatusListener(const base::TimeDelta& delay);
   ~DeviceStatusListener() override;
 
   // Returns the current device status for download scheduling.
@@ -44,15 +46,24 @@ class DeviceStatusListener
   bool listening_;
 
  private:
-  // net::NetworkChangeNotifier implementation.
+  // net::NetworkChangeNotifier::ConnectionTypeObserver implementation.
   void OnConnectionTypeChanged(
       net::NetworkChangeNotifier::ConnectionType type) override;
 
   // base::PowerObserver implementation.
   void OnPowerStateChange(bool on_battery_power) override;
 
-  // Notifies |observers_| about device status change.
+  // Notifies the observer about device status change.
   void NotifyStatusChange();
+
+  // Called after a delay to notify the observer. See |delay_|.
+  void NotifyNetworkChangeAfterDelay(NetworkStatus network_status);
+
+  // Used to notify the observer after a delay when network becomes connected.
+  base::OneShotTimer timer_;
+
+  // The delay used by |timer_|.
+  base::TimeDelta delay_;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceStatusListener);
 };
