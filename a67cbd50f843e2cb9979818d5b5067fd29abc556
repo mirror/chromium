@@ -70,6 +70,24 @@
       "revId": "a67cbd50f843e2cb9979818d5b5067fd29abc556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f544cc_3ef7e27f",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewBase.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-13T05:31:04Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right.\n\nHonestly speaking I\u0027m confused about this CL in many ways. A short question is: How are you planning to remove the Base classes?\n\nCurrently you\u0027re creating a dependency as follows:\n\n  web/ \u003d\u003e controller/ \u003d\u003e core/\n\nThen how can you move WebViewImpl.cpp from web/ to core/?\n\nI guess the dependency should look like:\n\n  controller/ \u003d\u003e web/ \u003d\u003e core/\n\nThen you won\u0027t need to move WillEnterModalLoop() to core/ because controller/WebDevToolsAgentImpl can just call WillEnterModalLoop(). Alternately you\u0027ll need to 1) introduce a way to call controller/WebDevToolsAgentImpl from web/WebLocalFrameImpl or 2) move a part of web/WebLocalFrameImpl to controller/. The mechanism should anyway be needed in the end state where web/ is removed, right?\n\nThere are many ways to get to the end state and I\u0027m not planning to ask you to strictly follow the way I described. However, I want to make sure that we are getting things closer to the end state. In particular, we should have a plan to remove the Base classes in the near future.",
+      "parentUuid": "b80c3aa3_cd5d9ed7",
+      "revId": "a67cbd50f843e2cb9979818d5b5067fd29abc556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
