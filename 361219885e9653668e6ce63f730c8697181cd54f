@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe413564_f8b18ba3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T18:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c857cad4_40a9fd1b",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9a493e6_cdcca2d4",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "361219885e9653668e6ce63f730c8697181cd54f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f128e143_855e9bf8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T18:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a493e6_cdcca2d4",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "12841fcc_17f0dac4",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T18:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b76322_b6ed986e",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14389dd5_8595b4c8",
         "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-13T15:34:46Z",
       "side": 1,
       "message": "There seems to be a bit of a disconnect here.  You have to use render_thread_.get(), but only need to use worklet_backing_thread_.  I think it would be more consistent if worket_backing_thread_.get() were used here too.  If possible and sensible.",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa0ce2a_6be9f10f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T18:31:56Z",
+      "side": 1,
+      "message": "This method needs to serve WebThread as a return value, but the source variables are different types. Please advised if you can have a better way of handling this.",
+      "parentUuid": "14389dd5_8595b4c8",
       "revId": "361219885e9653668e6ce63f730c8697181cd54f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ee0970c2_e1fff57e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T18:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff3af780_f7a5e4ba",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd74b0e1_d68ea62a",
         "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "88c480a3_85b2c4cc",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T18:31:56Z",
+      "side": 1,
+      "message": "Add a comment to explain why.",
+      "parentUuid": "fd74b0e1_d68ea62a",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06162e16_8e527dd8",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 5
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-13T15:34:46Z",
       "side": 1,
       "message": "Don\u0027t need to do anything here for worklet_backing_thread_?",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c748cb2c_75e8c3f5",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T18:31:56Z",
+      "side": 1,
+      "message": "No. worklet_backing_thread is a raw pointer and the actual object is owned by AudioWorkletThread. I believe its life cycle is longer than AudioDestination. So we don\u0027t care here.",
+      "parentUuid": "06162e16_8e527dd8",
       "revId": "361219885e9653668e6ce63f730c8697181cd54f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
