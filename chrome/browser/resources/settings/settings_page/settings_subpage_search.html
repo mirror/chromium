@@ -71,6 +71,7 @@
     </style>
     <iron-icon id="searchIcon" icon="cr:search"></iron-icon>
     <paper-input-container no-label-float>
+      <label id="prompt" aria-hidden="true">Search passwords</label>
       <input id="searchInput" type="search" on-search="onSearchTermSearch"
           on-input="onSearchTermInput" aria-labelledby="prompt" incremental
           autofocus$="[[autofocus]]" placeholder="[[label]]">
