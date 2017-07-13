@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f040780_9554ac99",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-13T01:52:02Z",
+      "side": 1,
+      "message": "Let\u0027s have CheckTitle(@\"title\"); here.",
+      "revId": "3c1376e2a2a41e0ced2c5ed4a98854bad7adc460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ac5d6e_9b7d86f5",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_selector_view_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-13T01:52:02Z",
+      "side": 1,
+      "message": "Let\u0027s have CheckTitle(@\"title\"); here.",
+      "revId": "3c1376e2a2a41e0ced2c5ed4a98854bad7adc460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7939c22e_6ee0c5d1",
+        "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-13T01:52:02Z",
+      "side": 1,
+      "message": "remove this after moving the header text into the mediator.",
+      "revId": "3c1376e2a2a41e0ced2c5ed4a98854bad7adc460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f596bae0_36ead6f8",
+        "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-13T01:52:02Z",
+      "side": 1,
+      "message": "remove this.",
+      "revId": "3c1376e2a2a41e0ced2c5ed4a98854bad7adc460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65589019_ae1aea65",
+        "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-13T01:52:02Z",
+      "side": 1,
+      "message": "Could you also please remove the headerText property from ShippingAddressSelectionMediator and move this into the mediator?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "3c1376e2a2a41e0ced2c5ed4a98854bad7adc460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca97a405_e7ecf4c9",
+        "filename": "ios/chrome/browser/ui/payments/shipping_option_selection_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-13T01:52:02Z",
+      "side": 1,
+      "message": "remove this.",
+      "revId": "3c1376e2a2a41e0ced2c5ed4a98854bad7adc460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a36f1a7_ffccf2cf",
+        "filename": "ios/chrome/browser/ui/payments/shipping_option_selection_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-13T01:52:02Z",
+      "side": 1,
+      "message": "remove this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "3c1376e2a2a41e0ced2c5ed4a98854bad7adc460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
