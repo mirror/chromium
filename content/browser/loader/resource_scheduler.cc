@@ -311,6 +311,8 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
     attributes_ = attributes;
   }
   const net::HostPortPair& host_port_pair() const { return host_port_pair_; }
+  base::TimeTicks start_time() const { return start_time_; }
+  void set_start_time(base::TimeTicks start_time) { start_time_ = start_time; }
 
  private:
   class UnownedPointer : public base::SupportsUserData::Data {
@@ -349,6 +351,9 @@ class ResourceScheduler::ScheduledResourceRequest : public ResourceThrottle {
   size_t peak_delayable_requests_in_flight_;
   // Cached to excessive recomputation in ShouldKeepSearching.
   const net::HostPortPair host_port_pair_;
+
+  // The time at which the resource scheduler started the request.
+  base::TimeTicks start_time_;
 
   base::WeakPtrFactory<ResourceScheduler::ScheduledResourceRequest>
       weak_ptr_factory_;
@@ -410,6 +415,25 @@ class ResourceScheduler::Client {
     if (should_start == START_REQUEST) {
       // New requests can be started synchronously without issue.
       StartRequest(request, START_SYNC, RequestStartTrigger::NONE);
+      if (RequestAttributesAreSet(request->attributes(), kAttributeDelayable)) {
+        // If the current request is a delayable request then insert the
+        // corresponding start time into |delayable_request_start_times_|.
+        base::TimeTicks request_start = base::TimeTicks::Now();
+        delayable_request_start_times_.insert(
+            std::make_pair(request_start, request));
+        request->set_start_time(request_start);
+      } else {
+        // If the current request is non-delayable, record the difference in
+        // start times of the current request and the latest start time in
+        // |delayable_request_start_times_|.
+        if (!delayable_request_start_times_.empty()) {
+          UMA_HISTOGRAM_TIMES(
+              "ResourceScheduler.InterarrivalTime."
+              "SpontaneousDelayableToNonDelayableStart",
+              base::TimeTicks::Now() -
+                  delayable_request_start_times_.crbegin()->first);
+        }
+      }
     } else {
       pending_requests_.Insert(request);
       if (should_start == YIELD_SCHEDULER)
@@ -552,12 +576,26 @@ class ResourceScheduler::Client {
   void EraseInFlightRequest(ScheduledResourceRequest* request) {
     size_t erased = in_flight_requests_.erase(request);
     DCHECK_EQ(1u, erased);
+
+    // Erase request from |last_scheduled_and_started_delayable_request_|.
+    auto requests_with_start_time_range =
+        delayable_request_start_times_.equal_range(request->start_time());
+    for (auto delayable_request_itr = requests_with_start_time_range.first;
+         delayable_request_itr != requests_with_start_time_range.second;
+         ++delayable_request_itr) {
+      if (delayable_request_itr->second == request) {
+        delayable_request_start_times_.erase(delayable_request_itr);
+        break;
+      }
+    }
+
     // Clear any special state that we were tracking for this request.
     SetRequestAttributes(request, kAttributeNone);
   }
 
   void ClearInFlightRequests() {
     in_flight_requests_.clear();
+    delayable_request_start_times_.clear();
     in_flight_delayable_count_ = 0;
     total_layout_blocking_count_ = 0;
   }
@@ -929,6 +967,12 @@ class ResourceScheduler::Client {
 
   // The number of requests that can start before yielding.
   int max_requests_before_yielding_;
+
+  // A map from the start time of a delayable in-flight request to a pointer to
+  // the |ScheduledRequest|. This allows quick lookup to find the delayable
+  // in-flight request that started last.
+  std::multimap<base::TimeTicks, ScheduledResourceRequest*>
+      delayable_request_start_times_;
 
   base::WeakPtrFactory<ResourceScheduler::Client> weak_ptr_factory_;
 };
