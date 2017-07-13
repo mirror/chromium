@@ -22,6 +22,30 @@
       "revId": "dee4a96d1f182c7745bf727c7b43a56105b2cf0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1382f18c_5c0c4ef5",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThread.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T01:35:21Z",
+      "side": 1,
+      "message": "A separate CL will update these comments:\nhttps://chromium-review.googlesource.com/c/567609/",
+      "parentUuid": "9621d307_f6f67ebe",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "dee4a96d1f182c7745bf727c7b43a56105b2cf0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
