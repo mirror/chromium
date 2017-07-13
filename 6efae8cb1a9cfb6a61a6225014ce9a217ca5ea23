@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d7cc3f5_4030dde4",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:54:15Z",
+      "side": 1,
+      "message": "Can we use : client(other.client), guid(other.guid), ... etc.?",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 59
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9854cdba_c206a003",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:54:15Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003cnet::NetworkTrafficAnnotationTag(params.traffic_annotation_)) if we end up keeping unique_ptr",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d63135_a0d0a370",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:54:15Z",
+      "side": 1,
+      "message": "This leaks the annotation right?  Do you want reset()?",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabafaff_bee31740",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:54:15Z",
+      "side": 1,
+      "message": "Was this added for tests?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 39
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7aca3d_32c7e154",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:54:15Z",
+      "side": 1,
+      "message": "Do we have to make this a unique_ptr?  If not, can it exist publicly?  I was hoping to keep Entry POD if possible.",
+      "range": {
+        "startLine": 97,
+        "startChar": 18,
+        "endLine": 97,
+        "endChar": 50
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2617e8_120d7f3f",
+        "filename": "components/download/internal/test/download_params_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:54:15Z",
+      "side": 1,
+      "message": "Do we need this?  Can this just always be the test annotation?",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 62
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0457ce42_638ae5fc",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:54:15Z",
+      "side": 1,
+      "message": "Don\u0027t put this in the constructor.  We can just early-fail the download in ControllerImpl::StartDownload().  We can add a new StartResult called INVALID_PARAMS an use that.  We can then also validate other required params as well.",
+      "range": {
+        "startLine": 128,
+        "startChar": 17,
+        "endLine": 128,
+        "endChar": 75
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
