@@ -14,8 +14,8 @@
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/sequenced_worker_pool.h"
-#include "chrome/browser/chromeos/printing/printers_manager.h"
-#include "chrome/browser/chromeos/printing/printers_manager_factory.h"
+#include "chrome/browser/chromeos/printing/printers_sync_manager.h"
+#include "chrome/browser/chromeos/printing/printers_sync_manager_factory.h"
 #include "chrome/browser/sync/test/integration/sync_datatype_helper.h"
 #include "chrome/browser/sync/test/integration/sync_test.h"
 #include "content/public/test/test_utils.h"
@@ -67,9 +67,10 @@ std::string PrinterId(int index) {
   return base::StringPrintf("printer%d", index);
 }
 
-chromeos::PrintersManager* GetPrinterStore(content::BrowserContext* context) {
-  chromeos::PrintersManager* manager =
-      chromeos::PrintersManagerFactory::GetForBrowserContext(context);
+chromeos::PrintersSyncManager* GetPrinterStore(
+    content::BrowserContext* context) {
+  chromeos::PrintersSyncManager* manager =
+      chromeos::PrintersSyncManagerFactory::GetForBrowserContext(context);
 
   // TODO(sync): crbug.com/709094: Remove all of this once the bug is fixed.
   // Must wait for ModelTypeStore initialization. It is fairly difficult to get
@@ -85,17 +86,17 @@ chromeos::PrintersManager* GetPrinterStore(content::BrowserContext* context) {
 
 }  // namespace
 
-void AddPrinter(chromeos::PrintersManager* manager,
+void AddPrinter(chromeos::PrintersSyncManager* manager,
                 const chromeos::Printer& printer) {
   manager->RegisterPrinter(base::MakeUnique<chromeos::Printer>(printer));
 }
 
-void RemovePrinter(chromeos::PrintersManager* manager, int index) {
+void RemovePrinter(chromeos::PrintersSyncManager* manager, int index) {
   chromeos::Printer testPrinter(CreateTestPrinter(index));
   manager->RemovePrinter(testPrinter.id());
 }
 
-bool EditPrinterDescription(chromeos::PrintersManager* manager,
+bool EditPrinterDescription(chromeos::PrintersSyncManager* manager,
                             int index,
                             const std::string& description) {
   PrinterList printers = manager->GetPrinters();
@@ -123,15 +124,15 @@ chromeos::Printer CreateTestPrinter(int index) {
   return printer;
 }
 
-chromeos::PrintersManager* GetVerifierPrinterStore() {
-  chromeos::PrintersManager* manager =
+chromeos::PrintersSyncManager* GetVerifierPrinterStore() {
+  chromeos::PrintersSyncManager* manager =
       GetPrinterStore(sync_datatype_helper::test()->verifier());
 
   return manager;
 }
 
-chromeos::PrintersManager* GetPrinterStore(int index) {
-  chromeos::PrintersManager* manager =
+chromeos::PrintersSyncManager* GetPrinterStore(int index) {
+  chromeos::PrintersSyncManager* manager =
       GetPrinterStore(sync_datatype_helper::test()->GetProfile(index));
 
   return manager;
