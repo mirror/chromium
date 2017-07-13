@@ -235,6 +235,15 @@
 
       if (success !== true) throw 'setNextGATTDiscoveryResponse failed.';
     }
+
+    // Triggers appropriate behavior when the services change (a service is
+    // removed, added, etc.)
+    async simulateGATTServicesChanged() {
+      let {success} =
+        await this.fake_central_ptr_.simulateGATTServicesChanged(this.address);
+
+      if (success !== true) throw 'simulateGATTServicesChanged failed.';
+    }
   }
 
   class FakeRemoteGATTService {
@@ -336,6 +345,13 @@
       return value;
     }
 
+    // Removes the fake GATT Characteristic from its fake service.
+    async remove() {
+      let {success} =
+          await this.fake_central_ptr_.removeFakeCharacteristic(...this.ids_);
+
+      if (!success) throw 'remove failed';
+    }
   }
 
   class FakeRemoteGATTDescriptor {

@@ -50,6 +50,18 @@ std::string FakeRemoteGattService::AddFakeCharacteristic(
   return it->second->GetIdentifier();
 }
 
+bool FakeRemoteGattService::RemoveFakeCharacteristic(
+    const std::string& characteristic_id) {
+  GetCharacteristic(characteristic_id);
+  const auto& it = fake_characteristics_.find(characteristic_id);
+  if (it == fake_characteristics_.end()) {
+    return false;
+  }
+
+  fake_characteristics_.erase(it);
+  return true;
+}
+
 std::string FakeRemoteGattService::GetIdentifier() const {
   return service_id_;
 }
@@ -81,8 +93,9 @@ FakeRemoteGattService::GetIncludedServices() const {
 }
 
 device::BluetoothRemoteGattCharacteristic*
-FakeRemoteGattService::GetCharacteristic(const std::string& identifier) const {
-  const auto& it = fake_characteristics_.find(identifier);
+FakeRemoteGattService::GetCharacteristic(
+    const std::string& characteristic_id) const {
+  const auto& it = fake_characteristics_.find(characteristic_id);
   if (it == fake_characteristics_.end())
     return nullptr;
 
