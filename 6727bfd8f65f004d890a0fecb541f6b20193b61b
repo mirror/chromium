@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca7a4404_31cd27be",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d6f23b6_7ecd7804",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 9
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f11bec0f_5d037308",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bb53f1_1a6d58a4",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f11bec0f_5d037308",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 67
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cf713983_b55ba30f",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d6d073e_f6d5bc89",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd125df5_6296b073",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-13T18:24:39Z",
       "side": 1,
       "message": "Please don\u0027t copy/paste code. Instead consider moving this to passwords_and_autofill_fake_data.js",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 1
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf596d6d_05fc0e12",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "bd125df5_6296b073",
       "range": {
         "startLine": 39,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "76f11e41_bbbd82bf",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34fceac5_7f74259d",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 5
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76511fbb_a4054cdc",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f5937e_24972d13",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "76511fbb_a4054cdc",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 7
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3aa2adc4_3762d722",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7caf4b4c_3f7b44c5",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12ed5e46_787ac21e",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 3
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-13T18:24:39Z",
       "side": 1,
       "message": "Is this necessary? (if so, then keep it and refactor |basePasswordExpectations|, but if it can be removed then no need to refactor)",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f005e93_026acf51",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Removed!",
+      "parentUuid": "12ed5e46_787ac21e",
       "range": {
         "startLine": 94,
         "startChar": 0,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4b45c2e0_450ca259",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baf8539b_77548f4f",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 26
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "842204c2_018d7533",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa6a56a_ba962e6d",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "842204c2_018d7533",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 77
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "fa9d8279_becdf1c3",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "726268f0_6832c6a3",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3cfe5a5_e3b5e6f5",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 3
@@ -275,6 +539,30 @@
       "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d052dc1_458ea98c",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-13T21:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3cfe5a5_e3b5e6f5",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 5
+      },
+      "revId": "6727bfd8f65f004d890a0fecb541f6b20193b61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
