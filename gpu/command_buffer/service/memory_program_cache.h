@@ -59,6 +59,7 @@ class GPU_EXPORT MemoryProgramCache : public ProgramCache {
   class ProgramCacheValue : public base::RefCounted<ProgramCacheValue> {
    public:
     ProgramCacheValue(GLsizei length,
+    GLsizei decompressed_length,
                       GLenum format,
                       const char* data,
                       const std::string& program_hash,
@@ -78,6 +79,10 @@ class GPU_EXPORT MemoryProgramCache : public ProgramCache {
 
     GLsizei length() const {
       return length_;
+    }
+
+    GLsizei decompressed_length() const {
+      return decompressed_length_;
     }
 
     GLenum format() const {
@@ -142,6 +147,7 @@ class GPU_EXPORT MemoryProgramCache : public ProgramCache {
     ~ProgramCacheValue();
 
     const GLsizei length_;
+    const GLsizei decompressed_length_;
     const GLenum format_;
     const std::unique_ptr<const char[]> data_;
     const std::string program_hash_;

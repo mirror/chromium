@@ -21,6 +21,8 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/shader_manager.h"
+#include "third_party/brotli/include/brotli/decode.h"
+#include "third_party/brotli/include/brotli/encode.h"
 #include "ui/gl/gl_bindings.h"
 
 namespace gpu {
@@ -204,9 +206,7 @@ void RunShaderCallback(GLES2DecoderClient* client,
 }
 
 bool ProgramBinaryExtensionsAvailable() {
-  return gl::g_current_gl_driver &&
-         (gl::g_current_gl_driver->ext.b_GL_ARB_get_program_binary ||
-          gl::g_current_gl_driver->ext.b_GL_OES_get_program_binary);
+  return true;
 }
 
 }  // namespace
@@ -217,7 +217,7 @@ MemoryProgramCache::MemoryProgramCache(
     bool disable_program_caching_for_transform_feedback,
     GpuProcessActivityFlags* activity_flags)
     : max_size_bytes_(max_cache_size_bytes),
-      disable_gpu_shader_disk_cache_(disable_gpu_shader_disk_cache),
+      disable_gpu_shader_disk_cache_(true),
       disable_program_caching_for_transform_feedback_(
           disable_program_caching_for_transform_feedback),
       curr_size_bytes_(0),
@@ -270,12 +270,18 @@ ProgramCache::ProgramLoadResult MemoryProgramCache::LoadLinkedProgram(
     return PROGRAM_LOAD_FAILURE;
   }
   const scoped_refptr<ProgramCacheValue> value = found->second;
+  
+  std::vector<uint8_t> decoded(value->decompressed_length());
+  size_t decoded_size = decoded.size();
+  auto result = BrotliDecoderDecompress(value->length(), reinterpret_cast<const uint8_t*>(value->data()), &decoded_size, decoded.data());
+  DCHECK_EQ(decoded_size, value->decompressed_length());
+  DCHECK_EQ(BROTLI_DECODER_RESULT_SUCCESS, result);
 
   {
     GpuProcessActivityFlags::ScopedSetFlag scoped_set_flag(
         activity_flags_, ActivityFlagsBase::FLAG_LOADING_PROGRAM_BINARY);
     glProgramBinary(program, value->format(),
-                    static_cast<const GLvoid*>(value->data()), value->length());
+                    static_cast<const GLvoid*>(decoded.data()), decoded_size);
   }
 
   GLint success = 0;
@@ -317,18 +323,20 @@ void MemoryProgramCache::SaveLinkedProgram(
     const std::vector<std::string>& transform_feedback_varyings,
     GLenum transform_feedback_buffer_mode,
     GLES2DecoderClient* client) {
-  if (!ProgramBinaryExtensionsAvailable()) {
-    // Early exit if this context can't support program binaries
-    return;
-  }
+  // if (!ProgramBinaryExtensionsAvailable()) {
+  //   // Early exit if this context can't support program binaries
+  //   return;
+  // }
   if (disable_program_caching_for_transform_feedback_ &&
       !transform_feedback_varyings.empty()) {
+        LOG(ERROR) << "FEDBAZ";
     return;
   }
   GLenum format;
   GLsizei length = 0;
-  glGetProgramiv(program, GL_PROGRAM_BINARY_LENGTH_OES, &length);
+  glGetProgramiv(program, GL_PROGRAM_BINARY_LENGTH, &length);
   if (length == 0 || static_cast<unsigned int>(length) > max_size_bytes_) {
+    LOG(ERROR) << "ENMG " << length;
     return;
   }
   std::unique_ptr<char[]> binary(new char[length]);
@@ -338,6 +346,13 @@ void MemoryProgramCache::SaveLinkedProgram(
                      &format,
                      binary.get());
   UMA_HISTOGRAM_COUNTS("GPU.ProgramCache.ProgramBinarySizeBytes", length);
+
+  size_t compressed_size = BrotliEncoderMaxCompressedSize(length);
+  std::unique_ptr<uint8_t[]> compressed_binary(new uint8_t[compressed_size]);
+
+  BrotliEncoderCompress(BROTLI_DEFAULT_QUALITY, BROTLI_DEFAULT_WINDOW, BROTLI_DEFAULT_MODE, length, reinterpret_cast<const uint8_t*>(binary.get()), &compressed_size, compressed_binary.get());
+
+  LOG(ERROR) << "ENCODED " << length << " bytes into " << compressed_size << " bytes";
 
   char a_sha[kHashLength];
   char b_sha[kHashLength];
@@ -386,7 +401,7 @@ void MemoryProgramCache::SaveLinkedProgram(
   store_.Put(
       sha_string,
       new ProgramCacheValue(
-          length, format, binary.release(), sha_string, a_sha,
+          compressed_size, length, format, reinterpret_cast<char*>(compressed_binary.release()), sha_string, a_sha,
           shader_a->attrib_map(), shader_a->uniform_map(),
           shader_a->varying_map(), shader_a->output_variable_list(),
           shader_a->interface_block_map(), b_sha,
@@ -459,15 +474,15 @@ void MemoryProgramCache::LoadProgram(const std::string& program) {
     std::unique_ptr<char[]> binary(new char[proto->program().length()]);
     memcpy(binary.get(), proto->program().c_str(), proto->program().length());
 
-    store_.Put(
-        proto->sha(),
-        new ProgramCacheValue(
-            proto->program().length(), proto->format(), binary.release(),
-            proto->sha(), proto->vertex_shader().sha().c_str(), vertex_attribs,
-            vertex_uniforms, vertex_varyings, vertex_output_variables,
-            vertex_interface_blocks, proto->fragment_shader().sha().c_str(),
-            fragment_attribs, fragment_uniforms, fragment_varyings,
-            fragment_output_variables, fragment_interface_blocks, this));
+    // store_.Put(
+    //     proto->sha(),
+    //     new ProgramCacheValue(
+    //         proto->program().length(), proto->format(), binary.release(),
+    //         proto->sha(), proto->vertex_shader().sha().c_str(), vertex_attribs,
+    //         vertex_uniforms, vertex_varyings, vertex_output_variables,
+    //         vertex_interface_blocks, proto->fragment_shader().sha().c_str(),
+    //         fragment_attribs, fragment_uniforms, fragment_varyings,
+    //         fragment_output_variables, fragment_interface_blocks, this));
 
     UMA_HISTOGRAM_COUNTS("GPU.ProgramCache.MemorySizeAfterKb",
                          curr_size_bytes_ / 1024);
@@ -495,6 +510,7 @@ void MemoryProgramCache::HandleMemoryPressure(
 
 MemoryProgramCache::ProgramCacheValue::ProgramCacheValue(
     GLsizei length,
+    GLsizei decompressed_length,
     GLenum format,
     const char* data,
     const std::string& program_hash,
@@ -512,6 +528,7 @@ MemoryProgramCache::ProgramCacheValue::ProgramCacheValue(
     const InterfaceBlockMap& interface_block_map_1,
     MemoryProgramCache* program_cache)
     : length_(length),
+      decompressed_length_(decompressed_length),
       format_(format),
       data_(data),
       program_hash_(program_hash),
