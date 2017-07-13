@@ -9,7 +9,7 @@
 
 // Protocol for commands that will generally be handled by the "current tab",
 // which in practice is the BrowserViewController instance displaying the tab.
-@protocol BrowserCommands<NSObject>
+@protocol BVCCommands<NSObject>
 
 // Closes the current tab.
 - (void)closeCurrentTab;
@@ -26,14 +26,18 @@
 // Reloads the current web page
 - (void)reload;
 
-// Shows the share sheet for the current page.
-- (void)sharePage;
-
 // Bookmarks the current page.
 - (void)bookmarkPage;
 
 // Shows the tools menu.
 - (void)showToolsMenu;
+
+@end
+
+@protocol BrowserCommands<BVCCommands>
+
+// Shows the share sheet for the current page.
+- (void)sharePage;
 
 @end
 

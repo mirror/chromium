@@ -83,10 +83,9 @@
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
 #import "ios/chrome/browser/tabs/tab_snapshotting_delegate.h"
-#import "ios/chrome/browser/ui/activity_services/chrome_activity_item_thumbnail_generator.h"
-#import "ios/chrome/browser/ui/activity_services/share_protocol.h"
-#import "ios/chrome/browser/ui/activity_services/share_to_data.h"
-#import "ios/chrome/browser/ui/activity_services/share_to_data_builder.h"
+#import "ios/chrome/browser/ui/activity_services/activity_service_coordinator.h"
+#import "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h"
+#import "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h"
 #import "ios/chrome/browser/ui/alert_coordinator/alert_coordinator.h"
 #import "ios/chrome/browser/ui/authentication/re_signin_infobar_delegate.h"
 #import "ios/chrome/browser/ui/background_generator.h"
@@ -342,7 +341,9 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 
 #pragma mark - BVC
 
-@interface BrowserViewController ()<AppRatingPromptDelegate,
+@interface BrowserViewController ()<ActivityServicePresentation,
+                                    ActivityServiceSnackbar,
+                                    AppRatingPromptDelegate,
                                     ContextualSearchControllerDelegate,
                                     ContextualSearchPanelMotionObserver,
                                     CRWNativeContentProvider,
@@ -355,7 +356,6 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
                                     OverscrollActionsControllerDelegate,
                                     PassKitDialogProvider,
                                     PreloadControllerDelegate,
-                                    ShareToDelegate,
                                     SKStoreProductViewControllerDelegate,
                                     SnapshotOverlayProvider,
                                     StoreKitLauncher,
@@ -533,6 +533,9 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 
   // Coordinator for displaying alerts.
   AlertCoordinator* _alertCoordinator;
+
+  // Coordinator for the share menu (Activity Services).
+  ActivityServiceCoordinator* _activityServiceCoordinator;
 }
 
 // The browser's side swipe controller.  Lazily instantiated on the first call.
@@ -646,10 +649,6 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 - (void)uninstallDelegatesForTab:(Tab*)tab;
 // Closes the current tab, with animation if applicable.
 - (void)closeCurrentTab;
-// Shows the menu to initiate sharing |data|.
-- (void)sharePageWithData:(ShareToData*)data;
-// Convenience method to share the current page.
-- (void)sharePage;
 // Prints the web page in the current tab.
 - (void)print;
 // Shows the Online Help Page in a tab.
@@ -724,13 +723,6 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 - (void)tabLoadComplete:(Tab*)tab withSuccess:(BOOL)success;
 // Evaluates Javascript asynchronously using the current page context.
 - (void)openJavascript:(NSString*)javascript;
-// Helper methods used by ShareToDelegate methods.
-// Shows an alert with the given title and message id.
-- (void)showErrorAlert:(int)titleMessageId message:(int)messageId;
-// Helper method displaying an alert with the given title and message.
-// Dismisses previous alert if it has not been dismissed yet.
-- (void)showErrorAlertWithStringTitle:(NSString*)title
-                              message:(NSString*)message;
 // Shows a self-dismissing snackbar displaying |message|.
 - (void)showSnackbar:(NSString*)message;
 // Induces an intentional crash in the browser process.
@@ -960,7 +952,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     [_dispatcher startDispatchingToTarget:self
                               forSelector:@selector(chromeExecuteCommand:)];
     [_dispatcher startDispatchingToTarget:self
-                              forProtocol:@protocol(BrowserCommands)];
+                              forProtocol:@protocol(BVCCommands)];
     [_dispatcher startDispatchingToTarget:applicationCommandEndpoint
                               forProtocol:@protocol(ApplicationCommands)];
 
@@ -1743,6 +1735,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_model browserStateDestroyed];
   [_preloadController browserStateDestroyed];
   _preloadController = nil;
+
+  // Disconnect child coordinators.
+  [_activityServiceCoordinator disconnect];
+
   // The file remover needs the browser state, so needs to be destroyed now.
   _externalFileRemover = nil;
   _browserState = nullptr;
@@ -1845,6 +1841,16 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     [_contextualSearchController setPanel:_contextualSearchPanel];
     [_contextualSearchController setTab:[_model currentTab]];
   }
+
+  // Create child coordinators.
+  _activityServiceCoordinator =
+      [[ActivityServiceCoordinator alloc] initWithBaseViewController:self];
+  _activityServiceCoordinator.dispatcher = _dispatcher;
+  _activityServiceCoordinator.tabModel = _model;
+  _activityServiceCoordinator.browserState = _browserState;
+  _activityServiceCoordinator.positionProvider = _toolbarController;
+  _activityServiceCoordinator.presentationProvider = self;
+  _activityServiceCoordinator.snackbarProvider = self;
 
   if (base::FeatureList::IsEnabled(payments::features::kWebPayments)) {
     _paymentRequestManager = [[PaymentRequestManager alloc]
@@ -3995,12 +4001,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   }
 }
 
-- (void)sharePage {
-  ShareToData* data = activity_services::ShareToDataForTab([_model currentTab]);
-  if (data)
-    [self sharePageWithData:data];
-}
-
 - (void)bookmarkPage {
   [self initializeBookmarkInteractionController];
   [_bookmarkInteractionController
@@ -4245,22 +4245,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 
-- (void)sharePageWithData:(ShareToData*)data {
-  id<ShareProtocol> controller = [_dependencyFactory shareControllerInstance];
-  if ([controller isActive])
-    return;
-  CGRect fromRect = [_toolbarController shareButtonAnchorRect];
-  UIView* inView = [_toolbarController shareButtonView];
-  [controller shareWithData:data
-                 controller:self
-               browserState:_browserState
-            shareToDelegate:self
-                   fromRect:fromRect
-                     inView:inView];
-}
-
 - (void)clearPresentedStateWithCompletion:(ProceduralBlock)completion {
-  [[_dependencyFactory shareControllerInstance] cancelShareAnimated:NO];
+  [_activityServiceCoordinator cancelShare];
   [_bookmarkInteractionController dismissBookmarkModalControllerAnimated:NO];
   [_bookmarkInteractionController dismissSnackbar];
   [_toolbarController cancelOmniboxEdit];
@@ -5048,73 +5034,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self updateToolbar];
 }
 
-#pragma mark - ShareToDelegate methods
-
-- (void)shareDidComplete:(ShareTo::ShareResult)shareStatus
-       completionMessage:(NSString*)message {
-  // The shareTo dialog dismisses itself instead of through
-  // |-dismissViewControllerAnimated:completion:| so we must reset the
-  // presenting state here.
-  self.presenting = NO;
-  [self.dialogPresenter tryToPresent];
-
-  switch (shareStatus) {
-    case ShareTo::SHARE_SUCCESS:
-      if ([message length]) {
-        TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
-        [self showSnackbar:message];
-      }
-      break;
-    case ShareTo::SHARE_ERROR:
-      [self showErrorAlert:IDS_IOS_SHARE_TO_ERROR_ALERT_TITLE
-                   message:IDS_IOS_SHARE_TO_ERROR_ALERT];
-      break;
-    case ShareTo::SHARE_NETWORK_FAILURE:
-      [self showErrorAlert:IDS_IOS_SHARE_TO_NETWORK_ERROR_ALERT_TITLE
-                   message:IDS_IOS_SHARE_TO_NETWORK_ERROR_ALERT];
-      break;
-    case ShareTo::SHARE_SIGN_IN_FAILURE:
-      [self showErrorAlert:IDS_IOS_SHARE_TO_SIGN_IN_ERROR_ALERT_TITLE
-                   message:IDS_IOS_SHARE_TO_SIGN_IN_ERROR_ALERT];
-      break;
-    case ShareTo::SHARE_CANCEL:
-    case ShareTo::SHARE_UNKNOWN_RESULT:
-      break;
-  }
-}
-
-- (void)passwordAppExDidFinish:(ShareTo::ShareResult)shareStatus
-                      username:(NSString*)username
-                      password:(NSString*)password
-             completionMessage:(NSString*)message {
-  switch (shareStatus) {
-    case ShareTo::SHARE_SUCCESS: {
-      PasswordController* passwordController =
-          [[_model currentTab] passwordController];
-      __block BOOL shown = NO;
-      [passwordController findAndFillPasswordForms:username
-                                          password:password
-                                 completionHandler:^(BOOL completed) {
-                                   if (shown || !completed || ![message length])
-                                     return;
-                                   TriggerHapticFeedbackForNotification(
-                                       UINotificationFeedbackTypeSuccess);
-                                   [self showSnackbar:message];
-                                   shown = YES;
-                                 }];
-      break;
-    }
-    default:
-      break;
-  }
-}
-
-- (void)showErrorAlert:(int)titleMessageId message:(int)messageId {
-  NSString* title = l10n_util::GetNSString(titleMessageId);
-  NSString* message = l10n_util::GetNSString(messageId);
-  [self showErrorAlertWithStringTitle:title message:message];
-}
-
 - (void)showErrorAlertWithStringTitle:(NSString*)title
                               message:(NSString*)message {
   // Dismiss current alert.
@@ -5241,6 +5160,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (id<LogoAnimationControllerOwner>)logoAnimationControllerOwner {
   return [self currentLogoAnimationControllerOwner];
+}
+
+#pragma mark - ActivityService Providers
+
+- (void)activityServiceDidEndPresenting {
+  self.presenting = NO;
+  [self.dialogPresenter tryToPresent];
 }
 
 @end

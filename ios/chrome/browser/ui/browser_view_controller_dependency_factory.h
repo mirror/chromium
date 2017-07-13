@@ -18,7 +18,6 @@
 @class PKAddPassesViewController;
 @class PreloadController;
 @protocol PreloadProvider;
-@protocol ShareProtocol;
 @class TabModel;
 class ToolbarModelDelegateIOS;
 class ToolbarModelIOS;
@@ -45,9 +44,6 @@ extern NSString* const kBrowserViewControllerSnackbarCategory;
 // state provided to BrowserViewController (and like BVC, this is a weak
 // reference).
 - (id)initWithBrowserState:(ios::ChromeBrowserState*)browserState;
-
-// Returns the ShareProtocol shared instance.
-- (id<ShareProtocol>)shareControllerInstance;
 
 // Creates a new PassKit view controller to display |pass|.
 - (PKAddPassesViewController*)newPassKitViewControllerForPass:(PKPass*)pass;
