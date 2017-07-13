@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "decaa5a0_33d50204",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T23:52:08Z",
+      "side": 1,
+      "message": "Maybe OnOmniboxFocused?",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c3ed2d_08d0378e",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T23:52:08Z",
+      "side": 1,
+      "message": "Remove unused includes. FilePath isn\u0027t used anymore for example.",
+      "range": {
+        "startLine": 11,
+        "startChar": 21,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5419c9b_c46eb554",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T23:52:08Z",
+      "side": 1,
+      "message": "Since this is only used once, let\u0027s go ahead and inline it.",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77f0d7f_b4f5c7b6",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T23:52:08Z",
+      "side": 1,
+      "message": "Let\u0027s keep this symmetric between NewTabTrackerEventTest::SetUp() and NewTabTrackerFeatureEngagementTrackerTest::SetUp() if the comment should be here. I leave it up to you.",
+      "range": {
+        "startLine": 92,
+        "startChar": 17,
+        "endLine": 92,
+        "endChar": 47
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3699f9_3e2dae7d",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T23:52:08Z",
+      "side": 1,
+      "message": "I just noticed this call will leak DesktopSessionDurationTrackers.\n(You\u0027ll find out after you submit when they run the leak checkers). \n\nDo they mind if you introduce a way to reset the currently set DesktopSessionDurationTracker?",
+      "range": {
+        "startLine": 93,
+        "startChar": 44,
+        "endLine": 93,
+        "endChar": 54
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
