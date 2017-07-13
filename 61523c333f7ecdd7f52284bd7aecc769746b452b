@@ -93,6 +93,30 @@
       "revId": "61523c333f7ecdd7f52284bd7aecc769746b452b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98ccafb1_24678f90",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-13T21:29:07Z",
+      "side": 1,
+      "message": "That sounds ok, but I\u0027d wait to hear sky@\u0027s input",
+      "parentUuid": "6a6f0055_44bc5802",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 21
+      },
+      "revId": "61523c333f7ecdd7f52284bd7aecc769746b452b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
