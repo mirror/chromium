@@ -253,4 +253,9 @@ DownloadFileType::DangerLevel FileTypePolicies::GetFileDangerLevel(
   return PolicyForExtension(ext).platform_settings(0).danger_level();
 }
 
+bool FileTypePolicies::MaxSizeUnpackDmg() const {
+  // TODO
+  return 0;
+}
+
 }  // namespace safe_browsing
