@@ -2,13 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <va/va.h>
+#include <va/va_drm.h>
+
 #include "media/gpu/vaapi_drm_picture.h"
 
 #include "base/file_descriptor_posix.h"
 #include "media/gpu/va_surface.h"
 #include "media/gpu/vaapi_wrapper.h"
-#include "third_party/libva/va/drm/va_drm.h"
-#include "third_party/libva/va/va.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/native_pixmap.h"
 #include "ui/gl/gl_bindings.h"
