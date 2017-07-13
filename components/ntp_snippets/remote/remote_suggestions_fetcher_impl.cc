@@ -12,6 +12,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "components/ntp_snippets/category.h"
+#include "components/ntp_snippets/ntp_snippets_constants.h"
 #include "components/ntp_snippets/user_classifier.h"
 #include "components/signin/core/browser/access_token_fetcher.h"
 #include "components/signin/core/browser/signin_manager_base.h"
@@ -31,8 +32,6 @@ using internal::JsonRequest;
 
 namespace {
 
-const char kContentSuggestionsApiScope[] =
-    "https://www.googleapis.com/auth/chrome-content-suggestions";
 const char kSnippetsServerNonAuthorizedFormat[] = "%s?key=%s";
 const char kAuthorizationRequestHeaderFormat[] = "Bearer %s";
 
