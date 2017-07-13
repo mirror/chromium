@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "036a54b2_4bf2cf66",
+        "filename": "chrome/browser/resources/settings/settings_shared_css.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T17:16:39Z",
+      "side": 1,
+      "message": "Let\u0027s make this comment more specific.\n\n\"Adjust ... to keep md-select\u0027s text (without the underline) aligned with neighboring text that does not have an underline.\"",
+      "revId": "ba28a97ebc3cdb44cb7cf78ee32b7ff99bdf53bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1649accb_aa6cff50",
+        "filename": "chrome/browser/resources/settings/settings_shared_css.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T17:16:39Z",
+      "side": 1,
+      "message": "Can this be moved to clear_browsing_data_dialog.html for now? Until a 2nd usage of it is found in which case we can move it elsewhere as needed.",
+      "revId": "ba28a97ebc3cdb44cb7cf78ee32b7ff99bdf53bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
