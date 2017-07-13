@@ -2821,11 +2821,12 @@ void Element::UpdateFocusAppearance(
     // FocusController::setFocusedElement() and we don't want to change the
     // focus to a new Element.
     frame->Selection().SetSelection(
-        SelectionInDOMTree::Builder()
-            .Collapse(FirstPositionInOrBeforeNode(this))
-            .Build(),
-        FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle |
-            FrameSelection::kDoNotSetFocus);
+        SetSelectionData::Builder()
+            .SetSelection(SelectionInDOMTree::Builder()
+                              .Collapse(FirstPositionInOrBeforeNode(this))
+                              .Build())
+            .SetDoNotSetFocus(true)
+            .Build());
     frame->Selection().RevealSelection();
   } else if (GetLayoutObject() &&
              !GetLayoutObject()->IsLayoutEmbeddedContent()) {

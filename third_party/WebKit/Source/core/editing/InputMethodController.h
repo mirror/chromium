@@ -92,9 +92,8 @@ class CORE_EXPORT InputMethodController final
 
   PlainTextRange GetSelectionOffsets() const;
   // Returns true if setting selection to specified offsets, otherwise false.
-  bool SetEditableSelectionOffsets(
-      const PlainTextRange&,
-      FrameSelection::SetSelectionOptions = FrameSelection::kCloseTyping);
+  bool SetEditableSelectionOffsets(const PlainTextRange&);
+  // FrameSelection::SetSelectionOptions = FrameSelection::kCloseTyping
   void ExtendSelectionAndDelete(int before, int after);
   PlainTextRange CreateRangeForSelection(int start,
                                          int end,
@@ -129,9 +128,8 @@ class CORE_EXPORT InputMethodController final
   EphemeralRange EphemeralRangeForOffsets(const PlainTextRange&) const;
 
   // Returns true if selection offsets were successfully set.
-  bool SetSelectionOffsets(
-      const PlainTextRange&,
-      FrameSelection::SetSelectionOptions = FrameSelection::kCloseTyping);
+  bool SetSelectionOffsets(const PlainTextRange&);
+  // FrameSelection::SetSelectionOptions = FrameSelection::kCloseTyping
 
   void AddCompositionUnderlines(const Vector<CompositionUnderline>& underlines,
                                 ContainerNode* base_element,

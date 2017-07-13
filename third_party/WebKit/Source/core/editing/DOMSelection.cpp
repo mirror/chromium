@@ -80,12 +80,13 @@ void DOMSelection::UpdateFrameSelection(const SelectionInDOMTree& selection,
   DCHECK(GetFrame());
   FrameSelection& frame_selection = GetFrame()->Selection();
   // TODO(tkent): Specify FrameSelection::DoNotSetFocus. crbug.com/690272
-  bool did_set = frame_selection.SetSelectionDeprecated(selection);
+  bool did_set = frame_selection.SetSelectionDeprecated(
+      SetSelectionData::Builder(selection).Build());
   CacheRangeIfSelectionOfDocument(new_cached_range);
   if (!did_set)
     return;
   Element* focused_element = GetFrame()->GetDocument()->FocusedElement();
-  frame_selection.DidSetSelectionDeprecated();
+  frame_selection.DidSetSelectionDeprecated(SetSelectionData());
   if (GetFrame() && GetFrame()->GetDocument() &&
       focused_element != GetFrame()->GetDocument()->FocusedElement())
     UseCounter::Count(GetFrame(), WebFeature::kSelectionFuncionsChangeFocus);
