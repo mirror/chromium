@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "166bc86f_2da07a3f",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-13T05:58:35Z",
+      "side": 1,
+      "message": "WorkerFetchContext::GetContentSettingsClient() returns null.",
+      "revId": "eaf26ed189eb040ba5cd315c40b9cf4c887c730d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324f8292_1430ff73",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-13T05:58:35Z",
+      "side": 1,
+      "message": "Can you tell me why you need this separate function? Isn\u0027t it good to implement in DispatchDidReceiveResponse?",
+      "revId": "eaf26ed189eb040ba5cd315c40b9cf4c887c730d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
