@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8087774_01c695aa",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T19:26:11Z",
+      "side": 1,
+      "message": "This comment needs to be fixed.",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 76
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0495d2f_96c484fe",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T19:26:11Z",
+      "side": 1,
+      "message": "You always get the first global scope. Is this what you want?",
+      "range": {
+        "startLine": 99,
+        "startChar": 9,
+        "endLine": 99,
+        "endChar": 33
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1783718_197dbe02",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T19:26:11Z",
+      "side": 1,
+      "message": "What if addModule() called 3 times? Then how many global scope do you have here?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 60
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da1f1ab_4ce9a74b",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T19:26:11Z",
+      "side": 1,
+      "message": "Perhaps we can make it optional with \"\u003d 1\". However, I prefer to make this change specific to PaintWorklet if possible.",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 37
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8357af_49485ba1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T19:26:11Z",
+      "side": 1,
+      "message": "As I stated, AudioWorkle always creates 1 global scope per context. So it does not need this argument.",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 37
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
