@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df0083c4_4c0b52ef",
+        "filename": "tools/gn/xcode_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-13T09:46:42Z",
+      "side": 1,
+      "message": "nit: use base::MakeUnique\u003c\u003e\n\n  auto container_item_proxy \u003d base::MakeUnique\u003cPBXContainerItemProxy\u003e(\n      project, base_pbxtarget);",
+      "revId": "6f3b98c198a2ef50c9f56892433d434b4730c8ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ce16d5_2807dc67",
+        "filename": "tools/gn/xcode_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-13T09:46:42Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6f3b98c198a2ef50c9f56892433d434b4730c8ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
