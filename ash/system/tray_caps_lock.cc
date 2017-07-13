@@ -59,7 +59,8 @@ std::unique_ptr<Notification> CreateNotification() {
           : IDS_ASH_STATUS_TRAY_CAPS_LOCK_CANCEL_BY_ALT_SEARCH;
   std::unique_ptr<Notification> notification(new Notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, kCapsLockNotificationId,
-      base::string16(), bundle.GetLocalizedString(string_id),
+      bundle.GetLocalizedString(IDS_ASH_STATUS_TRAY_CAPS_LOCK_ENABLED),
+      bundle.GetLocalizedString(string_id),
       gfx::Image(
           gfx::CreateVectorIcon(kSystemMenuCapsLockIcon,
                                 TrayPopupItemStyle::GetIconColor(
