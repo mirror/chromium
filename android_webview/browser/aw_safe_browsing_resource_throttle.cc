@@ -6,6 +6,7 @@
 
 #include "android_webview/browser/aw_contents_client_bridge.h"
 #include "android_webview/browser/aw_safe_browsing_ui_manager.h"
+#include "android_webview/browser/aw_safe_browsing_whitelist_manager.h"
 #include "base/macros.h"
 #include "components/safe_browsing/base_resource_throttle.h"
 #include "components/safe_browsing_db/database_manager.h"
@@ -28,10 +29,11 @@ AwSafeBrowsingResourceThrottle* AwSafeBrowsingResourceThrottle::MaybeCreate(
     net::URLRequest* request,
     content::ResourceType resource_type,
     scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> database_manager,
-    scoped_refptr<AwSafeBrowsingUIManager> ui_manager) {
+    scoped_refptr<AwSafeBrowsingUIManager> ui_manager,
+    AwSafeBrowsingWhitelistManager* filter_manager) {
   if (database_manager->IsSupported()) {
-    return new AwSafeBrowsingResourceThrottle(request, resource_type,
-                                              database_manager, ui_manager);
+    return new AwSafeBrowsingResourceThrottle(
+        request, resource_type, database_manager, ui_manager, filter_manager);
   }
   return nullptr;
 }
@@ -40,7 +42,8 @@ AwSafeBrowsingResourceThrottle::AwSafeBrowsingResourceThrottle(
     net::URLRequest* request,
     content::ResourceType resource_type,
     scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> database_manager,
-    scoped_refptr<AwSafeBrowsingUIManager> ui_manager)
+    scoped_refptr<AwSafeBrowsingUIManager> ui_manager,
+    AwSafeBrowsingWhitelistManager* filter_manager)
     : safe_browsing::BaseResourceThrottle(
           request,
           resource_type,
@@ -49,9 +52,17 @@ AwSafeBrowsingResourceThrottle::AwSafeBrowsingResourceThrottle(
                safe_browsing::SB_THREAT_TYPE_URL_PHISHING}),
           database_manager,
           ui_manager),
-      request_(request) {}
+      request_(request),
+      filter_manager_(filter_manager) {}
 
 AwSafeBrowsingResourceThrottle::~AwSafeBrowsingResourceThrottle() {}
+
+bool AwSafeBrowsingResourceThrottle::CheckUrl(const GURL& gurl) {
+  if (filter_manager_->IsURLWhitelisted(gurl)) {
+    return true;
+  }
+  return BaseResourceThrottle::CheckUrl(gurl);
+}
 
 void AwSafeBrowsingResourceThrottle::StartDisplayingBlockingPageHelper(
     security_interstitials::UnsafeResource resource) {
