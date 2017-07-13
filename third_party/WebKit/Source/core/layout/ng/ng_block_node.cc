@@ -44,7 +44,9 @@ RefPtr<NGLayoutResult> LayoutWithAlgorithm(const ComputedStyle& style,
 }
 
 // Copies data back to the legacy layout tree for a given child fragment.
-void FragmentPositionUpdated(const NGPhysicalFragment& fragment) {
+void FragmentPositionUpdated(
+    const NGPhysicalFragment& fragment,
+    const NGPhysicalOffset& additional_offset = NGPhysicalOffset()) {
   LayoutBox* layout_box = ToLayoutBox(fragment.GetLayoutObject());
   if (!layout_box)
     return;
@@ -57,22 +59,23 @@ void FragmentPositionUpdated(const NGPhysicalFragment& fragment) {
   if (containing_block->StyleRef().IsFlippedBlocksWritingMode()) {
     LayoutUnit container_width = containing_block->Size().Width();
     layout_box->SetX(container_width - fragment.Offset().left -
-                     fragment.Size().width);
+                     additional_offset.left - fragment.Size().width);
   } else {
-    layout_box->SetX(fragment.Offset().left);
+    layout_box->SetX(fragment.Offset().left + additional_offset.left);
   }
-  layout_box->SetY(fragment.Offset().top);
+  layout_box->SetY(fragment.Offset().top + additional_offset.top);
 }
 
 // Similar to FragmentPositionUpdated but for floats.
 // - Updates layout object's geometric information.
 // - Creates legacy FloatingObject and attached it to the provided parent.
-void FloatingObjectPositionedUpdated(const NGPositionedFloat& positioned_float,
-                                     LayoutBox* parent) {
-  NGPhysicalBoxFragment* box_fragment = positioned_float.fragment.Get();
-  FragmentPositionUpdated(*box_fragment);
+void FloatingObjectPositionedUpdated(
+    const NGPhysicalBoxFragment& fragment,
+    LayoutBox* parent,
+    const NGPhysicalOffset& additional_offset = NGPhysicalOffset()) {
+  FragmentPositionUpdated(fragment, additional_offset);
 
-  LayoutBox* layout_box = ToLayoutBox(box_fragment->GetLayoutObject());
+  LayoutBox* layout_box = ToLayoutBox(fragment.GetLayoutObject());
   DCHECK(layout_box->IsFloating());
 
   if (parent && parent->IsLayoutBlockFlow()) {
@@ -80,13 +83,16 @@ void FloatingObjectPositionedUpdated(const NGPositionedFloat& positioned_float,
     FloatingObject* floating_object =
         containing_block.InsertFloatingObject(*layout_box);
     floating_object->SetIsInPlacedTree(false);
-    LayoutUnit logical_left = positioned_float.paint_offset.inline_offset;
-    LayoutUnit logical_top = positioned_float.paint_offset.block_offset;
-    // Update floating_object's logical left and top position (which is the same
-    // as inline and block offset). Note that this does not update the actual
-    // LayoutObject established by the float, just the FloatingObject.
-    containing_block.SetLogicalLeftForFloat(*floating_object, logical_left);
-    containing_block.SetLogicalTopForFloat(*floating_object, logical_top);
+
+    if (parent->StyleRef().IsFlippedBlocksWritingMode()) {
+      LayoutUnit container_width = parent->Size().Width();
+      floating_object->SetX(container_width - fragment.Offset().left -
+                            additional_offset.left - fragment.Size().width);
+    } else {
+      floating_object->SetX(fragment.Offset().left + additional_offset.left);
+    }
+
+    floating_object->SetY(fragment.Offset().top + additional_offset.top);
     floating_object->SetIsPlaced(true);
     floating_object->SetIsInPlacedTree(true);
   }
@@ -275,23 +281,42 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   if (box_->IsLayoutBlockFlow()) {
     ToLayoutBlockFlow(box_)->RemoveFloatingObjects();
   }
-  for (const NGPositionedFloat& positioned_float :
-       physical_fragment->PositionedFloats())
-    FloatingObjectPositionedUpdated(positioned_float, box_);
+  /*for (const NGPositionedFloat& positioned_float :
+       physical_fragment->PositionedFloats())*/
+  for (const auto& child_fragment : physical_fragment->Children()) {
+    if (child_fragment->IsPlaced()) {
+      LayoutObject* layout_object = child_fragment->GetLayoutObject();
+      if (layout_object && layout_object->IsFloating() &&
+          child_fragment->IsBox() && !child_fragment->IsAnonymous())
+        FloatingObjectPositionedUpdated(
+            ToNGPhysicalBoxFragment(*child_fragment), box_);
+    }
+  }
 
   for (const auto& child_fragment : physical_fragment->Children()) {
-    if (child_fragment->IsPlaced())
-      FragmentPositionUpdated(ToNGPhysicalBoxFragment(*child_fragment));
+    if (child_fragment->IsPlaced()) {
+      LayoutObject* layout_object = child_fragment->GetLayoutObject();
+      if (!(layout_object && layout_object->IsFloating() &&
+            child_fragment->IsBox() && !child_fragment->IsAnonymous()))
+        FragmentPositionUpdated(ToNGPhysicalBoxFragment(*child_fragment));
+      else
+        continue;
+    }
 
     if (child_fragment->GetLayoutObject()->IsLayoutBlockFlow())
       ToLayoutBlockFlow(child_fragment->GetLayoutObject())
           ->AddOverflowFromFloats();
 
     if (child_fragment->GetLayoutObject() == box_) {
-      for (const NGPositionedFloat& positioned_float :
-           ToNGPhysicalBoxFragment(child_fragment.Get())->PositionedFloats()) {
-        FloatingObjectPositionedUpdated(
-            positioned_float, ToLayoutBox(child_fragment->GetLayoutObject()));
+      for (const auto& maybe_float :
+           ToNGPhysicalBoxFragment(child_fragment.Get())->Children()) {
+        LayoutObject* layout_object = maybe_float->GetLayoutObject();
+        if (layout_object && layout_object->IsFloating() &&
+            maybe_float->IsBox() && !maybe_float->IsAnonymous())
+          FloatingObjectPositionedUpdated(
+              ToNGPhysicalBoxFragment(*maybe_float),
+              ToLayoutBox(child_fragment->GetLayoutObject()),
+              child_fragment->Offset());
       }
     }
   }

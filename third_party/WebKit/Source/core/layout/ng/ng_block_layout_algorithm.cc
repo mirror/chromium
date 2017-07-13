@@ -119,7 +119,8 @@ void PositionPendingFloats(
   // TODO(ikilpatrick): Add DCHECK that any positioned floats are children.
 
   for (const auto& positioned_float : positioned_floats)
-    container_builder->AddPositionedFloat(positioned_float);
+    container_builder->AddChild(positioned_float.layout_result,
+                                positioned_float.logical_offset);
 
   unpositioned_floats->clear();
 }

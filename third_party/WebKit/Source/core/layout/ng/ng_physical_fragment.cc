@@ -7,6 +7,7 @@
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_break_token.h"
+#include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 
 namespace blink {
@@ -14,11 +15,13 @@ namespace blink {
 NGPhysicalFragment::NGPhysicalFragment(LayoutObject* layout_object,
                                        NGPhysicalSize size,
                                        NGFragmentType type,
+                                       bool is_anonymous,
                                        RefPtr<NGBreakToken> break_token)
     : layout_object_(layout_object),
       size_(size),
       break_token_(std::move(break_token)),
       type_(type),
+      is_anonymous_(is_anonymous),
       is_placed_(false) {}
 
 void NGPhysicalFragment::Destroy() const {

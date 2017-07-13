@@ -4,6 +4,8 @@
 
 #include "core/layout/ng/ng_physical_box_fragment.h"
 
+#include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_positioned_float.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 
 namespace blink {
@@ -12,6 +14,7 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
     LayoutObject* layout_object,
     NGPhysicalSize size,
     NGPhysicalSize overflow,
+    bool is_anonymous,
     Vector<RefPtr<NGPhysicalFragment>>& children,
     Vector<NGPositionedFloat>& positioned_floats,
     Vector<NGBaseline>& baselines,
@@ -20,6 +23,7 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
     : NGPhysicalFragment(layout_object,
                          size,
                          kFragmentBox,
+                         is_anonymous,
                          std::move(break_token)),
       overflow_(overflow),
       positioned_floats_(positioned_floats) {

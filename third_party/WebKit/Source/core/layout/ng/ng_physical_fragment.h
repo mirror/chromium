@@ -42,14 +42,16 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
     // enough to store.
   };
 
+  // The accessors in this class shouldn't be used by layout code directly,
+  // instead should be accessed by the NGFragmentBase classes. These accessors
+  // exist for paint, hit-testing, etc.
+
   NGFragmentType Type() const { return static_cast<NGFragmentType>(type_); }
   bool IsBox() const { return Type() == NGFragmentType::kFragmentBox; }
   bool IsText() const { return Type() == NGFragmentType::kFragmentText; }
   bool IsLineBox() const { return Type() == NGFragmentType::kFragmentLineBox; }
 
-  // The accessors in this class shouldn't be used by layout code directly,
-  // instead should be accessed by the NGFragmentBase classes. These accessors
-  // exist for paint, hit-testing, etc.
+  bool IsAnonymous() const { return is_anonymous_; }
 
   // Returns the border-box size.
   NGPhysicalSize Size() const { return size_; }
@@ -93,6 +95,7 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
   NGPhysicalFragment(LayoutObject* layout_object,
                      NGPhysicalSize size,
                      NGFragmentType type,
+                     bool is_anonymous,
                      RefPtr<NGBreakToken> break_token = nullptr);
 
   LayoutObject* layout_object_;
@@ -101,6 +104,7 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
   RefPtr<NGBreakToken> break_token_;
 
   unsigned type_ : 2;  // NGFragmentType
+  unsigned is_anonymous_ : 1;
   unsigned is_placed_ : 1;
   unsigned border_edge_ : 4;  // NGBorderEdges::Physical
 

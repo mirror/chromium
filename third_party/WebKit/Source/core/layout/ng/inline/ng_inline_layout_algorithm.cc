@@ -58,6 +58,7 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
           blink::IsHorizontalWritingMode(space->WritingMode())),
       space_builder_(space) {
   unpositioned_floats_ = ConstraintSpace().UnpositionedFloats();
+  container_builder_.SetIsAnonymous(true);
 
   if (!is_horizontal_writing_mode_)
     baseline_type_ = FontBaseline::kIdeographicBaseline;

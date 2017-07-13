@@ -222,6 +222,7 @@ NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
 #endif
 
   RefPtr<NGPhysicalBoxFragment> physical_fragment;
+  RefPtr<NGLayoutResult> layout_result;
   // We should only have a fragment if its writing mode is different, i.e. it
   // can't fragment.
   if (unpositioned_float->fragment) {
@@ -239,7 +240,7 @@ NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
 
     RefPtr<NGConstraintSpace> space = CreateConstraintSpaceForFloat(
         *unpositioned_float, new_parent_space, fragmentation_offset);
-    RefPtr<NGLayoutResult> layout_result = unpositioned_float->node.Layout(
+    layout_result = unpositioned_float->node.Layout(
         space.Get(), unpositioned_float->token.Get());
     physical_fragment =
         ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().Get());
@@ -279,7 +280,8 @@ NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
   NGLogicalOffset paint_offset = CalculateFloatingObjectPaintOffset(
       *new_parent_space, logical_offset, *unpositioned_float);
 
-  return NGPositionedFloat(std::move(physical_fragment), logical_offset,
+  return NGPositionedFloat(std::move(physical_fragment),
+                           std::move(layout_result), logical_offset,
                            paint_offset);
 }
 
