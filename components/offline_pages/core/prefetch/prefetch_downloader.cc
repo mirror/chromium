@@ -9,6 +9,7 @@
 #include "base/strings/string_util.h"
 #include "components/download/public/download_service.h"
 #include "components/offline_pages/core/prefetch/prefetch_server_urls.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace offline_pages {
@@ -42,9 +43,29 @@ void PrefetchDownloader::StartDownload(const std::string& download_id,
     return;
   }
 
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
   // TODO(jianli): Specify scheduling parameters, i.e. battery, network and etc.
   // http://crbug.com/736156
-  download::DownloadParams params;
+  download::DownloadParams params(traffic_annotation);
   params.client = download::DownloadClient::OFFLINE_PAGE_PREFETCH;
   // TODO(jianli): Remove the uppercase after the download service fixes
   // this issue.
