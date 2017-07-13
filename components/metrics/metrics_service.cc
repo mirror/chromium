@@ -661,10 +661,8 @@ void MetricsService::CloseCurrentLog() {
   base::TimeDelta incremental_uptime;
   base::TimeDelta uptime;
   GetUptimes(local_state_, &incremental_uptime, &uptime);
-  current_log->RecordStabilityMetrics(metrics_providers_, incremental_uptime,
-                                      uptime);
-
-  current_log->RecordGeneralMetrics(metrics_providers_);
+  current_log->RecordCurrentSessionData(metrics_providers_, incremental_uptime,
+                                        uptime);
   RecordCurrentHistograms();
   current_log->TruncateEvents();
   DVLOG(1) << "Generated an ongoing log.";
@@ -784,8 +782,7 @@ bool MetricsService::PrepareInitialStabilityLog(
 
   // Note: Some stability providers may record stability stats via histograms,
   //       so this call has to be after BeginLoggingWithLog().
-  log_manager_.current_log()->RecordStabilityMetrics(
-      metrics_providers_, base::TimeDelta(), base::TimeDelta());
+  log_manager_.current_log()->RecordPreviousSessionData(metrics_providers_);
   RecordCurrentStabilityHistograms();
 
   // Note: RecordGeneralMetrics() intentionally not called since this log is for
@@ -817,10 +814,8 @@ void MetricsService::PrepareInitialMetricsLog() {
 
   // Note: Some stability providers may record stability stats via histograms,
   //       so this call has to be after BeginLoggingWithLog().
-  MetricsLog* current_log = log_manager_.current_log();
-  current_log->RecordStabilityMetrics(metrics_providers_, base::TimeDelta(),
-                                      base::TimeDelta());
-  current_log->RecordGeneralMetrics(metrics_providers_);
+  log_manager_.current_log()->RecordCurrentSessionData(
+      metrics_providers_, base::TimeDelta(), base::TimeDelta());
   RecordCurrentHistograms();
 
   DVLOG(1) << "Generated an initial log.";
