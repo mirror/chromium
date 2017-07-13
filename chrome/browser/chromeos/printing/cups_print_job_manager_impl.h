@@ -16,7 +16,6 @@
 #include "base/sequenced_task_runner.h"
 #include "chrome/browser/chromeos/printing/cups_print_job.h"
 #include "chrome/browser/chromeos/printing/cups_print_job_manager.h"
-#include "chrome/browser/chromeos/printing/printers_manager.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "printing/backend/cups_connection.h"

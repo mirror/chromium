@@ -22,8 +22,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/printing/cups_print_job.h"
-#include "chrome/browser/chromeos/printing/printers_manager.h"
-#include "chrome/browser/chromeos/printing/printers_manager_factory.h"
+#include "chrome/browser/chromeos/printing/printers_sync_manager.h"
+#include "chrome/browser/chromeos/printing/printers_sync_manager_factory.h"
 #include "chrome/browser/printing/print_job.h"
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_context.h"
@@ -315,7 +315,7 @@ bool CupsPrintJobManagerImpl::CreatePrintJob(const std::string& printer_name,
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   auto printer =
-      PrintersManagerFactory::GetForBrowserContext(profile_)->GetPrinter(
+      PrintersSyncManagerFactory::GetForBrowserContext(profile_)->GetPrinter(
           printer_name);
   if (!printer) {
     LOG(WARNING) << "Printer was removed while job was in progress.  It cannot "

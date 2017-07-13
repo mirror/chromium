@@ -22,7 +22,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
-#include "chrome/browser/chromeos/printing/printers_manager_factory.h"
+#include "chrome/browser/chromeos/printing/printers_sync_manager_factory.h"
 #include "chrome/browser/chromeos/printing/usb_printer_detector.h"
 #include "chrome/browser/chromeos/printing/usb_printer_util.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -195,7 +195,7 @@ class UsbPrinterDetectorImpl : public UsbPrinterDetector,
     // one for the one we generated automatically and skip the parts where we
     // try to automagically figure out the driver.
     std::unique_ptr<Printer> existing_printer_configuration =
-        PrintersManagerFactory::GetForBrowserContext(profile_)->GetPrinter(
+        PrintersSyncManagerFactory::GetForBrowserContext(profile_)->GetPrinter(
             data->printer->id());
     if (existing_printer_configuration != nullptr) {
       data->is_new = false;
@@ -267,8 +267,8 @@ class UsbPrinterDetectorImpl : public UsbPrinterDetector,
         // We aren't done with data->printer yet, so we have to copy it instead
         // of moving it.
         auto printer_copy = base::MakeUnique<Printer>(*data->printer);
-        PrintersManagerFactory::GetForBrowserContext(profile_)->RegisterPrinter(
-            std::move(printer_copy));
+        PrintersSyncManagerFactory::GetForBrowserContext(profile_)
+            ->RegisterPrinter(std::move(printer_copy));
       }
       // TODO(justincarlson): If the device was hotplugged, pop a timed
       // notification that says the printer is now available for printing.
