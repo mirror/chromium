@@ -22,6 +22,30 @@
       "revId": "c0670658db88bf28a90c417eff99671069c34e5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c88ba4_c65708fe",
+        "filename": "ios/chrome/browser/ui/downloads/download_manager_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-07-13T15:31:50Z",
+      "side": 1,
+      "message": "That\u0027s a good idea. And results in better formatting too.",
+      "parentUuid": "e31e7700_fa5be27d",
+      "range": {
+        "startLine": 163,
+        "startChar": 28,
+        "endLine": 163,
+        "endChar": 33
+      },
+      "revId": "c0670658db88bf28a90c417eff99671069c34e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
