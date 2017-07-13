@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "fb5b59a8_9b2d8b00",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-13T18:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a841c927_caa2416f",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 13
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65ac2f8f_67834d75",
         "filename": "ios/build/xcode_install_wrapper.py",
         "patchSetId": 1
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "39bd0cf1_ed82e8ec",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-13T18:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65ac2f8f_67834d75",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 12
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7ce2739_c73775eb",
         "filename": "ios/build/xcode_install_wrapper.py",
         "patchSetId": 1
@@ -85,6 +133,30 @@
       "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3accc614_e433f6b8",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-13T18:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7ce2739_c73775eb",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +203,54 @@
       "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81e5ce5_ab23ebe4",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-13T18:22:33Z",
+      "side": 1,
+      "message": "Done. Capture stdout/stderr and log them. Then return the return code of this process.",
+      "parentUuid": "a3482311_8c31d7bc",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 14
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3222e3db_10516103",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-13T18:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8306adb2_bd1d7840",
+      "range": {
+        "startLine": 59,
+        "startChar": 27,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
