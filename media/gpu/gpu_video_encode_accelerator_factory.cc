@@ -5,13 +5,14 @@
 #include "media/gpu/gpu_video_encode_accelerator_factory.h"
 
 #include "base/memory/ptr_util.h"
+#include "build/build_config.h"
 #include "media/gpu/gpu_video_accelerator_util.h"
 
 #if defined(OS_CHROMEOS)
 #if defined(USE_V4L2_CODEC)
 #include "media/gpu/v4l2_video_encode_accelerator.h"
 #endif
-#if defined(ARCH_CPU_X86_FAMILY)
+#if defined(USE_VAAPI)
 #include "media/gpu/vaapi_video_encode_accelerator.h"
 #endif
 #elif defined(OS_ANDROID) && BUILDFLAG(ENABLE_WEBRTC)
@@ -37,7 +38,7 @@ std::unique_ptr<VideoEncodeAccelerator> CreateV4L2VEA() {
 }
 #endif
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(OS_CHROMEOS) && defined(USE_VAAPI)
 std::unique_ptr<VideoEncodeAccelerator> CreateVaapiVEA() {
   return base::WrapUnique<VideoEncodeAccelerator>(
       new VaapiVideoEncodeAccelerator());
@@ -76,7 +77,7 @@ std::vector<VEAFactoryFunction> GetVEAFactoryFunctions(
 #if defined(OS_CHROMEOS) && defined(USE_V4L2_CODEC)
   vea_factory_functions.push_back(&CreateV4L2VEA);
 #endif
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(OS_CHROMEOS) && defined(USE_VAAPI)
   if (!gpu_preferences.disable_vaapi_accelerated_video_encode)
     vea_factory_functions.push_back(&CreateVaapiVEA);
 #endif

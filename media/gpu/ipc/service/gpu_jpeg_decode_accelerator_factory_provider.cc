@@ -7,10 +7,11 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
 #include "media/base/media_switches.h"
 #include "media/gpu/fake_jpeg_decode_accelerator.h"
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(OS_CHROMEOS) && defined(USE_VAAPI)
 #define USE_VAAPI_JDA
 #endif
 
