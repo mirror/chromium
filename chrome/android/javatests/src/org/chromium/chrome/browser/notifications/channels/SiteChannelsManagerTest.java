@@ -7,8 +7,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
+import android.annotation.TargetApi;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
@@ -53,10 +56,10 @@ public class SiteChannelsManagerTest {
 
     private static void clearExistingSiteChannels(
             NotificationManagerProxy notificationManagerProxy) {
-        for (Channel channel : notificationManagerProxy.getNotificationChannels()) {
+        for (NotificationChannel channel : notificationManagerProxy.getNotificationChannels()) {
             if (channel.getId().startsWith(ChannelDefinitions.CHANNEL_ID_PREFIX_SITES)
-                    || (channel.getGroupId() != null
-                               && channel.getGroupId().equals(
+                    || (channel.getGroup() != null
+                               && channel.getGroup().equals(
                                           ChannelDefinitions.CHANNEL_GROUP_ID_SITES))) {
                 notificationManagerProxy.deleteNotificationChannel(channel.getId());
             }
@@ -64,29 +67,32 @@ public class SiteChannelsManagerTest {
     }
 
     @Test
-    @MinAndroidSdkLevel(26)
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     @SmallTest
     public void testCreateSiteChannel_enabled() throws Exception {
-        mSiteChannelsManager.createSiteChannel("https://chromium.org", true);
+        mSiteChannelsManager.createSiteChannel("https://example-enabled.org", true);
         assertThat(Arrays.asList(mSiteChannelsManager.getSiteChannels()), hasSize(1));
         NotificationSettingsBridge.SiteChannel channel = mSiteChannelsManager.getSiteChannels()[0];
-        assertThat(channel.getOrigin(), is("https://chromium.org"));
+        assertThat(channel.getOrigin(), is("https://example-enabled.org"));
         assertThat(channel.getStatus(), matchesChannelStatus(NotificationChannelStatus.ENABLED));
     }
 
     @Test
-    @MinAndroidSdkLevel(26)
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     @SmallTest
     public void testCreateSiteChannel_disabled() throws Exception {
-        mSiteChannelsManager.createSiteChannel("https://example.com", false);
+        mSiteChannelsManager.createSiteChannel("https://example-blocked.org", false);
         assertThat(Arrays.asList(mSiteChannelsManager.getSiteChannels()), hasSize(1));
         NotificationSettingsBridge.SiteChannel channel = mSiteChannelsManager.getSiteChannels()[0];
-        assertThat(channel.getOrigin(), is("https://example.com"));
+        assertThat(channel.getOrigin(), is("https://example-blocked.org"));
         assertThat(channel.getStatus(), matchesChannelStatus(NotificationChannelStatus.BLOCKED));
     }
 
     @Test
-    @MinAndroidSdkLevel(26)
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     @SmallTest
     public void testDeleteSiteChannel_channelExists() throws Exception {
         mSiteChannelsManager.createSiteChannel("https://chromium.org", true);
@@ -95,7 +101,8 @@ public class SiteChannelsManagerTest {
     }
 
     @Test
-    @MinAndroidSdkLevel(26)
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     @SmallTest
     public void testDeleteSiteChannel_channelDoesNotExist() throws Exception {
         mSiteChannelsManager.createSiteChannel("https://chromium.org", true);
@@ -104,30 +111,34 @@ public class SiteChannelsManagerTest {
     }
 
     @Test
-    @MinAndroidSdkLevel(26)
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     @SmallTest
     public void testGetChannelStatus_channelCreatedAsEnabled() throws Exception {
-        mSiteChannelsManager.createSiteChannel("https://chromium.org", true);
-        assertThat(mSiteChannelsManager.getChannelStatus("https://chromium.org"),
+        mSiteChannelsManager.createSiteChannel("https://example-enabled.org", true);
+        assertThat(mSiteChannelsManager.getChannelStatus("https://example-enabled.org"),
                 matchesChannelStatus(NotificationChannelStatus.ENABLED));
     }
 
     @Test
-    @MinAndroidSdkLevel(26)
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     @SmallTest
     public void testGetChannelStatus_channelCreatedAsBlocked() throws Exception {
-        assertThat(mSiteChannelsManager.getChannelStatus("https://foobar.com"),
+        assertThat(mSiteChannelsManager.getChannelStatus("https://example-blocked.com"),
                 matchesChannelStatus(NotificationChannelStatus.UNAVAILABLE));
-        mSiteChannelsManager.createSiteChannel("https://foobar.com", false);
-        assertThat(mNotificationManagerProxy.getNotificationChannel("web:https://foobar.com")
-                           .getImportance(),
+        mSiteChannelsManager.createSiteChannel("https://example-blocked.com", false);
+        assertThat(
+                mNotificationManagerProxy.getNotificationChannel("web:https://example-blocked.com")
+                        .getImportance(),
                 is(NotificationManager.IMPORTANCE_NONE));
-        assertThat(mSiteChannelsManager.getChannelStatus("https://foobar.com"),
+        assertThat(mSiteChannelsManager.getChannelStatus("https://example-blocked.com"),
                 matchesChannelStatus(NotificationChannelStatus.BLOCKED));
     }
 
     @Test
-    @MinAndroidSdkLevel(26)
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     @SmallTest
     public void testGetChannelStatus_channelNotCreated() throws Exception {
         assertThat(mSiteChannelsManager.getChannelStatus("https://chromium.org"),
@@ -135,7 +146,8 @@ public class SiteChannelsManagerTest {
     }
 
     @Test
-    @MinAndroidSdkLevel(26)
+    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     @SmallTest
     public void testGetChannelStatus_channelCreatedThenDeleted() throws Exception {
         mSiteChannelsManager.createSiteChannel("https://chromium.org", true);
