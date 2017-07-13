@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f0731f3_43a6950d",
+        "filename": "base/numerics/safe_conversions_arm_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-13T17:57:49Z",
+      "side": 1,
+      "message": "Nice!",
+      "range": {
+        "startLine": 61,
+        "startChar": 26,
+        "endLine": 61,
+        "endChar": 31
+      },
+      "revId": "255406aeb813fd16d85b0a31c9af01f0135df448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d79bdf_2d226691",
+        "filename": "base/numerics/safe_math_arm_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-13T17:57:49Z",
+      "side": 1,
+      "message": "I\u0027m a little surprised this is needed, I would have assumed the compiler would do the same.\nEither way, this is great!",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "255406aeb813fd16d85b0a31c9af01f0135df448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
