@@ -155,6 +155,24 @@
       "revId": "2e62b07b42e1186f77e86ac4d54ca51e58f781f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0c1482_2b71e883",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-13T01:53:31Z",
+      "side": 1,
+      "message": "Mike\u0027s OWNER here, so I defer to whatever decision he prefers.",
+      "parentUuid": "89dd4571_5567ee8c",
+      "revId": "2e62b07b42e1186f77e86ac4d54ca51e58f781f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
