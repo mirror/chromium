@@ -621,15 +621,8 @@ int HeadlessShellMain(int argc, const char** argv) {
   }
 
   if (command_line.HasSwitch(switches::kProxyServer)) {
-    std::string proxy_server =
-        command_line.GetSwitchValueASCII(switches::kProxyServer);
-    net::HostPortPair parsed_proxy_server =
-        net::HostPortPair::FromString(proxy_server);
-    if (parsed_proxy_server.host().empty() || !parsed_proxy_server.port()) {
-      LOG(ERROR) << "Malformed proxy server url";
-      return EXIT_FAILURE;
-    }
-    builder.SetProxyServer(parsed_proxy_server);
+    builder.SetProxyServer(
+        command_line.GetSwitchValueASCII(switches::kProxyServer));
   }
 
   if (command_line.HasSwitch(switches::kHostResolverRules)) {

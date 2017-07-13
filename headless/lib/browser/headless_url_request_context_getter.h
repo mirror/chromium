@@ -61,7 +61,7 @@ class HeadlessURLRequestContextGetter : public net::URLRequestContextGetter {
   // thread.
   std::string user_agent_;
   std::string host_resolver_rules_;
-  net::HostPortPair proxy_server_;
+  std::string proxy_server_;
 
   std::unique_ptr<net::ProxyConfigService> proxy_config_service_;
   std::unique_ptr<net::URLRequestContext> url_request_context_;

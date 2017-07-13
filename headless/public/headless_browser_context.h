@@ -121,7 +121,7 @@ class HEADLESS_EXPORT HeadlessBrowserContext::Builder {
   Builder& SetProductNameAndVersion(
       const std::string& product_name_and_version);
   Builder& SetUserAgent(const std::string& user_agent);
-  Builder& SetProxyServer(const net::HostPortPair& proxy_server);
+  Builder& SetProxyServer(const std::string& proxy_server);
   Builder& SetHostResolverRules(const std::string& host_resolver_rules);
   Builder& SetWindowSize(const gfx::Size& window_size);
   Builder& SetUserDataDir(const base::FilePath& user_data_dir);

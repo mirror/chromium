@@ -52,7 +52,7 @@ HeadlessURLRequestContextGetter::HeadlessURLRequestContextGetter(
   // We must create the proxy config service on the UI loop on Linux because it
   // must synchronously run on the glib message loop. This will be passed to
   // the URLRequestContextStorage on the IO thread in GetURLRequestContext().
-  if (proxy_server_.IsEmpty()) {
+  if (proxy_server_.empty()) {
     proxy_config_service_ =
         net::ProxyService::CreateSystemProxyConfigService(io_task_runner_);
   }
@@ -71,9 +71,8 @@ HeadlessURLRequestContextGetter::GetURLRequestContext() {
     builder.set_data_enabled(true);
     builder.set_file_enabled(true);
     builder.SetFileTaskRunner(file_task_runner_);
-    if (!proxy_server_.IsEmpty()) {
-      builder.set_proxy_service(
-          net::ProxyService::CreateFixed(proxy_server_.ToString()));
+    if (!proxy_server_.empty()) {
+      builder.set_proxy_service(net::ProxyService::CreateFixed(proxy_server_));
     } else {
       builder.set_proxy_config_service(std::move(proxy_config_service_));
     }

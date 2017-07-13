@@ -99,7 +99,7 @@ Builder& Builder::SetMessagePump(base::MessagePump* message_pump) {
   return *this;
 }
 
-Builder& Builder::SetProxyServer(const net::HostPortPair& proxy_server) {
+Builder& Builder::SetProxyServer(const std::string& proxy_server) {
   options_.proxy_server = proxy_server;
   return *this;
 }
