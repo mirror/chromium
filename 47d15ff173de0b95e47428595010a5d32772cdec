@@ -16,6 +16,24 @@
       "revId": "47d15ff173de0b95e47428595010a5d32772cdec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c140ad17_4c91b983",
+        "filename": "third_party/WebKit/LayoutTests/inspector/profiler/heap-snapshot-summary-expand-collapse.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-13T01:01:34Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t know how to reproduce it with vanilla DataGrid.",
+      "parentUuid": "c8c13b64_5b105345",
+      "revId": "47d15ff173de0b95e47428595010a5d32772cdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
