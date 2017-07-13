@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f08ac531_5adb9a7e",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2838,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T14:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0911a8dd_e1ee20b0",
+      "revId": "f0c468f266849e97c233d322d708342d3cefc81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37ed4e6e_d197c710",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f0c468f266849e97c233d322d708342d3cefc81a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3699816a_4d535eb8",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2842,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T14:08:00Z",
+      "side": 1,
+      "message": "That was actually a very good finding!\nThe next test is also flaky. On my machine it was failing like crazy unlike the first one. I applied the fix and it looks alright!",
+      "parentUuid": "37ed4e6e_d197c710",
+      "revId": "f0c468f266849e97c233d322d708342d3cefc81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
