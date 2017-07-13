@@ -22,6 +22,30 @@
       "revId": "a8f6d355dbbe68f42ae5d1e30e97446acabeaf6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a94bfd81_3ebf7809",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-13T23:52:38Z",
+      "side": 1,
+      "message": "\u003e An alternative is to add a call like:\n\u003e ShouldDisableWindowAnimations() to DesktopWindowTreeHost and do away with the ifdefs.\n\neven better!",
+      "parentUuid": "0c3d46cf_ccf1985f",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 11
+      },
+      "revId": "a8f6d355dbbe68f42ae5d1e30e97446acabeaf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
