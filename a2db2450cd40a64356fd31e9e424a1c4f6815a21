@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c620751_e6c8f568",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-13T01:55:15Z",
+      "side": 1,
+      "message": "The icons you usually get from designers should probably be run through an optimizer like https://jakearchibald.github.io/svgomg/",
+      "revId": "a2db2450cd40a64356fd31e9e424a1c4f6815a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
