@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e4fbeae_45bcc1dc",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-13T23:55:42Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b6d6ee0a_f40e5e8f",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 26
+      },
+      "revId": "31ef6a865a8a3fc650cbffec9c343c2ab66c6adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "660d68b4_ce44303e",
         "filename": "components/cronet/ios/cronet_environment.mm",
         "patchSetId": 3
@@ -108,6 +132,30 @@
       "side": 0,
       "message": "It was added to fix https://bugs.chromium.org/p/chromium/issues/detail?id\u003d624435 so it is probably still needed, although I don\u0027t get test failures without it neither, so maybe it is done elsewhere.",
       "parentUuid": "9900fa35_ae88b611",
+      "range": {
+        "startLine": 271,
+        "startChar": 60,
+        "endLine": 271,
+        "endChar": 66
+      },
+      "revId": "31ef6a865a8a3fc650cbffec9c343c2ab66c6adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cac2291_d94ec678",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-13T23:55:42Z",
+      "side": 0,
+      "message": "This was required, but right after this change was made, it looks like FeatureList was updated to not require this call if I understand correctly. PTAL at https://codereview.chromium.org/2110083007.",
+      "parentUuid": "9a1aa5be_ee1a5d31",
       "range": {
         "startLine": 271,
         "startChar": 60,
