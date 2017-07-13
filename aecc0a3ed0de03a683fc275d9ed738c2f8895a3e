@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30c9a5be_3db0ed95",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-13T19:08:57Z",
+      "side": 1,
+      "message": "I think the client expects to see DownloadParams::StartCallback instead of OnDownload..calls. \n\nDownloadParams::StartCallback is handled in the controller_impl.cc.\n\nFor OnDownload... calls, it would be good if we have public functions to trigger them.",
+      "range": {
+        "startLine": 61,
+        "startChar": 26,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "aecc0a3ed0de03a683fc275d9ed738c2f8895a3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
