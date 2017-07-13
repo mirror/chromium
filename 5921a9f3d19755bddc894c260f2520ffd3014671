@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dcc75610_57372304",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-13T15:49:56Z",
+      "side": 1,
+      "message": "+1. We could add an early return to the OfflinePageUtils method if tab \u003d\u003d null.",
+      "parentUuid": "60705b68_62d01cf3",
+      "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11492aa7_d4f6531a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 3
@@ -58,6 +76,121 @@
         "startChar": 15,
         "endLine": 2112,
         "endChar": 18
+      },
+      "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03fd862_956a3fdf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-13T15:49:56Z",
+      "side": 1,
+      "message": "Should we add @Nullable here?",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 7
+      },
+      "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa51f89_1d4bec86",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-13T15:49:56Z",
+      "side": 1,
+      "message": "nit: Whether ToolbarDataProvider currently has a tab related to it.",
+      "range": {
+        "startLine": 21,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b390f468_258b45a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-13T15:49:56Z",
+      "side": 1,
+      "message": "nit: update this to indicate when the empty string is returned.",
+      "range": {
+        "startLine": 26,
+        "startChar": 47,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41d4b9c_246febdd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-13T15:49:56Z",
+      "side": 1,
+      "message": "This should be reversed: hasTab() ? mTab : null;",
+      "range": {
+        "startLine": 74,
+        "startChar": 26,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd29c944_a3e14dac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-13T15:49:56Z",
+      "side": 1,
+      "message": "We still use the primary color for the progress bar, although we retrieve it directly from the tab (maybe we shouldn\u0027t be?)\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java?q\u003dbottomtoolbarphone\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d252",
+      "range": {
+        "startLine": 158,
+        "startChar": 33,
+        "endLine": 158,
+        "endChar": 41
       },
       "revId": "5921a9f3d19755bddc894c260f2520ffd3014671",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
