@@ -25,11 +25,18 @@ const CSSValue* CSSPropertyAPIJustifyItems::parseSingleValue(
                                              CSSValueRight>(range_copy);
   if (!legacy)
     legacy = CSSPropertyParserHelpers::ConsumeIdent<CSSValueLegacy>(range_copy);
-  if (legacy && position_keyword) {
+  if (legacy) {
     range = range_copy;
-    return CSSValuePair::Create(legacy, position_keyword,
-                                CSSValuePair::kDropIdenticalValues);
+    if (position_keyword) {
+      return CSSValuePair::Create(legacy, position_keyword,
+                                  CSSValuePair::kDropIdenticalValues);
+    } else {
+      return legacy;
+    }
   }
+  // justify-items property does not allow the 'auto' value.
+  if (CSSPropertyParserHelpers::ConsumeIdent<CSSValueAuto>(range))
+    return nullptr;
   return CSSPropertyAlignmentUtils::ConsumeSelfPositionOverflowPosition(range);
 }
 

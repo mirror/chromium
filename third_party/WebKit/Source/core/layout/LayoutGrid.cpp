@@ -2036,6 +2036,7 @@ GridAxisPosition LayoutGrid::ColumnAxisPositionForChild(
     case kItemPositionLastBaseline:
       return kGridAxisStart;
     case kItemPositionAuto:
+    case kItemPositionLegacy:
     case kItemPositionNormal:
       break;
   }
@@ -2113,6 +2114,7 @@ GridAxisPosition LayoutGrid::RowAxisPositionForChild(
     case kItemPositionLastBaseline:
       return kGridAxisStart;
     case kItemPositionAuto:
+    case kItemPositionLegacy:
     case kItemPositionNormal:
       break;
   }
