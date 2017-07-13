@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2208d160_656bfae8",
+        "filename": "chrome/android/java/res/drawable/content_suggestions_card_corner_bottom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T08:56:31Z",
+      "side": 1,
+      "message": "what happens below 21?",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e43f5ae_bccfb4b4",
+        "filename": "chrome/android/java/res/drawable/content_suggestions_card_corner_bottom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T08:56:31Z",
+      "side": 1,
+      "message": "to which extent are the values here going to scale properly when content_suggestions_card_modern_corner_radius changes?",
+      "range": {
+        "startLine": 12,
+        "startChar": 27,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38839241_83f6e005",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T08:56:31Z",
+      "side": 1,
+      "message": "we have to use this \"weird\" solution because all the cleaner ones would round all the corners of the image rather than only one side, right? Would you mind documenting that?",
+      "range": {
+        "startLine": 126,
+        "startChar": 5,
+        "endLine": 126,
+        "endChar": 14
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2368c2_3db9f201",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T08:56:31Z",
+      "side": 1,
+      "message": "ViewHolder pattern: call findViewById only once as it\u0027s an expensive operation. So get the corner views in onBindViewHolder?",
+      "range": {
+        "startLine": 155,
+        "startChar": 21,
+        "endLine": 155,
+        "endChar": 33
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
