@@ -588,8 +588,9 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
     }
 
     // Last, save this redirect chain for later so we can set titles & favicons
-    // on the redirected pages properly.
-    recent_redirects_.Put(request.url, redirects);
+    // on the redirected pages properly. For this we use the full original
+    // redirect chain.
+    recent_redirects_.Put(request.url, request.redirects);
   }
 
   // TODO(brettw) bug 1140015: Add an "add page" notification so the history
