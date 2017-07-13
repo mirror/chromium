@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "047d07e7_6da6eb97",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-07-13T10:32:05Z",
+      "side": 1,
+      "message": "Move your name above to Vernon Tang \u003cvt@foilhead.net\u003e",
+      "range": {
+        "startLine": 759,
+        "startChar": 18,
+        "endLine": 759,
+        "endChar": 27
+      },
+      "revId": "f79aa526a3df08f81be4d6e98af673aa5cfa61b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
