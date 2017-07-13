@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05fb9ca5_b9aa1c5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-13T20:58:10Z",
+      "side": 1,
+      "message": "This check is already part of mHistoryAdapter#hasPrivacyDisclaimers() so it\u0027s not needed here.",
+      "range": {
+        "startLine": 423,
+        "startChar": 59,
+        "endLine": 423,
+        "endChar": 70
+      },
+      "revId": "8cb7b16cacb4820eb9096eb9f54e0905b22af55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
