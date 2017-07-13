@@ -306,6 +306,7 @@ mojom("service_names") {
 }
 
 source_set("web") {
+  configs += [ "//build/config/compiler:enable_arc" ]
   deps = [
     ":core",
     ":js_resources",
