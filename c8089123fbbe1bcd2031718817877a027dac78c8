@@ -93,6 +93,30 @@
       "revId": "c8089123fbbe1bcd2031718817877a027dac78c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5909501d_33d2cfb6",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T18:48:09Z",
+      "side": 1,
+      "message": "DNSDomainFromDotWithValidityCheck has a TODO about just returning false instead of setting valid name as false (Which seems more like merging it with DNSDomainFromDot, and removing the extra parameter).  This strikes me as a better solution.  It has more potential to go wrong, but supporting invalid domains in some paths but not others seems like a bad idea.\n\nAlso, modifying DNSDomainFromDot\u0027s behavior will solve the problem for the async host resolver as well, which is what the bug was actually filed for - in this path, we can trust the OS to do something reasonable, for some definition of \"trust\", but with the DnsTransaction path, we\u0027re crafting the DNS UDP packets ourselves, so the OS can\u0027t block us for trying to resolve bad domain names.\n\nWe should probably add a test for the async DNS path (we can\u0027t really test this path, without refactoring, since it\u0027s right above the call to the system resolver).  I\u0027m happy to point you in the right direction there, later today or tomorrow.",
+      "parentUuid": "c240f099_fb8cd13a",
+      "range": {
+        "startLine": 141,
+        "startChar": 46,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "c8089123fbbe1bcd2031718817877a027dac78c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
