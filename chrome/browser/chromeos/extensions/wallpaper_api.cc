@@ -13,6 +13,7 @@
 #include "base/logging.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/strings/stringprintf.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/extensions/wallpaper_private_api.h"
@@ -155,11 +156,9 @@ void WallpaperSetWallpaperFunction::OnWallpaperDecoded(
       params_->details.filename);
 
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::BLOCK_SHUTDOWN);
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
   wallpaper::WallpaperLayout layout = wallpaper_api_util::GetLayoutEnum(
       extensions::api::wallpaper::ToString(params_->details.layout));
   wallpaper_api_util::RecordCustomWallpaperLayout(layout);

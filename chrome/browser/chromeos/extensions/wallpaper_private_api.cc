@@ -22,7 +22,7 @@
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
-#include "base/threading/sequenced_worker_pool.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
@@ -241,11 +241,9 @@ bool WallpaperPrivateSetWallpaperIfExistsFunction::RunAsync() {
   wallpaper_path = wallpaper_path.Append(file_name);
 
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
   task_runner->PostTask(
       FROM_HERE, base::BindOnce(&WallpaperPrivateSetWallpaperIfExistsFunction::
@@ -347,11 +345,9 @@ void WallpaperPrivateSetWallpaperFunction::OnWallpaperDecoded(
   unsafe_wallpaper_decoder_ = NULL;
 
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::BLOCK_SHUTDOWN);
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
   task_runner->PostTask(
       FROM_HERE,
@@ -476,11 +472,9 @@ void WallpaperPrivateSetCustomWallpaperFunction::OnWallpaperDecoded(
       params->file_name);
 
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::BLOCK_SHUTDOWN);
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
   wallpaper::WallpaperLayout layout = wallpaper_api_util::GetLayoutEnum(
       wallpaper_base::ToString(params->layout));
@@ -636,11 +630,9 @@ bool WallpaperPrivateGetThumbnailFunction::RunAsync() {
   }
 
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
 
   task_runner->PostTask(
       FROM_HERE, base::BindOnce(&WallpaperPrivateGetThumbnailFunction::Get,
@@ -700,11 +692,9 @@ bool WallpaperPrivateSaveThumbnailFunction::RunAsync() {
   EXTENSION_FUNCTION_VALIDATE(params);
 
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
 
   task_runner->PostTask(
       FROM_HERE,
@@ -749,11 +739,9 @@ WallpaperPrivateGetOfflineWallpaperListFunction::
 
 bool WallpaperPrivateGetOfflineWallpaperListFunction::RunAsync() {
   scoped_refptr<base::SequencedTaskRunner> task_runner =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-                  wallpaper::kWallpaperSequenceTokenName),
-              base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
 
   task_runner->PostTask(
       FROM_HERE,
