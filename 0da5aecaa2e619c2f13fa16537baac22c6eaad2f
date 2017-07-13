@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cbb124c_ff321cf0",
+        "filename": "components/invalidation/impl/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-13T18:55:06Z",
+      "side": 1,
+      "message": "Why is this necessary? Was this just missing?",
+      "revId": "0da5aecaa2e619c2f13fa16537baac22c6eaad2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
