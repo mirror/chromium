@@ -30,6 +30,8 @@ namespace blink {
 namespace {
 InstallConditionalFeaturesFunction
     g_original_install_conditional_features_function = nullptr;
+InstallConditionalFeaturesOnGlobalFunction
+    g_original_install_conditional_features_on_global_function = nullptr;
 InstallPendingConditionalFeatureFunction
     g_original_install_pending_conditional_feature_function = nullptr;
 }
@@ -126,6 +128,42 @@ void InstallConditionalFeaturesForModules(
           isolate, world, v8::Local<v8::Object>(), prototype_object,
           interface_object);
     }
+  }
+}
+
+void InstallConditionalFeaturesOnGlobalForModules(
+    const WrapperTypeInfo* wrapper_type_info,
+    const ScriptState* script_state) {
+  DCHECK(script_state);
+  DCHECK(script_state->GetContext() ==
+         script_state->GetIsolate()->GetCurrentContext());
+  DCHECK(script_state->PerContextData());
+
+  (*g_original_install_conditional_features_on_global_function)(
+      wrapper_type_info, script_state);
+
+  v8::Local<v8::Object> instance_object = script_state->GetContext()->Global();
+
+  // TODO(chasej): Generate this logic at compile-time, based on interfaces with
+  // [SecureContext] attribute.
+  if (wrapper_type_info == &V8Window::wrapperTypeInfo) {
+    V8WindowPartial::installConditionalFeaturesOnGlobal(
+        script_state->GetContext(), script_state->World(),
+        v8::Local<v8::Object>(), instance_object);
+  } else if (wrapper_type_info ==
+             &V8DedicatedWorkerGlobalScope::wrapperTypeInfo) {
+    V8DedicatedWorkerGlobalScopePartial::installConditionalFeaturesOnGlobal(
+        script_state->GetContext(), script_state->World(),
+        v8::Local<v8::Object>(), instance_object);
+  } else if (wrapper_type_info == &V8SharedWorkerGlobalScope::wrapperTypeInfo) {
+    V8SharedWorkerGlobalScopePartial::installConditionalFeaturesOnGlobal(
+        script_state->GetContext(), script_state->World(),
+        v8::Local<v8::Object>(), instance_object);
+  } else if (wrapper_type_info ==
+             &V8ServiceWorkerGlobalScope::wrapperTypeInfo) {
+    V8ServiceWorkerGlobalScope::installConditionalFeaturesOnGlobal(
+        script_state->GetContext(), script_state->World(),
+        v8::Local<v8::Object>(), instance_object);
   }
 }
 
@@ -231,6 +269,9 @@ void RegisterInstallConditionalFeaturesForModules() {
   g_original_install_conditional_features_function =
       SetInstallConditionalFeaturesFunction(
           &InstallConditionalFeaturesForModules);
+  g_original_install_conditional_features_on_global_function =
+      SetInstallConditionalFeaturesOnGlobalFunction(
+          &InstallConditionalFeaturesOnGlobalForModules);
   g_original_install_pending_conditional_feature_function =
       SetInstallPendingConditionalFeatureFunction(
           &InstallPendingConditionalFeatureForModules);

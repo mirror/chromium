@@ -565,16 +565,34 @@ const v8::FunctionCallbackInfo<v8::Value>& info
 
 
 {##############################################################################}
-{% macro install_conditionally_enabled_attributes_on_prototype() %}
+{% macro install_conditionally_enabled_attributes(secure_context_test_result) %}
 {% for attribute in conditionally_enabled_attributes if attribute.on_prototype %}
 {% filter exposed(attribute.exposed_test) %}
-{% filter secure_context(attribute.secure_context_test) %}
+{% filter secure_context(attribute.secure_context_test, secure_context_test_result) %}
 {% filter runtime_enabled(attribute.runtime_enabled_feature_name) %}
 static const V8DOMConfiguration::AccessorConfiguration accessorConfiguration[] = {
     {{accessor_configuration(attribute) | indent(4)}}
 };
 for (const auto& accessorConfig : accessorConfiguration)
   V8DOMConfiguration::InstallAccessor(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, accessorConfig);
+{% endfilter %}{# runtime_enabled #}
+{% endfilter %}{# secure_context #}
+{% endfilter %}{# exposed #}
+{% endfor %}
+{% endmacro %}
+
+
+{##############################################################################}
+{% macro install_conditionally_enabled_constructors(secure_context_test_result) %}
+{% for attribute in conditionally_enabled_attributes if attribute.constructor_type %}
+{% filter exposed(attribute.exposed_test) %}
+{% filter secure_context(attribute.secure_context_test, secure_context_test_result) %}
+{% filter runtime_enabled(attribute.runtime_enabled_feature_name) %}
+static const V8DOMConfiguration::AttributeConfiguration constructorConfiguration[] = {
+  {{attribute_configuration(attribute)}}
+};
+for (const auto& attributeConfig : constructorConfiguration)
+  V8DOMConfiguration::InstallAttribute(isolate, world, instance, prototypeObject, attributeConfig);
 {% endfilter %}{# runtime_enabled #}
 {% endfilter %}{# secure_context #}
 {% endfilter %}{# exposed #}

@@ -30,7 +30,6 @@
 
 #include "bindings/core/v8/LocalWindowProxy.h"
 
-#include "bindings/core/v8/ConditionalFeaturesForCore.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/core/v8/V8BindingForCore.h"
@@ -48,10 +47,9 @@
 #include "core/html/HTMLIFrameElement.h"
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/loader/FrameLoader.h"
-#include "core/origin_trials/OriginTrialContext.h"
 #include "platform/Histogram.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/ScriptForbiddenScope.h"
+#include "platform/bindings/ConditionalFeatures.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/V8DOMWrapper.h"
 #include "platform/bindings/V8PrivateProperty.h"
@@ -160,11 +158,9 @@ void LocalWindowProxy::Initialize() {
   MainThreadDebugger::Instance()->ContextCreated(script_state_.Get(),
                                                  GetFrame(), origin);
   GetFrame()->Client()->DidCreateScriptContext(context, world_->GetWorldId());
-  // If conditional features for window have been queued before the V8 context
-  // was ready, then inject them into the context now
-  if (world_->IsMainWorld()) {
-    InstallConditionalFeaturesOnWindow(script_state_.Get());
-  }
+
+  InstallConditionalFeaturesOnWindow(&V8Window::wrapperTypeInfo,
+                                     script_state_.Get());
 
   if (world_->IsMainWorld())
     GetFrame()->Loader().DispatchDidClearWindowObjectInMainWorld();

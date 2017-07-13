@@ -963,6 +963,7 @@ TestInterface5Implementation* NativeValueTraits<TestInterface5Implementation>::N
 void V8TestInterface5::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   v8::Isolate* isolate = context->GetIsolate();
   v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interfaceTemplate);
+  ALLOW_UNUSED_LOCAL(signature);
   ExecutionContext* executionContext = ToExecutionContext(context);
   DCHECK(executionContext);
 

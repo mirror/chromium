@@ -82,17 +82,6 @@ void InstallPendingConditionalFeatureCore(const String& feature,
   }
 }
 
-void InstallConditionalFeaturesOnWindow(const ScriptState* script_state) {
-  DCHECK(script_state);
-  DCHECK(script_state->GetContext() ==
-         script_state->GetIsolate()->GetCurrentContext());
-  DCHECK(script_state->PerContextData());
-  DCHECK(script_state->World().IsMainWorld());
-  InstallConditionalFeatures(&V8Window::wrapperTypeInfo, script_state,
-                             v8::Local<v8::Object>(),
-                             v8::Local<v8::Function>());
-}
-
 void RegisterInstallConditionalFeaturesForCore() {
   g_old_install_conditional_features_function =
       SetInstallConditionalFeaturesFunction(&InstallConditionalFeaturesCore);
