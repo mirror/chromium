@@ -83,6 +83,8 @@ ScrollbarAnimationController::ScrollbarAnimationController(
   horizontal_controller_ = SingleScrollbarAnimationControllerThinning::Create(
       scroll_element_id, ScrollbarOrientation::HORIZONTAL, client,
       thinning_duration);
+  if (initial_opacity != 0)
+    PostDelayedAnimation(FADE_OUT);
 }
 
 ScrollbarAnimationController::~ScrollbarAnimationController() {}
