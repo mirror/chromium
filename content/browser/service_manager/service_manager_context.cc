@@ -369,11 +369,17 @@ ServiceManagerContext::ServiceManagerContext() {
   }
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
+  sandboxed_services.emplace(media::mojom::kMediaServiceName,
+                             base::ASCIIToUTF16("Media Service"));
+#endif
+
+#if BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
   // TODO(xhwang): This is only used for test/experiment for now so it's okay
   // to run it in an unsandboxed utility process. Fix CDM loading so that we can
   // run it in the sandboxed utility process. See http://crbug.com/510604
-  unsandboxed_services.insert(std::make_pair(
-      media::mojom::kMediaServiceName, base::ASCIIToUTF16("Media Service")));
+  unsandboxed_services.emplace(
+      media::mojom::kCdmServiceName,
+      base::ASCIIToUTF16("Content Decryption Module Service"));
 #endif
 
   for (const auto& service : unsandboxed_services) {
