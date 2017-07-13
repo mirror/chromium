@@ -9,6 +9,7 @@
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/payments/core/autofill_payment_instrument.h"
+#include "components/payments/core/journey_logger.h"
 #include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/payment_request_data_util.h"
@@ -218,6 +219,15 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 - (void)paymentRequestViewControllerDidConfirm:
     (PaymentRequestViewController*)controller {
   DCHECK(_paymentRequest->selected_payment_method());
+
+  _paymentRequest->journey_logger().SetEventOccurred(
+      payments::JourneyLogger::EVENT_PAY_CLICKED);
+  _paymentRequest->journey_logger().SetSelectedPaymentMethod(
+      _paymentRequest->selected_payment_method()->type() ==
+              payments::PaymentInstrument::Type::AUTOFILL
+          ? payments::JourneyLogger::SELECTED_PAYMENT_METHOD_CREDIT_CARD
+          : payments::JourneyLogger::SELECTED_PAYMENT_METHOD_OTHER_PAYMENT_APP);
+
   _paymentRequest->selected_payment_method()->InvokePaymentApp(
       _fullCardRequester.get());
 }
@@ -337,6 +347,15 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 - (void)paymentItemsDisplayCoordinatorDidConfirm:
     (PaymentItemsDisplayCoordinator*)coordinator {
   DCHECK(_paymentRequest->selected_payment_method());
+
+  _paymentRequest->journey_logger().SetEventOccurred(
+      payments::JourneyLogger::EVENT_PAY_CLICKED);
+  _paymentRequest->journey_logger().SetSelectedPaymentMethod(
+      _paymentRequest->selected_payment_method()->type() ==
+              payments::PaymentInstrument::Type::AUTOFILL
+          ? payments::JourneyLogger::SELECTED_PAYMENT_METHOD_CREDIT_CARD
+          : payments::JourneyLogger::SELECTED_PAYMENT_METHOD_OTHER_PAYMENT_APP);
+
   _paymentRequest->selected_payment_method()->InvokePaymentApp(
       _fullCardRequester.get());
 }

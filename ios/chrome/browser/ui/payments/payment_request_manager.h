@@ -40,7 +40,8 @@ class WebState;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-// Stops tracking instances of payments::PaymentRequest for |webState|.
+// Stops tracking instances of payments::PaymentRequest for |webState|. This is
+// called before the tab |webState| is associated with is removed.
 - (void)stopTrackingWebState:(web::WebState*)webState;
 
 // Enables or disables the Payment Request API for the active webState. If
