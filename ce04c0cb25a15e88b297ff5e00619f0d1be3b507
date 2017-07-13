@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21f1a7f6_638a5898",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-13T21:22:05Z",
+      "side": 1,
+      "message": "nit: MediaControlElementType",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "ce04c0cb25a15e88b297ff5e00619f0d1be3b507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
