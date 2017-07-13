@@ -80,7 +80,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   // ImageTransportFactory implementation.
   ui::ContextFactory* GetContextFactory() override;
   ui::ContextFactoryPrivate* GetContextFactoryPrivate() override;
-  cc::FrameSinkManager* GetFrameSinkManager() override;
+  viz::FrameSinkManager* GetFrameSinkManager() override;
   viz::GLHelper* GetGLHelper() override;
   void SetGpuChannelEstablishFactory(
       gpu::GpuChannelEstablishFactory* factory) override;

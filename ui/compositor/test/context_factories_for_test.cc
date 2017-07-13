@@ -6,8 +6,8 @@
 
 #include "base/command_line.h"
 #include "base/sys_info.h"
-#include "cc/surfaces/frame_sink_manager.h"
 #include "components/viz/host/host_frame_sink_manager.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/compositor_switches.h"

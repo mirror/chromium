@@ -64,7 +64,7 @@ class CONTENT_EXPORT CompositorImpl
 
   static bool IsInitialized();
 
-  static cc::FrameSinkManager* GetFrameSinkManager();
+  static viz::FrameSinkManager* GetFrameSinkManager();
   static viz::HostFrameSinkManager* GetHostFrameSinkManager();
   static viz::FrameSinkId AllocateFrameSinkId();
 
