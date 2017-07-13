@@ -64,4 +64,37 @@ void ClientHintsPreferences::UpdateFromAcceptClientHintsHeader(
   }
 }
 
+void ClientHintsPreferences::UpdatePersistentHintsFromHeaders(
+    const String& accept_ch_header_value,
+    const String& accept_ch_lifetime_header_value,
+    const KURL& url,
+    bool enabled_types[kWebClientHintsTypeLast + 1],
+    int64_t* persist_duration_seconds) {
+  *persist_duration_seconds = -1;
+
+  if (!RuntimeEnabledFeatures::ClientHintsEnabled() ||
+      !RuntimeEnabledFeatures::ClientHintsPersistentEnabled() ||
+      accept_ch_header_value.IsEmpty() ||
+      accept_ch_lifetime_header_value.IsEmpty()) {
+    return;
+  }
+
+  if (url.Protocol() != "https") {
+    // Only HTTPS domains are allowed to persist client hints.
+    return;
+  }
+
+  bool conversion_ok = false;
+  *persist_duration_seconds =
+      accept_ch_lifetime_header_value.ToInt64Strict(&conversion_ok);
+  if (!conversion_ok || *persist_duration_seconds < 0) {
+    *persist_duration_seconds = -1;
+    return;
+  }
+
+  // Do not do HTTPS urls.
+
+  ParseAcceptChHeader(accept_ch_header_value, enabled_types);
+}
+
 }  // namespace blink

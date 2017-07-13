@@ -6,6 +6,7 @@
 #define ClientHintsPreferences_h
 
 #include "platform/PlatformExport.h"
+#include "platform/weborigin/KURL.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebClientHintsType.h"
@@ -35,6 +36,18 @@ class PLATFORM_EXPORT ClientHintsPreferences {
   void SetShouldSendForTesting(WebClientHintsType type) {
     enabled_types_[type] = true;
   }
+
+  // Parses the client hints headers, and populates |enabled_types| with the
+  // client hint prefernces that should be persisted for duration
+  // |persist_duration_seconds|. |persist_duration_seconds| should be non-null.
+  // If there are no client hints that need to be persisted,
+  // |persist_duration_seconds| should be set to -1.
+  static void UpdatePersistentHintsFromHeaders(
+      const String& accept_ch_header_value,
+      const String& accept_ch_lifetime_header_value,
+      const KURL&,
+      bool enabled_types[kWebClientHintsTypeLast + 1],
+      int64_t* persist_duration_seconds);
 
  private:
   bool enabled_types_[kWebClientHintsTypeLast + 1] = {};

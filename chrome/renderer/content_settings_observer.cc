@@ -343,6 +343,14 @@ bool ContentSettingsObserver::AllowScriptFromSource(
   return allow || IsWhitelistedForContentSettings();
 }
 
+void ContentSettingsObserver::PersistClientHints(
+    const bool enabled_types[blink::kWebClientHintsTypeLast + 1],
+    int64_t duration_seconds,
+    const blink::WebURL& url) {
+  // TODO (tbansal): Send it back to browser which should persist the
+  // preferences.
+}
+
 bool ContentSettingsObserver::AllowStorage(bool local) {
   blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
   if (frame->GetSecurityOrigin().IsUnique() ||
