@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16f5e9c6_33a2f9df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-13T23:53:52Z",
+      "side": 1,
+      "message": "use lowercase long, no need to support here so the autoboxing is just overhead",
+      "range": {
+        "startLine": 112,
+        "startChar": 22,
+        "endLine": 112,
+        "endChar": 26
+      },
+      "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d954063b_7b5c368f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-13T23:53:52Z",
+      "side": 1,
+      "message": "What happens if the view is made visible?  Does the adapter hear about that?\n\nIf not, what are you expected to do to make it visible?  notifyDataSetChanged?\n\nAny reason we need to support the invisible views?  Why not mandate that views are visible?  If we need to support non-visible views, I would just increment size regardless of visibility.  Otherwise, I feel mSize can easily get out of sync.\n\nActually, should this method be calling notifyDataSetChanged?  Looks like removeHeader would do it, but only if it previously had a header.",
+      "range": {
+        "startLine": 510,
+        "startChar": 21,
+        "endLine": 510,
+        "endChar": 30
+      },
+      "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
