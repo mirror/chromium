@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc2123ff_c6e7fefd",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T14:18:25Z",
+      "side": 1,
+      "message": "I still don\u0027t get this test. It\u0027s doing a lot of things, and I don\u0027t see which is the one thing being tested.",
+      "revId": "65da9f5b02a1d7c6681b2f535d5d58c4a0a6c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb8fdb2_60d3b7a6",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T14:18:25Z",
+      "side": 1,
+      "message": "This could be an ASSERT too, since it\u0027s not really what you\u0027re testing here. I think there\u0027s a few more similar cases around.",
+      "range": {
+        "startLine": 213,
+        "startChar": 44,
+        "endLine": 213,
+        "endChar": 0
+      },
+      "revId": "65da9f5b02a1d7c6681b2f535d5d58c4a0a6c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
