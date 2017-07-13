@@ -337,9 +337,12 @@ void TaskManagerView::Init() {
   AddChildView(tab_table_parent_);
 
   SetLayoutManager(new views::FillLayout());
-  SetBorder(
-      views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-          views::INSETS_DIALOG_CONTENTS)));
+  // Since TaskManagerView doesn't use BubbleFrameView (where these are plumbed
+  // automatically) we have to set up the margins manually.
+  SetBorder(views::CreateEmptyBorder(margins().top(), margins().left(), 0,
+                                     margins().right()));
+  set_button_margins(gfx::Insets(button_margins().top(), margins().left(),
+                                 margins().bottom(), margins().right()));
 
   table_model_->RetrieveSavedColumnsSettingsAndUpdateTable();
 

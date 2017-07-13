@@ -62,6 +62,23 @@ class VIEWS_EXPORT DialogDelegate : public ui::DialogModel,
   // Overrides may construct the view; this will only be called once per dialog.
   virtual View* CreateFootnoteView();
 
+  const gfx::Insets& margins() const { return margins_; }
+  void set_margins(const gfx::Insets& margins) { margins_ = margins; }
+
+  // Removes the left and right margins from the dialog content but not from
+  // the buttons.
+  void ClearHorizontalContentMargins();
+
+  const gfx::Insets& title_margins() const { return title_margins_; }
+  void set_title_margins(const gfx::Insets& title_margins) {
+    title_margins_ = title_margins;
+  }
+
+  const gfx::Insets& button_margins() const { return button_margins_; }
+  void set_button_margins(const gfx::Insets& button_margins) {
+    button_margins_ = button_margins;
+  }
+
   // For Dialog boxes, if there is a "Cancel" button or no dialog button at all,
   // this is called when the user presses the "Cancel" button.
   // It can also be called on a close action if |Close| has not been
@@ -104,7 +121,10 @@ class VIEWS_EXPORT DialogDelegate : public ui::DialogModel,
   ClientView* CreateClientView(Widget* widget) override;
   NonClientFrameView* CreateNonClientFrameView(Widget* widget) override;
 
-  static NonClientFrameView* CreateDialogFrameView(Widget* widget);
+  static NonClientFrameView* CreateDialogFrameView(
+      Widget* widget,
+      const gfx::Insets& title_margins,
+      const gfx::Insets& content_margins);
 
   // Returns true if this particular dialog should use a Chrome-styled frame
   // like the one used for bubbles. The alternative is a more platform-native
@@ -124,6 +144,16 @@ class VIEWS_EXPORT DialogDelegate : public ui::DialogModel,
   // A flag indicating whether this dialog is able to use the custom frame
   // style for dialogs.
   bool supports_custom_frame_;
+
+  // The margins around the content and dialog buttons.
+  gfx::Insets margins_;
+
+  // The margins around the title.
+  // TODO(tapted): Investigate deleting this when MD is default.
+  gfx::Insets title_margins_;
+
+  // The margins around the dialog buttons.
+  gfx::Insets button_margins_;
 };
 
 // A DialogDelegate implementation that is-a View. Used to override GetWidget()

@@ -32,6 +32,19 @@ namespace views {
 // DialogDelegate:
 
 DialogDelegate::DialogDelegate() : supports_custom_frame_(true) {
+  const LayoutProvider* provider = LayoutProvider::Get();
+  const gfx::Insets& dialog_insets = provider->GetInsetsMetric(INSETS_DIALOG);
+  // The bottom title margin is shared with the top content margin.
+  title_margins_.Set(dialog_insets.top(), dialog_insets.left(), 0,
+                     dialog_insets.right());
+  margins_.Set(
+      provider->GetDistanceMetric(DISTANCE_DIALOG_TITLE_CONTENT_MARGIN),
+      dialog_insets.left(), dialog_insets.bottom(), dialog_insets.right());
+  // The other three sides are shared with the content margins.
+  button_margins_.Set(
+      provider->GetDistanceMetric(DISTANCE_DIALOG_BUTTON_CONTENT_MARGIN), 0, 0,
+      0);
+
   UMA_HISTOGRAM_BOOLEAN("Dialog.DialogDelegate.Create", true);
 }
 
@@ -101,6 +114,15 @@ bool DialogDelegate::GetExtraViewPadding(int* padding) {
 
 View* DialogDelegate::CreateFootnoteView() {
   return NULL;
+}
+
+void DialogDelegate::ClearHorizontalContentMargins() {
+  // We never want the buttons to abut the edge of the dialog, so transfer the
+  // content margins to the button margins.
+  button_margins_.set_left(margins_.left());
+  button_margins_.set_right(margins_.right());
+  margins_.set_left(0);
+  margins_.set_right(0);
 }
 
 bool DialogDelegate::Cancel() {
@@ -189,20 +211,23 @@ DialogDelegate* DialogDelegate::AsDialogDelegate() {
 }
 
 ClientView* DialogDelegate::CreateClientView(Widget* widget) {
-  return new DialogClientView(widget, GetContentsView());
+  DialogClientView* client = new DialogClientView(widget, GetContentsView());
+  client->SetButtonRowInsets(button_margins_);
+  return client;
 }
 
 NonClientFrameView* DialogDelegate::CreateNonClientFrameView(Widget* widget) {
   if (ShouldUseCustomFrame())
-    return CreateDialogFrameView(widget);
+    return CreateDialogFrameView(widget, title_margins(), margins());
   return WidgetDelegate::CreateNonClientFrameView(widget);
 }
 
 // static
-NonClientFrameView* DialogDelegate::CreateDialogFrameView(Widget* widget) {
-  BubbleFrameView* frame = new BubbleFrameView(
-      LayoutProvider::Get()->GetInsetsMetric(INSETS_DIALOG_TITLE),
-      gfx::Insets());
+NonClientFrameView* DialogDelegate::CreateDialogFrameView(
+    Widget* widget,
+    const gfx::Insets& title_margins,
+    const gfx::Insets& content_margins) {
+  BubbleFrameView* frame = new BubbleFrameView(title_margins, content_margins);
   const BubbleBorder::Shadow kShadow = BubbleBorder::SMALL_SHADOW;
   std::unique_ptr<BubbleBorder> border(
       new BubbleBorder(BubbleBorder::FLOAT, kShadow, gfx::kPlaceholderColor));

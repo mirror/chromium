@@ -50,6 +50,7 @@ ProfileSigninConfirmationDialogViews::ProfileSigninConfirmationDialogViews(
       username_(username),
       delegate_(std::move(delegate)),
       prompt_for_new_profile_(true) {
+  ClearHorizontalContentMargins();
   chrome::RecordDialogCreation(
       chrome::DialogIdentifier::PROFILE_SIGNIN_CONFIRMATION);
 }
@@ -165,6 +166,9 @@ void ProfileSigninConfirmationDialogViews::ViewHierarchyChanged(
           IDS_ENTERPRISE_SIGNIN_ALERT,
           domain, &offset);
   views::StyledLabel* prompt_label = new views::StyledLabel(prompt_text, this);
+  const gfx::Insets content_insets =
+      views::LayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG);
+  prompt_label->SetBorder(views::CreateEmptyBorder(content_insets));
   prompt_label->SetDisplayedOnBackgroundColor(kPromptBarBackgroundColor);
 
   views::StyledLabel::RangeStyleInfo bold_style;
@@ -198,18 +202,12 @@ void ProfileSigninConfirmationDialogViews::ViewHierarchyChanged(
       views::StyledLabel::RangeStyleInfo::CreateForLink());
 
   // Layout the components.
-  const gfx::Insets content_insets =
-      views::LayoutProvider::Get()->GetInsetsMetric(
-          views::INSETS_DIALOG_CONTENTS);
-  // The prompt bar needs to go to the edge of the dialog, so remove horizontal
-  // insets.
-  SetBorder(views::CreateEmptyBorder(content_insets.top(), 0,
-                                     content_insets.bottom(), 0));
   views::GridLayout* dialog_layout = new views::GridLayout(this);
   SetLayoutManager(dialog_layout);
 
   // Use GridLayout inside the prompt bar because StyledLabel requires it.
-  views::GridLayout* prompt_layout = views::GridLayout::CreatePanel(prompt_bar);
+  views::GridLayout* prompt_layout = new views::GridLayout(prompt_bar);
+  prompt_bar->SetLayoutManager(prompt_layout);
   constexpr int kPromptBarColumnSetId = 0;
   prompt_layout->AddColumnSet(kPromptBarColumnSetId)
       ->AddColumn(views::GridLayout::FILL, views::GridLayout::CENTER, 100,
