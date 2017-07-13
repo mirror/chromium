@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09f12a36_b345c3a4",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 23
+      },
+      "lineNbr": 2316,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T00:53:50Z",
+      "side": 1,
+      "message": "then, to exclude chromeos, I would remove the file in this section. The promo is somewhat similar to the use-cases of some of the other UI in this section.",
+      "revId": "afb78d30222ec2cfc54e58a25c90ba11eb5ac3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
