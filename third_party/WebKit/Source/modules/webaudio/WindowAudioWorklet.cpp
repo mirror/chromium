@@ -7,6 +7,7 @@
 #include "core/dom/Document.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "modules/webaudio/BaseAudioContext.h"
 
 namespace blink {
 
