@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d2c10ac_7d0c7252",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-13T18:23:58Z",
+      "side": 1,
+      "message": "Done, now passed from configuration.",
+      "parentUuid": "353f0ba1_03282c21",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 36
+      },
+      "revId": "54ee8e07cc73bc482ab69b1549c9a79b1e9ee766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b302b311_e9e6db75",
         "filename": "components/download/internal/scheduler/device_status_listener.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-11T23:01:21Z",
       "side": 1,
       "message": "Do we actually want to delay setting this in case someone queries and sees online?",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 38
+      },
+      "revId": "54ee8e07cc73bc482ab69b1549c9a79b1e9ee766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d47a66_e8ff76c4",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-13T18:23:58Z",
+      "side": 1,
+      "message": "Done, now we delay all the connection change, and set the state inside the callback.",
+      "parentUuid": "b302b311_e9e6db75",
       "range": {
         "startLine": 100,
         "startChar": 2,
