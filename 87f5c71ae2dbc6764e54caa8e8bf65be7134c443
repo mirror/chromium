@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "8bd18eba_184d8cd7",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T09:53:23Z",
+      "side": 1,
+      "message": "We don\u0027t have much of a Python styleguide: https://chromium.googlesource.com/chromium/src/+/master/styleguide/styleguide.md\n\nHowever, it does specify two-space indents, but yapf makes it four-space indents, so I guess it doesn\u0027t apply here.",
+      "parentUuid": "c3843ada_be866f96",
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbcf4e6d_e879de82",
         "filename": "chrome/browser/search/tools/generate_integrity_header.py",
         "patchSetId": 1
@@ -56,6 +74,24 @@
       "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48df5a32_583fb491",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T09:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbcf4e6d_e879de82",
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "053b80d7_d790c9c0",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T09:53:23Z",
+      "side": 1,
+      "message": "Yep :)  Done.",
+      "parentUuid": "2c01b0bd_794db6cb",
+      "range": {
+        "startLine": 20,
+        "startChar": 21,
+        "endLine": 20,
+        "endChar": 49
+      },
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "300ff10f_b21279cc",
         "filename": "chrome/browser/search/tools/generate_integrity_header.py",
         "patchSetId": 1
@@ -105,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "d13433c2_9c133b5d",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T09:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "300ff10f_b21279cc",
+      "range": {
+        "startLine": 27,
+        "startChar": 40,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1500ef29_e8d8d098",
         "filename": "chrome/browser/search/tools/generate_integrity_header.py",
         "patchSetId": 1
@@ -119,6 +203,24 @@
       "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249f086a_3f4d7ef3",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T09:53:23Z",
+      "side": 1,
+      "message": "I thought about that, and decided it\u0027s not worth the effort:\n- The file should only ever be included once anyway.\n- If it were included multiple times, nothing very bad would happen.\n- It\u0027s somewhat inconvenient to produce a proper include guard, since we\u0027d need the path relative to src/ (we only have the path relative to the BUILD.gn file).",
+      "parentUuid": "1500ef29_e8d8d098",
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +244,30 @@
       "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ceb734_c3efcd90",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T09:53:23Z",
+      "side": 1,
+      "message": "I\u0027ve added a description string. Running the script with -h seems to have the intended output now.",
+      "parentUuid": "11fc140e_41077161",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
