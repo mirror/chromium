@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "67a0e3ab_95df452f",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-13T10:57:17Z",
+      "side": 1,
+      "message": "I guess there are arguments for both, but IMHO the reader approach is more flexible and doesn\u0027t have to be complex if we are passing a handle (as per my other comments).",
+      "parentUuid": "b065670e_322f4d87",
+      "range": {
+        "startLine": 49,
+        "startChar": 61,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10db0dc6_38b318ee",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 9

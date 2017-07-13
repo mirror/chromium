@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83667431_7e9538fb",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-13T10:57:17Z",
+      "side": 1,
+      "message": "I think you could pass the handle to the reader (instead of the buffer), using an Initialize() methods which would return a bool (to check success), that way you could eliminate the shared_buffer_ member variable completely in this class. The validity check can be performed inside the reader. Basically similar to the what shared_memory_seqlock_reader does. I think it would be fine to do in a follow-up patch, if this one is blocking progress (in which case file a bug and add TODO)..\n\nWe also need to make sure reillyg@ is sufficiently happy with this approach. :)",
+      "range": {
+        "startLine": 118,
+        "startChar": 43,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "70b60d03b7d5090868665ed659f9950fa7e93acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
