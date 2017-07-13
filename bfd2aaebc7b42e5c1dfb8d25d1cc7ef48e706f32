@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77e4bb8d_e32ce3e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T13:43:06Z",
+      "side": 1,
+      "message": "Please add longer description like:\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n[Android] Add SigninPromoView\n\nThis CL adds signin_promo_view and SigninPromoView Java counterpart\nthat are necessary for new signin promos on Android. This view will\nbe wired-up in the following CLs.\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "bfd2aaebc7b42e5c1dfb8d25d1cc7ef48e706f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3715f59b_1447023f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T13:43:06Z",
+      "side": 1,
+      "message": "Please add bug number (\"Bug: 737743\").",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "bfd2aaebc7b42e5c1dfb8d25d1cc7ef48e706f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99dba297_1550635a",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T13:43:06Z",
+      "side": 1,
+      "message": "Specs don\u0027t mention increased line spacing. Does it look bad without this line? If it does - please upload two screenshots to the bug and ask UX confirmation for increased line spacing.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "bfd2aaebc7b42e5c1dfb8d25d1cc7ef48e706f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63081777_9c34d7be",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T13:43:06Z",
+      "side": 1,
+      "message": "Could you move it to SigninButtonCompat, please?",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 35
+      },
+      "revId": "bfd2aaebc7b42e5c1dfb8d25d1cc7ef48e706f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce684b4_ebc5c0bf",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T13:43:06Z",
+      "side": 1,
+      "message": "Could you move these to the style, too?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 31
+      },
+      "revId": "bfd2aaebc7b42e5c1dfb8d25d1cc7ef48e706f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6d652c_c5ff3799",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T13:43:06Z",
+      "side": 1,
+      "message": "Castless assignment of findViewById result relies on compiler support and not used in Chrome codebase yet. I would really like Chrome to use this feature, but it\u0027s better to add manual cast for for now.",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "bfd2aaebc7b42e5c1dfb8d25d1cc7ef48e706f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4e6eb5_5905a3b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T13:43:06Z",
+      "side": 1,
+      "message": "Nit: could you please reorder getters and fields according to visual order of elements (image, dismiss button, signin button, choose button)?",
+      "range": {
+        "startLine": 40,
+        "startChar": 24,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "bfd2aaebc7b42e5c1dfb8d25d1cc7ef48e706f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4a9d3f_15ae97d1",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T13:43:06Z",
+      "side": 1,
+      "message": "Since you\u0027re already adding SigninButtonCompat style, it would make sense to move this one next to it and rename it as SigninButtonBorderlessRegular? Also, this style is applied to a Button, not ButtonCompat, which is another point why it shouldn\u0027t be here.",
+      "range": {
+        "startLine": 41,
+        "startChar": 17,
+        "endLine": 41,
+        "endChar": 46
+      },
+      "revId": "bfd2aaebc7b42e5c1dfb8d25d1cc7ef48e706f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
