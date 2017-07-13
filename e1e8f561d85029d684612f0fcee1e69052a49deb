@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0dd3dfc_43f0045b",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 2318,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T09:04:19Z",
+      "side": 1,
+      "message": "This is cargo culted from other BUILD.gn files. I\u0027m assuming it\u0027s still true.",
+      "range": {
+        "startLine": 2318,
+        "startChar": 2,
+        "endLine": 2318,
+        "endChar": 16
+      },
+      "revId": "e1e8f561d85029d684612f0fcee1e69052a49deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f852cb5a_5adbb7b2",
+        "filename": "base/mojo/values_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T09:04:19Z",
+      "side": 1,
+      "message": "I didn\u0027t bother with reserve() here, as I believe we need to default construct the element at some point no matter what.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 7
+      },
+      "revId": "e1e8f561d85029d684612f0fcee1e69052a49deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd86393_c8d34f3b",
+        "filename": "base/mojo/values_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T09:04:19Z",
+      "side": 1,
+      "message": "This intentionally uses base::Value rather than base::DictionaryValue in order to make value semantics work cleanly.",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 37
+      },
+      "revId": "e1e8f561d85029d684612f0fcee1e69052a49deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10312f7a_2c762d01",
+        "filename": "base/mojo/values_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T09:04:19Z",
+      "side": 1,
+      "message": "base::Value::Type has an enumerator for this, but the null case is already handled by IsNull/SetToNull above.\n\nI choose to define nullable_is_same_type to avoid a doubly nullable situation... however, I\u0027m planning on reverting this in the next patchset, as I could imagine an instance where code wants to distinguish the absence of a base::Value from a null base::Value.\n\nIt also saves some wire bytes, since list and dictionary values don\u0027t need an additional bool to indicate nullability for each element.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "e1e8f561d85029d684612f0fcee1e69052a49deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
