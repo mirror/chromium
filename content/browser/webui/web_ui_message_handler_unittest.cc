@@ -18,32 +18,32 @@ TEST(WebUIMessageHandlerTest, ExtractIntegerValue) {
   base::string16 neg_string(base::UTF8ToUTF16("-1234"));
   base::string16 pos_string(base::UTF8ToUTF16("1234"));
 
-  list.AppendInteger(zero_value);
+  list.GetList().emplace_back(zero_value);
   EXPECT_TRUE(WebUIMessageHandler::ExtractIntegerValue(&list, &value));
   EXPECT_EQ(value, zero_value);
   list.Clear();
 
-  list.AppendInteger(neg_value);
+  list.GetList().emplace_back(neg_value);
   EXPECT_TRUE(WebUIMessageHandler::ExtractIntegerValue(&list, &value));
   EXPECT_EQ(value, neg_value);
   list.Clear();
 
-  list.AppendInteger(pos_value);
+  list.GetList().emplace_back(pos_value);
   EXPECT_TRUE(WebUIMessageHandler::ExtractIntegerValue(&list, &value));
   EXPECT_EQ(value, pos_value);
   list.Clear();
 
-  list.AppendString(zero_string);
+  list.GetList().emplace_back(zero_string);
   EXPECT_TRUE(WebUIMessageHandler::ExtractIntegerValue(&list, &value));
   EXPECT_EQ(value, zero_value);
   list.Clear();
 
-  list.AppendString(neg_string);
+  list.GetList().emplace_back(neg_string);
   EXPECT_TRUE(WebUIMessageHandler::ExtractIntegerValue(&list, &value));
   EXPECT_EQ(value, neg_value);
   list.Clear();
 
-  list.AppendString(pos_string);
+  list.GetList().emplace_back(pos_string);
   EXPECT_TRUE(WebUIMessageHandler::ExtractIntegerValue(&list, &value));
   EXPECT_EQ(value, pos_value);
 }
@@ -55,32 +55,32 @@ TEST(WebUIMessageHandlerTest, ExtractDoubleValue) {
   base::string16 neg_string(base::UTF8ToUTF16("-1234.5"));
   base::string16 pos_string(base::UTF8ToUTF16("1234.5"));
 
-  list.AppendDouble(zero_value);
+  list.GetList().emplace_back(zero_value);
   EXPECT_TRUE(WebUIMessageHandler::ExtractDoubleValue(&list, &value));
   EXPECT_DOUBLE_EQ(value, zero_value);
   list.Clear();
 
-  list.AppendDouble(neg_value);
+  list.GetList().emplace_back(neg_value);
   EXPECT_TRUE(WebUIMessageHandler::ExtractDoubleValue(&list, &value));
   EXPECT_DOUBLE_EQ(value, neg_value);
   list.Clear();
 
-  list.AppendDouble(pos_value);
+  list.GetList().emplace_back(pos_value);
   EXPECT_TRUE(WebUIMessageHandler::ExtractDoubleValue(&list, &value));
   EXPECT_DOUBLE_EQ(value, pos_value);
   list.Clear();
 
-  list.AppendString(zero_string);
+  list.GetList().emplace_back(zero_string);
   EXPECT_TRUE(WebUIMessageHandler::ExtractDoubleValue(&list, &value));
   EXPECT_DOUBLE_EQ(value, zero_value);
   list.Clear();
 
-  list.AppendString(neg_string);
+  list.GetList().emplace_back(neg_string);
   EXPECT_TRUE(WebUIMessageHandler::ExtractDoubleValue(&list, &value));
   EXPECT_DOUBLE_EQ(value, neg_value);
   list.Clear();
 
-  list.AppendString(pos_string);
+  list.GetList().emplace_back(pos_string);
   EXPECT_TRUE(WebUIMessageHandler::ExtractDoubleValue(&list, &value));
   EXPECT_DOUBLE_EQ(value, pos_value);
 }
@@ -89,7 +89,7 @@ TEST(WebUIMessageHandlerTest, ExtractStringValue) {
   base::ListValue list;
   base::string16 in_string(base::UTF8ToUTF16(
       "The facts, though interesting, are irrelevant."));
-  list.AppendString(in_string);
+  list.GetList().emplace_back(in_string);
   base::string16 out_string = WebUIMessageHandler::ExtractStringValue(&list);
   EXPECT_EQ(in_string, out_string);
 }
