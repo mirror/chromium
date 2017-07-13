@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -28,6 +29,38 @@ public class TileGridLayout extends FrameLayout {
     private int mMaxRows;
     private int mMaxColumns;
     private int mExtraVerticalSpacing;
+
+    private static int sNumColumns;
+
+    /**
+     * TODO(oskopek): Comment + duplicate code.
+     *
+     * @param layout The layout for which to calculate the number of tile columns.
+     */
+    public static void calculatemNumColumns(TileGridLayout layout) {
+        if (sNumColumns != 0) {
+            return;
+        }
+
+        Resources res = layout.getResources();
+        int minHorizontalSpacing =
+                res.getDimensionPixelOffset(R.dimen.tile_grid_layout_min_horizontal_spacing);
+        int maxWidth = res.getDimensionPixelOffset(R.dimen.tile_grid_layout_max_width);
+
+        DisplayMetrics metrics = res.getDisplayMetrics();
+
+        // TODO(oskopek): Total width is larger by ~50 than the equivalent in onMeasure(...).
+        int totalWidth = Math.min(maxWidth, Math.min(metrics.widthPixels, metrics.heightPixels));
+
+        // Determine the number of columns that will fit.
+        int gridWidth = totalWidth - ApiCompatibilityUtils.getPaddingStart(layout)
+                - ApiCompatibilityUtils.getPaddingEnd(layout);
+        int childWidth = res.getDimensionPixelOffset(R.dimen.tile_view_width);
+        int numColumns = MathUtils.clamp(
+                (gridWidth + minHorizontalSpacing) / (childWidth + minHorizontalSpacing), 1,
+                layout.mMaxColumns);
+        sNumColumns = numColumns;
+    }
 
     /**
      * Constructor for inflating from XML.
@@ -59,6 +92,16 @@ public class TileGridLayout extends FrameLayout {
      */
     public void setMaxColumns(int columns) {
         mMaxColumns = columns;
+        calculatemNumColumns(this);
+    }
+
+    /**
+     * TODO(oskopek): Comment.
+     *
+     * @return The number of columns tiles will be layed out to.
+     */
+    public static int getColumnNumber() {
+        return sNumColumns;
     }
 
     /**
