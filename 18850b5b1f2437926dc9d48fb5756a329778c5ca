@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "4bc50dec_f65506ec",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:58:59Z",
+      "side": 1,
+      "message": "Right, the code here would still do the check--just the object itself would encapsulate the static cast.\n\nThe reason for doing that is to catch accidental typos, e.g. code checks that it\u0027s some other type of coordination unit by copy and paste error but then static casts it to FrameCoordinationUnitImpl. A ToFrameCoordinationUnit() helper method on CoordinationUnitImpl would DCHECK that it\u0027s the right type before static casting). This is similar to the ToType() macros in Blink which perform automatic DCHECKs.",
+      "parentUuid": "48b23fdd_c7df0ae3",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 72
+      },
+      "revId": "18850b5b1f2437926dc9d48fb5756a329778c5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96a8c85b_8fb03f5d",
         "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
         "patchSetId": 5

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2852d36_7cd07da7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:58:59Z",
+      "side": 1,
+      "message": "Nit: no .get()",
+      "range": {
+        "startLine": 859,
+        "startChar": 30,
+        "endLine": 859,
+        "endChar": 36
+      },
+      "revId": "68d9b179a0bbebd594115300575c32ee8f2b061c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556aa997_21c30d30",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:58:59Z",
+      "side": 1,
+      "message": "Nit: no .get()",
+      "range": {
+        "startLine": 885,
+        "startChar": 32,
+        "endLine": 885,
+        "endChar": 37
+      },
+      "revId": "68d9b179a0bbebd594115300575c32ee8f2b061c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
