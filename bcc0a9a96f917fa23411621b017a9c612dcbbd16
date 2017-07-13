@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db1af6fa_b5e5b2c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T00:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32f11143_5e0ed1ed",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "bcc0a9a96f917fa23411621b017a9c612dcbbd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "888de114_a5281374",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "bcc0a9a96f917fa23411621b017a9c612dcbbd16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13b2873_1357cd59",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T00:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "888de114_a5281374",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "bcc0a9a96f917fa23411621b017a9c612dcbbd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
