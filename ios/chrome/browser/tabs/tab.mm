@@ -926,13 +926,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   web::NavigationItem* navigationItem =
       [self navigationManager]->GetPendingItem();
-
-  // TODO(crbug.com/676129): the pending item is not correctly set when the
-  // page is reloading, use the last committed item if pending item is null.
-  // Remove this once tracking bug is fixed.
-  if (!navigationItem)
-    navigationItem = [self navigationManager]->GetLastCommittedItem();
-
+  DCHECK(navigationItem);
   [[OmniboxGeolocationController sharedInstance]
       addLocationToNavigationItem:navigationItem
                      browserState:_browserState];
