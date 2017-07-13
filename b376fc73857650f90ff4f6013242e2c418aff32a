@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26de3811_05b8630c",
+        "filename": "tools/idl_parser/idl_lexer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-13T23:02:11Z",
+      "side": 1,
+      "message": "Added note in idl_parser.py",
+      "parentUuid": "042a1feb_a560b8a1",
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e32e001_ce37a0b3",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37226417_698ebc6b",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-13T23:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e32e001_ce37a0b3",
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "20a0c77f_3517aa11",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-13T23:02:11Z",
+      "side": 1,
+      "message": "This is the original behavior. My intention of this CL is to restore original behavior with minimum changes. We can change this in follow-up CL if needed (or move this method outside the parse as yukishiino@ suggested).",
+      "parentUuid": "c8111489_18eb84d8",
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "211a13db_fd889ff1",
         "filename": "tools/idl_parser/test_parser/enum_web.idl",
         "patchSetId": 1
@@ -64,6 +118,30 @@
       "writtenOn": "2017-07-13T10:00:11Z",
       "side": 1,
       "message": "nit: add a space at the beginning.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b69150_cfde7cd6",
+        "filename": "tools/idl_parser/test_parser/enum_web.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-13T23:02:11Z",
+      "side": 1,
+      "message": "We can\u0027t. Patterns are exact matches as the above comment says.",
+      "parentUuid": "211a13db_fd889ff1",
       "range": {
         "startLine": 37,
         "startChar": 2,
