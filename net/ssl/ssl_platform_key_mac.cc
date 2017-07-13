@@ -40,13 +40,6 @@
 #include "third_party/boringssl/src/include/openssl/nid.h"
 #include "third_party/boringssl/src/include/openssl/rsa.h"
 
-#if !defined(MAC_OS_X_VERSION_10_12) || \
-    MAC_OS_X_VERSION_MIN_ALLOWED < MAC_OS_X_VERSION_10_12
-// Redeclare typedefs that only exist in 10.12+ to suppress
-// -Wpartial-availability warnings.
-typedef CFStringRef SecKeyAlgorithm;
-#endif
-
 namespace net {
 
 // CSSM functions are deprecated as of OSX 10.7, but have no replacement.
