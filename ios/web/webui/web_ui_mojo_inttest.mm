@@ -147,6 +147,22 @@ class WebUIMojoTest : public WebIntTest {
         new TestWebUIControllerFactory(ui_handler_.get()));
   }
 
+  void TearDown() override {
+    @autoreleasepool {
+      // WebState owns CRWWebUIManager. When WebState is destroyed,
+      // CRWWebUIManager is autoreleased and will be destroyed upon autorelease
+      // pool purge. However in this test, WebTest destructor is called before
+      // PlatformTest, thus CRWWebUIManager outlives the WebThreadBundle.
+      // However, CRWWebUIManager owns a URLFetcherImpl, which DCHECKs that its
+      // destructor is called on UI web thread. Hence, URLFetcherImpl has to
+      // outlive the WebThreadBundle, since [UIThread mainThread] will not be
+      // WebThread::UI once WebThreadBundle is destroyed.
+      web_state_.reset();
+    }
+
+    WebIntTest::TearDown();
+  }
+
   // Returns WebState which loads test WebUI page.
   WebStateImpl* web_state() { return web_state_.get(); }
   // Returns UI handler which communicates with WebUI page.
