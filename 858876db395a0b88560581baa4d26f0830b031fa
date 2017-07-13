@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "16551f36_b50bf37e",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T20:31:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bcadd392_0360485f",
+      "range": {
+        "startLine": 99,
+        "startChar": 9,
+        "endLine": 99,
+        "endChar": 33
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1783718_197dbe02",
         "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
         "patchSetId": 12
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "302b07f9_06e30b75",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T20:31:14Z",
+      "side": 1,
+      "message": "Got it. Now I saw the change in PaintWorklet.",
+      "parentUuid": "e788ddf1_a9ae8086",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 60
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1da1f1ab_4ce9a74b",
         "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
         "patchSetId": 12
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "The idea is up to debate. I see two options:\n1. Pass a parameter like what it is now. (I can give it a default value).\n2. Keep a static instance count in PaintWorkletGlobalScope class.\nBoth majidvp@ and flackr@ seem to favor the second one.",
       "parentUuid": "1da1f1ab_4ce9a74b",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 37
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b7badf_c9849d42",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-13T20:31:14Z",
+      "side": 1,
+      "message": "Understood. I agree with the second one as well for AudioWorklet.",
+      "parentUuid": "6a1357a7_f4de7216",
       "range": {
         "startLine": 68,
         "startChar": 6,
