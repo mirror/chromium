@@ -37,6 +37,52 @@
     },
     {
       "key": {
+        "uuid": "1c5c0ef5_83983f49",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-13T16:18:06Z",
+      "side": 1,
+      "message": "This would be a network error, no?",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 54
+      },
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2635887a_71b25c4a",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-13T16:18:06Z",
+      "side": 1,
+      "message": "Could you make this a DVLOG so we don\u0027t have the strings in release builds?",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 6
+      },
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "861cbfb9_dc232b88",
         "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
         "patchSetId": 7
