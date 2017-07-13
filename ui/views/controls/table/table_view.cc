@@ -28,10 +28,10 @@
 #include "ui/views/controls/table/table_header.h"
 #include "ui/views/controls/table/table_utils.h"
 #include "ui/views/controls/table/table_view_observer.h"
+#include "ui/views/layout/layout_provider.h"
+#include "ui/views/style/typography.h"
 
-// Padding around the text (on each side).
-static const int kTextVerticalPadding = 3;
-static const int kTextHorizontalPadding = 6;
+constexpr int kPreHarmonyRowHeightPadding = 3;
 
 // Size of images.
 static const int kImageSize = 16;
@@ -145,7 +145,10 @@ TableView::TableView(ui::TableModel* model,
       single_selection_(single_selection),
       select_on_remove_(true),
       observer_(NULL),
-      row_height_(font_list_.GetHeight() + kTextVerticalPadding * 2),
+      font_list_(
+          style::GetFont(style::CONTEXT_TABLE_ROW, style::STYLE_PRIMARY)),
+      row_height_(
+          LayoutProvider::Get()->GetDistanceMetric(DISTANCE_TABLE_ROW_HEIGHT)),
       last_parent_width_(0),
       layout_width_(0),
       grouper_(NULL),
@@ -550,6 +553,11 @@ void TableView::OnPaint(gfx::Canvas* canvas) {
       ui::NativeTheme::kColorId_TableText);
   const SkColor selected_fg_color = GetNativeTheme()->GetSystemColor(
       selected_text_color_id(HasFocus()));
+  const LayoutProvider* provider = LayoutProvider::Get();
+  const int row_margin =
+      provider->GetDistanceMetric(DISTANCE_TABLE_ROW_HORIZONTAL_MARGIN);
+  const int row_element_spacing =
+      provider->GetDistanceMetric(DISTANCE_RELATED_LABEL_HORIZONTAL);
   for (int i = region.min_row; i < region.max_row; ++i) {
     const int model_index = ViewToModel(i);
     const bool is_selected = selection_model_.IsSelected(model_index);
@@ -557,11 +565,11 @@ void TableView::OnPaint(gfx::Canvas* canvas) {
       canvas->FillRect(GetRowBounds(i), selected_bg_color);
     for (int j = region.min_column; j < region.max_column; ++j) {
       const gfx::Rect cell_bounds(GetCellBounds(i, j));
-      int text_x = kTextHorizontalPadding + cell_bounds.x();
+      int text_x = row_margin + cell_bounds.x();
 
       // Provide space for the grouping indicator, but draw it separately.
       if (j == 0 && grouper_)
-        text_x += kGroupingIndicatorSize + kTextHorizontalPadding;
+        text_x += kGroupingIndicatorSize + row_element_spacing;
 
       // Always paint the icon in the first visible column.
       if (j == 0 && table_type_ == ICON_AND_TEXT) {
@@ -574,17 +582,16 @@ void TableView::OnPaint(gfx::Canvas* canvas) {
               cell_bounds.y() + (cell_bounds.height() - kImageSize) / 2,
               kImageSize, kImageSize, true);
         }
-        text_x += kImageSize + kTextHorizontalPadding;
+        text_x += kImageSize + row_element_spacing;
       }
-      if (text_x < cell_bounds.right() - kTextHorizontalPadding) {
+      if (text_x < cell_bounds.right() - row_margin) {
         canvas->DrawStringRectWithFlags(
             model_->GetText(model_index, visible_columns_[j].column.id),
             font_list_, is_selected ? selected_fg_color : fg_color,
             gfx::Rect(GetMirroredXWithWidthInView(
-                text_x, cell_bounds.right() - text_x - kTextHorizontalPadding),
-                      cell_bounds.y() + kTextVerticalPadding,
-                      cell_bounds.right() - text_x,
-                      cell_bounds.height() - kTextVerticalPadding * 2),
+                          text_x, cell_bounds.right() - text_x - row_margin),
+                      cell_bounds.y(), cell_bounds.right() - text_x,
+                      row_height_),
             TableColumnAlignmentToCanvasAlignment(
                 visible_columns_[j].column.alignment));
       }
@@ -600,8 +607,8 @@ void TableView::OnPaint(gfx::Canvas* canvas) {
   grouping_flags.setColor(grouping_color);
   grouping_flags.setStyle(cc::PaintFlags::kFill_Style);
   grouping_flags.setAntiAlias(true);
-  const int group_indicator_x = GetMirroredXInView(GetCellBounds(0, 0).x() +
-      kTextHorizontalPadding + kGroupingIndicatorSize / 2);
+  const int group_indicator_x = GetMirroredXInView(
+      GetCellBounds(0, 0).x() + row_margin + kGroupingIndicatorSize / 2);
   for (int i = region.min_row; i < region.max_row; ) {
     const int model_index = ViewToModel(i);
     GroupRange range;
@@ -706,16 +713,20 @@ gfx::Rect TableView::GetCellBounds(int row, int visible_column_index) const {
 
 void TableView::AdjustCellBoundsForText(int visible_column_index,
                                         gfx::Rect* bounds) const {
-  int text_x = kTextHorizontalPadding + bounds->x();
+  const LayoutProvider* provider = LayoutProvider::Get();
+  const int row_margin =
+      provider->GetDistanceMetric(DISTANCE_TABLE_ROW_HORIZONTAL_MARGIN);
+  const int row_element_spacing =
+      provider->GetDistanceMetric(DISTANCE_RELATED_LABEL_HORIZONTAL);
+  int text_x = row_margin + bounds->x();
   if (visible_column_index == 0) {
     if (grouper_)
-      text_x += kGroupingIndicatorSize + kTextHorizontalPadding;
+      text_x += kGroupingIndicatorSize + row_element_spacing;
     if (table_type_ == ICON_AND_TEXT)
-      text_x += kImageSize + kTextHorizontalPadding;
+      text_x += kImageSize + row_element_spacing;
   }
   bounds->set_x(text_x);
-  bounds->set_width(
-      std::max(0, bounds->right() - kTextHorizontalPadding - text_x));
+  bounds->set_width(std::max(0, bounds->right() - row_margin - text_x));
 }
 
 void TableView::CreateHeaderIfNecessary() {
@@ -735,15 +746,20 @@ void TableView::UpdateVisibleColumnSizes() {
   for (size_t i = 0; i < visible_columns_.size(); ++i)
     columns.push_back(visible_columns_[i].column);
 
+  const LayoutProvider* provider = LayoutProvider::Get();
+  const int row_margin =
+      provider->GetDistanceMetric(DISTANCE_TABLE_ROW_HORIZONTAL_MARGIN);
+  const int row_element_spacing =
+      provider->GetDistanceMetric(DISTANCE_RELATED_LABEL_HORIZONTAL);
   int first_column_padding = 0;
   if (table_type_ == ICON_AND_TEXT && header_)
-    first_column_padding += kImageSize + kTextHorizontalPadding;
+    first_column_padding += kImageSize + row_element_spacing;
   if (grouper_)
-    first_column_padding += kGroupingIndicatorSize + kTextHorizontalPadding;
+    first_column_padding += kGroupingIndicatorSize + row_element_spacing;
 
   std::vector<int> sizes = views::CalculateTableColumnSizes(
       layout_width_, first_column_padding, header_->font_list(), font_list_,
-      std::max(kTextHorizontalPadding, TableHeader::kHorizontalPadding) * 2,
+      std::max(row_margin * 2, TableHeader::kHorizontalPadding * 2),
       TableHeader::kSortIndicatorWidth, columns, model_);
   DCHECK_EQ(visible_columns_.size(), sizes.size());
   int x = 0;
@@ -957,8 +973,9 @@ bool TableView::GetTooltipImpl(const gfx::Point& location,
   if (tooltip)
     *tooltip = text;
   if (tooltip_origin) {
-    tooltip_origin->SetPoint(cell_bounds.x(),
-                             cell_bounds.y() + kTextVerticalPadding);
+    tooltip_origin->SetPoint(
+        cell_bounds.x(),
+        cell_bounds.y() + (row_height_ - font_list_.GetHeight()) / 2);
   }
   return true;
 }
