@@ -333,7 +333,7 @@ void RenderWidgetHostInputEventRouter::RouteGestureEvent(
     return;
   }
 
-  switch (event->source_device) {
+  switch (event->SourceDevice()) {
     case blink::kWebGestureDeviceUninitialized:
     case blink::kWebGestureDeviceCount:
       NOTREACHED() << "Uninitialized device type is not allowed";
@@ -791,7 +791,7 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
     RenderWidgetHostViewBase* root_view,
     blink::WebGestureEvent* event,
     const ui::LatencyInfo& latency) {
-  DCHECK_EQ(blink::kWebGestureDeviceTouchscreen, event->source_device);
+  DCHECK_EQ(blink::kWebGestureDeviceTouchscreen, event->SourceDevice());
 
   if (event->GetType() == blink::WebInputEvent::kGesturePinchBegin) {
     in_touchscreen_gesture_pinch_ = true;
@@ -871,7 +871,7 @@ void RenderWidgetHostInputEventRouter::RouteTouchpadGestureEvent(
     RenderWidgetHostViewBase* root_view,
     blink::WebGestureEvent* event,
     const ui::LatencyInfo& latency) {
-  DCHECK_EQ(blink::kWebGestureDeviceTouchpad, event->source_device);
+  DCHECK_EQ(blink::kWebGestureDeviceTouchpad, event->SourceDevice());
 
   if (event->GetType() == blink::WebInputEvent::kGesturePinchBegin ||
       event->GetType() == blink::WebInputEvent::kGestureFlingStart) {

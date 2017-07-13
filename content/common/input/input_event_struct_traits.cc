@@ -119,7 +119,7 @@ bool StructTraits<content::mojom::EventDataView, InputEventUniquePtr>::Read(
     gesture_event->y = gesture_data->widget_position.y();
     gesture_event->global_x = gesture_data->screen_position.x();
     gesture_event->global_y = gesture_data->screen_position.y();
-    gesture_event->source_device = gesture_data->source_device;
+    gesture_event->SetSourceDevice(gesture_data->source_device);
     gesture_event->unique_touch_event_id = gesture_data->unique_touch_event_id;
     gesture_event->resending_plugin_id = gesture_data->resending_plugin_id;
 
@@ -393,7 +393,7 @@ void* StructTraits<content::mojom::EventDataView,
     content::mojom::GestureDataPtr& gesture_data = context->gesture_data;
     gesture_data->screen_position = gesture_event->PositionInScreen();
     gesture_data->widget_position = gesture_event->PositionInWidget();
-    gesture_data->source_device = gesture_event->source_device;
+    gesture_data->source_device = gesture_event->SourceDevice();
     gesture_data->unique_touch_event_id = gesture_event->unique_touch_event_id;
     gesture_data->resending_plugin_id = gesture_event->resending_plugin_id;
 
