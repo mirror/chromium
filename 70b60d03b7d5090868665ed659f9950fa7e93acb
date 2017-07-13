@@ -22,6 +22,30 @@
       "revId": "70b60d03b7d5090868665ed659f9950fa7e93acb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02764b39_9c782e6e",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-13T17:06:56Z",
+      "side": 1,
+      "message": "Filed a bug and added TODO.\n\nThis CL started with a simple idea: extracting the already existed sensor buffer reading code into somewhere so that it can be reused and we don\u0027t have to write similar logic again and again. As this CL evolves, we found two kinds of approach can be applied here: the common sensor buffer reading code can either be put into the SensorReading struct or have a separate sensor buffer reader class which handles the reading. From my point of view, as long as the approach can serve the purpose of code reuse and the solution is reasonably clean, then it is good. I think both approaches fulfill this requirement, so I am fine with either approach.\n\nCurrently this CL blocks some of my other CLs, so I would like to resolve this quickly so that my other CLs can make progress.\n\nDone.",
+      "parentUuid": "83667431_7e9538fb",
+      "range": {
+        "startLine": 118,
+        "startChar": 43,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "70b60d03b7d5090868665ed659f9950fa7e93acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

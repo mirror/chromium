@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "3bf8e8ae_167a8cb2",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-13T17:06:56Z",
+      "side": 1,
+      "message": "As per my other comment, I am fine with either approach.",
+      "parentUuid": "67a0e3ab_95df452f",
+      "range": {
+        "startLine": 49,
+        "startChar": 61,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "06029f63a771329aefca1c9beb839e74eed30afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10db0dc6_38b318ee",
         "filename": "device/generic_sensor/public/cpp/sensor_reading.cc",
         "patchSetId": 9
