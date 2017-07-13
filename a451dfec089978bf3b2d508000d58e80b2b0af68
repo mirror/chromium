@@ -22,6 +22,30 @@
       "revId": "a451dfec089978bf3b2d508000d58e80b2b0af68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d789828d_55a2a388",
+        "filename": "chromeos/components/tether/keep_alive_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T18:20:53Z",
+      "side": 1,
+      "message": "Circling back, here is the reasoning: the test actually doesn\u0027t fail in release builds, only debug builds. The buildbots don\u0027t run debug tests as part of presubmit because they take way too long and would prevent users from submitting code in a timely manner. However, they do run post-submit so that they can catch issues like this at some point.\n\nSo, looks like everything worked as intended for now.",
+      "parentUuid": "a75999b2_15a225bd",
+      "range": {
+        "startLine": 98,
+        "startChar": 41,
+        "endLine": 98,
+        "endChar": 54
+      },
+      "revId": "a451dfec089978bf3b2d508000d58e80b2b0af68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
