@@ -75,7 +75,14 @@ public class TestChildProcessConnection extends ChildProcessConnection {
      */
     public TestChildProcessConnection(ComponentName serviceName, boolean bindToCaller,
             boolean bindAsExternalService, Bundle serviceBundle) {
-        super(null /* context */, serviceName, bindToCaller, bindAsExternalService, serviceBundle);
+        super(null /* context */, serviceName, bindToCaller, bindAsExternalService, serviceBundle,
+                new ChildServiceConnectionFactory() {
+                    @Override
+                    public ChildServiceConnection createConnection(Intent bindIntent, int bindFlags,
+                            ChildServiceConnectionDelegate delegate) {
+                        return new MockChildServiceConnection(this);
+                    }
+                });
         mPostOnServiceConnected = true;
     }
 
@@ -86,11 +93,6 @@ public class TestChildProcessConnection extends ChildProcessConnection {
     @Override
     public int getPid() {
         return mPid;
-    }
-
-    @Override
-    protected ChildServiceConnection createServiceConnection(int bindFlags) {
-        return new MockChildServiceConnection(this);
     }
 
     // We don't have a real service so we have to mock the connection status.
