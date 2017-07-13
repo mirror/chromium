@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7310631b_fad5abc5",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:15:10Z",
+      "side": 1,
+      "message": "Good idea.  I can just do NOTREACHED() inside the switch.  Thanks!",
+      "parentUuid": "fda7498a_5011d1ef",
+      "revId": "6a8967ca2b5f103135e8c5ed5dfdaf6810d10596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96a7bd54_6b479fe7",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-12T23:51:31Z",
       "side": 1,
       "message": "Is it the plan to change it to RECOVERING here and start recovery for model/controller/file monitor (depending on whoever failed) and on the subsequent call to this function we would change it to UNAVAILABLE here if it still fails?",
+      "range": {
+        "startLine": 437,
+        "startChar": 1,
+        "endLine": 437,
+        "endChar": 2
+      },
+      "revId": "6a8967ca2b5f103135e8c5ed5dfdaf6810d10596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa916a33_1dfa6e73",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:15:10Z",
+      "side": 1,
+      "message": "Yeah the plan is to go to RECOVERING and see if that puts us back into a good state :).",
+      "parentUuid": "96a7bd54_6b479fe7",
       "range": {
         "startLine": 437,
         "startChar": 1,
