@@ -798,6 +798,12 @@ class DownloadProtectionService::CheckClientDownloadRequest
   void StartExtractDmgFeatures() {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DCHECK(item_);
+    if (item_->GetTotalBytes() > FileTypePolicies::GetInstance()->MaxSizeUnpackDmg()) {
+      UMA_HISTOGRAM_BOOLEAN("SBClientDownload.DmgTooBigToProcess", true);
+      OnFileFeatureExtractionDone();
+    } else {
+      UMA_HISTOGRAM_BOOLEAN("SBClientDownload.DmgTooBigToProcess", false);
+    }
     dmg_analyzer_ = new SandboxedDMGAnalyzer(
         item_->GetFullPath(),
         base::Bind(&CheckClientDownloadRequest::OnDmgAnalysisFinished,

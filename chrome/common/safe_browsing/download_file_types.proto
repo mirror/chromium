@@ -65,4 +65,5 @@ message DownloadFileTypeConfig {
   optional float sampled_ping_probability = 2;
   repeated DownloadFileType file_types = 3;
   optional DownloadFileType default_file_type = 4;
+  optional uint64 max_size_unpack_dmg = 5;
 }
