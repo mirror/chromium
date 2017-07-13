@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f57af0d2_99545f88",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7920eb1_bba4ccba",
+      "range": {
+        "startLine": 197,
+        "startChar": 21,
+        "endLine": 197,
+        "endChar": 31
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95d8dbef_4f10c3ed",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393cf32c_f417aa66",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95d8dbef_4f10c3ed",
+      "range": {
+        "startLine": 201,
+        "startChar": 21,
+        "endLine": 201,
+        "endChar": 29
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "05ba8c42_702ce8de",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ed0df6_3b9e1827",
+      "range": {
+        "startLine": 714,
+        "startChar": 11,
+        "endLine": 714,
+        "endChar": 16
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7bdf6a8_c1ea2536",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350fc5b3_e9aad70d",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7bdf6a8_c1ea2536",
+      "range": {
+        "startLine": 758,
+        "startChar": 11,
+        "endLine": 758,
+        "endChar": 16
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "830cc900_52800743",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3fdd3da_23b64e15",
+      "range": {
+        "startLine": 42,
+        "startChar": 56,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d67af40_089a63ac",
         "filename": "ash/system/network/network_icon.h",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb235446_34d70c89",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d67af40_089a63ac",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "29e11b27_6d87b7fc",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07ed2325_d1131429",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4460151f_7939ca12",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 12
@@ -183,6 +351,30 @@
       "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac15318_d0111484",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4460151f_7939ca12",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "9103664b_807089c0",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edeb2df0_7cda6f5b",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f52f270d_43c95caa",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 12
@@ -220,6 +436,30 @@
       "writtenOn": "2017-07-13T17:08:19Z",
       "side": 1,
       "message": "isn\u0027t this function equivalent to dividing by 25?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30814f9_72f62e07",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Yes, but for the sake of readability I did it this way, and also it guarantees a value.  But I could also divide by 25 if you think it\u0027s unnecessary.",
+      "parentUuid": "f52f270d_43c95caa",
       "range": {
         "startLine": 49,
         "startChar": 4,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "c1876719_5f9cd74f",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "khorimoto@",
+      "parentUuid": "d0d1327c_dc28b661",
+      "range": {
+        "startLine": 85,
+        "startChar": 29,
+        "endLine": 85,
+        "endChar": 75
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c32b6dba_5481319b",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 12
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "ba9aa341_1a10816e",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c32b6dba_5481319b",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 63
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6ee14a7_915c74d1",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
         "patchSetId": 12
@@ -289,6 +577,30 @@
       "writtenOn": "2017-07-13T17:08:19Z",
       "side": 1,
       "message": "is there a particular reason these private static fns are not just defined in the anonymous namespace in the cc file?",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0895491_78ae02d8",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T18:03:36Z",
+      "side": 1,
+      "message": "khorimoto@",
+      "parentUuid": "e6ee14a7_915c74d1",
       "range": {
         "startLine": 80,
         "startChar": 2,
