@@ -2,22 +2,31 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/safe_browsing/browser_url_loader_throttle.h"
+#include "components/safe_browsing/browser/browser_url_loader_throttle.h"
 
 #include "base/logging.h"
-#include "chrome/browser/safe_browsing/safe_browsing_url_checker_impl.h"
-#include "chrome/browser/safe_browsing/ui_manager.h"
-#include "components/safe_browsing_db/database_manager.h"
+#include "components/safe_browsing/browser/safe_browsing_url_checker_impl.h"
+#include "components/safe_browsing/browser/url_checker_delegate.h"
 #include "net/url_request/redirect_info.h"
 
 namespace safe_browsing {
 
+// static
+std::unique_ptr<BrowserURLLoaderThrottle> BrowserURLLoaderThrottle::MaybeCreate(
+    scoped_refptr<UrlCheckerDelegate> checker_delegate,
+    const base::Callback<content::WebContents*()>& web_contents_getter) {
+  if (!checker_delegate->GetDatabaseManager()->IsSupported())
+    return nullptr;
+
+  return base::WrapUnique<BrowserURLLoaderThrottle>(
+      new BrowserURLLoaderThrottle(std::move(checker_delegate),
+                                   web_contents_getter));
+}
+
 BrowserURLLoaderThrottle::BrowserURLLoaderThrottle(
-    scoped_refptr<SafeBrowsingDatabaseManager> database_manager,
-    scoped_refptr<SafeBrowsingUIManager> ui_manager,
+    scoped_refptr<UrlCheckerDelegate> checker_delegate,
     const base::Callback<content::WebContents*()>& web_contents_getter)
-    : database_manager_(database_manager),
-      ui_manager_(ui_manager),
+    : checker_delegate_(std::move(checker_delegate)),
       web_contents_getter_(web_contents_getter) {}
 
 BrowserURLLoaderThrottle::~BrowserURLLoaderThrottle() = default;
@@ -33,8 +42,8 @@ void BrowserURLLoaderThrottle::WillStartRequest(
 
   pending_checks_++;
   url_checker_ = base::MakeUnique<SafeBrowsingUrlCheckerImpl>(
-      load_flags, resource_type, std::move(database_manager_),
-      std::move(ui_manager_), web_contents_getter_);
+      load_flags, resource_type, std::move(checker_delegate_),
+      web_contents_getter_);
   url_checker_->CheckUrl(
       url, base::BindOnce(&BrowserURLLoaderThrottle::OnCheckUrlResult,
                           base::Unretained(this)));
