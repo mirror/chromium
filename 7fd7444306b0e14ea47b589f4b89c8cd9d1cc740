@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2344dbb7_a22a21bf",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-13T15:20:56Z",
+      "side": 1,
+      "message": "nit: From a stylistic perspective it seems odd to contemplate that autofill might be enabled but not supported. Could this be renamed?",
+      "range": {
+        "startLine": 1169,
+        "startChar": 18,
+        "endLine": 1169,
+        "endChar": 37
+      },
+      "revId": "7fd7444306b0e14ea47b589f4b89c8cd9d1cc740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
