@@ -32,7 +32,8 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   void MediaMutedStatusChanged(const MediaPlayerId& id, bool muted) override;
   void MediaResized(const gfx::Size& size, const MediaPlayerId& id) override;
 
-  static const int kSignificantSize;
+  static const int kSignificantSizeWidth;
+  static const int kSignificantSizeHeight;
 
  private:
   // Only MediaEngagementService can create a MediaEngagementContentsObserver.
