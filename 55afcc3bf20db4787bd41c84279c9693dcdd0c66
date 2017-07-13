@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d26bca0_4bf9f007",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-13T22:52:37Z",
+      "side": 1,
+      "message": "It\u0027s likely that a similar problem exists with passing in a raw pointer to EventRouter, so we should be unregistering from it when DialAPI is about to be destroyed.",
+      "range": {
+        "startLine": 39,
+        "startChar": 46,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7078e515_5982bb1b",
         "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
         "patchSetId": 4
