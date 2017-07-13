@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e288e380_2cb76efa",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-13T18:36:35Z",
+      "side": 1,
+      "message": "nit: s/effecting/affecting",
+      "range": {
+        "startLine": 414,
+        "startChar": 58,
+        "endLine": 414,
+        "endChar": 67
+      },
+      "revId": "61523c333f7ecdd7f52284bd7aecc769746b452b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a08e82_1565b8c2",
+        "filename": "ui/views/widget/desktop_aura/desktop_native_widget_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-13T18:36:35Z",
+      "side": 1,
+      "message": "I think we will want to disable animations on wayland too, when that comes.  So you must use the dreaded OS_LINUX \u0026\u0026 !OS_CHROMEOS",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 21
+      },
+      "revId": "61523c333f7ecdd7f52284bd7aecc769746b452b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
