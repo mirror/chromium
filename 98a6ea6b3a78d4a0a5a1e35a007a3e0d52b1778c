@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7920eb1_bba4ccba",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "nit: now that it\u0027s not part of the class it\u0027s relevant to, can we give this a more specific name such as kSignalStrengthImageInset",
+      "range": {
+        "startLine": 197,
+        "startChar": 21,
+        "endLine": 197,
+        "endChar": 31
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d8dbef_4f10c3ed",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 201,
+        "startChar": 21,
+        "endLine": 201,
+        "endChar": 29
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ed0df6_3b9e1827",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "constexpr?",
+      "range": {
+        "startLine": 714,
+        "startChar": 11,
+        "endLine": 714,
+        "endChar": 16
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bdf6a8_c1ea2536",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "constexpr?",
+      "range": {
+        "startLine": 758,
+        "startChar": 11,
+        "endLine": 758,
+        "endChar": 16
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3fdd3da_23b64e15",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "tiny nit: I think size should come right after color",
+      "range": {
+        "startLine": 42,
+        "startChar": 56,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d67af40_089a63ac",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "might be worth commenting that this version intuits color and size from icon_type",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ed2325_d1131429",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "why is this commented out?\n\nyou may need to include base/macros.h",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4460151f_7939ca12",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "nit: \\n",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edeb2df0_7cda6f5b",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "I think the code below will get a bit less verbose if you make this\n\nconstexpr gfx::Size kTetherSignalIconSize(40, 40);",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52f270d_43c95caa",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "isn\u0027t this function equivalent to dividing by 25?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d1327c_dc28b661",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "I like this better as CreateNotification. This name is unwieldy as is, but imagine if the default value used for every missing parameter were described in the name...",
+      "range": {
+        "startLine": 85,
+        "startChar": 29,
+        "endLine": 85,
+        "endChar": 75
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32b6dba_5481319b",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "great candidate for use of auto\n\nauto source \u003d base::MakeUnique\u003c...\u003e(...)",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 63
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ee14a7_915c74d1",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T17:08:19Z",
+      "side": 1,
+      "message": "is there a particular reason these private static fns are not just defined in the anonymous namespace in the cc file?",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
