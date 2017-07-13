@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7b6b6f7_afceae14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-13T00:39:30Z",
+      "side": 1,
+      "message": "why aren\u0027t we using LOG(DEBUG)? I don\u0027t see any need to change PRESUBMIT.",
+      "revId": "bc3a334c037aee1cd698e8d6810a9c7f0b51ac8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
