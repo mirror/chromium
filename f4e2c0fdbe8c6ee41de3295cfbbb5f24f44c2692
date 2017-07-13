@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33adaddd_fbc6fc01",
+        "filename": "content/browser/renderer_host/media/audio_output_authorization_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-13T13:41:35Z",
+      "side": 1,
+      "message": "This should be move(), but it\u0027s not possible as the argument is being bound into a repeating callback. Passed() is actually good, since it shows that we\u0027re doing something dangerous (creating a repeatable callback that should only be called once). Ideally, MediaDevicesManager should be updated to use OnceCallbacks, and then this can be changed to move().",
+      "parentUuid": "b6b08468_c4de1096",
+      "revId": "f4e2c0fdbe8c6ee41de3295cfbbb5f24f44c2692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37f4eb7f_bf99c7c4",
         "filename": "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f4e2c0fdbe8c6ee41de3295cfbbb5f24f44c2692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b2e1f6_3332dd9f",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-13T13:41:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f4eb7f_bf99c7c4",
+      "revId": "f4e2c0fdbe8c6ee41de3295cfbbb5f24f44c2692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
