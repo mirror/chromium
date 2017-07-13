@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd1ceee8_04cd7462",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "Maybe mention these 2 parse functions only work for the new ZRAM sysfs interface?",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31cb097_2a5bf560",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "Capitalize. Ditto below.",
+      "range": {
+        "startLine": 484,
+        "startChar": 3,
+        "endLine": 484,
+        "endChar": 4
+      },
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62c2bf3_9736a871",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "Since we are doing this, we may want to also check the return value in the caller and not use the info if it\u0027s invalid.",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fb0c18_5aea27c1",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "I realized I put this in the example, but it\u0027s not needed here since we are already in namespace base.",
+      "range": {
+        "startLine": 1019,
+        "startChar": 9,
+        "endLine": 1019,
+        "endChar": 15
+      },
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5eafcd_5aa8afc1",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "Since the old interface case is so short, instead of having a long if-statement, you can do:\n\nif (!use_new_zram_interface) {\n  ParseZramPath(swap_info);\n  return true;\n}\n\n// use_new_zram_interface code goes here.",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3eded9_23af3362",
+        "filename": "base/process/process_metrics_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "nit: remove blank line, since you didn\u0027t put one above the matching #endif.",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832813c9_ed92ab87",
+        "filename": "base/process/process_metrics_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "You don\u0027t need the \"struct\" keyword since this is C++. Same on line 417.",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4687c383_f172966b",
+        "filename": "base/process/process_metrics_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "Just call the variable swapinfo. This isn\u0027t 1970s UNIX and we can afford vowels now. ;)",
+      "range": {
+        "startLine": 401,
+        "startChar": 18,
+        "endLine": 401,
+        "endChar": 25
+      },
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6351ab_25a50da2",
+        "filename": "base/process/process_metrics_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "Since the parsing functions take StringPieces, you can do const char foo[] \u003d \"foo\", which is a) const, and b) avoids creating a std::string object.",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2c5a94_d1a54d7f",
+        "filename": "base/process/process_metrics_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-13T23:40:56Z",
+      "side": 1,
+      "message": "Another invalid input would be \"1 2 3 4 5 6 a\"",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
