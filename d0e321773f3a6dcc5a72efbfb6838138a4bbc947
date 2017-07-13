@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "688a8e40_aec59aac",
+        "filename": "components/nacl/browser/nacl_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-13T17:51:31Z",
+      "side": 1,
+      "message": "Yeah, I need to get the win people to check this out next week when they return.  This looks like an omission in the existing code --I suspect this may have been wrong everywhere except windows, where the ShouldSandbox() method superseded it.\n\nSo windows should stay the same, non-windows might pick up a sandbox.",
+      "parentUuid": "0256f054_2ff3a44c",
+      "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b33955cb_55aabace",
         "filename": "content/browser/ppapi_plugin_process_host.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-13T00:26:23Z",
       "side": 1,
       "message": "is this an intended behavior change?\n\nbefore the sandbox type would be SANDBOX_TYPE_PPAPI always for non-windows, even if is_broker_. Now on non-windows this will return NO_SANDBOX if is_broker_",
+      "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeff1813_162cb4d4",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-13T17:51:31Z",
+      "side": 1,
+      "message": "No behaviour change.  The ShouldSandbox() method, which we removed, would supersede the result of this call, so that logic has to come here.",
+      "parentUuid": "b33955cb_55aabace",
       "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
