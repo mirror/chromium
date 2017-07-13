@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
 #include "base/single_thread_task_runner.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "net/base/cache_type.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/blockfile/backend_impl.h"
@@ -29,7 +30,6 @@ class CacheCreator {
                net::CacheType type,
                net::BackendType backend_type,
                uint32_t flags,
-               const scoped_refptr<base::SingleThreadTaskRunner>& thread,
                net::NetLog* net_log,
                std::unique_ptr<disk_cache::Backend>* backend,
                const net::CompletionCallback& callback);
@@ -53,7 +53,6 @@ class CacheCreator {
 #if !defined(OS_ANDROID)
   uint32_t flags_;
 #endif
-  scoped_refptr<base::SingleThreadTaskRunner> thread_;
   std::unique_ptr<disk_cache::Backend>* backend_;
   net::CompletionCallback callback_;
   std::unique_ptr<disk_cache::Backend> created_cache_;
@@ -69,7 +68,6 @@ CacheCreator::CacheCreator(
     net::CacheType type,
     net::BackendType backend_type,
     uint32_t flags,
-    const scoped_refptr<base::SingleThreadTaskRunner>& thread,
     net::NetLog* net_log,
     std::unique_ptr<disk_cache::Backend>* backend,
     const net::CompletionCallback& callback)
@@ -82,7 +80,6 @@ CacheCreator::CacheCreator(
 #if !defined(OS_ANDROID)
       flags_(flags),
 #endif
-      thread_(thread),
       backend_(backend),
       callback_(callback),
       net_log_(net_log) {
@@ -100,8 +97,7 @@ int CacheCreator::Run() {
       (backend_type_ == net::CACHE_BACKEND_DEFAULT &&
        kSimpleBackendIsDefault)) {
     disk_cache::SimpleBackendImpl* simple_cache =
-        new disk_cache::SimpleBackendImpl(path_, max_bytes_, type_, thread_,
-                                          net_log_);
+        new disk_cache::SimpleBackendImpl(path_, max_bytes_, type_, net_log_);
     created_cache_.reset(simple_cache);
     return simple_cache->Init(
         base::Bind(&CacheCreator::OnIOComplete, base::Unretained(this)));
@@ -112,7 +108,7 @@ int CacheCreator::Run() {
   return net::ERR_FAILED;
 #else
   disk_cache::BackendImpl* new_cache =
-      new disk_cache::BackendImpl(path_, thread_, net_log_);
+      new disk_cache::BackendImpl(path_, net_log_);
   created_cache_.reset(new_cache);
   new_cache->SetMaxSize(max_bytes_);
   new_cache->SetType(type_);
@@ -165,7 +161,6 @@ int CreateCacheBackend(
     const base::FilePath& path,
     int max_bytes,
     bool force,
-    const scoped_refptr<base::SingleThreadTaskRunner>& thread,
     net::NetLog* net_log,
     std::unique_ptr<Backend>* backend,
     const net::CompletionCallback& callback) {
@@ -174,17 +169,29 @@ int CreateCacheBackend(
     *backend = disk_cache::MemBackendImpl::CreateBackend(max_bytes, net_log);
     return *backend ? net::OK : net::ERR_FAILED;
   }
-  DCHECK(thread.get());
   CacheCreator* creator =
       new CacheCreator(path, force, max_bytes, type, backend_type, kNone,
-                       thread, net_log, backend, callback);
+                       net_log, backend, callback);
   return creator->Run();
+}
+
+void FlushCacheThreadForTesting() {
+  // For simple backend.
+  SimpleBackendImpl::FlushWorkerPoolForTesting();
+  base::TaskScheduler::GetInstance()->FlushForTesting();
+
+  // Block backend.
+  BackendImpl::FlushForTesting();
 }
 
 int Backend::CalculateSizeOfEntriesBetween(base::Time initial_time,
                                            base::Time end_time,
                                            const CompletionCallback& callback) {
   return net::ERR_NOT_IMPLEMENTED;
+}
+
+scoped_refptr<base::SequencedTaskRunner> Backend::GetCacheTaskRunner() {
+  return nullptr;
 }
 
 }  // namespace disk_cache

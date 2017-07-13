@@ -9,9 +9,11 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
+#include "net/disk_cache/disk_cache.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -21,31 +23,25 @@ class AppCacheDiskCacheTest : public testing::Test {
   AppCacheDiskCacheTest() {}
 
   void SetUp() override {
-    // Use the current thread for the DiskCache's cache_thread.
-    message_loop_.reset(new base::MessageLoopForIO());
-    cache_thread_ = base::ThreadTaskRunnerHandle::Get();
     ASSERT_TRUE(directory_.CreateUniqueTempDir());
     completion_callback_ = base::Bind(
         &AppCacheDiskCacheTest::OnComplete,
         base::Unretained(this));
   }
 
-  void TearDown() override {
-    base::RunLoop().RunUntilIdle();
-    message_loop_.reset(NULL);
-  }
+  void TearDown() override { scoped_task_environment_.RunUntilIdle(); }
 
   void FlushCacheTasks() {
-    base::RunLoop().RunUntilIdle();
+    disk_cache::FlushCacheThreadForTesting();
+    scoped_task_environment_.RunUntilIdle();
   }
 
   void OnComplete(int err) {
     completion_results_.push_back(err);
   }
 
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::ScopedTempDir directory_;
-  std::unique_ptr<base::MessageLoop> message_loop_;
-  scoped_refptr<base::SingleThreadTaskRunner> cache_thread_;
   net::CompletionCallback completion_callback_;
   std::vector<int> completion_results_;
 
@@ -60,7 +56,7 @@ TEST_F(AppCacheDiskCacheTest, DisablePriorToInitCompletion) {
   std::unique_ptr<AppCacheDiskCache> disk_cache(new AppCacheDiskCache);
   EXPECT_FALSE(disk_cache->is_disabled());
   disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
-                                  cache_thread_, completion_callback_);
+                                  completion_callback_);
   disk_cache->CreateEntry(1, &entry, completion_callback_);
   disk_cache->OpenEntry(2, &entry, completion_callback_);
   disk_cache->DoomEntry(3, completion_callback_);
@@ -91,7 +87,7 @@ TEST_F(AppCacheDiskCacheTest, DisableAfterInitted) {
   std::unique_ptr<AppCacheDiskCache> disk_cache(new AppCacheDiskCache);
   EXPECT_FALSE(disk_cache->is_disabled());
   disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
-                                  cache_thread_, completion_callback_);
+                                  completion_callback_);
   FlushCacheTasks();
   EXPECT_EQ(1u, completion_results_.size());
   EXPECT_EQ(net::OK, completion_results_[0]);
@@ -126,7 +122,7 @@ TEST_F(AppCacheDiskCacheTest, DISABLED_DisableWithEntriesOpen) {
   std::unique_ptr<AppCacheDiskCache> disk_cache(new AppCacheDiskCache);
   EXPECT_FALSE(disk_cache->is_disabled());
   disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
-                                  cache_thread_, completion_callback_);
+                                  completion_callback_);
   FlushCacheTasks();
   EXPECT_EQ(1u, completion_results_.size());
   EXPECT_EQ(net::OK, completion_results_[0]);

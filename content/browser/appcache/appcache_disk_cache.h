@@ -16,10 +16,6 @@
 #include "content/common/content_export.h"
 #include "net/disk_cache/disk_cache.h"
 
-namespace base {
-class SingleThreadTaskRunner;
-}  // namespace base
-
 namespace content {
 
 // An implementation of AppCacheDiskCacheInterface that
@@ -35,7 +31,6 @@ class CONTENT_EXPORT AppCacheDiskCache
       const base::FilePath& disk_cache_directory,
       int disk_cache_size,
       bool force,
-      const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
       const net::CompletionCallback& callback);
 
   // Initializes the object to use memory only storage.
@@ -57,6 +52,9 @@ class CONTENT_EXPORT AppCacheDiskCache
   void set_is_waiting_to_initialize(bool is_waiting_to_initialize) {
     is_waiting_to_initialize_ = is_waiting_to_initialize;
   }
+
+  // Backend's thread. null for memory backend.
+  scoped_refptr<base::SequencedTaskRunner> GetCacheTaskRunner();
 
  protected:
   explicit AppCacheDiskCache(bool use_simple_cache);
@@ -107,7 +105,6 @@ class CONTENT_EXPORT AppCacheDiskCache
            const base::FilePath& directory,
            int cache_size,
            bool force,
-           const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
            const net::CompletionCallback& callback);
   void OnCreateBackendComplete(int rv);
   void AddOpenEntry(EntryImpl* entry) { open_entries_.insert(entry); }
@@ -121,6 +118,7 @@ class CONTENT_EXPORT AppCacheDiskCache
   PendingCalls pending_calls_;
   OpenEntries open_entries_;
   std::unique_ptr<disk_cache::Backend> disk_cache_;
+  scoped_refptr<base::SequencedTaskRunner> disk_cache_task_runner_;
 
   base::WeakPtrFactory<AppCacheDiskCache> weak_factory_;
 };
