@@ -6,6 +6,8 @@ import("//components/viz/viz.gni")
 import("//testing/test.gni")
 
 viz_source_set("common") {
+  defines = [ "VIZ_COMMON_IMPLEMENTATION" ]
+
   sources = [
     "gl_helper.cc",
     "gl_helper.h",
@@ -13,6 +15,12 @@ viz_source_set("common") {
     "gl_helper_readback_support.h",
     "gl_helper_scaling.cc",
     "gl_helper_scaling.h",
+    "gpu/context_cache_controller.cc",
+    "gpu/context_cache_controller.h",
+    "gpu/context_provider.cc",
+    "gpu/context_provider.h",
+    "gpu/in_process_context_provider.cc",
+    "gpu/in_process_context_provider.h",
     "quads/resource_format.h",
     "quads/shared_bitmap.cc",
     "quads/shared_bitmap.h",
@@ -40,7 +48,12 @@ viz_source_set("common") {
 
   deps = [
     "//base",
+    "//gpu",
+    "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/client:gles2_interface",
+    "//gpu/command_buffer/service",
+    "//gpu/ipc:gl_in_process_context",
+    "//gpu/skia_bindings:skia_bindings",
     "//mojo/public/cpp/bindings",
     "//skia",
     "//ui/gfx:color_space",
