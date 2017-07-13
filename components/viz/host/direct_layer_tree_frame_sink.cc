@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h"
+#include "components/viz/host/direct_layer_tree_frame_sink.h"
 
 #include "base/bind.h"
 #include "cc/output/compositor_frame.h"
@@ -11,12 +11,14 @@
 #include "cc/surfaces/surface.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
+#include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display/display.h"
 
 namespace viz {
 
 DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
     const FrameSinkId& frame_sink_id,
+    HostFrameSinkManager* host_frame_sink_manager,
     cc::FrameSinkManager* frame_sink_manager,
     Display* display,
     scoped_refptr<cc::ContextProvider> context_provider,
@@ -28,6 +30,7 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
                          gpu_memory_buffer_manager,
                          shared_bitmap_manager),
       frame_sink_id_(frame_sink_id),
+      host_frame_sink_manager_(host_frame_sink_manager),
       frame_sink_manager_(frame_sink_manager),
       display_(display) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -39,11 +42,13 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
 
 DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
     const FrameSinkId& frame_sink_id,
+    HostFrameSinkManager* host_frame_sink_manager,
     cc::FrameSinkManager* frame_sink_manager,
     Display* display,
     scoped_refptr<cc::VulkanContextProvider> vulkan_context_provider)
     : LayerTreeFrameSink(std::move(vulkan_context_provider)),
       frame_sink_id_(frame_sink_id),
+      host_frame_sink_manager_(host_frame_sink_manager),
       frame_sink_manager_(frame_sink_manager),
       display_(display) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -52,6 +57,10 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
 
 DirectLayerTreeFrameSink::~DirectLayerTreeFrameSink() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (support_) {
+    host_frame_sink_manager_->DestroyCompositorFrameSink(frame_sink_id_);
+    support_.reset();
+  }
 }
 
 bool DirectLayerTreeFrameSink::BindToClient(
@@ -69,9 +78,8 @@ bool DirectLayerTreeFrameSink::BindToClient(
 
   constexpr bool is_root = true;
   constexpr bool handles_frame_sink_id_invalidation = false;
-  support_ = CompositorFrameSinkSupport::Create(
-      this, frame_sink_manager_, frame_sink_id_, is_root,
-      handles_frame_sink_id_invalidation,
+  support_ = host_frame_sink_manager_->CreateCompositorFrameSinkSupport(
+      this, frame_sink_id_, is_root, handles_frame_sink_id_invalidation,
       capabilities_.delegated_sync_points_required);
   begin_frame_source_ = base::MakeUnique<cc::ExternalBeginFrameSource>(this);
   client_->SetBeginFrameSource(begin_frame_source_.get());
@@ -88,6 +96,7 @@ void DirectLayerTreeFrameSink::DetachFromClient() {
 
   // Unregister the SurfaceFactoryClient here instead of the dtor so that only
   // one client is alive for this namespace at any given time.
+  host_frame_sink_manager_->DestroyCompositorFrameSink(frame_sink_id_);
   support_.reset();
 
   cc::LayerTreeFrameSink::DetachFromClient();

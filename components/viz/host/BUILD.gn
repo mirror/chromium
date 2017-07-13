@@ -8,6 +8,8 @@ viz_component("host") {
   defines = [ "VIZ_HOST_IMPLEMENTATION" ]
 
   sources = [
+    "direct_layer_tree_frame_sink.cc",
+    "direct_layer_tree_frame_sink.h",
     "frame_sink_observer.h",
     "host_frame_sink_manager.cc",
     "host_frame_sink_manager.h",
@@ -26,6 +28,7 @@ viz_component("host") {
   ]
 
   public_deps = [
+    "//components/viz/service",
     "//gpu/command_buffer/client",
     "//gpu/ipc/host",
   ]
@@ -35,6 +38,7 @@ viz_source_set("unit_tests") {
   testonly = true
 
   sources = [
+    "direct_layer_tree_frame_sink_unittest.cc",
     "host_frame_sink_manager_unittests.cc",
     "server_gpu_memory_buffer_manager_unittest.cc",
   ]
@@ -43,6 +47,7 @@ viz_source_set("unit_tests") {
     ":host",
     "//base",
     "//base/test:test_support",
+    "//cc:test_support",
     "//cc/ipc:interfaces",
     "//cc/surfaces",
     "//gpu/ipc/host",

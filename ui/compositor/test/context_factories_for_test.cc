@@ -39,6 +39,9 @@ void ConnectFrameSinkManager() {
   g_host_frame_sink_manager->BindAndSetManager(
       std::move(host_mojo_request), base::SequencedTaskRunnerHandle::Get(),
       std::move(manager_mojo));
+
+  g_host_frame_sink_manager->SetFrameSinkManager(
+      g_frame_sink_manager_impl->frame_sink_manager());
 }
 
 }  // namespace

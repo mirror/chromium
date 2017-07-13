@@ -7,14 +7,21 @@
 #include <utility>
 
 #include "base/sequenced_task_runner.h"
-#include "cc/surfaces/surface_manager.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "components/viz/common/surfaces/surface_info.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
 
 namespace viz {
 
 HostFrameSinkManager::HostFrameSinkManager() : binding_(this) {}
 
 HostFrameSinkManager::~HostFrameSinkManager() = default;
+
+void HostFrameSinkManager::SetFrameSinkManager(
+    cc::FrameSinkManager* frame_sink_manager) {
+  frame_sink_manager_ = frame_sink_manager;
+}
 
 void HostFrameSinkManager::BindAndSetManager(
     cc::mojom::FrameSinkManagerClientRequest request,
@@ -37,17 +44,43 @@ void HostFrameSinkManager::CreateCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     cc::mojom::CompositorFrameSinkRequest request,
     cc::mojom::CompositorFrameSinkClientPtr client) {
+  LOG(ERROR) << "CreateCompositorFrameSink " << frame_sink_id;
   DCHECK_EQ(frame_sink_data_map_.count(frame_sink_id), 0u);
 
   FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
+  data.is_root = false;
 
   frame_sink_manager_ptr_->CreateCompositorFrameSink(
       frame_sink_id, std::move(request),
       mojo::MakeRequest(&data.private_interface), std::move(client));
 }
 
+std::unique_ptr<CompositorFrameSinkSupport>
+HostFrameSinkManager::CreateCompositorFrameSinkSupport(
+    CompositorFrameSinkSupportClient* client,
+    const FrameSinkId& frame_sink_id,
+    bool is_root,
+    bool handles_frame_sink_id_invalidation,
+    bool needs_sync_points) {
+  DCHECK(frame_sink_manager_);
+  DCHECK_EQ(frame_sink_data_map_.count(frame_sink_id), 0u);
+  LOG(ERROR) << "CreateCompositorFrameSinkSupport " << frame_sink_id
+             << ", is_root=" << is_root;
+
+  auto support = CompositorFrameSinkSupport::Create(
+      client, frame_sink_manager_, frame_sink_id, is_root,
+      handles_frame_sink_id_invalidation, needs_sync_points);
+
+  FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
+  data.support = support.get();
+  data.is_root = is_root;
+
+  return support;
+}
+
 void HostFrameSinkManager::DestroyCompositorFrameSink(
     const FrameSinkId& frame_sink_id) {
+  LOG(ERROR) << "DestroyCompositorFrameSink " << frame_sink_id;
   auto iter = frame_sink_data_map_.find(frame_sink_id);
   DCHECK(iter != frame_sink_data_map_.end());
 
@@ -62,15 +95,27 @@ void HostFrameSinkManager::DestroyCompositorFrameSink(
 void HostFrameSinkManager::RegisterFrameSinkHierarchy(
     const FrameSinkId& parent_frame_sink_id,
     const FrameSinkId& child_frame_sink_id) {
+  LOG(ERROR) << "RegisterFrameSinkHierarchy parent=" << parent_frame_sink_id
+             << ", child=" << child_frame_sink_id;
+  DCHECK_EQ(frame_sink_data_map_.count(child_frame_sink_id), 1u);
+
   // Register and store the parent.
-  frame_sink_manager_ptr_->RegisterFrameSinkHierarchy(parent_frame_sink_id,
-                                                      child_frame_sink_id);
+  if (frame_sink_manager_) {
+    frame_sink_manager_->RegisterFrameSinkHierarchy(parent_frame_sink_id,
+                                                    child_frame_sink_id);
+  } else {
+    frame_sink_manager_ptr_->RegisterFrameSinkHierarchy(parent_frame_sink_id,
+                                                        child_frame_sink_id);
+  }
+
   frame_sink_data_map_[child_frame_sink_id].parent = parent_frame_sink_id;
 }
 
 void HostFrameSinkManager::UnregisterFrameSinkHierarchy(
     const FrameSinkId& parent_frame_sink_id,
     const FrameSinkId& child_frame_sink_id) {
+  LOG(ERROR) << "UnregisterFrameSinkHierarchy parent=" << parent_frame_sink_id
+             << ", child=" << child_frame_sink_id;
   auto iter = frame_sink_data_map_.find(child_frame_sink_id);
   DCHECK(iter != frame_sink_data_map_.end());
 
@@ -78,14 +123,15 @@ void HostFrameSinkManager::UnregisterFrameSinkHierarchy(
   DCHECK_EQ(data.parent.value(), parent_frame_sink_id);
 
   // Unregister and clear the stored parent.
-  frame_sink_manager_ptr_->UnregisterFrameSinkHierarchy(parent_frame_sink_id,
-                                                        child_frame_sink_id);
-  data.parent.reset();
+  if (frame_sink_manager_) {
+    frame_sink_manager_->UnregisterFrameSinkHierarchy(parent_frame_sink_id,
+                                                      child_frame_sink_id);
+  } else {
+    frame_sink_manager_ptr_->UnregisterFrameSinkHierarchy(parent_frame_sink_id,
+                                                          child_frame_sink_id);
+  }
 
-  // If the client never called CreateCompositorFrameSink() then they won't
-  // call DestroyCompositorFrameSink() either, so cleanup map entry here.
-  if (!data.private_interface.is_bound())
-    frame_sink_data_map_.erase(iter);
+  data.parent.reset();
 }
 
 void HostFrameSinkManager::OnSurfaceCreated(const SurfaceInfo& surface_info) {

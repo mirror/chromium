@@ -21,10 +21,10 @@
 #include "cc/surfaces/frame_sink_manager.h"
 #include "cc/test/pixel_test_output_surface.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
+#include "components/viz/host/direct_layer_tree_frame_sink.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_scheduler.h"
-#include "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
@@ -253,9 +253,10 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
 
   auto* display = per_compositor_data_[compositor.get()]->display.get();
   auto layer_tree_frame_sink = base::MakeUnique<viz::DirectLayerTreeFrameSink>(
-      compositor->frame_sink_id(), GetFrameSinkManager(), display,
-      context_provider, shared_worker_context_provider_,
-      &gpu_memory_buffer_manager_, &shared_bitmap_manager_);
+      compositor->frame_sink_id(), GetHostFrameSinkManager(),
+      GetFrameSinkManager(), display, context_provider,
+      shared_worker_context_provider_, &gpu_memory_buffer_manager_,
+      &shared_bitmap_manager_);
   compositor->SetLayerTreeFrameSink(std::move(layer_tree_frame_sink));
 
   data->display->Resize(compositor->size());

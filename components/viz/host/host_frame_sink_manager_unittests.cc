@@ -11,7 +11,9 @@
 #include "base/run_loop.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "cc/ipc/frame_sink_manager.mojom.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -20,7 +22,7 @@ namespace test {
 namespace {
 
 constexpr FrameSinkId kFrameSinkId1(1, 1);
-constexpr FrameSinkId kFrameSinkId2(1, 1);
+constexpr FrameSinkId kFrameSinkId2(2, 1);
 
 ACTION_P(InvokeClosure, closure) {
   closure.Run();
@@ -103,10 +105,15 @@ class HostFrameSinkManagerTest : public testing::Test {
 
   MockFrameSinkManagerImpl& manager_impl() { return *manager_impl_; }
 
+  cc::FrameSinkManager* frame_sink_manager() {
+    return frame_sink_manager_.get();
+  }
+
   // testing::Test:
   void SetUp() override {
     manager_impl_ = base::MakeUnique<MockFrameSinkManagerImpl>();
     host_manager_ = base::MakeUnique<HostFrameSinkManager>();
+    frame_sink_manager_ = base::MakeUnique<cc::FrameSinkManager>();
 
     // Connect HostFrameSinkManager and FrameSinkManagerImpl.
     cc::mojom::FrameSinkManagerClientPtr host_mojo;
@@ -120,11 +127,14 @@ class HostFrameSinkManagerTest : public testing::Test {
     host_manager_->BindAndSetManager(std::move(host_mojo_request),
                                      base::SequencedTaskRunnerHandle::Get(),
                                      std::move(manager_mojo));
+
+    host_manager_->SetFrameSinkManager(frame_sink_manager());
   }
 
  private:
   std::unique_ptr<HostFrameSinkManager> host_manager_;
   std::unique_ptr<MockFrameSinkManagerImpl> manager_impl_;
+  std::unique_ptr<cc::FrameSinkManager> frame_sink_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(HostFrameSinkManagerTest);
 };
@@ -152,6 +162,18 @@ TEST_F(HostFrameSinkManagerTest, UnregisterHierarchyOnDestroy) {
       .WillOnce(InvokeClosure(run_loop.QuitClosure()));
 
   run_loop.Run();
+}
+
+TEST_F(HostFrameSinkManagerTest, RegisterInAndOutOfProcessClients) {
+  auto support1 = host_manager().CreateCompositorFrameSinkSupport(
+      nullptr, kFrameSinkId1, true /* is_root */,
+      true /* handles_frame_sink_id_invalidation */,
+      false /* needs_sync_points */);
+
+  auto support2 = host_manager().CreateCompositorFrameSinkSupport(
+      nullptr, kFrameSinkId2, true /* is_root */,
+      true /* handles_frame_sink_id_invalidation */,
+      false /* needs_sync_points */);
 }
 
 }  // namespace test

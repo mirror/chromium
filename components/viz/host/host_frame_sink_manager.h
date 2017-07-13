@@ -22,19 +22,24 @@ class SequencedTaskRunner;
 }
 
 namespace cc {
+class FrameSinkManager;
 class SurfaceInfo;
-class SurfaceManager;
 }  // namespace cc
 
 namespace viz {
 
+class CompositorFrameSinkSupport;
+class CompositorFrameSinkSupportClient;
+
 // Browser side wrapper of mojom::FrameSinkManager, to be used from the
 // UI thread. Manages frame sinks and is intended to replace SurfaceManager.
 class VIZ_HOST_EXPORT HostFrameSinkManager
-    : NON_EXPORTED_BASE(cc::mojom::FrameSinkManagerClient) {
+    : public NON_EXPORTED_BASE(cc::mojom::FrameSinkManagerClient) {
  public:
   HostFrameSinkManager();
   ~HostFrameSinkManager() override;
+
+  void SetFrameSinkManager(cc::FrameSinkManager* frame_sink_manager);
 
   // Binds |this| as a FrameSinkManagerClient for |request| on |task_runner|. On
   // Mac |task_runner| will be the resize helper task runner. May only be called
@@ -53,6 +58,13 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
       const FrameSinkId& frame_sink_id,
       cc::mojom::CompositorFrameSinkRequest request,
       cc::mojom::CompositorFrameSinkClientPtr client);
+
+  std::unique_ptr<CompositorFrameSinkSupport> CreateCompositorFrameSinkSupport(
+      CompositorFrameSinkSupportClient* client,
+      const FrameSinkId& frame_sink_id,
+      bool is_root,
+      bool handles_frame_sink_id_invalidation,
+      bool needs_sync_points);
 
   // Destroys a client connection. Will call UnregisterFrameSinkHierarchy() with
   // the registered parent if there is one.
@@ -77,9 +89,13 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
     ~FrameSinkData();
     FrameSinkData& operator=(FrameSinkData&& other);
 
+    bool is_root = false;
+
     // The FrameSinkId registered as the parent in the BeginFrame hierarchy.
     // This mirrors state in viz.
     base::Optional<FrameSinkId> parent;
+
+    CompositorFrameSinkSupport* support = nullptr;
 
     // The private interface that gives the host control over the
     // CompositorFrameSink connection between the client and viz.
@@ -98,6 +114,8 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
   // Mojo connection back from the FrameSinkManager.
   mojo::Binding<cc::mojom::FrameSinkManagerClient> binding_;
+
+  cc::FrameSinkManager* frame_sink_manager_ = nullptr;
 
   // Per CompositorFrameSink data.
   base::flat_map<FrameSinkId, FrameSinkData> frame_sink_data_map_;

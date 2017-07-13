@@ -5,6 +5,7 @@
 #include "ui/aura/local/layer_tree_frame_sink_local.h"
 
 #include "cc/output/layer_tree_frame_sink_client.h"
+#include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "ui/aura/client/cursor_client.h"
 #include "ui/aura/env.h"
@@ -17,10 +18,10 @@ namespace aura {
 
 LayerTreeFrameSinkLocal::LayerTreeFrameSinkLocal(
     const viz::FrameSinkId& frame_sink_id,
-    cc::FrameSinkManager* frame_sink_manager)
+    viz::HostFrameSinkManager* host_frame_sink_manager)
     : cc::LayerTreeFrameSink(nullptr, nullptr, nullptr, nullptr),
       frame_sink_id_(frame_sink_id),
-      frame_sink_manager_(frame_sink_manager) {}
+      host_frame_sink_manager_(host_frame_sink_manager) {}
 
 LayerTreeFrameSinkLocal::~LayerTreeFrameSinkLocal() {}
 
@@ -31,8 +32,8 @@ bool LayerTreeFrameSinkLocal::BindToClient(
   DCHECK(!thread_checker_);
   thread_checker_ = base::MakeUnique<base::ThreadChecker>();
 
-  support_ = viz::CompositorFrameSinkSupport::Create(
-      this, frame_sink_manager_, frame_sink_id_, false /* is_root */,
+  support_ = host_frame_sink_manager_->CreateCompositorFrameSinkSupport(
+      this, frame_sink_id_, false /* is_root */,
       true /* handles_frame_sink_id_invalidation */,
       true /* needs_sync_points */);
   begin_frame_source_ = base::MakeUnique<cc::ExternalBeginFrameSource>(this);
@@ -52,6 +53,7 @@ void LayerTreeFrameSinkLocal::DetachFromClient() {
   client_->SetBeginFrameSource(nullptr);
   begin_frame_source_.reset();
   support_->EvictCurrentSurface();
+  host_frame_sink_manager_->DestroyCompositorFrameSink(frame_sink_id_);
   support_.reset();
   thread_checker_.reset();
   cc::LayerTreeFrameSink::DetachFromClient();

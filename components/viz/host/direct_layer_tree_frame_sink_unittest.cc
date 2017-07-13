@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h"
+#include "components/viz/host/direct_layer_tree_frame_sink.h"
 
 #include <memory>
 
@@ -22,6 +22,7 @@
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
+#include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_scheduler.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -47,6 +48,7 @@ class DirectLayerTreeFrameSinkTest : public testing::Test {
         display_rect_(display_size_),
         context_provider_(cc::TestContextProvider::Create()) {
     frame_sink_manager_.RegisterFrameSinkId(kArbitraryFrameSinkId);
+    host_frame_sink_manager_.SetFrameSinkManager(&frame_sink_manager_);
 
     auto display_output_surface = cc::FakeOutputSurface::Create3d();
     display_output_surface_ = display_output_surface.get();
@@ -64,8 +66,8 @@ class DirectLayerTreeFrameSinkTest : public testing::Test {
         std::move(scheduler),
         base::MakeUnique<cc::TextureMailboxDeleter>(task_runner_.get())));
     layer_tree_frame_sink_ = base::MakeUnique<TestDirectLayerTreeFrameSink>(
-        kArbitraryFrameSinkId, &frame_sink_manager_, display_.get(),
-        context_provider_, nullptr, &gpu_memory_buffer_manager_,
+        kArbitraryFrameSinkId, &host_frame_sink_manager_, &frame_sink_manager_,
+        display_.get(), context_provider_, nullptr, &gpu_memory_buffer_manager_,
         &bitmap_manager_);
 
     layer_tree_frame_sink_->BindToClient(&layer_tree_frame_sink_client_);
@@ -107,6 +109,7 @@ class DirectLayerTreeFrameSinkTest : public testing::Test {
   const gfx::Size display_size_;
   const gfx::Rect display_rect_;
   cc::FrameSinkManager frame_sink_manager_;
+  HostFrameSinkManager host_frame_sink_manager_;
   cc::TestSharedBitmapManager bitmap_manager_;
   cc::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
 

@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_VIZ_SERVICE_FRAME_SINKS_DIRECT_LAYER_TREE_FRAME_SINK_H_
-#define COMPONENTS_VIZ_SERVICE_FRAME_SINKS_DIRECT_LAYER_TREE_FRAME_SINK_H_
+#ifndef COMPONENTS_VIZ_HOST_DIRECT_LAYER_TREE_FRAME_SINK_H_
+#define COMPONENTS_VIZ_HOST_DIRECT_LAYER_TREE_FRAME_SINK_H_
 
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
+#include "components/viz/host/viz_host_export.h"
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
-#include "components/viz/service/viz_service_export.h"
 
 namespace cc {
 class LocalSurfaceIdAllocator;
@@ -22,10 +22,11 @@ class FrameSinkManager;
 
 namespace viz {
 class Display;
+class HostFrameSinkManager;
 
 // This class submits compositor frames to an in-process Display, with the
 // client's frame being the root surface of the Display.
-class VIZ_SERVICE_EXPORT DirectLayerTreeFrameSink
+class VIZ_HOST_EXPORT DirectLayerTreeFrameSink
     : public cc::LayerTreeFrameSink,
       public NON_EXPORTED_BASE(CompositorFrameSinkSupportClient),
       public cc::ExternalBeginFrameSourceClient,
@@ -35,6 +36,7 @@ class VIZ_SERVICE_EXPORT DirectLayerTreeFrameSink
   // outlive this class.
   DirectLayerTreeFrameSink(
       const FrameSinkId& frame_sink_id,
+      HostFrameSinkManager* host_frame_sink_manager,
       cc::FrameSinkManager* frame_sink_manager,
       Display* display,
       scoped_refptr<cc::ContextProvider> context_provider,
@@ -43,6 +45,7 @@ class VIZ_SERVICE_EXPORT DirectLayerTreeFrameSink
       SharedBitmapManager* shared_bitmap_manager);
   DirectLayerTreeFrameSink(
       const FrameSinkId& frame_sink_id,
+      HostFrameSinkManager* host_frame_sink_manager,
       cc::FrameSinkManager* frame_sink_manager,
       Display* display,
       scoped_refptr<cc::VulkanContextProvider> vulkan_context_provider);
@@ -81,6 +84,7 @@ class VIZ_SERVICE_EXPORT DirectLayerTreeFrameSink
 
   const FrameSinkId frame_sink_id_;
   LocalSurfaceId local_surface_id_;
+  HostFrameSinkManager* host_frame_sink_manager_;
   cc::FrameSinkManager* frame_sink_manager_;
   LocalSurfaceIdAllocator local_surface_id_allocator_;
   Display* display_;
@@ -94,4 +98,4 @@ class VIZ_SERVICE_EXPORT DirectLayerTreeFrameSink
 
 }  // namespace viz
 
-#endif  // COMPONENTS_VIZ_SERVICE_FRAME_SINKS_DIRECT_LAYER_TREE_FRAME_SINK_H_
+#endif  // COMPONENTS_VIZ_HOST_DIRECT_LAYER_TREE_FRAME_SINK_H_

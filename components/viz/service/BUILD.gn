@@ -34,8 +34,6 @@ viz_component("service") {
     "frame_sinks/compositor_frame_sink_support.cc",
     "frame_sinks/compositor_frame_sink_support.h",
     "frame_sinks/compositor_frame_sink_support_client.h",
-    "frame_sinks/direct_layer_tree_frame_sink.cc",
-    "frame_sinks/direct_layer_tree_frame_sink.h",
     "frame_sinks/frame_eviction_manager.cc",
     "frame_sinks/frame_eviction_manager.h",
     "frame_sinks/frame_evictor.cc",
@@ -121,7 +119,6 @@ viz_source_set("unit_tests") {
     "display_embedder/buffer_queue_unittest.cc",
     "display_embedder/server_shared_bitmap_manager_unittest.cc",
     "frame_sinks/compositor_frame_sink_support_unittest.cc",
-    "frame_sinks/direct_layer_tree_frame_sink_unittest.cc",
   ]
 
   if (!use_aura && !is_mac) {

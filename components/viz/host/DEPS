@@ -1,6 +1,8 @@
 include_rules = [
   "+cc/ipc",
   "+cc/surfaces",
+  "+cc/output",
+  "+cc/scheduler",
   "+gpu/command_buffer/client",
   "+gpu/command_buffer/common",
   "+gpu/ipc/client",
@@ -10,3 +12,10 @@ include_rules = [
   "+services/ui/gpu/interfaces",
   "+ui/gfx",
 ]
+
+
+specific_include_rules = {
+  ".*_unittest\.cc": [
+    "+cc/test",
+  ],
+}
