@@ -247,6 +247,11 @@ void VrGLThread::SetSplashScreenIcon(const SkBitmap& bitmap) {
                                      weak_scene_manager_, bitmap));
 }
 
+void VrGLThread::OnFirstWebVrFrameAvailable() {
+  DCHECK(task_runner()->BelongsToCurrentThread());
+  scene_manager_->OnFirstWebVrFrameAvailable();
+}
+
 void VrGLThread::CleanUp() {
   scene_manager_.reset();
   vr_shell_gl_.reset();

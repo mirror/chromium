@@ -252,6 +252,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   bool ready_to_draw_ = false;
   bool surfaceless_rendering_;
   bool daydream_support_;
+  bool first_web_vr_frame_received_ = false;
 
   std::unique_ptr<VrController> controller_;
 
