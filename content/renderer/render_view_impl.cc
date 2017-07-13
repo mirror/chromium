@@ -1259,6 +1259,14 @@ void RenderViewImpl::ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect) {
     autofill_client->DidCompleteFocusChangeInFrame();
 }
 
+void RenderViewImpl::CreateWidgetMojoService(
+    base::WeakPtr<RenderViewImpl> render_view,
+    const service_manager::BindSourceInfo& source_info,
+    mojom::WidgetRequest request) {
+  if (render_view)
+    render_view->SetWidgetBinding(std::move(request));
+}
+
 void RenderViewImpl::OnSetHistoryOffsetAndLength(int history_offset,
                                                  int history_length) {
   DCHECK_GE(history_offset, -1);
