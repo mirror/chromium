@@ -27,6 +27,8 @@
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleUnits.h"
 #include "core/html/TextControlElement.h"
+#include "core/layout/LayoutBlock.h"
+#include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutView.h"
 #include "core/paint/PaintLayer.h"
 
@@ -129,26 +131,300 @@ static SelectionMode ComputeSelectionMode(
   return SelectionMode::kBlockCursor;
 }
 
+static bool IsSelectionAtomicAndVisible(LayoutObject* layout_object) {
+  if (!layout_object)
+    return false;
+  // return true;/*
+  if (layout_object->CanBeSelectionLeaf())
+    return true;
+  if (layout_object->IsImage() || layout_object->IsLayoutEmbeddedContent())
+    return true;
+  Node* node = layout_object->GetNode();
+  if (!node || !node->IsHTMLElement())
+    return false;
+  if (isHTMLTableElement(node))
+    return true;
+  if (IsHTMLFormControlElement(ToHTMLElement(*node)) ||
+      isHTMLLegendElement(ToHTMLElement(*node)) ||
+      isHTMLImageElement(ToHTMLElement(*node)) ||
+      isHTMLMeterElement(ToHTMLElement(*node)) ||
+      isHTMLProgressElement(ToHTMLElement(*node)))
+    return true;
+  return false;  //*/
+}
+
+static Vector<LayoutObject*> GetAncestors(LayoutObject* layout_object) {
+  Vector<LayoutObject*> ancestors;
+  for (LayoutObject* runner = layout_object; runner;) {
+    ancestors.push_back(runner);
+    LayoutObject* next = runner->Parent();
+    if (runner == next)
+      break;
+    runner = next;
+  }
+  return ancestors;
+}
+
+static Optional<int> compare(LayoutObject* a, LayoutObject* b) {
+  if (a == b)
+    return {0};
+  const Vector<LayoutObject*>& a_ancestors = GetAncestors(a);
+  const Vector<LayoutObject*>& b_ancestors = GetAncestors(b);
+  if (a_ancestors[a_ancestors.size() - 1] !=
+      b_ancestors[b_ancestors.size() - 1])
+    return {};
+  LayoutObject* recentAncestor = a_ancestors[a_ancestors.size() - 1];
+  size_t i = 0;
+  for (; i < std::min(a_ancestors.size(), b_ancestors.size()); ++i) {
+    if (a_ancestors[a_ancestors.size() - 1 - i] !=
+        b_ancestors[b_ancestors.size() - 1 - i])
+      break;
+    recentAncestor = a_ancestors[a_ancestors.size() - 1 - i];
+  }
+
+  if (i == a_ancestors.size())
+    return {-1};  // a is ancestor of b
+  if (i == b_ancestors.size())
+    return {1};  // b is ancestor of a
+  LayoutObject* const a_child_of_RA = a_ancestors[a_ancestors.size() - 1 - i];
+  LayoutObject* const b_child_of_RA = b_ancestors[b_ancestors.size() - 1 - i];
+  for (LayoutObject* runner = a_child_of_RA; runner;
+       runner = runner->NextSibling()) {
+    if (runner == b_child_of_RA)
+      return {-1};
+  }
+  return {1};
+}
+
+struct SelectionPosition {
+  STACK_ALLOCATED();
+
+  SelectionPosition() : SelectionPosition(nullptr, -1) {}
+  SelectionPosition(LayoutObject* layout_object, int offset)
+      : layout_object_(layout_object), offset_(offset) {}
+
+  SelectionPosition(const PositionInFlatTree& position) : SelectionPosition() {
+    if (position.IsNull())
+      return;
+    layout_object_ = position.AnchorNode()->GetLayoutObject();
+    offset_ = position.ComputeEditingOffset();
+  }
+
+  bool IsNull() const { return !layout_object_; }
+  PositionInFlatTree ToPositionInFlatTree() const {
+    if (IsNull())
+      return PositionInFlatTree();
+    return PositionInFlatTree(layout_object_->GetNode(), offset_);
+  }
+
+  LayoutObject* layout_object_;
+  int offset_;
+
+  bool operator==(const SelectionPosition& other) const {
+    return layout_object_ == other.layout_object_ && offset_ == other.offset_;
+  }
+  bool operator!=(const SelectionPosition& other) const {
+    return !operator==(other);
+  }
+};
+
+Node* ComputeNodeAfterPosition(const PositionInFlatTree& position) {
+  if (!position.AnchorNode())
+    return 0;
+
+  switch (position.AnchorType()) {
+    case PositionAnchorType::kBeforeChildren: {
+      if (Node* first_child =
+              FlatTreeTraversal::FirstChild(*position.AnchorNode()))
+        return first_child;
+      FlatTreeTraversal::NextSkippingChildren(*position.AnchorNode());
+    }
+    case PositionAnchorType::kAfterChildren:
+      return FlatTreeTraversal::NextSkippingChildren(*position.AnchorNode());
+    case PositionAnchorType::kOffsetInAnchor: {
+      if (position.AnchorNode()->IsCharacterDataNode())
+        return FlatTreeTraversal::Next(*position.AnchorNode());
+      if (Node* child_at = FlatTreeTraversal::ChildAt(
+              *position.AnchorNode(), position.OffsetInContainerNode()))
+        return child_at;
+      return FlatTreeTraversal::Next(*position.AnchorNode());
+    }
+    case PositionAnchorType::kBeforeAnchor:
+      return position.AnchorNode();
+    case PositionAnchorType::kAfterAnchor:
+      return FlatTreeTraversal::NextSkippingChildren(*position.AnchorNode());
+  }
+  NOTREACHED();
+  return 0;
+}
+
+static SelectionPosition FirstLayoutPosition(const PositionInFlatTree& start) {
+  if (start.AnchorNode()->IsTextNode() &&
+      start.AnchorNode()->GetLayoutObject()) {
+    return start;
+  }
+
+  LayoutObject* first_layout_object = nullptr;
+  for (Node* runner = ComputeNodeAfterPosition(start); runner;
+       runner = FlatTreeTraversal::Next(*runner)) {
+    if ((first_layout_object = runner->GetLayoutObject()))
+      break;
+  }
+  if (!first_layout_object)
+    return {};
+
+  for (LayoutObject* runner = first_layout_object; runner;
+       runner = runner->NextInPreOrder()) {
+    if (!IsSelectionAtomicAndVisible(runner))
+      continue;
+
+    return {runner, 0};
+  }
+  return {};
+}
+
+// Traverse FlatTree parent first backward.
+// It looks mirror of Next().
+static Node* Previous(const Node& node) {
+  if (FlatTreeTraversal::FirstChild(node))
+    return FlatTreeTraversal::LastWithin(node);
+  return FlatTreeTraversal::PreviousSkippingChildren(node);
+}
+
+// Traverse FlatTree parent first backward.
+// It looks mirror of Next().
+static LayoutObject* Previous(const LayoutObject& layout_object) {
+  if (LayoutObject* last_child = layout_object.SlowLastChild())
+    return last_child;
+  if (LayoutObject* previous_sibling = layout_object.PreviousSibling())
+    return previous_sibling;
+  for (LayoutObject* ancestor = layout_object.Parent(); ancestor;) {
+    LayoutObject* ancestor_prev_sib = ancestor->PreviousSibling();
+    if (ancestor_prev_sib)
+      return ancestor_prev_sib;
+    LayoutObject* parent = layout_object.Parent();
+    // LayoutTests/paint/invalidation/text-selection-rect-in-overflow-2.html
+    // makes infinite self-parent loop. Strange.
+    if (parent == ancestor)
+      return nullptr;
+    ancestor = parent;
+  }
+  return nullptr;
+}
+
+static Node* ComputeNodeBeforePosition(const PositionInFlatTree& position) {
+  if (!position.AnchorNode())
+    return nullptr;
+  switch (position.AnchorType()) {
+    case PositionAnchorType::kBeforeChildren:
+      return Previous(*position.AnchorNode());
+    case PositionAnchorType::kAfterChildren: {
+      if (Node* last_child =
+              FlatTreeTraversal::LastChild(*position.AnchorNode()))
+        return last_child;
+      return Previous(*position.AnchorNode());
+    }
+    case PositionAnchorType::kOffsetInAnchor: {
+      if (position.AnchorNode()->IsCharacterDataNode())
+        return Previous(*position.AnchorNode());
+      if (position.OffsetInContainerNode() == 0)
+        return Previous(*position.AnchorNode());
+      Node* child_before_offset = FlatTreeTraversal::ChildAt(
+          *position.AnchorNode(), position.OffsetInContainerNode() - 1);
+      return child_before_offset;
+    }
+    case PositionAnchorType::kBeforeAnchor:
+      return Previous(*position.AnchorNode());
+    case PositionAnchorType::kAfterAnchor:
+      return position.AnchorNode();
+  }
+  NOTREACHED();
+  return 0;
+}
+
+static SelectionPosition LastLayoutPosition(const PositionInFlatTree& end) {
+  if (end.AnchorNode()->IsTextNode() && end.AnchorNode()->GetLayoutObject()) {
+    return end;
+  }
+
+  LayoutObject* last_layout_object = nullptr;
+  for (Node* runner = ComputeNodeBeforePosition(end); runner;
+       runner = Previous(*runner)) {
+    if ((last_layout_object = runner->GetLayoutObject()))
+      break;
+  }
+  if (!last_layout_object)
+    return {};
+
+  for (LayoutObject* runner = last_layout_object; runner;
+       runner = Previous(*runner)) {
+    if (!IsSelectionAtomicAndVisible(runner))
+      continue;
+    if (Node* node = runner->GetNode()) {
+      if (node->IsTextNode()) {
+        return {runner, (int)ToText(runner->GetNode())->data().length()};
+      }
+    }
+
+    return {runner, 1};
+  }
+  return PositionInFlatTree();
+}
+
+#define MYDEBUG
+
 static EphemeralRangeInFlatTree CalcSelection(
     const FrameSelection& frame_selection) {
   const SelectionInDOMTree& selection_in_dom =
       frame_selection.GetSelectionInDOMTree();
+
+#ifdef MYDEBUG
+  EphemeralRangeInFlatTree debug_range;
+  const PositionInFlatTree& debug_base =
+      CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Base()))
+          .DeepEquivalent();
+  const PositionInFlatTree& debug_extent =
+      CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Extent()))
+          .DeepEquivalent();
+  if (!debug_base.IsNull() && !debug_extent.IsNull() &&
+      debug_base != debug_extent) {
+    const bool base_is_first = debug_base.CompareTo(debug_extent) <= 0;
+    const PositionInFlatTree& start = base_is_first ? debug_base : debug_extent;
+    const PositionInFlatTree& end = base_is_first ? debug_extent : debug_base;
+    debug_range = {MostForwardCaretPosition(start),
+                   MostBackwardCaretPosition(end)};
+  }
+  DCHECK(debug_range.IsNull() || true);
+#endif
+
   switch (ComputeSelectionMode(frame_selection)) {
     case SelectionMode::kNone:
       return {};
     case SelectionMode::kRange: {
       const PositionInFlatTree& base =
-          CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Base()))
-              .DeepEquivalent();
+          ToPositionInFlatTree(selection_in_dom.Base());
       const PositionInFlatTree& extent =
-          CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Extent()))
-              .DeepEquivalent();
-      if (base.IsNull() || extent.IsNull() || base == extent)
+          ToPositionInFlatTree(selection_in_dom.Extent());
+      const bool is_base_first = base <= extent;
+      const PositionInFlatTree& start = is_base_first ? base : extent;
+      const PositionInFlatTree& end = is_base_first ? extent : base;
+      DCHECK_LE(start, end);
+      if (start.IsNull() || end.IsNull())
+        return {PositionInFlatTree(), PositionInFlatTree()};
+      const SelectionPosition start_position = FirstLayoutPosition(start);
+      const SelectionPosition end_position = LastLayoutPosition(end);
+      if (start_position.IsNull() || end_position.IsNull())
         return {};
-      const bool base_is_first = base.CompareTo(extent) <= 0;
-      const PositionInFlatTree& start = base_is_first ? base : extent;
-      const PositionInFlatTree& end = base_is_first ? extent : base;
-      return {MostForwardCaretPosition(start), MostBackwardCaretPosition(end)};
+      Optional<int> comp =
+          compare(start_position.layout_object_, end_position.layout_object_);
+      DCHECK(comp.has_value());
+      if (comp.value() > 0)
+        return {};
+      const PositionInFlatTree selection_start =
+          start_position.ToPositionInFlatTree();
+      const PositionInFlatTree selection_end =
+          end_position.ToPositionInFlatTree();
+      return {selection_start, selection_end};
     }
     case SelectionMode::kBlockCursor: {
       const PositionInFlatTree& base =
