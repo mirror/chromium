@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "5dd820da_7314e30a",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-13T14:12:57Z",
+      "side": 1,
+      "message": "Right, so the security reasons here would be that if the user has one credential saved on Twitter website, and another coming from Twitter app, we want to make sure they end up next to each other? That might be reasonable.\nI won\u0027t predict what the best way to do this is. Let\u0027s go with what you have and iterate on feedback.",
+      "parentUuid": "40e6804b_7dd7f434",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 46
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82f828b9_7cd2ee80",
         "filename": "chrome/browser/ui/webui/options/password_manager_handler.cc",
         "patchSetId": 1
