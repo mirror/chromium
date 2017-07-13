@@ -1,6 +1,7 @@
-include_rules = [ 
+include_rules = [
   "+components/keyed_service",
   "+components/prefs",
   "+components/sync",
+  "+components/feature_engagement_tracker",
   "+net",
 ]

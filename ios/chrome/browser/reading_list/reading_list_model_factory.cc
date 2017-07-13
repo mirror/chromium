@@ -20,6 +20,7 @@
 #include "ios/chrome/browser/browser_state/browser_state_otr_helper.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/experimental_flags.h"
+#include "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h"
 #include "ios/chrome/common/channel_info.h"
 #include "ios/web/public/web_thread.h"
 
@@ -45,7 +46,9 @@ ReadingListModelFactory* ReadingListModelFactory::GetInstance() {
 ReadingListModelFactory::ReadingListModelFactory()
     : BrowserStateKeyedServiceFactory(
           "ReadingListModel",
-          BrowserStateDependencyManager::GetInstance()) {}
+          BrowserStateDependencyManager::GetInstance()) {
+  DependsOn(FeatureEngagementTrackerFactory::GetInstance());
+}
 
 ReadingListModelFactory::~ReadingListModelFactory() {}
 
@@ -70,10 +73,12 @@ std::unique_ptr<KeyedService> ReadingListModelFactory::BuildServiceInstanceFor(
                  base::BindRepeating(&syncer::ReportUnrecoverableError,
                                      GetChannel())));
 
+  feature_engagement_tracker::FeatureEngagementTracker* tracker =
+      FeatureEngagementTrackerFactory::GetForBrowserState(chrome_browser_state);
   std::unique_ptr<KeyedService> reading_list_model =
       base::MakeUnique<ReadingListModelImpl>(
           std::move(store), chrome_browser_state->GetPrefs(),
-          base::MakeUnique<base::DefaultClock>());
+          base::MakeUnique<base::DefaultClock>(), tracker);
   return reading_list_model;
 }
 
