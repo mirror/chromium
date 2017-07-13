@@ -117,8 +117,10 @@ newSettingsMainControllerWithBrowserState:(ios::ChromeBrowserState*)browserState
                                  delegate:
                                      (id<SettingsNavigationControllerDelegate>)
                                          delegate {
-  UIViewController* controller = [[SettingsCollectionViewController alloc]
-      initWithBrowserState:browserState];
+  SettingsCollectionViewController* controller =
+      [[SettingsCollectionViewController alloc]
+          initWithBrowserState:browserState
+                    dispatcher:[delegate dispatcherForSettings]];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
@@ -132,7 +134,9 @@ newAccountsController:(ios::ChromeBrowserState*)browserState
              delegate:(id<SettingsNavigationControllerDelegate>)delegate {
   UIViewController* controller = [[AccountsCollectionViewController alloc]
            initWithBrowserState:browserState
-      closeSettingsOnAddAccount:YES];
+
+      closeSettingsOnAddAccount:YES
+                     dispatcher:[delegate dispatcherForSettings]];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
@@ -508,13 +512,6 @@ initWithRootViewController:(UIViewController*)rootViewController
       // The command to reset all webview is not related to the browser state so
       // it can just be forwarded it up the responder chain.
       break;
-    case IDC_SHOW_ACCOUNTS_SETTINGS: {
-      UIViewController* controller = [[AccountsCollectionViewController alloc]
-               initWithBrowserState:mainBrowserState_
-          closeSettingsOnAddAccount:NO];
-      [self pushViewController:controller animated:YES];
-      return;
-    }
     case IDC_SHOW_SYNC_SETTINGS: {
       UIViewController* controller =
           [[SyncSettingsCollectionViewController alloc]
@@ -553,6 +550,16 @@ initWithRootViewController:(UIViewController*)rootViewController
                                     [weakSelf closeSettings];
                                   }],
   ];
+}
+
+#pragma mark - ApplicationSettingsCommands
+
+- (void)showAccountsSettings {
+  UIViewController* controller = [[AccountsCollectionViewController alloc]
+           initWithBrowserState:mainBrowserState_
+      closeSettingsOnAddAccount:NO
+                     dispatcher:[delegate_ dispatcherForSettings]];
+  [self pushViewController:controller animated:YES];
 }
 
 #pragma mark - Profile
