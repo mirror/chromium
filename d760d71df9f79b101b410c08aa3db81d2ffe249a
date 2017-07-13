@@ -22,6 +22,30 @@
       "revId": "d760d71df9f79b101b410c08aa3db81d2ffe249a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa26478_933ce1c6",
+        "filename": "chrome/browser/prefs/chrome_command_line_pref_store_ssl_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-07-13T15:51:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccb2f923_7c2ea257",
+      "range": {
+        "startLine": 82,
+        "startChar": 51,
+        "endLine": 82,
+        "endChar": 75
+      },
+      "revId": "d760d71df9f79b101b410c08aa3db81d2ffe249a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
