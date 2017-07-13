@@ -502,4 +502,6 @@ void SynchronousLayerTreeFrameSink::WillDrawSurface(
     const viz::LocalSurfaceId& local_surface_id,
     const gfx::Rect& damage_rect) {}
 
+void SynchronousLayerTreeFrameSink::OnBeginFramePausedChanged(bool paused) {}
+
 }  // namespace content

@@ -1632,8 +1632,7 @@ void RenderWidgetHostViewAndroid::StartObservingRootWindow() {
     return;
 
   observing_root_window_ = true;
-  if (host_)
-    host_->Send(new ViewMsg_SetBeginFramePaused(host_->GetRoutingID(), false));
+  SendBeginFramePaused(!begin_frame_paused_);
   view_.GetWindowAndroid()->AddObserver(this);
   // When using browser compositor, DelegatedFrameHostAndroid provides the BFS.
   if (!using_browser_compositor_)
@@ -1659,8 +1658,7 @@ void RenderWidgetHostViewAndroid::StopObservingRootWindow() {
   is_window_activity_started_ = true;
   is_window_visible_ = true;
   observing_root_window_ = false;
-  if (host_)
-    host_->Send(new ViewMsg_SetBeginFramePaused(host_->GetRoutingID(), true));
+  SendBeginFramePaused(true);
   view_.GetWindowAndroid()->RemoveObserver(this);
   if (!using_browser_compositor_)
     SetBeginFrameSource(nullptr);
@@ -2244,11 +2242,28 @@ const cc::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
   return last_begin_frame_args_;
 }
 
+void RenderWidgetHostViewAndroid::SendBeginFramePaused(bool paused) {
+  if (last_reported_paused_state_ != paused) {
+    last_reported_paused_state_ = paused;
+    if (sync_compositor_) {
+      if (host_) {
+        last_reported_paused_state_ = paused;
+        host_->Send(
+            new ViewMsg_SetBeginFramePaused(host_->GetRoutingID(), paused));
+      }
+    } else if (renderer_compositor_frame_sink_) {
+      renderer_compositor_frame_sink_->OnBeginFramePausedChanged(paused);
+    }
+  }
+}
+
 void RenderWidgetHostViewAndroid::OnBeginFrameSourcePausedChanged(bool paused) {
-  // The BeginFrameSources we listen to don't use this. For WebView, we signal
-  // the "paused" state to the RenderWidget when our window attaches/detaches,
-  // see |StartObservingRootWindow()| and |StopObservingRootWindow()|.
-  DCHECK(!paused);
+  if (paused != begin_frame_paused_) {
+    begin_frame_paused_ = paused;
+
+    // We are paused if paused is true, or if !observing_root_window_.
+    SendBeginFramePaused(paused || !observing_root_window_);
+  }
 }
 
 void RenderWidgetHostViewAndroid::OnAnimate(base::TimeTicks begin_frame_time) {
