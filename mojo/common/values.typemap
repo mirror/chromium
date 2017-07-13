@@ -10,6 +10,7 @@ traits_headers = [
 ]
 public_deps = [
   "//base",
+  "//base/mojo:interfaces",
   "//ipc",
 ]
 sources = [
