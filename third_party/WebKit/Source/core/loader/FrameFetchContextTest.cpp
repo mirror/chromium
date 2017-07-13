@@ -913,6 +913,42 @@ TEST_F(FrameFetchContextMockedLocalFrameClientTest,
       CreateUniqueIdentifier(), resource_request, resource->GetResponse());
 }
 
+// Tests that the embedder gets correct notification when a resource is loaded
+// from the memory cache.
+TEST_F(FrameFetchContextMockedLocalFrameClientTest,
+       DispatchPersistClientHints) {
+  ResourceRequest resource_request(url);
+  resource_request.SetRequestContext(WebURLRequest::kRequestContextImage);
+  resource_request.SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeOmit);
+
+  /*
+  Resource* resource = MockResource::Create(resource_request);
+  EXPECT_CALL(*client,
+              DispatchDidLoadResourceFromMemoryCache(
+                  ::testing::AllOf(
+                      ::testing::Property(&ResourceRequest::Url, url),
+                      ::testing::Property(&ResourceRequest::GetFrameType,
+                                          WebURLRequest::kFrameTypeNone),
+                      ::testing::Property(&ResourceRequest::GetRequestContext,
+                                          WebURLRequest::kRequestContextImage)),
+                  ResourceResponse()));
+  fetch_context->DispatchDidLoadResourceFromMemoryCache(
+      CreateUniqueIdentifier(), resource_request, resource->GetResponse());
+      */
+  ResourceResponse response;
+  response.SetHTTPHeaderField("accept-ch", "dpr");
+  response.SetHTTPHeaderField("accept-ch-lifetime", "3600");
+  response.SetURL(url);
+  Resource* resource = MockResource::Create(resource_request);
+  resource->SetResponse(response);
+  EXPECT_CALL(*client, DidDisplayContentWithCertificateErrors(url));
+  fetch_context->DispatchDidLoadResourceFromMemoryCache(
+      CreateUniqueIdentifier(), resource_request, resource->GetResponse());
+
+  EXPECT_FALSE(true);
+}
+
 // Tests that when a resource with certificate errors is loaded from the memory
 // cache, the embedder is notified.
 TEST_F(FrameFetchContextMockedLocalFrameClientTest,

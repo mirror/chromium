@@ -121,4 +121,13 @@ void ContentSettingsClient::DidNotAllowPlugins() {
     client_->DidNotAllowPlugins();
 }
 
+void ContentSettingsClient::PersistClientHints(
+    const bool enabled_types[kWebClientHintsTypeLast + 1],
+    int64_t duration_seconds,
+    const KURL& url) {
+  if (client_) {
+    return client_->PersistClientHints(enabled_types, duration_seconds, url);
+  }
+}
+
 }  // namespace blink

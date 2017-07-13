@@ -12,6 +12,8 @@
 
 namespace blink {
 
+class KURL;
+
 class PLATFORM_EXPORT ClientHintsPreferences {
   DISALLOW_NEW();
 
@@ -35,6 +37,20 @@ class PLATFORM_EXPORT ClientHintsPreferences {
   void SetShouldSendForTesting(WebClientHintsType type) {
     enabled_types_[type] = true;
   }
+
+  // Parses the client hints headers, and populates |enabled_types| with the
+  // client hint preferences that should be persisted for duration
+  // |persist_duration_seconds|. |persist_duration_seconds| should be non-null.
+  // If there are no client hints that need to be persisted,
+  // |persist_duration_seconds| is set to -1, otherwise it is set to the
+  // duration (in clients) for which the client hint preferences should be
+  // persisted.
+  static void UpdatePersistentHintsFromHeaders(
+      const String& accept_ch_header_value,
+      const String& accept_ch_lifetime_header_value,
+      const KURL&,
+      bool enabled_types[kWebClientHintsTypeLast + 1],
+      int64_t* persist_duration_seconds);
 
  private:
   bool enabled_types_[kWebClientHintsTypeLast + 1] = {};
