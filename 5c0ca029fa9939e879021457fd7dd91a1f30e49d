@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd202203_df0772aa",
+        "filename": "components/download/internal/model.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-13T18:16:46Z",
+      "side": 1,
+      "message": "Nit: For the other methods you mention that the response is async. Maybe mention that here too so it\u0027s not confusing?",
+      "range": {
+        "startLine": 68,
+        "startChar": 56,
+        "endLine": 68,
+        "endChar": 65
+      },
+      "revId": "5c0ca029fa9939e879021457fd7dd91a1f30e49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
