@@ -44,8 +44,10 @@ class JsonSanitizerAndroid : public JsonSanitizer {
 
   void Sanitize(const std::string& unsafe_json);
 
-  void OnSuccess(const std::string& json);
-  void OnError(const std::string& error);
+  void OnSuccess(base::SequencedTaskRunner* task_runner,
+                 const std::string& json);
+  void OnError(base::SequencedTaskRunner* task_runner,
+               const std::string& error);
 
  private:
   StringCallback success_callback_;
@@ -61,9 +63,11 @@ JsonSanitizerAndroid::JsonSanitizerAndroid(
       error_callback_(error_callback) {}
 
 void JsonSanitizerAndroid::Sanitize(const std::string& unsafe_json) {
+  auto task_runner = base::SequencedTaskRunnerHandle::Get();
+
   // The JSON parser only accepts wellformed UTF-8.
   if (!base::IsStringUTF8(unsafe_json)) {
-    OnError("Unsupported encoding");
+    OnError(task_runner.get(), "Unsupported encoding");
     return;
   }
 
@@ -73,17 +77,18 @@ void JsonSanitizerAndroid::Sanitize(const std::string& unsafe_json) {
 
   // This will synchronously call either OnSuccess() or OnError().
   Java_JsonSanitizer_sanitize(env, reinterpret_cast<jlong>(this),
+                              reinterpret_cast<jlong>(task_runner.get()),
                               unsafe_json_java);
 }
 
-void JsonSanitizerAndroid::OnSuccess(const std::string& json) {
-  base::SequencedTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(success_callback_, json));
+void JsonSanitizerAndroid::OnSuccess(base::SequencedTaskRunner* task_runner,
+                                     const std::string& json) {
+  task_runner->PostTask(FROM_HERE, base::Bind(success_callback_, json));
 }
 
-void JsonSanitizerAndroid::OnError(const std::string& error) {
-  base::SequencedTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(error_callback_, error));
+void JsonSanitizerAndroid::OnError(base::SequencedTaskRunner* task_runner,
+                                   const std::string& error) {
+  task_runner->PostTask(FROM_HERE, base::Bind(error_callback_, error));
 }
 
 }  // namespace
@@ -91,19 +96,27 @@ void JsonSanitizerAndroid::OnError(const std::string& error) {
 void OnSuccess(JNIEnv* env,
                const JavaParamRef<jclass>& clazz,
                jlong jsanitizer,
+               jlong j_task_runner,
                const JavaParamRef<jstring>& json) {
   JsonSanitizerAndroid* sanitizer =
       reinterpret_cast<JsonSanitizerAndroid*>(jsanitizer);
-  sanitizer->OnSuccess(base::android::ConvertJavaStringToUTF8(env, json));
+  base::SequencedTaskRunner* task_runner =
+      reinterpret_cast<base::SequencedTaskRunner*>(j_task_runner);
+  sanitizer->OnSuccess(task_runner,
+                       base::android::ConvertJavaStringToUTF8(env, json));
 }
 
 void OnError(JNIEnv* env,
              const JavaParamRef<jclass>& clazz,
              jlong jsanitizer,
+             jlong j_task_runner,
              const JavaParamRef<jstring>& error) {
   JsonSanitizerAndroid* sanitizer =
       reinterpret_cast<JsonSanitizerAndroid*>(jsanitizer);
-  sanitizer->OnError(base::android::ConvertJavaStringToUTF8(env, error));
+  base::SequencedTaskRunner* task_runner =
+      reinterpret_cast<base::SequencedTaskRunner*>(j_task_runner);
+  sanitizer->OnError(task_runner,
+                     base::android::ConvertJavaStringToUTF8(env, error));
 }
 
 // static

@@ -112,15 +112,15 @@ public class JsonSanitizer {
     }
 
     @CalledByNative
-    public static void sanitize(long nativePtr, String unsafeJson) {
+    public static void sanitize(long nativePtr, long nativeTaskRunnerPtr, String unsafeJson) {
         String result = null;
         try {
             result = sanitize(unsafeJson);
         } catch (IOException | IllegalStateException e) {
-            nativeOnError(nativePtr, e.getMessage());
+            nativeOnError(nativePtr, nativeTaskRunnerPtr, e.getMessage());
             return;
         }
-        nativeOnSuccess(nativePtr, result);
+        nativeOnSuccess(nativePtr, nativeTaskRunnerPtr, result);
     }
 
     /**
@@ -191,7 +191,7 @@ public class JsonSanitizer {
                 || (codePoint > 0xFDEF && codePoint <= 0x10FFFF && (codePoint & 0xFFFE) != 0xFFFE);
     }
 
-    private static native void nativeOnSuccess(long id, String json);
+    private static native void nativeOnSuccess(long id, long taskRunner, String json);
 
-    private static native void nativeOnError(long id, String error);
+    private static native void nativeOnError(long id, long taskRunner, String error);
 }
