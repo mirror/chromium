@@ -105,6 +105,30 @@
       "revId": "0af04effacd0ff59ef845fc24ceaa534dffe68a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96fb37e_ec4b1ac3",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-13T02:15:37Z",
+      "side": 1,
+      "message": "Oh, I was not even aware of that method.  That\u0027s better, I switched to using that and got rid of ShouldUseViewportLayers.",
+      "parentUuid": "829705da_c6a415a4",
+      "range": {
+        "startLine": 323,
+        "startChar": 15,
+        "endLine": 323,
+        "endChar": 38
+      },
+      "revId": "0af04effacd0ff59ef845fc24ceaa534dffe68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
