@@ -53,7 +53,6 @@ class PLATFORM_EXPORT RawResource final : public Resource {
 
   // Exposed for testing
   static RawResource* Create(ResourceRequest request, Type type) {
-    request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
     ResourceLoaderOptions options;
     return new RawResource(request, type, options);
   }

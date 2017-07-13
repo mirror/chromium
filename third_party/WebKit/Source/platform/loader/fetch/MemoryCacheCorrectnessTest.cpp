@@ -61,7 +61,6 @@ class MemoryCacheCorrectnessTest : public ::testing::Test {
     if (response.Url().IsNull())
       response.SetURL(KURL(kParsedURLString, kResourceURL));
     ResourceRequest request(response.Url());
-    request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
     MockResource* resource = MockResource::Create(request);
     resource->SetResponse(response);
     resource->Finish();
@@ -354,7 +353,6 @@ TEST_F(MemoryCacheCorrectnessTest, FreshWithFreshRedirect) {
   KURL redirect_target_url(kParsedURLString, kRedirectTargetUrlString);
 
   ResourceRequest request(redirect_url);
-  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
   MockResource* first_resource = MockResource::Create(request);
 
   ResourceResponse fresh301_response;
@@ -492,7 +490,6 @@ TEST_F(MemoryCacheCorrectnessTest, 302RedirectExplicitlyFreshMaxAge) {
   KURL redirect_target_url(kParsedURLString, kRedirectTargetUrlString);
 
   ResourceRequest request(redirect_url);
-  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
   MockResource* first_resource = MockResource::Create(request);
 
   ResourceResponse fresh302_response;
@@ -533,7 +530,6 @@ TEST_F(MemoryCacheCorrectnessTest, 302RedirectExplicitlyFreshExpires) {
   KURL redirect_target_url(kParsedURLString, kRedirectTargetUrlString);
 
   ResourceRequest request(redirect_url);
-  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
   MockResource* first_resource = MockResource::Create(request);
 
   ResourceResponse fresh302_response;
