@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "089c0c80_5286f59d",
+        "filename": "ash/public/interfaces/night_light_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T09:56:24Z",
+      "side": 1,
+      "message": "I would strongly prefer we define something like kLast and then do the (unfortunate looking) arithmetic when recording the UMA.\n\nMojo performs internal validation of enums, and it\u0027s preferred to have Mojo just reject out-of-range enumerator values rather than forcing consumers to manually filter out (like with the new default case).",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "8dab3c6298a2dcd828e42b8c329032b793c6ffab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa709e89_3883a76e",
         "filename": "ash/system/night_light/night_light_controller.cc",
         "patchSetId": 3
