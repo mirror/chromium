@@ -13,6 +13,7 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.DefaultBrowserInfo;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
+import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CustomTabsUiType;
 import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.share.ShareHelper;
@@ -26,14 +27,11 @@ import java.util.Map;
  * App menu properties delegate for {@link CustomTabActivity}.
  */
 public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegate {
-    private static final String SAMPLE_URL = "https://www.google.com";
-
+    private final @CustomTabsUiType int mUiType;
     private final boolean mShowShare;
-    private final boolean mIsMediaViewer;
     private final boolean mShowStar;
     private final boolean mShowDownload;
     private final boolean mIsOpenedByChrome;
-    private final boolean mIsPaymentRequestUI;
 
     private final List<String> mMenuEntries;
     private final Map<MenuItem, Integer> mItemToIndexMap = new HashMap<MenuItem, Integer>();
@@ -44,17 +42,15 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
      * Creates an {@link CustomTabAppMenuPropertiesDelegate} instance.
      */
     public CustomTabAppMenuPropertiesDelegate(final ChromeActivity activity,
-            List<String> menuEntries, boolean showShare, final boolean isOpenedByChrome,
-            final boolean isMediaViewer, boolean showStar, boolean showDownload,
-            final boolean isPaymentRequestUI) {
+            @CustomTabsUiType final int uiType, List<String> menuEntries, boolean isOpenedByChrome,
+            boolean showShare, boolean showStar, boolean showDownload) {
         super(activity);
+        mUiType = uiType;
         mMenuEntries = menuEntries;
+        mIsOpenedByChrome = isOpenedByChrome;
         mShowShare = showShare;
-        mIsMediaViewer = isMediaViewer;
         mShowStar = showStar;
         mShowDownload = showDownload;
-        mIsOpenedByChrome = isOpenedByChrome;
-        mIsPaymentRequestUI = isPaymentRequestUI;
     }
 
     @Override
@@ -84,25 +80,29 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
             boolean addToHomeScreenVisible = true;
             updateRequestDesktopSiteMenuItem(menu, currentTab);
 
-            if (mIsMediaViewer) {
+            if (mUiType == CustomTabsUiType.MEDIA_VIEWER) {
                 // Most of the menu items don't make sense when viewing media.
                 iconRow.setVisible(false);
                 openInChromeItem.setVisible(false);
                 menu.findItem(R.id.find_in_page_id).setVisible(false);
                 menu.findItem(R.id.request_desktop_site_row_menu_id).setVisible(false);
                 addToHomeScreenVisible = false;
-            } else if (mIsPaymentRequestUI) {
+            } else if (mUiType == CustomTabsUiType.PAYMENT_REQUEST) {
                 // Only the icon row and 'find in page' are shown for openning payment request UI
                 // from Chrome.
                 openInChromeItem.setVisible(false);
                 menu.findItem(R.id.request_desktop_site_id).setVisible(false);
                 addToHomeScreenVisible = false;
+                downloadItem.setVisible(false);
+                bookmarkItem.setVisible(false);
             } else {
                 openInChromeItem.setTitle(
                         DefaultBrowserInfo.getTitleOpenInDefaultBrowser(mIsOpenedByChrome));
                 updateBookmarkMenuItem(bookmarkItem, currentTab);
             }
-            bookmarkItem.setVisible(mShowStar);
+            if (!mShowStar) {
+                bookmarkItem.setVisible(false);
+            }
             downloadItem.setVisible(mShowDownload);
             if (!FirstRunStatus.getFirstRunFlowComplete()) {
                 openInChromeItem.setVisible(false);
@@ -146,7 +146,7 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
 
     @Override
     public int getFooterResourceId() {
-        return mIsMediaViewer ? 0 : R.layout.powered_by_chrome_footer;
+        return mUiType == CustomTabsUiType.MEDIA_VIEWER ? 0 : R.layout.powered_by_chrome_footer;
     }
 
     /**

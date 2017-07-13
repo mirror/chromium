@@ -16,6 +16,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.customtabs.CustomTabsSessionToken;
 import android.text.TextUtils;
@@ -33,6 +34,8 @@ import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +45,19 @@ import java.util.List;
  */
 public class CustomTabIntentDataProvider {
     private static final String TAG = "CustomTabIntentData";
+
+    // The type of UI for Custom Tab to use.
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+            CustomTabsUiType.DEFAULT,
+            CustomTabsUiType.MEDIA_VIEWER,
+            CustomTabsUiType.PAYMENT_REQUEST,
+    })
+    public @interface CustomTabsUiType {
+        public int DEFAULT = 0;
+        public int MEDIA_VIEWER = 1;
+        public int PAYMENT_REQUEST = 2;
+    }
 
     /**
      * Extra used to keep the caller alive. Its value is an Intent.
@@ -55,10 +71,6 @@ public class CustomTabIntentDataProvider {
     public static final String EXTRA_IS_OPENED_BY_CHROME =
             "org.chromium.chrome.browser.customtabs.IS_OPENED_BY_CHROME";
 
-    /** Indicates that the Custom Tab should style itself as a media viewer. */
-    public static final String EXTRA_IS_MEDIA_VIEWER =
-            "org.chromium.chrome.browser.customtabs.IS_MEDIA_VIEWER";
-
     /** URL that should be loaded in place of the URL passed along in the data. */
     public static final String EXTRA_MEDIA_VIEWER_URL =
             "org.chromium.chrome.browser.customtabs.MEDIA_VIEWER_URL";
@@ -67,9 +79,9 @@ public class CustomTabIntentDataProvider {
     public static final String EXTRA_ENABLE_EMBEDDED_MEDIA_EXPERIENCE =
             "org.chromium.chrome.browser.customtabs.EXTRA_ENABLE_EMBEDDED_MEDIA_EXPERIENCE";
 
-    /** Indicates that the Custom Tab should style itself as payment request UI. */
-    public static final String EXTRA_IS_PAYMENT_REQUEST_UI =
-            "org.chromium.chrome.browser.customtabs.EXTRA_IS_PAYMENT_REQUEST_UI";
+    /** Indicates the type of UI Custom Tab should use. */
+    public static final String EXTRA_UI_TYPE =
+            "org.chromium.chrome.browser.customtabs.EXTRA_UI_TYPE";
 
     /** Indicates that the Custom Tab should style itself as an info page. */
     public static final String EXTRA_IS_INFO_PAGE =
@@ -104,11 +116,10 @@ public class CustomTabIntentDataProvider {
     private final CustomTabsSessionToken mSession;
     private final boolean mIsTrustedIntent;
     private final Intent mKeepAliveServiceIntent;
+    private final int mUiType;
     private final int mTitleVisibilityState;
-    private final boolean mIsMediaViewer;
     private final String mMediaViewerUrl;
     private final boolean mEnableEmbeddedMediaExperience;
-    private final boolean mIsPaymentRequestUI;
     private final boolean mIsInfoPage;
     private final int mInitialBackgroundColor;
     private final boolean mDisableStar;
@@ -137,10 +148,8 @@ public class CustomTabIntentDataProvider {
      * Add extras to customize menu items for openning payment request UI custom tab from Chrome.
      */
     public static void addPaymentRequestUIExtras(Intent intent) {
-        intent.putExtra(EXTRA_IS_PAYMENT_REQUEST_UI, true);
+        intent.putExtra(EXTRA_UI_TYPE, CustomTabsUiType.PAYMENT_REQUEST);
         intent.putExtra(EXTRA_IS_OPENED_BY_CHROME, true);
-        intent.putExtra(EXTRA_DISABLE_STAR_BUTTON, true);
-        intent.putExtra(EXTRA_DISABLE_DOWNLOAD_BUTTON, true);
         IntentHandler.addTrustedIntentExtras(intent);
     }
 
@@ -191,6 +200,17 @@ public class CustomTabIntentDataProvider {
 
         mIsOpenedByChrome =
                 IntentUtils.safeGetBooleanExtra(intent, EXTRA_IS_OPENED_BY_CHROME, false);
+
+        final int requestedUiType =
+                IntentUtils.safeGetIntExtra(intent, EXTRA_UI_TYPE, CustomTabsUiType.DEFAULT);
+        if (requestedUiType == CustomTabsUiType.MEDIA_VIEWER && mIsTrustedIntent) {
+            mUiType = CustomTabsUiType.MEDIA_VIEWER;
+        } else if (requestedUiType == CustomTabsUiType.PAYMENT_REQUEST && mIsTrustedIntent
+                && mIsOpenedByChrome) {
+            mUiType = CustomTabsUiType.PAYMENT_REQUEST;
+        } else {
+            mUiType = CustomTabsUiType.DEFAULT;
+        }
         mAnimationBundle = IntentUtils.safeGetBundleExtra(
                 intent, CustomTabsIntent.EXTRA_EXIT_ANIMATION_BUNDLE);
         mTitleVisibilityState = IntentUtils.safeGetIntExtra(intent,
@@ -203,15 +223,12 @@ public class CustomTabIntentDataProvider {
                 CustomTabsIntent.EXTRA_REMOTEVIEWS_VIEW_IDS);
         mRemoteViewsPendingIntent = IntentUtils.safeGetParcelableExtra(intent,
                 CustomTabsIntent.EXTRA_REMOTEVIEWS_PENDINGINTENT);
-        mIsMediaViewer = mIsTrustedIntent
-                && IntentUtils.safeGetBooleanExtra(intent, EXTRA_IS_MEDIA_VIEWER, false);
-        mMediaViewerUrl = mIsMediaViewer
-                ? IntentUtils.safeGetStringExtra(intent, EXTRA_MEDIA_VIEWER_URL) : null;
+        mMediaViewerUrl = isMediaViewer()
+                ? IntentUtils.safeGetStringExtra(intent, EXTRA_MEDIA_VIEWER_URL)
+                : null;
         mEnableEmbeddedMediaExperience = mIsTrustedIntent
                 && IntentUtils.safeGetBooleanExtra(
                            intent, EXTRA_ENABLE_EMBEDDED_MEDIA_EXPERIENCE, false);
-        mIsPaymentRequestUI = mIsTrustedIntent && mIsOpenedByChrome
-                && IntentUtils.safeGetBooleanExtra(intent, EXTRA_IS_PAYMENT_REQUEST_UI, false);
         mIsInfoPage = mIsTrustedIntent
                 && IntentUtils.safeGetBooleanExtra(intent, EXTRA_IS_INFO_PAGE, false);
         mDisableStar = IntentUtils.safeGetBooleanExtra(intent, EXTRA_DISABLE_STAR_BUTTON, false);
@@ -518,10 +535,15 @@ public class CustomTabIntentDataProvider {
     }
 
     /**
-     * @return See {@link #EXTRA_IS_MEDIA_VIEWER}.
+     * @return See {@link #EXTRA_UI_TYPE}.
      */
     boolean isMediaViewer() {
-        return mIsMediaViewer;
+        return mUiType == CustomTabsUiType.MEDIA_VIEWER;
+    }
+
+    @CustomTabsUiType
+    int getUiType() {
+        return mUiType;
     }
 
     /**
@@ -536,14 +558,6 @@ public class CustomTabIntentDataProvider {
      */
     boolean shouldEnableEmbeddedMediaExperience() {
         return mEnableEmbeddedMediaExperience;
-    }
-
-    /**
-     * @return true If the Custom Tab is opened as payment request UI.
-     * @See {@link #EXTRA_IS_PAYMENT_REQUEST_UI}.
-     */
-    boolean isPaymentRequestUI() {
-        return mIsPaymentRequestUI;
     }
 
     /**
