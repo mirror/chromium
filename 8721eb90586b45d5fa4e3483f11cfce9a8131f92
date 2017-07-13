@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e00d5c63_8302c1c9",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-13T13:41:27Z",
+      "side": 0,
+      "message": "git cl format wasn\u0027t happy about these indentations",
+      "range": {
+        "startLine": 735,
+        "startChar": 3,
+        "endLine": 735,
+        "endChar": 4
+      },
+      "revId": "8721eb90586b45d5fa4e3483f11cfce9a8131f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
