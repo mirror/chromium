@@ -45,11 +45,9 @@ public class ChildProcessConnection {
 
         /**
          * Called when the child process failed to start. This can happen if the process is already
-         * in use by another client. Note onChildProcessDied will be called after this callback,
-         * once the client unbinds and the service gets cleaned.
-         * TODO(jcivelli): crbug.com/736948 we should improve the behavior in such cases.
+         * in use by another client. The client will not receive any other callbacks after this one.
          */
-        void onChildStartFailed();
+        void onChildStartFailed(final ChildProcessConnection connection);
 
         /**
          * Called when the service has been disconnected. whether it was stopped by the client or
@@ -402,11 +400,18 @@ public class ChildProcessConnection {
      */
     public void stop() {
         assert isRunningOnLauncherThread();
+        stop(true /* notifyChildProcessDied */);
+    }
+
+    private void stop(boolean notifyChildProcessDied) {
+        assert isRunningOnLauncherThread();
         cancelWatchDog();
         unbind();
         mService = null;
         mConnectionParams = null;
-        notifyChildProcessDied();
+        if (notifyChildProcessDied) {
+            notifyChildProcessDied();
+        }
     }
 
     @VisibleForTesting
@@ -431,8 +436,9 @@ public class ChildProcessConnection {
                 try {
                     if (!mService.bindToCaller()) {
                         if (mServiceCallback != null) {
-                            mServiceCallback.onChildStartFailed();
+                            mServiceCallback.onChildStartFailed(this);
                         }
+                        stop(false /* notifyChildProcessDied */);
                         return;
                     }
                 } catch (RemoteException ex) {
