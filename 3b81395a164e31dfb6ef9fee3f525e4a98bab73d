@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a483337_8c530917",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-13T15:13:01Z",
+      "side": 1,
+      "message": "*shakes hand at clang-format*",
+      "range": {
+        "startLine": 105,
+        "startChar": 44,
+        "endLine": 105,
+        "endChar": 2
+      },
+      "revId": "3b81395a164e31dfb6ef9fee3f525e4a98bab73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f641798a_0f213326",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1675,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-13T15:13:01Z",
+      "side": 1,
+      "message": "optional: This could be inlined.",
+      "range": {
+        "startLine": 1675,
+        "startChar": 25,
+        "endLine": 1675,
+        "endChar": 32
+      },
+      "revId": "3b81395a164e31dfb6ef9fee3f525e4a98bab73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
