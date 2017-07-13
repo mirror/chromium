@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4358fb4f_7932cd43",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-13T21:13:37Z",
+      "side": 1,
+      "message": "nit: explanation",
+      "range": {
+        "startLine": 161,
+        "startChar": 26,
+        "endLine": 161,
+        "endChar": 38
+      },
+      "revId": "df10c471f0563c538793bd1942243541bb33ba97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292e8163_076ef502",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-13T21:13:37Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 185,
+        "startChar": 26,
+        "endLine": 185,
+        "endChar": 38
+      },
+      "revId": "df10c471f0563c538793bd1942243541bb33ba97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20ff103_4464b3cd",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-13T21:13:37Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 230,
+        "startChar": 26,
+        "endLine": 230,
+        "endChar": 38
+      },
+      "revId": "df10c471f0563c538793bd1942243541bb33ba97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e64fd8_6dd6a61c",
+        "filename": "components/security_state/content/content_utils_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-13T21:13:37Z",
+      "side": 1,
+      "message": "nit: SecurityInfo (or |security_info| but I think you mean SecurityInfo)",
+      "range": {
+        "startLine": 156,
+        "startChar": 46,
+        "endLine": 156,
+        "endChar": 59
+      },
+      "revId": "df10c471f0563c538793bd1942243541bb33ba97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
