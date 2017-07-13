@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39214658_ac74d778",
+        "filename": "chromecast/base/cast_sys_info_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-13T22:48:06Z",
+      "side": 1,
+      "message": "I think you can also add the function in CastSysInfoAndroid.",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "18a8a1638dfdbec11b296c303d02289186a1c8f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
