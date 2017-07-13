@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "56003ffd_1313f7e4",
+        "filename": "components/download/internal/controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-13T17:28:40Z",
+      "side": 1,
+      "message": "Yea, but compiler complained when doing this inside a function\n\ncallback_ \u003d std::move(callback);",
+      "parentUuid": "f0405cae_51a9b22e",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "dce0e35afee6e23e92f17f831c6cc4d7b9032b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80dd6b33_df663ece",
         "filename": "components/download/internal/download_service_impl_unittest.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "dce0e35afee6e23e92f17f831c6cc4d7b9032b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5892d79_26cfb2d9",
+        "filename": "components/download/internal/download_service_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-13T17:28:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80dd6b33_df663ece",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 24
+      },
+      "revId": "dce0e35afee6e23e92f17f831c6cc4d7b9032b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
