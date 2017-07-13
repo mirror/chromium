@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11adcff0_b34909f3",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-13T07:49:16Z",
+      "side": 1,
+      "message": "nit: virtual const std::string",
+      "revId": "18b68467eadfdcbafe67a030660fbdeccefa7fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
