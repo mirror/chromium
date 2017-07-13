@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4676fad5_ae100cbc",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-13T15:50:13Z",
+      "side": 1,
+      "message": "Hmm. It seems like this point might be dependent on the exact size of the root window when running tests. Is it possible to get the point from status_area_widget_, like with views::Widget::GetWindowBoundsInScreen() or something similar?",
+      "revId": "f0b63455f54a5bebfa0cabdd2ae3274c2b2374ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56dd8bb1_2839fe3b",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-13T15:50:13Z",
+      "side": 1,
+      "message": "nit: If the only reason you use status_area_widget_ is to get the SystemTray you can instead use AshTestBase::GetPrimarySystemTray().",
+      "revId": "f0b63455f54a5bebfa0cabdd2ae3274c2b2374ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ef24e9_2a8efc53",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-13T15:50:13Z",
+      "side": 1,
+      "message": "optional: Sometimes you can put all the TEST_F functions inside the anonymous namespace too. I try to put it at the bottom of the file when I can. If you can\u0027t do it, that\u0027s fine too.",
+      "revId": "f0b63455f54a5bebfa0cabdd2ae3274c2b2374ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
