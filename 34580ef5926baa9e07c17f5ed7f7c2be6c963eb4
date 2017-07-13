@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a31bc7_fa439b0c",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T16:46:20Z",
+      "side": 1,
+      "message": "Here use the real username. The rule\n- with Times(0) use \u0027_\u0027\n- with a real expectation use a real param",
+      "range": {
+        "startLine": 269,
+        "startChar": 42,
+        "endLine": 269,
+        "endChar": 43
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62efcce2_57466e01",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T16:46:20Z",
+      "side": 1,
+      "message": "OMG, how it even compiles?\nIf you don\u0027t know what Gmock is about then either I or Tanya should fix this gap :)\nPlease avoid writing the code that you don\u0027t understand.",
+      "range": {
+        "startLine": 409,
+        "startChar": 29,
+        "endLine": 409,
+        "endChar": 30
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a77ff60_dbced23b",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2296,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T16:46:20Z",
+      "side": 1,
+      "message": "All other tests create a PasswordForm derived from observed_form, set a username and a password and submit it. saved_match() imitates a credential from the password store which you don\u0027t have here.",
+      "range": {
+        "startLine": 2296,
+        "startChar": 7,
+        "endLine": 2296,
+        "endChar": 18
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a643bbbb_da4e22b0",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T16:46:20Z",
+      "side": 1,
+      "message": "Would be useful to check the password value too.",
+      "range": {
+        "startLine": 2306,
+        "startChar": 2,
+        "endLine": 2306,
+        "endChar": 11
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ea7fd3_fa8dcb74",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2316,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T16:46:20Z",
+      "side": 1,
+      "message": "credential",
+      "range": {
+        "startLine": 2316,
+        "startChar": 15,
+        "endLine": 2316,
+        "endChar": 26
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d87f618_032f6a51",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2340,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T16:46:20Z",
+      "side": 1,
+      "message": "You should have a PSL matching credential in the store. That is, you should pass psl_saved_match_ to SetNonFederated",
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
