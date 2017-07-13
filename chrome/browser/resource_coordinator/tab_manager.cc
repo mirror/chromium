@@ -30,6 +30,7 @@
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/memory/oom_memory_details.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/sessions/session_restore.h"
@@ -978,8 +979,8 @@ void TabManager::RecordSwitchToTab(content::WebContents* contents) const {
 }
 
 content::NavigationThrottle::ThrottleCheckResult
-TabManager::MaybeThrottleNavigation(
-    content::NavigationHandle* navigation_handle) {
+TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
+  content::NavigationHandle* navigation_handle = throttle->navigation_handle();
   if (!ShouldDelayNavigation(navigation_handle)) {
     loading_contents_.insert(navigation_handle->GetWebContents());
     return content::NavigationThrottle::PROCEED;
@@ -989,8 +990,7 @@ TabManager::MaybeThrottleNavigation(
   // navigation will be delayed.
   GetWebContentsData(navigation_handle->GetWebContents())
       ->SetTabLoadingState(TAB_IS_NOT_LOADING);
-  pending_navigations_.push_back(navigation_handle);
-
+  pending_navigations_.push_back(throttle);
   return content::NavigationThrottle::DEFER;
 }
 
@@ -1007,8 +1007,8 @@ void TabManager::OnDidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   auto it = pending_navigations_.begin();
   while (it != pending_navigations_.end()) {
-    content::NavigationHandle* pending_handle = *it;
-    if (pending_handle == navigation_handle) {
+    BackgroundTabNavigationThrottle* throttle = *it;
+    if (throttle->navigation_handle() == navigation_handle) {
       pending_navigations_.erase(it);
       break;
     }
@@ -1037,41 +1037,40 @@ void TabManager::LoadNextBackgroundTabIfNeeded() {
   if (pending_navigations_.empty())
     return;
 
-  content::NavigationHandle* navigation_handle = pending_navigations_.front();
+  BackgroundTabNavigationThrottle* pending_throttle =
+      pending_navigations_.front();
   pending_navigations_.erase(pending_navigations_.begin());
-  ResumeNavigation(navigation_handle);
+  ResumeNavigation(pending_throttle);
 }
 
 void TabManager::ResumeTabNavigationIfNeeded(content::WebContents* contents) {
-  content::NavigationHandle* navigation_handle =
+  BackgroundTabNavigationThrottle* throttle =
       RemovePendingNavigationIfNeeded(contents);
-  if (navigation_handle)
-    ResumeNavigation(navigation_handle);
+  if (throttle)
+    ResumeNavigation(throttle);
 }
 
-void TabManager::ResumeNavigation(
-    content::NavigationHandle* navigation_handle) {
+void TabManager::ResumeNavigation(BackgroundTabNavigationThrottle* throttle) {
+  content::NavigationHandle* navigation_handle = throttle->navigation_handle();
   GetWebContentsData(navigation_handle->GetWebContents())
       ->SetTabLoadingState(TAB_IS_LOADING);
   loading_contents_.insert(navigation_handle->GetWebContents());
 
-  navigation_handle->Resume();
+  throttle->ResumeNavigation();
 }
 
-content::NavigationHandle* TabManager::RemovePendingNavigationIfNeeded(
+BackgroundTabNavigationThrottle* TabManager::RemovePendingNavigationIfNeeded(
     content::WebContents* contents) {
-  content::NavigationHandle* navigation_handle = nullptr;
   auto it = pending_navigations_.begin();
   while (it != pending_navigations_.end()) {
-    navigation_handle = *it;
-    if ((*it)->GetWebContents() == contents) {
-      navigation_handle = *it;
+    BackgroundTabNavigationThrottle* throttle = *it;
+    if (throttle->navigation_handle()->GetWebContents() == contents) {
       pending_navigations_.erase(it);
-      break;
+      return throttle;
     }
     it++;
   }
-  return navigation_handle;
+  return nullptr;
 }
 
 bool TabManager::IsTabLoadingForTest(content::WebContents* contents) const {
@@ -1087,8 +1086,8 @@ bool TabManager::IsTabLoadingForTest(content::WebContents* contents) const {
 
 bool TabManager::IsNavigationDelayedForTest(
     const content::NavigationHandle* navigation_handle) const {
-  for (const auto* nav : pending_navigations_) {
-    if (nav == navigation_handle)
+  for (const auto* it : pending_navigations_) {
+    if (it->navigation_handle() == navigation_handle)
       return true;
   }
   return false;
