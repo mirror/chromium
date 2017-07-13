@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f160d5d_bcb5e1f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-13T08:18:03Z",
+      "side": 1,
+      "message": "Is this still WIP?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 62
+      },
+      "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fea767d_173fc09b",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-13T08:18:03Z",
+      "side": 1,
+      "message": "How come we have to create an empty dictionary key with this?",
+      "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aef19ed_14c28822",
+        "filename": "chrome/browser/extensions/extension_sync_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-13T08:18:03Z",
+      "side": 1,
+      "message": "This matches the other bookmark apps stuff so I\u0027m sure it\u0027s right - but how come we have to explicitly sync this? That is, how come the default extension sync doesn\u0027t do it automatically via the url_handlers field?\n\nI should know that as I think I wrote a lot of this but I can\u0027t remember.",
+      "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ff2762_b97025c1",
+        "filename": "chrome/common/extensions/api/_manifest_features.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-13T08:18:03Z",
+      "side": 1,
+      "message": "Does this affect the documentation for url_handlers at all?",
+      "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
