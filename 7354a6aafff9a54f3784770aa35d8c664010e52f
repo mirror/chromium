@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb28f0d5_6d853144",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-13T19:55:16Z",
+      "side": 1,
+      "message": "the PaymentRequest UI on iOS should prevent the user from navigation. We should get here only a result of window.open(), page.location.reload(), etc which should be considered merchant navigation i think?",
+      "parentUuid": "6723355e_40990be4",
+      "range": {
+        "startLine": 311,
+        "startChar": 31,
+        "endLine": 311,
+        "endChar": 63
+      },
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97588e45_d6319b40",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T19:37:01Z",
       "side": 1,
       "message": "Will ending the PaymentRequest cause it to close and log a UserAborted or something like that? It\u0027s what happens on Desktop and Android, so you have to make sure to log only one completion status.\n\nSame thing with a navigation followed by an abort. So we created a method called  RecordFirstAbortReason",
+      "range": {
+        "startLine": 670,
+        "startChar": 60,
+        "endLine": 670,
+        "endChar": 0
+      },
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f34a215_67285514",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-13T19:55:16Z",
+      "side": 1,
+      "message": "SetAborted is called in a few places to handle cases such as merchant navigation, merchant abortion, or cancellation by user individually. So hopefully SetAbort shouldn\u0027t be called multiple times.",
+      "parentUuid": "97588e45_d6319b40",
       "range": {
         "startLine": 670,
         "startChar": 60,
