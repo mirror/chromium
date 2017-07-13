@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb7ac6bc_9a133aa4",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-13T20:13:32Z",
+      "side": 1,
+      "message": "This seems like the same thing as the previous CL, just more convoluted. If we can\u0027t trust preferred, we should eliminate it entirely or add observers/restructure the code so we can trust it.\n\nUnder what circumstances will the preferred app change? A pref sync? Two settings windows?\n\nWhat about restructuring the code so we have (psuedo-code) preferred_app_id() and then comparing app.id \u003d\u003d preferred_app_id()?",
+      "revId": "f52b8a1f9ebc3db6aa005a89edca260523fd0768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
