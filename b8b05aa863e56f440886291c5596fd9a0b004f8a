@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "8b4c08cd_cc08473b",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-13T00:11:20Z",
+      "side": 1,
+      "message": "Actually, I managed to modify this to replicate the original sizing logic. PTAL.",
+      "parentUuid": "30208f72_4877744e",
+      "revId": "b8b05aa863e56f440886291c5596fd9a0b004f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e263395_d25a5174",
         "filename": "chrome/browser/resources/md_extensions/pack_dialog.html",
         "patchSetId": 2
