@@ -29,6 +29,7 @@
  */
 
 #include "core/exported/WebSharedWorkerImpl.h"
+#include "core/workers/ContentSettingInstanceClient.h"
 
 #include <memory>
 #include "core/dom/Document.h"
@@ -326,11 +327,12 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
 
   WorkerClients* worker_clients = WorkerClients::Create();
   WorkerClientsInitializer<WebSharedWorkerImpl>::Run(worker_clients);
-
-  WebSecurityOrigin web_security_origin(loading_document_->GetSecurityOrigin());
   ProvideContentSettingsClientToWorker(
       worker_clients,
-      client_->CreateWorkerContentSettingsClient(web_security_origin));
+      WTF::MakeUnique<ContentSettingInstanceClient>(
+          KURL(NullURL(), loading_document_->GetSecurityOrigin()->ToString()),
+          loading_document_->GetSecurityOrigin()->IsUnique(),
+          client_->GetId()));
 
   if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
     std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
