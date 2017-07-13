@@ -104,6 +104,11 @@ PrintPreviewUIBrowserTest.prototype = {
   });
 });
 
+GEN('#if defined(OS_MACOSX) || defined(OS_WIN)');
+TEST_F('PrintPreviewUIBrowserTest', 'SystemDialogOrPDFInPreview', function() {
+  mocha.grep(new RegExp('SystemDialogOrPDFInPreview' + '\\b')).run();
+});
+GEN('#endif');
 
 // Disable accessibility errors for some tests.
 [
