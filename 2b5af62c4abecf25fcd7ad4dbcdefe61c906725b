@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e69e46f_6ab16a6f",
+        "filename": "chrome/browser/ui/login/login_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "Done (was from an earlier patchset)",
+      "parentUuid": "e5c77799_aae2a994",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a181e754_2cf7db3a",
         "filename": "chrome/browser/ui/login/login_handler_unittest.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-13T01:26:49Z",
       "side": 1,
       "message": "It feels fragile that we encode the exact strings above and muck with things here.  As we make string changes that don\u0027t affect test correctness, we have to update lots of entries.\n\nWould be nice to just string search for the expected authority within the larger text string, or something.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fa3a05_2ec80764",
+        "filename": "chrome/browser/ui/login/login_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "I agree that coupling to the exact strings is fragile, but is seems reasonable here to ensure the various states are covered. In a way it makes these change-detector tests (i.e. go/tott-350 \"Change-Detector Tests Considered Harmful\". But putting logic in tests can also be bad (i.e. go/tott-338 \"Don\u0027t Put Logic in Tests\").\n\nJust searching for the hostname doesn\u0027t allow the distinction between proxies and non-proxies to be tested.\n\nAnd trying to construct strings with more logic makes failed expectations harder to read. I couldn\u0027t come up with a good improvement. Happy to take suggestions.",
+      "parentUuid": "a181e754_2cf7db3a",
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "cf9a0068_c86bc8cf",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "Done (removed DISTANCE_DIALOG_INPUT_FIELD_HORIZONTAL_INDENT - 0 indents for all)",
+      "parentUuid": "a6075674_d9ce95a1",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ece82d3_88364358",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
         "patchSetId": 10
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "0a61729b_fb578c4e",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "Done (removed DISTANCE_INPUT_LABEL_MINIMIUM_WIDTH - replaced with TODO)",
+      "parentUuid": "3ece82d3_88364358",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d3451b6_1a3a6d18",
         "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
         "patchSetId": 10
@@ -99,6 +171,24 @@
       "writtenOn": "2017-07-13T01:26:49Z",
       "side": 1,
       "message": "Nit: I suspect you could remove this without using any additional lines below.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01383ee_6027435d",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "with label_min_width gone that\u0027s no longer the case. I don\u0027t think there is a downside to having this and there is no upside to scattering `views::` in more places below.",
+      "parentUuid": "8d3451b6_1a3a6d18",
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "0523016c_a59439a6",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "I tried things, but hated them all.\n\nI think using \"0\"/\"1\" is awful. But I don\u0027t think `views::GridLayout::kSizeToMinimum` is really an improvement. And I don\u0027t think I can get away with `views::kFixed`. Maybe, nested in views,\n\nnamespace grid_layout {\n  enum class Alignment {..}\n  enum class SizeType {..}\n  constexpr float kFixed .. \n  constexpr float KStretchy..\n}\n\n\nThen to get the call sites readable again, we\u0027d just end up with a `using` delcaration. But that\u0027s not much of an improvement over declaring these constexpr in anonymous namespaces.\n\n\n\nThe way I would share this would be to declare\n\n  void AddFixedPaddingRow(int size);\n  void AddStretchyPaddingRow(int min_size);\n\n  void StartFixedRow(int column_set_id, int height \u003d 0);\n  void StartStretchyRow(int column_set_id, int min_height \u003d 0);\n\n(ColumnSet::)\n\n  void AddFixedPaddingColumn(int width);\n  void AddStretchyPaddingColumn(int min_width);\n\n  void AddFixedColumn(GridLayout::Alignment h_align, ..\n  void AddStretchyColumn(GridLayout::Alignment h_align, ..\n\n\nBut I think that makes the GridLayout API more confusing.\n\n\n(In my mind, all the alternatives have downsides that outweigh the downside of the current approach, but maybe you have a preference)",
+      "parentUuid": "1b4b49a2_2478e09c",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cdcb860_ffa8e2d6",
         "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
         "patchSetId": 10
@@ -136,6 +244,24 @@
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8e3b6e_88ee52e9",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "Done. Although I am not sure this is better -- I liked that the client code is not forced to figure out what DISTANCE_ metric they should be using. It now increases the likelihood of a wrong choice, or of the necessary padding being ignored.",
+      "parentUuid": "9cdcb860_ffa8e2d6",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "9600e104_8dd2fcea",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40aad7d6_7c733861",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a6c62ca_813c8adc",
         "filename": "chrome/browser/ui/views/login_view.cc",
         "patchSetId": 10
@@ -262,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "62281323_3a6c6b75",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "We could pass in an argument to ConfigureTextfieldStack to do this. But that\u0027s more complex.\n\n`constexpr int kMessageWidth \u003d 320;` is what the dialog used to do, it\u0027s simple, and it satisfies the current set of use cases. I don\u0027t think we need something more complex unless our use-cases change.\n\n(And when --secondary-ui-md is default we can just pass in 0, so I don\u0027t want to add temporary complexity when the simple thing works).",
+      "parentUuid": "1ab14ae6_a4262670",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b73277b0_4fa04a27",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 10
@@ -309,6 +471,24 @@
       "side": 1,
       "message": "Basically, that sounds good.\n\nYour numbers didn\u0027t all make sense to me above so let me try to restate you:  you want the padding value to compute as 3 pre-Harmony and 4 in Harmony, so you use it directly above and below, and you double it when computing the total height.\n\nThat\u0027s how I would do things.  I think it\u0027s what you said above except \"/4\" where you wrote a \"/2\".",
       "parentUuid": "1d098532_325b5e07",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcd6292_23d1379f",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T05:28:16Z",
+      "side": 1,
+      "message": "Done. Note (even as is): I think this change adds complexity that we don\u0027t have a clear use-case for.\n\nAlso I sunk a lot of time trying to get this to work in a more general way (e.g. inside Textfield), but too many things inherit from textfield already, and rely on Textfield::GetInsets() to return special things, e.g., for the omnibox. I don\u0027t think it\u0027s appropriate to introduce Harmony layout ideas in a way that conflicts with Textfield being used outside of secondary UI.\n\nI also can\u0027t make it work for MdTextButton any more, since line heights are only meaningful with --secondary-ui-md.\n\nThe result is that only textfield_layout.cc uses this - nothing in ui/views - so the plumbing for this is now on ChromeLayoutProvider. Moving it to live entirely in textfield_layout.cc would also be a sane choice, IMO.\n\n(But TBH kRowHeight \u003d 28 also satisfies the current set of use cases that the spec caters for. Wiht that, font sizes configured to have a height of more than 22 will still increase the size of the textbox, while those between 15 and 22 will fit within the 28px used for smaller fonts. We don\u0027t start \"snapping\" line heights to a grid in that case, so using 3px for padding rather than 4px for padding doesn\u0027t seem like an important distinction to make).",
+      "parentUuid": "038510c3_056bcc24",
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
