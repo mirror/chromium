@@ -27,6 +27,8 @@
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleUnits.h"
 #include "core/html/TextControlElement.h"
+#include "core/layout/LayoutBlock.h"
+#include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutView.h"
 #include "core/paint/PaintLayer.h"
 
@@ -129,26 +131,151 @@ static SelectionMode ComputeSelectionMode(
   return SelectionMode::kBlockCursor;
 }
 
+Node* ComputeNodeAfterPosition(const PositionInFlatTree& position) {
+  if (!position.AnchorNode())
+    return 0;
+
+  Node& const anchor_node = *position.AnchorNode();
+  switch (position.AnchorType()) {
+    case PositionAnchorType::kBeforeChildren: {
+      if (Node* first_child = FlatTreeTraversal::FirstChild(anchor_node))
+        return first_child;
+      FlatTreeTraversal::NextSkippingChildren(anchor_node);
+    }
+    case PositionAnchorType::kAfterChildren:
+      return FlatTreeTraversal::NextSkippingChildren(anchor_node);
+    case PositionAnchorType::kOffsetInAnchor: {
+      if (anchor_node.IsCharacterDataNode())
+        return FlatTreeTraversal::Next(anchor_node);
+      if (Node* child_at = FlatTreeTraversal::ChildAt(
+              anchor_node, position.OffsetInContainerNode()))
+        return child_at;
+      return FlatTreeTraversal::Next(anchor_node);
+    }
+    case PositionAnchorType::kBeforeAnchor:
+      return &anchor_node;
+    case PositionAnchorType::kAfterAnchor:
+      return FlatTreeTraversal::NextSkippingChildren(anchor_node);
+  }
+  NOTREACHED();
+  return 0;
+}
+
+static PositionInFlatTree FirstLayoutPosition(const PositionInFlatTree& start) {
+  if (start.AnchorNode()->IsTextNode() &&
+      start.AnchorNode()->GetLayoutObject()) {
+    return start;
+  }
+
+  for (Node* runner = ComputeNodeAfterPosition(start); runner;
+       runner = FlatTreeTraversal::Next(*runner)) {
+    if (runner->GetLayoutObject())
+      return {runner, PositionAnchorType::kBeforeAnchor};
+  }
+  return {};
+}
+
+/*
+// Traverse FlatTree parent first backward.
+// It looks mirror of Next().
+static Node* Previous(const Node& node) {
+  if (FlatTreeTraversal::FirstChild(node))
+    return FlatTreeTraversal::LastWithin(node);
+  return FlatTreeTraversal::PreviousSkippingChildren(node);
+}
+
+static Node* ComputeNodeBeforePosition(const PositionInFlatTree& position) {
+  if (!position.AnchorNode())
+    return nullptr;
+  const Node& anchor = *position.AnchorNode();
+  switch (position.AnchorType()) {
+    case PositionAnchorType::kBeforeChildren:
+      return Previous(anchor);
+    case PositionAnchorType::kAfterChildren: {
+      if (Node* last_child =
+              FlatTreeTraversal::LastChild(anchor))
+        return last_child;
+      return Previous(anchor);
+    }
+    case PositionAnchorType::kOffsetInAnchor: {
+      if (position.AnchorNode()->IsCharacterDataNode())
+        return Previous(anchor);
+      if (position.OffsetInContainerNode() == 0)
+        return FlatTreeTraversal::PreviousSkippingChildren(anchor);
+      Node* child_before_offset = FlatTreeTraversal::ChildAt(
+        anchor, position.OffsetInContainerNode() - 1);
+      return child_before_offset;
+    }
+    case PositionAnchorType::kBeforeAnchor:
+      return Previous(anchor);
+    case PositionAnchorType::kAfterAnchor:
+      return position.AnchorNode();
+  }
+  NOTREACHED();
+  return 0;
+}
+
+static PositionInFlatTree LastLayoutPosition(const PositionInFlatTree& end) {
+  if (end.AnchorNode()->IsTextNode() && end.AnchorNode()->GetLayoutObject()) {
+    return end;
+  }
+
+  for (Node* runner = ComputeNodeBeforePosition(end); runner;
+       runner = Previous(*runner)) {
+    if (runner->GetLayoutObject())
+      return { runner, PositionAnchorType::kAfterAnchor };
+  }
+  return {};
+}
+*/
+
+#define MYDEBUG
+
 static EphemeralRangeInFlatTree CalcSelection(
     const FrameSelection& frame_selection) {
   const SelectionInDOMTree& selection_in_dom =
       frame_selection.GetSelectionInDOMTree();
+
+#ifdef MYDEBUG
+  EphemeralRangeInFlatTree debug_range;
+  const PositionInFlatTree& debug_base =
+      CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Base()))
+          .DeepEquivalent();
+  const PositionInFlatTree& debug_extent =
+      CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Extent()))
+          .DeepEquivalent();
+  if (!debug_base.IsNull() && !debug_extent.IsNull() &&
+      debug_base != debug_extent) {
+    const bool base_is_first = debug_base.CompareTo(debug_extent) <= 0;
+    const PositionInFlatTree& start = base_is_first ? debug_base : debug_extent;
+    const PositionInFlatTree& end = base_is_first ? debug_extent : debug_base;
+    debug_range = {MostForwardCaretPosition(start),
+                   MostBackwardCaretPosition(end)};
+  }
+  DCHECK(debug_range.IsNull() || true);
+#endif
+
   switch (ComputeSelectionMode(frame_selection)) {
     case SelectionMode::kNone:
       return {};
     case SelectionMode::kRange: {
       const PositionInFlatTree& base =
-          CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Base()))
-              .DeepEquivalent();
+          ToPositionInFlatTree(selection_in_dom.Base());
       const PositionInFlatTree& extent =
-          CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Extent()))
-              .DeepEquivalent();
-      if (base.IsNull() || extent.IsNull() || base == extent)
+          ToPositionInFlatTree(selection_in_dom.Extent());
+      if (base.IsNull() || extent.IsNull())
         return {};
-      const bool base_is_first = base.CompareTo(extent) <= 0;
-      const PositionInFlatTree& start = base_is_first ? base : extent;
-      const PositionInFlatTree& end = base_is_first ? extent : base;
-      return {MostForwardCaretPosition(start), MostBackwardCaretPosition(end)};
+      const bool is_base_first = base <= extent;
+      const PositionInFlatTree& start = is_base_first ? base : extent;
+      const PositionInFlatTree& end = is_base_first ? extent : base;
+      DCHECK_LE(start, end);
+      const PositionInFlatTree start_position = FirstLayoutPosition(start);
+      const PositionInFlatTree end_position = MostBackwardCaretPosition(
+          CreateVisiblePosition(end).DeepEquivalent());
+      if (start_position.IsNull() || end_position.IsNull() ||
+          start_position >= end_position)
+        return {};
+      return {start_position, end_position};
     }
     case SelectionMode::kBlockCursor: {
       const PositionInFlatTree& base =
