@@ -10,8 +10,9 @@
 namespace download {
 namespace test {
 
-DownloadParams BuildBasicDownloadParams() {
-  DownloadParams params;
+DownloadParams BuildBasicDownloadParams(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  DownloadParams params(traffic_annotation);
   params.client = DownloadClient::TEST;
   params.guid = base::GenerateGUID();
   return params;
