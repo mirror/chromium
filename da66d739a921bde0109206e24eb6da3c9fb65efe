@@ -22,6 +22,30 @@
       "revId": "da66d739a921bde0109206e24eb6da3c9fb65efe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25579e91_0fdea71a",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-13T21:12:14Z",
+      "side": 1,
+      "message": "Good eye! I dont know how this happened",
+      "parentUuid": "19c574a0_0c569de2",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "da66d739a921bde0109206e24eb6da3c9fb65efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
