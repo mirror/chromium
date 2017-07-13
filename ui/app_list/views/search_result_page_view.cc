@@ -13,6 +13,7 @@
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/views/app_list_main_view.h"
+#include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/app_list/views/search_result_list_view.h"
 #include "ui/app_list/views/search_result_tile_item_list_view.h"
@@ -37,7 +38,7 @@ constexpr int kFullscreenHeight = 440;
 // The z-height of the search box and cards in this view.
 constexpr int kSearchResultZHeight = 1;
 
-constexpr int kBackgroundCornerRadius = 4;
+constexpr int kBackgroundCornerRadius = 24;
 constexpr int kSeparatorPadding = 12;
 constexpr int kSeparatorThickness = 1;
 
@@ -52,10 +53,10 @@ class SearchCardView : public views::View {
     if (!features::IsFullscreenAppListEnabled()) {
       SetBorder(base::MakeUnique<views::ShadowBorder>(
           GetShadowForZHeight(kSearchResultZHeight)));
+      content_view->SetBackground(
+          views::CreateSolidBackground(kCardBackgroundColor));
     }
     SetLayoutManager(new views::FillLayout());
-    content_view->SetBackground(
-        views::CreateSolidBackground(kCardBackgroundColor));
     AddChildView(content_view);
   }
 
@@ -78,33 +79,27 @@ class ZeroWidthVerticalScrollBar : public views::OverlayScrollBar {
 
 class SearchResultPageBackground : public views::Background {
  public:
-  SearchResultPageBackground() {}
+  SearchResultPageBackground(SkColor color, int corner_radius)
+      : color_(color), corner_radius_(corner_radius) {}
   ~SearchResultPageBackground() override {}
 
  private:
   // views::Background overrides:
   void Paint(gfx::Canvas* canvas, views::View* view) const override {
     gfx::Rect bounds = view->GetContentsBounds();
-    const SkScalar kCornerRadiusScalar = SkIntToScalar(kBackgroundCornerRadius);
-    const SkScalar kRadius[8] = {0,
-                                 0,
-                                 0,
-                                 0,
-                                 kCornerRadiusScalar,
-                                 kCornerRadiusScalar,
-                                 kCornerRadiusScalar,
-                                 kCornerRadiusScalar};
-    SkPath path;
-    path.addRoundRect(gfx::RectToSkRect(bounds), kRadius);
     cc::PaintFlags flags;
     flags.setAntiAlias(true);
-    flags.setColor(kBackgroundColor);
-    canvas->DrawPath(path, flags);
+    flags.setColor(color_);
+    canvas->DrawRoundRect(bounds, corner_radius_, flags);
 
     // Draws a separator between SearchBoxView and SearchResultPageView.
+    bounds.set_y(kSearchBoxPreferredHeight);
     bounds.set_height(kSeparatorThickness);
     canvas->FillRect(bounds, kSeparatorColor);
   }
+
+  const SkColor color_;
+  const int corner_radius_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchResultPageBackground);
 };
@@ -147,7 +142,8 @@ SearchResultPageView::SearchResultPageView()
   if (is_fullscreen_app_list_enabled_) {
     contents_view_->SetLayoutManager(
         new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0));
-    SetBackground(base::MakeUnique<SearchResultPageBackground>());
+    SetBackground(base::MakeUnique<SearchResultPageBackground>(
+        kBackgroundColor, kBackgroundCornerRadius));
   } else {
     gfx::ShadowValue shadow = GetShadowForZHeight(kSearchResultZHeight);
     std::unique_ptr<views::Border> border(new views::ShadowBorder(shadow));
@@ -164,8 +160,8 @@ SearchResultPageView::SearchResultPageView()
 
   views::ScrollView* const scroller = new views::ScrollView;
   if (is_fullscreen_app_list_enabled_) {
-    scroller->SetBorder(
-        views::CreateEmptyBorder(gfx::Insets(kSeparatorThickness, 0, 0, 0)));
+    scroller->SetBorder(views::CreateEmptyBorder(
+        gfx::Insets(kSearchBoxPreferredHeight + kSeparatorThickness, 0, 0, 0)));
   }
   scroller->SetContents(contents_view_);
   // Setting clip height is necessary to make ScrollView take into account its
@@ -348,20 +344,20 @@ void SearchResultPageView::OnSearchResultContainerResultsChanged() {
 
 gfx::Rect SearchResultPageView::GetPageBoundsForState(
     AppListModel::State state) const {
-  gfx::Rect onscreen_bounds = GetDefaultContentsBounds();
-
-  if (is_fullscreen_app_list_enabled_) {
-    gfx::Rect search_box_bounds = GetSearchBoxBounds();
-    onscreen_bounds.set_y(search_box_bounds.bottom());
-    onscreen_bounds.set_height(kFullscreenHeight - search_box_bounds.height());
+  if (!is_fullscreen_app_list_enabled_) {
+    return (state == AppListModel::STATE_SEARCH_RESULTS
+                ? GetDefaultContentsBounds()
+                : GetAboveContentsOffscreenBounds(
+                      GetDefaultContentsBounds().size()));
   }
 
-  switch (state) {
-    case AppListModel::STATE_SEARCH_RESULTS:
-      return onscreen_bounds;
-    default:
-      return GetAboveContentsOffscreenBounds(onscreen_bounds.size());
-  }
+  if (state != AppListModel::STATE_SEARCH_RESULTS)
+    return AppListPage::GetSearchBoxBounds();
+
+  gfx::Rect onscreen_bounds(GetDefaultContentsBounds());
+  onscreen_bounds.set_y(AppListPage::GetSearchBoxBounds().y());
+  onscreen_bounds.set_height(kFullscreenHeight);
+  return onscreen_bounds;
 }
 
 void SearchResultPageView::OnAnimationUpdated(double progress,
@@ -370,6 +366,22 @@ void SearchResultPageView::OnAnimationUpdated(double progress,
   if (from_state != AppListModel::STATE_SEARCH_RESULTS &&
       to_state != AppListModel::STATE_SEARCH_RESULTS) {
     return;
+  }
+
+  if (is_fullscreen_app_list_enabled_) {
+    SearchBoxView* search_box =
+        AppListPage::contents_view()->GetSearchBoxView();
+    int from_corner_radius =
+        search_box->GetSearchBoxBorderCornerRadiusForState(from_state);
+    int to_corner_radius =
+        search_box->GetSearchBoxBorderCornerRadiusForState(to_state);
+    SkColor from_color = search_box->GetSearchBoxColorForState(from_state);
+    SkColor to_color = search_box->GetSearchBoxColorForState(to_state);
+    SkColor color =
+        gfx::Tween::ColorValueBetween(progress, from_color, to_color);
+    SetBackground(base::MakeUnique<SearchResultPageBackground>(
+        color, gfx::Tween::LinearIntValueBetween(progress, from_corner_radius,
+                                                 to_corner_radius)));
   }
 
   gfx::Rect onscreen_bounds(
@@ -391,8 +403,9 @@ void SearchResultPageView::OnHidden() {
 gfx::Rect SearchResultPageView::GetSearchBoxBounds() const {
   gfx::Rect rect(AppListPage::GetSearchBoxBounds());
   if (is_fullscreen_app_list_enabled_) {
-    rect.set_x(bounds().x());
-    rect.set_width(bounds().width());
+    gfx::Rect contents_bounds(GetDefaultContentsBounds());
+    rect.set_x(contents_bounds.x());
+    rect.set_width(contents_bounds.width());
   }
   return rect;
 }
