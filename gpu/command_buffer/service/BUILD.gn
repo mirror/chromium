@@ -181,6 +181,8 @@ target(link_target_type, "service_sources") {
     "//ui/gfx/geometry",
     "//ui/gl",
     "//ui/gl/init",
+    "//third_party/brotli:dec",
+    "//third_party/brotli:enc",
   ]
 
   if (is_mac) {

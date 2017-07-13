@@ -1379,11 +1379,11 @@ bool Program::Link(ShaderManager* manager,
     ExecuteProgramOutputBindCalls();
 
     before_time = TimeTicks::Now();
-    if (cache && gl::g_current_gl_driver->ext.b_GL_ARB_get_program_binary) {
+    //if (cache) {
       glProgramParameteri(service_id(),
                           PROGRAM_BINARY_RETRIEVABLE_HINT,
                           GL_TRUE);
-    }
+    //}
     glLinkProgram(service_id());
   }
 
@@ -1396,7 +1396,9 @@ bool Program::Link(ShaderManager* manager,
       for (auto shader : attached_shaders_) {
         shader->RefreshTranslatedShaderSource();
       }
+      LOG(ERROR) << "HIHIHI";
       if (cache) {
+        LOG(ERROR) << "CACHJE?";
         cache->SaveLinkedProgram(
             service_id(), attached_shaders_[0].get(),
             attached_shaders_[1].get(), &bind_attrib_location_map_,
