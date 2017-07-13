@@ -394,7 +394,7 @@ void PageHandler::CaptureScreenshot(
     emulation_handler_->SetDeviceEmulationParams(modified_params);
 
     if (clip.isJust()) {
-      widget_host->GetView()->SetSize(gfx::ScaleToCeiledSize(
+      widget_host->GetView()->SetSize(gfx::ScaleToRoundedSize(
           gfx::Size(clip.fromJust()->GetWidth(), clip.fromJust()->GetHeight()),
           dpfactor * clip.fromJust()->GetScale()));
     } else {
