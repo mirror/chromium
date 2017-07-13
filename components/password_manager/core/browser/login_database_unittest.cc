@@ -25,15 +25,19 @@
 #include "components/password_manager/core/browser/psl_matching_helper.h"
 #include "sql/connection.h"
 #include "sql/statement.h"
+#include "sql/test/scoped_error_expecter.h"
 #include "sql/test/test_helpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/sqlite/sqlite3.h"
 #include "url/origin.h"
 
 using autofill::PasswordForm;
 using autofill::PossibleUsernamePair;
 using autofill::PossibleUsernamesVector;
 using base::ASCIIToUTF16;
+using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::Eq;
 using ::testing::Pointee;
 using ::testing::UnorderedElementsAre;
@@ -1662,6 +1666,121 @@ TEST_F(LoginDatabaseTest, FilePermissions) {
   EXPECT_EQ((mode & base::FILE_PERMISSION_USER_MASK), mode);
 }
 #endif  // defined(OS_POSIX)
+
+TEST_F(LoginDatabaseTest, RecoveryFromTruncation) {
+  std::vector<std::unique_ptr<PasswordForm>> result;
+  ASSERT_TRUE(db().GetAutofillableLogins(&result));
+  ASSERT_EQ(0U, result.size());
+
+  // Create an example database.
+  PasswordForm password_form;
+  GenerateExamplePasswordForm(&password_form);
+  EXPECT_EQ(AddChangeForForm(password_form), db().AddLogin(password_form));
+
+  // Close the database.
+  db_.reset(new LoginDatabase(file_));
+
+  // Database corruption: truncate the file.
+  {
+    base::File f(file_, base::File::FLAG_OPEN | base::File::FLAG_WRITE);
+    ASSERT_TRUE(f.IsValid());
+    f.SetLength(f.GetLength() >> 2);
+    f.Close();
+  }
+
+  // Re-opening the database must trigger the recovery logic and succeed.
+  base::HistogramTester histogram_tester;
+  {
+    sql::test::ScopedErrorExpecter expecter;
+    expecter.ExpectError(SQLITE_CORRUPT);
+    ASSERT_TRUE(db_->Init());
+
+    // The data was lost, but queries should succeed.
+    EXPECT_TRUE(db().GetAutofillableLogins(&result));
+    EXPECT_EQ(0U, result.size());
+
+    ASSERT_TRUE(expecter.SawExpectedErrors());
+  }
+  histogram_tester.ExpectBucketCount("Sqlite.RecoveryEvents",
+                                     0 /* RECOVERY_SUCCESS_INIT */, 1);
+}
+
+TEST_F(LoginDatabaseTest, RecoveryFromLengthCorruption) {
+  std::vector<std::unique_ptr<PasswordForm>> result;
+  ASSERT_TRUE(db().GetAutofillableLogins(&result));
+  ASSERT_EQ(0U, result.size());
+
+  // Create an example database.
+  PasswordForm password_form;
+  GenerateExamplePasswordForm(&password_form);
+  EXPECT_EQ(AddChangeForForm(password_form), db().AddLogin(password_form));
+
+  // Close the database.
+  db_.reset(new LoginDatabase(file_));
+
+  // Database corruption: header length field set incorrectly.
+  EXPECT_TRUE(sql::test::CorruptSizeInHeader(file_));
+
+  // Check that the database is recovered at the SQLite level.
+  base::HistogramTester histogram_tester;
+  {
+    sql::test::ScopedErrorExpecter expecter;
+    expecter.ExpectError(SQLITE_CORRUPT);
+    ASSERT_TRUE(db_->Init());
+
+    // The data should have been recovered.
+    EXPECT_TRUE(db().GetAutofillableLogins(&result));
+    ASSERT_EQ(1U, result.size());
+    EXPECT_EQ(password_form, *result[0]);
+
+    ASSERT_TRUE(expecter.SawExpectedErrors());
+  }
+  histogram_tester.ExpectBucketCount("Sqlite.RecoveryEvents",
+                                     0 /* RECOVERY_SUCCESS_INIT */, 1);
+}
+
+TEST_F(LoginDatabaseTest, RecoveryFromDataCorruption) {
+  std::vector<std::unique_ptr<PasswordForm>> result;
+  ASSERT_TRUE(db().GetAutofillableLogins(&result));
+  ASSERT_EQ(0U, result.size());
+
+  // Create an example database.
+  PasswordForm password_form;
+  GenerateExamplePasswordForm(&password_form);
+  EXPECT_EQ(AddChangeForForm(password_form), db().AddLogin(password_form));
+
+  // Close the database.
+  db_.reset(new LoginDatabase(file_));
+
+  // Database corruption: the file data gets overwritten with noise.
+  {
+    base::File f(file_, base::File::FLAG_OPEN | base::File::FLAG_WRITE);
+    ASSERT_TRUE(f.IsValid());
+    int64_t length = f.GetLength();
+    for (int64_t i = 0; i < length; i++) {
+      ASSERT_EQ(1, f.WriteAtCurrentPos("\1", 1));
+    }
+    f.Close();
+  }
+
+  // Re-opening the database must trigger the recovery logic and succeed.
+  base::HistogramTester histogram_tester;
+  {
+    sql::test::ScopedErrorExpecter expecter;
+    expecter.ExpectError(SQLITE_NOTADB);
+    ASSERT_TRUE(db_->Init());
+
+    // The data was lost, but queries should succeed.
+    EXPECT_TRUE(db().GetAutofillableLogins(&result));
+    EXPECT_EQ(0U, result.size());
+
+    ASSERT_TRUE(expecter.SawExpectedErrors());
+  }
+  histogram_tester.ExpectBucketCount("Sqlite.RecoveryEvents",
+                                     5 /* RECOVERY_FAILED_ATTACH */, 1);
+  histogram_tester.ExpectBucketCount("Sqlite.RecoveryAttachError",
+                                     SQLITE_NOTADB, 1);
+}
 
 // If the database initialisation fails, the initialisation transaction should
 // roll back without crashing.
