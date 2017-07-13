@@ -656,15 +656,15 @@ void BackgroundImageGeometry::Calculate(const LayoutBoxModelObject* container,
 }
 
 const ImageResourceObserver& BackgroundImageGeometry::ImageClient() const {
-  return box_;
+  return coordinate_offset_by_paint_rect_ ? box_ : positioning_box_;
 }
 
 const Document& BackgroundImageGeometry::ImageDocument() const {
-  return box_.GetDocument();
+  return positioning_box_.GetDocument();
 }
 
 const ComputedStyle& BackgroundImageGeometry::ImageStyle() const {
-  return box_.StyleRef();
+  return positioning_box_.StyleRef();
 }
 
 }  // namespace blink
