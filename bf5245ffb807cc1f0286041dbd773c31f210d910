@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "787492de_026dbaec",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-13T00:07:57Z",
+      "side": 1,
+      "message": "I\u0027m confused about this call as well. We already did this in chrome_main.cc It doesn\u0027t seem like we should do this both in chrome_main and chrome_main_delegate.cc. The placement of this here is also confusing. It looks like the comment \"Needs to be called after we have chrome::DIR_USER_DATA\" applies to this code. I *think* it means to apply to the crash reporter, in which case (if this call should actually be here) things should be restructured to make that clear.",
+      "range": {
+        "startLine": 1077,
+        "startChar": 13,
+        "endLine": 1077,
+        "endChar": 40
+      },
+      "revId": "bf5245ffb807cc1f0286041dbd773c31f210d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

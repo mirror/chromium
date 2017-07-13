@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a68b252_d9ddb2c3",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-13T00:07:57Z",
+      "side": 0,
+      "message": "Did you remove this on purpose? Was it just to simplify chrome_main (on the theory that it will do nothing in the browser process)?",
+      "range": {
+        "startLine": 125,
+        "startChar": 40,
+        "endLine": 125,
+        "endChar": 52
+      },
+      "revId": "5903186bf35f85ec282dfa20966a5ee911f16c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
