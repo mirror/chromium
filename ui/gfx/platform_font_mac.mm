@@ -236,11 +236,9 @@ Font PlatformFontMac::DeriveFont(int size_delta,
       derived = [font_manager convertWeight:NO ofFont:derived];
   }
 
-  if (style != font_style_) {
-    NSFontTraitMask italic_trait_mask =
-        (style & Font::ITALIC) ? NSItalicFontMask : NSUnitalicFontMask;
-    derived = [font_manager convertFont:derived toHaveTrait:italic_trait_mask];
-  }
+  NSFontTraitMask italic_trait_mask =
+      (style & Font::ITALIC) ? NSItalicFontMask : NSUnitalicFontMask;
+  derived = [font_manager convertFont:derived toHaveTrait:italic_trait_mask];
 
   if (size_delta != 0)
     derived = [font_manager convertFont:derived toSize:font_size_ + size_delta];

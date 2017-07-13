@@ -330,4 +330,19 @@ TEST(PlatformFontMacTest, ValidateFontHeight) {
   }
 }
 
+TEST(PlatformFontMacTest, DerivedSemiboldFontIsNotItalic) {
+  gfx::Font base_font;
+  {
+    NSFontTraitMask traits = [[NSFontManager sharedFontManager]
+        traitsOfFont:base_font.GetNativeFont()];
+    ASSERT_FALSE(traits & NSItalicFontMask);
+  }
+
+  gfx::Font semibold_font(
+      base_font.Derive(0, gfx::Font::NORMAL, gfx::Font::Weight::SEMIBOLD));
+  NSFontTraitMask traits = [[NSFontManager sharedFontManager]
+      traitsOfFont:semibold_font.GetNativeFont()];
+  EXPECT_FALSE(traits & NSItalicFontMask);
+}
+
 }  // namespace gfx
