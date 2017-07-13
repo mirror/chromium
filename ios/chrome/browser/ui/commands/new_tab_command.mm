@@ -17,8 +17,7 @@
 
 - (instancetype)initWithIncognito:(BOOL)incognito
                       originPoint:(CGPoint)originPoint {
-  int tag = incognito ? IDC_NEW_INCOGNITO_TAB : IDC_NEW_TAB;
-  if ((self = [super initWithTag:tag])) {
+  if ((self = [super initWithTag:0])) {
     _incognito = incognito;
     _originPoint = originPoint;
   }
