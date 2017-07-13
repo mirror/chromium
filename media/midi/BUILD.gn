@@ -156,6 +156,17 @@ component("midi") {
     }
   }
 
+  if (is_chromeos) {
+    # Build CrOS version even for target_os="chromeos" that runs on Linux too.
+    # MIDI Service client library should be added here. We would have a build
+    # flag use_midis that is only enabled on Chrome OS device builds, but have a
+    # mocked service to run unit tests with use_midis being false on Linux.
+    sources += [
+      "chromeos/midi_manager_cros.cc",
+      "chromeos/midi_manager_cros.h",
+    ]
+  }
+
   if (use_alsa && use_udev) {
     deps += [
       "//crypto",
