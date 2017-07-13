@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7ae9234_793bdc8b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-13T00:39:10Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 1177,
+        "startChar": 45,
+        "endLine": 1177,
+        "endChar": 49
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5515a448_c7ef522f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-13T00:39:10Z",
+      "side": 1,
+      "message": "Does third_party/Webkit follow the |variable| style (pipes), or is single quotes more common?",
+      "range": {
+        "startLine": 65,
+        "startChar": 52,
+        "endLine": 65,
+        "endChar": 69
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32f6176_9d731d94",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7177,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-13T00:39:10Z",
+      "side": 1,
+      "message": "Here and below: I can\u0027t load the full file, but some of the \u003cobsolete\u003e notes mention the exact date the histograms are deprecated. Do we need that? (e.g. \"Media.Controls.Show\")",
+      "range": {
+        "startLine": 7177,
+        "startChar": 15,
+        "endLine": 7177,
+        "endChar": 24
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec4ea54_b93218df",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29217,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-13T00:39:10Z",
+      "side": 1,
+      "message": "s/trough/through",
+      "range": {
+        "startLine": 29217,
+        "startChar": 36,
+        "endLine": 29217,
+        "endChar": 42
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e910616_ae07a981",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29220,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-13T00:39:10Z",
+      "side": 1,
+      "message": "\"...buttons, it means...\"",
+      "range": {
+        "startLine": 29220,
+        "startChar": 63,
+        "endLine": 29220,
+        "endChar": 64
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
