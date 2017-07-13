@@ -10,12 +10,16 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "ui/gfx/animation/animation_container_element.h"
+#include "ui/gfx/animation/animation_export.h"
 
 namespace gfx {
 class Rect;
 }
 
 namespace gfx {
+namespace test {
+class AnimationTestApi;
+}  // namespace test
 
 class AnimationContainer;
 class AnimationDelegate;
@@ -28,6 +32,14 @@ class AnimationDelegate;
 // GetCurrentValue() to return the value appropriate to the animation.
 class ANIMATION_EXPORT Animation : public AnimationContainerElement {
  public:
+  // Used with SetRichAnimationRenderMode() to force enable/disable rich
+  // animations during tests.
+  enum class RichAnimationRenderMode {
+    PLATFORM,
+    FORCE_ENABLED,
+    FORCE_DISABLED
+  };
+
   explicit Animation(base::TimeDelta timer_interval);
   ~Animation() override;
 
@@ -92,6 +104,13 @@ class ANIMATION_EXPORT Animation : public AnimationContainerElement {
   base::TimeDelta GetTimerInterval() const override;
 
  private:
+  friend class test::AnimationTestApi;
+
+  static bool ShouldRenderRichAnimationImpl();
+
+  // The mode in which to render rich animations.
+  static RichAnimationRenderMode rich_animation_rendering_mode_;
+
   // Interval for the animation.
   const base::TimeDelta timer_interval_;
 
