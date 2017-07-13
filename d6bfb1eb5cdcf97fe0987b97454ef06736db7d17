@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03051bb9_4ebe9758",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-13T09:14:18Z",
+      "side": 1,
+      "message": "Note: in real implementation, TpmAttestationDeleteKeys return false if, e.g., given user is invalid etc., while even if the user doesn\u0027t have the key starting with the key_prefix, it succeeds. So, as a fake, returns true always should be ok, for now, IMO.",
+      "revId": "d6bfb1eb5cdcf97fe0987b97454ef06736db7d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
