@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "175f60b1_f318cc50",
+        "filename": "third_party/WebKit/LayoutTests/inspector/profiler/heap-snapshot-summary-expand-collapse.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T18:43:11Z",
+      "side": 1,
+      "message": "nit: child._element.classList.filter(cls \u003d\u003e cls \u003d\u003d\u003d \u0027revealed\u0027)",
+      "revId": "fea124c328ed232fc13f3d7180c9198a41414ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
