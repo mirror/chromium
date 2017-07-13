@@ -291,6 +291,7 @@ NetworkQualityEstimator::NetworkQualityEstimator(
   watcher_factory_.reset(new nqe::internal::SocketWatcherFactory(
       base::ThreadTaskRunnerHandle::Get(),
       params_->min_socket_watcher_notification_interval(),
+      use_localhost_requests_,
       base::Bind(&NetworkQualityEstimator::OnUpdatedRTTAvailable,
                  base::Unretained(this)),
       tick_clock_.get()));
