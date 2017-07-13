@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e504b21e_a623de85",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T00:00:53Z",
+      "side": 0,
+      "message": "contents can\u0027t be null",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "b980b4b5d4408bea7e83cbf1f70e7143edb41716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04beaba_c2bc3446",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T00:00:53Z",
+      "side": 0,
+      "message": "it wasn\u0027t until I started looking into why TabRendererState has a separate |loading| member (with the intent of cleaning it up) that I realized that the throbber only intends to show loads to different documents. Making reality match intention pretty much cleans up all the flicker and seems like a much simpler/less heuristic solution.",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "b980b4b5d4408bea7e83cbf1f70e7143edb41716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
