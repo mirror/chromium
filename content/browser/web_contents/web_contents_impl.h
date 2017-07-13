@@ -327,6 +327,7 @@ class CONTENT_EXPORT WebContentsImpl
       const std::string& frame_name) override;
   WebUI* GetWebUI() const override;
   WebUI* GetCommittedWebUI() const override;
+  PermissionManager* GetPermissionManager() override;
   void SetUserAgentOverride(const std::string& override) override;
   const std::string& GetUserAgentOverride() const override;
   void EnableWebContentsOnlyAccessibilityMode() override;
