@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d49e92b_5ceee83e",
+        "filename": "base/mojo/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:13:02Z",
+      "side": 1,
+      "message": "It actually really bugs me that the files usually live in //foo/mojo or //foo/interfaces, but the classes themselves live in the mojom namespace.\n\nHowever, mojom as a directory name is far less common than \"mojo\" or \"interfaces\". I changed it nonetheless, so we can hopefully resolve this inconsistency over time.",
+      "parentUuid": "548e3f8b_f97a504d",
+      "revId": "acf35d502f6af8d9aa6445e0e21bbcc9c2f79a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60bf82dd_5d17935a",
         "filename": "base/mojo/BUILD.gn",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a540c1b2_3c4b91b7",
+        "filename": "base/mojo/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60bf82dd_5d17935a",
+      "revId": "acf35d502f6af8d9aa6445e0e21bbcc9c2f79a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61021fff_9c95ae67",
         "filename": "base/test/run_all_base_unittests.cc",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "acf35d502f6af8d9aa6445e0e21bbcc9c2f79a83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "729a1bde_aa5eaa0e",
+        "filename": "base/test/run_all_base_unittests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:13:02Z",
+      "side": 1,
+      "message": "As mentioned in earlier comment, I cargo-culted this from other GN files. I\u0027ll take out the !ios logic and see if it still works.",
+      "parentUuid": "61021fff_9c95ae67",
+      "revId": "acf35d502f6af8d9aa6445e0e21bbcc9c2f79a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
