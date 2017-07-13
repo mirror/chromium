@@ -813,6 +813,45 @@ message DeviceSecondFactorAuthenticationProto {
   optional U2fMode mode = 1;
 }
 
+// Represents a time of day in hours and minutes.
+message TimeOfDayProto {
+  optional int32 hours = 1;
+  optional int32 minutes = 2;
+}
+
+// Represents a day of week.
+message DayOfWeekProto {
+  enum Day {
+    DAY_OF_WEEK_UNSPECIFIED = 0;
+    MONDAY = 1;
+    TUESDAY = 2;
+    WEDNESDAY = 3;
+    THURSDAY = 4;
+    FRIDAY = 5;
+    SATURDAY = 6;
+    SUNDAY = 7;
+  }
+  optional Day day = 1;
+}
+
+// Day of the week and time settings for DeviceOffHoursInterval.
+message WeeklyTimestampProto {
+  optional DayOfWeekProto weekday = 1;
+  optional TimeOfDayProto time = 2;
+}
+
+// Start and end interval settings for DeviceOffHours.
+message DeviceOffHoursIntervalProto {
+  optional WeeklyTimestampProto start = 1;
+  optional WeeklyTimestampProto end = 2;
+}
+
+// Set several time intervals when some policies are not applied.
+message DeviceOffHoursProto {
+  repeated DeviceOffHoursIntervalProto interval = 1;
+  repeated string policy = 2;
+}
+
 message ChromeDeviceSettingsProto {
   optional DevicePolicyRefreshRateProto device_policy_refresh_rate = 1;
   optional UserWhitelistProto user_whitelist = 2;
@@ -875,4 +914,5 @@ message ChromeDeviceSettingsProto {
       device_ecryptfs_migration_strategy = 51;
   optional DeviceSecondFactorAuthenticationProto
       device_second_factor_authentication = 52;
+  optional DeviceOffHoursProto device_off_hours = 53;
 }
