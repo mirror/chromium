@@ -2918,7 +2918,7 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
                                       base::RetainedRef(context)));
   }
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (safe_browsing_service_) {
     registry->AddInterface(
         base::Bind(&safe_browsing::MojoSafeBrowsingImpl::Create,
                    safe_browsing_service_->database_manager(),
