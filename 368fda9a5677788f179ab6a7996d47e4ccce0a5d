@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56238be2_83a18ff0",
+        "filename": "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-13T03:21:50Z",
+      "side": 1,
+      "message": "I think we should remove this DCHECK_NE().\nWhen the Search SW doesn\u0027t call FetchEvent.respondWith(), preparation_type is UNKNOWN.",
+      "revId": "368fda9a5677788f179ab6a7996d47e4ccce0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5191828a_efe5d641",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-13T03:21:50Z",
+      "side": 1,
+      "message": "Copy this in ResourceResponse::CopyData() and ResourceResponse::ResourceResponse(CrossThreadResourceResponseData* data).",
+      "revId": "368fda9a5677788f179ab6a7996d47e4ccce0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d618421_5fd43f25",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 50539,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-13T03:21:50Z",
+      "side": 1,
+      "message": "And also when the service worker didn\u0027t call FetchEvent.respondWith(), PageLoad.Clients.ServiceWorker.PreparationType is UNKNOWN.",
+      "revId": "368fda9a5677788f179ab6a7996d47e4ccce0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
