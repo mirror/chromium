@@ -9,12 +9,14 @@
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
 #include "cc/ipc/frame_sink_manager.mojom.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/host/frame_sink_observer.h"
 #include "components/viz/host/viz_host_export.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support_manager.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace base {
@@ -22,19 +24,31 @@ class SequencedTaskRunner;
 }
 
 namespace cc {
+class FrameSinkManager;
 class SurfaceInfo;
-class SurfaceManager;
 }  // namespace cc
 
 namespace viz {
 
+class CompositorFrameSinkSupport;
+class CompositorFrameSinkSupportClient;
+
+namespace test {
+class HostFrameSinkManagerTest;
+}
+
 // Browser side wrapper of mojom::FrameSinkManager, to be used from the
 // UI thread. Manages frame sinks and is intended to replace SurfaceManager.
 class VIZ_HOST_EXPORT HostFrameSinkManager
-    : NON_EXPORTED_BASE(cc::mojom::FrameSinkManagerClient) {
+    : public NON_EXPORTED_BASE(cc::mojom::FrameSinkManagerClient),
+      public NON_EXPORTED_BASE(CompositorFrameSinkSupportManager) {
  public:
   HostFrameSinkManager();
   ~HostFrameSinkManager() override;
+
+  // Injects a FrameSinkManager instance. Only to be used by the browser
+  // process, should not be used in the viz process.
+  void SetFrameSinkManager(cc::FrameSinkManager* frame_sink_manager);
 
   // Binds |this| as a FrameSinkManagerClient for |request| on |task_runner|. On
   // Mac |task_runner| will be the resize helper task runner. May only be called
@@ -70,20 +84,37 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   void UnregisterFrameSinkHierarchy(const FrameSinkId& parent_frame_sink_id,
                                     const FrameSinkId& child_frame_sink_id);
 
+  // CompositorFrameSinkSupportManager:
+  std::unique_ptr<CompositorFrameSinkSupport> CreateCompositorFrameSinkSupport(
+      CompositorFrameSinkSupportClient* client,
+      const FrameSinkId& frame_sink_id,
+      bool is_root,
+      bool handles_frame_sink_id_invalidation,
+      bool needs_sync_points) override;
+
  private:
+  friend class test::HostFrameSinkManagerTest;
+
   struct FrameSinkData {
     FrameSinkData();
     FrameSinkData(FrameSinkData&& other);
     ~FrameSinkData();
     FrameSinkData& operator=(FrameSinkData&& other);
 
+    // If the frame sink is a root that corresponds to a cc::Display.
+    bool is_root = false;
+
     // The FrameSinkId registered as the parent in the BeginFrame hierarchy.
     // This mirrors state in viz.
     base::Optional<FrameSinkId> parent;
 
     // The private interface that gives the host control over the
-    // CompositorFrameSink connection between the client and viz.
+    // CompositorFrameSink connection between the client and viz. This will be
+    // unbound if not using Mojo.
     cc::mojom::CompositorFrameSinkPrivatePtr private_interface;
+
+    // This will be null if using Mojo.
+    CompositorFrameSinkSupport* support = nullptr;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(FrameSinkData);
@@ -99,11 +130,20 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   // Mojo connection back from the FrameSinkManager.
   mojo::Binding<cc::mojom::FrameSinkManagerClient> binding_;
 
+  // If not null, this allows HostFrameSinkManager to use FrameSinkManager
+  // directly to create CompositorFrameSinkSupports. Changse to the
+  // FrameSinkHierarchy will also happen directly instead of over Mojo.
+  //
+  // In the viz process this will be null and only Mojo will be used.
+  cc::FrameSinkManager* frame_sink_manager_ = nullptr;
+
   // Per CompositorFrameSink data.
   base::flat_map<FrameSinkId, FrameSinkData> frame_sink_data_map_;
 
   // Local observers to that receive OnSurfaceCreated() messages from IPC.
   base::ObserverList<FrameSinkObserver> observers_;
+
+  base::WeakPtrFactory<HostFrameSinkManager> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(HostFrameSinkManager);
 };
