@@ -111,13 +111,9 @@ class CORE_EXPORT FontBuilder {
   }
   static FontSmoothingMode InitialFontSmoothing() { return kAutoSmoothing; }
 
-  static FontSelectionValueStretch InitialStretch() {
-    return NormalWidthValue();
-  }
-  static FontSelectionValueWeight InitialWeight() {
-    return NormalWeightValue();
-  }
-  static FontSelectionValueStyle InitialStyle() { return NormalSlopeValue(); }
+  static FontSelectionValue InitialStretch() { return NormalWidthValue(); }
+  static FontSelectionValue InitialWeight() { return NormalWeightValue(); }
+  static FontSelectionValue InitialStyle() { return NormalSlopeValue(); }
 
  private:
   void SetFamilyDescription(FontDescription&,
