@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9202397d_fbf67974",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29674,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-13T09:53:43Z",
+      "side": 1,
+      "message": "Good point, I have added another value in the enum that is recorded every time there was an event so we can use this as a counter.",
+      "parentUuid": "e70db2ee_5e28af6c",
+      "revId": "f6bcd4c8d61c52cc87c86990f6deb51f0c801d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be68412c_76dfd632",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -98,6 +116,30 @@
       "revId": "f6bcd4c8d61c52cc87c86990f6deb51f0c801d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1100fa9_469a6fec",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29681,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-13T09:53:43Z",
+      "side": 1,
+      "message": "Added clarification.",
+      "parentUuid": "02f02bf8_ddb012d1",
+      "range": {
+        "startLine": 29679,
+        "startChar": 3,
+        "endLine": 29681,
+        "endChar": 44
+      },
+      "revId": "f6bcd4c8d61c52cc87c86990f6deb51f0c801d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
