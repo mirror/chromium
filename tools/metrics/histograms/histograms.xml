@@ -29728,6 +29728,38 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Engagement.SignificantPlayers.PlayerNotAdded"
+    enum="InsignificantPlaybackReason">
+  <owner>beccahughes@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Recorded when the Media Engagement service doesn't determine a player to be
+    significant. If a player is not significant the reasons why will be
+    individually recorded to this histogram.
+
+    The significant state of a player is reevaluated any time the state of the
+    player changes (e.g. muted, playing/paused). If the player was not
+    considered signficiant and still is not then we will record the reasons why
+    in this histogram.
+  </summary>
+</histogram>
+
+<histogram name="Media.Engagement.SignificantPlayers.PlayerRemoved"
+    enum="InsignificantPlaybackReason">
+  <owner>beccahughes@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Recorded when the Media Engagement service no longer determines a player to
+    be significant. If a player is no longer significant, the reasons why will
+    be individually recorded to this histogram.
+
+    The significant state of a player is re-evaluted any time the state of the
+    player changes (e.g. muted, playing/paused). If the player was previously
+    considered significant and is no longer considered that we will record the
+    reasons why in this histogram.
+  </summary>
+</histogram>
+
 <histogram name="Media.FallbackHardwareAudioBitsPerChannel">
   <owner>dalecurtis@chromium.org</owner>
   <summary>
@@ -92451,8 +92483,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram_suffixes name="NavigationType" separator=".">
   <suffix name="NewPageInPageOriginMismatch"
       label="in-document new page navigation with a non-matching origin"/>
-  <suffix name="NewPageInPage"
-      label="in-document new page navigation"/>
+  <suffix name="NewPageInPage" label="in-document new page navigation"/>
   <suffix name="NewPagePendingEntryMatches"
       label="new page navigation which found a pending entry"/>
   <suffix name="NewPageNoMatchingEntry"
@@ -92462,7 +92493,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="ExistingPageDifferentDocumentIntendedAsNew"
       label="existing page navigation which is intended as new"/>
   <suffix name="ExistingPageSameDocumentRestoredBrowserInitiated"
-      label="in-document existing page browser-initiated navigation which is restored"/>
+      label="in-document existing page browser-initiated navigation which is
+             restored"/>
   <suffix name="ExistingPageSameDocumentBrowserInitiated"
       label="in-document existing page browser-initiated navigation"/>
   <suffix name="ExistingPageRestoredBrowserInitiated"
