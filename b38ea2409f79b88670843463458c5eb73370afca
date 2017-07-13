@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0551b419_43fbc60b",
+        "filename": "third_party/WebKit/Source/core/url/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T04:29:28Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "b38ea2409f79b88670843463458c5eb73370afca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
