@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "5d262944_68ce7748",
+        "filename": "chrome/browser/ui/webui/options/password_manager_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T13:27:48Z",
+      "side": 1,
+      "message": "Turns out this code is still alive on CrOS, so we definitely shouldn\u0027t remove it just yet. Sometimes Compilation Errors can be useful ;)",
+      "parentUuid": "fe3c5acb_0556a465",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d9e722c_41f008d2",
         "filename": "components/password_manager/core/browser/password_ui_utils.cc",
         "patchSetId": 1
