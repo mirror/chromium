@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "523bdbab_b9321e45",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-07-13T15:10:26Z",
+      "side": 1,
+      "message": "It seems like this would be one frame behind. (This value applies to the next frame rather than the current frame.)\n\nWhen GbmSurfaceless::SwapBuffersAsync() is called, the frame that needs to be queried is in |unsubmitted_frames_.back()|. The SubmitFrame() call on line 125 will trigger the call to GbmSurfaceless::QueueOverlayPlane() via the call in line 215, which happens after |is_on_external_drm_device_| is checked.\n\nThough this will really only affect the first few frames in the worst case. And exposing RequiresGlFinish() via the GlSurfaceOverlay is a non-trivial amount of work. Perhaps this is good enough as a short term fix until we can pipe the fence FD?\n\nThough, this should be documented so we can keep track of the hack.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 30
+      },
+      "revId": "19508d8458022ec44bdb6f1e1f4cd496e2147d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
