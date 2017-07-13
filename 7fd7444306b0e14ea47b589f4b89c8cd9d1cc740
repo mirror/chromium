@@ -46,6 +46,30 @@
       "revId": "7fd7444306b0e14ea47b589f4b89c8cd9d1cc740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcdf6da_af5ca616",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-13T18:35:43Z",
+      "side": 1,
+      "message": "I think it\u0027s fine as is. Let\u0027s put a comment here saying that Autofill is enabled if the user preference is properly set and the client supports it.\n\nIf you can make AutofillManager::IsAutofillEnabled then sure.",
+      "parentUuid": "38ca9d37_7686b9f1",
+      "range": {
+        "startLine": 1169,
+        "startChar": 18,
+        "endLine": 1169,
+        "endChar": 37
+      },
+      "revId": "7fd7444306b0e14ea47b589f4b89c8cd9d1cc740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
