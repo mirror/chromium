@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11968c56_fd171901",
+        "filename": "build/config/fuchsia/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-13T21:22:04Z",
+      "side": 0,
+      "message": "Not sure about this one, I\u0027d probably leave this one as it was",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 10
+      },
+      "revId": "7893bd97c2d6fcd653cfc2d0b13a86b0c877e7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d91fe1_d69f00f8",
+        "filename": "build/toolchain/fuchsia/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-13T21:22:04Z",
+      "side": 0,
+      "message": "ditto",
+      "range": {
+        "startLine": 1,
+        "startChar": 4,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "7893bd97c2d6fcd653cfc2d0b13a86b0c877e7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
