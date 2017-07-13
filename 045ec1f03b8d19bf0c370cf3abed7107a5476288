@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86e6a749_0fcbcb02",
+        "filename": "chrome/app/media_router_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-07-13T18:01:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67c73f91_4b5ed461",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 9
+      },
+      "revId": "045ec1f03b8d19bf0c370cf3abed7107a5476288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df6bff75_e11f77ce",
         "filename": "chrome/browser/ui/webui/media_router/media_router_file_dialog_unittest.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "045ec1f03b8d19bf0c370cf3abed7107a5476288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e63392_4886f40c",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_file_dialog_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-07-13T18:01:34Z",
+      "side": 1,
+      "message": "Moved the title one in. As each function expects the call with the file, I\u0027d rather leave that one as a parameter.",
+      "parentUuid": "df6bff75_e11f77ce",
+      "revId": "045ec1f03b8d19bf0c370cf3abed7107a5476288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
