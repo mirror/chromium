@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d6aab4_f0072797",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-13T20:21:57Z",
+      "side": 1,
+      "message": "Does it need this include? I would hope not, since it would be a circular reference.\n\nAlso, please take a look and see if there\u0027s any other unused includes here.",
+      "range": {
+        "startLine": 30,
+        "startChar": 61,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "3e5ecfc38ab86a2ce5f6ce0b9ebdb8502cf75c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbee19b_ee58b348",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-13T20:21:57Z",
+      "side": 1,
+      "message": "Can this move back to the private section like before? (If there\u0027s no reason to make it public.)\n\nIt should show up as unchanged in the diff if you keep it in the same place.",
+      "range": {
+        "startLine": 172,
+        "startChar": 41,
+        "endLine": 172,
+        "endChar": 0
+      },
+      "revId": "3e5ecfc38ab86a2ce5f6ce0b9ebdb8502cf75c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
