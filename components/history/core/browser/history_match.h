@@ -20,7 +20,6 @@ struct HistoryMatch {
 
   HistoryMatch(const URLRow& url_info,
                size_t input_location,
-               bool match_in_scheme,
                bool innermost_match);
 
   static bool EqualsGURL(const HistoryMatch& h, const GURL& url);
@@ -44,6 +43,10 @@ struct HistoryMatch {
   // will mislead the user into thinking the What You Typed match is what's
   // selected.)
   bool match_in_scheme;
+
+  bool match_in_subdomain;
+
+  bool match_after_host;
 
   // A match after any scheme/"www.", if the user input could match at both
   // locations.  If the user types "w", an innermost match ("website.com") is

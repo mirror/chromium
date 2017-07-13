@@ -17,13 +17,13 @@ HistoryMatch::HistoryMatch()
 
 HistoryMatch::HistoryMatch(const URLRow& url_info,
                            size_t input_location,
-                           bool match_in_scheme,
                            bool innermost_match)
     : url_info(url_info),
       input_location(input_location),
-      match_in_scheme(match_in_scheme),
-      innermost_match(innermost_match) {
-}
+      match_in_scheme(false),
+      match_in_subdomain(false),
+      match_after_host(false),
+      innermost_match(innermost_match) {}
 
 bool HistoryMatch::EqualsGURL(const HistoryMatch& h, const GURL& url) {
   return h.url_info.url() == url;
