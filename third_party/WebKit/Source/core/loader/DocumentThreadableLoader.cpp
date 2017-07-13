@@ -379,10 +379,11 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
           request.Url().Protocol())) {
     probe::documentThreadableLoaderFailedToStartLoadingForClient(GetDocument(),
                                                                  client_);
-    DispatchDidFailAccessControlCheck(ResourceError(
-        kErrorDomainBlinkInternal, 0, request.Url().GetString(),
-        "Cross origin requests are only supported for protocol schemes: " +
-            SchemeRegistry::ListOfCORSEnabledURLSchemes() + "."));
+    DispatchDidFailAccessControlCheck(
+        ResourceError::CancelledDueToAccessCheckError(
+            request.Url(), ResourceRequestBlockedReason::kOther,
+            "Cross origin requests are only supported for protocol schemes: " +
+                SchemeRegistry::ListOfCORSEnabledURLSchemes() + "."));
     return;
   }
 
@@ -393,11 +394,12 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
           error_message) &&
       request.IsExternalRequest()) {
     DispatchDidFailAccessControlCheck(
-        ResourceError(kErrorDomainBlinkInternal, 0, request.Url().GetString(),
-                      "Requests to internal network resources are not allowed "
-                      "from non-secure contexts (see https://goo.gl/Y0ZkNV). "
-                      "This is an experimental restriction which is part of "
-                      "'https://mikewest.github.io/cors-rfc1918/'."));
+        ResourceError::CancelledDueToAccessCheckError(
+            request.Url(), ResourceRequestBlockedReason::kOrigin,
+            "Requests to internal network resources are not allowed "
+            "from non-secure contexts (see https://goo.gl/Y0ZkNV). "
+            "This is an experimental restriction which is part of "
+            "'https://mikewest.github.io/cors-rfc1918/'."));
     return;
   }
 
