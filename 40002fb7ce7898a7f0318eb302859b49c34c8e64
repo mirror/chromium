@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850f95e1_4e335a63",
+        "filename": "components/arc/common/net.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-13T16:14:38Z",
+      "side": 1,
+      "message": "nit:\n\n// Next MinVersion: 7",
+      "revId": "40002fb7ce7898a7f0318eb302859b49c34c8e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f8b8a9_e74818f1",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-13T16:14:38Z",
+      "side": 1,
+      "message": "Can you move this to TranslateONCWifi()?",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 72
+      },
+      "revId": "40002fb7ce7898a7f0318eb302859b49c34c8e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
