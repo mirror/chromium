@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "edf00a05_16a3dc8b",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_file_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-13T18:02:15Z",
+      "side": 1,
+      "message": "lgtm.",
+      "parentUuid": "1aff4a93_0151f890",
+      "revId": "a6424677a9826599e9a6eb5382000b65e838255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c174d8c_7e5edea2",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
