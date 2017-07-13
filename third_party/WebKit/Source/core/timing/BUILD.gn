@@ -52,4 +52,8 @@ blink_core_sources("timing") {
     # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
     "//build/config/compiler:no_size_t_to_int_warning",
   ]
+
+  deps = [
+    "//third_party/WebKit/public:service_worker_mojo_bindings_blink",
+  ]
 }

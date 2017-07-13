@@ -161,6 +161,10 @@ class CORE_EXPORT DocumentLoader
     navigation_type_ = navigation_type;
   }
 
+  mojom::ServiceWorkerPreparationType GetServiceWorkerPreparationType() const {
+    return response_.GetServiceWorkerPreparationType();
+  };
+
   void SetItemForHistoryNavigation(HistoryItem* item) { history_item_ = item; }
   HistoryItem* GetHistoryItem() const { return history_item_; }
 

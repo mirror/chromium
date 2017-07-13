@@ -61,6 +61,11 @@ WebNavigationType WebPerformance::GetNavigationType() const {
   return kWebNavigationTypeOther;
 }
 
+blink::mojom::ServiceWorkerPreparationType
+WebPerformance::ServiceWorkerPreparationTypeForNavigation() const {
+  return private_->navigation()->GetServiceWorkerPreparationType();
+}
+
 double WebPerformance::NavigationStart() const {
   return MillisecondsToSeconds(private_->timing()->navigationStart());
 }

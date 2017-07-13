@@ -65,6 +65,7 @@
 #include "third_party/WebKit/public/platform/WebURLLoaderClient.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_preparation_type.mojom.h"
 #include "third_party/WebKit/public/web/WebSecurityPolicy.h"
 #include "third_party/boringssl/src/include/openssl/ssl.h"
 
@@ -1119,6 +1120,8 @@ void WebURLLoaderImpl::PopulateURLResponse(const GURL& url,
   response->SetCorsExposedHeaderNames(cors_exposed_header_names);
   response->SetDidServiceWorkerNavigationPreload(
       info.did_service_worker_navigation_preload);
+  response->SetServiceWorkerPreparationType(
+      info.service_worker_preparation_type);
   response->SetEncodedDataLength(info.encoded_data_length);
   response->SetAlpnNegotiatedProtocol(
       WebString::FromUTF8(info.alpn_negotiated_protocol));

@@ -249,6 +249,7 @@ target(link_target_type, "child") {
     "//third_party/WebKit/public:features",
     "//third_party/WebKit/public:image_resources",
     "//third_party/WebKit/public:resources",
+    "//third_party/WebKit/public:service_worker_mojo_bindings",
     "//third_party/ced",
     "//third_party/zlib/google:compression_utils",
     "//ui/base",

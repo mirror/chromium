@@ -141,6 +141,7 @@ source_set("browser") {
     "//third_party/WebKit/public:image_resources",
     "//third_party/WebKit/public:mojo_bindings",
     "//third_party/WebKit/public:resources",
+    "//third_party/WebKit/public:service_worker_mojo_bindings",
     "//third_party/angle:angle_common",
     "//third_party/brotli:dec",
     "//third_party/icu",

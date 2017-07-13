@@ -833,6 +833,18 @@ mojom("offscreen_canvas_mojo_bindings") {
   export_header_blink = "third_party/WebKit/public/platform/WebCommon.h"
 }
 
+# Some service worker bindings are separated from the rest of the mojom
+# files because it //chrome needs then and //chrome depending on mojo_bindings
+# caused linker errors for reasons I don't understand.
+mojom("service_worker_mojo_bindings") {
+  sources = [
+    "platform/modules/serviceworker/service_worker_preparation_type.mojom",
+  ]
+
+  # TODO(crbug.com/699569): Convert to use the new JS bindings.
+  js_bindings_mode = "both"
+}
+
 # Note that this intentionally depends on the generator target of the mojom
 # target instead of the mojom target itself directly. This is to ensure that the
 # dependencies are header-only and don't link against any bindings code.
