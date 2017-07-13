@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d6c22e7_caf7935f",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-13T14:43:31Z",
+      "side": 1,
+      "message": "I think you are right. My bad.",
+      "parentUuid": "aadd41bf_87ae49c9",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 13,
+        "endChar": 72
+      },
+      "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9ff79a9_4ccc0176",
         "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
         "patchSetId": 20
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T21:14:57Z",
       "side": 1,
       "message": "Nit: size_t here as well",
+      "range": {
+        "startLine": 28,
+        "startChar": 39,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36916c2e_33dbf53e",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-13T14:43:31Z",
+      "side": 1,
+      "message": "Done. Thanks",
+      "parentUuid": "d9ff79a9_4ccc0176",
       "range": {
         "startLine": 28,
         "startChar": 39,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c889ef10_3302fecf",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-13T14:43:31Z",
+      "side": 1,
+      "message": "My bad. Thanks",
+      "parentUuid": "7cbff825_6dd3ae10",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d63afba2_d939614b",
         "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
         "patchSetId": 20
@@ -85,6 +157,24 @@
       "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08bbc9d_30e9bdef",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-13T14:43:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d63afba2_d939614b",
+      "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "ccd82df6_fd364b4e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 5790,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-13T14:43:31Z",
+      "side": 1,
+      "message": "Makes sense. Thanks",
+      "parentUuid": "a2c709b2_86c4bc72",
+      "range": {
+        "startLine": 5790,
+        "startChar": 0,
+        "endLine": 5790,
+        "endChar": 72
+      },
+      "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b45e843_56bc8edc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 20
@@ -122,6 +236,24 @@
       "writtenOn": "2017-07-12T21:25:26Z",
       "side": 1,
       "message": "looks like a formatting tool re-wrapped a bunch of lines in this file. we should revert any changes not related to our own change, unless these reformats address lint errors.",
+      "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ceac29_0c6b32c8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 73399,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-13T14:43:31Z",
+      "side": 1,
+      "message": "Yea. My bad. reverted. \nThanks",
+      "parentUuid": "4b45e843_56bc8edc",
       "revId": "2980920bc37a1e95f457ea35328ce710cfe61cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -234,6 +234,30 @@
       "revId": "0028f05efe9381b242df75195a43139cda106894",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196b2cf3_eaa4e2bf",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-13T14:43:31Z",
+      "side": 1,
+      "message": "Also, not so sure what the best solution is yet, but we will also be measuring use counter CSS feature usage, so it might be worth it to keep this as a struct for now.",
+      "parentUuid": "b2de96d9_b8f04685",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "0028f05efe9381b242df75195a43139cda106894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
