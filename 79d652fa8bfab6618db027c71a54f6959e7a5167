@@ -93,6 +93,30 @@
       "revId": "79d652fa8bfab6618db027c71a54f6959e7a5167",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1283e4dc_fa59a121",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T23:23:46Z",
+      "side": 1,
+      "message": "It seems like a good thing to use for any function argument that is about to be serialized. For service_manager that is the case unless the test API is being used.",
+      "parentUuid": "e2eb770d_28fdd3cd",
+      "range": {
+        "startLine": 356,
+        "startChar": 20,
+        "endLine": 356,
+        "endChar": 45
+      },
+      "revId": "79d652fa8bfab6618db027c71a54f6959e7a5167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
