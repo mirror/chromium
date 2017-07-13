@@ -9,6 +9,7 @@
 #include "components/download/public/client.h"
 #include "components/download/public/clients.h"
 #include "components/download/public/download_params.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace download {
 
@@ -44,6 +45,7 @@ struct Entry {
   ~Entry();
 
   bool operator==(const Entry& other) const;
+  Entry& operator=(const Entry& other);
 
   // The feature that is requesting this download.
   DownloadClient client = DownloadClient::INVALID;
@@ -74,6 +76,19 @@ struct Entry {
 
   // Stores the number of retries for this download.
   uint32_t attempt_count;
+
+  bool has_traffic_annotation_tag() const {
+    return traffic_annotation_.get() != nullptr;
+  }
+
+  const net::NetworkTrafficAnnotationTag& get_traffic_annotation_tag() const {
+    CHECK(traffic_annotation_.get() != nullptr);
+    return *traffic_annotation_.get();
+  }
+
+ private:
+  // Traffic annotation for the network request.
+  std::unique_ptr<net::NetworkTrafficAnnotationTag> traffic_annotation_;
 };
 
 }  // namespace download
