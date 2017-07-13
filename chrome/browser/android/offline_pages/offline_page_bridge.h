@@ -42,8 +42,8 @@ class OfflinePageBridge : public OfflinePageModel::Observer,
   void OfflinePageModelLoaded(OfflinePageModel* model) override;
   void OfflinePageAdded(OfflinePageModel* model,
                         const OfflinePageItem& added_page) override;
-  void OfflinePageDeleted(int64_t offline_id,
-                          const ClientId& client_id) override;
+  void OfflinePageDeleted(
+      const OfflinePageModel::DeletedPageInfo& page_info) override;
 
   void CheckPagesExistOffline(
       JNIEnv* env,
@@ -153,7 +153,8 @@ class OfflinePageBridge : public OfflinePageModel::Observer,
       const base::android::JavaParamRef<jobject>& j_web_contents,
       const base::android::JavaParamRef<jstring>& j_namespace,
       const base::android::JavaParamRef<jstring>& j_url,
-      int ui_action);
+      int ui_action,
+      const base::android::JavaParamRef<jstring>& j_origin);
 
   base::android::ScopedJavaGlobalRef<jobject> java_ref() { return java_ref_; }
 

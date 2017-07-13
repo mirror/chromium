@@ -94,7 +94,7 @@ public class OfflinePageBridge {
          * @param offlineId The offline ID of the deleted offline page.
          * @param clientId The client supplied ID of the deleted offline page.
          */
-        public void offlinePageDeleted(long offlineId, ClientId clientId) {}
+        public void offlinePageDeleted(DeletedPageInfo deletedPage) {}
     }
 
     /**
@@ -497,6 +497,7 @@ public class OfflinePageBridge {
     /**
      * Schedules to download a page from |url| and categorize under |nameSpace|.
      * The duplicate pages or requests will be checked.
+     * Origin is presumed to be Chrome.
      *
      * @param webContents Web contents upon which the infobar is shown.
      * @param nameSpace Namespace of the page to save.
@@ -505,7 +506,24 @@ public class OfflinePageBridge {
      */
     public void scheduleDownload(
             WebContents webContents, String nameSpace, String url, int uiAction) {
-        nativeScheduleDownload(mNativeOfflinePageBridge, webContents, nameSpace, url, uiAction);
+        scheduleDownload(webContents, nameSpace, url, uiAction, "");
+    }
+
+    /**
+     * Schedules to download a page from |url| and categorize under |namespace| from |origin|.
+     * The duplicate pages or requests will be checked.
+     *
+     * @param webContents Web contents upon which the infobar is shown.
+     * @param nameSpace Namespace of the page to save.
+     * @param url URL of the page to save.
+     * @param uiAction UI action, like showing infobar or toast on certain case.
+     * @param origin Qualified string origin of the page. This will be a JSON-like string with
+     *        package name and signature on Android.
+     */
+    public void scheduleDownload(
+            WebContents webContents, String nameSpace, String url, int uiAction, String origin) {
+        nativeScheduleDownload(
+                mNativeOfflinePageBridge, webContents, nameSpace, url, uiAction, origin);
     }
 
     /**
@@ -568,9 +586,9 @@ public class OfflinePageBridge {
     }
 
     @CalledByNative
-    void offlinePageDeleted(long offlineId, ClientId clientId) {
+    void offlinePageDeleted(DeletedPageInfo deletedPage) {
         for (OfflinePageModelObserver observer : mObservers) {
-            observer.offlinePageDeleted(offlineId, clientId);
+            observer.offlinePageDeleted(deletedPage);
         }
     }
 
@@ -593,6 +611,12 @@ public class OfflinePageBridge {
     @CalledByNative
     private static ClientId createClientId(String clientNamespace, String id) {
         return new ClientId(clientNamespace, id);
+    }
+
+    @CalledByNative
+    private static DeletedPageInfo createDeletedPageInfo(
+            long offlineId, String clientNamespace, String clientId, String requestOrigin) {
+        return new DeletedPageInfo(offlineId, clientNamespace, clientId, requestOrigin);
     }
 
     private static native boolean nativeIsOfflineBookmarksEnabled();
@@ -644,7 +668,7 @@ public class OfflinePageBridge {
     private native boolean nativeIsShowingDownloadButtonInErrorPage(
             long nativeOfflinePageBridge, WebContents webContents);
     private native void nativeScheduleDownload(long nativeOfflinePageBridge,
-            WebContents webContents, String nameSpace, String url, int uiAction);
+            WebContents webContents, String nameSpace, String url, int uiAction, String origin);
     private native boolean nativeIsOfflinePage(
             long nativeOfflinePageBridge, WebContents webContents);
     private native OfflinePageItem nativeGetOfflinePage(
