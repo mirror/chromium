@@ -4,6 +4,8 @@
 
 #include "components/metrics/metrics_provider.h"
 
+#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
+
 namespace metrics {
 
 MetricsProvider::MetricsProvider() {
@@ -39,6 +41,18 @@ void MetricsProvider::ProvideSystemProfileMetrics(
 
 bool MetricsProvider::HasInitialStabilityMetrics() {
   return false;
+}
+
+void MetricsProvider::ProvidePreviousSessionData(
+    SystemProfileProto* system_profile_proto) {
+  ProvideInitialStabilityMetrics(system_profile_proto);
+  ProvideStabilityMetrics(system_profile_proto);
+}
+
+void MetricsProvider::ProvideCurrentSessionData(
+    ChromeUserMetricsExtension* uma_proto) {
+  ProvideStabilityMetrics(uma_proto->mutable_system_profile());
+  ProvideGeneralMetrics(uma_proto);
 }
 
 void MetricsProvider::ProvideInitialStabilityMetrics(

@@ -358,8 +358,7 @@ TEST_F(MetricsLogTest, InitialLogStabilityMetrics) {
   log.RecordEnvironment(metrics_providers,
                         std::vector<variations::ActiveGroupId>(), kInstallDate,
                         kEnabledDate);
-  log.RecordStabilityMetrics(metrics_providers, base::TimeDelta(),
-                             base::TimeDelta());
+  log.RecordPreviousSessionData(metrics_providers);
 
   // The test provider should have been called upon to provide initial
   // stability and regular stability metrics.
@@ -377,8 +376,8 @@ TEST_F(MetricsLogTest, OngoingLogStabilityMetrics) {
   log.RecordEnvironment(metrics_providers,
                         std::vector<variations::ActiveGroupId>(), kInstallDate,
                         kEnabledDate);
-  log.RecordStabilityMetrics(metrics_providers, base::TimeDelta(),
-                             base::TimeDelta());
+  log.RecordCurrentSessionData(metrics_providers, base::TimeDelta(),
+                               base::TimeDelta());
 
   // The test provider should have been called upon to provide regular but not
   // initial stability metrics.

@@ -117,6 +117,14 @@ class MetricsLog {
   // or it could not be decoded), returns false and |app_version| is empty.
   bool LoadSavedEnvironmentFromPrefs(std::string* app_version);
 
+  void RecordPreviousSessionData(
+      const std::vector<std::unique_ptr<MetricsProvider>>& metrics_providers);
+
+  void RecordCurrentSessionData(
+      const std::vector<std::unique_ptr<MetricsProvider>>& metrics_providers,
+      base::TimeDelta incremental_uptime,
+      base::TimeDelta uptime);
+
   // Writes application stability metrics, including stability metrics provided
   // by the specified set of |metrics_providers|. The system profile portion of
   // the log must have already been filled in by a call to RecordEnvironment()

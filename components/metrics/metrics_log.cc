@@ -215,7 +215,15 @@ void MetricsLog::RecordHistogramDelta(const std::string& histogram_name,
   EncodeHistogramDelta(histogram_name, snapshot, &uma_proto_);
 }
 
-void MetricsLog::RecordStabilityMetrics(
+void MetricsLog::RecordPreviousSessionData(
+    const std::vector<std::unique_ptr<MetricsProvider>>& metrics_providers) {
+  SystemProfileProto* system_profile = uma_proto()->mutable_system_profile();
+  for (const auto& provider : metrics_providers) {
+    provider->ProvidePreviousSessionData(system_profile);
+  }
+}
+
+void MetricsLog::RecordCurrentSessionData(
     const std::vector<std::unique_ptr<MetricsProvider>>& metrics_providers,
     base::TimeDelta incremental_uptime,
     base::TimeDelta uptime) {
@@ -229,21 +237,12 @@ void MetricsLog::RecordStabilityMetrics(
   // uma log upload, just as we send histogram data.
   WriteRealtimeStabilityAttributes(incremental_uptime, uptime);
 
-  SystemProfileProto* system_profile = uma_proto()->mutable_system_profile();
-  for (size_t i = 0; i < metrics_providers.size(); ++i) {
-    if (log_type() == INITIAL_STABILITY_LOG)
-      metrics_providers[i]->ProvideInitialStabilityMetrics(system_profile);
-    metrics_providers[i]->ProvideStabilityMetrics(system_profile);
-  }
-}
-
-void MetricsLog::RecordGeneralMetrics(
-    const std::vector<std::unique_ptr<MetricsProvider>>& metrics_providers) {
   if (local_state_->GetBoolean(prefs::kMetricsResetIds))
     UMA_HISTOGRAM_BOOLEAN("UMA.IsClonedInstall", true);
 
-  for (size_t i = 0; i < metrics_providers.size(); ++i)
-    metrics_providers[i]->ProvideGeneralMetrics(uma_proto());
+  for (const auto& provider : metrics_providers) {
+    provider->ProvideCurrentSessionData(uma_proto());
+  }
 }
 
 void MetricsLog::GetFieldTrialIds(
