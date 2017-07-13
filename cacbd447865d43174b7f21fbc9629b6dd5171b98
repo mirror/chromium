@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "644566c5_0aade868",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-13T06:06:09Z",
+      "side": 1,
+      "message": "Changed to calculating it using the difference between\nthe plane data pointers and corrected l.155, I shouldn\u0027t\nuse AllocationSize().",
+      "parentUuid": "d1ea9729_803b0fa4",
+      "revId": "cacbd447865d43174b7f21fbc9629b6dd5171b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d37978e0_5d94cc84",
         "filename": "media/mojo/clients/mojo_video_encode_accelerator_host.h",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "cacbd447865d43174b7f21fbc9629b6dd5171b98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e25dc2d_fadf40a0",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-13T06:06:09Z",
+      "side": 1,
+      "message": "I agree; done here and in the service-side CL.",
+      "parentUuid": "d37978e0_5d94cc84",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "cacbd447865d43174b7f21fbc9629b6dd5171b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
