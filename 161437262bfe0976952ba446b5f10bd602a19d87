@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec584ffa_53ca4117",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-13T17:01:03Z",
+      "side": 1,
+      "message": "This used to be the path of the file under /gen. Now we use it as the relative path to the asset in the apk, which means the webview_licenses.notice only exists in the apk but not in /gen folder. \n\nI have inlined it.",
+      "parentUuid": "13bd19ff_9e76aaad",
+      "revId": "161437262bfe0976952ba446b5f10bd602a19d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b9869ed_abaa9e27",
         "filename": "components/cronet/tools/cronet_licenses.py",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "81f5a943_0e3ad4a7",
+        "filename": "components/cronet/tools/cronet_licenses.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-13T17:01:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b9869ed_abaa9e27",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "161437262bfe0976952ba446b5f10bd602a19d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92eeaa1c_3c4c6073",
         "filename": "docs/adding_to_third_party.md",
         "patchSetId": 1
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b0aee894_df82cbe8",
+        "filename": "docs/adding_to_third_party.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-13T17:01:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92eeaa1c_3c4c6073",
+      "revId": "161437262bfe0976952ba446b5f10bd602a19d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7942b577_dcaf4928",
         "filename": "tools/copyright_scanner/PRESUBMIT.py",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "161437262bfe0976952ba446b5f10bd602a19d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20db5f0_47751c85",
+        "filename": "tools/copyright_scanner/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-13T17:01:03Z",
+      "side": 1,
+      "message": "Agreed. Pawel, please advise if it is OK to remove copyright_scanner.py?",
+      "parentUuid": "7942b577_dcaf4928",
+      "revId": "161437262bfe0976952ba446b5f10bd602a19d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
