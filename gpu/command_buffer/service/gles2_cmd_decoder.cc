@@ -684,6 +684,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   // Initialize or re-initialize the shader translator.
   bool InitializeShaderTranslator();
+  void DestroyShaderTranslator();
 
   void UpdateCapabilities();
 
@@ -1750,7 +1751,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
       GLuint renderbuffer, GLenum format);
 
   // Wrapper for glReleaseShaderCompiler.
-  void DoReleaseShaderCompiler() { }
+  void DoReleaseShaderCompiler();
 
   // Wrappers for glSamplerParameter functions.
   void DoSamplerParameterf(GLuint client_id, GLenum pname, GLfloat param);
@@ -3536,10 +3537,6 @@ bool GLES2DecoderImpl::Initialize(
                               features().khr_robustness ||
                               features().ext_robustness;
 
-  if (!InitializeShaderTranslator()) {
-    return false;
-  }
-
   GLint viewport_params[4] = { 0 };
   glGetIntegerv(GL_MAX_VIEWPORT_DIMS, viewport_params);
   viewport_max_width_ = viewport_params[0];
@@ -3894,6 +3891,10 @@ bool GLES2DecoderImpl::InitializeShaderTranslator() {
   if (feature_info_->disable_shader_translator()) {
     return true;
   }
+  if (vertex_translator_ || fragment_translator_) {
+    DCHECK(vertex_translator_ && fragment_translator_);
+    return true;
+  }
   ShBuiltInResources resources;
   sh::InitBuiltInResources(&resources);
   resources.MaxVertexAttribs = group_->max_vertex_attribs();
@@ -4042,6 +4043,11 @@ bool GLES2DecoderImpl::InitializeShaderTranslator() {
     return false;
   }
   return true;
+}
+
+void GLES2DecoderImpl::DestroyShaderTranslator() {
+  vertex_translator_ = nullptr;
+  fragment_translator_ = nullptr;
 }
 
 bool GLES2DecoderImpl::GenBuffersHelper(GLsizei n, const GLuint* client_ids) {
@@ -4905,8 +4911,7 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
 
   // Need to release these before releasing |group_| which may own the
   // ShaderTranslatorCache.
-  fragment_translator_ = NULL;
-  vertex_translator_ = NULL;
+  DestroyShaderTranslator();
 
   // Destroy the GPU Tracer which may own some in process GPU Timings.
   if (gpu_tracer_) {
@@ -8723,6 +8728,10 @@ bool GLES2DecoderImpl::VerifyMultisampleRenderbufferIntegrity(
       pixel[2] == 0xFF);
 }
 
+void GLES2DecoderImpl::DoReleaseShaderCompiler() {
+  DestroyShaderTranslator();
+}
+
 void GLES2DecoderImpl::DoRenderbufferStorage(
   GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
   Renderbuffer* renderbuffer =
@@ -10552,6 +10561,9 @@ void GLES2DecoderImpl::DoTransformFeedbackVaryings(
 
 scoped_refptr<ShaderTranslatorInterface> GLES2DecoderImpl::GetTranslator(
     GLenum type) {
+  if (!InitializeShaderTranslator()) {
+    return nullptr;
+  }
   return type == GL_VERTEX_SHADER ? vertex_translator_ : fragment_translator_;
 }
 
@@ -15825,7 +15837,7 @@ error::Error GLES2DecoderImpl::HandleRequestExtensionCHROMIUM(
     frag_depth_explicitly_enabled_ |= desire_frag_depth;
     draw_buffers_explicitly_enabled_ |= desire_draw_buffers;
     shader_texture_lod_explicitly_enabled_ |= desire_shader_texture_lod;
-    InitializeShaderTranslator();
+    DestroyShaderTranslator();
   }
 
   if (feature_str.find("GL_CHROMIUM_color_buffer_float_rgba ") !=
