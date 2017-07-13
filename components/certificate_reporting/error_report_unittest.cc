@@ -279,6 +279,21 @@ TEST(ErrorReportTest, TestChromeChannelIncluded) {
   }
 }
 
+TEST(ErrorReportTest, TestIsEnterpriseManagedPopulated) {
+  SSLInfo ssl_info;
+  ASSERT_NO_FATAL_FAILURE(
+      GetTestSSLInfo(INCLUDE_UNVERIFIED_CERT_CHAIN, &ssl_info, kCertStatus));
+  ErrorReport report(kDummyHostname, ssl_info);
+
+  report.SetIsEnterpriseManaged(false);
+  std::string serialized_report;
+  ASSERT_TRUE(report.Serialize(&serialized_report));
+
+  CertLoggerRequest parsed;
+  ASSERT_TRUE(parsed.ParseFromString(serialized_report));
+  EXPECT_EQ(false, parsed.is_enterprise_managed());
+}
+
 #if defined(OS_ANDROID)
 // Tests that information about the Android AIA fetching feature is included in
 // the report.
