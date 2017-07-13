@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57fbe0ce_f357212a",
+        "filename": "components/download/internal/file_monitor_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:29:39Z",
+      "side": 1,
+      "message": "Do we only want to do this if CreateDirectoryAndGetError fails?  Or do we want to leave it like this and do it for everything so we get a % failure rate?",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 49
+      },
+      "revId": "c10e71f60954b0ba3d4b3659069fdfd69a364067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df21b43_176177e8",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-13T16:29:39Z",
+      "side": 1,
+      "message": "Add a TODO to pass the mime type as well?  Might be nice to see a distribution of what kinds of files we\u0027re downloading.",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 53
+      },
+      "revId": "c10e71f60954b0ba3d4b3659069fdfd69a364067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
