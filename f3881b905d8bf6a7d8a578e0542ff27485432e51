@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07277732_4b2f335e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "nit: BLUE icon --\u003e blue signal strength icon",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af273b4f_380825d7",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "Just add all of the implementation here - you don\u0027t need to separate private vs. public. Generally, we implement functions in the order that they appear in the class definition (so public functions before private).",
+      "range": {
+        "startLine": 632,
+        "startChar": 0,
+        "endLine": 632,
+        "endChar": 36
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b591ff0_1c5517a2",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "No need for a second anonymous namespace.\n\nestade@: Do you still want these as static fields of SignalStrengthImageSource? Or is just moving these constants up to the other anonymous namespace above fine?",
+      "range": {
+        "startLine": 634,
+        "startChar": 0,
+        "endLine": 643,
+        "endChar": 15
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92cb10b_65125797",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like |icon_type_| is used at all now. You can just get rid of it (both here and in the .h file).\n\nAlso, make sure to update the comment for kIconInset since it refers to this field.",
+      "range": {
+        "startLine": 982,
+        "startChar": 0,
+        "endLine": 982,
+        "endChar": 25
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa37363c_28adb4d9",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "nit: No newline needed before this. Generally, we group all the overridden functions together.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 1
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca6146c_345552c0",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "nit: Don\u0027t need newlines before/after this either.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 1
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b8822e_939dbdfb",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "Just have this return an int from 0 to 4. Currently, you\u0027re relying on the fact that enum values start at 0 and increase by 1 for each subsequent enumeration. This is error-prone (someone could later change one of the values) as well as more difficult to understand (the SignalStrengthImageSource class takes an int as a parameter, but you provide a TetherIconType which is silently converted to an int).\n\nMake sure you update the description of this function to describe clearly what it returns.\n\nAlso, let\u0027s get rid of \"bars\" in the name. How about GetNormalizedSignalStrength().",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3a6432_bf1d0f0d",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cash::network_icon::SignalStrengthImageSource\u003e source \u003d\n    base::MakeUnique\u003cash::network_icon::SignalStrengthImageSource\u003e(...);\n\nThen, std::move(source) when passing it to the constructor of ImageSkia.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 55
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdaf5e59_90bb2d2a",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "nit: Unnecessary comment.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde665ca_32a5396b",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T00:34:42Z",
+      "side": 1,
+      "message": "nit: /* parameter_name */ after nullptr.",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "f3881b905d8bf6a7d8a578e0542ff27485432e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
