@@ -29,6 +29,10 @@ struct SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT CoordinationUnitID {
     return id == b.id && type == b.type;
   }
 
+  bool operator<(const CoordinationUnitID& b) const {
+    return std::tie(id, type) < std::tie(b.id, b.type);
+  }
+
   CoordinationUnitTypeId id;
   CoordinationUnitType type;
 };
