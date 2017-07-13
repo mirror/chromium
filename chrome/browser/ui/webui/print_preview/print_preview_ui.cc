@@ -670,6 +670,14 @@ void PrintPreviewUI::OnSetOptionsFromDocument(
                                    params.duplex);
 }
 
+void PrintPreviewUI::HandlerDestroyed() {
+  CHECK(false);
+}
+
+void PrintPreviewUI::SetHandlerForTesting(PrintPreviewHandler* handler) {
+  handler_ = handler;
+}
+
 // static
 void PrintPreviewUI::SetDelegateForTesting(TestingDelegate* delegate) {
   g_testing_delegate = delegate;

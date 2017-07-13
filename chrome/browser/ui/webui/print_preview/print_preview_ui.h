@@ -140,6 +140,11 @@ class PrintPreviewUI : public ConstrainedWebDialogUI {
   void OnSetOptionsFromDocument(
       const PrintHostMsg_SetOptionsFromDocument_Params& params);
 
+  // Notifies the PrintPreviewUI that the PrintPreviewHandler has been
+  // destroyed.
+  void HandlerDestroyed();
+
+  void SetHandlerForTesting(PrintPreviewHandler* handler);
   // Allows tests to wait until the print preview dialog is loaded.
   class TestingDelegate {
    public:
