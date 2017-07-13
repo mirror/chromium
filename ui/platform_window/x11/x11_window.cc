@@ -21,6 +21,7 @@ X11Window::X11Window(PlatformWindowDelegate* delegate, const gfx::Rect& bounds)
     : X11WindowBase(delegate, bounds) {
   DCHECK(PlatformEventSource::GetInstance());
   PlatformEventSource::GetInstance()->AddPlatformEventDispatcher(this);
+  TouchFactory::SetTouchDeviceListFromCommandLine();
 }
 
 X11Window::~X11Window() {
