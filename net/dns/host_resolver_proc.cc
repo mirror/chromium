@@ -133,8 +133,15 @@ int SystemHostResolverCall(const std::string& host,
   bool valid_hostname = false;
   {
     std::string out_ignored;
-    if (!DNSDomainFromDotWithValidityCheck(host, &out_ignored, &valid_hostname))
+    if (!DNSDomainFromDotWithValidityCheck(host, &out_ignored,
+                                           &valid_hostname) ||
+        !valid_hostname) {
+      if (!valid_hostname) {
+        UMA_HISTOGRAM_BOOLEAN("Net.SuccessfulResolutionWithValidDNSName",
+                              valid_hostname);
+      }
       return ERR_NAME_NOT_RESOLVED;
+    }
   }
 
   if (os_error)
