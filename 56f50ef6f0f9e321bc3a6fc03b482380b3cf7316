@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e3f0676_a36fcbc8",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptElementBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-13T14:53:11Z",
+      "side": 1,
+      "message": "why not \u003d false; ?",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
