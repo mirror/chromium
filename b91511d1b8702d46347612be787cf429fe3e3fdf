@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f206a89_97fe63bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-13T16:41:44Z",
+      "side": 1,
+      "message": "\"Reland\" normally means a second attempt to commit a CL that had already landed and was reverted.  In this case, the original CL hadn\u0027t been approved yet and hadn\u0027t landed, so maybe it\u0027s better to describe it as a continuation of that CL.\n\nPlease also include the main description from that CL here as well (\"When a renderer-initiated...\"), to make it easier to see what this CL is doing at a glance.",
+      "revId": "b91511d1b8702d46347612be787cf429fe3e3fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93e8767_6666323d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4755,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-13T16:41:44Z",
+      "side": 1,
+      "message": "Looks like I had another comment on this that\u0027s still unresolved:\n\n\"Looking at that one, I\u0027m also wondering if we should notify observers in this\ncase.  Do you know if the two current listeners to RFO::OnStop would want to\nhear this as well?\n\n(Also, feel free to include a TODO to address the race.  I\u0027m glad we\u0027re landing\nthis first, but we should acknowledge that it\u0027s worth coming back to.)\"\n\nCamille, what\u0027s your opinion on the observers?  And I think the race we were discussing was the one you were trying to fix with the IDs (though my memory is a bit rusty).  Probably worth leaving a TODO for it with a bit of an explanation, so we don\u0027t forget.",
+      "revId": "b91511d1b8702d46347612be787cf429fe3e3fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
