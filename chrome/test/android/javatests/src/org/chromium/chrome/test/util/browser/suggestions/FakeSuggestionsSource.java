@@ -254,7 +254,7 @@ public class FakeSuggestionsSource implements SuggestionsSource {
     }
 
     @Override
-    public void onDestroy() {}
+    public void destroy() {}
 
     @Override
     public int[] getCategories() {
