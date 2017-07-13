@@ -23,9 +23,10 @@ String ToString(const Vector<char>& v) {
   return String(v.data(), v.size());
 }
 
-class TestClient final : public GarbageCollectedFinalized<TestClient>,
-                         public BytesConsumer::Client {
-  USING_GARBAGE_COLLECTED_MIXIN(TestClient);
+class BytesConsumerTestClient final
+    : public GarbageCollectedFinalized<BytesConsumerTestClient>,
+      public BytesConsumer::Client {
+  USING_GARBAGE_COLLECTED_MIXIN(BytesConsumerTestClient);
 
  public:
   void OnStateChange() override { ++num_on_state_change_called_; }
@@ -319,7 +320,7 @@ TEST_F(BytesConsumerTeeTest, ConsumerCanBeErroredInTwoPhaseRead) {
   BytesConsumer* dest1 = nullptr;
   BytesConsumer* dest2 = nullptr;
   BytesConsumer::Tee(GetDocument(), src, &dest1, &dest2);
-  TestClient* client = new TestClient();
+  BytesConsumerTestClient* client = new BytesConsumerTestClient();
   dest1->SetClient(client);
 
   const char* buffer = nullptr;
@@ -344,7 +345,7 @@ TEST_F(BytesConsumerTeeTest,
   src->Add(Command(Command::kData, "a"));
   src->Add(Command(Command::kWait));
   src->Add(Command(Command::kDone));
-  TestClient* client = new TestClient();
+  BytesConsumerTestClient* client = new BytesConsumerTestClient();
 
   BytesConsumer* dest1 = nullptr;
   BytesConsumer* dest2 = nullptr;
@@ -379,7 +380,7 @@ TEST_F(BytesConsumerTeeTest,
   ReplayingBytesConsumer* src = new ReplayingBytesConsumer(GetDocument());
   src->Add(Command(Command::kData, "a"));
   src->Add(Command(Command::kDone));
-  TestClient* client = new TestClient();
+  BytesConsumerTestClient* client = new BytesConsumerTestClient();
 
   BytesConsumer* dest1 = nullptr;
   BytesConsumer* dest2 = nullptr;
