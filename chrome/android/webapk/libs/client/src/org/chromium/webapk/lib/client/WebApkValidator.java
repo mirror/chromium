@@ -57,6 +57,8 @@ public class WebApkValidator {
      * handled by a WebAPK.
      */
     public static String queryWebApkPackage(Context context, String url) {
+        Log.d(TAG, "querywebapkpackage");
+
         return findWebApkPackage(
                 context, resolveInfosForUrlAndOptionalPackage(context, url, null /* package*/));
     }
@@ -74,6 +76,8 @@ public class WebApkValidator {
      *     handled by a WebAPK.
      */
     public static ResolveInfo queryResolveInfo(Context context, String url) {
+        Log.d(TAG, "queryresolveino");
+
         return findResolveInfo(
                 context, resolveInfosForUrlAndOptionalPackage(context, url, null /* package */));
     }
@@ -85,6 +89,7 @@ public class WebApkValidator {
      *     ResolveInfos corresponds to a WebAPK.
      */
     public static String findWebApkPackage(Context context, List<ResolveInfo> infos) {
+        Log.d(TAG, "findwebapkpackaeg");
         ResolveInfo resolveInfo = findResolveInfo(context, infos);
         if (resolveInfo != null) {
             return resolveInfo.activityInfo.packageName;
@@ -93,6 +98,7 @@ public class WebApkValidator {
     }
 
     public static boolean canWebApkHandleUrl(Context context, String webApkPackage, String url) {
+        Log.d(TAG, "canwebapkhandleurl");
         List<ResolveInfo> infos = resolveInfosForUrlAndOptionalPackage(context, url, webApkPackage);
         for (ResolveInfo info : infos) {
             if (info.activityInfo != null
@@ -158,6 +164,8 @@ public class WebApkValidator {
      * @return true iff the WebAPK is installed and passes security checks
      */
     public static boolean isValidWebApk(Context context, String webappPackageName) {
+        Log.d(TAG, "isvalidwebapk");
+
         if (sExpectedSignature == null || sCommentSignedPublicKeyBytes == null) {
             Log.wtf(TAG,
                     "WebApk validation failure - expected signature not set."
@@ -174,12 +182,15 @@ public class WebApkValidator {
             return false;
         }
         if (isNotWebApkQuick(packageInfo)) {
+            Log.d(TAG, "isvalidwebapk=notquick");
             return false;
         }
         if (verifyV1WebApk(packageInfo, webappPackageName)) {
+            Log.d(TAG, "v1");
             return true;
         }
 
+        Log.d(TAG, "checkingcomment");
         return verifyCommentSignedWebApk(packageInfo, webappPackageName);
     }
 

@@ -30,6 +30,7 @@ import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.ui.base.PageTransition;
+import org.chromium.webapk.lib.client.WebApkValidator;
 
 import java.net.URI;
 import java.util.HashSet;
@@ -45,7 +46,7 @@ public class ExternalNavigationHandler {
     private static final String TAG = "UrlHandler";
 
     // Enables debug logging on a local build.
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String WTAI_URL_PREFIX = "wtai://wp/";
     private static final String WTAI_MC_URL_PREFIX = "wtai://wp/mc;";
@@ -247,8 +248,11 @@ public class ExternalNavigationHandler {
                         && !isExternalProtocol
                         && incomingIntentRedirect
                         && !handler.shouldNavigationTypeStayInChrome()
-                        && mDelegate.maybeLaunchInstantApp(params.getTab(), params.getUrl(),
-                                params.getReferrerUrl(), true)) {
+                        && (mDelegate.maybeLaunchInstantApp(params.getTab(), params.getUrl(),
+                                params.getReferrerUrl(), true)
+                            || WebApkValidator.queryWebApkPackage(ContextUtils.getApplicationContext(), params.getUrl()) != ""))
+
+                 {
                     if (DEBUG) {
                         Log.i(TAG, "OVERRIDE_WITH_EXTERNAL_INTENT: Launching redirect to "
                                 + "an instant app");
