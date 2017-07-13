@@ -22,6 +22,30 @@
       "revId": "c62fe8a2c20a96ff596877b2b2dbb8807431872b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2464a1c8_6893916d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25810,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-13T19:34:26Z",
+      "side": 1,
+      "message": "Remove base\u003dtrue and update the summary. :)",
+      "parentUuid": "a30b58cc_4695b74a",
+      "range": {
+        "startLine": 25810,
+        "startChar": 30,
+        "endLine": 25810,
+        "endChar": 63
+      },
+      "revId": "c62fe8a2c20a96ff596877b2b2dbb8807431872b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
