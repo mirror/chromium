@@ -16,6 +16,7 @@
 #include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/tab_contents/tab_util.h"
+#include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/url_formatter/elide_url.h"
 #include "content/public/browser/browser_thread.h"
@@ -278,6 +279,13 @@ void ChromeQuotaPermissionContext::RequestQuotaPermission(
     // The tab may have gone away or the request may not be from a tab.
     LOG(WARNING) << "Attempt to request quota tabless renderer: "
                  << render_process_id << "," << params.render_frame_id;
+    DispatchCallbackOnIOThread(callback, QUOTA_PERMISSION_RESPONSE_CANCELLED);
+    return;
+  }
+
+  if (vr::VrTabHelper::IsInVr(web_contents)) {
+    LOG(WARNING) << "Attempt to request quota from VR: " << render_process_id
+                 << "," << params.render_frame_id;
     DispatchCallbackOnIOThread(callback, QUOTA_PERMISSION_RESPONSE_CANCELLED);
     return;
   }
