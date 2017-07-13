@@ -22,6 +22,30 @@
       "revId": "407d7dc0738b7d4210a2bdd85ca8c10dae53d236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91086eb8_8a318393",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-07-13T03:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9554617f_78d11192",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "407d7dc0738b7d4210a2bdd85ca8c10dae53d236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
