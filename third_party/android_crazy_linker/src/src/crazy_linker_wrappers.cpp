@@ -88,6 +88,7 @@ char* WrapDlerror() {
 void* WrapDlopen(const char* path, int mode) {
   ScopedGlobalLock lock;
 
+  LOG("XXX: WrapDlopen: %s", path);
   // NOTE: If |path| is NULL, the wrapper should return a handle
   // corresponding to the current executable. This can't be a crazy
   // library, so don't try to handle it with the crazy linker.
@@ -122,6 +123,8 @@ void* WrapDlopen(const char* path, int mode) {
 void* WrapDlsym(void* lib_handle, const char* symbol_name) {
   LibraryView* wrap_lib = reinterpret_cast<LibraryView*>(lib_handle);
 
+  LOG("XXX: WrapDlsym, symbol: %s", symbol_name);
+
   if (!symbol_name) {
     SetLinkerError("dlsym: NULL symbol name");
     return NULL;
@@ -130,6 +133,24 @@ void* WrapDlsym(void* lib_handle, const char* symbol_name) {
   if (!lib_handle) {
     SetLinkerError("dlsym: NULL library handle");
     return NULL;
+  }
+
+  if (strlen(symbol_name) > 4 && !strncmp("gvr_", symbol_name, 4)) {
+    LOG("XXX: dlsym: looking for one of the gvr_* symbols");
+    // Try to load the executable with the system dlopen() instead.
+    ::dlerror();
+    const char path[] = "/data/app/com.google.vr.vrcore-2/lib/arm/libvrcore_native.so";
+    lib_handle = ::dlopen(path, RTLD_NOW | RTLD_GLOBAL);
+    if (lib_handle == NULL) {
+      LOG("XXX: Could not load system library for %s", path);
+      SaveSystemError();
+      return NULL;
+    }
+
+    wrap_lib = new LibraryView();
+    wrap_lib->SetSystem(lib_handle, path);
+    Globals::GetLibraries()->AddLibrary(wrap_lib);
+    LOG("XXX: Added system library for %s, handle: %p", path, lib_handle);
   }
 
   // TODO(digit): Handle RTLD_DEFAULT / RTLD_NEXT

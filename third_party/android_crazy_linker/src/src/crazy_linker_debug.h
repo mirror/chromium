@@ -9,7 +9,7 @@
 // This really means adding traces that will be sent to both stderr
 // and the logcat during execution.
 #ifndef CRAZY_DEBUG
-#define CRAZY_DEBUG 0
+#define CRAZY_DEBUG 1
 #endif
 
 // Define COMPILE_ASSERT using the implementation described in:
@@ -42,7 +42,7 @@ void LogErrno(const char* fmt, ...);
 #define LOG(...) ((void)0)
 #define LOG_ERRNO(...) ((void)0)
 
-#endif
+#endif  // CRAZY_DEBUG
 
 // Conditional logging.
 #define LOG_IF(cond, ...) \

@@ -43,7 +43,7 @@ public class LibraryLoader {
     private static final String TAG = "LibraryLoader";
 
     // Set to true to enable debug logs.
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     // Guards all access to the libraries
     private static final Object sLock = new Object();
