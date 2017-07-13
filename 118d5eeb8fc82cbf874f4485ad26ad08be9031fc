@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3d64d7d_b2b51afa",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-13T18:35:57Z",
+      "side": 1,
+      "message": "Hopefully, I\u0027ve configured it correctly. Please double-check in the next patch",
+      "parentUuid": "8fa75ff5_4da648c9",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c685e46_d63bcd9b",
         "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251f1861_803eb55f",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-13T18:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c685e46_d63bcd9b",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 35
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7b7d3c7a_7809272e",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-13T18:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de23a7e7_9902ccd2",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "937beeae_f35e2772",
         "filename": "chrome/android/java/res/values-v17/styles.xml",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cb4e78_78105d24",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-13T18:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "937beeae_f35e2772",
+      "range": {
+        "startLine": 580,
+        "startChar": 17,
+        "endLine": 580,
+        "endChar": 34
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "18fb3c5b_4d9f9dfc",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-13T18:35:57Z",
+      "side": 1,
+      "message": "It isn\u0027t. Removed it",
+      "parentUuid": "d63c8b99_65b6cc0e",
+      "range": {
+        "startLine": 196,
+        "startChar": 17,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90a123bc_edb986f3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240622b9_5e26e62f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-13T18:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90a123bc_edb986f3",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 13
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0ef84ba1_9729764c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-13T18:35:57Z",
+      "side": 1,
+      "message": "It was a change done by \"git cl format\". I checked the style guide and as far as I\u0027ve seen it is not acceptable. Changed it",
+      "parentUuid": "012b12a2_82240606",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 58
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91212c3b_0b2a71f8",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 8
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "988f3efe_5d074394",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-13T18:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91212c3b_0b2a71f8",
+      "range": {
+        "startLine": 2242,
+        "startChar": 30,
+        "endLine": 2242,
+        "endChar": 34
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "496d3ef4_1f9e902b",
         "filename": "chrome/android/java_sources.gni",
         "patchSetId": 8
@@ -206,6 +398,30 @@
       "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40446f7_366d0400",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-13T18:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "496d3ef4_1f9e902b",
+      "range": {
+        "startLine": 1013,
+        "startChar": 2,
+        "endLine": 1013,
+        "endChar": 67
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
