@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62982ed9_111891a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-13T14:43:45Z",
+      "side": 1,
+      "message": "This is kind of inconsistent with all of our other IntDefs (and all of the examples from Android: https://developer.android.com/reference/android/support/annotation/IntDef.html)\n\nAll other places would be:\npublic @interface CustomTabsUiType {}\n\npublic static final int CUSTOM_TABS_UI_TYPE_DEFAULT \u003d 0;\npublic static final int CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER \u003d 1;\npublic static final int CUSTOM_TABS_UI_TYPE_PAYMENT_REQUEST \u003d 2;\n\nI don\u0027t know if there are any implications other than style (does having them inside of the interface cause some more indirection than being in the top level class).",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "37692113261f1eef6c96023fac769b798c338696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1681274e_7d636ee4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-13T14:43:45Z",
+      "side": 1,
+      "message": "should this be a UI type?",
+      "range": {
+        "startLine": 87,
+        "startChar": 31,
+        "endLine": 87,
+        "endChar": 49
+      },
+      "revId": "37692113261f1eef6c96023fac769b798c338696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
