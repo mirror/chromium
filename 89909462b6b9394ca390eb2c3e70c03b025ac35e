@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "4f243c86_e403b5a4",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf26a303_baef0091",
+      "range": {
+        "startLine": 299,
+        "startChar": 28,
+        "endLine": 299,
+        "endChar": 43
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c423d80_548138d7",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 8
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "2dd0d343_075a7496",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d75d91b4_ed6f3236",
+      "range": {
+        "startLine": 428,
+        "startChar": 24,
+        "endLine": 428,
+        "endChar": 45
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d765ae23_7b8c035d",
         "filename": "ash/system/network/network_icon.cc",
         "patchSetId": 8
@@ -128,6 +176,30 @@
       "writtenOn": "2017-07-12T20:49:09Z",
       "side": 1,
       "message": "const ref\n\nwhat happened to the suggestion of moving SignalStrengthImageSource into the header and not adding this function? Doesn\u0027t seem like it will take a huge amount of effort.",
+      "range": {
+        "startLine": 838,
+        "startChar": 67,
+        "endLine": 838,
+        "endChar": 71
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42999847_100e9dd4",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "I exposed the entire class, let me know if that\u0027s no good.",
+      "parentUuid": "d765ae23_7b8c035d",
       "range": {
         "startLine": 838,
         "startChar": 67,
@@ -186,6 +258,54 @@
     },
     {
       "key": {
+        "uuid": "678d16f9_ec7bee85",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3441bc8f_1a718978",
+      "range": {
+        "startLine": 839,
+        "startChar": 25,
+        "endLine": 839,
+        "endChar": 67
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8e494d7_d40f4843",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ec9cb96_ea6c4e0f",
+      "range": {
+        "startLine": 839,
+        "startChar": 6,
+        "endLine": 839,
+        "endChar": 22
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75f8dd2c_f2c6916c",
         "filename": "ash/system/network/network_icon.h",
         "patchSetId": 8
@@ -232,6 +352,54 @@
     },
     {
       "key": {
+        "uuid": "8df5b6d4_7c171cb9",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75f8dd2c_f2c6916c",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 13
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "454d6bda_0745036f",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da3ade4d_a59a1473",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6237ce2c_63067407",
         "filename": "ash/system/network/network_icon.h",
         "patchSetId": 8
@@ -252,6 +420,30 @@
       "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eee4980_dd41e1fc",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6237ce2c_63067407",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 68
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "0a34c9bc_120a7749",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d77ed89_5a433b1e",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55edf601_edfef983",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 8
@@ -298,6 +514,30 @@
       "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0669e2_9b00bed2",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55edf601_edfef983",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "1957b6e5_323aec9c",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7ac5094_c13cbc57",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 73
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f4ba00_2a846c27",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
         "patchSetId": 8
@@ -344,6 +608,30 @@
       "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce01d2e2_116e9042",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T00:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f4ba00_2a846c27",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 68
+      },
+      "revId": "89909462b6b9394ca390eb2c3e70c03b025ac35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
