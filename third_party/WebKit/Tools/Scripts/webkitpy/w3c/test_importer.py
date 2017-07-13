@@ -30,6 +30,7 @@ from webkitpy.w3c.wpt_manifest import WPTManifest
 # Settings for how often to check try job results and how long to wait.
 POLL_DELAY_SECONDS = 2 * 60
 TIMEOUT_SECONDS = 180 * 60
+IMPORT_CL_TBR = 'qyearsley@chromium.org'
 
 _log = logging.getLogger(__file__)
 
@@ -347,6 +348,8 @@ class TestImporter(object):
             '--gerrit',
             '-m',
             description,
+            '--tbrs',
+            IMPORT_CL_TBR,
         ] + self._cc_part(directory_owners))
 
     def _upload_patchset(self, message):
@@ -388,7 +391,7 @@ class TestImporter(object):
 
         if directory_owners:
             description += self._format_directory_owners(directory_owners) + '\n\n'
-        description += 'TBR: qyearsley@chromium.org\n'
+        description += 'TBR: ' + IMPORT_CL_TBR + '\n'
 
         # Move any No-Export tag to the end of the description.
         description = description.replace('No-Export: true', '')
