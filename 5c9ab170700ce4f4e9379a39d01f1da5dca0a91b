@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "389bfbf4_ce5dad76",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-13T14:53:16Z",
+      "side": 1,
+      "message": "Accidental, I\u0027ll remove it.",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
