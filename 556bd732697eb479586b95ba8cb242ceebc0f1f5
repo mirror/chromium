@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9d16f91_caa507df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SuggestionsSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-13T16:54:16Z",
+      "side": 1,
+      "message": "Nit: \"with\"",
+      "range": {
+        "startLine": 135,
+        "startChar": 41,
+        "endLine": 135,
+        "endChar": 43
+      },
+      "revId": "556bd732697eb479586b95ba8cb242ceebc0f1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56973e7c_724997fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SuggestionsSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-13T16:54:16Z",
+      "side": 1,
+      "message": "What destruction observers are we talking about here? This class shouldn\u0027t have to know about the destruction observers for SuggestionsUiDelegate. You could move that comment to SuggestionsUiDelegate.addDestructionObserver() though (and maybe add that destruction observers have no ordering guarantees otherwise).",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 27
+      },
+      "revId": "556bd732697eb479586b95ba8cb242ceebc0f1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
