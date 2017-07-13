@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fbe564d5_65cc3313",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-13T07:26:59Z",
+      "side": 1,
+      "message": "ignore the \"(seems like it should be fixable...)\" part. I originally missed that you were linking to a specific patch with the fix.",
+      "parentUuid": "ffe35728_c2b7d198",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04558e2e_49c475f5",
         "filename": "content/renderer/service_worker/service_worker_context_client.h",
         "patchSetId": 4
