@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "c1670c13_58e2a92b",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-07-13T11:44:17Z",
+      "side": 1,
+      "message": "OK, I\u0027m fine with that.",
+      "parentUuid": "80f2d7c9_8681ffb7",
+      "revId": "eaab50918caa86f0cdb36a112cfd8900c18fd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22ceefd3_4a7343fe",
         "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.h",
         "patchSetId": 2
