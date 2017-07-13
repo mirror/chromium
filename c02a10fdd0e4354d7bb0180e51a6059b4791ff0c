@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1c0034b_0956da1d",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-13T18:37:39Z",
+      "side": 1,
+      "message": "Ack\n\nI\u0027ll add a comment for a cleanup.",
+      "parentUuid": "44713921_96646e85",
+      "revId": "c02a10fdd0e4354d7bb0180e51a6059b4791ff0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b84e37f_0aa10698",
         "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "c02a10fdd0e4354d7bb0180e51a6059b4791ff0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579cb918_cc6dee19",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-13T18:37:39Z",
+      "side": 1,
+      "message": "Done, although I ended up having to clear them here anyway because of destruction order problems.",
+      "parentUuid": "3b84e37f_0aa10698",
+      "revId": "c02a10fdd0e4354d7bb0180e51a6059b4791ff0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
