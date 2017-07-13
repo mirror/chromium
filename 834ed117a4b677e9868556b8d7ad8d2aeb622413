@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a5a48ef_710db96e",
+        "filename": "chrome/browser/resources/chromeos/login/md_screen_container.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-13T02:37:20Z",
+      "side": 0,
+      "message": "Can we remove this file? Or it\u0027s still being used by other non-md files?",
+      "revId": "834ed117a4b677e9868556b8d7ad8d2aeb622413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
