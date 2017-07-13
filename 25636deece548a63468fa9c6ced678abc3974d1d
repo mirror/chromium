@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52eabd39_e49a3257",
+        "filename": "tools/perf/core/trybot_command.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-07-13T15:01:42Z",
+      "side": 1,
+      "message": "https://luci-milo.appspot.com/buildbot/tryserver.chromium.perf/win_xp_perf_bisect/ returns 404 so I guess you\u0027re right. :)",
+      "parentUuid": "eab36939_4f6381b1",
+      "range": {
+        "startLine": 88,
+        "startChar": 18,
+        "endLine": 88,
+        "endChar": 36
+      },
+      "revId": "25636deece548a63468fa9c6ced678abc3974d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29dfdc05_2b825956",
         "filename": "tools/perf/core/trybot_command.py",
         "patchSetId": 5
