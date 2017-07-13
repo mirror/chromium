@@ -56,13 +56,15 @@ GpuVideoAcceleratorFactoriesImpl::Create(
     bool enable_gpu_memory_buffer_video_frames,
     const viz::BufferToTextureTargetMap& image_texture_targets,
     bool enable_video_accelerator,
+    media::mojom::VideoDecodeAcceleratorPtrInfo unbound_vda,
     media::mojom::VideoEncodeAcceleratorPtrInfo unbound_vea) {
   RecordContextProviderPhaseUmaEnum(
       ContextProviderPhase::CONTEXT_PROVIDER_ACQUIRED);
   return base::WrapUnique(new GpuVideoAcceleratorFactoriesImpl(
       std::move(gpu_channel_host), main_thread_task_runner, task_runner,
       context_provider, enable_gpu_memory_buffer_video_frames,
-      image_texture_targets, enable_video_accelerator, std::move(unbound_vea)));
+      image_texture_targets, enable_video_accelerator, std::move(unbound_vda),
+      std::move(unbound_vea)));
 }
 
 GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
@@ -73,6 +75,7 @@ GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
     bool enable_gpu_memory_buffer_video_frames,
     const viz::BufferToTextureTargetMap& image_texture_targets,
     bool enable_video_accelerator,
+    media::mojom::VideoDecodeAcceleratorPtrInfo unbound_vda,
     media::mojom::VideoEncodeAcceleratorPtrInfo unbound_vea)
     : main_thread_task_runner_(main_thread_task_runner),
       task_runner_(task_runner),
@@ -85,6 +88,7 @@ GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
       video_accelerator_enabled_(enable_video_accelerator),
       gpu_memory_buffer_manager_(
           RenderThreadImpl::current()->GetGpuMemoryBufferManager()),
+      unbound_vda_(std::move(unbound_vda)),
       unbound_vea_(std::move(unbound_vea)),
       thread_safe_sender_(ChildThreadImpl::current()->thread_safe_sender()) {
   DCHECK(main_thread_task_runner_);
@@ -145,6 +149,13 @@ GpuVideoAcceleratorFactoriesImpl::CreateVideoDecodeAccelerator() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   if (CheckContextLost())
     return nullptr;
+
+  media::mojom::VideoDecodeAcceleratorPtr vda;
+  vda.Bind(std::move(unbound_vda_));
+  if (vda) {
+    // TODO(c.padhi): Create a mojom::MojoVideoDecodeAcceleratorHost
+    // implementation and use it, https://crbug.com/740474
+  }
 
   return std::unique_ptr<media::VideoDecodeAccelerator>(
       new media::GpuVideoDecodeAcceleratorHost(

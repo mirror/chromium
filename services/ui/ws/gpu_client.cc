@@ -61,6 +61,11 @@ void GpuClient::CreateJpegDecodeAccelerator(
   gpu_service_->CreateJpegDecodeAccelerator(std::move(jda_request));
 }
 
+void GpuClient::CreateVideoDecodeAccelerator(
+    media::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  NOTIMPLEMENTED();
+}
+
 void GpuClient::CreateVideoEncodeAccelerator(
     media::mojom::VideoEncodeAcceleratorRequest vea_request) {
   NOTIMPLEMENTED();

@@ -83,6 +83,13 @@ void GpuClient::CreateJpegDecodeAccelerator(
     host->gpu_service()->CreateJpegDecodeAccelerator(std::move(jda_request));
 }
 
+void GpuClient::CreateVideoDecodeAccelerator(
+    media::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  GpuProcessHost* host = GpuProcessHost::Get();
+  if (host)
+    host->gpu_service()->CreateVideoDecodeAccelerator(std::move(vda_request));
+}
+
 void GpuClient::CreateVideoEncodeAccelerator(
     media::mojom::VideoEncodeAcceleratorRequest vea_request) {
   GpuProcessHost* host = GpuProcessHost::Get();

@@ -229,6 +229,13 @@ void GpuService::CreateJpegDecodeAccelerator(
   NOTIMPLEMENTED();
 }
 
+void GpuService::CreateVideoDecodeAccelerator(
+    media::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  DCHECK(io_runner_->BelongsToCurrentThread());
+  // TODO(c.padhi): Create a mojom::VideoDecodeAccelerator implementation,
+  // https://crbug.com/740474.
+}
+
 void GpuService::CreateVideoEncodeAccelerator(
     media::mojom::VideoEncodeAcceleratorRequest vea_request) {
   DCHECK(io_runner_->BelongsToCurrentThread());

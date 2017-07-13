@@ -98,6 +98,14 @@ void Gpu::CreateJpegDecodeAccelerator(
   gpu_->CreateJpegDecodeAccelerator(std::move(jda_request));
 }
 
+void Gpu::CreateVideoDecodeAccelerator(
+    media::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  DCHECK(IsMainThread());
+  if (!gpu_ || !gpu_.is_bound())
+    gpu_ = factory_.Run();
+  gpu_->CreateVideoDecodeAccelerator(std::move(vda_request));
+}
+
 void Gpu::CreateVideoEncodeAccelerator(
     media::mojom::VideoEncodeAcceleratorRequest vea_request) {
   DCHECK(IsMainThread());
