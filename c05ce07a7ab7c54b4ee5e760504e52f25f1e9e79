@@ -22,6 +22,30 @@
       "revId": "c05ce07a7ab7c54b4ee5e760504e52f25f1e9e79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "265b47fb_82837502",
+        "filename": "chrome/browser/ui/ash/keyboard_end_to_end_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-13T23:57:56Z",
+      "side": 1,
+      "message": "How do we wait the content is focused?",
+      "parentUuid": "e37176e0_63e4ec47",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "c05ce07a7ab7c54b4ee5e760504e52f25f1e9e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
