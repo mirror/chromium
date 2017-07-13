@@ -72,7 +72,7 @@ class SharedWorkerHost {
   void WorkerScriptLoadFailed();
   void WorkerConnected(int connection_request_id);
   void AllowFileSystem(const GURL& url,
-                       std::unique_ptr<IPC::Message> reply_msg);
+                       base::OnceCallback<void(bool)> callback);
   void AllowIndexedDB(const GURL& url,
                       const base::string16& name,
                       bool* result);
@@ -120,7 +120,7 @@ class SharedWorkerHost {
   void SetConnectionRequestID(SharedWorkerMessageFilter* filter,
                               int route_id,
                               int connection_request_id);
-  void AllowFileSystemResponse(std::unique_ptr<IPC::Message> reply_msg,
+  void AllowFileSystemResponse(base::OnceCallback<void(bool)> callback,
                                bool allowed);
 
   // Sends |message| to the SharedWorker.
