@@ -4,6 +4,7 @@
 
 #include "core/page/ValidationMessageOverlayDelegate.h"
 
+#include "core/dom/DOMTokenList.h"
 #include "core/dom/Element.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
@@ -206,6 +207,8 @@ Element& ValidationMessageOverlayDelegate::GetElementById(
 
 void ValidationMessageOverlayDelegate::AdjustBubblePosition(
     const IntSize& view_size) {
+  if (IsHiding())
+    return;
   IntRect anchor_rect = anchor_->VisibleBoundsInVisualViewport();
   bool show_bottom_arrow = false;
   double bubble_y = anchor_rect.MaxY();
@@ -282,6 +285,19 @@ void ValidationMessageOverlayDelegate::AdjustBubblePosition(
         .SetInlineStyleProperty(CSSPropertyLeft, arrow_x,
                                 CSSPrimitiveValue::UnitType::kPixels);
   }
+}
+
+void ValidationMessageOverlayDelegate::StartToHide() {
+  anchor_ = nullptr;
+  if (!page_)
+    return;
+  GetElementById("container")
+      .classList()
+      .replace("shown-fully", "hiding", ASSERT_NO_EXCEPTION);
+}
+
+bool ValidationMessageOverlayDelegate::IsHiding() const {
+  return !anchor_;
 }
 
 }  // namespace blink
