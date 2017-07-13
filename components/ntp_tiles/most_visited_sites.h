@@ -22,6 +22,7 @@
 #include "base/strings/string16.h"
 #include "components/history/core/browser/history_types.h"
 #include "components/history/core/browser/top_sites_observer.h"
+#include "components/ntp_tiles/exploration_section.h"
 #include "components/ntp_tiles/ntp_tile.h"
 #include "components/ntp_tiles/popular_sites.h"
 #include "components/ntp_tiles/tile_source.h"
@@ -87,6 +88,10 @@ class MostVisitedSites : public history::TopSitesObserver,
    public:
     virtual void OnMostVisitedURLsAvailable(const NTPTilesVector& tiles) = 0;
     virtual void OnIconMadeAvailable(const GURL& site_url) = 0;
+    virtual void OnExplorationSectionsAvailable(
+        const std::vector<ExplorationSection>& sections) = 0;
+    virtual void OnExplorationURLsAvailable(SectionType section_type,
+                                            const NTPTilesVector& tiles) = 0;
 
    protected:
     virtual ~Observer() {}
@@ -163,6 +168,11 @@ class MostVisitedSites : public history::TopSitesObserver,
   static NTPTilesVector MergeTiles(NTPTilesVector personal_tiles,
                                    NTPTilesVector whitelist_tiles,
                                    NTPTilesVector popular_tiles);
+
+  // Tests often mock out the download process and leave this callback untested.
+  void RetriggerOnPopularSitesDownloadedForTesting(bool success) {
+    OnPopularSitesDownloaded(success);
+  }
 
  private:
   // Initialize the query to Top Sites. Called if the SuggestionsService
