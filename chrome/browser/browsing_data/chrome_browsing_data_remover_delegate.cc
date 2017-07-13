@@ -738,7 +738,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
     for (const content_settings::ContentSettingsInfo* info : *registry) {
       map->ClearSettingsForOneTypeWithPredicate(
           info->website_settings_info()->type(), delete_begin_,
-          base::Bind(&WebsiteSettingsFilterAdapter, filter));
+          HostContentSettingsMap::PatternSourcePredicate());
     }
   }
 
