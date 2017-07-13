@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "032dfad6_2f31b896",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-13T00:58:39Z",
+      "side": 1,
+      "message": "drop this line",
+      "revId": "da17dc89c8afe13bf4c14c735a9d18d2b9aa6c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b93369d_ef9e5388",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-13T00:58:39Z",
+      "side": 1,
+      "message": "why do excessive flushes. Just remember the offsets and do it the same way as appendString.",
+      "revId": "da17dc89c8afe13bf4c14c735a9d18d2b9aa6c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4639ea7_3df55bf0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/ProfileView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-13T00:58:39Z",
+      "side": 1,
+      "message": "inline it.",
+      "revId": "da17dc89c8afe13bf4c14c735a9d18d2b9aa6c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
