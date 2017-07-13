@@ -460,6 +460,16 @@ void SetDelegateOnIO(content::ResourceDispatcherHostDelegate* new_delegate) {
   content::ResourceDispatcherHost::Get()->SetDelegate(new_delegate);
 }
 
+void WaitForIOThread() {
+  base::RunLoop run_loop;
+  content::BrowserThread::PostTaskAndReply(content::BrowserThread::IO,
+                                           FROM_HERE,
+                                           // Flush IO thread...
+                                           base::BindOnce(&base::DoNothing),
+                                           // ... and UI thread.
+                                           run_loop.QuitClosure());
+  run_loop.Run();
+}
 // Verify the following items:
 // 1- X-Chrome-Connected is appended on Google domains if account
 //    consistency is enabled and access is secure.
@@ -534,6 +544,9 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
                        test_case.redirected_to_url, root_http,
                        report_request_headers));
 
+    // Ensure that mock interceptors are in place.
+    WaitForIOThread();
+
     // Navigate to first url.
     ui_test_utils::NavigateToURL(browser(), test_case.original_url);
 
@@ -558,14 +571,7 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
 
     // Ensure that the response headers have been reported to the UI thread
     // and unregistration has been processed on the IO thread.
-    base::RunLoop run_loop;
-    content::BrowserThread::PostTaskAndReply(content::BrowserThread::IO,
-                                             FROM_HERE,
-                                             // Flush IO thread...
-                                             base::BindOnce(&base::DoNothing),
-                                             // ... and UI thread.
-                                             run_loop.QuitClosure());
-    run_loop.Run();
+    WaitForIOThread();
 
     // Check if header exists and X-Chrome-Connected is correctly provided.
     ASSERT_EQ(1u, request_headers.count(test_case.original_url.spec()));
