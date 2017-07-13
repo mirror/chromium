@@ -252,6 +252,9 @@ struct CONTENT_EXPORT WebPreferences {
   bool video_fullscreen_detection_enabled;
   bool embedded_media_experience_enabled;
   bool page_popups_suppressed;
+  // Enable 8 (#RRGGBBAA) and 4 (#RGBA) value hex colors in CSS Android
+  // WebView quirk (http://crbug.com/618472).
+  bool css_hex_alpha_color_enabled;
 #else  // defined(OS_ANDROID)
 #endif  // defined(OS_ANDROID)
 
