@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0e19a02_af9b3bd1",
+        "filename": "components/autofill/core/browser/autofill_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-13T13:19:25Z",
+      "side": 1,
+      "message": "please add:\n\nIf false, all features of Autofill are disabled, including Autocomplete.",
+      "revId": "63cf130b05172a79c326a1da289ecfb165d40824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
