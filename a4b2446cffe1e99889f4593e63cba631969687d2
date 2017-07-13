@@ -52,6 +52,24 @@
       "revId": "a4b2446cffe1e99889f4593e63cba631969687d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6110012_b89473cb",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_animated_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T22:26:06Z",
+      "side": 1,
+      "message": "I asked the Polymer team about this, and they said that \u003cslot\u003e is internally converted to \u003ccontent\u003e when using Polymer 1.x, so this should work just fine.",
+      "parentUuid": "3c6d5954_75a4d340",
+      "revId": "a4b2446cffe1e99889f4593e63cba631969687d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
