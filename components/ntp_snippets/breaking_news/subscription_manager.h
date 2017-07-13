@@ -38,6 +38,7 @@ class SubscriptionManager {
       PrefService* pref_service,
       SigninManagerBase* signin_manager,
       OAuth2TokenService* access_token_service,
+      const std::string& api_key,
       const GURL& subscribe_url,
       const GURL& unsubscribe_url);
 
@@ -91,6 +92,9 @@ class SubscriptionManager {
   SigninManagerBase* signin_manager_;
   std::unique_ptr<SigninObserver> signin_observer_;
   OAuth2TokenService* access_token_service_;
+
+  // API key to use for non-authenticated requests.
+  const std::string api_key_;
 
   // API endpoint for subscribing and unsubscribing.
   const GURL subscribe_url_;
