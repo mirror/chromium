@@ -48,6 +48,7 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   void NotifyInputEvent();
   void NotifyPaint();
   void CheckNetworkStable();
+  void ReportProvisionalFirstMeaningfulPaintSwap(double timestamp);
 
   DECLARE_TRACE();
 
@@ -75,6 +76,7 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
 
   Member<PaintTiming> paint_timing_;
   double provisional_first_meaningful_paint_ = 0.0;
+  double provisional_first_meaningful_paint_swap_ = 0.0;
   double max_significance_so_far_ = 0.0;
   double accumulated_significance_while_having_blank_text_ = 0.0;
   unsigned prev_layout_object_count_ = 0;
@@ -83,6 +85,7 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   bool network2_quiet_reached_ = false;
   double first_meaningful_paint0_quiet_ = 0.0;
   double first_meaningful_paint2_quiet_ = 0.0;
+  double first_meaningful_paint2_quiet_swap_ = 0.0;
   TaskRunnerTimer<FirstMeaningfulPaintDetector> network0_quiet_timer_;
   TaskRunnerTimer<FirstMeaningfulPaintDetector> network2_quiet_timer_;
 };

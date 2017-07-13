@@ -99,6 +99,10 @@ void FirstMeaningfulPaintDetector::NotifyPaint() {
   if (network2_quiet_reached_)
     return;
 
+  provisional_first_meaningful_paint_swap_ = 0.0;
+  paint_timing_->RegisterNotifySwapTime(
+      PaintTiming::PaintEvent::kProvisionalFirstMeaningfulPaint);
+
   TRACE_EVENT_MARK_WITH_TIMESTAMP1(
       "loading,devtools.timeline", "firstMeaningfulPaintCandidate",
       TraceEvent::ToTraceTimestamp(provisional_first_meaningful_paint_),
@@ -181,12 +185,19 @@ void FirstMeaningfulPaintDetector::Network2QuietTimerFired(TimerBase*) {
     paint_timing_->SetFirstMeaningfulPaintCandidate(
         provisional_first_meaningful_paint_);
     // Enforce FirstContentfulPaint <= FirstMeaningfulPaint.
-    first_meaningful_paint2_quiet_ =
-        std::max(provisional_first_meaningful_paint_,
-                 paint_timing_->FirstContentfulPaint());
+    if (provisional_first_meaningful_paint_ <
+        paint_timing_->FirstContentfulPaint()) {
+      first_meaningful_paint2_quiet_ = paint_timing_->FirstContentfulPaint();
+      first_meaningful_paint2_quiet_swap_ =
+          paint_timing_->FirstContentfulPaintSwap();
+    } else {
+      first_meaningful_paint2_quiet_ = provisional_first_meaningful_paint_;
+      first_meaningful_paint2_quiet_swap_ =
+          provisional_first_meaningful_paint_swap_;
+    }
     // Report FirstMeaningfulPaint when the page reached network 2-quiet.
     paint_timing_->SetFirstMeaningfulPaint(
-        first_meaningful_paint2_quiet_,
+        first_meaningful_paint2_quiet_, first_meaningful_paint2_quiet_swap_,
         had_user_input_before_provisional_first_meaningful_paint_);
   }
   ReportHistograms();
@@ -233,6 +244,13 @@ void FirstMeaningfulPaintDetector::ReportHistograms() {
   } else if (first_meaningful_paint2_quiet_) {
     had_network_quiet_histogram.Count(kHadNetwork2Quiet);
   }
+}
+
+void FirstMeaningfulPaintDetector::ReportProvisionalFirstMeaningfulPaintSwap(
+    double stamp) {
+  if (network2_quiet_reached_)
+    return;
+  provisional_first_meaningful_paint_swap_ = stamp;
 }
 
 DEFINE_TRACE(FirstMeaningfulPaintDetector) {

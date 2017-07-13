@@ -29,7 +29,7 @@ class CORE_EXPORT PaintTiming final
   enum class PaintEvent {
     kFirstPaint,
     kFirstContentfulPaint,
-    kFirstMeaningfulPaint
+    kProvisionalFirstMeaningfulPaint,
   };
 
   static PaintTiming& From(Document&);
@@ -52,6 +52,7 @@ class CORE_EXPORT PaintTiming final
   void SetFirstMeaningfulPaintCandidate(double timestamp);
   void SetFirstMeaningfulPaint(
       double stamp,
+      double swap_stamp,
       FirstMeaningfulPaintDetector::HadUserInput had_input);
   void NotifyPaint(bool is_first_paint, bool text_painted, bool image_painted);
 
@@ -67,6 +68,9 @@ class CORE_EXPORT PaintTiming final
   // painted. For instance, the first time that text or image content was
   // painted.
   double FirstContentfulPaint() const { return first_contentful_paint_; }
+  double FirstContentfulPaintSwap() const {
+    return first_contentful_paint_swap_;
+  }
 
   // firstTextPaint returns the first time that text content was painted.
   double FirstTextPaint() const { return first_text_paint_; }
@@ -90,6 +94,7 @@ class CORE_EXPORT PaintTiming final
     return *fmp_detector_;
   }
 
+  void RegisterNotifySwapTime(PaintEvent);
   void ReportSwapTime(PaintEvent, bool did_swap, double timestamp);
 
   DECLARE_VIRTUAL_TRACE();
@@ -111,7 +116,6 @@ class CORE_EXPORT PaintTiming final
   // time has not yet been recorded.
   void SetFirstContentfulPaint(double stamp);
 
-  void RegisterNotifySwapTime(PaintEvent);
   void ReportUserInputHistogram(
       FirstMeaningfulPaintDetector::HadUserInput had_input);
 
