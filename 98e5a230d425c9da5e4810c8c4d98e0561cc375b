@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "216a3656_729c9fe5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-13T23:14:26Z",
+      "side": 0,
+      "message": "The BottomSheet* classes are in their own directory now.",
+      "range": {
+        "startLine": 1,
+        "startChar": 9,
+        "endLine": 1,
+        "endChar": 20
+      },
+      "revId": "98e5a230d425c9da5e4810c8c4d98e0561cc375b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
