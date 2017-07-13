@@ -115,8 +115,11 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
       waiting_for_debugger_state_(kNotWaitingForDebugger) {
   RunningWorkerInstances().insert(this);
 
-  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled()) {
-    DCHECK(installed_scripts_manager);
+  // If the browser thinks the scripts should be served from ResourceLoader
+  // (e.g. installation or update check), |installed_scripts_manager| will be
+  // nullptr.
+  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
+      installed_scripts_manager) {
     installed_scripts_manager_ =
         WTF::MakeUnique<ServiceWorkerInstalledScriptsManager>(
             std::move(installed_scripts_manager));
@@ -344,16 +347,10 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
   // Kickstart the worker before loading the script when the script has been
   // installed.
   if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
+      installed_scripts_manager_ &&
       installed_scripts_manager_->IsScriptInstalled(
           worker_start_data_.script_url)) {
-    // TODO(shimazu): Move WorkerScriptLoaded to the correct place which is
-    // after InstalledScriptsManager::GetScriptData() called at
-    // WorkerThread::InitializeOnWorkerThread().
-    worker_context_client_->WorkerScriptLoaded();
-    if (pause_after_download_state_ == kDoPauseAfterDownload) {
-      pause_after_download_state_ = kIsPausedAfterDownload;
-      return;
-    }
+    DCHECK_EQ(pause_after_download_state_, kDontPauseAfterDownload);
     StartWorkerThread();
     return;
   }
