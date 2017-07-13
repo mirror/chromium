@@ -670,8 +670,11 @@ void LayerTreeHostCommon::CalculateDrawProperties(
 }
 
 void LayerTreeHostCommon::CalculateDrawPropertiesForTesting(
-    CalcDrawPropsImplInputsForTesting* inputs) {
-  CalculateDrawPropertiesInternal(inputs, BUILD_PROPERTY_TREES_IF_NEEDED);
+    CalcDrawPropsImplInputsForTesting* inputs,
+    bool build_property_trees_if_needed) {
+  CalculateDrawPropertiesInternal(inputs, build_property_trees_if_needed
+                                              ? BUILD_PROPERTY_TREES_IF_NEEDED
+                                              : DONT_BUILD_PROPERTY_TREES);
 }
 
 PropertyTrees* GetPropertyTrees(Layer* layer) {
