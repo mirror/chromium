@@ -327,6 +327,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
   CHECK(result.second) << "Inserting a duplicate item!";
   process_->AddRoute(routing_id_, this);
   process_->AddWidget(this);
+  process_->GetSharedBitmapAllocationNotifier()->AddObserver(this);
 
   // If we're initially visible, tell the process host that we're alive.
   // Otherwise we'll notify the process host when we are first shown.
@@ -1790,6 +1791,7 @@ void RenderWidgetHostImpl::Destroy(bool also_delete) {
     view_.reset();
   }
 
+  process_->GetSharedBitmapAllocationNotifier()->RemoveObserver(this);
   process_->RemoveWidget(this);
   process_->RemoveRoute(routing_id_);
   g_routing_id_widget_map.Get().erase(
@@ -2588,6 +2590,23 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
     return;
   }
 
+  uint32_t max_sequence_number = 0;
+  for (const auto& resource : frame.resource_list) {
+    max_sequence_number =
+        std::max(max_sequence_number, resource.shared_bitmap_sequence_number);
+  }
+
+  // If the CompositorFrame references SharedBitmaps that we are not aware of,
+  // defer the submission until they are registered.
+  if (max_sequence_number > GetProcess()
+                                ->GetSharedBitmapAllocationNotifier()
+                                ->last_sequence_number()) {
+    saved_frame_.frame = std::move(frame);
+    saved_frame_.local_surface_id = local_surface_id;
+    saved_frame_.max_shared_bitmap_sequence_number = max_sequence_number;
+    return;
+  }
+
   last_local_surface_id_ = local_surface_id;
   last_surface_properties_ = new_surface_properties;
 
@@ -2686,5 +2705,14 @@ device::mojom::WakeLock* RenderWidgetHostImpl::GetWakeLock() {
   return wake_lock_.get();
 }
 #endif
+
+void RenderWidgetHostImpl::DidAllocateSharedBitmap(uint32_t sequence_number) {
+  if (saved_frame_.local_surface_id.is_valid() &&
+      sequence_number >= saved_frame_.max_shared_bitmap_sequence_number) {
+    SubmitCompositorFrame(saved_frame_.local_surface_id,
+                          std::move(saved_frame_.frame));
+    saved_frame_.local_surface_id = viz::LocalSurfaceId();
+  }
+}
 
 }  // namespace content
