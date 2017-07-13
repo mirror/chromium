@@ -789,6 +789,7 @@ void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
        IDS_CHROME_CLEANUP_WEBUI_DONE_BUTTON_LABEL},
       {"chromeCleanupLinkShowFiles", IDS_CHROME_CLEANUP_WEBUI_LINK_SHOW_FILES},
       {"chromeCleanupLogsUploadPermission", IDS_CHROME_CLEANUP_LOGS_PERMISSION},
+      {"chromeCleanupPoweredBy", IDS_CHROME_CLEANUP_WEBUI_FOOTER_POWERED_BY},
       {"chromeCleanupRemoveButtonLabel",
        IDS_CHROME_CLEANUP_WEBUI_REMOVE_BUTTON_LABEL},
       {"chromeCleanupRestartButtonLabel",
