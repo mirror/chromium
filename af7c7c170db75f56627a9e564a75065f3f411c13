@@ -16,6 +16,24 @@
       "revId": "af7c7c170db75f56627a9e564a75065f3f411c13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ffc4b7_f0c23b8b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-07-13T23:15:53Z",
+      "side": 1,
+      "message": "Yeah it was there since I didn\u0027t know when an execution context might not be available for some reason or the evaluate fails.",
+      "parentUuid": "9a3331e1_0bbc1e1d",
+      "revId": "af7c7c170db75f56627a9e564a75065f3f411c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
