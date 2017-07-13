@@ -979,7 +979,7 @@ class LayerTreeHostCopyRequestTestCreatesTexture
   }
 
   void AfterTest() override {
-    release_->Run(gpu::SyncToken(), false);
+    std::move(release_).Run(gpu::SyncToken(), false);
 
     // No sync point was needed.
     EXPECT_FALSE(waited_sync_token_after_readback_.HasData());
@@ -987,7 +987,7 @@ class LayerTreeHostCopyRequestTestCreatesTexture
     EXPECT_EQ(num_textures_without_readback_ + 1, num_textures_with_readback_);
   }
 
-  std::unique_ptr<SingleReleaseCallback> release_;
+  SingleReleaseCallback release_;
 };
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestTestCreatesTexture);
@@ -1006,7 +1006,7 @@ class LayerTreeHostCopyRequestTestProvideTexture
     EXPECT_TRUE(result->HasTexture());
 
     viz::TextureMailbox mailbox;
-    std::unique_ptr<SingleReleaseCallback> release;
+    SingleReleaseCallback release;
     result->TakeTexture(&mailbox, &release);
     EXPECT_FALSE(release);
   }

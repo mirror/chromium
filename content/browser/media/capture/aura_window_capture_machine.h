@@ -101,7 +101,7 @@ class AuraWindowCaptureMachine
       base::TimeTicks event_time,
       const CaptureFrameCallback& capture_frame_cb,
       scoped_refptr<media::VideoFrame> target,
-      std::unique_ptr<cc::SingleReleaseCallback> release_callback,
+      cc::SingleReleaseCallback release_callback,
       bool result);
 
   // The window associated with the desktop.

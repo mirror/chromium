@@ -245,7 +245,7 @@ class Canvas2DLayerBridgeTest : public Test {
     gl.SetIsContextLost(true);
 
     viz::TextureMailbox texture_mailbox;
-    std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+    cc::SingleReleaseCallback release_callback;
     EXPECT_FALSE(
         bridge->PrepareTextureMailbox(&texture_mailbox, &release_callback));
   }
@@ -273,7 +273,7 @@ class Canvas2DLayerBridgeTest : public Test {
     bridge->RestoreSurface();
 
     viz::TextureMailbox texture_mailbox;
-    std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+    cc::SingleReleaseCallback release_callback;
     EXPECT_FALSE(
         bridge->PrepareTextureMailbox(&texture_mailbox, &release_callback));
   }
@@ -291,12 +291,12 @@ class Canvas2DLayerBridgeTest : public Test {
           CanvasColorParams())));
 
       viz::TextureMailbox texture_mailbox;
-      std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+      cc::SingleReleaseCallback release_callback;
       EXPECT_TRUE(
           bridge->PrepareTextureMailbox(&texture_mailbox, &release_callback));
 
       bool lost_resource = true;
-      release_callback->Run(gpu::SyncToken(), lost_resource);
+      std::move(release_callback).Run(gpu::SyncToken(), lost_resource);
     }
 
     // Retry with mailbox released while bridge destruction is in progress.
@@ -306,7 +306,7 @@ class Canvas2DLayerBridgeTest : public Test {
           WTF::WrapUnique(new FakeWebGraphicsContext3DProvider(&gl));
 
       viz::TextureMailbox texture_mailbox;
-      std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+      cc::SingleReleaseCallback release_callback;
 
       {
         Canvas2DLayerBridgePtr bridge(AdoptRef(new Canvas2DLayerBridge(
@@ -323,7 +323,7 @@ class Canvas2DLayerBridgeTest : public Test {
       // Before fixing crbug.com/411864, the following line would cause a memory
       // use after free that sometimes caused a crash in normal builds and
       // crashed consistently with ASAN.
-      release_callback->Run(gpu::SyncToken(), lost_resource);
+      std::move(release_callback).Run(gpu::SyncToken(), lost_resource);
     }
   }
 
@@ -1225,7 +1225,7 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_PrepareMailboxWhileHibernating)
 
   // Test prepareMailbox while hibernating
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
   EXPECT_FALSE(
       bridge->PrepareTextureMailbox(&texture_mailbox, &release_callback));
   EXPECT_TRUE(bridge->CheckSurfaceValid());
@@ -1285,7 +1285,7 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_PrepareMailboxWhileBackgroundRendering)
 
   // Test prepareMailbox while background rendering
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
   EXPECT_FALSE(
       bridge->PrepareTextureMailbox(&texture_mailbox, &release_callback));
   EXPECT_TRUE(bridge->CheckSurfaceValid());
@@ -1307,7 +1307,7 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_DeleteIOSurfaceAfterTeardown)
       WTF::WrapUnique(new FakeWebGraphicsContext3DProvider(&gl));
 
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
 
   {
     Canvas2DLayerBridgePtr bridge(AdoptRef(new Canvas2DLayerBridge(
@@ -1318,7 +1318,7 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_DeleteIOSurfaceAfterTeardown)
   }
 
   bool lost_resource = false;
-  release_callback->Run(gpu::SyncToken(), lost_resource);
+  std::move(release_callback).Run(gpu::SyncToken(), lost_resource);
 
   EXPECT_EQ(1u, gl.CreateImageCount());
   EXPECT_EQ(1u, gl.DestroyImageCount());

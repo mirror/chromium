@@ -897,7 +897,7 @@ bool Canvas2DLayerBridge::RestoreSurface() {
 
 bool Canvas2DLayerBridge::PrepareTextureMailbox(
     viz::TextureMailbox* out_mailbox,
-    std::unique_ptr<cc::SingleReleaseCallback>* out_release_callback) {
+    cc::SingleReleaseCallback* out_release_callback) {
   if (destruction_in_progress_) {
     // It can be hit in the following sequence.
     // 1. Canvas draws something.
@@ -948,8 +948,7 @@ bool Canvas2DLayerBridge::PrepareTextureMailbox(
   auto func =
       WTF::Bind(&Canvas2DLayerBridge::MailboxReleased,
                 weak_ptr_factory_.CreateWeakPtr(), out_mailbox->mailbox());
-  *out_release_callback =
-      cc::SingleReleaseCallback::Create(ConvertToBaseCallback(std::move(func)));
+  *out_release_callback = ConvertToBaseCallback(std::move(func));
   return true;
 }
 

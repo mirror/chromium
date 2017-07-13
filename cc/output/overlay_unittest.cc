@@ -266,8 +266,7 @@ ResourceId CreateResource(ResourceProvider* resource_provider,
   viz::TextureMailbox mailbox =
       viz::TextureMailbox(gpu::Mailbox::Generate(), gpu::SyncToken(),
                           GL_TEXTURE_2D, size, is_overlay_candidate, false);
-  std::unique_ptr<SingleReleaseCallbackImpl> release_callback =
-      SingleReleaseCallbackImpl::Create(base::Bind(&MailboxReleased));
+  SingleReleaseCallbackImpl release_callback = base::BindOnce(&MailboxReleased);
 
   return resource_provider->CreateResourceFromTextureMailbox(
       mailbox, std::move(release_callback));

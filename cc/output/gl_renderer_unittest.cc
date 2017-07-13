@@ -1800,8 +1800,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   viz::TextureMailbox mailbox =
       viz::TextureMailbox(gpu::Mailbox::Generate(), gpu::SyncToken(),
                           GL_TEXTURE_2D, gfx::Size(256, 256), true, false);
-  std::unique_ptr<SingleReleaseCallbackImpl> release_callback =
-      SingleReleaseCallbackImpl::Create(base::Bind(&MailboxReleased));
+  SingleReleaseCallbackImpl release_callback = base::BindOnce(&MailboxReleased);
   ResourceId resource_id = resource_provider->CreateResourceFromTextureMailbox(
       mailbox, std::move(release_callback));
   bool premultiplied_alpha = false;
@@ -1962,8 +1961,7 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
   viz::TextureMailbox mailbox =
       viz::TextureMailbox(gpu::Mailbox::Generate(), sync_token, GL_TEXTURE_2D,
                           gfx::Size(256, 256), true, false);
-  std::unique_ptr<SingleReleaseCallbackImpl> release_callback =
-      SingleReleaseCallbackImpl::Create(base::Bind(&MailboxReleased));
+  SingleReleaseCallbackImpl release_callback = base::BindOnce(&MailboxReleased);
   ResourceId resource_id = resource_provider->CreateResourceFromTextureMailbox(
       mailbox, std::move(release_callback));
   bool premultiplied_alpha = false;
@@ -2163,8 +2161,7 @@ TEST_F(GLRendererTest, DCLayerOverlaySwitch) {
   viz::TextureMailbox mailbox =
       viz::TextureMailbox(gpu::Mailbox::Generate(), gpu::SyncToken(),
                           GL_TEXTURE_2D, gfx::Size(256, 256), true, false);
-  std::unique_ptr<SingleReleaseCallbackImpl> release_callback =
-      SingleReleaseCallbackImpl::Create(base::Bind(&MailboxReleased));
+  SingleReleaseCallbackImpl release_callback = base::BindOnce(&MailboxReleased);
   ResourceId resource_id = resource_provider->CreateResourceFromTextureMailbox(
       mailbox, std::move(release_callback));
 

@@ -33,7 +33,7 @@ namespace {
 #if !defined(OS_ANDROID) || defined(USE_AURA)
 void CopyFromCompositingSurfaceFinished(
     const content::ReadbackRequestCallback& callback,
-    std::unique_ptr<cc::SingleReleaseCallback> release_callback,
+    cc::SingleReleaseCallback release_callback,
     std::unique_ptr<SkBitmap> bitmap,
     bool result) {
   gpu::SyncToken sync_token;
@@ -44,7 +44,7 @@ void CopyFromCompositingSurfaceFinished(
       gl_helper->GenerateSyncToken(&sync_token);
   }
   const bool lost_resource = !sync_token.HasData();
-  release_callback->Run(sync_token, lost_resource);
+  std::move(release_callback).Run(sync_token, lost_resource);
 
   callback.Run(*bitmap,
                result ? content::READBACK_SUCCESS : content::READBACK_FAILED);
@@ -90,7 +90,7 @@ void PrepareTextureCopyOutputResult(
   uint8_t* pixels = static_cast<uint8_t*>(bitmap->getPixels());
 
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
   result->TakeTexture(&texture_mailbox, &release_callback);
   DCHECK(texture_mailbox.IsTexture());
 

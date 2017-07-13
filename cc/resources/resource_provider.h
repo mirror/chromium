@@ -152,11 +152,11 @@ class CC_EXPORT ResourceProvider
   // Wraps an external texture mailbox into a GL resource.
   ResourceId CreateResourceFromTextureMailbox(
       const viz::TextureMailbox& mailbox,
-      std::unique_ptr<SingleReleaseCallbackImpl> release_callback_impl);
+      SingleReleaseCallbackImpl release_callback_impl);
 
   ResourceId CreateResourceFromTextureMailbox(
       const viz::TextureMailbox& mailbox,
-      std::unique_ptr<SingleReleaseCallbackImpl> release_callback_impl,
+      SingleReleaseCallbackImpl release_callback_impl,
       bool read_lock_fences_enabled);
 
   void DeleteResource(ResourceId id);
@@ -630,7 +630,7 @@ class CC_EXPORT ResourceProvider
     unsigned gl_upload_query_id;
     // Query used to determine when read lock fence has passed.
     unsigned gl_read_lock_query_id;
-    ReleaseCallbackImpl release_callback_impl;
+    SingleReleaseCallbackImpl release_callback_impl;
     uint8_t* pixels;
     int lock_for_read_count;
     int imported_count;
