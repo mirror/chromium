@@ -58,6 +58,8 @@ class EnrollmentHandlerChromeOS : public CloudPolicyClient::Observer,
  public:
   typedef DeviceCloudPolicyInitializer::EnrollmentCallback
       EnrollmentCallback;
+  typedef DeviceCloudPolicyInitializer::LicenseSelectionCallback
+      LicenseSelectionCallback;
 
   // |store| and |install_attributes| must remain valid for the life time of the
   // enrollment handler.
@@ -76,9 +78,18 @@ class EnrollmentHandlerChromeOS : public CloudPolicyClient::Observer,
       const EnrollmentCallback& completion_callback);
   ~EnrollmentHandlerChromeOS() override;
 
+  // Checks license types available for enrollment and reports the result
+  // to |callback|.
+  void CheckAvailableLicenses(
+      const LicenseSelectionCallback& completion_callback);
+
   // Starts the enrollment process and reports the result to
   // |completion_callback_|.
   void StartEnrollment();
+
+  // Starts the enrollment process using user-selected |license_type|
+  // and reports the result to |completion_callback_|.
+  void StartEnrollmentWithLicense(::policy::LicenseType license_type);
 
   // Releases the client.
   std::unique_ptr<CloudPolicyClient> ReleaseClient();
@@ -170,6 +181,11 @@ class EnrollmentHandlerChromeOS : public CloudPolicyClient::Observer,
   void HandleLockDeviceResult(
       chromeos::InstallAttributes::LockResult lock_result);
 
+  // Handles the available licenses request.
+  void HandleAvailableLicensesResult(
+      bool success,
+      const policy::CloudPolicyClient::LicenseMap& license_map);
+
   // Initiates storing DM token. For Active Directory devices only.
   void StartStoreDMToken();
 
@@ -209,6 +225,8 @@ class EnrollmentHandlerChromeOS : public CloudPolicyClient::Observer,
   std::string client_id_;
   std::string requisition_;
   EnrollmentCallback completion_callback_;
+  LicenseSelectionCallback license_selection_callback_;
+  enterprise_management::LicenseType license_type_;
 
   // The current state key provided by |state_keys_broker_|.
   std::string current_state_key_;

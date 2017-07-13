@@ -51,11 +51,39 @@ const char * const kMetricEnrollmentTimeFailure =
 const char * const kMetricEnrollmentTimeSuccess =
     "Enterprise.EnrollmentTime.Success";
 
+const char* const kLicenseTypePerpetual = "perpetual";
+const char* const kLicenseTypeAnnual = "annual";
+const char* const kLicenseTypeKiosk = "kiosk";
+
 // Retry policy constants.
 constexpr int kInitialDelayMS = 4 * 1000;  // 4 seconds
 constexpr double kMultiplyFactor = 1.5;
 constexpr double kJitterFactor = 0.1;           // +/- 10% jitter
 constexpr int64_t kMaxDelayMS = 8 * 60 * 1000;  // 8 minutes
+
+::policy::LicenseType GetLicenseTypeById(const std::string& id) {
+  if (id == kLicenseTypePerpetual)
+    return ::policy::LicenseType::PERPETUAL;
+  if (id == kLicenseTypeAnnual)
+    return ::policy::LicenseType::ANNUAL;
+  if (id == kLicenseTypeKiosk)
+    return ::policy::LicenseType::KIOSK;
+  return ::policy::LicenseType::UNKNOWN;
+}
+
+const std::string GetLicenseIdByType(::policy::LicenseType type) {
+  switch (type) {
+    case ::policy::LicenseType::PERPETUAL:
+      return kLicenseTypePerpetual;
+    case ::policy::LicenseType::ANNUAL:
+      return kLicenseTypeAnnual;
+    case ::policy::LicenseType::KIOSK:
+      return kLicenseTypeKiosk;
+    default:
+      NOTREACHED();
+      return std::string();
+  }
+}
 
 }  // namespace
 
@@ -202,7 +230,12 @@ void EnrollmentScreen::OnLoginDone(const std::string& user,
       auth_code, shark_controller_ != nullptr /* fetch_additional_token */);
 }
 
-void EnrollmentScreen::OnLicenseTypeSelected(const std::string& license_type) {}
+void EnrollmentScreen::OnLicenseTypeSelected(const std::string& license_type) {
+  view_->ShowEnrollmentSpinnerScreen();
+  auto license = GetLicenseTypeById(license_type);
+  CHECK(license != ::policy::LicenseType::UNKNOWN);
+  enrollment_helper_->UseLicenseType(license);
+}
 
 void EnrollmentScreen::OnRetry() {
   retry_task_.Cancel();
@@ -263,6 +296,15 @@ void EnrollmentScreen::OnAdJoined(const std::string& realm) {
 void EnrollmentScreen::OnAuthError(const GoogleServiceAuthError& error) {
   RecordEnrollmentErrorMetrics();
   view_->ShowAuthError(error);
+}
+
+void EnrollmentScreen::OnMultipleLicensesAvailable(
+    const EnrollmentLicenseMap& licenses) {
+  base::DictionaryValue license_dict;
+  for (auto it = licenses.begin(); it != licenses.end(); it++) {
+    license_dict.SetInteger(GetLicenseIdByType(it->first), it->second);
+  }
+  view_->ShowLicenseTypeSelectionScreen(license_dict);
 }
 
 void EnrollmentScreen::OnEnrollmentError(policy::EnrollmentStatus status) {

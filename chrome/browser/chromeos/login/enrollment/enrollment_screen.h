@@ -74,6 +74,8 @@ class EnrollmentScreen
 
   // EnterpriseEnrollmentHelper::EnrollmentStatusConsumer implementation:
   void OnAuthError(const GoogleServiceAuthError& error) override;
+  void OnMultipleLicensesAvailable(
+      const EnrollmentLicenseMap& licenses) override;
   void OnEnrollmentError(policy::EnrollmentStatus status) override;
   void OnOtherError(EnterpriseEnrollmentHelper::OtherError error) override;
   void OnDeviceEnrolled(const std::string& additional_token) override;

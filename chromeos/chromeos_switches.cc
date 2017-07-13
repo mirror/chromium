@@ -500,6 +500,10 @@ const char kTestEncryptionMigrationUI[] = "test-encryption-migration-ui";
 // Forces use of Chrome OS Gaia API v1.
 const char kCrosGaiaApiV1[] = "cros-gaia-api-v1";
 
+// Enables license type selection by user during enrollment.
+const char kEnterpriseEnableLicenseTypeSelection[] =
+    "enterprise-enable-license-type-selection";
+
 bool WakeOnWifiEnabled() {
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(kDisableWakeOnWifi);
 }

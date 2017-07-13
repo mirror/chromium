@@ -187,6 +187,18 @@ void HostPairingScreen::OnAuthError(const GoogleServiceAuthError& error) {
   OnAnyEnrollmentError();
 }
 
+void HostPairingScreen::OnMultipleLicensesAvailable(
+    const EnrollmentLicenseMap& licenses) {
+  LOG(ERROR) << "Host-paired enrollment is not yet compatible "
+             << "with Mixed Licenses Enrollment Flow";
+  enrollment_error_string_ = view_->GetErrorStringFromOtherError(
+      EnterpriseEnrollmentHelper::OTHER_ERROR_FATAL);
+  enrollment_error_code_ = GetEnrollmentErrorCode(
+      HostPairingController::ErrorCode::OTHER_ERROR,
+      static_cast<int>(EnterpriseEnrollmentHelper::OTHER_ERROR_FATAL));
+  OnAnyEnrollmentError();
+}
+
 void HostPairingScreen::OnEnrollmentError(policy::EnrollmentStatus status) {
   enrollment_error_string_ = view_->GetErrorStringFromEnrollmentError(status);
   enrollment_error_code_ =

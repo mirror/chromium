@@ -96,7 +96,7 @@ void DeviceCloudPolicyInitializer::Shutdown() {
   is_initialized_ = false;
 }
 
-void DeviceCloudPolicyInitializer::StartEnrollment(
+void DeviceCloudPolicyInitializer::PrepareEnrollment(
     DeviceManagementService* device_management_service,
     chromeos::ActiveDirectoryJoinDelegate* ad_join_delegate,
     const EnrollmentConfig& enrollment_config,
@@ -114,6 +114,25 @@ void DeviceCloudPolicyInitializer::StartEnrollment(
       install_attributes_->GetDeviceId(), manager_->GetDeviceRequisition(),
       base::Bind(&DeviceCloudPolicyInitializer::EnrollmentCompleted,
                  base::Unretained(this), enrollment_callback)));
+}
+
+void DeviceCloudPolicyInitializer::StartEnrollment() {
+  DCHECK(is_initialized_);
+  DCHECK(enrollment_handler_);
+  enrollment_handler_->StartEnrollment();
+}
+
+void DeviceCloudPolicyInitializer::CheckAvailableLicenses(
+    const LicenseSelectionCallback& callback) {
+  DCHECK(is_initialized_);
+  DCHECK(enrollment_handler_);
+}
+
+void DeviceCloudPolicyInitializer::StartEnrollmentWithLicense(
+    policy::LicenseType license_type) {
+  DCHECK(is_initialized_);
+  DCHECK(enrollment_handler_);
+  DCHECK(license_type != policy::LicenseType::UNKNOWN);
   enrollment_handler_->StartEnrollment();
 }
 

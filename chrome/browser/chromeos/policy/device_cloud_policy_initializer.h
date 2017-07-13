@@ -56,7 +56,11 @@ class EnrollmentStatus;
 // handles the enrollment process.
 class DeviceCloudPolicyInitializer : public CloudPolicyStore::Observer {
  public:
+  using EnrollmentLicenseMap = std::map<::policy::LicenseType, int>;
+
   typedef base::Callback<void(EnrollmentStatus)> EnrollmentCallback;
+  typedef base::Callback<void(const EnrollmentLicenseMap&)>
+      LicenseSelectionCallback;
 
   // |background_task_runner| is used to execute long-running background tasks
   // that may involve file I/O.
@@ -77,15 +81,26 @@ class DeviceCloudPolicyInitializer : public CloudPolicyStore::Observer {
   virtual void Init();
   virtual void Shutdown();
 
-  // Starts enrollment or re-enrollment. Once the enrollment process completes,
-  // |enrollment_callback| is invoked and gets passed the status of the
-  // operation.
-  virtual void StartEnrollment(
+  // Prepares enrollment or re-enrollment. Enrollment should be started by
+  // either calling StartEnrollment or CheckAvailableLicenses /
+  // StartEnrollmentWithLicense. Once the enrollment process
+  // completes, |enrollment_callback| is invoked and gets passed the status of
+  // the operation.
+  virtual void PrepareEnrollment(
       DeviceManagementService* device_management_service,
       chromeos::ActiveDirectoryJoinDelegate* ad_join_delegate,
       const EnrollmentConfig& enrollment_config,
       const std::string& auth_token,
       const EnrollmentCallback& enrollment_callback);
+
+  // Starts enrollment using server-based license type selection.
+  virtual void StartEnrollment();
+
+  // Queries server about available license types and their count.
+  virtual void CheckAvailableLicenses(const LicenseSelectionCallback& callback);
+
+  // Starts enrollment using user-selected license type.
+  virtual void StartEnrollmentWithLicense(policy::LicenseType license_type);
 
   // Get the enrollment configuration that has been set up via signals such as
   // device requisition, OEM manifest, pre-existing installation-time attributes
