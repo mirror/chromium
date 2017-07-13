@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "352e563e_45de9d18",
+        "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "This file isn\u0027t being updated so not sure why you need to increment the version_id.",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df57f2d9_fa547375",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "I would write this differently to avoid repitition:\n\nbool too_big_to_unpack\u003d item_-\u003eGetTotalBytes() \u003e\n        FileTypePolicies::GetInstance()-\u003eMaxSizeUnpackDmg();\nUMA_HISTOGRAM_BOOLEAN(\"SBClientDownload.DmgTooBigToUnpack\", too_big_to_unpack);\nif (!too_big_to_unpack) {\n  OnFileFeatureExtractionDone();\n}",
+      "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58c49da_de0e6f7d",
+        "filename": "chrome/common/safe_browsing/file_type_policies.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "bool or uint64_t?",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 3
+      },
+      "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003e3a0a_52caa609",
+        "filename": "chrome/common/safe_browsing/file_type_policies.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "Can you define this method with the rest of the methods in this class?\n\nAlso, some methods use the Get prefix and some methods in this class don\u0027t so there\u0027s no consistency already but I think it\u0027d be useful to have that prefix.",
+      "range": {
+        "startLine": 256,
+        "startChar": 23,
+        "endLine": 256,
+        "endChar": 39
+      },
+      "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913c0787_d0a9a77c",
+        "filename": "chrome/common/safe_browsing/file_type_policies.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "I would use std::numeric_limits\u003cuint64_t\u003e::max();",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 23
+      },
+      "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc3c07b_1a784549",
+        "filename": "chrome/common/safe_browsing/file_type_policies.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "what happens if this field is unset?",
+      "range": {
+        "startLine": 260,
+        "startChar": 20,
+        "endLine": 260,
+        "endChar": 39
+      },
+      "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41adc85c_0f6905c0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 65677,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "also good to add: this metric is logged each time the user downloads a DMG file on Mac.",
+      "range": {
+        "startLine": 65677,
+        "startChar": 44,
+        "endLine": 65677,
+        "endChar": 45
+      },
+      "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
