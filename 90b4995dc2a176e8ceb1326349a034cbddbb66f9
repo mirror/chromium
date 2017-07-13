@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d37b6e74_89847a8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-13T19:47:32Z",
+      "side": 1,
+      "message": "disabled (prevented) from checking. Updated.",
+      "parentUuid": "c86e98a2_756a5c1c",
+      "revId": "90b4995dc2a176e8ceb1326349a034cbddbb66f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd724d59_26614200",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-11T13:39:24Z",
       "side": 1,
       "message": "How big can this whitelist be? Is it built once?\nThere is some fairly large overhead in UrlMatcher (it builds a dynamic trie and runs Aho-Corasick algorithm on it).\n\nHave you considered some alternatives? Given that you need to only match against (sub-)domains, it would be sufficient to reverse the pattern strings and:\n1. Build a regular trie of these (do we have one in chromium?), so that you could scan URLs from the back until found a match in the trie.\n2. Or just have a sorted vector of these strings instead of trie, and binary search it when scanning the URL.\n\nAlso, you can take a look at components/url_pattern_index, which has a better memory profile, and was faster for our use-case. However, it was created for a slightly more generic purpose than yours, and it doesn\u0027t benefit from large substrings in the patterns - it extracts the \"best\" 5-grams from them and builds an index of those for prefiltering.",
+      "revId": "90b4995dc2a176e8ceb1326349a034cbddbb66f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff46de60_b8161e76",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-13T19:47:32Z",
+      "side": 1,
+      "message": "the list probably be on the order of 100\u0027s of domains at most. Thanks for the insight into url_matcher memory behavior. I looked at Chromium source code but in this case I had to with a simple trie implementation for a low memory overhead.",
+      "parentUuid": "cd724d59_26614200",
       "revId": "90b4995dc2a176e8ceb1326349a034cbddbb66f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ab52ea91_786aa955",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-13T19:47:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "754db053_b583d2c5",
+      "range": {
+        "startLine": 47,
+        "startChar": 22,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "90b4995dc2a176e8ceb1326349a034cbddbb66f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02d78736_cd1414ed",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
         "patchSetId": 5
@@ -70,6 +130,30 @@
       "writtenOn": "2017-07-11T12:21:22Z",
       "side": 1,
       "message": "The name indicates that this should happen on the IO thread but the comment points to a background thread.",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 17
+      },
+      "revId": "90b4995dc2a176e8ceb1326349a034cbddbb66f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b68c1e_8e41c495",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-13T19:47:32Z",
+      "side": 1,
+      "message": "updated the comment.",
+      "parentUuid": "02d78736_cd1414ed",
       "range": {
         "startLine": 51,
         "startChar": 7,

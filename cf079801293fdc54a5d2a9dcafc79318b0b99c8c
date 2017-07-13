@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38c029ef_50eff89e",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-13T19:47:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "201434e1_ef95cd3d",
+      "range": {
+        "startLine": 47,
+        "startChar": 38,
+        "endLine": 47,
+        "endChar": 52
+      },
+      "revId": "cf079801293fdc54a5d2a9dcafc79318b0b99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ed116f_b91d082f",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-11T01:53:20Z",
       "side": 1,
       "message": "Do we need \"DCHECK(io_task_runner_-\u003eRunsTasksInCurrentSequence());\" here too?",
+      "revId": "cf079801293fdc54a5d2a9dcafc79318b0b99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0879a788_f87f9159",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-13T19:47:32Z",
+      "side": 1,
+      "message": "this is internal to that file and it is already checked at the call point.",
+      "parentUuid": "68ed116f_b91d082f",
       "revId": "cf079801293fdc54a5d2a9dcafc79318b0b99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
