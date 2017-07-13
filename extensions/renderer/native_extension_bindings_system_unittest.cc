@@ -100,6 +100,38 @@ class TestIPCMessageSender : public IPCMessageSender {
     last_params_ = std::move(params);
   }
   void SendOnRequestResponseReceivedIPC(int request_id) override {}
+  // The event listener methods are less of a pain to mock (since they don't
+  // have complex parameters like ExtensionHostMsg_Request_Params).
+  MOCK_METHOD3(SendAddUnfilteredEventListenerIPC,
+               void(ScriptContext* context,
+                    const std::string& extension_id,
+                    const std::string& event_name));
+  MOCK_METHOD3(SendRemoveUnfilteredEventListenerIPC,
+               void(ScriptContext* context,
+                    const std::string& extension_id,
+                    const std::string& event_name));
+
+  // Send a message to add/remove a lazy unfiltered listener.
+  MOCK_METHOD3(SendAddUnfilteredLazyEventListenerIPC,
+               void(ScriptContext* context,
+                    const std::string& extension_id,
+                    const std::string& event_name));
+  MOCK_METHOD3(SendRemoveUnfilteredLazyEventListenerIPC,
+               void(ScriptContext* context,
+                    const std::string& extension_id,
+                    const std::string& event_name));
+
+  // Send a message to add/remove a filtered listener.
+  MOCK_METHOD4(SendAddFilteredEventListenerIPC,
+               void(ScriptContext* context,
+                    const std::string& event_name,
+                    const base::DictionaryValue& filter,
+                    bool is_lazy));
+  MOCK_METHOD4(SendRemoveFilteredEventListenerIPC,
+               void(ScriptContext* context,
+                    const std::string& event_name,
+                    const base::DictionaryValue& filter,
+                    bool remove_lazy_listener));
 
   const ExtensionHostMsg_Request_Params* last_params() const {
     return last_params_.get();
@@ -130,9 +162,7 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
     auto ipc_message_sender = base::MakeUnique<TestIPCMessageSender>();
     ipc_message_sender_ = ipc_message_sender.get();
     bindings_system_ = base::MakeUnique<NativeExtensionBindingsSystem>(
-        std::move(ipc_message_sender),
-        base::Bind(&NativeExtensionBindingsSystemUnittest::MockSendListenerIPC,
-                   base::Unretained(this)));
+        std::move(ipc_message_sender));
     APIBindingTest::SetUp();
   }
 
@@ -151,17 +181,6 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
     script_context_set_.reset();
     bindings_system_.reset();
     APIBindingTest::TearDown();
-  }
-
-  void MockSendListenerIPC(binding::EventListenersChanged changed,
-                           ScriptContext* context,
-                           const std::string& event_name,
-                           const base::DictionaryValue* filter,
-                           bool was_manual) {
-    if (event_change_handler_) {
-      event_change_handler_->OnChange(changed, context, event_name, filter,
-                                      was_manual);
-    }
   }
 
   ScriptContext* CreateScriptContext(v8::Local<v8::Context> v8_context,
@@ -193,7 +212,6 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
   void RegisterExtension(const ExtensionId& id) { extension_ids_.insert(id); }
 
   void InitEventChangeHandler() {
-    event_change_handler_ = base::MakeUnique<MockEventChangeHandler>();
   }
 
   NativeExtensionBindingsSystem* bindings_system() {
@@ -204,9 +222,7 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
     return *ipc_message_sender_->last_params();
   }
   StringSourceMap* source_map() { return &source_map_; }
-  MockEventChangeHandler* event_change_handler() {
-    return event_change_handler_.get();
-  }
+  TestIPCMessageSender* ipc_message_sender() { return ipc_message_sender_; }
 
  private:
   ExtensionIdSet extension_ids_;
@@ -611,13 +627,13 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestEventRegistration) {
       "});";
   v8::Local<v8::Function> add_listener =
       FunctionFromString(context, kAddListener);
-  EXPECT_CALL(*event_change_handler(),
-              OnChange(binding::EventListenersChanged::HAS_LISTENERS,
-                       script_context, kEventName, nullptr, true))
+  EXPECT_CALL(*ipc_message_sender(),
+              SendAddUnfilteredEventListenerIPC(script_context, extension->id(),
+                                                kEventName))
       .Times(1);
   v8::Local<v8::Value> argv[] = {listener};
   RunFunction(add_listener, context, arraysize(argv), argv);
-  ::testing::Mock::VerifyAndClearExpectations(event_change_handler());
+  ::testing::Mock::VerifyAndClearExpectations(ipc_message_sender());
   EXPECT_TRUE(bindings_system()->HasEventListenerInContext(
       "idle.onStateChanged", script_context));
 
@@ -626,14 +642,14 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestEventRegistration) {
       "(function(listener) {\n"
       "  chrome.idle.onStateChanged.removeListener(listener);\n"
       "});";
-  EXPECT_CALL(*event_change_handler(),
-              OnChange(binding::EventListenersChanged::NO_LISTENERS,
-                       script_context, kEventName, nullptr, true))
+  EXPECT_CALL(*ipc_message_sender(),
+              SendRemoveUnfilteredEventListenerIPC(script_context,
+                                                   extension->id(), kEventName))
       .Times(1);
   v8::Local<v8::Function> remove_listener =
       FunctionFromString(context, kRemoveListener);
   RunFunction(remove_listener, context, arraysize(argv), argv);
-  ::testing::Mock::VerifyAndClearExpectations(event_change_handler());
+  ::testing::Mock::VerifyAndClearExpectations(ipc_message_sender());
   EXPECT_FALSE(bindings_system()->HasEventListenerInContext(
       "idle.onStateChanged", script_context));
 }
@@ -671,12 +687,12 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
       "});";
   v8::Local<v8::Function> use_app_runtime =
       FunctionFromString(context, kUseAppRuntime);
-  EXPECT_CALL(*event_change_handler(),
-              OnChange(binding::EventListenersChanged::HAS_LISTENERS,
-                       script_context, "app.runtime.onLaunched", nullptr, true))
+  EXPECT_CALL(*ipc_message_sender(),
+              SendAddUnfilteredEventListenerIPC(script_context, app->id(),
+                                                "app.runtime.onLaunched"))
       .Times(1);
   RunFunctionOnGlobal(use_app_runtime, context, 0, nullptr);
-  ::testing::Mock::VerifyAndClearExpectations(event_change_handler());
+  ::testing::Mock::VerifyAndClearExpectations(ipc_message_sender());
 }
 
 TEST_F(NativeExtensionBindingsSystemUnittest,
@@ -1068,7 +1084,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, UnmanagedEvents) {
 
   // We should have no notifications for event listeners added (since the
   // mock is a strict mock, this will fail if anything was called).
-  ::testing::Mock::VerifyAndClearExpectations(event_change_handler());
+  ::testing::Mock::VerifyAndClearExpectations(ipc_message_sender());
 }
 
 }  // namespace extensions
