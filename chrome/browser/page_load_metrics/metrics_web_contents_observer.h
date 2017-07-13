@@ -136,14 +136,16 @@ class MetricsWebContentsObserver
   // public only for testing
   void OnTimingUpdated(content::RenderFrameHost* render_frame_host,
                        const mojom::PageLoadTiming& timing,
-                       const mojom::PageLoadMetadata& metadata);
+                       const mojom::PageLoadMetadata& metadata,
+                       const mojom::PageLoadFeatures& new_features);
 
  private:
   friend class content::WebContentsUserData<MetricsWebContentsObserver>;
 
   // page_load_metrics::mojom::PageLoadMetrics implementation.
   void UpdateTiming(mojom::PageLoadTimingPtr timing,
-                    mojom::PageLoadMetadataPtr metadata) override;
+                    mojom::PageLoadMetadataPtr metadata,
+                    mojom::PageLoadFeaturesPtr new_features) override;
 
   void HandleFailedNavigationForTrackedLoad(
       content::NavigationHandle* navigation_handle,
