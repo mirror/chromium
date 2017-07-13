@@ -16,6 +16,7 @@
 #include "services/ui/public/interfaces/cursor/cursor.mojom.h"
 #include "services/ui/public/interfaces/window_manager.mojom.h"
 #include "services/ui/ws/drag_cursor_updater.h"
+#include "services/ui/ws/event_matcher.h"
 #include "services/ui/ws/event_targeter.h"
 #include "services/ui/ws/event_targeter_delegate.h"
 #include "services/ui/ws/modal_window_controller.h"
@@ -142,6 +143,9 @@ class EventDispatcher : public ServerWindowObserver,
 
   void RemoveAccelerator(uint32_t id);
 
+  void SetCursorOnKeyList(
+      std::vector<::ui::mojom::EventMatcherPtr> show_cursor_matchers);
+
   // True if we are actively finding a target for an event, false otherwise.
   bool IsProcessingEvent() const;
 
@@ -200,6 +204,10 @@ class EventDispatcher : public ServerWindowObserver,
 
   void ProcessKeyEvent(const ui::KeyEvent& event,
                        AcceleratorMatchPhase match_phase);
+
+  // When the user presses a key, we want to hide the cursor if it doesn't
+  // match a list of window manager supplied keys.
+  void HideCursorOnMatchedKeyEvent(const ui::KeyEvent& event);
 
   bool IsTrackingPointer(int32_t pointer_id) const {
     return pointer_targets_.count(pointer_id) > 0;
@@ -310,6 +318,8 @@ class EventDispatcher : public ServerWindowObserver,
   int64_t event_display_id_ = display::kInvalidDisplayId;
 
   std::map<uint32_t, std::unique_ptr<Accelerator>> accelerators_;
+
+  std::vector<EventMatcher> cursor_matchers_;
 
   using PointerIdToTargetMap = std::map<int32_t, PointerTarget>;
   // |pointer_targets_| contains the active pointers. For a mouse based pointer

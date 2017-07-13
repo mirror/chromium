@@ -21,6 +21,7 @@ namespace ws {
 class EventMatcher {
  public:
   explicit EventMatcher(const mojom::EventMatcher& matcher);
+  EventMatcher(EventMatcher&& rhs);
   ~EventMatcher();
 
   bool MatchesEvent(const ui::Event& event) const;

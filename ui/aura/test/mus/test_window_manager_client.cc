@@ -39,6 +39,9 @@ void TestWindowManagerClient::AddAccelerators(
 
 void TestWindowManagerClient::RemoveAccelerator(uint32_t id) {}
 
+void TestWindowManagerClient::SetCursorOnKeyList(
+    std::vector<::ui::mojom::EventMatcherPtr> show_cursor_matchers) {}
+
 void TestWindowManagerClient::SetDisplayRoot(
     const display::Display& display,
     ui::mojom::WmViewportMetricsPtr viewport_metrics,

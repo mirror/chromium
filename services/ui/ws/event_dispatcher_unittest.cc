@@ -132,6 +132,7 @@ class TestEventDispatcherDelegate : public EventDispatcherDelegate {
   }
   void OnMouseCursorLocationChanged(const gfx::Point& point,
                                     int64_t display_id) override {}
+  void OnEventChangesCursorVisibility(bool visible) override {}
   void DispatchInputEventToWindow(ServerWindow* target,
                                   ClientSpecificId client_id,
                                   int64_t display_id,
