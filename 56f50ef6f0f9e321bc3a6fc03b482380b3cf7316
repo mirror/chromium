@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2113dbd0_eb3c4a5d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/nonce-enforce-blocked.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-13T15:08:17Z",
+      "side": 1,
+      "message": "These need to be updated with the new srcs",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2adbc761_fad967f9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/nonce-enforce-blocked.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-13T15:08:17Z",
+      "side": 1,
+      "message": "I\u0027m surprised this does not fail now that the expectations don\u0027t match the URLs below... could you investigate?",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e3f0676_a36fcbc8",
         "filename": "third_party/WebKit/Source/core/dom/ScriptElementBase.h",
         "patchSetId": 2
