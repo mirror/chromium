@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0411e86e_e87c6858",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1226098
+      },
+      "writtenOn": "2017-07-13T05:00:23Z",
+      "side": 1,
+      "message": "Ok. I\u0027ll move them back to the previous lines.",
+      "parentUuid": "54414f83_1281a171",
+      "range": {
+        "startLine": 160,
+        "startChar": 6,
+        "endLine": 160,
+        "endChar": 50
+      },
+      "revId": "8fb374e0a3142757795b3c25146f3a3eab3721cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8d262f7_05951121",
         "filename": "components/BUILD.gn",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T21:40:07Z",
       "side": 1,
       "message": "This doesn\u0027t really line up with the comment earlier.  Should this be a data_deps of the download/internal/.../unit_test targets?",
+      "range": {
+        "startLine": 162,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 5
+      },
+      "revId": "8fb374e0a3142757795b3c25146f3a3eab3721cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70da6bf4_052242ed",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1226098
+      },
+      "writtenOn": "2017-07-13T05:00:23Z",
+      "side": 1,
+      "message": "If we need to make components_unittests_gtest_filter as data_deps of only download/internal/.../unit_test targets, then do you suggest me to group \"download/internal/.../unit_test targets and components_unittests_gtest_filter as data_deps for only this\" and then add this group to deps at line# 60 ?",
+      "parentUuid": "d8d262f7_05951121",
       "range": {
         "startLine": 162,
         "startChar": 4,
