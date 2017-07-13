@@ -63,13 +63,12 @@ Bindings.ChunkedReader.prototype = {
  */
 Bindings.ChunkedFileReader = class {
   /**
-   * @param {!File} file
+   * @param {!Blob} blob
    * @param {number} chunkSize
    * @param {function(!Bindings.ChunkedReader)=} chunkTransferredCallback
    */
-  constructor(file, chunkSize, chunkTransferredCallback) {
-    this._file = file;
-    this._fileSize = file.size;
+  constructor(blob, chunkSize, chunkTransferredCallback) {
+    this._file = blob;
     this._loadedSize = 0;
     this._chunkSize = chunkSize;
     this._chunkTransferredCallback = chunkTransferredCallback;
@@ -114,7 +113,7 @@ Bindings.ChunkedFileReader = class {
    * @return {number}
    */
   fileSize() {
-    return this._fileSize;
+    return this._file.size;
   }
 
   /**
@@ -145,7 +144,7 @@ Bindings.ChunkedFileReader = class {
 
     var buffer = event.target.result;
     this._loadedSize += buffer.byteLength;
-    var endOfFile = this._loadedSize === this._fileSize;
+    var endOfFile = this._loadedSize === this._file.size;
     var decodedString = this._decoder.decode(buffer, {stream: !endOfFile});
     this._output.write(decodedString);
     if (this._isCanceled)
@@ -166,7 +165,7 @@ Bindings.ChunkedFileReader = class {
 
   _loadChunk() {
     var chunkStart = this._loadedSize;
-    var chunkEnd = Math.min(this._fileSize, chunkStart + this._chunkSize);
+    var chunkEnd = Math.min(this._file.size, chunkStart + this._chunkSize);
     var nextPart = this._file.slice(chunkStart, chunkEnd);
     this._reader.readAsArrayBuffer(nextPart);
   }
