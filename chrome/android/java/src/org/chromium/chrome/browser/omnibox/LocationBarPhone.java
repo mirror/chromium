@@ -23,6 +23,7 @@ import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.WindowDelegate;
 import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.ntp.NewTabPage;
+import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.toolbar.ToolbarDataProvider;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
@@ -225,12 +226,12 @@ public class LocationBarPhone extends LocationBarLayout {
         ToolbarDataProvider toolbarDataProvider = getToolbarDataProvider();
         if (toolbarDataProvider == null) return;
 
-        if (LocaleManager.getInstance().hasShownSearchEnginePromo()) {
+        if (LocaleManager.getInstance().hasShownSearchEnginePromo()
+                || !TemplateUrlService.getInstance().isDefaultSearchEngineGoogle()) {
             mGoogleGContainer.setVisibility(View.GONE);
             return;
         }
 
-        // If the default search engine is not Google, isLocationBarShownInNTP() will return false.
         NewTabPage ntp = toolbarDataProvider.getNewTabPageForCurrentTab();
         boolean isShownInRegularNtp = ntp != null && ntp.isLocationBarShownInNTP()
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_SHOW_GOOGLE_G_IN_OMNIBOX);
