@@ -33,7 +33,7 @@ class DeviceDisabledScreen : public BaseScreen,
 
   // DeviceDisabledScreenView::Delegate:
   void OnViewDestroyed(DeviceDisabledScreenView* view) override;
-  const std::string& GetEnrollmentDomain() const override;
+  const std::string& GetEnterpriseDisplayDomain() const override;
   const std::string& GetMessage() const override;
 
   // system::DeviceDisablingManager::Observer:

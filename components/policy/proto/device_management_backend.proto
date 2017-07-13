@@ -434,6 +434,9 @@ message PolicyData {
   // is affiliated on the device. See device_affiliation_ids for details.
   // Should be fetched with user policy. Ignored if fetched with other polices.
   repeated string user_affiliation_ids = 24;
+
+  // Used as the display domain when the primary domain gets renamed.
+  optional string display_domain = 25;
 }
 
 message PolicyFetchResponse {
