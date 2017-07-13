@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43eb08eb_2476475c",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-13T10:42:44Z",
+      "side": 1,
+      "message": "Note: lint fix.",
+      "revId": "671deb2597726a325bfd178142ca6257cb082f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d41e78_643ed41d",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-13T10:42:44Z",
+      "side": 1,
+      "message": "Just FYI:\nBartosz, although this tries to keep the previous code\u0027s behavior,\nthis may look slightly weird to me.\nAccording to the real implementation code, GetKeyPayload() returns false if key is not found.\nI tried to let GetKeyPayload return false, but it causes test failures.\nIs the key registered always? Or, is it a real production bug?\n(Any case, please let me focus on the main goal of this CL, which is removing Mock, though).",
+      "revId": "671deb2597726a325bfd178142ca6257cb082f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1042a6_59b340f0",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-13T10:42:44Z",
+      "side": 1,
+      "message": "Note: let\u0027s make this set (overwrite the value if the entry exists), rather than insert (no op if the entry exists) to follow the function name.",
+      "revId": "671deb2597726a325bfd178142ca6257cb082f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
