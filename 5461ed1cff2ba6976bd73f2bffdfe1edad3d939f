@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01d9bbf1_19333a69",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-13T21:28:44Z",
+      "side": 1,
+      "message": "Since you can call into Blink at this point, you probably want to use GetSecurityOrigin()-\u003eIsPotentiallyTrustworthy() instead of content::IsOriginSecure(). They should, theoretically, be the same, but that way you don\u0027t have to convert to a url::Origin, plus, if there are any divergences, you\u0027ll be consistent with other secure contexts checks inside Blink.\n\nDo you know if there is a way to have an http:// iframe inside of an https:// page in WebView? If not, this should be okay, but if it is possible, then you\u0027ll want to check the current frame\u0027s origin as well as all of its ancestors to be consistent with https://www.w3.org/TR/secure-contexts/#settings-object",
+      "range": {
+        "startLine": 687,
+        "startChar": 53,
+        "endLine": 687,
+        "endChar": 56
+      },
+      "revId": "5461ed1cff2ba6976bd73f2bffdfe1edad3d939f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a659be_d844f107",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-13T21:28:44Z",
+      "side": 1,
+      "message": "copy/pasted comment?",
+      "range": {
+        "startLine": 287,
+        "startChar": 5,
+        "endLine": 287,
+        "endChar": 76
+      },
+      "revId": "5461ed1cff2ba6976bd73f2bffdfe1edad3d939f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
