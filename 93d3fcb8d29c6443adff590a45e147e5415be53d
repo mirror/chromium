@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a56eac61_62a5765c",
+        "filename": "base/test/android/java/src/org/chromium/base/MultiprocessTestClientLauncher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-13T18:25:30Z",
+      "side": 1,
+      "message": "Optional nit: Everything else you do typically supports timeouts... Do we want that here?",
+      "revId": "93d3fcb8d29c6443adff590a45e147e5415be53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2b5f73_9260b5ce",
+        "filename": "base/test/android/java/src/org/chromium/base/MultiprocessTestClientLauncher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-13T18:25:30Z",
+      "side": 1,
+      "message": "Optional nit: Since you\u0027re checking it everywhere else you\u0027re accessing sPidToLauncher, maybe assert the thread here too?\n\nYes, I know you\u0027re passing in this callabcke to the runOnLauncher... method.... It\u0027s just that for the other ones where you extracted a method, you did in fact keep the assert in.",
+      "revId": "93d3fcb8d29c6443adff590a45e147e5415be53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
