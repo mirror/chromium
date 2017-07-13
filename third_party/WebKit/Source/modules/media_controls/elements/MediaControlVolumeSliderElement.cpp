@@ -31,12 +31,12 @@ void MediaControlVolumeSliderElement::DefaultEventHandler(Event* event) {
 
   MediaControlInputElement::DefaultEventHandler(event);
 
-  if (event->type() == EventTypeNames::mousedown) {
+  if (event->type() == EventTypeNames::pointerdown) {
     Platform::Current()->RecordAction(
         UserMetricsAction("Media.Controls.VolumeChangeBegin"));
   }
 
-  if (event->type() == EventTypeNames::mouseup) {
+  if (event->type() == EventTypeNames::pointerup) {
     Platform::Current()->RecordAction(
         UserMetricsAction("Media.Controls.VolumeChangeEnd"));
   }
