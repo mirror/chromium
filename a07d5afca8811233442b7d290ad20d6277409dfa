@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "317f9e70_8a862c8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T14:40:22Z",
+      "side": 1,
+      "message": "\u003e The data for onExplorationURLsAvailable(PERSONALIZED, XXX) is identical to onMostVisitedSitesAvailable(XXX) and arrives at the same time.\n\nCan we completely get rid of onMostVisitedSitesAvailable(XXX) then? :D On our end it would very likely be implemented by calling into onExplorationURLsAvailable(PERSONALIZED, XXX) or some other common method for both code paths...\n\nOr we can just leave it as it is now and figure out once the first integration is done",
+      "parentUuid": "54fdf5ee_72b39684",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85198823_53152ac0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
         "patchSetId": 1
@@ -378,6 +402,30 @@
       "side": 1,
       "message": "Dropped MostLikely.\nDropped NTP, although: are we sure this will never be part of the NTP?",
       "parentUuid": "f439ace9_df08a065",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c04a1c9b_dc7bd419",
+        "filename": "components/ntp_tiles/constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T14:40:22Z",
+      "side": 1,
+      "message": "it will definitely be shown on the NTP, but it will also be shown outside of it, so no reason to make it sound like it\u0027s restricted to it! :)",
+      "parentUuid": "a8ebccc3_a8fc3fc6",
       "range": {
         "startLine": 22,
         "startChar": 5,
