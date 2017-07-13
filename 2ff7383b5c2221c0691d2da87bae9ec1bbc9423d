@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be8b12fe_b084cd45",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T15:30:22Z",
+      "side": 1,
+      "message": "This should be necessary - a task posted to the IO thread will make it to the IOThread before any subsequent navigation.",
+      "range": {
+        "startLine": 548,
+        "startChar": 21,
+        "endLine": 548,
+        "endChar": 22
+      },
+      "revId": "2ff7383b5c2221c0691d2da87bae9ec1bbc9423d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73731f1_77e83941",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T15:30:22Z",
+      "side": 1,
+      "message": "These are being written on one thread, read on another, so this is still not thread safe (Just think of a favicon, if we request one, could result on us seeing another request and updating this while reading from it).  It\u0027s better to use a RunLoop to wait until a request to be test_case.original_url has been received.  And use a lock to protect access to the request_headers array.",
+      "range": {
+        "startLine": 580,
+        "startChar": 36,
+        "endLine": 580,
+        "endChar": 58
+      },
+      "revId": "2ff7383b5c2221c0691d2da87bae9ec1bbc9423d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
