@@ -22,6 +22,30 @@
       "revId": "477b64a7d11b8d895b232da8fe36038f77eaee04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ac70e0_8aac9d2a",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-07-13T11:33:39Z",
+      "side": 1,
+      "message": "Don\u0027t remember :) I\u0027ll see if I can\u0027t remove it.",
+      "parentUuid": "42e8b195_51213ea3",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 59
+      },
+      "revId": "477b64a7d11b8d895b232da8fe36038f77eaee04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
