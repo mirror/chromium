@@ -280,7 +280,8 @@ mojom("service_names") {
   ]
 }
 
-source_set("web") {
+source_set("web_tmp") {
+  configs += [ "//build/config/compiler:enable_arc" ]
   deps = [
     ":core",
     ":js_resources",
@@ -307,10 +308,6 @@ source_set("web") {
   ]
 
   sources = [
-    "web_state/ui/crw_web_controller.h",
-    "web_state/ui/crw_web_controller.mm",
-    "web_state/ui/crw_web_controller_container_view.h",
-    "web_state/ui/crw_web_controller_container_view.mm",
     "web_state/ui/crw_web_view_content_view.mm",
     "web_state/ui/crw_wk_script_message_router.h",
     "web_state/ui/crw_wk_script_message_router.mm",
@@ -322,16 +319,6 @@ source_set("web") {
     "web_state/ui/wk_web_view_configuration_provider.mm",
     "web_state/web_controller_observer_bridge.h",
     "web_state/web_controller_observer_bridge.mm",
-    "web_state/web_state.mm",
-    "web_state/web_state_delegate.mm",
-    "web_state/web_state_delegate_bridge.mm",
-    "web_state/web_state_impl.h",
-    "web_state/web_state_impl.mm",
-    "web_state/web_state_observer.mm",
-    "web_state/web_state_observer_bridge.mm",
-    "web_state/web_state_policy_decider.mm",
-    "web_state/web_state_weak_ptr_factory.h",
-    "web_state/web_state_weak_ptr_factory.mm",
     "web_state/web_view_internal_creation_util.h",
     "web_state/web_view_internal_creation_util.mm",
     "web_state/wk_web_view_security_util.h",
@@ -344,6 +331,61 @@ source_set("web") {
   ]
 
   allow_circular_includes_from = [ ":web_arc" ]
+}
+
+source_set("web") {
+  deps = [
+    ":core",
+    ":js_resources",
+    ":reload_type",
+    ":resources",
+    ":user_agent",
+    "//base",
+    "//components/url_formatter",
+    "//ios/net",
+    "//ios/third_party/blink:html_tokenizer",
+    "//mojo/public/cpp/system",
+    "//mojo/public/js",
+    "//net",
+    "//services/service_manager/public/cpp",
+    "//ui/base",
+    "//ui/gfx",
+    "//ui/gfx/geometry",
+    "//ui/resources",
+    "//url",
+  ]
+
+  public_deps = [
+    ":web_arc",
+    ":web_tmp",
+  ]
+
+  sources = [
+    "web_state/ui/crw_web_controller.h",
+    "web_state/ui/crw_web_controller.mm",
+    "web_state/ui/crw_web_controller_container_view.h",
+    "web_state/ui/crw_web_controller_container_view.mm",
+    "web_state/web_state.mm",
+    "web_state/web_state_delegate.mm",
+    "web_state/web_state_delegate_bridge.mm",
+    "web_state/web_state_impl.h",
+    "web_state/web_state_impl.mm",
+    "web_state/web_state_observer.mm",
+    "web_state/web_state_observer_bridge.mm",
+    "web_state/web_state_policy_decider.mm",
+    "web_state/web_state_weak_ptr_factory.h",
+    "web_state/web_state_weak_ptr_factory.mm",
+  ]
+
+  libs = [
+    "CoreGraphics.framework",
+    "WebKit.framework",
+  ]
+
+  allow_circular_includes_from = [
+    ":web_arc",
+    ":web_tmp",
+  ]
 }
 
 source_set("core") {
