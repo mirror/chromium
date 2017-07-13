@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cc76462_63a141ae",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1199052
+      },
+      "writtenOn": "2017-07-13T14:18:48Z",
+      "side": 1,
+      "message": "Perhaps \"Your Hangout Meet device...\" would sound better?",
+      "revId": "55de7695990d4a81a3c2995fd587ab30c817fed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
