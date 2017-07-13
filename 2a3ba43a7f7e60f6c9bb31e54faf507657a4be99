@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5dbc9c5d_6f351ba3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-13T01:05:24Z",
+      "side": 1,
+      "message": "Thanks for the suggestion!",
+      "parentUuid": "044ddc7b_97ede499",
+      "range": {
+        "startLine": 299,
+        "startChar": 35,
+        "endLine": 299,
+        "endChar": 49
+      },
+      "revId": "2a3ba43a7f7e60f6c9bb31e54faf507657a4be99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "616375eb_8f906c33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4592e9f7_9658fc8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-13T01:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "616375eb_8f906c33",
+      "range": {
+        "startLine": 387,
+        "startChar": 20,
+        "endLine": 387,
+        "endChar": 29
+      },
+      "revId": "2a3ba43a7f7e60f6c9bb31e54faf507657a4be99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc0521c3_91513307",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "2a3ba43a7f7e60f6c9bb31e54faf507657a4be99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e0f230_24d8c0dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-13T01:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc0521c3_91513307",
+      "range": {
+        "startLine": 398,
+        "startChar": 32,
+        "endLine": 398,
+        "endChar": 42
+      },
+      "revId": "2a3ba43a7f7e60f6c9bb31e54faf507657a4be99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
