@@ -41,16 +41,11 @@ class CAPTIVE_PORTAL_EXPORT CaptivePortalDetector
 
   typedef base::Callback<void(const Results& results)> DetectionCallback;
 
-  // The test URL.  When connected to the Internet, it should return a
-  // blank page with a 204 status code.  When behind a captive portal,
-  // requests for this URL should get an HTTP redirect or a login
-  // page.  When neither is true, no server should respond to requests
-  // for this URL.
-  static const char kDefaultURL[];
-
   explicit CaptivePortalDetector(
       const scoped_refptr<net::URLRequestContextGetter>& request_context);
   ~CaptivePortalDetector() override;
+
+  static std::string GetTestURL();
 
   // Triggers a check for a captive portal. After completion, runs the
   // |callback|.

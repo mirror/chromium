@@ -5,6 +5,7 @@
 #include "components/captive_portal/captive_portal_detector.h"
 
 #include "base/logging.h"
+#include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "net/base/load_flags.h"
@@ -14,13 +15,47 @@
 
 namespace captive_portal {
 
-const char CaptivePortalDetector::kDefaultURL[] =
-    "http://www.gstatic.com/generate_204";
+namespace {
+
+// The test URL.  When connected to the Internet, it should return a
+// blank page with a 204 status code.  When behind a captive portal,
+// requests for this URL should get an HTTP redirect or a login
+// page.  When neither is true, no server should respond to requests
+// for this URL.
+constexpr char kDefaultURL[] = "http://www.gstatic.com/generate_204";
+constexpr char kDefaultAltURL[] = "http://alt${RAND}.gstatic.com/generate_204";
+constexpr char kRandomKeyword[] = "${RAND}";
+
+// This range is determined by the server-side configuration. See b/63033351.
+constexpr int kMinRandomHost = 1;
+constexpr int kMaxRandomHost = 25;
+
+std::string test_url_;
+
+std::string RandomizeURL(const std::string& in) {
+  std::string out = in;
+  std::size_t offset = in.find(kRandomKeyword);
+  if (offset == std::string::npos) {
+    return out;
+  }
+
+  int alt_host = base::RandInt(kMinRandomHost, kMaxRandomHost);
+  out.replace(offset, strlen(kRandomKeyword), std::to_string(alt_host));
+  return out;
+}
+
+}  // namespace
+
+// static
+std::string CaptivePortalDetector::GetTestURL() {
+  if (test_url_.empty())
+    return kDefaultURL;
+  return test_url_;
+}
 
 CaptivePortalDetector::CaptivePortalDetector(
     const scoped_refptr<net::URLRequestContextGetter>& request_context)
-    : request_context_(request_context) {
-}
+    : request_context_(request_context) {}
 
 CaptivePortalDetector::~CaptivePortalDetector() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -35,6 +70,8 @@ void CaptivePortalDetector::DetectCaptivePortal(
   DCHECK(detection_callback_.is_null());
 
   detection_callback_ = detection_callback;
+
+  test_url_ = RandomizeURL(kDefaultAltURL);
 
   // The first 0 means this can use a TestURLFetcherFactory in unit tests.
   url_fetcher_ = net::URLFetcher::Create(0, url, net::URLFetcher::GET, this,

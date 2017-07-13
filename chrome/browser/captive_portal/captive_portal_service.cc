@@ -181,7 +181,6 @@ CaptivePortalService::CaptivePortalService(Profile* profile,
       enabled_(false),
       last_detection_result_(captive_portal::RESULT_INTERNET_CONNECTED),
       num_checks_with_same_result_(0),
-      test_url_(captive_portal::CaptivePortalDetector::kDefaultURL),
       tick_clock_for_testing_(clock_for_testing) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   // The order matters here:
@@ -268,7 +267,9 @@ void CaptivePortalService::DetectCaptivePortalInternal() {
           }
         })");
   captive_portal_detector_.DetectCaptivePortal(
-      test_url_,
+      test_url_.is_empty()
+          ? GURL(captive_portal::CaptivePortalDetector::GetTestURL())
+          : test_url_,
       base::Bind(&CaptivePortalService::OnPortalDetectionCompleted,
                  base::Unretained(this)),
       traffic_annotation);
