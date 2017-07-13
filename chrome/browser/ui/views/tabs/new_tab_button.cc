@@ -6,11 +6,13 @@
 
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/tabs/new_tab_promo.h"
 #include "third_party/skia/include/core/SkColorFilter.h"
 #include "third_party/skia/include/effects/SkBlurMaskFilter.h"
 #include "third_party/skia/include/effects/SkLayerDrawLooper.h"
 #include "third_party/skia/include/pathops/SkPathOps.h"
 #include "ui/base/default_theme_provider.h"
+#include "ui/gfx/color_utils.h"
 #include "ui/gfx/scoped_canvas.h"
 
 #if defined(OS_WIN)
@@ -35,14 +37,17 @@ sk_sp<SkDrawLooper> CreateShadowDrawLooper(SkColor color) {
       kNormal_SkBlurStyle, 0.5, SkBlurMaskFilter::kHighQuality_BlurFlag));
   layer_paint->setColorFilter(
       SkColorFilter::MakeModeFilter(color, SkBlendMode::kSrcIn));
-
   return looper_builder.detach();
 }
 
 }  // namespace
 
 NewTabButton::NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener)
-    : views::ImageButton(listener), tab_strip_(tab_strip), destroyed_(NULL) {
+    : views::ImageButton(listener),
+      tab_strip_(tab_strip),
+      new_tab_promo_(nullptr),
+      destroyed_(nullptr),
+      widget_observer_(this) {
   set_animate_on_state_change(true);
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
   set_triggerable_event_flags(triggerable_event_flags() |
@@ -62,6 +67,12 @@ int NewTabButton::GetTopOffset() {
   const int kNewTabButtonBottomOffset = 4;
   return Tab::GetMinimumInactiveSize().height() - kNewTabButtonBottomOffset -
          GetLayoutSize(NEW_TAB_BUTTON).height();
+}
+
+void NewTabButton::ShowPromo() {
+  new_tab_promo_ = new NewTabPromo(GetVisibleBounds());
+  widget_observer_.Add(new_tab_promo_->GetWidget());
+  NewTabButton::SchedulePaint();
 }
 
 #if defined(OS_WIN)
@@ -133,7 +144,13 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
   // the shadow will be affected by the clip we set above.
   cc::PaintFlags flags;
   flags.setAntiAlias(true);
-  const SkColor stroke_color = tab_strip_->GetToolbarTopSeparatorColor();
+  const SkColor stroke_color =
+      new_tab_promo_ ? color_utils::AlphaBlend(
+                           SK_ColorBLACK,
+                           GetNativeTheme()->GetSystemColor(
+                               ui::NativeTheme::kColorId_ProminentButtonColor),
+                           0x70)
+                     : tab_strip_->GetToolbarTopSeparatorColor();
   const float alpha = SkColorGetA(stroke_color);
   const SkAlpha shadow_alpha =
       base::saturated_cast<SkAlpha>(std::round(2.1875f * alpha));
@@ -141,7 +158,8 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
       CreateShadowDrawLooper(SkColorSetA(stroke_color, shadow_alpha)));
   const SkAlpha path_alpha =
       static_cast<SkAlpha>(std::round((pressed ? 0.875f : 0.609375f) * alpha));
-  flags.setColor(SkColorSetA(stroke_color, path_alpha));
+  const SkColor color = SkColorSetA(stroke_color, path_alpha);
+  flags.setColor(color);
   canvas->DrawPath(stroke, flags);
 }
 
@@ -154,6 +172,22 @@ bool NewTabButton::GetHitTestMask(gfx::Path* mask) const {
                 tab_strip_->SizeTabButtonToTopOfTabStrip(), &border);
   mask->addPath(border, SkMatrix::MakeScale(1 / scale));
   return true;
+}
+
+void NewTabButton::OnWidgetDestroying(views::Widget* widget) {
+  // When the promo widget is destroyed, the NewTabButton needs to be
+  // recolored.
+  new_tab_promo_ = nullptr;
+  SchedulePaint();
+}
+
+gfx::Rect NewTabButton::GetVisibleBounds() {
+  const float scale = GetWidget()->GetCompositor()->device_scale_factor();
+  SkPath border;
+  GetBorderPath(GetTopOffset() * scale, scale, false, &border);
+  gfx::Rect rect = gfx::ToEnclosingRect(gfx::SkRectToRectF(border.getBounds()));
+  ConvertRectToScreen(this, &rect);
+  return rect;
 }
 
 void NewTabButton::GetBorderPath(float button_y,
@@ -233,7 +267,11 @@ void NewTabButton::PaintFill(bool pressed,
           x_scale * scale, scale, 0, 0, &flags);
       DCHECK(succeeded);
     } else {
-      flags.setColor(tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB));
+      const SkColor color =
+          new_tab_promo_ ? GetNativeTheme()->GetSystemColor(
+                               ui::NativeTheme::kColorId_ProminentButtonColor)
+                         : tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB);
+      flags.setColor(color);
     }
     const SkColor stroke_color = tab_strip_->GetToolbarTopSeparatorColor();
     const SkAlpha alpha =

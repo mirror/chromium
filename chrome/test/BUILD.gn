@@ -2102,6 +2102,10 @@ test("browser_tests") {
           "../browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
         ]
       }
+      if ((is_linux || is_win) && !is_chromeos) {
+        sources +=
+            [ "../browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc" ]
+      }
       if (!is_mac || mac_views_browser) {
         sources += [
           # TODO(tapted): Move these to chrome_browser_tests_views_sources when the
