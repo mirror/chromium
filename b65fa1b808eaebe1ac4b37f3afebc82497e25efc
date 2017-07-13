@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04cc876e_b12bdcb3",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T16:57:55Z",
+      "side": 1,
+      "message": "Nit: Is this div necessary? could we simply move the id in the same div that has class\u003d\"body\", and remove the extra div?",
+      "revId": "b65fa1b808eaebe1ac4b37f3afebc82497e25efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56e0cbf_2c7064ca",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T16:57:55Z",
+      "side": 1,
+      "message": "s/immg/img",
+      "revId": "b65fa1b808eaebe1ac4b37f3afebc82497e25efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
