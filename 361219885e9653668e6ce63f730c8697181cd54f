@@ -107,6 +107,23 @@
     },
     {
       "key": {
+        "uuid": "915393cd_f9b715a9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-13T22:12:01Z",
+      "side": 1,
+      "message": "Maybe CHECK/DCHECK that only one is valid?",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14389dd5_8595b4c8",
         "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
         "patchSetId": 5
@@ -136,6 +153,24 @@
       "side": 1,
       "message": "This method needs to serve WebThread as a return value, but the source variables are different types. Please advised if you can have a better way of handling this.",
       "parentUuid": "14389dd5_8595b4c8",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3471ec49_95503737",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-13T22:12:01Z",
+      "side": 1,
+      "message": "I think you\u0027ve explained why this is in another comment, so nothing to be done here.",
+      "parentUuid": "faa0ce2a_6be9f10f",
       "revId": "361219885e9653668e6ce63f730c8697181cd54f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
