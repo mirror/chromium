@@ -321,7 +321,9 @@ bool HttpResponseInfo::InitFromPickle(const base::Pickle& pickle,
 
   was_alpn_negotiated = (flags & RESPONSE_INFO_WAS_ALPN) != 0;
 
-  was_fetched_via_proxy = (flags & RESPONSE_INFO_WAS_PROXY) != 0;
+  if ((flags & RESPONSE_INFO_WAS_PROXY) != 0) {
+    // TODO: Manufacture a bogus proxy_server?
+  }
 
   *response_truncated = (flags & RESPONSE_INFO_TRUNCATED) != 0;
 
@@ -358,7 +360,7 @@ void HttpResponseInfo::Persist(base::Pickle* pickle,
     flags |= RESPONSE_INFO_WAS_ALPN;
     flags |= RESPONSE_INFO_HAS_ALPN_NEGOTIATED_PROTOCOL;
   }
-  if (was_fetched_via_proxy)
+  if (was_fetched_via_proxy_method())
     flags |= RESPONSE_INFO_WAS_PROXY;
   if (connection_info != CONNECTION_INFO_UNKNOWN)
     flags |= RESPONSE_INFO_HAS_CONNECTION_INFO;
