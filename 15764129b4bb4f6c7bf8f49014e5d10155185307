@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64464a32_f148b8f9",
+        "filename": "content/renderer/presentation/presentation_connection_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-13T20:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28bc4520_9563b620",
+      "revId": "15764129b4bb4f6c7bf8f49014e5d10155185307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f17e4d9d_240113e5",
         "filename": "content/renderer/presentation/presentation_connection_proxy.cc",
         "patchSetId": 7
@@ -77,6 +95,24 @@
       "writtenOn": "2017-07-12T22:03:58Z",
       "side": 1,
       "message": "Can this TODO be elaborated?  What is to be removed?",
+      "revId": "15764129b4bb4f6c7bf8f49014e5d10155185307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13aa5c4a_e0e8d28f",
+        "filename": "content/renderer/presentation/presentation_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-13T20:25:05Z",
+      "side": 1,
+      "message": "Removed. This was a note to myself to see if some friend classes can be removed.",
+      "parentUuid": "f0cce2a9_be50c175",
       "revId": "15764129b4bb4f6c7bf8f49014e5d10155185307",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
