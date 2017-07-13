@@ -32,7 +32,7 @@ function test()
                 row.collapse();
                 row.expand();
                 for (var child of row.children)
-                    InspectorTest.addResult(child._name + " " + child._element.classList.value);
+                    InspectorTest.addResult(child._name + " " + child._element.classList.contains('revealed'));
                 next();
             }
         }

@@ -4,17 +4,17 @@ Profiler was enabled.
 Detailed heap profiles were enabled.
 
 Running: testShowAll
-A data-grid-data-grid-node parent revealed
-A data-grid-data-grid-node parent revealed
-A data-grid-data-grid-node parent revealed
-A data-grid-data-grid-node parent revealed
-A data-grid-data-grid-node parent revealed
-A data-grid-data-grid-node parent revealed
-A data-grid-data-grid-node parent revealed
-A data-grid-data-grid-node parent revealed
-A data-grid-data-grid-node parent revealed
-A data-grid-data-grid-node parent revealed
-undefined data-grid-data-grid-node revealed
+A true
+A true
+A true
+A true
+A true
+A true
+A true
+A true
+A true
+A true
+undefined true
 
 Profiler was disabled.
 
