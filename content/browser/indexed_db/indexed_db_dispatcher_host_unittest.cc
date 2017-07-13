@@ -547,7 +547,7 @@ TEST_F(IndexedDBDispatcherHostTest, CompactDatabaseWhileDoingTransaction) {
   {
     ::testing::InSequence dummy;
     base::RunLoop loop;
-    base::Closure quit_closure = base::BarrierClosure(3, loop.QuitClosure());
+    base::Closure quit_closure = base::BarrierClosure(4, loop.QuitClosure());
     const url::Origin origin = url::Origin(GURL(kOrigin));
 
     EXPECT_CALL(
@@ -557,6 +557,9 @@ TEST_F(IndexedDBDispatcherHostTest, CompactDatabaseWhileDoingTransaction) {
         .WillOnce(RunClosure(quit_closure));
     EXPECT_CALL(*connection.open_callbacks,
                 Error(blink::kWebIDBDatabaseExceptionAbortError, _))
+        .Times(1)
+        .WillOnce(RunClosure(quit_closure));
+    EXPECT_CALL(*connection.connection_callbacks, ForcedClose())
         .Times(1)
         .WillOnce(RunClosure(quit_closure));
 
@@ -610,7 +613,7 @@ TEST_F(IndexedDBDispatcherHostTest, CompactDatabaseWhileUpgrading) {
   {
     ::testing::InSequence dummy;
     base::RunLoop loop;
-    base::Closure quit_closure = base::BarrierClosure(3, loop.QuitClosure());
+    base::Closure quit_closure = base::BarrierClosure(4, loop.QuitClosure());
     const url::Origin origin = url::Origin(GURL(kOrigin));
 
     EXPECT_CALL(
@@ -620,6 +623,9 @@ TEST_F(IndexedDBDispatcherHostTest, CompactDatabaseWhileUpgrading) {
         .WillOnce(RunClosure(quit_closure));
     EXPECT_CALL(*connection.open_callbacks,
                 Error(blink::kWebIDBDatabaseExceptionAbortError, _))
+        .Times(1)
+        .WillOnce(RunClosure(quit_closure));
+    EXPECT_CALL(*connection.connection_callbacks, ForcedClose())
         .Times(1)
         .WillOnce(RunClosure(quit_closure));
 
@@ -671,7 +677,7 @@ TEST_F(IndexedDBDispatcherHostTest,
   {
     ::testing::InSequence dummy;
     base::RunLoop loop;
-    base::Closure quit_closure = base::BarrierClosure(3, loop.QuitClosure());
+    base::Closure quit_closure = base::BarrierClosure(4, loop.QuitClosure());
     const url::Origin origin = url::Origin(GURL(kOrigin));
 
     EXPECT_CALL(*connection.connection_callbacks, Complete(kTransactionId))
@@ -680,6 +686,9 @@ TEST_F(IndexedDBDispatcherHostTest,
     EXPECT_CALL(
         *connection.open_callbacks,
         MockedSuccessDatabase(IsAssociatedInterfacePtrInfoValid(false), _))
+        .Times(1)
+        .WillOnce(RunClosure(quit_closure));
+    EXPECT_CALL(*connection.connection_callbacks, ForcedClose())
         .Times(1)
         .WillOnce(RunClosure(quit_closure));
 
@@ -732,7 +741,7 @@ TEST_F(IndexedDBDispatcherHostTest, AbortTransactionsWhileDoingTransaction) {
   {
     ::testing::InSequence dummy;
     base::RunLoop loop;
-    base::Closure quit_closure = base::BarrierClosure(3, loop.QuitClosure());
+    base::Closure quit_closure = base::BarrierClosure(4, loop.QuitClosure());
     const url::Origin origin = url::Origin(GURL(kOrigin));
 
     EXPECT_CALL(
@@ -742,6 +751,9 @@ TEST_F(IndexedDBDispatcherHostTest, AbortTransactionsWhileDoingTransaction) {
         .WillOnce(RunClosure(quit_closure));
     EXPECT_CALL(*connection.open_callbacks,
                 Error(blink::kWebIDBDatabaseExceptionAbortError, _))
+        .Times(1)
+        .WillOnce(RunClosure(quit_closure));
+    EXPECT_CALL(*connection.connection_callbacks, ForcedClose())
         .Times(1)
         .WillOnce(RunClosure(quit_closure));
 
@@ -795,7 +807,7 @@ TEST_F(IndexedDBDispatcherHostTest, AbortTransactionsWhileUpgrading) {
   {
     ::testing::InSequence dummy;
     base::RunLoop loop;
-    base::Closure quit_closure = base::BarrierClosure(3, loop.QuitClosure());
+    base::Closure quit_closure = base::BarrierClosure(4, loop.QuitClosure());
     const url::Origin origin = url::Origin(GURL(kOrigin));
 
     EXPECT_CALL(
@@ -805,6 +817,9 @@ TEST_F(IndexedDBDispatcherHostTest, AbortTransactionsWhileUpgrading) {
         .WillOnce(RunClosure(quit_closure));
     EXPECT_CALL(*connection.open_callbacks,
                 Error(blink::kWebIDBDatabaseExceptionAbortError, _))
+        .Times(1)
+        .WillOnce(RunClosure(quit_closure));
+    EXPECT_CALL(*connection.connection_callbacks, ForcedClose())
         .Times(1)
         .WillOnce(RunClosure(quit_closure));
 
