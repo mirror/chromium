@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a69954b_989d496b",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T19:48:43Z",
+      "side": 1,
+      "message": "Nit: I\u0027d remove \"closed or\" since it will always be destroyed during destruction, not during the closing phase preceding destruction.",
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987a154e_54fbdaed",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T19:48:43Z",
+      "side": 1,
+      "message": "Nit: I would probably move this line above the comment, since it\u0027s not really related to recoloring the button.",
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5fc1d1_49d66a8e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T19:48:43Z",
+      "side": 1,
+      "message": "This declaration has no effect.\n\nIf you needed to forward-declare Widget, you\u0027d need to do it in the views:: namespace; declaring it here declares a different symbol, which you don\u0027t use.  However, it\u0027s guaranteed to be forward-declared by WidgetObserver, so you can just remove this.",
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
