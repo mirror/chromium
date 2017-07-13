@@ -151,6 +151,24 @@
     },
     {
       "key": {
+        "uuid": "a5525d29_faf3f462",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-13T08:50:57Z",
+      "side": 1,
+      "message": "Cool!\nBut it seems like some kernel 3.18 still using old version of zRam,\nso use uname() may cause problem.\nMaybe I can check if the file exists once and set |use_new_zram_interface| ?",
+      "parentUuid": "8833576c_09dddf99",
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3e7f9aa_b403f3e8",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 5
