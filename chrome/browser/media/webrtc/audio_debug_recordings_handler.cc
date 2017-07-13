@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "chrome/browser/media/webrtc/webrtc_log_list.h"
 #include "chrome/browser/profiles/profile.h"
@@ -41,7 +42,9 @@ base::FilePath GetAudioDebugRecordingsPrefixPath(
 AudioDebugRecordingsHandler::AudioDebugRecordingsHandler(
     Profile* profile,
     media::AudioManager* audio_manager)
-    : profile_(profile),
+    : background_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND})),
+      profile_(profile),
       is_audio_debug_recordings_in_progress_(false),
       current_audio_debug_recordings_id_(0),
       audio_manager_(audio_manager) {
@@ -59,8 +62,8 @@ void AudioDebugRecordingsHandler::StartAudioDebugRecordings(
     const RecordingErrorCallback& error_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE, FROM_HERE,
+  base::PostTaskAndReplyWithResult(
+      background_task_runner_.get(), FROM_HERE,
       base::Bind(&AudioDebugRecordingsHandler::GetLogDirectoryAndEnsureExists,
                  this),
       base::Bind(&AudioDebugRecordingsHandler::DoStartAudioDebugRecordings,
@@ -73,8 +76,8 @@ void AudioDebugRecordingsHandler::StopAudioDebugRecordings(
     const RecordingErrorCallback& error_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   const bool is_manual_stop = true;
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE, FROM_HERE,
+  base::PostTaskAndReplyWithResult(
+      background_task_runner_.get(), FROM_HERE,
       base::Bind(&AudioDebugRecordingsHandler::GetLogDirectoryAndEnsureExists,
                  this),
       base::Bind(&AudioDebugRecordingsHandler::DoStopAudioDebugRecordings, this,
@@ -83,7 +86,7 @@ void AudioDebugRecordingsHandler::StopAudioDebugRecordings(
 }
 
 base::FilePath AudioDebugRecordingsHandler::GetLogDirectoryAndEnsureExists() {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   base::FilePath log_dir_path =
       WebRtcLogList::GetWebRtcLogDirectoryForProfile(profile_->GetPath());
   base::File::Error error;

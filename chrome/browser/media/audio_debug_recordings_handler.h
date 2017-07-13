@@ -13,6 +13,7 @@
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
+#include "base/sequenced_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 
@@ -82,6 +83,9 @@ class AudioDebugRecordingsHandler
                                   const RecordingDoneCallback& callback,
                                   const RecordingErrorCallback& error_callback,
                                   const base::FilePath& log_directory);
+
+  // Background sequence running potentially blocking operations.
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
 
   // The profile associated with our renderer process.
   Profile* const profile_;
