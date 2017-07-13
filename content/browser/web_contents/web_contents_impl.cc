@@ -1761,6 +1761,8 @@ void WebContentsImpl::Init(const WebContents::CreateParams& params) {
     }
   }
 
+  initially_hidden_ = params.initially_hidden;
+
   // Ensure that observers are notified of the creation of this WebContents's
   // main RenderFrameHost. It must be done here for main frames, since the
   // NotifySwappedFromRenderManager expects view_ to already be created and that
@@ -5459,6 +5461,10 @@ bool WebContentsImpl::CompletedFirstVisuallyNonEmptyPaint() const {
 }
 
 #endif
+
+bool WebContentsImpl::IsInitiallyHidden() const {
+  return initially_hidden_;
+}
 
 void WebContentsImpl::OnDidDownloadImage(
     const ImageDownloadCallback& callback,

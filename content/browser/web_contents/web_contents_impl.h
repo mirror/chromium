@@ -474,6 +474,7 @@ class CONTENT_EXPORT WebContentsImpl
   bool GetAllowOtherViews() override;
   bool CompletedFirstVisuallyNonEmptyPaint() const override;
 #endif
+  bool IsInitiallyHidden() const override;
 
   // Implementation of PageNavigator.
   WebContents* OpenURL(const OpenURLParams& params) override;
@@ -1655,6 +1656,9 @@ class CONTENT_EXPORT WebContentsImpl
   VideoSizeMap cached_video_sizes_;
 
   bool has_persistent_video_ = false;
+
+  // Same initial value as in CreateParams.
+  bool initially_hidden_ = false;
 
   base::WeakPtrFactory<WebContentsImpl> loading_weak_factory_;
   base::WeakPtrFactory<WebContentsImpl> weak_factory_;

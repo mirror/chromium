@@ -841,6 +841,9 @@ class WebContents : public PageNavigator,
   virtual bool CompletedFirstVisuallyNonEmptyPaint() const = 0;
 #endif  // OS_ANDROID
 
+  // Return true if the WebContents was initially started in background.
+  virtual bool IsInitiallyHidden() const = 0;
+
  private:
   // This interface should only be implemented inside content.
   friend class WebContentsImpl;
