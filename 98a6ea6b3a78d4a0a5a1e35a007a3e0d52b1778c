@@ -472,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "b78992e4_e86ed757",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-13T18:05:57Z",
+      "side": 1,
+      "message": "Personally I think dividing by 25 is more readable.",
+      "parentUuid": "c30814f9_72f62e07",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "98a6ea6b3a78d4a0a5a1e35a007a3e0d52b1778c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0d1327c_dc28b661",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 12
