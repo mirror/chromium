@@ -84,10 +84,9 @@ TEST(LinkHighlightImplTest, verifyWebViewImplIntegration) {
   web_view_impl->Resize(WebSize(page_width, page_height));
   web_view_impl->UpdateAllLifecyclePhases();
 
-  WebGestureEvent touch_event(WebInputEvent::kGestureShowPress,
-                              WebInputEvent::kNoModifiers,
-                              WebInputEvent::kTimeStampForTesting);
-  touch_event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent touch_event(
+      WebInputEvent::kGestureShowPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
 
   // The coordinates below are linked to absolute positions in the referenced
   // .html file.
@@ -142,10 +141,9 @@ TEST(LinkHighlightImplTest, resetDuringNodeRemoval) {
   web_view_impl->Resize(WebSize(page_width, page_height));
   web_view_impl->UpdateAllLifecyclePhases();
 
-  WebGestureEvent touch_event(WebInputEvent::kGestureShowPress,
-                              WebInputEvent::kNoModifiers,
-                              WebInputEvent::kTimeStampForTesting);
-  touch_event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent touch_event(
+      WebInputEvent::kGestureShowPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   touch_event.x = 20;
   touch_event.y = 20;
 
@@ -182,10 +180,9 @@ TEST(LinkHighlightImplTest, resetLayerTreeView) {
   web_view_impl->Resize(WebSize(page_width, page_height));
   web_view_impl->UpdateAllLifecyclePhases();
 
-  WebGestureEvent touch_event(WebInputEvent::kGestureShowPress,
-                              WebInputEvent::kNoModifiers,
-                              WebInputEvent::kTimeStampForTesting);
-  touch_event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent touch_event(
+      WebInputEvent::kGestureShowPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   touch_event.x = 20;
   touch_event.y = 20;
 

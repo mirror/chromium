@@ -1975,13 +1975,12 @@ TEST_F(WebFrameTest,
   ASSERT_NE(nullptr, element);
   EXPECT_EQ(String("oldValue"), element->innerText());
 
-  WebGestureEvent gesture_event(WebInputEvent::kGestureTap,
-                                WebInputEvent::kNoModifiers,
-                                WebInputEvent::kTimeStampForTesting);
+  WebGestureEvent gesture_event(
+      WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   gesture_event.SetFrameScale(1);
   gesture_event.x = gesture_event.global_x = hit_point.X();
   gesture_event.y = gesture_event.global_y = hit_point.Y();
-  gesture_event.source_device = kWebGestureDeviceTouchscreen;
   web_view_helper.WebView()
       ->MainFrameImpl()
       ->GetFrame()
@@ -5986,13 +5985,12 @@ class CompositedSelectionBoundsTest : public WebFrameTest {
                          4 +
                      3);
 
-    WebGestureEvent gesture_event(WebInputEvent::kGestureTap,
-                                  WebInputEvent::kNoModifiers,
-                                  WebInputEvent::kTimeStampForTesting);
+    WebGestureEvent gesture_event(
+        WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     gesture_event.SetFrameScale(1);
     gesture_event.x = gesture_event.global_x = hit_point.X();
     gesture_event.y = gesture_event.global_y = hit_point.Y();
-    gesture_event.source_device = kWebGestureDeviceTouchscreen;
 
     web_view_helper_.WebView()
         ->MainFrameImpl()
@@ -6131,8 +6129,8 @@ class DisambiguationPopupTestWebViewClient
 
 static WebCoalescedInputEvent FatTap(int x, int y, int diameter) {
   WebGestureEvent event(WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+                        WebInputEvent::kTimeStampForTesting,
+                        kWebGestureDeviceTouchscreen);
   event.x = x;
   event.y = y;
   event.data.tap.width = diameter;
@@ -9489,8 +9487,8 @@ TEST_P(ParameterizedWebFrameTest, FrameWidgetTest) {
   helper.WebView()->Resize(WebSize(1000, 1000));
 
   WebGestureEvent event(WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+                        WebInputEvent::kTimeStampForTesting,
+                        kWebGestureDeviceTouchscreen);
   event.x = 20;
   event.y = 20;
   child_frame->FrameWidget()->HandleInputEvent(WebCoalescedInputEvent(event));
@@ -9867,10 +9865,7 @@ class WebFrameOverscrollTest
                                        float delta_x = 0.0,
                                        float delta_y = 0.0) {
     WebGestureEvent event(type, WebInputEvent::kNoModifiers,
-                          WebInputEvent::kTimeStampForTesting);
-    // TODO(wjmaclean): Make sure that touchpad device is only ever used for
-    // gesture scrolling event types.
-    event.source_device = GetParam();
+                          WebInputEvent::kTimeStampForTesting, GetParam());
     event.x = 100;
     event.y = 100;
     if (type == WebInputEvent::kGestureScrollUpdate) {
@@ -10804,18 +10799,15 @@ TEST_F(WebFrameTest, ScrollBeforeLayoutDoesntCrash) {
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
   document->documentElement()->SetLayoutObject(nullptr);
 
-  WebGestureEvent begin_event(WebInputEvent::kGestureScrollBegin,
-                              WebInputEvent::kNoModifiers,
-                              WebInputEvent::kTimeStampForTesting);
-  begin_event.source_device = kWebGestureDeviceTouchpad;
-  WebGestureEvent update_event(WebInputEvent::kGestureScrollUpdate,
-                               WebInputEvent::kNoModifiers,
-                               WebInputEvent::kTimeStampForTesting);
-  update_event.source_device = kWebGestureDeviceTouchpad;
-  WebGestureEvent end_event(WebInputEvent::kGestureScrollEnd,
-                            WebInputEvent::kNoModifiers,
-                            WebInputEvent::kTimeStampForTesting);
-  end_event.source_device = kWebGestureDeviceTouchpad;
+  WebGestureEvent begin_event(
+      WebInputEvent::kGestureScrollBegin, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchpad);
+  WebGestureEvent update_event(
+      WebInputEvent::kGestureScrollUpdate, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchpad);
+  WebGestureEvent end_event(
+      WebInputEvent::kGestureScrollEnd, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchpad);
 
   // Try GestureScrollEnd and GestureScrollUpdate first to make sure that not
   // seeing a Begin first doesn't break anything. (This currently happens).
@@ -11448,13 +11440,12 @@ class TapChangeHoverStateTest : public WebFrameTest {
     DCHECK(document->HoverElement() == div1);
 
     // Tap on div2.
-    WebGestureEvent tap_on_div2(WebInputEvent::kGestureTap,
-                                WebInputEvent::kNoModifiers,
-                                WebInputEvent::kTimeStampForTesting);
+    WebGestureEvent tap_on_div2(
+        WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
+        WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
     tap_on_div2.SetFrameScale(1);
     tap_on_div2.x = tap_on_div2.global_x = 10;
     tap_on_div2.y = tap_on_div2.global_y = 110;
-    tap_on_div2.source_device = kWebGestureDeviceTouchscreen;
     web_view_helper.WebView()
         ->MainFrameImpl()
         ->GetFrame()
