@@ -253,4 +253,11 @@ DownloadFileType::DangerLevel FileTypePolicies::GetFileDangerLevel(
   return PolicyForExtension(ext).platform_settings(0).danger_level();
 }
 
+uint64_t FileTypePolicies::GetMaxSizeUnpackDmg() const {
+  if (!config_)
+    return std::numeric_limits<uint64_t>::max();
+  else
+    return config_->max_size_unpack_dmg();
+}
+
 }  // namespace safe_browsing

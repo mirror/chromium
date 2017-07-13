@@ -78,6 +78,8 @@ class FileTypePolicies {
   DownloadFileType::PlatformSettings SettingsForFile(
       const base::FilePath& file) const;
 
+  uint64_t GetMaxSizeUnpackDmg() const;
+
  protected:
   // Creator must call one of Populate* before calling other methods.
   FileTypePolicies();
