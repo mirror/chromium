@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "105b3085_945a5261",
+        "filename": "components/feedback/feedback_uploader_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-07-13T22:50:08Z",
+      "side": 1,
+      "message": "Any reason why this needs to be a refptr? Can this not just be a scoped_ptr instead?",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "2a546e8a69a8170e5a57d784c246957e2f2dd37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aeee316_97629ea6",
+        "filename": "components/feedback/feedback_uploader_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-07-13T22:50:08Z",
+      "side": 1,
+      "message": "Why does this need to be a refptr?",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "2a546e8a69a8170e5a57d784c246957e2f2dd37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
