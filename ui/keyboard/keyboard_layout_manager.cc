@@ -103,16 +103,16 @@ void KeyboardLayoutManager::SetChildBounds(aura::Window* child,
         !controller_->keyboard_visible()) {
       // When the child is layed out, the controller is not shown, but showing
       // is not desired, this is indicative that the pre-load has completed.
-      controller_->NotifyKeyboardLoadingComplete();
+      controller_->NotifyContentsLoadingComplete();
     }
 
     if (controller_->keyboard_mode() == FULL_WIDTH) {
       // We need to send out this notification only if keyboard is visible since
       // keyboard window is resized even if keyboard is hidden.
       if (controller_->keyboard_visible())
-        controller_->NotifyKeyboardBoundsChanging(new_bounds);
+        controller_->NotifyContentsBoundsChanging(new_bounds);
     } else if (controller_->keyboard_mode() == FLOATING) {
-      controller_->NotifyKeyboardBoundsChanging(gfx::Rect());
+      controller_->NotifyContentsBoundsChanging(gfx::Rect());
     }
   }
 }
