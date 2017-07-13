@@ -5,12 +5,12 @@
 #include <GLES2/gl2extchromium.h>
 
 #include "base/bind.h"
-#include "cc/output/context_provider.h"
 #include "cc/resources/single_release_callback.h"
 #include "components/exo/buffer.h"
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
 #include "components/exo/test/exo_test_helper.h"
+#include "components/viz/common/gpu/context_provider.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/khronos/GLES2/gl2.h"
@@ -82,7 +82,7 @@ TEST_F(BufferTest, IsLost) {
       layer_tree_frame_sink_holder, resource_id, false, true, &resource);
   ASSERT_TRUE(rv);
 
-  scoped_refptr<cc::ContextProvider> context_provider =
+  scoped_refptr<viz::ContextProvider> context_provider =
       aura::Env::GetInstance()
           ->context_factory()
           ->SharedMainThreadContextProvider();
