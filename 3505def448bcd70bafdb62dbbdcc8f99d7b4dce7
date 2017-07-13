@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade5410f_5b572e5c",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-13T21:02:41Z",
+      "side": 1,
+      "message": "As mentioned in offline discussion, we should probably use layer-animations. Can you file a crbug so it is tracked?",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada1c5fd_75cec3c0",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-13T21:02:41Z",
+      "side": 1,
+      "message": "Initialize max_delta_?",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448e1738_f52d7ca2",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-13T21:02:41Z",
+      "side": 1,
+      "message": "Are you sure this will hold? I am thinking of a case where the browser window is really narrow, and on the right-edge of the screen. For touchscreen, we would use |window_width - start_threshold| as the max_delta_, but it should be possible to overscroll (towards left) much more than that.",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162321d1_49832b7c",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-13T21:02:41Z",
+      "side": 1,
+      "message": "Can we guarantee that |width| \u003c |start_threshold|?",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1a9c6a_f25e3d3c",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-13T21:02:41Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e07316b_26fa4681",
+        "filename": "ui/gfx/animation/linear_animation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-13T21:02:41Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
