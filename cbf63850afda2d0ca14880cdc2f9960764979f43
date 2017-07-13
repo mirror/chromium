@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e119ce2_60a0d084",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T14:21:15Z",
+      "side": 1,
+      "message": "Did you consider moving these out of //platform/network, perhaps just as static methods in `XMLHttpRequest.cpp`?",
+      "revId": "cbf63850afda2d0ca14880cdc2f9960764979f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
