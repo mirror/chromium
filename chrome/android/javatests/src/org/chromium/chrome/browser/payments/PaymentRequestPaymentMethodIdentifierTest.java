@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 /**
- * A payment integration test for supported payment methods.
+ * A payment integration test for "basic-card" payment method.
  */
 public class PaymentRequestPaymentMethodIdentifierTest extends PaymentRequestTestBase {
     public PaymentRequestPaymentMethodIdentifierTest() {
@@ -27,8 +27,8 @@ public class PaymentRequestPaymentMethodIdentifierTest extends PaymentRequestTes
     }
 
     @Override
-    public void onMainActivityStarted() throws InterruptedException, ExecutionException,
-            TimeoutException {
+    public void onMainActivityStarted()
+            throws InterruptedException, ExecutionException, TimeoutException {
         // The user has a valid "visa" card.
         AutofillTestHelper helper = new AutofillTestHelper();
         String billingAddressId = helper.setProfile(new AutofillProfile("", "https://example.com",
@@ -41,8 +41,8 @@ public class PaymentRequestPaymentMethodIdentifierTest extends PaymentRequestTes
 
     @MediumTest
     @Feature({"Payments"})
-    public void testCanPayWithBasicCard() throws InterruptedException,
-            ExecutionException, TimeoutException {
+    public void testCanPayWithBasicCard()
+            throws InterruptedException, ExecutionException, TimeoutException {
         openPageAndClickNodeAndWait("checkBasicCard", getCanMakePaymentQueryResponded());
         expectResultContains(new String[] {"true"});
 
@@ -51,8 +51,8 @@ public class PaymentRequestPaymentMethodIdentifierTest extends PaymentRequestTes
 
     @MediumTest
     @Feature({"Payments"})
-    public void testIgnoreCardType() throws InterruptedException,
-            ExecutionException, TimeoutException {
+    public void testIgnoreCardType()
+            throws InterruptedException, ExecutionException, TimeoutException {
         openPageAndClickNodeAndWait("checkBasicDebit", getCanMakePaymentQueryResponded());
         expectResultContains(new String[] {"true"});
 
@@ -61,8 +61,8 @@ public class PaymentRequestPaymentMethodIdentifierTest extends PaymentRequestTes
 
     @MediumTest
     @Feature({"Payments"})
-    public void testCannotMakeActivePaymentWithBasicMasterCard() throws InterruptedException,
-            ExecutionException, TimeoutException {
+    public void testCannotMakeActivePaymentWithBasicMasterCard()
+            throws InterruptedException, ExecutionException, TimeoutException {
         openPageAndClickNodeAndWait("checkBasicMasterCard", getCanMakePaymentQueryResponded());
         expectResultContains(new String[] {"false"});
 
@@ -104,8 +104,8 @@ public class PaymentRequestPaymentMethodIdentifierTest extends PaymentRequestTes
      */
     @MediumTest
     @Feature({"Payments"})
-    public void testPayWithBasicCard()  throws InterruptedException, ExecutionException,
-            TimeoutException {
+    public void testPayWithBasicCard()
+            throws InterruptedException, ExecutionException, TimeoutException {
         openPageAndClickNodeAndWait("checkBasicVisa", getCanMakePaymentQueryResponded());
         expectResultContains(new String[] {"true"});
 
@@ -113,8 +113,8 @@ public class PaymentRequestPaymentMethodIdentifierTest extends PaymentRequestTes
         clickAndWait(R.id.button_primary, getReadyForUnmaskInput());
         setTextInCardUnmaskDialogAndWait(R.id.card_unmask_input, "123", getReadyToUnmask());
         clickCardUnmaskButtonAndWait(DialogInterface.BUTTON_POSITIVE, getDismissed());
-        expectResultContains(new String[] {"Jon Doe", "4111111111111111", "12", "2050",
-                "basic-card", "123"});
+        expectResultContains(
+                new String[] {"Jon Doe", "4111111111111111", "12", "2050", "basic-card", "123"});
     }
 
     /**
@@ -124,8 +124,8 @@ public class PaymentRequestPaymentMethodIdentifierTest extends PaymentRequestTes
      */
     @MediumTest
     @Feature({"Payments"})
-    public void testAddMasterCard()  throws InterruptedException, ExecutionException,
-            TimeoutException {
+    public void testAddMasterCard()
+            throws InterruptedException, ExecutionException, TimeoutException {
         triggerUIAndWait(getReadyToPay());
         clickInPaymentMethodAndWait(R.id.payments_section, getReadyForInput());
         clickInPaymentMethodAndWait(R.id.payments_add_option_button, getReadyToEdit());
@@ -149,8 +149,8 @@ public class PaymentRequestPaymentMethodIdentifierTest extends PaymentRequestTes
      */
     @MediumTest
     @Feature({"Payments"})
-    public void testAddBasicCard()  throws InterruptedException, ExecutionException,
-            TimeoutException {
+    public void testAddBasicCard()
+            throws InterruptedException, ExecutionException, TimeoutException {
         triggerUIAndWait(getReadyToPay());
         clickInPaymentMethodAndWait(R.id.payments_section, getReadyForInput());
         clickInPaymentMethodAndWait(R.id.payments_add_option_button, getReadyToEdit());
