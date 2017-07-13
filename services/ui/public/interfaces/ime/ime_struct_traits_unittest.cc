@@ -32,12 +32,12 @@ class IMEStructTraitsTest : public testing::Test,
  private:
   // mojom::IMEStructTraitsTest:
   void EchoTextInputMode(TextInputMode in,
-                         const EchoTextInputModeCallback& callback) override {
-    callback.Run(in);
+                         EchoTextInputModeCallback callback) override {
+    std::move(callback).Run(in);
   }
   void EchoTextInputType(TextInputType in,
-                         const EchoTextInputTypeCallback& callback) override {
-    callback.Run(in);
+                         EchoTextInputTypeCallback callback) override {
+    std::move(callback).Run(in);
   }
 
   base::MessageLoop loop_;  // A MessageLoop is needed for Mojo IPC to work.
