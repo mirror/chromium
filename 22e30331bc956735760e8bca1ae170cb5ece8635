@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83fb4c4e_611486fe",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-13T01:37:09Z",
+      "side": 1,
+      "message": "We want this for just the requests started spontaneously (scheduled and immediately started). This is the best place afaict.",
+      "parentUuid": "1083e409_03c3c236",
+      "range": {
+        "startLine": 418,
+        "startChar": 10,
+        "endLine": 418,
+        "endChar": 33
+      },
+      "revId": "22e30331bc956735760e8bca1ae170cb5ece8635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "931906ce_cbae4cb0",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T01:31:47Z",
       "side": 1,
       "message": "If we just use existing |pending_requests_| struct, then this call and the call to insert in the multimap can be removed. As such, these two have 2 * O(log N) overhead.",
+      "range": {
+        "startLine": 422,
+        "startChar": 8,
+        "endLine": 422,
+        "endChar": 38
+      },
+      "revId": "22e30331bc956735760e8bca1ae170cb5ece8635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b0dbe2_c2ad976a",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-13T01:37:09Z",
+      "side": 1,
+      "message": "We want in flight requests. Also, that wouldn\u0027t let us find the most recent request in log time.",
+      "parentUuid": "931906ce_cbae4cb0",
       "range": {
         "startLine": 422,
         "startChar": 8,
