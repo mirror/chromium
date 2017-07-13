@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f93c8f4c_09927e27",
+        "filename": "third_party/WebKit/Source/core/paint/BackgroundImageGeometry.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-13T21:46:41Z",
+      "side": 1,
+      "message": "This could also be reversed and check if cell_using_container_background_ is set.\n\nThis is more correct however as positioning_box_ is the object that *should* be used. Sadly LayoutView painting is a special-snowflake that requires the view itself to be used instead, hence the conditional. Sigh.",
+      "range": {
+        "startLine": 659,
+        "startChar": 9,
+        "endLine": 659,
+        "endChar": 41
+      },
+      "revId": "c3c4c92c7d6a40fb51afc3195fa1e548ed34fd0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
