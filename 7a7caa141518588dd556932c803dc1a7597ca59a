@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0dd4b4d_97a798bc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T23:50:59Z",
+      "side": 1,
+      "message": "It\u0027s best to have the first line of the commit message something short, and have a blank line after it. E.g. you could insert a line at the top like\n\nCater for AppKit sometimes making the font italic when deriving a new weight.\n\n\nFollowed by what you have here. It should also be word-wrapped. See\n\nhttps://www.chromium.org/developers/contributing-code#TOC-Writing-change-list-descriptions",
+      "revId": "7a7caa141518588dd556932c803dc1a7597ca59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3baa806d_cb81cbfd",
+        "filename": "ui/gfx/platform_font_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T23:50:59Z",
+      "side": 1,
+      "message": "Needs a comment, like\n\n  // Always apply the italic trait. Even if the italic trait is not changing,\n  // it\u0027s possible for a change in the weight to trigger the font to go italic.\n  // This is due to an AppKit bug. See http://crbug.com/742261.\n\n\nBut since just changing the size is a much more common operation, we can be\nsmarter and do something like\n\n  // Always apply the italic trait if the weight changed. It\u0027s possible\n  // for a change in the weight to trigger the font to go italic.\n  // This is due to an AppKit bug. See http://crbug.com/742261.\n  if (style !\u003d font_style_ || weight !\u003d font_weight_) {\n    ...",
+      "revId": "7a7caa141518588dd556932c803dc1a7597ca59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d152a8_f0e21e91",
+        "filename": "ui/gfx/platform_font_mac_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T23:50:59Z",
+      "side": 1,
+      "message": "Indeed! I commented about this italic thing up here.",
+      "revId": "7a7caa141518588dd556932c803dc1a7597ca59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637fe1f5_300fdd98",
+        "filename": "ui/gfx/platform_font_mac_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T23:50:59Z",
+      "side": 1,
+      "message": "(note this is the private font property that AppKit applies for some silly reason)",
+      "revId": "7a7caa141518588dd556932c803dc1a7597ca59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc97c57_5d4f96b9",
+        "filename": "ui/gfx/platform_font_mac_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T23:50:59Z",
+      "side": 1,
+      "message": "needs a comment. E.g. \n\n// Test to ensure we cater for the AppKit quirk that can make the font italic\n// when asking for a fine-grained weight.",
+      "revId": "7a7caa141518588dd556932c803dc1a7597ca59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e94ada_e4c2eb3b",
+        "filename": "ui/gfx/platform_font_mac_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T23:50:59Z",
+      "side": 1,
+      "message": "When I patch this test in without the fix, it doesn\u0027t fail for me on macOS 10.12.5 (16F73). Is there a version of macOS that it does fail on? (can you add a comment?)\n\nOtherwise, we need to do more test set-up to get the font into a state where the bug occurs.",
+      "revId": "7a7caa141518588dd556932c803dc1a7597ca59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
