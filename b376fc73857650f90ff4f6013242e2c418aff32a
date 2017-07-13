@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e32e001_ce37a0b3",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-13T09:59:15Z",
+      "side": 1,
+      "message": "I think that it\u0027d be better to move this out of idl_parser.  The contents of the SPECIAL_COMMENT should be handled by clients.\n\nWhat about adding the following?\nTODO(bashi): Move this out of idl_parser.",
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
