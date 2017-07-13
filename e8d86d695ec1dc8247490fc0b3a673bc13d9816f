@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "606d9026_037be976",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-07-13T12:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bedbab1_12f9f2ff",
+      "revId": "e8d86d695ec1dc8247490fc0b3a673bc13d9816f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67fbe310_e94600e8",
         "filename": "components/viz/common/BUILD.gn",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2da242d8_4096c51c",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-07-13T12:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67fbe310_e94600e8",
+      "revId": "e8d86d695ec1dc8247490fc0b3a673bc13d9816f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efbe0ece_c8e4462a",
         "filename": "gpu/ipc/BUILD.gn",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-12T21:29:04Z",
       "side": 1,
       "message": "Shouldn\u0027t be needed, see comment in components/viz/common/BUILD.gn.",
+      "revId": "e8d86d695ec1dc8247490fc0b3a673bc13d9816f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf31a010_bf88351c",
+        "filename": "gpu/ipc/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-07-13T12:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efbe0ece_c8e4462a",
       "revId": "e8d86d695ec1dc8247490fc0b3a673bc13d9816f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
