@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "c4e53741_3ec8461f",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T01:02:24Z",
+      "side": 1,
+      "message": "This is a stack trace in a new checkout.\n\n#1 0x7fa530b9659b ash::ShelfView::CalculateIdealBounds()\n#2 0x7fa530b9809d ash::ShelfView::OnBoundsChanged()\n#3 0x7fa5313d93c5 views::View::BoundsChanged()\n#4 0x7fa5313d8fb7 views::View::SetBoundsRect()\n#5 0x7fa5313d0ecf views::FillLayout::Layout()\n#6 0x7fa5313dadb3 views::View::Layout()\n#7 0x7fa530b8fbf2 ash::ShelfLayoutManager::UpdateBoundsAndOpacity()\n#8 0x7fa530b8f78c ash::ShelfLayoutManager::LayoutShelfAndUpdateBounds()\n#9 0x7fa530bf2772 ash::StatusAreaLayoutManager::SetChildBounds()\n#10 0x7fa531400abb views::NativeWidgetAura::SetSize()\n#11 0x7fa530bf3ecd ash::StatusAreaWidgetDelegate::ChildPreferredSizeChanged()\n#12 0x7fa5313df365 views::View::PropagateRemoveNotifications()\n#13 0x7fa5313df2e0 views::View::PropagateRemoveNotifications()\n#14 0x7fa5313d854a views::View::DoRemoveChildView()\n#15 0x7fa5313d7647 views::View::~View()\n#16 0x7fa530c1bd76 ash::WebNotificationItem::~WebNotificationItem()\n#17 0x7fa530c1a49f ash::WebNotificationTray::~WebNotificationTray()\n#18 0x7fa530c1a61e ash::WebNotificationTray::~WebNotificationTray()\n#19 0x7fa530bf30c7 ash::StatusAreaWidget::Shutdown()\n#20 0x7fa530b9c20d ash::ShelfWidget::Shutdown()\n#21 0x7fa530ba5120 ash::Shell::~Shell()\n#22 0x7fa530ba671e ash::Shell::~Shell()\n#23 0x55b0c40e455f AshInit::~AshInit()\n#24 0x55b0c3f480ba ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun()\n#25 0x55b0c2e5473a ChromeBrowserMainParts::PostMainMessageLoopRun()\n#26 0x55b0c2a413aa chromeos::ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun()\n#27 0x7fa53301ff39 content::BrowserMainLoop::ShutdownThreadsAndCleanUp()\n#28 0x7fa5330223dc content::BrowserMainRunnerImpl::Shutdown()\n#29 0x7fa53301ba4b content::BrowserMain()\n#30 0x7fa53368aa79 content::ContentMainRunnerImpl::Run()\n#31 0x7fa5359547ce service_manager::Main()\n#32 0x7fa533689b14 content::ContentMain()\n#33 0x55b0c268863f ChromeMain\n#34 0x7fa52ab04f45 __libc_start_main\n#35 0x55b0c26884a4 \u003cunknown\u003e",
+      "parentUuid": "eaa67925_15764951",
+      "revId": "bed4e3bee01643639d04a67fb8637d8ee5c0fc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d8463d8_eb602009",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 12
