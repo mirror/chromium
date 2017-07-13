@@ -19,7 +19,6 @@
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "device/geolocation/public/interfaces/geolocation_config.mojom.h"
 #include "device/vr/android/gvr/cardboard_gamepad_data_provider.h"
 #include "device/vr/android/gvr/gvr_delegate.h"
 #include "device/vr/android/gvr/gvr_gamepad_data_provider.h"
@@ -162,7 +161,6 @@ class VrShell : public device::GvrDelegate,
   void DoUiAction(const UiAction action,
                   const base::DictionaryValue* arguments);
 
-  void SetHighAccuracyLocation(bool high_accuracy_location);
   void SetContentCssSize(float width, float height, float dpr);
 
   void ContentFrameWasResized(bool width_changed);
@@ -237,8 +235,6 @@ class VrShell : public device::GvrDelegate,
   vr::UiInterface* ui_;
   std::unique_ptr<vr::ToolbarHelper> toolbar_;
 
-  device::mojom::GeolocationConfigPtr geolocation_config_;
-
   jobject content_surface_ = nullptr;
   bool taken_surface_ = false;
   base::CancelableClosure poll_capturing_media_task_;
@@ -246,7 +242,6 @@ class VrShell : public device::GvrDelegate,
   bool is_capturing_video_ = false;
   bool is_capturing_screen_ = false;
   bool is_bluetooth_connected_ = false;
-  bool high_accuracy_location_ = false;
 
   // Are we currently providing a gamepad factory to the gamepad manager?
   bool gvr_gamepad_source_active_ = false;
@@ -263,6 +258,8 @@ class VrShell : public device::GvrDelegate,
 
   DISALLOW_COPY_AND_ASSIGN(VrShell);
 };
+
+bool RegisterVrShell(JNIEnv* env);
 
 }  // namespace vr_shell
 

@@ -919,6 +919,7 @@ CrSettingsSiteDetailsTest.prototype = {
 
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    ROOT_PATH + 'chrome/browser/resources/settings/site_settings/constants.js',
     '../test_browser_proxy.js',
     'test_site_settings_prefs_browser_proxy.js',
     'site_details_tests.js',
@@ -943,6 +944,7 @@ CrSettingsSiteDetailsPermissionTest.prototype = {
 
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    ROOT_PATH + 'chrome/browser/resources/settings/site_settings/constants.js',
     '../test_browser_proxy.js',
     'test_site_settings_prefs_browser_proxy.js',
     'site_details_permission_tests.js',

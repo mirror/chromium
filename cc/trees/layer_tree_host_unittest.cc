@@ -52,6 +52,7 @@
 #include "cc/test/push_properties_counting_layer_impl.h"
 #include "cc/test/render_pass_test_utils.h"
 #include "cc/test/skia_common.h"
+#include "cc/test/test_layer_tree_frame_sink.h"
 #include "cc/test/test_web_graphics_context_3d.h"
 #include "cc/trees/clip_node.h"
 #include "cc/trees/effect_node.h"
@@ -63,7 +64,6 @@
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/swap_promise_manager.h"
 #include "cc/trees/transform_node.h"
-#include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/khronos/GLES2/gl2.h"
@@ -441,7 +441,7 @@ SINGLE_THREAD_TEST_F(LayerTreeHostTestReadyToDrawVisibility);
 
 class LayerTreeHostContextCacheTest : public LayerTreeHostTest {
  public:
-  std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -3260,25 +3260,25 @@ class LayerTreeHostTestLCDChange : public LayerTreeHostTest {
         // The first draw.
         EXPECT_EQ(1, num_tiles_rastered_);
         EXPECT_TRUE(can_use_lcd_text);
-        EXPECT_TRUE(root_layer->RasterSourceUsesLCDTextForTesting());
+        EXPECT_TRUE(root_layer->RasterSourceUsesLCDText());
         break;
       case 1:
         // Nothing changed on the layer.
         EXPECT_EQ(1, num_tiles_rastered_);
         EXPECT_TRUE(can_use_lcd_text);
-        EXPECT_TRUE(root_layer->RasterSourceUsesLCDTextForTesting());
+        EXPECT_TRUE(root_layer->RasterSourceUsesLCDText());
         break;
       case 2:
         // LCD text was disabled; it should be re-rastered with LCD text off.
         EXPECT_EQ(2, num_tiles_rastered_);
         EXPECT_FALSE(can_use_lcd_text);
-        EXPECT_FALSE(root_layer->RasterSourceUsesLCDTextForTesting());
+        EXPECT_FALSE(root_layer->RasterSourceUsesLCDText());
         break;
       case 3:
         // LCD text was enabled, but it's sticky and stays off.
         EXPECT_EQ(2, num_tiles_rastered_);
         EXPECT_TRUE(can_use_lcd_text);
-        EXPECT_FALSE(root_layer->RasterSourceUsesLCDTextForTesting());
+        EXPECT_FALSE(root_layer->RasterSourceUsesLCDText());
         break;
     }
   }
@@ -3360,7 +3360,7 @@ class LayerTreeHostTestAbortedCommitDoesntStall : public LayerTreeHostTest {
   int commit_complete_count_;
 };
 
-class OnDrawLayerTreeFrameSink : public viz::TestLayerTreeFrameSink {
+class OnDrawLayerTreeFrameSink : public TestLayerTreeFrameSink {
  public:
   OnDrawLayerTreeFrameSink(
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -3404,7 +3404,7 @@ class LayerTreeHostTestAbortedCommitDoesntStallSynchronousCompositor
     settings->using_synchronous_renderer_compositor = true;
   }
 
-  std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -5535,7 +5535,7 @@ MULTI_THREAD_TEST_F(LayerTreeHostTestEmptyLayerGpuRasterization);
 
 class LayerTreeHostWithGpuRasterizationTest : public LayerTreeHostTest {
  protected:
-  std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -6065,7 +6065,7 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
     settings->use_zero_copy = true;
   }
 
-  std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
@@ -6074,7 +6074,7 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
     bool synchronous_composite =
         !HasImplThread() &&
         !layer_tree_host()->GetSettings().single_thread_proxy_scheduler;
-    return base::MakeUnique<viz::TestLayerTreeFrameSink>(
+    return base::MakeUnique<TestLayerTreeFrameSink>(
         compositor_context_provider, std::move(worker_context_provider),
         shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
         ImplThreadTaskRunner(), synchronous_composite, disable_display_vsync,

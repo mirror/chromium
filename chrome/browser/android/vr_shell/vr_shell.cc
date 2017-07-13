@@ -27,6 +27,7 @@
 #include "chrome/browser/android/vr_shell/vr_input_manager.h"
 #include "chrome/browser/android/vr_shell/vr_shell_delegate.h"
 #include "chrome/browser/android/vr_shell/vr_shell_gl.h"
+#include "chrome/browser/android/vr_shell/vr_tab_helper.h"
 #include "chrome/browser/android/vr_shell/vr_usage_monitor.h"
 #include "chrome/browser/android/vr_shell/vr_web_contents_observer.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
@@ -34,7 +35,6 @@
 #include "chrome/browser/vr/toolbar_helper.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
-#include "chrome/browser/vr/vr_tab_helper.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
@@ -45,15 +45,12 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
-#include "content/public/common/service_manager_connection.h"
-#include "device/geolocation/public/interfaces/geolocation_config.mojom.h"
 #include "device/vr/android/gvr/cardboard_gamepad_data_fetcher.h"
 #include "device/vr/android/gvr/gvr_device.h"
 #include "device/vr/android/gvr/gvr_device_provider.h"
 #include "device/vr/android/gvr/gvr_gamepad_data_fetcher.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "jni/VrShellImpl_jni.h"
-#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/android/view_android.h"
 #include "ui/android/window_android.h"
@@ -75,7 +72,7 @@ namespace {
 vr_shell::VrShell* g_instance;
 
 constexpr base::TimeDelta poll_media_access_interval_ =
-    base::TimeDelta::FromSecondsD(0.2);
+    base::TimeDelta::FromSecondsD(0.1);
 
 constexpr base::TimeDelta kExitVrDueToUnsupportedModeDelay =
     base::TimeDelta::FromSeconds(5);
@@ -87,7 +84,7 @@ void SetIsInVR(content::WebContents* contents, bool is_in_vr) {
     // VrTabHelper for details).
     contents->GetRenderWidgetHostView()->SetIsInVR(is_in_vr);
 
-    vr::VrTabHelper* vr_tab_helper = vr::VrTabHelper::FromWebContents(contents);
+    VrTabHelper* vr_tab_helper = VrTabHelper::FromWebContents(contents);
     DCHECK(vr_tab_helper);
     vr_tab_helper->SetIsInVr(is_in_vr);
   }
@@ -189,6 +186,10 @@ void VrShell::SetUiState() {
     ui_->SetFullscreen(web_contents_->IsFullscreen());
     ui_->SetIncognito(web_contents_->GetBrowserContext()->IsOffTheRecord());
   }
+}
+
+bool RegisterVrShell(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 VrShell::~VrShell() {
@@ -643,12 +644,6 @@ void VrShell::PollMediaAccessFlag() {
     if (web_contents->IsConnectedToBluetoothDevice())
       num_tabs_bluetooth_connected++;
   }
-  auto* connector =
-      content::ServiceManagerConnection::GetForProcess()->GetConnector();
-  connector->BindInterface("content_browser", &geolocation_config_);
-
-  geolocation_config_->IsHighAccuracyLocationBeingCaptured(
-      base::Bind(&VrShell::SetHighAccuracyLocation, base::Unretained(this)));
 
   bool is_capturing_audio = num_tabs_capturing_audio > 0;
   bool is_capturing_video = num_tabs_capturing_video > 0;
@@ -670,13 +665,6 @@ void VrShell::PollMediaAccessFlag() {
     ui_->SetBluetoothConnectedIndicator(is_bluetooth_connected);
     is_bluetooth_connected_ = is_bluetooth_connected;
   }
-}
-
-void VrShell::SetHighAccuracyLocation(bool high_accuracy_location) {
-  if (high_accuracy_location == high_accuracy_location_)
-    return;
-  ui_->SetLocationAccessIndicator(high_accuracy_location);
-  high_accuracy_location_ = high_accuracy_location;
 }
 
 void VrShell::SetContentCssSize(float width, float height, float dpr) {

@@ -24,7 +24,6 @@
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
-#import "ios/chrome/browser/ui/commands/new_tab_command.h"
 #import "ios/chrome/browser/ui/keyboard/UIKeyCommand+Chrome.h"
 #include "ios/chrome/browser/ui/ntp/recent_tabs/synced_sessions.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/views/signed_in_sync_off_view.h"
@@ -928,8 +927,7 @@ enum class SnapshotViewOption {
   if (entry->type != sessions::TabRestoreService::TAB)
     return;
 
-  NewTabCommand* command = [[NewTabCommand alloc] initWithIncognito:NO];
-  [self chromeExecuteCommand:command];
+  [self chromeExecuteCommand:[GenericChromeCommand commandWithTag:IDC_NEW_TAB]];
   TabRestoreServiceDelegateImplIOS* const delegate =
       TabRestoreServiceDelegateImplIOSFactory::GetForBrowserState(
           _browserState);
@@ -1115,8 +1113,10 @@ enum class SnapshotViewOption {
 - (void)openNewTabInPanelAtIndex:(NSInteger)panelIndex {
   CHECK(panelIndex >= 0);
   DCHECK([self isPanelIndexForLocalSession:panelIndex]);
-  BOOL incognito = !(panelIndex == kLocalTabsOnTheRecordPanelIndex);
-  if (incognito) {
+  const NSInteger tag = (panelIndex == kLocalTabsOnTheRecordPanelIndex)
+                            ? IDC_NEW_TAB
+                            : IDC_NEW_INCOGNITO_TAB;
+  if (tag == IDC_NEW_INCOGNITO_TAB) {
     base::RecordAction(
         base::UserMetricsAction("MobileTabSwitcherCreateIncognitoTab"));
   } else {
@@ -1124,7 +1124,8 @@ enum class SnapshotViewOption {
         base::UserMetricsAction("MobileTabSwitcherCreateNonIncognitoTab"));
   }
   // Create and execute command to create the tab.
-  NewTabCommand* command = [[NewTabCommand alloc] initWithIncognito:incognito];
+  GenericChromeCommand* command =
+      [[GenericChromeCommand alloc] initWithTag:tag];
   [self chromeExecuteCommand:command];
 }
 

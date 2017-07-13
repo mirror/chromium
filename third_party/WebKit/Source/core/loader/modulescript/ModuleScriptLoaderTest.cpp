@@ -130,7 +130,7 @@ void ModuleScriptLoaderTest::SetUp() {
   GetDocument().SetURL(KURL(NullURL(), "https://example.test"));
   auto* context =
       MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource);
-  fetcher_ = ResourceFetcher::Create(context);
+  fetcher_ = ResourceFetcher::Create(context, context->GetTaskRunner().Get());
   modulator_ = new ModuleScriptLoaderTestModulator(
       ToScriptStateForMainWorld(&GetFrame()),
       GetDocument().GetSecurityOrigin());

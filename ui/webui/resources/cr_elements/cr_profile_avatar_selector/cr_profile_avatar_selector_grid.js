@@ -80,8 +80,6 @@ Polymer({
         // end.
       }
     } else {
-      if (style.direction == 'rtl')
-        offset *= -1;
       var nextIndex = (focusIndex + offset) % items.length;
       if (nextIndex < 0)
         nextIndex = items.length - 1;

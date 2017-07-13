@@ -340,8 +340,9 @@ void TestThatIsNotPlaceholderRequestAndServeResponse(
 }
 
 ResourceFetcher* CreateFetcher() {
-  return ResourceFetcher::Create(
-      MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource));
+  auto* context =
+      MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource);
+  return ResourceFetcher::Create(context, context->GetTaskRunner());
 }
 
 using ScopedClientPlaceholderForServerLoFiForTest =

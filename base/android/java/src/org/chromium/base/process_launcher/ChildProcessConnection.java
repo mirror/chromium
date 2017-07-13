@@ -13,14 +13,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.RemoteException;
-import android.os.SystemClock;
 
 import org.chromium.base.Log;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.metrics.CachedMetrics;
-
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
@@ -149,16 +145,6 @@ public class ChildProcessConnection {
         }
     }
 
-    // CachedMetrics used from this class, because this class can run before native library is
-    // loaded.
-    private static final CachedMetrics.TimesHistogramSample sOnServiceConnectedTimesMetric =
-            new CachedMetrics.TimesHistogramSample(
-                    "Android.ChildProcessLauncher.OnServiceConnectedTime", TimeUnit.MILLISECONDS);
-    private static final CachedMetrics
-            .BooleanHistogramSample sOnServiceConnectedTimesMetricTimedOut =
-            new CachedMetrics.BooleanHistogramSample(
-                    "Android.ChildProcessLauncher.OnServiceConnectedTimedOut");
-
     private final Handler mLauncherHandler;
     private final Context mContext;
     private final ComponentName mServiceName;
@@ -237,9 +223,6 @@ public class ChildProcessConnection {
 
     // Set to true once unbind() was called.
     private boolean mUnbound;
-
-    // Timestamp when watchdog was last reset, which is equivalent to when start was called.
-    private long mLastWatchdogResetTimestamp;
 
     public ChildProcessConnection(Context context, ComponentName serviceName,
             boolean bindAsExternalService, Bundle serviceBundle,
@@ -393,10 +376,6 @@ public class ChildProcessConnection {
         }
         try {
             TraceEvent.begin("ChildProcessConnection.ChildServiceConnection.onServiceConnected");
-            sOnServiceConnectedTimesMetric.record(
-                    SystemClock.elapsedRealtime() - mLastWatchdogResetTimestamp);
-            sOnServiceConnectedTimesMetricTimedOut.record(false);
-
             mDidOnServiceConnected = true;
             mService = IChildProcessService.Stub.asInterface(service);
 
@@ -652,13 +631,12 @@ public class ChildProcessConnection {
                 assert !mDidOnServiceConnected;
                 assert mServiceCallback == null;
                 mOnServiceConnectedWatchDog = null;
-                sOnServiceConnectedTimesMetricTimedOut.record(true);
+                // TODO(boliu): Add a UMA here.
                 if (!retryOnTimeout) return;
                 unbindAll();
                 start(useStrongBinding, serviceCallback, retryOnTimeout);
             }
         };
-        mLastWatchdogResetTimestamp = SystemClock.elapsedRealtime();
         mLauncherHandler.postDelayed(mOnServiceConnectedWatchDog, BIND_SERVICE_TIMEOUT_IN_MS);
     }
 

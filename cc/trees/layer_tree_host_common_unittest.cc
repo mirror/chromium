@@ -3065,7 +3065,8 @@ TEST_F(LayerTreeHostCommonTest, OcclusionBySiblingOfTarget) {
   host_impl.SetVisible(true);
   host_impl.InitializeRenderer(layer_tree_frame_sink.get());
   host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
-  host_impl.active_tree()->UpdateDrawProperties();
+  bool update_lcd_text = false;
+  host_impl.active_tree()->UpdateDrawProperties(update_lcd_text);
 
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       GetRenderSurface(surface_ptr)->draw_transform(), translate);
@@ -3111,7 +3112,8 @@ TEST_F(LayerTreeHostCommonTest, TextureLayerSnapping) {
   host_impl.SetVisible(true);
   host_impl.InitializeRenderer(layer_tree_frame_sink.get());
   host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
-  host_impl.active_tree()->UpdateDrawProperties();
+  bool update_lcd_text = false;
+  host_impl.active_tree()->UpdateDrawProperties(update_lcd_text);
 
   EXPECT_NE(child_ptr->ScreenSpaceTransform(), fractional_translate);
   fractional_translate.RoundTranslationComponents();
@@ -3173,7 +3175,8 @@ TEST_F(LayerTreeHostCommonTest,
   host_impl.SetVisible(true);
   host_impl.InitializeRenderer(layer_tree_frame_sink.get());
   host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
-  host_impl.active_tree()->UpdateDrawProperties();
+  bool update_lcd_text = false;
+  host_impl.active_tree()->UpdateDrawProperties(update_lcd_text);
 
   LayerImpl* grand_child_ptr = host_impl.active_tree()
                                    ->root_layer_for_testing()

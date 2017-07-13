@@ -39,7 +39,6 @@ TEST_F(NetLogTest, CreateFile) {
   NSString* filename = [[[NSProcessInfo processInfo] globallyUniqueString]
       stringByAppendingString:@"_netlog.json"];
   bool netlog_started = [Cronet startNetLogToFile:filename logBytes:YES];
-  [Cronet stopNetLog];
 
   bool file_created = [[NSFileManager defaultManager]
       fileExistsAtPath:[Cronet getNetLogPathForFile:filename]];
@@ -72,8 +71,6 @@ TEST_F(NetLogTest, ExistantDir) {
   bool netlog_started =
       [Cronet startNetLogToFile:[dir stringByAppendingString:@"/netlog.json"]
                        logBytes:NO];
-
-  [Cronet stopNetLog];
 
   [[NSFileManager defaultManager]
       removeItemAtPath:[Cronet

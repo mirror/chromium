@@ -32,8 +32,6 @@ blink_modules_sources("webaudio") {
     "AudioNodeOutput.h",
     "AudioParam.cpp",
     "AudioParam.h",
-    "AudioParamMap.cpp",
-    "AudioParamMap.h",
     "AudioParamTimeline.cpp",
     "AudioParamTimeline.h",
     "AudioProcessingEvent.cpp",

@@ -191,13 +191,8 @@ public class AutocompleteEditTextTest {
 
         // User types a space.
         assertTrue(mInputConnection.beginBatchEdit());
-        // We should still show the intermediate autocomplete text to the user even in the middle of
-        // a batch edit. Otherwise, the user may see flickering of autocomplete text.
-        assertEquals("hello world", mAutocomplete.getText().toString());
         assertTrue(mInputConnection.commitText(" ", 1));
-        assertEquals("hello world", mAutocomplete.getText().toString());
         assertFalse(mAutocomplete.shouldAutocomplete());
-        assertEquals("hello world", mAutocomplete.getText().toString());
 
         mInOrder.verifyNoMoreInteractions();
         assertTrue(mInputConnection.endBatchEdit());
@@ -286,19 +281,8 @@ public class AutocompleteEditTextTest {
 
         // User types a space.
         assertTrue(mInputConnection.beginBatchEdit());
-        // We should still show the intermediate autocomplete text to the user even in the middle of
-        // a batch edit. Otherwise, the user may see flickering of autocomplete text.
-        if (isUsingSpannableModel()) {
-            assertEquals("hello world", mAutocomplete.getText().toString());
-        }
         assertTrue(mInputConnection.finishComposingText());
-        if (isUsingSpannableModel()) {
-            assertEquals("hello world", mAutocomplete.getText().toString());
-        }
         assertTrue(mInputConnection.commitText(" ", 1));
-        if (isUsingSpannableModel()) {
-            assertEquals("hello world", mAutocomplete.getText().toString());
-        }
 
         mInOrder.verifyNoMoreInteractions();
         assertTrue(mInputConnection.endBatchEdit());

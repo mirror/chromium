@@ -55,7 +55,6 @@ class MakeElementTypeHelpersWriter(json5_generator.Writer):
         }
 
         self._template_context = {
-            'input_files': self._input_files,
             'namespace': self.namespace,
             'tags': self.json5_file.name_dictionaries,
             'elements': set(),

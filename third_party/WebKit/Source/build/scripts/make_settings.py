@@ -72,7 +72,6 @@ class MakeSettingsWriter(json5_generator.Writer):
             ('SettingsMacros.h'): self.generate_macros,
         }
         self._template_context = {
-            'input_files': self._input_files,
             'settings': self.json5_file.name_dictionaries,
         }
 

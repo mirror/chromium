@@ -30,11 +30,9 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
 
 using blink::protocol::Array;
-// Renaming Cache since there is another blink::Cache.
-using ProtocolCache = blink::protocol::CacheStorage::Cache;
+using blink::protocol::CacheStorage::Cache;
 using blink::protocol::CacheStorage::DataEntry;
-// Renaming Response since there is another blink::Response.
-using ProtocolResponse = blink::protocol::Response;
+using blink::protocol::Response;
 
 typedef blink::protocol::CacheStorage::Backend::DeleteCacheCallback
     DeleteCacheCallback;
@@ -57,44 +55,41 @@ String BuildCacheId(const String& security_origin, const String& cache_name) {
   return id;
 }
 
-ProtocolResponse ParseCacheId(const String& id,
-                              String* security_origin,
-                              String* cache_name) {
+Response ParseCacheId(const String& id,
+                      String* security_origin,
+                      String* cache_name) {
   size_t pipe = id.find('|');
   if (pipe == WTF::kNotFound)
-    return ProtocolResponse::Error("Invalid cache id.");
+    return Response::Error("Invalid cache id.");
   *security_origin = id.Substring(0, pipe);
   *cache_name = id.Substring(pipe + 1);
-  return ProtocolResponse::OK();
+  return Response::OK();
 }
 
-ProtocolResponse AssertCacheStorage(
+Response AssertCacheStorage(
     const String& security_origin,
     std::unique_ptr<WebServiceWorkerCacheStorage>& result) {
   RefPtr<SecurityOrigin> sec_origin =
       SecurityOrigin::CreateFromString(security_origin);
 
   // Cache Storage API is restricted to trustworthy origins.
-  if (!sec_origin->IsPotentiallyTrustworthy()) {
-    return ProtocolResponse::Error(
-        sec_origin->IsPotentiallyTrustworthyErrorMessage());
-  }
+  if (!sec_origin->IsPotentiallyTrustworthy())
+    return Response::Error(sec_origin->IsPotentiallyTrustworthyErrorMessage());
 
   std::unique_ptr<WebServiceWorkerCacheStorage> cache =
       Platform::Current()->CreateCacheStorage(WebSecurityOrigin(sec_origin));
   if (!cache)
-    return ProtocolResponse::Error("Could not find cache storage.");
+    return Response::Error("Could not find cache storage.");
   result = std::move(cache);
-  return ProtocolResponse::OK();
+  return Response::OK();
 }
 
-ProtocolResponse AssertCacheStorageAndNameForId(
+Response AssertCacheStorageAndNameForId(
     const String& cache_id,
     String* cache_name,
     std::unique_ptr<WebServiceWorkerCacheStorage>& result) {
   String security_origin;
-  ProtocolResponse response =
-      ParseCacheId(cache_id, &security_origin, cache_name);
+  Response response = ParseCacheId(cache_id, &security_origin, cache_name);
   if (!response.isSuccess())
     return response;
   return AssertCacheStorage(security_origin, result);
@@ -134,12 +129,11 @@ class RequestCacheNames
   ~RequestCacheNames() override {}
 
   void OnSuccess(const WebVector<WebString>& caches) override {
-    std::unique_ptr<Array<ProtocolCache>> array =
-        Array<ProtocolCache>::create();
+    std::unique_ptr<Array<Cache>> array = Array<Cache>::create();
     for (size_t i = 0; i < caches.size(); i++) {
       String name = String(caches[i]);
-      std::unique_ptr<ProtocolCache> entry =
-          ProtocolCache::create()
+      std::unique_ptr<Cache> entry =
+          Cache::create()
               .setSecurityOrigin(security_origin_)
               .setCacheName(name)
               .setCacheId(BuildCacheId(security_origin_, name))
@@ -150,7 +144,7 @@ class RequestCacheNames
   }
 
   void OnError(WebServiceWorkerCacheError error) override {
-    callback_->sendFailure(ProtocolResponse::Error(
+    callback_->sendFailure(Response::Error(
         String::Format("Error requesting cache names: %s",
                        ServiceWorkerCacheErrorString(error).data())));
   }
@@ -224,9 +218,7 @@ class ResponsesAccumulator : public RefCounted<ResponsesAccumulator> {
     callback_->sendSuccess(std::move(array), has_more);
   }
 
-  void SendFailure(const ProtocolResponse& error) {
-    callback_->sendFailure(error);
-  }
+  void SendFailure(const Response& error) { callback_->sendFailure(error); }
 
  private:
   DataRequestParams params_;
@@ -251,7 +243,7 @@ class GetCacheResponsesForRequestData
   }
 
   void OnError(WebServiceWorkerCacheError error) override {
-    accumulator_->SendFailure(ProtocolResponse::Error(
+    accumulator_->SendFailure(Response::Error(
         String::Format("Error requesting responses for cache  %s: %s",
                        params_.cache_name.Utf8().data(),
                        ServiceWorkerCacheErrorString(error).data())));
@@ -297,7 +289,7 @@ class GetCacheKeysForRequestData
   }
 
   void OnError(WebServiceWorkerCacheError error) override {
-    callback_->sendFailure(ProtocolResponse::Error(
+    callback_->sendFailure(Response::Error(
         String::Format("Error requesting requests for cache %s: %s",
                        params_.cache_name.Utf8().data(),
                        ServiceWorkerCacheErrorString(error).data())));
@@ -328,7 +320,7 @@ class GetCacheForRequestData
   }
 
   void OnError(WebServiceWorkerCacheError error) override {
-    callback_->sendFailure(ProtocolResponse::Error(String::Format(
+    callback_->sendFailure(Response::Error(String::Format(
         "Error requesting cache %s: %s", params_.cache_name.Utf8().data(),
         ServiceWorkerCacheErrorString(error).data())));
   }
@@ -349,7 +341,7 @@ class DeleteCache : public WebServiceWorkerCacheStorage::CacheStorageCallbacks {
   void OnSuccess() override { callback_->sendSuccess(); }
 
   void OnError(WebServiceWorkerCacheError error) override {
-    callback_->sendFailure(ProtocolResponse::Error(
+    callback_->sendFailure(Response::Error(
         String::Format("Error requesting cache names: %s",
                        ServiceWorkerCacheErrorString(error).data())));
   }
@@ -369,7 +361,7 @@ class DeleteCacheEntry : public WebServiceWorkerCache::CacheBatchCallbacks {
   void OnSuccess() override { callback_->sendSuccess(); }
 
   void OnError(WebServiceWorkerCacheError error) override {
-    callback_->sendFailure(ProtocolResponse::Error(
+    callback_->sendFailure(Response::Error(
         String::Format("Error requesting cache names: %s",
                        ServiceWorkerCacheErrorString(error).data())));
   }
@@ -405,7 +397,7 @@ class GetCacheForDeleteEntry
   }
 
   void OnError(WebServiceWorkerCacheError error) override {
-    callback_->sendFailure(ProtocolResponse::Error(String::Format(
+    callback_->sendFailure(Response::Error(String::Format(
         "Error requesting cache %s: %s", cache_name_.Utf8().data(),
         ServiceWorkerCacheErrorString(error).data())));
   }
@@ -436,12 +428,12 @@ void InspectorCacheStorageAgent::requestCacheNames(
   if (!sec_origin->IsPotentiallyTrustworthy()) {
     // Don't treat this as an error, just don't attempt to open and enumerate
     // the caches.
-    callback->sendSuccess(Array<ProtocolCache>::create());
+    callback->sendSuccess(Array<protocol::CacheStorage::Cache>::create());
     return;
   }
 
   std::unique_ptr<WebServiceWorkerCacheStorage> cache;
-  ProtocolResponse response = AssertCacheStorage(security_origin, cache);
+  Response response = AssertCacheStorage(security_origin, cache);
   if (!response.isSuccess()) {
     callback->sendFailure(response);
     return;
@@ -457,7 +449,7 @@ void InspectorCacheStorageAgent::requestEntries(
     std::unique_ptr<RequestEntriesCallback> callback) {
   String cache_name;
   std::unique_ptr<WebServiceWorkerCacheStorage> cache;
-  ProtocolResponse response =
+  Response response =
       AssertCacheStorageAndNameForId(cache_id, &cache_name, cache);
   if (!response.isSuccess()) {
     callback->sendFailure(response);
@@ -477,7 +469,7 @@ void InspectorCacheStorageAgent::deleteCache(
     std::unique_ptr<DeleteCacheCallback> callback) {
   String cache_name;
   std::unique_ptr<WebServiceWorkerCacheStorage> cache;
-  ProtocolResponse response =
+  Response response =
       AssertCacheStorageAndNameForId(cache_id, &cache_name, cache);
   if (!response.isSuccess()) {
     callback->sendFailure(response);
@@ -493,7 +485,7 @@ void InspectorCacheStorageAgent::deleteEntry(
     std::unique_ptr<DeleteEntryCallback> callback) {
   String cache_name;
   std::unique_ptr<WebServiceWorkerCacheStorage> cache;
-  ProtocolResponse response =
+  Response response =
       AssertCacheStorageAndNameForId(cache_id, &cache_name, cache);
   if (!response.isSuccess()) {
     callback->sendFailure(response);

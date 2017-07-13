@@ -11,7 +11,6 @@
 #include <vector>
 
 #include "base/files/file_path.h"
-#include "build/build_config.h"
 #include "components/safe_browsing/csd.pb.h"
 
 namespace safe_browsing {
@@ -23,9 +22,6 @@ struct ArchiveAnalyzerResults {
   google::protobuf::RepeatedPtrField<ClientDownloadRequest_ArchivedBinary>
       archived_binary;
   std::vector<base::FilePath> archived_archive_filenames;
-#if defined(OS_MACOSX)
-  std::vector<uint8_t> signature_blob;
-#endif  // OS_MACOSX
   ArchiveAnalyzerResults();
   ArchiveAnalyzerResults(const ArchiveAnalyzerResults& other);
   ~ArchiveAnalyzerResults();

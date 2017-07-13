@@ -38,6 +38,9 @@ class CORE_EXPORT ScriptElementBase : public GarbageCollectedMixin {
  public:
   static ScriptElementBase* FromElementIfPossible(Element*);
 
+  virtual void DispatchLoadEvent() = 0;
+  virtual void DispatchErrorEvent() = 0;
+
   virtual bool AsyncAttributeValue() const = 0;
   virtual String CharsetAttributeValue() const = 0;
   virtual String CrossOriginAttributeValue() const = 0;
@@ -70,10 +73,6 @@ class CORE_EXPORT ScriptElementBase : public GarbageCollectedMixin {
   ScriptLoader* InitializeScriptLoader(bool parser_inserted,
                                        bool already_started,
                                        bool created_during_document_write);
-
-  friend class ScriptLoader;
-  virtual void DispatchLoadEvent() = 0;
-  virtual void DispatchErrorEvent() = 0;
 };
 
 }  // namespace blink

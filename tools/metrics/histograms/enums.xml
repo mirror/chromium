@@ -4060,18 +4060,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="3" label="Stream was never read at all"/>
 </enum>
 
-<enum name="CheckerImagingDecision">
-  <int value="0" label="Can decode asynchronously."/>
-  <int value="1" label="Image is animated."/>
-  <int value="2" label="Image is a video frame."/>
-  <int value="3" label="Image animation state is unknown."/>
-  <int value="4" label="Image is fetched using a multi-part response."/>
-  <int value="5" label="Image is partially loaded."/>
-  <int value="6" label="Image load state is unknown."/>
-  <int value="7" label="Image was too small to consider checkering."/>
-  <int value="8" label="Image was larger than the allowed cache limit."/>
-</enum>
-
 <enum name="ChromeChannelForHistogram">
   <int value="0" label="UNKNOWN"/>
   <int value="1" label="CANARY"/>
@@ -20791,11 +20779,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Failed to determine"/>
 </enum>
 
-<enum name="IsSyncPasswordHashSaved">
-  <int value="0" label="Not saved"/>
-  <int value="1" label="Saved"/>
-</enum>
-
 <enum name="JavaScriptAPIName">
   <int value="0" label="GetUserMedia"/>
   <int value="1" label="PeerConnection00"/>
@@ -22336,7 +22319,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Database open failed"/>
   <int value="2" label="Invalid schema version"/>
   <int value="3" label="Error reading schema version"/>
-  <int value="4" label="Success"/>
 </enum>
 
 <enum name="LockScreenProgress">
@@ -23224,7 +23206,6 @@ from previous Chrome versions.
   <int value="747847237" label="PhysicalWeb:enabled"/>
   <int value="752194066" label="enable-app-window-cycling"/>
   <int value="752939691" label="disable-tab-for-desktop-share"/>
-  <int value="762700519" label="enable-checker-imaging"/>
   <int value="773919225" label="disable-office-editing-component-extension"/>
   <int value="779086132" label="enable-data-reduction-proxy-alt"/>
   <int value="782167080" label="enable-new-qp-input-view"/>
@@ -23384,7 +23365,6 @@ from previous Chrome versions.
   <int value="1280614081" label="show-overdraw-feedback"/>
   <int value="1283956865" label="force-tablet-mode"/>
   <int value="1283960113" label="disable-fixed-position-compositing"/>
-  <int value="1284910808" label="disable-checker-imaging"/>
   <int value="1291257442" label="TabsInCBD:disabled"/>
   <int value="1291966558" label="ScrollAnchoring:disabled"/>
   <int value="1294131571" label="disable-winrt-midi-api"/>
@@ -35618,20 +35598,6 @@ from previous Chrome versions.
   <int value="1" label="Iframe with the same url as main frame"/>
   <int value="2" label="Iframe with different url and the same signon realm"/>
   <int value="3" label="Iframe with different signon realm"/>
-</enum>
-
-<enum name="SubprocessType">
-  <int value="1" label="Unknown"/>
-  <int value="2" label="Browser"/>
-  <int value="3" label="Renderer"/>
-  <int value="4" label="Plugin (deprecated)"/>
-  <int value="5" label="Worker (deprecated)"/>
-  <int value="6" label="Utility"/>
-  <int value="7" label="Zygote"/>
-  <int value="8" label="Sandbox Helper"/>
-  <int value="9" label="GPU"/>
-  <int value="10" label="PPAPI Plugin"/>
-  <int value="11" label="PPAPI Broker"/>
 </enum>
 
 <enum name="SubresourceFilterActions">

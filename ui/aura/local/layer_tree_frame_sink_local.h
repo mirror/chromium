@@ -9,19 +9,16 @@
 #include "base/macros.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/scheduler/begin_frame_source.h"
-#include "components/viz/common/surfaces/frame_sink_id.h"
-#include "components/viz/common/surfaces/local_surface_id_allocator.h"
-#include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
+#include "cc/surfaces/compositor_frame_sink_support_client.h"
+#include "components/viz/common/frame_sink_id.h"
+#include "components/viz/common/local_surface_id_allocator.h"
 #include "ui/aura/window_port.h"
 #include "ui/base/property_data.h"
 
 namespace cc {
+class CompositorFrameSinkSupport;
 class FrameSinkManager;
 }  // namespace cc
-
-namespace viz {
-class CompositorFrameSinkSupport;
-}
 
 namespace aura {
 
@@ -30,7 +27,7 @@ namespace aura {
 // aura::Window, and then the sink can be used for submitting frames to the
 // aura::Window's ui::Layer.
 class LayerTreeFrameSinkLocal : public cc::LayerTreeFrameSink,
-                                public viz::CompositorFrameSinkSupportClient,
+                                public cc::CompositorFrameSinkSupportClient,
                                 public cc::ExternalBeginFrameSourceClient {
  public:
   LayerTreeFrameSinkLocal(const viz::FrameSinkId& frame_sink_id,
@@ -48,7 +45,7 @@ class LayerTreeFrameSinkLocal : public cc::LayerTreeFrameSink,
   void SubmitCompositorFrame(cc::CompositorFrame frame) override;
   void DidNotProduceFrame(const cc::BeginFrameAck& ack) override;
 
-  // viz::CompositorFrameSinkSupportClient:
+  // cc::CompositorFrameSinkSupportClient:
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
@@ -63,7 +60,7 @@ class LayerTreeFrameSinkLocal : public cc::LayerTreeFrameSink,
  private:
   const viz::FrameSinkId frame_sink_id_;
   cc::FrameSinkManager* const frame_sink_manager_;
-  std::unique_ptr<viz::CompositorFrameSinkSupport> support_;
+  std::unique_ptr<cc::CompositorFrameSinkSupport> support_;
   gfx::Size surface_size_;
   float device_scale_factor_ = 0;
   viz::LocalSurfaceIdAllocator id_allocator_;

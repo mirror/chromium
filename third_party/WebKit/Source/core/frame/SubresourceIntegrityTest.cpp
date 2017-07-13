@@ -214,7 +214,8 @@ class SubresourceIntegrityTest : public ::testing::Test {
   Resource* CreateTestResource(const KURL& url,
                                const KURL* allow_origin_url,
                                ServiceWorkerMode service_worker_mode) {
-    ResourceFetcher* fetcher = ResourceFetcher::Create(context);
+    ResourceFetcher* fetcher =
+        ResourceFetcher::Create(context, context->GetTaskRunner());
     ResourceLoadScheduler* scheduler = ResourceLoadScheduler::Create();
     Resource* resource = RawResource::CreateForTest(url, Resource::kRaw);
     ResourceLoader* loader =

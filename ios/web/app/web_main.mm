@@ -11,24 +11,9 @@
 
 namespace web {
 
-WebMainParams::WebMainParams() : WebMainParams(nullptr) {}
-
-WebMainParams::WebMainParams(WebMainDelegate* delegate)
-    : delegate(delegate),
-      register_exit_manager(true),
-      get_task_scheduler_init_params_callback(nullptr),
-      argc(0),
-      argv(nullptr) {}
-
-WebMainParams::~WebMainParams() = default;
-
-WebMainParams::WebMainParams(WebMainParams&& other) = default;
-
-WebMainParams& WebMainParams::operator=(web::WebMainParams&& other) = default;
-
-WebMain::WebMain(WebMainParams params) {
+WebMain::WebMain(const WebMainParams& params) {
   web_main_runner_.reset(WebMainRunner::Create());
-  web_main_runner_->Initialize(std::move(params));
+  web_main_runner_->Initialize(params);
 }
 
 WebMain::~WebMain() {

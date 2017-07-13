@@ -29,10 +29,6 @@ struct StructWithTraits {
   map<string, NestedStructWithTraits> f_struct_map;
 };
 
-struct StructWithUnreachableTraits {
-  bool ignore_me;
-};
-
 // Test that this container can be cloned.
 struct StructWithTraitsContainer {
   StructWithTraits f_struct;
@@ -84,11 +80,6 @@ interface TraitsTestService {
       StructWithTraitsForUniquePtr? passed);
 
   EchoUnionWithTraits(UnionWithTraits u) => (UnionWithTraits passed);
-};
-
-interface TestUnserializedStruct {
-  PassUnserializedStruct(StructWithUnreachableTraits s)
-      => (StructWithUnreachableTraits passed);
 };
 
 // Test that specifying default value for a typemapped enum field works.

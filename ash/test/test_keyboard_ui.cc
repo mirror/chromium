@@ -15,7 +15,7 @@ namespace ash {
 TestKeyboardUI::TestKeyboardUI() {}
 TestKeyboardUI::~TestKeyboardUI() {}
 
-bool TestKeyboardUI::HasContentsWindow() const {
+bool TestKeyboardUI::HasKeyboardWindow() const {
   return !!keyboard_;
 }
 
@@ -23,7 +23,7 @@ bool TestKeyboardUI::ShouldWindowOverscroll(aura::Window* window) const {
   return true;
 }
 
-aura::Window* TestKeyboardUI::GetContentsWindow() {
+aura::Window* TestKeyboardUI::GetKeyboardWindow() {
   if (!keyboard_) {
     keyboard_.reset(new aura::Window(&delegate_));
     keyboard_->Init(ui::LAYER_NOT_DRAWN);
@@ -38,6 +38,7 @@ ui::InputMethod* TestKeyboardUI::GetInputMethod() {
   return root_window->GetHost()->GetInputMethod();
 }
 
+void TestKeyboardUI::SetUpdateInputType(ui::TextInputType type) {}
 void TestKeyboardUI::ReloadKeyboardIfNeeded() {}
 void TestKeyboardUI::InitInsets(const gfx::Rect& keyboard_bounds) {}
 void TestKeyboardUI::ResetInsets() {}

@@ -1,4 +1,3 @@
-<link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="chrome://resources/html/cr.html">
 <link rel="import" href="chrome://resources/html/polymer.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-icons/iron-icons.html">
@@ -11,7 +10,11 @@
 
 <dom-module id="extensions-error-page">
   <template>
-    <style include="cr-hidden-style">
+    <style>
+      [hidden] {
+        display: none !important;
+      }
+
       #main {
         background-color: white;
         height: 800px;

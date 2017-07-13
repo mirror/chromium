@@ -292,6 +292,14 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
 - (void)dealloc {
   [self stopBrowserStateServiceObservers];
+  if (!_signinStarted && _signinPromoViewMediator) {
+    PrefService* prefs = _browserState->GetPrefs();
+    int displayedCount =
+        prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
+    UMA_HISTOGRAM_COUNTS_100(
+        "MobileSignInPromo.SettingsManager.ImpressionsTilDismiss",
+        displayedCount);
+  }
 }
 
 - (void)stopBrowserStateServiceObservers {
@@ -1026,14 +1034,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 #pragma mark SettingsControllerProtocol
 
 - (void)settingsWillBeDismissed {
-  if (!_signinStarted && _signinPromoViewMediator) {
-    PrefService* prefs = _browserState->GetPrefs();
-    int displayedCount =
-        prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
-    UMA_HISTOGRAM_COUNTS_100(
-        "MobileSignInPromo.SettingsManager.ImpressionsTilDismiss",
-        displayedCount);
-  }
   [_signinInteractionController cancel];
   [self stopBrowserStateServiceObservers];
 }

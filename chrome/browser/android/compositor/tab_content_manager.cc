@@ -290,18 +290,14 @@ void TabContentManager::UpdateVisibleIds(
   thumbnail_cache_->UpdateVisibleIds(priority_ids, primary_tab_id);
 }
 
-void TabContentManager::NativeRemoveTabThumbnail(int tab_id) {
+void TabContentManager::RemoveTabThumbnail(JNIEnv* env,
+                                           const JavaParamRef<jobject>& obj,
+                                           jint tab_id) {
   TabReadbackRequestMap::iterator readback_iter =
       pending_tab_readbacks_.find(tab_id);
   if (readback_iter != pending_tab_readbacks_.end())
     readback_iter->second->SetToDropAfterReadback();
   thumbnail_cache_->Remove(tab_id);
-}
-
-void TabContentManager::RemoveTabThumbnail(JNIEnv* env,
-                                           const JavaParamRef<jobject>& obj,
-                                           jint tab_id) {
-  NativeRemoveTabThumbnail(tab_id);
 }
 
 void TabContentManager::GetDecompressedThumbnail(

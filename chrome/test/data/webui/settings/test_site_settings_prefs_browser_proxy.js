@@ -17,8 +17,8 @@ var ExceptionListPref;
 /**
  * In the real (non-test) code, this data comes from the C++ handler.
  * Only used for tests.
- * @typedef {{defaults: Map<string, !DefaultContentSetting>,
- *            exceptions: Map<string, !Array<!RawSiteException>>}}
+ * @typedef {{defaults: CategoryDefaultsPref,
+ *            exceptions: ExceptionListPref}}
  */
 var SiteSettingsPref;
 
@@ -91,6 +91,7 @@ var TestSiteSettingsPrefsBrowserProxy = function() {
     'resetCategoryPermissionForOrigin',
     'setCategoryPermissionForOrigin',
     'setDefaultValueForContentType',
+    'setOriginPermissions',
     'setProtocolDefault',
     'updateIncognitoStatus',
   ]);
@@ -175,6 +176,12 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
   setDefaultValueForContentType: function(contentType, defaultValue) {
     this.methodCalled(
         'setDefaultValueForContentType', [contentType, defaultValue]);
+  },
+
+  /** @override */
+  setOriginPermissions: function(origin, contentTypes, blanketSetting) {
+    this.methodCalled(
+        'setOriginPermissions', [origin, contentTypes, blanketSetting]);
   },
 
   /** @override */

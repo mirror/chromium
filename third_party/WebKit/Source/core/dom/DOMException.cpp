@@ -195,6 +195,10 @@ DOMException* DOMException::Create(const String& message, const String& name) {
   return new DOMException(GetErrorCode(name), name, message, message);
 }
 
+String DOMException::toString() const {
+  return name() + ": " + message();
+}
+
 String DOMException::ToStringForConsole() const {
   return name() + ": " + MessageForConsole();
 }

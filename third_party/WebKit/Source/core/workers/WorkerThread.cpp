@@ -403,14 +403,28 @@ void WorkerThread::InitializeOnWorkerThread(
   WorkerThreadStartMode start_mode = startup_data->start_mode_;
   V8CacheOptions v8_cache_options =
       startup_data->worker_v8_settings_.v8_cache_options_;
-  WorkerV8Settings v8_settings = startup_data->worker_v8_settings_;
+  bool heap_limit_increased_for_debugging =
+      startup_data->worker_v8_settings_.heap_limit_mode_ ==
+      WorkerV8Settings::HeapLimitMode::kIncreasedForDebugging;
+  bool allow_atomics_wait =
+      startup_data->worker_v8_settings_.atomics_wait_mode_ ==
+      WorkerV8Settings::AtomicsWaitMode::kAllow;
 
   {
     MutexLocker lock(thread_state_mutex_);
 
     if (IsOwningBackingThread())
-      GetWorkerBackingThread().Initialize(v8_settings);
+      GetWorkerBackingThread().Initialize();
     GetWorkerBackingThread().BackingThread().AddTaskObserver(this);
+
+    // Optimize for memory usage instead of latency for the worker isolate.
+    GetIsolate()->IsolateInBackgroundNotification();
+
+    if (heap_limit_increased_for_debugging) {
+      GetIsolate()->IncreaseHeapLimitForDebugging();
+    }
+
+    GetIsolate()->SetAllowAtomicsWait(allow_atomics_wait);
 
     console_message_storage_ = new ConsoleMessageStorage();
     global_scope_ = CreateWorkerGlobalScope(std::move(startup_data));

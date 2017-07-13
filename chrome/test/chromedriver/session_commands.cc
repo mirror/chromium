@@ -108,9 +108,7 @@ InitSessionParams::~InitSessionParams() {}
 
 namespace {
 
-std::unique_ptr<base::DictionaryValue> CreateCapabilities(
-    Session* session,
-    const Capabilities& capabilities) {
+std::unique_ptr<base::DictionaryValue> CreateCapabilities(Session* session) {
   std::unique_ptr<base::DictionaryValue> caps(new base::DictionaryValue());
   caps->SetString("browserName", "chrome");
   caps->SetString("version",
@@ -136,13 +134,6 @@ std::unique_ptr<base::DictionaryValue> CreateCapabilities(
   caps->SetBoolean("hasTouchScreen", session->chrome->HasTouchScreen());
   caps->SetString("unexpectedAlertBehaviour",
                   session->unexpected_alert_behaviour);
-
-  // add setWindowRect based on whether we are desktop/android/remote
-  if (capabilities.IsAndroid() || capabilities.IsRemoteBrowser()) {
-    caps->SetBoolean("setWindowRect", false);
-  } else {
-    caps->SetBoolean("setWindowRect", true);
-  }
 
   ChromeDesktopImpl* desktop = NULL;
   Status status = session->chrome->GetAsDesktop(&desktop);
@@ -248,28 +239,15 @@ Status InitSessionHelper(const InitSessionParams& bound_params,
                                                     session->w3c_compliant);
   if (status.IsError())
     return status;
+
   session->detach = capabilities.detach;
   session->force_devtools_screenshot = capabilities.force_devtools_screenshot;
-  session->capabilities = CreateCapabilities(session, capabilities);
+  session->capabilities = CreateCapabilities(session);
   value->reset(session->capabilities->DeepCopy());
   return CheckSessionCreated(session);
 }
 
 }  // namespace
-
-bool MatchCapabilities(base::DictionaryValue* capabilities) {
-  // attempt to match the capabilities requested to the actual capabilities
-  // reject if they don't match
-  if (capabilities->HasKey("browserName")) {
-    std::string name;
-    capabilities->GetString("browserName", &name);
-    if (name != "chrome") {
-      return false;
-    }
-  }
-
-  return true;
-}
 
 Status ExecuteInitSession(const InitSessionParams& bound_params,
                           Session* session,

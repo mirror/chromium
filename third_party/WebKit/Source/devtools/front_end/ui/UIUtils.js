@@ -1203,7 +1203,6 @@ UI.createTextButton = function(text, clickHandler, className, primary) {
  */
 UI.createInput = function(className, type) {
   var element = createElementWithClass('input', className || '');
-  element.spellcheck = false;
   element.classList.add('harmony-input');
   if (type)
     element.type = type;

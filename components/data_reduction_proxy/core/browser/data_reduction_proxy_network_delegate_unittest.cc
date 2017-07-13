@@ -90,40 +90,40 @@ const char kDifferenceValidOCLHistogramName[] =
 
 // HTTP original content length
 const char kOriginalInsecureDirectHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Http.Direct";
+    "Net.HttpOriginalContentLength.Http.Direct";
 const char kOriginalInsecureViaDRPHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Http.ViaDRP";
+    "Net.HttpOriginalContentLength.Http.ViaDRP";
 const char kOriginalInsecureBypassedHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Http.BypassedDRP";
+    "Net.HttpOriginalContentLength.Http.BypassedDRP";
 const char kOriginalInsecureOtherHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Http.Other";
+    "Net.HttpOriginalContentLength.Http.Other";
 // HTTP video original content length
 const char kOriginalVideoInsecureDirectHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Http.Direct.Video";
+    "Net.HttpOriginalContentLength.Http.Direct.Video";
 const char kOriginalVideoInsecureViaDRPHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Http.ViaDRP.Video";
+    "Net.HttpOriginalContentLength.Http.ViaDRP.Video";
 const char kOriginalVideoInsecureBypassedHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Http.BypassedDRP.Video";
+    "Net.HttpOriginalContentLength.Http.BypassedDRP.Video";
 const char kOriginalVideoInsecureOtherHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Http.Other.Video";
+    "Net.HttpOriginalContentLength.Http.Other.Video";
 // HTTPS original content length
 const char kOriginalSecureDirectHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Https.Direct";
+    "Net.HttpOriginalContentLength.Https.Direct";
 const char kOriginalSecureViaDRPHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Https.ViaDRP";
+    "Net.HttpOriginalContentLength.Https.ViaDRP";
 const char kOriginalSecureBypassedHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Https.BypassedDRP";
+    "Net.HttpOriginalContentLength.Https.BypassedDRP";
 const char kOriginalSecureOtherHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Https.Other";
+    "Net.HttpOriginalContentLength.Https.Other";
 // HTTPS video original content length
 const char kOriginalVideoSecureDirectHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Https.Direct.Video";
+    "Net.HttpOriginalContentLength.Https.Direct.Video";
 const char kOriginalVideoSecureViaDRPHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Https.ViaDRP.Video";
+    "Net.HttpOriginalContentLength.Https.ViaDRP.Video";
 const char kOriginalVideoSecureBypassedHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Https.BypassedDRP.Video";
+    "Net.HttpOriginalContentLength.Https.BypassedDRP.Video";
 const char kOriginalVideoSecureOtherHistogramName[] =
-    "Net.HttpOriginalContentLengthV2.Https.Other.Video";
+    "Net.HttpOriginalContentLength.Https.Other.Video";
 
 // Lo-Fi histograms.
 const char kReceivedValidOCLLoFiOnHistogramName[] =
@@ -135,37 +135,37 @@ const char kDifferenceValidOCLLoFiOnHistogramName[] =
 
 const char kReceivedHistogramName[] = "Net.HttpContentLength";
 const char kReceivedInsecureDirectHistogramName[] =
-    "Net.HttpContentLengthV2.Http.Direct";
+    "Net.HttpContentLength.Http.Direct";
 const char kReceivedInsecureViaDRPHistogramName[] =
-    "Net.HttpContentLengthV2.Http.ViaDRP";
+    "Net.HttpContentLength.Http.ViaDRP";
 const char kReceivedInsecureBypassedHistogramName[] =
-    "Net.HttpContentLengthV2.Http.BypassedDRP";
+    "Net.HttpContentLength.Http.BypassedDRP";
 const char kReceivedInsecureOtherHistogramName[] =
-    "Net.HttpContentLengthV2.Http.Other";
+    "Net.HttpContentLength.Http.Other";
 const char kReceivedSecureDirectHistogramName[] =
-    "Net.HttpContentLengthV2.Https.Direct";
+    "Net.HttpContentLength.Https.Direct";
 const char kReceivedSecureViaDRPHistogramName[] =
-    "Net.HttpContentLengthV2.Https.ViaDRP";
+    "Net.HttpContentLength.Https.ViaDRP";
 const char kReceivedSecureBypassedHistogramName[] =
-    "Net.HttpContentLengthV2.Https.BypassedDRP";
+    "Net.HttpContentLength.Https.BypassedDRP";
 const char kReceivedSecureOtherHistogramName[] =
-    "Net.HttpContentLengthV2.Https.Other";
+    "Net.HttpContentLength.Https.Other";
 const char kReceivedVideoInsecureDirectHistogramName[] =
-    "Net.HttpContentLengthV2.Http.Direct.Video";
+    "Net.HttpContentLength.Http.Direct.Video";
 const char kReceivedVideoInsecureViaDRPHistogramName[] =
-    "Net.HttpContentLengthV2.Http.ViaDRP.Video";
+    "Net.HttpContentLength.Http.ViaDRP.Video";
 const char kReceivedVideoInsecureBypassedHistogramName[] =
-    "Net.HttpContentLengthV2.Http.BypassedDRP.Video";
+    "Net.HttpContentLength.Http.BypassedDRP.Video";
 const char kReceivedVideoInsecureOtherHistogramName[] =
-    "Net.HttpContentLengthV2.Http.Other.Video";
+    "Net.HttpContentLength.Http.Other.Video";
 const char kReceivedVideoSecureDirectHistogramName[] =
-    "Net.HttpContentLengthV2.Https.Direct.Video";
+    "Net.HttpContentLength.Https.Direct.Video";
 const char kReceivedVideoSecureViaDRPHistogramName[] =
-    "Net.HttpContentLengthV2.Https.ViaDRP.Video";
+    "Net.HttpContentLength.Https.ViaDRP.Video";
 const char kReceivedVideoSecureBypassedHistogramName[] =
-    "Net.HttpContentLengthV2.Https.BypassedDRP.Video";
+    "Net.HttpContentLength.Https.BypassedDRP.Video";
 const char kReceivedVideoSecureOtherHistogramName[] =
-    "Net.HttpContentLengthV2.Https.Other.Video";
+    "Net.HttpContentLength.Https.Other.Video";
 const char kOriginalHistogramName[] = "Net.HttpOriginalContentLength";
 const char kDifferenceHistogramName[] = "Net.HttpContentLengthDifference";
 const char kFreshnessLifetimeHistogramName[] =
@@ -1538,8 +1538,8 @@ TEST_F(DataReductionProxyNetworkDelegateTest, DetailedNetHistograms) {
        kOriginalContentLength,
        kResponseContentLength,
        {
-           {kReceivedInsecureDirectHistogramName, kResponseContentLength},
-           {kOriginalInsecureDirectHistogramName, kResponseContentLength},
+           {kReceivedInsecureOtherHistogramName, kResponseContentLength},
+           {kOriginalInsecureOtherHistogramName, kResponseContentLength},
        }},
       {"DRP not configured for http video",
        true,
@@ -1548,10 +1548,10 @@ TEST_F(DataReductionProxyNetworkDelegateTest, DetailedNetHistograms) {
        kOriginalContentLength,
        kResponseContentLength,
        {
-           {kReceivedInsecureDirectHistogramName, kResponseContentLength},
-           {kOriginalInsecureDirectHistogramName, kResponseContentLength},
-           {kReceivedVideoInsecureDirectHistogramName, kResponseContentLength},
-           {kOriginalVideoInsecureDirectHistogramName, kResponseContentLength},
+           {kReceivedInsecureOtherHistogramName, kResponseContentLength},
+           {kOriginalInsecureOtherHistogramName, kResponseContentLength},
+           {kReceivedVideoInsecureOtherHistogramName, kResponseContentLength},
+           {kOriginalVideoInsecureOtherHistogramName, kResponseContentLength},
        }},
       {"nonvideo over https",
        false,

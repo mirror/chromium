@@ -722,19 +722,17 @@ int Node::OnMergePort(std::unique_ptr<MergePortEvent> event) {
   // first as otherwise its peer receiving port could be left stranded
   // indefinitely.
   if (AcceptPort(event->new_port_name(), event->new_port_descriptor()) != OK) {
-    if (port_ref.is_valid())
-      ClosePort(port_ref);
+    ClosePort(port_ref);
     return ERROR_PORT_STATE_UNEXPECTED;
   }
 
   PortRef new_port_ref;
   GetPort(event->new_port_name(), &new_port_ref);
-  if (!port_ref.is_valid() && new_port_ref.is_valid()) {
-    ClosePort(new_port_ref);
-    return ERROR_PORT_UNKNOWN;
-  } else if (port_ref.is_valid() && !new_port_ref.is_valid()) {
+  DCHECK(new_port_ref.is_valid());
+
+  if (!port_ref.is_valid()) {
     ClosePort(port_ref);
-    return ERROR_PORT_UNKNOWN;
+    ClosePort(new_port_ref);
   }
 
   return MergePortsInternal(port_ref, new_port_ref,

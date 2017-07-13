@@ -16,7 +16,6 @@ class PrefService;
 class GURL;
 namespace base {
 class FilePath;
-class SequencedTaskRunner;
 }
 
 namespace net {
@@ -193,7 +192,6 @@ class URLDownloader : public net::URLFetcherDelegate,
   // URLRequestContextGetter needed for the URLFetcher.
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
   std::unique_ptr<dom_distiller::DistillerViewerInterface> distiller_;
-  scoped_refptr<base::SequencedTaskRunner> task_runner_;
   base::CancelableTaskTracker task_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(URLDownloader);

@@ -9,7 +9,6 @@
 #include "chrome/browser/extensions/api/storage/sync_storage_backend.h"
 #include "chrome/browser/sync/glue/sync_start_util.h"
 #include "content/public/browser/browser_thread.h"
-#include "extensions/browser/api/storage/backend_task_runner.h"
 #include "extensions/browser/value_store/value_store_factory.h"
 #include "extensions/common/api/storage.h"
 #include "extensions/common/extension.h"
@@ -42,19 +41,19 @@ SyncValueStoreCache::SyncValueStoreCache(
   // This post is safe since the destructor can only be invoked from the
   // same message loop, and any potential post of a deletion task must come
   // after the constructor returns.
-  GetBackendTaskRunner()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&SyncValueStoreCache::InitOnBackend,
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::BindOnce(&SyncValueStoreCache::InitOnFileThread,
                      base::Unretained(this), factory, observers, profile_path));
 }
 
 SyncValueStoreCache::~SyncValueStoreCache() {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 }
 
 syncer::SyncableService* SyncValueStoreCache::GetSyncableService(
     syncer::ModelType type) const {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(initialized_);
 
   switch (type) {
@@ -71,7 +70,7 @@ syncer::SyncableService* SyncValueStoreCache::GetSyncableService(
 void SyncValueStoreCache::RunWithValueStoreForExtension(
     const StorageCallback& callback,
     scoped_refptr<const Extension> extension) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(initialized_);
   SyncStorageBackend* backend =
       extension->is_app() ? app_backend_.get() : extension_backend_.get();
@@ -79,16 +78,16 @@ void SyncValueStoreCache::RunWithValueStoreForExtension(
 }
 
 void SyncValueStoreCache::DeleteStorageSoon(const std::string& extension_id) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   app_backend_->DeleteStorage(extension_id);
   extension_backend_->DeleteStorage(extension_id);
 }
 
-void SyncValueStoreCache::InitOnBackend(
+void SyncValueStoreCache::InitOnFileThread(
     const scoped_refptr<ValueStoreFactory>& factory,
     const scoped_refptr<SettingsObserverList>& observers,
     const base::FilePath& profile_path) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(!initialized_);
   app_backend_.reset(new SyncStorageBackend(
       factory,

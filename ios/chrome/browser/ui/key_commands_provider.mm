@@ -8,7 +8,6 @@
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
-#import "ios/chrome/browser/ui/commands/new_tab_command.h"
 #import "ios/chrome/browser/ui/keyboard/UIKeyCommand+Chrome.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -65,19 +64,6 @@
     };
   }
 
-  // New tab blocks.
-  void (^newTab)() = ^{
-    [weakConsumer
-        chromeExecuteCommand:[[NewTabCommand alloc]
-                                 initWithIncognito:[weakConsumer
-                                                       isOffTheRecord]]];
-  };
-
-  void (^newIncognitoTab)() = ^{
-    [weakConsumer
-        chromeExecuteCommand:[[NewTabCommand alloc] initWithIncognito:YES]];
-  };
-
   const int browseLeftDescriptionID = useRTLLayout
                                           ? IDS_IOS_KEYBOARD_HISTORY_FORWARD
                                           : IDS_IOS_KEYBOARD_HISTORY_BACK;
@@ -95,13 +81,21 @@
                            modifierFlags:UIKeyModifierCommand
                                    title:l10n_util::GetNSStringWithFixup(
                                              IDS_IOS_TOOLS_MENU_NEW_TAB)
-                                  action:newTab],
+                                  action:^{
+                                    if ([weakConsumer isOffTheRecord]) {
+                                      execute(IDC_NEW_INCOGNITO_TAB);
+                                    } else {
+                                      execute(IDC_NEW_TAB);
+                                    }
+                                  }],
     [UIKeyCommand
         cr_keyCommandWithInput:@"n"
                  modifierFlags:UIKeyModifierCommand | UIKeyModifierShift
                          title:l10n_util::GetNSStringWithFixup(
                                    IDS_IOS_TOOLS_MENU_NEW_INCOGNITO_TAB)
-                        action:newIncognitoTab],
+                        action:^{
+                          execute(IDC_NEW_INCOGNITO_TAB);
+                        }],
     [UIKeyCommand
         cr_keyCommandWithInput:@"t"
                  modifierFlags:UIKeyModifierCommand | UIKeyModifierShift
@@ -175,12 +169,16 @@
                                modifierFlags:UIKeyModifierCommand
                                        title:l10n_util::GetNSStringWithFixup(
                                                  browseLeftDescriptionID)
-                                      action:browseLeft],
+                                      action:^{
+                                        browseLeft();
+                                      }],
         [UIKeyCommand cr_keyCommandWithInput:UIKeyInputRightArrow
                                modifierFlags:UIKeyModifierCommand
                                        title:l10n_util::GetNSStringWithFixup(
                                                  browseRightDescriptionID)
-                                      action:browseRight],
+                                      action:^{
+                                        browseRight();
+                                      }],
       ]];
     }
 
@@ -215,7 +213,13 @@
     [UIKeyCommand cr_keyCommandWithInput:@"n"
                            modifierFlags:UIKeyModifierCommand
                                    title:nil
-                                  action:newTab],
+                                  action:^{
+                                    if ([weakConsumer isOffTheRecord]) {
+                                      execute(IDC_NEW_INCOGNITO_TAB);
+                                    } else {
+                                      execute(IDC_NEW_TAB);
+                                    }
+                                  }],
     [UIKeyCommand cr_keyCommandWithInput:@","
                            modifierFlags:UIKeyModifierCommand
                                    title:nil
@@ -231,11 +235,15 @@
       [UIKeyCommand cr_keyCommandWithInput:@"["
                              modifierFlags:UIKeyModifierCommand
                                      title:nil
-                                    action:browseLeft],
+                                    action:^{
+                                      browseLeft();
+                                    }],
       [UIKeyCommand cr_keyCommandWithInput:@"]"
                              modifierFlags:UIKeyModifierCommand
                                      title:nil
-                                    action:browseRight],
+                                    action:^{
+                                      browseRight();
+                                    }],
       [UIKeyCommand cr_keyCommandWithInput:@"."
                              modifierFlags:UIKeyModifierCommand
                                      title:nil

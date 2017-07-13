@@ -198,7 +198,7 @@ void EasyUnlockServiceRegular::LaunchSetup() {
     OpenSetupApp();
   } else {
     bool reauth_success = chromeos::EasyUnlockReauth::ReauthForUserContext(
-        base::Bind(&EasyUnlockServiceRegular::OpenSetupAppAfterReauth,
+        base::Bind(&EasyUnlockServiceRegular::OnUserContextFromReauth,
                    weak_ptr_factory_.GetWeakPtr()));
     if (!reauth_success)
       OpenSetupApp();
@@ -209,20 +209,13 @@ void EasyUnlockServiceRegular::LaunchSetup() {
 }
 
 #if defined(OS_CHROMEOS)
-void EasyUnlockServiceRegular::HandleUserReauth(
+void EasyUnlockServiceRegular::OnUserContextFromReauth(
     const chromeos::UserContext& user_context) {
-  // Cache the user context for the next X minutes, so the user doesn't have to
-  // reauth again.
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   short_lived_user_context_.reset(new chromeos::ShortLivedUserContext(
       user_context,
       apps::AppLifetimeMonitorFactory::GetForBrowserContext(profile()),
       base::ThreadTaskRunnerHandle::Get().get()));
-}
-
-void EasyUnlockServiceRegular::OpenSetupAppAfterReauth(
-    const chromeos::UserContext& user_context) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  HandleUserReauth(user_context);
 
   OpenSetupApp();
 
@@ -454,6 +447,9 @@ void EasyUnlockServiceRegular::InitializeInternal() {
       prefs::kEasyUnlockAllowed,
       base::Bind(&EasyUnlockServiceRegular::OnPrefsChanged,
                  base::Unretained(this)));
+  registrar_.Add(prefs::kEasyUnlockProximityRequired,
+                 base::Bind(&EasyUnlockServiceRegular::OnPrefsChanged,
+                            base::Unretained(this)));
 
   OnPrefsChanged();
 
@@ -615,6 +611,9 @@ void EasyUnlockServiceRegular::SyncProfilePrefsToLocalState() {
   // items in the dictionary are the same profile prefs used for Easy Unlock.
   std::unique_ptr<base::DictionaryValue> user_prefs_dict(
       new base::DictionaryValue());
+  user_prefs_dict->SetBooleanWithoutPathExpansion(
+      prefs::kEasyUnlockProximityRequired,
+      profile_prefs->GetBoolean(prefs::kEasyUnlockProximityRequired));
 
   DictionaryPrefUpdate update(local_state,
                               prefs::kEasyUnlockLocalStateUserPrefs);

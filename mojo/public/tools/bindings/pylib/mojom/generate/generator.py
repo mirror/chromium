@@ -156,8 +156,7 @@ class Generator(object):
   def __init__(self, module, output_dir=None, typemap=None, variant=None,
                bytecode_path=None, for_blink=False, use_once_callback=False,
                js_bindings_mode="new", export_attribute=None,
-               export_header=None, generate_non_variant_code=False,
-               support_lazy_serialization=False):
+               export_header=None, generate_non_variant_code=False):
     self.module = module
     self.output_dir = output_dir
     self.typemap = typemap or {}
@@ -169,7 +168,6 @@ class Generator(object):
     self.export_attribute = export_attribute
     self.export_header = export_header
     self.generate_non_variant_code = generate_non_variant_code
-    self.support_lazy_serialization = support_lazy_serialization
 
   def Write(self, contents, filename):
     if self.output_dir is None:

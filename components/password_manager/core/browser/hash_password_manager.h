@@ -33,8 +33,6 @@ class HashPasswordManager {
   // Returns empty if no hash is available.
   base::Optional<SyncPasswordData> RetrievePasswordHash();
 
-  void ReportIsSyncPasswordHashSavedMetric();
-
   void set_prefs(PrefService* prefs) { prefs_ = prefs; }
 
  private:

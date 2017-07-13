@@ -86,7 +86,6 @@
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/gl_version_info.h"
-#include "ui/gl/gl_workarounds.h"
 #include "ui/gl/gpu_timing.h"
 
 #if defined(OS_MACOSX)
@@ -3187,13 +3186,6 @@ bool GLES2DecoderImpl::Initialize(
   // Create GPU Tracer for timing values.
   gpu_tracer_.reset(new GPUTracer(this));
 
-  // Pass some workarounds to GLContext so that we can apply them in RealGLApi.
-  gl::GLWorkarounds gl_workarounds;
-  if (workarounds().clear_to_zero_or_one_broken) {
-    gl_workarounds.clear_to_zero_or_one_broken = true;
-  }
-  GetGLContext()->SetGLWorkarounds(gl_workarounds);
-
   if (workarounds().disable_timestamp_queries) {
     // Forcing time elapsed query for any GPU Timing Client forces it for all
     // clients in the context.
@@ -4345,6 +4337,8 @@ bool GLES2DecoderImpl::MakeCurrent() {
 
 void GLES2DecoderImpl::ProcessFinishedAsyncTransfers() {
   ProcessPendingReadPixels(false);
+  if (query_manager_.get())
+    query_manager_->ProcessPendingTransferQueries();
 }
 
 static void RebindCurrentFramebuffer(
@@ -16164,7 +16158,8 @@ bool GLES2DecoderImpl::HasPendingQueries() const {
 void GLES2DecoderImpl::ProcessPendingQueries(bool did_finish) {
   if (!query_manager_.get())
     return;
-  query_manager_->ProcessPendingQueries(did_finish);
+  if (!query_manager_->ProcessPendingQueries(did_finish))
+    current_decoder_error_ = error::kOutOfBounds;
 }
 
 // Note that if there are no pending readpixels right now,
@@ -16298,14 +16293,6 @@ error::Error GLES2DecoderImpl::HandleBeginQueryEXT(
     return error::kNoError;
   }
 
-  scoped_refptr<gpu::Buffer> buffer = GetSharedMemoryBuffer(sync_shm_id);
-  if (!buffer)
-    return error::kInvalidArguments;
-  QuerySync* sync = static_cast<QuerySync*>(
-      buffer->GetDataAddress(sync_shm_offset, sizeof(QuerySync)));
-  if (!sync)
-    return error::kOutOfBounds;
-
   QueryManager::Query* query = query_manager_->GetQuery(client_id);
   if (!query) {
     if (!query_manager_->IsValidQuery(client_id)) {
@@ -16314,21 +16301,24 @@ error::Error GLES2DecoderImpl::HandleBeginQueryEXT(
                          "id not made by glGenQueriesEXT");
       return error::kNoError;
     }
-
-    query =
-        query_manager_->CreateQuery(target, client_id, std::move(buffer), sync);
-  } else {
-    if (query->target() != target) {
-      LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginQueryEXT",
-                         "target does not match");
-      return error::kNoError;
-    } else if (query->sync() != sync) {
-      DLOG(ERROR) << "Shared memory used by query not the same as before";
-      return error::kInvalidArguments;
-    }
+    query = query_manager_->CreateQuery(
+        target, client_id, sync_shm_id, sync_shm_offset);
   }
 
-  query_manager_->BeginQuery(query);
+  if (query->target() != target) {
+    LOCAL_SET_GL_ERROR(
+        GL_INVALID_OPERATION, "glBeginQueryEXT", "target does not match");
+    return error::kNoError;
+  } else if (query->shm_id() != sync_shm_id ||
+             query->shm_offset() != sync_shm_offset) {
+    DLOG(ERROR) << "Shared memory used by query not the same as before";
+    return error::kInvalidArguments;
+  }
+
+  if (!query_manager_->BeginQuery(query)) {
+    return error::kOutOfBounds;
+  }
+
   return error::kNoError;
 }
 
@@ -16347,7 +16337,12 @@ error::Error GLES2DecoderImpl::HandleEndQueryEXT(
     return error::kNoError;
   }
 
-  query_manager_->EndQuery(query, submit_count);
+  if (!query_manager_->EndQuery(query, submit_count)) {
+    return error::kOutOfBounds;
+  }
+
+  query_manager_->ProcessPendingTransferQueries();
+
   return error::kNoError;
 }
 
@@ -16378,14 +16373,6 @@ error::Error GLES2DecoderImpl::HandleQueryCounterEXT(
       return error::kNoError;
   }
 
-  scoped_refptr<gpu::Buffer> buffer = GetSharedMemoryBuffer(sync_shm_id);
-  if (!buffer)
-    return error::kInvalidArguments;
-  QuerySync* sync = static_cast<QuerySync*>(
-      buffer->GetDataAddress(sync_shm_offset, sizeof(QuerySync)));
-  if (!sync)
-    return error::kOutOfBounds;
-
   QueryManager::Query* query = query_manager_->GetQuery(client_id);
   if (!query) {
     if (!query_manager_->IsValidQuery(client_id)) {
@@ -16394,10 +16381,12 @@ error::Error GLES2DecoderImpl::HandleQueryCounterEXT(
                          "id not made by glGenQueriesEXT");
       return error::kNoError;
     }
-    query =
-        query_manager_->CreateQuery(target, client_id, std::move(buffer), sync);
+    query = query_manager_->CreateQuery(
+        target, client_id, sync_shm_id, sync_shm_offset);
   }
-  query_manager_->QueryCounter(query, submit_count);
+  if (!query_manager_->QueryCounter(query, submit_count)) {
+    return error::kOutOfBounds;
+  }
 
   return error::kNoError;
 }

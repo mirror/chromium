@@ -86,9 +86,10 @@ void PrefetchedPagesTrackerImpl::OfflinePageAdded(
 }
 
 void PrefetchedPagesTrackerImpl::OfflinePageDeleted(
-    const offline_pages::OfflinePageModel::DeletedPageInfo& page_info) {
+    int64_t offline_id,
+    const offline_pages::ClientId& client_id) {
   std::map<int64_t, GURL>::iterator it =
-      offline_id_to_url_mapping_.find(page_info.offline_id);
+      offline_id_to_url_mapping_.find(offline_id);
   if (it != offline_id_to_url_mapping_.end()) {
     DCHECK(prefetched_urls_.count(it->second));
     prefetched_urls_.erase(it->second);

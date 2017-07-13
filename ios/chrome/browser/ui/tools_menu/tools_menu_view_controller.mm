@@ -568,7 +568,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
         DCHECK([menuItem tag]);
         [_delegate commandWasSelected:[menuItem tag]];
         if ([menuItem tag] > 0) {
-          [self chromeExecuteCommand:[menuItem command]];
+          [self chromeExecuteCommand:menuItem];
         } else {
           DCHECK([menuItem selector]);
           DCHECK([self.dispatcher respondsToSelector:[menuItem selector]]);

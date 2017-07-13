@@ -13,6 +13,7 @@
 #include "core/editing/PositionWithAffinity.h"
 #include "core/editing/SelectionType.h"
 #include "core/editing/TextAffinity.h"
+#include "core/editing/TextGranularity.h"
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
@@ -63,6 +64,7 @@ class CORE_EXPORT SelectionTemplate final {
         const PositionTemplate<Strategy>& extent);
 
     Builder& SetAffinity(TextAffinity);
+    Builder& SetGranularity(TextGranularity);
     Builder& SetIsDirectional(bool);
     Builder& SetIsHandleVisible(bool);
 
@@ -83,6 +85,7 @@ class CORE_EXPORT SelectionTemplate final {
   const PositionTemplate<Strategy>& Base() const;
   const PositionTemplate<Strategy>& Extent() const;
   TextAffinity Affinity() const { return affinity_; }
+  TextGranularity Granularity() const { return granularity_; }
   bool IsCaret() const;
   bool IsDirectional() const { return is_directional_; }
   bool IsHandleVisible() const { return is_handle_visible_; }
@@ -97,8 +100,12 @@ class CORE_EXPORT SelectionTemplate final {
   const PositionTemplate<Strategy>& ComputeEndPosition() const;
   const PositionTemplate<Strategy>& ComputeStartPosition() const;
 
-  // Returns |SelectionType| for |this| based on |base_| and |extent_|.
-  SelectionType Type() const;
+  // Returns |SelectionType| for |this| based on |m_base| and |m_extent|
+  // If |m_granularity| is |CharacterGranularity|, otherwise this function
+  // returns |RangeSelection| event if |m_base| == |m_extent|.
+  // Note: |m_granularity| will be removed, using this function is not
+  // encouraged.
+  SelectionType SelectionTypeWithLegacyGranularity() const;
 
   DECLARE_TRACE();
 
@@ -115,6 +122,7 @@ class CORE_EXPORT SelectionTemplate final {
   PositionTemplate<Strategy> base_;
   PositionTemplate<Strategy> extent_;
   TextAffinity affinity_ = TextAffinity::kDownstream;
+  TextGranularity granularity_ = TextGranularity::kCharacter;
   bool is_directional_ = false;
   bool is_handle_visible_ = false;
 #if DCHECK_IS_ON()

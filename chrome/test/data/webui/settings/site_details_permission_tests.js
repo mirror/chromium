@@ -14,28 +14,26 @@ suite('SiteDetailsPermission', function() {
    * An example pref with only camera allowed.
    * @type {SiteSettingsPref}
    */
-  var prefs;
+  var prefs = {
+    defaults: {
+      camera: {
+        setting: settings.ContentSetting.ALLOW,
+      }
+    },
+    exceptions: {
+      camera: [
+        {
+          embeddingOrigin: '',
+          origin: 'https://www.example.com',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'preference',
+        },
+      ]
+    }
+  };
 
   // Initialize a site-details-permission before each test.
   setup(function() {
-    prefs = {
-      defaults: {
-        camera: {
-          setting: settings.ContentSetting.ALLOW,
-        }
-      },
-      exceptions: {
-        camera: [
-          {
-            embeddingOrigin: '',
-            origin: 'https://www.example.com',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
-          },
-        ]
-      }
-    };
-
     browserProxy = new TestSiteSettingsPrefsBrowserProxy();
     settings.SiteSettingsPrefsBrowserProxyImpl.instance_ = browserProxy;
     PolymerTest.clearBody();
@@ -59,25 +57,16 @@ suite('SiteDetailsPermission', function() {
   };
 
   function validatePermissionFlipWorks(origin, expectedContentSetting) {
-    // Flipping a permission typically calls setCategoryPermissionForOrigin, but
-    // clearing it should call resetCategoryPermissionForOrigin.
-    var isReset = expectedContentSetting == settings.ContentSetting.DEFAULT;
-    var expectedMethodCalled = isReset ? 'resetCategoryPermissionForOrigin' :
-                                         'setCategoryPermissionForOrigin';
-    browserProxy.resetResolver(expectedMethodCalled);
+    browserProxy.resetResolver('setOriginPermissions');
 
     // Simulate permission change initiated by the user.
     testElement.$.permission.value = expectedContentSetting;
     testElement.$.permission.dispatchEvent(new CustomEvent('change'));
 
-    return browserProxy.whenCalled(expectedMethodCalled).then(function(args) {
+    return browserProxy.whenCalled('setOriginPermissions').then(function(args) {
       assertEquals(origin, args[0]);
-      assertEquals('', args[1]);
-      assertEquals(testElement.category, args[2]);
-      // Since resetting the permission doesn't return its new value, don't
-      // test it here - checking that the correct method was called is fine.
-      if (!isReset)
-        assertEquals(expectedContentSetting, args[3]);
+      assertDeepEquals([testElement.category], args[1]);
+      assertEquals(expectedContentSetting, args[2]);
     });
   };
 

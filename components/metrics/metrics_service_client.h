@@ -126,6 +126,7 @@ class MetricsServiceClient {
   // Sets the callback to run MetricsServiceManager::UpdateRunningServices.
   void SetUpdateRunningServicesCallback(const base::Closure& callback);
 
+ protected:
   // Notify MetricsServiceManager to UpdateRunningServices using callback.
   void UpdateRunningServices();
 

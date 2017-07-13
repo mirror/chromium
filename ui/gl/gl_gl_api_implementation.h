@@ -11,7 +11,6 @@
 #include "base/compiler_specific.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_export.h"
-#include "ui/gl/gl_workarounds.h"
 
 namespace base {
 class CommandLine;
@@ -104,10 +103,6 @@ class GL_EXPORT RealGLApi : public GLApiBase {
                                           GLsizei height) override;
 
   void glClearFn(GLbitfield mask) override;
-  void glClearColorFn(GLclampf red,
-                      GLclampf green,
-                      GLclampf blue,
-                      GLclampf alpha) override;
   void glDrawArraysFn(GLenum mode, GLint first, GLsizei count) override;
   void glDrawElementsFn(GLenum mode,
                         GLsizei count,
@@ -118,7 +113,6 @@ class GL_EXPORT RealGLApi : public GLApiBase {
   void glDepthRangeFn(GLclampd z_near, GLclampd z_far) override;
 
   void InitializeFilteredExtensions();
-  void set_gl_workarounds(const GLWorkarounds& workarounds);
   void set_version(std::unique_ptr<GLVersionInfo> version);
 
  private:
@@ -127,7 +121,6 @@ class GL_EXPORT RealGLApi : public GLApiBase {
   std::vector<std::string> filtered_exts_;
   std::string filtered_exts_str_;
 
-  GLWorkarounds gl_workarounds_;
   std::unique_ptr<GLVersionInfo> version_;
 
 #if DCHECK_IS_ON()

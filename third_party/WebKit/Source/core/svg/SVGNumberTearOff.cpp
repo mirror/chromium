@@ -58,8 +58,7 @@ SVGNumberTearOff* SVGNumberTearOff::CreateDetached() {
 }
 
 DEFINE_TRACE_WRAPPERS(SVGNumberTearOff) {
-  SVGPropertyTearOff<SVGNumber>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
+  visitor->TraceWrappers(contextElement());
 }
 
 }  // namespace blink

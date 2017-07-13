@@ -52,8 +52,7 @@ Env::~Env() {
     observer.OnWillDestroyEnv();
 
 #if defined(USE_OZONE)
-  if (mode_ == Mode::LOCAL)
-    ui::OzonePlatform::Shutdown();
+  ui::OzonePlatform::Shutdown();
 #endif
 
   DCHECK_EQ(this, lazy_tls_ptr.Pointer()->Get());

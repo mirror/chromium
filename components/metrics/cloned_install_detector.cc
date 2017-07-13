@@ -14,7 +14,6 @@
 #include "base/metrics/metrics_hashes.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_runner_util.h"
-#include "base/task_scheduler/post_task.h"
 #include "components/metrics/machine_id_provider.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -48,19 +47,23 @@ void LogMachineIdState(MachineIdState state) {
 
 }  // namespace
 
-ClonedInstallDetector::ClonedInstallDetector() : weak_ptr_factory_(this) {}
+ClonedInstallDetector::ClonedInstallDetector(MachineIdProvider* raw_id_provider)
+    : raw_id_provider_(raw_id_provider), weak_ptr_factory_(this) {
+}
 
 ClonedInstallDetector::~ClonedInstallDetector() {
 }
 
-void ClonedInstallDetector::CheckForClonedInstall(PrefService* local_state) {
-  base::PostTaskWithTraitsAndReplyWithResult(
+void ClonedInstallDetector::CheckForClonedInstall(
+    PrefService* local_state,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  base::PostTaskAndReplyWithResult(
+      task_runner.get(),
       FROM_HERE,
-      {base::MayBlock(), base::TaskPriority::BACKGROUND,
-       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::Bind(&MachineIdProvider::GetMachineId),
+      base::Bind(&MachineIdProvider::GetMachineId, raw_id_provider_),
       base::Bind(&ClonedInstallDetector::SaveMachineId,
-                 weak_ptr_factory_.GetWeakPtr(), local_state));
+                 weak_ptr_factory_.GetWeakPtr(),
+                 local_state));
 }
 
 void ClonedInstallDetector::SaveMachineId(PrefService* local_state,

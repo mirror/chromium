@@ -11,12 +11,10 @@ NGLayoutResult::NGLayoutResult(
     Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants,
     Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
     const WTF::Optional<NGLogicalOffset> bfc_offset,
-    const NGMarginStrut end_margin_strut,
-    NGLayoutResultStatus status)
+    const NGMarginStrut end_margin_strut)
     : physical_fragment_(std::move(physical_fragment)),
       bfc_offset_(bfc_offset),
-      end_margin_strut_(end_margin_strut),
-      status_(status) {
+      end_margin_strut_(end_margin_strut) {
   unpositioned_floats_.swap(unpositioned_floats);
   oof_positioned_descendants_.swap(oof_positioned_descendants);
 }

@@ -7,7 +7,6 @@ import time
 from common import TestDriver
 from common import IntegrationTest
 from decorators import NotAndroid
-from decorators import ChromeVersionEqualOrAfterM
 
 
 class Smoke(IntegrationTest):
@@ -102,7 +101,6 @@ class Smoke(IntegrationTest):
         self.assertEqual(200, response.status)
 
   # Verify unique page IDs are sent in the Chrome-Proxy header.
-  @ChromeVersionEqualOrAfterM(59)
   def testPageID(self):
     with TestDriver() as t:
       t.AddChromeArg('--enable-spdy-proxy-auth')

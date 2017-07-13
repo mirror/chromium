@@ -235,20 +235,17 @@ void HeadlessAsyncDevTooledBrowserTest::RunTest() {
   HeadlessBrowserContext::Builder builder =
       browser()->CreateBrowserContextBuilder();
   builder.SetProtocolHandlers(GetProtocolHandlers());
-  if (GetAllowTabSockets()) {
+  if (GetTabSocketType() != HeadlessWebContents::Builder::TabSocketType::NONE) {
     builder.EnableUnsafeNetworkAccessWithMojoBindings(true);
     builder.AddTabSocketMojoBindings();
   }
-  std::unique_ptr<net::ProxyConfig> proxy_config = GetProxyConfig();
-  if (proxy_config)
-    builder.SetProxyConfig(std::move(proxy_config));
   browser_context_ = builder.Build();
 
   browser()->SetDefaultBrowserContext(browser_context_);
   browser()->GetDevToolsTarget()->AttachClient(browser_devtools_client_.get());
 
   web_contents_ = browser_context_->CreateWebContentsBuilder()
-                      .SetAllowTabSockets(GetAllowTabSockets())
+                      .SetTabSocketType(GetTabSocketType())
                       .Build();
   web_contents_->AddObserver(this);
 
@@ -268,18 +265,14 @@ ProtocolHandlerMap HeadlessAsyncDevTooledBrowserTest::GetProtocolHandlers() {
   return ProtocolHandlerMap();
 }
 
-bool HeadlessAsyncDevTooledBrowserTest::GetAllowTabSockets() {
-  return false;
+HeadlessWebContents::Builder::TabSocketType
+HeadlessAsyncDevTooledBrowserTest::GetTabSocketType() {
+  return HeadlessWebContents::Builder::TabSocketType::NONE;
 }
 
 bool HeadlessAsyncDevTooledBrowserTest::
     GetCreateTabSocketOnlyForIsolatedWorld() {
   return false;
-}
-
-std::unique_ptr<net::ProxyConfig>
-HeadlessAsyncDevTooledBrowserTest::GetProxyConfig() {
-  return nullptr;
 }
 
 }  // namespace headless

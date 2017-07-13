@@ -73,6 +73,7 @@ class TextInputTestHelper : public ui::InputMethodObserver {
   };
 
   // ui::InputMethodObserver overrides.
+  void OnTextInputTypeChanged(const ui::TextInputClient* client) override;
   void OnFocus() override;
   void OnBlur() override;
   void OnCaretBoundsChanged(const ui::TextInputClient* client) override;

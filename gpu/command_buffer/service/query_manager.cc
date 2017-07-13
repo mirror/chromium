@@ -30,11 +30,11 @@ class AbstractIntegerQuery : public QueryManager::Query {
  public:
   AbstractIntegerQuery(QueryManager* manager,
                        GLenum target,
-                       scoped_refptr<gpu::Buffer> buffer,
-                       QuerySync* sync);
-  void Begin() override;
-  void End(base::subtle::Atomic32 submit_count) override;
-  void QueryCounter(base::subtle::Atomic32 submit_count) override;
+                       int32_t shm_id,
+                       uint32_t shm_offset);
+  bool Begin() override;
+  bool End(base::subtle::Atomic32 submit_count) override;
+  bool QueryCounter(base::subtle::Atomic32 submit_count) override;
   void Pause() override;
   void Resume() override;
   void Destroy(bool have_context) override;
@@ -49,16 +49,16 @@ class AbstractIntegerQuery : public QueryManager::Query {
 
 AbstractIntegerQuery::AbstractIntegerQuery(QueryManager* manager,
                                            GLenum target,
-                                           scoped_refptr<gpu::Buffer> buffer,
-                                           QuerySync* sync)
-    : Query(manager, target, std::move(buffer), sync) {
+                                           int32_t shm_id,
+                                           uint32_t shm_offset)
+    : Query(manager, target, shm_id, shm_offset) {
   GLuint service_id = 0;
   glGenQueries(1, &service_id);
   DCHECK_NE(0u, service_id);
   service_ids_.push_back(service_id);
 }
 
-void AbstractIntegerQuery::Begin() {
+bool AbstractIntegerQuery::Begin() {
   MarkAsActive();
   // Delete all but the first one when beginning a new query.
   if (service_ids_.size() > 1) {
@@ -66,15 +66,17 @@ void AbstractIntegerQuery::Begin() {
     service_ids_.resize(1);
   }
   BeginQueryHelper(target(), service_ids_.back());
+  return true;
 }
 
-void AbstractIntegerQuery::End(base::subtle::Atomic32 submit_count) {
+bool AbstractIntegerQuery::End(base::subtle::Atomic32 submit_count) {
   EndQueryHelper(target());
-  AddToPendingQueue(submit_count);
+  return AddToPendingQueue(submit_count);
 }
 
-void AbstractIntegerQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
+bool AbstractIntegerQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
   NOTREACHED();
+  return false;
 }
 
 void AbstractIntegerQuery::Pause() {
@@ -114,9 +116,9 @@ class BooleanQuery : public AbstractIntegerQuery {
  public:
   BooleanQuery(QueryManager* manager,
                GLenum target,
-               scoped_refptr<gpu::Buffer> buffer,
-               QuerySync* sync);
-  void Process(bool did_finish) override;
+               int32_t shm_id,
+               uint32_t shm_offset);
+  bool Process(bool did_finish) override;
 
  protected:
   ~BooleanQuery() override;
@@ -124,34 +126,35 @@ class BooleanQuery : public AbstractIntegerQuery {
 
 BooleanQuery::BooleanQuery(QueryManager* manager,
                            GLenum target,
-                           scoped_refptr<gpu::Buffer> buffer,
-                           QuerySync* sync)
-    : AbstractIntegerQuery(manager, target, std::move(buffer), sync) {}
+                           int32_t shm_id,
+                           uint32_t shm_offset)
+    : AbstractIntegerQuery(manager, target, shm_id, shm_offset) {}
 
 BooleanQuery::~BooleanQuery() {
 }
 
-void BooleanQuery::Process(bool did_finish) {
-  if (!AreAllResultsAvailable())
-    return;
+bool BooleanQuery::Process(bool did_finish) {
+  if (!AreAllResultsAvailable()) {
+    // Must return true to avoid generating an error at the command
+    // buffer level.
+    return true;
+  }
   for (const GLuint& service_id : service_ids_) {
     GLuint result = 0;
     glGetQueryObjectuiv(service_id, GL_QUERY_RESULT_EXT, &result);
-    if (result != 0) {
-      MarkAsCompleted(1);
-      return;
-    }
+    if (result != 0)
+      return MarkAsCompleted(1);
   }
-  MarkAsCompleted(0);
+  return MarkAsCompleted(0);
 }
 
 class SummedIntegerQuery : public AbstractIntegerQuery {
  public:
   SummedIntegerQuery(QueryManager* manager,
                      GLenum target,
-                     scoped_refptr<gpu::Buffer> buffer,
-                     QuerySync* sync);
-  void Process(bool did_finish) override;
+                     int32_t shm_id,
+                     uint32_t shm_offset);
+  bool Process(bool did_finish) override;
 
  protected:
   ~SummedIntegerQuery() override;
@@ -159,38 +162,41 @@ class SummedIntegerQuery : public AbstractIntegerQuery {
 
 SummedIntegerQuery::SummedIntegerQuery(QueryManager* manager,
                                        GLenum target,
-                                       scoped_refptr<gpu::Buffer> buffer,
-                                       QuerySync* sync)
-    : AbstractIntegerQuery(manager, target, std::move(buffer), sync) {}
+                                       int32_t shm_id,
+                                       uint32_t shm_offset)
+    : AbstractIntegerQuery(manager, target, shm_id, shm_offset) {}
 
 SummedIntegerQuery::~SummedIntegerQuery() {
 }
 
-void SummedIntegerQuery::Process(bool did_finish) {
-  if (!AreAllResultsAvailable())
-    return;
+bool SummedIntegerQuery::Process(bool did_finish) {
+  if (!AreAllResultsAvailable()) {
+    // Must return true to avoid generating an error at the command
+    // buffer level.
+    return true;
+  }
   GLuint summed_result = 0;
   for (const GLuint& service_id : service_ids_) {
     GLuint result = 0;
     glGetQueryObjectuiv(service_id, GL_QUERY_RESULT_EXT, &result);
     summed_result += result;
   }
-  MarkAsCompleted(summed_result);
+  return MarkAsCompleted(summed_result);
 }
 
 class CommandsIssuedQuery : public QueryManager::Query {
  public:
   CommandsIssuedQuery(QueryManager* manager,
                       GLenum target,
-                      scoped_refptr<gpu::Buffer> buffer,
-                      QuerySync* sync);
+                      int32_t shm_id,
+                      uint32_t shm_offset);
 
-  void Begin() override;
-  void End(base::subtle::Atomic32 submit_count) override;
-  void QueryCounter(base::subtle::Atomic32 submit_count) override;
+  bool Begin() override;
+  bool End(base::subtle::Atomic32 submit_count) override;
+  bool QueryCounter(base::subtle::Atomic32 submit_count) override;
   void Pause() override;
   void Resume() override;
-  void Process(bool did_finish) override;
+  bool Process(bool did_finish) override;
   void Destroy(bool have_context) override;
 
  protected:
@@ -202,13 +208,14 @@ class CommandsIssuedQuery : public QueryManager::Query {
 
 CommandsIssuedQuery::CommandsIssuedQuery(QueryManager* manager,
                                          GLenum target,
-                                         scoped_refptr<gpu::Buffer> buffer,
-                                         QuerySync* sync)
-    : Query(manager, target, std::move(buffer), sync) {}
+                                         int32_t shm_id,
+                                         uint32_t shm_offset)
+    : Query(manager, target, shm_id, shm_offset) {}
 
-void CommandsIssuedQuery::Begin() {
+bool CommandsIssuedQuery::Begin() {
   MarkAsActive();
   begin_time_ = base::TimeTicks::Now();
+  return true;
 }
 
 void CommandsIssuedQuery::Pause() {
@@ -219,18 +226,20 @@ void CommandsIssuedQuery::Resume() {
   MarkAsActive();
 }
 
-void CommandsIssuedQuery::End(base::subtle::Atomic32 submit_count) {
+bool CommandsIssuedQuery::End(base::subtle::Atomic32 submit_count) {
   const base::TimeDelta elapsed = base::TimeTicks::Now() - begin_time_;
   MarkAsPending(submit_count);
-  MarkAsCompleted(elapsed.InMicroseconds());
+  return MarkAsCompleted(elapsed.InMicroseconds());
 }
 
-void CommandsIssuedQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
+bool CommandsIssuedQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
   NOTREACHED();
+  return false;
 }
 
-void CommandsIssuedQuery::Process(bool did_finish) {
+bool CommandsIssuedQuery::Process(bool did_finish) {
   NOTREACHED();
+  return true;
 }
 
 void CommandsIssuedQuery::Destroy(bool /* have_context */) {
@@ -246,15 +255,15 @@ class CommandLatencyQuery : public QueryManager::Query {
  public:
   CommandLatencyQuery(QueryManager* manager,
                       GLenum target,
-                      scoped_refptr<gpu::Buffer> buffer,
-                      QuerySync* sync);
+                      int32_t shm_id,
+                      uint32_t shm_offset);
 
-  void Begin() override;
-  void End(base::subtle::Atomic32 submit_count) override;
-  void QueryCounter(base::subtle::Atomic32 submit_count) override;
+  bool Begin() override;
+  bool End(base::subtle::Atomic32 submit_count) override;
+  bool QueryCounter(base::subtle::Atomic32 submit_count) override;
   void Pause() override;
   void Resume() override;
-  void Process(bool did_finish) override;
+  bool Process(bool did_finish) override;
   void Destroy(bool have_context) override;
 
  protected:
@@ -263,12 +272,13 @@ class CommandLatencyQuery : public QueryManager::Query {
 
 CommandLatencyQuery::CommandLatencyQuery(QueryManager* manager,
                                          GLenum target,
-                                         scoped_refptr<gpu::Buffer> buffer,
-                                         QuerySync* sync)
-    : Query(manager, target, std::move(buffer), sync) {}
+                                         int32_t shm_id,
+                                         uint32_t shm_offset)
+    : Query(manager, target, shm_id, shm_offset) {}
 
-void CommandLatencyQuery::Begin() {
+bool CommandLatencyQuery::Begin() {
   MarkAsActive();
+  return true;
 }
 
 void CommandLatencyQuery::Pause() {
@@ -279,18 +289,20 @@ void CommandLatencyQuery::Resume() {
   MarkAsActive();
 }
 
-void CommandLatencyQuery::End(base::subtle::Atomic32 submit_count) {
-  base::TimeDelta now = base::TimeTicks::Now() - base::TimeTicks();
-  MarkAsPending(submit_count);
-  MarkAsCompleted(now.InMicroseconds());
+bool CommandLatencyQuery::End(base::subtle::Atomic32 submit_count) {
+    base::TimeDelta now = base::TimeTicks::Now() - base::TimeTicks();
+    MarkAsPending(submit_count);
+    return MarkAsCompleted(now.InMicroseconds());
 }
 
-void CommandLatencyQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
+bool CommandLatencyQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
   NOTREACHED();
+  return false;
 }
 
-void CommandLatencyQuery::Process(bool did_finish) {
+bool CommandLatencyQuery::Process(bool did_finish) {
   NOTREACHED();
+  return true;
 }
 
 void CommandLatencyQuery::Destroy(bool /* have_context */) {
@@ -309,31 +321,35 @@ class AsyncReadPixelsCompletedQuery
  public:
   AsyncReadPixelsCompletedQuery(QueryManager* manager,
                                 GLenum target,
-                                scoped_refptr<gpu::Buffer> buffer,
-                                QuerySync* sync);
+                                int32_t shm_id,
+                                uint32_t shm_offset);
 
-  void Begin() override;
-  void End(base::subtle::Atomic32 submit_count) override;
-  void QueryCounter(base::subtle::Atomic32 submit_count) override;
+  bool Begin() override;
+  bool End(base::subtle::Atomic32 submit_count) override;
+  bool QueryCounter(base::subtle::Atomic32 submit_count) override;
   void Pause() override;
   void Resume() override;
-  void Process(bool did_finish) override;
+  bool Process(bool did_finish) override;
   void Destroy(bool have_context) override;
 
  protected:
   void Complete();
   ~AsyncReadPixelsCompletedQuery() override;
+
+ private:
+  bool complete_result_;
 };
 
 AsyncReadPixelsCompletedQuery::AsyncReadPixelsCompletedQuery(
     QueryManager* manager,
     GLenum target,
-    scoped_refptr<gpu::Buffer> buffer,
-    QuerySync* sync)
-    : Query(manager, target, std::move(buffer), sync) {}
+    int32_t shm_id,
+    uint32_t shm_offset)
+    : Query(manager, target, shm_id, shm_offset), complete_result_(false) {}
 
-void AsyncReadPixelsCompletedQuery::Begin() {
+bool AsyncReadPixelsCompletedQuery::Begin() {
   MarkAsActive();
+  return true;
 }
 
 void AsyncReadPixelsCompletedQuery::Pause() {
@@ -344,24 +360,29 @@ void AsyncReadPixelsCompletedQuery::Resume() {
   MarkAsActive();
 }
 
-void AsyncReadPixelsCompletedQuery::End(base::subtle::Atomic32 submit_count) {
-  MarkAsPending(submit_count);
+bool AsyncReadPixelsCompletedQuery::End(base::subtle::Atomic32 submit_count) {
+  if (!AddToPendingQueue(submit_count)) {
+    return false;
+  }
   manager()->decoder()->WaitForReadPixels(
       base::Bind(&AsyncReadPixelsCompletedQuery::Complete,
                  AsWeakPtr()));
+
+  return Process(false);
 }
 
-void AsyncReadPixelsCompletedQuery::QueryCounter(
+bool AsyncReadPixelsCompletedQuery::QueryCounter(
     base::subtle::Atomic32 submit_count) {
   NOTREACHED();
+  return false;
 }
 
 void AsyncReadPixelsCompletedQuery::Complete() {
-  MarkAsCompleted(1);
+  complete_result_ = MarkAsCompleted(1);
 }
 
-void AsyncReadPixelsCompletedQuery::Process(bool did_finish) {
-  NOTREACHED();
+bool AsyncReadPixelsCompletedQuery::Process(bool did_finish) {
+  return !IsFinished() || complete_result_;
 }
 
 void AsyncReadPixelsCompletedQuery::Destroy(bool /* have_context */) {
@@ -378,15 +399,15 @@ class GetErrorQuery : public QueryManager::Query {
  public:
   GetErrorQuery(QueryManager* manager,
                 GLenum target,
-                scoped_refptr<gpu::Buffer> buffer,
-                QuerySync* sync);
+                int32_t shm_id,
+                uint32_t shm_offset);
 
-  void Begin() override;
-  void End(base::subtle::Atomic32 submit_count) override;
-  void QueryCounter(base::subtle::Atomic32 submit_count) override;
+  bool Begin() override;
+  bool End(base::subtle::Atomic32 submit_count) override;
+  bool QueryCounter(base::subtle::Atomic32 submit_count) override;
   void Pause() override;
   void Resume() override;
-  void Process(bool did_finish) override;
+  bool Process(bool did_finish) override;
   void Destroy(bool have_context) override;
 
  protected:
@@ -397,12 +418,13 @@ class GetErrorQuery : public QueryManager::Query {
 
 GetErrorQuery::GetErrorQuery(QueryManager* manager,
                              GLenum target,
-                             scoped_refptr<gpu::Buffer> buffer,
-                             QuerySync* sync)
-    : Query(manager, target, std::move(buffer), sync) {}
+                             int32_t shm_id,
+                             uint32_t shm_offset)
+    : Query(manager, target, shm_id, shm_offset) {}
 
-void GetErrorQuery::Begin() {
+bool GetErrorQuery::Begin() {
   MarkAsActive();
+  return true;
 }
 
 void GetErrorQuery::Pause() {
@@ -413,17 +435,19 @@ void GetErrorQuery::Resume() {
   MarkAsActive();
 }
 
-void GetErrorQuery::End(base::subtle::Atomic32 submit_count) {
+bool GetErrorQuery::End(base::subtle::Atomic32 submit_count) {
   MarkAsPending(submit_count);
-  MarkAsCompleted(manager()->decoder()->GetErrorState()->GetGLError());
+  return MarkAsCompleted(manager()->decoder()->GetErrorState()->GetGLError());
 }
 
-void GetErrorQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
+bool GetErrorQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
   NOTREACHED();
+  return false;
 }
 
-void GetErrorQuery::Process(bool did_finish) {
+bool GetErrorQuery::Process(bool did_finish) {
   NOTREACHED();
+  return true;
 }
 
 void GetErrorQuery::Destroy(bool /* have_context */) {
@@ -439,16 +463,16 @@ class CommandsCompletedQuery : public QueryManager::Query {
  public:
   CommandsCompletedQuery(QueryManager* manager,
                          GLenum target,
-                         scoped_refptr<gpu::Buffer> buffer,
-                         QuerySync* sync);
+                         int32_t shm_id,
+                         uint32_t shm_offset);
 
   // Overridden from QueryManager::Query:
-  void Begin() override;
-  void End(base::subtle::Atomic32 submit_count) override;
-  void QueryCounter(base::subtle::Atomic32 submit_count) override;
+  bool Begin() override;
+  bool End(base::subtle::Atomic32 submit_count) override;
+  bool QueryCounter(base::subtle::Atomic32 submit_count) override;
   void Pause() override;
   void Resume() override;
-  void Process(bool did_finish) override;
+  bool Process(bool did_finish) override;
   void Destroy(bool have_context) override;
 
  protected:
@@ -459,16 +483,16 @@ class CommandsCompletedQuery : public QueryManager::Query {
   base::TimeTicks begin_time_;
 };
 
-CommandsCompletedQuery::CommandsCompletedQuery(
-    QueryManager* manager,
-    GLenum target,
-    scoped_refptr<gpu::Buffer> buffer,
-    QuerySync* sync)
-    : Query(manager, target, std::move(buffer), sync) {}
+CommandsCompletedQuery::CommandsCompletedQuery(QueryManager* manager,
+                                               GLenum target,
+                                               int32_t shm_id,
+                                               uint32_t shm_offset)
+    : Query(manager, target, shm_id, shm_offset) {}
 
-void CommandsCompletedQuery::Begin() {
+bool CommandsCompletedQuery::Begin() {
   MarkAsActive();
   begin_time_ = base::TimeTicks::Now();
+  return true;
 }
 
 void CommandsCompletedQuery::Pause() {
@@ -479,7 +503,7 @@ void CommandsCompletedQuery::Resume() {
   MarkAsActive();
 }
 
-void CommandsCompletedQuery::End(base::subtle::Atomic32 submit_count) {
+bool CommandsCompletedQuery::End(base::subtle::Atomic32 submit_count) {
   if (fence_ && fence_->ResetSupported()) {
     fence_->ResetState();
   }
@@ -487,22 +511,23 @@ void CommandsCompletedQuery::End(base::subtle::Atomic32 submit_count) {
     fence_.reset(gl::GLFence::Create());
   }
   DCHECK(fence_);
-  AddToPendingQueue(submit_count);
+  return AddToPendingQueue(submit_count);
 }
 
-void CommandsCompletedQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
+bool CommandsCompletedQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
   NOTREACHED();
+  return false;
 }
 
-void CommandsCompletedQuery::Process(bool did_finish) {
+bool CommandsCompletedQuery::Process(bool did_finish) {
   // Note: |did_finish| guarantees that the GPU has passed the fence but
   // we cannot assume that GLFence::HasCompleted() will return true yet as
   // that's not guaranteed by all GLFence implementations.
   if (!did_finish && fence_ && !fence_->HasCompleted())
-    return;
+    return true;
 
   const base::TimeDelta elapsed = base::TimeTicks::Now() - begin_time_;
-  MarkAsCompleted(elapsed.InMicroseconds());
+  return MarkAsCompleted(elapsed.InMicroseconds());
 }
 
 void CommandsCompletedQuery::Destroy(bool have_context) {
@@ -518,16 +543,16 @@ class TimeElapsedQuery : public QueryManager::Query {
  public:
   TimeElapsedQuery(QueryManager* manager,
                    GLenum target,
-                   scoped_refptr<gpu::Buffer> buffer,
-                   QuerySync* sync);
+                   int32_t shm_id,
+                   uint32_t shm_offset);
 
   // Overridden from QueryManager::Query:
-  void Begin() override;
-  void End(base::subtle::Atomic32 submit_count) override;
-  void QueryCounter(base::subtle::Atomic32 submit_count) override;
+  bool Begin() override;
+  bool End(base::subtle::Atomic32 submit_count) override;
+  bool QueryCounter(base::subtle::Atomic32 submit_count) override;
   void Pause() override;
   void Resume() override;
-  void Process(bool did_finish) override;
+  bool Process(bool did_finish) override;
   void Destroy(bool have_context) override;
 
  protected:
@@ -539,25 +564,27 @@ class TimeElapsedQuery : public QueryManager::Query {
 
 TimeElapsedQuery::TimeElapsedQuery(QueryManager* manager,
                                    GLenum target,
-                                   scoped_refptr<gpu::Buffer> buffer,
-                                   QuerySync* sync)
-    : Query(manager, target, std::move(buffer), sync),
+                                   int32_t shm_id,
+                                   uint32_t shm_offset)
+    : Query(manager, target, shm_id, shm_offset),
       gpu_timer_(manager->CreateGPUTimer(true)) {}
 
-void TimeElapsedQuery::Begin() {
+bool TimeElapsedQuery::Begin() {
   // Reset the disjoint value before the query begins if it is safe.
   SafelyResetDisjointValue();
   MarkAsActive();
   gpu_timer_->Start();
+  return true;
 }
 
-void TimeElapsedQuery::End(base::subtle::Atomic32 submit_count) {
+bool TimeElapsedQuery::End(base::subtle::Atomic32 submit_count) {
   gpu_timer_->End();
-  AddToPendingQueue(submit_count);
+  return AddToPendingQueue(submit_count);
 }
 
-void TimeElapsedQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
+bool TimeElapsedQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
   NOTREACHED();
+  return false;
 }
 
 void TimeElapsedQuery::Pause() {
@@ -568,9 +595,9 @@ void TimeElapsedQuery::Resume() {
   MarkAsActive();
 }
 
-void TimeElapsedQuery::Process(bool did_finish) {
+bool TimeElapsedQuery::Process(bool did_finish) {
   if (!gpu_timer_->IsAvailable())
-    return;
+    return true;
 
   // Make sure disjoint value is up to date. This disjoint check is the only one
   // that needs to be done to validate that this query is valid. If a disjoint
@@ -580,7 +607,7 @@ void TimeElapsedQuery::Process(bool did_finish) {
 
   const uint64_t nano_seconds = gpu_timer_->GetDeltaElapsed() *
                                 base::Time::kNanosecondsPerMicrosecond;
-  MarkAsCompleted(nano_seconds);
+  return MarkAsCompleted(nano_seconds);
 }
 
 void TimeElapsedQuery::Destroy(bool have_context) {
@@ -593,16 +620,16 @@ class TimeStampQuery : public QueryManager::Query {
  public:
   TimeStampQuery(QueryManager* manager,
                  GLenum target,
-                 scoped_refptr<gpu::Buffer> buffer,
-                 QuerySync* sync);
+                 int32_t shm_id,
+                 uint32_t shm_offset);
 
   // Overridden from QueryManager::Query:
-  void Begin() override;
-  void End(base::subtle::Atomic32 submit_count) override;
-  void QueryCounter(base::subtle::Atomic32 submit_count) override;
+  bool Begin() override;
+  bool End(base::subtle::Atomic32 submit_count) override;
+  bool QueryCounter(base::subtle::Atomic32 submit_count) override;
   void Pause() override;
   void Resume() override;
-  void Process(bool did_finish) override;
+  bool Process(bool did_finish) override;
   void Destroy(bool have_context) override;
 
  protected:
@@ -614,17 +641,19 @@ class TimeStampQuery : public QueryManager::Query {
 
 TimeStampQuery::TimeStampQuery(QueryManager* manager,
                                GLenum target,
-                               scoped_refptr<gpu::Buffer> buffer,
-                               QuerySync* sync)
-    : Query(manager, target, std::move(buffer), sync),
+                               int32_t shm_id,
+                               uint32_t shm_offset)
+    : Query(manager, target, shm_id, shm_offset),
       gpu_timer_(manager->CreateGPUTimer(false)) {}
 
-void TimeStampQuery::Begin() {
+bool TimeStampQuery::Begin() {
   NOTREACHED();
+  return false;
 }
 
-void TimeStampQuery::End(base::subtle::Atomic32 submit_count) {
+bool TimeStampQuery::End(base::subtle::Atomic32 submit_count) {
   NOTREACHED();
+  return false;
 }
 
 void TimeStampQuery::Pause() {
@@ -635,7 +664,7 @@ void TimeStampQuery::Resume() {
   MarkAsActive();
 }
 
-void TimeStampQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
+bool TimeStampQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
   // Reset the disjoint value before the query begins if it is safe.
   SafelyResetDisjointValue();
   MarkAsActive();
@@ -644,12 +673,12 @@ void TimeStampQuery::QueryCounter(base::subtle::Atomic32 submit_count) {
   BeginContinualDisjointUpdate();
 
   gpu_timer_->QueryTimeStamp();
-  AddToPendingQueue(submit_count);
+  return AddToPendingQueue(submit_count);
 }
 
-void TimeStampQuery::Process(bool did_finish) {
+bool TimeStampQuery::Process(bool did_finish) {
   if (!gpu_timer_->IsAvailable())
-    return;
+    return true;
 
   // Make sure disjoint value is up to date. This disjoint check is the only one
   // that needs to be done to validate that this query is valid. If a disjoint
@@ -663,7 +692,7 @@ void TimeStampQuery::Process(bool did_finish) {
   DCHECK(start == end);
 
   const uint64_t nano_seconds = start * base::Time::kNanosecondsPerMicrosecond;
-  MarkAsCompleted(nano_seconds);
+  return MarkAsCompleted(nano_seconds);
 }
 
 void TimeStampQuery::Destroy(bool have_context) {
@@ -712,6 +741,7 @@ QueryManager::~QueryManager() {
 void QueryManager::Destroy(bool have_context) {
   active_queries_.clear();
   pending_queries_.clear();
+  pending_transfer_queries_.clear();
   while (!queries_.empty()) {
     Query* query = queries_.begin()->second.get();
     query->Destroy(have_context);
@@ -737,44 +767,43 @@ error::Error QueryManager::SetDisjointSync(int32_t shm_id,
   return error::kNoError;
 }
 
-QueryManager::Query* QueryManager::CreateQuery(
-    GLenum target,
-    GLuint client_id,
-    scoped_refptr<gpu::Buffer> buffer,
-    QuerySync* sync) {
+QueryManager::Query* QueryManager::CreateQuery(GLenum target,
+                                               GLuint client_id,
+                                               int32_t shm_id,
+                                               uint32_t shm_offset) {
   scoped_refptr<Query> query;
   switch (target) {
     case GL_COMMANDS_ISSUED_CHROMIUM:
-      query = new CommandsIssuedQuery(this, target, std::move(buffer), sync);
+      query = new CommandsIssuedQuery(this, target, shm_id, shm_offset);
       break;
     case GL_LATENCY_QUERY_CHROMIUM:
-      query = new CommandLatencyQuery(this, target, std::move(buffer), sync);
+      query = new CommandLatencyQuery(this, target, shm_id, shm_offset);
       break;
     case GL_ASYNC_PIXEL_PACK_COMPLETED_CHROMIUM:
-      query = new AsyncReadPixelsCompletedQuery(this, target, std::move(buffer),
-                                                sync);
+      query = new AsyncReadPixelsCompletedQuery(
+          this, target, shm_id, shm_offset);
       break;
     case GL_GET_ERROR_QUERY_CHROMIUM:
-      query = new GetErrorQuery(this, target, std::move(buffer), sync);
+      query = new GetErrorQuery(this, target, shm_id, shm_offset);
       break;
     case GL_COMMANDS_COMPLETED_CHROMIUM:
-      query = new CommandsCompletedQuery(this, target, std::move(buffer), sync);
+      query = new CommandsCompletedQuery(this, target, shm_id, shm_offset);
       break;
     case GL_TIME_ELAPSED:
-      query = new TimeElapsedQuery(this, target, std::move(buffer), sync);
+      query = new TimeElapsedQuery(this, target, shm_id, shm_offset);
       break;
     case GL_TIMESTAMP:
-      query = new TimeStampQuery(this, target, std::move(buffer), sync);
+      query = new TimeStampQuery(this, target, shm_id, shm_offset);
       break;
     case GL_ANY_SAMPLES_PASSED:
     case GL_ANY_SAMPLES_PASSED_CONSERVATIVE:
-      query = new BooleanQuery(this, target, std::move(buffer), sync);
+      query = new BooleanQuery(this, target, shm_id, shm_offset);
       break;
     case GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN:
-      query = new SummedIntegerQuery(this, target, std::move(buffer), sync);
+      query = new SummedIntegerQuery(this, target, shm_id, shm_offset);
       break;
     case GL_SAMPLES_PASSED:
-      query = new SummedIntegerQuery(this, target, std::move(buffer), sync);
+      query = new SummedIntegerQuery(this, target, shm_id, shm_offset);
       break;
     default: {
       NOTREACHED();
@@ -906,12 +935,12 @@ void QueryManager::SafelyResetDisjointValue() {
 
 QueryManager::Query::Query(QueryManager* manager,
                            GLenum target,
-                           scoped_refptr<gpu::Buffer> buffer,
-                           QuerySync* sync)
+                           int32_t shm_id,
+                           uint32_t shm_offset)
     : manager_(manager),
       target_(target),
-      buffer_(std::move(buffer)),
-      sync_(sync),
+      shm_id_(shm_id),
+      shm_offset_(shm_offset),
       submit_count_(0),
       query_state_(kQueryState_Initialize),
       deleted_(false) {
@@ -945,29 +974,60 @@ QueryManager::Query::~Query() {
   }
 }
 
-void QueryManager::Query::MarkAsCompleted(uint64_t result) {
+bool QueryManager::Query::MarkAsCompleted(uint64_t result) {
   UnmarkAsPending();
+  QuerySync* sync = manager_->decoder_->GetSharedMemoryAs<QuerySync*>(
+      shm_id_, shm_offset_, sizeof(*sync));
+  if (!sync) {
+    return false;
+  }
 
-  sync_->result = result;
-  base::subtle::Release_Store(&sync_->process_count, submit_count_);
-  RunCallbacks();
+  sync->result = result;
+  base::subtle::Release_Store(&sync->process_count, submit_count_);
+
+  return true;
 }
 
-void QueryManager::ProcessPendingQueries(bool did_finish) {
+bool QueryManager::ProcessPendingQueries(bool did_finish) {
   while (!pending_queries_.empty()) {
     Query* query = pending_queries_.front().get();
-    query->Process(did_finish);
+    if (!query->Process(did_finish)) {
+      return false;
+    }
     if (query->IsPending()) {
       break;
     }
+    query->RunCallbacks();
     pending_queries_.pop_front();
   }
   // If glFinish() has been called, all of our queries should be completed.
   DCHECK(!did_finish || pending_queries_.empty());
+
+  return true;
 }
 
 bool QueryManager::HavePendingQueries() {
   return !pending_queries_.empty();
+}
+
+bool QueryManager::ProcessPendingTransferQueries() {
+  while (!pending_transfer_queries_.empty()) {
+    Query* query = pending_transfer_queries_.front().get();
+    if (!query->Process(false)) {
+      return false;
+    }
+    if (query->IsPending()) {
+      break;
+    }
+    query->RunCallbacks();
+    pending_transfer_queries_.pop_front();
+  }
+
+  return true;
+}
+
+bool QueryManager::HavePendingTransferQueries() {
+  return !pending_transfer_queries_.empty();
 }
 
 void QueryManager::ProcessFrameBeginUpdates() {
@@ -975,16 +1035,32 @@ void QueryManager::ProcessFrameBeginUpdates() {
     UpdateDisjointValue();
 }
 
-void QueryManager::AddPendingQuery(Query* query,
+bool QueryManager::AddPendingQuery(Query* query,
                                    base::subtle::Atomic32 submit_count) {
   DCHECK(query);
   DCHECK(!query->IsDeleted());
-  RemovePendingQuery(query);
+  if (!RemovePendingQuery(query)) {
+    return false;
+  }
   query->MarkAsPending(submit_count);
   pending_queries_.push_back(query);
+  return true;
 }
 
-void QueryManager::RemovePendingQuery(Query* query) {
+bool QueryManager::AddPendingTransferQuery(
+    Query* query,
+    base::subtle::Atomic32 submit_count) {
+  DCHECK(query);
+  DCHECK(!query->IsDeleted());
+  if (!RemovePendingQuery(query)) {
+    return false;
+  }
+  query->MarkAsPending(submit_count);
+  pending_transfer_queries_.push_back(query);
+  return true;
+}
+
+bool QueryManager::RemovePendingQuery(Query* query) {
   DCHECK(query);
   if (query->IsPending()) {
     // TODO(gman): Speed this up if this is a common operation. This would only
@@ -997,20 +1073,38 @@ void QueryManager::RemovePendingQuery(Query* query) {
         break;
       }
     }
-    query->MarkAsCompleted(0);
+    for (QueryQueue::iterator it = pending_transfer_queries_.begin();
+         it != pending_transfer_queries_.end(); ++it) {
+      if (it->get() == query) {
+        pending_transfer_queries_.erase(it);
+        break;
+      }
+    }
+    if (!query->MarkAsCompleted(0)) {
+      return false;
+    }
   }
+  return true;
 }
 
-void QueryManager::BeginQuery(Query* query) {
+bool QueryManager::BeginQuery(Query* query) {
   DCHECK(query);
-  RemovePendingQuery(query);
-  query->Begin();
-  active_queries_[query->target()] = query;
+  if (!RemovePendingQuery(query)) {
+    return false;
+  }
+  if (query->Begin()) {
+    active_queries_[query->target()] = query;
+    return true;
+  }
+
+  return false;
 }
 
-void QueryManager::EndQuery(Query* query, base::subtle::Atomic32 submit_count) {
+bool QueryManager::EndQuery(Query* query, base::subtle::Atomic32 submit_count) {
   DCHECK(query);
-  RemovePendingQuery(query);
+  if (!RemovePendingQuery(query)) {
+    return false;
+  }
 
   // Remove from active query map if it is active.
   ActiveQueryMap::iterator active_it = active_queries_.find(query->target());
@@ -1018,14 +1112,16 @@ void QueryManager::EndQuery(Query* query, base::subtle::Atomic32 submit_count) {
   DCHECK(query == active_it->second.get());
   active_queries_.erase(active_it);
 
-  query->End(submit_count);
+  return query->End(submit_count);
 }
 
-void QueryManager::QueryCounter(Query* query,
-                                base::subtle::Atomic32 submit_count) {
+bool QueryManager::QueryCounter(
+    Query* query, base::subtle::Atomic32 submit_count) {
   DCHECK(query);
-  RemovePendingQuery(query);
-  query->QueryCounter(submit_count);
+  if (!RemovePendingQuery(query)) {
+    return false;
+  }
+  return query->QueryCounter(submit_count);
 }
 
 void QueryManager::PauseQueries() {

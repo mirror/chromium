@@ -5,7 +5,6 @@
 #ifndef MockFetchContext_h
 #define MockFetchContext_h
 
-#include "platform/WebFrameScheduler.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/FetchParameters.h"
@@ -30,8 +29,13 @@ class MockFetchContext : public FetchContext {
     kShouldLoadNewResource,
     kShouldNotLoadNewResource,
   };
-  static MockFetchContext* Create(LoadPolicy load_policy) {
-    return new MockFetchContext(load_policy);
+  // TODO(toyoshim): Disallow to pass nullptr for |taskRunner|, and force to use
+  // FetchTestingPlatformSupport's WebTaskRunner. Probably, MockFetchContext
+  // would be available only through the FetchTestingPlatformSupport in the
+  // future.
+  static MockFetchContext* Create(LoadPolicy load_policy,
+                                  RefPtr<WebTaskRunner> task_runner = nullptr) {
+    return new MockFetchContext(load_policy, std::move(task_runner));
   }
 
   ~MockFetchContext() override {}
@@ -86,41 +90,20 @@ class MockFetchContext : public FetchContext {
         wrapped, runner_->ToSingleThreadTaskRunner());
   }
 
-  WebFrameScheduler* GetFrameScheduler() override {
-    return frame_scheduler_.get();
-  }
+  RefPtr<WebTaskRunner> GetTaskRunner() { return runner_; }
 
  private:
-  class MockFrameScheduler final : public WebFrameScheduler {
-   public:
-    MockFrameScheduler(RefPtr<WebTaskRunner> runner)
-        : runner_(std::move(runner)) {}
-    void AddThrottlingObserver(ObserverType, Observer*) override {}
-    void RemoveThrottlingObserver(ObserverType, Observer*) override {}
-    RefPtr<WebTaskRunner> TimerTaskRunner() override { return runner_; }
-    RefPtr<WebTaskRunner> LoadingTaskRunner() override { return runner_; }
-    RefPtr<WebTaskRunner> SuspendableTaskRunner() override { return runner_; }
-    RefPtr<WebTaskRunner> UnthrottledTaskRunner() override { return runner_; }
-    RefPtr<WebTaskRunner> UnthrottledButBlockableTaskRunner() override {
-      return runner_;
-    }
-
-   private:
-    RefPtr<WebTaskRunner> runner_;
-  };
-
-  MockFetchContext(LoadPolicy load_policy)
+  MockFetchContext(LoadPolicy load_policy, RefPtr<WebTaskRunner> task_runner)
       : load_policy_(load_policy),
-        runner_(AdoptRef(new scheduler::FakeWebTaskRunner)),
+        runner_(task_runner ? std::move(task_runner)
+                            : AdoptRef(new scheduler::FakeWebTaskRunner)),
         security_origin_(SecurityOrigin::CreateUnique()),
-        frame_scheduler_(new MockFrameScheduler(runner_)),
         complete_(false),
         transfer_size_(-1) {}
 
   enum LoadPolicy load_policy_;
   RefPtr<WebTaskRunner> runner_;
   RefPtr<SecurityOrigin> security_origin_;
-  std::unique_ptr<WebFrameScheduler> frame_scheduler_;
   bool complete_;
   long long transfer_size_;
 };

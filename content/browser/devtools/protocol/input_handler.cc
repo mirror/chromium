@@ -27,13 +27,11 @@ namespace protocol {
 
 namespace {
 
-gfx::PointF CssPixelsToPointF(double x, double y, float page_scale_factor) {
+gfx::PointF CssPixelsToPointF(int x, int y, float page_scale_factor) {
   return gfx::PointF(x * page_scale_factor, y * page_scale_factor);
 }
 
-gfx::Vector2dF CssPixelsToVector2dF(double x,
-                                    double y,
-                                    float page_scale_factor) {
+gfx::Vector2dF CssPixelsToVector2dF(int x, int y, float page_scale_factor) {
   return gfx::Vector2dF(x * page_scale_factor, y * page_scale_factor);
 }
 
@@ -346,8 +344,8 @@ void InputHandler::DispatchKeyEvent(
 
 void InputHandler::DispatchMouseEvent(
     const std::string& type,
-    double x,
-    double y,
+    int x,
+    int y,
     Maybe<int> modifiers,
     Maybe<double> timestamp,
     Maybe<std::string> button,
@@ -478,8 +476,8 @@ Response InputHandler::SetIgnoreInputEvents(bool ignore) {
 }
 
 void InputHandler::SynthesizePinchGesture(
-    double x,
-    double y,
+    int x,
+    int y,
     double scale_factor,
     Maybe<int> relative_speed,
     Maybe<std::string> gesture_source_type,
@@ -517,12 +515,12 @@ void InputHandler::SynthesizePinchGesture(
 }
 
 void InputHandler::SynthesizeScrollGesture(
-    double x,
-    double y,
-    Maybe<double> x_distance,
-    Maybe<double> y_distance,
-    Maybe<double> x_overscroll,
-    Maybe<double> y_overscroll,
+    int x,
+    int y,
+    Maybe<int> x_distance,
+    Maybe<int> y_distance,
+    Maybe<int> x_overscroll,
+    Maybe<int> y_overscroll,
     Maybe<bool> prevent_fling,
     Maybe<int> speed,
     Maybe<std::string> gesture_source_type,
@@ -623,8 +621,8 @@ void InputHandler::OnScrollFinished(
 }
 
 void InputHandler::SynthesizeTapGesture(
-    double x,
-    double y,
+    int x,
+    int y,
     Maybe<int> duration,
     Maybe<int> tap_count,
     Maybe<std::string> gesture_source_type,

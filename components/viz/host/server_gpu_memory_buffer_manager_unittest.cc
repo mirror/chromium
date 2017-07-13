@@ -4,7 +4,7 @@
 
 #include "components/viz/host/server_gpu_memory_buffer_manager.h"
 
-#include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread.h"
 #include "gpu/ipc/host/gpu_memory_buffer_support.h"
 #include "services/ui/gpu/interfaces/gpu_service.mojom.h"
@@ -88,7 +88,7 @@ class TestGpuService : public ui::mojom::GpuService {
   void RequestCompleteGpuInfo(
       const RequestCompleteGpuInfoCallback& callback) override {}
 
-  void LoadedShader(const std::string& key, const std::string& data) override {}
+  void LoadedShader(const std::string& data) override {}
 
   void DestroyingVideoSurface(
       int32_t surface_id,
@@ -169,6 +169,7 @@ class ServerGpuMemoryBufferManagerTest : public ::testing::Test {
   void TearDown() override { gfx::ClientNativePixmapFactory::ResetInstance(); }
 
  private:
+  base::test::ScopedTaskEnvironment env_;
   FakeClientNativePixmapFactory pixmap_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServerGpuMemoryBufferManagerTest);

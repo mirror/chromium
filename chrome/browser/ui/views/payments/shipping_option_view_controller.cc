@@ -9,8 +9,6 @@
 #include "components/payments/content/payment_request_spec.h"
 #include "components/payments/content/payment_request_state.h"
 #include "components/payments/core/strings_util.h"
-#include "components/strings/grit/components_strings.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/views/layout/fill_layout.h"
 
 namespace payments {
@@ -29,11 +27,8 @@ class ShippingOptionItem : public PaymentRequestItemList::Item {
                                      state,
                                      parent_list,
                                      selected,
-                                     /*clickable=*/true,
                                      /*show_edit_button=*/false),
-        shipping_option_(shipping_option) {
-    Init();
-  }
+        shipping_option_(shipping_option) {}
   ~ShippingOptionItem() override {}
 
  private:
@@ -52,8 +47,9 @@ class ShippingOptionItem : public PaymentRequestItemList::Item {
     }
   }
 
-  base::string16 GetNameForDataType() override {
-    return l10n_util::GetStringUTF16(IDS_PAYMENTS_SHIPPING_OPTION_LABEL);
+  bool IsEnabled() override {
+    // Shipping options are vetted by the website; none are disabled.
+    return true;
   }
 
   bool CanBeSelected() override {

@@ -59,6 +59,7 @@
 
 - (void)stop {
   [super stop];
+  [self.mediator disconnect];
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {

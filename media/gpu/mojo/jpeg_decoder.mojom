@@ -24,7 +24,7 @@ struct BitstreamBuffer {
   int32 id;
   handle<shared_buffer> memory_handle;
   uint32 size;
-  int64 offset;
+  uint64 offset;
   mojo.common.mojom.TimeDelta timestamp;
   string key_id;
   string iv;

@@ -54,8 +54,6 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
      * with javascript.
      */
     private PrintingContextInterface mContextFromScriptInitiation;
-    private int mRenderProcessId;
-    private int mRenderFrameId;
 
     /** The file descriptor into which the PDF will be written.  Provided by the framework. */
     private int mFileDescriptor;
@@ -92,8 +90,8 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
 
     private PrintManagerDelegate mPrintManager;
 
-    private PrintingControllerImpl(
-            PrintDocumentAdapterWrapper printDocumentAdapterWrapper, String errorText) {
+    private PrintingControllerImpl(PrintDocumentAdapterWrapper printDocumentAdapterWrapper,
+                                   String errorText) {
         mErrorMessage = errorText;
         mPrintDocumentAdapterWrapper = printDocumentAdapterWrapper;
         mPrintDocumentAdapterWrapper.setPdfGenerator(this);
@@ -174,16 +172,13 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
     }
 
     @Override
-    public void setPendingPrint(final Printable printable, PrintManagerDelegate printManager,
-            int renderProcessId, int renderFrameId) {
+    public void setPendingPrint(final Printable printable, PrintManagerDelegate printManager) {
         if (mIsBusy) {
             Log.d(TAG, "Pending print can't be set. PrintingController is busy.");
             return;
         }
         mPrintable = printable;
         mPrintManager = printManager;
-        mRenderProcessId = renderProcessId;
-        mRenderFrameId = renderFrameId;
     }
 
     @Override
@@ -204,7 +199,7 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
     @Override
     public void startPrint(final Printable printable, PrintManagerDelegate printManager) {
         if (mIsBusy) return;
-        setPendingPrint(printable, printManager, mRenderProcessId, mRenderFrameId);
+        setPendingPrint(printable, printManager);
         startPendingPrint(null);
     }
 
@@ -275,9 +270,7 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
         mFileDescriptor = destination.getFd();
         mPages = convertPageRangesToIntegerArray(ranges);
 
-        // mRenderProcessId and mRenderFrameId could be invalid values, in this case we are going to
-        // print the main frame.
-        if (mPrintable.print(mRenderProcessId, mRenderFrameId)) {
+        if (mPrintable.print()) {
             mPrintingState = PRINTING_STATE_STARTED_FROM_ONWRITE;
         } else {
             mOnWriteCallback.onWriteFailed(mErrorMessage);
@@ -309,8 +302,6 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
             mContextFromScriptInitiation.showSystemDialogDone();
             mContextFromScriptInitiation = null;
         }
-        mRenderProcessId = -1;
-        mRenderFrameId = -1;
 
         mPrintingState = PRINTING_STATE_FINISHED;
 

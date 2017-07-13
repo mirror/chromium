@@ -795,7 +795,7 @@ public class BottomSheet
         for (BottomSheetObserver o : mObservers) o.onLoadUrl(params.getUrl());
 
         // Native page URLs in this context do not need to communicate with the tab.
-        if (NativePageFactory.isNativePageUrl(params.getUrl(), incognito) && !isShowingNtp) {
+        if (NativePageFactory.isNativePageUrl(params.getUrl(), incognito)) {
             return TabLoadStatus.PAGE_LOAD_FAILED;
         }
 
@@ -996,12 +996,6 @@ public class BottomSheet
         for (BottomSheetObserver o : mObservers) o.onSheetOpened();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_opened));
         mActivity.addViewObscuringAllTabs(this);
-
-        setFocusable(true);
-        setFocusableInTouchMode(true);
-        setContentDescription(
-                getResources().getString(R.string.bottom_sheet_accessibility_description));
-        if (getFocusedChild() == null) requestFocus();
     }
 
     /**
@@ -1016,10 +1010,6 @@ public class BottomSheet
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_closed));
         clearFocus();
         mActivity.removeViewObscuringAllTabs(this);
-
-        setFocusable(false);
-        setFocusableInTouchMode(false);
-        setContentDescription(null);
 
         showHelpBubbleIfNecessary();
     }

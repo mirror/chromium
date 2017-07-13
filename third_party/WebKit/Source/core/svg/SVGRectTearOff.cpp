@@ -85,8 +85,7 @@ SVGRectTearOff* SVGRectTearOff::CreateDetached(const FloatRect& rect) {
 }
 
 DEFINE_TRACE_WRAPPERS(SVGRectTearOff) {
-  SVGPropertyTearOff<SVGRect>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
+  visitor->TraceWrappers(contextElement());
 }
 
 }  // namespace blink

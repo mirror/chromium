@@ -17,18 +17,7 @@
   max-width: 50%;
   opacity: 0;
   position: absolute;
-  will-change: opacity, transform;
-}
-
-#container.shown-initially {
-  /* If scaleY is smaller than 0.2, an assertion failure occurs in Skia. */
-  transform: scaleY(0.2);
-}
-
-#container.shown-fully {
-  opacity: 1.0;
-  transform: scaleY(1);
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s;
 }
 
 #bubble-body {

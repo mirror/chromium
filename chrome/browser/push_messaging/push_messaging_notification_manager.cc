@@ -29,7 +29,6 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/notification_resources.h"
-#include "content/public/common/push_messaging_status.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "third_party/WebKit/public/platform/modules/budget_service/budget_service.mojom.h"
@@ -55,10 +54,9 @@ using content::ServiceWorkerContext;
 using content::WebContents;
 
 namespace {
-void RecordUserVisibleStatus(content::mojom::PushUserVisibleStatus status) {
-  UMA_HISTOGRAM_ENUMERATION(
-      "PushMessaging.UserVisibleStatus", status,
-      static_cast<int>(content::mojom::PushUserVisibleStatus::LAST) + 1);
+void RecordUserVisibleStatus(content::PushUserVisibleStatus status) {
+  UMA_HISTOGRAM_ENUMERATION("PushMessaging.UserVisibleStatus", status,
+                            content::PUSH_USER_VISIBLE_STATUS_LAST + 1);
 }
 
 content::StoragePartition* GetStoragePartition(Profile* profile,
@@ -203,13 +201,13 @@ void PushMessagingNotificationManager::DidGetNotificationsFromDatabase(
 
   if (notification_needed && notification_shown) {
     RecordUserVisibleStatus(
-        content::mojom::PushUserVisibleStatus::REQUIRED_AND_SHOWN);
+        content::PUSH_USER_VISIBLE_STATUS_REQUIRED_AND_SHOWN);
   } else if (!notification_needed && !notification_shown) {
     RecordUserVisibleStatus(
-        content::mojom::PushUserVisibleStatus::NOT_REQUIRED_AND_NOT_SHOWN);
+        content::PUSH_USER_VISIBLE_STATUS_NOT_REQUIRED_AND_NOT_SHOWN);
   } else {
     RecordUserVisibleStatus(
-        content::mojom::PushUserVisibleStatus::NOT_REQUIRED_BUT_SHOWN);
+        content::PUSH_USER_VISIBLE_STATUS_NOT_REQUIRED_BUT_SHOWN);
   }
 
   message_handled_closure.Run();
@@ -257,14 +255,14 @@ void PushMessagingNotificationManager::ProcessSilentPush(
 
   // If the origin was allowed to issue a silent push, just return.
   if (silent_push_allowed) {
-    RecordUserVisibleStatus(content::mojom::PushUserVisibleStatus::
-                                REQUIRED_BUT_NOT_SHOWN_USED_GRACE);
+    RecordUserVisibleStatus(
+        content::PUSH_USER_VISIBLE_STATUS_REQUIRED_BUT_NOT_SHOWN_USED_GRACE);
     message_handled_closure.Run();
     return;
   }
 
-  RecordUserVisibleStatus(content::mojom::PushUserVisibleStatus::
-                              REQUIRED_BUT_NOT_SHOWN_GRACE_EXCEEDED);
+  RecordUserVisibleStatus(
+      content::PUSH_USER_VISIBLE_STATUS_REQUIRED_BUT_NOT_SHOWN_GRACE_EXCEEDED);
   rappor::SampleDomainAndRegistryFromGURL(
       g_browser_process->rappor_service(),
       "PushMessaging.GenericNotificationShown.Origin", origin);

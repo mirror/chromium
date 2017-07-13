@@ -47,8 +47,7 @@ class NET_EXPORT FileNetLogObserver : public NetLog::ThreadSafeObserver {
  public:
   // Creates a FileNetLogObserver in bounded mode.
   //
-  // |directory| is the directory where the log files will be written to. The
-  // directory must already exist.
+  // |directory| is the directory where the log files will be written to.
   //
   // |max_total_size| is the approximate limit on the cumulative size of all
   // netlog files.
@@ -67,8 +66,7 @@ class NET_EXPORT FileNetLogObserver : public NetLog::ThreadSafeObserver {
 
   // Creates a FileNetLogObserver in unbounded mode.
   //
-  // |log_path| is where the log file will be written to. If a file already
-  // exists at this path it will be overwritten.
+  // |log_path| is where the log file will be written to.
   //
   // |constants| is an optional legend for decoding constant values used in
   // the log. It should generally be a modified version of GetNetConstants().

@@ -84,29 +84,10 @@ class QueryManagerTest : public GpuServiceTest {
                                    int32_t shm_id,
                                    uint32_t shm_offset,
                                    GLuint service_id) {
-    return CreateQueryOnManager(manager_.get(), target, client_id, shm_id,
-                                shm_offset, service_id);
-  }
-
-  QueryManager::Query* CreateQueryOnManager(QueryManager* manager,
-                                            GLenum target,
-                                            GLuint client_id,
-                                            int32_t shm_id,
-                                            uint32_t shm_offset,
-                                            GLuint service_id) {
-    if (service_id) {
-      EXPECT_CALL(*gl_, GenQueries(1, _))
-          .WillOnce(SetArgPointee<1>(service_id))
-          .RetiresOnSaturation();
-    }
-    scoped_refptr<gpu::Buffer> buffer = decoder_->GetSharedMemoryBuffer(shm_id);
-    if (!buffer)
-      return nullptr;
-    QuerySync* sync = static_cast<QuerySync*>(
-        buffer->GetDataAddress(shm_offset, sizeof(QuerySync)));
-    if (!sync)
-      return nullptr;
-    return manager->CreateQuery(target, client_id, std::move(buffer), sync);
+    EXPECT_CALL(*gl_, GenQueries(1, _))
+        .WillOnce(SetArgPointee<1>(service_id))
+        .RetiresOnSaturation();
+    return manager_->CreateQuery(target, client_id, shm_id, shm_offset);
   }
 
   void QueueQuery(QueryManager::Query* query,
@@ -118,8 +99,8 @@ class QueryManagerTest : public GpuServiceTest {
     EXPECT_CALL(*gl_, EndQuery(query->target()))
         .Times(1)
         .RetiresOnSaturation();
-    manager_->BeginQuery(query);
-    manager_->EndQuery(query, submit_count);
+    EXPECT_TRUE(manager_->BeginQuery(query));
+    EXPECT_TRUE(manager_->EndQuery(query, submit_count));
   }
 
   std::unique_ptr<FakeCommandBufferServiceBase> command_buffer_service_;
@@ -209,6 +190,8 @@ TEST_F(QueryManagerTest, QueryBasic) {
   EXPECT_FALSE(query->IsDeleted());
   EXPECT_FALSE(query->IsPending());
   EXPECT_EQ(kTarget, query->target());
+  EXPECT_EQ(shared_memory_id_, query->shm_id());
+  EXPECT_EQ(kSharedMemoryOffset, query->shm_offset());
 }
 
 TEST_F(QueryManagerTest, ProcessPendingQuery) {
@@ -219,7 +202,7 @@ TEST_F(QueryManagerTest, ProcessPendingQuery) {
   const GLuint kResult = 1;
 
   // Check nothing happens if there are no pending queries.
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   // Create Query.
   scoped_refptr<QueryManager::Query> query(
@@ -244,7 +227,7 @@ TEST_F(QueryManagerTest, ProcessPendingQuery) {
               GetQueryObjectuiv(kService1Id, GL_QUERY_RESULT_AVAILABLE_EXT, _))
       .WillOnce(SetArgPointee<2>(0))
       .RetiresOnSaturation();
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
   EXPECT_TRUE(query->IsPending());
   EXPECT_EQ(0, sync->process_count);
   EXPECT_EQ(0u, sync->result);
@@ -258,7 +241,7 @@ TEST_F(QueryManagerTest, ProcessPendingQuery) {
   EXPECT_CALL(*gl_, GetQueryObjectuiv(kService1Id, GL_QUERY_RESULT_EXT, _))
       .WillOnce(SetArgPointee<2>(kResult))
       .RetiresOnSaturation();
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
   EXPECT_FALSE(query->IsPending());
   EXPECT_EQ(kSubmitCount, sync->process_count);
   EXPECT_EQ(kResult, sync->result);
@@ -266,7 +249,7 @@ TEST_F(QueryManagerTest, ProcessPendingQuery) {
 
   // Process with no queries.
   // Expect no GL commands/
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 }
 
 TEST_F(QueryManagerTest, ProcessPendingQueries) {
@@ -341,7 +324,7 @@ TEST_F(QueryManagerTest, ProcessPendingQueries) {
         *gl_, GetQueryObjectuiv(kService3Id, GL_QUERY_RESULT_AVAILABLE_EXT, _))
         .WillOnce(SetArgPointee<2>(0))
         .RetiresOnSaturation();
-    manager_->ProcessPendingQueries(false);
+    EXPECT_TRUE(manager_->ProcessPendingQueries(false));
   }
   EXPECT_FALSE(query1->IsPending());
   EXPECT_FALSE(query2->IsPending());
@@ -360,7 +343,7 @@ TEST_F(QueryManagerTest, ProcessPendingQueries) {
               GetQueryObjectuiv(kService3Id, GL_QUERY_RESULT_AVAILABLE_EXT, _))
       .WillOnce(SetArgPointee<2>(0))
       .RetiresOnSaturation();
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
   EXPECT_TRUE(query3->IsPending());
   EXPECT_EQ(0, sync3->process_count);
   EXPECT_EQ(0u, sync3->result);
@@ -375,11 +358,67 @@ TEST_F(QueryManagerTest, ProcessPendingQueries) {
   EXPECT_CALL(*gl_, GetQueryObjectuiv(kService3Id, GL_QUERY_RESULT_EXT, _))
       .WillOnce(SetArgPointee<2>(kResult3))
       .RetiresOnSaturation();
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
   EXPECT_FALSE(query3->IsPending());
   EXPECT_EQ(kSubmitCount3, sync3->process_count);
   EXPECT_EQ(kResult3, sync3->result);
   EXPECT_FALSE(manager_->HavePendingQueries());
+}
+
+TEST_F(QueryManagerTest, ProcessPendingBadSharedMemoryId) {
+  const GLuint kClient1Id = 1;
+  const GLuint kService1Id = 11;
+  const GLenum kTarget = GL_ANY_SAMPLES_PASSED_EXT;
+  const base::subtle::Atomic32 kSubmitCount = 123;
+  const GLuint kResult = 1;
+
+  // Create Query.
+  scoped_refptr<QueryManager::Query> query(
+      CreateQuery(kTarget, kClient1Id,
+                  kInvalidSharedMemoryId, kSharedMemoryOffset, kService1Id));
+  ASSERT_TRUE(query.get() != NULL);
+
+  // Queue it
+  QueueQuery(query.get(), kService1Id, kSubmitCount);
+
+  // Process with return available.
+  // Expect 2 GL commands.
+  EXPECT_CALL(*gl_,
+              GetQueryObjectuiv(kService1Id, GL_QUERY_RESULT_AVAILABLE_EXT, _))
+      .WillOnce(SetArgPointee<2>(1))
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, GetQueryObjectuiv(kService1Id, GL_QUERY_RESULT_EXT, _))
+      .WillOnce(SetArgPointee<2>(kResult))
+      .RetiresOnSaturation();
+  EXPECT_FALSE(manager_->ProcessPendingQueries(false));
+}
+
+TEST_F(QueryManagerTest, ProcessPendingBadSharedMemoryOffset) {
+  const GLuint kClient1Id = 1;
+  const GLuint kService1Id = 11;
+  const GLenum kTarget = GL_ANY_SAMPLES_PASSED_EXT;
+  const base::subtle::Atomic32 kSubmitCount = 123;
+  const GLuint kResult = 1;
+
+  // Create Query.
+  scoped_refptr<QueryManager::Query> query(
+      CreateQuery(kTarget, kClient1Id, shared_memory_id_,
+                  kInvalidSharedMemoryOffset, kService1Id));
+  ASSERT_TRUE(query.get() != NULL);
+
+  // Queue it
+  QueueQuery(query.get(), kService1Id, kSubmitCount);
+
+  // Process with return available.
+  // Expect 2 GL commands.
+  EXPECT_CALL(*gl_,
+              GetQueryObjectuiv(kService1Id, GL_QUERY_RESULT_AVAILABLE_EXT, _))
+      .WillOnce(SetArgPointee<2>(1))
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, GetQueryObjectuiv(kService1Id, GL_QUERY_RESULT_EXT, _))
+      .WillOnce(SetArgPointee<2>(kResult))
+      .RetiresOnSaturation();
+  EXPECT_FALSE(manager_->ProcessPendingQueries(false));
 }
 
 TEST_F(QueryManagerTest, ExitWithPendingQuery) {
@@ -414,9 +453,11 @@ TEST_F(QueryManagerTest, ARBOcclusionQuery2) {
   std::unique_ptr<QueryManager> manager(
       new QueryManager(decoder_.get(), feature_info.get()));
 
-  QueryManager::Query* query =
-      CreateQueryOnManager(manager.get(), kTarget, kClient1Id,
-                           shared_memory_id_, kSharedMemoryOffset, kService1Id);
+  EXPECT_CALL(*gl_, GenQueries(1, _))
+      .WillOnce(SetArgPointee<1>(kService1Id))
+      .RetiresOnSaturation();
+  QueryManager::Query* query = manager->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   EXPECT_CALL(*gl_, BeginQuery(GL_ANY_SAMPLES_PASSED_EXT, kService1Id))
@@ -425,8 +466,8 @@ TEST_F(QueryManagerTest, ARBOcclusionQuery2) {
   EXPECT_CALL(*gl_, EndQuery(GL_ANY_SAMPLES_PASSED_EXT))
       .Times(1)
       .RetiresOnSaturation();
-  manager->BeginQuery(query);
-  manager->EndQuery(query, kSubmitCount);
+  EXPECT_TRUE(manager->BeginQuery(query));
+  EXPECT_TRUE(manager->EndQuery(query, kSubmitCount));
   manager->Destroy(false);
 }
 
@@ -446,9 +487,11 @@ TEST_F(QueryManagerTest, ARBOcclusionQuery) {
   std::unique_ptr<QueryManager> manager(
       new QueryManager(decoder_.get(), feature_info.get()));
 
-  QueryManager::Query* query =
-      CreateQueryOnManager(manager.get(), kTarget, kClient1Id,
-                           shared_memory_id_, kSharedMemoryOffset, kService1Id);
+  EXPECT_CALL(*gl_, GenQueries(1, _))
+      .WillOnce(SetArgPointee<1>(kService1Id))
+      .RetiresOnSaturation();
+  QueryManager::Query* query = manager->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   EXPECT_CALL(*gl_, BeginQuery(GL_SAMPLES_PASSED_ARB, kService1Id))
@@ -457,8 +500,8 @@ TEST_F(QueryManagerTest, ARBOcclusionQuery) {
   EXPECT_CALL(*gl_, EndQuery(GL_SAMPLES_PASSED_ARB))
       .Times(1)
       .RetiresOnSaturation();
-  manager->BeginQuery(query);
-  manager->EndQuery(query, kSubmitCount);
+  EXPECT_TRUE(manager->BeginQuery(query));
+  EXPECT_TRUE(manager->EndQuery(query, kSubmitCount));
   manager->Destroy(false);
 }
 
@@ -477,15 +520,17 @@ TEST_F(QueryManagerTest, ARBOcclusionPauseResume) {
   std::unique_ptr<QueryManager> manager(
       new QueryManager(decoder_.get(), feature_info.get()));
 
-  QueryManager::Query* query =
-      CreateQueryOnManager(manager.get(), kTarget, kClient1Id,
-                           shared_memory_id_, kSharedMemoryOffset, kService1Id);
+  EXPECT_CALL(*gl_, GenQueries(1, _))
+      .WillOnce(SetArgPointee<1>(kService1Id))
+      .RetiresOnSaturation();
+  QueryManager::Query* query = manager->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   EXPECT_CALL(*gl_, BeginQuery(GL_SAMPLES_PASSED_ARB, kService1Id))
       .Times(1)
       .RetiresOnSaturation();
-  manager->BeginQuery(query);
+  EXPECT_TRUE(manager->BeginQuery(query));
 
   // Pause and Resume the manager.
   EXPECT_CALL(*gl_, EndQuery(GL_SAMPLES_PASSED_ARB))
@@ -504,7 +549,7 @@ TEST_F(QueryManagerTest, ARBOcclusionPauseResume) {
   EXPECT_CALL(*gl_, EndQuery(GL_SAMPLES_PASSED_ARB))
       .Times(1)
       .RetiresOnSaturation();
-  manager->EndQuery(query, kSubmitCount);
+  EXPECT_TRUE(manager->EndQuery(query, kSubmitCount));
 
   EXPECT_CALL(*gl_,
               GetQueryObjectuiv(kService2Id, GL_QUERY_RESULT_AVAILABLE_EXT, _))
@@ -516,7 +561,7 @@ TEST_F(QueryManagerTest, ARBOcclusionPauseResume) {
   EXPECT_CALL(*gl_, GetQueryObjectuiv(kService2Id, GL_QUERY_RESULT_EXT, _))
       .WillOnce(SetArgPointee<2>(1u))
       .RetiresOnSaturation();
-  manager->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager->ProcessPendingQueries(false));
   EXPECT_TRUE(query->IsFinished());
 
   QuerySync* sync = decoder_->GetSharedMemoryAs<QuerySync*>(
@@ -533,8 +578,8 @@ TEST_F(QueryManagerTest, ARBOcclusionPauseResume) {
   EXPECT_CALL(*gl_, EndQuery(GL_SAMPLES_PASSED_ARB))
       .Times(1)
       .RetiresOnSaturation();
-  manager->BeginQuery(query);
-  manager->EndQuery(query, kSubmitCount + 1);
+  EXPECT_TRUE(manager->BeginQuery(query));
+  EXPECT_TRUE(manager->EndQuery(query, kSubmitCount + 1));
 
   EXPECT_CALL(*gl_,
               GetQueryObjectuiv(kService1Id, GL_QUERY_RESULT_AVAILABLE_EXT, _))
@@ -543,7 +588,7 @@ TEST_F(QueryManagerTest, ARBOcclusionPauseResume) {
   EXPECT_CALL(*gl_, GetQueryObjectuiv(kService1Id, GL_QUERY_RESULT_EXT, _))
       .WillOnce(SetArgPointee<2>(0u))
       .RetiresOnSaturation();
-  manager->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager->ProcessPendingQueries(false));
   EXPECT_TRUE(query->IsFinished());
 
   EXPECT_EQ(0u, sync->result);
@@ -561,18 +606,18 @@ TEST_F(QueryManagerTest, TimeElapsedQuery) {
   decoder_->GetGLContext()->CreateGPUTimingClient()->SetCpuTimeForTesting(
       base::Bind(&gl::GPUTimingFake::GetFakeCPUTime));
 
-  QueryManager::Query* query = CreateQuery(
-      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset, 0);
+  QueryManager::Query* query = manager_->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   fake_timing_queries.ExpectGPUTimerQuery(*gl_, true);
   fake_timing_queries.SetCurrentGLTime(
       200 * base::Time::kNanosecondsPerMicrosecond);
-  manager_->BeginQuery(query);
+  EXPECT_TRUE(manager_->BeginQuery(query));
   fake_timing_queries.SetCurrentGLTime(
       300 * base::Time::kNanosecondsPerMicrosecond);
-  manager_->EndQuery(query, kSubmitCount);
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->EndQuery(query, kSubmitCount));
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   EXPECT_TRUE(query->IsFinished());
 
@@ -593,14 +638,14 @@ TEST_F(QueryManagerTest, TimeElapsedPauseResume) {
   decoder_->GetGLContext()->CreateGPUTimingClient()->SetCpuTimeForTesting(
       base::Bind(&gl::GPUTimingFake::GetFakeCPUTime));
 
-  QueryManager::Query* query = CreateQuery(
-      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset, 0);
+  QueryManager::Query* query = manager_->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   fake_timing_queries.ExpectGPUTimerQuery(*gl_, true);
   fake_timing_queries.SetCurrentGLTime(
       200 * base::Time::kNanosecondsPerMicrosecond);
-  manager_->BeginQuery(query);
+  EXPECT_TRUE(manager_->BeginQuery(query));
 
   // Pause and Resume here.
   fake_timing_queries.SetCurrentGLTime(
@@ -613,9 +658,9 @@ TEST_F(QueryManagerTest, TimeElapsedPauseResume) {
 
   fake_timing_queries.SetCurrentGLTime(
       500 * base::Time::kNanosecondsPerMicrosecond);
-  manager_->EndQuery(query, kSubmitCount);
+  EXPECT_TRUE(manager_->EndQuery(query, kSubmitCount));
 
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
   EXPECT_TRUE(query->IsFinished());
 
   QuerySync* sync = decoder_->GetSharedMemoryAs<QuerySync*>(
@@ -627,11 +672,11 @@ TEST_F(QueryManagerTest, TimeElapsedPauseResume) {
   // Make sure next query works properly.
   fake_timing_queries.SetCurrentGLTime(
       600 * base::Time::kNanosecondsPerMicrosecond);
-  manager_->BeginQuery(query);
+  EXPECT_TRUE(manager_->BeginQuery(query));
   fake_timing_queries.SetCurrentGLTime(
       700 * base::Time::kNanosecondsPerMicrosecond);
-  manager_->EndQuery(query, kSubmitCount + 1);
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->EndQuery(query, kSubmitCount + 1));
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   EXPECT_TRUE(query->IsFinished());
 
@@ -661,27 +706,27 @@ TEST_F(QueryManagerManualSetupTest, TimeElapsedDisjoint) {
   const GLenum kTarget = GL_TIME_ELAPSED_EXT;
   const base::subtle::Atomic32 kSubmitCount = 123;
 
-  QueryManager::Query* query = CreateQuery(
-      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset, 0);
+  QueryManager::Query* query = manager_->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   // Disjoint happening before the query should not trigger a disjoint event.
   fake_timing_queries.SetDisjoint();
 
   fake_timing_queries.ExpectGPUTimerQuery(*gl_, true);
-  manager_->BeginQuery(query);
-  manager_->EndQuery(query, kSubmitCount);
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->BeginQuery(query));
+  EXPECT_TRUE(manager_->EndQuery(query, kSubmitCount));
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   EXPECT_TRUE(query->IsFinished());
   EXPECT_EQ(current_disjoint_value, disjoint_sync->GetDisjointCount());
 
   // Disjoint happening during query should trigger disjoint event.
   fake_timing_queries.ExpectGPUTimerQuery(*gl_, true);
-  manager_->BeginQuery(query);
+  EXPECT_TRUE(manager_->BeginQuery(query));
   fake_timing_queries.SetDisjoint();
-  manager_->EndQuery(query, kSubmitCount);
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->EndQuery(query, kSubmitCount));
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   EXPECT_TRUE(query->IsFinished());
   EXPECT_NE(current_disjoint_value, disjoint_sync->GetDisjointCount());
@@ -698,16 +743,16 @@ TEST_F(QueryManagerTest, TimeStampQuery) {
   decoder_->GetGLContext()->CreateGPUTimingClient()->SetCpuTimeForTesting(
       base::Bind(&gl::GPUTimingFake::GetFakeCPUTime));
 
-  QueryManager::Query* query = CreateQuery(
-      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset, 0);
+  QueryManager::Query* query = manager_->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   const uint64_t expected_result =
       100u * base::Time::kNanosecondsPerMicrosecond;
   fake_timing_queries.SetCurrentGLTime(expected_result);
   fake_timing_queries.ExpectGPUTimeStampQuery(*gl_, false);
-  manager_->QueryCounter(query, kSubmitCount);
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->QueryCounter(query, kSubmitCount));
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   QuerySync* sync = decoder_->GetSharedMemoryAs<QuerySync*>(
       shared_memory_id_, kSharedMemoryOffset, sizeof(*sync));
@@ -725,19 +770,19 @@ TEST_F(QueryManagerTest, TimeStampQueryPending) {
   decoder_->GetGLContext()->CreateGPUTimingClient()->SetCpuTimeForTesting(
       base::Bind(&gl::GPUTimingFake::GetFakeCPUTime));
 
-  QueryManager::Query* query = CreateQuery(
-      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset, 0);
+  QueryManager::Query* query = manager_->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   const uint64_t expected_result =
       100u * base::Time::kNanosecondsPerMicrosecond;
   fake_timing_queries.SetCurrentGLTime(expected_result);
   fake_timing_queries.ExpectGPUTimeStampQuery(*gl_, false);
-  manager_->QueryCounter(query, kSubmitCount);
+  EXPECT_TRUE(manager_->QueryCounter(query, kSubmitCount));
   EXPECT_TRUE(query->IsPending());
   fake_timing_queries.ExpectGPUTimeStampQuery(*gl_, false);
-  manager_->QueryCounter(query, kSubmitCount);
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->QueryCounter(query, kSubmitCount));
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   QuerySync* sync = decoder_->GetSharedMemoryAs<QuerySync*>(
       shared_memory_id_, kSharedMemoryOffset, sizeof(*sync));
@@ -765,25 +810,25 @@ TEST_F(QueryManagerManualSetupTest, TimeStampDisjoint) {
   const GLenum kTarget = GL_TIMESTAMP_EXT;
   const base::subtle::Atomic32 kSubmitCount = 123;
 
-  QueryManager::Query* query = CreateQuery(
-      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset, 0);
+  QueryManager::Query* query = manager_->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   // Disjoint happening before the query should not trigger a disjoint event.
   fake_timing_queries.SetDisjoint();
 
   fake_timing_queries.ExpectGPUTimeStampQuery(*gl_, false);
-  manager_->QueryCounter(query, kSubmitCount);
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->QueryCounter(query, kSubmitCount));
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   EXPECT_TRUE(query->IsFinished());
   EXPECT_EQ(current_disjoint_value, disjoint_sync->GetDisjointCount());
 
   // Disjoint happening during query should trigger disjoint event.
   fake_timing_queries.ExpectGPUTimeStampQuery(*gl_, false);
-  manager_->QueryCounter(query, kSubmitCount);
+  EXPECT_TRUE(manager_->QueryCounter(query, kSubmitCount));
   fake_timing_queries.SetDisjoint();
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   EXPECT_TRUE(query->IsFinished());
   EXPECT_NE(current_disjoint_value, disjoint_sync->GetDisjointCount());
@@ -815,13 +860,13 @@ TEST_F(QueryManagerManualSetupTest, DisjointContinualTest) {
   const GLenum kTarget = GL_TIMESTAMP_EXT;
   const base::subtle::Atomic32 kSubmitCount = 123;
 
-  QueryManager::Query* query = CreateQuery(
-      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset, 0);
+  QueryManager::Query* query = manager_->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   fake_timing_queries.ExpectGPUTimeStampQuery(*gl_, false);
-  manager_->QueryCounter(query, kSubmitCount);
-  manager_->ProcessPendingQueries(false);
+  EXPECT_TRUE(manager_->QueryCounter(query, kSubmitCount));
+  EXPECT_TRUE(manager_->ProcessPendingQueries(false));
 
   EXPECT_EQ(current_disjoint_value, disjoint_sync->GetDisjointCount());
   fake_timing_queries.SetDisjoint();
@@ -842,9 +887,8 @@ TEST_F(QueryManagerTest, GetErrorQuery) {
   std::unique_ptr<QueryManager> manager(
       new QueryManager(decoder_.get(), feature_info.get()));
 
-  QueryManager::Query* query =
-      CreateQueryOnManager(manager.get(), kTarget, kClient1Id,
-                           shared_memory_id_, kSharedMemoryOffset, 0);
+  QueryManager::Query* query = manager->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   // Setup shared memory like client would.
@@ -853,7 +897,7 @@ TEST_F(QueryManagerTest, GetErrorQuery) {
   ASSERT_TRUE(sync != NULL);
   sync->Reset();
 
-  manager->BeginQuery(query);
+  EXPECT_TRUE(manager->BeginQuery(query));
 
   MockErrorState mock_error_state;
   EXPECT_CALL(*decoder_.get(), GetErrorState())
@@ -862,7 +906,7 @@ TEST_F(QueryManagerTest, GetErrorQuery) {
       .WillOnce(Return(GL_INVALID_ENUM))
       .RetiresOnSaturation();
 
-  manager->EndQuery(query, kSubmitCount);
+  EXPECT_TRUE(manager->EndQuery(query, kSubmitCount));
   EXPECT_FALSE(query->IsPending());
 
   EXPECT_EQ(static_cast<GLuint>(GL_INVALID_ENUM), sync->result);
@@ -884,9 +928,11 @@ TEST_F(QueryManagerTest, OcclusionQuery) {
   std::unique_ptr<QueryManager> manager(
       new QueryManager(decoder_.get(), feature_info.get()));
 
-  QueryManager::Query* query =
-      CreateQueryOnManager(manager.get(), kTarget, kClient1Id,
-                           shared_memory_id_, kSharedMemoryOffset, kService1Id);
+  EXPECT_CALL(*gl_, GenQueries(1, _))
+      .WillOnce(SetArgPointee<1>(kService1Id))
+      .RetiresOnSaturation();
+  QueryManager::Query* query = manager->CreateQuery(
+      kTarget, kClient1Id, shared_memory_id_, kSharedMemoryOffset);
   ASSERT_TRUE(query != NULL);
 
   EXPECT_CALL(*gl_, BeginQuery(GL_SAMPLES_PASSED_ARB, kService1Id))
@@ -895,8 +941,8 @@ TEST_F(QueryManagerTest, OcclusionQuery) {
   EXPECT_CALL(*gl_, EndQuery(GL_SAMPLES_PASSED_ARB))
       .Times(1)
       .RetiresOnSaturation();
-  manager->BeginQuery(query);
-  manager->EndQuery(query, kSubmitCount);
+  EXPECT_TRUE(manager->BeginQuery(query));
+  EXPECT_TRUE(manager->EndQuery(query, kSubmitCount));
   manager->Destroy(false);
 }
 

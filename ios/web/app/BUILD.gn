@@ -19,7 +19,6 @@ source_set("app") {
     "//base:i18n",
     "//crypto",
     "//ios/web",
-    "//ios/web/public/global_state",
     "//mojo/edk/system",
     "//net",
     "//ui/base",

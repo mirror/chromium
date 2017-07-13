@@ -67,12 +67,9 @@ class PaymentMethodListItem : public PaymentRequestItemList::Item {
                                      state,
                                      list,
                                      selected,
-                                     /*clickable=*/true,
                                      /*show_edit_button=*/true),
         instrument_(instrument),
-        dialog_(dialog) {
-    Init();
-  }
+        dialog_(dialog) {}
   ~PaymentMethodListItem() override {}
 
  private:
@@ -147,8 +144,9 @@ class PaymentMethodListItem : public PaymentRequestItemList::Item {
     }
   }
 
-  base::string16 GetNameForDataType() override {
-    return l10n_util::GetStringUTF16(IDS_PAYMENTS_METHOD_OF_PAYMENT_LABEL);
+  bool IsEnabled() override {
+    // All items are enabled.
+    return true;
   }
 
   bool CanBeSelected() override {

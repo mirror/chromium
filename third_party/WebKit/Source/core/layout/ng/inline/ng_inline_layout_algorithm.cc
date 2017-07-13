@@ -4,7 +4,6 @@
 
 #include "core/layout/ng/inline/ng_inline_layout_algorithm.h"
 
-#include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/inline/ng_bidi_paragraph.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
@@ -57,7 +56,7 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
       is_horizontal_writing_mode_(
           blink::IsHorizontalWritingMode(space->WritingMode())),
       space_builder_(space) {
-  unpositioned_floats_ = ConstraintSpace().UnpositionedFloats();
+  container_builder_.MutableUnpositionedFloats() = space->UnpositionedFloats();
 
   if (!is_horizontal_writing_mode_)
     baseline_type_ = FontBaseline::kIdeographicBaseline;
@@ -78,7 +77,7 @@ bool NGInlineLayoutAlgorithm::CreateLine(
     NGLogicalOffset origin_point =
         GetOriginPointForFloats(ContainerBfcOffset(), content_size_);
     PositionPendingFloats(origin_point.block_offset, &container_builder_,
-                          &unpositioned_floats_, MutableConstraintSpace());
+                          MutableConstraintSpace());
   }
 
   return true;
@@ -288,15 +287,25 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
   NGInlineBoxState* box =
       box_states_.OnOpenTag(item, *item_result, line_box, position);
 
+  // For replaced elements, inline-block elements, and inline-table elements,
+  // the height is the height of their margin box.
+  // https://drafts.csswg.org/css2/visudet.html#line-height
   NGBoxFragment fragment(
       ConstraintSpace().WritingMode(),
       ToNGPhysicalBoxFragment(
           item_result->layout_result->PhysicalFragment().Get()));
-  NGLineHeightMetrics metrics = fragment.BaselineMetrics(
-      {line_info.UseFirstLineStyle()
-           ? NGBaselineAlgorithmType::kAtomicInlineForFirstLine
-           : NGBaselineAlgorithmType::kAtomicInline,
-       baseline_type_});
+  LayoutUnit block_size =
+      fragment.BlockSize() + item_result->margins.BlockSum();
+
+  // TODO(kojii): Add baseline position to NGPhysicalFragment.
+  LayoutBox* layout_box = ToLayoutBox(item.GetLayoutObject());
+  LineDirectionMode line_direction_mode =
+      IsHorizontalWritingMode() ? LineDirectionMode::kHorizontalLine
+                                : LineDirectionMode::kVerticalLine;
+  LayoutUnit baseline_offset(layout_box->BaselinePosition(
+      baseline_type_, line_info.UseFirstLineStyle(), line_direction_mode));
+
+  NGLineHeightMetrics metrics(baseline_offset, block_size - baseline_offset);
   box->metrics.Unite(metrics);
 
   // TODO(kojii): Figure out what to do with OOF in NGLayoutResult.
@@ -306,7 +315,7 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
   // |fragment| directly. Currently |CopyFragmentDataToLayoutBlockFlow|
   // requires a text fragment.
   text_builder->SetDirection(style.Direction());
-  text_builder->SetSize({fragment.InlineSize(), metrics.LineHeight()});
+  text_builder->SetSize({fragment.InlineSize(), block_size});
   LayoutUnit line_top = item_result->margins.block_start - metrics.ascent;
   RefPtr<NGPhysicalTextFragment> text_fragment = text_builder->ToTextFragment(
       item_result->item_index, item_result->start_offset,
@@ -397,91 +406,28 @@ LayoutUnit NGInlineLayoutAlgorithm::ComputeContentSize(
   return content_size;
 }
 
-// Add a baseline from a child line box.
-// @return false if the specified child is not a line box.
-bool NGInlineLayoutAlgorithm::AddBaseline(const NGBaselineRequest& request,
-                                          unsigned child_index) {
-  const NGPhysicalFragment* child =
-      container_builder_.Children()[child_index].Get();
-  if (!child->IsLineBox())
-    return false;
-
-  const NGPhysicalLineBoxFragment* line_box =
-      ToNGPhysicalLineBoxFragment(child);
-  LayoutUnit offset = line_box->BaselinePosition(request.baseline_type);
-  container_builder_.AddBaseline(
-      request.algorithm_type, request.baseline_type,
-      offset + container_builder_.Offsets()[child_index].block_offset);
-  return true;
-}
-
-// Compute requested baselines from child line boxes.
-void NGInlineLayoutAlgorithm::PropagateBaselinesFromChildren() {
-  const Vector<NGBaselineRequest>& requests =
-      ConstraintSpace().BaselineRequests();
-  if (requests.IsEmpty())
-    return;
-
-  for (const auto& request : requests) {
-    switch (request.algorithm_type) {
-      case NGBaselineAlgorithmType::kAtomicInline:
-      case NGBaselineAlgorithmType::kAtomicInlineForFirstLine:
-        for (unsigned i = container_builder_.Children().size(); i--;) {
-          if (AddBaseline(request, i))
-            break;
-        }
-        break;
-      case NGBaselineAlgorithmType::kFirstLine:
-        for (unsigned i = 0; i < container_builder_.Children().size(); i++) {
-          if (AddBaseline(request, i))
-            break;
-        }
-        break;
-    }
-  }
-}
-
 RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   // Line boxes should start at (0,0).
   // The parent NGBlockLayoutAlgorithm places the anonymous wrapper using the
   // border and padding of the container block.
   content_size_ = LayoutUnit();
 
-  // We can resolve our BFC offset if we aren't an empty inline.
+  // Check if we can resolve the BFC offset.
   if (!Node().IsEmptyInline()) {
     DCHECK(!container_builder_.BfcOffset());
     LayoutUnit bfc_block_offset = constraint_space_->BfcOffset().block_offset +
                                   constraint_space_->MarginStrut().Sum();
     MaybeUpdateFragmentBfcOffset(*constraint_space_, bfc_block_offset,
                                  &container_builder_);
-
-    // If we have unpositioned floats from a previous sibling, we need to abort
-    // our layout, and tell our parent that we now know our BFC offset.
-    if (!unpositioned_floats_.IsEmpty()) {
-      // TODO(ikilpatrick): This should be swapping in its unpositioned floats
-      // before aborting, but as because NGLayoutInputNode::IsInline isn't
-      // stable, we can't do this yet.
-      // container_builder_.SwapUnpositionedFloats(&unpositioned_floats_);
-      return container_builder_.Abort(NGLayoutResult::kBfcOffsetResolved);
-    }
+    PositionPendingFloats(bfc_block_offset, &container_builder_,
+                          constraint_space_);
   }
 
   NGLineBreaker line_breaker(Node(), constraint_space_, &container_builder_,
-                             &unpositioned_floats_, BreakToken());
+                             BreakToken());
   NGLineInfo line_info;
   while (line_breaker.NextLine(&line_info, {LayoutUnit(), content_size_}))
     CreateLine(&line_info, line_breaker.CreateBreakToken());
-
-  // Place any remaining floats which couldn't fit on the previous line.
-  // TODO(ikilpatrick): This is duplicated from CreateLine, but flushes any
-  // floats if we didn't create a line-box. Refactor this such that this isn't
-  // needed.
-  if (container_builder_.BfcOffset()) {
-    NGLogicalOffset origin_point =
-        GetOriginPointForFloats(ContainerBfcOffset(), content_size_);
-    PositionPendingFloats(origin_point.block_offset, &container_builder_,
-                          &unpositioned_floats_, MutableConstraintSpace());
-  }
 
   // TODO(kojii): Check if the line box width should be content or available.
   NGLogicalSize size(max_inline_size_, content_size_);
@@ -493,17 +439,6 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   if (!container_builder_.BfcOffset()) {
     container_builder_.SetEndMarginStrut(ConstraintSpace().MarginStrut());
   }
-
-  // If we've got any unpositioned floats here, we must be an empty inline
-  // without a BFC offset. We need to pass our unpositioned floats to our next
-  // sibling.
-  if (!unpositioned_floats_.IsEmpty()) {
-    DCHECK(Node().IsEmptyInline());
-    DCHECK(!container_builder_.BfcOffset());
-    container_builder_.SwapUnpositionedFloats(&unpositioned_floats_);
-  }
-
-  PropagateBaselinesFromChildren();
 
   return container_builder_.ToBoxFragment();
 }

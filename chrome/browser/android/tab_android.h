@@ -186,13 +186,10 @@ class TabAndroid : public CoreTabHelperDelegate,
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jstring>& jurl,
       const base::android::JavaParamRef<jstring>& jtitle);
-  bool Print(JNIEnv* env,
-             const base::android::JavaParamRef<jobject>& obj,
-             jint render_process_id,
-             jint render_frame_id);
+  bool Print(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
 
   // Sets the tab as content to be printed through JNI.
-  void SetPendingPrint(int render_process_id, int render_frame_id);
+  void SetPendingPrint();
 
   // Called to get default favicon of current tab, return null if no
   // favicon is avaliable for current tab.
@@ -230,10 +227,6 @@ class TabAndroid : public CoreTabHelperDelegate,
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jobject>& jtab_content_manager);
-
-  void ClearThumbnailPlaceholder(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
 
   bool HasPrerenderedUrl(JNIEnv* env,
                          const base::android::JavaParamRef<jobject>& obj,

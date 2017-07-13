@@ -98,15 +98,6 @@ cr.define('extensions', function() {
           return [];
         },
       },
-
-      /**
-       * Prevents page content from showing before data is first loaded.
-       * @private
-       */
-      didInitPage_: {
-        type: Boolean,
-        value: false,
-      },
     },
 
     listeners: {
@@ -180,7 +171,6 @@ cr.define('extensions', function() {
      * the user visits chrome://extensions/?id=..., we land on the proper page.
      */
     initPage: function() {
-      this.didInitPage_ = true;
       this.changePage(this.navigationHelper_.getCurrentPage(), true);
     },
 
@@ -243,6 +233,14 @@ cr.define('extensions', function() {
     getData_: function(id) {
       return this.extensions[this.getIndexInList_('extensions', id)] ||
           this.apps[this.getIndexInList_('apps', id)];
+    },
+
+    /**
+     * @return {boolean} Whether the list should be visible.
+     * @private
+     */
+    computeListHidden_: function() {
+      return this.$['items-list'].items.length == 0;
     },
 
     /**

@@ -19,7 +19,6 @@ class EmptyClient : public Client {
   // Client implementation.
   void OnServiceInitialized(
       const std::vector<std::string>& outstanding_download_guids) override;
-  void OnServiceUnavailable() override;
   ShouldDownload OnDownloadStarted(
       const std::string& guid,
       const std::vector<GURL>& url_chain,

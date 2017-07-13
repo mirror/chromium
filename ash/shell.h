@@ -439,9 +439,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   // desired stored settings.
   PrefService* GetActiveUserPrefService() const;
 
-  // Gets the local state pref service. It will be null under mash.
-  PrefService* GetLocalStatePrefService() const;
-
   // Returns WebNotificationTray on the primary root window.
   WebNotificationTray* GetWebNotificationTray();
 

@@ -47,7 +47,6 @@ def apply_template(template_path, params, filters=None, tests=None):
     if tests:
         jinja_env.tests.update(tests)
     template = jinja_env.get_template(template_path)
-    params['template_file'] = template_path
     return template.render(params)
 
 

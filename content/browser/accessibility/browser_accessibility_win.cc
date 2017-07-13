@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "content/browser/accessibility/browser_accessibility_win.h"
-#include "content/browser/accessibility/browser_accessibility_manager.h"
 
 #include "ui/base/win/atl_module.h"
 
@@ -59,18 +58,6 @@ base::string16 BrowserAccessibilityWin::GetText() const {
 
 gfx::NativeViewAccessible BrowserAccessibilityWin::GetNativeViewAccessible() {
   return GetCOM();
-}
-
-ui::AXPlatformNode* BrowserAccessibilityWin::GetFromNodeID(int32_t id) {
-  if (!instance_active())
-    return nullptr;
-
-  BrowserAccessibility* accessibility = manager_->GetFromID(id);
-  if (!accessibility)
-    return nullptr;
-
-  auto* accessibility_win = ToBrowserAccessibilityWin(accessibility);
-  return accessibility_win->GetCOM();
 }
 
 BrowserAccessibilityComWin* BrowserAccessibilityWin::GetCOM() const {

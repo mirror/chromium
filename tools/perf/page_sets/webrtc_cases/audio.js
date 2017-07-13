@@ -40,14 +40,7 @@ function gotStream(stream) {
   if (audioTracks.length > 0) {
     trace('Using Audio device: ' + audioTracks[0].label);
   }
-  localStream.getTracks().forEach(
-    function(track) {
-      pc1.addTrack(
-        track,
-        localStream
-      );
-    }
-  );
+  pc1.addStream(localStream);
   trace('Adding Local Stream to peer connection');
 
   pc1.createOffer(
@@ -88,7 +81,7 @@ function call() {
   pc2.onicecandidate = function(e) {
     onIceCandidate(pc2, e);
   };
-  pc2.ontrack = gotRemoteStream;
+  pc2.onaddstream = gotRemoteStream;
   trace('Requesting local stream');
   navigator.mediaDevices.getUserMedia({
     audio: true,
@@ -149,10 +142,8 @@ function hangup() {
 }
 
 function gotRemoteStream(e) {
-  if (audio2.srcObject !== e.streams[0]) {
-    audio2.srcObject = e.streams[0];
-    trace('Received remote stream');
-  }
+  audio2.srcObject = e.stream;
+  trace('Received remote stream');
 }
 
 function getOtherPc(pc) {

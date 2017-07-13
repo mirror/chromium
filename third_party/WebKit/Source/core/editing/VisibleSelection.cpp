@@ -62,7 +62,7 @@ VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate(
 template <typename Strategy>
 VisibleSelectionTemplate<Strategy> VisibleSelectionTemplate<Strategy>::Create(
     const SelectionTemplate<Strategy>& selection) {
-  return VisibleSelectionTemplate(selection, TextGranularity::kCharacter);
+  return VisibleSelectionTemplate(selection, selection.Granularity());
 }
 
 VisibleSelection CreateVisibleSelection(const SelectionInDOMTree& selection) {

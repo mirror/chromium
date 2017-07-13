@@ -71,8 +71,8 @@ class CC_EXPORT PictureLayerImpl
                           Region* new_invalidation,
                           const PictureLayerTilingSet* pending_set);
   bool UpdateTiles();
-  // Returns true if the LCD state changed.
-  bool UpdateCanUseLCDTextAfterCommit();
+  void UpdateCanUseLCDTextAfterCommit();
+  bool RasterSourceUsesLCDText() const;
   WhichTree GetTree() const;
 
   // Mask-related functions.
@@ -105,8 +105,6 @@ class CC_EXPORT PictureLayerImpl
 
   void InvalidateRegionForImages(
       const PaintImageIdFlatSet& images_to_invalidate);
-
-  bool RasterSourceUsesLCDTextForTesting() const { return can_use_lcd_text_; }
 
  protected:
   PictureLayerImpl(LayerTreeImpl* tree_impl,
@@ -154,15 +152,13 @@ class CC_EXPORT PictureLayerImpl
   float raster_contents_scale_;
   float low_res_raster_contents_scale_;
 
+  bool was_screen_space_transform_animating_;
+  bool only_used_low_res_last_append_quads_;
   Layer::LayerMaskType mask_type_;
 
-  bool was_screen_space_transform_animating_ : 1;
-  bool only_used_low_res_last_append_quads_ : 1;
-
-  bool nearest_neighbor_ : 1;
-  bool use_transformed_rasterization_ : 1;
-  bool is_directly_composited_image_ : 1;
-  bool can_use_lcd_text_ : 1;
+  bool nearest_neighbor_;
+  bool use_transformed_rasterization_;
+  bool is_directly_composited_image_;
 
   // Use this instead of |visible_layer_rect()| for tiling calculations. This
   // takes external viewport and transform for tile priority into account.

@@ -179,6 +179,7 @@ class MockInputMethodObserver : public InputMethodObserver {
   ~MockInputMethodObserver() override {}
 
  private:
+  void OnTextInputTypeChanged(const TextInputClient* client) override {}
   void OnFocus() override {}
   void OnBlur() override {}
   void OnCaretBoundsChanged(const TextInputClient* client) override {}

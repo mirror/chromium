@@ -19,6 +19,13 @@ namespace {
 // those frames get dropped.
 static const int kMaxBufferCount = 3;
 
+void RunSuccessfulGetPhotoStateCallback(
+    video_capture::mojom::Device::GetPhotoStateCallback callback,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    media::mojom::PhotoStatePtr result) {
+  task_runner->PostTask(FROM_HERE, base::Bind(callback, base::Passed(&result)));
+}
+
 void RunFailedGetPhotoStateCallback(
     base::Callback<void(media::mojom::PhotoStatePtr)> cb) {
   cb.Run(nullptr);
@@ -26,6 +33,13 @@ void RunFailedGetPhotoStateCallback(
 
 void RunFailedSetOptionsCallback(base::Callback<void(bool)> cb) {
   cb.Run(false);
+}
+
+void RunSuccessfulTakePhotoCallback(
+    video_capture::mojom::Device::TakePhotoCallback callback,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    media::mojom::BlobPtr blob) {
+  task_runner->PostTask(FROM_HERE, base::Bind(callback, base::Passed(&blob)));
 }
 
 void RunFailedTakePhotoCallback(
@@ -115,7 +129,10 @@ void DeviceMediaToMojoAdapter::Resume() {
 void DeviceMediaToMojoAdapter::GetPhotoState(
     const GetPhotoStateCallback& callback) {
   media::VideoCaptureDevice::GetPhotoStateCallback scoped_callback(
-      media::BindToCurrentLoop(callback),
+      // Cannot use BindToCurrentLoop() here, because it does not support
+      // callbacks with unbound move-only parameters.
+      base::Bind(&RunSuccessfulGetPhotoStateCallback, std::move(callback),
+                 base::ThreadTaskRunnerHandle::Get()),
       media::BindToCurrentLoop(base::Bind(&RunFailedGetPhotoStateCallback)));
   device_->GetPhotoState(std::move(scoped_callback));
 }
@@ -133,7 +150,10 @@ void DeviceMediaToMojoAdapter::SetPhotoOptions(
 void DeviceMediaToMojoAdapter::TakePhoto(const TakePhotoCallback& callback) {
   media::ScopedResultCallback<media::mojom::ImageCapture::TakePhotoCallback>
       scoped_callback(
-          media::BindToCurrentLoop(callback),
+          // Cannot use BindToCurrentLoop() here, because it does not support
+          // callbacks with unbound move-only parameters.
+          base::Bind(&RunSuccessfulTakePhotoCallback, std::move(callback),
+                     base::ThreadTaskRunnerHandle::Get()),
           media::BindToCurrentLoop(base::Bind(&RunFailedTakePhotoCallback)));
   device_->TakePhoto(std::move(scoped_callback));
 }

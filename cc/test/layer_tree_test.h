@@ -16,10 +16,6 @@
 #include "cc/trees/layer_tree_host_impl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace viz {
-class TestLayerTreeFrameSink;
-}
-
 namespace cc {
 
 class AnimationHost;
@@ -30,6 +26,7 @@ class LayerTreeHostForTesting;
 class LayerTreeTestLayerTreeFrameSinkClient;
 class Proxy;
 class TestContextProvider;
+class TestLayerTreeFrameSink;
 class TestTaskGraphRunner;
 
 // Creates the virtual viewport layer hierarchy under the given root_layer.
@@ -141,7 +138,7 @@ class LayerTreeTest : public testing::Test, public TestHooks {
   // Override this and call the base class to change what ContextProviders will
   // be used (such as for pixel tests). Or override it and create your own
   // TestLayerTreeFrameSink to control how it is created.
-  virtual std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
+  virtual std::unique_ptr<TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
