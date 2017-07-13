@@ -19,6 +19,9 @@
 #include "v8/include/v8.h"
 
 namespace blink {
+namespace mojom {
+enum class WebFeature : int32_t;
+}  // namespace mojom
 class WebDataSource;
 class WebFormElement;
 class WebNode;
@@ -115,6 +118,10 @@ class CONTENT_EXPORT RenderFrameObserver : public IPC::Listener,
   // load. This is used for metrics collection.
   virtual void DidObserveLoadingBehavior(
       blink::WebLoadingBehaviorFlag behavior) {}
+
+  // Notification when the renderer observes a new feature usage during a page
+  // load. This is used for UseCounter feature metrics.
+  virtual void DidObserveNewFeatureUsage(blink::mojom::WebFeature feature) {}
 
   // Called when the focused node has changed to |node|.
   virtual void FocusedNodeChanged(const blink::WebNode& node) {}
