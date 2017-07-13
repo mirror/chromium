@@ -32,6 +32,10 @@
         "ui": [
           "discardable_memory",
           "gpu_client"
+        ],
+        "metrics": [
+          "metrics:histograms",
+          "metrics:debug"
         ]
       }
     },

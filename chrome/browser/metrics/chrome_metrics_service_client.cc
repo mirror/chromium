@@ -42,7 +42,6 @@
 #include "chrome/browser/metrics/network_quality_estimator_provider_impl.h"
 #include "chrome/browser/metrics/process_memory_metrics_emitter.h"
 #include "chrome/browser/metrics/sampling_metrics_provider.h"
-#include "chrome/browser/metrics/subprocess_metrics_provider.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_metrics_provider.h"
 #include "chrome/browser/sync/chrome_sync_client.h"
@@ -598,11 +597,6 @@ void ChromeMetricsServiceClient::Initialize() {
 void ChromeMetricsServiceClient::RegisterMetricsServiceProviders() {
   PrefService* local_state = g_browser_process->local_state();
 
-  // Gets access to persistent metrics shared by sub-processes.
-  metrics_service_->RegisterMetricsProvider(
-      std::unique_ptr<metrics::MetricsProvider>(
-          new SubprocessMetricsProvider()));
-
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   metrics_service_->RegisterMetricsProvider(
       std::unique_ptr<metrics::MetricsProvider>(
@@ -844,8 +838,9 @@ void ChromeMetricsServiceClient::OnMemoryDetailCollectionDone() {
   // Set up the callback task to call after we receive histograms from all
   // child processes. |timeout| specifies how long to wait before absolutely
   // calling us back on the task.
-  content::FetchHistogramsAsynchronously(base::ThreadTaskRunnerHandle::Get(),
-                                         callback, timeout);
+  // TODO(slan): Call the metrics service here.
+  // content::FetchHistogramsAsynchronously(base::ThreadTaskRunnerHandle::Get(),
+  //                                        callback, timeout);
 }
 
 void ChromeMetricsServiceClient::OnHistogramSynchronizationDone() {

@@ -39,6 +39,10 @@ class SyncChannel;
 class SyncMessageFilter;
 }  // namespace IPC
 
+namespace metrics {
+class HistogramCollectorClient;
+}
+
 namespace mojo {
 namespace edk {
 class IncomingBrokerClientInvitation;
@@ -48,7 +52,6 @@ class ScopedIPCSupport;
 }  // namespace mojo
 
 namespace content {
-class ChildHistogramMessageFilter;
 class ChildResourceMessageFilter;
 class FileSystemDispatcher;
 class InProcessChildThreadParams;
@@ -142,10 +145,6 @@ class CONTENT_EXPORT ChildThreadImpl
   // the main thread.
   ThreadSafeSender* thread_safe_sender() const {
     return thread_safe_sender_.get();
-  }
-
-  ChildHistogramMessageFilter* child_histogram_message_filter() const {
-    return histogram_message_filter_.get();
   }
 
   ServiceWorkerMessageFilter* service_worker_message_filter() const {
@@ -271,8 +270,6 @@ class CONTENT_EXPORT ChildThreadImpl
 
   std::unique_ptr<QuotaDispatcher> quota_dispatcher_;
 
-  scoped_refptr<ChildHistogramMessageFilter> histogram_message_filter_;
-
   scoped_refptr<ChildResourceMessageFilter> resource_message_filter_;
 
   scoped_refptr<ServiceWorkerMessageFilter> service_worker_message_filter_;
@@ -282,6 +279,9 @@ class CONTENT_EXPORT ChildThreadImpl
   scoped_refptr<NotificationDispatcher> notification_dispatcher_;
 
   std::unique_ptr<base::PowerMonitor> power_monitor_;
+
+  std::unique_ptr<metrics::HistogramCollectorClient>
+      histogram_collector_client_;
 
   scoped_refptr<base::SingleThreadTaskRunner> browser_process_io_runner_;
 

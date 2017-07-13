@@ -2,24 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_HISTOGRAM_SYNCHRONIZER_H_
-#define CONTENT_BROWSER_HISTOGRAM_SYNCHRONIZER_H_
+#ifndef SERVICES_METRICS_HISTOGRAMS_HISTOGRAM_SYNCHRONIZER_H_
+#define SERVICES_METRICS_HISTOGRAMS_HISTOGRAM_SYNCHRONIZER_H_
 
 #include <string>
 #include <vector>
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "base/memory/singleton.h"
 #include "base/synchronization/lock.h"
 #include "base/task_runner.h"
 #include "base/time/time.h"
-#include "content/browser/histogram_subscriber.h"
+#include "mojo/public/cpp/bindings/interface_ptr_set.h"
+#include "services/metrics/public/interfaces/histogram.mojom.h"
 
-namespace content {
+namespace metrics {
 
 // This class maintains state that is used to upload histogram data from the
-// various child processes, into the browser process. Such transactions are
+// various child clients, into the browser process. Such transactions are
 // usually instigated by the browser. In general, a child process will respond
 // by gathering snapshots of all internal histograms, calculating what has
 // changed since its last upload, and transmitting a pickled collection of
@@ -30,8 +30,8 @@ namespace content {
 // other is asynchronous, and used by the metrics services in preparation for a
 // log upload.
 //
-// To assure that all the processes have responded, a counter is maintained to
-// indicate the number of pending (not yet responsive) processes. To avoid
+// To assure that all the clients have responded, a counter is maintained to
+// indicate the number of pending (not yet responsive) clients. To avoid
 // confusion about a response (i.e., is the process responding to a current
 // request for an update, or to an old request for an update) we tag each group
 // of requests with a sequence number. When an update arrives we can ignore it
@@ -48,61 +48,61 @@ namespace content {
 // outstanding sequence number, the pickled data is accepted into the browser,
 // but there is no impact on the counters.
 
-class HistogramSynchronizer : public HistogramSubscriber {
+class HistogramSynchronizer {
  public:
+  HistogramSynchronizer();
+  ~HistogramSynchronizer();
+
   enum ProcessHistogramRequester {
     UNKNOWN,
     ASYNC_HISTOGRAMS,
   };
 
-  // Return pointer to the singleton instance for the current process, or NULL
-  // if none.
-  static HistogramSynchronizer* GetInstance();
-
-  // Contact all processes, and get them to upload to the browser any/all
+  // Contact all clients, and get them to upload to the browser any/all
   // changes to histograms. This method is called from about:histograms.
-  static void FetchHistograms();
+  void FetchHistograms();
 
-  // Contact all child processes, and get them to upload to the browser any/all
+  // Contact all child clients, and get them to upload to the browser any/all
   // changes to histograms.  When all changes have been acquired, or when the
   // wait time expires (whichever is sooner), post the callback to the specified
   // TaskRunner. Note the callback is posted exactly once.
-  static void FetchHistogramsAsynchronously(
+  void FetchHistogramsAsynchronously(
       scoped_refptr<base::TaskRunner> task_runner,
-      const base::Closure& callback,
+      base::OnceClosure callback,
       base::TimeDelta wait_time);
 
- private:
-  friend struct base::DefaultSingletonTraits<HistogramSynchronizer>;
+  // Register |client| as a provider of histogram data from a remote process.
+  // |client| will be queried on the calling thread for histogram data when
+  // GetHistogramData() is called. Must be called on the UI or IO threads.
+  void RegisterClient(metrics::mojom::HistogramCollectorClientPtr client);
 
+ private:
   class RequestContext;
 
-  HistogramSynchronizer();
-  ~HistogramSynchronizer() override;
-
-  // Establish a new sequence number, and use it to notify all processes
+  // Establish a new sequence number, and use it to notify all clients
   // (renderers, plugins, GPU, etc) of the need to supply, to the browser,
   // any/all changes to their histograms. |wait_time| specifies the amount of
-  // time to wait before cancelling the requests for non-responsive processes.
-  void RegisterAndNotifyAllProcesses(ProcessHistogramRequester requester,
-                                     base::TimeDelta wait_time);
+  // time to wait before cancelling the requests for non-responsive clients.
+  void RegisterAndNotifyAllClients(ProcessHistogramRequester requester,
+                                   base::TimeDelta wait_time);
 
   // -------------------------------------------------------
-  // HistogramSubscriber methods for browser child processes
+  // HistogramSubscriber methods for browser child clients
   // -------------------------------------------------------
 
-  // Update the number of pending processes for the given |sequence_number|.
+  // Update the number of pending clients for the given |sequence_number|.
   // This is called on UI thread.
-  void OnPendingProcesses(int sequence_number,
-                          int pending_processes,
-                          bool end) override;
+  void OnPendingClients(int sequence_number, int pending_clients, bool end);
+
+  // Contact all registered clients and get their histogram data.
+  void GetHistogramData(int sequence_number);
 
   // Send histogram_data back to caller and also record that we are waiting
   // for one less histogram data from child process for the given sequence
   // number. This method is accessible on UI thread.
   void OnHistogramDataCollected(
       int sequence_number,
-      const std::vector<std::string>& pickled_histograms) override;
+      const std::vector<std::string>& pickled_histograms);
 
   // Set the |callback_task_runner_| and |callback_| members. If these members
   // already had values, then as a side effect, post the old |callback_| to the
@@ -110,28 +110,31 @@ class HistogramSynchronizer : public HistogramSubscriber {
   // but is in place to assure correctness (that any tasks that were set, are
   // eventually called, and never merely discarded).
   void SetTaskRunnerAndCallback(scoped_refptr<base::TaskRunner> task_runner,
-                                const base::Closure& callback);
+                                base::OnceClosure callback);
 
   void ForceHistogramSynchronizationDoneCallback(int sequence_number);
 
   // Internal helper function, to post task, and record callback stats.
   void InternalPostTask(scoped_refptr<base::TaskRunner> task_runner,
-                        const base::Closure& callback);
+                        base::OnceClosure callback);
 
-  // Gets a new sequence number to be sent to processes from browser process.
+  // Gets a new sequence number to be sent to clients from browser process.
   int GetNextAvailableSequenceNumber(ProcessHistogramRequester requester);
 
   // This lock_ protects access to all members.
   base::Lock lock_;
 
+  // Binding set for the remote clients.
+  mojo::InterfacePtrSet<metrics::mojom::HistogramCollectorClient> clients_;
+
   // When a request is made to asynchronously update the histograms, we store
   // the task and TaskRunner we use to post a completion notification in
   // |callback_| and |callback_task_runner_|.
-  base::Closure callback_;
+  base::OnceClosure callback_;
   scoped_refptr<base::TaskRunner> callback_task_runner_;
 
-  // We don't track the actual processes that are contacted for an update, only
-  // the count of the number of processes, and we can sometimes time-out and
+  // We don't track the actual clients that are contacted for an update, only
+  // the count of the number of clients, and we can sometimes time-out and
   // give up on a "slow to respond" process.  We use a sequence_number to be
   // sure a response from a process is associated with the current round of
   // requests (and not merely a VERY belated prior response).
@@ -141,12 +144,12 @@ class HistogramSynchronizer : public HistogramSubscriber {
   int last_used_sequence_number_;
 
   // The sequence number used by the most recent asynchronous update request to
-  // contact all processes.
+  // contact all clients.
   int async_sequence_number_;
 
   DISALLOW_COPY_AND_ASSIGN(HistogramSynchronizer);
 };
 
-}  // namespace content
+}  // namespace metrics
 
-#endif  // CONTENT_BROWSER_HISTOGRAM_SYNCHRONIZER_H_
+#endif  // SERVICES_METRICS_HISTOGRAMS_HISTOGRAM_SYNCHRONIZER_H_

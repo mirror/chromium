@@ -4,7 +4,7 @@
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
-        "browser": [ 
+        "browser": [
           "content::mojom::Child",
           "IPC::mojom::ChannelBootstrap"
         ],
@@ -15,6 +15,7 @@
       "requires": {
         "content_browser": [ "plugin" ],
         "device": [ "device:power_monitor" ],
+        "metrics": [ "metrics:histograms" ],
         "ui": [ "discardable_memory" ]
       }
     }

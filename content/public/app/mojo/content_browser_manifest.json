@@ -6,6 +6,7 @@
       "provides": {
         "gpu": [
           "content::mojom::FieldTrialRecorder",
+          "metrics::mojom::HistogramCollectorcontent::",
           "media::mojom::AndroidOverlayProvider"
         ],
         "memory_instrumentation": [
@@ -25,8 +26,10 @@
           "blink::mojom::OffscreenCanvasProvider",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
+          "content::mojom::HistogramProvider",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FrameSinkProvider",
+          "metrics::mojom::HistogramCollectorcontent::",
           "content::mojom::MemoryCoordinatorHandle",
           "content::mojom::PushMessaging",
           "content::mojom::RendererHost",
@@ -50,6 +53,7 @@
           "service_manager::mojom::ServiceFactory"
         ],
         "utility": [
+          "metrics::mojom::HistogramCollectorcontent::",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_instrumentation::mojom::Coordinator"
         ]
@@ -66,6 +70,7 @@
         "device": [ "device:nfc", "device:wake_lock" ],
         "file": [ "file:filesystem", "file:leveldb" ],
         "media": [ "media:media" ],
+        "metrics": [ "metrics:histograms" ],
         "network": [
           "network_service",
           "test",
