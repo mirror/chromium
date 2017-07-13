@@ -22,6 +22,30 @@
       "revId": "f10c1b142072f17290b431f5930787f28f03870b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd15656e_126f85df",
+        "filename": "media/base/video_frame.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-13T01:38:47Z",
+      "side": 1,
+      "message": "Yes, as RepeatingCallback is convertible to OnceCallback, OnceCallback can take both of them.",
+      "parentUuid": "6a5ef091_31369f85",
+      "range": {
+        "startLine": 374,
+        "startChar": 36,
+        "endLine": 374,
+        "endChar": 47
+      },
+      "revId": "f10c1b142072f17290b431f5930787f28f03870b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
