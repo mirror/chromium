@@ -150,6 +150,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   scoped_refptr<MainThreadTaskQueue> DefaultTaskQueue();
   scoped_refptr<MainThreadTaskQueue> CompositorTaskQueue();
   scoped_refptr<MainThreadTaskQueue> LoadingTaskQueue();
+  scoped_refptr<MainThreadTaskQueue> LoadingControlTaskQueue();
   scoped_refptr<MainThreadTaskQueue> TimerTaskQueue();
 
   // Returns a new task queue created with given params.
@@ -531,6 +532,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   TaskQueueVoterMap task_runners_;
 
   scoped_refptr<MainThreadTaskQueue> default_loading_task_queue_;
+  scoped_refptr<MainThreadTaskQueue> default_loading_control_task_queue_;
   scoped_refptr<MainThreadTaskQueue> default_timer_task_queue_;
 
   // Note |virtual_time_domain_| is lazily created.

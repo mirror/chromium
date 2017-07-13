@@ -167,7 +167,7 @@ RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingControlTaskRunner() {
   if (!loading_control_web_task_runner_) {
     loading_control_task_queue_ =
         renderer_scheduler_->NewLoadingControlTaskQueue(
-            MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL);
+            MainThreadTaskQueue::QueueType::FRAME_LOADING);
     loading_control_task_queue_->SetBlameContext(blame_context_);
     loading_control_queue_enabled_voter_ =
         loading_control_task_queue_->CreateQueueEnabledVoter();

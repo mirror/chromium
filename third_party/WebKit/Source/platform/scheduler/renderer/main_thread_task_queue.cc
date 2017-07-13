@@ -36,8 +36,6 @@ const char* MainThreadTaskQueue::NameForQueueType(
       return "idle_tq";
     case MainThreadTaskQueue::QueueType::TEST:
       return "test_tq";
-    case MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL:
-      return "frame_loading_control_tq";
     case MainThreadTaskQueue::QueueType::COUNT:
       NOTREACHED();
       return nullptr;
@@ -56,7 +54,6 @@ MainThreadTaskQueue::QueueClass MainThreadTaskQueue::QueueClassForQueueType(
       return QueueClass::NONE;
     case QueueType::DEFAULT_LOADING:
     case QueueType::FRAME_LOADING:
-    case QueueType::FRAME_LOADING_CONTROL:
       return QueueClass::LOADING;
     case QueueType::DEFAULT_TIMER:
     case QueueType::FRAME_TIMER:

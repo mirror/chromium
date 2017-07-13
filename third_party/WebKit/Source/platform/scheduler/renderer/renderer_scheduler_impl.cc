@@ -135,6 +135,8 @@ RendererSchedulerImpl::RendererSchedulerImpl(
 
   default_loading_task_queue_ =
       NewLoadingTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_LOADING);
+  default_loading_control_task_queue_ = NewLoadingControlTaskQueue(
+      MainThreadTaskQueue::QueueType::DEFAULT_LOADING);
   default_timer_task_queue_ =
       NewTimerTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_TIMER);
 
@@ -352,6 +354,12 @@ RendererSchedulerImpl::CompositorTaskQueue() {
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::LoadingTaskQueue() {
   helper_.CheckOnValidThread();
   return default_loading_task_queue_;
+}
+
+scoped_refptr<MainThreadTaskQueue>
+RendererSchedulerImpl::LoadingControlTaskQueue() {
+  helper_.CheckOnValidThread();
+  return default_loading_control_task_queue_;
 }
 
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::TimerTaskQueue() {
@@ -1847,6 +1855,7 @@ void RendererSchedulerImpl::SetTopLevelBlameContext(
   control_task_queue_->SetBlameContext(blame_context);
   DefaultTaskQueue()->SetBlameContext(blame_context);
   default_loading_task_queue_->SetBlameContext(blame_context);
+  default_loading_control_task_queue_->SetBlameContext(blame_context);
   default_timer_task_queue_->SetBlameContext(blame_context);
   compositor_task_queue_->SetBlameContext(blame_context);
   idle_helper_.IdleTaskRunner()->SetBlameContext(blame_context);
