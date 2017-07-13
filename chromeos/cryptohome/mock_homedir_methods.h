@@ -68,6 +68,9 @@ class CHROMEOS_EXPORT MockHomedirMethods : public HomedirMethods {
   void set_add_key_callback(const base::Closure& callback) {
     on_add_key_called_ = callback;
   }
+  void set_temporary_mount_path(const std::string& temporary_mount_path) {
+    temporary_mount_path_ = temporary_mount_path;
+  }
 
  private:
   void DoCallback(const Callback& callback);
@@ -77,6 +80,7 @@ class CHROMEOS_EXPORT MockHomedirMethods : public HomedirMethods {
 
   bool success_ = false;
   MountError return_code_ = MOUNT_ERROR_NONE;
+  std::string temporary_mount_path_;
 
   base::Closure on_mount_called_;
   base::Closure on_add_key_called_;

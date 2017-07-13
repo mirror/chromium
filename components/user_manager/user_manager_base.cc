@@ -389,6 +389,10 @@ void UserManagerBase::SaveForceOnlineSignin(const AccountId& account_id,
   if (IsUserNonCryptohomeDataEphemeral(account_id))
     return;
 
+  User* user = FindUserAndModify(account_id);
+  if (user)
+    user->set_force_online_signin(force_online_signin);
+
   {
     DictionaryPrefUpdate force_online_update(GetLocalState(),
                                              kUserForceOnlineSignin);

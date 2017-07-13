@@ -45,8 +45,8 @@ void MockHomedirMethods::DoGetDataCallback(const GetKeyDataCallback& callback) {
 }
 
 void MockHomedirMethods::DoMountCallback(const MountCallback& callback) {
-  callback.Run(
-      success_, return_code_, MockAsyncMethodCaller::kFakeSanitizedUsername);
+  callback.Run(success_, return_code_,
+               MockAsyncMethodCaller::kFakeSanitizedUsername);
   if (!on_mount_called_.is_null())
     on_mount_called_.Run();
 }
