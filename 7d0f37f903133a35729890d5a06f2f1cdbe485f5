@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "204df517_6da558d4",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-13T19:00:38Z",
+      "side": 1,
+      "message": "Sure, Done.",
+      "parentUuid": "814056ee_cee77e19",
+      "range": {
+        "startLine": 608,
+        "startChar": 23,
+        "endLine": 608,
+        "endChar": 27
+      },
+      "revId": "7d0f37f903133a35729890d5a06f2f1cdbe485f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6b0c027_ebef64cf",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 3
@@ -59,6 +83,24 @@
       "writtenOn": "2017-07-13T18:24:16Z",
       "side": 1,
       "message": "nit: IIUC  you may change TEST_F to TEST_P and get rid of this check. Is any stopper why not to pass all tests in both full_screen/non-full_screen modes?",
+      "revId": "7d0f37f903133a35729890d5a06f2f1cdbe485f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483a82d8_d23ac222",
+        "filename": "ui/app_list/views/search_box_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-13T19:00:38Z",
+      "side": 1,
+      "message": "I could do the change. The tests still work if TEST_F is changed to TEST_P.",
+      "parentUuid": "3cf4ecb7_3deaffba",
       "revId": "7d0f37f903133a35729890d5a06f2f1cdbe485f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
