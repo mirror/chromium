@@ -158,16 +158,12 @@ void ReadingListWebStateObserver::StartCheckingLoading() {
 
   web::NavigationManager* manager = web_state()->GetNavigationManager();
   web::NavigationItem* item = manager->GetPendingItem();
-  bool is_reload = false;
-
-  // Manager->GetPendingItem() returns null on reload.
+  // Manager->GetPendingItem() returns null on some cases.
   // TODO(crbug.com/676129): Remove this workaround once GetPendingItem()
-  // returns the correct value on reload.
+  // always returns the correct value.
   if (!item) {
     item = manager->GetLastCommittedItem();
-    is_reload = true;
   }
-
   if (!ShouldObserveItem(item)) {
     StopCheckingProgress();
     return;
@@ -177,12 +173,12 @@ void ReadingListWebStateObserver::StartCheckingLoading() {
 
   pending_url_ = item->GetVirtualURL();
 
-  is_reload =
-      is_reload || ui::PageTransitionCoreTypeIs(item->GetTransitionType(),
-                                                ui::PAGE_TRANSITION_RELOAD);
   // If the user is reloading from the offline page, the intention is to access
   // the online page even on bad networks. No need to launch timer.
-  bool reloading_from_offline = last_load_was_offline && is_reload;
+  bool reloading_from_offline =
+      last_load_was_offline &&
+      ui::PageTransitionCoreTypeIs(item->GetTransitionType(),
+                                   ui::PAGE_TRANSITION_RELOAD);
 
   // No need to launch the timer either if there is no offline version to show.
   // Track |pending_url_| to mark the entry as read in case of a successful
@@ -245,9 +241,9 @@ void ReadingListWebStateObserver::VerifyIfReadingListEntryStartedLoading() {
   web::NavigationManager* manager = web_state()->GetNavigationManager();
   web::NavigationItem* item = manager->GetPendingItem();
 
-  // Manager->GetPendingItem() returns null on reload.
+  // Manager->GetPendingItem() returns null on some cases.
   // TODO(crbug.com/676129): Remove this workaround once GetPendingItem()
-  // returns the correct value on reload.
+  // always returns the correct value.
   if (!item) {
     item = manager->GetLastCommittedItem();
   }

@@ -3787,6 +3787,15 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     return;
   }
 
+  // If this is a reload initiated from the omnibox.
+  // TODO(crbug.com/730192): Add DCHECK to verify that whenever urlToLood is the
+  // same as the old url, the transition type is ui::PAGE_TRANSITION_RELOAD.
+  if (PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_RELOAD)) {
+    [[_model currentTab] navigationManager]->Reload(
+        web::ReloadType::NORMAL, true /* check_for_repost */);
+    return;
+  }
+
   web::NavigationManager::WebLoadParams params(urlToLoad);
   params.referrer = referrer;
   params.transition_type = transition;
