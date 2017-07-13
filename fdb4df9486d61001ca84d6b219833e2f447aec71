@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9367dabe_229518e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-13T07:55:33Z",
+      "side": 1,
+      "message": "Are you sure? Pretty much always this list will be empty. All the guidelines for Android development I read tell about religiously saving memory. Also, this is the pattern I copied from  CompositorView and its mDrawingFinishedCallbacks.",
+      "parentUuid": "24c37b06_96b31f06",
+      "range": {
+        "startLine": 612,
+        "startChar": 45,
+        "endLine": 612,
+        "endChar": 68
+      },
+      "revId": "fdb4df9486d61001ca84d6b219833e2f447aec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81f0db23_aab2c3e7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T07:12:33Z",
       "side": 1,
       "message": "nit: Just use nNextFrameSwapCallbacks directly in the iteration? And clear at the end instead of nulling it?",
+      "range": {
+        "startLine": 617,
+        "startChar": 35,
+        "endLine": 617,
+        "endChar": 58
+      },
+      "revId": "fdb4df9486d61001ca84d6b219833e2f447aec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144cc558_9490b606",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-13T07:55:33Z",
+      "side": 1,
+      "message": "I agree that this is slightly weird, I\u0027ve taken this from CompositorView and its mDrawingFinishedCallbacks. I assume the intention here is to safe memory as CompositorView and its mDrawingFinishedCallbacks will be pretty much always empty, so why keep bytes for it given all the Android mantra on saving memory when possible.\n\nIf we do nullify it, than doing it this way is slightly more thread safe than using mNextFrameSwapCallbacks directly in the iteration.\n\nI don\u0027t feel strongly, but being new to Android development and reading recently about saving bytes whenever possible I wonder which pattern is better here.",
+      "parentUuid": "81f0db23_aab2c3e7",
       "range": {
         "startLine": 617,
         "startChar": 35,
