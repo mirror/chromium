@@ -22,6 +22,30 @@
       "revId": "19508d8458022ec44bdb6f1e1f4cd496e2147d4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57c1473_d8e527d9",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-13T17:01:24Z",
+      "side": 1,
+      "message": "You\u0027re correct, we\u0027d be relying on implicit sync on external devices, where the workaround is enabled, for the first swapbuffers.\n\nIn practice we didn\u0027t notice any artifacts after we plug in a mimo, conversely before this patch the fb would be significant corrupted.\nI suspect chrome ends up always calling swapbuffers more than once when we plug in a new device, mitigating this issue.\n\nI considered exposing RequiresGlFinish and, as you said, it\u0027d be a much bigger change. Considering this is just a specific hack for a specific workaround, before we pipe in fence FDs, I think it\u0027s a reasonable fix for the time being.\n\nAdded a note just before testing |is_on_external_drm_device_|.",
+      "parentUuid": "523bdbab_b9321e45",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 30
+      },
+      "revId": "19508d8458022ec44bdb6f1e1f4cd496e2147d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
