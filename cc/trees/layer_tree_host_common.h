@@ -118,7 +118,8 @@ class CC_EXPORT LayerTreeHostCommon {
 
   static void CalculateDrawProperties(CalcDrawPropsImplInputs* inputs);
   static void CalculateDrawPropertiesForTesting(
-      CalcDrawPropsImplInputsForTesting* inputs);
+      CalcDrawPropsImplInputsForTesting* inputs,
+      bool build_property_trees_if_needed = true);
 
   template <typename Function>
   static void CallFunctionForEveryLayer(LayerTreeHost* host,
