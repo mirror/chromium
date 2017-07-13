@@ -1032,6 +1032,7 @@ static bool CanHaveOverflowScrollbars(const LayoutBox& box) {
 
 void PaintLayerScrollableArea::UpdateAfterStyleChange(
     const ComputedStyle* old_style) {
+  DCHECK(Box().HasOverflowClip());
   // Don't do this on first style recalc, before layout has ever happened.
   if (!OverflowRect().Size().IsZero()) {
     UpdateScrollableAreaSet(HasScrollableHorizontalOverflow() ||
