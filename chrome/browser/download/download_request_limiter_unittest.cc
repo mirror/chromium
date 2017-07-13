@@ -14,6 +14,7 @@
 #include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/permission_bubble/mock_permission_prompt_factory.h"
+#include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
@@ -684,5 +685,26 @@ TEST_F(DownloadRequestLimiterTest,
   CanDownload();
   ExpectAndResetCounts(0, 0, 1, __LINE__);
   ASSERT_EQ(DownloadRequestLimiter::PROMPT_BEFORE_DOWNLOAD,
+            download_request_limiter_->GetDownloadStatus(web_contents()));
+}
+
+TEST_F(DownloadRequestLimiterTest,
+       DownloadRequestLimiter_SuppressRequestsInVRMode) {
+  NavigateAndCommit(GURL("http://foo.com/bar"));
+  LoadCompleted();
+
+  EXPECT_FALSE(vr::VrTabHelper::IsInVr(web_contents()));
+  vr::VrTabHelper* vr_tab_helper =
+      vr::VrTabHelper::FromWebContents(web_contents());
+  vr_tab_helper->SetIsInVr(true);
+
+  CanDownload();
+  ExpectAndResetCounts(1, 0, 0, __LINE__);
+  ASSERT_EQ(DownloadRequestLimiter::PROMPT_BEFORE_DOWNLOAD,
+            download_request_limiter_->GetDownloadStatus(web_contents()));
+
+  CanDownload();
+  ExpectAndResetCounts(0, 1, 0, __LINE__);
+  ASSERT_EQ(DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED,
             download_request_limiter_->GetDownloadStatus(web_contents()));
 }
