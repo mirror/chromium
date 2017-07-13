@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c13b64_5b105345",
+        "filename": "third_party/WebKit/LayoutTests/inspector/profiler/heap-snapshot-summary-expand-collapse.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T00:21:34Z",
+      "side": 1,
+      "message": "Considering the bug is in data grid, it would be nice to have the regression test among the data grid tests as well.",
+      "revId": "47d15ff173de0b95e47428595010a5d32772cdec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
