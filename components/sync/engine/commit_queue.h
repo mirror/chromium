@@ -15,8 +15,12 @@ class CommitQueue {
   CommitQueue();
   virtual ~CommitQueue();
 
+
   // Entry point for the ModelTypeProcessor to send commit requests.
   virtual void EnqueueForCommit(const CommitRequestDataList& list) = 0;
+
+  // {PAV} comment
+  virtual void Nudge() = 0;
 };
 
 }  // namespace syncer

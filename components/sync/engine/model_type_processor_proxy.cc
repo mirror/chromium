@@ -46,4 +46,11 @@ void ModelTypeProcessorProxy::OnUpdateReceived(
                             type_state, updates));
 }
 
+void ModelTypeProcessorProxy::GetLocalChanges(
+    size_t max_entries, GetLocalChangesCallback callback) {
+  task_runner_->PostTask(
+      FROM_HERE, base::Bind(&ModelTypeProcessor::GetLocalChanges, processor_,
+                            max_entries, callback));
+}
+
 }  // namespace syncer

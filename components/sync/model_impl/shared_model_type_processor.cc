@@ -203,6 +203,7 @@ void SharedModelTypeProcessor::DisconnectSync() {
 void SharedModelTypeProcessor::Put(const std::string& storage_key,
                                    std::unique_ptr<EntityData> data,
                                    MetadataChangeList* metadata_change_list) {
+  DVLOG(0) << __FUNCTION__ << "{PAV}: " << ModelTypeToString(type_);
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(IsAllowingChanges());
   DCHECK(data);
@@ -291,6 +292,13 @@ void SharedModelTypeProcessor::UntrackEntity(const EntityData& entity_data) {
 }
 
 void SharedModelTypeProcessor::FlushPendingCommitRequests() {
+  if (!IsConnected())
+    return;
+  worker_->Nudge();
+}
+
+#if 0
+void SharedModelTypeProcessor::FlushPendingCommitRequests() {
   CommitRequestDataList commit_requests;
 
   // Don't bother sending anything if there's no one to send to.
@@ -314,10 +322,13 @@ void SharedModelTypeProcessor::FlushPendingCommitRequests() {
   if (!commit_requests.empty())
     worker_->EnqueueForCommit(commit_requests);
 }
+#endif
 
 void SharedModelTypeProcessor::OnCommitCompleted(
     const sync_pb::ModelTypeState& type_state,
     const CommitResponseDataList& response_list) {
+  DVLOG(0) << __FUNCTION__ << "{PAV}:" << ModelTypeToString(type_) << ", " <<
+      response_list.size();
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   std::unique_ptr<MetadataChangeList> metadata_change_list =
       bridge_->CreateMetadataChangeList();
@@ -432,6 +443,34 @@ void SharedModelTypeProcessor::OnUpdateReceived(
   DCHECK(AllStorageKeysPopulated());
   // There may be new reasons to commit by the time this function is done.
   FlushPendingCommitRequests();
+}
+
+void SharedModelTypeProcessor::GetLocalChanges(
+    size_t max_entries, GetLocalChangesCallback callback) {
+  // {PAV} implement
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(max_entries > 0);
+  CommitRequestDataList commit_requests;
+  if (!model_type_state_.initial_sync_done()) {
+    callback.Run(commit_requests);
+    return;
+  }
+  size_t collected_entries = 0;
+  for (const auto& kv : entities_) {
+    ProcessorEntityTracker* entity = kv.second.get();
+    if (entity->IsUnsynced() && !entity->RequiresCommitData()) {
+      CommitRequestData request;
+      entity->InitializeCommitRequestData(&request);
+      commit_requests.push_back(request);
+      ++collected_entries;
+      if (collected_entries >= max_entries)
+        break;
+    }
+  }
+  // DVLOG(0) << __FUNCTION__ << "{PAV}: " << ModelTypeToString(type_) << ", " <<
+  //     collected_entries;
+
+  callback.Run(commit_requests);
 }
 
 ProcessorEntityTracker* SharedModelTypeProcessor::ProcessUpdate(

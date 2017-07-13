@@ -40,6 +40,9 @@ class ModelTypeProcessor {
   // handle.
   virtual void OnUpdateReceived(const sync_pb::ModelTypeState& type_state,
                                 const UpdateResponseDataList& updates) = 0;
+
+  using GetLocalChangesCallback = base::Callback<void(CommitRequestDataList)>;
+  virtual void GetLocalChanges(size_t max_entries, GetLocalChangesCallback callback) = 0;
 };
 
 }  // namespace syncer

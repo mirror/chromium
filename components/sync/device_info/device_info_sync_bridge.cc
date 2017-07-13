@@ -416,20 +416,21 @@ void DeviceInfoSyncBridge::ReconcileLocalAndStored() {
                                   base::Unretained(this)));
     return;
   }
-  auto iter = all_data_.find(current_info->guid());
+  // auto iter = all_data_.find(current_info->guid());
 
   // Convert to DeviceInfo for Equals function.
-  if (iter != all_data_.end() &&
-      current_info->Equals(*SpecificsToModel(*iter->second))) {
-    const TimeDelta pulse_delay(DeviceInfoUtil::CalculatePulseDelay(
-        GetLastUpdateTime(*iter->second), Time::Now()));
-    if (!pulse_delay.is_zero()) {
-      pulse_timer_.Start(FROM_HERE, pulse_delay,
-                         base::Bind(&DeviceInfoSyncBridge::SendLocalData,
-                                    base::Unretained(this)));
-      return;
-    }
-  }
+  // if (iter != all_data_.end() &&
+  //     current_info->Equals(*SpecificsToModel(*iter->second))) {
+  //   const TimeDelta pulse_delay(DeviceInfoUtil::CalculatePulseDelay(
+  //       GetLastUpdateTime(*iter->second), Time::Now()));
+  //   if (!pulse_delay.is_zero()) {
+  //     pulse_timer_.Start(FROM_HERE, pulse_delay,
+  //                        base::Bind(&DeviceInfoSyncBridge::SendLocalData,
+  //                                   base::Unretained(this)));
+  //     return;
+  //   }
+  // }
+  DVLOG(0) << __FUNCTION__ << "{PAV}";
   SendLocalData();
 }
 

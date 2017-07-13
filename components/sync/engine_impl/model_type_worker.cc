@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/format_macros.h"
 #include "base/guid.h"
 #include "base/logging.h"
@@ -17,6 +18,8 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/memory_usage_estimator.h"
+#include "components/sync/base/cancelation_observer.h"
+#include "components/sync/base/cancelation_signal.h"
 #include "components/sync/base/time.h"
 #include "components/sync/engine/model_type_processor.h"
 #include "components/sync/engine_impl/commit_contribution.h"
@@ -34,13 +37,15 @@ ModelTypeWorker::ModelTypeWorker(
     std::unique_ptr<Cryptographer> cryptographer,
     NudgeHandler* nudge_handler,
     std::unique_ptr<ModelTypeProcessor> model_type_processor,
-    DataTypeDebugInfoEmitter* debug_info_emitter)
+    DataTypeDebugInfoEmitter* debug_info_emitter,
+    CancelationSignal* cancelation_signal)
     : type_(type),
       debug_info_emitter_(debug_info_emitter),
       model_type_state_(initial_state),
       model_type_processor_(std::move(model_type_processor)),
       cryptographer_(std::move(cryptographer)),
       nudge_handler_(nudge_handler),
+      cancelation_signal_(cancelation_signal),
       weak_ptr_factory_(this) {
   DCHECK(model_type_processor_);
 
@@ -245,6 +250,7 @@ void ModelTypeWorker::ApplyPendingUpdates() {
 }
 
 void ModelTypeWorker::EnqueueForCommit(const CommitRequestDataList& list) {
+  NOTREACHED();
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(IsTypeInitialized())
       << "Asked to commit items before type was initialized. "
@@ -262,13 +268,73 @@ void ModelTypeWorker::EnqueueForCommit(const CommitRequestDataList& list) {
     nudge_handler_->NudgeForCommit(type_);
 }
 
+void ModelTypeWorker::Nudge() {
+  DVLOG(0) << __FUNCTION__ << "{PAV}: " << ModelTypeToString(GetModelType());
+  DCHECK(thread_checker_.CalledOnValidThread());
+  nudge_handler_->NudgeForCommit(GetModelType());
+}
+
+
+class GetLocalChangesTracker : public CancelationObserver {
+ public:
+  GetLocalChangesTracker(CancelationSignal* cancelation_signal);
+
+  // CancelationObserver implementation.
+  void OnSignalReceived() override;
+
+  void AcceptResponse(CommitRequestDataList local_changes);
+  void WaitForResponse();
+  CommitRequestDataList response_;
+
+ private:
+  base::WaitableEvent response_accepted_;
+};
+
+GetLocalChangesTracker::GetLocalChangesTracker(
+    CancelationSignal* cancelation_signal)
+    :
+      response_accepted_(base::WaitableEvent::ResetPolicy::MANUAL,
+                         base::WaitableEvent::InitialState::NOT_SIGNALED) {
+}
+
+void GetLocalChangesTracker::OnSignalReceived() {
+}
+
+void GetLocalChangesTracker::AcceptResponse(CommitRequestDataList local_changes) {
+  DVLOG(0) << __FUNCTION__ << "{PAV}: " << local_changes.size();
+  response_ = local_changes;
+  response_accepted_.Signal();
+  // {PAV} remove
+}
+
+void GetLocalChangesTracker::WaitForResponse() {
+  response_accepted_.Wait();
+}
+
 // CommitContributor implementation.
 std::unique_ptr<CommitContribution> ModelTypeWorker::GetContribution(
     size_t max_entries) {
+  // {PAV} Make tracker ref-counted thread-safe and shared.
+  GetLocalChangesTracker tracker(cancelation_signal_);
+  // DVLOG(0) << __FUNCTION__ << "{PAV}: Before GetLocalChanges";
+  model_type_processor_->GetLocalChanges(
+      max_entries, base::Bind(&GetLocalChangesTracker::AcceptResponse,
+          base::Unretained(&tracker)));
+  tracker.WaitForResponse();
+  DVLOG(0) << __FUNCTION__ << "{PAV}: After GetLocalChanges>WaitForResponse: "
+      << tracker.response_.size();
+
   DCHECK(thread_checker_.CalledOnValidThread());
 
   size_t space_remaining = max_entries;
   google::protobuf::RepeatedPtrField<sync_pb::SyncEntity> commit_entities;
+  for (const auto& commit : tracker.response_) {
+    const EntityData& data = commit.entity.value();
+    if (!data.is_deleted()) {
+      DCHECK_EQ(type_, GetModelTypeFromSpecifics(data.specifics));
+    }
+    GetOrCreateEntityTracker(data)->RequestCommit(commit);
+  }
 
   if (!CanCommitItems())
     return std::unique_ptr<CommitContribution>();

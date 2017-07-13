@@ -77,6 +77,7 @@ class SharedModelTypeProcessor : public ModelTypeProcessor,
                          const CommitResponseDataList& response_list) override;
   void OnUpdateReceived(const sync_pb::ModelTypeState& type_state,
                         const UpdateResponseDataList& updates) override;
+  void GetLocalChanges(size_t max_entries, GetLocalChangesCallback callback) override;
 
   // Returns the estimate of dynamically allocated memory in bytes.
   size_t EstimateMemoryUsage() const;

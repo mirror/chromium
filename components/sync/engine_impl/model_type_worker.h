@@ -11,6 +11,7 @@
 #include <memory>
 #include <string>
 
+#include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "components/sync/base/cryptographer.h"
@@ -27,6 +28,7 @@
 
 namespace syncer {
 
+class CancelationSignal;
 class ModelTypeProcessor;
 class WorkerEntityTracker;
 
@@ -60,7 +62,8 @@ class ModelTypeWorker : public UpdateHandler,
                   std::unique_ptr<Cryptographer> cryptographer,
                   NudgeHandler* nudge_handler,
                   std::unique_ptr<ModelTypeProcessor> model_type_processor,
-                  DataTypeDebugInfoEmitter* debug_info_emitter);
+                  DataTypeDebugInfoEmitter* debug_info_emitter,
+                  CancelationSignal* cancelation_signal);
   ~ModelTypeWorker() override;
 
   ModelType GetModelType() const;
@@ -82,6 +85,7 @@ class ModelTypeWorker : public UpdateHandler,
 
   // CommitQueue implementation.
   void EnqueueForCommit(const CommitRequestDataList& request_list) override;
+  void Nudge() override;
 
   // CommitContributor implementation.
   std::unique_ptr<CommitContribution> GetContribution(
@@ -202,8 +206,12 @@ class ModelTypeWorker : public UpdateHandler,
   // Whether there are outstanding encrypted updates in |entities_|.
   bool has_encrypted_updates_ = false;
 
+  CancelationSignal* cancelation_signal_;
+
   base::ThreadChecker thread_checker_;
   base::WeakPtrFactory<ModelTypeWorker> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(ModelTypeWorker);
 };
 
 }  // namespace syncer

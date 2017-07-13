@@ -34,6 +34,7 @@ class CommitQueueProxy : public CommitQueue {
   ~CommitQueueProxy() override;
 
   void EnqueueForCommit(const CommitRequestDataList& list) override;
+  void Nudge() override;
 
  private:
   base::WeakPtr<ModelTypeWorker> worker_;
@@ -48,8 +49,16 @@ CommitQueueProxy::CommitQueueProxy(
 CommitQueueProxy::~CommitQueueProxy() {}
 
 void CommitQueueProxy::EnqueueForCommit(const CommitRequestDataList& list) {
+  NOTREACHED();
   sync_thread_->PostTask(
       FROM_HERE, base::Bind(&ModelTypeWorker::EnqueueForCommit, worker_, list));
+}
+
+void CommitQueueProxy::Nudge() {
+  DVLOG(0) << __FUNCTION__ << "{PAV}";
+  // {PAV} implement
+  sync_thread_->PostTask(
+      FROM_HERE, base::Bind(&ModelTypeWorker::Nudge, worker_));
 }
 
 }  // namespace
@@ -58,10 +67,12 @@ ModelTypeRegistry::ModelTypeRegistry(
     const std::vector<scoped_refptr<ModelSafeWorker>>& workers,
     UserShare* user_share,
     NudgeHandler* nudge_handler,
-    const UssMigrator& uss_migrator)
+    const UssMigrator& uss_migrator,
+    CancelationSignal* cancelation_signal)
     : user_share_(user_share),
       nudge_handler_(nudge_handler),
       uss_migrator_(uss_migrator),
+      cancelation_signal_(cancelation_signal),
       weak_ptr_factory_(this) {
   for (size_t i = 0u; i < workers.size(); ++i) {
     workers_map_.insert(
@@ -105,7 +116,8 @@ void ModelTypeRegistry::ConnectNonBlockingType(
   auto worker = base::MakeUnique<ModelTypeWorker>(
       type, activation_context->model_type_state, trigger_initial_sync,
       std::move(cryptographer_copy), nudge_handler_,
-      std::move(activation_context->type_processor), emitter);
+      std::move(activation_context->type_processor), emitter,
+      cancelation_signal_);
 
   // Save a raw pointer and add the worker to our structures.
   ModelTypeWorker* worker_ptr = worker.get();
