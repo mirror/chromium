@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78be9d63_26ef7d6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-13T19:47:34Z",
+      "side": 1,
+      "message": "drive by reviewers - please note, the CL is pretty skeletal at this point. I wouldn\u0027t even upload it except that we\u0027re about to go through an office move and I may otherwise lose access to the work-in-progress.",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 47
+      },
+      "revId": "677fde62ff6a7450e766c5108eef8c2adb5e9406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
