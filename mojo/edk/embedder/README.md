@@ -139,9 +139,11 @@ int main(int argc, char** argv) {
   base::ProcessHandle child_handle =
       LaunchCoolChildProcess(channel.PassClientHandle());
 
-  // At this point it's safe for |child| to go out of scope and nothing will
-  // break.
-  child.Connect(child_handle, channel.PassServerHandle());
+  // At this point it's safe for |invitation| to go out of scope and nothing
+  // will break.
+  invitation.Send(child_handle,
+      mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
+                                  channel.PassServerHandle()));
 
   return 0;
 }
@@ -170,7 +172,9 @@ int main(int argc, char** argv) {
       ipc_thread.task_runner(),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::CLEAN);
 
-  mojo::edk::IncomingBrokerClientInvitation::Accept(GetChannelHandle());
+  mojo::edk::IncomingBrokerClientInvitation::Accept(
+      mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
+                                  GetChannelHandle()));
 
   return 0;
 }
