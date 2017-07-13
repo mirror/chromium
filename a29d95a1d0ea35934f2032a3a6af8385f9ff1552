@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe0c52cf_ac787c87",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2246,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-13T22:41:40Z",
+      "side": 1,
+      "message": "nit: remove last_reported_paused_state_ because we call SendBeginFramePaused only when changing observing root window or when begin frame paused changes",
+      "revId": "a29d95a1d0ea35934f2032a3a6af8385f9ff1552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc78f1ab_e78a74f8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2248,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-13T22:41:40Z",
+      "side": 1,
+      "message": "nit: can you use !using_browser_compositor_ instead of sync_compositor_",
+      "revId": "a29d95a1d0ea35934f2032a3a6af8385f9ff1552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d896e7_26231fd8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-13T22:41:40Z",
+      "side": 1,
+      "message": "nit: can you make SendBeginFramePaused send (begin_frame_paused_ || !observing_root_window_) instead of passing the paused param into it? That would make it the one source of truth for what the paused state for the renderer is.",
+      "revId": "a29d95a1d0ea35934f2032a3a6af8385f9ff1552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
