@@ -85,6 +85,7 @@ public class AwSettings {
     private boolean mSpatialNavigationEnabled;  // Default depends on device features.
     private boolean mEnableSupportedHardwareAcceleratedFeatures;
     private int mMixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW;
+    private boolean mCSSHexAlphaColorEnabled = BuildInfo.isAtLeastO();
 
     private boolean mOffscreenPreRaster;
     private int mDisabledMenuItems = WebSettings.MENU_ITEM_NONE;
@@ -1265,6 +1266,12 @@ public class AwSettings {
     private boolean getSupportLegacyQuirksLocked() {
         assert Thread.holdsLock(mAwSettingsLock);
         return mSupportLegacyQuirks;
+    }
+
+    @CalledByNative
+    private boolean getmCSSHexAlphaColorEnabledLocked() {
+        assert Thread.holdsLock(mAwSettingsLock);
+        return mCSSHexAlphaColorEnabled;
     }
 
     @CalledByNative
