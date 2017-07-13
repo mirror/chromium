@@ -16,6 +16,24 @@
       "revId": "feebbf2b77a96c4f3baa2dc5e0871d5a873a9a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb2fa0c_c610305e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_learn_more_item.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-13T15:35:23Z",
+      "side": 1,
+      "message": "LabelLinkController uses GURL and we don\u0027t want to use it in the UI. So I cannot use LabelLinkController as is.\nI am discussing with UX/UI to know if we need to have only the link interactive, or the label or the whole cell.\nThis CL does not contains the logic to open the page, which will be done once this question is resolved.",
+      "parentUuid": "9680b982_00236880",
+      "revId": "feebbf2b77a96c4f3baa2dc5e0871d5a873a9a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
