@@ -54,6 +54,7 @@
 #include "extensions/browser/guest_view/web_view/web_view_renderer_state.h"
 #include "extensions/browser/info_map.h"
 #include "extensions/browser/io_thread_extension_message_filter.h"
+#include "extensions/browser/ruleset_manager.h"
 #include "extensions/browser/runtime_data.h"
 #include "extensions/browser/warning_service.h"
 #include "extensions/browser/warning_set.h"
@@ -631,6 +632,25 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
   request_time_tracker_->LogRequestStartTime(request->identifier(),
                                              base::Time::Now());
 
+  const bool is_incognito_context = IsIncognitoBrowserContext(browser_context);
+
+  {
+    // Handle Declarative Net Request API rules.
+    SCOPED_UMA_HISTOGRAM_TIMER(
+        "Extensions.DeclarativeNetRequest.RulesEvaluationDuration");
+
+    if (extension_info_map &&
+        extension_info_map->GetRulesetManager()->ShouldBlockRequest(
+            is_incognito_context, request)) {
+      return net::ERR_BLOCKED_BY_CLIENT;
+    }
+    if (extension_info_map &&
+        extension_info_map->GetRulesetManager()->ShouldRedirectRequest(
+            is_incognito_context, request, new_url)) {
+      return net::OK;
+    }
+  }
+
   // Whether to initialized |blocked_requests_|.
   bool initialize_blocked_requests = false;
 
@@ -659,7 +679,7 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
 
   BlockedRequest& blocked_request = blocked_requests_[request->identifier()];
   blocked_request.event = kOnBeforeRequest;
-  blocked_request.is_incognito |= IsIncognitoBrowserContext(browser_context);
+  blocked_request.is_incognito |= is_incognito_context;
   blocked_request.request = request;
   blocked_request.callback = callback;
   blocked_request.new_url = new_url;
