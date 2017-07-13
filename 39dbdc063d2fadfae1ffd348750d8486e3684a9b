@@ -34,6 +34,23 @@
       "revId": "39dbdc063d2fadfae1ffd348750d8486e3684a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd983c9e_798cd59a",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-07-13T02:58:58Z",
+      "side": 1,
+      "message": "How is the lifetime of |network| managed?  Might be good to leave a comment explaining why it is safe.",
+      "revId": "39dbdc063d2fadfae1ffd348750d8486e3684a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
