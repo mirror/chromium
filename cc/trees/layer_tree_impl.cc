@@ -369,6 +369,20 @@ void LayerTreeImpl::SetPropertyTrees(PropertyTrees* property_trees) {
     property_trees_.effect_tree.set_needs_update(true);
 }
 
+PropertyTrees* LayerTreeImpl::property_trees() {
+  // TODO(pdr): We should enable this DCHECK because it will catch uses of
+  // stale property trees, but it currently fails too many existing tests.
+  // DCHECK(lifecycle().AllowsPropertyTreeAccess());
+  return &property_trees_;
+}
+
+const PropertyTrees* LayerTreeImpl::property_trees() const {
+  // TODO(pdr): We should enable this DCHECK because it will catch uses of
+  // stale property trees, but it currently fails too many existing tests.
+  // DCHECK(lifecycle().AllowsPropertyTreeAccess());
+  return &property_trees_;
+}
+
 void LayerTreeImpl::PushPropertyTreesTo(LayerTreeImpl* target_tree) {
   // Property trees may store damage status. We preserve the active tree
   // damage status by pushing the damage status from active tree property

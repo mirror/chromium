@@ -1322,6 +1322,11 @@ class LayerTreeHostAnimationTestAddAnimationAfterAnimating
     LayerTreeHostAnimationTest::SetupTree();
     layer_ = Layer::Create();
     layer_->SetBounds(gfx::Size(4, 4));
+    // The layer to which we'll be subsequently adding an animation
+    // must have a transform node for the animated element to be
+    // considered present in the tree and ticked. We force a render
+    // surface as a proxy to produce a transform node.
+    layer_->SetForceRenderSurfaceForTesting(true);
     layer_tree_host()->root_layer()->AddChild(layer_);
 
     AttachPlayersToTimeline();
@@ -1385,6 +1390,23 @@ class LayerTreeHostAnimationTestAddAnimationAfterAnimating
   scoped_refptr<Layer> layer_;
 };
 
+static scoped_refptr<Layer> CreateAnimatableLayer(
+    FakeContentLayerClient* client) {
+  scoped_refptr<Layer> layer = FakePictureLayer::Create(client);
+  layer->SetBounds(gfx::Size(4, 4));
+  client->set_bounds(layer->bounds());
+  // The layer to which we'll be subsequently adding an animation must
+  // have a transform node for the animation to be considered present
+  // in the tree and ticked. Assign an arbitrary non-2D translate to
+  // be considered a 'significant' transform by PropertyTreeBuilder
+  // thus prompting creation of a transform node for the involved
+  // layer.
+  gfx::Transform z_rotation = gfx::Transform();
+  z_rotation.Translate3d(0, 0, 0.8);
+  layer->SetTransform(z_rotation);
+  return layer;
+}
+
 SINGLE_AND_MULTI_THREAD_TEST_F(
     LayerTreeHostAnimationTestAddAnimationAfterAnimating);
 
@@ -1393,9 +1415,7 @@ class LayerTreeHostAnimationTestRemoveAnimation
  public:
   void SetupTree() override {
     LayerTreeHostAnimationTest::SetupTree();
-    layer_ = FakePictureLayer::Create(&client_);
-    layer_->SetBounds(gfx::Size(4, 4));
-    client_.set_bounds(layer_->bounds());
+    layer_ = CreateAnimatableLayer(&client_);
     layer_tree_host()->root_layer()->AddChild(layer_);
 
     AttachPlayersToTimeline();
@@ -1580,9 +1600,7 @@ class LayerTreeHostAnimationTestAnimationFinishesDuringCommit
 
   void SetupTree() override {
     LayerTreeHostAnimationTest::SetupTree();
-    layer_ = FakePictureLayer::Create(&client_);
-    layer_->SetBounds(gfx::Size(4, 4));
-    client_.set_bounds(layer_->bounds());
+    layer_ = CreateAnimatableLayer(&client_);
     layer_tree_host()->root_layer()->AddChild(layer_);
 
     AttachPlayersToTimeline();
@@ -1653,9 +1671,7 @@ class LayerTreeHostAnimationTestImplSideInvalidation
  public:
   void SetupTree() override {
     LayerTreeHostAnimationTest::SetupTree();
-    layer_ = FakePictureLayer::Create(&client_);
-    layer_->SetBounds(gfx::Size(4, 4));
-    client_.set_bounds(layer_->bounds());
+    layer_ = CreateAnimatableLayer(&client_);
     layer_tree_host()->root_layer()->AddChild(layer_);
 
     AttachPlayersToTimeline();

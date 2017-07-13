@@ -1020,6 +1020,14 @@ bool AnimationPlayer::IsCurrentlyAnimatingProperty(
   return false;
 }
 
+bool AnimationPlayer::WillChangeAnimatingProperties() const {
+  return will_change_animating_properties_;
+}
+
+void AnimationPlayer::SetWillChangeAnimatingProperties(bool value) {
+  will_change_animating_properties_ = value;
+}
+
 bool AnimationPlayer::HasElementInActiveList() const {
   DCHECK(element_animations_);
   return element_animations_->has_element_in_active_list();

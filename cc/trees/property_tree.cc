@@ -2175,4 +2175,11 @@ gfx::Transform PropertyTrees::ToScreenSpaceTransformWithoutSurfaceContentsScale(
   return screen_space_transform;
 }
 
+bool PropertyTrees::HasTransformOrEffectNode(ElementId element_id) const {
+  return element_id_to_effect_node_index.find(element_id) !=
+             element_id_to_effect_node_index.end() ||
+         element_id_to_transform_node_index.find(element_id) !=
+             element_id_to_transform_node_index.end();
+}
+
 }  // namespace cc

@@ -159,12 +159,8 @@ class CC_EXPORT LayerTreeImpl {
   std::unique_ptr<OwnedLayerImplList> DetachLayers();
 
   void SetPropertyTrees(PropertyTrees* property_trees);
-  PropertyTrees* property_trees() {
-    // TODO(pdr): We should enable this DCHECK because it will catch uses of
-    // stale property trees, but it currently fails too many existing tests.
-    // DCHECK(lifecycle().AllowsPropertyTreeAccess());
-    return &property_trees_;
-  }
+  PropertyTrees* property_trees();
+  const PropertyTrees* property_trees() const;
 
   void PushPropertyTreesTo(LayerTreeImpl* tree_impl);
   void PushPropertiesTo(LayerTreeImpl* tree_impl);
