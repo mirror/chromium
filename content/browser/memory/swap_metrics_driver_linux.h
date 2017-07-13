@@ -1,0 +1,31 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef CONTENT_BROWSER_MEMORY_SWAP_METRICS_DRIVER_LINUX_H_
+#define CONTENT_BROWSER_MEMORY_SWAP_METRICS_DRIVER_LINUX_H_
+
+#include "content/browser/memory/swap_metrics_driver.h"
+
+#include <memory>
+
+namespace content {
+
+class SwapMetricsDriverLinux : public SwapMetricsDriver {
+ public:
+  SwapMetricsDriverLinux(std::unique_ptr<SwapMetricsObserver> observer,
+                         const int interval_in_seconds);
+  ~SwapMetricsDriverLinux() override;
+
+ protected:
+  SwapMetricsUpdateResult UpdateMetricsInternal(
+      base::TimeDelta interval) override;
+
+ private:
+  uint64_t last_pswpin_ = 0;
+  uint64_t last_pswpout_ = 0;
+};
+
+}  // namespace content
+
+#endif  // CONTENT_BROWSER_MEMORY_SWAP_METRICS_DRIVER_LINUX_H_
