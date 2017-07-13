@@ -41,11 +41,18 @@ bool WebUIMessageHandler::IsJavascriptAllowed() const {
 
 bool WebUIMessageHandler::ExtractIntegerValue(const base::ListValue* value,
                                               int* out_int) {
+  return ExtractIntegerValueAtIndex(value, 0, out_int);
+}
+
+bool WebUIMessageHandler::ExtractIntegerValueAtIndex(
+    const base::ListValue* value,
+    int index,
+    int* out_int) {
   std::string string_value;
-  if (value->GetString(0, &string_value))
+  if (value->GetString(index, &string_value))
     return base::StringToInt(string_value, out_int);
   double double_value;
-  if (value->GetDouble(0, &double_value)) {
+  if (value->GetDouble(index, &double_value)) {
     *out_int = static_cast<int>(double_value);
     return true;
   }

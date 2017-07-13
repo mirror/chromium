@@ -5,6 +5,7 @@
 #ifndef CONTENT_PUBLIC_BROWSER_WEB_UI_MESSAGE_HANDLER_H_
 #define CONTENT_PUBLIC_BROWSER_WEB_UI_MESSAGE_HANDLER_H_
 
+#include <string>
 #include <vector>
 
 #include "base/gtest_prod_util.h"
@@ -44,6 +45,7 @@ class CONTENT_EXPORT WebUIMessageHandler {
 
  protected:
   FRIEND_TEST_ALL_PREFIXES(WebUIMessageHandlerTest, ExtractIntegerValue);
+  FRIEND_TEST_ALL_PREFIXES(WebUIMessageHandlerTest, ExtractIntegerValueAtIndex);
   FRIEND_TEST_ALL_PREFIXES(WebUIMessageHandlerTest, ExtractDoubleValue);
   FRIEND_TEST_ALL_PREFIXES(WebUIMessageHandlerTest, ExtractStringValue);
 
@@ -53,8 +55,13 @@ class CONTENT_EXPORT WebUIMessageHandler {
 
   // Helper methods:
 
-  // Extract an integer value from a list Value.
+  // Extract an integer value from the first element of a list Value.
   static bool ExtractIntegerValue(const base::ListValue* value, int* out_int);
+
+  // Extract an integer value from a list Value from the specified |index|.
+  static bool ExtractIntegerValueAtIndex(const base::ListValue* value,
+                                         int index,
+                                         int* out_int);
 
   // Extract a floating point (double) value from a list Value.
   static bool ExtractDoubleValue(const base::ListValue* value,
