@@ -39,8 +39,7 @@ class CompositorTest : public testing::Test {
 
     compositor_.reset(new ui::Compositor(
         context_factory_private->AllocateFrameSinkId(), context_factory,
-        context_factory_private, CreateTaskRunner(),
-        false /* enable_surface_synchronization */));
+        context_factory_private, CreateTaskRunner(), ui::CompositorSettings()));
     compositor_->SetAcceleratedWidget(gfx::kNullAcceleratedWidget);
   }
 

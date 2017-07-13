@@ -257,6 +257,7 @@ class CONTENT_EXPORT RenderThreadImpl
   cc::TaskGraphRunner* GetTaskGraphRunner() override;
   bool IsThreadedAnimationEnabled() override;
   bool IsScrollAnimatorEnabled() override;
+  bool IsWaitForAllPipelineStagesBeforeDrawEnabled() override;
 
   // blink::scheduler::RendererScheduler::RAILModeObserver implementation.
   void OnRAILModeChanged(v8::RAILMode rail_mode) override;
@@ -753,6 +754,7 @@ class CONTENT_EXPORT RenderThreadImpl
   viz::BufferToTextureTargetMap buffer_to_texture_target_map_;
   bool is_threaded_animation_enabled_;
   bool is_scroll_animator_enabled_;
+  bool is_wait_for_all_pipeline_stages_before_draw_enabled_;
 
   class PendingFrameCreate : public base::RefCounted<PendingFrameCreate> {
    public:
