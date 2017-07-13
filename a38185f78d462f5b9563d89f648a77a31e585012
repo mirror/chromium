@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5304369e_fe843c3f",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-07-13T18:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29a592a2_49e088d0",
+      "range": {
+        "startLine": 198,
+        "startChar": 45,
+        "endLine": 198,
+        "endChar": 53
+      },
+      "revId": "a38185f78d462f5b9563d89f648a77a31e585012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6450091_fa9064fd",
         "filename": "components/ssl_config/ssl_config_service_manager_pref_unittest.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "a38185f78d462f5b9563d89f648a77a31e585012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d14cf8_44524f29",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-07-13T18:07:30Z",
+      "side": 1,
+      "message": "Removing the FeatureList code entirely, since I think FieldTrialParams is sufficient?",
+      "parentUuid": "b6450091_fa9064fd",
+      "range": {
+        "startLine": 282,
+        "startChar": 36,
+        "endLine": 282,
+        "endChar": 37
+      },
+      "revId": "a38185f78d462f5b9563d89f648a77a31e585012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
