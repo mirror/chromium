@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d4515972_1858f7f7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-13T16:08:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "953a4109_8ca8bc79",
+      "range": {
+        "startLine": 1177,
+        "startChar": 45,
+        "endLine": 1177,
+        "endChar": 49
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5515a448_c7ef522f",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "These are backquotes (markdown style). Happy to switch to pipe surrounding if you prefer. There is no distinction between Blink and Chromium for this AFAIK.",
       "parentUuid": "5515a448_c7ef522f",
+      "range": {
+        "startLine": 65,
+        "startChar": 52,
+        "endLine": 65,
+        "endChar": 69
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c163f696_84991e93",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-13T16:08:46Z",
+      "side": 1,
+      "message": "Slight preference for pipe, but if there\u0027s no distinction, that\u0027s fine.",
+      "parentUuid": "b7fc9552_351ca850",
       "range": {
         "startLine": 65,
         "startChar": 52,
