@@ -127,6 +127,9 @@ const int kSearchBoxPadding = 16;
 const int kSearchBoxTopPadding = 24;
 const int kSearchBoxBottomPadding = 21;
 
+// The preferred height of the search box.
+const int kSearchBoxPreferredHeight = 48;
+
 // Max items allowed in a folder.
 size_t kMaxFolderItems = 16;
 
