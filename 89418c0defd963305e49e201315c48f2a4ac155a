@@ -22,6 +22,30 @@
       "revId": "89418c0defd963305e49e201315c48f2a4ac155a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b1a5d6_aa7d1d2d",
+        "filename": "ui/gfx/animation/animation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1111184
+      },
+      "writtenOn": "2017-07-13T18:22:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d82d172f_8fbcb3df",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "89418c0defd963305e49e201315c48f2a4ac155a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

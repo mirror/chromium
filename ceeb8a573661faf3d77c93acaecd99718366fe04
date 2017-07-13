@@ -45,6 +45,30 @@
       "revId": "ceeb8a573661faf3d77c93acaecd99718366fe04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c62b56_dbd49ced",
+        "filename": "ui/gfx/test/animation_test_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111184
+      },
+      "writtenOn": "2017-07-13T18:22:46Z",
+      "side": 1,
+      "message": "Done, moved to ui/gfx/animation.",
+      "parentUuid": "82fa788c_b691bbf8",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 46
+      },
+      "revId": "ceeb8a573661faf3d77c93acaecd99718366fe04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
