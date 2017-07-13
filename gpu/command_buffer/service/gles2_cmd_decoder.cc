@@ -3879,6 +3879,10 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
     caps.disable_non_empty_post_sub_buffers = true;
   }
 
+  gpu::ImageFactory* image_factory = group_->image_factory();
+  caps.supported_image_buffer_attributes =
+      image_factory->GetBufferAttributesForImage();
+
   return caps;
 }
 

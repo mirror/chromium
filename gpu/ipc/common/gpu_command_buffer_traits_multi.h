@@ -12,6 +12,8 @@
 #include "ipc/ipc_message_utils.h"
 #include "ipc/param_traits_macros.h"
 #include "ui/gfx/ipc/geometry/gfx_param_traits.h"
+#include "ui/gfx/ipc/gfx_param_traits.h"
+
 #include "ui/gl/gpu_preference.h"
 
 #undef IPC_MESSAGE_EXPORT
@@ -139,6 +141,7 @@ IPC_STRUCT_TRAITS_BEGIN(gpu::Capabilities)
 
   IPC_STRUCT_TRAITS_MEMBER(major_version)
   IPC_STRUCT_TRAITS_MEMBER(minor_version)
+  IPC_STRUCT_TRAITS_MEMBER(supported_image_buffer_attributes)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(gpu::CommandBuffer::State)
