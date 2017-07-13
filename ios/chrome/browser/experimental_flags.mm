@@ -19,6 +19,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/password_manager/core/common/password_manager_features.h"
+#include "components/payments/core/features.h"
 #include "components/signin/core/common/signin_switches.h"
 #include "components/variations/variations_associated_data.h"
 #include "ios/chrome/browser/chrome_switches.h"
@@ -172,6 +173,17 @@ bool IsPasswordGenerationEnabled() {
   if (command_line->HasSwitch(switches::kDisableIOSPasswordGeneration))
     return false;
   return group_name != "Disabled";
+}
+
+bool IsPaymentRequestEnabled() {
+  // Check if the experimental flag is forced on.
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kEnablePaymentRequest)) {
+    return true;
+  }
+
+  // Check if the Finch experiment is turned on.
+  return base::FeatureList::IsEnabled(payments::features::kWebPayments);
 }
 
 bool IsPhysicalWebEnabled() {

@@ -5,14 +5,12 @@
 #include "ios/chrome/browser/web/chrome_web_client.h"
 
 #include "base/command_line.h"
-#include "base/feature_list.h"
 #include "base/files/file_util.h"
 #include "base/ios/ios_util.h"
 #include "base/mac/bundle_locations.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/dom_distiller/core/url_constants.h"
-#include "components/payments/core/features.h"
 #include "components/prefs/pref_service.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/version_info/version_info.h"
@@ -166,7 +164,7 @@ NSString* ChromeWebClient::GetEarlyPageScript(
     web::BrowserState* browser_state) const {
   NSString* chrome_page_script = GetPageScript(@"chrome_bundle");
 
-  if (!base::FeatureList::IsEnabled(payments::features::kWebPayments))
+  if (!experimental_flags::IsPaymentRequestEnabled())
     return chrome_page_script;
 
   NSString* kScriptTemplate = @"%@; %@";
