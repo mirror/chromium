@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee0b258e_d2a3614c",
+        "filename": "ash/mus/display_synchronizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-13T23:48:06Z",
+      "side": 1,
+      "message": "Tests can trigger this code path. I\u0027m not sure if it can be triggered on actual devices too. I\u0027m assuming in this case there is no need to do anything on the server side.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 10
+      },
+      "revId": "da9a7f09ba167752a1acdf3c89873e8d52acb30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
