@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cb6e859_4dc65364",
+        "filename": "base/files/file.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-13T19:27:45Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest \"Fuchsia\u0027s POSIX API does not support file locking.\"",
+      "revId": "cd00132af063fcbdea3f3729609d416f5d667fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac51816_19d6b04c",
+        "filename": "base/files/file.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-13T19:27:45Z",
+      "side": 1,
+      "message": "nit:  // !defined(OS_FUCHSIA) since the block is non-trivially long.",
+      "revId": "cd00132af063fcbdea3f3729609d416f5d667fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
