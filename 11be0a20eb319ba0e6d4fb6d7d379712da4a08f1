@@ -16,6 +16,24 @@
       "revId": "11be0a20eb319ba0e6d4fb6d7d379712da4a08f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a453ea0_77c9c5e4",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-13T22:23:34Z",
+      "side": 0,
+      "message": "Add a DCHCK(GetWidget()) please.",
+      "parentUuid": "7f0abeec_bcf8373f",
+      "revId": "11be0a20eb319ba0e6d4fb6d7d379712da4a08f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

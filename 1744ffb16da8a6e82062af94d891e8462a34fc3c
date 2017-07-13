@@ -16,6 +16,24 @@
       "revId": "1744ffb16da8a6e82062af94d891e8462a34fc3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a9c111b_62f78608",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-13T22:23:34Z",
+      "side": 1,
+      "message": "Please add the bug number in the TODO line for tracking purpose.",
+      "parentUuid": "41496e6e_caa03bef",
+      "revId": "1744ffb16da8a6e82062af94d891e8462a34fc3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
