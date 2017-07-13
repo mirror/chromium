@@ -36,6 +36,9 @@ public class AccountSigninActivity extends AppCompatActivity
     private static final String TAG = "AccountSigninActivity";
     private static final String INTENT_SIGNIN_ACCESS_POINT =
             "AccountSigninActivity.SigninAccessPoint";
+    private static final String INTENT_SELECT_ACCOUNT = "AccountSigninActivity.SelectAccount";
+    private static final String INTENT_IS_DEFAULT_ACCOUNT =
+            "AccountSigninActivity.IsDefaultAccount";
 
     private AccountSigninView mView;
     private ProfileDataCache mProfileDataCache;
@@ -76,6 +79,21 @@ public class AccountSigninActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * A convenience method to create a AccountSigninActivity passing the access point as an
+     * intent.
+     * @param accessPoint A SigninAccessPoint designating where the activity is created from.
+     * @param selectAccount - A SigninAccessPoint designating where the activity is created from.
+     */
+    public static void startFromConfirmationPage(Context context, @AccessPoint int accessPoint,
+            String selectAccount, boolean isDefaultAccount) {
+        Intent intent = new Intent(context, AccountSigninActivity.class);
+        intent.putExtra(INTENT_SIGNIN_ACCESS_POINT, accessPoint);
+        intent.putExtra(INTENT_SELECT_ACCOUNT, selectAccount);
+        intent.putExtra(INTENT_IS_DEFAULT_ACCOUNT, isDefaultAccount);
+        context.startActivity(intent);
+    }
+
     @Override
     @SuppressFBWarnings("DM_EXIT")
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +122,16 @@ public class AccountSigninActivity extends AppCompatActivity
 
         mView = (AccountSigninView) LayoutInflater.from(this).inflate(
                 R.layout.account_signin_view, null);
-        mView.init(getProfileDataCache(), false, null, this, this);
+
+        String selectAccount = getIntent().getStringExtra(INTENT_SELECT_ACCOUNT);
+        if (selectAccount == null) {
+            mView.initFromSelectionPage(getProfileDataCache(), false, this, this);
+        } else {
+            boolean isDefaultAccount =
+                    getIntent().getBooleanExtra(INTENT_IS_DEFAULT_ACCOUNT, false);
+            mView.initFromConfirmationPage(getProfileDataCache(), false, selectAccount,
+                    isDefaultAccount, AccountSigninView.UNDO_ABORT, this, this);
+        }
 
         if (getAccessPoint() == SigninAccessPoint.BOOKMARK_MANAGER
                 || getAccessPoint() == SigninAccessPoint.RECENT_TABS) {
