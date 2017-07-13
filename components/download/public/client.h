@@ -22,8 +22,14 @@ class Client {
   // Used by OnDownloadStarted to determine whether or not the DownloadService
   // should continue downloading the file or abort the attempt.
   enum class ShouldDownload {
+    // Continue to download the file.
     CONTINUE,
+
+    // Abort the download.
     ABORT,
+
+    // Last entry of the enum.
+    MAX,
   };
 
   // Used by OnDownloadFailed to determine the reason of the abort.

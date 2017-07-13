@@ -49,6 +49,7 @@ void DownloadServiceImpl::StartDownload(const DownloadParams& download_params) {
   stats::LogServiceApiAction(download_params.client,
                              stats::ServiceApiAction::START_DOWNLOAD);
   DCHECK_EQ(download_params.guid, base::ToUpperASCII(download_params.guid));
+  stats::LogDownloadParams(download_params);
   controller_->StartDownload(download_params);
 }
 

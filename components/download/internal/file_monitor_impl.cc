@@ -10,6 +10,7 @@
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
+#include "base/sys_info.h"
 #include "base/task_runner_util.h"
 #include "base/threading/thread_restrictions.h"
 
@@ -17,12 +18,64 @@ namespace download {
 
 namespace {
 
-bool CreateDirectoryIfNotExists(const base::FilePath& dir_path) {
+// Helper function to calculate total file size in a directory, the total
+// disk space and free disk space of the volume that contains that directory.
+// Returns false if failed to query disk space or total disk space is empty.
+bool CalculateDiskUtilization(const base::FilePath& file_dir,
+                              int64_t& total_disk_space,
+                              int64_t& free_disk_space,
+                              int64_t& files_size) {
+  base::ThreadRestrictions::AssertIOAllowed();
+  base::FileEnumerator file_enumerator(file_dir, false /* recursive */,
+                                       base::FileEnumerator::FILES);
+
+  int64_t size = 0;
+  // Compute the total size of all files in |file_dir|.
+  for (base::FilePath path = file_enumerator.Next(); !path.value().empty();
+       path = file_enumerator.Next()) {
+    if (!base::GetFileSize(path, &size)) {
+      DVLOG(1) << "File size query failed.";
+      return false;
+    }
+    files_size += size;
+  }
+
+  // Disk space of the volume that |file_dir| belongs to.
+  total_disk_space = base::SysInfo::AmountOfTotalDiskSpace(file_dir);
+  free_disk_space = base::SysInfo::AmountOfFreeDiskSpace(file_dir);
+  if (total_disk_space == -1 || free_disk_space == -1) {
+    DVLOG(1) << "System disk space query failed.";
+    return false;
+  }
+
+  if (total_disk_space == 0) {
+    DVLOG(1) << "Empty total system disk space.";
+    return false;
+  }
+  return true;
+}
+
+// Creates the download directory if it doesn't exist.
+bool InitializeAndCreateDownloadDirectory(const base::FilePath& dir_path) {
+  // Create the download directory.
   bool success = base::PathExists(dir_path);
   if (!success) {
-    base::File::Error error;
+    base::File::Error error = base::File::Error::FILE_OK;
     success = base::CreateDirectoryAndGetError(dir_path, &error);
+    if (!success)
+      stats::LogsFileDirectoryCreationError(error);
   }
+
+  // Records disk utilization histograms.
+  if (success) {
+    int64_t files_size = 0, total_disk_space = 0, free_disk_space = 0;
+    if (CalculateDiskUtilization(dir_path, total_disk_space, free_disk_space,
+                                 files_size)) {
+      stats::LogFileDirDiskUtilization(total_disk_space, free_disk_space,
+                                       files_size);
+    }
+  }
+
   return success;
 }
 
@@ -42,7 +95,8 @@ FileMonitorImpl::~FileMonitorImpl() = default;
 void FileMonitorImpl::Initialize(const InitCallback& callback) {
   base::PostTaskAndReplyWithResult(
       file_thread_task_runner_.get(), FROM_HERE,
-      base::Bind(&CreateDirectoryIfNotExists, download_file_dir_), callback);
+      base::Bind(&InitializeAndCreateDownloadDirectory, download_file_dir_),
+      callback);
 }
 
 void FileMonitorImpl::DeleteUnknownFiles(
@@ -72,6 +126,10 @@ std::vector<Entry*> FileMonitorImpl::CleanupFilesForCompletedEntries(
 
     entries_to_remove.push_back(entry);
     files_to_remove.push_back(entry->target_file_path);
+
+    // TODO(xingliu): Consider logs life time after the file being deleted on
+    // the file thread.
+    stats::LogFileLifeTime(base::Time::Now() - entry->completion_time);
   }
 
   file_thread_task_runner_->PostTask(
@@ -112,24 +170,19 @@ void FileMonitorImpl::DeleteFilesOnFileThread(
     const std::vector<base::FilePath>& paths,
     stats::FileCleanupReason reason) {
   base::ThreadRestrictions::AssertIOAllowed();
-  int num_delete_attempted = 0;
-  int num_delete_failed = 0;
-  int num_delete_by_external = 0;
+  int num_delete_succeeded = 0, num_delete_failed = 0,
+      num_delete_by_external = 0;
   for (const base::FilePath& path : paths) {
     if (!base::PathExists(path)) {
       num_delete_by_external++;
       continue;
     }
-
-    num_delete_attempted++;
     DCHECK(!base::DirectoryExists(path));
-
-    if (!base::DeleteFile(path, false /* recursive */)) {
-      num_delete_failed++;
-    }
+    base::DeleteFile(path, false /* recursive */) ? (++num_delete_succeeded)
+                                                  : (++num_delete_failed);
   }
 
-  stats::LogFileCleanupStatus(reason, num_delete_attempted, num_delete_failed,
+  stats::LogFileCleanupStatus(reason, num_delete_succeeded, num_delete_failed,
                               num_delete_by_external);
 }
 
