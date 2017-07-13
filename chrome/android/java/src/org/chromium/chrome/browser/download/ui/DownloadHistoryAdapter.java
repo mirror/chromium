@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import org.chromium.base.ContextUtils;
@@ -161,6 +162,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
     private final LoadingStateDelegate mLoadingDelegate;
     private final ObserverList<TestObserver> mObservers = new ObserverList<>();
     private final List<DownloadItemView> mViews = new ArrayList<>();
+    private final ArrayList<HeaderItem> mHeaderItems;
 
     private BackendProvider mBackendProvider;
     private OfflinePageDownloadBridge.Observer mOfflinePageObserver;
@@ -177,6 +179,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
         mShowOffTheRecord = showOffTheRecord;
         mParentComponent = parentComponent;
         mLoadingDelegate = new LoadingStateDelegate(mShowOffTheRecord);
+        mHeaderItems = new ArrayList<>();
 
         // Using stable IDs allows the RecyclerView to animate changes.
         setHasStableIds(true);
@@ -364,26 +367,32 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
     }
 
     @Override
+    protected void bindViewHolderForHeaderItem(ViewHolder viewHolder, HeaderItem headerItem) {
+        super.bindViewHolderForHeaderItem(viewHolder, headerItem);
+        mSpaceDisplay.onChanged();
+    }
+
+    @Override
     protected ItemGroup createGroup(long timeStamp) {
         return new DownloadItemGroup(timeStamp);
     }
 
-    @Override
-    protected BasicViewHolder createHeader(ViewGroup parent) {
-        if (mSpaceDisplay == null) {
-            mSpaceDisplay = new SpaceDisplay(parent, this);
-            registerAdapterDataObserver(mSpaceDisplay);
-            if (mUiConfig != null) {
-                MarginResizer.createWithViewAdapter(mSpaceDisplay.getView(), mUiConfig,
-                        parent.getResources().getDimensionPixelSize(
-                                R.dimen.list_item_default_margin),
-                        SelectableListLayout.getDefaultListItemLateralShadowSizePx(
-                                parent.getResources()));
-            }
+    /**
+     * Initialize space display view in storage info header and generate header item for it.
+     */
+    void generateHeaderItems() {
+        mSpaceDisplay = new SpaceDisplay(null, this);
+        View view = mSpaceDisplay.getView();
+        registerAdapterDataObserver(mSpaceDisplay);
+        if (mUiConfig != null) {
+            MarginResizer.createWithViewAdapter(view, mUiConfig,
+                    view.getResources().getDimensionPixelSize(R.dimen.list_item_default_margin),
+                    SelectableListLayout.getDefaultListItemLateralShadowSizePx(
+                            view.getResources()));
         }
-
-        mSpaceDisplay.onChanged();
-        return new BasicViewHolder(mSpaceDisplay.getView());
+        HeaderItem headerItem = new HeaderItem(0, view);
+        headerItem.setVisibility(true);
+        mHeaderItems.add(headerItem);
     }
 
     /** Called when a new DownloadItem has been created by the native DownloadManager. */
@@ -598,7 +607,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
 
         clear(false);
         if (!filteredTimedItems.isEmpty() && !mIsSearching && mShouldShowStorageInfoHeader) {
-            addHeader();
+            setHeaders(mHeaderItems);
         }
 
         loadItems(filteredTimedItems);
