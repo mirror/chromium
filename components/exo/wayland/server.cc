@@ -86,15 +86,21 @@
 #include <linux-dmabuf-unstable-v1-server-protocol.h>
 #include <wayland-drm-server-protocol.h>
 #if defined(OS_CHROMEOS)
+#include "ui/aura/env.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.h"
+#include "ui/ozone/platform/drm/common/drm_util.h"
 #endif
 #endif
 
 #if BUILDFLAG(USE_XKBCOMMON)
 #include <xkbcommon/xkbcommon.h>
 #include "ui/events/keycodes/scoped_xkb.h"  // nogncheck
+#endif
+
+#ifndef DRM_FORMAT_MOD_INVALID
+#define DRM_FORMAT_MOD_INVALID ((1ULL << 56) - 1)
 #endif
 
 DECLARE_UI_CLASS_PROPERTY_TYPE(wl_resource*);
@@ -606,17 +612,14 @@ void bind_drm(wl_client* client, void* data, uint32_t version, uint32_t id) {
 ////////////////////////////////////////////////////////////////////////////////
 // linux_buffer_params_interface:
 
-const struct dmabuf_supported_format {
-  uint32_t dmabuf_format;
-  gfx::BufferFormat buffer_format;
-} dmabuf_supported_formats[] = {
-    {DRM_FORMAT_RGB565, gfx::BufferFormat::BGR_565},
-    {DRM_FORMAT_XBGR8888, gfx::BufferFormat::RGBX_8888},
-    {DRM_FORMAT_ABGR8888, gfx::BufferFormat::RGBA_8888},
-    {DRM_FORMAT_XRGB8888, gfx::BufferFormat::BGRX_8888},
-    {DRM_FORMAT_ARGB8888, gfx::BufferFormat::BGRA_8888},
-    {DRM_FORMAT_NV12, gfx::BufferFormat::YUV_420_BIPLANAR},
-    {DRM_FORMAT_YVU420, gfx::BufferFormat::YVU_420}};
+std::vector<gfx::BufferAttribute> dmabuf_supported_attributes = {
+    {DRM_FORMAT_RGB565, DRM_FORMAT_MOD_INVALID},
+    {DRM_FORMAT_XBGR8888, DRM_FORMAT_MOD_INVALID},
+    {DRM_FORMAT_ABGR8888, DRM_FORMAT_MOD_INVALID},
+    {DRM_FORMAT_XRGB8888, DRM_FORMAT_MOD_INVALID},
+    {DRM_FORMAT_ARGB8888, DRM_FORMAT_MOD_INVALID},
+    {DRM_FORMAT_NV12, DRM_FORMAT_MOD_INVALID},
+    {DRM_FORMAT_YVU420, DRM_FORMAT_MOD_INVALID}};
 
 struct LinuxBufferParams {
   struct Plane {
@@ -707,27 +710,28 @@ void linux_buffer_params_create(wl_client* client,
                                 int32_t height,
                                 uint32_t format,
                                 uint32_t flags) {
-  const auto* supported_format = std::find_if(
-      std::begin(dmabuf_supported_formats), std::end(dmabuf_supported_formats),
-      [format](const dmabuf_supported_format& supported_format) {
-        return supported_format.dmabuf_format == format;
-      });
-  if (supported_format == std::end(dmabuf_supported_formats)) {
+  const auto supported_attribute =
+      std::find_if(std::begin(dmabuf_supported_attributes),
+                   std::end(dmabuf_supported_attributes),
+                   [format](const gfx::BufferAttribute& supported_attribute) {
+                     return supported_attribute.fourcc == (int32_t)format;
+                   });
+  if (supported_attribute == dmabuf_supported_attributes.end()) {
     wl_resource_post_error(resource,
                            ZWP_LINUX_BUFFER_PARAMS_V1_ERROR_INVALID_FORMAT,
                            "format not supported");
     return;
   }
 
-  if (!ValidateLinuxBufferParams(resource, width, height,
-                                 supported_format->buffer_format, flags))
+  gfx::BufferFormat buffer_format =
+      ui::GetBufferFormatFromFourCCFormat(supported_attribute->fourcc);
+  if (!ValidateLinuxBufferParams(resource, width, height, buffer_format, flags))
     return;
 
   LinuxBufferParams* linux_buffer_params =
       GetUserDataAs<LinuxBufferParams>(resource);
 
-  size_t num_planes =
-      gfx::NumberOfPlanesForBufferFormat(supported_format->buffer_format);
+  size_t num_planes = gfx::NumberOfPlanesForBufferFormat(buffer_format);
 
   std::vector<gfx::NativePixmapPlane> planes;
   std::vector<base::ScopedFD> fds;
@@ -741,8 +745,7 @@ void linux_buffer_params_create(wl_client* client,
 
   std::unique_ptr<Buffer> buffer =
       linux_buffer_params->display->CreateLinuxDMABufBuffer(
-          gfx::Size(width, height), supported_format->buffer_format, planes,
-          std::move(fds));
+          gfx::Size(width, height), buffer_format, planes, std::move(fds));
   if (!buffer) {
     zwp_linux_buffer_params_v1_send_failed(resource);
     return;
@@ -766,27 +769,28 @@ void linux_buffer_params_create_immed(wl_client* client,
                                       int32_t height,
                                       uint32_t format,
                                       uint32_t flags) {
-  const auto* supported_format = std::find_if(
-      std::begin(dmabuf_supported_formats), std::end(dmabuf_supported_formats),
-      [format](const dmabuf_supported_format& supported_format) {
-        return supported_format.dmabuf_format == format;
-      });
-  if (supported_format == std::end(dmabuf_supported_formats)) {
+  const auto supported_attribute =
+      std::find_if(std::begin(dmabuf_supported_attributes),
+                   std::end(dmabuf_supported_attributes),
+                   [format](const gfx::BufferAttribute& supported_attribute) {
+                     return supported_attribute.fourcc == (int32_t)format;
+                   });
+  if (supported_attribute == dmabuf_supported_attributes.end()) {
     wl_resource_post_error(resource,
                            ZWP_LINUX_BUFFER_PARAMS_V1_ERROR_INVALID_FORMAT,
                            "format not supported");
     return;
   }
 
-  if (!ValidateLinuxBufferParams(resource, width, height,
-                                 supported_format->buffer_format, flags))
+  gfx::BufferFormat buffer_format =
+      ui::GetBufferFormatFromFourCCFormat(supported_attribute->fourcc);
+  if (!ValidateLinuxBufferParams(resource, width, height, buffer_format, flags))
     return;
 
   LinuxBufferParams* linux_buffer_params =
       GetUserDataAs<LinuxBufferParams>(resource);
 
-  size_t num_planes =
-      gfx::NumberOfPlanesForBufferFormat(supported_format->buffer_format);
+  size_t num_planes = gfx::NumberOfPlanesForBufferFormat(buffer_format);
 
   std::vector<gfx::NativePixmapPlane> planes;
   std::vector<base::ScopedFD> fds;
@@ -800,8 +804,7 @@ void linux_buffer_params_create_immed(wl_client* client,
 
   std::unique_ptr<Buffer> buffer =
       linux_buffer_params->display->CreateLinuxDMABufBuffer(
-          gfx::Size(width, height), supported_format->buffer_format, planes,
-          std::move(fds));
+          gfx::Size(width, height), buffer_format, planes, std::move(fds));
   if (!buffer) {
     // On import failure in case of a create_immed request, the protocol
     // allows us to raise a fatal error from zwp_linux_dmabuf_v1 version 2+.
@@ -859,8 +862,21 @@ void bind_linux_dmabuf(wl_client* client,
   wl_resource_set_implementation(resource, &linux_dmabuf_implementation, data,
                                  nullptr);
 
-  for (const auto& supported_format : dmabuf_supported_formats)
-    zwp_linux_dmabuf_v1_send_format(resource, supported_format.dmabuf_format);
+  std::vector<gfx::BufferAttribute> attribs =
+      aura::Env::GetInstance()
+          ->context_factory()
+          ->SharedMainThreadContextProvider()
+          ->ContextCapabilities()
+          .supported_image_buffer_attributes;
+  if (!attribs.empty())
+    dmabuf_supported_attributes = std::move(attribs);
+
+  for (const auto attrib : dmabuf_supported_attributes) {
+    uint32_t modifier_lo = attrib.modifier & 0xFFFFFFFF;
+    uint32_t modifier_hi = attrib.modifier >> 32;
+    zwp_linux_dmabuf_v1_send_modifier(resource, attrib.fourcc, modifier_hi,
+                                      modifier_lo);
+  }
 }
 
 #endif
@@ -4096,7 +4112,7 @@ Server::Server(Display* display)
 #if defined(USE_OZONE)
   wl_global_create(wl_display_.get(), &wl_drm_interface, drm_version, display_,
                    bind_drm);
-  wl_global_create(wl_display_.get(), &zwp_linux_dmabuf_v1_interface, 2,
+  wl_global_create(wl_display_.get(), &zwp_linux_dmabuf_v1_interface, 3,
                    display_, bind_linux_dmabuf);
 #endif
   wl_global_create(wl_display_.get(), &wl_subcompositor_interface, 1, display_,

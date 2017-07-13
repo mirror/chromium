@@ -217,10 +217,32 @@ class RectsClient : public ClientBase {
           size_t num_benchmark_runs,
           base::TimeDelta benchmark_interval,
           bool show_fps_counter);
+  static void AddDmaBufAttribute(uint32_t format, uint64_t modifier);
 
  private:
+  static std::vector<std::pair<uint32_t, uint64_t>> dmabuf_attributes_;
   DISALLOW_COPY_AND_ASSIGN(RectsClient);
 };
+
+std::vector<std::pair<uint32_t, uint64_t>> RectsClient::dmabuf_attributes_ =
+    std::vector<std::pair<uint32_t, uint64_t>>();
+
+void RectsClient::AddDmaBufAttribute(uint32_t format, uint64_t modifier) {
+  dmabuf_attributes_.push_back(std::pair<uint32_t, uint64_t>(format, modifier));
+}
+
+void LinuxDmaBufAttributeReceived(void* data,
+                                  struct zwp_linux_dmabuf_v1* zwp_linux_dmabuf,
+                                  uint32_t format,
+                                  uint32_t modifier_hi,
+                                  uint32_t modifier_lo) {
+  RectsClient::AddDmaBufAttribute(format,
+                                  ((uint64_t)modifier_hi << 32 | modifier_lo));
+}
+
+void LinuxDmaBufFormatReceived(void* data,
+                               struct zwp_linux_dmabuf_v1* zwp_linux_dmabuf,
+                               uint32_t format) {}
 
 int RectsClient::Run(const ClientBase::InitParams& params,
                      size_t max_frames_pending,
@@ -520,6 +542,9 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  params.dmabuf_listener = {
+      exo::wayland::clients::LinuxDmaBufFormatReceived,
+      exo::wayland::clients::LinuxDmaBufAttributeReceived};
   exo::wayland::clients::RectsClient client;
   return client.Run(params, max_frames_pending, num_rects, num_benchmark_runs,
                     base::TimeDelta::FromMilliseconds(benchmark_interval_ms),
