@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8930faad_5fd13b48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-13T23:17:18Z",
+      "side": 1,
+      "message": "I don\u0027t think you want this here, or the setWindowModeForVr below.\n\nswapHostActivity should never be called while in VR, in fact we should probably add an assert to make that clear.\n\nIf it *is* actually the case that we\u0027re changing activities while in VR and expecting to stay in VR, then we\u0027ll need to do a lot more than just this.",
+      "range": {
+        "startLine": 626,
+        "startChar": 8,
+        "endLine": 626,
+        "endChar": 25
+      },
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
