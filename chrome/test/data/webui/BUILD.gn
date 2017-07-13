@@ -76,6 +76,7 @@ js2gtest("browser_tests_js_webui") {
     "ntp4.js",
     "polymer_browser_test_base.js",
     "sandboxstatus_browsertest.js",
+    "settings/accessibility_browsertest.js",
     "settings/advanced_page_browsertest.js",
     "settings/animation_browsertest.js",
     "settings/basic_page_browsertest.js",
