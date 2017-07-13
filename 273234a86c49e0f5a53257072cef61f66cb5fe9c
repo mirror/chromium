@@ -16,6 +16,24 @@
       "revId": "273234a86c49e0f5a53257072cef61f66cb5fe9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffef1328_ce93b09a",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-13T07:09:05Z",
+      "side": 1,
+      "message": "Thanks for the details!\n\nHmmm.. as long as the issue is correctly notified to webdevs via message, I\u0027m OK w/ enabling module in XHTML partially.\n\nI\u0027d like to proceed w/ this CL, as I think it is beneficial to have this in M61 from UX perspective.\nWould you follow up on the if block move? (no time constraint for the change)",
+      "parentUuid": "73d27e80_d2e2dbb4",
+      "revId": "273234a86c49e0f5a53257072cef61f66cb5fe9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
