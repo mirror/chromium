@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4015215_29ec4eb5",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T04:54:07Z",
+      "side": 1,
+      "message": "nit: link to the spec?",
+      "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9df14a7b_9f53b60a",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 5
@@ -42,6 +59,23 @@
         "endLine": 4204,
         "endChar": 49
       },
+      "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a5afd3_d06fe57e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T04:54:07Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be plumbed in LocalFrame so that per-frame FrameBrokerPtr can be kept there?",
       "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
