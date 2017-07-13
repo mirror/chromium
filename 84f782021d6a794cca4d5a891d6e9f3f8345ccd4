@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d46b05_69fdafa9",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-13T19:37:09Z",
+      "side": 1,
+      "message": "nit: Please use l10n_util::GetStringUTF16() here and on line 63 instead of calling GetLocalizedString() directly.",
+      "revId": "84f782021d6a794cca4d5a891d6e9f3f8345ccd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
