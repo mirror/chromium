@@ -19,6 +19,8 @@ static_library("zucchini_lib") {
     "image_utils.h",
     "io_utils.cc",
     "io_utils.h",
+    "main_utils.cc",
+    "main_utils.h",
     "suffix_array.h",
     "typed_value.h",
   ]
@@ -33,7 +35,15 @@ executable("zucchini") {
     "zucchini_main.cc",
   ]
 
-  deps = []
+  cflags_cc = [
+    "-nostdinc++",
+    "-std=c++11",
+  ]
+
+  deps = [
+    ":zucchini_lib",
+    "//base",
+  ]
 
   if (is_win) {
     deps += [ ":zucchini_exe_version" ]
