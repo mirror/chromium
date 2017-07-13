@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb5364ab_ca4a3f78",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-13T07:57:08Z",
+      "side": 1,
+      "message": "Right, crbug.com/443374 tracks the work to complete the implementation for WorkerDFetchContext.\nAlso,see https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/WorkerFetchContext.h?rcl\u003d6048b896826a1cf55096995d89ef4c72ae72ddd9\u0026l\u003d27",
+      "parentUuid": "166bc86f_2da07a3f",
+      "revId": "eaf26ed189eb040ba5cd315c40b9cf4c887c730d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "324f8292_1430ff73",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-13T05:58:35Z",
       "side": 1,
       "message": "Can you tell me why you need this separate function? Isn\u0027t it good to implement in DispatchDidReceiveResponse?",
+      "revId": "eaf26ed189eb040ba5cd315c40b9cf4c887c730d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8257b30_ba3bf05a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-13T07:57:08Z",
+      "side": 1,
+      "message": "You are right. It seems that it is possible to implement DispatchDidReceiveResponse in BaseFetchContext class, and then move this code to BaseFetchContext::DispatchDidReceiveResponse(). \n\nIIUC, FrameFetchContext is probably not enough. I believe FrameFetchContext::DispatchDidReceiveResponse() is only called for main frame responses (not all responses). I will update the CL tomorrow.",
+      "parentUuid": "324f8292_1430ff73",
       "revId": "eaf26ed189eb040ba5cd315c40b9cf4c887c730d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
