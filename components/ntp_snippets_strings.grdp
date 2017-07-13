@@ -68,4 +68,8 @@
     From <ph name="ARTICLE_PUBLISHER">$1<ex>World News Corporation</ex></ph>. Read this and <ph name="OTHER_ARTICLE_COUNT">$2<ex>9</ex></ph> other stories.
   </message>
 
+  <message name="IDS_NTP_LEARN_MORE_ABOUT_SUGGESTED_CONTENT" desc="Text in the footer of the New Tab Page. Part of the text is a link to a help center page where the user can learn more about suggested content.">
+    <ph name="BEGIN_LINK">&lt;link&gt;</ph>Learn more<ph name="END_LINK">&lt;/link&gt;</ph> about suggested content
+  </message>
+
 </grit-part>
