@@ -16,6 +16,24 @@
       "revId": "7bd2c3ca7b6924d17ee160950521421bd88eecde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78765a0c_5d33d6cb",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-13T18:39:17Z",
+      "side": 1,
+      "message": "My change doesn\u0027t require it, but `git cl lint` wants it for the use of std::move around line 509. Any objections?",
+      "parentUuid": "b4a8dadc_1fff81bd",
+      "revId": "7bd2c3ca7b6924d17ee160950521421bd88eecde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
