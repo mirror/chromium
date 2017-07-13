@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9066491a_bfff6a9b",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-13T06:05:49Z",
+      "side": 0,
+      "message": "Is it safe to remove this drainUntilIdle? I think this is the last line executed before some non-EG code that may depend upon passwords being cleared (which calls this method), and if we don\u0027t drainUntilIdle, might the UI (and perhaps the underlying action) not be complete?\n\nI think this is a larger problem we have of how to synchronize between EG and non-EG calls.\n\nThe purpose of ChromeEarlGrey should help, but do we want all method calls to go there? I guess callsites should always synchronize before calling un-synchronized code?\n\nSo I guess to summarize, two points.\n1. We should verify that removing some of these drainUntilIdles are safe.\n2. We need to come up with a more clear way to make everything synchronized.",
+      "revId": "839ce1be4b4cdc2a0f92bd0da4fc1fe3d10f67e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
