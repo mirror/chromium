@@ -21,6 +21,9 @@ MockPermissionPromptFactory::MockPermissionPromptFactory(
       manager_(manager) {
   manager->view_factory_ =
       base::Bind(&MockPermissionPromptFactory::Create, base::Unretained(this));
+  // Force the manager to re-create the view if it exists.
+  manager->HideBubble();
+  manager->DisplayPendingRequests();
 }
 
 MockPermissionPromptFactory::~MockPermissionPromptFactory() {

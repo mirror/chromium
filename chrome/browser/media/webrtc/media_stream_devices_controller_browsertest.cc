@@ -268,7 +268,6 @@ class MediaStreamDevicesControllerTest
           PermissionRequestManager::FromWebContents(
               browser()->tab_strip_model()->GetActiveWebContents());
       prompt_factory_.reset(new MockPermissionPromptFactory(manager));
-      manager->DisplayPendingRequests();
     } else {
       scoped_feature_list_.InitAndDisableFeature(
           features::kUsePermissionManagerForMediaRequests);
