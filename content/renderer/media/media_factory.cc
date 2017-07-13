@@ -30,6 +30,7 @@
 #include "media/filters/context_3d.h"
 #include "media/renderers/default_renderer_factory.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
+#include "services/service_manager/public/cpp/connect.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "third_party/WebKit/public/web/WebKit.h"
@@ -249,7 +250,9 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           max_keyframe_distance_to_disable_background_video_mse,
           enable_instant_source_buffer_gc,
           GetContentClient()->renderer()->AllowMediaSuspend(),
-          embedded_media_experience_enabled));
+          embedded_media_experience_enabled,
+          base::Bind(&MediaFactory::CreateMediaCapabilitiesRecorder,
+                     base::Unretained(this))));
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
@@ -481,6 +484,16 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
 #endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
 
   return cdm_factory_.get();
+}
+
+media::mojom::MediaCapabilitiesRecorderPtr
+MediaFactory::CreateMediaCapabilitiesRecorder() {
+  DCHECK(remote_interfaces_);
+
+  media::mojom::MediaCapabilitiesRecorderPtr recorder_ptr;
+  service_manager::GetInterface(remote_interfaces_->get(), &recorder_ptr);
+
+  return recorder_ptr;
 }
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)

@@ -243,7 +243,8 @@ class WebMediaPlayerImplTest : public testing::Test {
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
             kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false,
-            allow_suspend, false));
+            allow_suspend, false,
+            WebMediaPlayerParams::CreateCapabilitiesRecorderCB()));
   }
 
   ~WebMediaPlayerImplTest() override {

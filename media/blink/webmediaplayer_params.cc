@@ -27,7 +27,8 @@ WebMediaPlayerParams::WebMediaPlayerParams(
     base::TimeDelta max_keyframe_distance_to_disable_background_video_mse,
     bool enable_instant_source_buffer_gc,
     bool allow_suspend,
-    bool embedded_media_experience_enabled)
+    bool embedded_media_experience_enabled,
+    CreateCapabilitiesRecorderCB create_capabilities_recorder_cb)
     : defer_load_cb_(defer_load_cb),
       audio_renderer_sink_(audio_renderer_sink),
       media_log_(std::move(media_log)),
@@ -46,7 +47,8 @@ WebMediaPlayerParams::WebMediaPlayerParams(
           max_keyframe_distance_to_disable_background_video_mse),
       enable_instant_source_buffer_gc_(enable_instant_source_buffer_gc),
       allow_suspend_(allow_suspend),
-      embedded_media_experience_enabled_(embedded_media_experience_enabled) {}
+      embedded_media_experience_enabled_(embedded_media_experience_enabled),
+      create_capabilities_recorder_cb_(create_capabilities_recorder_cb) {}
 
 WebMediaPlayerParams::~WebMediaPlayerParams() {}
 
