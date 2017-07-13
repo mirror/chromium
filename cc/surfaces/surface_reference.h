@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/hash.h"
+#include "cc/surfaces/surfaces_export.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "mojo/public/cpp/bindings/struct_traits.h"
 
@@ -17,7 +18,7 @@ class SurfaceReferenceDataView;
 }
 
 // Hold a reference from an embedding (parent) to embedded (child) surface.
-class SurfaceReference {
+class CC_SURFACES_EXPORT SurfaceReference {
  public:
   SurfaceReference();
   SurfaceReference(const viz::SurfaceId& parent_id,
