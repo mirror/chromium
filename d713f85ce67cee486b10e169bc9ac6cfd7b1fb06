@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d67b1813_9b4ee6fe",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T21:45:46Z",
+      "side": 1,
+      "message": "Document that this returns a self-owned pointer here.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "d713f85ce67cee486b10e169bc9ac6cfd7b1fb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d09aff_d9486423",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T21:45:46Z",
+      "side": 1,
+      "message": "Move the definition to the CC file.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 3
+      },
+      "revId": "d713f85ce67cee486b10e169bc9ac6cfd7b1fb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
