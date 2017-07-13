@@ -16,6 +16,24 @@
       "revId": "39dbdc063d2fadfae1ffd348750d8486e3684a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75255073_f2f989ef",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-07-13T02:48:40Z",
+      "side": 1,
+      "message": "I consulted with stevenjb before this CL and he said that using this should be fine since we don\u0027t use ONC constants downstream.",
+      "parentUuid": "a8b6fc73_12a4390d",
+      "revId": "39dbdc063d2fadfae1ffd348750d8486e3684a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
