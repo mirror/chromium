@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c664165a_fd7b86b9",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 2408,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-13T18:33:27Z",
+      "side": 1,
+      "message": "Add \"# Fuchsia doesn\u0027t support file locking\" comment",
+      "range": {
+        "startLine": 2408,
+        "startChar": 20,
+        "endLine": 2408,
+        "endChar": 24
+      },
+      "revId": "d863cb18cc40c03a472f11bea36d9772b0b888c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6302a3_428118fa",
+        "filename": "base/files/file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-13T18:33:27Z",
+      "side": 1,
+      "message": "Add some \"Fuchsia doesn\u0027t support file locking\" type of comment, and if you know how to do a cross-platform lock without this, mention what to do instead on Fuchsia in the comment too.",
+      "range": {
+        "startLine": 276,
+        "startChar": 7,
+        "endLine": 276,
+        "endChar": 11
+      },
+      "revId": "d863cb18cc40c03a472f11bea36d9772b0b888c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
