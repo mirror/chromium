@@ -22,6 +22,30 @@
       "revId": "8eb38c5c7c5479aa9b4731e2bd1f814ab0acffc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616f061a_03ecde5a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-13T09:10:41Z",
+      "side": 1,
+      "message": "I hesitated but I did not find it readable.\nAnd the Article section might have some metrics in the future.",
+      "parentUuid": "337efdaf_51cd1d82",
+      "range": {
+        "startLine": 250,
+        "startChar": 6,
+        "endLine": 250,
+        "endChar": 11
+      },
+      "revId": "8eb38c5c7c5479aa9b4731e2bd1f814ab0acffc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
