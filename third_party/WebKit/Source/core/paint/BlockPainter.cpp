@@ -219,6 +219,11 @@ void BlockPainter::PaintObject(const PaintInfo& paint_info,
         scrolled_paint_info->UpdateCullRectForScrollingContents(
             EnclosingIntRect(layout_block_.OverflowClipRect(paint_offset)),
             scroll_translation->Matrix().ToAffineTransform());
+
+        // TODO(pdr): This should only be emitted for one phase, directly before
+        // children are painted. This is not the correct place.
+        scroll_recorder.emplace(paint_info.context, layout_block_, paint_phase,
+                                IntSize());
       }
     } else if (layout_block_.HasOverflowClip()) {
       IntSize scroll_offset = layout_block_.ScrolledContentOffset();

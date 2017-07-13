@@ -173,6 +173,7 @@ class PLATFORM_EXPORT DisplayItem {
     kEndTransform,
     kBeginClipPath,
     kEndClipPath,
+    kScrollLayer,
     kUninitializedType,
     kTypeLast = kUninitializedType
   };
@@ -306,6 +307,9 @@ class PLATFORM_EXPORT DisplayItem {
   DEFINE_PAINT_PHASE_CONVERSION_METHOD(Scroll)
 
   DEFINE_PAIRED_CATEGORY_METHODS(Transform3D, transform3D)
+
+  static bool IsScrollLayerType(Type type) { return type == kScrollLayer; }
+  bool IsScrollLayer() const { return IsScrollLayerType(type_); }
 
   static bool IsCacheableType(Type type) { return IsDrawingType(type); }
   bool IsCacheable() const { return !SkippedCache() && IsCacheableType(type_); }

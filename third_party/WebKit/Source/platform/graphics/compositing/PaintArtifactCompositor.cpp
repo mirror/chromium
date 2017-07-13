@@ -24,6 +24,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositorSupport.h"
 #include "public/platform/WebLayer.h"
+#include "public/platform/WebLayerScrollClient.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace blink {
@@ -105,6 +106,7 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
     const PendingLayer& pending_layer,
     gfx::Vector2dF& layer_offset,
     Vector<std::unique_ptr<ContentLayerClientImpl>>& new_content_layer_clients,
+    Vector<scoped_refptr<cc::Layer>>& new_scroll_layers,
     bool store_debug_info) {
   DCHECK(pending_layer.paint_chunks.size());
   const PaintChunk& first_paint_chunk = *pending_layer.paint_chunks[0];
@@ -114,7 +116,54 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
   if (scoped_refptr<cc::Layer> foreign_layer = ForeignLayerForPaintChunk(
           paint_artifact, first_paint_chunk, layer_offset)) {
     DCHECK_EQ(pending_layer.paint_chunks.size(), 1u);
+    if (extra_data_for_testing_enabled_)
+      extra_data_for_testing_->content_layers.push_back(foreign_layer);
     return foreign_layer;
+  }
+
+  // TODO(pdr): Break this out into a helper.
+  if (first_paint_chunk.size() == 1) {
+    const auto& display_item =
+        paint_artifact.GetDisplayItemList()[first_paint_chunk.begin_index];
+    if (display_item.IsScrollLayer()) {
+      const auto* scroll_translation =
+          pending_layer.property_tree_state.Transform();
+      DCHECK(scroll_translation->IsScrollTranslation());
+      auto scroll_element_id = scroll_translation->GetCompositorElementId();
+      for (auto& scroll_layer : scroll_layers_) {
+        if (scroll_layer && scroll_layer->element_id() == scroll_element_id) {
+          new_scroll_layers.push_back(scroll_layer);
+          if (extra_data_for_testing_enabled_)
+            extra_data_for_testing_->scroll_layers.push_back(scroll_layer);
+          scroll_layer->SetScrollable(
+              scroll_translation->ScrollNode()->ContainerBounds());
+          scroll_layer->SetBounds(scroll_translation->ScrollNode()->Bounds());
+          // TODO(pdr): Should the offset_to_transform_parent always be zero?
+          if (auto* scroll_client =
+                  scroll_translation->ScrollNode()->ScrollClient()) {
+            scroll_layer->set_did_scroll_callback(
+                base::Bind(&blink::WebLayerScrollClient::DidScroll,
+                           base::Unretained(scroll_client)));
+          }
+          return scroll_layer;
+        }
+      }
+      auto scroll_layer = cc::Layer::Create();
+      new_scroll_layers.push_back(scroll_layer);
+      if (extra_data_for_testing_enabled_)
+        extra_data_for_testing_->scroll_layers.push_back(scroll_layer);
+      scroll_layer->SetScrollable(
+          scroll_translation->ScrollNode()->ContainerBounds());
+      scroll_layer->SetBounds(scroll_translation->ScrollNode()->Bounds());
+      // TODO(pdr): Should the offset_to_transform_parent always be zero?
+      if (auto* scroll_client =
+              scroll_translation->ScrollNode()->ScrollClient()) {
+        scroll_layer->set_did_scroll_callback(
+            base::Bind(&blink::WebLayerScrollClient::DidScroll,
+                       base::Unretained(scroll_client)));
+      }
+      return scroll_layer;
+    }
   }
 
   // The common case: create or reuse a PictureLayer for painted content.
@@ -128,22 +177,24 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
       paint_artifact, cc_combined_bounds, pending_layer.paint_chunks,
       pending_layer.property_tree_state, store_debug_info);
   new_content_layer_clients.push_back(std::move(content_layer_client));
+  if (extra_data_for_testing_enabled_)
+    extra_data_for_testing_->content_layers.push_back(cc_layer);
   return cc_layer;
 }
 
 PaintArtifactCompositor::PendingLayer::PendingLayer(
     const PaintChunk& first_paint_chunk,
-    bool chunk_is_foreign)
+    bool chunk_requires_own_layer)
     : bounds(first_paint_chunk.bounds),
       known_to_be_opaque(first_paint_chunk.known_to_be_opaque),
       backface_hidden(first_paint_chunk.properties.backface_hidden),
       property_tree_state(first_paint_chunk.properties.property_tree_state),
-      is_foreign(chunk_is_foreign) {
+      requires_own_layer(chunk_requires_own_layer) {
   paint_chunks.push_back(&first_paint_chunk);
 }
 
 void PaintArtifactCompositor::PendingLayer::Merge(const PendingLayer& guest) {
-  DCHECK(!is_foreign && !guest.is_foreign);
+  DCHECK(!requires_own_layer && !guest.requires_own_layer);
   DCHECK_EQ(backface_hidden, guest.backface_hidden);
 
   paint_chunks.AppendVector(guest.paint_chunks);
@@ -163,7 +214,7 @@ static bool CanUpcastTo(const PropertyTreeState& guest,
                         const PropertyTreeState& home);
 bool PaintArtifactCompositor::PendingLayer::CanMerge(
     const PendingLayer& guest) const {
-  if (is_foreign || guest.is_foreign)
+  if (requires_own_layer || guest.requires_own_layer)
     return false;
   if (backface_hidden != guest.backface_hidden)
     return false;
@@ -174,7 +225,7 @@ bool PaintArtifactCompositor::PendingLayer::CanMerge(
 
 void PaintArtifactCompositor::PendingLayer::Upcast(
     const PropertyTreeState& new_state) {
-  DCHECK(!is_foreign);
+  DCHECK(!requires_own_layer);
   FloatClipRect float_clip_rect(bounds);
   GeometryMapper::LocalToAncestorVisualRect(property_tree_state, new_state,
                                             float_clip_rect);
@@ -263,7 +314,7 @@ bool PaintArtifactCompositor::CanDecompositeEffect(
   // did not allow to decomposite intermediate effects.
   if (layer.property_tree_state.Effect() != effect)
     return false;
-  if (layer.is_foreign)
+  if (layer.requires_own_layer)
     return false;
   // TODO(trchen): Exotic blending layer may be decomposited only if it could
   // be merged into the first layer of the current group.
@@ -349,11 +400,14 @@ void PaintArtifactCompositor::LayerizeGroup(
         chunk_it->properties.property_tree_state.Effect();
     if (chunk_effect == &current_group) {
       // Case A: The next chunk belongs to the current group but no subgroup.
-      bool is_foreign =
-          paint_artifact.GetDisplayItemList()[chunk_it->begin_index]
-              .IsForeignLayer();
-      pending_layers.push_back(PendingLayer(*chunk_it++, is_foreign));
-      if (is_foreign)
+      const auto& last_display_item =
+          paint_artifact.GetDisplayItemList()[chunk_it->begin_index];
+      bool requires_own_layer = last_display_item.IsForeignLayer() ||
+                                // TODO(pdr): Should this require a direct
+                                // compositing reason?
+                                last_display_item.IsScrollLayer();
+      pending_layers.push_back(PendingLayer(*chunk_it++, requires_own_layer));
+      if (requires_own_layer)
         continue;
     } else {
       const EffectPaintPropertyNode* subgroup =
@@ -388,7 +442,7 @@ void PaintArtifactCompositor::LayerizeGroup(
     // processed. Now determine whether it could be merged into a previous
     // layer.
     const PendingLayer& new_layer = pending_layers.back();
-    DCHECK(!new_layer.is_foreign);
+    DCHECK(!new_layer.requires_own_layer);
     DCHECK_EQ(&current_group, new_layer.property_tree_state.Effect());
     // This iterates pendingLayers[firstLayerInCurrentGroup:-1] in reverse.
     for (size_t candidate_index = pending_layers.size() - 1;
@@ -450,6 +504,8 @@ void PaintArtifactCompositor::Update(
   Vector<PendingLayer, 0> pending_layers;
   CollectPendingLayers(paint_artifact, pending_layers);
 
+  Vector<scoped_refptr<cc::Layer>> new_scroll_layers;
+
   Vector<std::unique_ptr<ContentLayerClientImpl>> new_content_layer_clients;
   new_content_layer_clients.ReserveCapacity(pending_layers.size());
 
@@ -462,11 +518,13 @@ void PaintArtifactCompositor::Update(
     gfx::Vector2dF layer_offset;
     scoped_refptr<cc::Layer> layer = CompositedLayerForPendingLayer(
         paint_artifact, pending_layer, layer_offset, new_content_layer_clients,
-        store_debug_info);
+        new_scroll_layers, store_debug_info);
 
     const auto* transform = pending_layer.property_tree_state.Transform();
     int transform_id =
         property_tree_manager.EnsureCompositorTransformNode(transform);
+    int scroll_id = property_tree_manager.CompositorScrollNode(
+        transform->NearestScrollTranslationNode()->ScrollNode());
     int clip_id = property_tree_manager.EnsureCompositorClipNode(
         pending_layer.property_tree_state.Clip());
     int effect_id = property_tree_manager.SwitchToEffectNode(
@@ -480,6 +538,7 @@ void PaintArtifactCompositor::Update(
       // TODO(wkorman): Cease setting element id on layer once
       // animation subsystem no longer requires element id to layer
       // map. http://crbug.com/709137
+      // TODO(pdr): This will still need to be set on scroll layers.
       layer->SetElementId(element_id);
       composited_element_ids.insert(element_id);
     }
@@ -496,18 +555,18 @@ void PaintArtifactCompositor::Update(
 
     layer->set_property_tree_sequence_number(g_s_property_tree_sequence_number);
     layer->SetTransformTreeIndex(transform_id);
+    layer->SetScrollTreeIndex(scroll_id);
     layer->SetClipTreeIndex(clip_id);
     layer->SetEffectTreeIndex(effect_id);
-    property_tree_manager.UpdateLayerScrollMapping(layer.get(), transform);
 
     layer->SetContentsOpaque(pending_layer.known_to_be_opaque);
     layer->SetShouldCheckBackfaceVisibility(pending_layer.backface_hidden);
-
-    if (extra_data_for_testing_enabled_)
-      extra_data_for_testing_->content_layers.push_back(layer);
   }
   content_layer_clients_.clear();
   content_layer_clients_.swap(new_content_layer_clients);
+
+  scroll_layers_.clear();
+  scroll_layers_.swap(new_scroll_layers);
 
   // Mark the property trees as having been rebuilt.
   host->property_trees()->sequence_number = g_s_property_tree_sequence_number;

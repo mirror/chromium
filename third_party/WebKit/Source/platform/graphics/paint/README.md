@@ -170,6 +170,10 @@ of the normal Blink paint system (for example, a plugin). Since they always map
 to a `cc::Layer`, they are always the only display item in their paint chunk,
 and are ineligible for squashing with other layers.
 
+#### [ScrollLayerDisplayItem](ScrollLayerDisplayItem.h)
+
+TODO(pdr): Describe this.
+
 ### Paired begin/end display items
 
 *** aside

@@ -935,9 +935,9 @@ void PaintLayerPainter::PaintOverflowControlsForFragments(
     }
 
     Optional<ScrollRecorder> scroll_recorder;
-    if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
-        !local_painting_info.scroll_offset_accumulation.IsZero()) {
-      cull_rect.Move(local_painting_info.scroll_offset_accumulation);
+    if (!local_painting_info.scroll_offset_accumulation.IsZero()) {
+      if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+        cull_rect.Move(local_painting_info.scroll_offset_accumulation);
       scroll_recorder.emplace(context, paint_layer_.GetLayoutObject(),
                               DisplayItem::kScrollOverflowControls,
                               local_painting_info.scroll_offset_accumulation);

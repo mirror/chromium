@@ -13,6 +13,7 @@
 #include "platform/graphics/paint/PaintFlags.h"
 #include "platform/graphics/paint/PaintRecord.h"
 #include "platform/graphics/paint/PaintRecorder.h"
+#include "platform/graphics/paint/ScrollLayerDisplayItem.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/testing/FakeDisplayItemClient.h"
 #include "platform/wtf/Assertions.h"
@@ -86,6 +87,14 @@ TestPaintArtifact& TestPaintArtifact::ForeignLayer(
   display_item_list_.AllocateAndConstruct<ForeignLayerDisplayItem>(
       *client, DisplayItem::kForeignLayerFirst, std::move(layer), location,
       size);
+  dummy_clients_.push_back(std::move(client));
+  return *this;
+}
+
+TestPaintArtifact& TestPaintArtifact::ScrollLayer() {
+  auto client = WTF::MakeUnique<DummyRectClient>();
+  display_item_list_.AllocateAndConstruct<ScrollLayerDisplayItem>(
+      *client, DisplayItem::kScrollLayer);
   dummy_clients_.push_back(std::move(client));
   return *this;
 }

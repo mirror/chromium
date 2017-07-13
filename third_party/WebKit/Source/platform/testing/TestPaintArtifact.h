@@ -55,6 +55,7 @@ class TestPaintArtifact {
   TestPaintArtifact& ForeignLayer(const FloatPoint&,
                                   const IntSize&,
                                   scoped_refptr<cc::Layer>);
+  TestPaintArtifact& ScrollLayer();
 
   // Can't add more things once this is called.
   const PaintArtifact& Build();
