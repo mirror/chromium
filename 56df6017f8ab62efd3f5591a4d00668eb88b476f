@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc392992_36e64354",
+        "filename": "components/sync/android/javatests/src/org/chromium/components/sync/AndroidSyncSettingsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-13T18:44:59Z",
+      "side": 1,
+      "message": "Should we guard all access of mNumberOfCallsToWait through synchronized(someObject)?",
+      "revId": "56df6017f8ab62efd3f5591a4d00668eb88b476f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
