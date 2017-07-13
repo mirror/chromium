@@ -56,6 +56,11 @@ cr.define('print_preview', function() {
      * @private {string} The ID of a printer with a bad driver.
      */
     this.badPrinterId_ = '';
+
+    /**
+     * @private {boolean} Whether the dialog is hidden.
+     */
+    this.dialogHidden_ = false;
   }
 
   NativeLayerStub.prototype = {
@@ -130,12 +135,14 @@ cr.define('print_preview', function() {
 
     /** @override */
     print: function(
-        destination, printTicketStore, cloudPrintInterface, documentInfo) {
+        destination, printTicketStore, cloudPrintInterface, documentInfo,
+        opt_isOpenPdfInPreview) {
       this.methodCalled('print', {
         destination: destination,
         printTicketStore: printTicketStore,
         cloudPrintInterface: cloudPrintInterface,
         documentInfo: documentInfo,
+        openPdfInPreview: opt_isOpenPdfInPreview || false,
       });
       return Promise.resolve();
     },
@@ -149,7 +156,17 @@ cr.define('print_preview', function() {
     },
 
     /** Stubs for |print_preview.NativeLayer| methods that call C++ handlers. */
-    startHideDialog: function () {},
+    startHideDialog: function () {
+      this.dialogHidden_ = true;
+    },
+
+    /**
+     * @return {boolean} Whether the dialog is hidden due to a call to
+     *     startHideDialog
+     */
+    isDialogHidden: function() {
+      return this.dialogHidden_;
+    },
 
     /**
      * @param {!print_preview.NativeInitialSettings} settings The settings

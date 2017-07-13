@@ -145,6 +145,42 @@ cr.define('print_preview_test', function() {
   }
 
   /**
+   * @return {!print_preview.PrinterCapabilitiesResponse} The capabilities of
+   *     the Save as PDF destination.
+   */
+  function getPdfPrinter() {
+    return {
+      printerId: 'Save as PDF',
+      capabilities: {
+        version: '1.0',
+        printer: {
+          page_orientation: {
+            option: [
+              {type: 'AUTO', is_default: true},
+              {type: 'PORTRAIT'},
+              {type: 'LANDSCAPE'}
+            ]
+          },
+          color: {
+            option: [
+              {type: 'STANDARD_COLOR', is_default: true}
+            ]
+          },
+          media_size: {
+            option: [
+              { name: 'NA_LETTER',
+                width_microns: 0,
+                height_microns: 0,
+                is_default: true
+              }
+            ]
+          }
+        }
+      }
+    };
+  }
+
+  /**
    * Get the default media size for |device|.
    * @param {!print_preview.PrinterCapabilitiesResponse} device
    * @return {{width_microns: number,
@@ -533,35 +569,7 @@ cr.define('print_preview_test', function() {
       initialSettings.systemDefaultDestinationId_ = 'Save as PDF';
 
       // Set PDF printer
-      var device = {
-        printerId: 'Save as PDF',
-        capabilities: {
-          version: '1.0',
-          printer: {
-            page_orientation: {
-              option: [
-                {type: 'AUTO', is_default: true},
-                {type: 'PORTRAIT'},
-                {type: 'LANDSCAPE'}
-              ]
-            },
-            color: {
-              option: [
-                {type: 'STANDARD_COLOR', is_default: true}
-              ]
-            },
-            media_size: {
-              option: [
-                { name: 'NA_LETTER',
-                  width_microns: 0,
-                  height_microns: 0,
-                  is_default: true
-                }
-              ]
-            }
-          }
-        }
-      };
+      var device = getPdfPrinter();
       nativeLayer.setLocalDestinationCapabilities(device);
 
       setInitialSettings();
@@ -1309,6 +1317,7 @@ cr.define('print_preview_test', function() {
         // recovery from error state.
         var printButton = $('print-header').querySelector('button.print');
         expectFalse(printButton.disabled);
+        expectFalse(nativeLayer.isDialogHidden());
         printButton.click();
         // This should result in a call to print.
         return nativeLayer.whenCalled('print');
@@ -1318,7 +1327,8 @@ cr.define('print_preview_test', function() {
            *          printTicketStore: !print_preview.PrintTicketStore,
            *          cloudPrintInterface: print_preview
            *                                  .CloudPrintInterface,
-           *          documentInfo: print_preview.DocumentInfo}} args
+           *          documentInfo: print_preview.DocumentInfo,
+           *          openPdfInPreview: boolean}} args
            *      The arguments that print() was called with.
            */
           function(args) {
@@ -1336,6 +1346,7 @@ cr.define('print_preview_test', function() {
             expectEquals(
                 mediaDefault.height_microns,
                 printTicketStore.mediaSize.getValue().height_microns);
+            expectTrue(nativeLayer.isDialogHidden());
           });
     });
 
@@ -1404,6 +1415,39 @@ cr.define('print_preview_test', function() {
             'FooDevice',
             printPreview.destinationStore_.selectedDestination.id);
       });
+    });
+
+    // Test that Mac "Open PDF in Preview" link is treated correctly as a
+    // local printer. See crbug.com/741341 and crbug.com/741528
+    test('MacOpenPDFInPreview', function() {
+      initialSettings.systemDefaultDestinationId_ = 'Save as PDF';
+      return setupSettingsAndDestinationsWithCapabilities(GetPdfPrinter()).
+          then(function() {
+            assertEquals(
+              'Save as PDF',
+              printPreview.destinationStore_.selectedDestination.id);
+            return nativeLayer.whenCalled('getPreview');
+          }).then(function() {
+            var openPdfInPreviewLink = $('open-pdf-in-preview-link');
+            checkElementDisplayed(openPdfInPreviewLink);
+            openPdfInPreviewLink.click();
+            expectFalse(nativeLayer.isDialogHidden());
+            // Should result in a print call and dialog should hide
+            return nativeLayer.whenCalled('print');
+          }).then(
+              /**
+               * @param {{destination: !print_preview.Destination,
+               *          printTicketStore: !print_preview.PrintTicketStore,
+               *          cloudPrintInterface: print_preview
+               *                                  .CloudPrintInterface,
+               *          documentInfo: print_preview.DocumentInfo,
+               *          openPdfInPreview: boolean}} args
+               *      The arguments that print() was called with.
+               */
+              function(args) {
+                expectTrue(args.openPdfInPreview);
+                expectTrue(nativeLayer.isDialogHidden());
+              });
     });
   });
 });

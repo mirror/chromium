@@ -122,3 +122,9 @@ TEST_F('PrintPreviewUIBrowserTest', 'SystemDefaultPrinterPolicy', function() {
   mocha.grep(new RegExp('SystemDefaultPrinterPolicy' + '\\b')).run();
 });
 GEN('#endif');
+
+GEN('#if defined(OS_MACOSX)');
+TEST_F('PrintPreviewUIBrowserTest', 'MacOpenPdfInPreview', function() {
+  mocha.grep(new RegExp('MacOpenPdfInPreview' + '\\b')).run();
+});
+GEN('#endif');
