@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0256f054_2ff3a44c",
+        "filename": "components/nacl/browser/nacl_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-13T00:26:23Z",
+      "side": 1,
+      "message": "is this a behavior change?",
+      "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33955cb_55aabace",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-13T00:26:23Z",
+      "side": 1,
+      "message": "is this an intended behavior change?\n\nbefore the sandbox type would be SANDBOX_TYPE_PPAPI always for non-windows, even if is_broker_. Now on non-windows this will return NO_SANDBOX if is_broker_",
+      "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
