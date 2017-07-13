@@ -99,6 +99,7 @@ void CoordinationUnitImpl::RecalcCoordinationPolicy() {
 }
 
 void CoordinationUnitImpl::SendEvent(mojom::EventPtr event) {
+  // TODO(crbug.com/691886) Consider removing the following code.
   switch (event->type) {
     case mojom::EventType::kOnWebContentsShown:
       state_flags_[kTabVisible] = true;
@@ -111,9 +112,6 @@ void CoordinationUnitImpl::SendEvent(mojom::EventPtr event) {
       break;
     case mojom::EventType::kOnProcessAudioStopped:
       state_flags_[kAudioPlaying] = false;
-      break;
-    case mojom::EventType::kOnLocalFrameNetworkIdle:
-      state_flags_[kNetworkIdle] = true;
       break;
     case mojom::EventType::kTestEvent:
       state_flags_[kTestState] = true;
