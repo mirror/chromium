@@ -1535,14 +1535,20 @@ void PrintPreviewHandler::OnGotUniqueFileName(const base::FilePath& path) {
 void PrintPreviewHandler::OnPrintPreviewReady(int preview_uid, int request_id) {
   if (request_id < 0)  // invalid ID.
     return;
-  CHECK(!preview_callbacks_.empty());
+  if (preview_callbacks_.empty()) {
+    NOTREACHED();
+    return;
+  }
   ResolveJavascriptCallback(base::Value(preview_callbacks_.front()),
                             base::Value(preview_uid));
   preview_callbacks_.pop();
 }
 
 void PrintPreviewHandler::OnPrintPreviewFailed() {
-  CHECK(!preview_callbacks_.empty());
+  if (preview_callbacks_.empty()) {
+    NOTREACHED();
+    return;
+  }
   if (!reported_failed_preview_) {
     reported_failed_preview_ = true;
     ReportUserActionHistogram(PREVIEW_FAILED);
@@ -1553,7 +1559,10 @@ void PrintPreviewHandler::OnPrintPreviewFailed() {
 }
 
 void PrintPreviewHandler::OnInvalidPrinterSettings() {
-  CHECK(!preview_callbacks_.empty());
+  if (preview_callbacks_.empty()) {
+    NOTREACHED();
+    return;
+  }
   RejectJavascriptCallback(base::Value(preview_callbacks_.front()),
                            base::Value("SETTINGS_INVALID"));
   preview_callbacks_.pop();
@@ -1588,7 +1597,10 @@ void PrintPreviewHandler::SendPagePreviewReady(int page_index,
 }
 
 void PrintPreviewHandler::OnPrintPreviewCancelled() {
-  CHECK(!preview_callbacks_.empty());
+  if (preview_callbacks_.empty()) {
+    NOTREACHED();
+    return;
+  }
   RejectJavascriptCallback(base::Value(preview_callbacks_.front()),
                            base::Value("CANCELLED"));
   preview_callbacks_.pop();
