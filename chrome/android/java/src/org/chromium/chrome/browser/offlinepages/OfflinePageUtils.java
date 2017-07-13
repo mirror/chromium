@@ -6,9 +6,15 @@ package org.chromium.chrome.browser.offlinepages;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.text.TextUtils;
+
+import org.json.JSONArray;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
@@ -47,6 +53,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -829,5 +836,38 @@ public class OfflinePageUtils {
     @VisibleForTesting
     public static void setSnackbarDurationForTesting(int durationMs) {
         sSnackbarDurationMs = durationMs;
+    }
+
+    /** @return a JSON string using the package name and signature hash of an app. */
+    public static String createOriginString(String packageName, String[] signatures) {
+        if (TextUtils.isEmpty(packageName)) return "";
+        if (signatures == null) return "";
+        // JSONArray(Object[]) requires API 19
+        JSONArray signatureArray = new JSONArray();
+        for (String s : signatures) {
+            signatureArray.put(s);
+        }
+        return new JSONArray().put(packageName).put(signatureArray).toString();
+    }
+
+    /** @return a sorted list of strings representing the signatures of an app.
+     *          Null if the app name is invalid or cannot be found.
+     */
+    public static String[] getAppSignaturesFor(Context context, String appName) {
+        if (TextUtils.isEmpty(appName)) return null;
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            Signature[] signatureList =
+                    packageManager.getPackageInfo(appName, PackageManager.GET_SIGNATURES)
+                            .signatures;
+            String[] sigStrings = new String[signatureList.length];
+            for (int i = 0; i < sigStrings.length; i++) {
+                sigStrings[i] = signatureList[i].toCharsString();
+            }
+            Arrays.sort(sigStrings);
+            return sigStrings;
+        } catch (NameNotFoundException e) {
+            return null;
+        }
     }
 }
