@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9928dfbe_2d37e5be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/InstallerDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-13T18:19:48Z",
+      "side": 1,
+      "message": "Optional drive by comment: Can this function take a single argument |packageName| and get the context via ContextUtils.getApplicationContext()\n\nFrom looking at the callers of the\nInstallerDelegate#isInstalled(PackageManager packageManager, String packageName)\nmethod it looks like it would be easy to delete the method and replace it with InstallerDelegate#isInstalled(String packageName)",
+      "revId": "cbe1281f9a024038221fab8d376b8fe425dfb94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28ec00ef_c1f88f28",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
         "patchSetId": 7
