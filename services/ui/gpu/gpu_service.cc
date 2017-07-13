@@ -29,7 +29,7 @@
 #include "ipc/ipc_channel_handle.h"
 #include "ipc/ipc_sync_channel.h"
 #include "ipc/ipc_sync_message_filter.h"
-#include "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.h"
+#include "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h"
 #include "media/gpu/ipc/service/gpu_video_decode_accelerator.h"
 #include "media/gpu/ipc/service/gpu_video_encode_accelerator.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
@@ -225,8 +225,7 @@ void GpuService::RecordLogMessage(int severity,
 void GpuService::CreateJpegDecodeAccelerator(
     media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
   DCHECK(io_runner_->BelongsToCurrentThread());
-  // TODO(c.padhi): Implement this, see https://crbug.com/699255.
-  NOTIMPLEMENTED();
+  media::GpuJpegDecodeAccelerator::Create(std::move(jda_request));
 }
 
 void GpuService::CreateVideoEncodeAccelerator(
