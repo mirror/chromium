@@ -34,6 +34,24 @@
       "revId": "0031231123b8e444569b224d77679ec884f0cb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "621bd941_ad736a0c",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-07-13T18:19:12Z",
+      "side": 1,
+      "message": "Actually kEnableCleanerLoggingSwitch would only be used here now, so we can probably just remove the constant.",
+      "parentUuid": "47bda9da_a869f11c",
+      "revId": "0031231123b8e444569b224d77679ec884f0cb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
