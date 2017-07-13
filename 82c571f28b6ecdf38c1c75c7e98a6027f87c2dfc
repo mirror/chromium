@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a64fbe_07272530",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T20:53:02Z",
+      "side": 1,
+      "message": "Please update your commit message to mention what the issue was and what you did to fix it.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "82c571f28b6ecdf38c1c75c7e98a6027f87c2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d070c90_3ffd1465",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T20:53:02Z",
+      "side": 1,
+      "message": "nit: These functions are only called as part of your workaround (and not during normal use). Please rename the functions appropriately and add comments explaining what these are for.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "82c571f28b6ecdf38c1c75c7e98a6027f87c2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
