@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "50458495_c6457103",
+        "filename": "components/download/internal/file_monitor_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-13T18:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57fbe0ce_f357212a",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 49
+      },
+      "revId": "c10e71f60954b0ba3d4b3659069fdfd69a364067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2df21b43_176177e8",
         "filename": "components/download/internal/stats.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "c10e71f60954b0ba3d4b3659069fdfd69a364067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f4e4be_c77cd436",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-13T18:35:51Z",
+      "side": 1,
+      "message": "Done, bundle into the TODO in stats.cc.",
+      "parentUuid": "2df21b43_176177e8",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 53
+      },
+      "revId": "c10e71f60954b0ba3d4b3659069fdfd69a364067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
