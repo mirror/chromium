@@ -68,6 +68,14 @@ void OnPaymentAppInvoked(const JavaRef<jobject>& jweb_contents,
       ConvertUTF8ToJavaString(env, app_response->stringified_details));
 }
 
+bool isInvokePaymentAppCancelled(const JavaRef<jobject>& jweb_contents,
+                                 const JavaRef<jobject>& jcallback) {
+  JNIEnv* env = AttachCurrentThread();
+
+  return Java_ServiceWorkerPaymentAppBridge_isInvokePaymentAppCancelled(
+      env, jcallback);
+}
+
 }  // namespace
 
 static void GetAllPaymentApps(JNIEnv* env,
@@ -179,6 +187,9 @@ static void InvokePaymentApp(
   content::PaymentAppProvider::GetInstance()->InvokePaymentApp(
       web_contents->GetBrowserContext(), registration_id, std::move(event_data),
       base::Bind(&OnPaymentAppInvoked,
+                 ScopedJavaGlobalRef<jobject>(env, jweb_contents),
+                 ScopedJavaGlobalRef<jobject>(env, jcallback)),
+      base::Bind(&isInvokePaymentAppCancelled,
                  ScopedJavaGlobalRef<jobject>(env, jweb_contents),
                  ScopedJavaGlobalRef<jobject>(env, jcallback)));
 }

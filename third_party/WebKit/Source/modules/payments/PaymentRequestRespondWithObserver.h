@@ -30,6 +30,8 @@ class MODULES_EXPORT PaymentRequestRespondWithObserver final
   void OnResponseFulfilled(const ScriptValue&) override;
   void OnNoResponse() override;
 
+  bool IsCancelled();
+
   DECLARE_VIRTUAL_TRACE();
 
  private:

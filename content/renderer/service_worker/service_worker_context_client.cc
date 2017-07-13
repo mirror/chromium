@@ -1096,6 +1096,15 @@ void ServiceWorkerContextClient::RespondToPaymentRequestEvent(
   context_->payment_response_callbacks.erase(payment_request_id);
 }
 
+bool ServiceWorkerContextClient::IsPaymentRequestCancelled(
+    const int payment_request_id) {
+  const payments::mojom::PaymentAppResponseCallbackPtr& response_callback =
+      context_->payment_response_callbacks[payment_request_id];
+  bool result = false;
+  response_callback->IsCancelled(&result);
+  return result;
+}
+
 void ServiceWorkerContextClient::DidHandlePaymentRequestEvent(
     int payment_request_id,
     blink::WebServiceWorkerEventResult result,

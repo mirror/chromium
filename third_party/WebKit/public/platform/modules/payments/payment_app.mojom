@@ -75,4 +75,6 @@ struct PaymentAppResponse {
 interface PaymentAppResponseCallback {
   OnPaymentAppResponse(PaymentAppResponse response,
                        mojo.common.mojom.Time dispatch_event_time);
+  [Sync=true]
+  IsCancelled() => (bool status);
 };
