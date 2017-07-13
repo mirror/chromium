@@ -30,6 +30,7 @@
 #include "content/child/url_loader_client_impl.h"
 #include "content/common/inter_process_time_ticks_converter.h"
 #include "content/common/navigation_params.h"
+#include "content/common/possibly_associated_url_loader_factory.h"
 #include "content/common/resource_messages.h"
 #include "content/common/throttling_url_loader.h"
 #include "content/public/child/fixed_received_data.h"
@@ -580,7 +581,7 @@ void ResourceDispatcher::StartSync(
     int routing_id,
     SyncLoadResponse* response,
     blink::WebURLRequest::LoadingIPCType ipc_type,
-    mojom::URLLoaderFactory* url_loader_factory,
+    PossiblyAssociatedURLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles) {
   CheckSchemeForReferrerPolicy(*request);
 
@@ -631,7 +632,7 @@ int ResourceDispatcher::StartAsync(
     const url::Origin& frame_origin,
     std::unique_ptr<RequestPeer> peer,
     blink::WebURLRequest::LoadingIPCType ipc_type,
-    mojom::URLLoaderFactory* url_loader_factory,
+    PossiblyAssociatedURLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     mojo::ScopedDataPipeConsumerHandle consumer_handle) {
   CheckSchemeForReferrerPolicy(*request);
@@ -691,11 +692,11 @@ int ResourceDispatcher::StartAsync(
         loading_task_runner ? loading_task_runner : thread_task_runner_;
     std::unique_ptr<URLLoaderClientImpl> client(
         new URLLoaderClientImpl(request_id, this, task_runner));
-    std::unique_ptr<ThrottlingURLLoader> url_loader =
-        ThrottlingURLLoader::CreateLoaderAndStart(
-            url_loader_factory, std::move(throttles), routing_id, request_id,
-            mojom::kURLLoadOptionNone, *request, client.get(),
-            traffic_annotation, std::move(task_runner));
+    std::unique_ptr<ThrottlingURLLoader> url_loader;
+    url_loader = ThrottlingURLLoader::CreateLoaderAndStart(
+        url_loader_factory, std::move(throttles), routing_id, request_id,
+        mojom::kURLLoadOptionNone, *request, client.get(), traffic_annotation,
+        std::move(task_runner));
     pending_requests_[request_id]->url_loader = std::move(url_loader);
     pending_requests_[request_id]->url_loader_client = std::move(client);
   } else {

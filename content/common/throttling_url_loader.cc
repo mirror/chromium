@@ -9,7 +9,7 @@
 namespace content {
 
 ThrottlingURLLoader::StartInfo::StartInfo(
-    mojom::URLLoaderFactory* in_url_loader_factory,
+    const PossiblyAssociatedURLLoaderFactory& in_url_loader_factory,
     int32_t in_routing_id,
     int32_t in_request_id,
     uint32_t in_options,
@@ -52,7 +52,7 @@ ThrottlingURLLoader::PriorityInfo::~PriorityInfo() = default;
 
 // static
 std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
-    mojom::URLLoaderFactory* factory,
+    PossiblyAssociatedURLLoaderFactory* factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     int32_t routing_id,
     int32_t request_id,
@@ -120,7 +120,7 @@ ThrottlingURLLoader::ThrottlingURLLoader(
 }
 
 void ThrottlingURLLoader::Start(
-    mojom::URLLoaderFactory* factory,
+    PossiblyAssociatedURLLoaderFactory* factory,
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
@@ -140,7 +140,7 @@ void ThrottlingURLLoader::Start(
     if (deferred) {
       deferred_stage_ = DEFERRED_START;
       start_info_ =
-          base::MakeUnique<StartInfo>(factory, routing_id, request_id, options,
+          base::MakeUnique<StartInfo>(*factory, routing_id, request_id, options,
                                       std::move(start_loader_callback),
                                       url_request, std::move(task_runner));
       return;
@@ -153,7 +153,7 @@ void ThrottlingURLLoader::Start(
 }
 
 void ThrottlingURLLoader::StartNow(
-    mojom::URLLoaderFactory* factory,
+    PossiblyAssociatedURLLoaderFactory* factory,
     int32_t routing_id,
     int32_t request_id,
     uint32_t options,
@@ -165,13 +165,8 @@ void ThrottlingURLLoader::StartNow(
 
   if (factory) {
     DCHECK(!start_loader_callback);
-
-    mojom::URLLoaderAssociatedPtr url_loader;
-    auto url_loader_request = mojo::MakeRequest(&url_loader);
-    url_loader_ = std::move(url_loader);
-    factory->CreateLoaderAndStart(
-        std::move(url_loader_request), routing_id, request_id, options,
-        url_request, std::move(client),
+    url_loader_ = factory->CreateLoaderAndStart(
+        routing_id, request_id, options, url_request, std::move(client),
         net::MutableNetworkTrafficAnnotationTag(traffic_annotation_));
   } else {
     mojom::URLLoaderPtr url_loader;
@@ -307,7 +302,7 @@ void ThrottlingURLLoader::Resume() {
 
   switch (deferred_stage_) {
     case DEFERRED_START: {
-      StartNow(start_info_->url_loader_factory, start_info_->routing_id,
+      StartNow(&start_info_->url_loader_factory, start_info_->routing_id,
                start_info_->request_id, start_info_->options,
                std::move(start_info_->start_loader_callback),
                start_info_->url_request, std::move(start_info_->task_runner));

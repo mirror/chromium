@@ -20,6 +20,7 @@
 #include "content/child/blink_platform_impl.h"
 #include "content/common/content_export.h"
 #include "content/common/possibly_associated_interface_ptr.h"
+#include "content/common/possibly_associated_url_loader_factory.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/renderer/origin_trials/web_trial_token_validator_impl.h"
 #include "content/renderer/top_level_blame_context.h"
@@ -313,7 +314,11 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
 
   std::unique_ptr<BlinkInterfaceProviderImpl> blink_interface_provider_;
 
-  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory_;
+  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
+      network_loader_factory_;
+  std::unique_ptr<IndependentURLLoaderFactory> cors_loader_factory_;
+
+  PossiblyAssociatedURLLoaderFactory url_loader_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RendererBlinkPlatformImpl);
 };

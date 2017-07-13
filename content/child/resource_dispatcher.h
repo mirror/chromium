@@ -38,6 +38,7 @@ struct RedirectInfo;
 }
 
 namespace content {
+class PossiblyAssociatedURLLoaderFactory;
 class RequestPeer;
 class ResourceDispatcherDelegate;
 class ResourceSchedulingFilter;
@@ -50,10 +51,6 @@ struct SiteIsolationResponseMetaData;
 struct SyncLoadResponse;
 class ThrottlingURLLoader;
 class URLLoaderClientImpl;
-
-namespace mojom {
-class URLLoaderFactory;
-}  // namespace mojom
 
 // This class serves as a communication interface to the ResourceDispatcherHost
 // in the browser process. It can be used from any child process.
@@ -83,7 +80,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
       int routing_id,
       SyncLoadResponse* response,
       blink::WebURLRequest::LoadingIPCType ipc_type,
-      mojom::URLLoaderFactory* url_loader_factory,
+      PossiblyAssociatedURLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles);
 
   // Call this method to initiate the request. If this method succeeds, then
@@ -103,7 +100,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
       const url::Origin& frame_origin,
       std::unique_ptr<RequestPeer> peer,
       blink::WebURLRequest::LoadingIPCType ipc_type,
-      mojom::URLLoaderFactory* url_loader_factory,
+      PossiblyAssociatedURLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       mojo::ScopedDataPipeConsumerHandle consumer_handle);
 

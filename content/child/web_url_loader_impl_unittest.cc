@@ -72,7 +72,7 @@ class TestResourceDispatcher : public ResourceDispatcher {
       int routing_id,
       SyncLoadResponse* response,
       blink::WebURLRequest::LoadingIPCType ipc_type,
-      mojom::URLLoaderFactory* url_loader_factory,
+      PossiblyAssociatedURLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles) override {
     *response = sync_load_response_;
   }
@@ -84,7 +84,7 @@ class TestResourceDispatcher : public ResourceDispatcher {
       const url::Origin& frame_origin,
       std::unique_ptr<RequestPeer> peer,
       blink::WebURLRequest::LoadingIPCType ipc_type,
-      mojom::URLLoaderFactory* url_loader_factory,
+      PossiblyAssociatedURLLoaderFactory* url_loader_factory,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       mojo::ScopedDataPipeConsumerHandle consumer_handle) override {
     EXPECT_FALSE(peer_);
