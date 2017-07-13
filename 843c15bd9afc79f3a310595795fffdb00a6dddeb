@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d70d2ef9_99b9ac27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 40
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Can you update the commit message to describe the feature being added?\nHere is what I suggest as an example:\n\nAdd command-line switch --log-url-log to write requested URLs to a text file.\n\nWhen in use, all URLs requested by the browser (across all contexts/profiles) are appended to a newline-separated text file.\n\nThis same information could also be obtained using --log-net-log. The difference is that\n (1) --log-url-log is a much simpler file format (newline separated URLs)\n (2) --log-url-log flushes writes synchronously after each URL\n\nThis means if a crash occurs shortly after requesting a particular URL, it is guaranteed that the URL was written to the log file (whereas --log-net-log buffers its writes, and may or may not have committed it by the time of crash).\n\nUse of this switch can cause jank on the IO thread, and hence should only be used for testing. It is intended for test tools (such as Clusterfuzz) which need a trace of the URLs being requested by the browser.",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8adc6da_a55c5d32",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
@@ -48,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "41ecebbb_fed344af",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Please update this comment.\n\nThe current comment was copy-pasted from older WriteToFileNetLogObserver code, and some of the description doesn\u0027t apply. For instance it describes it in terms of an unbounded buffer size, which isn\u0027t our primary motivation here.",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e596dad_f538d002",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
@@ -59,6 +93,30 @@
       "writtenOn": "2017-07-13T17:54:37Z",
       "side": 1,
       "message": "#include \u003cstring\u003e",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8025b30e_20fa56e8",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Rather, can you just use base::OpenFile(path, \"w\") ?\n\nThis has the advantage also of retrying on EINTR failures for posix.\nIt also internalizes the wideness of FilePath.",
+      "parentUuid": "9e596dad_f538d002",
       "range": {
         "startLine": 33,
         "startChar": 42,
@@ -88,6 +146,64 @@
         "endLine": 40,
         "endChar": 15
       },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb245a1_74049939",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Is that going to matter, given this is a leaky singleton?",
+      "parentUuid": "35cbbbb8_dde8575b",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3940ea7c_c8734426",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Move this to the top of the function, before testing any members.",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa6a63b_0a425840",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Can you use fwrite() instead?",
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +272,126 @@
         "startChar": 19,
         "endLine": 15,
         "endChar": 20
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb3f01a_7de5c276",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Command line switch to specify the destination file path where a newline-separated list of URLs are written to.  This switch is intended only for testing, and may have performance consequences. It is used as: --log-url-log\u003dLOGPATH",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfb20c7_ae3593c0",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Can we phrase this a bit differently, to separate what the class does from how it is expected to be used? (From a layering perspective the consumer needn\u0027t be NetworkDelegate).\n\nPerhaps:\n\n-------------------\n\nUrlLog is a singleton for appending URLs to a log file specified via --log-url-log.\n\nWrites happen immediately on the calling thread ......\n-------------------\n\nYou could make a mention to NetworkDelegate::OnBeforeURLRequest, but I would put that afterwards as an example. In general the documentation at this layer should stand on its own without needing to reference NetworkDelegate.",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0875eb6a_0811ab45",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "[optional] You could remove this comment and just make it threadsafe. The cost of a single lock acquisition, given that we are already doing synchronous file writing, seems negligeable. This isn\u0027t necessary given the current callsites, but make it harder to mis-use.",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0559d50b_558103f0",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Rather than imperative tense, use a passive tense to describe functions (part of style guide).\n\nGets the .....\n\nrather than\n\nGet the  ....",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53fd940c_b8e30d37",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "[optional] I wonder if the name \"AppendToFile()\" would make this more obvious when reading the callsites?",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18de0a62_a4492452",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "Same comment on tense throughout.",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 10
       },
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -433,6 +669,23 @@
         "endLine": 94,
         "endChar": 0
       },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372e5ee7_f1431ddc",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-13T20:54:49Z",
+      "side": 1,
+      "message": "This approach doesn\u0027t check that lines.size() \u003d\u003d expecteds.size(). Is that intentional?\n\nI suggest doing less string parsing, and just comparing the file contents more directly. Something like this perhaps:\n\nconst char kExpected[] \u003d\n    \"$1/test.html\\n\"\n    \"$1/testharness.js\\n\"\n    \"$1/styles.css\\n\"\n    \"$1/child.html\\n\"\n    \"$1/\"child.js\\n\";\n\nstd::string prefix \u003d net::FilePathToFileURL(test_data_dir_);\nstd::string expected_contents \u003d\n  base::ReplaceStringPlaceholders(kExpected, {prefix}, nullptr);\n\nEXPECT_EQ(expected_contents, actual_contents);",
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
