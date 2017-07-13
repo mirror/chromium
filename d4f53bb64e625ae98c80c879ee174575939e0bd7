@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7876598c_6e06372f",
+        "filename": "docs/fuchsia_sdk_updates.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-13T22:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da2d692f_b2263e0b",
+      "revId": "d4f53bb64e625ae98c80c879ee174575939e0bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9448dbe5_1de96a23",
         "filename": "docs/fuchsia_sdk_updates.md",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "d4f53bb64e625ae98c80c879ee174575939e0bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04e29e3_bdc2dc56",
+        "filename": "docs/fuchsia_sdk_updates.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-13T22:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9448dbe5_1de96a23",
+      "revId": "d4f53bb64e625ae98c80c879ee174575939e0bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
