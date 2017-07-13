@@ -16,6 +16,24 @@
       "revId": "4996252c995c17e965d88a7db7edb5a46746bf53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e1fa48_f1491cfe",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/preload/memcache_reuse_of_non_cacheable_preload.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-13T05:52:43Z",
+      "side": 1,
+      "message": "Done, thanks (I think the value should be use-credentials because this is a same-origin request).",
+      "parentUuid": "3f462680_3272d3f3",
+      "revId": "4996252c995c17e965d88a7db7edb5a46746bf53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
