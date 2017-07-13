@@ -363,6 +363,30 @@
       "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5228c3fd_1803b709",
+        "filename": "components/autofill/core/browser/payments/full_card_request.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-13T18:34:51Z",
+      "side": 1,
+      "message": "re: using const ref will make it hard...\n\nI\u0027m not sure I follow. This should just be a change at the call site, no?\n\n  // Request as pointer or pointer-like type.\n  From: OnFullCardRequestSucceed(request,...);\n  To:   OnFullCardRequestSucceed(*request,...);\n\n  // Request as object (member or on stack)\n  From: OnFullCardRequestSucceed(\u0026request,...);\n  To:   OnFullCardRequestSucceed(request,...);\n\nEverything else, including the initialization of the object should remain otherwise unchanged.\n\nOr am I misunderstanding your concern?",
+      "parentUuid": "098699f7_2e584fd1",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 39
+      },
+      "revId": "fa725a39ede364b5825fb16aff660b0094967efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

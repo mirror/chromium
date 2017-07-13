@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a086887e_102bff05",
+        "filename": "components/autofill/core/browser/payments/full_card_request.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-13T18:34:51Z",
+      "side": 1,
+      "message": "remove extraneous semi-colon.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 3
+      },
+      "revId": "33f3f41c081feecbbf84207c323f976c563b5e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63546f34_5c183bc5",
+        "filename": "components/autofill/core/browser/payments/full_card_request.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-13T18:34:51Z",
+      "side": 1,
+      "message": "*this and take as ref",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 55
+      },
+      "revId": "33f3f41c081feecbbf84207c323f976c563b5e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05ceb3b_8d353d66",
+        "filename": "components/autofill/core/browser/payments/full_card_request.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-13T18:34:51Z",
+      "side": 1,
+      "message": "*this and take as ref",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 16
+      },
+      "revId": "33f3f41c081feecbbf84207c323f976c563b5e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebda22b6_e1021c81",
+        "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-13T18:34:51Z",
+      "side": 1,
+      "message": "TL;DR: You can pass the result of this as const ref using *result().\n\nDoes this need to return a mutable request pointer? If not, you can change this to return a const ref and remove the \u0026.\n\nIf it does, a common pattern (mostly just FYI) is to have two accessors:\n\n  FullCardRequest* mutable_request() { return \u0026request_; }\n  const FullCardReqeust\u0026 request() const { return request_; }\n\nThis is probably overkill for a test fixture. I would suggesting leaving it as is, just note that you can pass the result as const ref using *request().",
+      "range": {
+        "startLine": 80,
+        "startChar": 19,
+        "endLine": 80,
+        "endChar": 26
+      },
+      "revId": "33f3f41c081feecbbf84207c323f976c563b5e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3498361_65ae9d3b",
+        "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-13T18:34:51Z",
+      "side": 1,
+      "message": "*request() and take as const ref",
+      "range": {
+        "startLine": 144,
+        "startChar": 18,
+        "endLine": 144,
+        "endChar": 25
+      },
+      "revId": "33f3f41c081feecbbf84207c323f976c563b5e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8109a33a_3a72e80a",
+        "filename": "components/payments/core/autofill_payment_instrument_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-13T18:34:51Z",
+      "side": 1,
+      "message": "this, in particular, is I don\u0027t think we wantto take the param as a pointer. If this is legal, then each impl MUST check that they have a non-null param.",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 15
+      },
+      "revId": "33f3f41c081feecbbf84207c323f976c563b5e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
