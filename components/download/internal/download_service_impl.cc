@@ -36,13 +36,16 @@ bool DownloadServiceImpl::OnStopScheduledTask(DownloadTaskType task_type) {
 }
 
 DownloadService::ServiceStatus DownloadServiceImpl::GetStatus() {
-  if (!controller_->GetStartupStatus()->Complete())
-    return DownloadService::ServiceStatus::STARTING_UP;
-
-  if (!controller_->GetStartupStatus()->Ok())
-    return DownloadService::ServiceStatus::UNAVAILABLE;
-
-  return DownloadService::ServiceStatus::READY;
+  switch (controller_->GetState()) {
+    case Controller::State::CREATED:
+    case Controller::State::INITIALIZING:  // Intentional fallthrough.
+    case Controller::State::RECOVERING:    // Intentional fallthrough.
+      return DownloadService::ServiceStatus::STARTING_UP;
+    case Controller::State::READY:
+      return DownloadService::ServiceStatus::READY;
+    case Controller::State::UNAVAILABLE:
+      return DownloadService::ServiceStatus::UNAVAILABLE;
+  }
 }
 
 void DownloadServiceImpl::StartDownload(const DownloadParams& download_params) {
