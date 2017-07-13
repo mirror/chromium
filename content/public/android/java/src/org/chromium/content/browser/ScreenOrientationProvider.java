@@ -26,6 +26,8 @@ import javax.annotation.Nullable;
 @JNINamespace("content")
 public class ScreenOrientationProvider {
     private static final String TAG = "cr.ScreenOrientation";
+    private static boolean sCanLockOrientation = true;
+    static ScreenOrientationDelegate sDelegate = null;
 
     private static int getOrientationFromWebScreenOrientations(byte orientation,
             @Nullable WindowAndroid window, Context context) {
@@ -71,6 +73,8 @@ public class ScreenOrientationProvider {
 
     @CalledByNative
     public static void lockOrientation(@Nullable WindowAndroid window, byte webScreenOrientation) {
+        if (!sCanLockOrientation) return;
+
         // WindowAndroid may be null if the tab is being reparented.
         if (window == null) return;
         Activity activity = window.getActivity().get();
@@ -119,8 +123,21 @@ public class ScreenOrientationProvider {
         } catch (PackageManager.NameNotFoundException e) {
             // Do nothing, defaultOrientation should be SCREEN_ORIENTATION_UNSPECIFIED.
         } finally {
-            activity.setRequestedOrientation(defaultOrientation);
+            if ((sDelegate == null)
+                    || sDelegate.orientationUnlocked(activity, defaultOrientation)) {
+                activity.setRequestedOrientation(defaultOrientation);
+            }
         }
+    }
+
+    @CalledByNative
+    static boolean isOrientationLockEnabled() {
+        return sCanLockOrientation;
+    }
+
+    public static void setOrientationDelegate(ScreenOrientationDelegate delegate) {
+        sDelegate = delegate;
+        sCanLockOrientation = (delegate != null);
     }
 
     private ScreenOrientationProvider() {

@@ -89,7 +89,8 @@ void ScreenOrientationProvider::UnlockOrientation() {
   NotifyLockResult(ScreenOrientationLockResult::
                        SCREEN_ORIENTATION_LOCK_RESULT_ERROR_CANCELED);
 
-  if (!lock_applied_ || !delegate_)
+  if (!lock_applied_ || !delegate_ ||
+      !delegate_->ScreenOrientationProviderSupported())
     return;
 
   delegate_->Unlock(web_contents());

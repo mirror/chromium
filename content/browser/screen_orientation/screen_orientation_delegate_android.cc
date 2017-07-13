@@ -40,8 +40,8 @@ void ScreenOrientationDelegateAndroid::Lock(
 }
 
 bool ScreenOrientationDelegateAndroid::ScreenOrientationProviderSupported() {
-  // Always supported on Android
-  return true;
+  return Java_ScreenOrientationProvider_isOrientationLockEnabled(
+      base::android::AttachCurrentThread());
 }
 
 void ScreenOrientationDelegateAndroid::Unlock(WebContents* web_contents) {

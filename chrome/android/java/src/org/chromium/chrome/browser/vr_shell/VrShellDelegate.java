@@ -56,6 +56,8 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.webapps.WebappActivity;
+import org.chromium.content.browser.ScreenOrientationDelegate;
+import org.chromium.content.browser.ScreenOrientationProvider;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -67,8 +69,9 @@ import java.lang.reflect.InvocationTargetException;
  * Manages interactions with the VR Shell.
  */
 @JNINamespace("vr_shell")
-public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
-                                        View.OnSystemUiVisibilityChangeListener {
+public class VrShellDelegate
+        implements ApplicationStatus.ActivityStateListener, View.OnSystemUiVisibilityChangeListener,
+                   ScreenOrientationDelegate {
     private static final String TAG = "VrShellDelegate";
 
     // Pseudo-random number to avoid request id collisions.
@@ -619,7 +622,11 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     private void swapHostActivity(ChromeActivity activity) {
         assert mActivity != null;
         if (mActivity == activity) return;
+
+        restoreWindowMode();
         mActivity = activity;
+        setWindowModeForVr(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         mVrDaydreamApi = mVrClassesWrapper.createVrDaydreamApi(mActivity);
         if (mNativeVrShellDelegate == 0 || mNonPresentingGvrContext == null) return;
         resetNonPresentingNativeContext();
@@ -768,6 +775,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
         // Lock orientation to landscape after enter VR.
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        ScreenOrientationProvider.setOrientationDelegate(this);
 
         addVrViews();
         boolean webVrMode = mRequestedWebVr || tentativeWebVrMode && !mAutopresentWebVr;
@@ -837,6 +845,15 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         }
     }
 
+    @Override
+    public boolean orientationUnlocked(Activity activity, int defaultOrientation) {
+        if (mActivity == activity && mRestoreOrientation != null) {
+            mRestoreOrientation = defaultOrientation;
+            return false;
+        }
+        return true;
+    }
+
     private boolean isWindowModeCorrectForVr() {
         int flags = mActivity.getWindow().getDecorView().getSystemUiVisibility();
         int orientation = mActivity.getResources().getConfiguration().orientation;
@@ -850,11 +867,13 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
             mRestoreOrientation = mActivity.getRequestedOrientation();
         }
         mActivity.setRequestedOrientation(requestedOrientation);
+        ScreenOrientationProvider.setOrientationDelegate(this);
         setupVrModeWindowFlags();
     }
 
     private void restoreWindowMode() {
         if (mRestoreOrientation != null) mActivity.setRequestedOrientation(mRestoreOrientation);
+        ScreenOrientationProvider.setOrientationDelegate(null);
         mRestoreOrientation = null;
         clearVrModeWindowFlags();
     }
