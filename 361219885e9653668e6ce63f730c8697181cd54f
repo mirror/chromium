@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c857cad4_40a9fd1b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-13T15:34:46Z",
+      "side": 1,
+      "message": "\"ensured\"?  What does that mean?",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a493e6_cdcca2d4",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-13T15:34:46Z",
+      "side": 1,
+      "message": "What does \"Shared\" mean here?  How is it shared?",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b76322_b6ed986e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-13T15:34:46Z",
+      "side": 1,
+      "message": "Yay for the braces, even if there\u0027s only one line!",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14389dd5_8595b4c8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-13T15:34:46Z",
+      "side": 1,
+      "message": "There seems to be a bit of a disconnect here.  You have to use render_thread_.get(), but only need to use worklet_backing_thread_.  I think it would be more consistent if worket_backing_thread_.get() were used here too.  If possible and sensible.",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3af780_f7a5e4ba",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-13T15:34:46Z",
+      "side": 1,
+      "message": "Not sure where to best document this, but you should say something about the fact that we have two possible threads depending on whether AudioWorklet is enabled or not.",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd74b0e1_d68ea62a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-13T15:34:46Z",
+      "side": 1,
+      "message": "Should this be std::unique_ptr\u003cWebThread\u003e worket_backing_thread_?",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06162e16_8e527dd8",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-13T15:34:46Z",
+      "side": 1,
+      "message": "Don\u0027t need to do anything here for worklet_backing_thread_?",
+      "revId": "361219885e9653668e6ce63f730c8697181cd54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
