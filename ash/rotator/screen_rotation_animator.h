@@ -61,6 +61,10 @@ class ASH_EXPORT ScreenRotationAnimator {
   // notifies |screen_rotation_animator_observer_|.
   void ProcessAnimationQueue();
 
+  bool IsRotating() const;
+
+  display::Display::Rotation GetTargetRotation() const;
+
  protected:
   using CopyCallback =
       base::Callback<void(std::unique_ptr<cc::CopyOutputResult> result)>;
@@ -177,6 +181,7 @@ class ASH_EXPORT ScreenRotationAnimator {
   std::unique_ptr<ui::LayerTreeOwner> mask_layer_tree_owner_;
   std::unique_ptr<ScreenRotationRequest> last_pending_request_;
   bool has_switch_ash_disable_smooth_screen_rotation_;
+  display::Display::Rotation target_rotation_ = display::Display::ROTATE_0;
   base::WeakPtrFactory<ScreenRotationAnimator> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenRotationAnimator);

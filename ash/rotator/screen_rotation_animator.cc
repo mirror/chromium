@@ -444,6 +444,7 @@ void ScreenRotationAnimator::Rotate(display::Display::Rotation new_rotation,
   std::unique_ptr<ScreenRotationRequest> rotation_request =
       base::MakeUnique<ScreenRotationRequest>(rotation_request_id_, display_id,
                                               new_rotation, source);
+  target_rotation_ = new_rotation;
   switch (screen_rotation_state_) {
     case IDLE:
     case COPY_REQUESTED:
@@ -483,6 +484,14 @@ void ScreenRotationAnimator::ProcessAnimationQueue() {
   // This is only used in test to notify animator observer.
   for (auto& observer : screen_rotation_animator_observers_)
     observer.OnScreenRotationAnimationFinished(this);
+}
+
+bool ScreenRotationAnimator::IsRotating() const {
+  return screen_rotation_state_ != IDLE;
+}
+
+display::Display::Rotation ScreenRotationAnimator::GetTargetRotation() const {
+  return target_rotation_;
 }
 
 void ScreenRotationAnimator::StopAnimating() {
