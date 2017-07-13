@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64d8c3b2_840d6fd4",
+        "filename": "cc/animation/animation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-13T16:12:14Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t think the name is helping here. I\u0027d hoped that it would be self-documenty, but I think it just adds to the confusion. I\u0027ve inlined here to make it more explicit.",
+      "parentUuid": "d10dea96_a1146022",
+      "range": {
+        "startLine": 112,
+        "startChar": 21,
+        "endLine": 112,
+        "endChar": 22
+      },
+      "revId": "55d7f02e3088968aa4eb64e4033ece854e1e0ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69f93cfc_23634a2e",
         "filename": "chrome/browser/vr/test/animation_creator.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T15:47:20Z",
       "side": 1,
       "message": "nit: period",
+      "range": {
+        "startLine": 13,
+        "startChar": 48,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "55d7f02e3088968aa4eb64e4033ece854e1e0ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2dc3401_fe488106",
+        "filename": "chrome/browser/vr/test/animation_creator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-13T16:12:14Z",
+      "side": 1,
+      "message": "Ditched this class.",
+      "parentUuid": "69f93cfc_23634a2e",
       "range": {
         "startLine": 13,
         "startChar": 48,
@@ -68,6 +116,30 @@
       "revId": "55d7f02e3088968aa4eb64e4033ece854e1e0ee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ba3815_36f8ddbe",
+        "filename": "chrome/browser/vr/test/animation_creator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-13T16:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faab78d0_a8f7be95",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "55d7f02e3088968aa4eb64e4033ece854e1e0ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
