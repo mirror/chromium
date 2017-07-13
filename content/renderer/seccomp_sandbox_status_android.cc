@@ -4,18 +4,15 @@
 
 #include "content/renderer/seccomp_sandbox_status_android.h"
 
-#include "content/public/renderer/seccomp_sandbox_status_android.h"
-
 namespace content {
 
-static sandbox::SeccompSandboxStatus g_status =
-    sandbox::SeccompSandboxStatus::NOT_SUPPORTED;
+static SeccompSandboxStatus g_status = SeccompSandboxStatus::NOT_SUPPORTED;
 
-void SetSeccompSandboxStatus(sandbox::SeccompSandboxStatus status) {
+void SetSeccompSandboxStatus(SeccompSandboxStatus status) {
   g_status = status;
 }
 
-sandbox::SeccompSandboxStatus GetSeccompSandboxStatus() {
+SeccompSandboxStatus GetSeccompSandboxStatus() {
   return g_status;
 }
 
