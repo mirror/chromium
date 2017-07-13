@@ -41,6 +41,18 @@ bool MetricsProvider::HasInitialStabilityMetrics() {
   return false;
 }
 
+void MetricsProvider::ProvideCurrentSessionData(
+    SystemProfileProto* system_profile_proto) {
+  ProvideStabilityMetrics(system_profile_proto);
+  ProvideGeneralMetrics(system_profile_proto);
+}
+
+void MetricsProvider::ProvidePreviousSessionData(
+    SystemProfileProto* system_profile_proto) {
+  ProvideInitialStabilityMetrics(system_profile_proto);
+  ProvideStabilityMetrics(system_profile_proto);
+}
+
 void MetricsProvider::ProvideInitialStabilityMetrics(
     SystemProfileProto* system_profile_proto) {
 }
