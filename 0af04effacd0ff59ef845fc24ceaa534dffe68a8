@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ef02dcf_7ade1965",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-13T00:08:52Z",
+      "side": 1,
+      "message": "Please add an explanatory comment on this method.\n\nAlso, why do we even create visual viewport layers if we\u0027re not going to use them?",
+      "range": {
+        "startLine": 323,
+        "startChar": 15,
+        "endLine": 323,
+        "endChar": 38
+      },
+      "revId": "0af04effacd0ff59ef845fc24ceaa534dffe68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
