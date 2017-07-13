@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b6d6ee0a_f40e5e8f",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-13T17:43:31Z",
+      "side": 0,
+      "message": "Should we put base::StatisticsRecorder::Initialize(); into ios_global_state::Create()? \nIt needs to be done before StartTaskScheduler, which creates histograms.",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 26
+      },
+      "revId": "31ef6a865a8a3fc650cbffec9c343c2ab66c6adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "660d68b4_ce44303e",
         "filename": "components/cronet/ios/cronet_environment.mm",
         "patchSetId": 3
@@ -61,6 +84,30 @@
       "side": 0,
       "message": "Misha, can you confirm this is OK to remove?",
       "parentUuid": "a45bd119_893bd72e",
+      "range": {
+        "startLine": 271,
+        "startChar": 60,
+        "endLine": 271,
+        "endChar": 66
+      },
+      "revId": "31ef6a865a8a3fc650cbffec9c343c2ab66c6adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1aa5be_ee1a5d31",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-13T17:43:31Z",
+      "side": 0,
+      "message": "It was added to fix https://bugs.chromium.org/p/chromium/issues/detail?id\u003d624435 so it is probably still needed, although I don\u0027t get test failures without it neither, so maybe it is done elsewhere.",
+      "parentUuid": "9900fa35_ae88b611",
       "range": {
         "startLine": 271,
         "startChar": 60,
