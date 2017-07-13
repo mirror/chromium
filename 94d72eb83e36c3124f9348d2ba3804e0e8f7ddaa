@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae27fa7_9cfa1480",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-13T12:45:54Z",
+      "side": 1,
+      "message": "typo?\nAlso, I think most developer are not familiar with the expression gold-circle (I\u0027m not).",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "94d72eb83e36c3124f9348d2ba3804e0e8f7ddaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea5524c_39590e06",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-13T12:45:54Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 12
+      },
+      "revId": "94d72eb83e36c3124f9348d2ba3804e0e8f7ddaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe6c3d9_67260aba",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-13T12:45:54Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 22,
+        "startChar": 67,
+        "endLine": 22,
+        "endChar": 76
+      },
+      "revId": "94d72eb83e36c3124f9348d2ba3804e0e8f7ddaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
