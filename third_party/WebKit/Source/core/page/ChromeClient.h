@@ -320,6 +320,9 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   // Input method editor related functions.
   virtual void ShowVirtualKeyboardOnElementFocus(LocalFrame&) {}
 
+  // Some windows, e.g. popups, do not use VisualViewport's layers.  This is
+  // overridden in ChromeClientImpl for regular (non-popup) windows.
+  virtual bool ShouldUseViewportLayers() const { return false; }
   virtual void RegisterViewportLayers() const {}
 
   virtual void ShowUnhandledTapUIIfNeeded(IntPoint, Node*, bool) {}
