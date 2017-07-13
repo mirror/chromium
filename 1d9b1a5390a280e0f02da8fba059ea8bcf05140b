@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "c04e6683_f155b958",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "Is there any risk of a race condition where the peer closes the connection before this is reset? And if so, does an atomic \"send and reset\" mechanism even exist?",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317188a9_0bfcaf09",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "Can this be,\n#if !defined(FOO)\nkControlBufferSize +\u003d sizeof(ucred);\n#endif",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "782c26e5_7b273fb1",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "since this loop is inside brackets, can we please put brackets here too?",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100bc896_80b74bf1",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "since this loop is inside brackets, can we please put brackets here too?",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9b5f13_72769d0f",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "nit: I think write_next_ +\u003d sizeof(EntryType) makes it more obvious that you\u0027re incrementing the pointer, but that\u0027s up to your preferred style.",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b2836ba_43904955",
         "filename": "sandbox/linux/syscall_broker/broker_simple_message.h",
         "patchSetId": 5
@@ -13,6 +98,92 @@
       "writtenOn": "2017-07-13T16:12:06Z",
       "side": 1,
       "message": "Strictly speaking, this shouldn\u0027t be SANDBOX_EXPORT, but in order to make this unit testable, I had to label it as such. Similarly, I had to make BrokerChannel SANDBOX_EXPORT for the unit tests.\n\nIf you have a suggestion of how to get the unit tests to work without this being SANDBOX_EXPORT, I\u0027m all ears.",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4197efc2_af3d3442",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2b2836ba_43904955",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60137939_9555422f",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "I know the name is pretty clear already, but can we can add a brief description here?",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc09ed4_17757d59",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "What do you mean include an array of file descriptors?",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f732c787_7f0d85d4",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "Can you comment these private methods and fields?",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e60a30e_15c2e343",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-13T17:57:51Z",
+      "side": 1,
+      "message": "Can you document how read_only_ and write_only_ are used in the implementation? When they get set, what they mean, etc?",
       "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
