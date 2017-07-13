@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12fc68d5_42fb177d",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T23:55:16Z",
+      "side": 1,
+      "message": "Nit: nativeLayer.setLocalDestinationCapabilities(getPdfPrinter());",
+      "revId": "2bf4b0f39f700e7d19bc9b080cd3c6fad3693ae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b9643d_581ef824",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1420,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T23:55:16Z",
+      "side": 1,
+      "message": "The comment makes it sound that this test is only applicable to Mac, and therefore should be wrapped in an if (cr.isMac) {...}, but it also tests somehing different in the non-Mac case.\n\nGiven that the test has to call cr.isMac three times, would it be simpler to split this to two separate tests (one for Mac, one for Win)?",
+      "revId": "2bf4b0f39f700e7d19bc9b080cd3c6fad3693ae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
