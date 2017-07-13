@@ -42,7 +42,10 @@ TEST_F(SavePendingPasswordViewControllerTest,
   profile()->GetPrefs()->SetBoolean(
       password_manager::prefs::kWasSignInPasswordPromoClicked, true);
   SetUpSavePendingState(false);
-  EXPECT_CALL(*ui_controller(), SavePassword());
+  EXPECT_CALL(
+      *ui_controller(),
+      SavePassword(
+          GetModelAndCreateIfNull()->pending_password().username_value));
   EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
   [controller().saveButton performClick:nil];
 
@@ -52,7 +55,7 @@ TEST_F(SavePendingPasswordViewControllerTest,
 TEST_F(SavePendingPasswordViewControllerTest,
        ShouldNeverAndDismissWhenNeverClicked) {
   SetUpSavePendingState(false);
-  EXPECT_CALL(*ui_controller(), SavePassword()).Times(0);
+  EXPECT_CALL(*ui_controller(), SavePassword(_)).Times(0);
   EXPECT_CALL(*ui_controller(), NeverSavePassword());
   [controller().neverButton performClick:nil];
 
@@ -61,7 +64,7 @@ TEST_F(SavePendingPasswordViewControllerTest,
 
 TEST_F(SavePendingPasswordViewControllerTest, ShouldDismissWhenCrossClicked) {
   SetUpSavePendingState(false);
-  EXPECT_CALL(*ui_controller(), SavePassword()).Times(0);
+  EXPECT_CALL(*ui_controller(), SavePassword(_)).Times(0);
   EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
   [controller().closeButton performClick:nil];
 
@@ -84,7 +87,7 @@ TEST_F(SavePendingPasswordViewControllerTest, CloseBubbleAndHandleClick) {
   // A user may press mouse down, some navigation closes the bubble, mouse up
   // still sends the action.
   SetUpSavePendingState(false);
-  EXPECT_CALL(*ui_controller(), SavePassword()).Times(0);
+  EXPECT_CALL(*ui_controller(), SavePassword(_)).Times(0);
   EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
   [delegate() setModel:nil];
   [controller().neverButton performClick:nil];
