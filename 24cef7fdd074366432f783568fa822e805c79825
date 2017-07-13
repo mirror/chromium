@@ -16,6 +16,24 @@
       "revId": "24cef7fdd074366432f783568fa822e805c79825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4747cb0_729e7a02",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-07-13T17:48:12Z",
+      "side": 1,
+      "message": "This is what is done for receivedKeyMessage (line 206 above or https://cs.chromium.org/chromium/src/chrome/browser/media/encrypted_media_browsertest.cc?l\u003d206). I guess it would be possible to do the check when the ENDED event is handled, but then additional parameters would need to be passed when running the test.",
+      "parentUuid": "6d53e9ca_84cc0711",
+      "revId": "24cef7fdd074366432f783568fa822e805c79825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
