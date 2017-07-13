@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e0a48f5_919112a0",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-13T15:07:21Z",
+      "side": 1,
+      "message": "When I looked at https://codereview.chromium.org/2021793002 I thought we\u0027d need something like:\n\n    // Draggables cannot be selected.\n    if (style.UserDrag() \u003d\u003d EUserDrag::kElement)\n      return false;\n\nBut that made user-drag-element-and-user-select-none.html fail...",
+      "revId": "d533aa630bdfe4da2364cffa8670506f0ca0aeaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
