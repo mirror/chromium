@@ -31,10 +31,7 @@ bool GetSaveFileNameImpl(FakePrintPreviewHandler* handler, OPENFILENAME* ofn);
 
 class FakePrintPreviewHandler : public PrintPreviewHandler {
  public:
-  explicit FakePrintPreviewHandler(content::WebUI* web_ui)
-      : init_called_(false), save_failed_(false) {
-    set_web_ui(web_ui);
-  }
+  FakePrintPreviewHandler() : init_called_(false), save_failed_(false) {}
 
   void FileSelected(const base::FilePath& path,
                     int index,
@@ -144,11 +141,13 @@ class PrintPreviewHandlerTest : public PrintPreviewTest {
         preview_dialog->GetWebUI()->GetController());
     ASSERT_TRUE(preview_ui_);
 
-    preview_handler_ =
-        base::MakeUnique<FakePrintPreviewHandler>(preview_dialog->GetWebUI());
+    auto handler = base::MakeUnique<FakePrintPreviewHandler>();
+    preview_ui_->SetHandlerForTesting(handler.get());
+    preview_handler_ = handler.get();
+    preview_dialog->GetWebUI()->AddMessageHandler(std::move(handler));
   }
 
-  std::unique_ptr<FakePrintPreviewHandler> preview_handler_;
+  FakePrintPreviewHandler* preview_handler_;
   PrintPreviewUI* preview_ui_;
 
  private:

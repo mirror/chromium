@@ -562,6 +562,10 @@ PrintPreviewHandler::PrintPreviewHandler()
 PrintPreviewHandler::~PrintPreviewHandler() {
   if (select_file_dialog_.get())
     select_file_dialog_->ListenerDestroyed();
+  if (print_preview_ui()) {
+    // This should never happen.
+    print_preview_ui()->HandlerDestroyed();
+  }
 
   UnregisterForGaiaCookieChanges();
 }
