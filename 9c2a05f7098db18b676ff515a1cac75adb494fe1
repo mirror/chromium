@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c83e3ff_3fcc959f",
+        "filename": "components/history/core/browser/history_match.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "819dcc1c_d144f965",
+      "revId": "9c2a05f7098db18b676ff515a1cac75adb494fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1601d132_06a7dffa",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bc05fd9b_635fb879",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "Done. Good point. Probably cleanest solution is to axe the whole constructor with parameters and treat it like the dumb struct it is. We will refactor once we merge with ScoredHistoryMatch",
+      "parentUuid": "1601d132_06a7dffa",
+      "revId": "9c2a05f7098db18b676ff515a1cac75adb494fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e757189_70fff78c",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-13T16:54:19Z",
       "side": 1,
       "message": "Do we not need to determine the other match_in_* values in this case?",
+      "revId": "9c2a05f7098db18b676ff515a1cac75adb494fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1388e47e_553baaa2",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T22:47:34Z",
+      "side": 1,
+      "message": "Done. We do, and I just did.\n\nIt doesn\u0027t fit into the testing scheme of the provider until I \"hook it up\" in the followup CL though. This logic will be tested in the followup CL",
+      "parentUuid": "5e757189_70fff78c",
       "revId": "9c2a05f7098db18b676ff515a1cac75adb494fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
