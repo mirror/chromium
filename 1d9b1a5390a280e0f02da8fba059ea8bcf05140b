@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b2836ba_43904955",
+        "filename": "sandbox/linux/syscall_broker/broker_simple_message.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002768
+      },
+      "writtenOn": "2017-07-13T16:12:06Z",
+      "side": 1,
+      "message": "Strictly speaking, this shouldn\u0027t be SANDBOX_EXPORT, but in order to make this unit testable, I had to label it as such. Similarly, I had to make BrokerChannel SANDBOX_EXPORT for the unit tests.\n\nIf you have a suggestion of how to get the unit tests to work without this being SANDBOX_EXPORT, I\u0027m all ears.",
+      "revId": "1d9b1a5390a280e0f02da8fba059ea8bcf05140b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
