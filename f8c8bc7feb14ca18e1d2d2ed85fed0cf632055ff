@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb6de3ea_8b1ff111",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-13T14:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd7e6da0_38de7426",
+      "revId": "f8c8bc7feb14ca18e1d2d2ed85fed0cf632055ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ca94aa6_843b6b3e",
         "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "f8c8bc7feb14ca18e1d2d2ed85fed0cf632055ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ad3d4f_4b8adfb5",
+        "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-13T14:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ca94aa6_843b6b3e",
+      "revId": "f8c8bc7feb14ca18e1d2d2ed85fed0cf632055ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
