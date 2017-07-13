@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79d20cd0_00238693",
+        "filename": "ui/events/platform/x11/x11_event_source_libevent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-13T18:26:38Z",
+      "side": 1,
+      "message": "I believe that didn\u0027t work with gcc because the types were std::unique_ptr\u003ccc::CompositorFrameSink\u003e and std::unique_ptr\u003cviz::ClientCompositorFrameSink\u003e, and this should be safe because it\u0027s the same type.",
+      "parentUuid": "ba1ddd60_18b06b30",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 14
+      },
+      "revId": "474af827d243d2144da02326ae8ac9aea7ef4599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddf7aa39_8a93a5f7",
         "filename": "ui/platform_window/x11/x11_window.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "474af827d243d2144da02326ae8ac9aea7ef4599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec9bf9b_4d181103",
+        "filename": "ui/platform_window/x11/x11_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-13T18:26:38Z",
+      "side": 1,
+      "message": "Great, deleted.",
+      "parentUuid": "ddf7aa39_8a93a5f7",
+      "revId": "474af827d243d2144da02326ae8ac9aea7ef4599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
