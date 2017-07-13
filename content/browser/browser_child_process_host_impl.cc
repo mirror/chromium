@@ -17,8 +17,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/persistent_histogram_allocator.h"
-#include "base/metrics/persistent_memory_allocator.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -26,7 +24,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/tracing/common/tracing_switches.h"
-#include "content/browser/histogram_message_filter.h"
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/profiler_message_filter.h"
 #include "content/browser/service_manager/service_manager_context.h"
@@ -157,7 +154,6 @@ BrowserChildProcessHostImpl::BrowserChildProcessHostImpl(
   child_process_host_.reset(ChildProcessHost::Create(this));
   AddFilter(new TraceMessageFilter(data_.id));
   AddFilter(new ProfilerMessageFilter(process_type));
-  AddFilter(new HistogramMessageFilter);
 
   g_child_process_list.Get().push_back(this);
   GetContentClient()->browser()->BrowserChildProcessHostCreated(this);
@@ -172,9 +168,6 @@ BrowserChildProcessHostImpl::BrowserChildProcessHostImpl(
                             ServiceManagerContext::GetConnectorForIOThread(),
                             base::ThreadTaskRunnerHandle::Get()));
   }
-
-  // Create a persistent memory segment for subprocess histograms.
-  CreateMetricsAllocator();
 }
 
 BrowserChildProcessHostImpl::~BrowserChildProcessHostImpl() {
@@ -267,11 +260,6 @@ const base::Process& BrowserChildProcessHostImpl::GetProcess() const {
   return child_process_->GetProcess();
 }
 
-std::unique_ptr<base::SharedPersistentMemoryAllocator>
-BrowserChildProcessHostImpl::TakeMetricsAllocator() {
-  return std::move(metrics_allocator_);
-}
-
 void BrowserChildProcessHostImpl::SetName(const base::string16& name) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   data_.name = name;
@@ -349,7 +337,6 @@ void BrowserChildProcessHostImpl::OnChannelConnected(int32_t peer_pid) {
   delegate_->OnChannelConnected(peer_pid);
 
   if (IsProcessLaunched()) {
-    ShareMetricsAllocatorToProcess();
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::Bind(&NotifyProcessLaunchedAndConnected,
                                        data_));
@@ -457,78 +444,6 @@ bool BrowserChildProcessHostImpl::Send(IPC::Message* message) {
   return child_process_host_->Send(message);
 }
 
-void BrowserChildProcessHostImpl::CreateMetricsAllocator() {
-  // Create a persistent memory segment for subprocess histograms only if
-  // they're active in the browser.
-  // TODO(bcwhite): Remove this once persistence is always enabled.
-  if (!base::GlobalHistogramAllocator::Get())
-    return;
-
-  // Determine the correct parameters based on the process type.
-  size_t memory_size;
-  base::StringPiece metrics_name;
-  switch (data_.process_type) {
-    case PROCESS_TYPE_UTILITY:
-      memory_size = 64 << 10;  // 64 KiB
-      metrics_name = "UtilityMetrics";
-      break;
-
-    case PROCESS_TYPE_ZYGOTE:
-      memory_size = 64 << 10;  // 64 KiB
-      metrics_name = "ZygoteMetrics";
-      break;
-
-    case PROCESS_TYPE_SANDBOX_HELPER:
-      memory_size = 64 << 10;  // 64 KiB
-      metrics_name = "SandboxHelperMetrics";
-      break;
-
-    case PROCESS_TYPE_GPU:
-      memory_size = 64 << 10;  // 64 KiB
-      metrics_name = "GpuMetrics";
-      break;
-
-    case PROCESS_TYPE_PPAPI_PLUGIN:
-      memory_size = 64 << 10;  // 64 KiB
-      metrics_name = "PpapiPluginMetrics";
-      break;
-
-    case PROCESS_TYPE_PPAPI_BROKER:
-      memory_size = 64 << 10;  // 64 KiB
-      metrics_name = "PpapiBrokerMetrics";
-      break;
-
-    default:
-      // Report new processes. "Custom" ones are renumbered to 1000+ so that
-      // they won't conflict with any standard ones in the future.
-      int process_type = data_.process_type;
-      if (process_type >= PROCESS_TYPE_CONTENT_END)
-        process_type += 1000 - PROCESS_TYPE_CONTENT_END;
-      UMA_HISTOGRAM_SPARSE_SLOWLY(
-          "UMA.SubprocessMetricsProvider.UntrackedProcesses", process_type);
-      return;
-  }
-
-  // Create the shared memory segment and attach an allocator to it.
-  // Mapping the memory shouldn't fail but be safe if it does; everything
-  // will continue to work but just as if persistence weren't available.
-  std::unique_ptr<base::SharedMemory> shm(new base::SharedMemory());
-  if (!shm->CreateAndMapAnonymous(memory_size))
-    return;
-  metrics_allocator_.reset(new base::SharedPersistentMemoryAllocator(
-      std::move(shm), static_cast<uint64_t>(data_.id), metrics_name,
-      /*readonly=*/false));
-}
-
-void BrowserChildProcessHostImpl::ShareMetricsAllocatorToProcess() {
-  if (metrics_allocator_) {
-    base::SharedMemoryHandle shm_handle =
-        metrics_allocator_->shared_memory()->handle().Duplicate();
-    Send(new ChildProcessMsg_SetHistogramMemory(
-        shm_handle, metrics_allocator_->shared_memory()->mapped_size()));
-  }
-}
-
 void BrowserChildProcessHostImpl::OnProcessLaunchFailed(int error_code) {
   delegate_->OnProcessLaunchFailed(error_code);
   notify_child_disconnected_ = false;
@@ -558,7 +473,6 @@ void BrowserChildProcessHostImpl::OnProcessLaunched() {
   delegate_->OnProcessLaunched();
 
   if (is_channel_connected_) {
-    ShareMetricsAllocatorToProcess();
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::Bind(&NotifyProcessLaunchedAndConnected,
                                        data_));

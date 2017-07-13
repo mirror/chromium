@@ -44,6 +44,8 @@
 #include "services/data_decoder/public/interfaces/constants.mojom.h"
 #include "services/device/device_service.h"
 #include "services/device/public/interfaces/constants.mojom.h"
+#include "services/metrics/public/interfaces/constants.mojom.h"
+#include "services/metrics/service.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
 #include "services/resource_coordinator/resource_coordinator_service.h"
@@ -316,6 +318,11 @@ ServiceManagerContext::ServiceManagerContext() {
   device_info.task_runner = base::ThreadTaskRunnerHandle::Get();
   packaged_services_connection_->AddEmbeddedService(device::mojom::kServiceName,
                                                     device_info);
+
+  service_manager::EmbeddedServiceInfo metrics_info;
+  metrics_info.factory = base::BindRepeating(&metrics::Service::Create);
+  packaged_services_connection_->AddEmbeddedService(
+      metrics::mojom::kServiceName, metrics_info);
 
   if (base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator)) {
     service_manager::EmbeddedServiceInfo resource_coordinator_info;

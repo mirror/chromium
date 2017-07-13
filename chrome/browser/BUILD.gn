@@ -669,8 +669,6 @@ split_static_library("browser") {
     "metrics/renderer_uptime_web_contents_observer.h",
     "metrics/sampling_metrics_provider.cc",
     "metrics/sampling_metrics_provider.h",
-    "metrics/subprocess_metrics_provider.cc",
-    "metrics/subprocess_metrics_provider.h",
     "metrics/thread_watcher.cc",
     "metrics/thread_watcher.h",
     "metrics/thread_watcher_android.cc",

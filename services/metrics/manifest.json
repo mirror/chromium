@@ -1,0 +1,15 @@
+{
+  "name": "metrics",
+  "display_name": "Metrics Service",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "metrics:histograms": [ "metrics::mojom::HistogramCollector" ],
+        "metrics:debug": [ "metrics::mojom::HistogramProvider" ]
+      },
+      "requires": {
+        "*": [ "app" ]
+      }
+    }
+  }
+}

@@ -6,7 +6,6 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/statistics_recorder.h"
-#include "content/browser/histogram_synchronizer.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
@@ -34,7 +33,8 @@ std::string HistogramInternalsRequestJob::GenerateHTML(const GURL& url) {
   if (offset < static_cast<int>(spec.size()))
     path = spec.substr(offset);
 
-  HistogramSynchronizer::FetchHistograms();
+  // TODO(slan): Plumb a connector in here to make a sync reuqest to
+  // HistogramCollector.
 
   std::string unescaped_query;
   std::string unescaped_title("About Histograms");

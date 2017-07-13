@@ -29,8 +29,7 @@ class PersistentHistogramAllocator;
 // when metrics are being collected for upload, or when something else needs
 // combined metrics (such as the chrome://histograms page).
 class SubprocessMetricsProvider
-    : public metrics::MetricsProvider,
-      public base::StatisticsRecorder::HistogramProvider,
+    : public base::StatisticsRecorder::HistogramProvider,
       public content::BrowserChildProcessObserver,
       public content::NotificationObserver,
       public content::RenderProcessHostObserver {

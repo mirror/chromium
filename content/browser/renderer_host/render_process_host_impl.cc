@@ -34,8 +34,6 @@
 #include "base/memory/shared_memory_handle.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/persistent_histogram_allocator.h"
-#include "base/metrics/persistent_memory_allocator.h"
 #include "base/metrics/user_metrics.h"
 #include "base/process/process_handle.h"
 #include "base/rand_util.h"
@@ -84,7 +82,6 @@
 #include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/gpu/shader_cache_factory.h"
-#include "content/browser/histogram_message_filter.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/indexed_db/indexed_db_dispatcher_host.h"
 #include "content/browser/loader/resource_message_filter.h"
@@ -1568,7 +1565,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   AddFilter(notification_message_filter_.get());
 
   AddFilter(new ProfilerMessageFilter(PROCESS_TYPE_RENDERER));
-  AddFilter(new HistogramMessageFilter());
 #if defined(OS_ANDROID)
   synchronous_compositor_filter_ =
       new SynchronousCompositorBrowserFilter(GetID());
@@ -1670,6 +1666,9 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
+
+  // Security: Only allow access to browser histograms when running in the
+  // context of a test. TODO(slan): Figure out where this should be hosted!
 
   if (base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator)) {
     registry->AddInterface(base::Bind(
@@ -1837,11 +1836,6 @@ void RenderProcessHostImpl::BindInterface(
 const service_manager::Identity& RenderProcessHostImpl::GetChildIdentity()
     const {
   return child_connection_->child_identity();
-}
-
-std::unique_ptr<base::SharedPersistentMemoryAllocator>
-RenderProcessHostImpl::TakeMetricsAllocator() {
-  return std::move(metrics_allocator_);
 }
 
 const base::TimeTicks& RenderProcessHostImpl::GetInitTimeForNavigationMetrics()
@@ -3296,38 +3290,6 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
   return render_process_host;
 }
 
-void RenderProcessHostImpl::CreateSharedRendererHistogramAllocator() {
-  // Create a persistent memory segment for renderer histograms only if
-  // they're active in the browser.
-  if (!base::GlobalHistogramAllocator::Get())
-    return;
-
-  // Get handle to the renderer process. Stop if there is none.
-  base::ProcessHandle destination = GetHandle();
-  if (destination == base::kNullProcessHandle)
-    return;
-
-  // If a renderer crashes before completing startup and gets restarted, this
-  // method will get called a second time meaning that a metrics-allocator
-  // already exists. Don't recreate it.
-  if (!metrics_allocator_) {
-    // Create persistent/shared memory and allow histograms to be stored in
-    // it. Memory that is not actualy used won't be physically mapped by the
-    // system. RendererMetrics usage, as reported in UMA, peaked around 0.7MiB
-    // as of 2016-12-20.
-    std::unique_ptr<base::SharedMemory> shm(new base::SharedMemory());
-    if (!shm->CreateAndMapAnonymous(2 << 20))  // 2 MiB
-      return;
-    metrics_allocator_.reset(new base::SharedPersistentMemoryAllocator(
-        std::move(shm), GetID(), "RendererMetrics", /*readonly=*/false));
-  }
-
-  base::SharedMemoryHandle shm_handle =
-      metrics_allocator_->shared_memory()->handle().Duplicate();
-  Send(new ChildProcessMsg_SetHistogramMemory(
-      shm_handle, metrics_allocator_->shared_memory()->mapped_size()));
-}
-
 void RenderProcessHostImpl::ProcessDied(bool already_dead,
                                         RendererClosedDetails* known_details) {
   // Our child process has died.  If we didn't expect it, it's a crash.
@@ -3577,9 +3539,6 @@ void RenderProcessHostImpl::OnProcessLaunched() {
 #if defined(OS_ANDROID)
     UpdateProcessPriority();
 #endif
-
-    // Share histograms between the renderer and this process.
-    CreateSharedRendererHistogramAllocator();
   }
 
   // NOTE: This needs to be before flushing queued messages, because
