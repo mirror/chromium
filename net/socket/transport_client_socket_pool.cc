@@ -293,7 +293,7 @@ int TransportConnectJob::DoTransportConnect() {
   if (socket_performance_watcher_factory_) {
     socket_performance_watcher =
         socket_performance_watcher_factory_->CreateSocketPerformanceWatcher(
-            SocketPerformanceWatcherFactory::PROTOCOL_TCP);
+            SocketPerformanceWatcherFactory::PROTOCOL_TCP, addresses_);
   }
   transport_socket_ = client_socket_factory_->CreateTransportClientSocket(
       addresses_, std::move(socket_performance_watcher), net_log().net_log(),
@@ -379,7 +379,8 @@ void TransportConnectJob::DoIPv6FallbackTransportConnect() {
   if (socket_performance_watcher_factory_) {
     socket_performance_watcher =
         socket_performance_watcher_factory_->CreateSocketPerformanceWatcher(
-            SocketPerformanceWatcherFactory::PROTOCOL_TCP);
+            SocketPerformanceWatcherFactory::PROTOCOL_TCP,
+            *fallback_addresses_);
   }
 
   fallback_addresses_.reset(new AddressList(addresses_));

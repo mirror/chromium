@@ -2076,15 +2076,23 @@ TEST(NetworkQualityEstimatorTest, TestRttThroughputObservers) {
   base::TimeDelta tcp_rtt(base::TimeDelta::FromMilliseconds(1));
   base::TimeDelta quic_rtt(base::TimeDelta::FromMilliseconds(2));
 
+  const std::string kCanonicalName = "canonical.example.com";
+  AddressList address_list;
+  IPAddressList ip_list;
+  IPAddress ip_address;
+  ASSERT_TRUE(ip_address.AssignFromIPLiteral("157.0.0.1"));
+  ip_list.push_back(ip_address);
+  address_list = AddressList::CreateFromIPAddressList(ip_list, kCanonicalName);
+
   std::unique_ptr<SocketPerformanceWatcher> tcp_watcher =
       estimator.GetSocketPerformanceWatcherFactory()
           ->CreateSocketPerformanceWatcher(
-              SocketPerformanceWatcherFactory::PROTOCOL_TCP);
+              SocketPerformanceWatcherFactory::PROTOCOL_TCP, address_list);
 
   std::unique_ptr<SocketPerformanceWatcher> quic_watcher =
       estimator.GetSocketPerformanceWatcherFactory()
           ->CreateSocketPerformanceWatcher(
-              SocketPerformanceWatcherFactory::PROTOCOL_QUIC);
+              SocketPerformanceWatcherFactory::PROTOCOL_QUIC, address_list);
 
   tcp_watcher->OnUpdatedRTTAvailable(tcp_rtt);
   quic_watcher->OnUpdatedRTTAvailable(quic_rtt);
