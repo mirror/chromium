@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "e14a076b_fcdda795",
+        "filename": "chrome/browser/resources/settings/icons.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-13T23:48:33Z",
+      "side": 1,
+      "message": "2 things I went wrong - \n1) on first blush I believe it didn\u0027t work because I did .iron-icon instead of iron-icon \n2) on second blush I left the fill defined here and proceeded to try to modify the color in various ways. However, the icon doesn\u0027t simply default to the fill specified -- it will always use that color even if you specify additional rules elsewhere.\n\nSo basically never specify fill on these icons here.",
+      "parentUuid": "151a3f5d_185661ef",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c07cb007_f93632e9",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 7
