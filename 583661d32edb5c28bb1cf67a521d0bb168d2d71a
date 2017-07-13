@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e76fcfb6_83c61e20",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T17:28:11Z",
+      "side": 1,
+      "message": "Static functions are related to the class in general but not to a specific instance of that class. This function does not touch any instance fields of the class, so it should be static.",
+      "parentUuid": "27d61d27_b17abe63",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "537cbae7_dcca9ff6",
         "filename": "chromeos/components/tether/persistent_host_scan_cache.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T16:58:20Z",
       "side": 1,
       "message": "I believe this is incorrect -- you need to release() the pointer first, don\u0027t you? (before the unique_ptr is destroyed). In any case, you could make this method\u0027s return signature std::unordered_map\u003cstd::string, std::unique_ptr\u003cHostScanCacheEntry\u003e\u003e, and simply move() the unique_ptr to the map, to make this easier to understand.",
+      "range": {
+        "startLine": 133,
+        "startChar": 42,
+        "endLine": 133,
+        "endChar": 47
+      },
+      "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f308fd0_52e2cbea",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T17:28:11Z",
+      "side": 1,
+      "message": "Nope, it\u0027s correct. |entry| is released automatically when it goes out of scope (i.e., at the end of the for() loop block). There\u0027s no reason we need to use pointers to entries instead of just entries themselves, so I\u0027m leaving it as-is.",
+      "parentUuid": "537cbae7_dcca9ff6",
       "range": {
         "startLine": 133,
         "startChar": 42,
@@ -68,6 +116,30 @@
       "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36488074_49af19de",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-13T17:28:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e817ed_ff6b348e",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
