@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "39eff3ae_552d5bab",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T20:15:09Z",
+      "side": 1,
+      "message": "Note that \"on creation this thing owns itself\" is a really common model throughout views and I\u0027ve never seen us do what you describe to document it.\n\nIn principle, I kinda like your idea!  I\u0027m just saying, it wouldn\u0027t be common practice for code in this area.  Dunno what to do with that.",
+      "parentUuid": "3cea0b5a_d02fc12a",
+      "range": {
+        "startLine": 75,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 68
+      },
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "987a154e_54fbdaed",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 26
