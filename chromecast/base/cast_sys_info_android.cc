@@ -82,7 +82,7 @@ std::string CastSysInfoAndroid::GetSystemReleaseChannel() {
 }
 
 std::string CastSysInfoAndroid::GetBoardName() {
-  return "";
+  return build_info->board();
 }
 
 std::string CastSysInfoAndroid::GetBoardRevision() {

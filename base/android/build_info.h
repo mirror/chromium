@@ -53,6 +53,8 @@ class BASE_EXPORT BuildInfo {
   // available even if the process is in a crash state. Sadly
   // std::string.c_str() doesn't guarantee that memory won't be allocated when
   // it is called.
+  const char* board() const { return board_; }
+
   const char* device() const {
     return device_;
   }
@@ -128,6 +130,7 @@ class BASE_EXPORT BuildInfo {
   // available even if the process is in a crash state. Sadly
   // std::string.c_str() doesn't guarantee that memory won't be allocated when
   // it is called.
+  const char* const board_;
   const char* const brand_;
   const char* const device_;
   const char* const android_build_id_;

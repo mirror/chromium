@@ -70,6 +70,7 @@ BuildInfo::BuildInfo(const std::vector<std::string>& params)
       installer_package_name_(StrDupParam(params, 13)),
       abi_name_(StrDupParam(params, 14)),
       extracted_file_suffix_(params[15]),
+      board_(StrDupParam(params, 16)),
       java_exception_info_(NULL) {}
 
 // static

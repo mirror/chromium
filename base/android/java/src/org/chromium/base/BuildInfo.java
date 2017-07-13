@@ -61,7 +61,7 @@ public class BuildInfo {
                     Build.BRAND, Build.DEVICE, Build.ID, Build.MANUFACTURER, Build.MODEL,
                     String.valueOf(Build.VERSION.SDK_INT), Build.TYPE, packageLabel, packageName,
                     versionCode, versionName, getAndroidBuildFingerprint(), getGMSVersionCode(pm),
-                    installerPackageName, abiString, extractedFileSuffix,
+                    installerPackageName, abiString, extractedFileSuffix, Build.BOARD,
             };
         } catch (NameNotFoundException e) {
             throw new RuntimeException(e);
