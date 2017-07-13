@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8573d596_cbd05b63",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T12:46:40Z",
+      "side": 1,
+      "message": "nit: empty line before",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa76977_9e96f6f8",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T12:46:40Z",
+      "side": 1,
+      "message": "Unrelated to this CL, but: Don\u0027t you need an API key in the unauthenticated case?",
+      "range": {
+        "startLine": 100,
+        "startChar": 30,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52585d5d_6382193b",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T12:46:40Z",
+      "side": 1,
+      "message": "I think this should just be Subscribe()?",
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a055f4b_59bfa675",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T12:46:40Z",
+      "side": 1,
+      "message": "I think this it out of date now. If they\u0027re equal, there\u0027s no reason to call Resubscribe, right?",
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1588c6_ddf6af98",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T12:46:40Z",
+      "side": 1,
+      "message": "Is it necessary to pass in the old token? Isn\u0027t that just the one currently stored in prefs?",
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba58c734_b5b7c7d2",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T12:46:40Z",
+      "side": 1,
+      "message": "ASSERT? (EXPECT is for the stuff under test, ASSERT is for preconditions (and also for things where the test would crash later otherwise))\n\nThis applies to many cases here.",
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
