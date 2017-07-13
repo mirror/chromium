@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e7d6ddc_2cca633e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-13T05:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ee09d5_d9b8429b",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 8
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06e23ae3_58c28db7",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e708f92a_3dad1200",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-13T05:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e23ae3_58c28db7",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 41
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bf7e2ccf_25640cc3",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-13T05:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2824a2dc_10d4e16e",
+      "range": {
+        "startLine": 231,
+        "startChar": 7,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29d28147_fd5c4e47",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9343e3_95e0d4a5",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-13T05:33:57Z",
+      "side": 1,
+      "message": "If I add private, the variable would not be accessible in test functions and I would need to add getter functions, should I do that or there\u0027s a neater solution?",
+      "parentUuid": "29d28147_fd5c4e47",
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "7ef0f83c_f005b881",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-13T05:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc1febf1_c90d3ba5",
+      "range": {
+        "startLine": 162,
+        "startChar": 56,
+        "endLine": 162,
+        "endChar": 67
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f8c15a6_330df853",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
         "patchSetId": 2
@@ -131,6 +245,30 @@
       "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a462ef_5b36b665",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-13T05:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8c15a6_330df853",
+      "range": {
+        "startLine": 174,
+        "startChar": 19,
+        "endLine": 174,
+        "endChar": 30
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "e2b6a0ed_784e6c68",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-13T05:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f922b811_8b4e491d",
+      "range": {
+        "startLine": 178,
+        "startChar": 37,
+        "endLine": 178,
+        "endChar": 61
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1635b85_1d546324",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
         "patchSetId": 2
@@ -177,6 +339,30 @@
       "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534666b8_702eea3d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-13T05:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1635b85_1d546324",
+      "range": {
+        "startLine": 234,
+        "startChar": 37,
+        "endLine": 234,
+        "endChar": 55
+      },
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
