@@ -238,6 +238,8 @@ void Scheduler::SetupNextBeginFrameIfNeeded() {
       begin_frame_source_->AddObserver(this);
     devtools_instrumentation::NeedsBeginFrameChanged(layer_tree_host_id_, true);
   } else if (!needs_begin_frames && observing_begin_frame_source_) {
+    DCHECK(!using_implicit_deadline_on_next_begin_frame_);
+
     observing_begin_frame_source_ = false;
     if (begin_frame_source_)
       begin_frame_source_->RemoveObserver(this);
@@ -263,6 +265,22 @@ void Scheduler::OnBeginFrameSourcePausedChanged(bool paused) {
 // a BeginRetroFrame.
 bool Scheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
   TRACE_EVENT1("cc,benchmark", "Scheduler::BeginFrame", "args", args.AsValue());
+
+  // Run the previous deadline if any.
+  if (state_machine_.begin_impl_frame_state() ==
+      SchedulerStateMachine::BEGIN_IMPL_FRAME_STATE_INSIDE_BEGIN_FRAME) {
+    OnBeginImplFrameDeadline();
+    // We may not need begin frames any longer.
+    if (!observing_begin_frame_source_) {
+      // We need to confirm the ignored BeginFrame, since we don't have updates.
+      // To persist the confirmation for future BeginFrameAcks, we let the state
+      // machine know about the BeginFrame.
+      state_machine_.OnBeginFrameDroppedNotObserving(args.source_id,
+                                                     args.sequence_number);
+      SendBeginFrameAck(args, kBeginFrameSkipped);
+      return false;
+    }
+  }
 
   if (!state_machine_.BeginFrameNeeded()) {
     TRACE_EVENT_INSTANT0("cc", "Scheduler::BeginFrameDropped",
@@ -339,21 +357,6 @@ void Scheduler::BeginImplFrameWithDeadline(const BeginFrameArgs& args) {
 
   skipped_last_frame_missed_exceeded_deadline_ = false;
 
-  // Run the previous deadline if any.
-  if (state_machine_.begin_impl_frame_state() ==
-      SchedulerStateMachine::BEGIN_IMPL_FRAME_STATE_INSIDE_BEGIN_FRAME) {
-    OnBeginImplFrameDeadline();
-    // We may not need begin frames any longer.
-    if (!observing_begin_frame_source_) {
-      // We need to confirm the ignored BeginFrame, since we don't have updates.
-      // To persist the confirmation for future BeginFrameAcks, we let the state
-      // machine know about the BeginFrame.
-      state_machine_.OnBeginFrameDroppedNotObserving(args.source_id,
-                                                     args.sequence_number);
-      SendBeginFrameAck(adjusted_args, kBeginFrameSkipped);
-      return;
-    }
-  }
   DCHECK_EQ(state_machine_.begin_impl_frame_state(),
             SchedulerStateMachine::BEGIN_IMPL_FRAME_STATE_IDLE);
 
@@ -494,6 +497,8 @@ void Scheduler::ScheduleBeginImplFrameDeadline() {
   begin_impl_frame_deadline_task_.Cancel();
   begin_impl_frame_deadline_task_.Reset(begin_impl_frame_deadline_closure_);
 
+  using_implicit_deadline_on_next_begin_frame_ = false;
+
   begin_impl_frame_deadline_mode_ =
       state_machine_.CurrentBeginImplFrameDeadlineMode();
   switch (begin_impl_frame_deadline_mode_) {
@@ -524,14 +529,24 @@ void Scheduler::ScheduleBeginImplFrameDeadline() {
       return;
   }
 
+  deadline_scheduled_at_ = Now();
+  base::TimeDelta delta =
+      std::max(deadline_ - deadline_scheduled_at_, base::TimeDelta());
+
+  if (!delta.is_zero() &&
+      deadline_ == begin_impl_frame_tracker_.Current().frame_time +
+                       begin_impl_frame_tracker_.Current().interval) {
+    // The deadline is exactly on next BeginFrame, OK to skip posting the task.
+    TRACE_EVENT2("cc", "Scheduler::ScheduleBeginImplFrameDeadline",
+                 "deadline_mode", "skipped", "deadline", deadline_);
+    using_implicit_deadline_on_next_begin_frame_ = true;
+    return;
+  }
+
   TRACE_EVENT2("cc", "Scheduler::ScheduleBeginImplFrameDeadline", "mode",
                SchedulerStateMachine::BeginImplFrameDeadlineModeToString(
                    begin_impl_frame_deadline_mode_),
                "deadline", deadline_);
-
-  deadline_scheduled_at_ = Now();
-  base::TimeDelta delta =
-      std::max(deadline_ - deadline_scheduled_at_, base::TimeDelta());
   task_runner_->PostDelayedTask(
       FROM_HERE, begin_impl_frame_deadline_task_.callback(), delta);
 }
@@ -555,6 +570,7 @@ void Scheduler::ScheduleBeginImplFrameDeadlineIfNeeded() {
 
 void Scheduler::OnBeginImplFrameDeadline() {
   TRACE_EVENT0("cc,benchmark", "Scheduler::OnBeginImplFrameDeadline");
+  using_implicit_deadline_on_next_begin_frame_ = false;
   begin_impl_frame_deadline_task_.Cancel();
   // We split the deadline actions up into two phases so the state machine
   // has a chance to trigger actions that should occur durring and after

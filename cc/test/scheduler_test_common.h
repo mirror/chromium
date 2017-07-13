@@ -154,6 +154,10 @@ class TestScheduler : public Scheduler {
     return state_machine_.needs_impl_side_invalidation();
   }
 
+  bool const using_implicit_deadline_on_next_begin_frame() {
+    return using_implicit_deadline_on_next_begin_frame_;
+  }
+
   ~TestScheduler() override;
 
   base::TimeDelta BeginImplFrameInterval() {
