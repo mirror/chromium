@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff4f467_cf217a67",
+        "filename": "chrome/test/data/webui/print_preview/native_layer_stub.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T22:16:22Z",
+      "side": 1,
+      "message": "Let\u0027s add \n/** @override */\n\nto make it clear that this method exists on the original NativeLayer instance.",
+      "revId": "126f4c3b5f678107b3d024a7162b2f9aa00a34fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afb91ed_1da4e6d4",
+        "filename": "chrome/test/data/webui/print_preview/native_layer_stub.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T22:16:22Z",
+      "side": 1,
+      "message": "Do we need this boolean? Can we not use\nthis.methodCalled(\u0027startHideDialog\u0027);\n\ninstead? See related comment in print_preview_tests.js.\n\nIdeally, it is a simpler model if the stub native layer does not hold any state besides knowing who was called, which is implemented with Promises in the superclass TestBrowserProxy and can be reset with reset() or resetResolver(), whereas the boolean would not be cleared.",
+      "revId": "126f4c3b5f678107b3d024a7162b2f9aa00a34fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445c70e7_f7ad418d",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1349,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-13T22:16:22Z",
+      "side": 1,
+      "message": "return nativeLayer.whenMethodCalled(\u0027startHideDialog\u0027);",
+      "revId": "126f4c3b5f678107b3d024a7162b2f9aa00a34fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
