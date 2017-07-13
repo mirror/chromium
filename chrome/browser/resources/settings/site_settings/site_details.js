@@ -23,6 +23,15 @@ Polymer({
     },
 
     /**
+     * Use the string representing the origin or extension name as the page
+     * title of the settings-subpage parent.
+     */
+    pageTitle: {
+      type: String,
+      notify: true,
+    },
+
+    /**
      * The amount of data stored for the origin.
      * @private
      */
@@ -70,21 +79,25 @@ Polymer({
     this.$.usageApi.fetchUsageTotal(this.toUrl(this.origin).hostname);
 
     var siteDetailsPermissions =
-        /** @type{!NodeList<!SiteDetailsPermissionElement>} */
+        /** @type {!NodeList<!SiteDetailsPermissionElement>} */
         (this.root.querySelectorAll('site-details-permission'));
     var categoryList =
-        /** @type{!Array<!string>} */ (
-            Array.prototype.map.call(siteDetailsPermissions, function(element) {
+        /** @type {!Array<!string>} */ (
+            Array.prototype.map.call(siteDetailsPermissions, element => {
               return element.category;
             }));
 
     this.browserProxy.getOriginPermissions(this.origin, categoryList)
-        .then(function(exceptionList) {
-          exceptionList.forEach(function(exception, i) {
+        .then((exceptionList) => {
+          exceptionList.forEach((exception, i) => {
             // |exceptionList| should be in the same order as |categoryList|,
             // which is in the same order as |siteDetailsPermissions|.
             siteDetailsPermissions[i].site =
                 /** @type {!RawSiteException} */ (exception);
+
+            // The displayName won't change, so just set |pageTitle| once.
+            if (!this.pageTitle)
+              this.pageTitle = /** @type {!string} */ exception.displayName;
           });
         });
   },
@@ -131,10 +144,9 @@ Polymer({
    * @private
    */
   onClearAndReset_: function() {
-    this.root.querySelectorAll('site-details-permission')
-        .forEach(function(element) {
-          element.resetPermission();
-        });
+    this.root.querySelectorAll('site-details-permission').forEach((element) => {
+      element.resetPermission();
+    });
 
     if (this.storedData_ != '')
       this.onClearStorage_();
@@ -157,8 +169,7 @@ Polymer({
    */
   permissionShowing_: function() {
     return Array.prototype.some.call(
-        this.root.querySelectorAll('site-details-permission'),
-        function(element) {
+        this.root.querySelectorAll('site-details-permission'), (element) => {
           return element.offsetHeight > 0;
         });
   },
