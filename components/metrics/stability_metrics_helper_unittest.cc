@@ -86,7 +86,13 @@ TEST_F(StabilityMetricsHelperTest, LogRendererCrash) {
   // be executed immediately.
   helper.ProvideStabilityMetrics(&system_profile);
 
+#if defined(OS_ANDROID)
+  EXPECT_EQ(
+      3, (int)histogram_tester.GetAllSamples("Stability.Android.RendererCrash")
+             .size());
+#else
   EXPECT_EQ(3, system_profile.stability().renderer_crash_count());
+#endif
   EXPECT_EQ(1, system_profile.stability().renderer_failed_launch_count());
   EXPECT_EQ(0, system_profile.stability().extension_renderer_crash_count());
 
