@@ -593,6 +593,11 @@
         <item name="android:textSize">14sp</item>
         <item name="android:layout_gravity">start</item>
     </style>
+    <style name="SigninButtonCompat">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <!-- New tab page RecyclerView overscroll color -->
     <style name="NewTabPageRecyclerView">
