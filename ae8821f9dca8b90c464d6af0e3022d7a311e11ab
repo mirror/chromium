@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a67a9b0_b67e7572",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-13T22:31:11Z",
+      "side": 1,
+      "message": "Weren\u0027t we going to do\n\nusing Service \u003d ArcAccessibilityHelperBridge;\n\n?",
+      "range": {
+        "startLine": 107,
+        "startChar": 10,
+        "endLine": 107,
+        "endChar": 38
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e829969a_8d77f3a2",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-13T22:31:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I\u0027d like this blurb to say it\u0027s needed for ArcBrowserContextKeyedServiceFactoryImpl and keep the description of the behavior for the services that are actually going to be consumed through the dependency chain.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754cf40c_50b0462f",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-13T22:31:11Z",
+      "side": 1,
+      "message": "do we want to also mention that we shouldn\u0027t add stuff that\u0027s only transitively needed to keep this list as small as possible?",
+      "range": {
+        "startLine": 198,
+        "startChar": 19,
+        "endLine": 198,
+        "endChar": 57
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59c72d7_e958adb1",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-13T22:31:11Z",
+      "side": 1,
+      "message": "Maybe add a small comment that this is needed for ABCKSFI.",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e139b902_dc5b05ab",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-13T22:31:11Z",
+      "side": 1,
+      "message": "Maybe clarify that this is in the .cc?",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59821a4b_4cec7a21",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-13T22:31:11Z",
+      "side": 1,
+      "message": "I think I agree with you that this should be ArcBrowserContextKeyedServiceFactoryBase, since Impls are typically not inherited from.",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 46
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
