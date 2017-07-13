@@ -11,6 +11,7 @@
 #include "base/memory/weak_ptr.h"
 #include "components/subresource_filter/core/common/activation_state.h"
 #include "content/public/renderer/render_frame_observer.h"
+#include "content/public/renderer/render_frame_observer_tracker.h"
 #include "url/gurl.h"
 
 namespace blink {
@@ -29,6 +30,7 @@ class WebDocumentSubresourceFilterImpl;
 // to do so by the driver.
 class SubresourceFilterAgent
     : public content::RenderFrameObserver,
+      public content::RenderFrameObserverTracker<SubresourceFilterAgent>,
       public base::SupportsWeakPtr<SubresourceFilterAgent> {
  public:
   // The |ruleset_dealer| must not be null and must outlive this instance. The
@@ -57,6 +59,11 @@ class SubresourceFilterAgent
       const DocumentLoadStatistics& statistics);
 
  private:
+  // Assumes that the parent will be in a local frame relative to this one, upon
+  // construction.
+  static ActivationState GetParentActivationState(
+      content::RenderFrame* render_frame);
+
   void OnActivateForNextCommittedLoad(ActivationState activation_state);
   void RecordHistogramsOnLoadCommitted();
   void RecordHistogramsOnLoadFinished();
@@ -71,8 +78,15 @@ class SubresourceFilterAgent
   bool OnMessageReceived(const IPC::Message& message) override;
   void WillCreateWorkerFetchContext(blink::WebWorkerFetchContext*) override;
 
+  // Subframe navigations matching these URLs/schemes will not trigger
+  // ReadyToCommitNavigation in the browser process, so they must be treated
+  // specially to maintain activation.
+  bool ShouldUseParentActivation(const GURL& url) const;
+
   // Owned by the ChromeContentRendererClient and outlives us.
   UnverifiedRulesetDealer* ruleset_dealer_;
+
+  const ActivationState initial_parent_activation_state_;
 
   ActivationState activation_state_for_next_commit_;
 
