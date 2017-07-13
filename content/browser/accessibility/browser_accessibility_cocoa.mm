@@ -2164,7 +2164,7 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
         CreatePositionFromTextMarker(parameter);
     if (position->IsNullPosition())
       return nil;
-    return CreateTextMarker(position->CreateNextCharacterPosition());
+    return CreateTextMarker(position->CreateNextCharacterPosition(ui::AXBoundaryBehavior::CrossBoundary));
   }
 
   if ([attribute isEqualToString:@"AXPreviousTextMarkerForTextMarker"]) {
@@ -2172,7 +2172,7 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
         CreatePositionFromTextMarker(parameter);
     if (position->IsNullPosition())
       return nil;
-    return CreateTextMarker(position->CreatePreviousCharacterPosition());
+    return CreateTextMarker(position->CreatePreviousCharacterPosition(ui::AXBoundaryBehavior::CrossBoundary));
   }
 
   if ([attribute isEqualToString:@"AXLeftWordTextMarkerRangeForTextMarker"]) {
@@ -2182,9 +2182,9 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
       return nil;
 
     AXPlatformPositionInstance startWordPosition =
-        endPosition->CreatePreviousWordStartPosition();
+        endPosition->CreatePreviousWordStartPosition(ui::AXBoundaryBehavior::CrossBoundary);
     AXPlatformPositionInstance endWordPosition =
-        endPosition->CreatePreviousWordEndPosition();
+        endPosition->CreatePreviousWordEndPosition(ui::AXBoundaryBehavior::CrossBoundary);
     AXPlatformPositionInstance startPosition =
         *startWordPosition <= *endWordPosition ? std::move(endWordPosition)
                                                : std::move(startWordPosition);
@@ -2199,9 +2199,9 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
       return nil;
 
     AXPlatformPositionInstance endWordPosition =
-        startPosition->CreateNextWordEndPosition();
+        startPosition->CreateNextWordEndPosition(ui::AXBoundaryBehavior::CrossBoundary);
     AXPlatformPositionInstance startWordPosition =
-        startPosition->CreateNextWordStartPosition();
+        startPosition->CreateNextWordStartPosition(ui::AXBoundaryBehavior::CrossBoundary);
     AXPlatformPositionInstance endPosition =
         *startWordPosition <= *endWordPosition ? std::move(startWordPosition)
                                                : std::move(endWordPosition);
@@ -2214,7 +2214,7 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
         CreatePositionFromTextMarker(parameter);
     if (position->IsNullPosition())
       return nil;
-    return CreateTextMarker(position->CreateNextWordEndPosition());
+    return CreateTextMarker(position->CreateNextWordEndPosition(ui::AXBoundaryBehavior::CrossBoundary));
   }
 
   if ([attribute
@@ -2223,7 +2223,7 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
         CreatePositionFromTextMarker(parameter);
     if (position->IsNullPosition())
       return nil;
-    return CreateTextMarker(position->CreatePreviousWordStartPosition());
+    return CreateTextMarker(position->CreatePreviousWordStartPosition(ui::AXBoundaryBehavior::CrossBoundary));
   }
 
   if ([attribute isEqualToString:@"AXTextMarkerRangeForLine"]) {
@@ -2233,9 +2233,9 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
       return nil;
 
     AXPlatformPositionInstance startPosition =
-        position->CreatePreviousLineStartPosition();
+        position->CreatePreviousLineStartPosition(ui::AXBoundaryBehavior::StopAtCurrentBoundary);
     AXPlatformPositionInstance endPosition =
-        position->CreateNextLineEndPosition();
+        position->CreateNextLineEndPosition(ui::AXBoundaryBehavior::StopAtCurrentBoundary);
     AXPlatformRange range(std::move(startPosition), std::move(endPosition));
     return CreateTextMarkerRange(std::move(range));
   }
@@ -2247,9 +2247,9 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
       return nil;
 
     AXPlatformPositionInstance startLinePosition =
-        endPosition->CreatePreviousLineStartPosition();
+        endPosition->CreatePreviousLineStartPosition(ui::AXBoundaryBehavior::CrossBoundary);
     AXPlatformPositionInstance endLinePosition =
-        endPosition->CreatePreviousLineEndPosition();
+        endPosition->CreatePreviousLineEndPosition(ui::AXBoundaryBehavior::CrossBoundary);
     AXPlatformPositionInstance startPosition =
         *startLinePosition <= *endLinePosition ? std::move(endLinePosition)
                                                : std::move(startLinePosition);
@@ -2264,9 +2264,9 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
       return nil;
 
     AXPlatformPositionInstance startLinePosition =
-        startPosition->CreateNextLineStartPosition();
+        startPosition->CreateNextLineStartPosition(ui::AXBoundaryBehavior::CrossBoundary);
     AXPlatformPositionInstance endLinePosition =
-        startPosition->CreateNextLineEndPosition();
+        startPosition->CreateNextLineEndPosition(ui::AXBoundaryBehavior::CrossBoundary);
     AXPlatformPositionInstance endPosition =
         *startLinePosition <= *endLinePosition ? std::move(startLinePosition)
                                                : std::move(endLinePosition);
@@ -2279,7 +2279,7 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
         CreatePositionFromTextMarker(parameter);
     if (position->IsNullPosition())
       return nil;
-    return CreateTextMarker(position->CreateNextLineEndPosition());
+    return CreateTextMarker(position->CreateNextLineEndPosition(ui::AXBoundaryBehavior::CrossBoundary));
   }
 
   if ([attribute
@@ -2288,7 +2288,7 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
         CreatePositionFromTextMarker(parameter);
     if (position->IsNullPosition())
       return nil;
-    return CreateTextMarker(position->CreatePreviousLineStartPosition());
+    return CreateTextMarker(position->CreatePreviousLineStartPosition(ui::AXBoundaryBehavior::CrossBoundary));
   }
 
   if ([attribute isEqualToString:@"AXLengthForTextMarkerRange"]) {
@@ -2339,8 +2339,8 @@ NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
     if (position->IsNullPosition())
       return nil;
 
-    AXPlatformRange range(position->CreatePreviousLineStartPosition(),
-                          position->CreateNextLineEndPosition());
+    AXPlatformRange range(position->CreatePreviousLineStartPosition(ui::AXBoundaryBehavior::StopAtCurrentBoundary),
+                          position->CreateNextLineEndPosition(ui::AXBoundaryBehavior::StopAtCurrentBoundary));
     return CreateTextMarkerRange(std::move(range));
   }
 
