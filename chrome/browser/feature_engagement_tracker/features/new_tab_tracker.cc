@@ -73,7 +73,7 @@ void NewTabTracker::NotifySessionTimeMet() {
 }
 
 void NewTabTracker::ShowPromo() {
-  // TODO(crbug.com/737830): call the promo
+  // TODO(crbug.com/737830): call the promo and pass in x_promo_string
 
   // This line must be called when the UI dismisses.
   GetFeatureTracker()->Dismissed(feature_engagement_tracker::kIPHNewTabFeature);
