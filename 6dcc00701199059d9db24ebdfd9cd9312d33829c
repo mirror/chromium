@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "193cbef7_73f0b351",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-13T19:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "736b6c47_17e29de8",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 7
+      },
+      "revId": "6dcc00701199059d9db24ebdfd9cd9312d33829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49436762_7e951709",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "6dcc00701199059d9db24ebdfd9cd9312d33829c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0689f1d_ce2b8da0",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-13T19:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49436762_7e951709",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 7
+      },
+      "revId": "6dcc00701199059d9db24ebdfd9cd9312d33829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9add198a_7b522b26",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-13T19:25:02Z",
+      "side": 1,
+      "message": "It should be \u003e\u003d 0, I would do the DCHECK.",
+      "parentUuid": "7f025720_39eb58db",
+      "range": {
+        "startLine": 89,
+        "startChar": 23,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "6dcc00701199059d9db24ebdfd9cd9312d33829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "943ac9d5_85b9ff23",
         "filename": "ui/app_list/views/search_result_page_view.h",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-13T18:58:49Z",
       "side": 1,
       "message": "nit: would it possible to move as private class of SearchResultPageView?\n\n private:\n  class HorizontalSeparator\n\nand in cc\n\nSearchResultPageView::HorizontalSeparator",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "6dcc00701199059d9db24ebdfd9cd9312d33829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1823b18f_ba8822a4",
+        "filename": "ui/app_list/views/search_result_page_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-13T19:25:02Z",
+      "side": 1,
+      "message": "Yes, Done.",
+      "parentUuid": "943ac9d5_85b9ff23",
       "range": {
         "startLine": 20,
         "startChar": 6,
