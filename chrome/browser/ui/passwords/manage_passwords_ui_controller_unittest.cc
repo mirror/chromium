@@ -406,7 +406,7 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordSaved) {
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
   controller()->OnPasswordSubmitted(std::move(test_form_manager));
 
-  controller()->SavePassword();
+  controller()->SavePassword(_);
   ExpectIconStateIs(password_manager::ui::MANAGE_STATE);
 }
 
@@ -447,7 +447,7 @@ TEST_F(ManagePasswordsUIControllerTest, NormalNavigationsClosedBubble) {
       CreateFormManager());
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
   controller()->OnPasswordSubmitted(std::move(test_form_manager));
-  controller()->SavePassword();
+  controller()->SavePassword(_);
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
   controller()->OnBubbleHidden();
   ExpectIconStateIs(password_manager::ui::MANAGE_STATE);
