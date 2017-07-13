@@ -46,16 +46,15 @@ class BoxPainter : public BoxPainterBase {
   void PaintBoxDecorationBackgroundWithRect(const PaintInfo&,
                                             const LayoutPoint&,
                                             const LayoutRect&);
-  static void PaintFillLayer(const LayoutBoxModelObject&,
-                             const PaintInfo&,
-                             const Color&,
-                             const FillLayer&,
-                             const LayoutRect&,
-                             BackgroundBleedAvoidance,
-                             BackgroundImageGeometry&,
-                             const InlineFlowBox* = nullptr,
-                             const LayoutSize& = LayoutSize(),
-                             SkBlendMode = SkBlendMode::kSrcOver);
+  void PaintFillLayer(const PaintInfo&,
+                      const Color&,
+                      const FillLayer&,
+                      const LayoutRect&,
+                      BackgroundBleedAvoidance,
+                      BackgroundImageGeometry&,
+                      const InlineFlowBox* = nullptr,
+                      const LayoutSize& = LayoutSize(),
+                      SkBlendMode = SkBlendMode::kSrcOver);
   LayoutRect BoundsForDrawingRecorder(const PaintInfo&,
                                       const LayoutPoint& adjusted_paint_offset);
 
