@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "217971e6_e0ece781",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-13T20:22:56Z",
+      "side": 1,
+      "message": "Directly accessing a class\u0027 variables should be reserved to simple structs, not classes. Directly accessing variables in a subclass (since tests are subclasses of the fixture) is even stranger.\n\nBesides, by naming the variable with an underscore in the end you have already indicated that it should be private.\n\nSo yes, please use simple getters (source_path(), build_path(), tests_folder()).",
+      "parentUuid": "2b9343e3_95e0d4a5",
+      "revId": "8d7325b6763faf5e01fa33666491946f26ad2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc1febf1_c90d3ba5",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
         "patchSetId": 2
