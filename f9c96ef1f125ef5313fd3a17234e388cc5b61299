@@ -16,6 +16,24 @@
       "revId": "f9c96ef1f125ef5313fd3a17234e388cc5b61299",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bee7ba9_f3c35966",
+        "filename": "base/memory/shared_memory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-13T04:06:04Z",
+      "side": 1,
+      "message": "\u003e The ID is invalid even after the SharedMemoryHandle is Closed, as long as the region is not unmapped.\n\nvalid?",
+      "parentUuid": "40ce088c_cd6a7deb",
+      "revId": "f9c96ef1f125ef5313fd3a17234e388cc5b61299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
