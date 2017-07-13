@@ -36,7 +36,7 @@ class CONTENT_EXPORT PaymentAppProvider {
   using GetAllPaymentAppsCallback = base::OnceCallback<void(PaymentApps)>;
   using InvokePaymentAppCallback =
       base::Callback<void(payments::mojom::PaymentAppResponsePtr)>;
-
+      
   // Should be accessed only on the UI thread.
   virtual void GetAllPaymentApps(BrowserContext* browser_context,
                                  GetAllPaymentAppsCallback callback) = 0;

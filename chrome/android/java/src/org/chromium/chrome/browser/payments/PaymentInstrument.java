@@ -44,6 +44,11 @@ public abstract class PaymentInstrument extends PaymentOption {
          * Called if unable to retrieve instrument details.
          */
         void onInstrumentDetailsError();
+
+        /**
+         * Called by the payment instrument to check whether the invocation is cancelled.
+         */
+        boolean isCancelled();
     }
 
     protected PaymentInstrument(String id, String label, String sublabel, Drawable icon) {

@@ -456,7 +456,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchPaymentRequestEvent(
     const WebPaymentRequestEventData& web_app_request) {
   WaitUntilObserver* wait_until_observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kPaymentRequest, event_id);
-  RespondWithObserver* respond_with_observer =
+  PaymentRequestRespondWithObserver* respond_with_observer =
       PaymentRequestRespondWithObserver::Create(WorkerGlobalScope(), event_id,
                                                 wait_until_observer);
 

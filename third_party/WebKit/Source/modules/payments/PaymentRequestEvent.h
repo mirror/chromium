@@ -17,7 +17,7 @@ class AtomicString;
 
 namespace blink {
 
-class RespondWithObserver;
+class PaymentRequestRespondWithObserver;
 class ScriptState;
 
 class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
@@ -29,7 +29,7 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
                                      const PaymentRequestEventInit&);
   static PaymentRequestEvent* Create(const AtomicString& type,
                                      const PaymentRequestEventInit&,
-                                     RespondWithObserver*,
+                                     PaymentRequestRespondWithObserver*,
                                      WaitUntilObserver*);
   ~PaymentRequestEvent() override;
 
@@ -51,7 +51,7 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
  private:
   PaymentRequestEvent(const AtomicString& type,
                       const PaymentRequestEventInit&,
-                      RespondWithObserver*,
+                      PaymentRequestRespondWithObserver*,
                       WaitUntilObserver*);
 
   String top_level_origin_;
@@ -62,7 +62,7 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
   HeapVector<PaymentDetailsModifier> modifiers_;
   String instrument_key_;
 
-  Member<RespondWithObserver> observer_;
+  Member<PaymentRequestRespondWithObserver> observer_;
 };
 
 }  // namespace blink

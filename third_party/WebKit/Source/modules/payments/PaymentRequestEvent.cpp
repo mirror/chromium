@@ -8,7 +8,7 @@
 #include "core/dom/DOMException.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerLocation.h"
-#include "modules/serviceworkers/RespondWithObserver.h"
+#include "modules/payments/PaymentRequestRespondWithObserver.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "modules/serviceworkers/ServiceWorkerWindowClientCallback.h"
 #include "platform/bindings/ScriptState.h"
@@ -26,7 +26,7 @@ PaymentRequestEvent* PaymentRequestEvent::Create(
 PaymentRequestEvent* PaymentRequestEvent::Create(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer,
-    RespondWithObserver* respond_with_observer,
+    PaymentRequestRespondWithObserver* respond_with_observer,
     WaitUntilObserver* wait_until_observer) {
   return new PaymentRequestEvent(type, initializer, respond_with_observer,
                                  wait_until_observer);
@@ -78,6 +78,12 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
   // https://w3c.github.io/payment-handler/#dfn-open-window-algorithm).
 
   KURL parsed_url_to_open = context->CompleteURL(url);
+  if (observer_->IsCancelled()) {
+    resolver->Reject(V8ThrowException::CreateTypeError(
+        script_state->GetIsolate(), "'" + url + "' InvalidStateError."));
+    return promise;
+  }
+
   if (!parsed_url_to_open.IsValid()) {
     resolver->Reject(V8ThrowException::CreateTypeError(
         script_state->GetIsolate(), "'" + url + "' is not a valid URL."));
@@ -127,7 +133,7 @@ DEFINE_TRACE(PaymentRequestEvent) {
 PaymentRequestEvent::PaymentRequestEvent(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer,
-    RespondWithObserver* respond_with_observer,
+    PaymentRequestRespondWithObserver* respond_with_observer,
     WaitUntilObserver* wait_until_observer)
     : ExtendableEvent(type, initializer, wait_until_observer),
       top_level_origin_(initializer.topLevelOrigin()),
