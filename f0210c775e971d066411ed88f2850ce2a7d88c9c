@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e93e5559_26e91d39",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-13T16:02:11Z",
+      "side": 1,
+      "message": "nit: This state isn\u0027t actually necessary, you could just call scene::OnWebVrFrameAvailable instead of OnFirstWebVrFrameAvailable, and have that return early if waiting_for_first_web_vr_frame_ hasn\u0027t changed.",
+      "range": {
+        "startLine": 255,
+        "startChar": 7,
+        "endLine": 255,
+        "endChar": 35
+      },
+      "revId": "f0210c775e971d066411ed88f2850ce2a7d88c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cbd921_2e00fc77",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-13T16:02:11Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be (web_vr_mode_ \u0026\u0026 !waiting_for_first_web_vr_frame_)? You\u0027re turning on WebVr rendering any time you\u0027re not showing a splash screen with this.",
+      "range": {
+        "startLine": 488,
+        "startChar": 36,
+        "endLine": 488,
+        "endChar": 67
+      },
+      "revId": "f0210c775e971d066411ed88f2850ce2a7d88c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
