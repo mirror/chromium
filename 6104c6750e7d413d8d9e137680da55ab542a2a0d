@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb3a7430_8ca06ef1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/webexposed/global-interface-listing-paint-worklet-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-13T18:53:30Z",
+      "side": 1,
+      "message": "ikilpatrick@: I don\u0027t understand...I didn\u0027t change any IDL, but this part is repeated twice.",
+      "range": {
+        "startLine": 506,
+        "startChar": 0,
+        "endLine": 506,
+        "endChar": 51
+      },
+      "revId": "6104c6750e7d413d8d9e137680da55ab542a2a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60047f8_adb2c91b",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/paintworklet-console-selector-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-13T18:53:30Z",
+      "side": 1,
+      "message": "ikilpatrick@: is this okay?",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 20
+      },
+      "revId": "6104c6750e7d413d8d9e137680da55ab542a2a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
