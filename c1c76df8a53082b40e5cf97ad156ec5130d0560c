@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648f507b_cd55be89",
+        "filename": "cc/ipc/filter_operation_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-13T22:21:17Z",
+      "side": 1,
+      "message": "This is going to create a global typename mojo::Traits. Move this into the struct or give it a more specific name?",
+      "revId": "c1c76df8a53082b40e5cf97ad156ec5130d0560c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
