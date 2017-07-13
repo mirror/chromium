@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1b40b35_8d696478",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-13T21:14:39Z",
+      "side": 1,
+      "message": "Maybe I should just leave out an explicit shutdown behavior, since it doesn\u0027t really matter anyway. Tasks will only be posted from the IO thread, which means the task scheduler is guaranteed to not be shut down yet, so it really doesn\u0027t matter what shutdown behavior these tasks have.",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "9596cab4fc07eb85ed47a1b9cb736c95bd416f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
