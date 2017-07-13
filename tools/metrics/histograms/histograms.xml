@@ -29728,6 +29728,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Engagement.ScoreAtPlayback" units="%">
+  <owner>beccahughes@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    The media engagement score recorded at the time of playback. It is converted
+    to a percentage so should be divided by 100 to get the actual score.
+  </summary>
+</histogram>
+
 <histogram name="Media.FallbackHardwareAudioBitsPerChannel">
   <owner>dalecurtis@chromium.org</owner>
   <summary>
@@ -92451,8 +92460,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram_suffixes name="NavigationType" separator=".">
   <suffix name="NewPageInPageOriginMismatch"
       label="in-document new page navigation with a non-matching origin"/>
-  <suffix name="NewPageInPage"
-      label="in-document new page navigation"/>
+  <suffix name="NewPageInPage" label="in-document new page navigation"/>
   <suffix name="NewPagePendingEntryMatches"
       label="new page navigation which found a pending entry"/>
   <suffix name="NewPageNoMatchingEntry"
@@ -92462,7 +92470,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="ExistingPageDifferentDocumentIntendedAsNew"
       label="existing page navigation which is intended as new"/>
   <suffix name="ExistingPageSameDocumentRestoredBrowserInitiated"
-      label="in-document existing page browser-initiated navigation which is restored"/>
+      label="in-document existing page browser-initiated navigation which is
+             restored"/>
   <suffix name="ExistingPageSameDocumentBrowserInitiated"
       label="in-document existing page browser-initiated navigation"/>
   <suffix name="ExistingPageRestoredBrowserInitiated"
