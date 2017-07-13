@@ -16,6 +16,24 @@
       "revId": "1bd91812b02ec540227e15cd0dc81c8ccce897cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cd7ab5_3caec5c7",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/PaintLayerCompositor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-13T05:18:07Z",
+      "side": 1,
+      "message": "The inspector is indistinguishable from a regular (non-popup) WebView from the point of view of this code.",
+      "parentUuid": "bd197fd4_6b857f5c",
+      "revId": "1bd91812b02ec540227e15cd0dc81c8ccce897cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
