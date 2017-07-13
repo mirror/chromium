@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bfd849f_bf11edc4",
+        "filename": "content/browser/indexed_db/indexed_db_dispatcher_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-13T20:46:00Z",
+      "side": 1,
+      "message": "Can you flesh out the comment slightly more, e.g.:\n\n// Flaky: https://crbug.com/742503",
+      "range": {
+        "startLine": 511,
+        "startChar": 3,
+        "endLine": 511,
+        "endChar": 19
+      },
+      "revId": "bc36959870d0c4d3e3999e02b58d17c8124e7358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
