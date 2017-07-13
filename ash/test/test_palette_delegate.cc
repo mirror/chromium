@@ -48,11 +48,12 @@ bool TestPaletteDelegate::IsMetalayerSupported() {
   return is_metalayer_supported_;
 }
 
-void TestPaletteDelegate::ShowMetalayer(const base::Closure& closed) {
+void TestPaletteDelegate::ShowMetalayer() {
   ++show_metalayer_count_;
-  metalayer_closed_ = closed;
 }
 
-void TestPaletteDelegate::HideMetalayer() {}
+void TestPaletteDelegate::HideMetalayer() {
+  ++hide_metalayer_count_;
+}
 
 }  // namespace ash

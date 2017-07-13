@@ -30,8 +30,6 @@ class ASH_EXPORT MetalayerMode : public CommonPaletteTool {
   // CommonPaletteTool:
   const gfx::VectorIcon& GetPaletteIcon() const override;
 
-  void OnMetalayerDone();
-
   base::WeakPtrFactory<MetalayerMode> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MetalayerMode);

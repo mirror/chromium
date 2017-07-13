@@ -32,8 +32,6 @@
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_util.h"
 #include "components/arc/instance_holder.h"
-#include "components/exo/surface.h"
-#include "components/exo/wm_helper.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
@@ -78,24 +76,6 @@ void ScreenshotCallback(
   callback.Run(result);
 }
 
-bool IsMetalayerWindow(aura::Window* window) {
-  exo::Surface* surface = exo::Surface::AsSurface(window);
-  return surface != nullptr && surface->IsStylusOnly();
-}
-
-void CollectLayers(LayerSet& layers,
-                   aura::Window* root_window,
-                   base::Callback<bool(aura::Window*)> matcher_func) {
-  if (matcher_func.Run(root_window))
-    layers.insert(root_window->layer());
-
-  aura::Window::Windows children = root_window->children();
-  for (aura::Window::Windows::iterator iter = children.begin();
-       iter != children.end(); ++iter) {
-    CollectLayers(layers, *iter, matcher_func);
-  }
-}
-
 std::unique_ptr<ui::LayerTreeOwner> CreateLayerTreeForSnapshot(
     aura::Window* root_window) {
   LayerSet blocked_layers;
@@ -105,7 +85,12 @@ std::unique_ptr<ui::LayerTreeOwner> CreateLayerTreeForSnapshot(
   }
 
   LayerSet excluded_layers;
-  CollectLayers(excluded_layers, root_window, base::Bind(IsMetalayerWindow));
+  // Exclude metalayer-related layers. This will also include other layers
+  // under kShellWindowId_OverlayContainer which is fine.
+  aura::Window* overlay_container = ash::Shell::GetContainer(
+     root_window, ash::kShellWindowId_OverlayContainer);
+  if (overlay_container != nullptr)
+    excluded_layers.insert(overlay_container->layer());
 
   auto layer_tree_owner = ::wm::RecreateLayersWithClosure(
       root_window, base::BindRepeating(
@@ -183,50 +168,11 @@ void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
   mojom::VoiceInteractionFrameworkHostPtr host_proxy;
   binding_.Bind(mojo::MakeRequest(&host_proxy));
   framework_instance->Init(std::move(host_proxy));
-
-  // Temporary shortcut added to enable the metalayer experiment.
-  ash::Shell::Get()->accelerator_controller()->Register(
-      {ui::Accelerator(ui::VKEY_A, ui::EF_COMMAND_DOWN | ui::EF_SHIFT_DOWN)},
-      this);
 }
 
 void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  ash::Shell::Get()->accelerator_controller()->UnregisterAll(this);
-  CallAndResetMetalayerCallback();
   metalayer_enabled_ = false;
-}
-
-bool ArcVoiceInteractionFrameworkService::AcceleratorPressed(
-    const ui::Accelerator& accelerator) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  base::RecordAction(base::UserMetricsAction(
-      "VoiceInteraction.MetalayerStarted.Search_Shift_A"));
-
-  // Temporary, used for debugging.
-  // Does not take into account or update the palette state.
-  // Explicitly call ShowMetalayer() to take into account user interaction
-  // initiations.
-  ShowMetalayer(base::Bind([]() {}));
-  return true;
-}
-
-bool ArcVoiceInteractionFrameworkService::CanHandleAccelerators() const {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  return true;
-}
-
-void ArcVoiceInteractionFrameworkService::OnTouchEvent(ui::TouchEvent* event) {
-  if (event->pointer_details().pointer_type !=
-      ui::EventPointerType::POINTER_TYPE_PEN)
-    return;
-
-  if (event->type() == ui::ET_TOUCH_RELEASED) {
-    // Stylus gesture has just completed. This handler is only active while
-    // the metalayer is on. Looks like a legitimate metalayer action.
-    InitiateUserInteraction();
-  }
 }
 
 void ArcVoiceInteractionFrameworkService::CaptureFocusedWindow(
@@ -280,43 +226,16 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionRunning(
 
 void ArcVoiceInteractionFrameworkService::OnMetalayerClosed() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  CallAndResetMetalayerCallback();
 }
 
 void ArcVoiceInteractionFrameworkService::SetMetalayerEnabled(bool enabled) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   metalayer_enabled_ = enabled;
-  if (!metalayer_enabled_)
-    CallAndResetMetalayerCallback();
 }
 
 bool ArcVoiceInteractionFrameworkService::IsMetalayerSupported() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   return metalayer_enabled_;
-}
-
-void ArcVoiceInteractionFrameworkService::ShowMetalayer(
-    const base::Closure& closed) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (!metalayer_closed_callback_.is_null()) {
-    LOG(ERROR) << "Metalayer is already enabled";
-    return;
-  }
-  metalayer_closed_callback_ = closed;
-  // Hanlde all stylus events while the metalayer is on.
-  exo::WMHelper::GetInstance()->AddPreTargetHandler(this);
-  SetMetalayerVisibility(true);
-}
-
-void ArcVoiceInteractionFrameworkService::HideMetalayer() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (metalayer_closed_callback_.is_null()) {
-    LOG(ERROR) << "Metalayer is already hidden";
-    return;
-  }
-  metalayer_closed_callback_ = base::Closure();
-  exo::WMHelper::GetInstance()->RemovePreTargetHandler(this);
-  SetMetalayerVisibility(false);
 }
 
 void ArcVoiceInteractionFrameworkService::StartVoiceInteractionSetupWizard() {
@@ -328,27 +247,6 @@ void ArcVoiceInteractionFrameworkService::StartVoiceInteractionSetupWizard() {
   if (!framework_instance)
     return;
   framework_instance->StartVoiceInteractionSetupWizard();
-}
-
-void ArcVoiceInteractionFrameworkService::SetMetalayerVisibility(bool visible) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  mojom::VoiceInteractionFrameworkInstance* framework_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service()->voice_interaction_framework(),
-          SetMetalayerVisibility);
-  if (!framework_instance) {
-    CallAndResetMetalayerCallback();
-    return;
-  }
-  framework_instance->SetMetalayerVisibility(visible);
-}
-
-void ArcVoiceInteractionFrameworkService::CallAndResetMetalayerCallback() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (metalayer_closed_callback_.is_null())
-    return;
-  base::ResetAndReturn(&metalayer_closed_callback_).Run();
-  exo::WMHelper::GetInstance()->RemovePreTargetHandler(this);
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionEnabled(
