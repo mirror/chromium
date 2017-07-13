@@ -6,6 +6,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#include "base/mac/availability.h"
 #include "base/mac/mac_util.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/base/cocoa/animation_utils.h"
@@ -18,7 +19,7 @@ const uint64_t kFramesBeforeFlushingLowPowerLayer = 15;
 
 CALayerTreeCoordinator::CALayerTreeCoordinator(
     bool allow_remote_layers,
-    bool allow_av_sample_buffer_display_layer)
+    bool allow_av_sample_buffer_display_layer) API_AVAILABLE(macos(10.10))
     : allow_remote_layers_(allow_remote_layers),
       allow_av_sample_buffer_display_layer_(
           allow_av_sample_buffer_display_layer) {

@@ -17,6 +17,7 @@
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/mac/availability.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/mac_logging.h"
 #include "base/mac/mac_util.h"
@@ -82,7 +83,8 @@ class ScopedCSSM_CC_HANDLE {
 //
 // TODO(davidben): After https://crbug.com/669240 is fixed, use the APIs
 // directly.
-struct SecKeyAPIs {
+
+struct API_AVAILABLE(macosx(10.12)) SecKeyAPIs {
   SecKeyAPIs() { Init(); }
 
   void Init() {
@@ -137,8 +139,8 @@ struct SecKeyAPIs {
   SecKeyAlgorithm kSecKeyAlgorithmECDSASignatureDigestX962SHA512 = nullptr;
 };
 
-base::LazyInstance<SecKeyAPIs>::Leaky g_sec_key_apis =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<SecKeyAPIs>::Leaky API_AVAILABLE(macosx(10.12))
+    g_sec_key_apis = LAZY_INSTANCE_INITIALIZER;
 
 class SSLPlatformKeyCSSM : public ThreadedSSLPrivateKey::Delegate {
  public:
@@ -268,7 +270,8 @@ class SSLPlatformKeySecKey : public ThreadedSSLPrivateKey::Delegate {
 
   Error SignDigest(SSLPrivateKey::Hash hash,
                    const base::StringPiece& input,
-                   std::vector<uint8_t>* signature) override {
+                   std::vector<uint8_t>* signature) override
+      API_AVAILABLE(macosx(10.12)) {
     const SecKeyAPIs& apis = g_sec_key_apis.Get();
     if (!apis.valid) {
       LOG(ERROR) << "SecKey APIs not found";

@@ -4,6 +4,7 @@
 
 #import "ui/base/cocoa/touch_bar_util.h"
 
+#include "base/mac/availability.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/strings/sys_string_conversions.h"
@@ -18,9 +19,11 @@ Class NSCustomTouchBarItem() {
   return NSClassFromString(@"NSCustomTouchBarItem");
 }
 
-NSButton* GetBlueTouchBarButton(NSString* title, id target, SEL action) {
+NSButton* GetBlueTouchBarButton(NSString* title, id target, SEL action)
+    API_AVAILABLE(macos(10.12.2)) {
   NSButton* button =
       [NSButton buttonWithTitle:title target:target action:action];
+
   [button setBezelColor:[NSColor colorWithSRGBRed:0.168
                                             green:0.51
                                              blue:0.843

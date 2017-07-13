@@ -359,7 +359,7 @@ NSString* const kOkEnabledName = @"okEnabled";
   [self autorelease];
 }
 
-- (NSTouchBar*)makeTouchBar {
+- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2)) {
   if (!base::FeatureList::IsEnabled(features::kBrowserTouchBar))
     return nil;
 
@@ -380,7 +380,8 @@ NSString* const kOkEnabledName = @"okEnabled";
 }
 
 - (NSTouchBarItem*)touchBar:(NSTouchBar*)touchBar
-      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier {
+      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier
+    API_AVAILABLE(macos(10.12.2)) {
   NSButton* button = nil;
   if ([identifier hasSuffix:kNewFolderTouchBarId]) {
     button =

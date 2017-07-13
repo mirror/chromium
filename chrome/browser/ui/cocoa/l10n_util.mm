@@ -5,6 +5,7 @@
 #import "chrome/browser/ui/cocoa/l10n_util.h"
 
 #include "base/i18n/rtl.h"
+#include "base/mac/availability.h"
 #include "base/mac/mac_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
@@ -109,10 +110,10 @@ NSCellImagePosition TrailingCellImagePosition() {
   return ShouldDoExperimentalRTLLayout() ? NSImageLeft : NSImageRight;
 }
 #else
-NSCellImagePosition LeadingCellImagePosition() {
+NSCellImagePosition LeadingCellImagePosition() API_AVAILABLE(macos(10.12)) {
   return NSImageLeading;
 }
-NSCellImagePosition TrailingCellImagePosition() {
+NSCellImagePosition TrailingCellImagePosition() API_AVAILABLE(macos(10.12)) {
   return NSImageTrailing;
 }
 #endif  // MAC_OS_X_VERSION_10_12

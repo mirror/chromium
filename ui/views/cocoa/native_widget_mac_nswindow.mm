@@ -4,10 +4,11 @@
 
 #import "ui/views/cocoa/native_widget_mac_nswindow.h"
 
+#include "base/mac/availability.h"
 #include "base/mac/foundation_util.h"
 #import "base/mac/sdk_forward_declarations.h"
-#import "ui/views/cocoa/bridged_native_widget.h"
 #import "ui/base/cocoa/user_interface_item_command_handler.h"
+#import "ui/views/cocoa/bridged_native_widget.h"
 #import "ui/views/cocoa/views_nswindow_delegate.h"
 #include "ui/views/controls/menu/menu_controller.h"
 #include "ui/views/widget/native_widget_mac.h"
@@ -111,7 +112,7 @@
 // Override sendEvent to intercept window drag events and allow key events to be
 // forwarded to a toolkit-views menu while it is active, and while still
 // allowing any native subview to retain firstResponder status.
-- (void)sendEvent:(NSEvent*)event {
+- (void)sendEvent:(NSEvent*)event API_AVAILABLE(macos(10.11)) {
   // Let CommandDispatcher check if this is a redispatched event.
   if ([commandDispatcher_ preSendEvent:event])
     return;

@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/mac/availability.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/sdk_forward_declarations.h"
@@ -372,7 +373,8 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
 
 // (NSApplicationDelegate protocol) This is the Apple-approved place to override
 // the default handlers.
-- (void)applicationWillFinishLaunching:(NSNotification*)notification {
+- (void)applicationWillFinishLaunching:(NSNotification*)notification
+    API_AVAILABLE(macos(10.12)) {
   MacStartupProfiler::GetInstance()->Profile(
       MacStartupProfiler::WILL_FINISH_LAUNCHING);
 

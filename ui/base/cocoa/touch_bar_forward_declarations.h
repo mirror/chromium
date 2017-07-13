@@ -9,6 +9,7 @@
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 
+#include "base/mac/availability.h"
 #include "ui/base/ui_base_export.h"
 
 #pragma clang assume_nonnull begin
@@ -104,6 +105,7 @@ typedef NSString* NSTouchBarCustomizationIdentifier;
 @protocol NSTouchBarDelegate;
 @class NSTouchBarItem;
 
+API_AVAILABLE(macos(10.12.2))
 @interface NSWindow (TouchBarSDK)
 @property(strong, readonly) NSTouchBar* touchBar;
 @end

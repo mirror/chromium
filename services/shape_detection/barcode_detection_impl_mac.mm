@@ -4,6 +4,7 @@
 
 #include "services/shape_detection/barcode_detection_impl_mac.h"
 
+#include "base/mac/availability.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/mac/sdk_forward_declarations.h"
@@ -47,7 +48,8 @@ BarcodeDetectionImplMac::BarcodeDetectionImplMac() {
 BarcodeDetectionImplMac::~BarcodeDetectionImplMac() {}
 
 void BarcodeDetectionImplMac::Detect(const SkBitmap& bitmap,
-                                     DetectCallback callback) {
+                                     DetectCallback callback)
+    API_AVAILABLE(macos(10.10)) {
   media::ScopedResultCallback<DetectCallback> scoped_callback(
       std::move(callback), base::Bind(&RunCallbackWithNoBarcodes));
 

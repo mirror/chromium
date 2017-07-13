@@ -4,6 +4,7 @@
 
 #include "services/shape_detection/text_detection_impl_mac.h"
 
+#include "base/mac/availability.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/mac/sdk_forward_declarations.h"
@@ -34,7 +35,7 @@ void TextDetectionImpl::Create(
                           std::move(request));
 }
 
-TextDetectionImplMac::TextDetectionImplMac() {
+TextDetectionImplMac::TextDetectionImplMac() API_AVAILABLE(macos(10.11)) {
   NSDictionary* const opts = @{CIDetectorAccuracy : CIDetectorAccuracyHigh};
   detector_.reset([[CIDetector detectorOfType:CIDetectorTypeText
                                       context:nil
@@ -44,7 +45,8 @@ TextDetectionImplMac::TextDetectionImplMac() {
 TextDetectionImplMac::~TextDetectionImplMac() {}
 
 void TextDetectionImplMac::Detect(const SkBitmap& bitmap,
-                                  DetectCallback callback) {
+                                  DetectCallback callback)
+    API_AVAILABLE(macos(10.10)) {
   DCHECK(base::mac::IsAtLeastOS10_11());
   media::ScopedResultCallback<DetectCallback> scoped_callback(
       std::move(callback), base::Bind(&RunCallbackWithNoResults));

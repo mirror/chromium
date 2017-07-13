@@ -12,6 +12,7 @@
 #include <utility>
 
 #include "base/command_line.h"
+#include "base/mac/availability.h"
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/trace_event/trace_event.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -56,7 +57,7 @@ namespace {
 // retain |cv_pixel_buffer| until it is no longer being displayed.
 bool AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
     AVSampleBufferDisplayLayer* av_layer,
-    CVPixelBufferRef cv_pixel_buffer) {
+    CVPixelBufferRef cv_pixel_buffer) API_AVAILABLE(macos(10.10)) {
   OSStatus os_status = noErr;
 
   base::ScopedCFTypeRef<CMVideoFormatDescriptionRef> video_info;
@@ -114,7 +115,7 @@ bool AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
 // of and retain |io_surface| until it is no longer being displayed.
 bool AVSampleBufferDisplayLayerEnqueueIOSurface(
     AVSampleBufferDisplayLayer* av_layer,
-    IOSurfaceRef io_surface) {
+    IOSurfaceRef io_surface) API_AVAILABLE(macos(10.10)) {
   CVReturn cv_return = kCVReturnSuccess;
 
   base::ScopedCFTypeRef<CVPixelBufferRef> cv_pixel_buffer;
@@ -245,7 +246,8 @@ void CARendererLayerTree::CommitScheduledCALayers(
 }
 
 bool CARendererLayerTree::CommitFullscreenLowPowerLayer(
-    AVSampleBufferDisplayLayer* fullscreen_low_power_layer) {
+    AVSampleBufferDisplayLayer* fullscreen_low_power_layer)
+    API_AVAILABLE(macos(10.10)) {
   DCHECK(has_committed_);
   const ContentLayer* video_layer = nullptr;
   gfx::RectF video_layer_frame_dip;
@@ -649,7 +651,8 @@ void CARendererLayerTree::TransformLayer::CommitToCA(CALayer* superlayer,
 
 void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
                                                    ContentLayer* old_layer,
-                                                   float scale_factor) {
+                                                   float scale_factor)
+    API_AVAILABLE(macos(10.10)) {
   bool update_contents = true;
   bool update_contents_rect = true;
   bool update_rect = true;
