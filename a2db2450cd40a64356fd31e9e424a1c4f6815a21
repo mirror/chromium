@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24fbbdcb_0a827c55",
+        "filename": "chrome/browser/resources/chromeos/login/header_bar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-13T03:07:38Z",
+      "side": 1,
+      "message": "for the rest, there are no existing non-md counterparts that would be broken with this change :)",
+      "parentUuid": "2b7a0210_dd6fd8ab",
+      "revId": "a2db2450cd40a64356fd31e9e424a1c4f6815a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3df9c1d_28abe3c8",
         "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.css",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-13T02:37:20Z",
       "side": 1,
       "message": "I don\u0027t think it\u0027ll be a problem, but please see crbug.com/738886: if the virtual keyboard is shown at the same time with the sign-in banner, the banner will be pushed to the top. Right now it doesn\u0027t overlap with the version container but it may overlap with the new container as it\u0027s higher. But sign-in banner should be very rarely shown on the lock screen so I think it\u0027s fine.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 8
+      },
+      "revId": "a2db2450cd40a64356fd31e9e424a1c4f6815a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612ae8f3_10e8dbe5",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-13T03:07:38Z",
+      "side": 1,
+      "message": "version text size / vertical position should not change (though, it might get pushed little to the left).\n\nso, banner might overlap with new-note-action-container, but it should not overlap with the text inside the container",
+      "parentUuid": "f3df9c1d_28abe3c8",
       "range": {
         "startLine": 20,
         "startChar": 2,
@@ -56,6 +98,24 @@
       "revId": "a2db2450cd40a64356fd31e9e424a1c4f6815a21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395710c1_d096794a",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-13T03:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08800bed_af0868ad",
+      "revId": "a2db2450cd40a64356fd31e9e424a1c4f6815a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
