@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a4f2625_e82b8542",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-13T08:46:15Z",
+      "side": 1,
+      "message": "I don\u0027t think using a reference is correct here.",
+      "revId": "b63f21569f96303285ee42a3fabaf32b481a5573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ce98cd_023e8ce4",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-13T08:46:15Z",
+      "side": 1,
+      "message": "nit: for consistency, maybe use \"Record\"?",
+      "revId": "b63f21569f96303285ee42a3fabaf32b481a5573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
