@@ -329,6 +329,30 @@
       "revId": "cae487748d0084b689812cf279642b4c462b8f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6238bd2_dd389c57",
+        "filename": "third_party/WebKit/Source/platform/scroll/SmoothScrollSequencer.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-13T01:06:44Z",
+      "side": 1,
+      "message": "Good idea!",
+      "parentUuid": "04f121c8_6ccd3ecd",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

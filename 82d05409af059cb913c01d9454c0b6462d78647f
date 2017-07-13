@@ -22,6 +22,30 @@
       "revId": "82d05409af059cb913c01d9454c0b6462d78647f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cad8fe_c3b4681d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-13T01:06:44Z",
+      "side": 1,
+      "message": "Even the base version behaves differently with RootLayerScrolling on and off. I update rect_to_scroll in LayoutBox and now they behave the same.",
+      "parentUuid": "e366f206_dfe10427",
+      "range": {
+        "startLine": 114,
+        "startChar": 13,
+        "endLine": 114,
+        "endChar": 38
+      },
+      "revId": "82d05409af059cb913c01d9454c0b6462d78647f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
