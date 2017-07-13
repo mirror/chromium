@@ -369,11 +369,6 @@ void PrepareFactory(sync_preferences::PrefServiceSyncableFactory* factory,
                     scoped_refptr<PersistentPrefStore> user_pref_store,
                     const scoped_refptr<PrefStore>& extension_prefs,
                     bool async) {
-  policy::BrowserPolicyConnector* policy_connector =
-      g_browser_process->browser_policy_connector();
-  factory->SetManagedPolicies(policy_service, policy_connector);
-  factory->SetRecommendedPolicies(policy_service, policy_connector);
-
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
   if (supervised_user_settings) {
     scoped_refptr<PrefStore> supervised_user_prefs = make_scoped_refptr(
