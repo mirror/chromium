@@ -230,6 +230,13 @@ class PLATFORM_EXPORT FetchContext
   // Returns a "detached" fetch context which can be null.
   virtual FetchContext* Detach() { return nullptr; }
 
+  // Called when the persistent client hint preferences for |url| needs to be
+  // updated.
+  virtual void PersistClientHints(
+      const KURL& url,
+      const bool enabled_types[kWebClientHintsTypeLast + 1],
+      int64_t persist_duration_seconds) {}
+
  protected:
   FetchContext();
 
