@@ -1028,6 +1028,28 @@ cr.define('device_page_tests', function() {
         assertEquals('v1', browserProxy.setPreferredNoteTakingApp_);
       });
 
+      test('reselect-initially-preferred-app', function () {
+        return new Promise(function(resolve) {
+          // Load app list.
+          browserProxy.onNoteTakingAppsUpdated_([
+            entry('n1', 'v1', false, false),
+            entry('n2', 'v2', true, false)
+          ], false);
+          stylusPage.async(resolve);
+        }).then(function() {
+          assertEquals('', browserProxy.setPreferredNoteTakingApp_);
+
+          // Update select element to new value, verify browser proxy is called.
+          appSelector.value = 'v1';
+          stylusPage.onSelectedAppChanged_();
+          assertEquals('v1', browserProxy.setPreferredNoteTakingApp_);
+
+          appSelector.value = 'v2';
+          stylusPage.onSelectedAppChanged_();
+          assertEquals('v2', browserProxy.setPreferredNoteTakingApp_);
+        });
+      });
+
       test('preferred app does not change without interaction', function() {
         // Pass various types of data to page, verify the preferred note-app
         // does not change.
