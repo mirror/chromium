@@ -235,6 +235,7 @@ class PrintPreviewObserver : public WebContentsObserver {
     // When a setting has been set succesfully, this is called and the observer
     // is told to send the next setting to be set.
     void HandleDone(const base::ListValue* /* args */) {
+      AllowJavascript();
       observer_->ManipulatePreviewSettings();
     }
 

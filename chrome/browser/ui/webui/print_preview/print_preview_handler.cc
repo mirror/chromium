@@ -799,6 +799,8 @@ void PrintPreviewHandler::HandleGetPreview(const base::ListValue* args) {
   settings->GetInteger(printing::kPreviewRequestID, &request_id);
   CHECK_GT(request_id, -1);
 
+  AllowJavascript();
+
   preview_callbacks_.push(callback_id);
   print_preview_ui()->OnPrintPreviewRequest(request_id);
   // Add an additional key in order to identify |print_preview_ui| later on
@@ -1185,6 +1187,8 @@ void PrintPreviewHandler::HandleSignin(const base::ListValue* args) {
   CHECK(args->GetString(0, &callback_id));
   CHECK(!callback_id.empty());
   CHECK(args->GetBoolean(1, &add_account));
+
+  AllowJavascript();
 
   Profile* profile = Profile::FromBrowserContext(
       preview_web_contents()->GetBrowserContext());
