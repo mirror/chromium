@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a27fc62d_65f32741",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-13T18:03:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce0281cd_f998fd86",
+      "range": {
+        "startLine": 253,
+        "startChar": 11,
+        "endLine": 253,
+        "endChar": 41
+      },
+      "revId": "7eb269413b2b2cbd969b8e6073a47b27ab5ee7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76331b2a_5d9b75a3",
         "filename": "cc/trees/layer_tree_host_common_unittest.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2360385f_f6f88060",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10240,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-13T18:03:57Z",
+      "side": 1,
+      "message": "ClearCopyRequests is better. Will make the change.",
+      "parentUuid": "76331b2a_5d9b75a3",
+      "revId": "7eb269413b2b2cbd969b8e6073a47b27ab5ee7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c33e0f33_ee671aea",
         "filename": "cc/trees/layer_tree_host_common_unittest.cc",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-13T14:19:25Z",
       "side": 1,
       "message": "Is this needed? Neither of the two previous lines do anything that would trigger a rebuild.",
+      "range": {
+        "startLine": 10241,
+        "startChar": 67,
+        "endLine": 10241,
+        "endChar": 72
+      },
+      "revId": "7eb269413b2b2cbd969b8e6073a47b27ab5ee7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96808df7_531ce250",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10241,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-13T18:03:57Z",
+      "side": 1,
+      "message": "I need to calculate draw property but do not have a new property tree and cached_data_ which cause the bug.\nThe reason I add a new bool parameter here is that, CalculateDrawPropertiesForTesting always calls CalculateDrawPropertiesInternal(inputs, BUILD_PROPERTY_TREES_IF_NEEDED), which always have a new cached_data_ even not rebuild the property tree.\ne.g. After call ExecuteCalculateDrawPropertiesWithoutAdjustingRasterScales(root).\nthe version become: cached_data_.transform_tree_update_number 0 data.update_number -1",
+      "parentUuid": "c33e0f33_ee671aea",
       "range": {
         "startLine": 10241,
         "startChar": 67,
@@ -85,6 +151,30 @@
       "revId": "7eb269413b2b2cbd969b8e6073a47b27ab5ee7ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a92db51_87f0d056",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-13T18:03:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "552e105f_3d0d8a49",
+      "range": {
+        "startLine": 870,
+        "startChar": 22,
+        "endLine": 870,
+        "endChar": 53
+      },
+      "revId": "7eb269413b2b2cbd969b8e6073a47b27ab5ee7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
