@@ -22,6 +22,30 @@
       "revId": "202870bf0e82d9cf0d37e6aafc4c291dbc6413c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e625641_211b603a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-13T21:19:13Z",
+      "side": 1,
+      "message": "GetWebContentsData creates the WebContentsData the first time it\u0027s called for a given WebContents, and in some cases that doesn\u0027t happen before RecordSwitchToTab is called (below). It was suggested in TabManagerStatsCollector to use WebContentsData::FromWebContents() instead of tab_manager-\u003eGetWebContentsData(). But that\u0027s a problem when the associated WebContentsData doesn\u0027t exist.\n\nWe discussed some other options, but we decided to start with this.",
+      "parentUuid": "81f39752_c28e76ac",
+      "range": {
+        "startLine": 825,
+        "startChar": 21,
+        "endLine": 825,
+        "endChar": 33
+      },
+      "revId": "202870bf0e82d9cf0d37e6aafc4c291dbc6413c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
