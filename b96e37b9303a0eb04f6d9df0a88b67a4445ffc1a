@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a8a272_5aa100df",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-13T18:37:53Z",
+      "side": 1,
+      "message": "Briefly document this enum",
+      "revId": "b96e37b9303a0eb04f6d9df0a88b67a4445ffc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783f0557_21fbb02c",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-13T18:37:53Z",
+      "side": 1,
+      "message": "It doesn\u0027t make sense to pass this by const ref does it?",
+      "revId": "b96e37b9303a0eb04f6d9df0a88b67a4445ffc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5724379e_d6a7e2b1",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-13T18:37:53Z",
+      "side": 1,
+      "message": "I think this would be more aptly named \"GetAdTypes\" or something.",
+      "range": {
+        "startLine": 146,
+        "startChar": 21,
+        "endLine": 146,
+        "endChar": 30
+      },
+      "revId": "b96e37b9303a0eb04f6d9df0a88b67a4445ffc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1182d1fc_71b990e5",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-13T18:37:53Z",
+      "side": 1,
+      "message": "Add \"WOULD_DISALLOW is logged only in dry runs.\"",
+      "revId": "b96e37b9303a0eb04f6d9df0a88b67a4445ffc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211ec3c9_55721d97",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-13T18:37:53Z",
+      "side": 1,
+      "message": "This method can be replaced by:\nreturn unfinished_subresource_ad_frames_.erase(frame_tree_node_id);\n\nI wouldn\u0027t be opposed to just inlining the logic at the call site since it\u0027s a one-liner.",
+      "revId": "b96e37b9303a0eb04f6d9df0a88b67a4445ffc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1570a84_fa334a8e",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-13T18:37:53Z",
+      "side": 1,
+      "message": "Can you say std::bitset\u003cAD_TYPE_ALL\u003e? Moving the enum here is fine.",
+      "revId": "b96e37b9303a0eb04f6d9df0a88b67a4445ffc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b61a6a_2a45f89a",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-13T18:37:53Z",
+      "side": 1,
+      "message": "We capitalize it \"SubresourceFilter\". Here and elsewhere.",
+      "revId": "b96e37b9303a0eb04f6d9df0a88b67a4445ffc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f49e91_bc4aeaba",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-13T18:37:53Z",
+      "side": 1,
+      "message": "return \"\"",
+      "revId": "b96e37b9303a0eb04f6d9df0a88b67a4445ffc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2abf975_3ad620ac",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-13T18:37:53Z",
+      "side": 1,
+      "message": "Let\u0027s also test one with DISALLOW, if it isn\u0027t too much trouble.",
+      "revId": "b96e37b9303a0eb04f6d9df0a88b67a4445ffc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
