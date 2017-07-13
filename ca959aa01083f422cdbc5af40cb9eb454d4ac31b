@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca375eaf_a1072c4e",
+        "filename": "components/viz/host/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-13T21:55:09Z",
+      "side": 1,
+      "message": "Add a TODO to remove this once we use mojo everywhere?",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 29
+      },
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b165f7ac_9df9b41c",
+        "filename": "components/viz/host/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-13T21:55:09Z",
+      "side": 1,
+      "message": "Add a TODO to remove this once we use mojo everywhere?",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
