@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f24ff7fb_e1a09ab8",
+        "filename": "components/viz/common/gpu/context_cache_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-13T19:57:08Z",
+      "side": 0,
+      "message": "I don\u0027t believe your assertion is correct. ContextCacheController is used by ContextProviderCommandBuffer, which is used on all plaforms.\nBesides, the *_EXPORT macro is also needed on Linux to change symbol visibility.\n\nIs it because //components/viz/common is a source_set instead of a component, that gets pulled (i.e. duplicated) in all dependents? That seems bad.",
+      "parentUuid": "cdadbb85_e150b422",
+      "revId": "5cb481239f13fdd3454fe56aadcb56d7ffb822d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "189a36d0_8ff50cfc",
         "filename": "components/viz/common/gpu/context_provider.h",
         "patchSetId": 12
