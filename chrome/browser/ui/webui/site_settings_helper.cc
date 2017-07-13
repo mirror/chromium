@@ -10,13 +10,18 @@
 #include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/permissions/chooser_context_base.h"
+#include "chrome/browser/permissions/permission_manager.h"
+#include "chrome/browser/permissions/permission_result.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/usb/usb_chooser_context_factory.h"
 #include "chrome/common/pref_names.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
+#include "components/content_settings/core/common/content_settings_pattern.h"
+#include "components/content_settings/core/common/content_settings_utils.h"
 #include "components/prefs/pref_service.h"
 #include "extensions/browser/extension_registry.h"
+#include "url/origin.h"
 
 namespace site_settings {
 
@@ -78,6 +83,57 @@ const ContentSettingsTypeNameEntry kContentSettingsTypeGroupNames[] = {
     {CONTENT_SETTINGS_TYPE_ADS, "ads"},
 };
 
+// Retrieves the corresponding string, according to the following precedence
+// order from highest to lowest priority:
+//    1. Kill-switch.
+//    2. Enterprise policy.
+//    3. Extensions.
+//    4. User-set per-origin setting.
+//    5. Embargo.
+//    6. User-set patterns.
+//    7. User-set global default for a ContentSettingsType.
+//    8. Chrome's built-in default.
+std::string ConvertContentSettingSourceToString(
+    const content_settings::SettingInfo& info,
+    PermissionStatusSource permission_status_source) {
+  // TODO(patricialor): Do some plumbing for sources #1, #2, #3, and #5 through
+  // to the Web UI. Currently there aren't strings to represent these sources.
+  if (permission_status_source == PermissionStatusSource::KILL_SWITCH)
+    return kPreferencesSource;  // Source #1.
+
+  if (info.source == content_settings::SETTING_SOURCE_POLICY ||
+      info.source == content_settings::SETTING_SOURCE_SUPERVISED) {
+    return kPolicyProviderId;  // Source #2.
+  }
+
+  if (info.source == content_settings::SETTING_SOURCE_EXTENSION)
+    return kExtensionProviderId;  // Source #3.
+
+  DCHECK_NE(content_settings::SETTING_SOURCE_NONE, info.source);
+  if (info.source == content_settings::SETTING_SOURCE_USER) {
+    if (permission_status_source ==
+            PermissionStatusSource::SAFE_BROWSING_BLACKLIST ||
+        permission_status_source ==
+            PermissionStatusSource::MULTIPLE_DISMISSALS ||
+        permission_status_source == PermissionStatusSource::MULTIPLE_IGNORES) {
+      return kPreferencesSource;  // Source #5.
+    }
+    if (info.primary_pattern == ContentSettingsPattern::Wildcard() &&
+        info.secondary_pattern == ContentSettingsPattern::Wildcard()) {
+      return "default";  // Source #7, #8.
+    }
+    // Source #4, #6. When #4 is the source, |permission_status_source|
+    // won't be set to any of the source #5 enum values, as PermissionManager is
+    // aware of the difference between these two sources internally. The
+    // subtlety here should go away when PermissionManager can handle all
+    // content settings and all possible sources.
+    return kPreferencesSource;
+  }
+
+  NOTREACHED();
+  return kPreferencesSource;
+}
+
 }  // namespace
 
 bool HasRegisteredGroupName(ContentSettingsType type) {
@@ -118,12 +174,12 @@ void AddExceptionForHostedApp(const std::string& url_pattern,
       content_settings::ContentSettingToString(CONTENT_SETTING_ALLOW);
   DCHECK(!setting_string.empty());
 
-  exception->SetString(site_settings::kSetting, setting_string);
-  exception->SetString(site_settings::kOrigin, url_pattern);
-  exception->SetString(site_settings::kDisplayName, url_pattern);
-  exception->SetString(site_settings::kEmbeddingOrigin, url_pattern);
-  exception->SetString(site_settings::kSource, "HostedApp");
-  exception->SetBoolean(site_settings::kIncognito, false);
+  exception->SetString(kSetting, setting_string);
+  exception->SetString(kOrigin, url_pattern);
+  exception->SetString(kDisplayName, url_pattern);
+  exception->SetString(kEmbeddingOrigin, url_pattern);
+  exception->SetString(kSource, "HostedApp");
+  exception->SetBoolean(kIncognito, false);
   exception->SetString(kAppName, app.name());
   exception->SetString(kAppId, app.id());
   exceptions->Append(std::move(exception));
@@ -169,6 +225,15 @@ std::string GetDisplayName(
             url.host(), extensions::ExtensionRegistry::EVERYTHING);
     if (extension)
       return extension->name();
+  }
+
+  // If the pattern is also a valid origin, use url::Origin to chop off any
+  // default port numbers which may be confusing to users.
+  const GURL pattern_url(pattern.ToString());
+  if (pattern_url.is_valid()) {
+    url::Origin origin(pattern_url);
+    if (!origin.unique())
+      return origin.Serialize();
   }
   return pattern.ToString();
 }
@@ -285,9 +350,44 @@ void GetContentCategorySetting(
       map->GetDefaultContentSetting(content_type, &provider));
   DCHECK(!setting.empty());
 
-  object->SetString(site_settings::kSetting, setting);
+  object->SetString(kSetting, setting);
   if (provider != "default")
-    object->SetString(site_settings::kSource, provider);
+    object->SetString(kSource, provider);
+}
+
+ContentSetting GetContentSettingForOrigin(
+    Profile* profile,
+    const HostContentSettingsMap* map,
+    const GURL& origin,
+    ContentSettingsType content_type,
+    std::string* source_string,
+    const extensions::ExtensionRegistry* extension_registry,
+    std::string* display_name) {
+  // TODO(patricialor): In future, PermissionManager should know about all
+  // content settings, not just the permissions, plus all the possible sources,
+  // and the calls to HostContentSettingsMap should be removed.
+  content_settings::SettingInfo info;
+  std::unique_ptr<base::Value> value = map->GetWebsiteSetting(
+      origin, origin, content_type, std::string(), &info);
+
+  // Retrieve the content setting.
+  PermissionResult result(CONTENT_SETTING_DEFAULT,
+                          PermissionStatusSource::UNSPECIFIED);
+  if (PermissionUtil::IsPermission(content_type)) {
+    result = PermissionManager::Get(profile)->GetPermissionStatus(
+        content_type, origin, origin);
+  } else {
+    DCHECK(value.get());
+    DCHECK_EQ(base::Value::Type::INTEGER, value->GetType());
+    result.content_setting =
+        content_settings::ValueToContentSetting(value.get());
+  }
+
+  // Retrieve the source of the content setting.
+  *source_string = ConvertContentSettingSourceToString(info, result.source);
+  *display_name = GetDisplayName(
+      ContentSettingsPattern::FromURLNoWildcard(origin), extension_registry);
+  return result.content_setting;
 }
 
 void GetPolicyAllowedUrls(
@@ -356,12 +456,11 @@ std::unique_ptr<base::DictionaryValue> GetChooserExceptionForPage(
       content_settings::ContentSettingToString(CONTENT_SETTING_DEFAULT);
   DCHECK(!setting_string.empty());
 
-  exception->SetString(site_settings::kSetting, setting_string);
-  exception->SetString(site_settings::kOrigin, requesting_origin.spec());
-  exception->SetString(site_settings::kDisplayName, requesting_origin.spec());
-  exception->SetString(
-      site_settings::kEmbeddingOrigin, embedding_origin.spec());
-  exception->SetString(site_settings::kSource, provider_name);
+  exception->SetString(kSetting, setting_string);
+  exception->SetString(kOrigin, requesting_origin.spec());
+  exception->SetString(kDisplayName, requesting_origin.spec());
+  exception->SetString(kEmbeddingOrigin, embedding_origin.spec());
+  exception->SetString(kSource, provider_name);
   exception->SetBoolean(kIncognito, incognito);
   if (object) {
     exception->SetString(kObjectName, name);
