@@ -14,13 +14,14 @@
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/sequence_checker.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "extensions/browser/value_store/lazy_leveldb.h"
 #include "extensions/browser/value_store/value_store.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 
 // Value store area, backed by a leveldb database.
-// All methods must be run on the FILE thread.
+// All methods must be run on a sequence where IO is allowed.
 class LeveldbValueStore : public ValueStore,
                           public LazyLevelDb,
                           public base::trace_event::MemoryDumpProvider {

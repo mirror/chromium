@@ -174,13 +174,13 @@ ValueStore::WriteResult LeveldbValueStore::Set(
 
 ValueStore::WriteResult LeveldbValueStore::Remove(const std::string& key) {
   base::ThreadRestrictions::AssertIOAllowed();
+
   return Remove(std::vector<std::string>(1, key));
 }
 
 ValueStore::WriteResult LeveldbValueStore::Remove(
     const std::vector<std::string>& keys) {
   base::ThreadRestrictions::AssertIOAllowed();
-
   Status status = EnsureDbIsOpen();
   if (!status.ok())
     return MakeWriteResult(status);
@@ -301,5 +301,7 @@ ValueStore::Status LeveldbValueStore::AddToBatch(
 }
 
 ValueStore::Status LeveldbValueStore::WriteToDb(leveldb::WriteBatch* batch) {
+  base::ThreadRestrictions::AssertIOAllowed();
+
   return ToValueStoreError(db()->Write(write_options(), batch));
 }
