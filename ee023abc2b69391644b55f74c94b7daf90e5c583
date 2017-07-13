@@ -46,6 +46,30 @@
       "revId": "ee023abc2b69391644b55f74c94b7daf90e5c583",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da7d318_69ea8692",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T18:39:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bce5d745_eb77901e",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "ee023abc2b69391644b55f74c94b7daf90e5c583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

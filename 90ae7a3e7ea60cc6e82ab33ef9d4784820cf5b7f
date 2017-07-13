@@ -210,6 +210,24 @@
       "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9463bcb1_26e6d7dd",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T18:39:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5b94c13_1321b910",
+      "revId": "90ae7a3e7ea60cc6e82ab33ef9d4784820cf5b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
