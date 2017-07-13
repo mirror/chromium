@@ -275,9 +275,29 @@ void RenderFrameMessageFilter::DownloadUrl(int render_view_id,
   if (!resource_context_)
     return;
 
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
   std::unique_ptr<DownloadUrlParameters> parameters(new DownloadUrlParameters(
       url, render_process_id_, render_view_id, render_frame_id,
-      request_context_.get(), NO_TRAFFIC_ANNOTATION_YET));
+      request_context_.get(), traffic_annotation));
   parameters->set_content_initiated(true);
   parameters->set_suggested_name(suggested_name);
   parameters->set_prompt(use_prompt);
