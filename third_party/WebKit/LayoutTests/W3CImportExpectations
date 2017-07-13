@@ -252,14 +252,14 @@ external/wpt/css/.htaccess [ Skip ]
 # external/wpt/cssom [ Pass ]
 ## Owners: style-dev@chromium.org
 # external/wpt/cssom-view [ Pass ]
-## Owners: dom-dev@chromium.org
+## Owners: html-dev@chromium.org
 # external/wpt/custom-elements [ Pass ]
 external/wpt/docs [ Skip ]
 ## Owners: dom-dev@chromium.org
 external/wpt/dom [ Pass ]
-## Owners: dom-dev@chromium.org
+## Owners: html-dev@chromium.org
 # external/wpt/domparsing [ Pass ]
-## Owners: dom-dev@chromium.org
+## Owners: html-dev@chromium.org
 # external/wpt/domxpath [ Pass ]
 external/wpt/dpub-aam [ Skip ]
 external/wpt/dpub-aria [ Skip ]
@@ -288,9 +288,9 @@ external/wpt/fonts/math [ Skip ]
 # external/wpt/geolocation-API [ Pass ]
 ## Owners: jsbell@chromium.org
 # external/wpt/hr-time [ Pass ]
-## Owners: dom-dev@chromium.org
+## Owners: html-dev@chromium.org
 # external/wpt/html [ Pass ]
-## Owners: dom-dev@chromium.org
+## Owners: html-dev@chromium.org
 # external/wpt/html-imports [ Pass ]
 external/wpt/html-longdesc [ Skip ]
 ## Owners: rijubrata.bhaumik@intel.com,mcasas@chromium.org
@@ -305,7 +305,7 @@ external/wpt/html-longdesc [ Skip ]
 # external/wpt/infrastructure [ Pass ]
 ## Owners: none; No tests in the directory.
 # external/wpt/interfaces [ Pass ]
-## Owners: dom-dev@chromium.org
+## Owners: html-dev@chromium.org
 # external/wpt/innerText [ Pass ]
 external/wpt/js [ Skip ]
 external/wpt/lint [ Skip ]
