@@ -1418,6 +1418,9 @@ extern const char kTouchscreenCalibrationDescription[];
 extern const char kUiDevToolsName[];
 extern const char kUiDevToolsDescription[];
 
+extern const char kUseCrosMidiServiceName[];
+extern const char kUseCrosMidiServiceNameDescription[];
+
 extern const char kUseMusName[];
 extern const char kUseMusDescription[];
 extern const char kEnableMashDescription[];
