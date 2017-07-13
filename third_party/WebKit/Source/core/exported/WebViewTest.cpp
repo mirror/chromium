@@ -3685,11 +3685,13 @@ class UnhandledTapWebViewClient : public FrameTestHelpers::TestWebViewClient {
  public:
   void ShowUnhandledTapUIIfNeeded(const WebPoint& tapped_position,
                                   const WebNode& tapped_node,
-                                  bool page_changed) override {
+                                  bool page_changed,
+                                  int text_height) override {
     was_called_ = true;
     tapped_position_ = tapped_position;
     tapped_node_ = tapped_node;
     page_changed_ = page_changed;
+    text_height_ = text_height;
   }
   bool GetWasCalled() const { return was_called_; }
   int GetTappedXPos() const { return tapped_position_.X(); }
@@ -3697,6 +3699,7 @@ class UnhandledTapWebViewClient : public FrameTestHelpers::TestWebViewClient {
   bool IsTappedNodeNull() const { return tapped_node_.IsNull(); }
   const WebNode& GetWebNode() const { return tapped_node_; }
   bool GetPageChanged() const { return page_changed_; }
+  int GetTextHeight() const { return text_height_; }
   void Reset() {
     was_called_ = false;
     tapped_position_ = IntPoint();
@@ -3709,6 +3712,7 @@ class UnhandledTapWebViewClient : public FrameTestHelpers::TestWebViewClient {
   IntPoint tapped_position_;
   WebNode tapped_node_;
   bool page_changed_ = false;
+  int text_height_ = -1;
 };
 
 TEST_P(WebViewTest, ShowUnhandledTapUIIfNeeded) {
@@ -3731,6 +3735,7 @@ TEST_P(WebViewTest, ShowUnhandledTapUIIfNeeded) {
   EXPECT_EQ(278, client.GetTappedYPos());
   EXPECT_FALSE(client.IsTappedNodeNull());
   EXPECT_TRUE(client.GetWebNode().IsTextNode());
+  EXPECT_EQ(-1, client.GetTextHeight());
 
   // Test basic tap handling and notification.
   client.Reset();
@@ -3801,6 +3806,7 @@ TEST_P(WebViewTest, ShowUnhandledTapUIIfNeededWithMutateDom) {
   EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
                              WebString::FromUTF8("target")));
   EXPECT_FALSE(client.GetPageChanged());
+  EXPECT_EQ(-1, client.GetTextHeight());
 
   web_view_helper_.Reset();  // Remove dependency on locally scoped client.
 }
@@ -3828,6 +3834,7 @@ TEST_P(WebViewTest, ShowUnhandledTapUIIfNeededWithMutateStyle) {
   EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
                              WebString::FromUTF8("style_active")));
   EXPECT_FALSE(client.GetPageChanged());
+  EXPECT_EQ(-1, client.GetTextHeight());
 
   // Test without any style mutation.
   client.Reset();
@@ -3860,6 +3867,7 @@ TEST_P(WebViewTest, ShowUnhandledTapUIIfNeededWithPreventDefault) {
   EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap,
                              WebString::FromUTF8("target")));
   EXPECT_TRUE(client.GetWasCalled());
+  EXPECT_EQ(-1, client.GetTextHeight());
 
   web_view_helper_.Reset();  // Remove dependency on locally scoped client.
 }

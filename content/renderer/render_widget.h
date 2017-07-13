@@ -327,7 +327,8 @@ class CONTENT_EXPORT RenderWidget
   // determine if triggering is appropriate.
   void ShowUnhandledTapUIIfNeeded(const blink::WebPoint& tapped_position,
                                   const blink::WebNode& tapped_node,
-                                  bool page_changed) override;
+                                  bool page_changed,
+                                  int text_height) override;
 #endif
 
   // Begins the compositor's scheduler to start producing frames.

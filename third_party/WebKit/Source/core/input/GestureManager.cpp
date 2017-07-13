@@ -300,7 +300,8 @@ WebInputEventResult GestureManager::HandleGestureTap(
             tapped_position);
     frame_->GetChromeClient().ShowUnhandledTapUIIfNeeded(
         tapped_position_in_viewport, tapped_node,
-        dom_tree_changed || style_changed);
+        dom_tree_changed || style_changed,
+        frame_->LocalFrameRoot().Selection().AbsoluteCaretBounds().Height());
   }
   return event_result;
 }

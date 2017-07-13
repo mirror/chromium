@@ -1001,11 +1001,13 @@ void ChromeClientImpl::ShowVirtualKeyboardOnElementFocus(LocalFrame& frame) {
 void ChromeClientImpl::ShowUnhandledTapUIIfNeeded(
     IntPoint tapped_position_in_viewport,
     Node* tapped_node,
-    bool page_changed) {
-  if (web_view_->Client())
+    bool page_changed,
+    int text_height) {
+  if (web_view_->Client()) {
     web_view_->Client()->ShowUnhandledTapUIIfNeeded(
         WebPoint(tapped_position_in_viewport), WebNode(tapped_node),
-        page_changed);
+        page_changed, text_height);
+  }
 }
 
 void ChromeClientImpl::OnMouseDown(Node& mouse_down_node) {

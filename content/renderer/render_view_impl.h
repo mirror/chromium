@@ -276,7 +276,8 @@ class CONTENT_EXPORT RenderViewImpl
   void SetTouchAction(cc::TouchAction touchAction) override;
   void ShowUnhandledTapUIIfNeeded(const blink::WebPoint& tappedPosition,
                                   const blink::WebNode& tappedNode,
-                                  bool pageChanged) override;
+                                  bool pageChanged,
+                                  int textHeight) override;
   blink::WebWidgetClient* WidgetClient() override;
 
   // blink::WebViewClient implementation --------------------------------------

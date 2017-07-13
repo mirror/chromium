@@ -43,6 +43,8 @@ import org.chromium.ui.touch_selection.SelectionEventType;
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG,
 })
 public class ContextualSearchTapEventTest {
+    private static final int FAKE_TEXT_HEIGHT = 10;
+
     @Rule
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
@@ -203,7 +205,7 @@ public class ContextualSearchTapEventTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mContextualSearchClient.showUnhandledTapUIIfNeeded(0, 0);
+                mContextualSearchClient.showUnhandledTapUIIfNeeded(0, 0, FAKE_TEXT_HEIGHT);
             }
         });
     }
@@ -215,7 +217,7 @@ public class ContextualSearchTapEventTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mContextualSearchClient.showUnhandledTapUIIfNeeded(0, 0);
+                mContextualSearchClient.showUnhandledTapUIIfNeeded(0, 0, FAKE_TEXT_HEIGHT);
                 mContextualSearchClient.onSelectionEvent(
                         SelectionEventType.SELECTION_HANDLES_CLEARED, 0, 0);
             }

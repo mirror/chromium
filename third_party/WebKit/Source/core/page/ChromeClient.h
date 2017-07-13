@@ -322,7 +322,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
 
   virtual void RegisterViewportLayers() const {}
 
-  virtual void ShowUnhandledTapUIIfNeeded(IntPoint, Node*, bool) {}
+  virtual void ShowUnhandledTapUIIfNeeded(IntPoint, Node*, bool, int) {}
 
   virtual void OnMouseDown(Node&) {}
 

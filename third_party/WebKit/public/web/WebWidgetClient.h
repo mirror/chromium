@@ -165,7 +165,8 @@ class WebWidgetClient {
   // something as a result of a tap without explicitly consuming the event.
   virtual void ShowUnhandledTapUIIfNeeded(const WebPoint& tapped_position,
                                           const WebNode& tapped_node,
-                                          bool page_changed) {}
+                                          bool page_changed,
+                                          int text_height) {}
 
   // Converts the |rect| from Blink's Viewport coordinates to the
   // coordinates in the native window used to display the content, in

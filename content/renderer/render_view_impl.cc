@@ -1799,9 +1799,10 @@ void RenderViewImpl::SetTouchAction(blink::WebTouchAction touchAction) {
 void RenderViewImpl::ShowUnhandledTapUIIfNeeded(
     const blink::WebPoint& tappedPosition,
     const blink::WebNode& tappedNode,
-    bool pageChanged) {
+    bool pageChanged,
+    int textHeight) {
   RenderWidget::ShowUnhandledTapUIIfNeeded(tappedPosition, tappedNode,
-                                           pageChanged);
+                                           pageChanged, textHeight);
 }
 
 blink::WebWidgetClient* RenderViewImpl::WidgetClient() {

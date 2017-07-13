@@ -251,7 +251,8 @@ class WebViewClient : protected WebWidgetClient {
   void SetTouchAction(WebTouchAction touch_action) override {}
   void ShowUnhandledTapUIIfNeeded(const WebPoint& tapped_position,
                                   const WebNode& tapped_node,
-                                  bool page_changed) override {}
+                                  bool page_changed,
+                                  int text_height) override {}
   void Show(WebNavigationPolicy) override {}
   virtual WebWidgetClient* WidgetClient() { return this; }
 

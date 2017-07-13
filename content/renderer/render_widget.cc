@@ -2208,13 +2208,14 @@ blink::WebScreenInfo RenderWidget::GetScreenInfo() {
 #if defined(OS_ANDROID)
 void RenderWidget::ShowUnhandledTapUIIfNeeded(const WebPoint& tapped_position,
                                               const WebNode& tapped_node,
-                                              bool page_changed) {
+                                              bool page_changed,
+                                              int text_height) {
   bool should_trigger = !page_changed && tapped_node.IsTextNode() &&
                         !tapped_node.IsContentEditable() &&
                         !tapped_node.IsInsideFocusableElementOrARIAWidget();
   if (should_trigger) {
-    Send(new ViewHostMsg_ShowUnhandledTapUIIfNeeded(routing_id_,
-        tapped_position.x, tapped_position.y));
+    Send(new ViewHostMsg_ShowUnhandledTapUIIfNeeded(
+        routing_id_, tapped_position.x, tapped_position.y, text_height));
   }
 }
 #endif

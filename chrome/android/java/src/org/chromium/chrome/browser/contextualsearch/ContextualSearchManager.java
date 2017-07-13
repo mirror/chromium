@@ -1203,9 +1203,9 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
     }
 
     @Override
-    public void showUnhandledTapUIIfNeeded(final int x, final int y) {
+    public void showUnhandledTapUIIfNeeded(int x, int y, int textHeight) {
         if (!isOverlayVideoMode()) {
-            mSelectionController.handleShowUnhandledTapUIIfNeeded(x, y);
+            mSelectionController.handleShowUnhandledTapUIIfNeeded(x, y, textHeight);
         }
     }
 
