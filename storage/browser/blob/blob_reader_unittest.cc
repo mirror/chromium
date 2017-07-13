@@ -356,9 +356,8 @@ class BlobReaderTest : public ::testing::Test {
   void InitializeReader(BlobDataBuilder* builder) {
     blob_handle_ = builder ? context_.AddFinishedBlob(builder) : nullptr;
     provider_ = new MockFileStreamReaderProvider();
-    reader_.reset(new BlobReader(blob_handle_.get(),
-                                 base::WrapUnique(provider_),
-                                 message_loop_.task_runner().get()));
+    reader_.reset(
+        new BlobReader(blob_handle_.get(), base::WrapUnique(provider_)));
   }
 
   // Takes ownership of the file reader (the blob reader takes ownership).
@@ -1196,8 +1195,8 @@ TEST_F(BlobReaderTest, HandleBeforeAsyncCancel) {
       b, base::Bind(&SaveBlobStatusAndFiles, &can_populate_status, &files));
   EXPECT_EQ(BlobStatus::PENDING_TRANSPORT, can_populate_status);
   provider_ = new MockFileStreamReaderProvider();
-  reader_.reset(new BlobReader(blob_handle_.get(), base::WrapUnique(provider_),
-                               message_loop_.task_runner().get()));
+  reader_.reset(
+      new BlobReader(blob_handle_.get(), base::WrapUnique(provider_)));
   int size_result = -1;
   EXPECT_EQ(BlobReader::Status::IO_PENDING,
             reader_->CalculateSize(base::Bind(&SetValue<int>, &size_result)));
@@ -1222,8 +1221,8 @@ TEST_F(BlobReaderTest, ReadFromIncompleteBlob) {
       b, base::Bind(&SaveBlobStatusAndFiles, &can_populate_status, &files));
   EXPECT_EQ(BlobStatus::PENDING_TRANSPORT, can_populate_status);
   provider_ = new MockFileStreamReaderProvider();
-  reader_.reset(new BlobReader(blob_handle_.get(), base::WrapUnique(provider_),
-                               message_loop_.task_runner().get()));
+  reader_.reset(
+      new BlobReader(blob_handle_.get(), base::WrapUnique(provider_)));
   int size_result = -1;
   EXPECT_EQ(BlobReader::Status::IO_PENDING,
             reader_->CalculateSize(base::Bind(&SetValue<int>, &size_result)));
