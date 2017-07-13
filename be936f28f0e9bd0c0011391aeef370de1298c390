@@ -46,6 +46,30 @@
       "revId": "be936f28f0e9bd0c0011391aeef370de1298c390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626fae1b_2db84fb5",
+        "filename": "remoting/ios/app/app_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-13T19:45:24Z",
+      "side": 1,
+      "message": "Thought about this again. There are a few edge cases that can go wrong and end up in bad states (say you get logged out when you are disconnecting from the host, which calls popToRootVC?). I think for now it\u0027s simplest to assume nobody could manipulate the view stack when the first launch view is showing...\n\nI\u0027ve added comments and TODO.",
+      "parentUuid": "ceefaf06_dd534ebc",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "be936f28f0e9bd0c0011391aeef370de1298c390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
