@@ -16,6 +16,24 @@
       "revId": "1a7b275c352ce7545964a6efaa137ee7001f24dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af50988_16e1103d",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1122985
+      },
+      "writtenOn": "2017-07-13T19:53:47Z",
+      "side": 1,
+      "message": "Reverted to the original form of this block in patchset 2.",
+      "parentUuid": "8e94c20f_ea84c577",
+      "revId": "1a7b275c352ce7545964a6efaa137ee7001f24dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
