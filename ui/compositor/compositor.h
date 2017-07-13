@@ -69,6 +69,7 @@ namespace ui {
 
 class Compositor;
 class CompositorVSyncManager;
+class ExternalBeginFrameClient;
 class LatencyInfo;
 class Layer;
 class Reflector;
@@ -135,6 +136,8 @@ class COMPOSITOR_EXPORT ContextFactoryPrivate {
   virtual void SetDisplayVSyncParameters(ui::Compositor* compositor,
                                          base::TimeTicks timebase,
                                          base::TimeDelta interval) = 0;
+  virtual void IssueExternalBeginFrame(ui::Compositor* compositor,
+                                       const cc::BeginFrameArgs& args) = 0;
 
   virtual void SetOutputIsSecure(Compositor* compositor, bool secure) = 0;
 };
@@ -176,6 +179,12 @@ class COMPOSITOR_EXPORT ContextFactory {
   virtual void RemoveObserver(ContextFactoryObserver* observer) = 0;
 };
 
+struct COMPOSITOR_EXPORT CompositorSettings {
+  bool enable_surface_synchronization = false;
+  bool enable_external_begin_frames = false;
+  bool wait_for_all_pipeline_stages_before_draw = false;
+};
+
 // Compositor object to take care of GPU painting.
 // A Browser compositor object is responsible for generating the final
 // displayable form of pixels comprising a single widget's contents. It draws an
@@ -190,8 +199,10 @@ class COMPOSITOR_EXPORT Compositor
              ui::ContextFactory* context_factory,
              ui::ContextFactoryPrivate* context_factory_private,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-             bool enable_surface_synchronization);
+             const CompositorSettings& compositor_settings);
   ~Compositor() override;
+
+  const CompositorSettings& settings() { return settings_; }
 
   ui::ContextFactory* context_factory() { return context_factory_; }
 
@@ -293,6 +304,20 @@ class COMPOSITOR_EXPORT Compositor
   // Returns the vsync manager for this compositor.
   scoped_refptr<CompositorVSyncManager> vsync_manager() const;
 
+  void SetExternalBeginFrameClient(ExternalBeginFrameClient* client);
+
+  // The ExternalBeginFrameClient calls this to issue a BeginFrame with the
+  // given |args|.
+  void IssueExternalBeginFrame(const cc::BeginFrameArgs& args);
+
+  // Called by the ContextFactory when a BeginFrame was completed by the Display
+  // if the enable_external_begin_frames setting is true.
+  void OnDisplayDidFinishFrame(const cc::BeginFrameAck& ack);
+
+  // Called by the ContextFactory to signal whether BeginFrames are needed by
+  // the compositor if the enable_external_begin_frames setting is true.
+  void OnNeedsExternalBeginFrames(bool needs_begin_frames);
+
   // Returns the main thread task runner this compositor uses. Users of the
   // compositor generally shouldn't use this.
   scoped_refptr<base::SingleThreadTaskRunner> task_runner() const {
@@ -386,6 +411,8 @@ class COMPOSITOR_EXPORT Compositor
   // Causes all active CompositorLocks to be timed out.
   void TimeoutLocks();
 
+  const CompositorSettings settings_;
+
   gfx::Size size_;
 
   ui::ContextFactory* context_factory_;
@@ -419,6 +446,9 @@ class COMPOSITOR_EXPORT Compositor
 
   // The manager of vsync parameters for this compositor.
   scoped_refptr<CompositorVSyncManager> vsync_manager_;
+
+  ExternalBeginFrameClient* external_begin_frame_client_ = nullptr;
+  bool needs_external_begin_frames_ = false;
 
   // The device scale factor of the monitor that this compositor is compositing
   // layers on.

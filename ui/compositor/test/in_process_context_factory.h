@@ -82,6 +82,8 @@ class InProcessContextFactory : public ContextFactory,
   void SetDisplayVSyncParameters(ui::Compositor* compositor,
                                  base::TimeTicks timebase,
                                  base::TimeDelta interval) override {}
+  void IssueExternalBeginFrame(ui::Compositor* compositor,
+                               const cc::BeginFrameArgs& args) override {}
   void SetOutputIsSecure(ui::Compositor* compositor, bool secure) override {}
   const viz::ResourceSettings& GetResourceSettings() const override;
   void AddObserver(ContextFactoryObserver* observer) override;

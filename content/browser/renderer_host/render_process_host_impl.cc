@@ -2346,7 +2346,9 @@ StoragePartition* RenderProcessHostImpl::GetStoragePartition() const {
   return storage_partition_impl_;
 }
 
-static void AppendCompositorCommandLineFlags(base::CommandLine* command_line) {
+static void AppendCompositorCommandLineFlags(
+    base::CommandLine* command_line,
+    bool wait_for_all_pipeline_stages_before_draw) {
   command_line->AppendSwitchASCII(
       switches::kNumRasterThreads,
       base::IntToString(NumberOfRendererRasterThreads()));
@@ -2376,6 +2378,13 @@ static void AppendCompositorCommandLineFlags(base::CommandLine* command_line) {
   command_line->AppendSwitchASCII(
       switches::kContentImageTextureTarget,
       viz::BufferToTextureTargetMapToString(CreateBufferToTextureTargetMap()));
+
+  if (wait_for_all_pipeline_stages_before_draw ||
+      command_line->HasSwitch(
+          switches::kEnableWaitForAllPipelineStagesBeforeDraw)) {
+    command_line->AppendSwitch(
+        switches::kEnableWaitForAllPipelineStagesBeforeDraw);
+  }
 
   // Appending disable-gpu-feature switches due to software rendering list.
   GpuDataManagerImpl* gpu_data_manager = GpuDataManagerImpl::GetInstance();
@@ -2428,7 +2437,9 @@ void RenderProcessHostImpl::AppendRendererCommandLine(
       base::DoubleToString(display::win::GetDPIScale()));
 #endif
 
-  AppendCompositorCommandLineFlags(command_line);
+  AppendCompositorCommandLineFlags(
+      command_line,
+      browser_context_->ShouldWaitForAllPipelineStagesBeforeDraw());
 
   command_line->AppendSwitchASCII(switches::kServiceRequestChannelToken,
                                   child_connection_->service_token());
@@ -3310,7 +3321,7 @@ void RenderProcessHost::SetRunRendererInProcess(bool value) {
     // TODO(piman): we should really send configuration through bools rather
     // than by parsing strings, i.e. sending an IPC rather than command line
     // args. crbug.com/314909
-    AppendCompositorCommandLineFlags(command_line);
+    AppendCompositorCommandLineFlags(command_line, false);
   }
 }
 

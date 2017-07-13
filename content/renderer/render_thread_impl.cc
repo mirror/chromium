@@ -632,6 +632,7 @@ RenderThreadImpl::RenderThreadImpl(
       main_message_loop_(std::move(main_message_loop)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
       is_scroll_animator_enabled_(false),
+      is_wait_for_all_pipeline_stages_before_draw_enabled_(false),
       renderer_binding_(this),
       field_trial_syncer_(this) {
   scoped_refptr<base::SingleThreadTaskRunner> test_task_counter;
@@ -862,6 +863,9 @@ void RenderThreadImpl::Init(
   } else {
     is_distance_field_text_enabled_ = false;
   }
+
+  is_wait_for_all_pipeline_stages_before_draw_enabled_ = command_line.HasSwitch(
+      switches::kEnableWaitForAllPipelineStagesBeforeDraw);
 
   // Note that under Linux, the media library will normally already have
   // been initialized by the Zygote before this instance became a Renderer.
@@ -1658,6 +1662,10 @@ bool RenderThreadImpl::IsThreadedAnimationEnabled() {
 
 bool RenderThreadImpl::IsScrollAnimatorEnabled() {
   return is_scroll_animator_enabled_;
+}
+
+bool RenderThreadImpl::IsWaitForAllPipelineStagesBeforeDrawEnabled() {
+  return is_wait_for_all_pipeline_stages_before_draw_enabled_;
 }
 
 void RenderThreadImpl::OnRAILModeChanged(v8::RAILMode rail_mode) {
