@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df1d3e95_43941091",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-13T23:01:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5880017_f01742c1",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 128
+      },
+      "revId": "79d652fa8bfab6618db027c71a54f6959e7a5167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e062d79_4f115329",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T22:51:59Z",
       "side": 1,
       "message": "Please file a bug to have Mojo use base::StringPiece more often as that efficiently handles writing functions that are often called with a string literal but may also be called with a full std::string.",
+      "range": {
+        "startLine": 356,
+        "startChar": 20,
+        "endLine": 356,
+        "endChar": 45
+      },
+      "revId": "79d652fa8bfab6618db027c71a54f6959e7a5167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2eb770d_28fdd3cd",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-13T23:01:08Z",
+      "side": 1,
+      "message": "(I am happy to file a bug, just trying to make sure I understand)\n\nWhen you said \"have Mojo use base::StringPiece more often\", which things do you have in mind?\nDo you mean the client lib of, say, service_manager (line 362) or generated bindings?",
+      "parentUuid": "5e062d79_4f115329",
       "range": {
         "startLine": 356,
         "startChar": 20,
