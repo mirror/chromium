@@ -13,6 +13,8 @@ from telemetry.value import scalar
 from measurements import smoothness
 
 import mock
+import shutil
+
 
 
 class FakeTracingController(object):
@@ -54,6 +56,7 @@ class FakeTab(object):
 class CustomResultsWrapperUnitTest(unittest.TestCase):
 
   def testOnlyOneInteractionRecordPerPage(self):
+    shutil.rmtree('/tmp/foo')
     test_page = page.Page('http://dummy', None, name='http://dummy')
 
     # pylint: disable=protected-access
