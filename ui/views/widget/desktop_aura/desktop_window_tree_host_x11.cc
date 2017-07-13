@@ -1302,15 +1302,11 @@ void DesktopWindowTreeHostX11::OnCursorVisibilityChangedNative(bool show) {
 ////////////////////////////////////////////////////////////////////////////////
 // DesktopWindowTreeHostX11, display::DisplayObserver implementation:
 
-void DesktopWindowTreeHostX11::OnDisplayAdded(
-    const display::Display& new_display) {}
-
-void DesktopWindowTreeHostX11::OnDisplayRemoved(
-    const display::Display& old_display) {}
-
 void DesktopWindowTreeHostX11::OnDisplayMetricsChanged(
     const display::Display& display,
     uint32_t changed_metrics) {
+  aura::WindowTreeHost::OnDisplayMetricsChanged(display, changed_metrics);
+
   if ((changed_metrics & DISPLAY_METRIC_DEVICE_SCALE_FACTOR) &&
       display::Screen::GetScreen()->GetDisplayNearestWindow(window()).id() ==
           display.id()) {
