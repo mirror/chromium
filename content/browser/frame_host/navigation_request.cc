@@ -187,6 +187,31 @@ void AddAdditionalRequestHeaders(net::HttpRequestHeaders* headers,
   headers->SetHeader(net::HttpRequestHeaders::kOrigin, origin.Serialize());
 }
 
+// Checks if a given throttle check result means we should abort a navigation.
+bool ShouldAbortNavigationRequest(
+    NavigationThrottle::ThrottleCheckResult throttle) {
+  return (throttle == NavigationThrottle::CANCEL ||
+          throttle == NavigationThrottle::CANCEL_AND_IGNORE ||
+          throttle == NavigationThrottle::BLOCK_REQUEST ||
+          throttle == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE);
+}
+
+// Returns the network error code that makes more sense to report a throttle
+// check failure.
+int GetNetErrorFromThrottle(NavigationThrottle::ThrottleCheckResult throttle) {
+  switch (throttle) {
+    case NavigationThrottle::CANCEL:
+    case NavigationThrottle::CANCEL_AND_IGNORE:
+      return net::ERR_ABORTED;
+    case NavigationThrottle::BLOCK_REQUEST:
+    case NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE:
+      return net::ERR_BLOCKED_BY_CLIENT;
+    default:
+      NOTREACHED();
+      return net::ERR_FAILED;
+  }
+}
+
 }  // namespace
 
 // static
@@ -250,12 +275,14 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           controller->GetLastCommittedEntryIndex(),
           controller->GetEntryCount()),
       browser_initiated,
-      true,  // may_transfer
+      false,  // from_begin_navigation
       &frame_entry, &entry));
   return navigation_request;
 }
 
 // static
+// TODO(ahemery): Rename creation functions depending on begin navigation
+// starting it.
 std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
     FrameTreeNode* frame_tree_node,
     NavigationEntryImpl* entry,
@@ -297,7 +324,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
   std::unique_ptr<NavigationRequest> navigation_request(new NavigationRequest(
       frame_tree_node, common_params, begin_params, request_params,
       false,  // browser_initiated
-      false,  // may_transfer
+      true,   // from_begin_navigation
       nullptr, entry));
   return navigation_request;
 }
@@ -308,7 +335,7 @@ NavigationRequest::NavigationRequest(
     const BeginNavigationParams& begin_params,
     const RequestNavigationParams& request_params,
     bool browser_initiated,
-    bool may_transfer,
+    bool from_begin_navigation,
     const FrameNavigationEntry* frame_entry,
     const NavigationEntryImpl* entry)
     : frame_tree_node_(frame_tree_node),
@@ -322,7 +349,7 @@ NavigationRequest::NavigationRequest(
       bindings_(NavigationEntryImpl::kInvalidBindings),
       response_should_be_rendered_(true),
       associated_site_instance_type_(AssociatedSiteInstanceType::NONE),
-      may_transfer_(may_transfer),
+      from_begin_navigation_(from_begin_navigation),
       weak_factory_(this) {
   DCHECK(!browser_initiated || (entry != nullptr && frame_entry != nullptr));
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationRequest", this,
@@ -334,21 +361,20 @@ NavigationRequest::NavigationRequest(
   common_params_.referrer =
       Referrer::SanitizeForRequest(common_params_.url, common_params_.referrer);
 
-  if (may_transfer) {
+  if (from_begin_navigation_) {
+    // This is needed to have data URLs commit in the same SiteInstance as the
+    // initiating renderer.
+    source_site_instance_ =
+        frame_tree_node->current_frame_host()->GetSiteInstance();
+  } else {
     FrameNavigationEntry* frame_entry = entry->GetFrameEntry(frame_tree_node);
     if (frame_entry) {
       source_site_instance_ = frame_entry->source_site_instance();
       dest_site_instance_ = frame_entry->site_instance();
     }
-
     restore_type_ = entry->restore_type();
     is_view_source_ = entry->IsViewSourceMode();
     bindings_ = entry->bindings();
-  } else {
-    // This is needed to have about:blank and data URLs commit in the same
-    // SiteInstance as the initiating renderer.
-    source_site_instance_ =
-        frame_tree_node->current_frame_host()->GetSiteInstance();
   }
 
   // Update the load flags with cache information.
@@ -761,21 +787,11 @@ void NavigationRequest::OnStartChecksComplete(
   if (on_start_checks_complete_closure_)
     on_start_checks_complete_closure_.Run();
   // Abort the request if needed. This will destroy the NavigationRequest.
-  if (result == NavigationThrottle::CANCEL_AND_IGNORE ||
-      result == NavigationThrottle::CANCEL ||
-      result == NavigationThrottle::BLOCK_REQUEST ||
-      result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-    // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
-    int error_code = net::ERR_ABORTED;
-    if (result == NavigationThrottle::BLOCK_REQUEST ||
-        result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-      error_code = net::ERR_BLOCKED_BY_CLIENT;
-    }
-
+  if (ShouldAbortNavigationRequest(result)) {
+    int error_code = GetNetErrorFromThrottle(result);
     // If the start checks completed synchronously, which could happen if there
-    // is no onbeforeunload handler or if a NavigationThrottle cancelled it,
-    // then this could cause reentrancy into NavigationController. So use a
-    // PostTask to avoid that.
+    // is no onbeforeunload handler, then this could cause reentrancy into
+    // NavigationController. So use a PostTask to avoid that.
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::Bind(&NavigationRequest::OnRequestFailed,

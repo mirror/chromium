@@ -370,8 +370,8 @@ void NavigationSimulator::Fail(int error_code) {
         FrameHostMsg_DidFailProvisionalLoadWithError(
             render_frame_host_->GetRoutingID(), error_params));
     if (!should_result_in_error_page) {
-      render_frame_host_->OnMessageReceived(
-          FrameHostMsg_DidStopLoading(render_frame_host_->GetRoutingID()));
+      render_frame_host_->OnMessageReceived(FrameHostMsg_DidStopLoading(
+          render_frame_host_->GetRoutingID(), GURL()));
     }
   }
 
@@ -461,7 +461,7 @@ void NavigationSimulator::CommitSameDocument() {
   render_frame_host_->SendNavigateWithParams(&params);
 
   render_frame_host_->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(render_frame_host_->GetRoutingID()));
+      FrameHostMsg_DidStopLoading(render_frame_host_->GetRoutingID(), GURL()));
 
   state_ = FINISHED;
 
@@ -645,8 +645,8 @@ void NavigationSimulator::FailFromThrottleCheck(
           render_frame_host_->GetRoutingID(), error_params));
   bool should_result_in_error_page = error_code != net::ERR_ABORTED;
   if (!should_result_in_error_page) {
-    render_frame_host_->OnMessageReceived(
-        FrameHostMsg_DidStopLoading(render_frame_host_->GetRoutingID()));
+    render_frame_host_->OnMessageReceived(FrameHostMsg_DidStopLoading(
+        render_frame_host_->GetRoutingID(), GURL()));
     CHECK_EQ(1, num_did_finish_navigation_called_);
   } else {
     CHECK_EQ(0, num_did_finish_navigation_called_);

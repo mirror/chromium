@@ -454,6 +454,8 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       is_waiting_for_swapout_ack_(false),
       render_frame_created_(false),
       navigations_suspended_(false),
+      has_beforeunload_handlers_(false),
+      has_unload_handlers_(false),
       is_waiting_for_beforeunload_ack_(false),
       unload_ack_is_for_navigation_(false),
       is_loading_(false),
@@ -473,6 +475,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
+      double_loading_(false),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
@@ -787,6 +790,9 @@ blink::WebPageVisibilityState RenderFrameHostImpl::GetVisibilityState() {
 
 bool RenderFrameHostImpl::Send(IPC::Message* message) {
   DCHECK(IPC_MESSAGE_ID_CLASS(message->type()) != InputMsgStart);
+  std::unique_ptr<IPC::Message> ptr(new FrameMsg_Stop(routing_id_));
+  // if (message->type() == ptr->type())
+  //   base::debug::StackTrace().Print();
   return GetProcess()->Send(message);
 }
 
@@ -840,6 +846,10 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_DocumentOnLoadCompleted,
                         OnDocumentOnLoadCompleted)
     IPC_MESSAGE_HANDLER(FrameHostMsg_BeforeUnload_ACK, OnBeforeUnloadACK)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_BeforeUnloadHandlersPresent,
+                        OnBeforeUnloadHandlersPresent)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UnloadHandlersPresent,
+                        OnUnloadHandlersPresent)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SwapOut_ACK, OnSwapOutACK)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ContextMenu, OnContextMenu)
     IPC_MESSAGE_HANDLER(FrameHostMsg_JavaScriptExecuteResponse,
@@ -1390,11 +1400,13 @@ void RenderFrameHostImpl::OnDidFailProvisionalLoadWithError(
   // return early if navigation_handle_ is null, once we prevent that case from
   // happening in practice.
 
+  // LOG(WARNING) << "FAILING THIS POOR LITTLE THING: " << params.url;
+
   // Update the error code in the NavigationHandle of the navigation.
-  if (navigation_handle_) {
-    navigation_handle_->set_net_error_code(
-        static_cast<net::Error>(params.error_code));
-  }
+  // if (navigation_handle_) {
+  //   navigation_handle_->set_net_error_code(
+  //       static_cast<net::Error>(params.error_code));
+  // }
 
   frame_tree_node_->navigator()->DidFailProvisionalLoadWithError(this, params);
 }
@@ -1620,6 +1632,10 @@ GlobalFrameRoutingId RenderFrameHostImpl::GetGlobalFrameRoutingId() {
 
 void RenderFrameHostImpl::SetNavigationHandle(
     std::unique_ptr<NavigationHandleImpl> navigation_handle) {
+  if (navigation_handle_) {
+    // LOG(WARNING) << "SET BLOCKER";
+    double_loading_ = true;
+  }
   navigation_handle_ = std::move(navigation_handle);
 }
 
@@ -2557,9 +2573,17 @@ void RenderFrameHostImpl::OnDidStartLoading(bool to_different_document) {
   }
 }
 
-void RenderFrameHostImpl::OnDidStopLoading() {
+void RenderFrameHostImpl::OnDidStopLoading(const GURL& loading_url) {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
+
+  // LOG(WARNING) << "STOP STOP STOP STOP STOP STOP url: " << loading_url;
+
+  if (double_loading_) {
+    // LOG(WARNING) << "GOT BLOCKED";
+    double_loading_ = false;
+    return;
+  }
 
   // This method should never be called when the frame is not loading.
   // Unfortunately, it can happen if a history navigation happens during a
@@ -2624,6 +2648,14 @@ void RenderFrameHostImpl::OnSetDevToolsFrameId(
   untrusted_devtools_frame_id_ = devtools_frame_id;
 }
 
+void RenderFrameHostImpl::OnBeforeUnloadHandlersPresent(bool present) {
+  has_beforeunload_handlers_ = present;
+}
+
+void RenderFrameHostImpl::OnUnloadHandlersPresent(bool present) {
+  has_unload_handlers_ = present;
+}
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 void RenderFrameHostImpl::OnShowPopup(
     const FrameHostMsg_ShowPopup_Params& params) {
@@ -2656,7 +2688,7 @@ void RenderFrameHostImpl::OnNavigationHandledByEmbedder() {
   if (navigation_handle_)
     navigation_handle_->set_net_error_code(net::ERR_ABORTED);
 
-  OnDidStopLoading();
+  OnDidStopLoading(GURL());
 }
 #endif
 
@@ -3129,7 +3161,25 @@ void RenderFrameHostImpl::SimulateBeforeUnloadAck() {
 }
 
 bool RenderFrameHostImpl::ShouldDispatchBeforeUnload() {
-  return IsRenderFrameLive();
+  if (!IsRenderFrameLive())
+    return false;
+
+  for (FrameTreeNode* node : frame_tree_->SubtreeNodes(frame_tree_node_)) {
+    if (node->current_frame_host()->has_beforeunload_handlers_)
+      return true;
+  }
+  return false;
+}
+
+bool RenderFrameHostImpl::HasUnloadHandler() {
+  if (!IsRenderFrameLive())
+    return false;
+
+  for (FrameTreeNode* node : frame_tree_->SubtreeNodes(frame_tree_node_)) {
+    if (node->current_frame_host()->has_unload_handlers_)
+      return true;
+  }
+  return false;
 }
 
 void RenderFrameHostImpl::UpdateOpener() {
@@ -3202,6 +3252,7 @@ void RenderFrameHostImpl::CommitNavigation(
     const RequestNavigationParams& request_params,
     bool is_view_source,
     mojom::URLLoaderFactoryPtrInfo subresource_url_loader_factory_info) {
+  // LOG(WARNING) << "COMMIT COMMIT COMMIT COMMIT url: " << common_params.url;
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
@@ -3284,6 +3335,7 @@ void RenderFrameHostImpl::FailedNavigation(
   // Get back to a clean state, in case a new navigation started without
   // completing an unload handler.
   ResetWaitingState();
+  is_loading_ = true;
 
   Send(new FrameMsg_FailedNavigation(routing_id_, common_params, request_params,
                                      has_stale_copy_in_cache, error_code));
@@ -3292,7 +3344,6 @@ void RenderFrameHostImpl::FailedNavigation(
       this, common_params, begin_params, static_cast<net::Error>(error_code));
 
   // An error page is expected to commit, hence why is_loading_ is set to true.
-  is_loading_ = true;
   if (navigation_handle_)
     DCHECK_NE(net::OK, navigation_handle_->GetNetErrorCode());
   frame_tree_node_->ResetNavigationRequest(true, true);
@@ -3473,7 +3524,7 @@ void RenderFrameHostImpl::ResetLoadingState() {
     if (!is_active())
       is_loading_ = false;
     else
-      OnDidStopLoading();
+      OnDidStopLoading(GURL());
   }
 }
 

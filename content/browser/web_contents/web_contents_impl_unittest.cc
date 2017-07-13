@@ -551,13 +551,6 @@ TEST_F(WebContentsImplTest, CrossSiteBoundaries) {
   pending_rfh->GetRenderViewHost()->set_delete_counter(
       &pending_rvh_delete_count);
 
-  // Navigations should be suspended in pending_rfh until BeforeUnloadACK.
-  if (!IsBrowserSideNavigationEnabled()) {
-    EXPECT_TRUE(pending_rfh->are_navigations_suspended());
-    orig_rfh->SendBeforeUnloadACK(true);
-    EXPECT_FALSE(pending_rfh->are_navigations_suspended());
-  }
-
   // DidNavigate from the pending page
   contents()->TestDidNavigateWithSequenceNumber(
       pending_rfh, entry_id, true, url2, Referrer(), ui::PAGE_TRANSITION_TYPED,
@@ -589,13 +582,6 @@ TEST_F(WebContentsImplTest, CrossSiteBoundaries) {
     main_test_rfh()->PrepareForCommit();
   TestRenderFrameHost* goback_rfh = contents()->GetPendingMainFrame();
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
-
-  // Navigations should be suspended in goback_rfh until BeforeUnloadACK.
-  if (!IsBrowserSideNavigationEnabled()) {
-    EXPECT_TRUE(goback_rfh->are_navigations_suspended());
-    pending_rfh->SendBeforeUnloadACK(true);
-    EXPECT_FALSE(goback_rfh->are_navigations_suspended());
-  }
 
   // DidNavigate from the back action
   contents()->TestDidNavigateWithSequenceNumber(
@@ -803,13 +789,6 @@ TEST_F(WebContentsImplTest, NavigateFromSitelessUrl) {
   int pending_rvh_delete_count = 0;
   pending_rfh->GetRenderViewHost()->set_delete_counter(
       &pending_rvh_delete_count);
-
-  // Navigations should be suspended in pending_rvh until BeforeUnloadACK.
-  if (!IsBrowserSideNavigationEnabled()) {
-    EXPECT_TRUE(pending_rfh->are_navigations_suspended());
-    orig_rfh->SendBeforeUnloadACK(true);
-    EXPECT_FALSE(pending_rfh->are_navigations_suspended());
-  }
 
   // DidNavigate from the pending page.
   contents()->TestDidNavigate(pending_rfh, entry_id, true, url2,
@@ -1060,6 +1039,7 @@ TEST_F(WebContentsImplTest, CrossSiteUnloadHandlers) {
   controller().LoadURL(
       url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
   int entry_id = controller().GetPendingEntry()->GetUniqueID();
+  main_test_rfh()->set_has_beforeunload_handlers();
   main_test_rfh()->PrepareForCommit();
   contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
                               ui::PAGE_TRANSITION_TYPED);
@@ -1123,8 +1103,6 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationPreempted) {
   const GURL url2("http://www.yahoo.com");
   controller().LoadURL(
       url2, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  EXPECT_TRUE(orig_rfh->is_waiting_for_beforeunload_ack());
-  orig_rfh->PrepareForCommit();
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
 
   // Suppose the original renderer navigates before the new one is ready.
@@ -1172,10 +1150,6 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationBackPreempted) {
   entry_id = controller().GetPendingEntry()->GetUniqueID();
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
   TestRenderFrameHost* google_rfh = contents()->GetPendingMainFrame();
-
-  // Simulate beforeunload approval.
-  EXPECT_TRUE(webui_rfh->is_waiting_for_beforeunload_ack());
-  webui_rfh->PrepareForCommit();
 
   // DidNavigate from the pending page.
   contents()->TestDidNavigateWithSequenceNumber(
@@ -1225,13 +1199,6 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationBackPreempted) {
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
   EXPECT_TRUE(contents()->GetPendingMainFrame());
   EXPECT_EQ(entry1, controller().GetPendingEntry());
-
-  // Simulate beforeunload approval.
-  EXPECT_TRUE(google_rfh->is_waiting_for_beforeunload_ack());
-  base::TimeTicks now = base::TimeTicks::Now();
-  google_rfh->PrepareForCommit();
-  google_rfh->OnMessageReceived(
-      FrameHostMsg_BeforeUnload_ACK(0, true, now, now));
 
   // DidNavigate from the first back. This aborts the second back's pending RFH.
   contents()->TestDidNavigateWithSequenceNumber(
@@ -1284,10 +1251,6 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationBackOldNavigationIgnored) {
   entry_id = controller().GetPendingEntry()->GetUniqueID();
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
   TestRenderFrameHost* google_rfh = contents()->GetPendingMainFrame();
-
-  // Simulate beforeunload approval.
-  EXPECT_TRUE(webui_rfh->is_waiting_for_beforeunload_ack());
-  webui_rfh->PrepareForCommit();
 
   // DidNavigate from the pending page.
   contents()->TestDidNavigate(google_rfh, entry_id, true, url2,
@@ -1376,12 +1339,8 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationNotPreemptedByFrame) {
   child_rfh->SendNavigateWithTransition(0, false,
                                         GURL("http://google.com/frame"),
                                         ui::PAGE_TRANSITION_AUTO_SUBFRAME);
-  EXPECT_TRUE(orig_rfh->is_waiting_for_beforeunload_ack());
 
-  // Now simulate the onbeforeunload approval and verify the navigation is
-  // not canceled.
-  orig_rfh->PrepareForCommit();
-  EXPECT_FALSE(orig_rfh->is_waiting_for_beforeunload_ack());
+  // Verify the navigation is not canceled.
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
 }
 
@@ -1402,6 +1361,7 @@ TEST_F(WebContentsImplTest, CrossSiteNotPreemptedDuringBeforeUnload) {
       url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
   int entry1_id = controller().GetPendingEntry()->GetUniqueID();
   TestRenderFrameHost* orig_rfh = main_test_rfh();
+  orig_rfh->set_has_beforeunload_handlers();
   orig_rfh->PrepareForCommit();
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
 
@@ -3177,7 +3137,7 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
     subframe->SendNavigateWithTransition(0, false, initial_url,
                                          ui::PAGE_TRANSITION_AUTO_SUBFRAME);
     subframe->OnMessageReceived(
-        FrameHostMsg_DidStopLoading(subframe->GetRoutingID()));
+        FrameHostMsg_DidStopLoading(subframe->GetRoutingID(), GURL()));
   }
 
   // Navigate the frame to another URL, which will send again
@@ -3192,7 +3152,7 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
     subframe->SendNavigateWithTransition(10, false, foo_url,
                                          ui::PAGE_TRANSITION_AUTO_SUBFRAME);
     subframe->OnMessageReceived(
-        FrameHostMsg_DidStopLoading(subframe->GetRoutingID()));
+        FrameHostMsg_DidStopLoading(subframe->GetRoutingID(), GURL()));
   }
 
   // Since the main frame hasn't sent any DidStopLoading messages, it is
@@ -3228,7 +3188,7 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
     contents()->TestDidNavigate(subframe, entry_id, true, bar_url,
                                 ui::PAGE_TRANSITION_MANUAL_SUBFRAME);
     subframe->OnMessageReceived(
-        FrameHostMsg_DidStopLoading(subframe->GetRoutingID()));
+        FrameHostMsg_DidStopLoading(subframe->GetRoutingID(), GURL()));
   }
 
   // At this point the status should still be loading, since the main frame
@@ -3239,7 +3199,7 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
   // Send the DidStopLoading for the main frame and ensure it isn't loading
   // anymore.
   orig_rfh->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(orig_rfh->GetRoutingID()));
+      FrameHostMsg_DidStopLoading(orig_rfh->GetRoutingID(), GURL()));
   EXPECT_FALSE(contents()->IsLoading());
   EXPECT_FALSE(observer.is_loading());
 }
@@ -3289,7 +3249,7 @@ TEST_F(WebContentsImplTest, NoEarlyStop) {
   current_rfh->SendNavigateWithModificationCallback(
       0, true, kUrl3, base::Bind(SetAsNonUserGesture));
   current_rfh->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(current_rfh->GetRoutingID()));
+      FrameHostMsg_DidStopLoading(current_rfh->GetRoutingID(), GURL()));
   EXPECT_EQ(contents()->GetPendingMainFrame(), pending_rfh);
   EXPECT_TRUE(contents()->IsLoading());
   // It should commit.
@@ -3309,7 +3269,7 @@ TEST_F(WebContentsImplTest, NoEarlyStop) {
   // Simulate the new current RenderFrameHost DidStopLoading. The WebContents
   // should now have stopped loading.
   new_current_rfh->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(new_current_rfh->GetRoutingID()));
+      FrameHostMsg_DidStopLoading(new_current_rfh->GetRoutingID(), GURL()));
   EXPECT_EQ(main_test_rfh(), new_current_rfh);
   EXPECT_FALSE(contents()->IsLoading());
 }

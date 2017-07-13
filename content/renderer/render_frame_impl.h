@@ -658,6 +658,9 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidChangeManifest() override;
   void EnterFullscreen() override;
   void ExitFullscreen() override;
+  void SuddenTerminationDisablerChanged(
+      bool present,
+      blink::WebFrameClient::SuddenTerminationDisablerType type) override;
   void RegisterProtocolHandler(const blink::WebString& scheme,
                                const blink::WebURL& url,
                                const blink::WebString& title) override;
@@ -852,6 +855,7 @@ class CONTENT_EXPORT RenderFrameImpl
                  const FrameReplicationState& replicated_frame_state);
   void OnDeleteFrame();
   void OnStop();
+  void OnDroppedNavigation();
   void OnCollapse(bool collapse);
   void OnShowContextMenu(const gfx::Point& location);
   void OnContextMenuClosed(const CustomContextMenuContext& custom_context);

@@ -595,10 +595,9 @@ void FrameLoader::LoadInSameDocument(
                                        ? std::move(state_object)
                                        : SerializedScriptValue::NullValue());
 
-  if (history_item) {
+  if (history_item)
     RestoreScrollPositionAndViewStateForLoadType(frame_load_type,
                                                  kHistorySameDocumentLoad);
-  }
 
   // We need to scroll to the fragment whether or not a hash change occurred,
   // since the user might have scrolled since the previous navigation.
@@ -1390,6 +1389,13 @@ NavigationPolicy FrameLoader::ShouldContinueForRedirectNavigationPolicy(
       WebTriggeringEventInfo::kNotFromEvent, form);
 }
 
+void FrameLoader::ClientDroppedNavigation() {
+  if (!provisional_document_loader_ || provisional_document_loader_->DidStart())
+    return;
+  provisional_document_loader_->SetSentDidFinishLoad();
+  DetachDocumentLoader(provisional_document_loader_);
+}
+
 NavigationPolicy FrameLoader::CheckLoadCanStart(
     FrameLoadRequest& frame_load_request,
     FrameLoadType type,
@@ -1438,9 +1444,14 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
                             HistoryItem* history_item) {
   DCHECK(Client()->HasWebView());
   ResourceRequest& resource_request = frame_load_request.GetResourceRequest();
+  // LOG(WARNING) << "STARTING WEBKIT LOAD ON: " <<
+  // resource_request.Url().GetString();
+  // base::debug::StackTrace().Print();
+
   NavigationType navigation_type = DetermineNavigationType(
       type, resource_request.HttpBody() || frame_load_request.Form(),
       frame_load_request.TriggeringEvent());
+  // LOG(WARNING) << "navigation_type: " << (int)navigation_type;
   resource_request.SetRequestContext(
       DetermineRequestContextFromNavigationType(navigation_type));
   resource_request.SetFrameType(frame_->IsMainFrame()
@@ -1451,6 +1462,7 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
       provisional_document_loader_ && !provisional_document_loader_->DidStart();
   navigation_policy = CheckLoadCanStart(frame_load_request, type,
                                         navigation_policy, navigation_type);
+  // LOG(WARNING) << "navigation_policy: " << navigation_policy;
   if (navigation_policy == kNavigationPolicyIgnore) {
     if (had_placeholder_client_document_loader &&
         !resource_request.CheckForBrowserSideNavigation()) {
@@ -1487,11 +1499,15 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   // honored.
   if (!had_placeholder_client_document_loader ||
       navigation_policy == kNavigationPolicyHandledByClient) {
+    // LOG(WARNING) << "frame_->GetNavigationScheduler().Cancel();";
+
     frame_->GetNavigationScheduler().Cancel();
   }
 
-  if (frame_load_request.Form())
+  if (frame_load_request.Form()) {
     Client()->DispatchWillSubmitForm(frame_load_request.Form());
+    // LOG(WARNING) << "frame_load_request.Form;";
+  }
 
   provisional_document_loader_->AppendRedirect(
       provisional_document_loader_->GetRequest().Url());
@@ -1512,6 +1528,8 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   DCHECK(provisional_document_loader_);
 
   if (navigation_policy == kNavigationPolicyCurrentTab) {
+    // LOG(WARNING) << "kNavigationPolicyCurrentTab";
+
     provisional_document_loader_->StartLoading();
     // This should happen after the request is sent, so that the state
     // the inspector stored in the matching frameScheduledClientNavigation()
@@ -1522,9 +1540,11 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
     // Check for usage of legacy schemes now. Unsupported schemes will be
     // rewritten by the client, so the FrameFetchContext will not be able to
     // check for those when the navigation commits.
-    if (navigation_policy == kNavigationPolicyHandledByClient)
+    if (navigation_policy == kNavigationPolicyHandledByClient) {
       CheckForLegacyProtocolInSubresource(resource_request,
                                           frame_->GetDocument());
+      // LOG(WARNING) << "kNavigationPolicyHandledByClient";
+    }
     probe::frameScheduledClientNavigation(frame_);
   }
 

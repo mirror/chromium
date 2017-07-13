@@ -247,7 +247,7 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
   } else if (web_contents) {
     content::TestNavigationObserver observer(
         web_contents, number_of_navigations,
-        content::MessageLoopRunner::QuitMode::DEFERRED);
+        content::MessageLoopRunner::QuitMode::IMMEDIATE);
     observer.Wait();
     return;
   }

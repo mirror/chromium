@@ -762,6 +762,11 @@ IPC_MESSAGE_ROUTED0(FrameMsg_SwapIn)
 // Instructs the frame to stop the load in progress, if any.
 IPC_MESSAGE_ROUTED0(FrameMsg_Stop)
 
+// PlzNavigate
+// Informs the renderer that the browser stopped processing a renderer-initiated
+// navigation. It does not stop ongoing loads in the current page.
+IPC_MESSAGE_ROUTED0(FrameMsg_DroppedNavigation)
+
 // A message sent to RenderFrameProxy to indicate that its corresponding
 // RenderFrame has started loading a document.
 IPC_MESSAGE_ROUTED0(FrameMsg_DidStartLoading)
@@ -1133,7 +1138,7 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_DidStartLoading,
                     bool /* to_different_document */)
 
 // Sent when the renderer is done loading a page.
-IPC_MESSAGE_ROUTED0(FrameHostMsg_DidStopLoading)
+IPC_MESSAGE_ROUTED1(FrameHostMsg_DidStopLoading, GURL /* loading_url */)
 
 // Notifies the browser that this frame has new session history information.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateState, content::PageState /* state */)
@@ -1673,6 +1678,13 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_RunFileChooser, content::FileChooserParams)
 // Notification that the urls for the favicon of a site has been determined.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateFaviconURL,
                     std::vector<content::FaviconURL> /* candidates */)
+
+// Messages to signal the presence or absence of beforeunload or unload handlers
+// for a frame. |present| is true if there is at least one of the handlers for
+// the frame.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_BeforeUnloadHandlersPresent,
+                    bool /* present */)
+IPC_MESSAGE_ROUTED1(FrameHostMsg_UnloadHandlersPresent, bool /* present */)
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 
