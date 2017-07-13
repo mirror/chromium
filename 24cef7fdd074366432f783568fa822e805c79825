@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d53e9ca_84cc0711",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-13T05:01:30Z",
+      "side": 1,
+      "message": "Is it possible to do this in JS instead?",
+      "revId": "24cef7fdd074366432f783568fa822e805c79825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
