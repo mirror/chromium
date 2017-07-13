@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "f3ffd142_5789ed91",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-13T10:03:19Z",
+      "side": 1,
+      "message": "Ah right, should be yapf --style\u003dgoogle because of course we don\u0027t use the standard style.\n\n(I\u0027m not sure if it will actually change anything important. The only thing I noticed was surrounding top-level definitions with two blank lines, which is common to both PEP8 and Google style)",
+      "parentUuid": "8bd18eba_184d8cd7",
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbcf4e6d_e879de82",
         "filename": "chrome/browser/search/tools/generate_integrity_header.py",
         "patchSetId": 1
