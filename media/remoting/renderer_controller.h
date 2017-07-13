@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
+#include "base/timer/timer.h"
 #include "media/base/media_observer.h"
 #include "media/remoting/metrics.h"
 #include "media/remoting/shared_session.h"
@@ -69,6 +70,8 @@ class RendererController final : public SharedSession::Client,
   void OnRendererFatalError(StopTrigger stop_trigger);
 
  private:
+  friend class RendererControllerTest;
+
   bool has_audio() const {
     return pipeline_metadata_.has_audio &&
            pipeline_metadata_.audio_decoder_config.IsValidConfig();
@@ -89,7 +92,8 @@ class RendererController final : public SharedSession::Client,
   bool IsAudioCodecSupported();
   bool IsRemoteSinkAvailable();
 
-  // Helper to decide whether to enter or leave Remoting mode.
+  // Helpers to decide whether remoting can be activated.
+  bool CanBeRemoting();
   bool ShouldBeRemoting();
 
   // Determines whether to enter or leave Remoting mode and switches if
@@ -99,8 +103,15 @@ class RendererController final : public SharedSession::Client,
   void UpdateAndMaybeSwitch(StartTrigger start_trigger,
                             StopTrigger stop_trigger);
 
-  // Indicates whether this media element is in full screen.
-  bool is_fullscreen_ = false;
+  // Start the transition to remoting.
+  void StartTransition(StartTrigger start_trigger);
+  // Remoting should not be started. Stop the transition timer if it is running.
+  void StopTransition();
+  // Called when |remoting_start_transition_timer_| is fired.
+  void OnStartTransitionTimerFired(StartTrigger start_trigger);
+
+  // Helper to request switching to remoting renderer.
+  void StartRemoting(StartTrigger start_trigger);
 
   // Indicates whether remoting is started.
   bool remote_rendering_started_ = false;
@@ -132,6 +143,15 @@ class RendererController final : public SharedSession::Client,
   // and never start again for the lifetime of this controller.
   bool encountered_renderer_fatal_error_ = false;
 
+  // Indicates whether the viewport intersection monitoring is activated. It is
+  // only activated when CanBeRemoting() is true.
+  bool acivated_viewport_intersection_monitoring_ = false;
+
+  // Indicates whether activated the viewport intersection monitoring. Updated
+  // when remoting sink starts/stops support remoting the media streams. It is
+  // always false for encrypted contents.
+  // bool activated_viewport_intersection_monitoring_ = false;
+
   // This is initially the SharedSession passed to the ctor, and might be
   // replaced with a different instance later if OnSetCdm() is called.
   scoped_refptr<SharedSession> session_;
@@ -148,6 +168,10 @@ class RendererController final : public SharedSession::Client,
 
   // Not own by this class. Can only be set once by calling SetClient().
   MediaObserverClient* client_ = nullptr;
+
+  // The timer is running when in the transition to start remoting. Remoting is
+  // only started when condition keeps satisfying during the transition.
+  base::OneShotTimer remoting_start_transition_timer_;
 
   base::WeakPtrFactory<RendererController> weak_factory_;
 
