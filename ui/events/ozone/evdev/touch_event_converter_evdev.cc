@@ -33,6 +33,7 @@
 #include "ui/events/ozone/evdev/device_event_dispatcher_evdev.h"
 #include "ui/events/ozone/evdev/touch_evdev_types.h"
 #include "ui/events/ozone/evdev/touch_filter/false_touch_finder.h"
+#include "ui/events/ozone/evdev/touch_filter/inconsistent_speed_filter.h"
 #include "ui/ozone/public/input_controller.h"
 
 namespace {
@@ -152,6 +153,20 @@ void TouchEventConverterEvdev::Initialize(const EventDeviceInfo& info) {
     touch_points_ = 1;
     major_max_ = 0;
     current_slot_ = 0;
+  }
+
+  // Wacom devices (0x2d1f) report at an inconsistent rate, which causes
+  // the pen speed to be very unstable.
+  if (info.vendor_id() == 0x2d1f) {
+    uint16_t pid = info.product_id();
+    if (pid == 0x0163) {
+      // Kevin / Caroline: Every other event is delayed due to tilt scan.
+      inconsistent_speed_filter_.reset(new InconsistentSpeedFilter(2));
+    } else if (pid == 0x5134) {
+      // Eve: Scan cycle of 4 with some delayed for touch scan and others
+      // poorly extrapolating location during tilt scan.
+      inconsistent_speed_filter_.reset(new InconsistentSpeedFilter(8));
+    }
   }
 
   quirk_left_mouse_button_ =
@@ -494,6 +509,9 @@ void TouchEventConverterEvdev::ReportTouchEvent(
   ui::PointerDetails details(event.reported_tool_type, /* pointer_id*/ 0,
                              event.radius_x, event.radius_y, event.pressure,
                              event.tilt_x, event.tilt_y);
+  if (inconsistent_speed_filter_)
+    timestamp = inconsistent_speed_filter_->FilterTimestamp(timestamp, event);
+
   dispatcher_->DispatchTouchEvent(
       TouchEventParams(input_device_.id, event.slot, event_type,
                        gfx::PointF(event.x, event.y), details, timestamp));

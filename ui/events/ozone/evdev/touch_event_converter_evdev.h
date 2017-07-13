@@ -26,6 +26,7 @@ namespace ui {
 
 class DeviceEventDispatcherEvdev;
 class FalseTouchFinder;
+class InconsistentSpeedFilter;
 struct InProgressTouchEvdev;
 
 class EVENTS_OZONE_EVDEV_EXPORT TouchEventConverterEvdev
@@ -146,6 +147,9 @@ class EVENTS_OZONE_EVDEV_EXPORT TouchEventConverterEvdev
 
   // Finds touches that need to be filtered.
   std::unique_ptr<FalseTouchFinder> false_touch_finder_;
+
+  // Filters inconsistent timestamps leading to inconsistent speeds
+  std::unique_ptr<InconsistentSpeedFilter> inconsistent_speed_filter_;
 
   // Records the recent touch events. It is used to fill the feedback reports
   TouchEventLogEvdev touch_evdev_debug_buffer_;
