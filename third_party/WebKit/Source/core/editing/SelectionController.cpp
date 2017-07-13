@@ -784,9 +784,11 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
       Selection().IsHandleVisible() == selection_in_flat_tree.IsHandleVisible())
     return;
   Selection().SetSelection(
-      selection_in_flat_tree,
-      FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle,
-      CursorAlignOnScroll::kIfNeeded, granularity);
+      SetSelectionData::Builder()
+          .SetSelection(ConvertToSelectionInDOMTree(selection_in_flat_tree))
+          .SetCursorAlignOnScroll(CursorAlignOnScroll::kIfNeeded)
+          .SetGranularity(granularity)
+          .Build());
 }
 
 void SelectionController::SetCaretAtHitTestResult(
@@ -1004,7 +1006,7 @@ bool SelectionController::HandleMouseReleaseEvent(
 
     if (Selection().ComputeVisibleSelectionInFlatTree() !=
         CreateVisibleSelection(builder.Build())) {
-      Selection().SetSelection(builder.Build());
+      Selection().SetSelection(ConvertToSelectionInDOMTree(builder.Build()));
     }
 
     handled = true;
@@ -1162,12 +1164,13 @@ void SelectionController::PassMousePressEventToSubframe(
   const VisiblePositionInFlatTree& visible_pos =
       VisiblePositionOfHitTestResult(mev.GetHitTestResult());
   if (visible_pos.IsNull()) {
-    Selection().SetSelection(SelectionInFlatTree());
+    Selection().SetSelection(SelectionInDOMTree());
     return;
   }
-  Selection().SetSelection(SelectionInFlatTree::Builder()
-                               .Collapse(visible_pos.ToPositionWithAffinity())
-                               .Build());
+  Selection().SetSelection(ConvertToSelectionInDOMTree(
+      SelectionInFlatTree::Builder()
+          .Collapse(visible_pos.ToPositionWithAffinity())
+          .Build()));
 }
 
 void SelectionController::InitializeSelectionState() {

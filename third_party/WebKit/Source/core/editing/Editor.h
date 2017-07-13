@@ -252,7 +252,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   IntRect FirstRectForRange(const EphemeralRange&) const;
 
   void RespondToChangedSelection(const Position& old_selection_start,
-                                 FrameSelection::SetSelectionOptions);
+                                 const SetSelectionData&);
 
   bool MarkedTextMatchesAreHighlighted() const;
   void SetMarkedTextMatchesAreHighlighted(bool);
@@ -355,8 +355,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   void RevealSelectionAfterEditingOperation(
       const ScrollAlignment& = ScrollAlignment::kAlignCenterIfNeeded,
       RevealExtentOption = kDoNotRevealExtent);
-  void ChangeSelectionAfterCommand(const SelectionInDOMTree&,
-                                   FrameSelection::SetSelectionOptions);
+  void ChangeSelectionAfterCommand(const SetSelectionData&);
 
   SpellChecker& GetSpellChecker() const;
 

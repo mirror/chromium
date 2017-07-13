@@ -431,16 +431,19 @@ bool TextControlElement::SetSelectionRange(
   }
 #endif  // DCHECK_IS_ON()
   frame->Selection().SetSelection(
-      SelectionInDOMTree::Builder()
-          .Collapse(direction == kSelectionHasBackwardDirection
-                        ? end_position
-                        : start_position)
-          .Extend(direction == kSelectionHasBackwardDirection ? start_position
-                                                              : end_position)
-          .SetIsDirectional(direction != kSelectionHasNoDirection)
-          .Build(),
-      FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle |
-          FrameSelection::kDoNotSetFocus);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder()
+                  .Collapse(direction == kSelectionHasBackwardDirection
+                                ? end_position
+                                : start_position)
+                  .Extend(direction == kSelectionHasBackwardDirection
+                              ? start_position
+                              : end_position)
+                  .SetIsDirectional(direction != kSelectionHasNoDirection)
+                  .Build())
+          .SetDoNotSetFocus(true)
+          .Build());
   return did_change;
 }
 
