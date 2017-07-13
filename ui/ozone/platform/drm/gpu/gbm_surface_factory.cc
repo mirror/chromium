@@ -140,6 +140,14 @@ std::vector<gfx::BufferFormat> GbmSurfaceFactory::GetScanoutFormats(
   return scanout_formats;
 }
 
+std::vector<gfx::BufferAttribute>
+GbmSurfaceFactory::GetBufferAttributesForScanout(
+    gfx::AcceleratedWidget widget) {
+  std::vector<gfx::BufferAttribute> scanout_attributes;
+  drm_thread_proxy_->GetBufferAttributesForScanout(widget, &scanout_attributes);
+  return scanout_attributes;
+}
+
 scoped_refptr<gfx::NativePixmap> GbmSurfaceFactory::CreateNativePixmap(
     gfx::AcceleratedWidget widget,
     gfx::Size size,

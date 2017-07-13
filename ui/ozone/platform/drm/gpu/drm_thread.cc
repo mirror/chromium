@@ -168,6 +168,12 @@ void DrmThread::GetScanoutFormats(
   display_manager_->GetScanoutFormats(widget, scanout_formats);
 }
 
+void DrmThread::GetBufferAttributesForScanout(
+    gfx::AcceleratedWidget widget,
+    std::vector<gfx::BufferAttribute>* scanout_attributes) {
+  display_manager_->GetBufferAttributesForScanout(widget, scanout_attributes);
+}
+
 void DrmThread::SchedulePageFlip(gfx::AcceleratedWidget widget,
                                  const std::vector<OverlayPlane>& planes,
                                  SwapCompletionOnceCallback callback) {
