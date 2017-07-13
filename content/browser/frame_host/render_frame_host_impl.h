@@ -116,7 +116,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
     : public RenderFrameHost,
       public base::SupportsUserData,
       NON_EXPORTED_BASE(public mojom::FrameHost),
-      NON_EXPORTED_BASE(public mojom::FrameHostInterfaceBroker),
       public BrowserAccessibilityDelegate,
       public SiteInstanceImpl::Observer,
       public NON_EXPORTED_BASE(service_manager::mojom::InterfaceProvider),
@@ -194,10 +193,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void DisableBeforeUnloadHangMonitorForTesting() override;
   bool IsBeforeUnloadHangMonitorDisabledForTesting() override;
   bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) override;
-
-  // mojom::FrameHostInterfaceBroker
-  void GetInterfaceProvider(
-      service_manager::mojom::InterfaceProviderRequest interfaces) override;
 
   // IPC::Sender
   bool Send(IPC::Message* msg) override;
@@ -823,9 +818,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
                            const gfx::Rect& initial_rect,
                            bool user_gesture);
 
-  // mojom::FrameHost
+  // mojom::FrameHost:
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
+  void BindInterfaceProviderForNewDocument(
+      service_manager::mojom::InterfaceProviderRequest request) override;
 
   void RunCreateWindowCompleteCallback(CreateNewWindowCallback callback,
                                        mojom::CreateNewWindowReplyPtr reply,
@@ -1202,8 +1199,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // same Previews status as the top-level frame.
   PreviewsState last_navigation_previews_state_;
 
-  mojo::Binding<mojom::FrameHostInterfaceBroker>
-      frame_host_interface_broker_binding_;
   mojo::AssociatedBinding<mojom::FrameHost> frame_host_associated_binding_;
   mojom::FramePtr frame_;
   mojom::FrameBindingsControlAssociatedPtr frame_bindings_control_;
@@ -1253,8 +1248,15 @@ class CONTENT_EXPORT RenderFrameHostImpl
   std::unique_ptr<JavaInterfaceProvider> java_interface_registry_;
 #endif
 
-  mojo::BindingSet<service_manager::mojom::InterfaceProvider>
-      interface_provider_bindings_;
+  // The InterfaceProvider binding that is re-bound to a newly created message
+  // pipe each time a non-same-document navigation commits.
+  //
+  // GetInterface messages dispatched through this binding are therefore
+  // guaranteed to originate from document corresponding to the last committed
+  // navigation; or from the inital empty document if no real navigation has
+  // ever been committed in the frame.
+  mojo::Binding<service_manager::mojom::InterfaceProvider>
+      document_scoped_interface_provider_binding_;
 
   // IPC-friendly token that represents this host for AndroidOverlays, if we
   // have created one yet.
