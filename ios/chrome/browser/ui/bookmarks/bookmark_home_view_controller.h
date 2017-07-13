@@ -23,6 +23,7 @@ class BookmarkNode;
 }  // namespace bookmarks
 
 @class BookmarkCollectionView;
+@class BookmarkEditingBar;
 @class BookmarkEditViewController;
 @class BookmarkFolderEditorViewController;
 @class BookmarkFolderViewController;
@@ -35,7 +36,16 @@ class BookmarkNode;
 
 // Class to navigate the bookmark hierarchy, needs subclassing for tablet /
 // handset case.
-@interface BookmarkHomeViewController : UIViewController
+@interface BookmarkHomeViewController : UIViewController {
+ @protected
+  // The following 2 ivars both represent the set of nodes being edited.
+  // The set is for fast lookup.
+  // The vector maintains the order that edit nodes were added.
+  // Use the relevant instance methods to modify these two ivars in tandem.
+  // DO NOT modify these two ivars directly.
+  std::set<const bookmarks::BookmarkNode*> _editNodes;
+  std::vector<const bookmarks::BookmarkNode*> _editNodesOrdered;
+}
 
 - (instancetype)initWithNibName:(NSString*)nibNameOrNil
                          bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
@@ -92,6 +102,19 @@ class BookmarkNode;
 @property(nonatomic, strong, readonly)
     BookmarkFolderEditorViewController* folderEditor;
 
+// Whether the view controller is in editing mode.
+@property(nonatomic, assign, readonly) BOOL editing;
+
+// The set of selected index paths for edition.
+@property(nonatomic, strong, readonly) NSMutableArray* editIndexPaths;
+
+// The layout code in this class relies on the assumption that the editingBar
+// has the same frame as the navigationBar.
+@property(nonatomic, strong, readonly) BookmarkEditingBar* editingBar;
+
+// Whether the panel view can be brought into view and hidden by swipe gesture.
+@property(nonatomic, assign) BOOL sideSwipingPossible;
+
 // This method should be called at most once in the life-cycle of the class.
 // It should be called at the soonest possible time after the view has been
 // loaded, and the bookmark model is loaded.
@@ -111,6 +134,9 @@ class BookmarkNode;
 // The active collection view that corresponds to primaryMenuItem.
 - (UIView<BookmarkHomePrimaryView>*)primaryView;
 
+// Returns NSIndexPath for a given cell.
+- (NSIndexPath*)indexPathForCell:(UICollectionViewCell*)cell;
+
 // The controller managing the display of the promo cell and the promo view
 // controller.
 @property(nonatomic, strong, readonly)
@@ -123,6 +149,11 @@ class BookmarkNode;
 
 #pragma mark - Action sheet callbacks
 
+// Enters into edit mode by selecting the given node corresponding to the
+// given cell.
+- (void)selectFirstNode:(const bookmarks::BookmarkNode*)node
+               withCell:(UICollectionViewCell*)cell;
+
 // Opens the folder move editor for the given node.
 - (void)moveNodes:(const std::set<const bookmarks::BookmarkNode*>&)nodes;
 
@@ -130,6 +161,49 @@ class BookmarkNode;
 - (void)deleteNodes:(const std::set<const bookmarks::BookmarkNode*>&)nodes;
 
 - (void)editNode:(const bookmarks::BookmarkNode*)node;
+
+#pragma mark - Edit
+
+// Replaces |_editNodes| and |_editNodesOrdered| with new container objects.
+- (void)resetEditNodes;
+// Adds |node| corresponding to a |cell| if it isn't already present.
+- (void)insertEditNode:(const bookmarks::BookmarkNode*)node
+           atIndexPath:(NSIndexPath*)indexPath;
+// Removes |node| corresponding to a |cell| if it's present.
+- (void)removeEditNode:(const bookmarks::BookmarkNode*)node
+           atIndexPath:(NSIndexPath*)indexPath;
+// This method updates the property, and resets the edit nodes.
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated;
+
+// This method statelessly updates the editing top bar from |_editNodes| and
+// |editing|.
+- (void)updateEditingStateAnimated:(BOOL)animated;
+// Shows the editing bar, this method MUST be overridden by subclass to
+// tailor the behaviour according to device.
+- (void)showEditingBarAnimated:(BOOL)animated;
+// Hides the editing bar, this method MUST be overridden by subclass to
+// tailor the behaviour according to device.
+- (void)hideEditingBarAnimated:(BOOL)animated;
+
+// Instaneously updates the shadow of the edit bar.
+// This method should be called anytime:
+//  (1)|editing| property changes.
+//  (2)The primary view changes.
+//  (3)The primary view's collection view is scrolled.
+// (2) is not necessary right now, as it is only possible to switch primary
+// views when |editing| is NO. When |editing| is NO, the shadow is never shown.
+- (void)updateEditBarShadow;
+
+#pragma mark - Editing bar callbacks
+// The cancel button was tapped on the editing bar.
+- (void)editingBarCancel;
+// The move button was tapped on the editing bar.
+- (void)editingBarMove;
+// The delete button was tapped on the editing bar.
+- (void)editingBarDelete;
+// The edit button was tapped on the editing bar.
+- (void)editingBarEdit;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BOOKMARKS_HOME_VIEW_CONTROLLER_H_
