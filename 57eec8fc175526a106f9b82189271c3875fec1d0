@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04e30fe5_e3627598",
+        "filename": "chrome/browser/chrome_quota_permission_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-13T16:54:12Z",
+      "side": 1,
+      "message": "Why are you logging a warning here?",
+      "range": {
+        "startLine": 287,
+        "startChar": 5,
+        "endLine": 287,
+        "endChar": 25
+      },
+      "revId": "57eec8fc175526a106f9b82189271c3875fec1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e05aa2_ad3c11c1",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1791,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-13T16:54:12Z",
+      "side": 1,
+      "message": "Please add a comment as I have no idea why there is an early out here.",
+      "range": {
+        "startLine": 1791,
+        "startChar": 11,
+        "endLine": 1791,
+        "endChar": 23
+      },
+      "revId": "57eec8fc175526a106f9b82189271c3875fec1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
