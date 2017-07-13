@@ -2357,9 +2357,12 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
     scrolling_contents_layer_ = nullptr;
     layer_changed = true;
     if (scrolling_coordinator) {
-      scrolling_coordinator->ScrollableAreaScrollLayerDidChange(
-          owning_layer_.GetScrollableArea());
-      scrolling_coordinator->ScrollableAreasDidChange();
+      if (PaintLayerScrollableArea* scrollable_area =
+              owning_layer_.GetScrollableArea()) {
+        scrolling_coordinator->ScrollableAreaScrollLayerDidChange(
+            owning_layer_.GetScrollableArea());
+        scrolling_coordinator->ScrollableAreasDidChange();
+      }
     }
   }
 
