@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "daf55145_6b9eed61",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-13T22:26:41Z",
+      "side": 1,
+      "message": "It\u0027s tested mainly through layer_tree_host_common_unittest and layer_tree_host_impl_unittest. Existing animation player related test logic exists in the former, so I\u0027ve added a new test case there. It actually caught a bug (I forgot to initialize the new member data to false).",
+      "parentUuid": "63f2708b_c9fe2ae7",
+      "revId": "7450972e09f7bbe78929bb2c8a051c36018351f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c253138_14240bae",
         "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "7450972e09f7bbe78929bb2c8a051c36018351f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684ac015_d2d94221",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-13T22:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c253138_14240bae",
+      "revId": "7450972e09f7bbe78929bb2c8a051c36018351f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
