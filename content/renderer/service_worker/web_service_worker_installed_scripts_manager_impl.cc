@@ -38,10 +38,11 @@ std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager>
 WebServiceWorkerInstalledScriptsManagerImpl::Create(
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
-  auto installed_scripts_manager =
-      base::WrapUnique<WebServiceWorkerInstalledScriptsManagerImpl>(
-          new WebServiceWorkerInstalledScriptsManagerImpl(
-              std::move(installed_scripts_info->installed_urls)));
+  std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager>
+      installed_scripts_manager =
+          base::WrapUnique<WebServiceWorkerInstalledScriptsManagerImpl>(
+              new WebServiceWorkerInstalledScriptsManagerImpl(
+                  std::move(installed_scripts_info->installed_urls)));
   // TODO(shimazu): Implement a container class which is shared among
   // WebServiceWorkerInstalledScriptsManagerImpl and Internal to pass the data
   // between the IO thread and the worker thread.
