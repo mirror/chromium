@@ -18,7 +18,7 @@ FakeVideoEncodeAccelerator::FakeVideoEncodeAccelerator(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
     : task_runner_(task_runner),
       will_initialization_succeed_(true),
-      client_(NULL),
+      client_(nullptr),
       next_frame_is_first_frame_(true),
       weak_this_factory_(this) {}
 
@@ -46,9 +46,8 @@ bool FakeVideoEncodeAccelerator::Initialize(VideoPixelFormat input_format,
                                             VideoCodecProfile output_profile,
                                             uint32_t initial_bitrate,
                                             Client* client) {
-  if (!will_initialization_succeed_) {
+  if (!will_initialization_succeed_)
     return false;
-  }
   if (output_profile == VIDEO_CODEC_PROFILE_UNKNOWN ||
       output_profile > VIDEO_CODEC_PROFILE_MAX) {
     return false;
@@ -68,6 +67,7 @@ void FakeVideoEncodeAccelerator::Encode(
     const scoped_refptr<VideoFrame>& frame,
     bool force_keyframe) {
   DCHECK(client_);
+
   queued_frames_.push(force_keyframe);
   EncodeTask();
 }
@@ -105,8 +105,8 @@ void FakeVideoEncodeAccelerator::DoRequireBitstreamBuffers(
     unsigned int input_count,
     const gfx::Size& input_coded_size,
     size_t output_buffer_size) const {
-  client_->RequireBitstreamBuffers(
-      input_count, input_coded_size, output_buffer_size);
+  client_->RequireBitstreamBuffers(input_count, input_coded_size,
+                                   output_buffer_size);
 }
 
 void FakeVideoEncodeAccelerator::EncodeTask() {
