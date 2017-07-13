@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ce57773_b8e1a5cb",
+        "filename": "ash/system/tray/tray_event_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "Done.\n\nI, oka@ and blakeo@ in TOK started to maintain VK related code. I hope the situation will get better. For container window management, I will clean it up as part of http://crbug.com/731537.",
+      "parentUuid": "70c4b21d_e0c5a4f5",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dca4f2f_bc6af659",
         "filename": "ash/system/tray/tray_event_filter_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686afd42_7f810695",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dca4f2f_bc6af659",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "638a79dc_32617496",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4a0a335_d5449bab",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e686de_9771dc90",
         "filename": "ash/system/tray/tray_event_filter_unittest.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2965c118_2a71a5e2",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92e686de_9771dc90",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "02394ed3_49babca4",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe197bf4_1cdba087",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51c649d_141df1e2",
         "filename": "ash/system/tray/tray_event_filter_unittest.cc",
         "patchSetId": 8
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-12T17:30:23Z",
       "side": 1,
       "message": "Do you have to create your own StatusAreaWidget? AshTestBase makes one for you, which you can access via StatusAreaWidgetTestHelper.",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5527762_5cd6f96b",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "I switched to use that from AshTestBase. Thanks!",
+      "parentUuid": "e51c649d_141df1e2",
       "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d1c2597b_16e0b5f4",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f5c466c_3c4afacb",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65527806_95428a2f",
         "filename": "ash/system/tray/tray_event_filter_unittest.cc",
         "patchSetId": 8
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-12T17:30:23Z",
       "side": 1,
       "message": "Thank you for adding test coverage, not only for your bug but also for the other cases!\n\nThese are nice tests -- I like how they are short and have the pattern of comment/action/expectation.",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68810a90_2c8c61f0",
+        "filename": "ash/system/tray/tray_event_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "65527806_95428a2f",
       "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "fd8fd6de_f08ae1bd",
+        "filename": "chrome/browser/ui/ash/app_list/app_list_presenter_delegate_mus.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fea6c984_0811d58e",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43a800b4_af747cc6",
         "filename": "ui/views/pointer_watcher.h",
         "patchSetId": 8
@@ -169,6 +331,24 @@
       "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa01da5a_8bf31c55",
+        "filename": "ui/views/pointer_watcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T09:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43a800b4_af747cc6",
+      "revId": "a20c6c5c3b77a3a10110423add31bbbb3b6e4ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
