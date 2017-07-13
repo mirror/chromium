@@ -184,6 +184,8 @@ class VertexShader {
   // Use arrays of uniforms for matrix, texTransform, and opacity.
   bool use_uniform_arrays_ = false;
 
+  bool use_quad_index_varying_ = false;
+
   PositionSource position_source_ = POSITION_SOURCE_ATTRIBUTE;
   TexCoordSource tex_coord_source_ = TEX_COORD_SOURCE_NONE;
   TexCoordTransform tex_coord_transform_ = TEX_COORD_TRANSFORM_NONE;
@@ -276,6 +278,9 @@ class FragmentShader {
 
   bool has_background_color_ = false;
   int background_color_location_ = -1;
+
+  bool has_tex_clamp_rect_ = false;
+  int tex_clamp_rect_location_ = -1;
 
   TexCoordPrecision tex_coord_precision_ = TEX_COORD_PRECISION_NA;
   SamplerType sampler_type_ = SAMPLER_TYPE_NA;
