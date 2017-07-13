@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8adc6da_a55c5d32",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "This should be above all the other headers",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719b56d1_154605e7",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "Order of methods here should match order in header",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e596dad_f538d002",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35cbbbb8_dde8575b",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);?",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ee7bef_d68ebae6",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "Move to the CC file?",
+      "range": {
+        "startLine": 8,
+        "startChar": 18,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b200c9a0_11b95751",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "Can be moved to the CC file.",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0008a1_57c5e594",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "This can be forward declared and included in the cc file.",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0251e6_d0c56160",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "LogForTests...()",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98aaaf45_43241d5b",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "Suggest making these private and adding a std::unique_ptr\u003cUrlLog\u003e CreateForTests method.\n\nIf you keep them public, they should go first (constructor/destructor always go before all other methods in the section)",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63beb570_7845495f",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "include base/macros.h for DISALLOW_COPY_AND_ASSIGN.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d682a809_c669e7ac",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "nit:  new files shouldn\u0027t use the (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 26,
+        "endLine": 1,
+        "endChar": 34
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd5979e_10006dd4",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "I think it\u0027s better just to have two copies of this test, one in chrome/browser/net, and one in content/shell.  Duplicating code isn\u0027t great, but still seems the better option.",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9f73c9_2694c30a",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "Can this all be moved into the constructor?",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401b74a7_603727fa",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "The capitalization is wrong, this should be GetUrl.\n\nBoth arguments should be passed in by const reference.",
+      "range": {
+        "startLine": 58,
+        "startChar": 14,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32396742_fdb89e10",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "Also, I think just spec() is fine.  I don\u0027t think any of the URLs should be invalid?  If they are, they may not appear in the log (If the main one is invalid, subresources won\u0027t appear.  If subresource URLs are bad, blink may not send the requests to the browser process, or RDH may not send them to net::URLRequest).",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08192dc_1551cd39",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "This should be returning a GURL (It\u0027s a little weird to convert a GURL to a string and then have one consumer convert it back to a GURL)",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6964f474_8d72342a",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this needed, but if we want to do this, makes more sense right below where we initialize log_path_",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e47302f_245c646e",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "Hrm...I thought Windows would complain about opening the file multiple times at once, when just using fopen.  I guess not.",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 19
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf71ff51_9db60602",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "since these are constants, recommend just doing:\n\nconst char* const kExpectedFiles[] \u003d {...};\n\nYou can still use the same syntax for the for loop, too.",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5234df10_bdab3fed",
+        "filename": "components/url_log/url_log_export.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "nit:  -(c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 35,
+        "endLine": 1,
+        "endChar": 42
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952315c4_035ac766",
+        "filename": "components/url_log/url_log_export.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "COMPONENTS_URL_LOG_URL_LOG_EXPORT_H_",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 36
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d21ac9_3f7c6576",
+        "filename": "components/url_log/url_log_unittest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T17:54:37Z",
+      "side": 1,
+      "message": "include gurl.h",
+      "range": {
+        "startLine": 36,
+        "startChar": 18,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
