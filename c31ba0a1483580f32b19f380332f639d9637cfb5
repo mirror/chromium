@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b029700f_1aeffee8",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-13T00:35:26Z",
+      "side": 1,
+      "message": "nit: These should be in alphabetical order",
+      "revId": "c31ba0a1483580f32b19f380332f639d9637cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86614cd_305dc386",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-13T00:35:26Z",
+      "side": 1,
+      "message": "nit: Add a comment saying why we don\u0027t enable the cache for these.",
+      "range": {
+        "startLine": 304,
+        "startChar": 4,
+        "endLine": 304,
+        "endChar": 13
+      },
+      "revId": "c31ba0a1483580f32b19f380332f639d9637cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2033fc9_4abf2bfe",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-13T00:35:26Z",
+      "side": 1,
+      "message": "ckear-data",
+      "range": {
+        "startLine": 334,
+        "startChar": 19,
+        "endLine": 334,
+        "endChar": 24
+      },
+      "revId": "c31ba0a1483580f32b19f380332f639d9637cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d48673_01480263",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-13T00:35:26Z",
+      "side": 1,
+      "message": "The goal is to replace build/android/adb_gdb_chrome_public, so we should have this pass --program-name and --package-name\n\nAlso - I think the first entry in flags here needs to be gdb_script_path.",
+      "range": {
+        "startLine": 346,
+        "startChar": 7,
+        "endLine": 346,
+        "endChar": 12
+      },
+      "revId": "c31ba0a1483580f32b19f380332f639d9637cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37b5960_6468e23d",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-13T00:35:26Z",
+      "side": 1,
+      "message": "All other commands will end up using the adb binary within the catapult/ directory (via device_utils), we should be sure to use the same one here.\n\ndevil/android/sdk/adb_wrapper.py: GetAdbPath()\n\nAlso - since you\u0027re not writing the cache for this command, use os.execv.",
+      "range": {
+        "startLine": 348,
+        "startChar": 15,
+        "endLine": 348,
+        "endChar": 18
+      },
+      "revId": "c31ba0a1483580f32b19f380332f639d9637cfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
