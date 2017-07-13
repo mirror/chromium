@@ -19,10 +19,8 @@ class SingleThreadTaskRunner;
 namespace media {
 class AudioManager;
 
-// Work in progress: Provides asynchronous interface to AudioManager. All the
-// AudioManager clients will be switched to it, in preparation for moving
-// to Mojo audio service.
-class MEDIA_EXPORT AudioSystem {
+// Provides asynchronous interface to access audio device information
+class MEDIA_EXPORT AudioSystemInterface {
  public:
   // Replies are asynchronously sent from audio system thread to the thread the
   // call is issued on. Attention! Audio system thread may outlive the client
@@ -36,20 +34,15 @@ class MEDIA_EXPORT AudioSystem {
   using OnInputDeviceInfoCallback = base::OnceCallback<
       void(const AudioParameters&, const AudioParameters&, const std::string&)>;
 
-  // Must not be called on audio system thread if it differs from the one
-  // AudioSystem is destroyed on. See http://crbug.com/705455.
-  static AudioSystem* Get();
-
-  virtual ~AudioSystem();
+  virtual ~AudioSystemInterface() {}
 
   // Callback may receive invalid parameters, it means the specified device is
   // not found. This is best-effort: valid parameters do not guarantee existence
   // of the device.
   // TODO(olka,tommi): fix all AudioManager implementations to return invalid
   // parameters if the device is not found.
-  virtual void GetInputStreamParameters(
-      const std::string& device_id,
-      OnAudioParamsCallback on_params_cb) const = 0;
+  virtual void GetInputStreamParameters(const std::string& device_id,
+                                        OnAudioParamsCallback on_params_cb) = 0;
 
   // If media::AudioDeviceDescription::IsDefaultDevice(device_id) is true,
   // callback will receive the parameters of the default output device.
@@ -60,17 +53,17 @@ class MEDIA_EXPORT AudioSystem {
   // parameters if the device is not found.
   virtual void GetOutputStreamParameters(
       const std::string& device_id,
-      OnAudioParamsCallback on_params_cb) const = 0;
+      OnAudioParamsCallback on_params_cb) = 0;
 
-  virtual void HasInputDevices(OnBoolCallback on_has_devices_cb) const = 0;
+  virtual void HasInputDevices(OnBoolCallback on_has_devices_cb) = 0;
 
-  virtual void HasOutputDevices(OnBoolCallback on_has_devices_cb) const = 0;
+  virtual void HasOutputDevices(OnBoolCallback on_has_devices_cb) = 0;
 
   // Replies with device descriptions of input audio devices if |for_input| is
   // true, and of output audio devices otherwise.
   virtual void GetDeviceDescriptions(
-      OnDeviceDescriptionsCallback on_descriptions_cb,
-      bool for_input) = 0;
+      bool for_input,
+      OnDeviceDescriptionsCallback on_descriptions_cb) = 0;
 
   // Replies with an empty string if there is no associated output device found.
   virtual void GetAssociatedOutputDeviceID(
@@ -83,8 +76,19 @@ class MEDIA_EXPORT AudioSystem {
   virtual void GetInputDeviceInfo(
       const std::string& input_device_id,
       OnInputDeviceInfoCallback on_input_device_info_cb) = 0;
+};
 
-  virtual base::SingleThreadTaskRunner* GetTaskRunner() const = 0;
+// AudioSystemInterface methods must be called on GetTaskRunner() only.
+class MEDIA_EXPORT AudioSystemNonThreadSafe : public AudioSystemInterface {
+ public:
+  // Can be called on any thread.
+  virtual base::SingleThreadTaskRunner* GetTaskRunner() = 0;
+};
+
+// Methods can be called on any thread.
+class MEDIA_EXPORT AudioSystem : public AudioSystemInterface {
+ public:
+  static AudioSystem* Get();
 
  protected:
   // Sets the global AudioSystem pointer to the specified non-null value.

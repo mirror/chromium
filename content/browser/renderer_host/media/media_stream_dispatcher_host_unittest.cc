@@ -37,6 +37,7 @@
 #include "ipc/ipc_message_macros.h"
 #include "media/audio/audio_device_description.h"
 #include "media/audio/audio_system_impl.h"
+#include "media/audio/local_audio_system.h"
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_thread.h"
 #include "media/base/media_switches.h"
@@ -251,7 +252,8 @@ class MediaStreamDispatcherHostTest : public testing::Test {
         origin_(GURL("https://test.com")) {
     audio_manager_.reset(new media::MockAudioManager(
         base::MakeUnique<media::TestAudioThread>()));
-    audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
+    audio_system_ = base::MakeUnique<media::AudioSystemImpl>(
+        base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()));
     // Make sure we use fake devices to avoid long delays.
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseFakeDeviceForMediaStream);
@@ -260,7 +262,8 @@ class MediaStreamDispatcherHostTest : public testing::Test {
     mock_video_capture_provider_ = mock_video_capture_provider.get();
     // Create our own MediaStreamManager.
     media_stream_manager_ = base::MakeUnique<MediaStreamManager>(
-        audio_system_.get(), std::move(mock_video_capture_provider));
+        audio_system_.get(), audio_manager_->GetTaskRunner(),
+        std::move(mock_video_capture_provider));
 
     host_ = new MockMediaStreamDispatcherHost(
         browser_context_.GetMediaDeviceIDSalt(),
