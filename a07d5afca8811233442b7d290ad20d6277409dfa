@@ -1,0 +1,331 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a684161_21cd9584",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "Nope :)",
+      "range": {
+        "startLine": 45,
+        "startChar": 75,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af7075b_d42521cb",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "nit: Just SplitTileVector? The \"ByAttribute\" confused me...",
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00030072_a176effa",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "This will create a vector of this size, containing empty strings, which is not what you want. Keep the reserve() calls.",
+      "range": {
+        "startLine": 184,
+        "startChar": 51,
+        "endLine": 184,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdef800c_04e39f91",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 206,
+        "startChar": 54,
+        "endLine": 206,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3605f9b3_79d0445c",
+        "filename": "chrome/browser/search/instant_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "We don\u0027t (for the foreseeable future) :)\n\n// Not used on desktop.",
+      "range": {
+        "startLine": 314,
+        "startChar": 39,
+        "endLine": 314,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf62b1b_b761514f",
+        "filename": "components/ntp_tiles/constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "Not \"MostLikely\", it\u0027s completely unrelated to that.",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b41f09_3985812c",
+        "filename": "components/ntp_tiles/exploration_section.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "It doesn\u0027t actually contain the tiles though.",
+      "range": {
+        "startLine": 14,
+        "startChar": 77,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229906f3_3fde56ef",
+        "filename": "components/ntp_tiles/exploration_section.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "Can the title of a section ever change? If not, I\u0027d just provide a GetSectionTitle(type) function and get rid of this struct.",
+      "range": {
+        "startLine": 17,
+        "startChar": 23,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599d4955_a48f703f",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "What\u0027s up with the PERSONALIZED section? That would never come out of PopularSites, would it?!",
+      "range": {
+        "startLine": 545,
+        "startChar": 52,
+        "endLine": 545,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455824b2_8237a755",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "\u0026",
+      "range": {
+        "startLine": 548,
+        "startChar": 43,
+        "endLine": 548,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4eaefcb_18feb83b",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "Is it guaranteed that every section (type) always exists?",
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8475130_f8c3ac86",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 247,
+        "startChar": 62,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc788e46_919c4fcb",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "Why not just check section.type?",
+      "range": {
+        "startLine": 252,
+        "startChar": 77,
+        "endLine": 252,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5055be_5d5af1e8",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "Er.. what? PERSONALIZED \u003d\u003d popular sites?! Those aren\u0027t personalized.",
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca1d91c_3d34662e",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T08:31:41Z",
+      "side": 1,
+      "message": "All the +1s and -1s are super confusing, and easy to get wrong. I think this is because PERSONALIZED is weird, maybe we can discuss the design offline?",
+      "range": {
+        "startLine": 364,
+        "startChar": 44,
+        "endLine": 364,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
