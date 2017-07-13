@@ -278,6 +278,13 @@ interface WindowManagerClient {
   AddAccelerators(array<WmAccelerator> accelerators) => (bool success);
   RemoveAccelerator(uint32 id);
 
+  // Some platforms want to hide the cursor when the user presses a key, but
+  // only on certain keys. When |key_event_matchers| is non-empty, the window
+  // server will attempt to match all keys being dispatched to windows to this
+  // list. If there is no match, the window server will hide the cursor. (The
+  // list of keys to *not* hide on is much shorter than the list of all keys.)
+  SetCursorOnKeyList(array<EventMatcher> show_cursor_matchers);
+
   // Sets the root of a particular display. This is only applicable when the
   // WindowTree was created with a value of false for
   // |automatically_create_display_roots| (see
