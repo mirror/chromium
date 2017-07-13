@@ -22,13 +22,13 @@
 #ifndef LayoutSelection_h
 #define LayoutSelection_h
 
-#include "core/editing/Position.h"
-#include "core/editing/VisibleSelection.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
+class IntRect;
 class FrameSelection;
+class LayoutObject;
 
 // This class represents a selection range in layout tree for painting and
 // paint invalidation.
