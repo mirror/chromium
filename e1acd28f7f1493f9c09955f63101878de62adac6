@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5891f25f_acc520fd",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T00:51:18Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ(widget, new_tab_promo_);",
+      "revId": "e1acd28f7f1493f9c09955f63101878de62adac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7507e5a_9120ce9f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T00:51:18Z",
+      "side": 1,
+      "message": "With ScopedObserver, I\u0027m fairly certain you also need scoped_observer_.Remove(new_tab_promo_); before this. Otherwise it will just keep accumulating freed pointers.",
+      "revId": "e1acd28f7f1493f9c09955f63101878de62adac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce544b6c_b1496bf2",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T00:51:18Z",
+      "side": 1,
+      "message": "It\u0027s a bit inaccurate to say this manages widgets. Perhaps \"Observers for Widgets created by NewTabButton. Currently only the NewTabPromo.\"",
+      "revId": "e1acd28f7f1493f9c09955f63101878de62adac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfbaa89b_1815f462",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T00:51:18Z",
+      "side": 1,
+      "message": "We usually put the observer class in the second argument. i.e. NewTabButton -\u003e WidgetObserver",
+      "range": {
+        "startLine": 96,
+        "startChar": 32,
+        "endLine": 96,
+        "endChar": 44
+      },
+      "revId": "e1acd28f7f1493f9c09955f63101878de62adac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebde0d09_045efb3d",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 22
+      },
+      "lineNbr": 2106,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T00:51:18Z",
+      "side": 1,
+      "message": "this is the section where it should go\n\n(Mac uses toolkit-views for \"secondary\" UI, but it doesn\u0027t use BrowserView / \"primary\" UI)",
+      "revId": "e1acd28f7f1493f9c09955f63101878de62adac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
