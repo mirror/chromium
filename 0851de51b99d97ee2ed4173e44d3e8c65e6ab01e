@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d75d10a_fa08cdf4",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-13T01:05:37Z",
+      "side": 1,
+      "message": "Why are you comparing the texture_target of the two mailboxes here? Where is the producer that produces these kind of VideoFrames?\n\nIn your case, don\u0027t you have only one mailbox with one NV12 texture? Are you relying on the fact that mailbox_holder.texture_target is initialized to TEXTURE_2D?",
+      "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc0dbf14_5df237f7",
         "filename": "media/gpu/vaapi_drm_picture.cc",
         "patchSetId": 2
@@ -13,6 +30,40 @@
       "writtenOn": "2017-07-13T00:56:03Z",
       "side": 1,
       "message": "I already commented on this method in the other CL and I\u0027m not quite sure why you didn\u0027t address this already.\n\nAllowOverlay returning true at this level is completely fine. As you well know, it just means that the compositor will consider the VideoFrame originating from this picture as an overlay. DrmOverlayValidator will be used to determine if it can actually be scanned out. If leaving this to true break anything, we need to fix whatever is broken in ozone/overlay validation.",
+      "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0597eeac_71bd1948",
+        "filename": "ui/gfx/native_pixmap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-13T01:05:37Z",
+      "side": 1,
+      "message": "Please remove this, it\u0027s not needed.",
+      "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6c1bab_fb1177aa",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-13T01:05:37Z",
+      "side": 1,
+      "message": "I really think it\u0027s a bad idea to convert from gbmflags back to BufferUsage and it shouldn\u0027t be needed. Please remove.",
       "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
