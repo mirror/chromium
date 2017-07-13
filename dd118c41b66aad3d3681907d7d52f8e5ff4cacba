@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "369de868_a8df217a",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-13T15:55:40Z",
+      "side": 1,
+      "message": "Good point, will take quite some changes throughout the code tho.",
+      "parentUuid": "f0fca525_510f297a",
+      "range": {
+        "startLine": 81,
+        "startChar": 14,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27bd56bc_e7b3553e",
         "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6baaecb8_83da7eca",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-13T15:55:40Z",
+      "side": 1,
+      "message": "Good point, updated comment.",
+      "parentUuid": "27bd56bc_e7b3553e",
+      "range": {
+        "startLine": 83,
+        "startChar": 67,
+        "endLine": 84,
+        "endChar": 16
+      },
+      "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8023e348_d60b7a56",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-13T15:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da7f370_2d347516",
+      "range": {
+        "startLine": 104,
+        "startChar": 12,
+        "endLine": 104,
+        "endChar": 31
+      },
+      "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "922a3733_0890b406",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27056a28_7a7cc13a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-13T15:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "922a3733_0890b406",
+      "range": {
+        "startLine": 120,
+        "startChar": 12,
+        "endLine": 120,
+        "endChar": 31
+      },
+      "revId": "dd118c41b66aad3d3681907d7d52f8e5ff4cacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
