@@ -126,6 +126,8 @@ class PaymentRequest : public mojom::PaymentRequest,
   // Whether a completion was already recorded for this Payment Request.
   bool has_recorded_completion_ = false;
 
+  base::WeakPtrFactory<PaymentRequest> weak_ptr_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(PaymentRequest);
 };
 
