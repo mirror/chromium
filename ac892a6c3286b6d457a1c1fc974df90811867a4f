@@ -16,6 +16,24 @@
       "revId": "ac892a6c3286b6d457a1c1fc974df90811867a4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665d1b88_8e8d9ed2",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-13T21:27:37Z",
+      "side": 1,
+      "message": "\u003e I seem to recall there may be some subtleties here, but I don\u0027t recall off hand. mark@, thoughts?\n\nYes. The values that you’ll see here are often fake. Things that come out of the dyld shared cache will have a fileoff of 0 for the __TEXT segment and, for other segments, a fileoff relative to the cache file and not the file belonging to the module you’re pretending was mapped. That’s inconsistent, because __TEXT’s fileoff would have been 0 if you had mapped the real file instead of the cache. And then all of this changes again in 10.13, where it behaves as I’ve described on HFS+, but you get cache-relative fileoffs even for __TEXT on APFS. (https://crashpad.chromium.org/bug/118 - I just stopped considering fileoff when looking at generic segments altogether, because it’s become too difficult to figure out what it’s supposed to mean for an image already mapped into memory.)",
+      "parentUuid": "89093eb9_3abbb6e4",
+      "revId": "ac892a6c3286b6d457a1c1fc974df90811867a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
