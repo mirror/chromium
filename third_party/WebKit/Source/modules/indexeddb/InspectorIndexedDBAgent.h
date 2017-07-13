@@ -76,6 +76,11 @@ class MODULES_EXPORT InspectorIndexedDBAgent final
   void deleteDatabase(const String& security_origin,
                       const String& database_name,
                       std::unique_ptr<DeleteDatabaseCallback>) override;
+  void compactDatabase(const String& security_origin,
+                       std::unique_ptr<CompactDatabaseCallback>) override;
+  void abortAllTransactions(
+      const String& security_origin,
+      std::unique_ptr<AbortAllTransactionsCallback>) override;
 
  private:
   Member<InspectedFrames> inspected_frames_;

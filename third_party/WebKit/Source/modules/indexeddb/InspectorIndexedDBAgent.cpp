@@ -59,6 +59,7 @@
 #include "platform/bindings/V8PerIsolateData.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Vector.h"
+#include "public/platform/WebCallbacks.h"
 #include "public/platform/modules/indexeddb/WebIDBCursor.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
 
@@ -83,6 +84,10 @@ typedef blink::protocol::IndexedDB::Backend::ClearObjectStoreCallback
     ClearObjectStoreCallback;
 typedef blink::protocol::IndexedDB::Backend::DeleteDatabaseCallback
     DeleteDatabaseCallback;
+typedef blink::protocol::IndexedDB::Backend::CompactDatabaseCallback
+    CompactDatabaseCallback;
+typedef blink::protocol::IndexedDB::Backend::AbortAllTransactionsCallback
+    AbortAllTransactionsCallback;
 
 namespace blink {
 
@@ -182,6 +187,51 @@ class DeleteCallback final : public EventListener {
         security_origin_(security_origin) {}
   std::unique_ptr<DeleteDatabaseCallback> request_callback_;
   String security_origin_;
+};
+
+class CompactCallback final : public WebCallbacks<void, void> {
+  WTF_MAKE_NONCOPYABLE(CompactCallback);
+
+ public:
+  static CompactCallback* Create(
+      std::unique_ptr<CompactDatabaseCallback> request_callback) {
+    return new CompactCallback(std::move(request_callback));
+  }
+
+  void OnSuccess() override { request_callback_->sendSuccess(); }
+
+  void OnError() override {
+    request_callback_->sendFailure(
+        Response::Error("Failed to compact database."));
+  }
+
+ private:
+  CompactCallback(std::unique_ptr<CompactDatabaseCallback> request_callback)
+      : request_callback_(std::move(request_callback)) {}
+  std::unique_ptr<CompactDatabaseCallback> request_callback_;
+};
+
+class AbortAllCallback final : public WebCallbacks<void, void> {
+  WTF_MAKE_NONCOPYABLE(AbortAllCallback);
+
+ public:
+  static AbortAllCallback* Create(
+      std::unique_ptr<AbortAllTransactionsCallback> request_callback) {
+    return new AbortAllCallback(std::move(request_callback));
+  }
+
+  void OnSuccess() override { request_callback_->sendSuccess(); }
+
+  void OnError() override {
+    request_callback_->sendFailure(
+        Response::Error("Failed to abort transactions."));
+  }
+
+ private:
+  AbortAllCallback(
+      std::unique_ptr<AbortAllTransactionsCallback> request_callback)
+      : request_callback_(std::move(request_callback)) {}
+  std::unique_ptr<AbortAllTransactionsCallback> request_callback_;
 };
 
 template <typename RequestCallback>
@@ -1035,6 +1085,76 @@ void InspectorIndexedDBAgent::deleteDatabase(
       DeleteCallback::Create(std::move(request_callback),
                              document->GetSecurityOrigin()->ToRawString()),
       false);
+}
+
+void InspectorIndexedDBAgent::compactDatabase(
+    const String& security_origin,
+    std::unique_ptr<CompactDatabaseCallback> request_callback) {
+  LocalFrame* frame =
+      inspected_frames_->FrameWithSecurityOrigin(security_origin);
+  Document* document = frame ? frame->GetDocument() : nullptr;
+  if (!document) {
+    request_callback->sendFailure(Response::Error(kNoDocumentError));
+    return;
+  }
+  IDBFactory* idb_factory = nullptr;
+  Response response = AssertIDBFactory(document, idb_factory);
+  if (!response.isSuccess()) {
+    request_callback->sendFailure(response);
+    return;
+  }
+
+  ScriptState* script_state = ToScriptStateForMainWorld(frame);
+  if (!script_state) {
+    request_callback->sendFailure(Response::InternalError());
+    return;
+  }
+  ScriptState::Scope scope(script_state);
+  DummyExceptionStateForTesting exception_state;
+  idb_factory->AbortTransactionsAndCompactDatabase(
+      script_state,
+      std::unique_ptr<WebCallbacks<void, void>>(
+          CompactCallback::Create(std::move(request_callback))),
+      exception_state);
+  if (exception_state.HadException()) {
+    request_callback->sendFailure(
+        Response::Error("Could not compact database."));
+  }
+}
+
+void InspectorIndexedDBAgent::abortAllTransactions(
+    const String& security_origin,
+    std::unique_ptr<AbortAllTransactionsCallback> request_callback) {
+  LocalFrame* frame =
+      inspected_frames_->FrameWithSecurityOrigin(security_origin);
+  Document* document = frame ? frame->GetDocument() : nullptr;
+  if (!document) {
+    request_callback->sendFailure(Response::Error(kNoDocumentError));
+    return;
+  }
+  IDBFactory* idb_factory = nullptr;
+  Response response = AssertIDBFactory(document, idb_factory);
+  if (!response.isSuccess()) {
+    request_callback->sendFailure(response);
+    return;
+  }
+
+  ScriptState* script_state = ToScriptStateForMainWorld(frame);
+  if (!script_state) {
+    request_callback->sendFailure(Response::InternalError());
+    return;
+  }
+  ScriptState::Scope scope(script_state);
+  DummyExceptionStateForTesting exception_state;
+  idb_factory->AbortTransactionsForDatabase(
+      script_state,
+      std::unique_ptr<WebCallbacks<void, void>>(
+          AbortAllCallback::Create(std::move(request_callback))),
+      exception_state);
+  if (exception_state.HadException()) {
+    request_callback->sendFailure(
+        Response::Error("Could not abort transactions."));
+  }
 }
 
 DEFINE_TRACE(InspectorIndexedDBAgent) {

@@ -8,6 +8,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "content/common/indexed_db/indexed_db.mojom.h"
+#include "third_party/WebKit/public/platform/WebCallbacks.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBCallbacks.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseCallbacks.h"
@@ -43,6 +44,12 @@ class WebIDBFactoryImpl : public blink::WebIDBFactory {
                       blink::WebIDBCallbacks* callbacks,
                       const blink::WebSecurityOrigin& origin,
                       bool force_close) override;
+  void AbortTransactionsAndCompactDatabase(
+      std::unique_ptr<blink::WebCallbacks<void, void>> callback,
+      const blink::WebSecurityOrigin& origin) override;
+  void AbortTransactionsForDatabase(
+      std::unique_ptr<blink::WebCallbacks<void, void>> callback,
+      const blink::WebSecurityOrigin& origin) override;
 
  private:
   class IOThreadHelper;

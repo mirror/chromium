@@ -10,8 +10,10 @@
 #include "content/child/storage_util.h"
 #include "ipc/ipc_sync_channel.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
+#include "third_party/WebKit/public/platform/WebCallbacks.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseException.h"
 
 using blink::WebIDBCallbacks;
 using blink::WebIDBDatabase;
@@ -23,6 +25,26 @@ using indexed_db::mojom::DatabaseCallbacksAssociatedPtrInfo;
 using indexed_db::mojom::FactoryAssociatedPtr;
 
 namespace content {
+namespace {
+
+void CallIDBStatusCallback(
+    std::unique_ptr<blink::WebCallbacks<void, void>> callback,
+    ::indexed_db::mojom::Status status) {
+  if (status == ::indexed_db::mojom::Status::OK)
+    callback->OnSuccess();
+  else
+    callback->OnError();
+}
+
+void IDBStatusCallback(
+    scoped_refptr<base::SequencedTaskRunner> io_runner,
+    std::unique_ptr<blink::WebCallbacks<void, void>> callback,
+    ::indexed_db::mojom::Status status) {
+  io_runner->PostTask(FROM_HERE, base::BindOnce(&CallIDBStatusCallback,
+                                                std::move(callback), status));
+}
+
+}  // namespace
 
 class WebIDBFactoryImpl::IOThreadHelper {
  public:
@@ -47,6 +69,12 @@ class WebIDBFactoryImpl::IOThreadHelper {
                       std::unique_ptr<IndexedDBCallbacksImpl> callbacks,
                       const url::Origin& origin,
                       bool force_close);
+  void AbortTransactionsAndCompactDatabase(
+      base::OnceCallback<void(::indexed_db::mojom::Status)> callback,
+      const url::Origin& origin);
+  void AbortTransactionsForDatabase(
+      base::OnceCallback<void(::indexed_db::mojom::Status)> callback,
+      const url::Origin& origin);
 
  private:
   scoped_refptr<IPC::SyncMessageFilter> sync_message_filter_;
@@ -109,6 +137,32 @@ void WebIDBFactoryImpl::DeleteDatabase(const WebString& name,
                  url::Origin(origin), force_close));
 }
 
+void WebIDBFactoryImpl::AbortTransactionsAndCompactDatabase(
+    std::unique_ptr<blink::WebCallbacks<void, void>> callback,
+    const WebSecurityOrigin& origin) {
+  base::OnceCallback<void(::indexed_db::mojom::Status)> callback_on_io =
+      base::BindOnce(&IDBStatusCallback, base::ThreadTaskRunnerHandle::Get(),
+                     std::move(callback));
+  io_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&IOThreadHelper::AbortTransactionsAndCompactDatabase,
+                     base::Unretained(io_helper_), std::move(callback_on_io),
+                     url::Origin(origin)));
+}
+
+void WebIDBFactoryImpl::AbortTransactionsForDatabase(
+    std::unique_ptr<blink::WebCallbacks<void, void>> callback,
+    const WebSecurityOrigin& origin) {
+  base::OnceCallback<void(::indexed_db::mojom::Status)> callback_on_io =
+      base::BindOnce(&IDBStatusCallback, base::ThreadTaskRunnerHandle::Get(),
+                     std::move(callback));
+  io_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&IOThreadHelper::AbortTransactionsForDatabase,
+                     base::Unretained(io_helper_), std::move(callback_on_io),
+                     url::Origin(origin)));
+}
+
 WebIDBFactoryImpl::IOThreadHelper::IOThreadHelper(
     scoped_refptr<IPC::SyncMessageFilter> sync_message_filter)
     : sync_message_filter_(std::move(sync_message_filter)) {}
@@ -164,6 +218,19 @@ void WebIDBFactoryImpl::IOThreadHelper::DeleteDatabase(
     bool force_close) {
   GetService()->DeleteDatabase(GetCallbacksProxy(std::move(callbacks)), origin,
                                name, force_close);
+}
+
+void WebIDBFactoryImpl::IOThreadHelper::AbortTransactionsAndCompactDatabase(
+    base::OnceCallback<void(::indexed_db::mojom::Status)> callback,
+    const url::Origin& origin) {
+  GetService()->AbortTransactionsAndCompactDatabase(origin,
+                                                    std::move(callback));
+}
+
+void WebIDBFactoryImpl::IOThreadHelper::AbortTransactionsForDatabase(
+    base::OnceCallback<void(::indexed_db::mojom::Status)> callback,
+    const url::Origin& origin) {
+  GetService()->AbortTransactionsForDatabase(origin, std::move(callback));
 }
 
 }  // namespace content

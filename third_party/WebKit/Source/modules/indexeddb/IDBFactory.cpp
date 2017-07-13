@@ -43,6 +43,7 @@
 #include "platform/Histogram.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebCallbacks.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabaseCallbacks.h"
 #include "public/platform/modules/indexeddb/WebIDBFactory.h"
@@ -93,6 +94,74 @@ IDBRequest* IDBFactory::GetDatabaseNames(ScriptState* script_state,
       WebSecurityOrigin(
           ExecutionContext::From(script_state)->GetSecurityOrigin()));
   return request;
+}
+
+void IDBFactory::AbortTransactionsAndCompactDatabase(
+    ScriptState* script_state,
+    std::unique_ptr<WebCallbacks<void, void>> callback,
+    ExceptionState& exception_state) {
+  IDB_TRACE("IDBFactory::abortTransactionsAndCompactDatabaseRequestSetup");
+  IDBRequest::AsyncTraceState metrics(
+      "IDBFactory::abortTransactionsAndCompactDatabase");
+
+  if (!IsContextValid(ExecutionContext::From(script_state))) {
+    callback->OnError();
+    return;
+  }
+  if (!ExecutionContext::From(script_state)
+           ->GetSecurityOrigin()
+           ->CanAccessDatabase()) {
+    exception_state.ThrowSecurityError(
+        "access to the Indexed Database API is denied in this context.");
+    callback->OnError();
+    return;
+  }
+
+  if (!IndexedDBClient::From(ExecutionContext::From(script_state))
+           ->AllowIndexedDB(ExecutionContext::From(script_state),
+                            "Database Compaction")) {
+    callback->OnError();
+    return;
+  }
+
+  Platform::Current()->IdbFactory()->AbortTransactionsAndCompactDatabase(
+      std::move(callback),
+      WebSecurityOrigin(
+          ExecutionContext::From(script_state)->GetSecurityOrigin()));
+}
+
+void IDBFactory::AbortTransactionsForDatabase(
+    ScriptState* script_state,
+    std::unique_ptr<WebCallbacks<void, void>> callback,
+    ExceptionState& exception_state) {
+  IDB_TRACE("IDBFactory::abortTransactionsForDatabaseRequestSetup");
+  IDBRequest::AsyncTraceState metrics(
+      "IDBFactory::abortTransactionsForDatabase");
+
+  if (!IsContextValid(ExecutionContext::From(script_state))) {
+    callback->OnError();
+    return;
+  }
+  if (!ExecutionContext::From(script_state)
+           ->GetSecurityOrigin()
+           ->CanAccessDatabase()) {
+    exception_state.ThrowSecurityError(
+        "access to the Indexed Database API is denied in this context.");
+    callback->OnError();
+    return;
+  }
+
+  if (!IndexedDBClient::From(ExecutionContext::From(script_state))
+           ->AllowIndexedDB(ExecutionContext::From(script_state),
+                            "Aborting Transactions")) {
+    callback->OnError();
+    return;
+  }
+
+  Platform::Current()->IdbFactory()->AbortTransactionsForDatabase(
+      std::move(callback),
+      WebSecurityOrigin(
+          ExecutionContext::From(script_state)->GetSecurityOrigin()));
 }
 
 IDBOpenDBRequest* IDBFactory::open(ScriptState* script_state,

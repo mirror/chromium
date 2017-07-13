@@ -29,6 +29,7 @@
 #ifndef WebIDBFactory_h
 #define WebIDBFactory_h
 
+#include "public/platform/WebCallbacks.h"
 #include "public/platform/WebCommon.h"
 
 namespace blink {
@@ -53,6 +54,12 @@ class WebIDBFactory {
                               WebIDBCallbacks*,
                               const WebSecurityOrigin&,
                               bool force_close) = 0;
+  virtual void AbortTransactionsAndCompactDatabase(
+      std::unique_ptr<WebCallbacks<void, void>>,
+      const WebSecurityOrigin&) = 0;
+  virtual void AbortTransactionsForDatabase(
+      std::unique_ptr<WebCallbacks<void, void>>,
+      const WebSecurityOrigin&) = 0;
 };
 
 }  // namespace blink

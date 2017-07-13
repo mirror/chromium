@@ -32,6 +32,7 @@
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebCallbacks.h"
 
 namespace blink {
 
@@ -65,6 +66,14 @@ class IDBFactory final : public GarbageCollected<IDBFactory>,
   IDBOpenDBRequest* CloseConnectionsAndDeleteDatabase(ScriptState*,
                                                       const String& name,
                                                       ExceptionState&);
+  void AbortTransactionsAndCompactDatabase(
+      ScriptState*,
+      std::unique_ptr<WebCallbacks<void, void>> calback,
+      ExceptionState&);
+  void AbortTransactionsForDatabase(
+      ScriptState*,
+      std::unique_ptr<WebCallbacks<void, void>> calback,
+      ExceptionState&);
 
  private:
   IDBFactory();
