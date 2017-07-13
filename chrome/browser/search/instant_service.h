@@ -136,6 +136,11 @@ class InstantService : public KeyedService,
   void OnMostVisitedURLsAvailable(
       const ntp_tiles::NTPTilesVector& tiles) override;
   void OnIconMadeAvailable(const GURL& site_url) override;
+  void OnExplorationSectionsAvailable(
+      const std::vector<ntp_tiles::ExplorationSection>& sections) override;
+  void OnExplorationURLsAvailable(
+      ntp_tiles::SectionType section_type,
+      const ntp_tiles::NTPTilesVector& tiles) override;
 
   // Notifies the observer about the last known most visited items.
   void NotifyAboutMostVisitedItems();
