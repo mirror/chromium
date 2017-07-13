@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c77799_aae2a994",
+        "filename": "chrome/browser/ui/login/login_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "Nit: How come we need this?",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a181e754_2cf7db3a",
+        "filename": "chrome/browser/ui/login/login_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "It feels fragile that we encode the exact strings above and muck with things here.  As we make string changes that don\u0027t affect test correctness, we have to update lots of entries.\n\nWould be nice to just string search for the expected authority within the larger text string, or something.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5fde74e_fb2c60a7",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "Why is \"web-modal\" relevant?  Are there dialogs (e.g. the bookmark bubble) that use a different indent?  If we want a distinction like that it seems like we\u0027d want to encode it in the name here or something.\n\nI wonder if this is really something we should specify a constant for.  Maybe it would be better to just remove the indent pre-Harmony, by nuking this concept entirely.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ece82d3_88364358",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "I discussed this some with bettes@.  For now, we\u0027re scrapping this.  Just have textfields start at (right edge of widest label + 1 layout unit), rounded to the next rightward layout unit.\n\nHe\u0027ll post on the bug.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3451b6_1a3a6d18",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "Nit: I suspect you could remove this without using any additional lines below.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4b49a2_2478e09c",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "Nit: If you think these add sufficient readability to be worth naming, consider defining them in grid_layout.h itself so others can also benefit",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cdcb860_ffa8e2d6",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "Kinda feels like the padding above the top row in the stack should be added manually by the containing dialog, just as any padding below the last row would be.\n\nThis would become necessary (rather than just nice) if we have any dialogs that put such stacks at the top of their content.\n\nAt that point, AddTextfieldRow() just becomes a layout-\u003eAddPaddingRow() call followed by a call to AddFirstTextfieldRow(), which can then inline the rest of this method.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183c4261_f0785a2a",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "Note that we want this column to start on a layoutunit-aligned boundary... not sure exactly how to do that in gridlayout today.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40aad7d6_7c733861",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "Nit: a -\u003e and",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6c62ca_813c8adc",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "Hmmmmmmmm.\n\nIt seems like it\u0027d be more correct to say that the textfields have a preferred width of some number of characters.  Then in Harmony the dialog ends up sized to 320 anyway due to snapping the preferred sizes of the children, unless the font/label strings are so large/long that we go over that; and pre-Harmony the width doesn\u0027t become ridiculously small, it just maybe becomes smaller.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73277b0_4fa04a27",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T01:26:49Z",
+      "side": 1,
+      "message": "I kinda think we want both textfields and buttons to be \"font height + a fixed amount of padding\".  Changing the font height should change the textfield height (and button height) to something other than 28.  So if we\u0027re going to add a layout constant, I sort of feel like it should be the \"control vertical padding\" instead of the \"control height\".\n\nYou discuss this in your commentary; basically, I think you should indeed go that route and not this one.\n\nI\u0027m worried that there\u0027s an obvious reason why this is dumb, e.g. that bold fonts are 1 pt taller and so their buttons would be larger, or something.  But hardcoding a 28 pt height for either textfields of buttons just feels wrong, whereas saying \"we have this much \u0027control edge\u0027 padding around the top and bottom\" matches up well with how I think of these being sized.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
