@@ -12,9 +12,7 @@
 #include "media/mojo/interfaces/renderer.mojom.h"
 
 namespace service_manager {
-namespace mojom {
 class InterfaceProvider;
-}
 }
 
 namespace media {
@@ -26,9 +24,8 @@ class MojoRendererFactory : public RendererFactory {
  public:
   using GetGpuFactoriesCB = base::Callback<GpuVideoAcceleratorFactories*()>;
 
-  MojoRendererFactory(
-      const GetGpuFactoriesCB& get_gpu_factories_cb,
-      service_manager::mojom::InterfaceProvider* interface_provider);
+  MojoRendererFactory(const GetGpuFactoriesCB& get_gpu_factories_cb,
+                      service_manager::InterfaceProvider* interface_provider);
   ~MojoRendererFactory() final;
 
   std::unique_ptr<Renderer> CreateRenderer(
@@ -40,7 +37,7 @@ class MojoRendererFactory : public RendererFactory {
 
  private:
   GetGpuFactoriesCB get_gpu_factories_cb_;
-  service_manager::mojom::InterfaceProvider* interface_provider_;
+  service_manager::InterfaceProvider* interface_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoRendererFactory);
 };
