@@ -130,8 +130,8 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
   size_t frames_to_render = fifo_->Pull(output_bus_.Get(), number_of_frames);
 
   // TODO(hongchan): this check might be redundant, so consider removing later.
-  if (frames_to_render != 0 && rendering_thread_) {
-    rendering_thread_->GetWebTaskRunner()->PostTask(
+  if (frames_to_render != 0 && GetRenderingThread()) {
+    GetRenderingThread()->GetWebTaskRunner()->PostTask(
         BLINK_FROM_HERE,
         CrossThreadBind(&AudioDestination::RequestRenderOnWebThread,
                         CrossThreadUnretained(this), number_of_frames,
@@ -184,14 +184,21 @@ void AudioDestination::RequestRenderOnWebThread(size_t frames_requested,
   frames_elapsed_ += frames_requested;
 }
 
-void AudioDestination::Start() {
+void AudioDestination::Start(WebThread* worklet_backing_thread) {
   DCHECK(IsMainThread());
 
   // Start the "audio device" after the rendering thread is ready.
   if (web_audio_device_ && !is_playing_) {
     TRACE_EVENT0("webaudio", "AudioDestination::Start");
-    rendering_thread_ =
-        Platform::Current()->CreateThread("WebAudio Rendering Thread");
+
+    // Set the experimental rendering thread when it is given.
+    if (!worklet_backing_thread) {
+      rendering_thread_ =
+          Platform::Current()->CreateThread("WebAudio Rendering Thread");
+    } else {
+      worklet_backing_thread_ = worklet_backing_thread;
+    }
+
     web_audio_device_->Start();
     is_playing_ = true;
   }
@@ -205,7 +212,10 @@ void AudioDestination::Stop() {
   if (web_audio_device_ && is_playing_) {
     TRACE_EVENT0("webaudio", "AudioDestination::Stop");
     web_audio_device_->Stop();
-    rendering_thread_.reset();
+
+    if (rendering_thread_)
+      rendering_thread_.reset();
+
     is_playing_ = false;
   }
 }
@@ -261,8 +271,15 @@ bool AudioDestination::CheckBufferSize() {
 }
 
 bool AudioDestination::IsRenderingThread() {
-  return static_cast<ThreadIdentifier>(rendering_thread_->ThreadId()) ==
-         CurrentThread();
+  return GetRenderingThread()->IsCurrentThread();
+}
+
+WebThread* AudioDestination::GetRenderingThread() {
+  // Even though it is impossible for both pointers to be valid, but use the
+  // unique pointer first when both are available.
+  return rendering_thread_
+      ? rendering_thread_.get()
+      : worklet_backing_thread_;
 }
 
 }  // namespace blink

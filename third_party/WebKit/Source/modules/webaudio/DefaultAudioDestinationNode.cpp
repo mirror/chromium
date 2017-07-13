@@ -27,6 +27,7 @@
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
+#include "modules/webaudio/AudioWorkletThread.h"
 #include "modules/webaudio/BaseAudioContext.h"
 
 namespace blink {
@@ -84,11 +85,21 @@ void DefaultAudioDestinationHandler::CreateDestination() {
                                           Context()->GetSecurityOrigin());
 }
 
+void DefaultAudioDestinationHandler::StartDestination() {
+  // Use Experimental AudioWorkletThread only when AudioWorklet is enabled.
+  if (RuntimeEnabledFeatures::AudioWorkletEnabled()) {
+    AudioWorkletThread::EnsureSharedBackingThread();
+    destination_->Start(AudioWorkletThread::GetSharedBackingThread());
+  } else {
+    destination_->Start();
+  }
+}
+
 void DefaultAudioDestinationHandler::StartRendering() {
   DCHECK(IsInitialized());
   if (IsInitialized()) {
     DCHECK(!destination_->IsPlaying());
-    destination_->Start();
+    StartDestination();
   }
 }
 
@@ -135,7 +146,7 @@ void DefaultAudioDestinationHandler::SetChannelCount(
     // Re-create destination.
     destination_->Stop();
     CreateDestination();
-    destination_->Start();
+    StartDestination();
   }
 }
 
