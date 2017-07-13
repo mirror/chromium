@@ -27,8 +27,6 @@ source_set("downloads") {
     "//ios/chrome/browser/ui/alert_coordinator",
     "//ios/chrome/browser/ui/colors",
     "//ios/chrome/browser/web:web_internal",
-    "//ios/public/provider/chrome/browser",
-    "//ios/public/provider/chrome/browser/native_app_launcher",
     "//ios/third_party/material_components_ios",
     "//ios/third_party/material_roboto_font_loader_ios",
     "//ios/web",
