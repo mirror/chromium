@@ -407,7 +407,8 @@ bool ElementAnimations::IsPotentiallyAnimatingProperty(
     TargetProperty::Type target_property,
     ElementListType list_type) const {
   for (auto& player : players_list_) {
-    if (player.IsPotentiallyAnimatingProperty(target_property, list_type))
+    if (player.IsPotentiallyAnimatingProperty(target_property, list_type) ||
+        player.WillChangeAnimatingProperties())
       return true;
   }
 

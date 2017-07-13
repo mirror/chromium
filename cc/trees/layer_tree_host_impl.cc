@@ -4225,17 +4225,20 @@ bool LayerTreeHostImpl::ScrollAnimationUpdateTarget(
 bool LayerTreeHostImpl::IsElementInList(ElementId element_id,
                                         ElementListType list_type) const {
   if (list_type == ElementListType::ACTIVE) {
-    return active_tree()
-               ? active_tree()->LayerByElementId(element_id) != nullptr
-               : false;
-  } else {
-    if (pending_tree() && pending_tree()->LayerByElementId(element_id))
-      return true;
-    if (recycle_tree() && recycle_tree()->LayerByElementId(element_id))
-      return true;
-
-    return false;
+    if (!active_tree())
+      return false;
+    return active_tree()->property_trees()->HasTransformOrEffectNode(
+        element_id);
   }
+  if (pending_tree()) {
+    return pending_tree()->property_trees()->HasTransformOrEffectNode(
+        element_id);
+  }
+  if (recycle_tree()) {
+    return recycle_tree()->property_trees()->HasTransformOrEffectNode(
+        element_id);
+  }
+  return false;
 }
 
 void LayerTreeHostImpl::SetMutatorsNeedCommit() {}
