@@ -104,6 +104,9 @@ config("gpu_config") {
   if (is_chromeos && use_v4l2_codec) {
     defines += [ "USE_V4L2_CODEC" ]
   }
+  if (use_vaapi) {
+    defines += [ "USE_VAAPI" ]
+  }
 }
 
 component("gpu") {
@@ -293,7 +296,7 @@ component("gpu") {
         ]
       }
     }
-    if (current_cpu != "arm") {
+    if (use_vaapi) {
       sources += [
                    "va_surface.h",
                    "vaapi_jpeg_decode_accelerator.cc",
@@ -309,10 +312,7 @@ component("gpu") {
                    "vaapi_wrapper.cc",
                    "vaapi_wrapper.h",
                  ] + get_target_outputs(":libva_generate_stubs")
-      configs += [
-        "//third_party/libva:libva_config",
-        "//third_party/libyuv:libyuv_config",
-      ]
+      configs += [ "//third_party/libyuv:libyuv_config" ]
       deps += [
         ":libva_generate_stubs",
         "//media",
@@ -321,17 +321,21 @@ component("gpu") {
       if (use_x11) {
         configs += [ "//build/config/linux:x11" ]
         deps += [ "//ui/gfx/x" ]
-        sources += [
-          "vaapi_tfp_picture.cc",
-          "vaapi_tfp_picture.h",
-        ]
+        if (use_vaapi) {
+          sources += [
+            "vaapi_tfp_picture.cc",
+            "vaapi_tfp_picture.h",
+          ]
+        }
       }
       if (use_ozone) {
         deps += [ "//ui/ozone" ]
-        sources += [
-          "vaapi_drm_picture.cc",
-          "vaapi_drm_picture.h",
-        ]
+        if (use_vaapi) {
+          sources += [
+            "vaapi_drm_picture.cc",
+            "vaapi_drm_picture.h",
+          ]
+        }
       }
     }
   }
@@ -411,9 +415,6 @@ if (is_win || is_android || is_chromeos) {
       "//third_party/khronos:khronos_headers",
       ":gpu_config",
     ]
-    if (is_chromeos && current_cpu != "arm") {
-      configs += [ "//third_party/libva:libva_config" ]
-    }
 
     if (is_win || is_chromeos) {
       sources += [
@@ -512,7 +513,6 @@ if (is_chromeos || is_mac || is_win) {
       "//ui/gl:test_support",
     ]
     configs += [
-      "//third_party/libva:libva_config",
       "//third_party/libyuv:libyuv_config",
       ":gpu_config",
     ]
@@ -546,7 +546,6 @@ if (is_chromeos) {
       "//ui/gl:test_support",
     ]
     configs += [
-      "//third_party/libva:libva_config",
       "//third_party/libyuv:libyuv_config",
       ":gpu_config",
     ]

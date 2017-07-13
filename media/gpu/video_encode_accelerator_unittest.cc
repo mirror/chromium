@@ -2323,7 +2323,7 @@ int main(int argc, char** argv) {
     LOG(FATAL) << "--measure_latency requires --run_at_fps enabled to work.";
   }
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(OS_CHROMEOS) && defined(USE_VAAPI)
   media::VaapiWrapper::PreSandboxInitialization();
 #elif defined(OS_WIN)
   media::MediaFoundationVideoEncodeAccelerator::PreSandboxInitialization();

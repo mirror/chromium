@@ -1854,7 +1854,7 @@ class VDATestSuite : public base::TestSuite {
     ui::OzonePlatform::InitializeForUI();
 #endif
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(OS_CHROMEOS) && defined(USE_VAAPI)
     media::VaapiWrapper::PreSandboxInitialization();
 #elif defined(OS_WIN)
     media::DXVAVideoDecodeAccelerator::PreSandboxInitialization();

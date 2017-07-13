@@ -5,6 +5,7 @@
 #include "media/gpu/gpu_video_decode_accelerator_factory.h"
 
 #include "base/memory/ptr_util.h"
+#include "build/build_config.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "media/base/media_switches.h"
 #include "media/gpu/gpu_video_accelerator_util.h"
@@ -23,7 +24,7 @@
 #include "media/gpu/v4l2_video_decode_accelerator.h"
 #include "ui/gl/gl_surface_egl.h"
 #endif
-#if defined(ARCH_CPU_X86_FAMILY)
+#if defined(USE_VAAPI)
 #include "media/gpu/vaapi_video_decode_accelerator.h"
 #include "ui/gl/gl_implementation.h"
 #endif
@@ -97,7 +98,7 @@ GpuVideoDecodeAcceleratorFactory::GetDecoderCapabilities(
   GpuVideoAcceleratorUtil::InsertUniqueDecodeProfiles(
       vda_profiles, &capabilities.supported_profiles);
 #endif
-#if defined(ARCH_CPU_X86_FAMILY)
+#if defined(USE_VAAPI)
   vda_profiles = VaapiVideoDecodeAccelerator::GetSupportedProfiles();
   GpuVideoAcceleratorUtil::InsertUniqueDecodeProfiles(
       vda_profiles, &capabilities.supported_profiles);
@@ -140,7 +141,7 @@ GpuVideoDecodeAcceleratorFactory::CreateVDA(
     &GpuVideoDecodeAcceleratorFactory::CreateV4L2VDA,
     &GpuVideoDecodeAcceleratorFactory::CreateV4L2SVDA,
 #endif
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(OS_CHROMEOS) && defined(USE_VAAPI)
     &GpuVideoDecodeAcceleratorFactory::CreateVaapiVDA,
 #endif
 #if defined(OS_MACOSX)
@@ -221,7 +222,7 @@ GpuVideoDecodeAcceleratorFactory::CreateV4L2SVDA(
 }
 #endif
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(OS_CHROMEOS) && defined(USE_VAAPI)
 std::unique_ptr<VideoDecodeAccelerator>
 GpuVideoDecodeAcceleratorFactory::CreateVaapiVDA(
     const gpu::GpuDriverBugWorkarounds& workarounds,
