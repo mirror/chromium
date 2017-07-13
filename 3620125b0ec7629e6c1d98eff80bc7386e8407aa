@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1367e3f6_7ebab7f7",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-13T15:34:14Z",
+      "side": 1,
+      "message": "not: add bug number here",
+      "revId": "3620125b0ec7629e6c1d98eff80bc7386e8407aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ab2166_911108bf",
+        "filename": "components/exo/keyboard_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-13T15:34:14Z",
+      "side": 1,
+      "message": "not: no need to include this",
+      "revId": "3620125b0ec7629e6c1d98eff80bc7386e8407aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f3dc75_ff608ee9",
+        "filename": "components/exo/keyboard_device_configuration_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-13T15:34:14Z",
+      "side": 1,
+      "message": "not: no need to include this",
+      "revId": "3620125b0ec7629e6c1d98eff80bc7386e8407aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d0f439_b2c1e6f0",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-13T15:34:14Z",
+      "side": 1,
+      "message": "nit: please have the keyboard delegate ctor/dtor add/remove the observer and keep this code as before",
+      "revId": "3620125b0ec7629e6c1d98eff80bc7386e8407aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
