@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6723355e_40990be4",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-13T19:37:01Z",
+      "side": 1,
+      "message": "Is this always a navigation? If so, can it be a user navigation?",
+      "range": {
+        "startLine": 311,
+        "startChar": 31,
+        "endLine": 311,
+        "endChar": 63
+      },
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97588e45_d6319b40",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-13T19:37:01Z",
+      "side": 1,
+      "message": "Will ending the PaymentRequest cause it to close and log a UserAborted or something like that? It\u0027s what happens on Desktop and Android, so you have to make sure to log only one completion status.\n\nSame thing with a navigation followed by an abort. So we created a method called  RecordFirstAbortReason",
+      "range": {
+        "startLine": 670,
+        "startChar": 60,
+        "endLine": 670,
+        "endChar": 0
+      },
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
