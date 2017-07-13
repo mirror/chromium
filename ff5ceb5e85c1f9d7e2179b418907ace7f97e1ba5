@@ -1,0 +1,256 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e20fb6b_1cad5308",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "constexpr const char* preferences[] {\n    pref::kSafeBrowsingEnabled,\n    ....\n};",
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc941e24_3da6cdec",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "for (const char* preference : sb_preferences_list)",
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b31af53_4b7f391a",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "maybe this?\n  bool enabled \u003d prefs-\u003eGetBoolean(preference);\n  preferences_list.GetList().push_back(\n      base::Value(enabled ? \"Enabled\" : \"Disabled\"));",
+      "range": {
+        "startLine": 489,
+        "startChar": 3,
+        "endLine": 493,
+        "endChar": 5
+      },
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5baf412d_24e60b8e",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "comments should end with a .",
+      "range": {
+        "startLine": 173,
+        "startChar": 51,
+        "endLine": 173,
+        "endChar": 59
+      },
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdb630c_e80af4d2",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "please try not to use abbreviations.\n\nI think that the rendering of a subset of preference values as a list in a special format is a very specialized function and suggest to move it out of safe_browsing_prefs.* and into safe_browsing_ui.*.\n\n(I would suggest to do the same for GetFeatureStatusList())",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 36
+      },
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65b6a44_52d241b6",
+        "filename": "components/safe_browsing/web_ui/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "general nit: I think that this directory should be called webui not web_ui. (see output of `find . -type d -name webui`)",
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb24af71_b4ed4814",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "indentation",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22045ada_de955ef0",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "+2 indentation",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 3
+      },
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225bfa6c_c9189480",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "I think that a nice way of doing this would actually be something like the following:\ncr.sendWithPromise(\u0027getSafeBrowsingPreferences\u0027).then(prefs \u003d\u003e addPreferences(prefs));\n\nSearch for example for initializeClearBrowsingData for a sample.",
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727826b8_2b74c180",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "should this be plural?",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41b7404_2cb7b2b4",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "How about calling this \"SendPreferencesToUI\"? (or \"GetPreferences\" using the promise pattern pointed out above)",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72905ffb_ab12e453",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-13T12:17:03Z",
+      "side": 1,
+      "message": "please don\u0027t use abbreviations, also below.",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
