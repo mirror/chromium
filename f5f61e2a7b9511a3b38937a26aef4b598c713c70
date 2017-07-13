@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5fa5a7_9acbd8f1",
+        "filename": "base/trace_event/process_memory_dump_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-13T07:12:10Z",
+      "side": 0,
+      "message": "First I tried to keep this test by introducing a function to put the flag off, like SetUseOldSharedMemoryOwnershipEdgesForTesting(), but I realized such function to change a global state affected other tests (NewSharedMemoryOwnershipTest in this case), and the affected tests failed. This means that the current usage SetUseSharedMemoryBasedGUIDsForTesting might be dangerous because this depends on the order of test execution.\n\nThus, I just removed this test. PTAL just in case.",
+      "revId": "f5f61e2a7b9511a3b38937a26aef4b598c713c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
