@@ -46,6 +46,30 @@
       "revId": "9e7a4da13aace9418645b9c05b4b69c246b492bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640ddc3a_a9857862",
+        "filename": "chrome/test/data/android/webvr_instrumentation/html/test_presentation_promise_unresolved_during_don.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-07-13T19:07:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0d3fe1f5_eb453004",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "9e7a4da13aace9418645b9c05b4b69c246b492bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
