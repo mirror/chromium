@@ -5,6 +5,7 @@
 #include "ui/ozone/platform/drm/common/drm_util.h"
 
 #include <drm_fourcc.h>
+#include <gbm.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/mman.h>
@@ -515,6 +516,36 @@ int GetFourCCFormatForOpaqueFramebuffer(gfx::BufferFormat format) {
     default:
       NOTREACHED();
       return 0;
+  }
+}
+
+uint32_t GetGbmFlagsFromBufferUsage(gfx::BufferUsage usage) {
+  switch (usage) {
+    case gfx::BufferUsage::GPU_READ:
+      return GBM_BO_USE_TEXTURING;
+    case gfx::BufferUsage::SCANOUT:
+      return GBM_BO_USE_RENDERING | GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING;
+    case gfx::BufferUsage::SCANOUT_CPU_READ_WRITE:
+      return GBM_BO_USE_LINEAR | GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING;
+    case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE:
+    case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
+      return GBM_BO_USE_LINEAR | GBM_BO_USE_TEXTURING;
+  }
+}
+
+gfx::BufferUsage GetBufferUsageFromGbmFlags(int flags) {
+  switch (flags) {
+    case GBM_BO_USE_TEXTURING:
+      return gfx::BufferUsage::GPU_READ;
+    case GBM_BO_USE_RENDERING | GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING:
+      return gfx::BufferUsage::SCANOUT;
+    case GBM_BO_USE_LINEAR | GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING:
+      return gfx::BufferUsage::SCANOUT_CPU_READ_WRITE;
+    case GBM_BO_USE_LINEAR | GBM_BO_USE_TEXTURING:
+      return gfx::BufferUsage::GPU_READ_CPU_READ_WRITE;
+    default:
+      NOTREACHED();
+      return gfx::BufferUsage::SCANOUT;
   }
 }
 
