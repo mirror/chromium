@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "eab36939_4f6381b1",
+        "filename": "tools/perf/core/trybot_command.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116018
+      },
+      "writtenOn": "2017-07-13T14:48:31Z",
+      "side": 1,
+      "message": "I can try to find the bug but I\u0027m pretty sure the xp bots were sunset a while ago, so this can be removed.",
+      "range": {
+        "startLine": 88,
+        "startChar": 18,
+        "endLine": 88,
+        "endChar": 36
+      },
+      "revId": "25636deece548a63468fa9c6ced678abc3974d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29dfdc05_2b825956",
         "filename": "tools/perf/core/trybot_command.py",
         "patchSetId": 5
