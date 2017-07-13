@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de7acfda_035d8fe9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-13T01:54:43Z",
+      "side": 1,
+      "message": "Probably, but I don\u0027t know which ones yet.  Here are the latest layout test results with RLS enabled (but without using FlagExpectations/root-layer-scrolls):\n\nhttps://storage.googleapis.com/chromium-layout-test-archives/linux_chromium_rel_ng/497549/layout-test-results/results.html\n\nI am starting to run that try job daily, and my strategy is to drive down that list, rather than try to keep FlagExpectations/root-layer-scrolls current (which is an impossible task).\n\nI expect that the calendar-picker, color, select-popup, and suggestion-popup tests will stop crashing; I\u0027ll know more once I land this patch and re-run the try jobs.",
+      "parentUuid": "96e79f41_3e09e181",
+      "revId": "0af04effacd0ff59ef845fc24ceaa534dffe68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef02dcf_7ade1965",
         "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-13T00:08:52Z",
       "side": 1,
       "message": "Please add an explanatory comment on this method.\n\nAlso, why do we even create visual viewport layers if we\u0027re not going to use them?",
+      "range": {
+        "startLine": 323,
+        "startChar": 15,
+        "endLine": 323,
+        "endChar": 38
+      },
+      "revId": "0af04effacd0ff59ef845fc24ceaa534dffe68a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db672d5_f3982b0d",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-13T01:54:43Z",
+      "side": 1,
+      "message": "This is not the only case where VisualViewport\u0027s layers are created but not used; another is for an OOPIF local root frame which is not a main frame.\n\nWe should probably audit where VisualViewport::CreateLayerTree is called, but not in this patch.",
+      "parentUuid": "0ef02dcf_7ade1965",
       "range": {
         "startLine": 323,
         "startChar": 15,
