@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d87cd5f_113ddc3f",
+        "filename": "services/device/generic_sensor/platform_sensor_reader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:25:53Z",
+      "side": 1,
+      "message": "Btw, I suspect this probably shouldn\u0027t use base::Bind: it\u0027s not capturing any variables, so base::Bind() is really just adding overhead.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 9
+      },
+      "revId": "f856c458689e1f31a64581826a54541c3ea6cfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d8fa46_915c486c",
+        "filename": "services/device/public/interfaces/sensor.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:25:53Z",
+      "side": 1,
+      "message": "Please wrap at 80 chars (I would just put the comment on the preceding line)",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 109
+      },
+      "revId": "f856c458689e1f31a64581826a54541c3ea6cfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
