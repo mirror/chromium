@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3475fcc6_0843eff0",
+        "filename": "chrome/android/java/res/drawable/content_suggestions_card_corner_bottom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-13T16:14:47Z",
+      "side": 1,
+      "message": "This works, I just tested it on JB 4.1 API level 16. The support library handles this, but there\u0027s a linter that still complains without this line ¯\\_(ツ)_/¯",
+      "parentUuid": "2208d160_656bfae8",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e43f5ae_bccfb4b4",
         "filename": "chrome/android/java/res/drawable/content_suggestions_card_corner_bottom.xml",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0afa392b_b469959d",
+        "filename": "chrome/android/java/res/drawable/content_suggestions_card_corner_bottom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-13T16:14:47Z",
+      "side": 1,
+      "message": "This works well, as you would hope. I tried with content_suggestions_card_modern_corner_radius set to 50dp and it\u0027s all correct and sharp.",
+      "parentUuid": "04e483d1_b747a150",
+      "range": {
+        "startLine": 12,
+        "startChar": 27,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38839241_83f6e005",
         "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
         "patchSetId": 1
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a55e822a_55848059",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-13T16:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38839241_83f6e005",
+      "range": {
+        "startLine": 126,
+        "startChar": 5,
+        "endLine": 126,
+        "endChar": 14
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c61be102_15c8167e",
         "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
         "patchSetId": 1
@@ -106,6 +178,30 @@
       "writtenOn": "2017-07-13T09:40:29Z",
       "side": 1,
       "message": "Could you move this after the thumbnail view, so that it\u0027s semantically clearer that it comes at the start of the card layout and overlays the thumbnail?",
+      "range": {
+        "startLine": 130,
+        "startChar": 23,
+        "endLine": 130,
+        "endChar": 44
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1121c199_c7a90055",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-13T16:14:47Z",
+      "side": 1,
+      "message": "Strictly speaking, they overlay the card contents. So, if the card is taller than the thumbnail, its bottom corner is not rounded. To me, this seems like the correct place in the file.",
+      "parentUuid": "c61be102_15c8167e",
       "range": {
         "startLine": 130,
         "startChar": 23,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "91a07a65_a8b64bb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-13T16:14:47Z",
+      "side": 1,
+      "message": "I gave it another try and yes, this is really neat :-)",
+      "parentUuid": "14311ac2_9629a022",
+      "range": {
+        "startLine": 154,
+        "startChar": 45,
+        "endLine": 154,
+        "endChar": 93
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba2368c2_3db9f201",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 1
@@ -152,6 +272,30 @@
       "writtenOn": "2017-07-13T08:56:31Z",
       "side": 1,
       "message": "ViewHolder pattern: call findViewById only once as it\u0027s an expensive operation. So get the corner views in onBindViewHolder?",
+      "range": {
+        "startLine": 155,
+        "startChar": 21,
+        "endLine": 155,
+        "endChar": 33
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de8269d_601a8c90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-13T16:14:47Z",
+      "side": 1,
+      "message": "This code is gone in the latest patch.",
+      "parentUuid": "ba2368c2_3db9f201",
       "range": {
         "startLine": 155,
         "startChar": 21,
