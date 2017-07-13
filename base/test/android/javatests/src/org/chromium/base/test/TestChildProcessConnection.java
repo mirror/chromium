@@ -88,7 +88,7 @@ public class TestChildProcessConnection extends ChildProcessConnection {
         return mPid;
     }
 
-    @Override
+    //@Override
     protected ChildServiceConnection createServiceConnection(int bindFlags) {
         return new MockChildServiceConnection(this);
     }
