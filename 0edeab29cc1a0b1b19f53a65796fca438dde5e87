@@ -22,6 +22,30 @@
       "revId": "0edeab29cc1a0b1b19f53a65796fca438dde5e87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ead4687_1e56daa0",
+        "filename": "third_party/WebKit/Source/core/testing/data/mhtml/simple_test.mht",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-13T01:40:03Z",
+      "side": 1,
+      "message": "This is bizarre! In the latest patch this file is not changed.",
+      "parentUuid": "3b409101_046f3d42",
+      "range": {
+        "startLine": 1,
+        "startChar": 5,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "0edeab29cc1a0b1b19f53a65796fca438dde5e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
