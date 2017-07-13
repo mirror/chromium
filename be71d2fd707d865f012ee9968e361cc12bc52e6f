@@ -34,6 +34,24 @@
       "revId": "be71d2fd707d865f012ee9968e361cc12bc52e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41db7381_601ee0b4",
+        "filename": "third_party/WebKit/Source/core/page/ScopedWindowFocusAllowedIndicator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-07-13T04:59:37Z",
+      "side": 1,
+      "message": "Ack. Thanks! I reverted moving this file.",
+      "parentUuid": "be914542_1352fe46",
+      "revId": "be71d2fd707d865f012ee9968e361cc12bc52e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
