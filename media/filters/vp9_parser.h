@@ -416,7 +416,7 @@ class MEDIA_EXPORT Vp9Parser {
   // Remaining bytes in stream_.
   off_t bytes_left_;
 
-  bool parsing_compressed_header_;
+  const bool parsing_compressed_header_;
 
   // FrameInfo for the remaining frames in the current superframe to be parsed.
   std::deque<FrameInfo> frames_;
