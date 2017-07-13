@@ -16,6 +16,24 @@
       "revId": "7fd9d09cc5fa0817c5795e66d16ff5bcf2372cc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa351186_ae7f51c7",
+        "filename": "tools/gn/bundle_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-13T17:00:26Z",
+      "side": 1,
+      "message": "Agreed! In my other CL, as Sylvain pointed out, xcode_extra_attributes is clearer than extra_attributes.",
+      "parentUuid": "308a3b94_b5ab26f7",
+      "revId": "7fd9d09cc5fa0817c5795e66d16ff5bcf2372cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
