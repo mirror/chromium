@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daef4964_d657851e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-13T08:59:40Z",
+      "side": 1,
+      "message": "Please do not call a nethod -initXXX if it is not used to initialize the object.",
+      "range": {
+        "startLine": 648,
+        "startChar": 8,
+        "endLine": 648,
+        "endChar": 20
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe141c2_a2a6d4fe",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-13T08:59:40Z",
+      "side": 1,
+      "message": "Why don\u0027t you just put this code in the init method? No need to test for nil. For one line of code it would be simpler.",
+      "range": {
+        "startLine": 651,
+        "startChar": 0,
+        "endLine": 651,
+        "endChar": 80
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c486f6ec_de3a6367",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-13T08:59:40Z",
+      "side": 1,
+      "message": "This is unnecessary, as this is called from dealloc and C++ scoped objects are taken care of properly when an objectiveC object goes away.",
+      "range": {
+        "startLine": 656,
+        "startChar": 2,
+        "endLine": 656,
+        "endChar": 25
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
