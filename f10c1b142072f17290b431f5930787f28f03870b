@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a5ef091_31369f85",
+        "filename": "media/base/video_frame.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-13T00:14:00Z",
+      "side": 1,
+      "message": "I guess this \"just works\" because the callers of \nthis method use base::Bind() that can be either\nRepeating or Once, right? Just wondering out loud.",
+      "range": {
+        "startLine": 374,
+        "startChar": 36,
+        "endLine": 374,
+        "endChar": 47
+      },
+      "revId": "f10c1b142072f17290b431f5930787f28f03870b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
