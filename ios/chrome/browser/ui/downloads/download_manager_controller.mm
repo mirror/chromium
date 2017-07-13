@@ -158,6 +158,10 @@ using net::URLRequestStatus;
 - (void)setProgressBarHeightWithAnimation:(BOOL)animated
                   withCompletionAnimation:(BOOL)completionAnimation;
 
+// Sets |title| on |button| for both Normal and Highlighted states.
+// Material design uses all caps for button labels.
+- (void)setTitle:(NSString*)title forButton:(UIButton*)button;
+
 // Makes the file icon "pop" and fades the image in the fold icon to the
 // completed fold icon. This will also call -showGoogleDriveButton if the user
 // doesn't have Google Drive installed on their device.
@@ -540,28 +544,14 @@ class DownloadContentDelegate : public URLFetcherDelegate {
     _isDisplayingError = NO;
     _didSuccessfullyFinishHeadFetch = NO;
 
-    NSString* downloadText =
-        l10n_util::GetNSString(IDS_IOS_DOWNLOAD_MANAGER_DOWNLOAD);
-    NSString* capsDownloadText =
-        [downloadText uppercaseStringWithLocale:[NSLocale currentLocale]];
-    [_downloadButton setTitle:capsDownloadText forState:UIControlStateNormal];
-
-    NSString* cancelText = l10n_util::GetNSString(IDS_CANCEL);
-    NSString* capsCancelText =
-        [cancelText uppercaseStringWithLocale:[NSLocale currentLocale]];
-    [_cancelButton setTitle:capsCancelText forState:UIControlStateNormal];
-
-    NSString* openInText = l10n_util::GetNSString(IDS_IOS_OPEN_IN);
-    NSString* capsOpenInText =
-        [openInText uppercaseStringWithLocale:[NSLocale currentLocale]];
-    [_openInButton setTitle:capsOpenInText forState:UIControlStateNormal];
-
-    NSString* googleDriveText =
-        l10n_util::GetNSString(IDS_IOS_DOWNLOAD_MANAGER_INSTALL_GOOGLE_DRIVE);
-    NSString* capsGoogleDriveText =
-        [googleDriveText uppercaseStringWithLocale:[NSLocale currentLocale]];
-    [_googleDriveButton setTitle:capsGoogleDriveText
-                        forState:UIControlStateNormal];
+    [self setTitle:l10n_util::GetNSString(IDS_IOS_DOWNLOAD_MANAGER_DOWNLOAD)
+         forButton:_downloadButton];
+    [self setTitle:l10n_util::GetNSString(IDS_CANCEL) forButton:_cancelButton];
+    [self setTitle:l10n_util::GetNSString(IDS_IOS_OPEN_IN)
+         forButton:_openInButton];
+    [self setTitle:l10n_util::GetNSString(
+                       IDS_IOS_DOWNLOAD_MANAGER_INSTALL_GOOGLE_DRIVE)
+         forButton:_googleDriveButton];
 
     [_documentContainer setIsAccessibilityElement:YES];
     self.fractionDownloaded = 0;
@@ -1125,14 +1115,10 @@ class DownloadContentDelegate : public URLFetcherDelegate {
   [_documentContainer setAccessibilityLabel:errorText];
 
   // Prepare the "RETRY DOWNLOAD" button text for the fading in animation.
-  NSString* retryDownloadText =
-      l10n_util::GetNSString(IDS_IOS_DOWNLOAD_MANAGER_RETRY_DOWNLOAD);
-  NSString* retryDownloadTextCaps =
-      [retryDownloadText uppercaseStringWithLocale:[NSLocale currentLocale]];
+  [self setTitle:l10n_util::GetNSString(IDS_IOS_DOWNLOAD_MANAGER_RETRY_DOWNLOAD)
+       forButton:_downloadButton];
   _downloadButton.alpha = 0.0;
   _downloadButton.hidden = NO;
-  [_downloadButton setTitle:retryDownloadTextCaps
-                   forState:UIControlStateNormal];
 
   [UIView
       animateWithDuration:kErrorAnimationDuration
@@ -1190,8 +1176,6 @@ class DownloadContentDelegate : public URLFetcherDelegate {
   // Prepare to change the download button back to its original text.
   NSString* downloadText =
       l10n_util::GetNSString(IDS_IOS_DOWNLOAD_MANAGER_DOWNLOAD);
-  NSString* downloadTextCaps =
-      [downloadText uppercaseStringWithLocale:[NSLocale currentLocale]];
 
   [_errorOrSizeLabel.layer addAnimation:fileSizeTextAnimation
                                  forKey:@"hideError"];
@@ -1213,8 +1197,7 @@ class DownloadContentDelegate : public URLFetcherDelegate {
         _errorIcon.alpha = 1.0;
         _downloadButton.hidden = YES;
         _downloadButton.alpha = 1.0;
-        [_downloadButton setTitle:downloadTextCaps
-                         forState:UIControlStateNormal];
+        [self setTitle:downloadText forButton:_downloadButton];
         _isDisplayingError = NO;
         [self finishDownloadButtonTapped];
       }];
@@ -1322,6 +1305,13 @@ class DownloadContentDelegate : public URLFetcherDelegate {
       [self runDownloadCompleteAnimation];
     }
   }
+}
+
+- (void)setTitle:(NSString*)title forButton:(UIButton*)button {
+  NSString* capsTitle =
+      [title uppercaseStringWithLocale:[NSLocale currentLocale]];
+  [button setTitle:capsTitle forState:UIControlStateNormal];
+  [button setTitle:capsTitle forState:UIControlStateHighlighted];
 }
 
 - (void)runDownloadCompleteAnimation {
