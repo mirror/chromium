@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aada1346_faea6132",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-13T06:34:03Z",
+      "side": 0,
+      "message": "This is no longer needed.\nnow it will be notified when syncing is finished.",
+      "revId": "6d016c9355721f174c345002f89cb9f750655f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e68a9a2_1e7991e8",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_panel_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-13T06:34:03Z",
+      "side": 0,
+      "message": "The SigninManager and SigninManagerFactory stuff are moved to SyncedSessionsBridge.\nso that they can be reused by bookmarkCollectionView.",
+      "range": {
+        "startLine": 11,
+        "startChar": 41,
+        "endLine": 11,
+        "endChar": 55
+      },
+      "revId": "6d016c9355721f174c345002f89cb9f750655f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

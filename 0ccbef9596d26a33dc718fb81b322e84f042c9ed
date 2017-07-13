@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31b1ae3b_9c7ae202",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-13T06:34:03Z",
+      "side": 1,
+      "message": "I want to free loadingSpinnerBackgroundView here because\nit is not likely the loading spinner will be reused again once it is hidden.\nNeed advise if it is good to set it to nil.  Or should I release() it?",
+      "revId": "0ccbef9596d26a33dc718fb81b322e84f042c9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1230bf61_a3984b9e",
+        "filename": "ios/chrome/browser/ui/sync/synced_sessions_bridge.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-13T06:34:03Z",
+      "side": 1,
+      "message": "If I don\u0027t add this line, first_sync_cycle_is_completed_ will be mistakenly set as false if syncing is already done when this constructor is called.  That will cause bookmarkCollectionView to show a wrong background.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "0ccbef9596d26a33dc718fb81b322e84f042c9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
