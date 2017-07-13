@@ -53,8 +53,8 @@ void DeviceDisabledScreen::OnViewDestroyed(DeviceDisabledScreenView* view) {
     view_ = nullptr;
 }
 
-const std::string& DeviceDisabledScreen::GetEnrollmentDomain() const {
-  return device_disabling_manager_->enrollment_domain();
+const std::string& DeviceDisabledScreen::GetEnterpriseDisplayDomain() const {
+  return device_disabling_manager_->enterprise_display_domain();
 }
 
 const std::string& DeviceDisabledScreen::GetMessage() const {

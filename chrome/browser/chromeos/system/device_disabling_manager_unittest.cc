@@ -248,7 +248,7 @@ TEST_F(DeviceDisablingManagerOOBETest, ShowWhenDisabledAndNotOwned) {
   CheckWhetherDeviceDisabledDuringOOBE();
   EXPECT_TRUE(device_disabled());
   EXPECT_EQ(kEnrollmentDomain,
-            GetDeviceDisablingManager()->enrollment_domain());
+            GetDeviceDisablingManager()->enterprise_display_domain());
   EXPECT_EQ(kDisabledMessage1, GetDeviceDisablingManager()->disabled_message());
 }
 
@@ -401,7 +401,7 @@ TEST_F(DeviceDisablingManagerTest, DisabledOnLoginScreen) {
   EXPECT_CALL(*this, OnDisabledMessageChanged(_)).Times(0);
   CreateDeviceDisablingManager();
   EXPECT_EQ(kEnrollmentDomain,
-            GetDeviceDisablingManager()->enrollment_domain());
+            GetDeviceDisablingManager()->enterprise_display_domain());
   EXPECT_EQ(kDisabledMessage1, GetDeviceDisablingManager()->disabled_message());
 }
 
@@ -430,7 +430,7 @@ TEST_F(DeviceDisablingManagerTest, DisableAndReEnableOnLoginScreen) {
   SetDeviceDisabled(true);
   Mock::VerifyAndClearExpectations(this);
   EXPECT_EQ(kEnrollmentDomain,
-            GetDeviceDisablingManager()->enrollment_domain());
+            GetDeviceDisablingManager()->enterprise_display_domain());
   EXPECT_EQ(kDisabledMessage1, GetDeviceDisablingManager()->disabled_message());
 
   // Update the disabled message. Verify that the device disabled screen is

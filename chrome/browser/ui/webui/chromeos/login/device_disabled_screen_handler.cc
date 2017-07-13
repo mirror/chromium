@@ -34,7 +34,8 @@ void DeviceDisabledScreenHandler::Show() {
   }
 
   if (delegate_) {
-    CallJS("setEnrollmentDomain", delegate_->GetEnrollmentDomain());
+    CallJS("setEnterpriseDisplayDomain",
+           delegate_->GetEnterpriseDisplayDomain());
     CallJS("setMessage", delegate_->GetMessage());
   }
   ShowScreen(kScreenId);
