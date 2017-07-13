@@ -9,6 +9,8 @@
 
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "ui/aura/layout_manager.h"
+#include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/ime/input_method_observer.h"
 #include "ui/base/ime/text_input_type.h"
@@ -71,7 +73,8 @@ enum class KeyboardControllerState {
 // Provides control of the virtual keyboard, including providing a container
 // and controlling visibility.
 class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
-                                           public aura::WindowObserver {
+                                           public aura::WindowObserver,
+                                           public aura::LayoutManager {
  public:
   // Different ways to hide the keyboard.
   enum HideReason {
@@ -185,6 +188,16 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void OnTextInputStateChanged(const ui::TextInputClient* client) override;
   void OnShowImeIfNeeded() override;
 
+  // aura::LayoutManager overrides
+  void OnWindowResized() override;
+  void OnWindowAddedToLayout(aura::Window* child) override;
+  void OnWillRemoveWindowFromLayout(aura::Window* child) override {}
+  void OnWindowRemovedFromLayout(aura::Window* child) override {}
+  void OnChildWindowVisibilityChanged(aura::Window* child,
+                                      bool visible) override {}
+  void SetChildBounds(aura::Window* child,
+                      const gfx::Rect& requested_bounds) override;
+
   // Notifies that the extension has completed loading
   void NotifyContentsLoadingComplete();
 
@@ -230,6 +243,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // If the contents window is visible, this should be the same size as the
   // contents window. If not, this should be empty.
   gfx::Rect current_keyboard_bounds_;
+
+  aura::Window* contents_window_;
 
   KeyboardControllerState state_;
 

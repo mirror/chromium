@@ -20,12 +20,15 @@
 #include "ui/base/ime/input_method.h"
 #include "ui/base/ime/text_input_client.h"
 #include "ui/compositor/layer_animation_observer.h"
+#include "ui/compositor/layer_animator.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/path.h"
+#include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
-#include "ui/keyboard/keyboard_layout_manager.h"
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
 
@@ -282,6 +285,7 @@ KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
       show_on_resize_(false),
       keyboard_locked_(false),
       keyboard_mode_(FULL_WIDTH),
+      contents_window_(nullptr),
       state_(KeyboardControllerState::UNKNOWN),
       weak_factory_(this) {
   ui_->GetInputMethod()->AddObserver(this);
@@ -321,7 +325,7 @@ aura::Window* KeyboardController::GetContainerWindow() {
     container_->set_owned_by_parent(false);
     container_->Init(ui::LAYER_NOT_DRAWN);
     container_->AddObserver(this);
-    container_->SetLayoutManager(new KeyboardLayoutManager(this));
+    container_->SetLayoutManager(this);
     container_->AddPreTargetHandler(&event_filter_);
   }
   return container_.get();
@@ -750,6 +754,110 @@ void KeyboardController::ChangeState(KeyboardControllerState state) {
   state_ = state;
   for (KeyboardControllerObserver& observer : observer_list_)
     observer.OnStateChanged(state);
+}
+
+// Overridden from aura::LayoutManager
+void KeyboardController::OnWindowResized() {
+  if (contents_window_) {
+    // Container window is the top level window of the virtual keyboard window.
+    // To support window.moveTo for the virtual keyboard window, as it actually
+    // moves the top level window, the container window should be set to the
+    // desired bounds before changing the bounds of the virtual keyboard window.
+    gfx::Rect container_bounds = this->GetContainerWindow()->bounds();
+    // Always align container window and keyboard window.
+    if (this->keyboard_mode() == FULL_WIDTH) {
+      SetChildBounds(contents_window_, gfx::Rect(container_bounds.size()));
+    } else {
+      SetChildBoundsDirect(contents_window_,
+                           gfx::Rect(container_bounds.size()));
+    }
+  }
+}
+
+void KeyboardController::OnWindowAddedToLayout(aura::Window* child) {
+  DCHECK(!contents_window_);
+  contents_window_ = child;
+  if (this->keyboard_mode() == FULL_WIDTH) {
+    this->GetContainerWindow()->SetBounds(gfx::Rect());
+  } else if (this->keyboard_mode() == FLOATING) {
+    this->GetContainerWindow()->SetBounds(child->bounds());
+    SetChildBoundsDirect(contents_window_, gfx::Rect(child->bounds().size()));
+  }
+}
+
+void KeyboardController::SetChildBounds(aura::Window* child,
+                                        const gfx::Rect& requested_bounds) {
+  DCHECK(child == contents_window_);
+
+  TRACE_EVENT0("vk", "KeyboardLayoutSetChildBounds");
+
+  // Request to change the bounds of child window (AKA the virtual keyboard
+  // window) should change the container window first. Then the child window is
+  // resized and covers the container window. Note the child's bound is only set
+  // in OnWindowResized.
+  gfx::Rect new_bounds = requested_bounds;
+  if (this->keyboard_mode() == FULL_WIDTH) {
+    const gfx::Rect& window_bounds =
+        this->GetContainerWindow()->GetRootWindow()->bounds();
+    new_bounds.set_y(window_bounds.height() - new_bounds.height());
+    // If shelf is positioned on the left side of screen, x is not 0. In
+    // FULL_WIDTH mode, the virtual keyboard should always align with the left
+    // edge of the screen. So manually set x to 0 here.
+    new_bounds.set_x(0);
+    new_bounds.set_width(window_bounds.width());
+  }
+  // Keyboard bounds should only be reset when it actually changes. Otherwise
+  // it interrupts the initial animation of showing the keyboard. Described in
+  // crbug.com/356753.
+  gfx::Rect old_bounds = contents_window_->GetTargetBounds();
+  aura::Window::ConvertRectToTarget(
+      contents_window_, contents_window_->GetRootWindow(), &old_bounds);
+  if (new_bounds == old_bounds)
+    return;
+
+  ui::LayerAnimator* animator =
+      this->GetContainerWindow()->layer()->GetAnimator();
+  // Stops previous animation if a window resize is requested during animation.
+  if (animator->is_animating())
+    animator->StopAnimating();
+
+  this->GetContainerWindow()->SetBounds(new_bounds);
+  SetChildBoundsDirect(contents_window_, gfx::Rect(new_bounds.size()));
+
+  const bool container_had_size = old_bounds.height() != 0;
+  const bool child_has_size = child->bounds().height() != 0;
+
+  if (!container_had_size && child_has_size && this->show_on_resize()) {
+    // The window height is set to 0 initially or before switch to an IME in a
+    // different extension. Virtual keyboard window may wait for this bounds
+    // change to correctly animate in.
+    if (this->keyboard_locked()) {
+      // Do not move the keyboard to another display after switch to an IME in a
+      // different extension.
+      const int64_t display_id =
+          display::Screen::GetScreen()
+              ->GetDisplayNearestWindow(this->GetContainerWindow())
+              .id();
+      this->ShowKeyboardInDisplay(display_id);
+    } else {
+      this->ShowKeyboard(false /* lock */);
+    }
+  } else {
+    if (!container_had_size && child_has_size && !this->keyboard_visible()) {
+      // When the child is layed out, the controller is not shown, but showing
+      // is not desired, this is indicative that the pre-load has completed.
+      this->NotifyContentsLoadingComplete();
+    }
+
+    if (this->keyboard_mode() == FULL_WIDTH) {
+      // We need to send out this notification only if keyboard is visible since
+      // keyboard window is resized even if keyboard is hidden.
+      if (this->keyboard_visible())
+        this->NotifyContentsBoundsChanging(new_bounds);
+    } else if (this->keyboard_mode() == FLOATING) {
+      this->NotifyContentsBoundsChanging(gfx::Rect());
+    }
+  }
 }
 
 }  // namespace keyboard
