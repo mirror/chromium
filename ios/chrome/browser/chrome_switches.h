@@ -33,6 +33,7 @@ extern const char kEnableIOSPasswordGeneration[];
 extern const char kEnableLRUSnapshotCache[];
 extern const char kEnableNTPFavicons[];
 extern const char kEnableOfflineAutoReload[];
+extern const char kEnablePaymentRequest[];
 extern const char kEnableReaderModeToolbarIcon[];
 extern const char kEnableSpotlightActions[];
 extern const char kEnableIOSPhysicalWeb[];
