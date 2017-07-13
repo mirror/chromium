@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef20a943_db4a103c",
+        "filename": "components/viz/common/quads/shared_bitmap.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-13T22:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be8de3ba_8219400e",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 10
+      },
+      "revId": "1640867aed2f1c989d98c1d5aef4a51db3410b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8575408_6edf2878",
         "filename": "content/browser/renderer_host/render_widget_host_impl.h",
         "patchSetId": 38
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "35d0c3c9_7abbaaed",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-13T22:05:27Z",
+      "side": 1,
+      "message": "Submitting compositor frames has no time guarantee. What I\u0027m doing is basically deliver the frame later. The display compositor is able to handle arbitrarily late deliveries. Offline you expressed concern about multiple frames in flight and message ordering issues. Pausing the message pipe will address those.",
+      "parentUuid": "c8575408_6edf2878",
+      "revId": "1640867aed2f1c989d98c1d5aef4a51db3410b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9953d1a2_7110c531",
         "filename": "content/public/test/DEPS",
         "patchSetId": 38
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-13T19:06:47Z",
       "side": 1,
       "message": "Hmm, which part of viz do you need here?",
+      "revId": "1640867aed2f1c989d98c1d5aef4a51db3410b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66787e5_8b04286c",
+        "filename": "content/public/test/DEPS",
+        "patchSetId": 38
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-13T22:05:27Z",
+      "side": 1,
+      "message": "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h in content/public/test/mock_render_process_host.h",
+      "parentUuid": "9953d1a2_7110c531",
       "revId": "1640867aed2f1c989d98c1d5aef4a51db3410b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

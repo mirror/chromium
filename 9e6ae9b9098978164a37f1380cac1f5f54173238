@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2eb15148_7b0992a5",
+        "filename": "cc/resources/transferable_resource.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-13T22:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cacc56b8_e9ce60db",
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d85a371f_82a2cced",
         "filename": "components/viz/client/client_shared_bitmap_manager.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8924e10_7bd63fe7",
+        "filename": "components/viz/client/client_shared_bitmap_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-13T22:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d85a371f_82a2cced",
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "60bc832b_ab61d572",
+        "filename": "components/viz/common/quads/shared_bitmap.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-13T22:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2267db0c_515a8b49",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "989ccbba_ee32b8d6",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 10
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "898f768f_e1d169da",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-13T22:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "989ccbba_ee32b8d6",
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7de05bee_1d414106",
         "filename": "content/browser/renderer_host/render_widget_host_impl.h",
         "patchSetId": 10
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-11T22:44:39Z",
       "side": 1,
       "message": "What if we have more than one in flight? Should we keep a queue?",
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b10725_b8b6d801",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-13T22:05:27Z",
+      "side": 1,
+      "message": "We can stop processing messages until one frame is done with.",
+      "parentUuid": "7de05bee_1d414106",
       "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
