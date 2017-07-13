@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc31a344_faaf85ee",
+        "filename": "components/reading_list/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-13T09:07:05Z",
+      "side": 1,
+      "message": "Please remove the spurious space.",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "7e37ca072a3fbc4573c286c6d06025c6ec3be1d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
