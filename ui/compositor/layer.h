@@ -293,10 +293,9 @@ class COMPOSITOR_EXPORT Layer
 
   // Set new TextureMailbox for this layer. Note that |mailbox| may hold a
   // shared memory resource or an actual mailbox for a texture.
-  void SetTextureMailbox(
-      const viz::TextureMailbox& mailbox,
-      std::unique_ptr<cc::SingleReleaseCallback> release_callback,
-      gfx::Size texture_size_in_dip);
+  void SetTextureMailbox(const viz::TextureMailbox& mailbox,
+                         cc::SingleReleaseCallback release_callback,
+                         gfx::Size texture_size_in_dip);
   void SetTextureSize(gfx::Size texture_size_in_dip);
   void SetTextureFlipped(bool flipped);
   bool TextureFlipped() const;
@@ -390,7 +389,7 @@ class COMPOSITOR_EXPORT Layer
   // TextureLayerClient
   bool PrepareTextureMailbox(
       viz::TextureMailbox* mailbox,
-      std::unique_ptr<cc::SingleReleaseCallback>* release_callback) override;
+      cc::SingleReleaseCallback* release_callback) override;
 
   float device_scale_factor() const { return device_scale_factor_; }
 
@@ -569,7 +568,7 @@ class COMPOSITOR_EXPORT Layer
 
   // The callback to release the mailbox. This is only set after
   // SetTextureMailbox is called, before we give it to the TextureLayer.
-  std::unique_ptr<cc::SingleReleaseCallback> mailbox_release_callback_;
+  cc::SingleReleaseCallback mailbox_release_callback_;
 
   // The size of the frame or texture in DIP, set when SetShowDelegatedContent
   // or SetTextureMailbox was called.

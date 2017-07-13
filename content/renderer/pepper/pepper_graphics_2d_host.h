@@ -12,6 +12,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "cc/resources/single_release_callback.h"
 #include "content/common/content_export.h"
 #include "ppapi/c/ppb_graphics_2d.h"
 #include "ppapi/host/host_message_context.h"
@@ -20,10 +21,6 @@
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/size.h"
-
-namespace cc {
-class SingleReleaseCallback;
-}
 
 namespace gfx {
 class Rect;
@@ -75,9 +72,8 @@ class CONTENT_EXPORT PepperGraphics2DHost
              const gfx::Rect& plugin_rect,
              const gfx::Rect& paint_rect);
 
-  bool PrepareTextureMailbox(
-      viz::TextureMailbox* mailbox,
-      std::unique_ptr<cc::SingleReleaseCallback>* release_callback);
+  bool PrepareTextureMailbox(viz::TextureMailbox* mailbox,
+                             cc::SingleReleaseCallback* release_callback);
   void AttachedToNewLayer();
 
   // Notifications about the view's progress painting.  See PluginInstance.

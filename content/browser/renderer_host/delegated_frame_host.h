@@ -233,7 +233,7 @@ class CONTENT_EXPORT DelegatedFrameHost
       base::WeakPtr<DelegatedFrameHost> rwhva,
       const base::Callback<void(bool)>& callback,
       scoped_refptr<OwnedMailbox> subscriber_texture,
-      std::unique_ptr<cc::SingleReleaseCallback> release_callback,
+      cc::SingleReleaseCallback release_callback,
       bool result);
   static void ReturnSubscriberTexture(
       base::WeakPtr<DelegatedFrameHost> rwhva,

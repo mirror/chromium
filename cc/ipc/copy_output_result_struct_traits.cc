@@ -16,8 +16,7 @@ namespace {
 // attached to it goes away (i.e. StrongBinding is used).
 class TextureMailboxReleaserImpl : public cc::mojom::TextureMailboxReleaser {
  public:
-  TextureMailboxReleaserImpl(
-      std::unique_ptr<cc::SingleReleaseCallback> release_callback)
+  TextureMailboxReleaserImpl(cc::SingleReleaseCallback release_callback)
       : release_callback_(std::move(release_callback)) {
     DCHECK(release_callback_);
   }
@@ -26,19 +25,18 @@ class TextureMailboxReleaserImpl : public cc::mojom::TextureMailboxReleaser {
     // If the client fails to call Release, we should do it ourselves because
     // release_callback_ will fail if it's never called.
     if (release_callback_)
-      release_callback_->Run(gpu::SyncToken(), true);
+      std::move(release_callback_).Run(gpu::SyncToken(), true);
   }
 
   // mojom::TextureMailboxReleaser implementation:
   void Release(const gpu::SyncToken& sync_token, bool is_lost) override {
     if (!release_callback_)
       return;
-    release_callback_->Run(sync_token, is_lost);
-    release_callback_.reset();
+    std::move(release_callback_).Run(sync_token, is_lost);
   }
 
  private:
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback_;
+  cc::SingleReleaseCallback release_callback_;
 };
 
 void Release(cc::mojom::TextureMailboxReleaserPtr ptr,
@@ -85,7 +83,7 @@ bool StructTraits<cc::mojom::CopyOutputResultDataView,
   gfx::Size size;
   auto bitmap = base::MakeUnique<SkBitmap>();
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
+  cc::SingleReleaseCallback release_callback;
 
   if (!data.ReadSize(&size))
     return false;
@@ -101,8 +99,7 @@ bool StructTraits<cc::mojom::CopyOutputResultDataView,
     // CopyOutputResult does not have a TextureMailboxReleaserPtr member.
     // We use base::Bind to turn TextureMailboxReleaser::Release into a
     // ReleaseCallback.
-    release_callback = cc::SingleReleaseCallback::Create(
-        base::Bind(Release, base::Passed(&releaser)));
+    release_callback = base::BindOnce(&Release, std::move(releaser));
   }
 
   // Empty result.

@@ -16,10 +16,9 @@ CopyOutputResult::CopyOutputResult(std::unique_ptr<SkBitmap> bitmap)
   DCHECK(bitmap_);
 }
 
-CopyOutputResult::CopyOutputResult(
-    const gfx::Size& size,
-    const viz::TextureMailbox& texture_mailbox,
-    std::unique_ptr<SingleReleaseCallback> release_callback)
+CopyOutputResult::CopyOutputResult(const gfx::Size& size,
+                                   const viz::TextureMailbox& texture_mailbox,
+                                   SingleReleaseCallback release_callback)
     : size_(size),
       texture_mailbox_(texture_mailbox),
       release_callback_(std::move(release_callback)) {
@@ -28,16 +27,15 @@ CopyOutputResult::CopyOutputResult(
 
 CopyOutputResult::~CopyOutputResult() {
   if (release_callback_)
-    release_callback_->Run(gpu::SyncToken(), false);
+    std::move(release_callback_).Run(gpu::SyncToken(), false);
 }
 
 std::unique_ptr<SkBitmap> CopyOutputResult::TakeBitmap() {
   return std::move(bitmap_);
 }
 
-void CopyOutputResult::TakeTexture(
-    viz::TextureMailbox* texture_mailbox,
-    std::unique_ptr<SingleReleaseCallback>* release_callback) {
+void CopyOutputResult::TakeTexture(viz::TextureMailbox* texture_mailbox,
+                                   SingleReleaseCallback* release_callback) {
   *texture_mailbox = texture_mailbox_;
   *release_callback = std::move(release_callback_);
 
