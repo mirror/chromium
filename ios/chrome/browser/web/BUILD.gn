@@ -132,7 +132,6 @@ source_set("web_internal") {
     "//components/dom_distiller/core",
     "//components/error_page/common",
     "//components/infobars/core",
-    "//components/payments/core",
     "//components/prefs",
     "//components/resources",
     "//components/strings",
