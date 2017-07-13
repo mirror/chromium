@@ -42,11 +42,14 @@ class CORE_EXPORT NGFragmentBuilder final {
   NGFragmentBuilder& SetOverflowSize(const NGLogicalSize&);
   NGFragmentBuilder& SetBlockOverflow(LayoutUnit);
 
+  NGFragmentBuilder& SetIsAnonymous(bool is_anonymous) {
+    is_anonymous_ = is_anonymous;
+    return *this;
+  }
+
   NGFragmentBuilder& AddChild(RefPtr<NGLayoutResult>, const NGLogicalOffset&);
   NGFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
                               const NGLogicalOffset&);
-
-  NGFragmentBuilder& AddPositionedFloat(NGPositionedFloat);
 
   NGFragmentBuilder& SetBfcOffset(const NGLogicalOffset& offset);
 
@@ -163,6 +166,8 @@ class CORE_EXPORT NGFragmentBuilder final {
   NGLogicalSize size_;
   NGLogicalSize overflow_;
 
+  bool is_anonymous_;
+
   Vector<RefPtr<NGPhysicalFragment>> children_;
   Vector<NGLogicalOffset> offsets_;
 
@@ -178,8 +183,6 @@ class CORE_EXPORT NGFragmentBuilder final {
   // Floats that need to be positioned by the next in-flow fragment that can
   // determine its block position in space.
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
-
-  Vector<NGPositionedFloat> positioned_floats_;
 
   WTF::Optional<NGLogicalOffset> bfc_offset_;
   NGMarginStrut end_margin_strut_;

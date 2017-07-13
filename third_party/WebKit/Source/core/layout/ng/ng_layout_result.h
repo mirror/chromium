@@ -10,13 +10,14 @@
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_out_of_flow_positioned_descendant.h"
 #include "core/layout/ng/ng_physical_fragment.h"
-#include "core/layout/ng/ng_unpositioned_float.h"
 #include "platform/LayoutUnit.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
+
+struct NGUnpositionedFloat;
 
 // The NGLayoutResult stores the resulting data from layout. This includes
 // geometry information in form of a NGPhysicalFragment, which is kept around
