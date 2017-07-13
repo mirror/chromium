@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bd90388_e6030bf5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T10:16:05Z",
+      "side": 1,
+      "message": "If -\u003e When ?",
+      "revId": "5e0f506d1501bc0077a693e3f61705c69a7307b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfcced7_2e562249",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T10:16:05Z",
+      "side": 1,
+      "message": "how about s/request/ResourceRequest/ as this comment is not about the concept but more about implementation details.",
+      "revId": "5e0f506d1501bc0077a693e3f61705c69a7307b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d343a7_e7d8227d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T10:16:05Z",
+      "side": 1,
+      "message": "across threads",
+      "revId": "5e0f506d1501bc0077a693e3f61705c69a7307b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4564a66c_785ac9ba",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T10:16:05Z",
+      "side": 1,
+      "message": "assinment -\u003e assignment",
+      "revId": "5e0f506d1501bc0077a693e3f61705c69a7307b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344ea126_d0a8b485",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T10:16:05Z",
+      "side": 1,
+      "message": "If -\u003e When",
+      "revId": "5e0f506d1501bc0077a693e3f61705c69a7307b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7a8317_333b3b40",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T10:16:05Z",
+      "side": 1,
+      "message": "ditto. response -\u003e ResourceResponse",
+      "revId": "5e0f506d1501bc0077a693e3f61705c69a7307b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5c33bd_05a9cc2b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T10:16:05Z",
+      "side": 1,
+      "message": "across threads",
+      "revId": "5e0f506d1501bc0077a693e3f61705c69a7307b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941f1005_58c16f7c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T10:16:05Z",
+      "side": 1,
+      "message": "assinment -\u003e assignment",
+      "revId": "5e0f506d1501bc0077a693e3f61705c69a7307b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
