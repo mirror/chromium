@@ -87,7 +87,8 @@ int64_t GetPrimaryDisplayId() {
 
 class TestShelfObserver : public ShelfObserver {
  public:
-  explicit TestShelfObserver(Shelf* shelf) : shelf_(shelf) {
+  explicit TestShelfObserver(Shelf* shelf, ShelfViewTestAPI* test_api)
+      : shelf_(shelf), test_api_(test_api) {
     shelf_->AddObserver(this);
   }
 
@@ -96,14 +97,25 @@ class TestShelfObserver : public ShelfObserver {
   // ShelfObserver implementation.
   void OnShelfIconPositionsChanged() override {
     icon_positions_changed_ = true;
+
+    if (test_api_)
+      icon_positions_animation_duration_ = test_api_->GetAnimationDuration();
   }
 
   bool icon_positions_changed() const { return icon_positions_changed_; }
-  void Reset() { icon_positions_changed_ = false; }
+  void Reset() {
+    icon_positions_changed_ = false;
+    icon_positions_animation_duration_ = 0.0;
+  }
+  double icon_positions_animation_duration() const {
+    return icon_positions_animation_duration_;
+  }
 
  private:
   Shelf* shelf_;
+  ShelfViewTestAPI* test_api_;
   bool icon_positions_changed_ = false;
+  double icon_positions_animation_duration_ = 0.0;
 
   DISALLOW_COPY_AND_ASSIGN(TestShelfObserver);
 };
@@ -115,7 +127,7 @@ class ShelfObserverIconTest : public AshTestBase {
 
   void SetUp() override {
     AshTestBase::SetUp();
-    observer_.reset(new TestShelfObserver(GetPrimaryShelf()));
+    observer_.reset(new TestShelfObserver(GetPrimaryShelf(), nullptr));
     shelf_view_test_.reset(
         new ShelfViewTestAPI(GetPrimaryShelf()->GetShelfViewForTesting()));
     shelf_view_test_->SetAnimationDuration(1);
@@ -194,7 +206,7 @@ TEST_F(ShelfObserverIconTest, AddRemoveWithMultipleDisplays) {
   observer()->Reset();
 
   Shelf* second_shelf = Shelf::ForWindow(Shell::GetAllRootWindows()[1]);
-  TestShelfObserver second_observer(second_shelf);
+  TestShelfObserver second_observer(second_shelf, nullptr);
 
   ShelfItem item;
   item.id = ShelfID("foo");
@@ -1972,6 +1984,47 @@ TEST_F(ShelfViewTest, TestHideOverflow) {
   EXPECT_TRUE(test_api_->IsShowingOverflowBubble());
 }
 
+// Verify the animations of the shelf items are as long as expected.
+TEST_F(ShelfViewTest, TestShelfItemsAnimations) {
+  TestShelfObserver observer(shelf_view_->shelf(), test_api_.get());
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  ShelfID first_app_id = AddAppShortcut();
+  ShelfID second_app_id = AddAppShortcut();
+
+  // Set the animation duration for shelf items.
+  const double animation_duration = 100.0;
+  test_api_->SetAnimationDuration(animation_duration);
+
+  // The shelf items should animate if they are moved within the shelf, either
+  // by swapping or if the items need to be rearranged due to an item getting
+  // ripped off.
+  generator.set_current_location(GetButtonCenter(first_app_id));
+  generator.DragMouseTo(GetButtonCenter(second_app_id));
+  generator.DragMouseBy(0, 50);
+  test_api_->RunMessageLoopUntilAnimationsDone();
+  EXPECT_EQ(animation_duration, observer.icon_positions_animation_duration());
+
+  // The shelf items should not animate when the whole shelf and its contents
+  // have to move.
+  observer.Reset();
+  shelf_view_->shelf()->SetAlignment(SHELF_ALIGNMENT_LEFT);
+  test_api_->RunMessageLoopUntilAnimationsDone();
+  EXPECT_EQ(1.0, observer.icon_positions_animation_duration());
+
+  // The shelf items should animate if we are entering or exiting maximize mode.
+  observer.Reset();
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      true);
+  test_api_->RunMessageLoopUntilAnimationsDone();
+  EXPECT_EQ(animation_duration, observer.icon_positions_animation_duration());
+
+  observer.Reset();
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      false);
+  test_api_->RunMessageLoopUntilAnimationsDone();
+  EXPECT_EQ(animation_duration, observer.icon_positions_animation_duration());
+}
+
 class ShelfViewVisibleBoundsTest : public ShelfViewTest,
                                    public testing::WithParamInterface<bool> {
  public:
@@ -2567,46 +2620,9 @@ TEST_F(ShelfViewInkDropTest, ShelfButtonWithMenuPressRelease) {
                           views::InkDropState::DEACTIVATED));
 }
 
-// Test fixture to run app list button ink drop tests for both mouse and touch
-// events.
-class AppListButtonInkDropTest
-    : public ShelfViewInkDropTest,
-      public testing::WithParamInterface<ui::EventPointerType> {
- public:
-  AppListButtonInkDropTest() : pointer_type_(GetParam()) {}
-
-  ~AppListButtonInkDropTest() override {}
-
-  void MovePointerTo(const gfx::Point& point) {
-    if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_MOUSE)
-      GetEventGenerator().MoveMouseTo(point);
-    else if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_TOUCH)
-      GetEventGenerator().MoveTouch(point);
-  }
-
-  void PressPointer() {
-    if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_MOUSE)
-      GetEventGenerator().PressLeftButton();
-    else if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_TOUCH)
-      GetEventGenerator().PressTouch();
-  }
-
-  void ReleasePointer() {
-    if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_MOUSE)
-      GetEventGenerator().ReleaseLeftButton();
-    else if (pointer_type_ == ui::EventPointerType::POINTER_TYPE_TOUCH)
-      GetEventGenerator().ReleaseTouch();
-  }
-
- private:
-  ui::EventPointerType pointer_type_;
-
-  DISALLOW_COPY_AND_ASSIGN(AppListButtonInkDropTest);
-};
-
 // Tests that clicking/tapping on the app list button in maximized mode (when
 // it has two functionalities), transitions the ink drop state correctly.
-TEST_P(AppListButtonInkDropTest, AppListButtonInMaximizedMode) {
+TEST_F(ShelfViewInkDropTest, AppListButtonInMaximizedMode) {
   // TODO: investigate failure in mash, http://crbug.com/695751.
   if (Shell::GetAshConfig() == Config::MASH)
     return;
@@ -2621,53 +2637,75 @@ TEST_P(AppListButtonInkDropTest, AppListButtonInMaximizedMode) {
   EXPECT_EQ(new_bounds.height(), old_bounds.height());
   EXPECT_GT(new_bounds.width(), old_bounds.width());
 
-  gfx::Point point_on_circle = app_list_button_->GetAppListButtonCenterPoint();
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  gfx::Point point_on_circle = app_list_button_->GetCircleCenterPoint();
   views::View::ConvertPointToScreen(app_list_button_, &point_on_circle);
   gfx::Point point_on_back_button =
       app_list_button_->GetBackButtonCenterPoint();
   views::View::ConvertPointToScreen(app_list_button_, &point_on_back_button);
 
-  // Verify the ink drop state transitions as expected when we press and
-  // release on the app list circle part of the app list button. Taps on the
-  // app list circle, which shows the app list, should end up in the activated
-  // state.
-  MovePointerTo(point_on_circle);
-  PressPointer();
-  EXPECT_EQ(views::InkDropState::ACTION_PENDING,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTION_PENDING));
-  ReleasePointer();
+  const std::vector<std::string> event_types = {"mouse", "touch"};
 
-  // Trigger a mock button notification that the app list was shown.
-  app_list_button_->OnAppListShown();
-  FinishAppListVisibilityChange();
-  EXPECT_EQ(views::InkDropState::ACTIVATED,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTIVATED));
+  for (auto event_type : event_types) {
+    SCOPED_TRACE(event_type);
+    // Verify the ink drop state transitions as expected when we press and
+    // release on the app list circle part of the app list button. Taps on the
+    // app list circle, which shows the app list, should end up in the activated
+    // state.
+    if (event_type == "mouse") {
+      generator.MoveMouseTo(point_on_circle);
+      generator.PressLeftButton();
+    } else if (event_type == "touch") {
+      generator.MoveTouch(point_on_circle);
+      generator.PressTouch();
+    }
+    EXPECT_EQ(views::InkDropState::ACTION_PENDING,
+              app_list_button_ink_drop_->GetTargetInkDropState());
+    EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+                ElementsAre(views::InkDropState::ACTION_PENDING));
+    if (event_type == "mouse")
+      generator.ReleaseLeftButton();
+    else if (event_type == "touch")
+      generator.ReleaseTouch();
 
-  // Trigger a mock button notification that the app list was dismissed.
-  app_list_button_->OnAppListDismissed();
-  FinishAppListVisibilityChange();
-  EXPECT_EQ(views::InkDropState::HIDDEN,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::DEACTIVATED));
+    // Trigger a mock button notification that the app list was shown.
+    app_list_button_->OnAppListShown();
+    FinishAppListVisibilityChange();
+    EXPECT_EQ(views::InkDropState::ACTIVATED,
+              app_list_button_ink_drop_->GetTargetInkDropState());
+    EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+                ElementsAre(views::InkDropState::ACTIVATED));
 
-  // Verify the ink drop state transitions as expected when we tap on the back
-  // button part of the app list button.
-  MovePointerTo(point_on_back_button);
-  PressPointer();
-  EXPECT_EQ(views::InkDropState::ACTION_PENDING,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTION_PENDING));
-  ReleasePointer();
-  EXPECT_EQ(views::InkDropState::HIDDEN,
-            app_list_button_ink_drop_->GetTargetInkDropState());
-  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
-              ElementsAre(views::InkDropState::ACTION_TRIGGERED));
+    // Trigger a mock button notification that the app list was dismissed.
+    app_list_button_->OnAppListDismissed();
+    FinishAppListVisibilityChange();
+    EXPECT_EQ(views::InkDropState::HIDDEN,
+              app_list_button_ink_drop_->GetTargetInkDropState());
+    EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+                ElementsAre(views::InkDropState::DEACTIVATED));
+
+    // Verify the ink drop state transitions as expected when we tap on the back
+    // button part of the app list button.
+    if (event_type == "mouse") {
+      generator.MoveMouseTo(point_on_back_button);
+      generator.PressLeftButton();
+    } else if (event_type == "touch") {
+      generator.MoveTouch(point_on_back_button);
+      generator.PressTouch();
+    }
+    EXPECT_EQ(views::InkDropState::ACTION_PENDING,
+              app_list_button_ink_drop_->GetTargetInkDropState());
+    EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+                ElementsAre(views::InkDropState::ACTION_PENDING));
+    if (event_type == "mouse")
+      generator.ReleaseLeftButton();
+    else if (event_type == "touch")
+      generator.ReleaseTouch();
+    EXPECT_EQ(views::InkDropState::HIDDEN,
+              app_list_button_ink_drop_->GetTargetInkDropState());
+    EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+                ElementsAre(views::InkDropState::ACTION_TRIGGERED));
+  }
 
   // Verify when we leave maximized mode, the bounds should return to be the
   // same as they were before we entered maximized mode.
@@ -2676,14 +2714,6 @@ TEST_P(AppListButtonInkDropTest, AppListButtonInMaximizedMode) {
   new_bounds = app_list_button_->GetBoundsInScreen();
   EXPECT_EQ(new_bounds, old_bounds);
 }
-
-static const ui::EventPointerType kPointerTypes[] = {
-    ui::EventPointerType::POINTER_TYPE_MOUSE,
-    ui::EventPointerType::POINTER_TYPE_TOUCH};
-INSTANTIATE_TEST_CASE_P(
-    /* prefix intentionally left blank due to only one parameterization */,
-    AppListButtonInkDropTest,
-    ::testing::ValuesIn(kPointerTypes));
 
 namespace {
 

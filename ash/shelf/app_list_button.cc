@@ -54,21 +54,22 @@ constexpr int kVoiceInteractionAnimationDelayMs = 200;
 // Generate and send a VKEY_BROWSER_BACK key event when the back button portion
 // is clicked or tapped.
 void GenerateAndSendBackEvent(const ui::LocatedEvent& original_event) {
-  ui::EventType event_type;
+  ui::KeyEvent key_event(ui::ET_KEY_PRESSED, ui::VKEY_BROWSER_BACK,
+                         ui::EF_NONE);
   switch (original_event.type()) {
     case ui::ET_MOUSE_PRESSED:
     case ui::ET_GESTURE_TAP_DOWN:
-      event_type = ui::ET_KEY_PRESSED;
       break;
     case ui::ET_MOUSE_RELEASED:
     case ui::ET_GESTURE_TAP:
-      event_type = ui::ET_KEY_RELEASED;
+      key_event =
+          ui::KeyEvent(ui::ET_KEY_RELEASED, ui::VKEY_BROWSER_BACK, ui::EF_NONE);
       break;
     default:
+      NOTIMPLEMENTED();
       return;
   }
 
-  ui::KeyEvent key_event(event_type, ui::VKEY_BROWSER_BACK, ui::EF_NONE);
   aura::Window* target = static_cast<aura::Window*>(original_event.target());
   aura::Window* target_root = target->GetRootWindow()
                                   ? target->GetRootWindow()
@@ -144,14 +145,14 @@ void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
     switch (event->type()) {
       case ui::ET_GESTURE_TAP:
         AnimateInkDrop(views::InkDropState::ACTION_TRIGGERED, event);
-        GenerateAndSendBackEvent(*event);
+        GenerateAndSendBackEvent(*(event->AsLocatedEvent()));
         break;
       case ui::ET_GESTURE_TAP_CANCEL:
         AnimateInkDrop(views::InkDropState::HIDDEN, event);
         break;
       case ui::ET_GESTURE_TAP_DOWN:
         AnimateInkDrop(views::InkDropState::ACTION_PENDING, event);
-        GenerateAndSendBackEvent(*event);
+        GenerateAndSendBackEvent(*(event->AsLocatedEvent()));
         break;
       default:
         break;
@@ -267,7 +268,7 @@ void AppListButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 std::unique_ptr<views::InkDropRipple> AppListButton::CreateInkDropRipple()
     const {
   gfx::Point center = last_event_is_back_event_ ? GetBackButtonCenterPoint()
-                                                : GetAppListButtonCenterPoint();
+                                                : GetCircleCenterPoint();
   gfx::Rect bounds(center.x() - kAppListButtonRadius,
                    center.y() - kAppListButtonRadius, 2 * kAppListButtonRadius,
                    2 * kAppListButtonRadius);
@@ -302,7 +303,7 @@ std::unique_ptr<views::InkDropMask> AppListButton::CreateInkDropMask() const {
   return base::MakeUnique<views::CircleInkDropMask>(
       size(),
       last_event_is_back_event_ ? GetBackButtonCenterPoint()
-                                : GetAppListButtonCenterPoint(),
+                                : GetCircleCenterPoint(),
       kAppListButtonRadius);
 }
 
@@ -310,7 +311,9 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   const bool is_maximize_mode = Shell::Get()
                                     ->maximize_mode_controller()
                                     ->IsMaximizeModeWindowManagerEnabled();
-  gfx::PointF circle_center(GetAppListButtonCenterPoint());
+  const double current_animation_value =
+      shelf_view_->GetAppListButtonAnimationCurrentValue();
+  gfx::PointF circle_center(GetCircleCenterPoint());
 
   // Paint the circular background.
   cc::PaintFlags bg_flags;
@@ -318,7 +321,7 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   bg_flags.setAntiAlias(true);
   bg_flags.setStyle(cc::PaintFlags::kFill_Style);
 
-  if (is_maximize_mode) {
+  if (is_maximize_mode || current_animation_value > 0.0) {
     // Draw the maximize mode app list background. It will look something like
     // [1] when the shelf is horizontal and [2] when the shelf is vertical,
     // where 1. is the back button and 2. is the app launcher circle.
@@ -365,8 +368,16 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     // TODO(sammiequon): Check if the back button should be flipped in RTL.
     gfx::ImageSkia back_button =
         CreateVectorIcon(kShelfBackIcon, SK_ColorTRANSPARENT);
+
+    // Fades the back button in or out.
+    int opacity = current_animation_value > 0.0
+                      ? static_cast<int>((is_maximize_mode
+                                              ? current_animation_value
+                                              : 1.0 - current_animation_value) *
+                                         255.0)
+                      : 255;
     canvas->DrawImageInt(back_button, back_center.x() - back_button.width() / 2,
-                         back_center.y() - back_button.height() / 2);
+                         back_center.y() - back_button.height() / 2, opacity);
   } else {
     canvas->DrawCircle(circle_center, kAppListButtonRadius, bg_flags);
   }
@@ -384,7 +395,6 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     gfx::ScopedCanvas scoped_canvas(canvas);
     const float dsf = canvas->UndoDeviceScaleFactor();
     circle_center.Scale(dsf);
-
     cc::PaintFlags fg_flags;
     fg_flags.setAntiAlias(true);
     fg_flags.setStyle(cc::PaintFlags::kStroke_Style);
@@ -412,7 +422,7 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   }
 }
 
-gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
+gfx::Point AppListButton::GetCircleCenterPoint() const {
   // For a bottom-aligned shelf, the button bounds could have a larger height
   // than width (in the case of touch-dragging the shelf upwards) or a larger
   // width than height (in the case of a shelf hide/show animation), so adjust
@@ -425,24 +435,26 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
   const bool is_maximize_mode = Shell::Get()
                                     ->maximize_mode_controller()
                                     ->IsMaximizeModeWindowManagerEnabled();
+  const bool is_animating =
+      shelf_view_->GetAppListButtonAnimationCurrentValue() > 0.0;
 
   ShelfAlignment alignment = shelf_->alignment();
   if (alignment == SHELF_ALIGNMENT_BOTTOM ||
       alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) {
-    if (is_maximize_mode) {
+    if (is_maximize_mode || is_animating) {
       return gfx::Point(width() - kShelfButtonSize / 2.f,
                         kShelfButtonSize / 2.f);
     }
     return gfx::Point(x_mid, x_mid);
   } else if (alignment == SHELF_ALIGNMENT_RIGHT) {
-    if (is_maximize_mode) {
+    if (is_maximize_mode || is_animating) {
       return gfx::Point(kShelfButtonSize / 2.f,
                         height() - kShelfButtonSize / 2.f);
     }
     return gfx::Point(y_mid, y_mid);
   } else {
     DCHECK_EQ(alignment, SHELF_ALIGNMENT_LEFT);
-    if (is_maximize_mode) {
+    if (is_maximize_mode || is_animating) {
       return gfx::Point(width() - kShelfButtonSize / 2.f,
                         height() - kShelfButtonSize / 2.f);
     }
@@ -485,7 +497,7 @@ bool AppListButton::IsBackEvent(const gfx::Point& location) {
   }
 
   return (location - GetBackButtonCenterPoint()).LengthSquared() <
-         (location - GetAppListButtonCenterPoint()).LengthSquared();
+         (location - GetCircleCenterPoint()).LengthSquared();
 }
 
 }  // namespace ash

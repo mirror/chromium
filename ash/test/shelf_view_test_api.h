@@ -104,6 +104,9 @@ class ShelfViewTestAPI {
   // An accessor for |shelf_button_pressed_metric_tracker_|.
   ShelfButtonPressedMetricTracker* shelf_button_pressed_metric_tracker();
 
+  // An accessor for the |bounds_animator_| duration.
+  double GetAnimationDuration() const;
+
  private:
   ShelfView* shelf_view_;
 
