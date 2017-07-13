@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fa75ff5_4da648c9",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T09:58:54Z",
+      "side": 1,
+      "message": "Please sort attributes in XML files according to tools/android/android_studio/ChromiumStyle.xml: https://chromium.googlesource.com/chromium/src.git/+/master/docs/android_studio.md#Android-Studio-Tips",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c685e46_d63bcd9b",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T09:58:54Z",
+      "side": 1,
+      "message": "I think this can be moved to ButtonCompatBorderlessRegular style.",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 35
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de23a7e7_9902ccd2",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T09:58:54Z",
+      "side": 1,
+      "message": "This is already set in style.",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937beeae_f35e2772",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T09:58:54Z",
+      "side": 1,
+      "message": "Since there\u0027s no way to use this style for Signin Promo, so I think this chunk can be safely removed.",
+      "range": {
+        "startLine": 580,
+        "startChar": 17,
+        "endLine": 580,
+        "endChar": 34
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63c8b99_65b6cc0e",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T09:58:54Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "range": {
+        "startLine": 196,
+        "startChar": 17,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a123bc_edb986f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T09:58:54Z",
+      "side": 1,
+      "message": "We should keep recording \"Signin_Impression_FromSettings\" here.",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 13
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012b12a2_82240606",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T09:58:54Z",
+      "side": 1,
+      "message": "Does this formatting comply to style guide?",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 58
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91212c3b_0b2a71f8",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T09:58:54Z",
+      "side": 1,
+      "message": "Nit: s/NAME/USER_FULL_NAME/",
+      "range": {
+        "startLine": 2242,
+        "startChar": 30,
+        "endLine": 2242,
+        "endChar": 34
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496d3ef4_1f9e902b",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T09:58:54Z",
+      "side": 1,
+      "message": "I think you\u0027ve reordered these by mistake.",
+      "range": {
+        "startLine": 1013,
+        "startChar": 2,
+        "endLine": 1013,
+        "endChar": 67
+      },
+      "revId": "118d5eeb8fc82cbf874f4485ad26ad08be9031fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
