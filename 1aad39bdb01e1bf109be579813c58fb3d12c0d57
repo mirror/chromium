@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "05176efe_596e4b69",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-07-13T03:06:06Z",
+      "side": 1,
+      "message": "No. UpdateDistribution doesn\u0027t do DOM mutation. IsConnected() is purely determined by the structure of DOM trees, on which UpdateDistribution doesn\u0027t have any effect.",
+      "parentUuid": "58ed50e0_5b352fd2",
+      "revId": "1aad39bdb01e1bf109be579813c58fb3d12c0d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9b926da_608f5a76",
         "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
         "patchSetId": 4
