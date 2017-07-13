@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a04049f_4a9ee758",
+        "filename": "base/mojo/values.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T09:19:01Z",
+      "side": 1,
+      "message": "I chose this instead of creating a placeholder struct: there doesn\u0027t appear to be an easy way to scope certain classes into an internal namespace.\n\n(It\u0027s also not 100% clear to me if the compiler can optimize out all the boilerplate for an unused placeholder mojo struct)",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "326bc7103c774196c51f841dd1d096042395264e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
