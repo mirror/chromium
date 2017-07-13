@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82dde353_1e137f35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T15:14:30Z",
+      "side": 1,
+      "message": "No statics please... Maybe store the result of calculateNumColumns in TileGroup\u0027s constructor and store it in a constant there?",
+      "range": {
+        "startLine": 33,
+        "startChar": 23,
+        "endLine": 33,
+        "endChar": 34
+      },
+      "revId": "33a9e733c7c4ae85c88748843da6774801ac3b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea72061_19bd06cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T15:14:30Z",
+      "side": 1,
+      "message": "Pass a context or resources instead? You can also use ContextUtils.getApplicationContext() to get a context to resolve the resources.",
+      "range": {
+        "startLine": 40,
+        "startChar": 44,
+        "endLine": 40,
+        "endChar": 58
+      },
+      "revId": "33a9e733c7c4ae85c88748843da6774801ac3b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97185724_cf382eba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T15:14:30Z",
+      "side": 1,
+      "message": "make the padding a constant you can reference instead?",
+      "range": {
+        "startLine": 56,
+        "startChar": 59,
+        "endLine": 56,
+        "endChar": 74
+      },
+      "revId": "33a9e733c7c4ae85c88748843da6774801ac3b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c603da1c_214d527f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T15:14:30Z",
+      "side": 1,
+      "message": "the TileGroup is provided with the max number of results in startObserving. Maybe decompose that into maxRows and maxCols then you can have access to the max number of columns there?\n\nEnd code in TileGroup could look like\n\n\npublic TileGroup(..., int maxRows, int maxColumns) {\n   ...\n   mMaxResults \u003d maxRows * maxColumns;\n   mNumColumns \u003d Math.min(maxColumns, TileGridLayout.calculateNumColumns(context));\n   ...\n}",
+      "range": {
+        "startLine": 61,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "33a9e733c7c4ae85c88748843da6774801ac3b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed9f561_54377278",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T15:14:30Z",
+      "side": 1,
+      "message": "Document why we do that? Especially the fact what we decided that it\u0027s okay if it\u0027s not always the last of the column, and we don\u0027t address runtime changes?",
+      "range": {
+        "startLine": 323,
+        "startChar": 47,
+        "endLine": 323,
+        "endChar": 55
+      },
+      "revId": "33a9e733c7c4ae85c88748843da6774801ac3b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62d9c03_ff1b2ede",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-13T15:14:30Z",
+      "side": 1,
+      "message": "nit: }  else { // regular stuff",
+      "range": {
+        "startLine": 325,
+        "startChar": 16,
+        "endLine": 325,
+        "endChar": 24
+      },
+      "revId": "33a9e733c7c4ae85c88748843da6774801ac3b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
