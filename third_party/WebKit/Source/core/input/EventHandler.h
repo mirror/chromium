@@ -394,6 +394,8 @@ class CORE_EXPORT EventHandler final
 
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, HitOnNothingDoesNotShowIBeam);
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, HitOnTextShowsIBeam);
+  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest,
+                           HitOnUserSelectNoneTextDoesNotShowIBeam);
 };
 
 }  // namespace blink
