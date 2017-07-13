@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d1f142_9479b513",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-13T01:08:01Z",
+      "side": 1,
+      "message": "Please make the rename changes I asked for in the previous patch.",
+      "revId": "6d5d1ae000a7bafcc543d72fba34c82f4a6de054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

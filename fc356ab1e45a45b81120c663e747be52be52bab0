@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "478320a9_b7522ec2",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-13T01:08:01Z",
+      "side": 1,
+      "message": "l_segment -\u003e longest_segment_length",
+      "revId": "fc356ab1e45a45b81120c663e747be52be52bab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9ab82e_c15ca7ea",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-13T01:08:01Z",
+      "side": 1,
+      "message": "p_segment -\u003e longest_segment",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "fc356ab1e45a45b81120c663e747be52be52bab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
