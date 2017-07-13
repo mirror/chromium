@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "bca6c9d7_f8cc6045",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-13T20:47:04Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Thanks for considering this!\n\nA common pattern is also to reuse objects so you don\u0027t have to pay the allocation cost each time. You\u0027ll notice that with members like mCacheFoo in classes.\n\nBut you\u0027re right, in this case you\u0027ll add a callback once on startup (that too only the WebApps would) and never need to reuse the list. So nulling it would be a better pattern to use. As for using it directly in the iteration, I think the code in mDrawingFinishedCallbacks did that to avoid re-enterency, in case running the callback makes a call to queue another callback, but since you\u0027re posting them to the message loop, that shouldn\u0027t be a concern here?",
+      "parentUuid": "144cc558_9490b606",
+      "range": {
+        "startLine": 617,
+        "startChar": 35,
+        "endLine": 617,
+        "endChar": 58
+      },
+      "revId": "fdb4df9486d61001ca84d6b219833e2f447aec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4e75184_e0a8c6d8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 2
