@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1b0c0f2_f0605ce6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-13T11:08:36Z",
+      "side": 1,
+      "message": "The only thing we need is\nChromeBrowserInitializer.getInstance(context).handleSynchronousStartupWithGpuWarmUp();\n\nSince we call synchronous initialization, it will be in a single task, and not cancelled in any case.\nWhat that means is that the spare renderer may not be available, and the UI may not have been inflated. This is not an issue, as all warmup() is best effort, and none of the code depends on it.",
+      "parentUuid": "7ce39be6_7676ee51",
+      "range": {
+        "startLine": 759,
+        "startChar": 12,
+        "endLine": 759,
+        "endChar": 24
+      },
+      "revId": "eadf3ad97d1a6f195d28774b9e979c43d7bfa1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bf16c31_8bf5c462",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T03:33:16Z",
       "side": 1,
       "message": "why is this needed?",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "eadf3ad97d1a6f195d28774b9e979c43d7bfa1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaffae6f_20409bc4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-13T11:08:36Z",
+      "side": 1,
+      "message": "Oops, it\u0027s not.\nDone.",
+      "parentUuid": "6bf16c31_8bf5c462",
       "range": {
         "startLine": 29,
         "startChar": 11,
