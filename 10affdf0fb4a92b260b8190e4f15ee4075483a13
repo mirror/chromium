@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02335f25_a74d3a5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-13T07:23:56Z",
+      "side": 1,
+      "message": "\"This patch fixes to use\" isn\u0027t grammatical. And \"fixes the place of X to the right place\" is a bit redundant.\n\nSuggest doing:\nThis patch:\n- Fixes where OnScriptLoaded() is called when script streaming is enabled\n- Changes to use StringBuilder in ServiceWorker...",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe35728_c2b7d198",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-13T07:23:56Z",
+      "side": 1,
+      "message": "This sentence is redundant too... is there a TRACE_EVENT for script streaming when script streaming is not enabled? Suggest doing: \"The script streaming TRACE_EVENT is broken by this patch. I\u0027ll fix it in the following patch \"\n\n(seems like it should be fixable in this patch though?)",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04558e2e_49c475f5",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-13T07:23:56Z",
+      "side": 1,
+      "message": "This is only called for the main script right?\n\n// Called when the main script finishes loading. This is called on the main thread if loading happened via ResourceLoader (is that what Loader is?), or on the worker thread if loading happened via WebServiceWorkerInstalledScriptsManager.",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b3e606_30acda3e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-13T07:23:56Z",
+      "side": 1,
+      "message": "seems cleaner to just make a function DidLoadScript() that\u0027s only called in the script streaming case, then you don\u0027t need this bool.",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5cc7a7b_ce8233f5",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-13T07:23:56Z",
+      "side": 1,
+      "message": "Maybe should put a comment here too about how GetScriptData blocks until the scripts are received from the browser.",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a354c3_d74da7ac",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-13T07:23:56Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment, can you elaborate?",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
