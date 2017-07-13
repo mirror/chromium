@@ -60,6 +60,7 @@ constexpr int kBackgroundBorderCornerRadius = 2;
 constexpr int kBackgroundBorderCornerRadiusFullscreen = 24;
 constexpr int kGoogleIconSize = 24;
 constexpr int kMicIconSize = 24;
+constexpr int kCloseIconSize = 24;
 
 // Default color used when wallpaper customized color is not available for
 // searchbox, #000 at 87% opacity.
@@ -150,13 +151,8 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
                              AppListView* app_list_view)
     : delegate_(delegate),
       view_delegate_(view_delegate),
-      model_(nullptr),
       content_container_(new views::View),
-      google_icon_(nullptr),
-      back_button_(nullptr),
-      speech_button_(nullptr),
       search_box_(new views::Textfield),
-      contents_view_(nullptr),
       app_list_view_(app_list_view),
       focused_view_(FOCUS_SEARCH_BOX),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
@@ -211,6 +207,15 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
   }
   content_container_->AddChildView(search_box_);
   layout->SetFlexForView(search_box_, 1);
+
+  if (is_fullscreen_app_list_enabled_) {
+    close_button_ = new SearchBoxImageButton(this);
+    close_button_->SetImage(views::ImageButton::STATE_NORMAL,
+                            gfx::CreateVectorIcon(kIcCloseIcon, kCloseIconSize,
+                                                  kDefaultSearchboxColor));
+    close_button_->SetVisible(false);
+    content_container_->AddChildView(close_button_);
+  }
 
   view_delegate_->GetSpeechUI()->AddObserver(this);
   ModelChanged();
@@ -267,6 +272,10 @@ views::ImageButton* SearchBoxView::back_button() {
   return static_cast<views::ImageButton*>(back_button_);
 }
 
+bool SearchBoxView::IsCloseButtonVisible() const {
+  return close_button_ && close_button_->visible();
+}
+
 // Returns true if set internally, i.e. if focused_view_ != CONTENTS_VIEW.
 // Note: because we always want to be able to type in the edit box, this is only
 // a faux-focus so that buttons can respond to the ENTER key.
@@ -275,6 +284,8 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
     back_button_->SetSelected(false);
   if (speech_button_)
     speech_button_->SetSelected(false);
+  if (close_button_)
+    close_button_->SetSelected(false);
 
   switch (focused_view_) {
     case FOCUS_BACK_BUTTON:
@@ -288,18 +299,23 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
       } else {
         focused_view_ = speech_button_ && speech_button_->visible()
                             ? FOCUS_MIC_BUTTON
-                            : FOCUS_CONTENTS_VIEW;
+                            : (close_button_ && close_button_->visible()
+                                   ? FOCUS_CLOSE_BUTTON
+                                   : FOCUS_CONTENTS_VIEW);
       }
       break;
     case FOCUS_MIC_BUTTON:
+    case FOCUS_CLOSE_BUTTON:
       focused_view_ = move_backwards ? FOCUS_SEARCH_BOX : FOCUS_CONTENTS_VIEW;
       break;
     case FOCUS_CONTENTS_VIEW:
-      focused_view_ =
-          move_backwards
-              ? (speech_button_ && speech_button_->visible() ? FOCUS_MIC_BUTTON
-                                                             : FOCUS_SEARCH_BOX)
-              : FOCUS_CONTENTS_VIEW;
+      if (move_backwards) {
+        focused_view_ = speech_button_ && speech_button_->visible()
+                            ? FOCUS_MIC_BUTTON
+                            : (close_button_ && close_button_->visible()
+                                   ? FOCUS_CLOSE_BUTTON
+                                   : FOCUS_SEARCH_BOX);
+      }
       break;
     default:
       DCHECK(false);
@@ -323,6 +339,10 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
       if (speech_button_)
         speech_button_->SetSelected(true);
       break;
+    case FOCUS_CLOSE_BUTTON:
+      if (close_button_)
+        close_button_->SetSelected(true);
+      break;
     default:
       break;
   }
@@ -338,6 +358,8 @@ void SearchBoxView::ResetTabFocus(bool on_contents) {
     back_button_->SetSelected(false);
   if (speech_button_)
     speech_button_->SetSelected(false);
+  if (close_button_)
+    close_button_->SetSelected(false);
   focused_view_ = on_contents ? FOCUS_CONTENTS_VIEW : FOCUS_SEARCH_BOX;
 }
 
@@ -375,6 +397,11 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
                                                  : kDefaultSearchboxColor);
   search_box_->SetCursorEnabled(active);
   search_box_->SchedulePaint();
+
+  if (speech_button_)
+    speech_button_->SetVisible(!active);
+  close_button_->SetVisible(active);
+  content_container_->Layout();
 }
 
 void SearchBoxView::HandleSearchBoxEvent(ui::LocatedEvent* located_event) {
@@ -420,6 +447,8 @@ void SearchBoxView::OnEnabledChanged() {
   search_box_->SetEnabled(enabled());
   if (speech_button_)
     speech_button_->SetEnabled(enabled());
+  if (close_button_)
+    close_button_->SetEnabled(enabled());
 }
 
 const char* SearchBoxView::GetClassName() const {
@@ -475,6 +504,10 @@ bool SearchBoxView::HandleKeyEvent(views::Textfield* sender,
         speech_button_->OnKeyPressed(key_event))
       return true;
 
+    if (focused_view_ == FOCUS_CLOSE_BUTTON && close_button_ &&
+        close_button_->OnKeyPressed(key_event))
+      return true;
+
     const bool handled = contents_view_ && contents_view_->visible() &&
                          contents_view_->OnKeyPressed(key_event);
 
@@ -503,6 +536,10 @@ bool SearchBoxView::HandleKeyEvent(views::Textfield* sender,
         speech_button_->OnKeyReleased(key_event))
       return true;
 
+    if (focused_view_ == FOCUS_CLOSE_BUTTON && close_button_ &&
+        close_button_->OnKeyReleased(key_event))
+      return true;
+
     return contents_view_ && contents_view_->visible() &&
            contents_view_->OnKeyReleased(key_event);
   }
@@ -526,6 +563,8 @@ void SearchBoxView::ButtonPressed(views::Button* sender,
     delegate_->BackButtonPressed();
   else if (speech_button_ && sender == speech_button_)
     view_delegate_->StartSpeechRecognition();
+  else if (close_button_ && sender == close_button_)
+    ClearSearch();
   else
     NOTREACHED();
 }
@@ -608,6 +647,11 @@ void SearchBoxView::WallpaperProminentColorsChanged() {
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(
           kIcMicBlackIcon, kMicIconSize,
+          dark_muted_available ? dark_muted : kDefaultSearchboxColor));
+  close_button_->SetImage(
+      views::Button::STATE_NORMAL,
+      gfx::CreateVectorIcon(
+          kIcCloseIcon, kCloseIconSize,
           dark_muted_available ? dark_muted : kDefaultSearchboxColor));
   search_box_->set_placeholder_text_color(
       dark_muted_available ? dark_muted : kDefaultSearchboxColor);
