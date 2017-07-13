@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44713921_96646e85",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-13T14:50:27Z",
+      "side": 1,
+      "message": "Looks like there are now three copies of this (rwhv child frame unittest, rwhv guest, and here).  Maybe we could consolidate these in one place, perhaps in a followup cleanup?",
+      "revId": "c02a10fdd0e4354d7bb0180e51a6059b4791ff0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b84e37f_0aa10698",
+        "filename": "content/browser/renderer_host/cursor_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-13T14:50:27Z",
+      "side": 1,
+      "message": "nit: might as well make those two unique_ptrs and not worry about deleting them",
+      "revId": "c02a10fdd0e4354d7bb0180e51a6059b4791ff0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
