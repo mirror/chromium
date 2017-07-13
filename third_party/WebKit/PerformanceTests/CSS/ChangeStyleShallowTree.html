@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../resources/runner.js"></script>
+    <script src="resources/utils.js"></script>
+    <style type="text/css">
+        #item {
+            background-color: red;
+            border-radius: 5px;
+            padding: 3px;
+            box-shadow: 0 5px 5px #000;
+            transform: rotate(10deg);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+</body>
+    <script>
+        createDOMTree(document.body, 15, 2);
+        PerfTestRunner.measureRunsPerSecond({
+            description: "Change the style of an element in a shallow and broad tree",
+            run:function() {
+            var allElements = document.body.getElementsByTagName("*");
+            for (element in allElements) {
+                forceStyleRecalc(element);
+                element.id = "item";
+            }
+        }});
+    </script>
+</html>
