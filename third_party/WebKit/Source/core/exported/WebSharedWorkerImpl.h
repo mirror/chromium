@@ -115,6 +115,8 @@ class CORE_EXPORT WebSharedWorkerImpl final
     return Platform::Current()->CreateURLLoader(request, task_runner);
   }
 
+  bool IsFake() const override { return true; }
+
   // Callback methods for SharedWorkerReportingProxy.
   void CountFeature(WebFeature);
   void PostMessageToPageInspector(int session_id, const String& message);

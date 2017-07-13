@@ -826,6 +826,10 @@ class BLINK_EXPORT WebFrameClient {
     NOTREACHED();
     return nullptr;
   }
+
+  // In ServiceWorker, a 'shadow page' is created with Worker specific
+  // WebFrameClient for same origin so that the loading checks work correctly.
+  virtual bool IsFake() const { return false; }
 };
 
 }  // namespace blink

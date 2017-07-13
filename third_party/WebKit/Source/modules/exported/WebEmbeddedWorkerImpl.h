@@ -89,6 +89,7 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
     // TODO(yhirano): Stop using Platform::CreateURLLoader() here.
     return Platform::Current()->CreateURLLoader(request, task_runner);
   }
+  bool IsFake() const override { return true; }
 
  private:
   void PrepareShadowPageForLoader();
