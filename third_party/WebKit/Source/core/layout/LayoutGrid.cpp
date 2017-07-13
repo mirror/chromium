@@ -1853,7 +1853,7 @@ LayoutUnit LayoutGrid::AscentForChild(const LayoutBox& child,
                  ? child.Size().Width().ToInt() + margin
                  : margin;
     }
-    return child.Size().Height() + margin;
+    return child.Size().Height().Round() + margin;
   }
   return LayoutUnit(baseline) + margin;
 }
