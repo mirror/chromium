@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a01281d7_ef2a65f7",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T13:56:56Z",
+      "side": 1,
+      "message": "How about net::WrappedIOBuffer that doesn\u0027t own the underlying buffer?",
+      "revId": "eb746d41b045016ee61799aba14a0235541bdc62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
