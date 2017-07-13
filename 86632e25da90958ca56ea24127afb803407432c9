@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "953a4109_8ca8bc79",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-13T13:02:32Z",
+      "side": 1,
+      "message": "This is for me, the CL isn\u0027t 100% finished :)",
+      "parentUuid": "c7ae9234_793bdc8b",
+      "range": {
+        "startLine": 1177,
+        "startChar": 45,
+        "endLine": 1177,
+        "endChar": 49
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5515a448_c7ef522f",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T00:39:10Z",
       "side": 1,
       "message": "Does third_party/Webkit follow the |variable| style (pipes), or is single quotes more common?",
+      "range": {
+        "startLine": 65,
+        "startChar": 52,
+        "endLine": 65,
+        "endChar": 69
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fc9552_351ca850",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-13T13:02:32Z",
+      "side": 1,
+      "message": "These are backquotes (markdown style). Happy to switch to pipe surrounding if you prefer. There is no distinction between Blink and Chromium for this AFAIK.",
+      "parentUuid": "5515a448_c7ef522f",
       "range": {
         "startLine": 65,
         "startChar": 52,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2cdd3902_815bcda3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7177,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-13T13:02:32Z",
+      "side": 1,
+      "message": "Will see if the metrics OWNERS have a preference but for sure I can\u0027t guess the date when it will land at the moment :)",
+      "parentUuid": "a32f6176_9d731d94",
+      "range": {
+        "startLine": 7177,
+        "startChar": 15,
+        "endLine": 7177,
+        "endChar": 24
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ec4ea54_b93218df",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "194044a0_35b83ff9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29217,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-13T13:02:32Z",
+      "side": 1,
+      "message": "This is exactly why I use CTR :)",
+      "parentUuid": "1ec4ea54_b93218df",
+      "range": {
+        "startLine": 29217,
+        "startChar": 36,
+        "endLine": 29217,
+        "endChar": 42
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e910616_ae07a981",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "86632e25da90958ca56ea24127afb803407432c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa532f4a_cd0f1905",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29220,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-13T13:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e910616_ae07a981",
+      "range": {
+        "startLine": 29220,
+        "startChar": 63,
+        "endLine": 29220,
+        "endChar": 64
+      },
+      "revId": "86632e25da90958ca56ea24127afb803407432c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
