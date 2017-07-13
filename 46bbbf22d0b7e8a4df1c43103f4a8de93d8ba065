@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45e4512f_064fef9b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T20:56:38Z",
+      "side": 1,
+      "message": "Let\u0027s make these three lines more explicit, i.e.\n\nif (timing.dnsEnd \u003e\u003d 0) {\n ...\n}\n(no need for else, since dns is already -1)",
+      "revId": "46bbbf22d0b7e8a4df1c43103f4a8de93d8ba065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a6a732_136ef89d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T20:56:38Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "46bbbf22d0b7e8a4df1c43103f4a8de93d8ba065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e0cc04_55a13468",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T20:56:38Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "46bbbf22d0b7e8a4df1c43103f4a8de93d8ba065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bd5772_0addbbe5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T20:56:38Z",
+      "side": 1,
+      "message": "Why not, BTW?",
+      "revId": "46bbbf22d0b7e8a4df1c43103f4a8de93d8ba065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
