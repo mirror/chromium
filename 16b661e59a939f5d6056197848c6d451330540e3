@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db399b42_30576ed3",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-13T12:44:41Z",
+      "side": 1,
+      "message": "Well, PreresolveInfo is actually deleted in this method by `preresolve_info_.erase(it)` so |info| becomes a dangling pointer at the end of the method. It\u0027s a modification in some sense. And it seems less surprising for me to have dangling raw pointer than dangling const reference.",
+      "parentUuid": "5c117de6_0081f2a9",
+      "revId": "16b661e59a939f5d6056197848c6d451330540e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cb60411_cb67aad2",
         "filename": "chrome/browser/predictors/preconnect_manager.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "16b661e59a939f5d6056197848c6d451330540e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3d83dd_6818aa01",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-13T12:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cb60411_cb67aad2",
+      "revId": "16b661e59a939f5d6056197848c6d451330540e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0c9932ea_bb8024e9",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-13T12:44:41Z",
+      "side": 1,
+      "message": "Kept the minimum set of arguments for now.\nDone",
+      "parentUuid": "aa9325bb_d8f968b1",
+      "revId": "16b661e59a939f5d6056197848c6d451330540e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e70d5c69_173e6b4b",
         "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "16b661e59a939f5d6056197848c6d451330540e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a61e69c_dc1ca9f6",
+        "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-13T12:44:41Z",
+      "side": 1,
+      "message": ":D\nApparently, there is no common format to print size_t values on all platforms.",
+      "parentUuid": "e70d5c69_173e6b4b",
+      "revId": "16b661e59a939f5d6056197848c6d451330540e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
