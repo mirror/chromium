@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50d4c957_04cbc05c",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-13T22:07:34Z",
+      "side": 1,
+      "message": "remove \u0027and exit if statement\u0027.\n\nEnd the comment with a .",
+      "revId": "0333fa377c8f158999825de82b1e01a87ab964a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
