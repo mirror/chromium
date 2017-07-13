@@ -13,6 +13,10 @@
 #include "ui/ozone/public/surface_factory_ozone.h"
 #endif
 
+#ifndef DRM_FORMAT_MOD_INVALID
+#define DRM_FORMAT_MOD_INVALID ((1ULL << 56) - 1)
+#endif
+
 namespace gpu {
 
 GpuMemoryBufferFactoryNativePixmap::GpuMemoryBufferFactoryNativePixmap() {}
@@ -154,6 +158,55 @@ GpuMemoryBufferFactoryNativePixmap::CreateAnonymousImage(
     return nullptr;
   }
   return image;
+}
+
+std::vector<gfx::BufferAttribute>
+GpuMemoryBufferFactoryNativePixmap::GetBufferAttributesForImage() {
+  if (!image_buffer_attributes_.empty())
+    return image_buffer_attributes_;
+
+  image_buffer_attributes_ =
+      gl::GLImageNativePixmap::QueryDmaBufBufferAttributes();
+  std::sort(image_buffer_attributes_.begin(), image_buffer_attributes_.end());
+#if defined(USE_OZONE)
+  std::vector<gfx::BufferAttribute> intersection;
+  std::vector<gfx::BufferAttribute> drm_buffer_attributes =
+      ui::OzonePlatform::GetInstance()
+          ->GetSurfaceFactoryOzone()
+          ->GetBufferAttributesForScanout(gfx::kNullAcceleratedWidget);
+  std::sort(drm_buffer_attributes.begin(), drm_buffer_attributes.end());
+
+  // NOTE(varad): If either of the buffer consumers we've queried (EGL or
+  // SurfaceFactoryOzone) returns the DRM_FORMAT_MOD_INVALID modifier with a
+  // common format, we advertise only the invalid modifier since we cannot
+  // guarantee a modifier in that case.
+  size_t i = 0, j = 0;
+  while (i < image_buffer_attributes_.size() &&
+         j < drm_buffer_attributes.size()) {
+    if (image_buffer_attributes_[i].fourcc == drm_buffer_attributes[j].fourcc) {
+      bool has_invalid =
+          (image_buffer_attributes_[i].modifier == DRM_FORMAT_MOD_INVALID ||
+           drm_buffer_attributes[j].modifier == DRM_FORMAT_MOD_INVALID);
+      if (has_invalid || image_buffer_attributes_[i].modifier ==
+                             drm_buffer_attributes[j].modifier) {
+        intersection.push_back(gfx::BufferAttribute(
+            image_buffer_attributes_[i].fourcc,
+            has_invalid ? DRM_FORMAT_MOD_INVALID
+                        : image_buffer_attributes_[i].modifier));
+        i++;
+        j++;
+        continue;
+      }
+    }
+    if (image_buffer_attributes_[i] < drm_buffer_attributes[j])
+      i++;
+    else
+      j++;
+  }
+
+  image_buffer_attributes_ = std::move(intersection);
+#endif
+  return image_buffer_attributes_;
 }
 
 unsigned GpuMemoryBufferFactoryNativePixmap::RequiredTextureType() {

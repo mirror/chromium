@@ -54,6 +54,7 @@ class GPU_EXPORT GpuMemoryBufferFactoryNativePixmap
       gfx::BufferFormat format,
       unsigned internalformat) override;
   unsigned RequiredTextureType() override;
+  std::vector<gfx::BufferAttribute> GetBufferAttributesForImage() override;
 
  private:
   using NativePixmapMapKey = std::pair<int, int>;
@@ -63,6 +64,8 @@ class GPU_EXPORT GpuMemoryBufferFactoryNativePixmap
                                              NativePixmapMapKeyHash>;
   NativePixmapMap native_pixmaps_;
   base::Lock native_pixmaps_lock_;
+
+  std::vector<gfx::BufferAttribute> image_buffer_attributes_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuMemoryBufferFactoryNativePixmap);
 };

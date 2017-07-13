@@ -39,6 +39,10 @@ class GPU_EXPORT ImageFactory {
       gfx::BufferFormat format,
       unsigned internalformat);
 
+  // Get BufferAttributes supported for creating an image from imported
+  // GpuMemoryBuffers.
+  virtual std::vector<gfx::BufferAttribute> GetBufferAttributesForImage();
+
   // An image can only be bound to a texture with the appropriate type.
   virtual unsigned RequiredTextureType();
 
