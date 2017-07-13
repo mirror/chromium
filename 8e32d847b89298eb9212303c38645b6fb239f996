@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a86f02f0_c149bd70",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_file_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-07-13T18:29:39Z",
+      "side": 1,
+      "message": "I would not have expected that to compile...",
+      "parentUuid": "e09059bf_754dc709",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 4
+      },
+      "revId": "8e32d847b89298eb9212303c38645b6fb239f996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e3b2884_ba70d65a",
         "filename": "chrome/browser/ui/webui/media_router/media_router_file_dialog.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8ac806e7_69c56230",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_file_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-07-13T18:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e3b2884_ba70d65a",
+      "range": {
+        "startLine": 198,
+        "startChar": 64,
+        "endLine": 198,
+        "endChar": 65
+      },
+      "revId": "8e32d847b89298eb9212303c38645b6fb239f996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2c8d3ef_0330e966",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-13T17:59:37Z",
       "side": 1,
       "message": "\"Indicates...\" for consistency to the other descriptions.",
+      "range": {
+        "startLine": 73395,
+        "startChar": 4,
+        "endLine": 73395,
+        "endChar": 16
+      },
+      "revId": "8e32d847b89298eb9212303c38645b6fb239f996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1424a978_c4eee63d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 73395,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-07-13T18:29:39Z",
+      "side": 1,
+      "message": "I didn\u0027t add this, it was changed in a format run. Should I modify it anyway?",
+      "parentUuid": "b2c8d3ef_0330e966",
       "range": {
         "startLine": 73395,
         "startChar": 4,
