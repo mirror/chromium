@@ -53233,6 +53233,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram
+    name="PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything.EffectOnCompletion"
+    enum="PaymentRequestFlowCompletionStatus">
+  <owner>sebsg@chromium.org</owner>
+  <summary>
+    Whether the flow was completed when the user did not have a complete
+    suggestion offered for each requested information.
+  </summary>
+</histogram>
+
+<histogram
     name="PaymentRequest.UserDidNotHaveInitialFormOfPayment.EffectOnCompletion"
     enum="PaymentRequestFlowCompletionStatus">
   <owner>sebsg@chromium.org</owner>
@@ -53249,6 +53259,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Whether the flow was completed when the user did not have suggestions
     offered for each requested information.
+  </summary>
+</histogram>
+
+<histogram
+    name="PaymentRequest.UserHadCompleteSuggestionsForEverything.EffectOnCompletion"
+    enum="PaymentRequestFlowCompletionStatus">
+  <owner>sebsg@chromium.org</owner>
+  <summary>
+    Whether the flow was completed when the user had at least one complete
+    suggestion offered for each requested information.
   </summary>
 </histogram>
 
