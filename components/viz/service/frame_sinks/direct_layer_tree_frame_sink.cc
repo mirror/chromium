@@ -19,8 +19,8 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
     const FrameSinkId& frame_sink_id,
     cc::FrameSinkManager* frame_sink_manager,
     Display* display,
-    scoped_refptr<cc::ContextProvider> context_provider,
-    scoped_refptr<cc::ContextProvider> worker_context_provider,
+    scoped_refptr<ContextProvider> context_provider,
+    scoped_refptr<ContextProvider> worker_context_provider,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     SharedBitmapManager* shared_bitmap_manager)
     : LayerTreeFrameSink(std::move(context_provider),
