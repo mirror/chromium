@@ -7,7 +7,10 @@
 #import <WebKit/WebKit.h>
 
 #include "base/logging.h"
-#import "base/mac/scoped_nsobject.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace {
 
@@ -22,9 +25,9 @@ const CGFloat kBackgroundRGBComponents[] = {0.75f, 0.74f, 0.76f};
 
 @interface CRWWebViewContentView () {
   // The web view being shown.
-  base::scoped_nsobject<UIView> _webView;
+  UIView* _webView;
   // The web view's scroll view.
-  base::scoped_nsobject<UIScrollView> _scrollView;
+  UIScrollView* _scrollView;
   // Backs up property of the same name if |_webView| is a WKWebView.
   CGFloat _topContentPadding;
 }
@@ -46,8 +49,8 @@ const CGFloat kBackgroundRGBComponents[] = {0.75f, 0.74f, 0.76f};
     DCHECK(webView);
     DCHECK(scrollView);
     DCHECK([scrollView isDescendantOfView:webView]);
-    _webView.reset([webView retain]);
-    _scrollView.reset([scrollView retain]);
+    _webView = webView;
+    _scrollView = scrollView;
   }
   return self;
 }
@@ -100,11 +103,11 @@ const CGFloat kBackgroundRGBComponents[] = {0.75f, 0.74f, 0.76f};
 #pragma mark Accessors
 
 - (UIScrollView*)scrollView {
-  return _scrollView.get();
+  return _scrollView;
 }
 
 - (UIView*)webView {
-  return _webView.get();
+  return _webView;
 }
 
 #pragma mark Layout
