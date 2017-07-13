@@ -336,6 +336,12 @@
       return value;
     }
 
+    // Removes the fake GATT Characteristic from its fake service.
+    async remove() {
+      let {success} =
+          await this.fake_central_ptr_.removeFakeCharacteristic(...this.ids_);
+      return success;
+    }
   }
 
   class FakeRemoteGATTDescriptor {

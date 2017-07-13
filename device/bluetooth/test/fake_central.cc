@@ -113,6 +113,29 @@ void FakeCentral::AddFakeCharacteristic(
       characteristic_uuid, std::move(properties)));
 }
 
+void FakeCentral::RemoveFakeCharacteristic(
+    const std::string& identifier,
+    const std::string& service_id,
+    const std::string& peripheral_address,
+    RemoveFakeCharacteristicCallback callback) {
+  auto device_iter = devices_.find(peripheral_address);
+  if (device_iter == devices_.end()) {
+    std::move(callback).Run(false);
+    return;
+  }
+
+  FakeRemoteGattService* fake_remote_gatt_service =
+      static_cast<FakeRemoteGattService*>(
+          device_iter->second.get()->GetGattService(service_id));
+  if (fake_remote_gatt_service == nullptr) {
+    std::move(callback).Run(false);
+    return;
+  }
+
+  std::move(callback).Run(
+      fake_remote_gatt_service->RemoveFakeCharacteristic(identifier));
+}
+
 void FakeCentral::AddFakeDescriptor(
     const device::BluetoothUUID& descriptor_uuid,
     const std::string& characteristic_id,
