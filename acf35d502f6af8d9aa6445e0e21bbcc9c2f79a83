@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "548e3f8b_f97a504d",
+        "filename": "base/mojo/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-13T14:46:59Z",
+      "side": 1,
+      "message": "super nitty nit: I feel that for library subdirectories which host mojoms and typemaps, we should use the name \"mojom\" by convention instead of \"mojo\". The directory is specifically for bindings-related stuff and not general-purpose mojo usage.",
+      "revId": "acf35d502f6af8d9aa6445e0e21bbcc9c2f79a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60bf82dd_5d17935a",
+        "filename": "base/mojo/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-13T14:46:59Z",
+      "side": 1,
+      "message": "nit: Can we also then just call this \"mojom\" so dependents can use \"//base/mojom\"?",
+      "revId": "acf35d502f6af8d9aa6445e0e21bbcc9c2f79a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61021fff_9c95ae67",
+        "filename": "base/test/run_all_base_unittests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-13T14:46:59Z",
+      "side": 1,
+      "message": "why not iOS?",
+      "revId": "acf35d502f6af8d9aa6445e0e21bbcc9c2f79a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
