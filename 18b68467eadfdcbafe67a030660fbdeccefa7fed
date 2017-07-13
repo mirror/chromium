@@ -16,6 +16,24 @@
       "revId": "18b68467eadfdcbafe67a030660fbdeccefa7fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5b48bf_e5561871",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-13T07:57:49Z",
+      "side": 1,
+      "message": "Hm, all other std::string getters in this class are just bare std::string so seems OK to leave it like this for consistency?",
+      "parentUuid": "11adcff0_b34909f3",
+      "revId": "18b68467eadfdcbafe67a030660fbdeccefa7fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
