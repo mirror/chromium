@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "818a2ff2_52508c18",
+        "filename": "content/browser/shared_worker/content_setting_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T12:31:39Z",
+      "side": 1,
+      "message": "\"\u003d default;\" instead of \"{}\"",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad0fd80_1acfa0ee",
+        "filename": "content/browser/shared_worker/content_setting_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T12:31:39Z",
+      "side": 1,
+      "message": "2013 -\u003e 2017",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1a898d_b28e4753",
+        "filename": "content/browser/shared_worker/content_setting_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T12:31:39Z",
+      "side": 1,
+      "message": "Can you move the constructor to \u0027private\u0027 section and use WrapUnique instead of MakeUnique in Create()? Exposing both the constructor and creation function looks a bit strange.",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d619ba2_7f96568b",
+        "filename": "content/browser/shared_worker/content_setting_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T12:31:39Z",
+      "side": 1,
+      "message": "Can you add \"explicit\" for the single-argument constructor like this?\n\n  explicit ContentSettingInstance(int render_process_id);\n\nSee https://google.github.io/styleguide/cppguide.html#Implicit_Conversions\n\n  \"Do not define implicit conversions. Use the explicit keyword for conversion operators and single-argument constructors.\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2b756e_839a22a7",
+        "filename": "content/browser/shared_worker/content_setting_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T12:31:39Z",
+      "side": 1,
+      "message": "|render_process_id_| is never modified. Can you mark this with \u0027const\u0027?\n\n  const int render_process_id_;",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31140a4_2e80bf1a",
+        "filename": "third_party/WebKit/Source/core/workers/ContentSettingInstanceClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T12:31:39Z",
+      "side": 1,
+      "message": "The trailing \u0027;\u0027 is not necessary for function definitions.",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e3f578_70e81e39",
+        "filename": "third_party/WebKit/Source/core/workers/ContentSettingInstanceClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T12:31:39Z",
+      "side": 1,
+      "message": "Can you add brief class-level comments? Typically they explain the purpose of this class, things to be careful of when you use this class, etc.\n\nSee the guide line for reference: https://chromium.googlesource.com/chromium/src/+/2fdea409522469e17391f6203a80edf2e9d21915/docs/documentation_guidelines.md#Interface-class-documentation",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdef602_36a65ae2",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/content_setting.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T12:31:39Z",
+      "side": 1,
+      "message": "Can you explain the justification for synchronous IPC? Basically, it\u0027s preferable to avoid synchronous IPC because it blocks the caller\u0027s thread and may affect performance. Also, it could cause deadlock.",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e42154e_2ffc96fa",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/content_setting.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-13T12:31:39Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
