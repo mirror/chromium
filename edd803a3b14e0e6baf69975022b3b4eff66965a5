@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f06b029_9f561938",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e66dfad_3f923e73",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e29dc1fa_b8dfb63e",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
         "patchSetId": 32
@@ -45,6 +69,30 @@
       "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c397f76_58dc6f85",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e29dc1fa_b8dfb63e",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 78
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b6f9d3c1_2ddbda29",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74effced_37a0fde8",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78db448c_a3e95cbf",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
         "patchSetId": 32
@@ -91,6 +163,30 @@
       "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451fed77_e6226065",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78db448c_a3e95cbf",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8aa07867_27905e74",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "Not used anymore, removed it.",
+      "parentUuid": "eb971581_98c5c948",
+      "range": {
+        "startLine": 57,
+        "startChar": 17,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fd06524_4260f776",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
         "patchSetId": 32
@@ -137,6 +257,30 @@
       "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a10303_8eff4078",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd06524_4260f776",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1c34e825_dfc36f6e",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e00b7d8_8f1f0f84",
+      "range": {
+        "startLine": 162,
+        "startChar": 17,
+        "endLine": 162,
+        "endChar": 25
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04684b94_768f751b",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
         "patchSetId": 32
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-12T23:51:16Z",
       "side": 1,
       "message": "These tests don\u0027t seem to do anything with the profile_. Are they needed?",
+      "range": {
+        "startLine": 195,
+        "startChar": 11,
+        "endLine": 195,
+        "endChar": 19
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89683cb9_8eaeacac",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "Removed the profile_ for NewTabTrackerEventTest, but I need it for NewTabTrackerFeatureEngagementTrackerTest for the IncognitoProfile test. Do you thinkthat I remove it and locally create a profile for the last test?",
+      "parentUuid": "04684b94_768f751b",
       "range": {
         "startLine": 195,
         "startChar": 11,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4aeade67_d739394b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "The MockFeatureEngagementTracker needs the profile\u0027s dir path for storage. This will be changed when I refactor everything into the separate file however.",
+      "parentUuid": "bec70a3b_6ba2c02c",
+      "range": {
+        "startLine": 288,
+        "startChar": 69,
+        "endLine": 288,
+        "endChar": 77
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08c5b811_b75e5b66",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
         "patchSetId": 32
@@ -220,6 +436,30 @@
       "writtenOn": "2017-07-12T23:51:16Z",
       "side": 1,
       "message": "Remove this reset. The tearing down of the test object will automatically reset this unique_ptr.",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 40
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cc84b2_dbc45e35",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T01:13:32Z",
+      "side": 1,
+      "message": "Will fix this with the moving of the FeatureEngagementTracker code.",
+      "parentUuid": "08c5b811_b75e5b66",
       "range": {
         "startLine": 302,
         "startChar": 4,
