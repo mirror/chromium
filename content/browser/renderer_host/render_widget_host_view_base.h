@@ -121,6 +121,7 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
                           bool editable) override;
   TouchSelectionControllerClientManager*
   GetTouchSelectionControllerClientManager() override;
+  bool IsRenderWidgetHostViewChildFrame() override;
 
   // This only needs to be overridden by RenderWidgetHostViewBase subclasses
   // that handle content embedded within other RenderWidgetHostViews.
@@ -305,13 +306,6 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // support direct mouse event routing, or when RWHVGuest is removed
   // entirely, which comes first.
   virtual bool IsRenderWidgetHostViewGuest();
-
-  // Subclass identifier for RenderWidgetHostViewChildFrames. This is useful
-  // to be able to know if this RWHV is embedded within another RWHV. If
-  // other kinds of embeddable RWHVs are created, this should be renamed to
-  // a more generic term -- in which case, static casts to RWHVChildFrame will
-  // need to also be resolved.
-  virtual bool IsRenderWidgetHostViewChildFrame();
 
   // Notify the View that a screen rect update is being sent to the
   // RenderWidget. Related platform-specific updates can be sent from here.
