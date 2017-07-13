@@ -16,6 +16,24 @@
       "revId": "366ad4354d4e2f72afd51af31ae204c57d1e0626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5db1fcf_2a399603",
+        "filename": "chrome/browser/media/webrtc/audio_debug_recordings_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-07-13T12:28:21Z",
+      "side": 1,
+      "message": "That\u0027s a great way, thanks for pointing at that. And looking at the CreateDirectoryAndGetError() implementations it should be fine if it\u0027s called from different threads. Done.\n\nMade GetLogDirectoryAndEnsureExists() a regular function; no need to be a member.",
+      "parentUuid": "54863f93_23260154",
+      "revId": "366ad4354d4e2f72afd51af31ae204c57d1e0626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
