@@ -85,10 +85,15 @@ Polymer({
   /** @private */
   onSelectedAppChanged_: function() {
     var app = this.findApp_(this.$.menu.value);
+
+    if (this.selectedApp_ && this.selectedApp_ !== app)
+      this.selectedApp_.preferred = false;
     this.selectedApp_ = app;
 
-    if (app && !app.preferred)
+    if (app && !app.preferred) {
       this.browserProxy_.setPreferredNoteTakingApp(app.value);
+      app.preferred = true;
+    }
   },
 
   /**
