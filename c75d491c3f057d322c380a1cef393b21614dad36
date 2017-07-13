@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad8355c5_b5c59ae0",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-13T09:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "430533e0_28ee7822",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "c75d491c3f057d322c380a1cef393b21614dad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f0c506a_a7e6c8c5",
         "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "c75d491c3f057d322c380a1cef393b21614dad36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f29d4ce_d76bc401",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-13T09:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0c506a_a7e6c8c5",
+      "revId": "c75d491c3f057d322c380a1cef393b21614dad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
