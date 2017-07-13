@@ -25,10 +25,8 @@ base::Process OpenOwnProcessInheritable() {
 }  // namespace
 
 WatcherClient::WatcherClient(const CommandLineGenerator& command_line_generator)
-    : use_legacy_launch_(base::win::GetVersion() < base::win::VERSION_VISTA),
-      command_line_generator_(command_line_generator),
-      process_(base::kNullProcessHandle) {
-}
+    : command_line_generator_(command_line_generator),
+      process_(base::kNullProcessHandle) {}
 
 WatcherClient::~WatcherClient() {
 }
@@ -44,17 +42,10 @@ void WatcherClient::LaunchWatcher() {
   base::HandlesToInheritVector to_inherit;
   base::LaunchOptions options;
   options.start_hidden = true;
-  if (use_legacy_launch_) {
-    // Launch the child process inheriting all handles on XP.
-    options.inherit_handles = true;
-  } else {
-    // Launch the child process inheriting only |self| on
-    // Vista and better.
-    to_inherit.push_back(self.Handle());
-    to_inherit.insert(to_inherit.end(), inherited_handles_.begin(),
-                      inherited_handles_.end());
-    options.handles_to_inherit = &to_inherit;
-  }
+  to_inherit.push_back(self.Handle());
+  to_inherit.insert(to_inherit.end(), inherited_handles_.begin(),
+                    inherited_handles_.end());
+  options.handles_to_inherit = &to_inherit;
 
   process_ = base::LaunchProcess(cmd_line, options);
   if (!process_.IsValid())
