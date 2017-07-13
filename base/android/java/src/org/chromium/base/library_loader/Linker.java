@@ -181,7 +181,7 @@ public abstract class Linker {
     protected int mMemoryDeviceConfig = MEMORY_DEVICE_CONFIG_INIT;
 
     // Set to true to enable debug logs.
-    protected static final boolean DEBUG = false;
+    protected static final boolean DEBUG = true;
 
     // Used to pass the shared RELRO Bundle through Binder.
     public static final String EXTRA_LINKER_SHARED_RELROS =

@@ -64,7 +64,6 @@ source_set("android_crazy_linker") {
   ]
 
   include_dirs = [ "src/src" ]
-  defines = [ "CRAZY_DEBUG=0" ]
 
   public_configs = [ ":crazy_config" ]
   configs -= [ "//build/config/compiler:chromium_code" ]
