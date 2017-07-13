@@ -1,0 +1,5 @@
+include_specific_rules = {
+  "AutoplayUmaHelper\.cpp": [
+    "+url/gurl.h",
+  ],
+}
