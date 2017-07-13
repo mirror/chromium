@@ -55,30 +55,6 @@ you're re-using code. See
 for a list of fields to include. A presubmit check will check this has the right
 format.
 
-### Add a LICENSE file and run related checks
-
-You need a LICENSE file. Example:
-[third_party/libjpeg/LICENSE](http://src.chromium.org/viewvc/chrome/trunk/src/third_party/libjpeg/LICENSE?revision=42288&view=markup).
-
-Run the following scripts:
-
-* `src/tools/licenses.py scan` - This will complain about incomplete or missing
-  data for third_party checkins. We use 'licenses.py credits' to generate the
-  about:credits page in Google Chrome builds.
-* `src/tools/checklicenses/checklicenses.py` - See below for info on how to
-  handle possible failures.
-* If you are adding code that will be present in the content layer, please make
-  sure that the license used is compliant with Android tree requirements because
-  this code will also be used in Android WebView. You need to run
-  `src/android_webview/tools/webview_licenses.py scan`
-
-See the ["Odds n' Ends"](adding_to_third_party.md#Odds-n_Ends) Section below if
-you run into any failures running these.
-
-If the library will never be shipped as a part of Chrome (e.g. build-time tools,
-testing tools), make sure to set "License File" as "NOT_SHIPPED" so that the
-license is not included in about:credits page.
-
 ### Modify DEPS
 
 If the code is applicable and will be compiled on all supported Chromium
@@ -187,16 +163,3 @@ __If the failure looks like ...   ... the right action is to ... __
       resulting binaries can't use GPL code. Ideally we just shouldn't have
       those files at all in the tree. If in doubt, please ask mal@chromium.org
 
-### Handling `webview_licenses.py` failures
-
-__If the failure looks like ...   ... the right action is to ... __
-
-* Missing license file
-    * Make sure that the license file is present. It should be called 'LICENSE',
-      or otherwise README.chromium file must point to it explicitly.
-* The following files contain a third-party license but are not in a listed
-  third-party directory...
-    * Check if it's a false positive (e.g. 'copyright' word used in a string
-      literal), if so, update
-      [src/tools/copyright_scanner/third_party_files_whitelist.txt](https://code.google.com/p/chromium/codesearch#chromium/src/tools/copyright_scanner/third_party_files_whitelist.txt)
-      file. Otherwise, please move the code into third_party.
