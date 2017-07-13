@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d63e4b75_c8d8d4ef",
+        "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-13T23:12:50Z",
+      "side": 1,
+      "message": "You need to add a size cap in this ascii proto in order to enforce it.",
+      "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "352e563e_45de9d18",
         "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
         "patchSetId": 5
@@ -36,6 +53,23 @@
       "writtenOn": "2017-07-13T22:47:34Z",
       "side": 1,
       "message": "I would write this differently to avoid repitition:\n\nbool too_big_to_unpack\u003d item_-\u003eGetTotalBytes() \u003e\n        FileTypePolicies::GetInstance()-\u003eMaxSizeUnpackDmg();\nUMA_HISTOGRAM_BOOLEAN(\"SBClientDownload.DmgTooBigToUnpack\", too_big_to_unpack);\nif (!too_big_to_unpack) {\n  OnFileFeatureExtractionDone();\n}",
+      "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fa1477_eea397b3",
+        "filename": "chrome/common/safe_browsing/download_file_types.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-13T23:12:50Z",
+      "side": 1,
+      "message": "This sounds type specific. Please put this in PlatformSettings.",
       "revId": "43172f9e5f2e761389bee7ed877e4034e155267c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
