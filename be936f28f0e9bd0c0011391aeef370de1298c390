@@ -22,6 +22,30 @@
       "revId": "be936f28f0e9bd0c0011391aeef370de1298c390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceefaf06_dd534ebc",
+        "filename": "remoting/ios/app/app_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-13T19:13:47Z",
+      "side": 1,
+      "message": "I don\u0027t think so. It doesn\u0027t change the view hierarchy of the nav controller. It simply adds a new view on top if the user is unauthorized, so the root view controller for the nav controller is still always RemotingVC.\n\nCalling popToRootViewController when the FirstLaunchView is showing will pop it out and probably mess up the state of FirstLaunchViewPresenter, although no other VC is expected to do anything when the FirstLaunchView is showing. I\u0027ll change the check in FirstLaunchViewPresenter a little bit.",
+      "parentUuid": "fac3afca_47e4b7bf",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "be936f28f0e9bd0c0011391aeef370de1298c390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
