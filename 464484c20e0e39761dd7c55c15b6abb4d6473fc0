@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f260ba2d_c43941da",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-13T20:13:18Z",
+      "side": 1,
+      "message": "Could you also CHECK that source_text_.IsNull() when ResourceBuffer() is null?",
+      "revId": "464484c20e0e39761dd7c55c15b6abb4d6473fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
