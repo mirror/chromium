@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "d38c7f80_f709a473",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "Why the square brackets in \"[...]\"?",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c6d388_aa0730d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "Would you mind checking whether the external variant of hash-checking (like //content-security-policy/script-src/script-src-sri_hash.sub.html) works in report-only?",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321d2ba3_0337affe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "Are there tests for this bit?",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f490d835_d2f80477",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/script-src-multiple-policies-multiple-hashing-algorithms.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "Rather than timing out, consider something like:\n\n```\n\u003cscript nonce\u003d\"abc\"\u003evar executed \u003d false;\u003c/script\u003e\n\u003cscript\u003eexecuted \u003d true\u003c/script\u003e\u003c!-- \u003c-- Hash matches this --\u003e\n\u003cscript nonce\u003d\"abc\"\u003et.step_func(_ \u003d\u003e assert_true(executed))\u003c/script\u003e\n```\n\nThat seems like it would run without timeouts in both the success and failure cases.",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505f7b54_85d17c2c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/script-src-report-only-policy-works-with-hash-policy.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "Rather than just validating that it executes, can you also add a `securitypolicyviolation` listener?",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be2a954_87d7ac03",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/style-src/style-src-multiple-policies-multiple-hashing-algorithms.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t see any nonces. :)",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "389bfbf4_ce5dad76",
         "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
         "patchSetId": 1
@@ -13,6 +115,74 @@
       "writtenOn": "2017-07-13T14:53:16Z",
       "side": 1,
       "message": "Accidental, I\u0027ll remove it.",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e99864_d82df817",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "const? I guess it doesn\u0027t make much difference.",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b129945e_db667128",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "Can you add a layout test for the `unsafe-hash-attributes` case with multiple policies? A few, I guess, to cover multiple, report-only, and pass/fail",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24582e64_063dd7e9",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "Remind me to kill this bit; I don\u0027t think it\u0027s going to fly based on the numbers.",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d354403_9fb00a7b",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicyTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-13T19:22:28Z",
+      "side": 1,
+      "message": "Would you mind adding similar unit tests for hashes?",
       "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
