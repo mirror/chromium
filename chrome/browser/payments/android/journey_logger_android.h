@@ -30,7 +30,8 @@ class JourneyLoggerAndroid {
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& jcaller,
       jint jsection,
-      jint jnumber);
+      jint jnumber,
+      jboolean jhas_complete_suggestion);
   void IncrementSelectionChanges(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& jcaller,

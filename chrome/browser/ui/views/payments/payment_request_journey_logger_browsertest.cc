@@ -222,7 +222,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestJourneyLoggerAllSectionStatsTest,
 
   // Expect the appropriate number of suggestions shown to be logged.
   histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.NumberOfSuggestionsShown.CreditCards.Completed", 1, 1);
+      "PaymentRequest.NumberOfSuggestionsShown.PaymentMethod.Completed", 1, 1);
   histogram_tester.ExpectUniqueSample(
       "PaymentRequest.NumberOfSuggestionsShown.ShippingAddress.Completed", 2,
       1);
@@ -252,7 +252,8 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestJourneyLoggerAllSectionStatsTest,
 
   // Expect the appropriate number of suggestions shown to be logged.
   histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.NumberOfSuggestionsShown.CreditCards.UserAborted", 1, 1);
+      "PaymentRequest.NumberOfSuggestionsShown.PaymentMethod.UserAborted", 1,
+      1);
   histogram_tester.ExpectUniqueSample(
       "PaymentRequest.NumberOfSuggestionsShown.ShippingAddress.UserAborted", 2,
       1);
@@ -295,7 +296,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestJourneyLoggerNoShippingSectionStatsTest,
 
   // Expect the appropriate number of suggestions shown to be logged.
   histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.NumberOfSuggestionsShown.CreditCards.Completed", 1, 1);
+      "PaymentRequest.NumberOfSuggestionsShown.PaymentMethod.Completed", 1, 1);
   histogram_tester.ExpectUniqueSample(
       "PaymentRequest.NumberOfSuggestionsShown.ContactInfo.Completed", 2, 1);
 
@@ -326,7 +327,8 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestJourneyLoggerNoShippingSectionStatsTest,
 
   // Expect the appropriate number of suggestions shown to be logged.
   histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.NumberOfSuggestionsShown.CreditCards.UserAborted", 1, 1);
+      "PaymentRequest.NumberOfSuggestionsShown.PaymentMethod.UserAborted", 1,
+      1);
   histogram_tester.ExpectUniqueSample(
       "PaymentRequest.NumberOfSuggestionsShown.ContactInfo.UserAborted", 2, 1);
 
@@ -371,7 +373,7 @@ IN_PROC_BROWSER_TEST_F(
 
   // Expect the appropriate number of suggestions shown to be logged.
   histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.NumberOfSuggestionsShown.CreditCards.Completed", 1, 1);
+      "PaymentRequest.NumberOfSuggestionsShown.PaymentMethod.Completed", 1, 1);
   histogram_tester.ExpectUniqueSample(
       "PaymentRequest.NumberOfSuggestionsShown.ShippingAddress.Completed", 2,
       1);
@@ -404,7 +406,8 @@ IN_PROC_BROWSER_TEST_F(
 
   // Expect the appropriate number of suggestions shown to be logged.
   histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.NumberOfSuggestionsShown.CreditCards.UserAborted", 1, 1);
+      "PaymentRequest.NumberOfSuggestionsShown.PaymentMethod.UserAborted", 1,
+      1);
   histogram_tester.ExpectUniqueSample(
       "PaymentRequest.NumberOfSuggestionsShown.ShippingAddress.UserAborted", 2,
       1);

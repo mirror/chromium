@@ -39,11 +39,13 @@ void JourneyLoggerAndroid::SetNumberOfSuggestionsShown(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
     jint jsection,
-    jint jnumber) {
+    jint jnumber,
+    jboolean jhas_complete_suggestion) {
   DCHECK_GE(jsection, 0);
   DCHECK_LT(jsection, JourneyLogger::Section::SECTION_MAX);
   journey_logger_.SetNumberOfSuggestionsShown(
-      static_cast<JourneyLogger::Section>(jsection), jnumber);
+      static_cast<JourneyLogger::Section>(jsection), jnumber,
+      jhas_complete_suggestion);
 }
 
 void JourneyLoggerAndroid::IncrementSelectionChanges(

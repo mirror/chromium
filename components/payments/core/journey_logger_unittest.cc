@@ -445,7 +445,8 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for all the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
+                                     /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -477,7 +478,8 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for all the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
+                                     /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -509,7 +511,8 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for all the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
+                                     /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -542,7 +545,8 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for all the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
+                                     /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -574,7 +578,8 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for none of the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
+                                     /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -607,7 +612,8 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for none of the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
+                                     /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -640,7 +646,8 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for none of the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
+                                     /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -674,7 +681,8 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for none of the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
+                                     /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -793,8 +801,10 @@ TEST(JourneyLoggerTest, RecordJourneyStatsHistograms_TwoPaymentRequests) {
 
   logger1.SetCanMakePaymentValue(true);
 
-  logger1.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
-  logger2.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
+  logger1.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
+                                      /*has_complete_suggestion=*/false);
+  logger2.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
+                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the user completes one checkout and aborts the other.
   logger1.SetCompleted();

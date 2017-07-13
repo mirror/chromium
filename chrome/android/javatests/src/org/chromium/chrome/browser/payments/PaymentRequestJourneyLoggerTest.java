@@ -256,18 +256,18 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
         // Make sure the right number of suggestions were logged.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSuggestionsShown.CreditCards.Completed", 2));
+                        "PaymentRequest.NumberOfSuggestionsShown.PaymentMethod.Completed", 2));
 
         // Make sure no adds, edits or changes were logged.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSelectionAdds.CreditCards.Completed", 0));
+                        "PaymentRequest.NumberOfSelectionAdds.PaymentMethod.Completed", 0));
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSelectionChanges.CreditCards.Completed", 0));
+                        "PaymentRequest.NumberOfSelectionChanges.PaymentMethod.Completed", 0));
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSelectionEdits.CreditCards.Completed", 0));
+                        "PaymentRequest.NumberOfSelectionEdits.PaymentMethod.Completed", 0));
     }
 
     /**
@@ -291,18 +291,18 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
         // Make sure the right number of suggestions were logged.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSuggestionsShown.CreditCards.UserAborted", 2));
+                        "PaymentRequest.NumberOfSuggestionsShown.PaymentMethod.UserAborted", 2));
 
         // Make sure no adds, edits or changes were logged.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSelectionAdds.CreditCards.UserAborted", 0));
+                        "PaymentRequest.NumberOfSelectionAdds.PaymentMethod.UserAborted", 0));
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSelectionChanges.CreditCards.UserAborted", 0));
+                        "PaymentRequest.NumberOfSelectionChanges.PaymentMethod.UserAborted", 0));
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSelectionEdits.CreditCards.UserAborted", 0));
+                        "PaymentRequest.NumberOfSelectionEdits.PaymentMethod.UserAborted", 0));
     }
 
     /**
@@ -342,15 +342,286 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
         // Make sure the add was logged.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSelectionAdds.CreditCards.Completed", 1));
+                        "PaymentRequest.NumberOfSelectionAdds.PaymentMethod.Completed", 1));
 
         // Make sure no edits or changes were logged.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSelectionChanges.CreditCards.Completed", 0));
+                        "PaymentRequest.NumberOfSelectionChanges.PaymentMethod.Completed", 0));
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.NumberOfSelectionEdits.CreditCards.Completed", 0));
+                        "PaymentRequest.NumberOfSelectionEdits.PaymentMethod.Completed", 0));
+    }
+
+    /**
+     * Expect that the metric that records whether the user had complete suggestions for the
+     * requested information is logged correctly.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUserHadCompleteSuggestions_ShippingAndPayment()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        createTestData();
+
+        // Cancel the payment request.
+        mPaymentRequestTestRule.triggerUIAndWait("ccBuy", mPaymentRequestTestRule.getReadyToPay());
+        mPaymentRequestTestRule.clickAndWait(
+                R.id.close_button, mPaymentRequestTestRule.getDismissed());
+
+        // Wait for the histograms to be logged.
+        Thread.sleep(200);
+
+        // Make the metric was logged correctly.
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "PaymentRequest.UserHadCompleteSuggestionsForEverything.EffectOnCompletion",
+                        CompletionStatus.USER_ABORTED));
+
+        // Make sure the opposite metric has no logs.
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramTotalCountForTesting(
+                        "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
+                        + "EffectOnCompletion"));
+    }
+
+    /**
+     * Expect that the metric that records whether the user had complete suggestions for the
+     * requested information is logged correctly.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUserDidNotHaveCompleteSuggestions_ShippingAndPayment_IncompleteShipping()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Add a card and an incomplete address (no region).
+        AutofillTestHelper mHelper = new AutofillTestHelper();
+        String mBillingAddressId = mHelper.setProfile(new AutofillProfile("", "https://example.com",
+                true, "Jon Doe", "Google", "340 Main St", /*region=*/"", "Los Angeles", "", "90291",
+                "", "US", "650-253-0000", "", "en-US"));
+        mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
+                "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
+                CardType.UNKNOWN, mBillingAddressId, "" /* serverId */));
+
+        // Cancel the payment request.
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "ccBuy", mPaymentRequestTestRule.getReadyForInput());
+        mPaymentRequestTestRule.clickAndWait(
+                R.id.close_button, mPaymentRequestTestRule.getDismissed());
+
+        // Wait for the histograms to be logged.
+        Thread.sleep(200);
+
+        // Make the metric was logged correctly.
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
+                                + "EffectOnCompletion",
+                        CompletionStatus.USER_ABORTED));
+
+        // Make sure the opposite metric has no logs.
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramTotalCountForTesting(
+                        "PaymentRequest.UserHadCompleteSuggestionsForEverything."
+                        + "EffectOnCompletion"));
+    }
+
+    /**
+     * Expect that the metric that records whether the user had complete suggestions for the
+     * requested information is logged correctly.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUserDidNotHaveCompleteSuggestions_ShippingAndPayment_IncompleteCard()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Add an incomplete card (no exp date) and an complete address.
+        AutofillTestHelper mHelper = new AutofillTestHelper();
+        String mBillingAddressId = mHelper.setProfile(new AutofillProfile("", "https://example.com",
+                true, "Jon Doe", "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "",
+                "US", "650-253-0000", "", "en-US"));
+        mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
+                /*number=*/"", "1111", "10", "2021", "visa", R.drawable.visa_card, CardType.UNKNOWN,
+                mBillingAddressId, "" /* serverId */));
+
+        // Cancel the payment request.
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "ccBuy", mPaymentRequestTestRule.getReadyForInput());
+        mPaymentRequestTestRule.clickAndWait(
+                R.id.close_button, mPaymentRequestTestRule.getDismissed());
+
+        // Wait for the histograms to be logged.
+        Thread.sleep(200);
+
+        // Make the metric was logged correctly.
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
+                                + "EffectOnCompletion",
+                        CompletionStatus.USER_ABORTED));
+
+        // Make sure the opposite metric has no logs.
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramTotalCountForTesting(
+                        "PaymentRequest.UserHadCompleteSuggestionsForEverything."
+                        + "EffectOnCompletion"));
+    }
+
+    /**
+     * Expect that the metric that records whether the user had complete suggestions for the
+     * requested information is logged correctly.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUserDidNotHaveCompleteSuggestions_ShippingAndPayment_UnsupportedCard()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Add an unsupported card (mastercard) and an complete address.
+        AutofillTestHelper mHelper = new AutofillTestHelper();
+        String mBillingAddressId = mHelper.setProfile(new AutofillProfile("", "https://example.com",
+                true, "Jon Doe", "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "",
+                "US", "650-253-0000", "", "en-US"));
+        mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
+                "5187654321098765", "8765", "10", "2021", "mastercard", R.drawable.visa_card,
+                CardType.UNKNOWN, mBillingAddressId, "" /* serverId */));
+
+        // Cancel the payment request.
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "ccBuy", mPaymentRequestTestRule.getReadyForInput());
+        mPaymentRequestTestRule.clickAndWait(
+                R.id.close_button, mPaymentRequestTestRule.getDismissed());
+
+        // Wait for the histograms to be logged.
+        Thread.sleep(200);
+
+        // Make the metric was logged correctly.
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
+                                + "EffectOnCompletion",
+                        CompletionStatus.USER_ABORTED));
+
+        // Make sure the opposite metric has no logs.
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramTotalCountForTesting(
+                        "PaymentRequest.UserHadCompleteSuggestionsForEverything."
+                        + "EffectOnCompletion"));
+    }
+
+    /**
+     * Expect that the metric that records whether the user had complete suggestions for the
+     * requested information is logged correctly.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUserDidNotHaveCompleteSuggestions_ShippingAndPayment_OnlyPaymentApp()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Add a complete address and a working payment app.
+        AutofillTestHelper mHelper = new AutofillTestHelper();
+        mHelper.setProfile(new AutofillProfile("", "https://example.com", true, "Jon Doe", "Google",
+                "340 Main St", "CA", "Los Angeles", "", "90291", "", "US", "650-253-0000", "",
+                "en-US"));
+        mPaymentRequestTestRule.installPaymentApp(HAVE_INSTRUMENTS, IMMEDIATE_RESPONSE);
+
+        // Cancel the payment request.
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "ccBuy", mPaymentRequestTestRule.getReadyForInput());
+        mPaymentRequestTestRule.clickAndWait(
+                R.id.close_button, mPaymentRequestTestRule.getDismissed());
+
+        // Wait for the histograms to be logged.
+        Thread.sleep(200);
+
+        // Make the metric was logged correctly.
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
+                                + "EffectOnCompletion",
+                        CompletionStatus.USER_ABORTED));
+
+        // Make sure the opposite metric has no logs.
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramTotalCountForTesting(
+                        "PaymentRequest.UserHadCompleteSuggestionsForEverything."
+                        + "EffectOnCompletion"));
+    }
+
+    /**
+     * Expect that the metric that records whether the user had complete suggestions for the
+     * requested information is logged correctly.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUserDidNotHaveCompleteSuggestions_PaymentApp_NoInstruments()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Add an address and a payment app without instruments on file.
+        AutofillTestHelper mHelper = new AutofillTestHelper();
+        mHelper.setProfile(new AutofillProfile("", "https://example.com", true, "Jon Doe", "Google",
+                "340 Main St", "CA", "Los Angeles", "", "90291", "", "US", "650-253-0000", "",
+                "en-US"));
+        mPaymentRequestTestRule.installPaymentApp(NO_INSTRUMENTS, IMMEDIATE_RESPONSE);
+
+        // Cancel the payment request.
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "cardsAndBobPayBuy", mPaymentRequestTestRule.getReadyForInput());
+        mPaymentRequestTestRule.clickAndWait(
+                R.id.close_button, mPaymentRequestTestRule.getDismissed());
+
+        // Wait for the histograms to be logged.
+        Thread.sleep(200);
+
+        // Make the metric was logged correctly.
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
+                                + "EffectOnCompletion",
+                        CompletionStatus.USER_ABORTED));
+
+        // Make sure the opposite metric has no logs.
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramTotalCountForTesting(
+                        "PaymentRequest.UserHadCompleteSuggestionsForEverything."
+                        + "EffectOnCompletion"));
+    }
+
+    /**
+     * Expect that the metric that records whether the user had complete suggestions for the
+     * requested information is logged correctly.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUserHadCompleteSuggestions_PaymentApp_HasValidPaymentApp()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Add an address and a payment app on file.
+        AutofillTestHelper mHelper = new AutofillTestHelper();
+        mHelper.setProfile(new AutofillProfile("", "https://example.com", true, "Jon Doe", "Google",
+                "340 Main St", "CA", "Los Angeles", "", "90291", "", "US", "650-253-0000", "",
+                "en-US"));
+        mPaymentRequestTestRule.installPaymentApp(HAVE_INSTRUMENTS, IMMEDIATE_RESPONSE);
+
+        // Cancel the payment request.
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "cardsAndBobPayBuy", mPaymentRequestTestRule.getReadyForInput());
+        mPaymentRequestTestRule.clickAndWait(
+                R.id.close_button, mPaymentRequestTestRule.getDismissed());
+
+        // Wait for the histograms to be logged.
+        Thread.sleep(200);
+
+        // Make the metric was logged correctly.
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "PaymentRequest.UserHadCompleteSuggestionsForEverything.EffectOnCompletion",
+                        CompletionStatus.USER_ABORTED));
+
+        // Make sure the opposite metric has no logs.
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramTotalCountForTesting(
+                        "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
+                        + "EffectOnCompletion"));
     }
 
     /**

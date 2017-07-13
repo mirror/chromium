@@ -36,8 +36,8 @@ std::string GetHistogramNameSuffix(
     case JourneyLogger::SECTION_CONTACT_INFO:
       name_suffix = "ContactInfo.";
       break;
-    case JourneyLogger::SECTION_CREDIT_CARDS:
-      name_suffix = "CreditCards.";
+    case JourneyLogger::SECTION_PAYMENT_METHOD:
+      name_suffix = "PaymentMethod.";
       break;
     default:
       break;
@@ -91,10 +91,16 @@ void JourneyLogger::IncrementSelectionEdits(Section section) {
   sections_[section].number_selection_edits_++;
 }
 
-void JourneyLogger::SetNumberOfSuggestionsShown(Section section, int number) {
+void JourneyLogger::SetNumberOfSuggestionsShown(Section section,
+                                                int number,
+                                                bool has_complete_suggestion) {
   DCHECK_LT(section, SECTION_MAX);
   sections_[section].number_suggestions_shown_ = number;
   sections_[section].is_requested_ = true;
+  sections_[section].has_complete_suggestion_ = has_complete_suggestion;
+
+  LOG(ERROR) << "Section: " << section << " number of " << number
+             << " has_complete_ " << has_complete_suggestion;
 }
 
 void JourneyLogger::SetCanMakePaymentValue(bool value) {
@@ -212,6 +218,10 @@ void JourneyLogger::RecordSectionSpecificStats(
   // Record whether the user had suggestions for each requested information.
   bool user_had_all_requested_information = true;
 
+  // Record whether the user had at least one complete suggestion for each
+  // requested section.
+  bool user_had_complete_suggestions_ = true;
+
   for (int i = 0; i < NUMBER_OF_SECTIONS; ++i) {
     std::string name_suffix = GetHistogramNameSuffix(i, completion_status);
 
@@ -236,6 +246,9 @@ void JourneyLogger::RecordSectionSpecificStats(
 
       if (sections_[i].number_suggestions_shown_ == 0) {
         user_had_all_requested_information = false;
+        user_had_complete_suggestions_ = false;
+      } else if (!sections_[i].has_complete_suggestion_) {
+        user_had_complete_suggestions_ = false;
       }
     }
   }
@@ -250,6 +263,20 @@ void JourneyLogger::RecordSectionSpecificStats(
   } else {
     base::UmaHistogramEnumeration(
         "PaymentRequest.UserDidNotHaveSuggestionsForEverything."
+        "EffectOnCompletion",
+        completion_status, COMPLETION_STATUS_MAX);
+  }
+
+  // Record metrics about completion based on whether the user had complete
+  // suggestions for each requested information.
+  if (user_had_complete_suggestions_) {
+    base::UmaHistogramEnumeration(
+        "PaymentRequest.UserHadCompleteSuggestionsForEverything."
+        "EffectOnCompletion",
+        completion_status, COMPLETION_STATUS_MAX);
+  } else {
+    base::UmaHistogramEnumeration(
+        "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
         "EffectOnCompletion",
         completion_status, COMPLETION_STATUS_MAX);
   }
