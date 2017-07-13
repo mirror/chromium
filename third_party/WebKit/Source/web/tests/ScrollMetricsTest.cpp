@@ -56,12 +56,11 @@ class ScrollBeginEventBuilder : public WebGestureEvent {
   ScrollBeginEventBuilder(IntPoint position,
                           FloatPoint delta,
                           WebGestureDevice device)
-      : WebGestureEvent() {
+      : WebGestureEvent(device) {
     type_ = WebInputEvent::kGestureScrollBegin;
     x = global_x = position.X();
     y = global_y = position.Y();
     data.scroll_begin.delta_y_hint = delta.Y();
-    source_device = device;
     frame_scale_ = 1;
   }
 };
