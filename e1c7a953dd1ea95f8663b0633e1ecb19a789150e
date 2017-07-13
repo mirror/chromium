@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fee6e887_55b7e969",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T19:50:03Z",
+      "side": 1,
+      "message": "nit: this calculation would return the correct value (255) even when |current_animation_value \u003d\u003d 0|, right? Consider dropping the conditional and always using the calculation.",
+      "range": {
+        "startLine": 374,
+        "startChar": 23,
+        "endLine": 374,
+        "endChar": 24
+      },
+      "revId": "e1c7a953dd1ea95f8663b0633e1ecb19a789150e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b61baef_3f397e8e",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T19:50:03Z",
+      "side": 1,
+      "message": "Actually, just move the conditional and {AnimateToIdealBounds(); return;} block above the declaration of the BoundsAnimator, which then does not need to be a unique_ptr.",
+      "range": {
+        "startLine": 1501,
+        "startChar": 6,
+        "endLine": 1501,
+        "endChar": 41
+      },
+      "revId": "e1c7a953dd1ea95f8663b0633e1ecb19a789150e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92884f6_c90afda5",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T19:50:03Z",
+      "side": 1,
+      "message": "nit: consider something like: Returns the AppListButton\u0027s current animation value, or 0 if the animation is not running. Used to synchronize AppListButton and ShelfView animations.",
+      "range": {
+        "startLine": 182,
+        "startChar": 5,
+        "endLine": 182,
+        "endChar": 11
+      },
+      "revId": "e1c7a953dd1ea95f8663b0633e1ecb19a789150e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c26d570_ddae5cb7",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T19:50:03Z",
+      "side": 1,
+      "message": "Can you avoid passing a ShelfViewTestAPI into the ctor and keeping a member, and instead construct one inline here?\nicon_positions_animation_duration_ \u003d ShelfViewTestAPI(shelf-\u003eGetShelfViewForTesting())-\u003eGetAnimationDuration();",
+      "range": {
+        "startLine": 102,
+        "startChar": 43,
+        "endLine": 102,
+        "endChar": 52
+      },
+      "revId": "e1c7a953dd1ea95f8663b0633e1ecb19a789150e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65cab65_445e5d7b",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T19:50:03Z",
+      "side": 1,
+      "message": "Are these Reset calls necessary? It seems like it\u0027d be okay to skip all of them and not bother clearing |icon_positions_animation_duration_| in the implementation.",
+      "revId": "e1c7a953dd1ea95f8663b0633e1ecb19a789150e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

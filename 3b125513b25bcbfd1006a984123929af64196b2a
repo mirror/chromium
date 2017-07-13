@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "79a37999_1b6e8557",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T19:50:03Z",
+      "side": 1,
+      "message": "I don\u0027t see anything in the style guide about that. Sounds like a personal preference, and I typically prefer shorter code / fewer lines.",
+      "parentUuid": "cd960032_3e909a5b",
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6240e87_d85383e3",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 2
@@ -213,6 +231,30 @@
       "side": 1,
       "message": "Done, but i thought auto is fine as long as its clear what the type is?",
       "parentUuid": "d6240e87_d85383e3",
+      "range": {
+        "startLine": 1506,
+        "startChar": 6,
+        "endLine": 1506,
+        "endChar": 7
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0a844d_6dbb5195",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T19:50:03Z",
+      "side": 1,
+      "message": "It would be fine here. I have some reviewers that often request explicit type names, so that\u0027s a bit ingrained, but auto is helpful and would be okay here. Feel free to push back on any comments, especially nits that boil down to personal preferences.",
+      "parentUuid": "e27e7fb7_bc65b303",
       "range": {
         "startLine": 1506,
         "startChar": 6,
@@ -307,6 +349,30 @@
       "side": 1,
       "message": "Which is the preferred method? Though i think suggestion 2 should be done in a seperate (and precursor) CL?",
       "parentUuid": "a8d933b8_4d779f09",
+      "range": {
+        "startLine": 109,
+        "startChar": 17,
+        "endLine": 109,
+        "endChar": 18
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c7e9fe_443323f9",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T19:50:03Z",
+      "side": 1,
+      "message": "Hmm, using mojo for Ash-\u003eAsh observation does seem overkill, and you\u0027re right that moving observer methods off of ShellObserver would be better accomplished separately. We should really move OnShelfAligmentChanged() to ShelfObserver and move OnMaximizeMode[Started|Ending|Ended]() to a new MaximizeModeController::Observer (or MaximizeModeObserver?), like suggested here:\nhttps://cs.chromium.org/chromium/src/ash/wm/maximize_mode/maximize_mode_controller.cc?rcl\u003d66dbfe275dad836430f512ac8e2e55c9846617ef\u0026l\u003d180\nIf there aren\u0027t serious obstacles to that work, could you land those changes as precursors to this CL? That would be really nice!",
+      "parentUuid": "fad9b2f5_c321dce2",
       "range": {
         "startLine": 109,
         "startChar": 17,
