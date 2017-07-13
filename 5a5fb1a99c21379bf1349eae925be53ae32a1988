@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d299e392_f8d4c8db",
+        "filename": "third_party/WebKit/Source/core/css/CSSRule.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-13T06:40:20Z",
+      "side": 1,
+      "message": "Just to confirm: Who traces in CSSRule?\n\nI\u0027m wondering why it\u0027s safe to remove TraceWrappers from CSSStyleDeclaration.cpp and CSSStyleRule.cpp.",
+      "revId": "5a5fb1a99c21379bf1349eae925be53ae32a1988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
