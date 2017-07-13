@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a30b58cc_4695b74a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25810,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-13T00:33:10Z",
+      "side": 1,
+      "message": "asvitkine: This conflicts with the histogram on line 25820 below, leading to:\nERROR:root:Duplicate histogram definition InProductHelp.ShouldTriggerHelpUI\n\nShould I just remove |base\u003d\"true\"| from the histogram below, and update the summary?\nOr is it required to have unique names?",
+      "range": {
+        "startLine": 25810,
+        "startChar": 30,
+        "endLine": 25810,
+        "endChar": 63
+      },
+      "revId": "c62fe8a2c20a96ff596877b2b2dbb8807431872b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
