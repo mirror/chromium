@@ -68,6 +68,11 @@ class ASH_EXPORT WindowTreeHostManager
     // Invoked in WindowTreeHostManager::Shutdown().
     virtual void OnWindowTreeHostManagerShutdown() {}
 
+    // Invoked when an existing AshWindowTreeHost is moved to a new display.
+    virtual void OnWindowTreeHostReusedForDisplay(
+        AshWindowTreeHost* window_tree_host,
+        const display::Display& display) {}
+
    protected:
     virtual ~Observer() {}
   };
