@@ -71,6 +71,8 @@ EventMatcher::EventMatcher(const mojom::EventMatcher& matcher)
   }
 }
 
+EventMatcher::EventMatcher(EventMatcher&& rhs) = default;
+
 EventMatcher::~EventMatcher() {}
 
 bool EventMatcher::MatchesEvent(const ui::Event& event) const {

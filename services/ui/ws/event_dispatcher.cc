@@ -269,6 +269,13 @@ void EventDispatcher::RemoveAccelerator(uint32_t id) {
     accelerators_.erase(it);
 }
 
+void EventDispatcher::SetCursorOnKeyList(
+    std::vector<::ui::mojom::EventMatcherPtr> show_cursor_matchers) {
+  cursor_matchers_.clear();
+  for (auto& matcher : show_cursor_matchers)
+    cursor_matchers_.push_back(EventMatcher(*matcher));
+}
+
 bool EventDispatcher::IsProcessingEvent() const {
   return event_targeter_->IsHitTestInFlight();
 }
@@ -355,6 +362,8 @@ void EventDispatcher::ProcessKeyEvent(const ui::KeyEvent& event,
   ServerWindow* focused_window =
       delegate_->GetFocusedWindowForEventDispatcher(event_display_id_);
   if (focused_window) {
+    HideCursorOnMatchedKeyEvent(event);
+
     // Assume key events are for the client area.
     const bool in_nonclient_area = false;
     const ClientSpecificId client_id =
@@ -367,6 +376,19 @@ void EventDispatcher::ProcessKeyEvent(const ui::KeyEvent& event,
   if (post_target)
     delegate_->OnAccelerator(post_target->id(), event_display_id_, event,
                              EventDispatcherDelegate::AcceleratorPhase::POST);
+}
+
+void EventDispatcher::HideCursorOnMatchedKeyEvent(const ui::KeyEvent& event) {
+  bool hide_cursor = !cursor_matchers_.empty();
+  for (auto& matcher : cursor_matchers_) {
+    if (matcher.MatchesEvent(event)) {
+      hide_cursor = false;
+      break;
+    }
+  }
+
+  if (hide_cursor)
+    delegate_->OnEventChangesCursorVisibility(false);
 }
 
 void EventDispatcher::ProcessPointerEventOnFoundTarget(
@@ -392,6 +414,12 @@ void EventDispatcher::ProcessPointerEventOnFoundTarget(
   const bool is_mouse_event = event.IsMousePointerEvent();
 
   if (is_mouse_event) {
+    // This corresponds to the code in CompoundEventFilter which updates
+    // visibility on each mouse event. Here, we're sure that we're a non-exit
+    // mouse event and FROM_TOUCH doesn't exist in mus so we shouldn't need
+    // further filtering.
+    delegate_->OnEventChangesCursorVisibility(true);
+
     SetMousePointerLocation(location_target.location_in_root,
                             location_target.display_id);
     delegate_->OnMouseCursorLocationChanged(location_target.location_in_root,

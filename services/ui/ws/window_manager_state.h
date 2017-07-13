@@ -71,6 +71,9 @@ class WindowManagerState : public EventDispatcherDelegate,
   // Sets the location of the cursor to a location on display |display_id|.
   void SetCursorLocation(const gfx::Point& display_pixels, int64_t display_id);
 
+  void SetCursorOnKeyList(
+      std::vector<::ui::mojom::EventMatcherPtr> show_cursor_matchers);
+
   void SetDragDropSourceWindow(
       DragSource* drag_source,
       ServerWindow* window,
@@ -261,6 +264,7 @@ class WindowManagerState : public EventDispatcherDelegate,
                         ServerWindow* old_capture) override;
   void OnMouseCursorLocationChanged(const gfx::Point& point,
                                     int64_t display_id) override;
+  void OnEventChangesCursorVisibility(bool visible) override;
   void DispatchInputEventToWindow(ServerWindow* target,
                                   ClientSpecificId client_id,
                                   int64_t display_id,

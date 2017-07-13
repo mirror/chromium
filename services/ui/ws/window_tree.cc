@@ -2267,6 +2267,12 @@ void WindowTree::SetExtendedHitRegionForChildren(
                                                      touch_insets);
 }
 
+void WindowTree::SetCursorOnKeyList(
+    std::vector<::ui::mojom::EventMatcherPtr> show_cursor_matchers) {
+  DCHECK(window_manager_state_);
+  window_manager_state_->SetCursorOnKeyList(std::move(show_cursor_matchers));
+}
+
 void WindowTree::SetDisplayRoot(const display::Display& display,
                                 mojom::WmViewportMetricsPtr viewport_metrics,
                                 bool is_primary_display,
