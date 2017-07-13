@@ -1166,7 +1166,7 @@ TEST_F(URLRequestTest, AllowFileURLs) {
   }
 }
 
-#if defined(OS_POSIX)  // Bacause of symbolic links.
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA)  // Bacause of symbolic links.
 
 TEST_F(URLRequestTest, SymlinksToFiles) {
   base::ScopedTempDir temp_dir;
