@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "241bfa73_4d08b66b",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-13T03:23:59Z",
+      "side": 1,
+      "message": "You no longer need the {} here.",
+      "range": {
+        "startLine": 317,
+        "startChar": 22,
+        "endLine": 317,
+        "endChar": 28
+      },
+      "revId": "64ea80a64555176a9af3e5f5d607b506685d99d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
