@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "6441b5c2_91a0f1a7",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T16:40:44Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "89683cb9_8eaeacac",
+      "range": {
+        "startLine": 195,
+        "startChar": 11,
+        "endLine": 195,
+        "endChar": 19
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec70a3b_6ba2c02c",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
         "patchSetId": 32
@@ -469,6 +493,30 @@
       "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68def2f0_5c4c3e2b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-13T16:40:44Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "54cc84b2_dbc45e35",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 40
+      },
+      "revId": "edd803a3b14e0e6baf69975022b3b4eff66965a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
