@@ -925,6 +925,88 @@ IN_PROC_BROWSER_TEST_P(MediaStreamDevicesControllerTest,
   ASSERT_FALSE(CheckDevicesListContains(content::MEDIA_DEVICE_VIDEO_CAPTURE));
 }
 
+// Request and allow microphone and camera access on about:blank. mic/camera
+// should not be allowed if the renderer's notion of the page is about:blank
+// but there are times where the page actually has an origin but the browser
+// thinks the page's origin is still about:blank (see crbug.com/742049 and
+// crbug.com/740540). Ideally the browser's notion of the origin would match the
+// renderer, but until then we need to ensure this works.
+IN_PROC_BROWSER_TEST_P(MediaStreamDevicesControllerTest,
+                       RequestAndAllowMicCamAboutBlank) {
+  InitWithUrl(GURL("about:blank"));
+  SetDevicePolicy(DEVICE_TYPE_AUDIO, ACCESS_ALLOWED);
+  SetDevicePolicy(DEVICE_TYPE_VIDEO, ACCESS_ALLOWED);
+  // Ensure the prompt is accepted if necessary such that tab specific content
+  // settings are updated.
+  SetPromptResponseType(PermissionRequestManager::ACCEPT_ALL);
+  content::MediaStreamRequest request =
+      CreateRequest(example_audio_id(), example_video_id());
+  request.security_origin = GURL("https://www.example.com");
+
+  RequestPermissions(
+      GetWebContents(), request,
+      base::Bind(&MediaStreamDevicesControllerTest::OnMediaStreamResponse,
+                 base::Unretained(this)));
+
+  EXPECT_TRUE(GetContentSettings()->IsContentAllowed(
+      CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC));
+  EXPECT_FALSE(GetContentSettings()->IsContentBlocked(
+      CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC));
+  EXPECT_TRUE(GetContentSettings()->IsContentAllowed(
+      CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA));
+  EXPECT_FALSE(GetContentSettings()->IsContentBlocked(
+      CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA));
+  EXPECT_EQ(TabSpecificContentSettings::MICROPHONE_ACCESSED |
+                TabSpecificContentSettings::CAMERA_ACCESSED,
+            GetContentSettings()->GetMicrophoneCameraState());
+  EXPECT_EQ(example_audio_id(),
+            GetContentSettings()->media_stream_requested_audio_device());
+  EXPECT_EQ(example_audio_id(),
+            GetContentSettings()->media_stream_selected_audio_device());
+  EXPECT_EQ(example_video_id(),
+            GetContentSettings()->media_stream_requested_video_device());
+  EXPECT_EQ(example_video_id(),
+            GetContentSettings()->media_stream_selected_video_device());
+}
+
+// This is similar to the test above but simulates the renderer's notion of the
+// page being "about:blank". The request should be blocked.
+IN_PROC_BROWSER_TEST_P(MediaStreamDevicesControllerTest,
+                       RequestAndAllowMicCamAboutBlankBlocked) {
+  InitWithUrl(GURL("about:blank"));
+  SetDevicePolicy(DEVICE_TYPE_AUDIO, ACCESS_DENIED);
+  SetDevicePolicy(DEVICE_TYPE_VIDEO, ACCESS_DENIED);
+  // Ensure the prompt is accepted if necessary such that tab specific content
+  // settings are updated.
+  SetPromptResponseType(PermissionRequestManager::ACCEPT_ALL);
+  RequestPermissions(
+      GetWebContents(), CreateRequest(example_audio_id(), example_video_id()),
+      base::Bind(&MediaStreamDevicesControllerTest::OnMediaStreamResponse,
+                 base::Unretained(this)));
+
+  EXPECT_FALSE(GetContentSettings()->IsContentAllowed(
+      CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC));
+  EXPECT_TRUE(GetContentSettings()->IsContentBlocked(
+      CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC));
+  EXPECT_FALSE(GetContentSettings()->IsContentAllowed(
+      CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA));
+  EXPECT_TRUE(GetContentSettings()->IsContentBlocked(
+      CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA));
+  EXPECT_EQ(TabSpecificContentSettings::MICROPHONE_ACCESSED |
+                TabSpecificContentSettings::MICROPHONE_BLOCKED |
+                TabSpecificContentSettings::CAMERA_ACCESSED |
+                TabSpecificContentSettings::CAMERA_BLOCKED,
+            GetContentSettings()->GetMicrophoneCameraState());
+  EXPECT_EQ(example_audio_id(),
+            GetContentSettings()->media_stream_requested_audio_device());
+  EXPECT_EQ(example_audio_id(),
+            GetContentSettings()->media_stream_selected_audio_device());
+  EXPECT_EQ(example_video_id(),
+            GetContentSettings()->media_stream_requested_video_device());
+  EXPECT_EQ(example_video_id(),
+            GetContentSettings()->media_stream_selected_video_device());
+}
+
 INSTANTIATE_TEST_CASE_P(
     MediaStreamDevicesControllerTestInstance,
     MediaStreamDevicesControllerTest,

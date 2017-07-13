@@ -73,6 +73,27 @@ void LogPermissionBlockedMessage(content::WebContents* web_contents,
                          PermissionUtil::GetPermissionString(type).c_str()));
 }
 
+// The browser's notion of the top-level origin doesn't always correspond with
+// blink's notion. We never want to allow permissions if blink thinks the page
+// is about:blank, but there are cases when blink thinks the page is of a
+// particular origin but the browser doesn't know. What we should really do is
+// fix the browser's notion of the origin to match the blink's. See
+// crbug.com/742049 for the general issue.
+bool IsEmbeddingOriginValid(ContentSettingsType type,
+                            const GURL& embedding_url) {
+  if (embedding_url.IsAboutBlank()) {
+    // We allow about:blank for mic/camera to avoid regressing crbug.com/740540.
+    // The result of calling GetOrigin on about:blank is an empty URL, but this
+    // isn't problematic because mic/camera is keyed off the requesting origin.
+    if (type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC ||
+        type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA) {
+      return true;
+    }
+  }
+
+  return embedding_url.GetOrigin().is_valid();
+}
+
 }  // namespace
 
 // static
@@ -110,9 +131,11 @@ void PermissionContextBase::RequestPermission(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   GURL requesting_origin = requesting_frame.GetOrigin();
-  GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
+  GURL embedding_url = web_contents->GetLastCommittedURL();
+  GURL embedding_origin = embedding_url.GetOrigin();
 
-  if (!requesting_origin.is_valid() || !embedding_origin.is_valid()) {
+  if (!requesting_origin.is_valid() ||
+      !IsEmbeddingOriginValid(content_settings_type_, embedding_url)) {
     std::string type_name =
         PermissionUtil::GetPermissionString(content_settings_type_);
 
