@@ -34,6 +34,24 @@
       "revId": "e53090ee967ee2fd6a25b83fe13d09d91c8db329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c863e2a1_8f1cde01",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_tablet_ntp_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-07-13T01:31:23Z",
+      "side": 0,
+      "message": "Yep, that\u0027s right. This was dead code.",
+      "parentUuid": "eff77741_337fe187",
+      "revId": "e53090ee967ee2fd6a25b83fe13d09d91c8db329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
