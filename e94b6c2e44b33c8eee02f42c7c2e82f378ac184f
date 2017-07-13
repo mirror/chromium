@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fbb2a44_756f60c2",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1179769
+      },
+      "writtenOn": "2017-07-13T11:25:33Z",
+      "side": 1,
+      "message": "Ack. Renamed to BufferAttribute in v3.",
+      "parentUuid": "47937ac3_b755cbd5",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "709cc1b2_3e50788c",
         "filename": "ui/gfx/buffer_types.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-27T00:58:06Z",
       "side": 1,
       "message": "nit: s/{};/ {}/",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2093827e_a6ba269a",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1179769
+      },
+      "writtenOn": "2017-07-13T11:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "709cc1b2_3e50788c",
       "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,42 @@
     },
     {
       "key": {
+        "uuid": "7558a699_a2a42265",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1179769
+      },
+      "writtenOn": "2017-07-13T11:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2878b5bd_b7d93fd6",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce9b790_41a7351f",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1179769
+      },
+      "writtenOn": "2017-07-13T11:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38dec93d_9dc88ecf",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d35b8a1a_010f33ea",
         "filename": "ui/gfx/buffer_types.h",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-27T00:58:06Z",
       "side": 1,
       "message": "nit: s/{};/ {}/",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0372c1_71e700d4",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1179769
+      },
+      "writtenOn": "2017-07-13T11:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d35b8a1a_010f33ea",
       "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "dc3b7c1c_68e7432c",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1179769
+      },
+      "writtenOn": "2017-07-13T11:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86aafda8_696ad52b",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3b33940_8e6d06b2",
         "filename": "ui/gfx/buffer_types.h",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2017-06-27T00:19:42Z",
       "side": 1,
       "message": "Is this used anywhere?",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ccf13e_c2ebb10b",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179769
+      },
+      "writtenOn": "2017-07-13T11:25:33Z",
+      "side": 1,
+      "message": "Discarded in v3.",
+      "parentUuid": "c3b33940_8e6d06b2",
       "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c7c67a0b_c88ffe86",
+        "filename": "ui/gfx/ipc/gfx_param_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179769
+      },
+      "writtenOn": "2017-07-13T11:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5d24a60_57325dbb",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "997f0b8a_114eebf6",
         "filename": "ui/gfx/mojo/buffer_types_struct_traits.cc",
         "patchSetId": 2
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-27T00:19:42Z",
       "side": 1,
       "message": "Why only Linux?",
+      "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e443378_59f5ccb7",
+        "filename": "ui/gfx/mojo/buffer_types_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1179769
+      },
+      "writtenOn": "2017-07-13T11:25:33Z",
+      "side": 1,
+      "message": "Ack, removed the check.",
+      "parentUuid": "997f0b8a_114eebf6",
       "revId": "e94b6c2e44b33c8eee02f42c7c2e82f378ac184f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
