@@ -88,7 +88,7 @@ cr.define('extension_options_dialog_tests', function() {
                 textContent.trim());
         // The width of the dialog should be set to match the width of the
         // header, which is greater than the default min width.
-        expectTrue(mainDiv.style.width > MIN_WIDTH, mainDiv.style.height);
+        expectTrue(optionsDialog.$.dialog.style.width > MIN_WIDTH);
         expectEquals(MIN_HEIGHT, mainDiv.style.height);
 
         // Going back to an extension with a shorter name should resize the
