@@ -341,6 +341,18 @@ TEST_F(EventHandlerTest, HitOnTextShowsIBeam) {
                                                                          hit));
 }
 
+TEST_F(EventHandlerTest, HitOnUserSelectNoneTextDoesNotShowIBeam) {
+  SetHtmlInnerHTML("<span style='user-select: none'>blabla</span>");
+  Node* text = GetDocument().body()->firstChild()->firstChild();
+  LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_FALSE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
 // Regression test for http://crbug.com/641403 to verify we use up-to-date
 // layout tree for dispatching "contextmenu" event.
 TEST_F(EventHandlerTest, sendContextMenuEventWithHover) {
