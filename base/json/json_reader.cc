@@ -4,8 +4,13 @@
 
 #include "base/json/json_reader.h"
 
+#include <utility>
+#include <vector>
+
 #include "base/json/json_parser.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
+#include "base/optional.h"
 #include "base/values.h"
 
 namespace base {
@@ -45,13 +50,15 @@ JSONReader::~JSONReader() {
 // static
 std::unique_ptr<Value> JSONReader::Read(StringPiece json) {
   internal::JSONParser parser(JSON_PARSE_RFC);
-  return parser.Parse(json);
+  Optional<Value> root = parser.Parse(json);
+  return root ? MakeUnique<Value>(std::move(*root)) : nullptr;
 }
 
 // static
 std::unique_ptr<Value> JSONReader::Read(StringPiece json, int options) {
   internal::JSONParser parser(options);
-  return parser.Parse(json);
+  Optional<Value> root = parser.Parse(json);
+  return root ? MakeUnique<Value>(std::move(*root)) : nullptr;
 }
 
 
@@ -64,7 +71,7 @@ std::unique_ptr<Value> JSONReader::ReadAndReturnError(
     int* error_line_out,
     int* error_column_out) {
   internal::JSONParser parser(options);
-  std::unique_ptr<Value> root(parser.Parse(json));
+  Optional<Value> root = parser.Parse(json);
   if (!root) {
     if (error_code_out)
       *error_code_out = parser.error_code();
@@ -76,7 +83,7 @@ std::unique_ptr<Value> JSONReader::ReadAndReturnError(
       *error_column_out = parser.error_column();
   }
 
-  return root;
+  return root ? MakeUnique<Value>(std::move(*root)) : nullptr;
 }
 
 // static
@@ -107,7 +114,8 @@ std::string JSONReader::ErrorCodeToString(JsonParseError error_code) {
 }
 
 std::unique_ptr<Value> JSONReader::ReadToValue(StringPiece json) {
-  return parser_->Parse(json);
+  Optional<Value> value = parser_->Parse(json);
+  return value ? MakeUnique<Value>(std::move(*value)) : nullptr;
 }
 
 JSONReader::JsonParseError JSONReader::error_code() const {
