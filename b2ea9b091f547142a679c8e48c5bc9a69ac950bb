@@ -468,6 +468,30 @@
     },
     {
       "key": {
+        "uuid": "7869f42d_960ece44",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-13T11:13:22Z",
+      "side": 1,
+      "message": "So in what scenarios would we arrive here with a {speculative, link} preload and the existing resource is an unused preload? Is it only for preloaded resources from other resource fetchers?",
+      "parentUuid": "58dfc88b_acd0759e",
+      "range": {
+        "startLine": 1019,
+        "startChar": 3,
+        "endLine": 1019,
+        "endChar": 0
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b5ca874_a01134fc",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 18
