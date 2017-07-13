@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 
+#include "components/feature_engagement_tracker/public/feature_engagement_tracker.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/reading_list/core/reading_list_entry.h"
 #include "components/reading_list/core/reading_list_model.h"
@@ -32,9 +33,13 @@ class ReadingListModelImpl : public ReadingListModel,
   // ReadingListModelImpl without persistence. Data will not be persistent
   // across sessions.
   // |clock| will be used to timestamp all the operations.
-  ReadingListModelImpl(std::unique_ptr<ReadingListModelStorage> storage_layer,
-                       PrefService* pref_service,
-                       std::unique_ptr<base::Clock> clock_);
+  // |tracker| is used to keep track of feature engagement events for the use
+  // with in-product help.
+  ReadingListModelImpl(
+      std::unique_ptr<ReadingListModelStorage> storage_layer,
+      PrefService* pref_service,
+      std::unique_ptr<base::Clock> clock_,
+      feature_engagement_tracker::FeatureEngagementTracker* tracker);
 
   ReadingListModelImpl();
 
@@ -147,6 +152,12 @@ class ReadingListModelImpl : public ReadingListModel,
   PrefService* pref_service_;
   bool has_unseen_;
   bool loaded_;
+  // |feature_engagement_tracker_| is owned by a
+  // BrowserStateKeyedServiceFactory. When the browser state is destroyed, the
+  // feature engagement tracker object AND this object will both be destroyed,
+  // so using a raw pointer here is safe.
+  feature_engagement_tracker::FeatureEngagementTracker*
+      feature_engagement_tracker_;
 
   base::WeakPtrFactory<ReadingListModelImpl> weak_ptr_factory_;
 
