@@ -22,6 +22,30 @@
       "revId": "5508ef4e5fbaa8ab646640185fbe6868d9740e95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63da1e09_5486ea4a",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-13T01:06:42Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I added a common function to ImageDecodeCache used from both caches.",
+      "parentUuid": "b431ad0d_46d041c0",
+      "range": {
+        "startLine": 435,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 29
+      },
+      "revId": "5508ef4e5fbaa8ab646640185fbe6868d9740e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
