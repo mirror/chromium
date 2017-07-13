@@ -712,7 +712,12 @@ mojom("page_load_metrics_mojom") {
     "page_load_metrics/page_load_metrics.mojom",
   ]
 
+  deps = [
+    "//third_party/WebKit/public:mojo_bindings",
+  ]
+
   public_deps = [
     "//mojo/common:common_custom_types",
+    "//third_party/WebKit/public:web_feature_mojo_bindings",
   ]
 }

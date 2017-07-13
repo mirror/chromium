@@ -15,8 +15,9 @@ FakePageTimingSender::~FakePageTimingSender() {}
 
 void FakePageTimingSender::SendTiming(
     const mojom::PageLoadTimingPtr& timing,
-    const mojom::PageLoadMetadataPtr& metadata) {
-  validator_->UpdateTiming(timing, metadata);
+    const mojom::PageLoadMetadataPtr& metadata,
+    const mojom::PageLoadFeaturesPtr& new_features) {
+  validator_->UpdateTiming(timing, metadata, new_features);
 }
 
 FakePageTimingSender::PageTimingValidator::PageTimingValidator() {}
@@ -45,7 +46,8 @@ void FakePageTimingSender::PageTimingValidator::VerifyExpectedTimings() const {
 
 void FakePageTimingSender::PageTimingValidator::UpdateTiming(
     const mojom::PageLoadTimingPtr& timing,
-    const mojom::PageLoadMetadataPtr& metadata) {
+    const mojom::PageLoadMetadataPtr& metadata,
+    const mojom::PageLoadFeaturesPtr& new_features) {
   actual_timings_.push_back(timing.Clone());
   VerifyExpectedTimings();
 }
