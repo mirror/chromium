@@ -70,6 +70,24 @@
       "revId": "b48b2bd7cdcf4ac7cc7425333d948838bd1735fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a9ac7c_e26af051",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-13T16:48:43Z",
+      "side": 1,
+      "message": "\u003e https://bugs.chromium.org/p/chromium/issues/detail?id\u003d618472#c13 webviewchromium.java was discussed as option 1).\n\u003e \n\u003e \"1) Add some new plumbing from WebViewChromium down to WebRuntimeFeatures (plus the tiny bit of missing plumbing from WebRuntimeFeatures to RuntimeEnabledFeatures).  I think there\u0027d be some Java work to this, so would probably be best for you guys to drive.\"\n\u003e \n\u003e where \"you guys to drive\" means Android folk.  That never happened, sadly.  Option 2) was\n\u003e \n\u003e \"2) Add a new WebSetting (like the other quirks) that can disable support for this feature (independent of the RuntimeEnabledFeature - which we\u0027d remove after shipping).\n\u003e \n\u003e which is what the current patch does: eg., if I set mCSSHexAlphaColorEnabled to false here, I\u0027d be done and the general web can just use this feature.  Android WebView can enable it, however you guys wish to do that, when you are ready.\n\nSure, you can just leave it disabled in webview for now. There\u0027s already that bug to discuss how it should be enabled in webview.",
+      "parentUuid": "847714f5_79568f9c",
+      "revId": "b48b2bd7cdcf4ac7cc7425333d948838bd1735fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
