@@ -21,8 +21,29 @@ bool LayoutNGBlockFlow::IsOfType(LayoutObjectType type) const {
 void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
   LayoutAnalyzer::BlockScope analyzer(*this);
 
+  if (IsOutOfFlowPositioned()) {
+    LogicalExtentComputedValues computed_values;
+    const ComputedStyle* style = Style();
+    bool width_is_shrink_to_fit =
+        style->LogicalWidth().IsAuto() &&
+        (style->LogicalLeft().IsAuto() || style->LogicalRight().IsAuto());
+    if (!width_is_shrink_to_fit) {
+      ComputeLogicalWidth(computed_values);
+      SetOverrideLogicalContentWidth(computed_values.extent_ -
+                                     BorderAndPaddingLogicalWidth());
+    }
+    if (!StyleRef().LogicalHeight().IsAuto()) {
+      ComputeLogicalHeight(computed_values);
+      SetOverrideLogicalContentHeight(computed_values.extent_ -
+                                      BorderAndPaddingLogicalHeight());
+    }
+  }
   RefPtr<NGConstraintSpace> constraint_space =
       NGConstraintSpace::CreateFromLayoutObject(*this);
+  if (IsOutOfFlowPositioned()) {
+    ClearOverrideLogicalContentWidth();
+    ClearOverrideLogicalContentHeight();
+  }
   RefPtr<NGLayoutResult> result =
       NGBlockNode(this).Layout(constraint_space.Get());
 

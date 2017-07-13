@@ -88,6 +88,7 @@ RefPtr<NGConstraintSpace> NGConstraintSpace::CreateFromLayoutObject(
       available_logical_height = box.ContainingBlockLogicalWidthForContent();
     }
   }
+
   NGLogicalSize percentage_size = {available_logical_width,
                                    available_logical_height};
   NGLogicalSize available_size = percentage_size;

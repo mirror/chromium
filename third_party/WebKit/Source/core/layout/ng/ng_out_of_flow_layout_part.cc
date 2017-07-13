@@ -114,9 +114,27 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
     min_max_size = descendant.ComputeMinMaxContentSize();
   }
 
+  Optional<LayoutSize> intrinsic_size;
+  if (descendant.GetLayoutObject()->IsLayoutReplaced()) {
+    LayoutBox* box = ToLayoutBox(descendant.GetLayoutObject());
+    if (box) {
+      LayoutSize content_size = box->IntrinsicSize();
+      NGPhysicalBoxStrut borders_and_padding =
+          (ComputeBorders(*container_space_, box->StyleRef()) +
+           ComputePadding(*container_space_, box->StyleRef()))
+              .ConvertToPhysical(container_space_->WritingMode(),
+                                 container_space_->Direction());
+      intrinsic_size =
+          LayoutSize(content_size.Width() + borders_and_padding.HorizontalSum(),
+                     content_size.Height() + borders_and_padding.VerticalSum());
+    } else
+      NOTREACHED();
+  }
+
   NGAbsolutePhysicalPosition node_position =
       ComputePartialAbsoluteWithChildInlineSize(
-          *container_space_, descendant.Style(), static_position, min_max_size);
+          *container_space_, descendant.Style(), static_position, min_max_size,
+          intrinsic_size);
 
   if (AbsoluteNeedsChildBlockSize(descendant.Style())) {
     layout_result = GenerateFragment(descendant, block_estimate, node_position);
@@ -130,7 +148,7 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
 
   ComputeFullAbsoluteWithChildBlockSize(*container_space_, descendant.Style(),
                                         static_position, block_estimate,
-                                        &node_position);
+                                        intrinsic_size, &node_position);
 
   // Skip this step if we produced a fragment when estimating the block size.
   if (!layout_result) {
