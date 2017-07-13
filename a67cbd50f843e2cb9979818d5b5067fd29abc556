@@ -34,6 +34,24 @@
       "revId": "a67cbd50f843e2cb9979818d5b5067fd29abc556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb075e1_13bcc855",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewBase.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-13T04:40:29Z",
+      "side": 1,
+      "message": "I agree with Pavel. It looks strange to put methods of WebView in WebViewBase.\n\nWhy can\u0027t you put the methods in WebView.cpp?",
+      "parentUuid": "0a505d96_8d297c5a",
+      "revId": "a67cbd50f843e2cb9979818d5b5067fd29abc556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
