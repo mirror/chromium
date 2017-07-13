@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4df18891_7b254400",
+        "filename": "components/nacl/browser/nacl_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-13T19:16:00Z",
+      "side": 1,
+      "message": "perhaps it\u0027s better to keep the behavior change in other cls from the refactorings?",
+      "parentUuid": "688a8e40_aec59aac",
+      "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b33955cb_55aabace",
         "filename": "content/browser/ppapi_plugin_process_host.cc",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "No behaviour change.  The ShouldSandbox() method, which we removed, would supersede the result of this call, so that logic has to come here.",
       "parentUuid": "b33955cb_55aabace",
+      "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7757068_e785e0c3",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-13T19:16:00Z",
+      "side": 1,
+      "message": "But ShouldSandbox wasn\u0027t called on non-windows?",
+      "parentUuid": "eeff1813_162cb4d4",
       "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
