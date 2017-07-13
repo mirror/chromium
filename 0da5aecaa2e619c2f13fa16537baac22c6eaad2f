@@ -16,6 +16,24 @@
       "revId": "0da5aecaa2e619c2f13fa16537baac22c6eaad2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03077e4f_f0d122c7",
+        "filename": "components/invalidation/impl/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-07-13T19:30:01Z",
+      "side": 1,
+      "message": "any `org.junit.*` targets actually requires this.\n\nWhich was not the case in junit3, since junit.framework.* is provided by android",
+      "parentUuid": "8cbb124c_ff321cf0",
+      "revId": "0da5aecaa2e619c2f13fa16537baac22c6eaad2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
