@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c2d1950_141ebf9b",
+        "filename": "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-13T19:06:47Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 48,
+        "startChar": 11,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "435b8f1a78d038647acc5a800a76c193d1e34b5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

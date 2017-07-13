@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be8de3ba_8219400e",
+        "filename": "components/viz/common/quads/shared_bitmap.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-13T19:06:47Z",
+      "side": 1,
+      "message": "if sequence_number_ doesn\u0027t change then const uint32_t.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 10
+      },
+      "revId": "1640867aed2f1c989d98c1d5aef4a51db3410b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8575408_6edf2878",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-13T19:06:47Z",
+      "side": 1,
+      "message": "I\u0027m generally concerned about this. If we hold onto the CompositorFrame without processing it\nthen we\u0027re not updating surface references. This means if a surface sequence is dropped elsewhere then we will flicker.\n\nIt\u0027s not obvious to me if this is a real problem in practice.",
+      "revId": "1640867aed2f1c989d98c1d5aef4a51db3410b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9953d1a2_7110c531",
+        "filename": "content/public/test/DEPS",
+        "patchSetId": 38
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-13T19:06:47Z",
+      "side": 1,
+      "message": "Hmm, which part of viz do you need here?",
+      "revId": "1640867aed2f1c989d98c1d5aef4a51db3410b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
