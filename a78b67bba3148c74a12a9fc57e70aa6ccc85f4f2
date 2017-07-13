@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a1b16b36_b46f274c",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-13T17:03:21Z",
+      "side": 1,
+      "message": "Changed to have 1 ensure file per target_os (currently, just android)",
+      "parentUuid": "d7c675e2_7462ff94",
+      "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9f7fdc5_f9e97a42",
         "filename": "build/cipd_wrapper.py",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Hm... That\u0027s actually an interesting question. I think for now we should use the bot version because we cache it and make it available as a real service for this purpose. In particular, we\u0027re planning on augmenting the bot-provided version of this tool to report extra monitoring information that won\u0027t be present in the depot_tools version of the tool.\n\nMaybe the cipd_wrapper could look for cipd/cipd.bat in $PATH, and use that if available, and otherwise fall back onto the third_party version? That would take chromium one step closer to the `git clone \u0026\u0026 sync.py` workflow. On the other hand, we basically wouldn\u0027t be using this codepath on the bots or for most devs today, which usually means the code will break easily and no one will notice.",
       "parentUuid": "243ef4a8_fdf5cbf3",
+      "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d448d0_3fbd634a",
+        "filename": "build/cipd_wrapper.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-13T17:03:21Z",
+      "side": 1,
+      "message": "So I orignally just assumed cipd was in the PATH since that is how download_from_google_storage was used in the DEPS hooks. But yeah, I didnt realize that was changed here, https://chromium-review.googlesource.com/c/528370/ . So Ill just use cipd in third_party/depot_tools.",
+      "parentUuid": "c7dcc895_f8414af0",
       "revId": "a78b67bba3148c74a12a9fc57e70aa6ccc85f4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
