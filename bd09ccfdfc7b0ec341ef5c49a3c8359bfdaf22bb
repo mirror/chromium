@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08f180cf_8bd1017d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-13T21:08:30Z",
+      "side": 1,
+      "message": "It looks like this check is incorrect too. hasTab() should be:\n\nmTab !\u003d null \u0026\u0026 mTab.isInitialized().",
+      "range": {
+        "startLine": 82,
+        "startChar": 21,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "bd09ccfdfc7b0ec341ef5c49a3c8359bfdaf22bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
