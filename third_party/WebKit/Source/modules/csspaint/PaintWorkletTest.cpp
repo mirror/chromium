@@ -22,7 +22,7 @@ class PaintWorkletTest : public ::testing::Test {
  public:
   PaintWorkletTest() : page_(DummyPageHolder::Create()) {}
 
-  void SetUp() override { proxy_ = GetPaintWorklet()->CreateGlobalScope(); }
+  void SetUp() override { proxy_ = GetPaintWorklet()->CreateGlobalScope(1); }
 
   PaintWorklet* GetPaintWorklet() {
     return WindowPaintWorklet::From(*page_->GetFrame().DomWindow())
