@@ -395,6 +395,40 @@ TEST_F(SystemMetricsTest, TestNoNegativeCpuUsage) {
 
 #endif  // defined(OS_LINUX) || defined(OS_CHROMEOS)
 
+#if defined(OS_CHROMEOS)
+
+TEST_F(SystemMetricsTest, ParseZramMmStat) {
+  struct SwapInfo swpinfo;
+
+  std::string invalid_input1 = "aaa";
+  std::string invalid_input2 = "1 2 3 4 5 6";
+  EXPECT_FALSE(ParseZramMmStat(invalid_input1, &swpinfo));
+  EXPECT_FALSE(ParseZramMmStat(invalid_input2, &swpinfo));
+
+  std::string valid_input1 =
+      "17715200 5008166 566062  0 1225715712  127 183842";
+  EXPECT_TRUE(ParseZramMmStat(valid_input1, &swpinfo));
+  EXPECT_EQ(17715200ULL, swpinfo.orig_data_size);
+  EXPECT_EQ(5008166ULL, swpinfo.compr_data_size);
+  EXPECT_EQ(566062ULL, swpinfo.mem_used_total);
+}
+
+TEST_F(SystemMetricsTest, ParseZramStat) {
+  struct SwapInfo swpinfo;
+
+  std::string invalid_input1 = "aaa";
+  std::string invalid_input2 = "1 2 3 4 5 6 7 8 9 10";
+  EXPECT_FALSE(ParseZramStat(invalid_input1, &swpinfo));
+  EXPECT_FALSE(ParseZramStat(invalid_input2, &swpinfo));
+
+  std::string valid_input1 =
+      "299    0    2392    0    1    0    8    0    0    0    0";
+  EXPECT_TRUE(ParseZramStat(valid_input1, &swpinfo));
+  EXPECT_EQ(299ULL, swpinfo.num_reads);
+  EXPECT_EQ(1ULL, swpinfo.num_writes);
+}
+#endif  // defined(OS_CHROMEOS)
+
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX) || \
     defined(OS_ANDROID)
 TEST(SystemMetrics2Test, GetSystemMemoryInfo) {
