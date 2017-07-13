@@ -22,6 +22,30 @@
       "revId": "050f1a455cf0d8915fc05a94d5ed0ee95e69c2e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5a8a91_02d06bd5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-13T16:11:30Z",
+      "side": 1,
+      "message": "Just to return something and make the compiler happy. I assume it was the first in the list when that code was written (only moving it from class A to class B).",
+      "parentUuid": "e0edbd21_3e6c8416",
+      "range": {
+        "startLine": 72,
+        "startChar": 29,
+        "endLine": 72,
+        "endChar": 45
+      },
+      "revId": "050f1a455cf0d8915fc05a94d5ed0ee95e69c2e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
