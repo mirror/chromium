@@ -95,13 +95,15 @@ void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
   if (!base::ContainsKey(devices_, device_info->device_id())) {
     devices_[device_info->device_id()] = device_info;
 
+    PlatformHidDeviceId platform_hid_device_id =
+        HidDeviceInfo::GetPlatformHidDeviceIdFromMap(device_info->device_id());
     HID_LOG(USER) << "HID device "
                   << (enumeration_ready_ ? "added" : "detected")
                   << ": vendorId=" << device_info->vendor_id()
                   << ", productId=" << device_info->product_id() << ", name='"
                   << device_info->product_name() << "', serial='"
                   << device_info->serial_number() << "', deviceId='"
-                  << device_info->device_id() << "'";
+                  << platform_hid_device_id << "'";
 
     if (enumeration_ready_) {
       for (auto& observer : observer_list_)
@@ -110,11 +112,15 @@ void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
   }
 }
 
-void HidService::RemoveDevice(const HidDeviceId& device_id) {
+void HidService::RemoveDevice(
+    const PlatformHidDeviceId& platform_hid_device_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  HidDeviceId device_id =
+      HidDeviceInfo::RemoveDeviceIdMappingFromMap(platform_hid_device_id);
   DeviceMap::iterator it = devices_.find(device_id);
   if (it != devices_.end()) {
-    HID_LOG(USER) << "HID device removed: deviceId='" << device_id << "'";
+    HID_LOG(USER) << "HID device removed: deviceId='" << platform_hid_device_id
+                  << "'";
 
     scoped_refptr<HidDeviceInfo> device = it->second;
     if (enumeration_ready_) {

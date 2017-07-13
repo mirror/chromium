@@ -81,7 +81,7 @@ class HidService {
   HidService();
 
   void AddDevice(scoped_refptr<HidDeviceInfo> info);
-  void RemoveDevice(const HidDeviceId& device_id);
+  void RemoveDevice(const PlatformHidDeviceId& platform_hid_device_id);
   void FirstEnumerationComplete();
 
   const DeviceMap& devices() const { return devices_; }

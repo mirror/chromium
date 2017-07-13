@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -23,17 +24,20 @@ enum HidBusType {
   kHIDBusTypeBluetooth = 1,
 };
 
-#if defined(OS_MACOSX)
 typedef uint64_t HidDeviceId;
 const uint64_t kInvalidHidDeviceId = -1;
+
+#if defined(OS_MACOSX)
+typedef uint64_t PlatformHidDeviceId;
+const uint64_t kInvalidPlatformHidDeviceId = -1;
 #else
-typedef std::string HidDeviceId;
-extern const char kInvalidHidDeviceId[];
+typedef std::string PlatformHidDeviceId;
+extern const char kInvalidPlatformHidDeviceId[];
 #endif
 
 class HidDeviceInfo : public base::RefCountedThreadSafe<HidDeviceInfo> {
  public:
-  HidDeviceInfo(const HidDeviceId& device_id,
+  HidDeviceInfo(const PlatformHidDeviceId& platform_hid_device_id,
                 uint16_t vendor_id,
                 uint16_t product_id,
                 const std::string& product_name,
@@ -41,7 +45,7 @@ class HidDeviceInfo : public base::RefCountedThreadSafe<HidDeviceInfo> {
                 HidBusType bus_type,
                 const std::vector<uint8_t> report_descriptor);
 
-  HidDeviceInfo(const HidDeviceId& device_id,
+  HidDeviceInfo(const PlatformHidDeviceId& platform_hid_device_id,
                 uint16_t vendor_id,
                 uint16_t product_id,
                 const std::string& product_name,
@@ -51,6 +55,13 @@ class HidDeviceInfo : public base::RefCountedThreadSafe<HidDeviceInfo> {
                 size_t max_input_report_size,
                 size_t max_output_report_size,
                 size_t max_feature_report_size);
+
+  static PlatformHidDeviceId GetPlatformHidDeviceIdFromMap(
+      const HidDeviceId& device_id);
+  static HidDeviceId FindDeviceIdMappingInMap(
+      const PlatformHidDeviceId& platform_hid_device_id);
+  static HidDeviceId RemoveDeviceIdMappingFromMap(
+      const PlatformHidDeviceId& platform_hid_device_id);
 
   // Device identification.
   const HidDeviceId& device_id() const { return device_id_; }
