@@ -1832,9 +1832,9 @@ bool LayerTreeHostImpl::CanUseGpuRasterization() {
         layer_tree_frame_sink_->worker_context_provider()))
     return false;
 
-  ContextProvider* context_provider =
+  viz::ContextProvider* context_provider =
       layer_tree_frame_sink_->worker_context_provider();
-  ContextProvider::ScopedContextLock scoped_context(context_provider);
+  viz::ContextProvider::ScopedContextLock scoped_context(context_provider);
   if (!context_provider->GrContext())
     return false;
 
@@ -1851,7 +1851,7 @@ bool LayerTreeHostImpl::UpdateGpuRasterizationStatus() {
 
   int requested_msaa_samples = RequestedMSAASampleCount();
   int max_msaa_samples = 0;
-  ContextProvider* compositor_context_provider =
+  viz::ContextProvider* compositor_context_provider =
       layer_tree_frame_sink_->context_provider();
   bool gpu_rasterization_enabled = false;
   bool supports_disable_msaa = false;
@@ -2017,7 +2017,7 @@ void LayerTreeHostImpl::SynchronouslyInitializeAllTiles() {
 
 void LayerTreeHostImpl::DidLoseLayerTreeFrameSink() {
   if (resource_provider_)
-    resource_provider_->DidLoseContextProvider();
+    resource_provider_->DidLoseVulkanContextProvider();
   has_valid_layer_tree_frame_sink_ = false;
   client_->DidLoseLayerTreeFrameSinkOnImplThread();
 }
@@ -2336,7 +2336,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   // resolved.
   CHECK(resource_provider_);
 
-  ContextProvider* compositor_context_provider =
+  viz::ContextProvider* compositor_context_provider =
       layer_tree_frame_sink_->context_provider();
   if (!compositor_context_provider) {
     *resource_pool =
@@ -2350,7 +2350,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     return;
   }
 
-  ContextProvider* worker_context_provider =
+  viz::ContextProvider* worker_context_provider =
       layer_tree_frame_sink_->worker_context_provider();
   if (use_gpu_rasterization_) {
     DCHECK(worker_context_provider);
@@ -2478,7 +2478,7 @@ void LayerTreeHostImpl::CleanUpTileManagerAndUIResources() {
       compositor_context->ContextGL()->ShallowFlushCHROMIUM();
     if (auto* worker_context =
             layer_tree_frame_sink_->worker_context_provider()) {
-      ContextProvider::ScopedContextLock hold(worker_context);
+      viz::ContextProvider::ScopedContextLock hold(worker_context);
       worker_context->ContextGL()->ShallowFlushCHROMIUM();
     }
   }
@@ -4384,7 +4384,7 @@ void LayerTreeHostImpl::SetContextVisibility(bool is_visible) {
   // before we get a chance to go invisible in NotifyAllTileTasksComplete.
   auto* worker_context = layer_tree_frame_sink_->worker_context_provider();
   if (worker_context && is_visible != !!worker_context_visibility_) {
-    ContextProvider::ScopedContextLock hold(worker_context);
+    viz::ContextProvider::ScopedContextLock hold(worker_context);
     if (is_visible) {
       worker_context_visibility_ =
           worker_context->CacheController()->ClientBecameVisible();
