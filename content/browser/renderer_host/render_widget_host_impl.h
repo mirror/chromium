@@ -30,7 +30,7 @@
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
 #include "content/browser/renderer_host/input/input_ack_handler.h"
-#include "content/browser/renderer_host/input/input_router_client.h"
+#include "content/browser/renderer_host/input/input_router_impl.h"
 #include "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.h"
 #include "content/browser/renderer_host/input/render_widget_host_latency_tracker.h"
 #include "content/browser/renderer_host/input/synthetic_gesture.h"
@@ -44,6 +44,7 @@
 #include "content/common/input/synthetic_gesture_packet.h"
 #include "content/common/render_widget_surface_properties.h"
 #include "content/common/view_message_enums.h"
+#include "content/common/widget.mojom.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/url_constants.h"
@@ -100,7 +101,7 @@ struct TextInputState;
 // embedders of content, and adds things only visible to content.
 class CONTENT_EXPORT RenderWidgetHostImpl
     : public RenderWidgetHost,
-      public InputRouterClient,
+      public InputRouterImplClient,
       public InputAckHandler,
       public TouchEmulatorClient,
       public NON_EXPORTED_BASE(SyntheticGestureController::Delegate),
@@ -113,7 +114,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
                        RenderProcessHost* process,
                        int32_t routing_id,
+                       mojom::WidgetPtr widget_interface,
                        bool hidden);
+
   ~RenderWidgetHostImpl() override;
 
   // Similar to RenderWidgetHost::FromID, but returning the Impl object.
@@ -210,7 +213,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void DragSourceSystemDragEnded() override;
   void FilterDropData(DropData* drop_data) override;
   void SetCursor(const CursorInfo& cursor_info) override;
-  mojom::WidgetInputHandler* GetWidgetInputHandler();
 
   // Notification that the screen info has changed.
   void NotifyScreenInfoChanged();
@@ -586,6 +588,11 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // there are any queued messages belonging to it, they will be processed.
   void DidProcessFrame(uint32_t frame_token);
 
+  void SetWidgetInputHandler(
+      mojom::WidgetInputHandlerAssociatedPtr widget_input_handler);
+  mojom::WidgetInputHandler* GetWidgetInputHandler() override;
+  void SetWidget(mojom::WidgetPtr widget);
+
  protected:
   // ---------------------------------------------------------------------------
   // The following method is overridden by RenderViewHost to send upwards to
@@ -752,6 +759,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // Once both the frame and its swap messages arrive, we call this method to
   // process the messages. Virtual for tests.
   virtual void ProcessSwapMessages(std::vector<IPC::Message> messages);
+
+  void SetupInputRouter();
 
 #if defined(OS_MACOSX)
   device::mojom::WakeLock* GetWakeLock();
@@ -981,7 +990,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // Sorted by frame token.
   std::queue<std::pair<uint32_t, std::vector<IPC::Message>>> queued_messages_;
 
-  std::unique_ptr<LegacyIPCWidgetInputHandler> legacy_widget_input_handler_;
+  mojom::WidgetInputHandlerAssociatedPtr associated_widget_input_handler_;
+  mojom::WidgetInputHandlerPtr widget_input_handler_;
+  std::unique_ptr<mojom::WidgetInputHandler> legacy_widget_input_handler_;
 
   base::WeakPtrFactory<RenderWidgetHostImpl> weak_factory_;
 

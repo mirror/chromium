@@ -34,12 +34,14 @@ RenderViewHost* TestRenderViewHostFactory::CreateRenderViewHost(
     RenderWidgetHostDelegate* widget_delegate,
     int32_t routing_id,
     int32_t main_frame_routing_id,
+    mojom::WidgetPtr widget,
     bool swapped_out) {
-  return new TestRenderViewHost(instance,
-                                base::MakeUnique<RenderWidgetHostImpl>(
-                                    widget_delegate, instance->GetProcess(),
-                                    routing_id, false /* hidden */),
-                                delegate, main_frame_routing_id, swapped_out);
+  return new TestRenderViewHost(
+      instance,
+      base::MakeUnique<RenderWidgetHostImpl>(
+          widget_delegate, instance->GetProcess(), routing_id,
+          std::move(widget), false /* hidden */),
+      delegate, main_frame_routing_id, swapped_out);
 }
 
 }  // namespace content
