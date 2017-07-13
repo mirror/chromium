@@ -30,15 +30,10 @@ interface FrameBindingsControl {
   AllowBindings(int32 enabled_bindings_flags);
 };
 
-// Implemented by the frame server (i.e. the browser process).
-interface FrameHostInterfaceBroker {
-  GetInterfaceProvider(service_manager.mojom.InterfaceProvider& interfaces);
-};
-
 // Implemented by a service that provides implementations of the Frame
 // interface. (e.g. renderer processes).
 interface FrameFactory {
-  CreateFrame(int32 frame_routing_id, Frame& frame, FrameHostInterfaceBroker host);
+  CreateFrame(int32 frame_routing_id, Frame& frame);
 };
 
 struct CreateNewWindowParams {
@@ -100,4 +95,18 @@ interface FrameHost {
   // be created.
   [Sync] CreateNewWindow(CreateNewWindowParams params)
       => (CreateNewWindowReply reply);
+
+  // Sent once when the RenderFrame is created, then immediately after
+  // FrameHostMsg_DidCommitProvisionalLoad each time when the committed
+  // navigation was not within the existing document.
+  //
+  // This is sent as a separate message because of a subtlety in how
+  // FrameHostMsg_DidCommitProvisionalLoad is handled, preventing us from
+  // attaching a message pipe directly to that message.
+  //
+  // This should be merged into the commit confirmation message (whatever that
+  // ends up being) when FrameHostMsg_DidCommitProvisionalLoad is converted to
+  // mojom.
+  BindInterfaceProviderForNewDocument(
+      service_manager.mojom.InterfaceProvider& request);
 };
