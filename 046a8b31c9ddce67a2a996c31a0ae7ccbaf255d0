@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "be8393c4_47147f22",
+        "filename": "media/audio/audio_system_info_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-13T14:16:17Z",
+      "side": 1,
+      "message": "I just realized this won\u0027t work for handling mojo requests, since AudioParameters must be valid. The mojo interface should probably have Optional\u003cAudioParameters\u003e, and you can map invalid AudioParameters to nullopt.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "046a8b31c9ddce67a2a996c31a0ae7ccbaf255d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e338a3fa_042d9d07",
         "filename": "media/audio/audio_system_info_helper.h",
         "patchSetId": 3
