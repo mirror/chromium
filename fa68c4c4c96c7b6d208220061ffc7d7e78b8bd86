@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30bd9fdd_c2b526db",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-13T04:28:18Z",
+      "side": 1,
+      "message": "I get a segmentation fault here when testing the WPT tests I wrote. |deprecated_callback| is a null pointer. See the test files at https://github.com/dominickng/web-platform-tests/commit/401d47f450bcdbbfec487ce63f7151a1b3b92e06",
+      "range": {
+        "startLine": 383,
+        "startChar": 4,
+        "endLine": 383,
+        "endChar": 23
+      },
+      "revId": "fa68c4c4c96c7b6d208220061ffc7d7e78b8bd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
