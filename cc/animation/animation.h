@@ -107,6 +107,11 @@ class CC_ANIMATION_EXPORT Animation {
            run_state_ == WAITING_FOR_DELETION;
   }
 
+  bool is_animating() const {
+    return run_state_ == STARTING || run_state_ == RUNNING ||
+           run_state_ == PAUSED;
+  }
+
   bool InEffect(base::TimeTicks monotonic_time) const;
 
   AnimationCurve* curve() { return curve_.get(); }
