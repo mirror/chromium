@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c51ed24_8222b9f1",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-13T00:00:30Z",
+      "side": 1,
+      "message": "This can be wrapped in an anonymous namespace.",
+      "revId": "03be7d68828cb19090d4a7d6d250d7cb38d5d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d43a75_3189010b",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-13T00:00:30Z",
+      "side": 1,
+      "message": "Do not define any global variable. You can let TestDownloadService holds a unique_ptr\u003cServiceConfig\u003e and has the constructor create it.",
+      "revId": "03be7d68828cb19090d4a7d6d250d7cb38d5d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83c00ad_f02e68c7",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-13T00:00:30Z",
+      "side": 1,
+      "message": "nit: not needed since download_service.h should include the forward declaration for it",
+      "revId": "03be7d68828cb19090d4a7d6d250d7cb38d5d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d474af7_7f7e7a65",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-13T00:00:30Z",
+      "side": 1,
+      "message": "The client should be passed here.",
+      "revId": "03be7d68828cb19090d4a7d6d250d7cb38d5d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34f0c9b_41dcd048",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-13T00:00:30Z",
+      "side": 1,
+      "message": "Why protected?",
+      "revId": "03be7d68828cb19090d4a7d6d250d7cb38d5d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327e5f84_fd0f8712",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-13T00:00:30Z",
+      "side": 1,
+      "message": "Any method or setter to change this?",
+      "revId": "03be7d68828cb19090d4a7d6d250d7cb38d5d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156ee4f6_84f74415",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-13T00:00:30Z",
+      "side": 1,
+      "message": "We should expose a way to generate or get a failed download it such that the test code can supply it.",
+      "revId": "03be7d68828cb19090d4a7d6d250d7cb38d5d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
