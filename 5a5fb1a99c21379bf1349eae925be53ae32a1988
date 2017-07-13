@@ -16,6 +16,24 @@
       "revId": "5a5fb1a99c21379bf1349eae925be53ae32a1988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb61e37f_7ead9057",
+        "filename": "third_party/WebKit/Source/core/css/CSSRule.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-07-13T08:10:01Z",
+      "side": 1,
+      "message": "CSSStyleDeclaration only traced parentRule(). The only non-null parentRule() is used in StyleRuleCSSStyleDeclaration which is where I moved the tracing to. \n\nSo, StyleRuleCSSStyleDeclaration will trace parent_rule_ which is the CSSRule.",
+      "parentUuid": "d299e392_f8d4c8db",
+      "revId": "5a5fb1a99c21379bf1349eae925be53ae32a1988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
