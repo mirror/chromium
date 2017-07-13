@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0d8ec7b_ef4e3865",
+        "filename": "chrome/browser/resources/settings/controls/settings_dropdown_menu.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-13T09:50:12Z",
+      "side": 1,
+      "message": "I moved the css fix to settings_shared_css and only applied it to CBD. For other dropdowns like page zoom I can\u0027t see the misalignment anymore, so it should be fine.",
+      "parentUuid": "f9d06944_caa90007",
+      "revId": "bd51a5a8ea6ac60d9530addd425e971e17614840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5048ff60_271e3a8e",
         "filename": "ui/webui/resources/html/md_select_css.html",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T19:31:43Z",
       "side": 1,
       "message": "Tried this change locally. I think we should add a \"height: 0\" within the .md-select-underline {} block below. The underline should have just 1px height (because of the border). Not sure why it has 2px height + 1px border currently.\n\nThen margin-top should be 2px instead of 4px (but also see other comment suggesting that margin-top should be added elsewhere).",
+      "revId": "bd51a5a8ea6ac60d9530addd425e971e17614840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ac5876_5bf44192",
+        "filename": "ui/webui/resources/html/md_select_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-13T09:50:12Z",
+      "side": 1,
+      "message": "the additional 2px come from the focus underline (md-select-underline::after) but setting \"height: 0\" works and the focus underline is still in the same position. This already reduces the misalignment. Thanks!",
+      "parentUuid": "5048ff60_271e3a8e",
       "revId": "bd51a5a8ea6ac60d9530addd425e971e17614840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
