@@ -22,6 +22,30 @@
       "revId": "9690fc3b1d4f80f9dd98cf3c8a6440860cd676c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13bd2321_b0d42042",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-13T17:40:20Z",
+      "side": 1,
+      "message": "Done (switching to 2).\n\nAdding a flag to the reporter invocation (unused by the reporter) just so that the cleaner has a second opinion of which engine is used seems strange.",
+      "parentUuid": "f5c3da80_0982eb1b",
+      "range": {
+        "startLine": 213,
+        "startChar": 24,
+        "endLine": 213,
+        "endChar": 74
+      },
+      "revId": "9690fc3b1d4f80f9dd98cf3c8a6440860cd676c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

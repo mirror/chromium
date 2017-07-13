@@ -52,6 +52,24 @@
       "revId": "24f1df03eeb58348f31347f0df3da89928f1ec25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0ce190_2a5fa000",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-13T17:40:20Z",
+      "side": 1,
+      "message": "Nevermind, still used by the unittest and reporter_runner_win.cc",
+      "parentUuid": "54de75eb_8f70c991",
+      "revId": "24f1df03eeb58348f31347f0df3da89928f1ec25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
