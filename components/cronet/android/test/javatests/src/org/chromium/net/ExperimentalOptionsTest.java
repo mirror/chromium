@@ -181,7 +181,9 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         callback.blockForDone();
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
 
-        // Shut down the context, persisting contents to disk, and build a new one.
+        // First wait a little longer for the write to prefs to go through. Then shut down the
+        // context, persisting contents to disk, and build a new one.
+        Thread.sleep(100);
         context.shutdown();
         context = (CronetUrlRequestContext) mBuilder.build();
 
