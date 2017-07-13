@@ -226,6 +226,52 @@
     },
     {
       "key": {
+        "uuid": "615c483f_13380136",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-13T08:57:06Z",
+      "side": 1,
+      "message": "Can any of these ever happen *after* OnMostVisitedURLsAvailable? If not, we can just remove them and expose a getter below (analogous of PopularSites\u0027 API)., guaranteeing that it should be available by the time OnMostVisitedURLsAvailable() is called.",
+      "range": {
+        "startLine": 94,
+        "startChar": 77,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfa6b87_433eb692",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-13T08:57:06Z",
+      "side": 1,
+      "message": "Why not simply return a map\u003cSectionType, SitesVector\u003e?",
+      "range": {
+        "startLine": 68,
+        "startChar": 70,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4eaefcb_18feb83b",
         "filename": "components/ntp_tiles/popular_sites.h",
         "patchSetId": 1
