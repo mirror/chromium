@@ -1144,6 +1144,16 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             mTabContentManager = null;
         }
 
+        if (mBottomSheet != null) {
+            mBottomSheet.destroy();
+            mBottomSheet = null;
+        }
+
+        if (mBottomSheetContentController != null) {
+            mBottomSheetContentController.destroy();
+            mBottomSheetContentController = null;
+        }
+
         AccessibilityManager manager = (AccessibilityManager)
                 getBaseContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
         manager.removeAccessibilityStateChangeListener(this);
