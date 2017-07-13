@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df70c354_b9a49dd2",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-13T23:31:12Z",
+      "side": 1,
+      "message": "Can we add a typedef for this callback to make the code a bit easier to read?",
+      "revId": "cfc24270bfc43126129faa67579555fd531c0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b77c963_0602335a",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-13T23:31:12Z",
+      "side": 1,
+      "message": "is this the only use of the callback? in that case why not create this instance on the |task_runner_| thread instead? Not having to return a handle and a callback but just an instance seems cleaner if possible.",
+      "revId": "cfc24270bfc43126129faa67579555fd531c0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
