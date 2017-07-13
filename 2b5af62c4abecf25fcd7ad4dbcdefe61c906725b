@@ -174,6 +174,24 @@
     },
     {
       "key": {
+        "uuid": "81e5c89d_fff35494",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T02:20:13Z",
+      "side": 1,
+      "message": "Probably (a), since the Harmony layout docs talk about snapping all the horizontal widths and start points of everything to layout units.  So it\u0027s not just applicable to the case of textfield-after-label.",
+      "parentUuid": "d2729be4_037c02d2",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40aad7d6_7c733861",
         "filename": "chrome/browser/ui/views/login_view.cc",
         "patchSetId": 10
@@ -226,6 +244,24 @@
     },
     {
       "key": {
+        "uuid": "1ab14ae6_a4262670",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T02:20:13Z",
+      "side": 1,
+      "message": "I don\u0027t know that we want either -- I think we want to set a preferred character width on these specific textfields from this dialog.  The preferred character width will inherently be based on the context of what the textfield is supposed to hold, so I don\u0027t think it\u0027s the sort of thing we could specify in the layout provider or at the textfield.cc level.",
+      "parentUuid": "1e3e7215_a839c843",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b73277b0_4fa04a27",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 10
@@ -255,6 +291,24 @@
       "side": 1,
       "message": "\"font height\" is a tricky thing to pin down. We have the point size, ascenders/descenders, and line height, and it all changes depending on the platform/typeface. But HarmonyTypographyProvider::GetLineHeight has most of the required arithmetic already.\n\nwdyt about\n\nmax(style::GetLineHeight(CONTEXT_TEXTFIELD), font_list.GetHeight()) + GetDistanceMetric(DISTANCE_CONTROL_VERTICAL_PADDING);\n\nNote this would mean we would not try to normalize MdTextButton and Textfield heights in this CL (buttons need a zero line height in order to not break things and are in-use pre-harmony, so I think that should be dealt with separately).\n\nDISTANCE_CONTROL_VERTICAL_PADDING is 3 on non-harmony (constant in textfield.cc) and kHarmonyLayoutUnit/2 for Harmony.\n\nLineHeight on Harmony is already 20pt, and will mix in the appropriate platform-specific arithmetic to get the correct result.\n\nSo 20 + 4(top) + 4(bottom) gets us to 28.",
       "parentUuid": "b73277b0_4fa04a27",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038510c3_056bcc24",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T02:20:13Z",
+      "side": 1,
+      "message": "Basically, that sounds good.\n\nYour numbers didn\u0027t all make sense to me above so let me try to restate you:  you want the padding value to compute as 3 pre-Harmony and 4 in Harmony, so you use it directly above and below, and you double it when computing the total height.\n\nThat\u0027s how I would do things.  I think it\u0027s what you said above except \"/4\" where you wrote a \"/2\".",
+      "parentUuid": "1d098532_325b5e07",
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
