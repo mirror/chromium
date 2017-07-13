@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b0a570_d5f99579",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "geolocation_service_ will always be null at this point.",
+      "range": {
+        "startLine": 2819,
+        "startChar": 6,
+        "endLine": 2819,
+        "endChar": 27
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248d830c_0f5a3cd7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "Unused.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 21
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e43e50_a0447583",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "This should be in the content namespace.",
+      "range": {
+        "startLine": 1169,
+        "startChar": 18,
+        "endLine": 1169,
+        "endChar": 26
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa75b70_e3deece1",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "DCHECK(render_frame_host)?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 1
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7735bf2_7da5e804",
+        "filename": "content/browser/geolocation/geolocation_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "CONTENT_BROWSER_GEOLOCATION_GEOLOCATION_SERVICE_IMPL_H_",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398f90d5_8ffef0e9",
+        "filename": "content/browser/geolocation/geolocation_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "Leftovers?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 75
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd8b240_b53255da",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "EXPECT_EQ(permissions, PermissionType::GEOLOCATION);\nEXPECT_TRUE(user_gesture);",
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8636241c_580c7ed2",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "Set the default at declaration time:\n\nbool error_ \u003d false;",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57a6a5d_e44eb2f4",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "Use Run() instead of RunUntilIdle() and pass the loop\u0027s QuitClosure() to OnPositionUpdated(). Set the connection error handler to something which calls ADD_FAILURE() as we don\u0027t expect it to be called.",
+      "range": {
+        "startLine": 99,
+        "startChar": 18,
+        "endLine": 99,
+        "endChar": 32
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7107efe9_a43a5572",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "If you do it this way you won\u0027t need to store these because they will be checked in the callbacks.",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 50
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c027bd18_0c8c8429",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "Use Run() instead of RunUntilIdle() and pass the loop\u0027s QuitClosure() as the connection error handler. Pass something which calls ADD_FAILURE() to QueryNextPosition() as we don\u0027t expect it to be called.",
+      "range": {
+        "startLine": 120,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 32
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac2eaea_5e1cc06d",
+        "filename": "device/geolocation/geolocation_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "This method does not need to be virtual.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6ef694_4b4c9e0e",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "One space between sentences.",
+      "range": {
+        "startLine": 9,
+        "startChar": 57,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7673179_c1c91318",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/resources/geolocation-mock.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-13T00:13:53Z",
+      "side": 1,
+      "message": "This looks like a good opportunity to add tests for the user gesture logic but don\u0027t worry about that for this patch.",
+      "range": {
+        "startLine": 120,
+        "startChar": 29,
+        "endLine": 120,
+        "endChar": 41
+      },
+      "revId": "05db44990c866070e871ac5f8dd2a67c843735de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
