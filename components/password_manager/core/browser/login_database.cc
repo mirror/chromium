@@ -35,6 +35,7 @@
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "sql/connection.h"
+#include "sql/recovery.h"
 #include "sql/statement.h"
 #include "sql/transaction.h"
 #include "third_party/re2/src/re2/re2.h"
@@ -164,6 +165,38 @@ void BindAddStatement(const PasswordForm& form,
 void AddCallback(int err, sql::Statement* /*stmt*/) {
   if (err == 19 /*SQLITE_CONSTRAINT*/)
     DLOG(WARNING) << "LoginDatabase::AddLogin updated an existing form";
+}
+
+void DatabaseErrorCallback(sql::Connection* db,
+                           const base::FilePath& db_path,
+                           int extended_error,
+                           sql::Statement* stmt) {
+  // Attempt to recover corrupt databases.
+  if (sql::Recovery::ShouldRecover(extended_error)) {
+    // NOTE(pwnall): This approach is valid as of version 19.  When bumping the
+    // version, it will PROBABLY remain valid, but consider whether any schema
+    // changes might break automated recovery.
+    DCHECK_EQ(19, kCurrentVersionNumber);
+
+    // Prevent reentrant calls.
+    db->reset_error_callback();
+
+    // After this call, the |db| handle is poisoned so that future calls will
+    // return errors until the handle is re-opened.
+    sql::Recovery::RecoverDatabaseWithMetaVersion(db, db_path);
+
+    // The DLOG(FATAL) below is intended to draw immediate attention to errors
+    // in newly-written code.  Database corruption is generally a result of OS
+    // or hardware issues, not coding errors at the client level, so displaying
+    // the error would probably lead to confusion. The ignored call signals the
+    // test-expectation framework that the error was handled.
+    ignore_result(sql::Connection::IsExpectedSqliteError(extended_error));
+    return;
+  }
+
+  // The default handling is to assert on debug and to ignore on release.
+  if (!sql::Connection::IsExpectedSqliteError(extended_error))
+    DLOG(FATAL) << db->GetErrorMessage();
 }
 
 bool DoesMatchConstraints(const PasswordForm& form) {
@@ -534,6 +567,8 @@ bool LoginDatabase::Init() {
   db_.set_exclusive_locking();
   db_.set_restrict_to_user();
   db_.set_histogram_tag("Passwords");
+  db_.set_error_callback(
+      base::BindRepeating(&DatabaseErrorCallback, &db_, db_path_));
 
   if (!db_.Open(db_path_)) {
     LogDatabaseInitError(OPEN_FILE_ERROR);
@@ -824,7 +859,8 @@ PasswordStoreChangeList LoginDatabase::AddLogin(const PasswordForm& form) {
   BindAddStatement(form, encrypted_password, &s);
   db_.set_error_callback(base::Bind(&AddCallback));
   const bool success = s.Run();
-  db_.reset_error_callback();
+  db_.set_error_callback(
+      base::BindRepeating(&DatabaseErrorCallback, &db_, db_path_));
   if (success) {
     list.push_back(PasswordStoreChange(PasswordStoreChange::ADD, form));
     return list;
