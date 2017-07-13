@@ -311,12 +311,18 @@ public class TileGroup implements MostVisitedSites.Observer {
         // added back in the correct order.
         parent.removeAllViews();
 
-        for (Tile tile : mTiles) {
+        for (int i = 0; i < mTiles.length; i++) {
+            Tile tile = mTiles[i];
             TileView tileView = oldTileViews.get(tile.getUrl());
             if (tileView == null) {
                 tileView = buildTileView(tile, parent, condensed);
             } else {
                 tileView.updateIfDataChanged(tile);
+            }
+
+            if (tile.getSource() == TileSource.HOMEPAGE) {
+                parent.addView(tileView, Math.min(i, TileGridLayout.getColumnNumber() - 1));
+                continue;
             }
 
             parent.addView(tileView);
