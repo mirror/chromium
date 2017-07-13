@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fac3afca_47e4b7bf",
+        "filename": "remoting/ios/app/app_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-13T17:39:12Z",
+      "side": 1,
+      "message": "Will this change using nav controller popToRootViewController at all?",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "be936f28f0e9bd0c0011391aeef370de1298c390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
