@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "308a3b94_b5ab26f7",
+        "filename": "tools/gn/bundle_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-13T01:27:11Z",
+      "side": 1,
+      "message": "I think \"test_application_name\" is too generic a name to use for something xcode-specific.\n\nMaybe this should be \"xcode_test_application_name\" instead, and we should use a similar prefix for the other xcode-project-specific things?",
+      "revId": "7fd9d09cc5fa0817c5795e66d16ff5bcf2372cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
