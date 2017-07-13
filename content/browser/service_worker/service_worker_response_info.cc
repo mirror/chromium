@@ -55,6 +55,8 @@ void ServiceWorkerResponseInfo::GetExtraResponseInfo(
   response_info->cors_exposed_header_names = cors_exposed_header_names_;
   response_info->did_service_worker_navigation_preload =
       did_navigation_preload_;
+  response_info->service_worker_preparation_type =
+      service_worker_preparation_type_;
 }
 
 void ServiceWorkerResponseInfo::OnPrepareToRestart(
@@ -86,7 +88,9 @@ void ServiceWorkerResponseInfo::OnStartCompleted(
     bool response_is_in_cache_storage,
     const std::string& response_cache_storage_cache_name,
     const ServiceWorkerHeaderList& cors_exposed_header_names,
-    bool did_navigation_preload) {
+    bool did_navigation_preload,
+    blink::mojom::ServiceWorkerPreparationType
+        service_worker_preparation_type) {
   was_fetched_via_service_worker_ = was_fetched_via_service_worker;
   was_fetched_via_foreign_fetch_ = was_fetched_via_foreign_fetch;
   was_fallback_required_ = was_fallback_required;
@@ -103,6 +107,7 @@ void ServiceWorkerResponseInfo::OnStartCompleted(
   }
 
   did_navigation_preload_ = did_navigation_preload;
+  service_worker_preparation_type_ = service_worker_preparation_type;
 }
 
 void ServiceWorkerResponseInfo::ResetData() {
@@ -121,6 +126,8 @@ void ServiceWorkerResponseInfo::ResetData() {
   // Don't reset the |did_navigation_preload_| flag. This is used for the
   // UseCounter, and if it was ever true for a request, it should remain true
   // even if the job restarts.
+  service_worker_preparation_type_ =
+      blink::mojom::ServiceWorkerPreparationType::UNKNOWN;
 }
 
 ServiceWorkerResponseInfo::ServiceWorkerResponseInfo() {}

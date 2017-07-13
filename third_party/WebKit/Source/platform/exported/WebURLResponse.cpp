@@ -328,6 +328,11 @@ void WebURLResponse::SetDidServiceWorkerNavigationPreload(bool value) {
   resource_response_->SetDidServiceWorkerNavigationPreload(value);
 }
 
+void WebURLResponse::SetServiceWorkerPreparationType(
+    mojom::ServiceWorkerPreparationType type) {
+  resource_response_->SetServiceWorkerPreparationType(type);
+}
+
 WebString WebURLResponse::DownloadFilePath() const {
   return resource_response_->DownloadedFilePath();
 }

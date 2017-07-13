@@ -92,6 +92,8 @@ class ServiceWorkerPageLoadMetricsObserverTest
         internal::kHistogramServiceWorkerDomContentLoadedSearch, 0);
     histogram_tester().ExpectTotalCount(
         internal::kHistogramServiceWorkerLoadSearch, 0);
+    histogram_tester().ExpectTotalCount(
+        internal::kHistogramServiceWorkerPreparationTypeSearch, 0);
   }
 
   void AssertNoSearchNoSWHistogramsLogged() {
@@ -158,6 +160,8 @@ TEST_F(ServiceWorkerPageLoadMetricsObserverTest, WithServiceWorker) {
   page_load_metrics::mojom::PageLoadMetadata metadata;
   metadata.behavior_flags |=
       blink::WebLoadingBehaviorFlag::kWebLoadingBehaviorServiceWorkerControlled;
+  timing.service_worker_timing->preparation_type =
+      blink::mojom::ServiceWorkerPreparationType::RUNNING;
   SimulateTimingAndMetadataUpdate(timing, metadata);
 
   histogram_tester().ExpectTotalCount(
@@ -259,6 +263,8 @@ TEST_F(ServiceWorkerPageLoadMetricsObserverTest, InboxSite) {
   page_load_metrics::mojom::PageLoadMetadata metadata;
   metadata.behavior_flags |=
       blink::WebLoadingBehaviorFlag::kWebLoadingBehaviorServiceWorkerControlled;
+  timing.service_worker_timing->preparation_type =
+      blink::mojom::ServiceWorkerPreparationType::RUNNING;
   SimulateTimingAndMetadataUpdate(timing, metadata);
 
   histogram_tester().ExpectTotalCount(
@@ -375,6 +381,8 @@ TEST_F(ServiceWorkerPageLoadMetricsObserverTest, SearchSite) {
   page_load_metrics::mojom::PageLoadMetadata metadata;
   metadata.behavior_flags |=
       blink::WebLoadingBehaviorFlag::kWebLoadingBehaviorServiceWorkerControlled;
+  timing.service_worker_timing->preparation_type =
+      blink::mojom::ServiceWorkerPreparationType::RUNNING;
   SimulateTimingAndMetadataUpdate(timing, metadata);
 
   histogram_tester().ExpectTotalCount(
@@ -478,6 +486,12 @@ TEST_F(ServiceWorkerPageLoadMetricsObserverTest, SearchSite) {
   histogram_tester().ExpectBucketCount(
       internal::kHistogramServiceWorkerParseStart,
       timing.parse_timing->parse_start.value().InMilliseconds(), 1);
+
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramServiceWorkerPreparationTypeSearch, 1);
+  histogram_tester().ExpectBucketCount(
+      internal::kHistogramServiceWorkerPreparationTypeSearch,
+      static_cast<int>(blink::mojom::ServiceWorkerPreparationType::RUNNING), 1);
 
   AssertNoInboxHistogramsLogged();
   AssertNoSearchNoSWHistogramsLogged();
