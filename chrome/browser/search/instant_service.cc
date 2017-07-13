@@ -304,6 +304,17 @@ void InstantService::OnMostVisitedURLsAvailable(
 
 void InstantService::OnIconMadeAvailable(const GURL& site_url) {}
 
+void InstantService::OnExplorationSectionsAvailable(
+    const std::vector<ntp_tiles::ExplorationSection>& sections) {
+  // Not used on Desktop
+}
+
+void InstantService::OnExplorationURLsAvailable(
+    ntp_tiles::SectionType section_type,
+    const ntp_tiles::NTPTilesVector& tiles) {
+  // Not used on Desktop
+}
+
 void InstantService::NotifyAboutMostVisitedItems() {
   for (InstantServiceObserver& observer : observers_)
     observer.MostVisitedItemsChanged(most_visited_items_);

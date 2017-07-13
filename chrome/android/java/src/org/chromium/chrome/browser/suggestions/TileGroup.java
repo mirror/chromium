@@ -282,6 +282,17 @@ public class TileGroup implements MostVisitedSites.Observer {
         mUiDelegate.getImageFetcher().makeLargeIconRequest(siteUrl, mMinIconSize, iconCallback);
     }
 
+    @Override
+    public void onExplorationSectionsAvailable(int[] types, String[] titles) {
+        // TODO(dgn): Initiate refresh of exploration sections.
+    }
+
+    @Override
+    public void onExplorationURLsAvailable(
+            int type, String[] titles, String[] urls, String[] whitelistIconPaths, int[] sources) {
+        // TODO(dgn): Initiate refresh of exploration section tiles.
+    }
+
     /**
      * Instructs this instance to start listening for data. The {@link TileGroup.Observer} may be
      * called immediately if new data is received synchronously.
