@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97a429ab_0aed1b03",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-13T14:18:29Z",
+      "side": 1,
+      "message": "This was copied from dbeam\u0027s example code:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/md_history_ui.cc?l\u003d228\u0026rcl\u003d3585c48faf2d6a7e30988093201fbf008eabb5c1\n\nI\u0027ll let a WebUI owner decide whether to change it to a DCHECK in both places or not.",
+      "parentUuid": "87609f1f_78cea7b4",
+      "revId": "e65c8959e8e2a9abf3c13c68fee73bbe81977ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a64f525_c8b39195",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-13T13:48:25Z",
       "side": 1,
       "message": "Was this missing before or should it also be guarded by OS_WIN? (since all the new code is guarded by OS_WIN)",
+      "revId": "e65c8959e8e2a9abf3c13c68fee73bbe81977ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61799811_46df56ce",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-13T14:18:29Z",
+      "side": 1,
+      "message": "It was missing from the .cc file before. The .h file previously didn\u0027t have an ifdef(OS_WIN). \nHowever, we shouldn\u0027t guard this include in OS_WIN since the ifdef requires build_config.h:\n\n** Presubmit Warnings **\nchrome\\browser\\ui\\webui\\settings\\md_settings_ui.cc:260 OS_WIN macro is used without including build/build_config.h.\nchrome\\browser\\ui\\webui\\settings\\md_settings_ui.h:15 OS_WIN macro is used without including build/build_config.h.",
+      "parentUuid": "51ad2f16_34ba9270",
       "revId": "e65c8959e8e2a9abf3c13c68fee73bbe81977ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
