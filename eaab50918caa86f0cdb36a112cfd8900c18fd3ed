@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "80f2d7c9_8681ffb7",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-07-13T11:36:26Z",
+      "side": 1,
+      "message": "It\u0027s already checked by all of the file functions:\nhttps://cs.chromium.org/chromium/src/base/files/file_util_posix.cc?rcl\u003d3c72b68028a9adba323c7e7f8f7b7eac3ee7ee01\u0026l\u003d404",
+      "parentUuid": "c70e6ec0_63914e69",
+      "revId": "eaab50918caa86f0cdb36a112cfd8900c18fd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22ceefd3_4a7343fe",
         "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.h",
         "patchSetId": 2
