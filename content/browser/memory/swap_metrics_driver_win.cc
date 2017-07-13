@@ -2,15 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "content/browser/memory/swap_metrics_driver.h"
+
+#include <memory>
+
 #include "content/browser/memory/swap_metrics_observer.h"
 
 namespace content {
 
 // static
-SwapMetricsObserver* SwapMetricsObserver::GetInstance() {
-  // SwapMetricsObserver isn't available on Windows for now.
+std::unique_ptr<SwapMetricsDriver> SwapMetricsDriver::Create(
+    std::unique_ptr<SwapMetricsObserver> observer,
+    const int interval_in_seconds) {
+  // SwapMetricsDriver isn't available on Windows for now.
   // TODO(bashi): Figure out a way to measure swap rates on Windows.
-  return nullptr;
+  return std::unique_ptr<SwapMetricsDriver>();
 }
 
 }  // namespace content
