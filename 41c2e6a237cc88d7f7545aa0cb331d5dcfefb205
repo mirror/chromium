@@ -16,6 +16,121 @@
       "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a841c927_caa2416f",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-07-13T03:49:56Z",
+      "side": 1,
+      "message": "I\u0027d set up logging explicitly, even if it is just logging.basicConfig(level\u003dlogging.DEBUG).",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 13
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ac2f8f_67834d75",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-07-13T03:49:56Z",
+      "side": 1,
+      "message": "Since you\u0027re using main()\u0027s return value in sys.exit(), let\u0027s return an error code (e.g. 1).",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 12
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ce2739_c73775eb",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-07-13T03:49:56Z",
+      "side": 1,
+      "message": "return 1",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3482311_8c31d7bc",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-07-13T03:49:56Z",
+      "side": 1,
+      "message": "If this fails, the script will crash with an exception and a stack trace (not user-friendly).\nIt will also lose any debugging output the installer spits out. I\u0027d rather use subprocess.Popen() with communicate() to capture the output and also return the process\u0027s return code.",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 14
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8306adb2_bd1d7840",
+        "filename": "ios/build/xcode_install_wrapper.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-07-13T03:49:56Z",
+      "side": 1,
+      "message": "I think you can drop \u0027sudo\u0027 part, since the entire script will be run under \u0027sudo\u0027.",
+      "range": {
+        "startLine": 59,
+        "startChar": 27,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "41c2e6a237cc88d7f7545aa0cb331d5dcfefb205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
