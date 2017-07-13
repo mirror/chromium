@@ -27,6 +27,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/sys_info.h"
 #include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -239,19 +240,19 @@ class SimpleBackendImpl::ActiveEntryProxy
   base::WeakPtr<SimpleBackendImpl> backend_;
 };
 
-SimpleBackendImpl::SimpleBackendImpl(
-    const FilePath& path,
-    int max_bytes,
-    net::CacheType cache_type,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
-    net::NetLog* net_log)
+SimpleBackendImpl::SimpleBackendImpl(const FilePath& path,
+                                     int max_bytes,
+                                     net::CacheType cache_type,
+                                     net::NetLog* net_log)
     : path_(path),
       cache_type_(cache_type),
-      cache_thread_(cache_thread),
+      cache_thread_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN})),
       orig_max_size_(max_bytes),
-      entry_operations_mode_(cache_type == net::DISK_CACHE ?
-                                 SimpleEntryImpl::OPTIMISTIC_OPERATIONS :
-                                 SimpleEntryImpl::NON_OPTIMISTIC_OPERATIONS),
+      entry_operations_mode_(cache_type == net::DISK_CACHE
+                                 ? SimpleEntryImpl::OPTIMISTIC_OPERATIONS
+                                 : SimpleEntryImpl::NON_OPTIMISTIC_OPERATIONS),
       net_log_(net_log) {
   MaybeHistogramFdLimit(cache_type_);
 }
@@ -574,6 +575,11 @@ size_t SimpleBackendImpl::DumpMemoryStats(
   dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                   base::trace_event::MemoryAllocatorDump::kUnitsBytes, size);
   return size;
+}
+
+scoped_refptr<base::SequencedTaskRunner>
+SimpleBackendImpl::GetCacheTaskRunner() {
+  return cache_thread_;
 }
 
 void SimpleBackendImpl::InitializeIndex(const CompletionCallback& callback,
