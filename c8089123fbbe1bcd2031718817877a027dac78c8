@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa7125f_a767a802",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T18:12:00Z",
+      "side": 1,
+      "message": "This links to issue 496468, but issue 496468 is about the DnsTransaction case, not the system host resolver case.  Is this the right place for this code?",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 26
+      },
+      "revId": "c8089123fbbe1bcd2031718817877a027dac78c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d31ed7_75a0bd93",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T18:12:00Z",
+      "side": 1,
+      "message": "This changes the meaning of the histogram enough that I wonder if we should just get rid of it and add a new one instead - just log valid_hostname for all DNSDomainFromDotWithValidityCheck checks (Or possibly only log if when DNSDomainFrom* returns true.  When it returns false, behavior is not clearly documented).",
+      "range": {
+        "startLine": 141,
+        "startChar": 46,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "c8089123fbbe1bcd2031718817877a027dac78c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
