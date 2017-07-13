@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1879eede_ef7483ec",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T13:59:12Z",
+      "side": 1,
+      "message": "Potentially, I\u0027m not really convinced either way is perfect. In the mid term we\u0027re going to have to consult with the browser process to determine the ideal size of an image (and whether it\u0027s necessary at all!), so this\u0027ll be changing anyway.",
+      "parentUuid": "21405613_d9fa90bd",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 8
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f913a794_2dbecf51",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45fad71d_aad56f7b",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T13:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f913a794_2dbecf51",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 8
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5fc01c2a_594822d8",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T13:59:12Z",
+      "side": 1,
+      "message": "Added DCHECK_GT()s in DidFinishLoading.",
+      "parentUuid": "77e890d8_81602fe4",
+      "range": {
+        "startLine": 193,
+        "startChar": 62,
+        "endLine": 193,
+        "endChar": 76
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd98e044_1658add5",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-12T17:03:34Z",
       "side": 1,
       "message": "Is there a constant MS_PER_SECOND or something instead of the naked 1000?",
+      "range": {
+        "startLine": 206,
+        "startChar": 32,
+        "endLine": 206,
+        "endChar": 36
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe8a59a_c1b232f4",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T13:59:12Z",
+      "side": 1,
+      "message": "There is in base, but not yet in Blink AFAIK.",
+      "parentUuid": "bd98e044_1658add5",
       "range": {
         "startLine": 206,
         "startChar": 32,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "28a88c5f_3de91dfd",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T13:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31618a16_e8783299",
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c12f5043_ff8b36ad",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
         "patchSetId": 1
@@ -131,6 +245,30 @@
       "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadbed76_ed84a83d",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T13:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12f5043_ff8b36ad",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 19
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "d6973c0d_974db2d4",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T13:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e152012c_8ef2cf0a",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b193afa_8cf49e24",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
         "patchSetId": 1
@@ -177,6 +339,30 @@
       "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6d2556_4ecb7e98",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T13:59:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8b193afa_8cf49e24",
+      "range": {
+        "startLine": 237,
+        "startChar": 36,
+        "endLine": 237,
+        "endChar": 70
+      },
+      "revId": "b00a4ad12a649730460e502c390ee9e1ddef8a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
