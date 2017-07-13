@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ff78414_3f152de3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Updated the copy-and-paste artifact.",
+      "parentUuid": "8a684161_21cd9584",
+      "range": {
+        "startLine": 45,
+        "startChar": 75,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c29a942_f97d2de1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T09:17:21Z",
       "side": 1,
       "message": "Didn\u0027t dig much in the C++ code, but what\u0027s the TL;DR, esp. regarding the interaction with onMostVisitedSitesAvailable? Can both be called when the feature is enabled? How are we supposed to mix the data?\n\nOr maybe we can remove the current call and only have one for explore, then when only personalized is return and the feature is disabled we show the current tile grid?",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fdf5ee_72b39684",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Currently both can be called, but I can easily remove the call to onMostVisitedSitesAvailable when the feature is enabled. (I just didn\u0027t because I am not sure what is easier for you)\n\nThe data for onExplorationURLsAvailable(PERSONALIZED, XXX) is identical to onMostVisitedSitesAvailable(XXX) and arrives at the same time.",
+      "parentUuid": "0c29a942_f97d2de1",
       "range": {
         "startLine": 53,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "58c62aec_eaf95ef8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "At least the PERSONALIZED section should, right?",
+      "parentUuid": "85198823_53152ac0",
+      "range": {
+        "startLine": 99,
+        "startChar": 29,
+        "endLine": 99,
+        "endChar": 47
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1af7075b_d42521cb",
         "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1ad87e_e3a4f1b2",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af7075b_d42521cb",
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "151db4ce_d33fbfc6",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00030072_a176effa",
+      "range": {
+        "startLine": 184,
+        "startChar": 51,
+        "endLine": 184,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdef800c_04e39f91",
         "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
         "patchSetId": 1
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "ad39a06e_8e56a552",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdef800c_04e39f91",
+      "range": {
+        "startLine": 206,
+        "startChar": 54,
+        "endLine": 206,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3605f9b3_79d0445c",
         "filename": "chrome/browser/search/instant_service.cc",
         "patchSetId": 1
@@ -154,6 +292,30 @@
       "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47df83ac_28bcdbb3",
+        "filename": "chrome/browser/search/instant_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "3605f9b3_79d0445c",
+      "range": {
+        "startLine": 314,
+        "startChar": 39,
+        "endLine": 314,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -204,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "a8ebccc3_a8fc3fc6",
+        "filename": "components/ntp_tiles/constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Dropped MostLikely.\nDropped NTP, although: are we sure this will never be part of the NTP?",
+      "parentUuid": "f439ace9_df08a065",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6b41f09_3985812c",
         "filename": "components/ntp_tiles/exploration_section.h",
         "patchSetId": 1
@@ -227,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "07599ede_929bcd10",
+        "filename": "components/ntp_tiles/exploration_section.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6b41f09_3985812c",
+      "range": {
+        "startLine": 14,
+        "startChar": 77,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "229906f3_3fde56ef",
         "filename": "components/ntp_tiles/exploration_section.h",
         "patchSetId": 1
@@ -238,6 +448,30 @@
       "writtenOn": "2017-07-13T08:31:41Z",
       "side": 1,
       "message": "Can the title of a section ever change? If not, I\u0027d just provide a GetSectionTitle(type) function and get rid of this struct.",
+      "range": {
+        "startLine": 17,
+        "startChar": 23,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8cea0c_775bf020",
+        "filename": "components/ntp_tiles/exploration_section.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "This is not clear yet but if possible, I would also like to get rid of this struct.\nIf we use translated strings in chromium, they won\u0027t. If the sections are subject to change, they might.",
+      "parentUuid": "229906f3_3fde56ef",
       "range": {
         "startLine": 17,
         "startChar": 23,
@@ -273,6 +507,30 @@
     },
     {
       "key": {
+        "uuid": "4d945156_2ee700df",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Yes. Probably the smartest move would be to just remove it from Popular Sites and prepend it before sending it to the client.",
+      "parentUuid": "599d4955_a48f703f",
+      "range": {
+        "startLine": 545,
+        "startChar": 52,
+        "endLine": 545,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "455824b2_8237a755",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 1
@@ -296,6 +554,30 @@
     },
     {
       "key": {
+        "uuid": "7eab1c1f_c3bcddf4",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "455824b2_8237a755",
+      "range": {
+        "startLine": 548,
+        "startChar": 43,
+        "endLine": 548,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "615c483f_13380136",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 1
@@ -307,6 +589,30 @@
       "writtenOn": "2017-07-13T08:57:06Z",
       "side": 1,
       "message": "Can any of these ever happen *after* OnMostVisitedURLsAvailable? If not, we can just remove them and expose a getter below (analogous of PopularSites\u0027 API)., guaranteeing that it should be available by the time OnMostVisitedURLsAvailable() is called.",
+      "range": {
+        "startLine": 94,
+        "startChar": 77,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb20190e_0eb54077",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Yes. OnExplorationURLsAvailable can happen after the baked-in popular sites were propagated via OnMostVisitedURLAvailable.\nThere is ongoing discussion on how we retrieve exploration sections (especially their translations) as the sections seem to be subject to change.\nDiscussion here: https://docs.google.com/document/d/1SBQ5cr7ZhyohKssPnIPGl4TUZzcoEsIcS_em6SjGiLY/edit#heading\u003dh.nyqh3gflt43w",
+      "parentUuid": "615c483f_13380136",
       "range": {
         "startLine": 94,
         "startChar": 77,
@@ -342,6 +648,30 @@
     },
     {
       "key": {
+        "uuid": "5be238a1_9c926424",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Unless we copy the SitesVector, it might easily change and for some events, only the sections are needed. \nThis might happen anyway if we need to get the sections out of the JSON.",
+      "parentUuid": "0cfa6b87_433eb692",
+      "range": {
+        "startLine": 68,
+        "startChar": 70,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4eaefcb_18feb83b",
         "filename": "components/ntp_tiles/popular_sites.h",
         "patchSetId": 1
@@ -356,6 +686,24 @@
       "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c481abe2_7ced759b",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Yes. Guaranteed and covered by tests.",
+      "parentUuid": "c4eaefcb_18feb83b",
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -382,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "07ddeb5a_2fdcb744",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "That is very wrong and explains a lot.",
+      "parentUuid": "f8475130_f8c3ac86",
+      "range": {
+        "startLine": 247,
+        "startChar": 62,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc788e46_919c4fcb",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 1
@@ -405,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "a7ecab97_ee6714bc",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Too obvious.\n(Done, thanks :D)",
+      "parentUuid": "fc788e46_919c4fcb",
+      "range": {
+        "startLine": 252,
+        "startChar": 77,
+        "endLine": 252,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e5055be_5d5af1e8",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 1
@@ -422,6 +818,24 @@
     },
     {
       "key": {
+        "uuid": "64571fbe_44b42da9",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "Generally true, although they are personalized by country/language.\nI am not sure yet how to handle this case.",
+      "parentUuid": "3e5055be_5d5af1e8",
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fca1d91c_3d34662e",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 1
@@ -433,6 +847,30 @@
       "writtenOn": "2017-07-13T08:31:41Z",
       "side": 1,
       "message": "All the +1s and -1s are super confusing, and easy to get wrong. I think this is because PERSONALIZED is weird, maybe we can discuss the design offline?",
+      "range": {
+        "startLine": 364,
+        "startChar": 44,
+        "endLine": 364,
+        "endChar": 0
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0f077b_cb5f2c8e",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-13T11:41:20Z",
+      "side": 1,
+      "message": "I agree. We should meet beginning of next week to discuss where sections originate from and I have a feeling that this enum will be gone then.",
+      "parentUuid": "fca1d91c_3d34662e",
       "range": {
         "startLine": 364,
         "startChar": 44,
