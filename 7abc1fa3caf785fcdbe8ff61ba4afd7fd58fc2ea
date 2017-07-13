@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9904bb91_60d1481f",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:10:19Z",
+      "side": 1,
+      "message": "Nit: no tabs \u003d)",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 2
+      },
+      "revId": "7abc1fa3caf785fcdbe8ff61ba4afd7fd58fc2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19d848f_01ca9344",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:10:19Z",
+      "side": 1,
+      "message": "Please group this with SiteEngagementDetailsProvider below (as this isn\u0027t a capability we should be exposing to non-webui renderers).",
+      "range": {
+        "startLine": 70,
+        "startChar": 3,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "7abc1fa3caf785fcdbe8ff61ba4afd7fd58fc2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146bdc17_c59cd0f2",
+        "filename": "chrome/browser/media/media_engagement_score_details.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:10:19Z",
+      "side": 1,
+      "message": "Out of curiosity, why didn\u0027t using the mojo Time struct work well for JS?\n\nAlso, if this remains a double, please add a brief describing the unit of measurement.",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "7abc1fa3caf785fcdbe8ff61ba4afd7fd58fc2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47379608_81349aa3",
+        "filename": "chrome/browser/ui/webui/media/media_engagement_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T21:10:19Z",
+      "side": 1,
+      "message": "Hmm... if we need to make this conversion, maybe GetAllScoreDetails should just use MediaEngagementScoreDetails::New() itself, and return a vector of struct pointers?\n\nThen we don\u0027t have to generate the list and then convert the list.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 5
+      },
+      "revId": "7abc1fa3caf785fcdbe8ff61ba4afd7fd58fc2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
