@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a6075674_d9ce95a1",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T01:54:12Z",
+      "side": 1,
+      "message": "\u003e Are there dialogs (e.g. the bookmark bubble) that use a different indent?\n\nyes - exactly.\n\nI\u0027m fine with removing the indent from http-auth pre-harmony (alluded to it in an earlier comment even..)",
+      "parentUuid": "a5fde74e_fb2c60a7",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ece82d3_88364358",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
         "patchSetId": 10
@@ -138,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "d2729be4_037c02d2",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T01:54:12Z",
+      "side": 1,
+      "message": "It is not possible - GridLayout has no snap-to-grid. (So, actually, the \"simpler\" mock is much more complicated..)\n\nWe could (a) implement this in GridLayout, or (b) we could create a subclass of views::Label which rounds its preferred width up to multiples of kHarmonyLayoutUnit, or (c) we could try to mash this logic into views::Label using DISTANCE_ metrics. My preference is (b).\n\n\nAssuming (b). Options are: anonymous-namespace in textfield_layout.cc or a class in c/b/ui/views/harmony \n\n\n.. any preferences?",
+      "parentUuid": "183c4261_f0785a2a",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40aad7d6_7c733861",
         "filename": "chrome/browser/ui/views/login_view.cc",
         "patchSetId": 10
@@ -172,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "1e3e7215_a839c843",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T01:54:12Z",
+      "side": 1,
+      "message": "You might need to be more specific.\n\nTextfield::default_with_in_chars_ initializes to 0. Do we want textfield_layout.cc to call Textfield::set_default_with_in_chars(kSomeConstant); Or do we want a DISTANCE_ metric for this?",
+      "parentUuid": "3a6c62ca_813c8adc",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b73277b0_4fa04a27",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 10
@@ -183,6 +237,24 @@
       "writtenOn": "2017-07-13T01:26:49Z",
       "side": 1,
       "message": "I kinda think we want both textfields and buttons to be \"font height + a fixed amount of padding\".  Changing the font height should change the textfield height (and button height) to something other than 28.  So if we\u0027re going to add a layout constant, I sort of feel like it should be the \"control vertical padding\" instead of the \"control height\".\n\nYou discuss this in your commentary; basically, I think you should indeed go that route and not this one.\n\nI\u0027m worried that there\u0027s an obvious reason why this is dumb, e.g. that bold fonts are 1 pt taller and so their buttons would be larger, or something.  But hardcoding a 28 pt height for either textfields of buttons just feels wrong, whereas saying \"we have this much \u0027control edge\u0027 padding around the top and bottom\" matches up well with how I think of these being sized.",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d098532_325b5e07",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T01:54:12Z",
+      "side": 1,
+      "message": "\"font height\" is a tricky thing to pin down. We have the point size, ascenders/descenders, and line height, and it all changes depending on the platform/typeface. But HarmonyTypographyProvider::GetLineHeight has most of the required arithmetic already.\n\nwdyt about\n\nmax(style::GetLineHeight(CONTEXT_TEXTFIELD), font_list.GetHeight()) + GetDistanceMetric(DISTANCE_CONTROL_VERTICAL_PADDING);\n\nNote this would mean we would not try to normalize MdTextButton and Textfield heights in this CL (buttons need a zero line height in order to not break things and are in-use pre-harmony, so I think that should be dealt with separately).\n\nDISTANCE_CONTROL_VERTICAL_PADDING is 3 on non-harmony (constant in textfield.cc) and kHarmonyLayoutUnit/2 for Harmony.\n\nLineHeight on Harmony is already 20pt, and will mix in the appropriate platform-specific arithmetic to get the correct result.\n\nSo 20 + 4(top) + 4(bottom) gets us to 28.",
+      "parentUuid": "b73277b0_4fa04a27",
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
