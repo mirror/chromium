@@ -8,18 +8,16 @@
 
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/sessions/core/tab_restore_service.h"
-#include "components/signin/core/browser/signin_manager.h"
 #include "components/sync_sessions/open_tabs_ui_delegate.h"
 #include "components/sync_sessions/synced_session.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/sessions/ios_chrome_tab_restore_service_factory.h"
-#include "ios/chrome/browser/signin/signin_manager_factory.h"
 #include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
 #include "ios/chrome/browser/sync/sync_setup_service.h"
 #include "ios/chrome/browser/sync/sync_setup_service_factory.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_bridges.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.h"
-#import "ios/chrome/browser/ui/ntp/recent_tabs/synced_sessions_bridge.h"
+#import "ios/chrome/browser/ui/sync/synced_sessions_bridge.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -187,9 +185,7 @@
 #pragma mark - Private
 
 - (BOOL)isSignedIn {
-  SigninManager* signin_manager =
-      ios::SigninManagerFactory::GetForBrowserState(_browserState);
-  return signin_manager->IsAuthenticated();
+  return _syncedSessionsObserver->IsSignedIn();
 }
 
 - (BOOL)isSyncTabsEnabled {

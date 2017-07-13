@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_SYNCED_SESSIONS_BRIDGE_H_
-#define IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_SYNCED_SESSIONS_BRIDGE_H_
+#ifndef IOS_CHROME_BROWSER_UI_SYNC_SYNCED_SESSIONS_BRIDGE_H_
+#define IOS_CHROME_BROWSER_UI_SYNC_SYNCED_SESSIONS_BRIDGE_H_
 
 #import <UIKit/UIKit.h>
 
@@ -11,7 +11,7 @@
 #include "components/signin/core/browser/signin_manager_base.h"
 #include "components/sync/driver/sync_service_observer.h"
 #import "ios/chrome/browser/sync/sync_observer_bridge.h"
-#import "ios/chrome/browser/ui/ntp/recent_tabs/synced_sessions_bridge.h"
+#import "ios/chrome/browser/ui/sync/synced_sessions_bridge.h"
 
 namespace ios {
 class ChromeBrowserState;
@@ -45,11 +45,14 @@ class SyncedSessionsObserverBridge : public SyncObserverBridge,
   // Returns true if the first sync cycle that contains session information is
   // completed. Returns false otherwise.
   bool IsFirstSyncCycleCompleted();
+  bool IsSignedIn();
+  bool IsSyncing();
 
  private:
   base::WeakNSProtocol<id<SyncedSessionsObserver>> owner_;
   SigninManager* signin_manager_;
   syncer::SyncService* sync_service_;
+  ios::ChromeBrowserState* browser_state_;
   ScopedObserver<SigninManagerBase, SigninManagerBase::Observer>
       signin_manager_observer_;
   // Stores whether the first sync cycle that contains session information is
@@ -59,4 +62,4 @@ class SyncedSessionsObserverBridge : public SyncObserverBridge,
 
 }  // namespace synced_sessions
 
-#endif  // IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_SYNCED_SESSIONS_BRIDGE_H_
+#endif  // IOS_CHROME_BROWSER_UI_SYNC_SYNCED_SESSIONS_BRIDGE_H_

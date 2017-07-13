@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/ui/ntp/recent_tabs/synced_sessions_bridge.h"
+#import "ios/chrome/browser/ui/sync/synced_sessions_bridge.h"
 
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -10,7 +10,8 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
 #include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
-#import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.h"
+#include "ios/chrome/browser/sync/sync_setup_service.h"
+#include "ios/chrome/browser/sync/sync_setup_service_factory.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -31,6 +32,7 @@ SyncedSessionsObserverBridge::SyncedSessionsObserverBridge(
           ios::SigninManagerFactory::GetForBrowserState(browserState)),
       sync_service_(
           IOSChromeProfileSyncServiceFactory::GetForBrowserState(browserState)),
+      browser_state_(browserState),
       signin_manager_observer_(this),
       first_sync_cycle_is_completed_(false) {
   signin_manager_observer_.Add(signin_manager_);
@@ -74,6 +76,28 @@ void SyncedSessionsObserverBridge::GoogleSignedOut(
     const std::string& username) {
   first_sync_cycle_is_completed_ = false;
   [owner_ reloadSessions];
+}
+
+#pragma mark - Signin and syncing status
+
+bool SyncedSessionsObserverBridge::IsSignedIn() {
+  SigninManager* signin_manager =
+      ios::SigninManagerFactory::GetForBrowserState(browser_state_);
+  return signin_manager->IsAuthenticated();
+}
+
+bool SyncedSessionsObserverBridge::IsSyncing() {
+  if (!IsSignedIn())
+    return false;
+
+  SyncSetupService* syncSetupService =
+      SyncSetupServiceFactory::GetForBrowserState(browser_state_);
+
+  bool syncEnabled = syncSetupService->IsSyncEnabled();
+  bool noSyncError = (syncSetupService->GetSyncServiceState() ==
+                      SyncSetupService::kNoSyncServiceError);
+
+  return syncEnabled && noSyncError && !IsFirstSyncCycleCompleted();
 }
 
 }  // namespace synced_sessions
