@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d5e59a1_3f957127",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-07-13T10:21:41Z",
+      "side": 1,
+      "message": "AssertIOAllowed should be sufficient.\n\nThis function doesn\u0027t depend on any external state, so DCHECKing thread or sequence affinity, isn\u0027t necessary. I removed the dcheck and replaced it with this one because the only dependency on |this| was because of the dcheck itself, which made it pointless.",
+      "parentUuid": "2a1097c9_6f35a390",
+      "revId": "eaab50918caa86f0cdb36a112cfd8900c18fd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22ceefd3_4a7343fe",
         "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-13T08:46:41Z",
       "side": 1,
       "message": "Nit: should it be camel case or background_task_runner()? Would the reference returned make the difference?",
+      "range": {
+        "startLine": 96,
+        "startChar": 50,
+        "endLine": 96,
+        "endChar": 70
+      },
+      "revId": "eaab50918caa86f0cdb36a112cfd8900c18fd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e91904f_b5207075",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-07-13T10:21:41Z",
+      "side": 1,
+      "message": "Both seem to exist in the code base. Changed the name as you suggested.",
+      "parentUuid": "22ceefd3_4a7343fe",
       "range": {
         "startLine": 96,
         "startChar": 50,
