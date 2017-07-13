@@ -65,6 +65,8 @@ enum class CaretVisibility;
 
 enum class HandleVisibility { kNotVisible, kVisible };
 
+enum class TypingContinuation { kContinue, kEnd };
+
 class CORE_EXPORT FrameSelection final
     : public GarbageCollectedFinalized<FrameSelection>,
       public SynchronousMutationObserver {
