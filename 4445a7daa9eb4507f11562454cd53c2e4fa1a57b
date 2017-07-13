@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2dfd032f_712941ed",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-13T17:34:21Z",
+      "side": 1,
+      "message": "You are correct, thanks. There are existing examples in encryption_migration.html so I thought it was OK, but now I recall seeing that conversation. Changed to use i18nDynamic.",
+      "parentUuid": "5dea88cb_b56b3b15",
+      "revId": "4445a7daa9eb4507f11562454cd53c2e4fa1a57b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68942bf0_c5c8faf7",
         "filename": "chrome/browser/resources/chromeos/login/oobe_screen_user_image.css",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8b01c4dd_5c083553",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_user_image.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-13T17:34:21Z",
+      "side": 1,
+      "message": "Oops, thanks. Done.",
+      "parentUuid": "68942bf0_c5c8faf7",
+      "revId": "4445a7daa9eb4507f11562454cd53c2e4fa1a57b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2abba74d_0dfb5773",
         "filename": "chrome/browser/resources/chromeos/login/oobe_screen_user_image.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-13T02:25:08Z",
       "side": 1,
       "message": "Remove if you do not plan to use i18nDynamic(). \nui/login/display_manager.js will call it only if present.",
+      "revId": "4445a7daa9eb4507f11562454cd53c2e4fa1a57b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cda0f21_a1bef145",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_user_image.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-13T17:34:21Z",
+      "side": 1,
+      "message": "Updated for i18nDynamic.",
+      "parentUuid": "2abba74d_0dfb5773",
       "revId": "4445a7daa9eb4507f11562454cd53c2e4fa1a57b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
