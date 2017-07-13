@@ -71,13 +71,18 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         };
         mContextMenuManager =
                 new ContextMenuManager(activity, navigationDelegate, touchEnabledDelegate);
-        activity.getWindowAndroid().addContextMenuCloseListener(mContextMenuManager);
-        mSuggestionsUiDelegate.addDestructionObserver(new DestructionObserver() {
-            @Override
-            public void onDestroy() {
-                activity.getWindowAndroid().removeContextMenuCloseListener(mContextMenuManager);
-            }
-        });
+
+        // #getWindowAndroid() may return null (e.g. after destruction). Avoid an NPE by checking
+        // for null before using it. See crbug.com/741041.
+        if (activity.getWindowAndroid() != null) {
+            activity.getWindowAndroid().addContextMenuCloseListener(mContextMenuManager);
+            mSuggestionsUiDelegate.addDestructionObserver(new DestructionObserver() {
+                @Override
+                public void onDestroy() {
+                    activity.getWindowAndroid().removeContextMenuCloseListener(mContextMenuManager);
+                }
+            });
+        }
 
         UiConfig uiConfig = new UiConfig(mRecyclerView);
         mRecyclerView.init(uiConfig, mContextMenuManager);
