@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e8b195_51213ea3",
+        "filename": "chrome/browser/media/webrtc/webrtc_event_log_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-07-13T11:20:25Z",
+      "side": 1,
+      "message": "Drive-by: why is base::WithBaseSyncPrimitives() needed?",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 59
+      },
+      "revId": "477b64a7d11b8d895b232da8fe36038f77eaee04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
