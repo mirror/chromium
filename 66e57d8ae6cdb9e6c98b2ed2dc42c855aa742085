@@ -22,6 +22,30 @@
       "revId": "66e57d8ae6cdb9e6c98b2ed2dc42c855aa742085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2141de1a_3b158362",
+        "filename": "ios/chrome/browser/web/chrome_web_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-13T00:19:56Z",
+      "side": 1,
+      "message": "Done; now matches AddAdditionalSchemes in ContentClient.",
+      "parentUuid": "d65fa650_81568315",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "66e57d8ae6cdb9e6c98b2ed2dc42c855aa742085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
