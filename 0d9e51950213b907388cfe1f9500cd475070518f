@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a74b8f8_9fc9a337",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-align-3/default-alignment/place-items-shorthand-002.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1231189
+      },
+      "writtenOn": "2017-07-13T16:54:55Z",
+      "side": 1,
+      "message": "We probably do want to test what \"auto\" does (i.e., that it\u0027s treated as an unknown value), hence just renaming it is probably the wrong thing here.",
+      "revId": "0d9e51950213b907388cfe1f9500cd475070518f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48f66cda_a616e147",
         "filename": "third_party/WebKit/LayoutTests/fast/alignment/parse-place-items.html",
         "patchSetId": 8
