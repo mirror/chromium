@@ -81,11 +81,12 @@ void InlineFlowBoxPainter::PaintFillLayer(const PaintInfo& paint_info,
   BackgroundImageGeometry geometry(*box_model);
   StyleImage* img = fill_layer.GetImage();
   bool has_fill_image = img && img->CanRender();
+  BoxPainter box_painter(ToLayoutBox(*box_model));
   if ((!has_fill_image &&
        !inline_flow_box_.GetLineLayoutItem().Style()->HasBorderRadius()) ||
       (!inline_flow_box_.PrevLineBox() && !inline_flow_box_.NextLineBox()) ||
       !inline_flow_box_.Parent()) {
-    BoxPainter::PaintFillLayer(*box_model, paint_info, c, fill_layer, rect,
+    box_painter.PaintFillLayer(paint_info, c, fill_layer, rect,
                                kBackgroundBleedNone, geometry,
                                &inline_flow_box_, rect.Size(), op);
   } else if (inline_flow_box_.GetLineLayoutItem()
@@ -93,7 +94,7 @@ void InlineFlowBoxPainter::PaintFillLayer(const PaintInfo& paint_info,
                  ->BoxDecorationBreak() == EBoxDecorationBreak::kClone) {
     GraphicsContextStateSaver state_saver(paint_info.context);
     paint_info.context.Clip(PixelSnappedIntRect(rect));
-    BoxPainter::PaintFillLayer(*box_model, paint_info, c, fill_layer, rect,
+    box_painter.PaintFillLayer(paint_info, c, fill_layer, rect,
                                kBackgroundBleedNone, geometry,
                                &inline_flow_box_, rect.Size(), op);
   } else {
@@ -106,7 +107,7 @@ void InlineFlowBoxPainter::PaintFillLayer(const PaintInfo& paint_info,
     GraphicsContextStateSaver state_saver(paint_info.context);
     // TODO(chrishtr): this should likely be pixel-snapped.
     paint_info.context.Clip(PixelSnappedIntRect(rect));
-    BoxPainter::PaintFillLayer(*box_model, paint_info, c, fill_layer,
+    box_painter.PaintFillLayer(paint_info, c, fill_layer,
                                image_strip_paint_rect, kBackgroundBleedNone,
                                geometry, &inline_flow_box_, rect.Size(), op);
   }
