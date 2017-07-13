@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "598279e3_1bf6e7de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T00:02:40Z",
+      "side": 1,
+      "message": "Reference the Git patch and use http://crrev.com/[git patch]",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 49
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b0f23a_590e24c5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T00:02:40Z",
+      "side": 1,
+      "message": "Capitalize",
+      "range": {
+        "startLine": 758,
+        "startChar": 11,
+        "endLine": 758,
+        "endChar": 20
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c35c8b1_cfdbdc7a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T00:02:40Z",
+      "side": 1,
+      "message": "Add a period.",
+      "range": {
+        "startLine": 760,
+        "startChar": 39,
+        "endLine": 760,
+        "endChar": 40
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c8be97_2bdf88d4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T00:02:40Z",
+      "side": 1,
+      "message": "SchedulerWorkerPoolImpl",
+      "range": {
+        "startLine": 784,
+        "startChar": 19,
+        "endLine": 784,
+        "endChar": 32
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645a34ed_4ba596e7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T00:02:40Z",
+      "side": 1,
+      "message": "Alternatively\nVerify the SchedulerWorkerPoolImpl keeps at least one idle standby thread, capacity permitting.",
+      "range": {
+        "startLine": 785,
+        "startChar": 12,
+        "endLine": 785,
+        "endChar": 59
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354f9f1a_0955c047",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T00:02:40Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 787,
+        "startChar": 3,
+        "endLine": 787,
+        "endChar": 4
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9252c109_c2afccc4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T00:02:40Z",
+      "side": 1,
+      "message": "For both of these events, follow the existing style for waitable events used in this way.",
+      "range": {
+        "startLine": 803,
+        "startChar": 16,
+        "endLine": 803,
+        "endChar": 28
+      },
+      "revId": "6898061c6fd62883a6ddfa0161cba4d42385c899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
