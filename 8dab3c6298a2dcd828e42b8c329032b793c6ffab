@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa709e89_3883a76e",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-13T03:39:01Z",
+      "side": 1,
+      "message": "comment that this 5 is because of the 5 used in GetTemperatureRange().",
+      "range": {
+        "startLine": 113,
+        "startChar": 29,
+        "endLine": 113,
+        "endChar": 48
+      },
+      "revId": "8dab3c6298a2dcd828e42b8c329032b793c6ffab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
