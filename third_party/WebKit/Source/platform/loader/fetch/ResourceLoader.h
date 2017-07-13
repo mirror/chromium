@@ -153,6 +153,10 @@ class PLATFORM_EXPORT ResourceLoader final
   void RequestSynchronously(const ResourceRequest&);
   void Dispose();
 
+  // Checks if the origin requested persisting the client hints, and notifies
+  // the |Context()| with the list of client hints and the persistence duration.
+  void ParsePersistentClientHints(const ResourceResponse&) const;
+
   std::unique_ptr<WebURLLoader> loader_;
   ResourceLoadScheduler::ClientId scheduler_client_id_;
   Member<ResourceFetcher> fetcher_;

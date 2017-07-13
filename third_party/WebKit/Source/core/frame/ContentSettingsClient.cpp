@@ -58,6 +58,15 @@ bool ContentSettingsClient::AllowScriptFromSource(bool enabled_per_settings,
   return enabled_per_settings;
 }
 
+void ContentSettingsClient::PersistClientHints(
+    const bool enabled_types[kWebClientHintsTypeLast + 1],
+    int64_t duration_seconds,
+    const KURL& url) {
+  if (client_) {
+    return client_->PersistClientHints(enabled_types, duration_seconds, url);
+  }
+}
+
 bool ContentSettingsClient::AllowImage(bool enabled_per_settings,
                                        const KURL& image_url) {
   if (client_)
