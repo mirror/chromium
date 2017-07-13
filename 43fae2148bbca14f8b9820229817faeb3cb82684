@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d0e2ab4_789257fe",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T15:45:47Z",
+      "side": 1,
+      "message": "Nit: s/button_continue/signin_button/",
+      "range": {
+        "startLine": 61,
+        "startChar": 25,
+        "endLine": 61,
+        "endChar": 53
+      },
+      "revId": "43fae2148bbca14f8b9820229817faeb3cb82684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93661bf_89cd40c2",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T15:45:47Z",
+      "side": 1,
+      "message": "Nit: s/button_choose_account/choose_account_button/",
+      "range": {
+        "startLine": 72,
+        "startChar": 25,
+        "endLine": 72,
+        "endChar": 59
+      },
+      "revId": "43fae2148bbca14f8b9820229817faeb3cb82684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236ef7a7_08331db3",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T15:45:47Z",
+      "side": 1,
+      "message": "I think it makes sense to add a one-line comment why these are necessary.",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 13
+      },
+      "revId": "43fae2148bbca14f8b9820229817faeb3cb82684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df04bb60_e9604007",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T15:45:47Z",
+      "side": 1,
+      "message": "Can we rename it to SigninButtonBorderlessRegular for consistency with previous style? Also, this style is used on Button, not ButtonCompat, so I\u0027m not sure if inheriting from ButtonCompatBase is necessary.",
+      "range": {
+        "startLine": 603,
+        "startChar": 17,
+        "endLine": 603,
+        "endChar": 46
+      },
+      "revId": "43fae2148bbca14f8b9820229817faeb3cb82684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca3e5cf_b8642919",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T15:45:47Z",
+      "side": 1,
+      "message": "Nit: s/getChooseButton/getChooseAccountButton/",
+      "range": {
+        "startLine": 52,
+        "startChar": 18,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "43fae2148bbca14f8b9820229817faeb3cb82684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67b2f3a_1a3e24cf",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 12
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-13T15:45:47Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be here, I suppose.",
+      "range": {
+        "startLine": 1013,
+        "startChar": 0,
+        "endLine": 1013,
+        "endChar": 73
+      },
+      "revId": "43fae2148bbca14f8b9820229817faeb3cb82684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
