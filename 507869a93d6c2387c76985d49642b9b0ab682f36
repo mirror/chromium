@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fdfaebdd_4b83c472",
+        "filename": "components/storage_monitor/mtab_watcher_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T16:38:31Z",
+      "side": 1,
+      "message": "Done. Almost feels like virtually every class should have SequenceChecker auto-added to it unless writer opts out.",
+      "parentUuid": "f88ecf93_1094cbf6",
+      "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "081b9774_3247dc88",
         "filename": "components/storage_monitor/mtab_watcher_linux.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939ad3df_33a02278",
+        "filename": "components/storage_monitor/mtab_watcher_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T16:38:31Z",
+      "side": 1,
+      "message": "Done. Nice my C++11 foo is increasing",
+      "parentUuid": "081b9774_3247dc88",
+      "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d266fd34_47c213cf",
+        "filename": "components/storage_monitor/storage_monitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T16:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28122952_3071b633",
+      "range": {
+        "startLine": 96,
+        "startChar": 30,
+        "endLine": 96,
+        "endChar": 43
+      },
+      "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b617ce3_d2de78c0",
         "filename": "components/storage_monitor/storage_monitor_linux.cc",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492a776a_2fce432b",
+        "filename": "components/storage_monitor/storage_monitor_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T16:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b617ce3_d2de78c0",
+      "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "4fe97eaa_5dbe7aec",
+        "filename": "components/storage_monitor/storage_monitor_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T16:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a722161c_cc082e75",
+      "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17e55577_0a6df73b",
         "filename": "components/storage_monitor/storage_monitor_linux.h",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d06dbb8_5936860d",
+        "filename": "components/storage_monitor/storage_monitor_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T16:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17e55577_0a6df73b",
+      "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "e4716592_25df683e",
+        "filename": "components/storage_monitor/storage_monitor_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T16:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0db96db5_ed69c4db",
+      "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2cbeec4_f9f21bf2",
         "filename": "components/storage_monitor/storage_monitor_linux.h",
         "patchSetId": 5
@@ -141,6 +273,24 @@
       "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d820fe3_f1eef604",
+        "filename": "components/storage_monitor/storage_monitor_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-13T16:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2cbeec4_f9f21bf2",
+      "revId": "507869a93d6c2387c76985d49642b9b0ab682f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
