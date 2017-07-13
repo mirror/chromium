@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b43564d5_62561ecb",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-13T03:59:51Z",
+      "side": 1,
+      "message": "Pretty sure this is not right.  boliu@ should I use false here, or some other app SDK related thing, to implement this quirk?",
+      "revId": "7257a7f656d461eb7b4f550e59aeae909f52aaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

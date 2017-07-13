@@ -34,6 +34,24 @@
       "revId": "e5dfdbafbc98ace2212e0f606adb74a3657ba9f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97d06812_6f3fd083",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-13T03:59:51Z",
+      "side": 1,
+      "message": "Removed this, and went with a WebView setting quirk in the next patch.",
+      "parentUuid": "bc21c404_e518bd3b",
+      "revId": "e5dfdbafbc98ace2212e0f606adb74a3657ba9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
