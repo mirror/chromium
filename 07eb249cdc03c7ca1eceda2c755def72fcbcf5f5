@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "93a896d2_f500b7bb",
+        "filename": "ash/shell/window_watcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T20:46:41Z",
+      "side": 0,
+      "message": "Is the production ShelfWindowWatcher wrong to use display::DisplayObserver?",
+      "range": {
+        "startLine": 136,
+        "startChar": 41,
+        "endLine": 136,
+        "endChar": 48
+      },
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dc9ef2a_5447bac9",
         "filename": "ash/shell/window_watcher.h",
         "patchSetId": 1
@@ -22,6 +45,30 @@
       "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3926739_2db350fd",
+        "filename": "ash/shell/window_watcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T20:46:41Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "9dc9ef2a_5447bac9",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

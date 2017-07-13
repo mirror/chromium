@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ae3d28b_c6c168cf",
+        "filename": "ash/shell/window_watcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-13T20:46:41Z",
+      "side": 1,
+      "message": "aside: I looked at the impl of WorkspaceWindowWatcher, and for some reason its watching kShellWindowId_PanelContainer and *kShellWindowId_ShelfContainer*, I\u0027d expect it to watch kShellWindowId_DefaultContainer (like the production ShelfWindowWatcher) instead of kShellWindowId_ShelfContainer... not sure how this works in practice in the test shell.",
+      "revId": "14aa847c3a002faeba3721409c2d31219ab1f77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
