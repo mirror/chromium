@@ -136,6 +136,9 @@ class NET_EXPORT HttpResponseInfo {
   // the proxy server that was used.
   // TODO(tbansal): crbug.com/653354. Remove |was_fetched_via_proxy|.
   bool was_fetched_via_proxy;
+  bool was_fetched_via_proxy_method() const {
+    return proxy_server.is_valid() && !proxy_server.is_direct();
+  }
   ProxyServer proxy_server;
 
   // Whether the request use http proxy or server authentication.

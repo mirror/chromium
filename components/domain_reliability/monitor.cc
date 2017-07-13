@@ -356,7 +356,7 @@ void DomainReliabilityMonitor::OnRequestLegComplete(
   beacon_template.http_response_code = response_code;
   beacon_template.start_time = request.load_timing_info.request_start;
   beacon_template.elapsed = time_->NowTicks() - beacon_template.start_time;
-  beacon_template.was_proxied = request.response_info.was_fetched_via_proxy;
+  beacon_template.was_proxied = request.response_info.was_fetched_via_proxy_method();
   beacon_template.url = request.url;
   beacon_template.upload_depth = request.upload_depth;
   beacon_template.details = request.details;
