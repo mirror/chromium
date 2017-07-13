@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99c50b63_d8063083",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-13T23:30:20Z",
+      "side": 1,
+      "message": "I really don\u0027t like this name, but I don\u0027t know what I should call this. Any better name is much longer (ie, DontHideCursorKeyList\"). Do you have any suggestions?",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 20
+      },
+      "revId": "0eff897acd301d0e9c3da3a5aa347477bfe468ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
