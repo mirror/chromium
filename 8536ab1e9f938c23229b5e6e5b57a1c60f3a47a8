@@ -22,6 +22,30 @@
       "revId": "8536ab1e9f938c23229b5e6e5b57a1c60f3a47a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da8509a_2d7c082e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabAppMenuPropertiesDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-13T04:38:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23981bc8_7c36b7c3",
+      "range": {
+        "startLine": 31,
+        "startChar": 18,
+        "endLine": 31,
+        "endChar": 21
+      },
+      "revId": "8536ab1e9f938c23229b5e6e5b57a1c60f3a47a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
