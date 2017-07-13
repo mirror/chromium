@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7a72a59_3bb86d9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T21:33:25Z",
+      "side": 1,
+      "message": "Maybe\n\nProvides a test FeatureEngagementTracker that makes all non-relevant conditions true so you can test per-feature specific conditions and configurations?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "a0e438733181251e4800b98b2fdb9aff67de67a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27836e39_d917a691",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T21:33:25Z",
+      "side": 1,
+      "message": "Inline this to the bool declaration below and then you can use \u003d default.",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 40
+      },
+      "revId": "a0e438733181251e4800b98b2fdb9aff67de67a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef150541_43b36362",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T21:33:25Z",
+      "side": 1,
+      "message": "We don\u0027t care about thread affinity, right?\n\nPrefer SequencedTaskRunnerHandle.",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "a0e438733181251e4800b98b2fdb9aff67de67a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e439d127_be246622",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T21:33:25Z",
+      "side": 1,
+      "message": "Is this necessary? When is it false?",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "a0e438733181251e4800b98b2fdb9aff67de67a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c21cf7_56b0230e",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T21:33:25Z",
+      "side": 1,
+      "message": "This isn\u0027t supposed to change right? Make it const.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 7
+      },
+      "revId": "a0e438733181251e4800b98b2fdb9aff67de67a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71f5e5b_d7e0cfe3",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-13T21:33:25Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to inherit from FeatureEngagementTracker, right? Create already returns an appropriate FeatureEngagementTracker.",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 68
+      },
+      "revId": "a0e438733181251e4800b98b2fdb9aff67de67a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
