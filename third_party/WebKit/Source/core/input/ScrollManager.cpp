@@ -6,6 +6,7 @@
 
 #include <memory>
 #include "core/dom/DOMNodeIds.h"
+#include "core/dom/NodeComputedStyle.h"
 #include "core/events/GestureEvent.h"
 #include "core/frame/BrowserControls.h"
 #include "core/frame/LocalFrameView.h"
@@ -117,6 +118,9 @@ void ScrollManager::RecomputeScrollChain(const Node& start_node,
       if (IsViewportScrollingElement(*cur_element) ||
           cur_element == document_element)
         break;
+
+      if (!CanPropagate(scroll_state, *cur_element))
+        break;
     }
 
     cur_box = cur_box->ContainingBlock();
@@ -150,6 +154,22 @@ bool ScrollManager::CanScroll(const ScrollState& scroll_state,
   ScrollOffset clamped_offset =
       scrollable_area->ClampScrollOffset(target_offset);
   return clamped_offset != current_offset;
+}
+
+bool ScrollManager::CanPropagate(const ScrollState& scroll_state,
+                                 const Element& current_element) {
+  // ScrollBoundaryBehavior may have different values on x-axis and y-axis.
+  // We need to find out the dominant axis of user's intended scroll to decide
+  // which ScrollBoundaryBehavior should be applied, i.e. which node should
+  // be scrolled.
+  bool x_dominant =
+      std::abs(scroll_state.deltaXHint()) > std::abs(scroll_state.deltaYHint());
+  return (x_dominant &&
+          current_element.GetComputedStyle()->ScrollBoundaryBehaviorX() ==
+              EScrollBoundaryBehavior::kAuto) ||
+         (!x_dominant &&
+          current_element.GetComputedStyle()->ScrollBoundaryBehaviorY() ==
+              EScrollBoundaryBehavior::kAuto);
 }
 
 bool ScrollManager::LogicalScroll(ScrollDirection direction,

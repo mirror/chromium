@@ -80,7 +80,9 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
       scrollbars_hidden_(false),
       needs_show_scrollbars_(false),
       raster_even_if_not_drawn_(false),
-      has_transform_node_(false) {
+      has_transform_node_(false),
+      scroll_boundary_behavior_(
+          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto) {
   DCHECK_GT(layer_id_, 0);
 
   DCHECK(layer_tree_impl_);

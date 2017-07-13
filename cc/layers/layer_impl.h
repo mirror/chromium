@@ -23,6 +23,7 @@
 #include "cc/cc_export.h"
 #include "cc/debug/layer_tree_debug_state.h"
 #include "cc/input/input_handler.h"
+#include "cc/input/scroll_boundary_behavior.h"
 #include "cc/layers/draw_mode.h"
 #include "cc/layers/draw_properties.h"
 #include "cc/layers/layer_collections.h"
@@ -564,6 +565,8 @@ class CC_EXPORT LayerImpl {
   bool raster_even_if_not_drawn_ : 1;
 
   bool has_transform_node_ : 1;
+
+  ScrollBoundaryBehavior scroll_boundary_behavior_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerImpl);
 };

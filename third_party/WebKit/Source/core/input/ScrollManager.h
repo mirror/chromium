@@ -113,6 +113,7 @@ class CORE_EXPORT ScrollManager
                             const ScrollState&,
                             std::deque<int>& scroll_chain);
   bool CanScroll(const ScrollState&, const Element& current_element);
+  bool CanPropagate(const ScrollState&, const Element& current_element);
 
   // scroller_size is set only when scrolling non root scroller.
   void ComputeScrollRelatedMetrics(

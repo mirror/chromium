@@ -682,6 +682,7 @@ class CC_EXPORT LayerTreeHostImpl
   void DistributeScrollDelta(ScrollState* scroll_state);
   bool CanConsumeDelta(ScrollNode* scroll_node,
                        const ScrollState& scroll_state);
+  bool CanPropagate(ScrollNode* scroll_node, float x, float y);
 
   bool AnimatePageScale(base::TimeTicks monotonic_time);
   bool AnimateScrollbars(base::TimeTicks monotonic_time);
