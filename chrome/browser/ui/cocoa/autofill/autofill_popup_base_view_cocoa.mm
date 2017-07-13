@@ -191,6 +191,14 @@
   // Configure the scroller to have no visible border.
   [scrollView setBorderType:NSNoBorder];
 
+  // Configure scrolling behavior and appearance of the scrollbar, which will
+  // not show if scrolling is not possible, and only show during scrolling as an
+  // overlay scrollbar.
+  [scrollView setHasVerticalScroller:YES];
+  [scrollView setAutohidesScrollers:YES];
+  [scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+  [scrollView setHorizontalScrollElasticity:NSScrollElasticityNone];
+
   // The |window| contains the |scrollView|, which contains |self|, the full
   // popup view (which is not clipped and may be longer than |scrollView|).
   [self setFrame:[self fullPopupFrame]];
@@ -203,6 +211,11 @@
   [self updateBoundsAndRedrawPopup];
   [[popup_delegate_->container_view() window] addChildWindow:window
                                                      ordered:NSWindowAbove];
+
+  // This will momentarily show the vertical scrollbar to indicate that it is
+  // possible to scroll. Will do the right thing and not show if scrolling is
+  // not possible.
+  [scrollView flashScrollers];
 }
 
 - (void)hidePopup {
