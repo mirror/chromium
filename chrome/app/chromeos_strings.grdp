@@ -3105,11 +3105,14 @@ Press any key to continue exploring.
   <message name="IDS_OPTIONS_CHANGE_PICTURE_PROFILE_LOADING_PHOTO" desc="The text on the loading stub for Google profile image.">
     Google Profile photo (loading)
   </message>
-  <message name="IDS_IMAGE_SCREEN_PROFILE_PHOTO" desc="The title of the Google profile photo of the user on image selection screen. Please keep in sync with IDS_OPTIONS_CHANGE_PICTURE_PROFILE_PHOTO.">
-    * Google Profile photo
+  <message name="IDS_IMAGE_SCREEN_PROFILE_PHOTO" desc="The title of the Google profile photo of the user on image selection screen.">
+    Google Profile photo
   </message>
-  <message name="IDS_IMAGE_SCREEN_PROFILE_LOADING_PHOTO" desc="The title of the loading stub for Google profile image on image selection screen. Please keep in sync with IDS_OPTIONS_CHANGE_PICTURE_PROFILE_LOADING_PHOTO.">
-    * Google Profile photo (loading)
+  <message name="IDS_IMAGE_SCREEN_PROFILE_LOADING_PHOTO" desc="The title of the loading stub for Google profile image on image selection screen.">
+    Google Profile photo (loading)
+  </message>
+  <message name="IDS_IMAGE_SCREEN_PICTURE_AUTHOR_CREDIT_TEXT" desc="Label for the photo credit for the selected image in the image selection screen.">
+    Photo by <ph name="NAME">$1<ex>John Doe</ex></ph>
   </message>
   <message name="IDS_IMAGE_SCREEN_SYNCING_PREFERENCES" desc="The message displayed on the image screen of the GAIA flow while user preferences are syncing.">
     Syncing your preferences...
