@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8a25b2d_c2908954",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T06:35:02Z",
+      "side": 1,
+      "message": "Added a TODO for this. Currently textfields look kinda long under Harmony. I think we should revisit this once we know how textfields should align and not try to do something more complex until then. (This isn\u0027t a \"new\" constant, I just moved it here from line 14).",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa7f405_319f4b8b",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-13T06:35:02Z",
+      "side": 1,
+      "message": "not really sure it\u0027s worth changing this file to add this comment, but it\u0027s here for now",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
