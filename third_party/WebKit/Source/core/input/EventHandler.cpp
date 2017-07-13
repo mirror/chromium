@@ -186,6 +186,7 @@ EventHandler::EventHandler(LocalFrame& frame)
           TaskRunnerHelper::Get(TaskType::kUnspecedTimer, &frame),
           this,
           &EventHandler::CursorUpdateTimerFired),
+      should_show_cursor_(true),
       event_handler_will_reset_capturing_mouse_events_node_(0),
       should_only_fire_drag_over_event_(false),
       scroll_manager_(new ScrollManager(frame)),
@@ -398,6 +399,9 @@ OptionalCursor EventHandler::SelectCursor(const HitTestResult& result) {
     return kNoCursorChange;
   if (scroll_manager_->MiddleClickAutoscrollInProgress())
     return kNoCursorChange;
+
+  if (!should_show_cursor_)
+    return NoneCursor();
 
   Node* node = result.InnerPossiblyPseudoNode();
   if (!node)

@@ -46,6 +46,7 @@
 #include "core/html/media/HTMLMediaElementControlsList.h"
 #include "core/html/track/TextTrackContainer.h"
 #include "core/html/track/TextTrackList.h"
+#include "core/input/EventHandler.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/page/SpatialNavigation.h"
@@ -596,10 +597,14 @@ bool MediaControlsImpl::IsVisible() const {
 
 void MediaControlsImpl::MakeOpaque() {
   panel_->MakeOpaque();
+  if (is_mouse_over_controls_ || MediaElement().IsFocusedElementInDocument())
+    GetDocument().GetFrame()->GetEventHandler().SetShouldShowCursor(true);
 }
 
 void MediaControlsImpl::MakeTransparent() {
   panel_->MakeTransparent();
+  if (is_mouse_over_controls_ || MediaElement().IsFocusedElementInDocument())
+    GetDocument().GetFrame()->GetEventHandler().SetShouldShowCursor(false);
 }
 
 bool MediaControlsImpl::ShouldHideMediaControls(unsigned behavior_flags) const {

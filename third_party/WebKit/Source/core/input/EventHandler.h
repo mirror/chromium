@@ -121,6 +121,9 @@ class CORE_EXPORT EventHandler final
 
   void ScheduleHoverStateUpdate();
   void ScheduleCursorUpdate();
+  void SetShouldShowCursor(bool should_show) {
+    should_show_cursor_ = should_show;
+  }
 
   // Return whether a mouse cursor update is currently pending.  Used for
   // testing.
@@ -357,6 +360,7 @@ class CORE_EXPORT EventHandler final
   // state should move out of EventHandler to a new PageEventHandler class.
   // crbug.com/449649
   TaskRunnerTimer<EventHandler> cursor_update_timer_;
+  bool should_show_cursor_;
 
   Member<Node> capturing_mouse_events_node_;
   bool event_handler_will_reset_capturing_mouse_events_node_;
