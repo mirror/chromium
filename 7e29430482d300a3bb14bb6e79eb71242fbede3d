@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e51443f2_10be7a96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-13T12:46:39Z",
+      "side": 1,
+      "message": "Remove this paragraph. This is explanation for reviewer, but unnecessary to understand why the change is made.",
+      "revId": "7e29430482d300a3bb14bb6e79eb71242fbede3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb493239_5702934a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-13T12:46:39Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7e29430482d300a3bb14bb6e79eb71242fbede3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d091214_15362ebc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-13T12:46:39Z",
+      "side": 1,
+      "message": "Please use \"Bug: none\" (and remove blank line) to use the gerrit way of naming labels.",
+      "revId": "7e29430482d300a3bb14bb6e79eb71242fbede3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3756e53_1608aa4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-13T12:46:39Z",
+      "side": 1,
+      "message": "Please remove (this is the default).",
+      "revId": "7e29430482d300a3bb14bb6e79eb71242fbede3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
