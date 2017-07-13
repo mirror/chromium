@@ -81,7 +81,6 @@ class PermissionRequestManagerBrowserTest : public InProcessBrowserTest {
     PermissionRequestManager* manager = GetPermissionRequestManager();
     mock_permission_prompt_factory_.reset(
         new MockPermissionPromptFactory(manager));
-    manager->DisplayPendingRequests();
   }
 
   void TearDownOnMainThread() override {

@@ -111,12 +111,12 @@ PermissionRequestManager::PermissionRequestManager(
       view_factory_(base::Bind(&PermissionPrompt::Create)),
       view_(nullptr),
       main_frame_has_fully_loaded_(false),
+      tab_is_active_(false),
       persist_(true),
       auto_response_for_test_(NONE),
       weak_factory_(this) {
 #if defined(OS_ANDROID)
-  view_ = view_factory_.Run(web_contents);
-  view_->SetDelegate(this);
+  tab_is_active_ = true;
 #endif
 }
 
@@ -231,10 +231,12 @@ void PermissionRequestManager::CancelRequest(PermissionRequest* request) {
 }
 
 void PermissionRequestManager::HideBubble() {
-  // Disengage from the existing view if there is one and it doesn't manage
-  // its own visibility.
-  if (!view_ || view_->HidesAutomatically())
+  tab_is_active_ = false;
+
+  // Disengage from the existing view if there is one.
+  if (!view_)
     return;
+  DCHECK(!view_->HidesAutomatically());
 
   view_->SetDelegate(nullptr);
   view_->Hide();
@@ -242,14 +244,14 @@ void PermissionRequestManager::HideBubble() {
 }
 
 void PermissionRequestManager::DisplayPendingRequests() {
-  if (IsBubbleVisible())
+  DCHECK(!view_);
+  tab_is_active_ = true;
+
+  if (!main_frame_has_fully_loaded_)
     return;
 
   view_ = view_factory_.Run(web_contents());
   view_->SetDelegate(this);
-
-  if (!main_frame_has_fully_loaded_)
-    return;
 
   if (requests_.empty()) {
     DequeueRequestsAndShowBubble();
@@ -291,13 +293,21 @@ void PermissionRequestManager::DidFinishNavigation(
     return;
   }
 
-  CancelPendingQueues();
-  FinalizeBubble();
+  CleanUpRequests();
   main_frame_has_fully_loaded_ = false;
 }
 
 void PermissionRequestManager::DocumentOnLoadCompletedInMainFrame() {
+  DCHECK(!main_frame_has_fully_loaded_);
+  DCHECK(!view_);
   main_frame_has_fully_loaded_ = true;
+
+  if (!tab_is_active_)
+    return;
+
+  view_ = view_factory_.Run(web_contents());
+  view_->SetDelegate(this);
+
   // This is scheduled because while all calls to the browser have been
   // issued at DOMContentLoaded, they may be bouncing around in scheduled
   // callbacks finding the UI thread still. This makes sure we allow those
@@ -313,8 +323,7 @@ void PermissionRequestManager::DocumentLoadedInFrame(
 
 void PermissionRequestManager::WebContentsDestroyed() {
   // If the web contents has been destroyed, treat the bubble as cancelled.
-  CancelPendingQueues();
-  FinalizeBubble();
+  CleanUpRequests();
 
   // The WebContents is going away; be aggressively paranoid and delete
   // ourselves lest other parts of the system attempt to add permission bubbles
@@ -380,9 +389,9 @@ void PermissionRequestManager::ScheduleShowBubble() {
 void PermissionRequestManager::DequeueRequestsAndShowBubble() {
   if (!view_)
     return;
+  DCHECK(main_frame_has_fully_loaded_);
+
   if (!requests_.empty())
-    return;
-  if (!main_frame_has_fully_loaded_)
     return;
   if (queued_requests_.empty())
     return;
@@ -428,7 +437,7 @@ void PermissionRequestManager::FinalizeBubble() {
     DequeueRequestsAndShowBubble();
 }
 
-void PermissionRequestManager::CancelPendingQueues() {
+void PermissionRequestManager::CleanUpRequests() {
   std::deque<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = queued_requests_.begin();
        requests_iter != queued_requests_.end();
@@ -436,6 +445,8 @@ void PermissionRequestManager::CancelPendingQueues() {
     RequestFinishedIncludingDuplicates(*requests_iter);
   }
   queued_requests_.clear();
+  FinalizeBubble();
+  view_.reset();
 }
 
 PermissionRequest* PermissionRequestManager::GetExistingRequest(
