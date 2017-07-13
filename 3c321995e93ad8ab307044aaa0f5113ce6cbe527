@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "034849bc_b12d49d7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T04:46:13Z",
+      "side": 1,
+      "message": "how about putting a blank line here so that it\u0027s clear the following 2. is not a part of the enumeration?",
+      "revId": "3c321995e93ad8ab307044aaa0f5113ce6cbe527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93c135d_e321efe6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T04:46:13Z",
+      "side": 1,
+      "message": "cause -\u003e causes",
+      "revId": "3c321995e93ad8ab307044aaa0f5113ce6cbe527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
