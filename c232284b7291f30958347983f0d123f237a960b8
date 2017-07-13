@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d727600f_a4205a26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-13T21:12:17Z",
+      "side": 1,
+      "message": "\"detect and prevent any future from creeping in in the future\" - typos?",
+      "revId": "c232284b7291f30958347983f0d123f237a960b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e092eb9c_d79b7066",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-13T21:12:17Z",
+      "side": 1,
+      "message": "I think you forgot to update this comment.",
+      "revId": "c232284b7291f30958347983f0d123f237a960b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec83580_c3bb848f",
+        "filename": "sql/connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1751,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-13T21:12:17Z",
+      "side": 1,
+      "message": "Forgot to update comment?",
+      "revId": "c232284b7291f30958347983f0d123f237a960b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
