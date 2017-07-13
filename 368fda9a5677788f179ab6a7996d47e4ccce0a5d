@@ -36,6 +36,98 @@
     },
     {
       "key": {
+        "uuid": "e8856474_60b0ac83",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T10:12:00Z",
+      "side": 1,
+      "message": "Nit: no it.",
+      "range": {
+        "startLine": 837,
+        "startChar": 16,
+        "endLine": 837,
+        "endChar": 19
+      },
+      "revId": "368fda9a5677788f179ab6a7996d47e4ccce0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff138a75_3d87f9fb",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T10:12:00Z",
+      "side": 1,
+      "message": "It\u0027s because //third_party/WebKit/public:mojo_bindings depends on private (not exported?) content types. So linking this into anything that\u0027s not //content will unfortunately just Not Work. I think we should probably think of a more generic name for this, so we can group the web_features.mojom from +loonybear in here as well.",
+      "range": {
+        "startLine": 837,
+        "startChar": 43,
+        "endLine": 838,
+        "endChar": 54
+      },
+      "revId": "368fda9a5677788f179ab6a7996d47e4ccce0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23da22fe_39c9dd60",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T10:12:00Z",
+      "side": 1,
+      "message": "I think this block shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 843,
+        "startChar": 0,
+        "endLine": 845,
+        "endChar": 27
+      },
+      "revId": "368fda9a5677788f179ab6a7996d47e4ccce0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf9cbbf_7f187c9b",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_preparation_type.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T10:12:00Z",
+      "side": 1,
+      "message": "I would strongly prefer to avoid defining this sentinel value in the enum: this makes ParamTraits and StructTraits asymmetrical in behavior (IPC rejects this sentinel value, while Mojo will happily accept it), and forces client code using this enum to have to write an extra case to handle a sentinel that should never appear.\n\nWhile it\u0027s ugly, from an IPC standpoint, it\u0027d be preferable to keep the LAST \u003d START_IN_EXISTING_READY_PROCESS idiom, and then do the not nice looking arithmetic on the scoped enum.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 11
+      },
+      "revId": "368fda9a5677788f179ab6a7996d47e4ccce0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d618421_5fd43f25",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
