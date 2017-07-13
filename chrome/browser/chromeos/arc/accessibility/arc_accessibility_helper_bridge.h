@@ -37,7 +37,12 @@ class ArcAccessibilityHelperBridge
       public AXTreeSourceArc::Delegate,
       public ArcAppListPrefs::Observer {
  public:
-  ArcAccessibilityHelperBridge(Profile* profile,
+  // Returns singleton instance for the given BrowserContext,
+  // or nullptr if it is not allowed to use ARC.
+  static ArcAccessibilityHelperBridge* GetForBrowserContext(
+      content::BrowserContext* context);
+
+  ArcAccessibilityHelperBridge(content::BrowserContext* browser_context,
                                ArcBridgeService* arc_bridge_service);
   ~ArcAccessibilityHelperBridge() override;
 
