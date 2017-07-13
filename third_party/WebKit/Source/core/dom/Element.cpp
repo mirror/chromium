@@ -4170,7 +4170,7 @@ void Element::StyleAttributeChanged(
                                             ShadowRootType::kUserAgent) ||
              GetDocument().GetContentSecurityPolicy()->AllowInlineStyle(
                  this, GetDocument().Url(), String(), start_line_number,
-                 new_style_string)) {
+                 new_style_string, ContentSecurityPolicy::InlineType::kBlock)) {
     SetInlineStyleFromString(new_style_string);
   }
 
