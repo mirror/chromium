@@ -308,6 +308,7 @@ TEST_F(UiSceneManagerTest, WebVrAutopresented) {
 
   // Enter WebVR with autopresentation.
   manager_->SetWebVrMode(true, false);
+  manager_->OnFirstWebVrFrameAvailable();
   VerifyElementsVisible("Autopresented",
                         std::set<UiElementDebugId>{kTransientUrlBar});
 
