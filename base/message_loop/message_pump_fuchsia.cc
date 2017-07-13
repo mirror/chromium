@@ -16,8 +16,7 @@ MessagePumpFuchsia::FileDescriptorWatcher::FileDescriptorWatcher(
 }
 
 MessagePumpFuchsia::FileDescriptorWatcher::~FileDescriptorWatcher() {
-  if (!StopWatchingFileDescriptor())
-    NOTREACHED();
+  StopWatchingFileDescriptor();
   if (io_)
     __mxio_release(io_);
   if (was_destroyed_) {
@@ -27,21 +26,13 @@ MessagePumpFuchsia::FileDescriptorWatcher::~FileDescriptorWatcher() {
 }
 
 bool MessagePumpFuchsia::FileDescriptorWatcher::StopWatchingFileDescriptor() {
-  if (handle_ == MX_HANDLE_INVALID)
-    return true;
   uint64_t this_as_key =
       static_cast<uint64_t>(reinterpret_cast<uintptr_t>(this));
-  int result = mx_port_cancel(port_, handle_, this_as_key);
-  DLOG_IF(ERROR, result != MX_OK)
-      << "mx_port_cancel(handle=" << handle_ << ") failed: result=" << result;
-  handle_ = MX_HANDLE_INVALID;
-  return result == MX_OK;
+  return mx_port_cancel(port_, handle_, this_as_key) == MX_OK;
 }
 
 MessagePumpFuchsia::MessagePumpFuchsia() : keep_running_(true) {
-  // TODO(wez): Remove MX_PORT_OPT_V2 once the SDK is rolled, or migrate
-  // this implementation use ulib/port helpers.
-  CHECK(mx_port_create(MX_PORT_OPT_V2, &port_) == MX_OK);
+  CHECK(mx_port_create(0, &port_) == MX_OK);
 }
 
 MessagePumpFuchsia::~MessagePumpFuchsia() {
@@ -83,10 +74,8 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
   controller->desired_events_ = events;
 
   controller->io_ = __mxio_fd_to_io(fd);
-  if (!controller->io_) {
-    DLOG(ERROR) << "Failed to get IO for FD";
+  if (!controller->io_)
     return false;
-  }
 
   controller->fd_ = fd;
   controller->persistent_ = persistent;
@@ -97,18 +86,15 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
 bool MessagePumpFuchsia::FileDescriptorWatcher::WaitBegin() {
   uint32_t signals = 0u;
   __mxio_wait_begin(io_, desired_events_, &handle_, &signals);
-  if (handle_ == MX_HANDLE_INVALID) {
-    DLOG(ERROR) << "mxio_wait_begin failed";
+  if (handle_ == MX_HANDLE_INVALID)
     return false;
-  }
 
   uint64_t this_as_key =
       static_cast<uint64_t>(reinterpret_cast<uintptr_t>(this));
   mx_status_t status = mx_object_wait_async(handle_, port_, this_as_key,
                                             signals, MX_WAIT_ASYNC_ONCE);
   if (status != MX_OK) {
-    DLOG(ERROR) << "mx_object_wait_async failed: " << status
-                << " (port=" << port_ << ")";
+    DLOG(ERROR) << "mx_object_wait_async failed: " << status;
     return false;
   }
   return true;
@@ -178,14 +164,21 @@ void MessagePumpFuchsia::Run(Delegate* delegate) {
       // pointer is now invalid.
       bool controller_was_destroyed = false;
       controller->was_destroyed_ = &controller_was_destroyed;
-      if (events & MXIO_EVT_WRITABLE)
+      if ((events & (MXIO_EVT_READABLE | MXIO_EVT_WRITABLE)) ==
+          (MXIO_EVT_READABLE | MXIO_EVT_WRITABLE)) {
         controller->watcher_->OnFileCanWriteWithoutBlocking(controller->fd_);
-      if (!controller_was_destroyed && (events & MXIO_EVT_READABLE))
+        if (!controller_was_destroyed)
+          controller->watcher_->OnFileCanReadWithoutBlocking(controller->fd_);
+      } else if (events & MXIO_EVT_WRITABLE) {
+        controller->watcher_->OnFileCanWriteWithoutBlocking(controller->fd_);
+      } else if (events & MXIO_EVT_READABLE) {
         controller->watcher_->OnFileCanReadWithoutBlocking(controller->fd_);
+      }
       if (!controller_was_destroyed) {
         controller->was_destroyed_ = nullptr;
-        if (controller->persistent_)
-          controller->WaitBegin();
+      }
+      if (!controller_was_destroyed && controller->persistent_) {
+        controller->WaitBegin();
       }
     } else {
       // Wakeup caused by ScheduleWork().
@@ -206,8 +199,9 @@ void MessagePumpFuchsia::ScheduleWork() {
   mx_port_packet_t packet = {};
   packet.type = MX_PKT_TYPE_USER;
   mx_status_t status = mx_port_queue(port_, &packet, 0);
-  DLOG_IF(ERROR, status != MX_OK)
-      << "mx_port_queue failed: " << status << " (port=" << port_ << ")";
+  if (status != MX_OK) {
+    DLOG(ERROR) << "mx_port_queue failed: " << status;
+  }
 }
 
 void MessagePumpFuchsia::ScheduleDelayedWork(

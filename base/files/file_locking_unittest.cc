@@ -11,6 +11,7 @@
 #include "base/test/test_timeouts.h"
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/multiprocess_func_list.h"
 
@@ -179,7 +180,12 @@ class FileLockingTest : public testing::Test {
 };
 
 // Test that locks are released by Unlock().
-TEST_F(FileLockingTest, LockAndUnlock) {
+#if defined(OS_FUCHSIA)
+#define MAYBE_LockAndUnlock DISABLED_LockAndUnlock
+#else
+#define MAYBE_LockAndUnlock LockAndUnlock
+#endif
+TEST_F(FileLockingTest, MAYBE_LockAndUnlock) {
   StartChildAndSignalLock(kFileUnlock);
 
   ASSERT_NE(File::FILE_OK, lock_file_.Lock());
@@ -192,7 +198,12 @@ TEST_F(FileLockingTest, LockAndUnlock) {
 }
 
 // Test that locks are released on Close().
-TEST_F(FileLockingTest, UnlockOnClose) {
+#if defined(OS_FUCHSIA)
+#define MAYBE_UnlockOnClose DISABLED_UnlockOnClose
+#else
+#define MAYBE_UnlockOnClose UnlockOnClose
+#endif
+TEST_F(FileLockingTest, MAYBE_UnlockOnClose) {
   StartChildAndSignalLock(kCloseUnlock);
 
   ASSERT_NE(File::FILE_OK, lock_file_.Lock());
@@ -205,7 +216,12 @@ TEST_F(FileLockingTest, UnlockOnClose) {
 }
 
 // Test that locks are released on exit.
-TEST_F(FileLockingTest, UnlockOnExit) {
+#if defined(OS_FUCHSIA)
+#define MAYBE_UnlockOnExit DISABLED_UnlockOnExit
+#else
+#define MAYBE_UnlockOnExit UnlockOnExit
+#endif
+TEST_F(FileLockingTest, MAYBE_UnlockOnExit) {
   StartChildAndSignalLock(kExitUnlock);
 
   ASSERT_NE(File::FILE_OK, lock_file_.Lock());
@@ -215,7 +231,12 @@ TEST_F(FileLockingTest, UnlockOnExit) {
 }
 
 // Test that killing the process releases the lock.  This should cover crashing.
-TEST_F(FileLockingTest, UnlockOnTerminate) {
+#if defined(OS_FUCHSIA)
+#define MAYBE_UnlockOnTerminate DISABLED_UnlockOnTerminate
+#else
+#define MAYBE_UnlockOnTerminate UnlockOnTerminate
+#endif
+TEST_F(FileLockingTest, MAYBE_UnlockOnTerminate) {
   // The child will wait for an exit which never arrives.
   StartChildAndSignalLock(kExitUnlock);
 
@@ -223,4 +244,21 @@ TEST_F(FileLockingTest, UnlockOnTerminate) {
   ASSERT_TRUE(TerminateMultiProcessTestChild(spawn_child_.process, 0, true));
   ASSERT_EQ(File::FILE_OK, lock_file_.Lock());
   ASSERT_EQ(File::FILE_OK, lock_file_.Unlock());
+}
+
+#if !defined(OS_FUCHSIA)
+#define MAYBE_NoOpOnFuchsia DISABLED_NoOpOnFuchsia
+#else
+#define MAYBE_NoOpOnFuchsia NoOpOnFuchsia
+#endif
+TEST_F(FileLockingTest, MAYBE_NoOpOnFuchsia) {
+  EXPECT_EQ(File::FILE_OK, lock_file_.Lock());
+  EXPECT_EQ(File::FILE_OK, lock_file_.Unlock());
+
+  // An invalid sequence of lock operations should be permissible, since this
+  // isn't actually locking any files.
+  EXPECT_EQ(File::FILE_OK, lock_file_.Unlock());
+  EXPECT_EQ(File::FILE_OK, lock_file_.Lock());
+  EXPECT_EQ(File::FILE_OK, lock_file_.Lock());
+  EXPECT_EQ(File::FILE_OK, lock_file_.Unlock());
 }
