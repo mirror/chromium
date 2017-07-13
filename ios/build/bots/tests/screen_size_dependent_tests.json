@@ -13,6 +13,9 @@
       "app": "ios_chrome_unittests"
     },
     {
+      "app": "ios_clean_chrome_unittests"
+    },
+    {
       "app": "ios_web_inttests"
     },
     {

@@ -577,6 +577,11 @@
     "type": "raw",
     "args": [],
   },
+  "ios_clean_chrome_unittests": {
+    "label": "//ios/clean/chrome/test:ios_clean_chrome_unittests",
+    "type": "raw",
+    "args": [],
+  },
   "ios_net_unittests": {
     "label": "//ios/net:ios_net_unittests",
     "type": "raw",
