@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "058cc9d2_af99ea50",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-13T21:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a69954b_989d496b",
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cea0b5a_d02fc12a",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 26
@@ -136,6 +154,54 @@
     },
     {
       "key": {
+        "uuid": "6fe47b89_4927e30c",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-13T21:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7adae3b5_6f0c333a",
+      "range": {
+        "startLine": 75,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 68
+      },
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c3f66ff_e700f7b1",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-13T21:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f7e6a72_b55cc66b",
+      "range": {
+        "startLine": 75,
+        "startChar": 15,
+        "endLine": 75,
+        "endChar": 29
+      },
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "987a154e_54fbdaed",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 26
@@ -150,6 +216,24 @@
       "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97270059_596680b6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-13T21:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "987a154e_54fbdaed",
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -170,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "633b7f75_5cc93f65",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-13T21:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b5fc1d1_49d66a8e",
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6666f4f1_890e26f2",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
         "patchSetId": 26
@@ -181,6 +283,30 @@
       "writtenOn": "2017-07-13T20:08:07Z",
       "side": 1,
       "message": "For future changes, perform this sort of cleanup in a separate change and mark this change as dependent on the cleanup. This makes reverts in the event anything goes wrong easier.",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 21
+      },
+      "revId": "cb1d3e28e0c0da4c1c13e1be88f72be24e65137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d74d5f4_7f336f9d",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-13T21:13:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6666f4f1_890e26f2",
       "range": {
         "startLine": 284,
         "startChar": 6,
