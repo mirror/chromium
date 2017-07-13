@@ -183,6 +183,7 @@ void CoordinatorImpl::RegisterClientProcess(
 
 void CoordinatorImpl::UnregisterClientProcess(
     mojom::ClientProcess* client_process) {
+  using ResponseType = QueuedMemoryDumpRequest::PendingResponse::Type;
   QueuedMemoryDumpRequest* request = GetCurrentRequest();
   if (request != nullptr) {
     // Check if we are waiting for an ack from this client process.
@@ -198,19 +199,19 @@ void CoordinatorImpl::UnregisterClientProcess(
         continue;
 
       switch (current->type) {
-        case QueuedMemoryDumpRequest::PendingResponse::Type::kProcessDump: {
-          OnProcessMemoryDumpResponse(client_process, false /* success */,
-                                      request->args.dump_guid,
-                                      nullptr /* process_memory_dump */);
+        case ResponseType::kProcessDump: {
+          RemovePendingResponse(client_process, ResponseType::kProcessDump);
           break;
         }
-        case QueuedMemoryDumpRequest::PendingResponse::Type::kOSDump: {
-          OSMemDumpMap results;
-          OnOSMemoryDumpResponse(client_process, false /* success */, results);
+        case ResponseType::kOSDump: {
+          RemovePendingResponse(client_process, ResponseType::kOSDump);
           break;
         }
       }
+      request->failed_memory_dump_count++;
+      DCHECK(GetCurrentRequest());
     }
+    FinalizeGlobalMemoryDumpIfAllManagersReplied();
   }
   size_t num_deleted = clients_.erase(client_process);
   DCHECK(num_deleted == 1);
@@ -315,14 +316,7 @@ void CoordinatorImpl::OnProcessMemoryDumpResponse(
     return;
   }
 
-  auto it =
-      request->pending_responses.find({client, ResponseType::kProcessDump});
-
-  if (request->args.dump_guid != dump_guid ||
-      it == request->pending_responses.end()) {
-    VLOG(1) << "Unexpected memory dump response, dump-id:" << dump_guid;
-    return;
-  }
+  RemovePendingResponse(client, ResponseType::kProcessDump);
 
   auto iter = clients_.find(client);
   if (iter == clients_.end()) {
@@ -336,7 +330,6 @@ void CoordinatorImpl::OnProcessMemoryDumpResponse(
     request->responses[client].dump_ptr = mojom::RawProcessMemoryDump::New();
   }
 
-  request->pending_responses.erase(it);
 
   if (!success) {
     request->failed_memory_dump_count++;
@@ -357,12 +350,7 @@ void CoordinatorImpl::OnOSMemoryDumpResponse(mojom::ClientProcess* client,
     return;
   }
 
-  auto it = request->pending_responses.find({client, ResponseType::kOSDump});
-
-  if (it == request->pending_responses.end()) {
-    VLOG(1) << "Unexpected memory dump response";
-    return;
-  }
+  RemovePendingResponse(client, ResponseType::kOSDump);
 
   auto iter = clients_.find(client);
   if (iter == clients_.end()) {
@@ -372,14 +360,28 @@ void CoordinatorImpl::OnOSMemoryDumpResponse(mojom::ClientProcess* client,
 
   request->responses[client].os_dumps = os_dumps;
 
-  request->pending_responses.erase(it);
-
   if (!success) {
     request->failed_memory_dump_count++;
     VLOG(1) << "RequestGlobalMemoryDump() FAIL: NACK from client process";
   }
 
   FinalizeGlobalMemoryDumpIfAllManagersReplied();
+}
+
+void CoordinatorImpl::RemovePendingResponse(
+    mojom::ClientProcess* client,
+    QueuedMemoryDumpRequest::PendingResponse::Type type) {
+  QueuedMemoryDumpRequest* request = GetCurrentRequest();
+  if (request == nullptr) {
+    NOTREACHED() << "No current dump request.";
+    return;
+  }
+  auto it = request->pending_responses.find({client, type});
+  if (it == request->pending_responses.end()) {
+    VLOG(1) << "Unexpected memory dump response";
+    return;
+  }
+  request->pending_responses.erase(it);
 }
 
 void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
@@ -398,17 +400,21 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   std::map<base::ProcessId, OSMemDump> os_dumps;
   for (auto& response : request->responses) {
     const base::ProcessId pid = response.second.process_id;
-    const OSMemDump dump = response.second.dump_ptr->os_dump;
+    const mojom::RawProcessMemoryDumpPtr& dump_ptr = response.second.dump_ptr;
+
+    // If we're missing a Chrome dump response for this client give up.
+    if (!dump_ptr)
+      continue;
 
     // TODO(hjd): We should have a better way to tell if os_dump is filled.
     // TODO(hjd): Remove this if when we collect OS dumps separately.
-    if (dump.resident_set_kb > 0) {
+    if (dump_ptr->os_dump.resident_set_kb > 0) {
       DCHECK_EQ(0u, os_dumps.count(pid));
-      os_dumps[pid] = dump;
+      os_dumps[pid] = dump_ptr->os_dump;
     }
 
     // TODO(hjd): Remove this for loop when we collect OS dumps separately.
-    for (auto& extra : response.second.dump_ptr->extra_processes_dumps) {
+    for (auto& extra : dump_ptr->extra_processes_dumps) {
       const base::ProcessId extra_pid = extra.first;
       const OSMemDump extra_dump = extra.second;
       DCHECK_EQ(0u, os_dumps.count(extra_pid));
@@ -426,10 +432,14 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   std::map<base::ProcessId, mojom::ProcessMemoryDumpPtr> finalized_pmds;
   for (auto& response : request->responses) {
     const base::ProcessId pid = response.second.process_id;
-    mojom::ProcessMemoryDumpPtr& pmd = finalized_pmds[pid];
-    if (!pmd)
-      pmd = mojom::ProcessMemoryDump::New();
+    DCHECK(!finalized_pmds.count(pid));
 
+    // If we're missing a Chrome dump response for this client give up.
+    if (!response.second.dump_ptr)
+      continue;
+
+    mojom::ProcessMemoryDumpPtr& pmd = finalized_pmds[pid];
+    pmd = mojom::ProcessMemoryDump::New();
     pmd->process_type = response.second.process_type;
     pmd->chrome_dump = response.second.dump_ptr->chrome_dump;
     pmd->os_dump = CreatePublicOSDump(os_dumps[pid]);

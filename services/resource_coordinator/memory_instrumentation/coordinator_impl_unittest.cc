@@ -230,6 +230,33 @@ TEST_F(CoordinatorImplTest, ClientCrashDuringGlobalDump) {
   run_loop.Run();
 }
 
+TEST_F(CoordinatorImplTest, ClientSelfCrashDuringGlobalDump) {
+  base::RunLoop run_loop;
+
+  base::trace_event::MemoryDumpRequestArgs args = {
+      0, base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+      base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
+
+  auto client_process = base::MakeUnique<NiceMock<MockClientProcess>>(
+      this, 1, mojom::ProcessType::BROWSER);
+
+  ON_CALL(*client_process, RequestProcessMemoryDump(_, _))
+      .WillByDefault(
+          Invoke([&client_process](
+                     const MemoryDumpRequestArgs& args,
+                     const MockClientProcess::RequestProcessMemoryDumpCallback&
+                         callback) {
+            client_process.reset();
+            callback.Run(true, args.dump_guid, nullptr);
+          }));
+
+  MockGlobalMemoryDumpCallback callback;
+  EXPECT_CALL(callback, OnCall(false, Ne(0u), NotNull()))
+      .WillOnce(RunClosure(run_loop.QuitClosure()));
+  RequestGlobalMemoryDump(args, callback.Get());
+  run_loop.Run();
+}
+
 TEST_F(CoordinatorImplTest, GlobalMemoryDumpStruct) {
   base::RunLoop run_loop;
 
