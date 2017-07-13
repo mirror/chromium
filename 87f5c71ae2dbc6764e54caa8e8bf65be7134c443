@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "e8871139_e2747b01",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T11:09:25Z",
+      "side": 1,
+      "message": "--style\u003dgoogle still does four-space indents for some reason. There\u0027s --style\u003dchromium though, so I applied that. Mostly it inserted a few more newlines.",
+      "parentUuid": "f3ffd142_5789ed91",
+      "revId": "87f5c71ae2dbc6764e54caa8e8bf65be7134c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbcf4e6d_e879de82",
         "filename": "chrome/browser/search/tools/generate_integrity_header.py",
         "patchSetId": 1
