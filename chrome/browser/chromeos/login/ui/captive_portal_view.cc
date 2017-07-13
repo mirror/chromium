@@ -17,8 +17,8 @@
 
 namespace {
 
-const char* CaptivePortalStartURL() {
-  return captive_portal::CaptivePortalDetector::kDefaultURL;
+std::string CaptivePortalStartURL() {
+  return captive_portal::CaptivePortalDetector::GetTestURL();
 }
 
 }  // namespace

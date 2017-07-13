@@ -232,7 +232,7 @@ void CaptivePortalBlockingPageTest::TestCertReporting(
               ? certificate_reporting_test_utils::CERT_REPORT_EXPECTED
               : certificate_reporting_test_utils::CERT_REPORT_NOT_EXPECTED);
 
-  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::kDefaultURL);
+  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::GetTestURL());
   TestInterstitial(true, std::string(), kLandingUrl, EXPECT_WIFI_YES,
                    EXPECT_WIFI_SSID_NO, EXPECT_LOGIN_URL_NO,
                    std::move(ssl_cert_reporter));
@@ -275,7 +275,7 @@ IN_PROC_BROWSER_TEST_F(CaptivePortalBlockingPageTest,
 // which case the login URL shouldn't be displayed.
 IN_PROC_BROWSER_TEST_F(CaptivePortalBlockingPageTest,
                        WiredNetwork_NoLoginURL) {
-  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::kDefaultURL);
+  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::GetTestURL());
   TestInterstitial(false, std::string(), kLandingUrl, EXPECT_WIFI_NO,
                    EXPECT_WIFI_SSID_NO, EXPECT_LOGIN_URL_NO);
 }
@@ -284,7 +284,7 @@ IN_PROC_BROWSER_TEST_F(CaptivePortalBlockingPageTest,
 // be Wi-Fi.
 IN_PROC_BROWSER_TEST_F(CaptivePortalBlockingPageTest,
                        WiredNetwork_NoLoginURL_With_SSID) {
-  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::kDefaultURL);
+  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::GetTestURL());
   TestInterstitial(false, kWiFiSSID, kLandingUrl, EXPECT_WIFI_YES,
                    EXPECT_WIFI_SSID_YES, EXPECT_LOGIN_URL_NO);
 }
@@ -322,7 +322,7 @@ IN_PROC_BROWSER_TEST_F(CaptivePortalBlockingPageTest,
 // Same as above, with SSID but no login URL.
 IN_PROC_BROWSER_TEST_F(CaptivePortalBlockingPageTest,
                        MAYBE_WiFi_SSID_NoLoginURL) {
-  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::kDefaultURL);
+  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::GetTestURL());
   TestInterstitial(true, kWiFiSSID, kLandingUrl,
                    EXPECT_WIFI_YES, EXPECT_WIFI_SSID_YES, EXPECT_LOGIN_URL_NO);
 }
@@ -330,7 +330,7 @@ IN_PROC_BROWSER_TEST_F(CaptivePortalBlockingPageTest,
 // Same as above, with no SSID and no login URL.
 IN_PROC_BROWSER_TEST_F(CaptivePortalBlockingPageTest,
                        WiFi_NoSSID_NoLoginURL) {
-  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::kDefaultURL);
+  const GURL kLandingUrl(captive_portal::CaptivePortalDetector::GetTestURL());
   TestInterstitial(true, std::string(), kLandingUrl, EXPECT_WIFI_YES,
                    EXPECT_WIFI_SSID_NO, EXPECT_LOGIN_URL_NO);
 }
