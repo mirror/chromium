@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "678fd1d8_b7e3d663",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-13T00:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d5f8df5_5dc4a318",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "3f2d0fa45be8f04e92f800d8a42757fd33a24126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44e0caa3_cdece1d6",
         "filename": "media/mojo/services/mojo_video_encode_accelerator.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "3f2d0fa45be8f04e92f800d8a42757fd33a24126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e960cfe_02066e5f",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-13T00:32:56Z",
+      "side": 1,
+      "message": "I like it and I concur. I was planning to remove\nthe DVLOG()s  altogether before shipping though, now\nthat there\u0027s documentation on the mojom file as to\nhow the protocol is supposed to work (and there\u0027ll be\nalso unittests to enforce it), whereas before it was a\nbit of a mystery.",
+      "parentUuid": "44e0caa3_cdece1d6",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 7
+      },
+      "revId": "3f2d0fa45be8f04e92f800d8a42757fd33a24126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e3287eea_58eac6cc",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-13T00:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd8f321f_07015fdf",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 11
+      },
+      "revId": "3f2d0fa45be8f04e92f800d8a42757fd33a24126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b74fd92d_a0efa50f",
         "filename": "media/mojo/services/mojo_video_encode_accelerator.h",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e16113cd_c4a73237",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-13T00:32:56Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "b74fd92d_a0efa50f",
+      "range": {
+        "startLine": 76,
+        "startChar": 45,
+        "endLine": 76,
+        "endChar": 65
+      },
+      "revId": "3f2d0fa45be8f04e92f800d8a42757fd33a24126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09056009_bfc0e5d7",
         "filename": "media/mojo/services/mojo_video_encode_accelerator.h",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-12T20:31:19Z",
       "side": 1,
       "message": "Why not a Thread Checker then?",
+      "range": {
+        "startLine": 86,
+        "startChar": 37,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "3f2d0fa45be8f04e92f800d8a42757fd33a24126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ea8b58_56ea249a",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-13T00:32:56Z",
+      "side": 1,
+      "message": "In principle any mojo interface can be unbound and rebound\non another thread, hence the tail \"when bound\"; from this \nclass\u0027 perspective the thread affinity is just about checking\nsequentially, leaving the bindings to check for threading.",
+      "parentUuid": "09056009_bfc0e5d7",
       "range": {
         "startLine": 86,
         "startChar": 37,
