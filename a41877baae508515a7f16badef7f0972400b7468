@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6cf334c7_3d1242cc",
+        "filename": "ios/web/public/url_schemes.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-13T18:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "225491f3_048d41c6",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "a41877baae508515a7f16badef7f0972400b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0d9e1f8_ade3ee91",
         "filename": "ios/web/public/web_client.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "a41877baae508515a7f16badef7f0972400b7468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907956c8_d2b251d0",
+        "filename": "ios/web/public/web_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-13T18:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d9e1f8_ade3ee91",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "a41877baae508515a7f16badef7f0972400b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
