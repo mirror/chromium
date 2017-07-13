@@ -29,6 +29,7 @@
 #include "content/test/mock_google_streaming_server.h"
 #include "media/audio/audio_system_impl.h"
 #include "media/audio/audio_thread_impl.h"
+#include "media/audio/local_audio_system.h"
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_input_controller_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -126,7 +127,8 @@ class SpeechRecognitionBrowserTest :
         base::MakeUnique<media::AudioThreadImpl>()));
     audio_manager_->SetInputStreamParameters(
         media::AudioParameters::UnavailableDeviceParams());
-    audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
+    audio_system_ = base::MakeUnique<media::AudioSystemImpl>(
+        base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()));
     SpeechRecognizerImpl::SetAudioEnvironmentForTesting(audio_system_.get(),
                                                         audio_manager_.get());
   }

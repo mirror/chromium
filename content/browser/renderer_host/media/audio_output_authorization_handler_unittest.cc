@@ -20,6 +20,7 @@
 #include "media/audio/audio_thread_impl.h"
 #include "media/audio/fake_audio_log_factory.h"
 #include "media/audio/fake_audio_manager.h"
+#include "media/audio/local_audio_system.h"
 #include "media/base/media_switches.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_test_util.h"
@@ -101,9 +102,10 @@ class AudioOutputAuthorizationHandlerTest : public RenderViewHostTestHarness {
 
     audio_manager_ = base::MakeUnique<media::FakeAudioManager>(
         base::MakeUnique<media::AudioThreadImpl>(), &log_factory_);
-    audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
-    media_stream_manager_ =
-        base::MakeUnique<MediaStreamManager>(audio_system_.get());
+    audio_system_ = base::MakeUnique<media::AudioSystemImpl>(
+        base::MakeUnique<media::LocalAudioSystem>(audio_manager_.get()));
+    media_stream_manager_ = base::MakeUnique<MediaStreamManager>(
+        audio_system_.get(), audio_manager_->GetTaskRunner());
 
     // Make sure everything is done initializing:
     SyncWithAllThreads();
