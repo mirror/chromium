@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb321f67_fbee6738",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "tress?",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552fdfce_bb9b5d4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "Hmm, should we have default settings for these functions so that different tests can use the same tree configuration? e.g. createShallowDOMTree() and createDeepDomTree() ?",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9890f9b8_a6f7077c",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleDeepTree.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "nit: Do we need title?",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93bd4303_0a60b271",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleDeepTree.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "Should we mention why we picked these properties?",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb447d83_ad72b5b9",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleDeepTree.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "deep and thin ? (to balance with shallow and broad).",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041e7dab_c3010279",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleDeepTree.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "nit: space after \"run:\"",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee54abd_64d0a665",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleDeepTree.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "nit: Maybe indent this block so it looks like:\n\nrun: function() {\n   var AllElements \u003d ..\n}",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ae9a0c_534e38a4",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleShallowTree.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "Also are there conventions for naming the description? e.g. other files seem to prefix \"Measures the performance of ...\"",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcf6112_e9190c34",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/resources/utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "Maybe hoist this if statement out of the for loop? e..g\n\nif (depth \u003e 0)\n   return;\n\nfor (....) {\n}",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f72e8fa_4fa4dc35",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/resources/utils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T02:00:05Z",
+      "side": 1,
+      "message": "nit: space between // and f",
+      "revId": "f1a40ab5d2844cc5affb8c7ad6e22dfcc9e3d943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
