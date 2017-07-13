@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e82a1092_13c40996",
+        "filename": "chrome/browser/prefs/in_process_service_factory_factory.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-13T09:17:23Z",
+      "side": 1,
+      "message": "I would use a Singleton for this. Then you could also make the constructor private (and friend base::(Leaky|Default)SingletonTraits\u003c\u003e).",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "e20a8ef324b19b00c8bbebc8fb1866e4190c980a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b4fbae_6c277d35",
+        "filename": "chrome/browser/prefs/in_process_service_factory_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-13T09:17:23Z",
+      "side": 1,
+      "message": "That\u0027s amazing :)",
+      "range": {
+        "startLine": 15,
+        "startChar": 26,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "e20a8ef324b19b00c8bbebc8fb1866e4190c980a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
