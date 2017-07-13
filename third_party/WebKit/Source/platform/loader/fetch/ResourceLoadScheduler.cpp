@@ -6,6 +6,7 @@
 
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
+#include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 
 namespace blink {
@@ -132,8 +133,47 @@ void ResourceLoadScheduler::SetOutstandingLimitForTesting(size_t limit) {
   SetOutstandingLimitAndMaybeRun(limit);
 }
 
+void ResourceLoadScheduler::OnNetworkQuiet() {
+  DCHECK(IsMainThread());
+  if (maximum_running_requests_seen_ == 0)
+    return;
+
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_throttled,
+      ("Blink.ResourceLoadScheduler.PeakRequests.MainframeThrottled", 0, 10000,
+       25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_not_throttled,
+      ("Blink.ResourceLoadScheduler.PeakRequests.MainframeNotThrottled", 0,
+       10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_throttled,
+      ("Blink.ResourceLoadScheduler.PeakRequests.SubframeThrottled", 0, 10000,
+       25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_not_throttled,
+      ("Blink.ResourceLoadScheduler.PeakRequests.SubframeNotThrottled", 0,
+       10000, 25));
+
+  switch (throttling_state_at_maximum_running_requests_) {
+    case WebFrameScheduler::ThrottlingState::kThrottled:
+      if (context_->IsMainFrame())
+        main_frame_throttled.Count(maximum_running_requests_seen_);
+      else
+        sub_frame_throttled.Count(maximum_running_requests_seen_);
+      break;
+    case WebFrameScheduler::ThrottlingState::kNotThrottled:
+      if (context_->IsMainFrame())
+        main_frame_not_throttled.Count(maximum_running_requests_seen_);
+      else
+        sub_frame_not_throttled.Count(maximum_running_requests_seen_);
+      break;
+  }
+}
+
 void ResourceLoadScheduler::OnThrottlingStateChanged(
     WebFrameScheduler::ThrottlingState state) {
+  throttling_state_ = state;
   switch (state) {
     case WebFrameScheduler::ThrottlingState::kThrottled:
       SetOutstandingLimitAndMaybeRun(outstanding_throttled_limit_);
@@ -172,6 +212,10 @@ void ResourceLoadScheduler::MaybeRun() {
 void ResourceLoadScheduler::Run(ResourceLoadScheduler::ClientId id,
                                 ResourceLoadSchedulerClient* client) {
   running_requests_.insert(id);
+  if (running_requests_.size() > maximum_running_requests_seen_) {
+    maximum_running_requests_seen_ = running_requests_.size();
+    throttling_state_at_maximum_running_requests_ = throttling_state_;
+  }
   client->Run();
 }
 
