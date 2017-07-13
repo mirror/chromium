@@ -24,6 +24,7 @@ class SiteSettingsHelperTest : public testing::Test {
   void VerifySetting(const base::ListValue& exceptions,
                      int index,
                      const std::string& pattern,
+                     const std::string& pattern_display_name,
                      const std::string& setting) {
     const base::DictionaryValue* dict;
     exceptions.GetDictionary(index, &dict);
@@ -32,7 +33,7 @@ class SiteSettingsHelperTest : public testing::Test {
     EXPECT_EQ(pattern, actual_pattern);
     std::string actual_display_name;
     dict->GetString("displayName", &actual_display_name);
-    EXPECT_EQ(pattern, actual_display_name);
+    EXPECT_EQ(pattern_display_name, actual_display_name);
     std::string actual_setting;
     dict->GetString("setting", &actual_setting);
     EXPECT_EQ(setting, actual_setting);
@@ -66,9 +67,10 @@ TEST_F(SiteSettingsHelperTest, CheckExceptionOrder) {
   map->SetDefaultContentSetting(kContentType, CONTENT_SETTING_ALLOW);
 
   // Add a policy exception.
+  std::string star_google_com = "http://[*.]google.com";
   auto policy_provider = base::MakeUnique<content_settings::MockProvider>();
   policy_provider->SetWebsiteSetting(
-      ContentSettingsPattern::FromString("http://[*.]google.com"),
+      ContentSettingsPattern::FromString(star_google_com),
       ContentSettingsPattern::Wildcard(), kContentType, "",
       new base::Value(CONTENT_SETTING_BLOCK));
   policy_provider->set_read_only(true);
@@ -76,14 +78,17 @@ TEST_F(SiteSettingsHelperTest, CheckExceptionOrder) {
       map, std::move(policy_provider), HostContentSettingsMap::POLICY_PROVIDER);
 
   // Add user preferences.
-  AddSetting(map, "http://*", CONTENT_SETTING_BLOCK);
-  AddSetting(map, "http://maps.google.com", CONTENT_SETTING_BLOCK);
-  AddSetting(map, "http://[*.]google.com", CONTENT_SETTING_ALLOW);
+  std::string http_star = "http://*";
+  std::string maps_google_com = "http://maps.google.com";
+  AddSetting(map, http_star, CONTENT_SETTING_BLOCK);
+  AddSetting(map, maps_google_com, CONTENT_SETTING_BLOCK);
+  AddSetting(map, star_google_com, CONTENT_SETTING_ALLOW);
 
   // Add an extension exception.
+  std::string drive_google_com = "http://drive.google.com";
   auto extension_provider = base::MakeUnique<content_settings::MockProvider>();
   extension_provider->SetWebsiteSetting(
-      ContentSettingsPattern::FromString("http://drive.google.com"),
+      ContentSettingsPattern::FromString(drive_google_com),
       ContentSettingsPattern::Wildcard(), kContentType, "",
       new base::Value(CONTENT_SETTING_ASK));
   extension_provider->set_read_only(true);
@@ -103,13 +108,14 @@ TEST_F(SiteSettingsHelperTest, CheckExceptionOrder) {
   // The default content setting should not be returned.
   int i = 0;
   // From policy provider:
-  VerifySetting(exceptions, i++, "http://[*.]google.com", "block");
+  VerifySetting(exceptions, i++, star_google_com, star_google_com, "block");
   // From extension provider:
-  VerifySetting(exceptions, i++, "http://drive.google.com", "ask");
+  VerifySetting(exceptions, i++, drive_google_com, drive_google_com, "ask");
   // From user preferences:
-  VerifySetting(exceptions, i++, "http://maps.google.com", "block");
-  VerifySetting(exceptions, i++, "http://[*.]google.com", "allow");
-  VerifySetting(exceptions, i++, "http://*", "block");
+  VerifySetting(exceptions, i++, maps_google_com, maps_google_com, "block");
+  VerifySetting(exceptions, i++, star_google_com, star_google_com, "allow");
+  // The display name for valid Origins will be percent encoded.
+  VerifySetting(exceptions, i++, http_star, "http://%2A", "block");
 }
 
 }  // namespace site_settings

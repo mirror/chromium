@@ -97,6 +97,19 @@ void GetContentCategorySetting(
     ContentSettingsType content_type,
     base::DictionaryValue* object);
 
+// Retrieves the current setting for a given origin, category pair, the source
+// of that setting, and its display name, which will be different if it's an
+// extension. Note this is similar to GetContentCategorySetting() above but this
+// goes through the PermissionManager (preferred, see https://crbug.com/739241).
+ContentSetting GetContentSettingForOrigin(
+    Profile* profile,
+    const HostContentSettingsMap* map,
+    const GURL& origin,
+    ContentSettingsType content_type,
+    std::string* source_string,
+    const extensions::ExtensionRegistry* extension_registry,
+    std::string* display_name);
+
 // Returns exceptions constructed from the policy-set allowed URLs
 // for the content settings |type| mic or camera.
 void GetPolicyAllowedUrls(
