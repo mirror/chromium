@@ -182,7 +182,8 @@ class CaptivePortalService : public KeyedService {
   // is considered a "failure", to trigger throttling.
   std::unique_ptr<net::BackoffEntry> backoff_entry_;
 
-  // URL that returns a 204 response code when connected to the Internet.
+  // URL that returns a 204 response code when connected to the Internet. Set in
+  // tests.
   GURL test_url_;
 
   // The pref member for whether navigation errors should be resolved with a web

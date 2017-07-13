@@ -74,7 +74,7 @@ class CaptivePortalDetectorTest : public testing::Test,
                const char* response_headers) {
     ASSERT_FALSE(FetchingURL());
 
-    GURL url(CaptivePortalDetector::kDefaultURL);
+    GURL url(CaptivePortalDetector::GetTestURL());
     CaptivePortalClient client(detector());
 
     detector()->DetectCaptivePortal(
@@ -100,7 +100,7 @@ class CaptivePortalDetectorTest : public testing::Test,
   void RunCancelTest() {
     ASSERT_FALSE(FetchingURL());
 
-    GURL url(CaptivePortalDetector::kDefaultURL);
+    GURL url(CaptivePortalDetector::GetTestURL());
     CaptivePortalClient client(detector());
 
     detector()->DetectCaptivePortal(

@@ -67,7 +67,7 @@ void IOSSSLErrorHandler::RecordCaptivePortalState(web::WebState* web_state) {
   CaptivePortalDetectorTabHelper* tab_helper =
       CaptivePortalDetectorTabHelper::FromWebState(web_state);
   tab_helper->detector()->DetectCaptivePortal(
-      GURL(CaptivePortalDetector::kDefaultURL),
+      GURL(CaptivePortalDetector::GetTestURL()),
       base::BindBlockArc(^(const CaptivePortalDetector::Results& results) {
         CaptivePortalStatus status;
         switch (results.result) {

@@ -70,7 +70,7 @@ base::string16 NetworkPortalWebDialog::GetDialogTitle() const {
 }
 
 GURL NetworkPortalWebDialog::GetDialogContentURL() const {
-  return GURL(captive_portal::CaptivePortalDetector::kDefaultURL);
+  return GURL(captive_portal::CaptivePortalDetector::GetTestURL());
 }
 
 void NetworkPortalWebDialog::GetWebUIMessageHandlers(

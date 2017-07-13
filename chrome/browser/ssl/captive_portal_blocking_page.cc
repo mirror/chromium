@@ -165,7 +165,8 @@ void CaptivePortalBlockingPage::PopulateInterstitialStrings(
   load_time_data->SetString("heading", tab_title);
 
   base::string16 paragraph;
-  if (login_url_.spec() == captive_portal::CaptivePortalDetector::kDefaultURL) {
+  if (login_url_.spec() ==
+      captive_portal::CaptivePortalDetector::GetTestURL()) {
     // Captive portal may intercept requests without HTTP redirects, in which
     // case the login url would be the same as the captive portal detection url.
     // Don't show the login url in that case.

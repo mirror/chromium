@@ -602,7 +602,7 @@ void SSLErrorHandler::StartHandlingError() {
       g_config.Pointer()->IsKnownCaptivePortalCert(ssl_info_)) {
     RecordUMA(CAPTIVE_PORTAL_CERT_FOUND);
     ShowCaptivePortalInterstitial(
-        GURL(captive_portal::CaptivePortalDetector::kDefaultURL));
+        GURL(captive_portal::CaptivePortalDetector::GetTestURL()));
     return;
   }
 #endif
