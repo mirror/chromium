@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e61a5ebd_8f0f8b84",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-13T15:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad30e1f_836b45c4",
+      "range": {
+        "startLine": 246,
+        "startChar": 26,
+        "endLine": 246,
+        "endChar": 0
+      },
+      "revId": "a4a422cc4d8a3ce6a41234b96dae484e90897d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a625148_ff21d7b1",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T21:42:18Z",
       "side": 1,
       "message": "I think something\u0027s wrong here, this is pretty confusing.\n\nYou set web_vr_autopresentation_expected_ to false both when leaving webvr mode and when receiving your first webvr frame?",
+      "range": {
+        "startLine": 465,
+        "startChar": 4,
+        "endLine": 465,
+        "endChar": 37
+      },
+      "revId": "a4a422cc4d8a3ce6a41234b96dae484e90897d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d9ab4e_4face0c3",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-13T15:20:14Z",
+      "side": 1,
+      "message": "Spoke to you about this offline. But this is essentially the flag used to show the splash screen when we expect auto-presentation until the first WebVR frame. Renamed for clarity.",
+      "parentUuid": "5a625148_ff21d7b1",
       "range": {
         "startLine": 465,
         "startChar": 4,
