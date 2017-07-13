@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d195ced3_2dba3abf",
+        "filename": "chrome/browser/android/password_ui_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T10:53:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d79704_24f693f9",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 24
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b6aeeab_3b22dffb",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_utils.cc",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2af5e1fc_5b3689af",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T10:53:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b6aeeab_3b22dffb",
+      "range": {
+        "startLine": 41,
+        "startChar": 43,
+        "endLine": 41,
+        "endChar": 75
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "852cee1b_5d177404",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2017-07-12T13:03:40Z",
       "side": 1,
       "message": "Why is the display name not useful for the sort key? As a user looking at the results, I would expect them to be sorted exactly by what is displayed to me (as a name).",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 46
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e6804b_7dd7f434",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T10:53:37Z",
+      "side": 1,
+      "message": "While I agree with you with regard to user expectations, this code already breaks this pattern by sorting according to eTLD+1 (see comment on top of this method). Looking at the mentioned example this seems to be for security reasons. The question now remains how Android display names should be handled. To be consistent with existing code we should probably ignore the display name and simple look at the (reversed) App package name. Further Feedback is definitely welcome :)",
+      "parentUuid": "852cee1b_5d177404",
       "range": {
         "startLine": 88,
         "startChar": 7,
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "fe3c5acb_0556a465",
+        "filename": "chrome/browser/ui/webui/options/password_manager_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T10:53:37Z",
+      "side": 1,
+      "message": "Done, https://crbug.com/741690.",
+      "parentUuid": "d96f17d8_39d0483e",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d9e722c_41f008d2",
         "filename": "components/password_manager/core/browser/password_ui_utils.cc",
         "patchSetId": 1
@@ -174,6 +270,24 @@
       "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c3e2d3_7c553cd5",
+        "filename": "components/password_manager/core/browser/password_ui_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-13T10:53:37Z",
+      "side": 1,
+      "message": "Ack, changing the display language according to https://support.google.com/accounts/answer/32047 indeed leads to localized version of the Play Store, even when visiting the dotcom address without specifying the hl parameter. So leaving it up to the server SGTM.",
+      "parentUuid": "82021d1a_982958e5",
+      "revId": "1183afcdc86b2a36c18ddb84cfc1a7c5bbddb548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
