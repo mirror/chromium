@@ -657,10 +657,10 @@ TEST_P(ArcSessionManagerPolicyTest, SkippingTerms) {
   // Terms of Service are skipped iff not an Active Directory user, ARC is
   // enabled by policy and both ArcBackupRestoreEnabled and
   // ArcLocationServiceEnabled are managed.
-  const bool expected_terms_skipping = !is_active_directory_user() &&
-                                       arc_enabled_pref_managed() &&
-                                       backup_restore_pref_value().is_bool() &&
-                                       location_service_pref_value().is_bool();
+  const bool expected_terms_skipping =
+      is_active_directory_user() ||
+      (arc_enabled_pref_managed() && backup_restore_pref_value().is_bool() &&
+       location_service_pref_value().is_bool());
   EXPECT_EQ(expected_terms_skipping
                 ? ArcSessionManager::State::CHECKING_ANDROID_MANAGEMENT
                 : ArcSessionManager::State::NEGOTIATING_TERMS_OF_SERVICE,

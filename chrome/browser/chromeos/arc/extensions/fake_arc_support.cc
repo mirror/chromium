@@ -26,21 +26,6 @@ void SerializeAndSend(extensions::NativeMessageHost* native_message_host,
   native_message_host->OnMessage(message_string);
 }
 
-// Posts onAgree with the three given bools as arguments.
-void PostOnAgree(extensions::NativeMessageHost* native_message_host,
-                 bool metrics_mode,
-                 bool backup_and_restore_mode,
-                 bool location_service_mode) {
-  DCHECK(native_message_host);
-
-  base::DictionaryValue message;
-  message.SetString("event", "onAgreed");
-  message.SetBoolean("isMetricsEnabled", metrics_mode);
-  message.SetBoolean("isBackupRestoreEnabled", backup_and_restore_mode);
-  message.SetBoolean("isLocationServiceEnabled", location_service_mode);
-  SerializeAndSend(native_message_host, message);
-}
-
 }  // namespace
 
 namespace arc {
@@ -73,29 +58,39 @@ void FakeArcSupport::Close() {
   UnsetMessageHost();
 }
 
-void FakeArcSupport::EmulateAuthCodeResponse(const std::string& auth_code) {
-  DCHECK_EQ(ui_page_, ArcSupportHost::UIPage::LSO);
+void FakeArcSupport::EmulateAuthSuccess(const std::string& auth_code) {
+  DCHECK(ui_page_ == ArcSupportHost::UIPage::LSO ||
+         ui_page_ == ArcSupportHost::UIPage::AD_AUTH);
   base::DictionaryValue message;
   message.SetString("event", "onAuthSucceeded");
   message.SetString("code", auth_code);
   SerializeAndSend(native_message_host_.get(), message);
 }
 
-void FakeArcSupport::EmulateAuthFailure() {
+void FakeArcSupport::EmulateAuthFailure(const std::string& error_msg) {
   DCHECK(native_message_host_);
-  DCHECK_EQ(ui_page_, ArcSupportHost::UIPage::LSO);
-  native_message_host_->OnMessage("{\"event\": \"onAuthFailed\"}");
+  DCHECK(ui_page_ == ArcSupportHost::UIPage::LSO ||
+         ui_page_ == ArcSupportHost::UIPage::AD_AUTH);
+  base::DictionaryValue message;
+  message.SetString("event", "onAuthFailed");
+  message.SetString("error_msg", error_msg);
+  SerializeAndSend(native_message_host_.get(), message);
 }
 
 void FakeArcSupport::ClickAgreeButton() {
   DCHECK_EQ(ui_page_, ArcSupportHost::UIPage::TERMS);
-  PostOnAgree(native_message_host_.get(), metrics_mode_,
-              backup_and_restore_mode_, location_service_mode_);
+  base::DictionaryValue message;
+  message.SetString("event", "onAgreed");
+  message.SetBoolean("isMetricsEnabled", metrics_mode_);
+  message.SetBoolean("isBackupRestoreEnabled", backup_and_restore_mode_);
+  message.SetBoolean("isLocationServiceEnabled", location_service_mode_);
+  SerializeAndSend(native_message_host_.get(), message);
 }
 
-void FakeArcSupport::ClickAdAuthNextButton() {
-  DCHECK_EQ(ui_page_, ArcSupportHost::UIPage::AD_AUTH_NOTIFICATION);
-  PostOnAgree(native_message_host_.get(), false, false, false);
+void FakeArcSupport::ClickAdAuthCancelButton() {
+  DCHECK_EQ(ui_page_, ArcSupportHost::UIPage::AD_AUTH);
+  // The cancel button closes the window.
+  Close();
 }
 
 void FakeArcSupport::ClickRetryButton() {
@@ -128,6 +123,7 @@ void FakeArcSupport::PostMessageFromNativeHost(
     return;
   }
 
+  ArcSupportHost::UIPage prev_ui_page = ui_page_;
   if (action == "initialize") {
     // Do nothing as emulation.
   } else if (action == "showPage") {
@@ -142,8 +138,8 @@ void FakeArcSupport::PostMessageFromNativeHost(
       ui_page_ = ArcSupportHost::UIPage::LSO;
     } else if (page == "arc-loading") {
       ui_page_ = ArcSupportHost::UIPage::ARC_LOADING;
-    } else if (page == "ad-auth-notification") {
-      ui_page_ = ArcSupportHost::UIPage::AD_AUTH_NOTIFICATION;
+    } else if (page == "ad-auth") {
+      ui_page_ = ArcSupportHost::UIPage::AD_AUTH;
     } else {
       NOTREACHED() << message_string;
     }
@@ -164,10 +160,20 @@ void FakeArcSupport::PostMessageFromNativeHost(
       NOTREACHED() << message_string;
       return;
     }
+  } else if (action == "setAdAuthUrls") {
+    if (!message->GetString("federationUrl", &ad_auth_federation_url_) ||
+        !message->GetString("dmUrlPrefix", &ad_auth_dm_url_prefix_)) {
+      NOTREACHED() << message_string;
+      return;
+    }
+  } else if (action == "closeWindow") {
+    // Do nothing as emulation.
   } else {
     // Unknown or unsupported action.
     NOTREACHED() << message_string;
   }
+  if (!on_page_changed_.is_null() && prev_ui_page != ui_page_)
+    on_page_changed_.Run(ui_page_);
 }
 
 void FakeArcSupport::CloseChannel(const std::string& error_message) {
