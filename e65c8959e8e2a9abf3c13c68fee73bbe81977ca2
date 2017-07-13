@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "87609f1f_78cea7b4",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-07-13T13:48:25Z",
+      "side": 1,
+      "message": "This should probably just be a DCHECK since I don\u0027t think this is a security vulnerability if the check fails.",
+      "revId": "e65c8959e8e2a9abf3c13c68fee73bbe81977ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a64f525_c8b39195",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 1
@@ -13,6 +30,23 @@
       "writtenOn": "2017-07-12T21:36:37Z",
       "side": 1,
       "message": "This will be updated once https://chromium-review.googlesource.com/c/568399/ is landed.",
+      "revId": "e65c8959e8e2a9abf3c13c68fee73bbe81977ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ad2f16_34ba9270",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-07-13T13:48:25Z",
+      "side": 1,
+      "message": "Was this missing before or should it also be guarded by OS_WIN? (since all the new code is guarded by OS_WIN)",
       "revId": "e65c8959e8e2a9abf3c13c68fee73bbe81977ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
