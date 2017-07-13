@@ -285,9 +285,18 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
   TestingProfile* CreateProfile() override {
     // Ensure that the profile created by BrowserWithTestWindowTest is
     // registered with |profile_manager_|.
-    return profile_manager_->CreateTestingProfile(kTestProfileName);
+    auto prefs =
+        base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
+    chrome::RegisterUserProfilePrefs(prefs->registry());
+    profile_prefs_ = prefs.get();
+    return profile_manager_->CreateTestingProfile(
+        kTestProfileName, std::move(prefs), base::ASCIIToUTF16("Test profile"),
+        1 /* avatar_id */, std::string() /* supervised_user_id */,
+        TestingProfile::TestingFactories());
   }
+
   void DestroyProfile(TestingProfile* profile) override {
+    profile_prefs_ = nullptr;
     return profile_manager_->DeleteTestingProfile(kTestProfileName);
   }
 
@@ -296,6 +305,10 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
 
   arc::FakeIntentHelperInstance intent_helper_;
   std::unique_ptr<TestingProfileManager> profile_manager_;
+
+  // Pointer to the primary profile (returned by |profile()|) prefs - owned by
+  // the profile.
+  sync_preferences::TestingPrefServiceSyncable* profile_prefs_ = nullptr;
 
  private:
   // Callback registered with the helper to record Chrome app launch requests.
@@ -530,6 +543,79 @@ TEST_P(NoteTakingHelperTest, PreferredAppEnabledOnLockScreen) {
             GetAppString(*preferred_info));
 }
 
+TEST_P(NoteTakingHelperTest, PreferredAppEnabledOnLockScreenManagedByPolicy) {
+  Init(ENABLE_PALETTE | ENABLE_LOCK_SCREEN_APPS);
+
+  ASSERT_FALSE(helper()->IsAppAvailable(profile()));
+  ASSERT_TRUE(helper()->GetAvailableApps(profile()).empty());
+
+  // Disable lock screen apps by policy.
+  profile_prefs_->SetManagedPref(prefs::kNoteTakingAppEnabledOnLockScreen,
+                                 base::MakeUnique<base::Value>(false));
+
+  std::unique_ptr<base::Value> lock_enabled_action_handler =
+      extensions::ListBuilder()
+          .Append(extensions::DictionaryBuilder()
+                      .Set("action", app_runtime::ToString(
+                                         app_runtime::ACTION_TYPE_NEW_NOTE))
+                      .SetBoolean("enabled_on_lock_screen", true)
+                      .Build())
+          .Build();
+
+  // Install lock screen enabled Keep note taking app.
+  scoped_refptr<const extensions::Extension> dev_extension =
+      CreateExtension(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                      extensions::ListBuilder().Append("lockScreen").Build(),
+                      std::move(lock_enabled_action_handler));
+  InstallExtension(dev_extension.get(), profile());
+
+  // Verify that the app is reported to support lock screen note taking.
+  std::vector<NoteTakingAppInfo> apps = helper()->GetAvailableApps(profile());
+  ASSERT_EQ(1u, apps.size());
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         false /* preferred */,
+                         NoteTakingLockScreenSupport::kSupported),
+            GetAppString(apps[0]));
+  EXPECT_FALSE(helper()->GetPreferredChromeAppInfo(profile()));
+
+  // Setting lock screen note taking pref should not override the value set by
+  // policy - the lock screen note taking should remain disabled.
+  helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
+  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
+                                    true);
+
+  apps = helper()->GetAvailableApps(profile());
+  ASSERT_EQ(1u, apps.size());
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         true /* preferred */,
+                         NoteTakingLockScreenSupport::kSupported),
+            GetAppString(apps[0]));
+  std::unique_ptr<NoteTakingAppInfo> preferred_info =
+      helper()->GetPreferredChromeAppInfo(profile());
+  ASSERT_TRUE(preferred_info);
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         true /* preferred */,
+                         NoteTakingLockScreenSupport::kSupported),
+            GetAppString(*preferred_info));
+
+  // If the policy pref is updated, lock screen note-taking should get enabled.
+  profile_prefs_->SetManagedPref(prefs::kNoteTakingAppEnabledOnLockScreen,
+                                 base::MakeUnique<base::Value>(true));
+
+  apps = helper()->GetAvailableApps(profile());
+  ASSERT_EQ(1u, apps.size());
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         true /* preferred */,
+                         NoteTakingLockScreenSupport::kSelected),
+            GetAppString(apps[0]));
+  preferred_info = helper()->GetPreferredChromeAppInfo(profile());
+  ASSERT_TRUE(preferred_info);
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         true /* preferred */,
+                         NoteTakingLockScreenSupport::kSelected),
+            GetAppString(*preferred_info));
+}
+
 TEST_P(NoteTakingHelperTest, PreferredAppWithNoLockScreenPermission) {
   Init(ENABLE_PALETTE | ENABLE_LOCK_SCREEN_APPS);
 
@@ -562,7 +648,43 @@ TEST_P(NoteTakingHelperTest, PreferredAppWithNoLockScreenPermission) {
 }
 
 TEST_P(NoteTakingHelperTest,
-       PreferredAppWithotLockSupportClearsLockScreenPref) {
+       PreferredAppWithNoLockScreenPermission_LockScreenEnabledByPolicy) {
+  Init(ENABLE_PALETTE | ENABLE_LOCK_SCREEN_APPS);
+
+  ASSERT_FALSE(helper()->IsAppAvailable(profile()));
+  ASSERT_TRUE(helper()->GetAvailableApps(profile()).empty());
+
+  // Enable lock screen apps by policy.
+  profile_prefs_->SetManagedPref(prefs::kNoteTakingAppEnabledOnLockScreen,
+                                 base::MakeUnique<base::Value>(true));
+
+  std::unique_ptr<base::Value> lock_enabled_action_handler =
+      extensions::ListBuilder()
+          .Append(extensions::DictionaryBuilder()
+                      .Set("action", app_runtime::ToString(
+                                         app_runtime::ACTION_TYPE_NEW_NOTE))
+                      .SetBoolean("enabled_on_lock_screen", true)
+                      .Build())
+          .Build();
+
+  // Install lock screen enabled Keep note taking app, but wihtout lock screen
+  // permission listed.
+  scoped_refptr<const extensions::Extension> dev_extension = CreateExtension(
+      NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+      nullptr /* permissions */, std::move(lock_enabled_action_handler));
+  InstallExtension(dev_extension.get(), profile());
+
+  // Verify that the app is not reported to support lock screen note taking.
+  std::vector<NoteTakingAppInfo> apps = helper()->GetAvailableApps(profile());
+  ASSERT_EQ(1u, apps.size());
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         false /* preferred */,
+                         NoteTakingLockScreenSupport::kNotSupported),
+            GetAppString(apps[0]));
+}
+
+TEST_P(NoteTakingHelperTest,
+       RestorePerAppLockScreenEnabledValueWhenSettingPreferredApp) {
   Init(ENABLE_PALETTE | ENABLE_LOCK_SCREEN_APPS);
 
   ASSERT_FALSE(helper()->IsAppAvailable(profile()));
@@ -638,10 +760,160 @@ TEST_P(NoteTakingHelperTest,
   EXPECT_FALSE(profile()->GetPrefs()->GetBoolean(
       prefs::kNoteTakingAppEnabledOnLockScreen));
 
-  // Setting the Keep app as the preferred app again should not re-anable lock
-  // screen note taking.
+  // Setting the Keep app as the preferred app again should reset lock screen
+  // note taking support to the value previously set for the new preferred app.
   helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
   apps = helper()->GetAvailableApps(profile());
+  ASSERT_EQ(2u, apps.size());
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         true /* preferred */,
+                         NoteTakingLockScreenSupport::kSelected),
+            GetAppString(apps[0]));
+  EXPECT_EQ(GetAppString(kNewNoteId, kName, false /* preferred */,
+                         NoteTakingLockScreenSupport::kNotSupported),
+            GetAppString(apps[1]));
+  EXPECT_TRUE(profile()->GetPrefs()->GetBoolean(
+      prefs::kNoteTakingAppEnabledOnLockScreen));
+}
+
+TEST_P(NoteTakingHelperTest,
+       PreferredAppWithotLockSupportClearsLockScreenPref_RecommendedPrefSet) {
+  Init(ENABLE_PALETTE | ENABLE_LOCK_SCREEN_APPS);
+
+  ASSERT_FALSE(helper()->IsAppAvailable(profile()));
+  ASSERT_TRUE(helper()->GetAvailableApps(profile()).empty());
+
+  // Set recommended lock screen note taking pref value to true.
+  profile_prefs_->SetRecommendedPref(prefs::kNoteTakingAppEnabledOnLockScreen,
+                                     base::MakeUnique<base::Value>(false));
+
+  std::unique_ptr<base::Value> lock_enabled_action_handler =
+      extensions::ListBuilder()
+          .Append(extensions::DictionaryBuilder()
+                      .Set("action", app_runtime::ToString(
+                                         app_runtime::ACTION_TYPE_NEW_NOTE))
+                      .SetBoolean("enabled_on_lock_screen", true)
+                      .Build())
+          .Build();
+
+  // Install dev Keep app that supports lock screen note taking.
+  scoped_refptr<const extensions::Extension> dev_extension =
+      CreateExtension(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                      extensions::ListBuilder().Append("lockScreen").Build(),
+                      lock_enabled_action_handler->CreateDeepCopy());
+  InstallExtension(dev_extension.get(), profile());
+
+  // Install third-party app that does not support lock screen note taking.
+  const extensions::ExtensionId kNewNoteId = crx_file::id_util::GenerateId("a");
+  const std::string kName = "Some App";
+  scoped_refptr<const extensions::Extension> has_new_note = CreateExtension(
+      kNewNoteId, kName, extensions::ListBuilder().Append("lockScreen").Build(),
+      lock_enabled_action_handler->CreateDeepCopy());
+  InstallExtension(has_new_note.get(), profile());
+
+  // Verify that only Keep app is reported to support lock screen note taking.
+  std::vector<NoteTakingAppInfo> apps = helper()->GetAvailableApps(profile());
+  ASSERT_EQ(2u, apps.size());
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         false /* preferred */,
+                         NoteTakingLockScreenSupport::kSupported),
+            GetAppString(apps[0]));
+  EXPECT_EQ(GetAppString(kNewNoteId, kName, false /* preferred */,
+                         NoteTakingLockScreenSupport::kNotSupported),
+            GetAppString(apps[1]));
+
+  // When the Keep app is set as preferred app, and note taking on lock screen
+  // is enabled, the keep app should be reported to be selected as the lock
+  // screen note taking app.
+  helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
+  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
+                                    true);
+  apps = helper()->GetAvailableApps(profile());
+  ASSERT_EQ(2u, apps.size());
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         true /* preferred */,
+                         NoteTakingLockScreenSupport::kSelected),
+            GetAppString(apps[0]));
+  EXPECT_EQ(GetAppString(kNewNoteId, kName, false /* preferred */,
+                         NoteTakingLockScreenSupport::kNotSupported),
+            GetAppString(apps[1]));
+
+  // When a third party app (which does not support lock screen note taking) is
+  // set as the preferred app, Keep app should stop being reported as the
+  // selected note taking app.
+  helper()->SetPreferredApp(profile(), kNewNoteId);
+  apps = helper()->GetAvailableApps(profile());
+  ASSERT_EQ(2u, apps.size());
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         false /* preferred */,
+                         NoteTakingLockScreenSupport::kSupported),
+            GetAppString(apps[0]));
+  EXPECT_EQ(GetAppString(kNewNoteId, kName, true /* preferred */,
+                         NoteTakingLockScreenSupport::kNotSupported),
+            GetAppString(apps[1]));
+
+  EXPECT_FALSE(profile()->GetPrefs()->GetBoolean(
+      prefs::kNoteTakingAppEnabledOnLockScreen));
+
+  // Setting the Keep app as the preferred app again should not re-enable lock
+  // screen note taking - the pref value should default to the recommended
+  // value.
+  helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
+  apps = helper()->GetAvailableApps(profile());
+  ASSERT_EQ(2u, apps.size());
+  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                         true /* preferred */,
+                         NoteTakingLockScreenSupport::kSelected),
+            GetAppString(apps[0]));
+  EXPECT_EQ(GetAppString(kNewNoteId, kName, false /* preferred */,
+                         NoteTakingLockScreenSupport::kNotSupported),
+            GetAppString(apps[1]));
+  EXPECT_TRUE(profile()->GetPrefs()->GetBoolean(
+      prefs::kNoteTakingAppEnabledOnLockScreen));
+}
+
+TEST_P(NoteTakingHelperTest, RestoreLockScreenDisabledPerAppValue) {
+  Init(ENABLE_PALETTE | ENABLE_LOCK_SCREEN_APPS);
+
+  ASSERT_FALSE(helper()->IsAppAvailable(profile()));
+  ASSERT_TRUE(helper()->GetAvailableApps(profile()).empty());
+
+  // Set recommended lock screen note taking pref value to true.
+  profile_prefs_->SetRecommendedPref(prefs::kNoteTakingAppEnabledOnLockScreen,
+                                     base::MakeUnique<base::Value>(true));
+
+  std::unique_ptr<base::Value> lock_enabled_action_handler =
+      extensions::ListBuilder()
+          .Append(extensions::DictionaryBuilder()
+                      .Set("action", app_runtime::ToString(
+                                         app_runtime::ACTION_TYPE_NEW_NOTE))
+                      .SetBoolean("enabled_on_lock_screen", true)
+                      .Build())
+          .Build();
+
+  // Install dev Keep app that supports lock screen note taking.
+  scoped_refptr<const extensions::Extension> dev_extension =
+      CreateExtension(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                      extensions::ListBuilder().Append("lockScreen").Build(),
+                      lock_enabled_action_handler->CreateDeepCopy());
+  InstallExtension(dev_extension.get(), profile());
+
+  // Install third-party app that does not support lock screen note taking.
+  const extensions::ExtensionId kNewNoteId = crx_file::id_util::GenerateId("a");
+  const std::string kName = "Some App";
+  scoped_refptr<const extensions::Extension> has_new_note = CreateExtension(
+      kNewNoteId, kName, extensions::ListBuilder().Append("lockScreen").Build(),
+      lock_enabled_action_handler->CreateDeepCopy());
+  InstallExtension(has_new_note.get(), profile());
+
+  helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
+  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
+                                    false);
+
+  helper()->SetPreferredApp(profile(), kNewNoteId);
+
+  helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
+  std::vector<NoteTakingAppInfo> apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(2u, apps.size());
   EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
                          true /* preferred */,

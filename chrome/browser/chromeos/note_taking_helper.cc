@@ -33,6 +33,7 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
+#include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/api/app_runtime.h"
 #include "extensions/common/extension.h"
@@ -45,6 +46,15 @@ namespace app_runtime = extensions::api::app_runtime;
 
 namespace chromeos {
 namespace {
+
+// Per app pref that holds the last user set setting for whether the app is
+// enabled as a new note handler on lock screen.
+// This pref will be set in the extension prefs of the previously selected
+// preferred app when the preferred app changes, and used later to set initial
+// prefs::kNoteTakingAppEnabledOnLockScreen if the app is selected as the
+// preferred note taking app again.
+constexpr char kLastEnabledOnLockScreenValuePref[] =
+    "last_new_note_enabled_on_lock_screen";
 
 // Pointer to singleton instance.
 NoteTakingHelper* g_helper = nullptr;
@@ -199,16 +209,42 @@ void NoteTakingHelper::SetPreferredApp(Profile* profile,
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(profile);
 
+  const std::string current_app_id =
+      profile->GetPrefs()->GetString(prefs::kNoteTakingAppId);
+  if (current_app_id == app_id)
+    return;
+
+  const base::Value* user_pref = profile->GetPrefs()->GetUserPrefValue(
+      prefs::kNoteTakingAppEnabledOnLockScreen);
+  if (!current_app_id.empty()) {
+    std::unique_ptr<base::Value> current_pref_value =
+        user_pref && user_pref->is_bool()
+            ? base::MakeUnique<base::Value>(user_pref->GetBool())
+            : nullptr;
+    extensions::ExtensionPrefs::Get(profile)->UpdateExtensionPref(
+        current_app_id, kLastEnabledOnLockScreenValuePref,
+        std::move(current_pref_value));
+  }
+
+  // Set initial lock screen enabled value for the app to false - if the user
+  // preference for the extension is not set, this will be cleared.
+  profile->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
+                                  false);
+  profile->GetPrefs()->SetString(prefs::kNoteTakingAppId, app_id);
+
   const extensions::Extension* app =
       extensions::ExtensionRegistry::Get(profile)->GetExtensionById(
           app_id, extensions::ExtensionRegistry::ENABLED);
 
-  if (!app || !IsLockScreenEnabled(app)) {
+  bool lock_screen_enabled = false;
+  if (app && IsLockScreenEnabled(app) &&
+      extensions::ExtensionPrefs::Get(profile)->ReadPrefAsBoolean(
+          app->id(), kLastEnabledOnLockScreenValuePref, &lock_screen_enabled)) {
     profile->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    false);
+                                    lock_screen_enabled);
+  } else {
+    profile->GetPrefs()->ClearPref(prefs::kNoteTakingAppEnabledOnLockScreen);
   }
-
-  profile->GetPrefs()->SetString(prefs::kNoteTakingAppId, app_id);
 }
 
 bool NoteTakingHelper::IsAppAvailable(Profile* profile) {

@@ -684,6 +684,12 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kBrowserNetworkTimeQueriesEnabled,
     network_time::prefs::kNetworkTimeQueriesEnabled,
     base::Value::Type::BOOLEAN },
+
+#if defined(OS_CHROMEOS)
+  { key::kNoteTakingOnLockScreenEnabled,
+    prefs::kNoteTakingAppEnabledOnLockScreen,
+    base::Value::Type::BOOLEAN },
+#endif
 };
 // clang-format on
 
