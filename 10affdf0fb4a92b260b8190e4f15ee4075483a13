@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ebbf318_5112e649",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-13T09:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02335f25_a74d3a5e",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe35728_c2b7d198",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f3c00d45_1c5eb118",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-13T09:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbe564d5_65cc3313",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04558e2e_49c475f5",
         "filename": "content/renderer/service_worker/service_worker_context_client.h",
         "patchSetId": 4
@@ -68,6 +104,24 @@
       "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db08bb5e_d6ab4d68",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-13T09:51:55Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "04558e2e_49c475f5",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "00b1343c_1c3f4a87",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-13T09:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b3e606_30acda3e",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5cc7a7b_ce8233f5",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
         "patchSetId": 4
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "e8aec0e5_35bb9ac2",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-13T09:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5cc7a7b_ce8233f5",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a354c3_d74da7ac",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
         "patchSetId": 4
@@ -119,6 +209,47 @@
       "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93570ff_fb56ea14",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-13T09:51:55Z",
+      "side": 1,
+      "message": "If the browser thinks the scripts should be served from ResourceLoader (e.g. installation or update check), |installed_scripts_manager| will be nullptr in current implementation. \nUpdated the comment. How about this?",
+      "parentUuid": "b1a354c3_d74da7ac",
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cd35f4b_a54cd46a",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-13T09:51:55Z",
+      "side": 1,
+      "message": "Oops, it\u0027s wrong. updated.",
+      "range": {
+        "startLine": 352,
+        "startChar": 43,
+        "endLine": 352,
+        "endChar": 77
+      },
+      "revId": "10affdf0fb4a92b260b8190e4f15ee4075483a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
