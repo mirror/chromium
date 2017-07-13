@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c94f9a_1a7e03c4",
+        "filename": "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T02:31:24Z",
+      "side": 1,
+      "message": "I don\u0027t think this is what you want to check.  Based on the bug description, you\u0027re trying to copy desktop\u0027s behavior of having an empty omnibox on the NTP.  The NTP should have an active WebContents, which should be caught by the code above.  Is that somehow not what happens in your case?  I\u0027d like to understand this better if so, because various places in the omnibox code assume a valid WebContents even when on the NTP, so just patching here doesn\u0027t seem like the right thing -- rather, I\u0027d think we\u0027d want to ensure we do have a WebContents, and its URL is the NewTabHost as the code above checks.",
+      "revId": "677375e950fae1173585800e1e2d4d07331cd98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
