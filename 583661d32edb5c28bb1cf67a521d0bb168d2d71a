@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d61d27_b17abe63",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-13T16:58:20Z",
+      "side": 1,
+      "message": "Why is this static?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537cbae7_dcca9ff6",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-13T16:58:20Z",
+      "side": 1,
+      "message": "I believe this is incorrect -- you need to release() the pointer first, don\u0027t you? (before the unique_ptr is destroyed). In any case, you could make this method\u0027s return signature std::unordered_map\u003cstd::string, std::unique_ptr\u003cHostScanCacheEntry\u003e\u003e, and simply move() the unique_ptr to the map, to make this easier to understand.",
+      "range": {
+        "startLine": 133,
+        "startChar": 42,
+        "endLine": 133,
+        "endChar": 47
+      },
+      "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e817ed_ff6b348e",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-13T16:58:20Z",
+      "side": 1,
+      "message": "Please dedupe this with the same constants in master_host_scan_cache_unittest. Maybe make a test helper file.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "583661d32edb5c28bb1cf67a521d0bb168d2d71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
