@@ -157,6 +157,9 @@ class ChromeBrowserProvider {
   // Returns an instance of the spotlight provider.
   virtual SpotlightProvider* GetSpotlightProvider() const;
 
+  // Checks for installed Apps.
+  virtual void CheckInstalledApps() const;
+
   // Adds and removes observers.
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
