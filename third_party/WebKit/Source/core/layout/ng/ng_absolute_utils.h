@@ -11,11 +11,13 @@
 #include "core/layout/ng/geometry/ng_static_position.h"
 #include "core/layout/ng/ng_min_max_content_size.h"
 #include "platform/LayoutUnit.h"
+#include "platform/geometry/LayoutSize.h"
 #include "platform/wtf/Optional.h"
 
 namespace blink {
 
 class ComputedStyle;
+class LayoutSize;
 class NGConstraintSpace;
 
 struct CORE_EXPORT NGAbsolutePhysicalPosition {
@@ -53,7 +55,8 @@ ComputePartialAbsoluteWithChildInlineSize(
     const NGConstraintSpace& space,
     const ComputedStyle& style,
     const NGStaticPosition&,
-    const Optional<MinMaxContentSize>& child_minmax);
+    const Optional<MinMaxContentSize>& child_minmax,
+    const Optional<LayoutSize>& intrinsic_size /* physical size */);
 
 // Compute rest of NGPhysicalRect that depends on child's block_size.
 CORE_EXPORT void ComputeFullAbsoluteWithChildBlockSize(
@@ -61,11 +64,9 @@ CORE_EXPORT void ComputeFullAbsoluteWithChildBlockSize(
     const ComputedStyle& style,
     const NGStaticPosition&,
     const Optional<LayoutUnit>& child_block_size,
+    const Optional<LayoutSize>& intrinsic_size,  // physical size
     NGAbsolutePhysicalPosition* position);
 
-// TODO(atotic) Absolute coordinates for replaced elements
-// ComputeAbsoluteReplaced.
-// https://www.w3.org/TR/css-position-3/#abs-replaced-width
 }  // namespace blink
 
 #endif  // NGAbsoluteUtils_h
