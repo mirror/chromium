@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "37446148_7c146848",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-13T16:27:25Z",
+      "side": 1,
+      "message": "The comment does specifically mention the thumbnail. Right now, to a casual reader it might not even be clear what thumbnail that refers to, because the view is ~80 lines further up.",
+      "parentUuid": "1121c199_c7a90055",
+      "range": {
+        "startLine": 130,
+        "startChar": 23,
+        "endLine": 130,
+        "endChar": 44
+      },
+      "revId": "c56bdc208191f0d2878874168dc5fba2bb255057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14311ac2_9629a022",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 1
