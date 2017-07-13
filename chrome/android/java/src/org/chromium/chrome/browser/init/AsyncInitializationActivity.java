@@ -182,14 +182,18 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
 
     @Override
     public void maybePreconnect() {
-        TraceEvent.begin("maybePreconnect");
-        Intent intent = getIntent();
-        if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
-            final String url = intent.getDataString();
-            WarmupManager.getInstance()
-                .maybePreconnectUrlAndSubResources(Profile.getLastUsedProfile(), url);
+        try {
+            TraceEvent.begin("maybePreconnect");
+            Intent intent = getIntent();
+            if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+                String url = intent.getDataString();
+                if (url == null) return;
+                WarmupManager.getInstance()
+                        .maybePreconnectUrlAndSubResources(Profile.getLastUsedProfile(), url);
+            }
+        } finally {
+            TraceEvent.end("maybePreconnect");
         }
-        TraceEvent.end("maybePreconnect");
     }
 
     @Override
