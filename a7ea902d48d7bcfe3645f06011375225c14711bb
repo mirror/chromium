@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9b72ba3_0a627db2",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133400
+      },
+      "writtenOn": "2017-07-13T00:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "022084cc_18030f7c",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5693e07_de8eb703",
         "filename": "chromecast/media/audio/cast_audio_manager_alsa.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0d83ea_3abc4820",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133400
+      },
+      "writtenOn": "2017-07-13T00:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5693e07_de8eb703",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e35ee4e_39771253",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1133400
+      },
+      "writtenOn": "2017-07-13T00:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d05999a6_f78bbd92",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11675955_53647810",
         "filename": "chromecast/media/audio/cast_audio_manager_alsa.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-12T23:35:24Z",
       "side": 1,
       "message": "do these functions need to be members?",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528c764c_333375e4",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1133400
+      },
+      "writtenOn": "2017-07-13T00:06:37Z",
+      "side": 1,
+      "message": "As far as I can tell no, but they are members in AudioManagerAlsa.",
+      "parentUuid": "11675955_53647810",
       "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391dc382_f506e14b",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1133400
+      },
+      "writtenOn": "2017-07-13T00:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d6f1139_6c0fb16c",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
