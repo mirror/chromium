@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a71d8337_762c22e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T22:08:25Z",
+      "side": 1,
+      "message": "Nit: shift clicks (spoofed isn\u0027t really the important bit here, I suspect it gets used for regular shift clicks as well)",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf687f5_a8ff279e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5532,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T22:08:25Z",
+      "side": 1,
+      "message": "I assume there\u0027s a test case that proved that this case is needed.",
+      "range": {
+        "startLine": 5531,
+        "startChar": 0,
+        "endLine": 5532,
+        "endChar": 47
+      },
+      "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f50e487_73a581b2",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T22:08:25Z",
+      "side": 1,
+      "message": "FWIW, I think this has changed quite a bit due to PlzNavigate. It didn\u0027t always used to be this way.",
+      "range": {
+        "startLine": 1356,
+        "startChar": 0,
+        "endLine": 1359,
+        "endChar": 50
+      },
+      "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6363ddea_4f3b7228",
+        "filename": "third_party/WebKit/Source/web/LocalFrameClientImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-13T22:08:25Z",
+      "side": 1,
+      "message": "I wonder if downloads really need to trigger fullscreen exit. It seems like they shouldn\u0027t? I just tried fullscreening gmail and downloading an attachment, and it doesn\u0027t kick me out.",
+      "range": {
+        "startLine": 651,
+        "startChar": 2,
+        "endLine": 651,
+        "endChar": 74
+      },
+      "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
