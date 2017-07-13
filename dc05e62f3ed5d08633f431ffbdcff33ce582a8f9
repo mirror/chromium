@@ -16,6 +16,24 @@
       "revId": "dc05e62f3ed5d08633f431ffbdcff33ce582a8f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe01fd13_4662a954",
+        "filename": "tools/idl_parser/idl_lexer.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-13T23:46:49Z",
+      "side": 1,
+      "message": "Let me keep using +?, as empty special comment doesn\u0027t make much sense :)",
+      "parentUuid": "bdebf07a_c012c161",
+      "revId": "dc05e62f3ed5d08633f431ffbdcff33ce582a8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
