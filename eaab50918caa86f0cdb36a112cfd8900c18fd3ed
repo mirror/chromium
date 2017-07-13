@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1097c9_6f35a390",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-07-13T08:46:41Z",
+      "side": 1,
+      "message": "Now, there\u0027s no checking of that this function is run on a background priority / may block task runner. We should really have that.\n\nIs base::ThreadRestrictions::AssertIOAllowed() sufficient?",
+      "revId": "eaab50918caa86f0cdb36a112cfd8900c18fd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ceefd3_4a7343fe",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-07-13T08:46:41Z",
+      "side": 1,
+      "message": "Nit: should it be camel case or background_task_runner()? Would the reference returned make the difference?",
+      "range": {
+        "startLine": 96,
+        "startChar": 50,
+        "endLine": 96,
+        "endChar": 70
+      },
+      "revId": "eaab50918caa86f0cdb36a112cfd8900c18fd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
