@@ -34,6 +34,24 @@
       "revId": "9b8270896eb3d514bb04970404206608afb77c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8065058_d7dec886",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-13T05:40:21Z",
+      "side": 1,
+      "message": "\u003e I think this histogram is not for side-by-side comparison between Finch groups, but just to understand how often throttling happened in each experiment group.\n\nI see, that makes sense. Was trying to make sense the other way.\n\n\u003e \u003e Do we want to also record the stats when the tab becomes foregrounded for the first time?\n\u003e \n\u003e Could you elaborate a bit why this is useful?\n\nI have wondered if we\u0027re interested in how peak memory could differ between control and others for the pages that were started (mostly) in background but then brought to foreground later. \nSay, could it be useful to record peak count for the frames that are not throttled when OnNetworkQuiet is called (while it might have been throttled) in a single bucket?",
+      "parentUuid": "04c649c0_17dbc068",
+      "revId": "9b8270896eb3d514bb04970404206608afb77c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
