@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d146e551_3d56c6e6",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-13T21:12:51Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e93e5559_26e91d39",
+      "range": {
+        "startLine": 255,
+        "startChar": 7,
+        "endLine": 255,
+        "endChar": 35
+      },
+      "revId": "f0210c775e971d066411ed88f2850ce2a7d88c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41cbd921_2e00fc77",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T16:02:11Z",
       "side": 1,
       "message": "Shouldn\u0027t this be (web_vr_mode_ \u0026\u0026 !waiting_for_first_web_vr_frame_)? You\u0027re turning on WebVr rendering any time you\u0027re not showing a splash screen with this.",
+      "range": {
+        "startLine": 488,
+        "startChar": 36,
+        "endLine": 488,
+        "endChar": 67
+      },
+      "revId": "f0210c775e971d066411ed88f2850ce2a7d88c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc8569f_53e18fd5",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-13T21:12:51Z",
+      "side": 1,
+      "message": "This bit is used by vr_shell_gl to in ShouldDrawWebVr: https://cs.chromium.org/chromium/src/chrome/browser/android/vr_shell/vr_shell_gl.cc?rcl\u003db84bc5d6d971d3015f746d85e2a4c15f1543cdf1\u0026l\u003d1213\n\nIt was previously always set to true. But there\u0027s not harm in doing this. Done.",
+      "parentUuid": "41cbd921_2e00fc77",
       "range": {
         "startLine": 488,
         "startChar": 36,
