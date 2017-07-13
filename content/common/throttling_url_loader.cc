@@ -5,6 +5,7 @@
 #include "content/common/throttling_url_loader.h"
 
 #include "base/single_thread_task_runner.h"
+#include "content/renderer/net/cors_url_loader.h"
 
 namespace content {
 
@@ -169,10 +170,12 @@ void ThrottlingURLLoader::StartNow(
     mojom::URLLoaderAssociatedPtr url_loader;
     auto url_loader_request = mojo::MakeRequest(&url_loader);
     url_loader_ = std::move(url_loader);
-    factory->CreateLoaderAndStart(
-        std::move(url_loader_request), routing_id, request_id, options,
+
+    // TODO(hintzed): Probably not the right place to plug CORS in?
+    CORSURLLoader::CreateAndStart(
+        factory, std::move(url_loader_request), routing_id, request_id, options,
         url_request, std::move(client),
-        net::MutableNetworkTrafficAnnotationTag(traffic_annotation_));
+        (net::NetworkTrafficAnnotationTag)traffic_annotation_);
   } else {
     mojom::URLLoaderPtr url_loader;
     auto url_loader_request = mojo::MakeRequest(&url_loader);
