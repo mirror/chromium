@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8c417657_0ba18d24",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T03:00:49Z",
+      "side": 1,
+      "message": "Nit: (expected, actual)",
+      "revId": "57897deab728e8c06869498c0aed81e4c1b0fbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "408397bd_b13a6636",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
         "patchSetId": 24
@@ -13,6 +30,41 @@
       "writtenOn": "2017-07-13T02:46:08Z",
       "side": 1,
       "message": "nit: forward declare (move this line to the .cc)",
+      "revId": "57897deab728e8c06869498c0aed81e4c1b0fbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c5dc6f_c5b4e32f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T03:00:49Z",
+      "side": 1,
+      "message": "...however, you do probably want to #include base/scoped_observer.h in this file now?",
+      "parentUuid": "408397bd_b13a6636",
+      "revId": "57897deab728e8c06869498c0aed81e4c1b0fbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fee8a33_9119dc0d",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-13T03:00:49Z",
+      "side": 1,
+      "message": "Nit: Optional, but you could eliminate this now; just convert everywhere that checks it to check widget_observer_.IsObservingSources() instead.\n\nIf you do this, I would change |widget_observer_| to be named |new_tab_promo_observer_| to make it clear we expect it to monitor that, and change the comment on it likewise (\"Observes the new tab promo\u0027s Widget.  Used to tell whether the promo is open and get called back when it closes.\").  Otherwise it\u0027s too tempting for someone later to expand what this is observing without realizing that will trigger a behavior change.",
       "revId": "57897deab728e8c06869498c0aed81e4c1b0fbfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
