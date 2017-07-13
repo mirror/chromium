@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e94c20f_ea84c577",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-13T16:43:02Z",
+      "side": 1,
+      "message": "Looks like this value will either get overwritten below or not get used at all. How about something like:\n\nif (command_line-\u003eHasSwitch(switches::kTestLauncherJobs)) {\n  ...\n  return jobs;\n} else if (command_line-\u003eHasSwitch(kGTestFilterFlag) \u0026\u0026 !BotModeEnabled()) {\n  return 1U;\n}\nreturn base::checked_cast\u003csize_t\u003e(SysInfo::NumberOfProcessors());\n\nI\u0027m not familiar with the code here so I\u0027d wait for Pawel\u0027s opinion though.",
+      "revId": "1a7b275c352ce7545964a6efaa137ee7001f24dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
