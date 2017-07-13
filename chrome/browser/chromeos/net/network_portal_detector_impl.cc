@@ -213,8 +213,7 @@ const char NetworkPortalDetectorImpl::kSessionPortalToOnlineHistogram[] =
 NetworkPortalDetectorImpl::NetworkPortalDetectorImpl(
     const scoped_refptr<net::URLRequestContextGetter>& request_context,
     bool create_notification_controller)
-    : portal_test_url_(CaptivePortalDetector::kDefaultURL),
-      strategy_(PortalDetectorStrategy::CreateById(
+    : strategy_(PortalDetectorStrategy::CreateById(
           PortalDetectorStrategy::STRATEGY_ID_LOGIN_SCREEN,
           this)),
       weak_factory_(this) {
@@ -439,13 +438,14 @@ void NetworkPortalDetectorImpl::ScheduleAttempt(const base::TimeDelta& delay) {
 
 void NetworkPortalDetectorImpl::StartAttempt() {
   DCHECK(is_portal_check_pending());
-  DCHECK(portal_test_url_.is_valid());
 
   state_ = STATE_CHECKING_FOR_PORTAL;
   attempt_start_time_ = NowTicks();
 
   captive_portal_detector_->DetectCaptivePortal(
-      portal_test_url_,
+      portal_test_url_.is_empty()
+          ? GURL(captive_portal::CaptivePortalDetector::GetTestURL())
+          : portal_test_url_,
       base::Bind(&NetworkPortalDetectorImpl::OnAttemptCompleted,
                  weak_factory_.GetWeakPtr()),
       NO_TRAFFIC_ANNOTATION_YET);

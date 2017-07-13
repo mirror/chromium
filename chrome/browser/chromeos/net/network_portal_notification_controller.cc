@@ -182,8 +182,9 @@ void NetworkPortalNotificationControllerDelegate::Click() {
     if (!profile)
       return;
     chrome::ScopedTabbedBrowserDisplayer displayer(profile);
-    GURL url(captive_portal::CaptivePortalDetector::kDefaultURL);
-    chrome::ShowSingletonTab(displayer.browser(), url);
+    chrome::ShowSingletonTab(
+        displayer.browser(),
+        GURL(captive_portal::CaptivePortalDetector::GetTestURL()));
   }
   CloseNotification();
 }
