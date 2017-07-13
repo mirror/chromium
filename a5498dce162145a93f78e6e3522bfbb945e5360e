@@ -702,6 +702,24 @@
     },
     {
       "key": {
+        "uuid": "98e3bedb_fd2cd861",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T16:52:00Z",
+      "side": 1,
+      "message": "A base::Time is 8 bytes in length, an std::string for this data will be ~32 bytes. Not super significant, but you asked :).\n\nOne option you have is to do the string-int conversion in Java, where we already extract the value of the `timestamp`, and just pass a jlong to native. That means you can drop the call to ConvertJavaStringToUTF8() for the timestamp too. That seems fairly clean?\n\nSince native needs it as a base::Time anyway for the last modified time, we\u0027ll need to do this somewhere..",
+      "parentUuid": "0d7c83db_b8b6a70f",
+      "revId": "a5498dce162145a93f78e6e3522bfbb945e5360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a79e99e8_cc8d8987",
         "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
         "patchSetId": 5

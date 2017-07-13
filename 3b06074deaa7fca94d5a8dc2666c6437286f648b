@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "922e3e5d_2238a4a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T16:52:00Z",
+      "side": 1,
+      "message": "private @Nullable SiteChannel?",
+      "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf693c9_5e51b70f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T16:52:00Z",
+      "side": 1,
+      "message": "nit: assert parts.size() \u003d\u003d 2?",
+      "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edebe0fd_126d150f",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T16:52:00Z",
+      "side": 1,
+      "message": "Initialize retrieved_channels_ to false. Right now it\u0027s uninitialized memory, so it\u0027ll have a random value.",
+      "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc118b8_807be514",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T16:52:00Z",
+      "side": 1,
+      "message": "optional: This code would benefit a lot from blank lines to separate the logical blocks.",
+      "revId": "3b06074deaa7fca94d5a8dc2666c6437286f648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
