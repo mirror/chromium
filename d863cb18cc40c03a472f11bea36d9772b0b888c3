@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b276577_72a5ac44",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 2408,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-13T18:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c664165a_fd7b86b9",
+      "range": {
+        "startLine": 2408,
+        "startChar": 20,
+        "endLine": 2408,
+        "endChar": 24
+      },
+      "revId": "d863cb18cc40c03a472f11bea36d9772b0b888c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a6302a3_428118fa",
         "filename": "base/files/file.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d863cb18cc40c03a472f11bea36d9772b0b888c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901ba11a_7cf358da",
+        "filename": "base/files/file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-13T18:58:28Z",
+      "side": 1,
+      "message": "Done. I\u0027m going to punt on making a general cross-process locking recommendation in file.h though - it seems odd to put that detail in a platform agnostic file class, and we might want to come up with alternatives on a case-by-case basis.",
+      "parentUuid": "3a6302a3_428118fa",
+      "range": {
+        "startLine": 276,
+        "startChar": 7,
+        "endLine": 276,
+        "endChar": 11
+      },
+      "revId": "d863cb18cc40c03a472f11bea36d9772b0b888c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
