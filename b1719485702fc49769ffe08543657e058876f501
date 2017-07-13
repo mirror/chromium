@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e769e873_b4826a5e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T15:22:53Z",
+      "side": 1,
+      "message": "nit: End with \".\", also below",
+      "revId": "b1719485702fc49769ffe08543657e058876f501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

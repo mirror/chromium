@@ -187,6 +187,30 @@
     },
     {
       "key": {
+        "uuid": "87dd5cee_f4389f72",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T15:22:53Z",
+      "side": 1,
+      "message": "Probably everything above should be ASSERT, since it\u0027s more or less part of the \"setup\"/preconditions phase?",
+      "parentUuid": "32877244_c692c7de",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 13
+      },
+      "revId": "65da9f5b02a1d7c6681b2f535d5d58c4a0a6c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc2123ff_c6e7fefd",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 9
@@ -219,6 +243,24 @@
       "revId": "65da9f5b02a1d7c6681b2f535d5d58c4a0a6c1e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6bd72ba_3b4f1f81",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-13T15:22:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6622488f_38abd792",
+      "revId": "65da9f5b02a1d7c6681b2f535d5d58c4a0a6c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
