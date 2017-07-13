@@ -16,6 +16,24 @@
       "revId": "0031231123b8e444569b224d77679ec884f0cb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bda9da_a869f11c",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-13T17:50:50Z",
+      "side": 1,
+      "message": "That sounds like a \"change detection\" test in that it will require the test to be updated every time we add or remove a flag. I think we should avoid that kind of test.\n\nAdded a comment here for clarity.",
+      "parentUuid": "0a381630_0093124d",
+      "revId": "0031231123b8e444569b224d77679ec884f0cb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
