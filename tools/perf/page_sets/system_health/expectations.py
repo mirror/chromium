@@ -23,6 +23,9 @@ class SystemHealthDesktopCommonExpectations(expectations.StoryExpectations):
                       'crbug.com/64939')
     self.DisableStory('browse:news:cnn',
                       [expectations.ALL_MAC], 'crbug.com/728576')
+    self.DisableStory('multitab:misc:typical24',
+                      [expectations.ALL_WIN, expectations.ALL_MAC],
+                      'crbug.com/742475')
 
 
 class SystemHealthDesktopMemoryExpectations(expectations.StoryExpectations):
@@ -48,6 +51,9 @@ class SystemHealthDesktopMemoryExpectations(expectations.StoryExpectations):
                       [expectations.ALL_MAC], 'crbug.com/728576')
     self.DisableStory('browse:social:twitter_infinite_scroll',
                       [expectations.ALL_WIN], 'crbug.com/728464')
+    self.DisableStory('multitab:misc:typical24',
+                      [expectations.ALL_WIN, expectations.ALL_MAC],
+                      'crbug.com/742475')
 
 
 class SystemHealthMobileCommonExpectations(expectations.StoryExpectations):
