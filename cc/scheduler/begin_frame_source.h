@@ -215,14 +215,13 @@ class CC_EXPORT DelayBasedBeginFrameSource : public SyntheticBeginFrameSource,
   void OnTimerTick() override;
 
  private:
-  BeginFrameArgs CreateBeginFrameArgs(base::TimeTicks frame_time,
-                                      BeginFrameArgs::BeginFrameArgsType type);
+  BeginFrameArgs CreateBeginFrameArgs(base::TimeTicks frame_time);
 
   std::unique_ptr<DelayBasedTimeSource> time_source_;
   std::unordered_set<BeginFrameObserver*> observers_;
   base::TimeTicks last_timebase_;
   base::TimeDelta authoritative_interval_;
-  BeginFrameArgs current_begin_frame_args_;
+  BeginFrameArgs last_begin_frame_args_;
   uint64_t next_sequence_number_;
 
   DISALLOW_COPY_AND_ASSIGN(DelayBasedBeginFrameSource);
