@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f933a85_8bc61881",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "Let\u0027s avoid too many maps to maintain. You can map extension to MIME type, then map MIME type to resource type, I think this should work well.",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467299a9_d645d86f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "Ugh... I thought you\u0027ll convert evrything to HAR rather than Har -- we typically keep abbreviations all-uppercase.",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2f6746_df412f56",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "Drop || undefined?",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4024684a_17652158",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e99f7c9_294ab319",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "s/Har/HAR/g",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fc0fda_442832a8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "Should we get the port number from the URL?",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea41386b_b4bcc3b0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "This can only happen in the ternary operator above...",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0329be_c53fdaf6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "... so just put this into ternary above.",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1a5068_4c5763ca",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "This looks like it can go negative.",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a94773_22b3f713",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "isn\u0027t ssl part of connect timing?",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0324b946_623f321c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "Why? Just readAsText(), you need text after all...",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8f2d43_a0d6890e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-13T21:59:34Z",
+      "side": 1,
+      "message": "Make it one line, i.e. just do \"+ e\" in the line above.",
+      "revId": "58dee09d0239eceaefe5b1a3f428dd8b9ba031c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
