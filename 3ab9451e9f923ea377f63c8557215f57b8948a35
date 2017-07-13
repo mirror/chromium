@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edab8aae_fd5b558b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationSettingsBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-13T11:37:50Z",
+      "side": 1,
+      "message": "I\u0027m wondering about changing this constructor parameter from a NotificationChannelStatus to just a boolean isEnabled flag, since it doesn\u0027t really make sense to construct a SiteChannel with status\u003dUNAVAILABLE.",
+      "revId": "3ab9451e9f923ea377f63c8557215f57b8948a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
