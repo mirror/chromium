@@ -37,9 +37,9 @@ CSSPaintDefinition* CSSPaintDefinition::Create(
     ScriptState* script_state,
     v8::Local<v8::Function> constructor,
     v8::Local<v8::Function> paint,
-    Vector<CSSPropertyID>& native_invalidation_properties,
-    Vector<AtomicString>& custom_invalidation_properties,
-    Vector<CSSSyntaxDescriptor>& input_argument_types,
+    Vector<CSSPropertyID> native_invalidation_properties,
+    Vector<AtomicString> custom_invalidation_properties,
+    Vector<CSSSyntaxDescriptor> input_argument_types,
     bool has_alpha) {
   return new CSSPaintDefinition(
       script_state, constructor, paint, native_invalidation_properties,

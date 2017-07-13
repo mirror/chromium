@@ -13,6 +13,8 @@
 #include "core/inspector/MainThreadDebugger.h"
 #include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/CSSPaintImageGeneratorImpl.h"
+#include "modules/csspaint/PaintWorklet.h"
+#include "modules/csspaint/WindowPaintWorklet.h"
 #include "platform/bindings/V8BindingMacros.h"
 
 namespace blink {
@@ -24,15 +26,16 @@ PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
     const String& user_agent,
     PassRefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
-    PaintWorkletPendingGeneratorRegistry* pending_generator_registry) {
+    PaintWorkletPendingGeneratorRegistry* pending_generator_registry,
+    int global_scope_instance_count) {
   PaintWorkletGlobalScope* paint_worklet_global_scope =
       new PaintWorkletGlobalScope(frame, url, user_agent,
                                   std::move(security_origin), isolate,
                                   pending_generator_registry);
-  // TODO(xidachen): When we implement two PaintWorkletGlobalScope, we should
-  // change the last parameter.
+  String context_name("Paint Worklet");
+  context_name.append(String::Number(global_scope_instance_count));
   paint_worklet_global_scope->ScriptController()->InitializeContextIfNeeded(
-      "Paint Worklet");
+      context_name);
   MainThreadDebugger::Instance()->ContextCreated(
       paint_worklet_global_scope->ScriptController()->GetScriptState(),
       paint_worklet_global_scope->GetFrame(),
@@ -200,6 +203,32 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
   paint_definitions_.Set(
       name, TraceWrapperMember<CSSPaintDefinition>(this, definition));
   pending_generator_registry_->SetDefinition(name, definition);
+
+  // TODO(xidachen): the following steps should be done with a postTask when
+  // we move PaintWorklet off main thread.
+  LocalDOMWindow* dom_window = GetFrame()->GetDocument()->domWindow();
+  PaintWorklet* paint_worklet =
+      WindowPaintWorklet::From(*dom_window).paintWorklet();
+  PaintWorklet::DocumentDefinitionMap& document_definition_map =
+      paint_worklet->GetDocumentDefinitionMap();
+  DocumentPaintDefinition* document_definition =
+      DocumentPaintDefinition::Create(native_invalidation_properties,
+                                      custom_invalidation_properties,
+                                      input_argument_types, has_alpha);
+  if (document_definition_map.Contains(name)) {
+    DocumentPaintDefinition* existing_document_definition =
+        document_definition_map.at(name);
+    if (!existing_document_definition)
+      return;
+    if (!existing_document_definition->Equals(document_definition)) {
+      document_definition_map.Set(name, nullptr);
+      exception_state.ThrowDOMException(
+          kNotSupportedError,
+          "A class with name:'" + name + "' is already registered.");
+    }
+  }
+  document_definition_map.Set(name, TraceWrapperMember<DocumentPaintDefinition>(
+                                        this, document_definition));
 }
 
 CSSPaintDefinition* PaintWorkletGlobalScope::FindDefinition(

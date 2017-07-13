@@ -18,6 +18,7 @@ class CSSPaintDefinition;
 class CSSSyntaxDescriptor;
 class Document;
 class Image;
+class PaintWorklet;
 
 class CSSPaintImageGeneratorImpl final : public CSSPaintImageGenerator {
  public:
@@ -26,7 +27,8 @@ class CSSPaintImageGeneratorImpl final : public CSSPaintImageGenerator {
                                         Observer*);
   ~CSSPaintImageGeneratorImpl() override;
 
-  PassRefPtr<Image> Paint(const ImageResourceObserver&,
+  PassRefPtr<Image> Paint(const Document&,
+                          const ImageResourceObserver&,
                           const IntSize&,
                           const CSSStyleValueVector*) final;
   const Vector<CSSPropertyID>& NativeInvalidationProperties() const final;
@@ -42,11 +44,15 @@ class CSSPaintImageGeneratorImpl final : public CSSPaintImageGenerator {
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  CSSPaintImageGeneratorImpl(Observer*);
-  CSSPaintImageGeneratorImpl(CSSPaintDefinition*);
+  CSSPaintImageGeneratorImpl(Observer*, PaintWorklet*, const String&);
+  CSSPaintImageGeneratorImpl(PaintWorklet*, CSSPaintDefinition*, const String&);
+
+  bool HasDocumentDefinition() const;
 
   Member<CSSPaintDefinition> definition_;
   Member<Observer> observer_;
+  Member<PaintWorklet> paint_worklet_;
+  String name_;
 };
 
 }  // namespace blink
