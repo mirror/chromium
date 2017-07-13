@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2d692f_b2263e0b",
+        "filename": "docs/fuchsia_sdk_updates.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-07-13T20:38:28Z",
+      "side": 1,
+      "message": "add a link to https://fuchsia.googlesource.com/docs/+/HEAD/getting_started.md",
+      "revId": "d4f53bb64e625ae98c80c879ee174575939e0bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9448dbe5_1de96a23",
+        "filename": "docs/fuchsia_sdk_updates.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-07-13T20:38:28Z",
+      "side": 1,
+      "message": "this needs to be executed on a linux host",
+      "revId": "d4f53bb64e625ae98c80c879ee174575939e0bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
