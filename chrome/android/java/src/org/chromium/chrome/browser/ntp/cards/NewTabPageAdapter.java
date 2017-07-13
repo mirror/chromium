@@ -18,6 +18,7 @@ import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder.PartialBindCal
 import org.chromium.chrome.browser.ntp.snippets.SectionHeaderViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticleViewHolder;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
+import org.chromium.chrome.browser.suggestions.SuggestionsCarousel;
 import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.suggestions.TileGrid;
@@ -49,6 +50,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     private final AboveTheFoldItem mAboveTheFold;
     @Nullable
     private final TileGrid mTileGrid;
+    private final SuggestionsCarousel mSuggestionsCarousel;
     private final SectionList mSections;
     private final SignInPromo mSigninPromo;
     private final AllDismissedItem mAllDismissed;
@@ -65,10 +67,12 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
      * @param offlinePageBridge used to determine if articles are available.
      * @param contextMenuManager used to build context menus.
      * @param tileGroupDelegate if not null this is used to build a {@link TileGrid}.
+     * @param suggestionsCarousel
      */
     public NewTabPageAdapter(SuggestionsUiDelegate uiDelegate, @Nullable View aboveTheFoldView,
             UiConfig uiConfig, OfflinePageBridge offlinePageBridge,
-            ContextMenuManager contextMenuManager, @Nullable TileGroup.Delegate tileGroupDelegate) {
+            ContextMenuManager contextMenuManager, @Nullable TileGroup.Delegate tileGroupDelegate,
+            @Nullable SuggestionsCarousel suggestionsCarousel) {
         mUiDelegate = uiDelegate;
         mContextMenuManager = contextMenuManager;
 
@@ -87,6 +91,15 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             mAboveTheFold = new AboveTheFoldItem();
             mRoot.addChild(mAboveTheFold);
         }
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL)
+                && suggestionsCarousel != null) {
+            mSuggestionsCarousel = new SuggestionsCarousel();
+            mRoot.addChild(mSuggestionsCarousel);
+        } else {
+            mSuggestionsCarousel = null;
+        }
+
         if (tileGroupDelegate == null) {
             mTileGrid = null;
         } else {
@@ -94,6 +107,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
                     uiDelegate, mContextMenuManager, tileGroupDelegate, offlinePageBridge);
             mRoot.addChild(mTileGrid);
         }
+
         mRoot.addChildren(mSections, mSigninPromo, mAllDismissed, mFooter);
         if (mAboveTheFoldView == null
                 || ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT)) {
@@ -152,6 +166,9 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
 
             case ItemViewType.ALL_DISMISSED:
                 return new AllDismissedItem.ViewHolder(mRecyclerView, mSections);
+
+            case ItemViewType.CAROUSEL:
+                return new SuggestionsCarousel.ViewHolder(mRecyclerView, mUiDelegate);
         }
 
         assert false : viewType;

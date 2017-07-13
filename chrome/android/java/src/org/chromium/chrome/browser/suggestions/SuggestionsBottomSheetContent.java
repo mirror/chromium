@@ -45,6 +45,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private final ContextMenuManager mContextMenuManager;
     private final SuggestionsUiDelegateImpl mSuggestionsUiDelegate;
     private final TileGroup.Delegate mTileGroupDelegate;
+    private final SuggestionsCarousel mSuggestionsCarousel;
     private final SuggestionsSheetVisibilityChangeObserver mBottomSheetObserver;
 
     public SuggestionsBottomSheetContent(final ChromeActivity activity, final BottomSheet sheet,
@@ -61,6 +62,8 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
         mView = LayoutInflater.from(activity).inflate(
                 R.layout.suggestions_bottom_sheet_content, null);
+        mSuggestionsCarousel = new SuggestionsCarousel();
+
         mRecyclerView = (SuggestionsRecyclerView) mView.findViewById(R.id.recycler_view);
 
         TouchEnabledDelegate touchEnabledDelegate = new TouchEnabledDelegate() {
@@ -83,7 +86,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
         final NewTabPageAdapter adapter = new NewTabPageAdapter(mSuggestionsUiDelegate,
                 /* aboveTheFoldView = */ null, uiConfig, OfflinePageBridge.getForProfile(profile),
-                mContextMenuManager, mTileGroupDelegate);
+                mContextMenuManager, mTileGroupDelegate, mSuggestionsCarousel);
         mRecyclerView.init(uiConfig, mContextMenuManager, adapter);
 
         mBottomSheetObserver = new SuggestionsSheetVisibilityChangeObserver(this, activity) {

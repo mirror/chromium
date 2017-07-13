@@ -8,20 +8,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:chrome="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/snippets_card_view"
+    android:id="@+id/contextual_card_view"
     android:layout_width="match_parent"
+    android:layout_marginEnd="6dp"
     android:layout_height="wrap_content"
     android:background="@drawable/card_single"
     android:foreground="@drawable/button_borderless_compat">
 
+    <org.chromium.chrome.browser.widget.TintedImageView
+        android:id="@+id/article_thumbnail"
+        android:layout_width="@dimen/snippets_thumbnail_size_large"
+        android:layout_height="@dimen/snippets_thumbnail_size_large"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null"
+        android:src="@null" />
+
+    <ImageView
+        android:id="@+id/article_thumbnail_video_overlay"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignTop="@+id/article_thumbnail"
+        android:layout_alignStart="@+id/article_thumbnail"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="38dp"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_play_circle_filled" />
+
     <LinearLayout
         android:id="@+id/text_layout"
-        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/article_thumbnail"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@id/article_thumbnail"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
         android:padding="@dimen/snippets_padding"
         android:orientation="vertical">
 
@@ -102,24 +125,4 @@
 
     </LinearLayout>
 
-    <org.chromium.chrome.browser.widget.TintedImageView
-        android:id="@+id/article_thumbnail"
-        android:layout_width="@dimen/snippets_thumbnail_size_large"
-        android:layout_height="@dimen/snippets_thumbnail_size_large"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:scaleType="centerCrop"
-        android:contentDescription="@null"
-        android:src="@null" />
-
-    <ImageView
-        android:id="@+id/article_thumbnail_video_overlay"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignTop="@+id/article_thumbnail"
-        android:layout_alignStart="@+id/article_thumbnail"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="38dp"
-        android:contentDescription="@null"
-        app:srcCompat="@drawable/ic_play_circle_filled" />
 </RelativeLayout>
