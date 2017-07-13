@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29a592a2_49e088d0",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-13T17:39:46Z",
+      "side": 1,
+      "message": "We don\u0027t recommend using field trial name parsing for new experiments.\n\nInstead, you should use field trial params. See base/metrics/field_trial_params.h",
+      "range": {
+        "startLine": 198,
+        "startChar": 45,
+        "endLine": 198,
+        "endChar": 53
+      },
+      "revId": "a38185f78d462f5b9563d89f648a77a31e585012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6450091_fa9064fd",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-13T17:39:46Z",
+      "side": 1,
+      "message": "Can you use ScopedFeatureList instead?",
+      "range": {
+        "startLine": 282,
+        "startChar": 36,
+        "endLine": 282,
+        "endChar": 37
+      },
+      "revId": "a38185f78d462f5b9563d89f648a77a31e585012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
