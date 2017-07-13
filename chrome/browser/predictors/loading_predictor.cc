@@ -43,7 +43,7 @@ void LoadingPredictor::PrepareForPageLoad(const GURL& url, HintOrigin origin) {
 
   bool hint_activated = false;
 
-  {
+  if (config_.IsPrefetchingEnabledForOrigin(profile_, origin)) {
     ResourcePrefetchPredictor::Prediction prediction;
     if (resource_prefetch_predictor_->GetPrefetchData(url, &prediction)) {
       MaybeAddPrefetch(url, prediction.subresource_urls, origin);
@@ -51,7 +51,8 @@ void LoadingPredictor::PrepareForPageLoad(const GURL& url, HintOrigin origin) {
     }
   }
 
-  if (!hint_activated) {
+  if (!hint_activated &&
+      config_.IsPreconnectEnabledForOrigin(profile_, origin)) {
     PreconnectPrediction prediction;
     if (resource_prefetch_predictor_->PredictPreconnectOrigins(url,
                                                                &prediction)) {
@@ -188,8 +189,6 @@ void LoadingPredictor::CleanupAbandonedHintsAndNavigations(
 void LoadingPredictor::MaybeAddPrefetch(const GURL& url,
                                         const std::vector<GURL>& urls,
                                         HintOrigin origin) {
-  if (!config_.IsPrefetchingEnabledForOrigin(profile_, origin))
-    return;
   std::string host = url.host();
   if (prefetches_.find(host) != prefetches_.end())
     return;
@@ -265,8 +264,6 @@ void LoadingPredictor::MaybeAddPreconnect(
     HintOrigin origin) {
   // In case Shutdown() has been already called.
   if (!preconnect_manager_)
-    return;
-  if (!config_.IsPreconnectEnabledForOrigin(profile_, origin))
     return;
 
   content::BrowserThread::PostTask(
