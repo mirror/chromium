@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "042a1feb_a560b8a1",
+        "filename": "tools/idl_parser/idl_lexer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-07-13T10:00:11Z",
+      "side": 1,
+      "message": "Javadoc (\u003e1.4) allows to skip a leading \u0027*\u0027 on each line.\nIf you skip lines which do not have a leading \u0027*\u0027, it should be noted.",
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e32e001_ce37a0b3",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 1
@@ -13,6 +30,86 @@
       "writtenOn": "2017-07-13T09:59:15Z",
       "side": 1,
       "message": "I think that it\u0027d be better to move this out of idl_parser.  The contents of the SPECIAL_COMMENT should be handled by clients.\n\nWhat about adding the following?\nTODO(bashi): Move this out of idl_parser.",
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8111489_18eb84d8",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-07-13T10:00:11Z",
+      "side": 1,
+      "message": "Is it necessary to drop lines which don\u0027t start with \u0027*\u0027?",
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211a13db_fd889ff1",
+        "filename": "tools/idl_parser/test_parser/enum_web.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-07-13T10:00:11Z",
+      "side": 1,
+      "message": "nit: add a space at the beginning.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7650718e_e9c1f9b8",
+        "filename": "tools/idl_parser/test_parser/enum_web.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-07-13T10:00:11Z",
+      "side": 1,
+      "message": "diito",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d3aa44_4632c493",
+        "filename": "tools/idl_parser/test_parser/enum_web.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-07-13T10:00:11Z",
+      "side": 1,
+      "message": "ditto",
       "revId": "b376fc73857650f90ff4f6013242e2c418aff32a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
