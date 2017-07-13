@@ -410,6 +410,55 @@ TEST_F(SiteSettingsHandlerTest, DefaultSettingSource) {
   ValidateOrigin(google, google, google, "allow", "policy", 8U);
 }
 
+TEST_F(SiteSettingsHandlerTest, SetOriginPermissions) {
+  const std::string origin("https://www.example.com");
+  base::ListValue getargs;
+  getargs.AppendString(kCallbackId);
+  getargs.AppendString(origin);
+  {
+    auto category_list2 = base::MakeUnique<base::ListValue>();
+    category_list2->AppendString("notifications");
+    getargs.Append(std::move(category_list2));
+  }
+  handler()->HandleGetOriginPermissions(&getargs);
+  ValidateOrigin(origin, origin, origin, "ask", "preference", 1U);
+
+  base::ListValue set_args;
+  {
+    set_args.AppendString(origin);
+    auto category_list = base::MakeUnique<base::ListValue>();
+    category_list->AppendString("notifications");
+    set_args.Append(std::move(category_list));
+    set_args.AppendString("block");
+  }
+  handler()->HandleSetOriginPermissions(&set_args);
+  EXPECT_EQ(2U, web_ui()->call_data().size());
+
+  // Verify the change was successful.
+  base::ListValue list_args;
+  list_args.AppendString(kCallbackId);
+  list_args.AppendString("notifications");
+  handler()->HandleGetExceptionList(&list_args);
+  ValidateOrigin(origin, origin, "", "block", "preference", 3U);
+
+  // Reset things back to how they were.
+  base::ListValue reset_args;
+  reset_args.AppendString(origin);
+  auto category_list = base::MakeUnique<base::ListValue>();
+  category_list->AppendString("notifications");
+  reset_args.Append(std::move(category_list));
+  reset_args.AppendString("default");
+
+  handler()->HandleSetOriginPermissions(&reset_args);
+  EXPECT_EQ(4U, web_ui()->call_data().size());
+
+  // Verify the reset was successful.
+  handler()->HandleGetOriginPermissions(&getargs);
+  ValidateOrigin(origin, origin, origin, "ask", "preference", 5U);
+  handler()->HandleGetExceptionList(&list_args);
+  ValidateNoOrigin(6U);
+}
+
 TEST_F(SiteSettingsHandlerTest, ExceptionHelpers) {
   ContentSettingsPattern pattern =
       ContentSettingsPattern::FromString("[*.]google.com");
