@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39ffc974_ae3dc686",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T11:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4f0f458_a9a69b32",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a3f86e9_bc634522",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e32944b_6f78b40c",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T11:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a3f86e9_bc634522",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9771904e_f5262e1d",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T11:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc6762fb_0065d661",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c46b332_d349649e",
         "filename": "components/exo/keyboard.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd40931_747c9a18",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T11:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c46b332_d349649e",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "362ba8aa_afc6ff9a",
+        "filename": "components/exo/keyboard_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T11:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dde60eb9_b7cfad25",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1fc2594_b0370a74",
         "filename": "components/exo/keyboard_device_configuration_delegate.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42faee09_9cd92728",
+        "filename": "components/exo/keyboard_device_configuration_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T11:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1fc2594_b0370a74",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "541d4a58_93ec36f4",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4091,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T11:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e52c1a2f_09fd61d5",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf2361d4_ab4df994",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a94ed7e_cda53854",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4129,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-13T11:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf2361d4_ab4df994",
+      "revId": "91c8b13d60106f40c5a96b967652331fa9f9865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
