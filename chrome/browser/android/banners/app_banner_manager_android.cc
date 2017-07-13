@@ -111,6 +111,7 @@ bool AppBannerManagerAndroid::OnAppDetailsRetrieved(
     const JavaParamRef<jstring>& japp_title,
     const JavaParamRef<jstring>& japp_package,
     const JavaParamRef<jstring>& jicon_url) {
+  LOG(ERROR) << "\nABCD OnAppDetailsRetrieved\n";
   native_app_data_.Reset(japp_data);
   native_app_title_ = ConvertJavaStringToUTF16(env, japp_title);
   native_app_package_ = ConvertJavaStringToUTF8(env, japp_package);
@@ -186,6 +187,7 @@ InstallableParams AppBannerManagerAndroid::ParamsToPerformInstallableCheck() {
 void AppBannerManagerAndroid::PerformInstallableCheck() {
   // Check if the manifest prefers that we show a native app banner. If so, call
   // to Java to verify the details.
+  LOG(ERROR) << "\nABCD PerformInstallable\n";
   if (manifest_.prefer_related_applications &&
       manifest_.related_applications.size()) {
     for (const auto& application : manifest_.related_applications) {
@@ -271,6 +273,7 @@ void AppBannerManagerAndroid::ShowBanner() {
 bool AppBannerManagerAndroid::CanHandleNonWebApp(const std::string& platform,
                                                  const GURL& url,
                                                  const std::string& id) {
+  LOG(ERROR) << "\nABCD CanHandleNonWebapp\n";
   if (!CheckPlatformAndId(platform, id))
     return false;
 
