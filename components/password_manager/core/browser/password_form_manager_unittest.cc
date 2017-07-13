@@ -2287,6 +2287,37 @@ TEST_F(PasswordFormManagerTest, TestUpdateNoUsernameTextfieldPresent) {
   EXPECT_EQ(saved_match()->submit_element, new_credentials.submit_element);
 }
 
+// Test that when user updates username, the pending credentials is updated
+// accordingly.
+TEST_F(PasswordFormManagerTest, TestUpdateUsernameMethod) {
+  fake_form_fetcher()->SetNonFederated(std::vector<const PasswordForm*>(), 0u);
+  form_manager()->UpdateUsername(ASCIIToUTF16("newusername"));
+
+  EXPECT_EQ(form_manager()->pending_credentials().username_value,
+            ASCIIToUTF16("newusername"));
+  EXPECT_EQ(form_manager()->IsNewLogin(), true);
+}
+
+// Test that when user updates username to an already existing one, is_new_login
+// status is false.
+TEST_F(PasswordFormManagerTest, TestUpdateUsernameToExisting) {
+  // We have an already existing credential.
+  PasswordForm credentials(*observed_form());
+  credentials.username_value = ASCIIToUTF16("existing_username");
+  credentials.password_value = saved_match()->password_value;
+  credentials.preferred = true;
+
+  fake_form_fetcher()->SetNonFederated({&credentials}, 0u);
+
+  // User edits the username to the already existing one.
+  form_manager()->UpdateUsername(ASCIIToUTF16("existing_username"));
+
+  // The username in credentials is expected to be updated.
+  EXPECT_EQ(form_manager()->pending_credentials().username_value,
+            ASCIIToUTF16("existing_username"));
+  EXPECT_EQ(form_manager()->IsNewLogin(), false);
+}
+
 // Test that if WipeStoreCopyIfOutdated is called before password store
 // callback, the UMA is signalled accordingly.
 TEST_F(PasswordFormManagerTest, WipeStoreCopyIfOutdated_BeforeStoreCallback) {
