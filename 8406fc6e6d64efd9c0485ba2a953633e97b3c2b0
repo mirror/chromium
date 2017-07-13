@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cc33a8f_70960e52",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleShallowTree.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-13T04:58:59Z",
+      "side": 1,
+      "message": "Actually, is script meant to be in \u003cbody\u003e?",
+      "revId": "8406fc6e6d64efd9c0485ba2a953633e97b3c2b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
