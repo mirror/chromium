@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b08468_c4de1096",
+        "filename": "content/browser/renderer_host/media/audio_output_authorization_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-07-13T13:02:22Z",
+      "side": 1,
+      "message": "nit: move() as everywhere else? or Passed() everywhere else?",
+      "revId": "f4e2c0fdbe8c6ee41de3295cfbbb5f24f44c2692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f4eb7f_bf99c7c4",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-07-13T13:02:22Z",
+      "side": 1,
+      "message": "Could you add a comment and explain the two device ids?",
+      "revId": "f4e2c0fdbe8c6ee41de3295cfbbb5f24f44c2692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
