@@ -16,6 +16,24 @@
       "revId": "8406fc6e6d64efd9c0485ba2a953633e97b3c2b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df20fe9b_70d44a60",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleShallowTree.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-13T05:03:48Z",
+      "side": 1,
+      "message": "Position of the script element doesn\u0027t affect test results.",
+      "parentUuid": "8cc33a8f_70960e52",
+      "revId": "8406fc6e6d64efd9c0485ba2a953633e97b3c2b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
