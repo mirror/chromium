@@ -178,6 +178,7 @@
 #include "extensions/common/extension_set.h"
 #include "extensions/common/features/feature_channel.h"
 #include "extensions/common/manifest_handlers/shared_module_info.h"
+#include "extensions/common/switches.h"
 #include "media/media_features.h"
 #include "net/base/net_errors.h"
 #include "net/base/url_util.h"
@@ -211,6 +212,7 @@
 #include "chrome/browser/chromeos/accessibility/magnification_manager.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/login/test/js_checker.h"
+#include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/chromeos/system/timezone_resolver_manager.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/chrome_screenshot_grabber.h"
@@ -740,6 +742,7 @@ class PolicyTest : public InProcessBrowserTest {
     base::FilePath extension_path(ui_test_utils::GetTestFilePath(
         base::FilePath(kTestExtensionsDir), base::FilePath(name)));
     extensions::ChromeTestExtensionLoader loader(browser()->profile());
+    LOG(ERROR) << "LOAD " << extension_path.value();
     return loader.LoadExtension(extension_path);
   }
 
@@ -4463,4 +4466,115 @@ IN_PROC_BROWSER_TEST_F(NetworkTimePolicyTest, NetworkTimeQueriesDisabled) {
   EXPECT_EQ(1u, num_requests());
 }
 
+#if defined(OS_CHROMEOS)
+class NoteTakingOnLockScreenPolicyTest : public PolicyTest {
+ public:
+  NoteTakingOnLockScreenPolicyTest() = default;
+  ~NoteTakingOnLockScreenPolicyTest() override = default;
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(chromeos::switches::kEnableLockScreenApps);
+    command_line->AppendSwitchASCII(
+        extensions::switches::kWhitelistedExtensionID,
+        "cadfeochfldmbdgoccgbeianhamecbae");
+    PolicyTest::SetUpCommandLine(command_line);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(NoteTakingOnLockScreenPolicyTest);
+};
+
+IN_PROC_BROWSER_TEST_F(NoteTakingOnLockScreenPolicyTest,
+                       DisableLockScreenNoteTakingiByPolicy) {
+  PrefService* const pref = browser()->profile()->GetPrefs();
+
+  scoped_refptr<const extensions::Extension> app =
+      LoadUnpackedExtension("lock_screen_apps/app_launch");
+  ASSERT_TRUE(app);
+
+  chromeos::NoteTakingHelper* helper = chromeos::NoteTakingHelper::Get();
+  ASSERT_TRUE(helper);
+
+  helper->SetPreferredApp(browser()->profile(), app->id());
+  pref->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen, true);
+
+  // Verify that the test app is currently selected as a lock screen note taking
+  // app.
+  std::unique_ptr<chromeos::NoteTakingAppInfo> info =
+      helper->GetPreferredChromeAppInfo(browser()->profile());
+  ASSERT_TRUE(info);
+  EXPECT_EQ(chromeos::NoteTakingLockScreenSupport::kSelected,
+            info->lock_screen_support);
+
+  // Update policy to disable lock screen note taking, and verify that the app
+  // is no longer selected as a lock screen note taking app.
+  PolicyMap policies;
+  policies.Set(key::kNoteTakingOnLockScreenEnabled, POLICY_LEVEL_MANDATORY,
+               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
+               base::MakeUnique<base::Value>(false), nullptr);
+  UpdateProviderPolicy(policies);
+
+  info = helper->GetPreferredChromeAppInfo(browser()->profile());
+  ASSERT_TRUE(info);
+  EXPECT_EQ(chromeos::NoteTakingLockScreenSupport::kSupported,
+            info->lock_screen_support);
+  EXPECT_FALSE(pref->GetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen));
+
+  // Removing the policy returns the app lock screen status to the previous one.
+  policies.Erase(key::kNoteTakingOnLockScreenEnabled);
+  UpdateProviderPolicy(policies);
+
+  info = helper->GetPreferredChromeAppInfo(browser()->profile());
+  ASSERT_TRUE(info);
+  EXPECT_EQ(chromeos::NoteTakingLockScreenSupport::kSelected,
+            info->lock_screen_support);
+  EXPECT_TRUE(pref->GetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen));
+}
+
+IN_PROC_BROWSER_TEST_F(NoteTakingOnLockScreenPolicyTest,
+                       EnableLockScreenNoteTakingiByPolicy) {
+  PrefService* const pref = browser()->profile()->GetPrefs();
+
+  scoped_refptr<const extensions::Extension> app =
+      LoadUnpackedExtension("lock_screen_apps/app_launch");
+  ASSERT_TRUE(app);
+
+  chromeos::NoteTakingHelper* helper = chromeos::NoteTakingHelper::Get();
+  ASSERT_TRUE(helper);
+
+  helper->SetPreferredApp(browser()->profile(), app->id());
+
+  // Verify that the test app is currently not selected as a lock screen note
+  // taking app.
+  std::unique_ptr<chromeos::NoteTakingAppInfo> info =
+      helper->GetPreferredChromeAppInfo(browser()->profile());
+  ASSERT_TRUE(info);
+  EXPECT_EQ(chromeos::NoteTakingLockScreenSupport::kSupported,
+            info->lock_screen_support);
+
+  // Update policy to enable lock screen note taking, and verify that the app
+  // is now selected as a lock screen note taking app.
+  PolicyMap policies;
+  policies.Set(key::kNoteTakingOnLockScreenEnabled, POLICY_LEVEL_MANDATORY,
+               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
+               base::MakeUnique<base::Value>(true), nullptr);
+  UpdateProviderPolicy(policies);
+
+  info = helper->GetPreferredChromeAppInfo(browser()->profile());
+  ASSERT_TRUE(info);
+  EXPECT_EQ(chromeos::NoteTakingLockScreenSupport::kSelected,
+            info->lock_screen_support);
+  EXPECT_TRUE(pref->GetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen));
+
+  // Removing the policy returns the app lock screen status to the previous one.
+  policies.Erase(key::kNoteTakingOnLockScreenEnabled);
+  UpdateProviderPolicy(policies);
+
+  info = helper->GetPreferredChromeAppInfo(browser()->profile());
+  ASSERT_TRUE(info);
+  EXPECT_EQ(chromeos::NoteTakingLockScreenSupport::kSupported,
+            info->lock_screen_support);
+  EXPECT_FALSE(pref->GetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen));
+}
+#endif  // defined(OS_CHROMEOS)
 }  // namespace policy
