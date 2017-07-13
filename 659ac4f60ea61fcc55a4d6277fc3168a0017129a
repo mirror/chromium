@@ -22,6 +22,30 @@
       "revId": "659ac4f60ea61fcc55a4d6277fc3168a0017129a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7e680f_f6289259",
+        "filename": "components/ssl_config/ssl_config_service_manager_pref_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-07-13T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb1248d9_6cb5c9e7",
+      "range": {
+        "startLine": 241,
+        "startChar": 8,
+        "endLine": 241,
+        "endChar": 33
+      },
+      "revId": "659ac4f60ea61fcc55a4d6277fc3168a0017129a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
