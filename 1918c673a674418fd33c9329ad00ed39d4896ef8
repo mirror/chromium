@@ -16,6 +16,24 @@
       "revId": "1918c673a674418fd33c9329ad00ed39d4896ef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b1079a_dd88584b",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-13T23:29:25Z",
+      "side": 1,
+      "message": "\u003e For video quads, we should only be issuing 1 quad per draw call, so we shouldn\u0027t have to know the quad index. Can you update the patch to avoid using batched draws when has_texture_clamp_rect_ is true?\n\nDone. In theory, there are multiple video drawn next to next, but it\u0027s rare.\nBTW, new CL looks more complicated in my opinion, because it creates new exception which doesn\u0027t batch TextureDrawQuad.\n\n\u003e In general, I want to kill off uniform indexed quad batching -- it was an optimization added in the distant past for 9-patch textures only, and really doesn\u0027t help.\n\nIt can reduce number of drawElement call by 9 times in theory. That\u0027s huge benefit in my opinion, because glDrawElement causes expensive validation check under the gpu driver.",
+      "parentUuid": "48c3064a_6e84895c",
+      "revId": "1918c673a674418fd33c9329ad00ed39d4896ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
