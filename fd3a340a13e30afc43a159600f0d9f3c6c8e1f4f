@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1b084869_1d386609",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-13T19:19:45Z",
+      "side": 1,
+      "message": "They look the same on my testing device.",
+      "parentUuid": "7ba45439_46ea10e9",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 18
+      },
+      "revId": "fd3a340a13e30afc43a159600f0d9f3c6c8e1f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c994bb29_61d664cd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
         "patchSetId": 8
