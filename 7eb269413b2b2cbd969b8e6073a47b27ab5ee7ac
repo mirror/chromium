@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce0281cd_f998fd86",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-13T14:19:25Z",
+      "side": 1,
+      "message": "Instead of making this change, it should be possible to modify your test so that rebuilding happens (or doesn\u0027t happen) as needed. See comment below.",
+      "range": {
+        "startLine": 253,
+        "startChar": 11,
+        "endLine": 253,
+        "endChar": 41
+      },
+      "revId": "7eb269413b2b2cbd969b8e6073a47b27ab5ee7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76331b2a_5d9b75a3",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10240,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-13T14:19:25Z",
+      "side": 1,
+      "message": "Instead of the the above two lines, how about just doing effect_tree.ClearCopyRequests()?",
+      "revId": "7eb269413b2b2cbd969b8e6073a47b27ab5ee7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33e0f33_ee671aea",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10241,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-13T14:19:25Z",
+      "side": 1,
+      "message": "Is this needed? Neither of the two previous lines do anything that would trigger a rebuild.",
+      "range": {
+        "startLine": 10241,
+        "startChar": 67,
+        "endLine": 10241,
+        "endChar": 72
+      },
+      "revId": "7eb269413b2b2cbd969b8e6073a47b27ab5ee7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552e105f_3d0d8a49",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-13T14:19:25Z",
+      "side": 1,
+      "message": "This could use a better name, like \u0027InvalidateTransformCache\u0027. But since you need to merge this CL back to 60, you can do the renaming in a separate follow-up CL.",
+      "range": {
+        "startLine": 870,
+        "startChar": 22,
+        "endLine": 870,
+        "endChar": 53
+      },
+      "revId": "7eb269413b2b2cbd969b8e6073a47b27ab5ee7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
