@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90224442_06eea259",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-13T21:59:31Z",
+      "side": 1,
+      "message": "There is a crash here.\nBypassed the crash by adding \" \u0026\u0026 safe_browsing_service-\u003edatabase_manager()\"\n\nAlso needed to add the same check \"\u0026\u0026 sb_service-\u003edatabase_manager()\" in SafeBrowsingResourceThrottle::MaybeCreate() too.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "5ec33f235d0efe6500423bf0882a5001b2974914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
