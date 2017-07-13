@@ -16,6 +16,24 @@
       "revId": "a67cbd50f843e2cb9979818d5b5067fd29abc556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a505d96_8d297c5a",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewBase.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-13T04:22:20Z",
+      "side": 1,
+      "message": "These are static methods previously bound into web/. They are now available in core/. They are not new.",
+      "parentUuid": "f5737dc1_0f4de2f3",
+      "revId": "a67cbd50f843e2cb9979818d5b5067fd29abc556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
