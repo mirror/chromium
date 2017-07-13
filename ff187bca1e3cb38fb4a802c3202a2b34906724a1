@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f57b005_4254c236",
+        "filename": "content/browser/media/media_interface_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-13T06:17:46Z",
+      "side": 1,
+      "message": "Added more comments.",
+      "parentUuid": "4f2c4e55_fce4d38f",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 51
+      },
+      "revId": "ff187bca1e3cb38fb4a802c3202a2b34906724a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "370a9d59_bad3552c",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2cf75dd3_ed4f8e4d",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-13T06:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "370a9d59_bad3552c",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 373,
+        "endChar": 77
+      },
+      "revId": "ff187bca1e3cb38fb4a802c3202a2b34906724a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f5434ea_c5da7c5b",
         "filename": "media/mojo/services/cdm_manifest.json",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-12T22:19:07Z",
       "side": 1,
       "message": "It feels a bit surprising to expose the same service through two different capabilities. Will the service implementation restrict which interfaces are exposed through its interface factory?\n\n(media_service.mojom could use an interface comment as well in a followup CL, it\u0027s not 100% clear why MediaService has its own InterfaceFactory. I\u0027m sure there are good reasons, so it\u0027d be nice if they were documented \u003d)",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "ff187bca1e3cb38fb4a802c3202a2b34906724a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9885d54_b8f6c8a2",
+        "filename": "media/mojo/services/cdm_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-13T06:17:46Z",
+      "side": 1,
+      "message": "\u003e It feels a bit surprising to expose the same service through two different capabilities. Will the service implementation restrict which interfaces are exposed through its interface factory?\n\nMediaService provides the generic framework to provide various OOP services. Then it\u0027s the individual MojoMediaClient\u0027s job to specify exactly what services are provided.\n\nIn utility_service_factory.cc you can see that in CdmMojoMediaClient only a CDM service is provided.\n\nI can also add parameters to media::MediaService\u0027s constructor to specify what services are allowed, if that\u0027s preferred.\n\nAn alternative solution is to build a media::CdmService that only provides CDM service. But that would end up with a lot of duplicate code between media::MediaService and media::CdmService and I\u0027d like to avoid that. \n\n\u003e (media_service.mojom could use an interface comment as well in a followup CL, it\u0027s not 100% clear why MediaService has its own InterfaceFactory. I\u0027m sure there are good reasons, so it\u0027d be nice if they were documented \u003d)\n\nIt\u0027s kinda documented in the mojom file. The reason we need media_service.mojom is such that we can provide the |host_interfaces|. Note that these services cannot be provided via the incoming connector because they need to keep their \"frame\" context.\n\nAgreed that the documentation can be improved. I think I should simplify and convert my go/mojo-media doc into a .md file for future reference.",
+      "parentUuid": "2f5434ea_c5da7c5b",
       "range": {
         "startLine": 7,
         "startChar": 24,
