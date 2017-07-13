@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7352bf00_375f84df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2017-07-13T17:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b62d149c_4b7b25b6",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "c6edb7d4fad378b5ff60facc17188d101b584104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c05c30d_832c7dfd",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-13T10:00:11Z",
       "side": 1,
       "message": "Remove as Gerrit adds the correct Reviewed-by: tags after review.",
+      "revId": "c6edb7d4fad378b5ff60facc17188d101b584104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71c0a7e_fe7528fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2017-07-13T17:40:48Z",
+      "side": 1,
+      "message": "fwiw... this got added by git cl upload.",
+      "parentUuid": "7c05c30d_832c7dfd",
       "revId": "c6edb7d4fad378b5ff60facc17188d101b584104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
