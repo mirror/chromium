@@ -22,6 +22,30 @@
       "revId": "fa68c4c4c96c7b6d208220061ffc7d7e78b8bd86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8749e5_98ecb891",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-13T13:48:55Z",
+      "side": 1,
+      "message": "Fixed. Thanks for writing these tests!",
+      "parentUuid": "30bd9fdd_c2b526db",
+      "range": {
+        "startLine": 383,
+        "startChar": 4,
+        "endLine": 383,
+        "endChar": 23
+      },
+      "revId": "fa68c4c4c96c7b6d208220061ffc7d7e78b8bd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
