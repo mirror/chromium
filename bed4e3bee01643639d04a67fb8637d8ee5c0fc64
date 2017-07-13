@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "eaa67925_15764951",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-13T00:50:30Z",
+      "side": 1,
+      "message": "it shouldn\u0027t be calculating this during shutdown, ideally. can you get the stack trace?",
+      "parentUuid": "bcbfb2b1_34ebc56b",
+      "revId": "bed4e3bee01643639d04a67fb8637d8ee5c0fc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d8463d8_eb602009",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 12
