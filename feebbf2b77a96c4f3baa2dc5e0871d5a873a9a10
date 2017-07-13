@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9680b982_00236880",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_learn_more_item.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-13T14:57:48Z",
+      "side": 1,
+      "message": "Could you use LabelLinkController here?",
+      "revId": "feebbf2b77a96c4f3baa2dc5e0871d5a873a9a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
