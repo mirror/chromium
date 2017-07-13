@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01f157e9_ef24b36c",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46ac0261_6e00804c",
+      "range": {
+        "startLine": 323,
+        "startChar": 26,
+        "endLine": 323,
+        "endChar": 38
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b38a5405_dd05275a",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T03:21:34Z",
       "side": 1,
       "message": "Should this be returning true for any animation, or just when there\u0027s an app list button animation? (ie. bounds_animator_-\u003eGetAnimationForView(GetAppListButton()) is non-null)",
+      "range": {
+        "startLine": 741,
+        "startChar": 9,
+        "endLine": 741,
+        "endChar": 25
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372c5194_aac01a80",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Function removed, but yes that would be for any animation so your suggestion would\u0027ve been better.",
+      "parentUuid": "b38a5405_dd05275a",
       "range": {
         "startLine": 741,
         "startChar": 9,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2d392400_e11eb10e",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5b16114_1d293f04",
+      "range": {
+        "startLine": 747,
+        "startChar": 23,
+        "endLine": 747,
+        "endChar": 24
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a122d9cb_69c19ea5",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 2
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "cd960032_3e909a5b",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "I vaguely recall someone telling me using ? in return statements was not preffered.",
+      "parentUuid": "a122d9cb_69c19ea5",
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6240e87_d85383e3",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2017-07-13T03:21:34Z",
       "side": 1,
       "message": "nit: avoid auto",
+      "range": {
+        "startLine": 1506,
+        "startChar": 6,
+        "endLine": 1506,
+        "endChar": 7
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27e7fb7_bc65b303",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Done, but i thought auto is fine as long as its clear what the type is?",
+      "parentUuid": "d6240e87_d85383e3",
       "range": {
         "startLine": 1506,
         "startChar": 6,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "063f25d1_b4645016",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fe8c08d_2d94268f",
+      "range": {
+        "startLine": 1509,
+        "startChar": 12,
+        "endLine": 1509,
+        "endChar": 13
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8d933b8_4d779f09",
         "filename": "ash/shelf/shelf_view.h",
         "patchSetId": 2
@@ -145,6 +283,30 @@
       "writtenOn": "2017-07-13T03:21:34Z",
       "side": 1,
       "message": "Can you use mojom::TouchViewObserver instead? Or maybe, if it\u0027s easy enough, move ShellObserver::OnShelfAligmentChanged() and users over to ShelfObserver?",
+      "range": {
+        "startLine": 109,
+        "startChar": 17,
+        "endLine": 109,
+        "endChar": 18
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad9b2f5_c321dce2",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Which is the preferred method? Though i think suggestion 2 should be done in a seperate (and precursor) CL?",
+      "parentUuid": "a8d933b8_4d779f09",
       "range": {
         "startLine": 109,
         "startChar": 17,
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "bfe7f59f_3020e69f",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10692b5b_2585dac1",
+      "range": {
+        "startLine": 184,
+        "startChar": 1,
+        "endLine": 184,
+        "endChar": 2
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e638d459_10180685",
         "filename": "ash/shelf/shelf_view.h",
         "patchSetId": 2
@@ -214,6 +400,30 @@
       "writtenOn": "2017-07-13T03:21:34Z",
       "side": 1,
       "message": "Maybe \"True while the animation to enter or exit maximize mode is running.\"?\nIf so, drop the last sentence and consider |is_maximize_mode_animation_running_| or |is_changing_bounds_for_animation_mode_| or similar. Also, is \u0027maximize mode\u0027 the latest terminology? It seems like there\u0027s a mix of that and \u0027touch mode\u0027 and \u0027tablet mode\u0027 everywhere.",
+      "range": {
+        "startLine": 490,
+        "startChar": 23,
+        "endLine": 490,
+        "endChar": 28
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c524803_6b5b5c33",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Theres also \"tablet mode\", but the folder is still called maximize_mode/ with maximize_mode_controller() so ill stick with that for now.",
+      "parentUuid": "e638d459_10180685",
       "range": {
         "startLine": 490,
         "startChar": 23,
@@ -249,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "353ffa39_18d97bc8",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Not part of comment anymore.",
+      "parentUuid": "b12e0bd6_a86b0a9c",
+      "range": {
+        "startLine": 492,
+        "startChar": 44,
+        "endLine": 492,
+        "endChar": 54
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e87c7e0a_72133b18",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 2
@@ -272,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "8e16c5c2_be68d0c8",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e87c7e0a_72133b18",
+      "range": {
+        "startLine": 100,
+        "startChar": 17,
+        "endLine": 100,
+        "endChar": 18
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4372ad63_9af4caed",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 2
@@ -283,6 +541,30 @@
       "writtenOn": "2017-07-13T03:21:34Z",
       "side": 1,
       "message": "nit: move this up with the SetAnimationDuration call.",
+      "range": {
+        "startLine": 2002,
+        "startChar": 11,
+        "endLine": 2002,
+        "endChar": 42
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff74d6de_b5e1870c",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-13T16:23:00Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "4372ad63_9af4caed",
       "range": {
         "startLine": 2002,
         "startChar": 11,
