@@ -22,6 +22,30 @@
       "revId": "7c61cc9ce3d71c50788b60570085797b4688a52a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e485cbc_dc6cfe76",
+        "filename": "chrome/browser/chromeos/login/auth/cryptohome_authenticator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-13T07:10:37Z",
+      "side": 1,
+      "message": "Sounds good.\nDone.",
+      "parentUuid": "f96f5b42_ceb31bb9",
+      "range": {
+        "startLine": 137,
+        "startChar": 1,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "7c61cc9ce3d71c50788b60570085797b4688a52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
