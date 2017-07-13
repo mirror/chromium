@@ -62,9 +62,9 @@ public class ChildConnectionAllocatorTest {
             if (mConnection == null) {
                 mConnection = mock(ChildProcessConnection.class);
                 // Retrieve the ServiceCallback so we can simulate the service process dying.
-                doAnswer(new Answer() {
+                doAnswer(new Answer<Void>() {
                     @Override
-                    public Object answer(InvocationOnMock invocation) {
+                    public Void answer(InvocationOnMock invocation) {
                         mConnectionServiceCallback =
                                 (ChildProcessConnection.ServiceCallback) invocation.getArgument(1);
                         return null;
@@ -89,9 +89,9 @@ public class ChildConnectionAllocatorTest {
                 final boolean onStartFailed, final boolean onChildProcessDied) {
             final ChildProcessConnection connection = mock(ChildProcessConnection.class);
             mConnection = connection;
-            doAnswer(new Answer() {
+            doAnswer(new Answer<Void>() {
                 @Override
-                public Object answer(InvocationOnMock invocation) {
+                public Void answer(InvocationOnMock invocation) {
                     ChildProcessConnection.ServiceCallback serviceCallback =
                             (ChildProcessConnection.ServiceCallback) invocation.getArgument(1);
                     if (onChildStarted) {
