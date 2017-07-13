@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "71f9a027_3666b258",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-13T17:53:19Z",
+      "side": 1,
+      "message": "https://docs.google.com/a/chromium.org/document/d/1Wvy64GOIln4LQPJVr0uQNFEEWd-5bPBu3Zrf0SMV5h4/edit?usp\u003dsharing",
+      "parentUuid": "ede57f59_07c7f4b2",
+      "range": {
+        "startLine": 422,
+        "startChar": 8,
+        "endLine": 422,
+        "endChar": 38
+      },
+      "revId": "22e30331bc956735760e8bca1ae170cb5ece8635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c253db97_13579b23",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 3
