@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2bafb22_071c5510",
+        "filename": "services/device/generic_sensor/platform_sensor_reader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-13T22:06:19Z",
+      "side": 1,
+      "message": "Thanks! I filed a bug regarding this:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d742557",
+      "parentUuid": "4d87cd5f_113ddc3f",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 9
+      },
+      "revId": "f856c458689e1f31a64581826a54541c3ea6cfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13d8fa46_915c486c",
         "filename": "services/device/public/interfaces/sensor.mojom",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f856c458689e1f31a64581826a54541c3ea6cfa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a9e6a9_bebb3db7",
+        "filename": "services/device/public/interfaces/sensor.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-13T22:06:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13d8fa46_915c486c",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 109
+      },
+      "revId": "f856c458689e1f31a64581826a54541c3ea6cfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
