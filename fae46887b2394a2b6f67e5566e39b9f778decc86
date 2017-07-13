@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e957facc_ebad28d9",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-13T20:13:08Z",
+      "side": 1,
+      "message": "add \u0026\u0026 field-\u003eIsEmpty() here?\n\nThe code expects that that the field value is empty iff the user actually left it empty. It doesn\u0027t really make sense for the field value to be empty yet the possible_types to have something other than EMPTY_TYPE in it. But I can see why you would want to skip evaluating other possible types if the field has correctly been identified as a password.\n\nThe challenge is that \"correctly identified as a password\" part. We want to be able to measure password/X confusion, where X generally equals CVC but could be whatever.\n\nDoes this clearing of the value and assignment to PASSWORD in possible_types only happen when the password manager explicitly saves a new password and when the user submits with a known password? If so, then we know we\u0027re logging in a TRUE_POSITIVE scenario and this change is OK.\n\nNot sure what the best approach is for this.",
+      "revId": "fae46887b2394a2b6f67e5566e39b9f778decc86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
