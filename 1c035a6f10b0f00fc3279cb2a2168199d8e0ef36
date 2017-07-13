@@ -46,6 +46,30 @@
       "revId": "1c035a6f10b0f00fc3279cb2a2168199d8e0ef36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cc3db76_5ab225bc",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-13T15:11:45Z",
+      "side": 1,
+      "message": "The string is the same of course. But \u0026kUkmSubmissionObserved may print different value in different files.",
+      "parentUuid": "bff25bd1_41aa6568",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "1c035a6f10b0f00fc3279cb2a2168199d8e0ef36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
