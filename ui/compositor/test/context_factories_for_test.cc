@@ -39,6 +39,11 @@ void ConnectFrameSinkManager() {
   g_host_frame_sink_manager->BindAndSetManager(
       std::move(host_mojo_request), base::SequencedTaskRunnerHandle::Get(),
       std::move(manager_mojo));
+
+  // While everything should one day happen over Mojo, in the current browser
+  // code some things happen via directly function calls.
+  g_host_frame_sink_manager->SetFrameSinkManager(
+      g_frame_sink_manager_impl->frame_sink_manager());
 }
 
 }  // namespace

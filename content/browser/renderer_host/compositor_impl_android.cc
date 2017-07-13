@@ -837,10 +837,11 @@ void CompositorImpl::InitializeDisplay(
   auto layer_tree_frame_sink =
       vulkan_context_provider
           ? base::MakeUnique<viz::DirectLayerTreeFrameSink>(
-                frame_sink_id_, manager, display_.get(),
-                vulkan_context_provider)
+                frame_sink_id_, GetHostFrameSinkManager(), manager,
+                display_.get(), vulkan_context_provider)
           : base::MakeUnique<viz::DirectLayerTreeFrameSink>(
-                frame_sink_id_, manager, display_.get(), context_provider,
+                frame_sink_id_, GetHostFrameSinkManager(), manager,
+                display_.get(), context_provider,
                 nullptr /* worker_context_provider */,
                 gpu_memory_buffer_manager,
                 viz::ServerSharedBitmapManager::current());
