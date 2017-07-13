@@ -6,6 +6,7 @@
 
 #include <memory>
 #include "core/dom/DOMNodeIds.h"
+#include "core/dom/NodeComputedStyle.h"
 #include "core/events/GestureEvent.h"
 #include "core/frame/BrowserControls.h"
 #include "core/frame/LocalFrameView.h"
@@ -93,6 +94,8 @@ void ScrollManager::RecomputeScrollChain(const Node& start_node,
   DCHECK(start_node.GetLayoutObject());
   LayoutBox* cur_box = start_node.GetLayoutObject()->EnclosingBox();
   Element* document_element = frame_->GetDocument()->documentElement();
+  bool x_dominated =
+      std::abs(scroll_state.deltaXHint()) > std::abs(scroll_state.deltaYHint());
 
   // Scrolling propagates along the containing block chain and ends at the
   // RootScroller element. The RootScroller element will have a custom
@@ -116,6 +119,14 @@ void ScrollManager::RecomputeScrollChain(const Node& start_node,
         scroll_chain.push_front(DOMNodeIds::IdForNode(cur_element));
       if (IsViewportScrollingElement(*cur_element) ||
           cur_element == document_element)
+        break;
+
+      if ((x_dominated &&
+           cur_element->GetComputedStyle()->ScrollBoundaryBehaviorX() !=
+               EScrollBoundaryBehavior::kAuto) ||
+          (!x_dominated &&
+           cur_element->GetComputedStyle()->ScrollBoundaryBehaviorY() !=
+               EScrollBoundaryBehavior::kAuto))
         break;
     }
 
@@ -150,6 +161,22 @@ bool ScrollManager::CanScroll(const ScrollState& scroll_state,
   ScrollOffset clamped_offset =
       scrollable_area->ClampScrollOffset(target_offset);
   return clamped_offset != current_offset;
+}
+
+bool ScrollManager::CanPropagate(const ScrollState& scroll_state,
+                                 const Element& current_element) {
+  // ScrollBoundaryBehavior may have different values on x-axis and y-axis.
+  // We need to find out the dominant axis of user's intended scroll to decide
+  // which ScrollBoundaryBehavior should be applied, i.e. which node should
+  // be scrolled.
+  bool x_dominant =
+      std::abs(scroll_state.deltaXHint()) > std::abs(scroll_state.deltaYHint());
+  return (x_dominant &&
+          current_element.GetComputedStyle()->ScrollBoundaryBehaviorX() ==
+              EScrollBoundaryBehavior::kAuto) ||
+         (!x_dominant &&
+          current_element.GetComputedStyle()->ScrollBoundaryBehaviorY() ==
+              EScrollBoundaryBehavior::kAuto);
 }
 
 bool ScrollManager::LogicalScroll(ScrollDirection direction,

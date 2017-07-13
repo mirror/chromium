@@ -3140,6 +3140,9 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimated(
       }
 
       pending_delta -= scroll_delta;
+
+      if (!CanPropagate(scroll_node, pending_delta.x(), pending_delta.y()))
+        break;
     }
   }
   scroll_state.set_is_ending(true);
@@ -3375,6 +3378,7 @@ void LayerTreeHostImpl::DistributeScrollDelta(ScrollState* scroll_state) {
       viewport()->MainScrollLayer()
           ? scroll_tree.Node(viewport()->MainScrollLayer()->scroll_tree_index())
           : nullptr;
+
   if (scroll_node) {
     // TODO(bokan): The loop checks for a null parent but don't we still want to
     // distribute to the root scroll node?
@@ -3394,6 +3398,16 @@ void LayerTreeHostImpl::DistributeScrollDelta(ScrollState* scroll_state) {
 
       if (CanConsumeDelta(scroll_node, *scroll_state))
         current_scroll_chain.push_front(scroll_node);
+
+      float delta_x = scroll_state->is_beginning()
+                          ? scroll_state->delta_x_hint()
+                          : scroll_state->delta_x();
+      float delta_y = scroll_state->is_beginning()
+                          ? scroll_state->delta_y_hint()
+                          : scroll_state->delta_y();
+
+      if (!CanPropagate(scroll_node, delta_x, delta_y))
+        break;
     }
   }
   active_tree_->SetCurrentlyScrollingNode(
@@ -3434,6 +3448,22 @@ bool LayerTreeHostImpl::CanConsumeDelta(ScrollNode* scroll_node,
     return true;
 
   return false;
+}
+
+bool LayerTreeHostImpl::CanPropagate(ScrollNode* scroll_node,
+                                     float x,
+                                     float y) {
+  // ScrollBoundaryBehavior may have different values on x-axis and y-axis.
+  // We need to find out the dominant axis of user's intended scroll to decide
+  // which node's ScrollBoundaryBehavior should be applied, i.e. which node
+  // should be scrolled.
+  bool x_dominant = std::abs(x) > std::abs(y);
+  return (x_dominant &&
+          scroll_node->scroll_boundary_behavior.x ==
+              ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto) ||
+         (!x_dominant &&
+          scroll_node->scroll_boundary_behavior.y ==
+              ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto);
 }
 
 InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
