@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c70e6ec0_63914e69",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-07-13T10:32:28Z",
+      "side": 1,
+      "message": "Nit: Hmm, but there\u0027s no AssertIOAllowed here. Isn\u0027t it good to have that here and not only rely on the base:: file functions? (I assume you meant to do that, or missed it here.)",
+      "parentUuid": "6d5e59a1_3f957127",
+      "revId": "eaab50918caa86f0cdb36a112cfd8900c18fd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22ceefd3_4a7343fe",
         "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.h",
         "patchSetId": 2
@@ -81,6 +99,30 @@
       "revId": "eaab50918caa86f0cdb36a112cfd8900c18fd3ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb7927b_42c031f5",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_uploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-07-13T10:32:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3e91904f_b5207075",
+      "range": {
+        "startLine": 96,
+        "startChar": 50,
+        "endLine": 96,
+        "endChar": 70
+      },
+      "revId": "eaab50918caa86f0cdb36a112cfd8900c18fd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
