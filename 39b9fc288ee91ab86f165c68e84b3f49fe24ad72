@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1ae1eea_238985be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-13T16:39:41Z",
+      "side": 1,
+      "message": "you might want to consider using IntentHandler.getUrlFromIntent for consistency with other places.",
+      "range": {
+        "startLine": 189,
+        "startChar": 29,
+        "endLine": 189,
+        "endChar": 35
+      },
+      "revId": "39b9fc288ee91ab86f165c68e84b3f49fe24ad72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
