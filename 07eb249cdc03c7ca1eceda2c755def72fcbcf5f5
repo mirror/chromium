@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfd81c51_13d5e255",
+        "filename": "ash/shell/window_watcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-13T20:56:40Z",
+      "side": 0,
+      "message": "ShelfWindowWatcher guards against the problem this code has by checking if it\u0027s already observing the windows. I think that code could be converted to ShellObserver as well and DCHECKing that it isn\u0027t an observer, rather than conditionally checking if it\u0027s already an observer.",
+      "parentUuid": "93a896d2_f500b7bb",
+      "range": {
+        "startLine": 136,
+        "startChar": 41,
+        "endLine": 136,
+        "endChar": 48
+      },
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dc9ef2a_5447bac9",
         "filename": "ash/shell/window_watcher.h",
         "patchSetId": 1
