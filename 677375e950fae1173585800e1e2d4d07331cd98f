@@ -16,6 +16,24 @@
       "revId": "677375e950fae1173585800e1e2d4d07331cd98f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c62a54_7f797ca4",
+        "filename": "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-13T15:51:03Z",
+      "side": 1,
+      "message": "Thank you for looking at the CL! I agree that this is a hacky solution. However, on Clank you can have tabs with a native page, which are not a web content (such as chrome://newtab).  In 2D mode clank does not call ChromeToolbarModelDelegate::ShouldDisplayURL for the native page. However, in VR we try to avoid special casing different types of tabs. My rationale was that if there is no web contents you cannot show a URL.",
+      "parentUuid": "a0c94f9a_1a7e03c4",
+      "revId": "677375e950fae1173585800e1e2d4d07331cd98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
