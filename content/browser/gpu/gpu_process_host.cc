@@ -620,6 +620,7 @@ bool GpuProcessHost::Init() {
 
   gpu::GpuPreferences gpu_preferences = GetGpuPreferencesFromCommandLine();
   if (in_process_) {
+    GpuDataManagerImpl::GetInstance()->UpdateGpuPreferences(&gpu_preferences);
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     DCHECK(GetGpuMainThreadFactory());
     in_process_gpu_thread_.reset(

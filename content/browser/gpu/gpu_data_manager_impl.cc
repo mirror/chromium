@@ -216,6 +216,12 @@ void GpuDataManagerImpl::UpdateRendererWebPrefs(
   private_->UpdateRendererWebPrefs(prefs);
 }
 
+void GpuDataManagerImpl::UpdateGpuPreferences(
+    gpu::GpuPreferences* gpu_preferences) const {
+  base::AutoLock auto_lock(lock_);
+  private_->UpdateGpuPreferences(gpu_preferences);
+}
+
 std::string GpuDataManagerImpl::GetBlacklistVersion() const {
   base::AutoLock auto_lock(lock_);
   return private_->GetBlacklistVersion();

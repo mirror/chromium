@@ -937,6 +937,25 @@ void GpuDataManagerImplPrivate::UpdateRendererWebPrefs(
       command_line->HasSwitch(switches::kEnableThreadedTextureMailboxes);
 }
 
+void GpuDataManagerImplPrivate::UpdateGpuPreferences(
+    gpu::GpuPreferences* gpu_preferences) const {
+  DCHECK(gpu_preferences);
+
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+
+  if (IsGpuSchedulerEnabled())
+    gpu_preferences->enable_gpu_scheduler = true;
+
+  if (ShouldDisableAcceleratedVideoDecode(command_line))
+    gpu_preferences->disable_accelerated_video_decode = true;
+
+  gpu_preferences->enable_es3_apis =
+      (command_line->HasSwitch(switches::kEnableES3APIs) ||
+       !IsFeatureBlacklisted(gpu::GPU_FEATURE_TYPE_WEBGL2)) &&
+      !command_line->HasSwitch(switches::kDisableES3APIs);
+}
+
 void GpuDataManagerImplPrivate::DisableHardwareAcceleration() {
   if (!is_initialized_) {
     post_init_tasks_.push_back(

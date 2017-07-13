@@ -129,6 +129,9 @@ class CONTENT_EXPORT GpuDataManagerImpl
   // Update WebPreferences for renderer based on blacklisting decisions.
   void UpdateRendererWebPrefs(WebPreferences* prefs) const;
 
+  // Update GpuPreferences based on blacklisting decisions.
+  void UpdateGpuPreferences(gpu::GpuPreferences* gpu_preferences) const;
+
   std::string GetBlacklistVersion() const;
   std::string GetDriverBugListVersion() const;
 
