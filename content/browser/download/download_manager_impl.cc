@@ -391,8 +391,7 @@ void DownloadManagerImpl::StartDownloadWithId(
     DCHECK(stream.get());
     download_file.reset(file_factory_->CreateFile(
         std::move(info->save_info), default_download_directory,
-        std::move(stream), download->GetNetLogWithSource(),
-        download->DestinationObserverAsWeakPtr()));
+        std::move(stream), download->GetNetLogWithSource()));
   }
   // It is important to leave info->save_info intact in the case of an interrupt
   // so that the DownloadItem can salvage what it can out of a failed resumption

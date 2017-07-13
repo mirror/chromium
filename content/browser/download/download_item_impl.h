@@ -302,11 +302,6 @@ class CONTENT_EXPORT DownloadItemImpl
 
   virtual void OnDownloadedFileRemoved();
 
-  // Provide a weak pointer reference to a DownloadDestinationObserver
-  // for use by download destinations.
-  virtual base::WeakPtr<DownloadDestinationObserver>
-      DestinationObserverAsWeakPtr();
-
   // Get the download's NetLogWithSource.
   virtual const net::NetLogWithSource& GetNetLogWithSource() const;
 
