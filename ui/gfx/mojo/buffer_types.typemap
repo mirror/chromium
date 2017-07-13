@@ -16,6 +16,7 @@ public_deps = [
   "//ui/gfx",
 ]
 type_mappings = [
+  "gfx.mojom.BufferAttribute=gfx::BufferAttribute",
   "gfx.mojom.BufferFormat=gfx::BufferFormat",
   "gfx.mojom.BufferUsage=gfx::BufferUsage",
   "gfx.mojom.GpuMemoryBufferHandle=gfx::GpuMemoryBufferHandle",

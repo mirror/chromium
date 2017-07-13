@@ -288,6 +288,16 @@ struct StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
                    gfx::GpuMemoryBufferHandle* handle);
 };
 
+template <>
+struct StructTraits<gfx::mojom::BufferAttributeDataView, gfx::BufferAttribute> {
+  static int fourcc(const gfx::BufferAttribute attrib) { return attrib.fourcc; }
+  static uint64_t modifier(const gfx::BufferAttribute attrib) {
+    return attrib.modifier;
+  }
+  static bool Read(gfx::mojom::BufferAttributeDataView attrib,
+                   gfx::BufferAttribute* out);
+};
+
 }  // namespace mojo
 
 #endif  // UI_GFX_MOJO_BUFFER_TYPES_STRUCT_TRAITS_H_

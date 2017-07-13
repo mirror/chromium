@@ -4,6 +4,12 @@
 
 module gfx.mojom;
 
+// gfx::BufferAttribute
+struct BufferAttribute {
+  int32 fourcc;
+  uint64 modifier;
+};
+
 // gfx::BufferFormat
 enum BufferFormat {
   ATC,

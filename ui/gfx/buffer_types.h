@@ -1,11 +1,30 @@
 // Copyright 2015 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+#include <stdint.h>
+#include <tuple>
 
 #ifndef UI_GFX_BUFFER_TYPES_H_
 #define UI_GFX_BUFFER_TYPES_H_
 
 namespace gfx {
+
+// The attribute carries the fourcc format and format modifier information
+// used to describe a buffer's layout. The modifier field here adheres to the
+// modifier codes defined in drm_fourcc.h on linux.
+struct BufferAttribute {
+  BufferAttribute(int fourcc, uint64_t modifier)
+      : fourcc(fourcc), modifier(modifier) {}
+  BufferAttribute() : fourcc(0), modifier(0) {}
+  ~BufferAttribute() {}
+
+  bool operator<(BufferAttribute const& rhs) const {
+    return std::tie(fourcc, modifier) < std::tie(rhs.fourcc, rhs.modifier);
+  }
+
+  int fourcc;
+  uint64_t modifier;
+};
 
 // The format needs to be taken into account when mapping a buffer into the
 // client's address space.

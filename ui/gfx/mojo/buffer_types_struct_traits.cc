@@ -125,4 +125,12 @@ bool StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
   return true;
 }
 
+bool StructTraits<gfx::mojom::BufferAttributeDataView, gfx::BufferAttribute>::
+    Read(gfx::mojom::BufferAttributeDataView attrib,
+         gfx::BufferAttribute* out) {
+  out->fourcc = attrib.fourcc();
+  out->modifier = attrib.modifier();
+  return true;
+}
+
 }  // namespace mojo
