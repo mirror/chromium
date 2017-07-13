@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d10dea96_a1146022",
+        "filename": "cc/animation/animation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-13T15:47:20Z",
+      "side": 1,
+      "message": "This feels strange semantically. Is a paused animation really animating?\n\nI\u0027m having a hard time coming up with a better name for what you intend to ask though...\n\nmaybe started_or_starting()? I don\u0027t know.",
+      "range": {
+        "startLine": 112,
+        "startChar": 21,
+        "endLine": 112,
+        "endChar": 22
+      },
+      "revId": "55d7f02e3088968aa4eb64e4033ece854e1e0ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f93cfc_23634a2e",
+        "filename": "chrome/browser/vr/test/animation_creator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-13T15:47:20Z",
+      "side": 1,
+      "message": "nit: period",
+      "range": {
+        "startLine": 13,
+        "startChar": 48,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "55d7f02e3088968aa4eb64e4033ece854e1e0ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faab78d0_a8f7be95",
+        "filename": "chrome/browser/vr/test/animation_creator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-13T15:47:20Z",
+      "side": 1,
+      "message": "I feel like this class would be less confusing if you either split it into a separate SizeAnimationCreator and TransformAnimationCreator classes, or just got rid of the statefulness and just used static functions with the appropriate args.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "55d7f02e3088968aa4eb64e4033ece854e1e0ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
