@@ -16,6 +16,24 @@
       "revId": "bc3a334c037aee1cd698e8d6810a9c7f0b51ac8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a3d02f_4ffcc06b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-13T04:22:44Z",
+      "side": 1,
+      "message": "There\u0027s no LOG(DEBUG). LOG(WARNING) and LOG(ERROR) seem inappropriate; and DLOG(INFO) would only work in debug mode, but we want to display output in release mode.\n\nAlso, note that the installer/setup is also an exception.",
+      "parentUuid": "f7b6b6f7_afceae14",
+      "revId": "bc3a334c037aee1cd698e8d6810a9c7f0b51ac8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
