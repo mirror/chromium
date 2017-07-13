@@ -52,9 +52,10 @@ TileItemView* SuggestionsContainerView::GetTileItemView(int index) {
 }
 
 int SuggestionsContainerView::DoUpdate() {
-  // Ignore updates and disable buttons when transitioning to a different
-  // state.
-  if (contents_view_->GetActiveState() != AppListModel::STATE_START) {
+  // Ignore updates and disable buttons when app list is not on STATE_START or
+  // STATE_APPS state, as suggestions container view is not shown.
+  const AppListModel::State state = contents_view_->GetActiveState();
+  if (state != AppListModel::STATE_START && state != AppListModel::STATE_APPS) {
     for (auto* view : search_result_tile_views_)
       view->SetEnabled(false);
 
