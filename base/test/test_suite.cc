@@ -181,6 +181,12 @@ void TestSuite::InitializeFromCommandLine(int argc, wchar_t** argv) {
 void TestSuite::PreInitialize() {
 #if defined(OS_WIN)
   testing::GTEST_FLAG(catch_exceptions) = false;
+#elif defined(OS_MACOSX)
+  // On macOS, most of CoreFoundation is not safe to use after fork() without
+  // exec(). Several //base routines on Mac use CF, and so it is almost never
+  // safe to use the "fast" death_test_style. Default to the threadsafe style,
+  // but individual tests can override this back to "fast".
+  testing::GTEST_FLAG(death_test_style) = "threadsafe";
 #endif
   EnableTerminationOnHeapCorruption();
 #if defined(OS_LINUX) && defined(USE_AURA)
