@@ -540,7 +540,7 @@ void OfflinePageRequestJobTest::InterceptRequestOnIO(
     const std::string& extra_header_name,
     const std::string& extra_header_value,
     content::ResourceType resource_type) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   request_ = CreateRequest(url, method, resource_type);
   if (!extra_header_name.empty()) {
@@ -556,7 +556,7 @@ void OfflinePageRequestJobTest::InterceptRequest(
     const std::string& extra_header_name,
     const std::string& extra_header_value,
     content::ResourceType resource_type) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
@@ -566,7 +566,7 @@ void OfflinePageRequestJobTest::InterceptRequest(
 }
 
 void OfflinePageRequestJobTest::ReadCompletedOnIO(int bytes_read) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
@@ -575,7 +575,7 @@ void OfflinePageRequestJobTest::ReadCompletedOnIO(int bytes_read) {
 }
 
 void OfflinePageRequestJobTest::ReadCompleted(int bytes_read) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   bytes_read_ = bytes_read;
   base::ThreadTaskRunnerHandle::Get()->PostTask(

@@ -144,7 +144,7 @@ void PrerenderingLoaderTest::SetUp() {
   test_adapter_ = new TestAdapter(loader_.get());
   loader_->SetAdapterForTesting(base::WrapUnique(test_adapter_));
   callback_called_ = false;
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 }
 
 void PrerenderingLoaderTest::OnLoadDone(Offliner::RequestStatus load_status,
