@@ -87,6 +87,24 @@
       "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "997ffdb2_ce655be7",
+        "filename": "third_party/WebKit/LayoutTests/fast/files/xhr-response-blob-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-13T06:36:16Z",
+      "side": 1,
+      "message": "Sure :)",
+      "parentUuid": "78810cbb_e95cc272",
+      "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
