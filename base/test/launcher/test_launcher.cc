@@ -1198,8 +1198,10 @@ size_t NumParallelJobs() {
   if (command_line->HasSwitch(kGTestFilterFlag) && !BotModeEnabled()) {
     // Do not run jobs in parallel by default if we are running a subset of
     // the tests and if bot mode is off.
-    return 1U;
-  } else if (command_line->HasSwitch(switches::kTestLauncherJobs)) {
+    jobs = 1U;
+  }
+
+  if (command_line->HasSwitch(switches::kTestLauncherJobs)) {
     if (!StringToSizeT(
             command_line->GetSwitchValueASCII(switches::kTestLauncherJobs),
             &jobs) ||
