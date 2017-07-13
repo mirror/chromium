@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b74d985e_8a579df7",
+        "filename": "chrome/browser/ssl/cert_report_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-07-13T18:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2650e16_2e779efd",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "247d8689721cd1995317d72a05c022e6676f02ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "299aa9e6_1ddc6989",
         "filename": "components/certificate_reporting/cert_logger.proto",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "247d8689721cd1995317d72a05c022e6676f02ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9648b459_0fa362ad",
+        "filename": "components/certificate_reporting/cert_logger.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-07-13T18:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "299aa9e6_1ddc6989",
+      "revId": "247d8689721cd1995317d72a05c022e6676f02ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "247d8689721cd1995317d72a05c022e6676f02ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90fb0ac_46c51aa4",
+        "filename": "components/certificate_reporting/error_report_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-07-13T18:21:01Z",
+      "side": 1,
+      "message": "@estark -- Mustafa and I just talked about this, and we ended up just changing the test by swapping out true for false. I added a comment so that this is hopefully more clear, but this test solely tests that SetIsEnterpriseManaged works correctly, it is not actually grabbing the value of the IsEnterpriseManaged flag from the machine the test runs on.",
+      "parentUuid": "e8ff100e_e5584d12",
+      "range": {
+        "startLine": 262,
+        "startChar": 51,
+        "endLine": 262,
+        "endChar": 0
+      },
+      "revId": "247d8689721cd1995317d72a05c022e6676f02ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
