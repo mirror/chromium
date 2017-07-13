@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "db5185df_cf78de7c",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-13T14:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0e6889c_53544b54",
+      "revId": "0c5463f53853f21092b1eb7cbdfe449a7d9f355e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d89bddc0_9d9bab8b",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 7

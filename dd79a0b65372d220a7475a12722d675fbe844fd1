@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05924d4f_7344a46a",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-13T14:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8573d596_cbd05b63",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baa76977_9e96f6f8",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a2060889_c58eeeac",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-13T14:07:40Z",
+      "side": 1,
+      "message": "As agreed offline, will do in a separate CL.",
+      "parentUuid": "baa76977_9e96f6f8",
+      "range": {
+        "startLine": 100,
+        "startChar": 30,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52585d5d_6382193b",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 8
@@ -62,6 +110,24 @@
       "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ba204f_0d6adff9",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-13T14:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52585d5d_6382193b",
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "77227715_4adf6320",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-13T14:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a055f4b_59bfa675",
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a1588c6_ddf6af98",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
         "patchSetId": 8
@@ -93,6 +177,24 @@
       "writtenOn": "2017-07-13T12:46:40Z",
       "side": 1,
       "message": "Is it necessary to pass in the old token? Isn\u0027t that just the one currently stored in prefs?",
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f98ff6_b8ec9bcd",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-13T14:07:40Z",
+      "side": 1,
+      "message": "Yes, but I find the API cleaner that way (and more explicit).  Actually the argument holds for unsubscribe as well.\nIt\u0027s a trade off between encapsulation and explicitness. \nWDYT?",
+      "parentUuid": "8a1588c6_ddf6af98",
       "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -113,6 +215,24 @@
       "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09007eed_c30bf2ce",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-13T14:07:40Z",
+      "side": 1,
+      "message": "Done!\nPlease, let me know if there are still some left and should be ASSERT.\nThank,",
+      "parentUuid": "ba58c734_b5b7c7d2",
+      "revId": "dd79a0b65372d220a7475a12722d675fbe844fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
