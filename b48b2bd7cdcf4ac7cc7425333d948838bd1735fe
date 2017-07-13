@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c90860_257cb72d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-13T04:44:17Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we should consider this to be too late for O. Documentation and the system image build of webview for O happened months ago. +torne\n\nPlus this is the wrong thing to check. Need to check the target sdk version, ie apps need to target O instead of simply running on O.",
+      "revId": "b48b2bd7cdcf4ac7cc7425333d948838bd1735fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
