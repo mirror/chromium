@@ -16,6 +16,24 @@
       "revId": "0333fa377c8f158999825de82b1e01a87ab964a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3aee46_ee7fbb17",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-07-13T22:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50d4c957_04cbc05c",
+      "revId": "0333fa377c8f158999825de82b1e01a87ab964a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
