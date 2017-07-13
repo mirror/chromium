@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e80bf91_bcdfcbf9",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-13T21:11:13Z",
+      "side": 1,
+      "message": "Not sure if this is needed.",
+      "range": {
+        "startLine": 11,
+        "startChar": 33,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "24f2bcbf0d0e59d978e8b2a80c62f6d4b740122b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92381cd8_709b076b",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-13T21:11:13Z",
+      "side": 1,
+      "message": "I think you can just forward declare this instead of including the header.",
+      "range": {
+        "startLine": 16,
+        "startChar": 68,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "24f2bcbf0d0e59d978e8b2a80c62f6d4b740122b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
