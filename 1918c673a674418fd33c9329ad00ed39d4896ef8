@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48c3064a_6e84895c",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-13T19:41:11Z",
+      "side": 1,
+      "message": "For video quads, we should only be issuing 1 quad per draw call, so we shouldn\u0027t have to know the quad index. Can you update the patch to avoid using batched draws when has_texture_clamp_rect_ is true?\n\nIf you do that, then you won\u0027t need to pass the quad index as a varying -- there will always only be 1 quad.\n\nIn general, I want to kill off uniform indexed quad batching -- it was an optimization added in the distant past for 9-patch textures only, and really doesn\u0027t help.",
+      "revId": "1918c673a674418fd33c9329ad00ed39d4896ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
