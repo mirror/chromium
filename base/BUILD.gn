@@ -2023,7 +2023,6 @@ test("base_unittests") {
     "files/dir_reader_posix_unittest.cc",
     "files/file_descriptor_watcher_posix_unittest.cc",
     "files/file_enumerator_unittest.cc",
-    "files/file_locking_unittest.cc",
     "files/file_path_unittest.cc",
     "files/file_path_watcher_unittest.cc",
     "files/file_proxy_unittest.cc",
@@ -2396,6 +2395,11 @@ test("base_unittests") {
   if (is_posix && !is_ios && !is_fuchsia) {
     sources += [ "message_loop/message_pump_libevent_unittest.cc" ]
     deps += [ "//base/third_party/libevent" ]
+  }
+
+  if (!is_fuchsia) {
+    # Fuchsia doesn't support file locking.
+    sources += [ "files/file_locking_unittest.cc" ]
   }
 
   if (is_android) {
