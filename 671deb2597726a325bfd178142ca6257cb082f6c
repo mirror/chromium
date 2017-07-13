@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "d966f43c_515e3ab4",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-13T10:57:16Z",
+      "side": 1,
+      "message": "You meant to say \"only KEY_DEVICE case is supported\"?",
+      "range": {
+        "startLine": 551,
+        "startChar": 15,
+        "endLine": 551,
+        "endChar": 43
+      },
+      "revId": "671deb2597726a325bfd178142ca6257cb082f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a1042a6_59b340f0",
         "filename": "chromeos/dbus/fake_cryptohome_client.cc",
         "patchSetId": 2
@@ -47,6 +70,75 @@
       "writtenOn": "2017-07-13T10:42:44Z",
       "side": 1,
       "message": "Note: let\u0027s make this set (overwrite the value if the entry exists), rather than insert (no op if the entry exists) to follow the function name.",
+      "revId": "671deb2597726a325bfd178142ca6257cb082f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbf8a55_5de405f4",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-13T10:57:16Z",
+      "side": 1,
+      "message": "Device key payload",
+      "range": {
+        "startLine": 310,
+        "startChar": 5,
+        "endLine": 310,
+        "endChar": 19
+      },
+      "revId": "671deb2597726a325bfd178142ca6257cb082f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28da6a2a_f0f6d2da",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-13T10:57:16Z",
+      "side": 1,
+      "message": "nit: data.",
+      "range": {
+        "startLine": 310,
+        "startChar": 20,
+        "endLine": 310,
+        "endChar": 25
+      },
+      "revId": "671deb2597726a325bfd178142ca6257cb082f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0317e96_670495e6",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-13T10:57:16Z",
+      "side": 1,
+      "message": "How about renaming this to device_key_payload_map_ to be more informative?",
+      "range": {
+        "startLine": 311,
+        "startChar": 37,
+        "endLine": 311,
+        "endChar": 56
+      },
       "revId": "671deb2597726a325bfd178142ca6257cb082f6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
