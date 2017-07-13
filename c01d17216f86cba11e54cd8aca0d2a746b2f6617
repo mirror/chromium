@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "634c230b_6b69a6a5",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-13T14:47:25Z",
+      "side": 1,
+      "message": "Thanks for adding this.  Almost commented on it on the last CL, but decided it was too tangential (So was this change, but this one seemed to have more real consequences)",
+      "range": {
+        "startLine": 224,
+        "startChar": 9,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "c01d17216f86cba11e54cd8aca0d2a746b2f6617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
