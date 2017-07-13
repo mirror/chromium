@@ -20,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -239,7 +240,7 @@ public class CronetHttpURLConnection extends HttpURLConnection {
             if (superFixedContentLengthLong != -1) {
                 contentLength = superFixedContentLengthLong;
             }
-        } catch (Exception e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             // Ignored.
         }
         return contentLength;

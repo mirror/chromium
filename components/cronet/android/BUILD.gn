@@ -688,7 +688,7 @@ android_library("cronet_javatests") {
     "test/javatests/src/org/chromium/net/BrotliTest.java",
     "test/javatests/src/org/chromium/net/Criteria.java",
     "test/javatests/src/org/chromium/net/CronetEngineBuilderTest.java",
-    "test/javatests/src/org/chromium/net/CronetTestBase.java",
+    "test/javatests/src/org/chromium/net/CronetTestRule.java",
     "test/javatests/src/org/chromium/net/CronetTestBaseTest.java",
     "test/javatests/src/org/chromium/net/CronetUploadTest.java",
     "test/javatests/src/org/chromium/net/CronetUrlRequestContextTest.java",
@@ -731,6 +731,7 @@ android_library("cronet_javatests") {
     "//net/android:net_java",
     "//net/android:net_java_test_support",
     "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
   ]
 
   run_findbugs_override = true

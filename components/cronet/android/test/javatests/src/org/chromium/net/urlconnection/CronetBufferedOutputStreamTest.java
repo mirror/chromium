@@ -4,11 +4,22 @@
 
 package org.chromium.net.urlconnection;
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetEngine;
-import org.chromium.net.CronetTestBase;
+import org.chromium.net.CronetTestRule;
+import org.chromium.net.CronetTestRule.CompareDefaultWithCronet;
+import org.chromium.net.CronetTestRule.OnlyRunCronetHttpURLConnection;
 import org.chromium.net.NativeTestServer;
 
 import java.io.IOException;
@@ -19,20 +30,25 @@ import java.net.URL;
 /**
  * Tests the CronetBufferedOutputStream implementation.
  */
-public class CronetBufferedOutputStreamTest extends CronetTestBase {
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        setStreamHandlerFactory(new CronetEngine.Builder(getContext()).build());
-        assertTrue(NativeTestServer.startNativeTestServer(getContext()));
+@RunWith(BaseJUnit4ClassRunner.class)
+public class CronetBufferedOutputStreamTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
+    @Before
+    public void setUp() throws Exception {
+        mTestRule.setStreamHandlerFactory(
+                new CronetEngine.Builder(InstrumentationRegistry.getContext()).build());
+        Assert.assertTrue(
+                NativeTestServer.startNativeTestServer(InstrumentationRegistry.getContext()));
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         NativeTestServer.shutdownNativeTestServer();
-        super.tearDown();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -42,10 +58,10 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
                 (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
-        assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals(200, connection.getResponseCode());
         try {
             connection.getOutputStream();
-            fail();
+            Assert.fail();
         } catch (java.net.ProtocolException e) {
             // Expected.
         }
@@ -56,6 +72,7 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
      * writing after being connected, so this test only runs against Cronet's
      * implementation.
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunCronetHttpURLConnection
@@ -71,12 +88,13 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         try {
             // Attemp to write some more.
             out.write(TestUtil.UPLOAD_DATA);
-            fail();
+            Assert.fail();
         } catch (IllegalStateException e) {
-            assertEquals("Cannot write after being connected.", e.getMessage());
+            Assert.assertEquals("Cannot write after being connected.", e.getMessage());
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -87,10 +105,10 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
         OutputStream out = connection.getOutputStream();
-        assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals(200, connection.getResponseCode());
         try {
             out.write(TestUtil.UPLOAD_DATA);
-            fail();
+            Assert.fail();
         } catch (Exception e) {
             // Default implementation gives an IOException and says that the
             // stream is closed. Cronet gives an IllegalStateException and
@@ -98,6 +116,7 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -124,12 +143,13 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
             totalBytesWritten += bytesToWrite;
             bytesToWrite *= 2;
         }
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
         TestUtil.checkLargeData(TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -144,12 +164,13 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
                 Integer.toString(largeData.length));
         OutputStream out = connection.getOutputStream();
         out.write(largeData);
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
         TestUtil.checkLargeData(TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -166,12 +187,13 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         for (int i = 0; i < largeData.length; i++) {
             out.write(largeData[i]);
         }
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
         TestUtil.checkLargeData(TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -182,12 +204,13 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Length", "0");
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
-        assertEquals("", TestUtil.getResponseAsString(connection));
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals("", TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -198,9 +221,9 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
                 (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
-        assertEquals("0", TestUtil.getResponseAsString(connection));
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals("0", TestUtil.getResponseAsString(connection));
         connection.disconnect();
 
         // Make sure the server echoes back empty body for both implementation.
@@ -209,12 +232,13 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
                 (HttpURLConnection) echoBody.openConnection();
         connection2.setDoOutput(true);
         connection2.setRequestMethod("POST");
-        assertEquals(200, connection2.getResponseCode());
-        assertEquals("OK", connection2.getResponseMessage());
-        assertEquals("", TestUtil.getResponseAsString(connection2));
+        Assert.assertEquals(200, connection2.getResponseCode());
+        Assert.assertEquals("OK", connection2.getResponseMessage());
+        Assert.assertEquals("", TestUtil.getResponseAsString(connection2));
         connection2.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -226,12 +250,13 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         connection.setRequestMethod("POST");
         OutputStream out = connection.getOutputStream();
         out.write(TestUtil.UPLOAD_DATA);
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
-        assertEquals(TestUtil.UPLOAD_DATA_STRING, TestUtil.getResponseAsString(connection));
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals(TestUtil.UPLOAD_DATA_STRING, TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -256,12 +281,13 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
             totalBytesWritten += bytesToWrite;
             bytesToWrite *= 2;
         }
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
         TestUtil.checkLargeData(TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -274,12 +300,13 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         OutputStream out = connection.getOutputStream();
         byte[] largeData = TestUtil.getLargeData();
         out.write(largeData);
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
         TestUtil.checkLargeData(TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -294,17 +321,17 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         for (int i = 0; i < largeData.length; i++) {
             out.write(largeData[i]);
         }
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
         TestUtil.checkLargeData(TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
-    public void testWriteLessThanContentLength()
-            throws Exception {
+    public void testWriteLessThanContentLength() throws Exception {
         URL url = new URL(NativeTestServer.getEchoBodyURL());
         HttpURLConnection connection =
                 (HttpURLConnection) url.openConnection();
@@ -317,7 +344,7 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         out.write(TestUtil.UPLOAD_DATA);
         try {
             connection.getResponseCode();
-            fail();
+            Assert.fail();
         } catch (IOException e) {
             // Expected.
         }
@@ -328,6 +355,7 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
      * Tests that if caller writes more than the content length provided,
      * an exception should occur.
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -348,10 +376,10 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
             out.write(TestUtil.UPLOAD_DATA, 3, TestUtil.UPLOAD_DATA.length - 3);
             // On Lollipop, default implementation only triggers the error when reading response.
             connection.getInputStream();
-            fail();
+            Assert.fail();
         } catch (IOException e) {
-            assertEquals("exceeded content-length limit of " + (TestUtil.UPLOAD_DATA.length - 1)
-                            + " bytes",
+            Assert.assertEquals("exceeded content-length limit of "
+                            + (TestUtil.UPLOAD_DATA.length - 1) + " bytes",
                     e.getMessage());
         }
     }
@@ -360,6 +388,7 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
      * Same as {@code testWriteMoreThanContentLength()}, but it only writes one byte
      * at a time.
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @CompareDefaultWithCronet
@@ -379,10 +408,10 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
             }
             // On Lollipop, default implementation only triggers the error when reading response.
             connection.getInputStream();
-            fail();
+            Assert.fail();
         } catch (IOException e) {
-            assertEquals("exceeded content-length limit of " + (TestUtil.UPLOAD_DATA.length - 1)
-                            + " bytes",
+            Assert.assertEquals("exceeded content-length limit of "
+                            + (TestUtil.UPLOAD_DATA.length - 1) + " bytes",
                     e.getMessage());
         }
     }
@@ -393,6 +422,7 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
      * Use {@code OnlyRunCronetHttpURLConnection} as the default implementation
      * does not pass this test.
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunCronetHttpURLConnection
@@ -406,13 +436,14 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
                 "Content-Length", Integer.toString(TestUtil.UPLOAD_DATA.length));
         OutputStream out = connection.getOutputStream();
         out.write(TestUtil.UPLOAD_DATA);
-        assertEquals(TestUtil.UPLOAD_DATA_STRING, TestUtil.getResponseAsString(connection));
+        Assert.assertEquals(TestUtil.UPLOAD_DATA_STRING, TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
     /**
      * Like {@link #testRewind} but does not set Content-Length header.
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunCronetHttpURLConnection
@@ -424,7 +455,7 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         connection.setRequestMethod("POST");
         OutputStream out = connection.getOutputStream();
         out.write(TestUtil.UPLOAD_DATA);
-        assertEquals(TestUtil.UPLOAD_DATA_STRING, TestUtil.getResponseAsString(connection));
+        Assert.assertEquals(TestUtil.UPLOAD_DATA_STRING, TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 }
