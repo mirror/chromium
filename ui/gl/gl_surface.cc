@@ -194,9 +194,7 @@ void GLSurface::WaitForSnapshotRendering() {
   // By default, just executing the SwapBuffers is normally enough.
 }
 
-void GLSurface::SetRelyOnImplicitSync() {
-  NOTIMPLEMENTED();
-}
+void GLSurface::SetRelyOnImplicitSync() {}
 
 GLSurface* GLSurface::GetCurrent() {
   return current_surface_.Pointer()->Get();
