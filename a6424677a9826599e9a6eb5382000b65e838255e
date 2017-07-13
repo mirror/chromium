@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68414d27_2648756a",
+        "filename": "chrome/browser/media/router/media_router_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-13T17:13:55Z",
+      "side": 1,
+      "message": "s/case/cast ?",
+      "range": {
+        "startLine": 107,
+        "startChar": 27,
+        "endLine": 107,
+        "endChar": 31
+      },
+      "revId": "a6424677a9826599e9a6eb5382000b65e838255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec2eb9c_e61d4ce7",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_file_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-13T17:13:55Z",
+      "side": 1,
+      "message": "Perhaps we should check the return value of GetFileSize() and record the size only if true. But that\u0027d mean we might not notice if GetFileSize() is returning false a lot, so I think we can go either way.",
+      "revId": "a6424677a9826599e9a6eb5382000b65e838255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c174d8c_7e5edea2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31558,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-13T17:13:55Z",
+      "side": 1,
+      "message": "I\u0027d say LocalFileSize here and elsewhere (so we know it\u0027s not a file streamed from the web) but I don\u0027t feel strongly.",
+      "range": {
+        "startLine": 31558,
+        "startChar": 36,
+        "endLine": 31558,
+        "endChar": 44
+      },
+      "revId": "a6424677a9826599e9a6eb5382000b65e838255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
