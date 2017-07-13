@@ -67,7 +67,7 @@ class RegisterAppTaskTest : public testing::Test {
     context_.reset(new SyncEngineContext(
         std::move(fake_drive_service), std::move(drive_uploader),
         nullptr /* task_logger */, base::ThreadTaskRunnerHandle::Get(),
-        base::ThreadTaskRunnerHandle::Get(), nullptr /* worker_pool */));
+        base::ThreadTaskRunnerHandle::Get()));
 
     ASSERT_EQ(google_apis::HTTP_CREATED,
               fake_drive_service_helper_->AddOrphanedFolder(

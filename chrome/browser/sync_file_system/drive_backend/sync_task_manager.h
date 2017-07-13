@@ -77,8 +77,7 @@ class SyncTaskManager {
   // If |maximum_background_tasks| is zero, all task runs as foreground task.
   SyncTaskManager(base::WeakPtr<Client> client,
                   size_t maximum_background_task,
-                  const scoped_refptr<base::SequencedTaskRunner>& task_runner,
-                  const scoped_refptr<base::SequencedWorkerPool>& worker_pool);
+                  const scoped_refptr<base::SequencedTaskRunner>& task_runner);
   virtual ~SyncTaskManager();
 
   // This needs to be called to start task scheduling.
@@ -129,7 +128,6 @@ class SyncTaskManager {
   bool IsRunningTask(int64_t task_token_id) const;
 
   void DetachFromSequence();
-  bool ShouldTrackTaskToken() const;
 
  private:
   struct PendingTask {
@@ -209,7 +207,6 @@ class SyncTaskManager {
   TaskDependencyManager dependency_manager_;
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
-  scoped_refptr<base::SequencedWorkerPool> worker_pool_;
   base::SequenceChecker sequence_checker_;
 
   base::WeakPtrFactory<SyncTaskManager> weak_ptr_factory_;

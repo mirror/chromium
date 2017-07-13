@@ -116,18 +116,19 @@ class DriveBackendSyncTest : public testing::Test,
         drive_service.get(), uploader.get(),
         kSyncRootFolderTitle));
 
-    remote_sync_service_.reset(new SyncEngine(
-        base::ThreadTaskRunnerHandle::Get(),  // ui_task_runner
-        worker_task_runner_.get(), drive_task_runner.get(),
-        content::BrowserThread::GetBlockingPool(), base_dir_.GetPath(),
-        nullptr,  // task_logger
-        nullptr,  // notification_manager
-        nullptr,  // extension_service
-        nullptr,  // signin_manager
-        nullptr,  // token_service
-        nullptr,  // request_context
-        nullptr,  // drive_service
-        in_memory_env_.get()));
+    remote_sync_service_.reset(
+        new SyncEngine(base::ThreadTaskRunnerHandle::Get(),  // ui_task_runner
+                       worker_task_runner_.get(), drive_task_runner.get(),
+                       /* content::BrowserThread::GetBlockingPool(), */
+                       base_dir_.GetPath(),
+                       nullptr,  // task_logger
+                       nullptr,  // notification_manager
+                       nullptr,  // extension_service
+                       nullptr,  // signin_manager
+                       nullptr,  // token_service
+                       nullptr,  // request_context
+                       nullptr,  // drive_service
+                       in_memory_env_.get()));
     remote_sync_service_->AddServiceObserver(this);
     remote_sync_service_->InitializeForTesting(std::move(drive_service),
                                                std::move(uploader),
