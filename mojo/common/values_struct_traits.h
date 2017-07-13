@@ -5,6 +5,7 @@
 #ifndef MOJO_COMMON_VALUES_STRUCT_TRAITS_H_
 #define MOJO_COMMON_VALUES_STRUCT_TRAITS_H_
 
+#include "base/mojom/values_struct_traits.h"
 #include "base/values.h"
 #include "mojo/common/values.mojom-shared.h"
 #include "mojo/public/cpp/bindings/array_traits.h"
@@ -58,27 +59,6 @@ struct StructTraits<common::mojom::ListValueDataView,
 
   static bool Read(common::mojom::ListValueDataView data,
                    std::unique_ptr<base::ListValue>* value);
-};
-
-template <>
-struct MapTraits<base::DictionaryValue> {
-  using Key = std::string;
-  using Value = base::Value;
-  using Iterator = base::DictionaryValue::Iterator;
-
-  static size_t GetSize(const base::DictionaryValue& input) {
-    return input.size();
-  }
-
-  static Iterator GetBegin(const base::DictionaryValue& input) {
-    return Iterator(input);
-  }
-
-  static void AdvanceIterator(Iterator& iterator) { iterator.Advance(); }
-
-  static const Key& GetKey(Iterator& iterator) { return iterator.key(); }
-
-  static const Value& GetValue(Iterator& iterator) { return iterator.value(); }
 };
 
 template <>

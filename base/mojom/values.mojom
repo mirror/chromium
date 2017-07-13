@@ -1,0 +1,31 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module base.mojom;
+
+// Value represents a value that can be serialized to/from JSON.
+//
+// One notable caveat is that Value supports arbitrary binary data, which JSON
+// does not support natively.
+union Value {
+  // Null type placeholder. This field is never used.
+  uint8 null_value;
+  // Primitive types.
+  bool bool_value;
+  int32 int_value;
+  double double_value;
+  // Unicode string.
+  string string_value;
+  // Binary blob with arbitrary bytes. Not supported for JSON.
+  array<uint8> binary_value;
+  // Basic container support for lists and maps.
+  InternalDictValueDoNotUse dictionary_value;
+  array<Value> list_value;
+};
+
+// This is an internal implementation detail to hide the fact that dictionary
+// storage currently still holds Value objects in std::unique_ptr.
+struct InternalDictValueDoNotUse {
+  map<string, Value> storage;
+};

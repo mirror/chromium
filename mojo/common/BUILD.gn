@@ -105,6 +105,7 @@ source_set("values_struct_traits") {
   public_deps = [
     ":common_custom_types_shared_cpp_sources",
     "//base",
+    "//base/mojom",
     "//mojo/public/cpp/bindings:bindings",
   ]
 }
