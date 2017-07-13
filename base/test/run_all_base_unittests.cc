@@ -12,11 +12,19 @@
 #include "base/test/android/test_system_message_handler_link_android.h"
 #endif  // defined(OS_ANDROID)
 
+#if !defined(OS_IOS)
+#include "mojo/edk/embedder/embedder.h"  // nogncheck
+#endif
+
 int main(int argc, char** argv) {
 #if defined(OS_ANDROID)
   base::android::TestSystemMessageHandlerLink::RegisterJNI(
       base::android::AttachCurrentThread());
 #endif  // defined(OS_ANDROID)
+
+#if !defined(OS_IOS)
+  mojo::edk::Init();
+#endif
 
   base::TestSuite test_suite(argc, argv);
   return base::LaunchUnitTests(

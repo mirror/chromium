@@ -315,6 +315,13 @@ static_library("run_all_base_unittests") {
   deps = [
     ":test_support",
   ]
+
+  if (!is_ios) {
+    deps += [
+      "//mojo/edk/system",
+      "//mojo/edk/test:test_support",
+    ]
+  }
 }
 
 if (is_linux) {
