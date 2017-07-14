@@ -106,9 +106,6 @@ gfx::Size TeleportWarningView::CalculatePreferredSize() const {
 }
 
 void TeleportWarningView::InitDialog() {
-  SetBorder(
-      views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-          views::INSETS_DIALOG_TITLE)));
   SetLayoutManager(new views::FillLayout());
 
   // Explanation string

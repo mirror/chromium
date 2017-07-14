@@ -40,7 +40,8 @@ LoginView::LoginView(const base::string16& authority,
   authority_label_->SetAllowCharacterBreak(true);
 
   // Initialize the Grid Layout Manager used for this dialog box.
-  GridLayout* layout = GridLayout::CreatePanel(this);
+  GridLayout* layout = new GridLayout(this);
+  SetLayoutManager(layout);
 
   // Add the column set for the information message at the top of the dialog
   // box.
@@ -79,7 +80,7 @@ LoginView::LoginView(const base::string16& authority,
   }
 
   layout->AddPaddingRow(0, provider->GetDistanceMetric(
-                               DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE));
+                               views::DISTANCE_UNRELATED_CONTROL_VERTICAL));
 
   layout->StartRow(0, labels_column_set_id);
   layout->AddView(username_label_);
@@ -91,11 +92,6 @@ LoginView::LoginView(const base::string16& authority,
   layout->StartRow(0, labels_column_set_id);
   layout->AddView(password_label_);
   layout->AddView(password_field_);
-
-  if (provider->UseExtraDialogPadding()) {
-    layout->AddPaddingRow(0, provider->GetDistanceMetric(
-                                 views::DISTANCE_UNRELATED_CONTROL_VERTICAL));
-  }
 
   if (login_model_data) {
     login_model_->AddObserverAndDeliverCredentials(this,

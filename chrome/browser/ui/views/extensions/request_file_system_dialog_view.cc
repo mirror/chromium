@@ -85,11 +85,6 @@ gfx::Size RequestFileSystemDialogView::CalculatePreferredSize() const {
                    child_at(0)->GetHeightForWidth(kDialogMaxWidth));
 }
 
-gfx::Insets RequestFileSystemDialogView::GetInsets() const {
-  return ChromeLayoutProvider::Get()->GetInsetsMetric(
-      views::INSETS_DIALOG_CONTENTS);
-}
-
 RequestFileSystemDialogView::RequestFileSystemDialogView(
     const std::string& extension_name,
     const std::string& volume_label,

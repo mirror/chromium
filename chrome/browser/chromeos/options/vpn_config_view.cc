@@ -507,7 +507,8 @@ void VPNConfigView::Init() {
     DCHECK(vpn && vpn->type() == shill::kTypeVPN);
   }
 
-  layout_ = views::GridLayout::CreatePanel(this);
+  layout_ = new views::GridLayout(this);
+  SetLayoutManager(layout_);
   views::LayoutProvider* provider = views::LayoutProvider::Get();
 
   // Observer any changes to the certificate list.

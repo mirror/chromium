@@ -106,9 +106,6 @@ gfx::Size MultiprofilesIntroView::CalculatePreferredSize() const {
 }
 
 void MultiprofilesIntroView::InitDialog() {
-  SetBorder(
-      views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-          views::INSETS_DIALOG_TITLE)));
   SetLayoutManager(new views::FillLayout());
 
   // Explanation string

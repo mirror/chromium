@@ -423,7 +423,8 @@ void HungRendererDialogView::Init() {
   using views::GridLayout;
   using views::ColumnSet;
 
-  GridLayout* layout = GridLayout::CreatePanel(this);
+  GridLayout* layout = new GridLayout(this);
+  SetLayoutManager(layout);
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   const int double_column_set_id = 0;
