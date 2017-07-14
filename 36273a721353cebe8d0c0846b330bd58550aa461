@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9799afda_e23a8077",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-14T11:22:55Z",
+      "side": 1,
+      "message": "It looks like this part of rebase got lost.",
+      "range": {
+        "startLine": 40,
+        "startChar": 41,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "36273a721353cebe8d0c0846b330bd58550aa461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927a044d_30842121",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-14T11:22:55Z",
+      "side": 1,
+      "message": "That\u0027s a very fragile way (e.g. it fails if the URL has a query already or api_key contains inappropriate characters).\nBasically, you need to add a query parameter to URL.\n\nAfter some searching I\u0027ve found AppendQueryParameter from net/base/url_util.h, which is exactly what you need.",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 78
+      },
+      "revId": "36273a721353cebe8d0c0846b330bd58550aa461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8fc4e7_0e2cd5dd",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-14T11:22:55Z",
+      "side": 1,
+      "message": "Again, this is a part of missing rebase.",
+      "range": {
+        "startLine": 220,
+        "startChar": 54,
+        "endLine": 221,
+        "endChar": 42
+      },
+      "revId": "36273a721353cebe8d0c0846b330bd58550aa461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
