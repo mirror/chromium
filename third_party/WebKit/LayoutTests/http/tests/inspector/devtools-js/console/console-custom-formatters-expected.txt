@@ -1,0 +1,12 @@
+Tests that console logging dumps properly when there are multiple custom formatters on the page
+
+VM:110 Header formatted by 1 aBody formatted by 1 a
+VM:111 Header formatted by 2 bBody formatted by 2 b
+VM:112 Header formatted by 1 cBody formatted by 1 c
+VM:113 Formatter with config Header info: additional infobodyinfo: additional info
+VM:114 Formatter with config Formatter with config Formatter with config Formatter with config Formatter with config Formatter with config Formatter with config Formatter with config Formatter with config Object
+Custom Formatter Failed: Too deep hierarchy of inlined custom previews undefined
+Promise resolved (async)
+logVars @ VM:114
+(anonymous) @ VM:1
+
