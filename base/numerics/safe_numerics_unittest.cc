@@ -648,6 +648,24 @@ static void TestArithmetic(const char* dst, int line) {
     TEST_EXPECTED_VALUE(1, -ClampedNumeric<Dst>(-1));
     TEST_EXPECTED_VALUE(static_cast<Dst>(DstLimits::max() * -1),
                         -ClampedNumeric<Dst>(DstLimits::max()));
+
+    // This forces some runtime tests of the optimized paths.
+    volatile Dst value = Dst(0);
+    TEST_EXPECTED_VALUE(0, -MakeClampedNum(value));
+    value = Dst(1);
+    TEST_EXPECTED_VALUE(-1, -MakeClampedNum(value));
+    value = Dst(2);
+    TEST_EXPECTED_VALUE(-2, -MakeClampedNum(value));
+    value = Dst(-1);
+    TEST_EXPECTED_VALUE(1, -MakeClampedNum(value));
+    value = Dst(-2);
+    TEST_EXPECTED_VALUE(2, -MakeClampedNum(value));
+    value = DstLimits::max();
+    TEST_EXPECTED_VALUE(Dst(DstLimits::max() * -1), -MakeClampedNum(value));
+    value = Dst(-1 * DstLimits::max());
+    TEST_EXPECTED_VALUE(DstLimits::max(), -MakeClampedNum(value));
+    value = DstLimits::lowest();
+    TEST_EXPECTED_VALUE(DstLimits::max(), -MakeClampedNum(value));
   }
 
   // Generic absolute value.
