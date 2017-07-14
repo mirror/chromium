@@ -70,6 +70,30 @@
       "revId": "e92df3faaec8d03ce1277184c17d26b4018335c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97efb113_7b280f29",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1826,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-07-14T22:23:36Z",
+      "side": 1,
+      "message": "I think this problem exists regardless, if someone added logic outside of these methods in the main one above.\n\nQuestion I don\u0027t quite understand: why does VR care about distinguishing between minimize and close case? Would it not be enough to examine the return boolean of handleBackPressed and base what you do on that?",
+      "parentUuid": "219c7ade_61ef1742",
+      "range": {
+        "startLine": 1826,
+        "startChar": 19,
+        "endLine": 1826,
+        "endChar": 40
+      },
+      "revId": "e92df3faaec8d03ce1277184c17d26b4018335c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
