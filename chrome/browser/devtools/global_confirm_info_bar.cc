@@ -4,13 +4,16 @@
 
 #include "chrome/browser/devtools/global_confirm_info_bar.h"
 
+#include <memory>
 #include <utility>
 
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/stl_util.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/infobars/core/infobar.h"
+#include "components/infobars/core/infobars_switches.h"
 #include "ui/gfx/image/image.h"
 
 // InfoBarDelegateProxy -------------------------------------------------------
@@ -160,7 +163,11 @@ GlobalConfirmInfoBar::GlobalConfirmInfoBar(
     : delegate_(std::move(delegate)),
       browser_tab_strip_tracker_(this, nullptr, nullptr),
       weak_factory_(this) {
-  browser_tab_strip_tracker_.Init();
+  // Don't do anything if info bars are disabled.
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          infobars::switches::kDisableInfoBars)) {
+    browser_tab_strip_tracker_.Init();
+  }
 }
 
 GlobalConfirmInfoBar::~GlobalConfirmInfoBar() {
@@ -217,8 +224,8 @@ void GlobalConfirmInfoBar::MaybeAddInfoBar(content::WebContents* web_contents) {
   infobars::InfoBar* added_bar = infobar_service->AddInfoBar(
       infobar_service->CreateConfirmInfoBar(std::move(proxy)));
 
-  proxy_ptr->info_bar_ = added_bar;
   DCHECK(added_bar);
+  proxy_ptr->info_bar_ = added_bar;
   proxies_[infobar_service] = proxy_ptr;
   infobar_service->AddObserver(this);
 }
