@@ -122,6 +122,78 @@ TEST_F(FileUtilTest, InstallUninstallGarbageCollect) {
   ASSERT_TRUE(base::DirectoryExists(all_extensions));
 }
 
+TEST_F(FileUtilTest, ValidateExtensionWithMetadataFolder) {
+  base::FilePath install_dir;
+  ASSERT_TRUE(PathService::Get(DIR_TEST_DATA, &install_dir));
+  install_dir = install_dir.AppendASCII("metadata_folder");
+
+  std::string error;
+  std::unique_ptr<base::DictionaryValue> manifest =
+      file_util::LoadManifest(install_dir, &error);
+  ASSERT_TRUE(manifest.get());
+
+  scoped_refptr<Extension> extension(
+      Extension::Create(install_dir, Manifest::UNPACKED, *manifest,
+                        Extension::NO_FLAGS, std::string(), &error));
+  ASSERT_TRUE(extension.get());
+
+  std::vector<InstallWarning> warnings;
+  ASSERT_TRUE(file_util::ValidateExtension(extension.get(), &error, &warnings));
+  EXPECT_EQ(1u, warnings.size());
+  EXPECT_EQ(
+      "_metadata is a reserved directory that will not be allowed at "
+      "the time of Chrome Web Store upload.",
+      warnings[0].message);
+}
+
+TEST_F(FileUtilTest, LoadExtensionWithMetadataFolder) {
+  base::FilePath install_dir;
+  ASSERT_TRUE(PathService::Get(DIR_TEST_DATA, &install_dir));
+  install_dir = install_dir.AppendASCII("metadata_folder");
+
+  std::string error;
+  scoped_refptr<Extension> extension(file_util::LoadExtension(
+      install_dir, Manifest::UNPACKED, Extension::NO_FLAGS, &error));
+  // LoadExtension() does not block the loading of an extension if a filename
+  // starts with _.
+  ASSERT_TRUE(extension.get() != NULL);
+
+  // LoadExtension() does not throw an error in this case, only a warning.
+  EXPECT_EQ("", error);
+}
+
+TEST_F(FileUtilTest, LoadExtensionWithUnderscoreFolder) {
+  base::FilePath install_dir;
+  ASSERT_TRUE(PathService::Get(DIR_TEST_DATA, &install_dir));
+  install_dir = install_dir.AppendASCII("underscore_name");
+
+  std::string error;
+  scoped_refptr<Extension> extension(file_util::LoadExtension(
+      install_dir, Manifest::UNPACKED, Extension::NO_FLAGS, &error));
+  // LoadExtension() does not block the loading of an extension if a filename
+  // starts with _.
+  ASSERT_TRUE(extension.get() != NULL);
+
+  // LoadExtension() does not throw an error in this case, only a warning.
+  EXPECT_EQ("", error);
+}
+
+TEST_F(FileUtilTest, LoadExtensionWithMetadataAndUnderscoreFolders) {
+  base::FilePath install_dir;
+  ASSERT_TRUE(PathService::Get(DIR_TEST_DATA, &install_dir));
+  install_dir = install_dir.AppendASCII("underscore_metadata_folders");
+
+  std::string error;
+  scoped_refptr<Extension> extension(file_util::LoadExtension(
+      install_dir, Manifest::UNPACKED, Extension::NO_FLAGS, &error));
+  // LoadExtension() does not block the loading of an extension if a filename
+  // starts with _.
+  ASSERT_TRUE(extension.get() != NULL);
+
+  // LoadExtension() does not throw an error in this case, only a warning.
+  EXPECT_EQ("", error);
+}
+
 TEST_F(FileUtilTest, LoadExtensionWithValidLocales) {
   base::FilePath install_dir;
   ASSERT_TRUE(PathService::Get(DIR_TEST_DATA, &install_dir));
