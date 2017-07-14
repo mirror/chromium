@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7d7fa30_52c7e97e",
+        "filename": "base/numerics/clamped_math.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T19:50:36Z",
+      "side": 1,
+      "message": "This is hard to read; it\u0027d be helpful to have the preceding comment summarize the intended behaviour of the different cases, so future editors/reviewers can sanity-check against that.",
+      "revId": "a07bb9d3309d102546e2835a2b7482b61b51ebd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33396be_6ba56c2a",
+        "filename": "base/numerics/safe_numerics_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T19:50:36Z",
+      "side": 1,
+      "message": "nit: I\u0027d reword the comment a little - IIUC you\u0027re tricking the compiler to not make optimizations on the arithmetic, by preventing it from making assumptions about |value|\u0027s contents?",
+      "revId": "a07bb9d3309d102546e2835a2b7482b61b51ebd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
