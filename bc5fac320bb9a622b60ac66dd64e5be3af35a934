@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "939c4845_543cd2d9",
+        "filename": "chrome/installer/zucchini/patch_sink.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "what is this check and why is it here?\n\nIt seems like ElementMatch should have an IsValid() method, or something?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e13a5b_e14b1ffc",
+        "filename": "chrome/installer/zucchini/patch_sink.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "why is this a uint instead of an int?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1560172_4e0984a4",
+        "filename": "chrome/installer/zucchini/patch_sink.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "Any reason element_match isn\u0027t passed by const reference?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a6aa32_605acddf",
+        "filename": "chrome/installer/zucchini/patch_sink.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "can you describe why you need 3 vectors here?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8ba662_d1482dd1",
+        "filename": "chrome/installer/zucchini/patch_sink.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "Your sinks look almost exactly the same [with a different PutNext]. Are inheritance and composition both inappropriate?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0c6193_0ca49f6c",
+        "filename": "chrome/installer/zucchini/patch_sink.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "can we call them something that is not Sink(s) then?\n\nMaybe...Serializer?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41a6179_f5f73f84",
+        "filename": "chrome/installer/zucchini/patch_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "shouldn\u0027t |source| be const?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787f3e9d_5d1e4a9d",
+        "filename": "chrome/installer/zucchini/patch_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "Do all of your parse methods modify Source?\n\nThat doesn\u0027t match my expectations for a Parse() function. Would it make more sense to make this a method on BufferSource?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb91cd58_1bb5ec60",
+        "filename": "chrome/installer/zucchini/patch_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "so...this is intended to be called exactly once? Maybe InitializeAndParse() ?\n\nDoes this actually do any parsing?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946382ea_1a223459",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "What is this? I couldn\u0027t find it in the README, or code search, and it has no comments.",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ff4697_a4b372be",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "Aren\u0027t we switching to clang soon?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd44321_a952bcec",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T22:49:24Z",
+      "side": 1,
+      "message": "what is this?",
+      "revId": "bc5fac320bb9a622b60ac66dd64e5be3af35a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
