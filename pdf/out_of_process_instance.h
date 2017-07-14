@@ -195,7 +195,7 @@ class OutOfProcessInstance : public pp::Instance,
   // Set new zoom scale.
   void SetZoom(double scale);
 
-  // Reduces the document to 1 page and appends |print_preview_page_count_|
+  // Reduces the document to 1 page and appends |print_preview_page_count_| - 1
   // blank pages to the document for print preview.
   void AppendBlankPrintPreviewPages();
 
@@ -331,7 +331,10 @@ class OutOfProcessInstance : public pp::Instance,
 
   // Number of pages in print preview mode, 0 if not in print preview mode.
   int print_preview_page_count_;
-  std::vector<int> print_preview_page_numbers_;
+
+  // Number of pages loaded in print preview mode. Always less than or equal to
+  // |print_preview_page_count_|.
+  int print_preview_loaded_page_count_;
 
   // Used to manage loaded print preview page information. A |PreviewPageInfo|
   // consists of data source URL string and the page index in the destination
