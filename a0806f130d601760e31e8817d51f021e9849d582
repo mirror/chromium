@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8faa15e8_0b18dbc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Renamed it to GlobalScopeCreationParams.\n\n(I code-searched InitializationData, InitializationParams, CreationData and CreationParams, and found CreationParams is the most popular name)",
+      "parentUuid": "b58216f6_7f54ec15",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6657013c_88b2efb2",
         "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "07d87c7a_fd75264b",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6657013c_88b2efb2",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5dc69fe_d21ac921",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerGlobalScope.cpp",
         "patchSetId": 4
@@ -65,6 +101,24 @@
       "writtenOn": "2017-07-14T06:44:02Z",
       "side": 1,
       "message": "|startup_data| is finalized (destroyed?) on return, after the relevant parts have been passed along to |context|.",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa74f8ba_4ed77fc0",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerGlobalScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Removed this comment. I think it wouldn\u0027t be useful because |startup_data| is a unique_ptr and it\u0027s obviously destroyed once it\u0027s scoped-out.",
+      "parentUuid": "d5dc69fe_d21ac921",
       "revId": "a0806f130d601760e31e8817d51f021e9849d582",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "0ba00b7a_2b764414",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeStartupData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73782f82_51fdb25b",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e42e6ff4_a304aaa0",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerGlobalScope.cpp",
         "patchSetId": 4
@@ -102,6 +174,24 @@
       "revId": "a0806f130d601760e31e8817d51f021e9849d582",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb8846a_49fce761",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerGlobalScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Done (removed this comment)",
+      "parentUuid": "e42e6ff4_a304aaa0",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "04d71064_2c058053",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d5b6a5a_66731e9c",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e5f58d9_51169116",
         "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThreadStartupData.h",
         "patchSetId": 4
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "151c1a87_012b1f71",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThreadStartupData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e5f58d9_51169116",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2623d834_5494c223",
         "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThreadStartupData.h",
         "patchSetId": 4
@@ -150,6 +276,24 @@
       "writtenOn": "2017-07-14T06:44:02Z",
       "side": 1,
       "message": "It\u0027s kind of weird that Gerrit highlights Default(). Is Default a C++ reserved keyword or something?\n\nMaybe it\u0027s better to just call this Create() or CreateDefault() something.",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d543c28f_2ca05d42",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThreadStartupData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "I don\u0027t know whether \"Default\" is reserved keyword or not, but I suspect the syntax highlighter misinterprets it as function\u0027s default or case-switch\u0027s default.\n\nAnyway, I renamed this to CreateDefault().",
+      "parentUuid": "2623d834_5494c223",
       "revId": "a0806f130d601760e31e8817d51f021e9849d582",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "01efb462_0474a143",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThreadStartupData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb0c87a_87c89e65",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12914484_00942949",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
         "patchSetId": 4
@@ -184,6 +346,24 @@
       "writtenOn": "2017-07-14T06:44:02Z",
       "side": 1,
       "message": "not sure about \"starting\" a global scope here too",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4ae2cc_8b331134",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "I don\u0027t come up with a better name yet. This enum used for suspending a global scope before it starts evaluating scripts and running debugger tasks. Hmmm... how about like this?\n\nenum DebuggerTaskModeOnGlobalScopeCreation { kDontRun, kRun };",
+      "parentUuid": "12914484_00942949",
       "revId": "a0806f130d601760e31e8817d51f021e9849d582",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "f0ec5b21_d7e015f2",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Sounds clearer. Done.",
+      "parentUuid": "9da6eb4d_931c2d6b",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcfed9df_118a7c6c",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 4
@@ -224,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "08a9ba97_4e349fbd",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcfed9df_118a7c6c",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34a0a3cd_1c47397d",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
         "patchSetId": 4
@@ -238,6 +454,24 @@
       "revId": "a0806f130d601760e31e8817d51f021e9849d582",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df4e5ae_c171b2c9",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T08:35:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a0a3cd_1c47397d",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
