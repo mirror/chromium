@@ -287,6 +287,8 @@ component("ash") {
     "shelf/shelf_button_pressed_metric_tracker.cc",
     "shelf/shelf_button_pressed_metric_tracker.h",
     "shelf/shelf_constants.h",
+    "shelf/shelf_context_menu.cc",
+    "shelf/shelf_context_menu.h",
     "shelf/shelf_controller.cc",
     "shelf/shelf_controller.h",
     "shelf/shelf_layout_manager.cc",

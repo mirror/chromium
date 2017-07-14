@@ -21,6 +21,11 @@ MenuItemList ShelfItemDelegate::GetAppMenuItems(int event_flags) {
   return MenuItemList();
 }
 
+MenuItemList ShelfItemDelegate::GetContextMenuItems(int event_flags) {
+  LOG(ERROR) << "MSW ShelfItemDelegate::GetContextMenuItems";
+  return MenuItemList();
+}
+
 AppWindowLauncherItemController*
 ShelfItemDelegate::AsAppWindowLauncherItemController() {
   return nullptr;

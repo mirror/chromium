@@ -28,6 +28,10 @@ struct EnumTraits<ash::mojom::ShelfAction, ash::ShelfAction> {
         return ash::mojom::ShelfAction::WINDOW_MINIMIZED;
       case ash::SHELF_ACTION_APP_LIST_SHOWN:
         return ash::mojom::ShelfAction::APP_LIST_SHOWN;
+      case ash::SHELF_ACTION_SHOW_APPLICATION_MENU:
+        return ash::mojom::ShelfAction::SHOW_APPLICATION_MENU;
+      case ash::SHELF_ACTION_SHOW_CONTEXT_MENU:
+        return ash::mojom::ShelfAction::SHOW_CONTEXT_MENU;
     }
     NOTREACHED();
     return ash::mojom::ShelfAction::NONE;
@@ -49,6 +53,12 @@ struct EnumTraits<ash::mojom::ShelfAction, ash::ShelfAction> {
         return true;
       case ash::mojom::ShelfAction::APP_LIST_SHOWN:
         *out = ash::SHELF_ACTION_APP_LIST_SHOWN;
+        return true;
+      case ash::mojom::ShelfAction::SHOW_APPLICATION_MENU:
+        *out = ash::SHELF_ACTION_SHOW_APPLICATION_MENU;
+        return true;
+      case ash::mojom::ShelfAction::SHOW_CONTEXT_MENU:
+        *out = ash::SHELF_ACTION_SHOW_CONTEXT_MENU;
         return true;
     }
     NOTREACHED();
