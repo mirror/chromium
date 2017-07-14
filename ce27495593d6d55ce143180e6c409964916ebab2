@@ -70,6 +70,30 @@
       "revId": "ce27495593d6d55ce143180e6c409964916ebab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4339bb2_75bc015f",
+        "filename": "media/midi/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-14T05:24:23Z",
+      "side": 1,
+      "message": "No, MidiManagerCrosshould be used always if is_chromeos is true. Otherwise no Chrome tests run on the waterfall, and that results in the port being broken in a few months. If use_midis is false, we would run an in-process mocked midis that provides minimum functionalities for tests to pass with MidiManagerCros for production. That\u0027s the point I asked in another mail thread.",
+      "parentUuid": "815fc744_ea102816",
+      "range": {
+        "startLine": 162,
+        "startChar": 18,
+        "endLine": 162,
+        "endChar": 27
+      },
+      "revId": "ce27495593d6d55ce143180e6c409964916ebab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
