@@ -12,6 +12,15 @@
 <dom-module id="settings-cups-printers">
   <template>
     <style include="settings-shared action-link">
+      .settings-box .add-printer-learn-more {
+        -webkit-padding-start: 40px;
+      }
+
+      .settings-box .add-printer-button {
+        -webkit-margin-end: 0;
+        -webkit-margin-start: auto;
+      }
+
       .settings-box .start {
         color: var(--paper-grey-600);
       }
@@ -19,11 +28,6 @@
       .settings-box .start .secondary {
         color: var(--paper-grey-800);
         font-size: 92.31%;  /* 12px / 13px */
-      }
-      
-      .settings-box .primary-button {
-        -webkit-margin-end: 0;
-        -webkit-margin-start: auto;
       }
 
       #message {
@@ -54,14 +58,22 @@
       }
     </style>
 
-    <div class="settings-box first">
-      <paper-button class="primary-button" id="addPrinter"
-          on-tap="onAddPrinterTap_" hidden="[[!canAddPrinter_]]">
-        $i18n{addCupsPrinter}
-      </paper-button>
-      <div class="start" hidden="[[canAddPrinter_]]">
-        <span>$i18n{addCupsPrinter}</span>
-        <div class="secondary">$i18n{requireNetworkMessage}</div>
+    <div class="settings-box first two-line">
+      <div class="add-printer-learn-more">
+        <span>$i18n{cupsPrintersLearnMoreLable}</span>
+        <a href="$i18n{printingCUPSPrintLearnMoreUrl}" target="_blank">
+          $i18n{learnMore}
+        </a>
+      </div>
+      <div class="add-printer-button">
+        <paper-button class="primary-button" id="addPrinter"
+            on-tap="onAddPrinterTap_" hidden="[[!canAddPrinter_]]">
+          $i18n{addCupsPrinter}
+        </paper-button>
+        <div class="start" hidden="[[canAddPrinter_]]">
+          <span>$i18n{addCupsPrinter}</span>
+          <div class="secondary">$i18n{requireNetworkMessage}</div>
+        </div>
       </div>
     </div>
 
