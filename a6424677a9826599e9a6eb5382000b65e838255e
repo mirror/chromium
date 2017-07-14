@@ -146,6 +146,30 @@
       "revId": "a6424677a9826599e9a6eb5382000b65e838255e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fed2f71_4431414a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31558,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-14T23:25:16Z",
+      "side": 1,
+      "message": "You mentioned over email that the metric above hasn\u0027t been recorded to yet.  If that\u0027s true, then there\u0027s no issue with changing the name, as there is no data with the old name.\n\nOn the other hand, if there is data that uses the old name, then it\u0027s still fine to change the name; just, in that case, please mark the old name as \u003cobsolete\u003e.",
+      "parentUuid": "bb0e950b_fe378ae2",
+      "range": {
+        "startLine": 31558,
+        "startChar": 36,
+        "endLine": 31558,
+        "endChar": 44
+      },
+      "revId": "a6424677a9826599e9a6eb5382000b65e838255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
