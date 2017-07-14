@@ -22,6 +22,30 @@
       "revId": "e0e0ad07489a1a80033571af24bbcae31e7e2ece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56504f78_dbfd8878",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_boot_error_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T20:21:25Z",
+      "side": 1,
+      "message": "Done to add explanation of safeness about context_ at perspective different from ownership. \nAs for Delegate class lifetime, it is not simple to explain unfortunately, because it is refcounted. As it is not the main focus, I just skipped it.",
+      "parentUuid": "c1896cfa_91426a1f",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "e0e0ad07489a1a80033571af24bbcae31e7e2ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
