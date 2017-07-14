@@ -1100,7 +1100,6 @@ static size_t PartitionPurgePage(PartitionPage* page, bool discard) {
   DCHECK(page->num_unprovisioned_slots < bucket_num_slots);
   size_t num_slots = bucket_num_slots - page->num_unprovisioned_slots;
   char slot_usage[max_slot_count];
-  size_t last_slot = static_cast<size_t>(-1);
   memset(slot_usage, 1, num_slots);
   char* ptr = reinterpret_cast<char*>(PartitionPageToPointer(page));
   PartitionFreelistEntry* entry = page->freelist_head;
@@ -1111,13 +1110,6 @@ static size_t PartitionPurgePage(PartitionPage* page, bool discard) {
     DCHECK(slotIndex < num_slots);
     slot_usage[slotIndex] = 0;
     entry = PartitionFreelistMask(entry->next);
-    // If we have a slot where the masked freelist entry is 0, we can
-    // actually discard that freelist entry because touching a discarded
-    // page is guaranteed to return original content or 0.
-    // (Note that this optimization won't fire on big endian machines
-    // because the masking function is negation.)
-    if (!PartitionFreelistMask(entry))
-      last_slot = slotIndex;
   }
 
   // If the slot(s) at the end of the slot span are not in used, we can
@@ -1162,7 +1154,6 @@ static size_t PartitionPurgePage(PartitionPage* page, bool discard) {
       *entry_ptr = PartitionFreelistMask(entry);
       entry_ptr = reinterpret_cast<PartitionFreelistEntry**>(entry);
       num_new_entries++;
-      last_slot = slotIndex;
     }
     // Terminate the freelist chain.
     *entry_ptr = nullptr;
@@ -1185,8 +1176,7 @@ static size_t PartitionPurgePage(PartitionPage* page, bool discard) {
     // null, we can discard that pointer value too.
     char* begin_ptr = ptr + (i * slot_size);
     char* end_ptr = begin_ptr + slot_size;
-    if (i != last_slot)
-      begin_ptr += sizeof(PartitionFreelistEntry);
+    begin_ptr += sizeof(PartitionFreelistEntry);
     begin_ptr = reinterpret_cast<char*>(
         RoundUpToSystemPage(reinterpret_cast<size_t>(begin_ptr)));
     end_ptr = reinterpret_cast<char*>(
