@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "content/public/browser/push_messaging_service.h"
+#include "content/public/common/push_messaging_status.h"
 #include "third_party/WebKit/public/platform/modules/push_messaging/WebPushPermissionStatus.h"
 
 namespace content {
@@ -45,7 +46,7 @@ class LayoutTestPushMessagingService : public PushMessagingService {
                                                      bool user_visible)
       override;
   bool SupportNonVisibleMessages() override;
-  void Unsubscribe(mojom::PushUnregistrationReason reason,
+  void Unsubscribe(PushUnregistrationReason reason,
                    const GURL& requesting_origin,
                    int64_t service_worker_registration_id,
                    const std::string& sender_id,

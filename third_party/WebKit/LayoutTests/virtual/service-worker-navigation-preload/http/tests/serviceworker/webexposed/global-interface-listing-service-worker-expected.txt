@@ -152,6 +152,7 @@ interface DOMException
     getter message
     getter name
     method constructor
+    method toString
 interface DOMMatrix : DOMMatrixReadOnly
     getter a
     getter b

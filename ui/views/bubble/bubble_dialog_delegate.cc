@@ -310,8 +310,10 @@ void BubbleDialogDelegateView::HandleVisibilityChanged(Widget* widget,
   // than just its title and initially focused view.  See
   // http://crbug.com/474622 for details.
   if (widget == GetWidget() && visible) {
-    if (GetAccessibleWindowRole() == ui::AX_ROLE_ALERT_DIALOG)
-      widget->GetRootView()->NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+    ui::AXNodeData node_data;
+    GetAccessibleNodeData(&node_data);
+    if (node_data.role == ui::AX_ROLE_ALERT_DIALOG)
+      NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
   }
 }
 

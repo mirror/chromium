@@ -204,11 +204,12 @@ _BANNED_CPP_FUNCTIONS = (
       'ScopedAllowIO',
       (
        'New production code should not use ScopedAllowIO (using it in',
-       'tests is fine). Post a task to a MayBlock task runner instead.',
+       'browser tests is fine). Post a task to the blocking pool or the',
+       'FILE thread instead.',
       ),
       True,
       (
-        r"^.*(browser|unit)(|_)test[a-z_]*\.cc$",
+        r"^.*browser(|_)test[a-z_]*\.cc$",
         r"^base[\\\/]memory[\\\/]shared_memory_posix\.cc$",
         r"^base[\\\/]process[\\\/]internal_aix\.cc$",
         r"^base[\\\/]process[\\\/]process_linux\.cc$",

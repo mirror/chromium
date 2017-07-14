@@ -53,7 +53,6 @@
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebCachePolicy.h"
-#include "public/platform/WebClientHintsType.h"
 #include "public/platform/WebDocumentSubresourceFilter.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -542,7 +541,7 @@ class FrameFetchContextHintsTest : public FrameFetchContextTest {
 TEST_F(FrameFetchContextHintsTest, MonitorDeviceRAMHints) {
   ExpectHeader("http://www.example.com/1.gif", "device-ram", false, "");
   ClientHintsPreferences preferences;
-  preferences.SetShouldSendForTesting(kWebClientHintsTypeDeviceRam);
+  preferences.SetShouldSendDeviceRAM(true);
   document->GetClientHintsPreferences().UpdateFrom(preferences);
   MemoryCoordinator::SetPhysicalMemoryMBForTesting(4096);
   ExpectHeader("http://www.example.com/1.gif", "device-ram", true, "4");
@@ -560,7 +559,7 @@ TEST_F(FrameFetchContextHintsTest, MonitorDeviceRAMHints) {
 TEST_F(FrameFetchContextHintsTest, MonitorDPRHints) {
   ExpectHeader("http://www.example.com/1.gif", "DPR", false, "");
   ClientHintsPreferences preferences;
-  preferences.SetShouldSendForTesting(kWebClientHintsTypeDpr);
+  preferences.SetShouldSendDPR(true);
   document->GetClientHintsPreferences().UpdateFrom(preferences);
   ExpectHeader("http://www.example.com/1.gif", "DPR", true, "1");
   dummy_page_holder->GetPage().SetDeviceScaleFactorDeprecated(2.5);
@@ -572,7 +571,7 @@ TEST_F(FrameFetchContextHintsTest, MonitorDPRHints) {
 TEST_F(FrameFetchContextHintsTest, MonitorResourceWidthHints) {
   ExpectHeader("http://www.example.com/1.gif", "Width", false, "");
   ClientHintsPreferences preferences;
-  preferences.SetShouldSendForTesting(kWebClientHintsTypeResourceWidth);
+  preferences.SetShouldSendResourceWidth(true);
   document->GetClientHintsPreferences().UpdateFrom(preferences);
   ExpectHeader("http://www.example.com/1.gif", "Width", true, "500", 500);
   ExpectHeader("http://www.example.com/1.gif", "Width", true, "667", 666.6666);
@@ -585,7 +584,7 @@ TEST_F(FrameFetchContextHintsTest, MonitorResourceWidthHints) {
 TEST_F(FrameFetchContextHintsTest, MonitorViewportWidthHints) {
   ExpectHeader("http://www.example.com/1.gif", "Viewport-Width", false, "");
   ClientHintsPreferences preferences;
-  preferences.SetShouldSendForTesting(kWebClientHintsTypeViewportWidth);
+  preferences.SetShouldSendViewportWidth(true);
   document->GetClientHintsPreferences().UpdateFrom(preferences);
   ExpectHeader("http://www.example.com/1.gif", "Viewport-Width", true, "500");
   dummy_page_holder->GetFrameView().SetLayoutSizeFixedToFrameSize(false);
@@ -603,10 +602,10 @@ TEST_F(FrameFetchContextHintsTest, MonitorAllHints) {
   ExpectHeader("http://www.example.com/1.gif", "Width", false, "");
 
   ClientHintsPreferences preferences;
-  preferences.SetShouldSendForTesting(kWebClientHintsTypeDeviceRam);
-  preferences.SetShouldSendForTesting(kWebClientHintsTypeDpr);
-  preferences.SetShouldSendForTesting(kWebClientHintsTypeResourceWidth);
-  preferences.SetShouldSendForTesting(kWebClientHintsTypeViewportWidth);
+  preferences.SetShouldSendDeviceRAM(true);
+  preferences.SetShouldSendDPR(true);
+  preferences.SetShouldSendResourceWidth(true);
+  preferences.SetShouldSendViewportWidth(true);
   MemoryCoordinator::SetPhysicalMemoryMBForTesting(4096);
   document->GetClientHintsPreferences().UpdateFrom(preferences);
   ExpectHeader("http://www.example.com/1.gif", "device-ram", true, "4");
@@ -1242,25 +1241,18 @@ TEST_F(FrameFetchContextTest, PopulateResourceRequestWhenDetached) {
   request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
 
   ClientHintsPreferences client_hints_preferences;
-  client_hints_preferences.SetShouldSendForTesting(
-      kWebClientHintsTypeDeviceRam);
-  client_hints_preferences.SetShouldSendForTesting(kWebClientHintsTypeDpr);
-  client_hints_preferences.SetShouldSendForTesting(
-      kWebClientHintsTypeResourceWidth);
-  client_hints_preferences.SetShouldSendForTesting(
-      kWebClientHintsTypeViewportWidth);
+  client_hints_preferences.SetShouldSendDeviceRAM(true);
+  client_hints_preferences.SetShouldSendDPR(true);
+  client_hints_preferences.SetShouldSendResourceWidth(true);
+  client_hints_preferences.SetShouldSendViewportWidth(true);
 
   FetchParameters::ResourceWidth resource_width;
   ResourceLoaderOptions options;
 
-  document->GetClientHintsPreferences().SetShouldSendForTesting(
-      kWebClientHintsTypeDeviceRam);
-  document->GetClientHintsPreferences().SetShouldSendForTesting(
-      kWebClientHintsTypeDpr);
-  document->GetClientHintsPreferences().SetShouldSendForTesting(
-      kWebClientHintsTypeResourceWidth);
-  document->GetClientHintsPreferences().SetShouldSendForTesting(
-      kWebClientHintsTypeViewportWidth);
+  document->GetClientHintsPreferences().SetShouldSendDeviceRAM(true);
+  document->GetClientHintsPreferences().SetShouldSendDPR(true);
+  document->GetClientHintsPreferences().SetShouldSendResourceWidth(true);
+  document->GetClientHintsPreferences().SetShouldSendViewportWidth(true);
 
   dummy_page_holder = nullptr;
 

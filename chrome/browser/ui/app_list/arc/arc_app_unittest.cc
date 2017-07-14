@@ -1081,19 +1081,19 @@ TEST_P(ArcAppModelBuilderTest, LastLaunchTime) {
   EXPECT_EQ(base::Time(), app_info->last_launch_time);
 
   // Test direct setting last launch time.
-  const base::Time before_time = base::Time::Now();
-  prefs->SetLastLaunchTime(id1);
+  const base::Time now_time = base::Time::Now();
+  prefs->SetLastLaunchTime(id1, now_time);
 
   app_info = prefs->GetApp(id1);
   ASSERT_NE(nullptr, app_info.get());
-  EXPECT_GE(app_info->last_launch_time, before_time);
+  EXPECT_EQ(now_time, app_info->last_launch_time);
 
   // Test setting last launch time via LaunchApp.
   app_info = prefs->GetApp(id2);
   ASSERT_NE(nullptr, app_info.get());
   EXPECT_EQ(base::Time(), app_info->last_launch_time);
 
-  base::Time time_before = base::Time::Now();
+  const base::Time time_before = base::Time::Now();
   arc::LaunchApp(profile(), id2, ui::EF_NONE);
   const base::Time time_after = base::Time::Now();
 
@@ -1107,11 +1107,10 @@ TEST_P(ArcAppModelBuilderTest, LastLaunchTime) {
   app_info = prefs->GetApp(id3);
   ASSERT_NE(nullptr, app_info.get());
   EXPECT_EQ(base::Time(), app_info->last_launch_time);
-  time_before = base::Time::Now();
   app_instance()->SendTaskCreated(0, fake_apps()[2], std::string());
   app_info = prefs->GetApp(id3);
   ASSERT_NE(nullptr, app_info.get());
-  EXPECT_GE(app_info->last_launch_time, time_before);
+  EXPECT_GE(app_info->last_launch_time, now_time);
 }
 
 // Validate that arc model contains expected elements on restart.
@@ -1649,12 +1648,12 @@ TEST_P(ArcAppModelBuilderTest, ArcAppsAndShortcutsOnPackageChange) {
   ValidateHaveAppsAndShortcuts(apps1, shortcuts);
 
   const std::string app_id = ArcAppTest::GetAppId(apps[1]);
-  const base::Time time_before = base::Time::Now();
-  prefs->SetLastLaunchTime(app_id);
+  const base::Time now_time = base::Time::Now();
+  prefs->SetLastLaunchTime(app_id, now_time);
   std::unique_ptr<ArcAppListPrefs::AppInfo> app_info_before =
       prefs->GetApp(app_id);
   ASSERT_TRUE(app_info_before);
-  EXPECT_GE(base::Time::Now(), time_before);
+  EXPECT_EQ(now_time, app_info_before->last_launch_time);
 
   app_instance()->SendPackageAppListRefreshed(apps[0].package_name, apps2);
   ValidateHaveAppsAndShortcuts(apps2, shortcuts);
@@ -1662,8 +1661,7 @@ TEST_P(ArcAppModelBuilderTest, ArcAppsAndShortcutsOnPackageChange) {
   std::unique_ptr<ArcAppListPrefs::AppInfo> app_info_after =
       prefs->GetApp(app_id);
   ASSERT_TRUE(app_info_after);
-  EXPECT_EQ(app_info_before->last_launch_time,
-            app_info_after->last_launch_time);
+  EXPECT_EQ(now_time, app_info_after->last_launch_time);
 
   RemovePackage(package);
   ValidateHaveAppsAndShortcuts(std::vector<arc::mojom::AppInfo>(),

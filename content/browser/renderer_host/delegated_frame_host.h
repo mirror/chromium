@@ -13,7 +13,7 @@
 #include "cc/output/begin_frame_args.h"
 #include "cc/output/copy_output_result.h"
 #include "cc/scheduler/begin_frame_source.h"
-#include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
+#include "cc/surfaces/compositor_frame_sink_support_client.h"
 #include "components/viz/service/frame_sinks/frame_evictor.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "content/browser/compositor/owned_mailbox.h"
@@ -33,12 +33,15 @@ namespace base {
 class TickClock;
 }
 
+namespace cc {
+class CompositorFrameSinkSupport;
+}
+
 namespace media {
 class VideoFrame;
 }
 
 namespace viz {
-class CompositorFrameSinkSupport;
 class ReadbackYUVInterface;
 }
 
@@ -80,7 +83,7 @@ class CONTENT_EXPORT DelegatedFrameHost
       public ui::CompositorVSyncManager::Observer,
       public ui::ContextFactoryObserver,
       public viz::FrameEvictorClient,
-      public NON_EXPORTED_BASE(viz::CompositorFrameSinkSupportClient),
+      public NON_EXPORTED_BASE(cc::CompositorFrameSinkSupportClient),
       public base::SupportsWeakPtr<DelegatedFrameHost> {
  public:
   DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
@@ -105,7 +108,7 @@ class CONTENT_EXPORT DelegatedFrameHost
   // FrameEvictorClient implementation.
   void EvictDelegatedFrame() override;
 
-  // viz::CompositorFrameSinkSupportClient implementation.
+  // cc::CompositorFrameSinkSupportClient implementation.
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
@@ -277,7 +280,7 @@ class CONTENT_EXPORT DelegatedFrameHost
   SkColor background_color_;
 
   // State for rendering into a Surface.
-  std::unique_ptr<viz::CompositorFrameSinkSupport> support_;
+  std::unique_ptr<cc::CompositorFrameSinkSupport> support_;
   gfx::Size current_surface_size_;
   float current_scale_factor_;
   std::vector<cc::ReturnedResource> surface_returned_resources_;

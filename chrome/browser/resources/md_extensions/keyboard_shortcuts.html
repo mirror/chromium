@@ -1,4 +1,3 @@
-<link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="chrome://resources/html/cr.html">
 <link rel="import" href="chrome://resources/html/md_select_css.html">
 <link rel="import" href="chrome://resources/html/polymer.html">
@@ -10,7 +9,11 @@
 
 <dom-module id="extensions-keyboard-shortcuts">
   <template>
-    <style include="md-select cr-hidden-style">
+    <style include="md-select">
+      [hidden] {
+        display: none !important;
+      }
+
       .shortcut-card {
         @apply(--shadow-elevation-2dp);
         background-color: white;

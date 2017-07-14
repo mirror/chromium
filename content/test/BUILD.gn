@@ -98,6 +98,8 @@ static_library("test_support") {
     "../public/test/ppapi_test_utils.h",
     "../public/test/render_view_test.cc",
     "../public/test/render_view_test.h",
+    "../public/test/repeated_notification_observer.cc",
+    "../public/test/repeated_notification_observer.h",
     "../public/test/service_worker_test_helpers.cc",
     "../public/test/service_worker_test_helpers.h",
     "../public/test/test_browser_context.cc",
@@ -250,6 +252,9 @@ static_library("test_support") {
     "//cc/ipc:interfaces",
     "//cc/surfaces",
     "//components/leveldb/public/interfaces",
+    "//components/viz/common",
+    "//components/viz/host",
+    "//components/viz/service",
     "//content/app:both_for_content_tests",
     "//content/browser:for_content_tests",
     "//content/browser/speech/proto",
@@ -367,9 +372,6 @@ static_library("test_support") {
 
   if (use_aura || is_mac) {
     deps += [
-      "//components/viz/common",
-      "//components/viz/host",
-      "//components/viz/service",
       "//third_party/libvpx",
       "//ui/compositor",
     ]
@@ -508,7 +510,7 @@ static_library("layouttest_support") {
   deps = [
     ":test_support",
     "//cc",
-    "//components/viz/test:test_support",
+    "//cc/blink",
     "//content/browser:for_content_tests",
     "//content/child:for_content_tests",
     "//content/public/common",

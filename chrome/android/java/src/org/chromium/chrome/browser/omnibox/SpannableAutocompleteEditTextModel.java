@@ -361,19 +361,13 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
 
         private boolean incrementBatchEditCount() {
             ++mBatchEditNestCount;
-            // After the outermost super.beginBatchEdit(), EditText will stop selection change
-            // update to the IME app.
             return super.beginBatchEdit();
         }
 
         private boolean decrementBatchEditCount() {
             --mBatchEditNestCount;
             boolean retVal = super.endBatchEdit();
-            if (mBatchEditNestCount == 0) {
-                // At the outermost super.endBatchEdit(), EditText will resume selection change
-                // update to the IME app.
-                updateSelectionForTesting();
-            }
+            if (mBatchEditNestCount == 0) updateSelectionForTesting();
             return retVal;
         }
 
@@ -391,20 +385,13 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
 
         @Override
         public boolean beginBatchEdit() {
-            if (DEBUG) Log.i(TAG, "beginBatchEdit");
-            onBeginImeCommand();
             boolean retVal = incrementBatchEditCount();
-            onEndImeCommand();
-            return retVal;
-        }
-
-        private boolean onBeginImeCommand() {
-            if (DEBUG) Log.i(TAG, "onBeginImeCommand: " + mBatchEditNestCount);
-            boolean retVal = incrementBatchEditCount();
+            // Note: this should be called after super.beginBatchEdit() to be effective.
             if (mBatchEditNestCount == 1) {
+                if (DEBUG) Log.i(TAG, "beginBatchEdit");
                 mPreBatchEditState.copyFrom(mCurrentState);
+                mSpanController.removeSpan();
             }
-            mSpanController.removeSpan();
             return retVal;
         }
 
@@ -417,6 +404,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         }
 
         private boolean setAutocompleteSpan() {
+            assert mBatchEditNestCount == 1;
             mSpanController.removeSpan();
             if (DEBUG) {
                 Log.i(TAG, "setAutocompleteSpan. %s->%s", mPreviouslySetState, mCurrentState);
@@ -433,20 +421,10 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
 
         @Override
         public boolean endBatchEdit() {
-            if (DEBUG) Log.i(TAG, "endBatchEdit");
-            onBeginImeCommand();
-            boolean retVal = decrementBatchEditCount();
-            onEndImeCommand();
-            return retVal;
-        }
-
-        private boolean onEndImeCommand() {
-            if (DEBUG) Log.i(TAG, "onEndImeCommand: " + (mBatchEditNestCount - 1));
             if (mBatchEditNestCount > 1) {
-                String diff = mCurrentState.getBackwardDeletedTextFrom(mPreBatchEditState);
-                if (diff == null) setAutocompleteSpan();
                 return decrementBatchEditCount();
             }
+            if (DEBUG) Log.i(TAG, "endBatchEdit");
 
             String diff = mCurrentState.getBackwardDeletedTextFrom(mPreBatchEditState);
             if (diff != null) {
@@ -480,109 +458,109 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         @Override
         public boolean commitText(CharSequence text, int newCursorPosition) {
             if (DEBUG) Log.i(TAG, "commitText: " + text);
-            onBeginImeCommand();
+            beginBatchEdit();
             boolean retVal = super.commitText(text, newCursorPosition);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public boolean setComposingText(CharSequence text, int newCursorPosition) {
             if (DEBUG) Log.i(TAG, "setComposingText: " + text);
-            onBeginImeCommand();
+            beginBatchEdit();
             boolean retVal = super.setComposingText(text, newCursorPosition);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public boolean setComposingRegion(int start, int end) {
             if (DEBUG) Log.i(TAG, "setComposingRegion: [%d,%d]", start, end);
-            onBeginImeCommand();
+            beginBatchEdit();
             boolean retVal = super.setComposingRegion(start, end);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public boolean finishComposingText() {
             if (DEBUG) Log.i(TAG, "finishComposingText");
-            onBeginImeCommand();
+            beginBatchEdit();
             boolean retVal = super.finishComposingText();
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public boolean deleteSurroundingText(final int beforeLength, final int afterLength) {
             if (DEBUG) Log.i(TAG, "deleteSurroundingText [%d,%d]", beforeLength, afterLength);
-            onBeginImeCommand();
+            beginBatchEdit();
             boolean retVal = super.deleteSurroundingText(beforeLength, afterLength);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public boolean setSelection(final int start, final int end) {
             if (DEBUG) Log.i(TAG, "setSelection [%d,%d]", start, end);
-            onBeginImeCommand();
+            beginBatchEdit();
             boolean retVal = super.setSelection(start, end);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public boolean performEditorAction(final int editorAction) {
             if (DEBUG) Log.i(TAG, "performEditorAction: " + editorAction);
-            onBeginImeCommand();
+            beginBatchEdit();
             commitAutocomplete();
             boolean retVal = super.performEditorAction(editorAction);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public boolean sendKeyEvent(final KeyEvent event) {
             if (DEBUG) Log.i(TAG, "sendKeyEvent: " + event.getKeyCode());
-            onBeginImeCommand();
+            beginBatchEdit();
             boolean retVal = super.sendKeyEvent(event);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public ExtractedText getExtractedText(final ExtractedTextRequest request, final int flags) {
             if (DEBUG) Log.i(TAG, "getExtractedText");
-            onBeginImeCommand();
+            beginBatchEdit();
             ExtractedText retVal = super.getExtractedText(request, flags);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public CharSequence getTextAfterCursor(final int n, final int flags) {
             if (DEBUG) Log.i(TAG, "getTextAfterCursor");
-            onBeginImeCommand();
+            beginBatchEdit();
             CharSequence retVal = super.getTextAfterCursor(n, flags);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public CharSequence getTextBeforeCursor(final int n, final int flags) {
             if (DEBUG) Log.i(TAG, "getTextBeforeCursor");
-            onBeginImeCommand();
+            beginBatchEdit();
             CharSequence retVal = super.getTextBeforeCursor(n, flags);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
 
         @Override
         public CharSequence getSelectedText(final int flags) {
             if (DEBUG) Log.i(TAG, "getSelectedText");
-            onBeginImeCommand();
+            beginBatchEdit();
             CharSequence retVal = super.getSelectedText(flags);
-            onEndImeCommand();
+            endBatchEdit();
             return retVal;
         }
     }

@@ -274,6 +274,7 @@ class ChromeServiceWorkerFetchTest : public ChromeServiceWorkerTest {
               "  issuedRequests.forEach(function(data) {"
               "      str += data + '\\n';"
               "    });"
+              "  window.domAutomationController.setAutomationId(0);"
               "  window.domAutomationController.send(str);"
               "}"
               "navigator.serviceWorker.addEventListener("

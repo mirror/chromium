@@ -33,12 +33,6 @@ class DictionaryValue;
 class ListValue;
 }
 
-#if defined(OS_CHROMEOS)
-namespace chromeos {
-class UserContext;
-}
-#endif
-
 namespace user_manager {
 class User;
 }
@@ -69,6 +63,16 @@ class EasyUnlockService : public KeyedService {
     TYPE_SIGNIN
   };
 
+  // Easy Unlock settings that the user can configure.
+  struct UserSettings {
+    UserSettings();
+    ~UserSettings();
+
+    // Whether to require the remote device to be in very close proximity
+    // before allowing unlock (~1 feet).
+    bool require_close_proximity;
+  };
+
   // Gets EasyUnlockService instance.
   static EasyUnlockService* Get(Profile* profile);
 
@@ -84,6 +88,9 @@ class EasyUnlockService : public KeyedService {
 
   // Removes the hardlock state for the given user.
   static void ResetLocalStateForUser(const AccountId& account_id);
+
+  // Returns the user's preferences.
+  static UserSettings GetUserSettings(const AccountId& account_id);
 
   // Returns the identifier for the device.
   static std::string GetDeviceId();
@@ -211,12 +218,6 @@ class EasyUnlockService : public KeyedService {
   // Records that the user clicked on the lock icon during the trial run
   // initiated by the Easy Unlock app.
   void RecordClickOnLockIcon();
-
-#if defined(OS_CHROMEOS)
-  // Called when the user reauths (e.g. in chrome://settings) so we can cache
-  // the user context for the setup flow.
-  virtual void HandleUserReauth(const chromeos::UserContext& user_context);
-#endif
 
   void AddObserver(EasyUnlockServiceObserver* observer);
   void RemoveObserver(EasyUnlockServiceObserver* observer);

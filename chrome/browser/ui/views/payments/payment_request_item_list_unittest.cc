@@ -23,11 +23,8 @@ class TestListItem : public PaymentRequestItemList::Item {
                                      nullptr,
                                      list,
                                      selected,
-                                     /*clickable=*/true,
                                      /*show_edit_button=*/false),
-        selected_state_changed_calls_count_(0) {
-    Init();
-  }
+        selected_state_changed_calls_count_(0) {}
 
   int selected_state_changed_calls_count() {
     return selected_state_changed_calls_count_;
@@ -39,7 +36,7 @@ class TestListItem : public PaymentRequestItemList::Item {
     return base::MakeUnique<views::View>();
   }
 
-  base::string16 GetNameForDataType() override { return base::string16(); }
+  bool IsEnabled() override { return true; }
 
   bool CanBeSelected() override { return true; }
 

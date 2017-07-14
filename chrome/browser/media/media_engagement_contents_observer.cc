@@ -4,7 +4,6 @@
 
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 
-#include "build/build_config.h"
 #include "chrome/browser/media/media_engagement_service.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
@@ -63,7 +62,6 @@ void MediaEngagementContentsObserver::DidFinishNavigation(
 
   if (committed_origin_.unique())
     return;
-
   service_->RecordVisit(committed_origin_.GetURL());
 }
 
@@ -148,12 +146,8 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
 
   // Do not record significant playback if the tab did not make
   // a sound in the last two seconds.
-#if defined(OS_ANDROID)
-// Skipping WasRecentlyAudible check on Android (not available).
-#else
   if (!web_contents()->WasRecentlyAudible())
     return;
-#endif
 
   significant_playback_recorded_ = true;
 

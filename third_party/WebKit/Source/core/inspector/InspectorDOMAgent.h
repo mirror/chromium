@@ -172,18 +172,12 @@ class CORE_EXPORT InspectorDOMAgent final
   protocol::Response undo() override;
   protocol::Response redo() override;
   protocol::Response markUndoableState() override;
-  protocol::Response focus(protocol::Maybe<int> node_id,
-                           protocol::Maybe<int> backend_node_id,
-                           protocol::Maybe<String> object_id) override;
+  protocol::Response focus(int node_id) override;
   protocol::Response setFileInputFiles(
-      std::unique_ptr<protocol::Array<String>> files,
-      protocol::Maybe<int> node_id,
-      protocol::Maybe<int> backend_node_id,
-      protocol::Maybe<String> object_id) override;
+      int node_id,
+      std::unique_ptr<protocol::Array<String>> files) override;
   protocol::Response getBoxModel(
-      protocol::Maybe<int> node_id,
-      protocol::Maybe<int> backend_node_id,
-      protocol::Maybe<String> object_id,
+      int node_id,
       std::unique_ptr<protocol::DOM::BoxModel>*) override;
   protocol::Response getNodeForLocation(
       int x,
@@ -252,10 +246,6 @@ class CORE_EXPORT InspectorDOMAgent final
                            HeapVector<Member<Node>>* result);
 
   protocol::Response AssertNode(int node_id, Node*&);
-  protocol::Response AssertNode(const protocol::Maybe<int>& node_id,
-                                const protocol::Maybe<int>& backend_node_id,
-                                const protocol::Maybe<String>& object_id,
-                                Node*&);
   protocol::Response AssertElement(int node_id, Element*&);
   Document* GetDocument() const { return document_.Get(); }
 

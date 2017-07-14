@@ -30,8 +30,7 @@ NGConstraintSpace::NGConstraintSpace(
     const WTF::Optional<NGLogicalOffset>& floats_bfc_offset,
     const std::shared_ptr<NGExclusions>& exclusions,
     Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
-    const WTF::Optional<LayoutUnit>& clearance_offset,
-    Vector<NGBaselineRequest>& baseline_requests)
+    const WTF::Optional<LayoutUnit>& clearance_offset)
     : available_size_(available_size),
       percentage_resolution_size_(percentage_resolution_size),
       initial_containing_block_size_(initial_containing_block_size),
@@ -54,7 +53,6 @@ NGConstraintSpace::NGConstraintSpace(
       exclusions_(exclusions),
       clearance_offset_(clearance_offset) {
   unpositioned_floats_.swap(unpositioned_floats);
-  baseline_requests_.swap(baseline_requests);
 }
 
 RefPtr<NGConstraintSpace> NGConstraintSpace::CreateFromLayoutObject(
@@ -102,15 +100,8 @@ RefPtr<NGConstraintSpace> NGConstraintSpace::CreateFromLayoutObject(
     fixed_block = true;
   }
 
-  bool is_new_fc = true;
-  // TODO(ikilpatrick): This DCHECK needs to be enabled once we've switched
-  // LayoutTableCell, etc over to LayoutNG.
-  //
-  // We currently need to "force" LayoutNG roots to be formatting contexts so
-  // that floats have layout performed on them.
-  //
-  // DCHECK(is_new_fc,
-  //  box.IsLayoutBlock() && ToLayoutBlock(box).CreatesNewFormattingContext());
+  bool is_new_fc =
+      box.IsLayoutBlock() && ToLayoutBlock(box).CreatesNewFormattingContext();
 
   FloatSize icb_float_size = box.View()->ViewportSizeForViewportUnits();
   NGPhysicalSize initial_containing_block_size{

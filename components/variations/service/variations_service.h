@@ -152,8 +152,10 @@ class VariationsService
       const char* disable_network_switch,
       const UIStringOverrider& ui_string_overrider);
 
-  // Enables the VariationsService for testing, even in Chromium builds.
-  static void EnableForTesting();
+  // Factory method for creating a VariationsService in a testing context.
+  static std::unique_ptr<VariationsService> CreateForTesting(
+      std::unique_ptr<VariationsServiceClient> client,
+      PrefService* local_state);
 
   // Set the PrefService responsible for getting policy-related preferences,
   // such as the restrict parameter.

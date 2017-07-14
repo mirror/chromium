@@ -12,7 +12,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
 #include "cc/animation/animation_export.h"
-#include "cc/animation/animation_target.h"
 #include "cc/trees/element_id.h"
 #include "cc/trees/property_animation_state.h"
 #include "cc/trees/target_property.h"
@@ -21,6 +20,7 @@
 
 namespace gfx {
 class BoxF;
+class SizeF;
 }
 
 namespace cc {
@@ -39,8 +39,7 @@ enum class UpdateTickingType { NORMAL, FORCE };
 // This is a CC counterpart for blink::ElementAnimations (in 1:1 relationship).
 // No pointer to/from respective blink::ElementAnimations object for now.
 class CC_ANIMATION_EXPORT ElementAnimations
-    : public AnimationTarget,
-      public base::RefCounted<ElementAnimations> {
+    : public base::RefCounted<ElementAnimations> {
  public:
   static scoped_refptr<ElementAnimations> Create();
 
@@ -149,14 +148,21 @@ class CC_ANIMATION_EXPORT ElementAnimations
   void SetNeedsUpdateImplClientState();
 
   void NotifyClientOpacityAnimated(float opacity,
-                                   Animation* animation) override;
-  void NotifyClientFilterAnimated(const FilterOperations& filter,
-                                  Animation* animation) override;
+                                   bool notify_active_elements,
+                                   bool notify_pending_elements);
   void NotifyClientTransformOperationsAnimated(
       const TransformOperations& operations,
-      Animation* animation) override;
+      bool notify_active_elements,
+      bool notify_pending_elements);
+  void NotifyClientFilterAnimated(const FilterOperations& filter,
+                                  bool notify_active_elements,
+                                  bool notify_pending_elements);
   void NotifyClientScrollOffsetAnimated(const gfx::ScrollOffset& scroll_offset,
-                                        Animation* animation) override;
+                                        bool notify_active_elements,
+                                        bool notify_pending_elements);
+  void NotifyClientBoundsAnimated(const gfx::SizeF& size,
+                                  bool notify_active_elements,
+                                  bool notify_pending_elements);
 
   gfx::ScrollOffset ScrollOffsetForAnimation() const;
 
@@ -164,7 +170,7 @@ class CC_ANIMATION_EXPORT ElementAnimations
   friend class base::RefCounted<ElementAnimations>;
 
   ElementAnimations();
-  ~ElementAnimations() override;
+  ~ElementAnimations();
 
   void OnFilterAnimated(ElementListType list_type,
                         const FilterOperations& filters);
@@ -178,9 +184,6 @@ class CC_ANIMATION_EXPORT ElementAnimations
 
   void UpdatePlayersTickingState(UpdateTickingType update_ticking_type) const;
   void RemovePlayersFromTicking() const;
-
-  bool AnimationAffectsActiveElements(Animation* animation) const;
-  bool AnimationAffectsPendingElements(Animation* animation) const;
 
   PlayersList players_list_;
   AnimationHost* animation_host_;

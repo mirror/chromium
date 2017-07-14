@@ -303,9 +303,8 @@ std::unique_ptr<base::DictionaryValue> GetNetConstants() {
                               base::Int64ToString(tick_to_unix_time_ms));
   }
 
-  // TODO(eroman): Is this needed?
-  // "clientInfo" key is required for some log readers. Provide a default empty
-  // value for compatibility.
+  // "clientInfo" key is required for some WriteToFileNetLogObserver log
+  // readers. Provide a default empty value for compatibility.
   constants_dict->Set("clientInfo", base::MakeUnique<base::DictionaryValue>());
 
   // Add a list of active field experiments.

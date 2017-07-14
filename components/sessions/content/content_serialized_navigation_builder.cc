@@ -22,8 +22,7 @@ namespace sessions {
 SerializedNavigationEntry
 ContentSerializedNavigationBuilder::FromNavigationEntry(
     int index,
-    const content::NavigationEntry& entry,
-    SerializationOptions serialization_options) {
+    const content::NavigationEntry& entry) {
   SerializedNavigationEntry navigation;
   navigation.index_ = index;
   navigation.unique_id_ = entry.GetUniqueID();
@@ -31,8 +30,7 @@ ContentSerializedNavigationBuilder::FromNavigationEntry(
   navigation.referrer_policy_ = entry.GetReferrer().policy;
   navigation.virtual_url_ = entry.GetVirtualURL();
   navigation.title_ = entry.GetTitle();
-  if (!(serialization_options & SerializationOptions::EXCLUDE_PAGE_STATE))
-    navigation.encoded_page_state_ = entry.GetPageState().ToEncodedData();
+  navigation.encoded_page_state_ = entry.GetPageState().ToEncodedData();
   navigation.transition_type_ = entry.GetTransitionType();
   navigation.has_post_data_ = entry.GetHasPostData();
   navigation.post_id_ = entry.GetPostID();

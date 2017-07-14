@@ -18,35 +18,19 @@ namespace blink {
 
 class NGConstraintSpace;
 class NGLayoutResult;
-
-// This struct is used for communicating to a child the position of the
-// previous inflow child.
-struct NGPreviousInflowPosition {
-  LayoutUnit bfc_block_offset;
-  LayoutUnit logical_block_offset;
-  NGMarginStrut margin_strut;
-};
-
-// This strut holds information for the current inflow child. The data is not
-// useful outside of handling this single inflow child.
-struct NGInflowChildData {
-  NGLogicalOffset bfc_offset_estimate;
-  NGMarginStrut margin_strut;
-  NGBoxStrut margins;
-};
+struct NGInflowChildData;
+struct NGPreviousInflowPosition;
 
 // Updates the fragment's BFC offset if it's not already set.
-bool MaybeUpdateFragmentBfcOffset(const NGConstraintSpace&,
+void MaybeUpdateFragmentBfcOffset(const NGConstraintSpace&,
                                   LayoutUnit bfc_block_offset,
                                   NGFragmentBuilder* builder);
 
 // Positions pending floats starting from {@origin_block_offset} and relative
 // to container's BFC offset.
-void PositionPendingFloats(
-    LayoutUnit origin_block_offset,
-    NGFragmentBuilder* container_builder,
-    Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats,
-    NGConstraintSpace* space);
+void PositionPendingFloats(LayoutUnit origin_block_offset,
+                           NGFragmentBuilder* container_builder,
+                           NGConstraintSpace* space);
 
 // A class for general block layout (e.g. a <div> with no special style).
 // Lays out the children in sequence.
@@ -71,20 +55,18 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   // Creates a new constraint space for the current child.
   RefPtr<NGConstraintSpace> CreateConstraintSpaceForChild(
       const NGLayoutInputNode child,
-      const NGInflowChildData& child_data,
-      const WTF::Optional<NGLogicalOffset> floats_bfc_offset = WTF::nullopt);
+      const NGInflowChildData& child_data);
 
   // @return Estimated BFC offset for the "to be layout" child.
-  NGInflowChildData ComputeChildData(const NGPreviousInflowPosition&,
-                                     NGLayoutInputNode);
+  NGInflowChildData PrepareChildLayout(const NGPreviousInflowPosition&,
+                                       NGLayoutInputNode);
 
-  NGPreviousInflowPosition ComputeInflowPosition(
-      const NGPreviousInflowPosition& previous_inflow_position,
+  NGPreviousInflowPosition FinishChildLayout(
+      const NGConstraintSpace&,
+      const NGPreviousInflowPosition& prev_data,
       const NGInflowChildData& child_data,
-      const WTF::Optional<NGLogicalOffset>& child_bfc_offset,
-      const NGLogicalOffset& logical_offset,
-      const NGLayoutResult& layout_result,
-      const NGFragment& fragment);
+      const NGLayoutInputNode child,
+      NGLayoutResult*);
 
   // Positions the fragment that establishes a new formatting context.
   //
@@ -105,18 +87,14 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   //    then it will be placed there and we collapse its margin.
   // 2) If #new-fc is too big then we need to clear its position and place it
   //    below #float ignoring its vertical margin.
-  bool PositionNewFc(const NGLayoutInputNode& child,
-                     const NGPreviousInflowPosition&,
-                     const NGLayoutResult&,
-                     const NGInflowChildData& child_data,
-                     const NGConstraintSpace& child_space,
-                     WTF::Optional<NGLogicalOffset>* child_bfc_offset);
+  NGLogicalOffset PositionNewFc(const NGLayoutInputNode& child,
+                                const NGPreviousInflowPosition&,
+                                const NGBoxFragment&,
+                                const NGInflowChildData& child_data,
+                                const NGConstraintSpace& child_space);
 
   // Positions the fragment that knows its BFC offset.
-  WTF::Optional<NGLogicalOffset> PositionWithBfcOffset(
-      const NGLogicalOffset& bfc_offset);
-  bool PositionWithBfcOffset(const NGLogicalOffset& bfc_offset,
-                             WTF::Optional<NGLogicalOffset>* child_bfc_offset);
+  NGLogicalOffset PositionWithBfcOffset(const NGLogicalOffset& bfc_offset);
 
   // Positions using the parent BFC offset.
   // Fragment doesn't know its offset but we can still calculate its BFC
@@ -133,21 +111,14 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
                                  const NGInflowChildData& child_data);
 
   void HandleOutOfFlowPositioned(const NGPreviousInflowPosition&, NGBlockNode);
-  void HandleFloat(const NGPreviousInflowPosition&,
-                   NGBlockNode,
-                   NGBlockBreakToken*);
-  WTF::Optional<NGPreviousInflowPosition> HandleInflow(
-      const NGPreviousInflowPosition&,
-      NGLayoutInputNode child,
-      NGBreakToken* child_break_token);
+  void HandleFloating(const NGPreviousInflowPosition&,
+                      NGBlockNode,
+                      NGBlockBreakToken*);
 
   // Final adjustments before fragment creation. We need to prevent the
   // fragment from crossing fragmentainer boundaries, and rather create a break
   // token if we're out of space.
   void FinalizeForFragmentation();
-
-  void PropagateBaselinesFromChildren();
-  bool AddBaseline(const NGBaselineRequest&, unsigned);
 
   // Calculates logical offset for the current fragment using either
   // {@code content_size_} when the fragment doesn't know it's offset
@@ -163,10 +134,6 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   NGBoxStrut border_scrollbar_padding_;
   LayoutUnit content_size_;
   LayoutUnit max_inline_size_;
-
-  bool abort_when_bfc_resolved_;
-
-  Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
 };
 
 }  // namespace blink

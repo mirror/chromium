@@ -44,7 +44,7 @@ class CONTENT_EXPORT UtilityProcessHostImpl
   base::WeakPtr<UtilityProcessHost> AsWeakPtr() override;
   bool Send(IPC::Message* message) override;
   void SetExposedDir(const base::FilePath& dir) override;
-  void SetSandboxType(SandboxType sandbox_type) override;
+  void DisableSandbox() override;
 #if defined(OS_WIN)
   void ElevatePrivileges() override;
 #endif

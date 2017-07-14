@@ -107,7 +107,7 @@ static std::unique_ptr<RenderPass> DoAppendQuadsWithScaledMask(
 
   impl.host_impl()->SetViewportSize(viewport_size);
   impl.host_impl()->active_tree()->BuildLayerListAndPropertyTreesForTesting();
-  impl.host_impl()->active_tree()->UpdateDrawProperties();
+  impl.host_impl()->active_tree()->UpdateDrawProperties(false);
 
   LayerImpl* surface_raw = impl.host_impl()
                                ->active_tree()

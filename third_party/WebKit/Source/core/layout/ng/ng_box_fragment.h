@@ -12,7 +12,6 @@
 
 namespace blink {
 
-struct NGLineHeightMetrics;
 struct NGLogicalSize;
 
 class CORE_EXPORT NGBoxFragment final : public NGFragment {
@@ -23,12 +22,6 @@ class CORE_EXPORT NGBoxFragment final : public NGFragment {
 
   // Returns the total size, including the contents outside of the border-box.
   NGLogicalSize OverflowSize() const;
-
-  // Compute baseline metrics (ascent/descent) for this box.
-  //
-  // Baseline requests must be added to constraint space when this fragment was
-  // laid out.
-  NGLineHeightMetrics BaselineMetrics(const NGBaselineRequest&) const;
 };
 
 DEFINE_TYPE_CASTS(NGBoxFragment,

@@ -32,7 +32,6 @@ class CORE_EXPORT NGLineBreaker {
   NGLineBreaker(NGInlineNode,
                 NGConstraintSpace*,
                 NGFragmentBuilder*,
-                Vector<RefPtr<NGUnpositionedFloat>>*,
                 const NGInlineBreakToken* = nullptr);
   ~NGLineBreaker() {}
   STACK_ALLOCATED();
@@ -73,9 +72,7 @@ class CORE_EXPORT NGLineBreaker {
                  LayoutUnit available_width);
 
   LineBreakState HandleControlItem(const NGInlineItem&, NGInlineItemResult*);
-  LineBreakState HandleAtomicInline(const NGInlineItem&,
-                                    NGInlineItemResult*,
-                                    const NGLineInfo&);
+  LineBreakState HandleAtomicInline(const NGInlineItem&, NGInlineItemResult*);
   void HandleFloat(const NGInlineItem&,
                    NGInlineItemResults*);
 
@@ -97,7 +94,6 @@ class CORE_EXPORT NGLineBreaker {
   NGInlineNode node_;
   NGConstraintSpace* constraint_space_;
   NGFragmentBuilder* container_builder_;
-  Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats_;
   const AtomicString locale_;
   unsigned item_index_;
   unsigned offset_;

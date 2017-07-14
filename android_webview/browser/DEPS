@@ -30,8 +30,6 @@ include_rules = [
   "+components/user_prefs",
   "+components/visitedlink/browser",
   "+components/viz/common",
-  "+components/viz/service/display",
-  "+components/viz/service/frame_sinks",
   "+components/webdata/common",
 
   "+content/public/browser",

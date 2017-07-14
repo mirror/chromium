@@ -18,6 +18,8 @@
 #include "base/memory/linked_ptr.h"
 #include "base/supports_user_data.h"
 #include "content/common/content_export.h"
+#include "content/public/common/push_event_payload.h"
+#include "content/public/common/push_messaging_status.h"
 #include "net/url_request/url_request_interceptor.h"
 #include "net/url_request/url_request_job_factory.h"
 #include "services/service_manager/embedder/embedded_service_info.h"
@@ -51,10 +53,6 @@ class SpecialStoragePolicy;
 
 namespace content {
 
-namespace mojom {
-enum class PushDeliveryStatus;
-}
-
 class BackgroundSyncController;
 class BlobHandle;
 class BrowserPluginGuestManager;
@@ -63,7 +61,6 @@ class BrowsingDataRemoverDelegate;
 class DownloadManager;
 class DownloadManagerDelegate;
 class PermissionManager;
-struct PushEventPayload;
 class PushMessagingService;
 class ResourceContext;
 class ServiceManagerConnection;
@@ -143,7 +140,7 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
       const GURL& origin,
       int64_t service_worker_registration_id,
       const PushEventPayload& payload,
-      const base::Callback<void(mojom::PushDeliveryStatus)>& callback);
+      const base::Callback<void(PushDeliveryStatus)>& callback);
 
   static void NotifyWillBeDestroyed(BrowserContext* browser_context);
 

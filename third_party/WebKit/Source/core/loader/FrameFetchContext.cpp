@@ -786,7 +786,19 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   if (!RuntimeEnabledFeatures::ClientHintsEnabled())
     return;
 
-  if (ShouldSendClientHint(kWebClientHintsTypeDeviceRam, hints_preferences)) {
+  bool should_send_device_ram =
+      GetClientHintsPreferences().ShouldSendDeviceRAM() ||
+      hints_preferences.ShouldSendDeviceRAM();
+  bool should_send_dpr = GetClientHintsPreferences().ShouldSendDPR() ||
+                         hints_preferences.ShouldSendDPR();
+  bool should_send_resource_width =
+      GetClientHintsPreferences().ShouldSendResourceWidth() ||
+      hints_preferences.ShouldSendResourceWidth();
+  bool should_send_viewport_width =
+      GetClientHintsPreferences().ShouldSendViewportWidth() ||
+      hints_preferences.ShouldSendViewportWidth();
+
+  if (should_send_device_ram) {
     int64_t physical_memory = MemoryCoordinator::GetPhysicalMemoryMB();
     request.AddHTTPHeaderField(
         "device-ram",
@@ -794,11 +806,11 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   }
 
   float dpr = GetDevicePixelRatio();
-  if (ShouldSendClientHint(kWebClientHintsTypeDpr, hints_preferences))
+  if (should_send_dpr) {
     request.AddHTTPHeaderField("DPR", AtomicString(String::Number(dpr)));
+  }
 
-  if (ShouldSendClientHint(kWebClientHintsTypeResourceWidth,
-                           hints_preferences)) {
+  if (should_send_resource_width) {
     if (resource_width.is_set) {
       float physical_width = resource_width.width * dpr;
       request.AddHTTPHeaderField(
@@ -806,9 +818,7 @@ void FrameFetchContext::AddClientHintsIfNecessary(
     }
   }
 
-  if (ShouldSendClientHint(kWebClientHintsTypeViewportWidth,
-                           hints_preferences) &&
-      !IsDetached() && GetFrame()->View()) {
+  if (should_send_viewport_width && !IsDetached() && GetFrame()->View()) {
     request.AddHTTPHeaderField(
         "Viewport-Width",
         AtomicString(String::Number(GetFrame()->View()->ViewportWidth())));
@@ -1083,13 +1093,6 @@ float FrameFetchContext::GetDevicePixelRatio() const {
   }
 
   return document_->DevicePixelRatio();
-}
-
-bool FrameFetchContext::ShouldSendClientHint(
-    WebClientHintsType type,
-    const ClientHintsPreferences& hints_preferences) const {
-  return GetClientHintsPreferences().ShouldSend(type) ||
-         hints_preferences.ShouldSend(type);
 }
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(

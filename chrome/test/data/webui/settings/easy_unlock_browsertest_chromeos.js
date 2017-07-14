@@ -103,6 +103,7 @@ TEST_F('SettingsEasyUnlockBrowserTest', 'DISABLED_EasyUnlock', function() {
       // bots that do not have Bluetooth (don't actually support Easy Unlock).
       loadTimeData.overrideValues({
         easyUnlockAllowed: true,
+        easyUnlockProximityDetectionAllowed: false,
 
         easyUnlockSectionTitle: '',
         easyUnlockLearnMoreURL: '',

@@ -64,13 +64,8 @@ class LegalMessageLine {
   // 3. "${" anywhere in the template string is invalid.
   // 4. "\n" embedded anywhere in the template string, or an empty template
   //    string, can be used to separate paragraphs.
-  // 5. Because a single apostrophe before a curly brace starts quoted literal
-  //    text in MessageFormat, "'{0}" gets treated as a literal.  To avoid
-  //    situations like these, setting |escape_apostrophes| to true will escape
-  //    all ASCII apostrophes by doubling them up.
   static bool Parse(const base::DictionaryValue& legal_message,
-                    LegalMessageLines* out,
-                    bool escape_apostrophes = false);
+                    LegalMessageLines* out);
 
   const base::string16& text() const { return text_; }
   const std::vector<Link>& links() const { return links_; }
@@ -78,7 +73,7 @@ class LegalMessageLine {
  private:
   friend class TestLegalMessageLine;
 
-  bool ParseLine(const base::DictionaryValue& line, bool escape_apostrophes);
+  bool ParseLine(const base::DictionaryValue& line);
 
   base::string16 text_;
   std::vector<Link> links_;

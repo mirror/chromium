@@ -320,16 +320,14 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
   UIPasteboard* generalPasteboard = [UIPasteboard generalPasteboard];
   generalPasteboard.string = _site;
   [self showCopyResultToast:l10n_util::GetNSString(
-                                IDS_IOS_SETTINGS_SITE_WAS_COPIED_MESSAGE)
-                 forSuccess:YES];
+                                IDS_IOS_SETTINGS_SITE_WAS_COPIED_MESSAGE)];
 }
 
 - (void)copyUsername {
   UIPasteboard* generalPasteboard = [UIPasteboard generalPasteboard];
   generalPasteboard.string = _username;
   [self showCopyResultToast:l10n_util::GetNSString(
-                                IDS_IOS_SETTINGS_USERNAME_WAS_COPIED_MESSAGE)
-                 forSuccess:YES];
+                                IDS_IOS_SETTINGS_USERNAME_WAS_COPIED_MESSAGE)];
 }
 
 - (NSString*)showHideButtonText {
@@ -402,9 +400,10 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
   if (_plainTextPasswordShown) {
     UIPasteboard* generalPasteboard = [UIPasteboard generalPasteboard];
     generalPasteboard.string = _password;
-    [self showCopyResultToast:l10n_util::GetNSString(
-                                  IDS_IOS_SETTINGS_PASSWORD_WAS_COPIED_MESSAGE)
-                   forSuccess:YES];
+    TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
+    [self
+        showCopyResultToast:l10n_util::GetNSString(
+                                IDS_IOS_SETTINGS_PASSWORD_WAS_COPIED_MESSAGE)];
     UMA_HISTOGRAM_ENUMERATION(
         "PasswordManager.AccessPasswordInSettings",
         password_manager::metrics_util::ACCESS_PASSWORD_COPIED,
@@ -422,19 +421,19 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
       if (success) {
         UIPasteboard* generalPasteboard = [UIPasteboard generalPasteboard];
         generalPasteboard.string = strongSelf->_password;
+        TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
         [strongSelf showCopyResultToast:
                         l10n_util::GetNSString(
-                            IDS_IOS_SETTINGS_PASSWORD_WAS_COPIED_MESSAGE)
-                             forSuccess:YES];
+                            IDS_IOS_SETTINGS_PASSWORD_WAS_COPIED_MESSAGE)];
         UMA_HISTOGRAM_ENUMERATION(
             "PasswordManager.AccessPasswordInSettings",
             password_manager::metrics_util::ACCESS_PASSWORD_COPIED,
             password_manager::metrics_util::ACCESS_PASSWORD_COUNT);
       } else {
+        TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeError);
         [strongSelf showCopyResultToast:
                         l10n_util::GetNSString(
-                            IDS_IOS_SETTINGS_PASSWORD_WAS_NOT_COPIED_MESSAGE)
-                             forSuccess:NO];
+                            IDS_IOS_SETTINGS_PASSWORD_WAS_NOT_COPIED_MESSAGE)];
       }
     };
     [_weakReauthenticationModule
@@ -444,14 +443,9 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
   }
 }
 
-// Show a MD snack bar and provide haptic feedback. The haptic feedback is
-// either for success or for error, depending on |success|.
-- (void)showCopyResultToast:(NSString*)message forSuccess:(BOOL)success {
+- (void)showCopyResultToast:(NSString*)message {
   // TODO(crbug.com/159166): Route this through some delegate API to be able
   // to mock it in the unittest, and avoid having an EGTest just for that?
-  TriggerHapticFeedbackForNotification(success
-                                           ? UINotificationFeedbackTypeSuccess
-                                           : UINotificationFeedbackTypeError);
   MDCSnackbarMessage* copyPasswordResultMessage =
       [MDCSnackbarMessage messageWithText:message];
   copyPasswordResultMessage.category = @"PasswordsSnackbarCategory";

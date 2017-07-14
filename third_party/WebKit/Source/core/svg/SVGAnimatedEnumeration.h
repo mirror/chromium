@@ -71,7 +71,7 @@ class SVGAnimatedEnumeration : public SVGAnimatedEnumerationBase {
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGAnimatedEnumerationBase::TraceWrappers(visitor);
+    visitor->TraceWrappers(contextElement());
   }
 
  protected:

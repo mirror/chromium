@@ -16,7 +16,6 @@ namespace blink {
 class LayoutObject;
 class NGBreakToken;
 class NGConstraintSpace;
-class NGFragmentBuilder;
 class NGLayoutResult;
 struct NGLogicalOffset;
 struct MinMaxContentSize;
@@ -60,11 +59,6 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
   // After we run the layout algorithm, this function copies back the geometry
   // data to the layout box.
   void CopyFragmentDataToLayoutBox(const NGConstraintSpace&, NGLayoutResult*);
-
-  void CopyBaselinesFromOldLayout(const NGConstraintSpace&, NGFragmentBuilder*);
-  void AddAtomicInlineBaselineFromOldLayout(const NGBaselineRequest&,
-                                            bool,
-                                            NGFragmentBuilder*);
 };
 
 DEFINE_TYPE_CASTS(NGBlockNode,

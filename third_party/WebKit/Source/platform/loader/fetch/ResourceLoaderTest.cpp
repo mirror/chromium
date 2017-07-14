@@ -108,7 +108,8 @@ TEST_F(ResourceLoaderTest, DetermineCORSStatus) {
         << static_cast<unsigned>(test.expectation));
 
     context_->SetSecurityOrigin(SecurityOrigin::Create(test.origin));
-    ResourceFetcher* fetcher = ResourceFetcher::Create(context_);
+    ResourceFetcher* fetcher =
+        ResourceFetcher::Create(context_, context_->GetTaskRunner().Get());
 
     Resource* resource =
         RawResource::CreateForTest(test.target, test.resource_type);

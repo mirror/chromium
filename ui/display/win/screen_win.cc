@@ -91,7 +91,7 @@ Display CreateDisplayFromDisplayInfo(const DisplayInfo& display_info,
   display.set_bounds(gfx::ScaleToEnclosingRect(display_info.screen_rect(),
                      1.0f / scale_factor));
   display.set_rotation(display_info.rotation());
-  if (!Display::HasForceColorProfile()) {
+  if (!gfx::ICCProfile::HasForcedProfile()) {
     display.set_color_space(
         color_profile_reader->GetDisplayColorSpace(display_info.id()));
   }

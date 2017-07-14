@@ -20,6 +20,7 @@ MimeRegistryImpl::~MimeRegistryImpl() = default;
 void MimeRegistryImpl::Create(
     const service_manager::BindSourceInfo& source_info,
     blink::mojom::MimeRegistryRequest request) {
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   mojo::MakeStrongBinding(base::MakeUnique<MimeRegistryImpl>(),
                           std::move(request));
 }
@@ -27,7 +28,7 @@ void MimeRegistryImpl::Create(
 void MimeRegistryImpl::GetMimeTypeFromExtension(
     const std::string& extension,
     GetMimeTypeFromExtensionCallback callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   std::string mime_type;
   net::GetMimeTypeFromExtension(
       base::FilePath::FromUTF8Unsafe(extension).value(), &mime_type);

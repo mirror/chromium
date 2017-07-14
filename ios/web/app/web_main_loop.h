@@ -9,7 +9,6 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "ios/web/public/app/task_scheduler_init_params_callback.h"
 
 namespace base {
 class MessageLoop;
@@ -39,10 +38,8 @@ class WebMainLoop {
   void EarlyInitialization();
   void MainMessageLoopStart();
 
-  // Creates and starts running the tasks needed to complete startup. The
-  // |init_params_callback| may be null or supply InitParams to be used to start
-  // the global TaskScheduler instead of using the defaults.
-  void CreateStartupTasks(TaskSchedulerInitParamsCallback init_params_callback);
+  // Creates and starts running the tasks needed to complete startup.
+  void CreateStartupTasks();
 
   // Performs the shutdown sequence, starting with PostMainMessageLoopRun
   // through stopping threads to PostDestroyThreads.
@@ -56,10 +53,8 @@ class WebMainLoop {
   // Called just before creating the threads
   int PreCreateThreads();
 
-  // Creates all secondary threads. The |init_params_callback| may be null or
-  // supply InitParams to be used to start the global TaskScheduler instead of
-  // using the defaults.
-  int CreateThreads(TaskSchedulerInitParamsCallback init_params_callback);
+  // Creates all secondary threads.
+  int CreateThreads();
 
   // Called right after the web threads have been started.
   int WebThreadsStarted();

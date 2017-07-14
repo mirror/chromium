@@ -7,7 +7,6 @@
 #include "base/bind.h"
 #include "chromeos/components/tether/active_host.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
-#include "chromeos/components/tether/host_connection_metrics_logger.h"
 #include "chromeos/components/tether/host_scan_cache.h"
 #include "chromeos/components/tether/notification_presenter.h"
 #include "chromeos/components/tether/tether_host_fetcher.h"
@@ -30,8 +29,7 @@ TetherConnector::TetherConnector(
     TetherHostResponseRecorder* tether_host_response_recorder,
     DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map,
     HostScanCache* host_scan_cache,
-    NotificationPresenter* notification_presenter,
-    HostConnectionMetricsLogger* host_connection_metrics_logger)
+    NotificationPresenter* notification_presenter)
     : network_state_handler_(network_state_handler),
       wifi_hotspot_connector_(wifi_hotspot_connector),
       active_host_(active_host),
@@ -41,7 +39,6 @@ TetherConnector::TetherConnector(
       device_id_tether_network_guid_map_(device_id_tether_network_guid_map),
       host_scan_cache_(host_scan_cache),
       notification_presenter_(notification_presenter),
-      host_connection_metrics_logger_(host_connection_metrics_logger),
       weak_ptr_factory_(this) {}
 
 TetherConnector::~TetherConnector() {
@@ -122,10 +119,7 @@ bool TetherConnector::CancelConnectionAttempt(
     connect_tethering_operation_.reset();
   }
 
-  SetConnectionFailed(
-      NetworkConnectionHandler::kErrorConnectCanceled,
-      HostConnectionMetricsLogger::ConnectionToHostResult::
-          CONNECTION_RESULT_FAILURE_CLIENT_CONNECTION_CANCELED_BY_USER);
+  SetConnectionFailed(NetworkConnectionHandler::kErrorConnectCanceled);
   return true;
 }
 
@@ -167,8 +161,7 @@ void TetherConnector::OnSuccessfulConnectTetheringResponse(
 void TetherConnector::OnConnectTetheringFailure(
     const cryptauth::RemoteDevice& remote_device,
     ConnectTetheringResponse_ResponseCode error_code) {
-  std::string device_id_copy = remote_device.GetDeviceId();
-  if (device_id_pending_connection_ != device_id_copy) {
+  if (device_id_pending_connection_ != remote_device.GetDeviceId()) {
     // If the failure was part of a previous attempt for a different device,
     // ignore it.
     PA_LOG(INFO) << "Received failed ConnectTetheringResponse from device with "
@@ -183,9 +176,7 @@ void TetherConnector::OnConnectTetheringFailure(
 
   connect_tethering_operation_->RemoveObserver(this);
   connect_tethering_operation_.reset();
-  SetConnectionFailed(
-      NetworkConnectionHandler::kErrorConnectFailed,
-      GetConnectionToHostResultFromErrorCode(device_id_copy, error_code));
+  SetConnectionFailed(NetworkConnectionHandler::kErrorConnectFailed);
 }
 
 void TetherConnector::OnTetherHostToConnectFetched(
@@ -202,16 +193,13 @@ void TetherConnector::OnTetherHostToConnectFetched(
     PA_LOG(ERROR) << "Could not fetch tether host with device ID "
                   << cryptauth::RemoteDevice::TruncateDeviceIdForLogs(device_id)
                   << ". Cannot connect.";
-    SetConnectionFailed(
-        NetworkConnectionHandler::kErrorConnectFailed,
-        HostConnectionMetricsLogger::ConnectionToHostResult::
-            CONNECTION_RESULT_FAILURE_CLIENT_CONNECTION_INTERNAL_ERROR);
+    SetConnectionFailed(NetworkConnectionHandler::kErrorConnectFailed);
     return;
   }
 
   DCHECK(device_id == tether_host_to_connect->GetDeviceId());
 
-  const std::string tether_network_guid =
+  const std::string& tether_network_guid =
       device_id_tether_network_guid_map_->GetTetherNetworkGuidForDeviceId(
           device_id);
   connect_tethering_operation_ =
@@ -223,10 +211,7 @@ void TetherConnector::OnTetherHostToConnectFetched(
   connect_tethering_operation_->Initialize();
 }
 
-void TetherConnector::SetConnectionFailed(
-    const std::string& error_name,
-    HostConnectionMetricsLogger::ConnectionToHostResult
-        connection_to_host_result) {
+void TetherConnector::SetConnectionFailed(const std::string& error_name) {
   DCHECK(!device_id_pending_connection_.empty());
   DCHECK(!error_callback_.is_null());
 
@@ -241,9 +226,6 @@ void TetherConnector::SetConnectionFailed(
 
   error_callback.Run(error_name);
   active_host_->SetActiveHostDisconnected();
-
-  host_connection_metrics_logger_->RecordConnectionToHostResult(
-      connection_to_host_result);
 }
 
 void TetherConnector::SetConnectionSucceeded(
@@ -252,10 +234,6 @@ void TetherConnector::SetConnectionSucceeded(
   DCHECK(!device_id_pending_connection_.empty());
   DCHECK(device_id_pending_connection_ == device_id);
   DCHECK(!success_callback_.is_null());
-
-  host_connection_metrics_logger_->RecordConnectionToHostResult(
-      HostConnectionMetricsLogger::ConnectionToHostResult::
-          CONNECTION_RESULT_SUCCESS);
 
   notification_presenter_->RemoveSetupRequiredNotification();
 
@@ -295,44 +273,11 @@ void TetherConnector::OnWifiConnection(const std::string& device_id,
                   << cryptauth::RemoteDevice::TruncateDeviceIdForLogs(device_id)
                   << ".";
 
-    SetConnectionFailed(
-        NetworkConnectionHandler::kErrorConnectFailed,
-        HostConnectionMetricsLogger::ConnectionToHostResult::
-            CONNECTION_RESULT_FAILURE_CLIENT_CONNECTION_TIMEOUT);
+    SetConnectionFailed(NetworkConnectionHandler::kErrorConnectFailed);
     return;
   }
 
   SetConnectionSucceeded(device_id, wifi_network_guid);
-}
-
-HostConnectionMetricsLogger::ConnectionToHostResult
-TetherConnector::GetConnectionToHostResultFromErrorCode(
-    const std::string& device_id,
-    ConnectTetheringResponse_ResponseCode error_code) {
-  if (error_code ==
-      ConnectTetheringResponse_ResponseCode::
-          ConnectTetheringResponse_ResponseCode_PROVISIONING_FAILED) {
-    return HostConnectionMetricsLogger::ConnectionToHostResult::
-        CONNECTION_RESULT_PROVISIONING_FAILED;
-  }
-
-  if (error_code ==
-      ConnectTetheringResponse_ResponseCode::
-          ConnectTetheringResponse_ResponseCode_TETHERING_TIMEOUT) {
-    const std::string tether_network_guid =
-        device_id_tether_network_guid_map_->GetTetherNetworkGuidForDeviceId(
-            device_id);
-    if (host_scan_cache_->DoesHostRequireSetup(tether_network_guid)) {
-      return HostConnectionMetricsLogger::ConnectionToHostResult::
-          CONNECTION_RESULT_FAILURE_TETHERING_TIMED_OUT_FIRST_TIME_SETUP_WAS_REQUIRED;
-    }
-
-    return HostConnectionMetricsLogger::ConnectionToHostResult::
-        CONNECTION_RESULT_FAILURE_TETHERING_TIMED_OUT_FIRST_TIME_SETUP_WAS_NOT_REQUIRED;
-  }
-
-  return HostConnectionMetricsLogger::ConnectionToHostResult::
-      CONNECTION_RESULT_FAILURE_UNKNOWN_ERROR;
 }
 
 }  // namespace tether

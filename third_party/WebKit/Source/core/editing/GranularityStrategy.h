@@ -11,8 +11,6 @@
 
 namespace blink {
 
-enum class TextGranularity;
-
 class GranularityStrategy {
   USING_FAST_MALLOC(GranularityStrategy);
 

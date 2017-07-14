@@ -31,7 +31,6 @@
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
-#import "ios/chrome/browser/ui/commands/new_tab_command.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
@@ -338,7 +337,8 @@
                    didTriggerAction:(OverscrollAction)action {
   switch (action) {
     case OverscrollAction::NEW_TAB: {
-      NewTabCommand* command = [[NewTabCommand alloc] initWithIncognito:NO];
+      base::scoped_nsobject<GenericChromeCommand> command(
+          [[GenericChromeCommand alloc] initWithTag:IDC_NEW_TAB]);
       [self.suggestionsViewController chromeExecuteCommand:command];
     } break;
     case OverscrollAction::CLOSE_TAB: {

@@ -241,25 +241,21 @@ template_context = {
     "config": config,
     "method_name": method_name,
     "name": base_name,
-    "input_files": [os.path.basename(input_path)]
+    "input_file": os.path.basename(input_path)
 }
-
-template_context["template_file"] = "/InstrumentingProbesImpl.cpp.tmpl"
-cpp_template = jinja_env.get_template(template_context["template_file"])
+cpp_template = jinja_env.get_template("/InstrumentingProbesImpl.cpp.tmpl")
 cpp_file = open(output_dirpath + "/" + base_name + "Impl.cpp", "w")
 cpp_file.write(cpp_template.render(template_context))
 cpp_file.close()
 
-template_context["template_file"] = "/ProbeSink.h.tmpl"
-sink_h_template = jinja_env.get_template(template_context["template_file"])
+sink_h_template = jinja_env.get_template("/ProbeSink.h.tmpl")
 sink_h_file = open(output_dirpath + "/" + to_singular(base_name) + "Sink.h", "w")
 sink_h_file.write(sink_h_template.render(template_context))
 sink_h_file.close()
 
 for f in files:
     template_context["file"] = f
-    template_context["template_file"] = "/InstrumentingProbesInl.h.tmpl"
-    h_template = jinja_env.get_template(template_context["template_file"])
+    h_template = jinja_env.get_template("/InstrumentingProbesInl.h.tmpl")
     h_file = open(output_dirpath + "/" + f.header_name + ".h", "w")
     h_file.write(h_template.render(template_context))
     h_file.close()

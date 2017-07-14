@@ -639,7 +639,7 @@ static error::Error ExecuteQueryCounterCmd(GLES2DecoderTestBase* test,
   return test->ExecuteCmd(query_counter_cmd);
 }
 
-static void ProcessQuery(GLES2DecoderTestBase* test,
+static bool ProcessQuery(GLES2DecoderTestBase* test,
                          ::gl::MockGLInterface* gl,
                          GLenum target,
                          GLuint service_id) {
@@ -659,12 +659,16 @@ static void ProcessQuery(GLES2DecoderTestBase* test,
   }
 
   QueryManager* query_manager = test->GetDecoder()->GetQueryManager();
-  ASSERT_TRUE(nullptr != query_manager);
-  query_manager->ProcessPendingQueries(false);
+  EXPECT_TRUE(nullptr != query_manager);
+  if (!query_manager)
+    return false;
+
+  return query_manager->ProcessPendingQueries(false);
 }
 
 static void CheckBeginEndQueryBadMemoryFails(GLES2DecoderTestBase* test,
                                              GLuint client_id,
+                                             GLuint service_id,
                                              const QueryType& query_type,
                                              int32_t shm_id,
                                              uint32_t shm_offset) {
@@ -679,29 +683,43 @@ static void CheckBeginEndQueryBadMemoryFails(GLES2DecoderTestBase* test,
   init.request_alpha = true;
   init.bind_generates_resource = true;
   test->InitDecoder(init);
+  ::testing::StrictMock<::gl::MockGLInterface>* gl = test->GetGLMock();
+  ::gl::GPUTimingFake gpu_timing_queries;
 
-  test->GenHelper<GenQueriesEXTImmediate>(client_id);
+  ExecuteGenerateQueryCmd(test, gl, query_type.type,
+                          client_id, service_id);
 
   // Test bad shared memory fails
-  error::Error error = error::kNoError;
+  error::Error error1 = error::kNoError;
+  error::Error error2 = error::kNoError;
   if (query_type.is_counter) {
-    QueryCounterEXT query_counter_cmd;
-    query_counter_cmd.Init(client_id, query_type.type, shm_id, shm_offset, 1);
-    error = test->ExecuteCmd(query_counter_cmd);
+    error1 =
+        ExecuteQueryCounterCmd(test, gl, &gpu_timing_queries, query_type.type,
+                               client_id, service_id, shm_id, shm_offset, 1);
   } else {
-    BeginQueryEXT begin_cmd;
-    begin_cmd.Init(query_type.type, client_id, shm_id, shm_offset);
-    error = test->ExecuteCmd(begin_cmd);
+    error1 = ExecuteBeginQueryCmd(test, gl, &gpu_timing_queries,
+                                  query_type.type,
+                                  client_id, service_id,
+                                  shm_id, shm_offset);
+    error2 = ExecuteEndQueryCmd(test, gl, query_type.type, 1);
   }
 
-  EXPECT_TRUE(error != error::kNoError);
+  bool process_success = ProcessQuery(test, gl, query_type.type, service_id);
 
+  EXPECT_TRUE(error1 != error::kNoError || error2 != error::kNoError ||
+              !process_success);
+
+  if (GL_ANY_SAMPLES_PASSED_EXT == query_type.type)
+    EXPECT_CALL(*gl, DeleteQueries(1, _)).Times(1).RetiresOnSaturation();
   test->ResetDecoder();
 }
 
 TEST_P(GLES2DecoderManualInitTest, BeginEndQueryEXTBadMemoryIdFails) {
   for (size_t i = 0; i < arraysize(kQueryTypes); ++i) {
-    CheckBeginEndQueryBadMemoryFails(this, kNewClientId, kQueryTypes[i],
+    CheckBeginEndQueryBadMemoryFails(this,
+                                     kNewClientId,
+                                     kNewServiceId,
+                                     kQueryTypes[i],
                                      kInvalidSharedMemoryId,
                                      kSharedMemoryOffset);
   }
@@ -710,12 +728,13 @@ TEST_P(GLES2DecoderManualInitTest, BeginEndQueryEXTBadMemoryIdFails) {
 TEST_P(GLES2DecoderManualInitTest, BeginEndQueryEXTBadMemoryOffsetFails) {
   for (size_t i = 0; i < arraysize(kQueryTypes); ++i) {
     // Out-of-bounds.
-    CheckBeginEndQueryBadMemoryFails(this, kNewClientId, kQueryTypes[i],
-                                     shared_memory_id_,
+    CheckBeginEndQueryBadMemoryFails(this, kNewClientId, kNewServiceId,
+                                     kQueryTypes[i], shared_memory_id_,
                                      kInvalidSharedMemoryOffset);
     // Overflow.
-    CheckBeginEndQueryBadMemoryFails(this, kNewClientId, kQueryTypes[i],
-                                     shared_memory_id_, 0xfffffffcu);
+    CheckBeginEndQueryBadMemoryFails(this, kNewClientId, kNewServiceId,
+                                     kQueryTypes[i], shared_memory_id_,
+                                     0xfffffffcu);
   }
 }
 
@@ -755,7 +774,7 @@ TEST_P(GLES2DecoderManualInitTest, QueryReuseTest) {
                                                     query_type.type, 1));
     }
 
-    ProcessQuery(this, gl, query_type.type, kNewServiceId);
+    EXPECT_TRUE(ProcessQuery(this, gl, query_type.type, kNewServiceId));
 
     // Reuse query.
     if (query_type.is_counter) {
@@ -774,7 +793,7 @@ TEST_P(GLES2DecoderManualInitTest, QueryReuseTest) {
                                                     query_type.type, 2));
     }
 
-    ProcessQuery(this, gl, query_type.type, kNewServiceId);
+    EXPECT_TRUE(ProcessQuery(this, gl, query_type.type, kNewServiceId));
 
     if (GL_ANY_SAMPLES_PASSED_EXT == query_type.type)
       EXPECT_CALL(*gl, DeleteQueries(1, _)).Times(1).RetiresOnSaturation();
@@ -906,8 +925,9 @@ TEST_P(GLES2DecoderManualInitTest, BeginEndQueryEXTCommandsCompletedCHROMIUM) {
   EXPECT_CALL(*gl_, ClientWaitSync(kGlSync, _, _))
       .WillOnce(Return(GL_TIMEOUT_EXPIRED))
       .RetiresOnSaturation();
-  query_manager->ProcessPendingQueries(false);
+  bool process_success = query_manager->ProcessPendingQueries(false);
 
+  EXPECT_TRUE(process_success);
   EXPECT_TRUE(query->IsPending());
 
 #if DCHECK_IS_ON()
@@ -918,8 +938,9 @@ TEST_P(GLES2DecoderManualInitTest, BeginEndQueryEXTCommandsCompletedCHROMIUM) {
   EXPECT_CALL(*gl_, ClientWaitSync(kGlSync, _, _))
       .WillOnce(Return(GL_ALREADY_SIGNALED))
       .RetiresOnSaturation();
-  query_manager->ProcessPendingQueries(false);
+  process_success = query_manager->ProcessPendingQueries(false);
 
+  EXPECT_TRUE(process_success);
   EXPECT_FALSE(query->IsPending());
 
 #if DCHECK_IS_ON()

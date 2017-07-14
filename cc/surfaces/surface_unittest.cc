@@ -5,14 +5,14 @@
 #include "cc/surfaces/surface.h"
 #include "base/memory/ptr_util.h"
 #include "cc/output/copy_output_result.h"
+#include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface_dependency_tracker.h"
 #include "cc/test/begin_frame_args_test.h"
 #include "cc/test/compositor_frame_helpers.h"
 #include "cc/test/fake_external_begin_frame_source.h"
 #include "cc/test/scheduler_test_common.h"
-#include "components/viz/common/surfaces/local_surface_id_allocator.h"
-#include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
+#include "components/viz/common/local_surface_id_allocator.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -27,9 +27,10 @@ constexpr bool kNeedsSyncPoints = true;
 TEST(SurfaceTest, SurfaceLifetime) {
   FrameSinkManager frame_sink_manager;
   SurfaceManager* surface_manager = frame_sink_manager.surface_manager();
-  auto support = viz::CompositorFrameSinkSupport::Create(
-      nullptr, &frame_sink_manager, kArbitraryFrameSinkId, kIsRoot,
-      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  std::unique_ptr<CompositorFrameSinkSupport> support =
+      CompositorFrameSinkSupport::Create(
+          nullptr, &frame_sink_manager, kArbitraryFrameSinkId, kIsRoot,
+          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   viz::LocalSurfaceId local_surface_id(6, base::UnguessableToken::Create());
   viz::SurfaceId surface_id(kArbitraryFrameSinkId, local_surface_id);
@@ -59,9 +60,10 @@ void TestCopyResultCallback(bool* called,
 TEST(SurfaceTest, CopyRequestLifetime) {
   FrameSinkManager frame_sink_manager;
   SurfaceManager* surface_manager = frame_sink_manager.surface_manager();
-  auto support = viz::CompositorFrameSinkSupport::Create(
-      nullptr, &frame_sink_manager, kArbitraryFrameSinkId, kIsRoot,
-      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  std::unique_ptr<CompositorFrameSinkSupport> support =
+      CompositorFrameSinkSupport::Create(
+          nullptr, &frame_sink_manager, kArbitraryFrameSinkId, kIsRoot,
+          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   viz::LocalSurfaceId local_surface_id(6, base::UnguessableToken::Create());
   viz::SurfaceId surface_id(kArbitraryFrameSinkId, local_surface_id);

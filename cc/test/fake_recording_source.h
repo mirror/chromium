@@ -48,7 +48,8 @@ class FakeRecordingSource : public RecordingSource {
   }
 
   // RecordingSource overrides.
-  scoped_refptr<RasterSource> CreateRasterSource() const override;
+  scoped_refptr<RasterSource> CreateRasterSource(
+      bool can_use_lcd) const override;
 
   void SetRecordedViewport(const gfx::Rect& recorded_viewport) {
     recorded_viewport_ = recorded_viewport;

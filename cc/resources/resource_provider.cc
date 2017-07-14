@@ -36,7 +36,6 @@
 #include "third_party/khronos/GLES2/gl2ext.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkSurface.h"
-#include "third_party/skia/include/gpu/GrBackendSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLTypes.h"
 #include "ui/gfx/geometry/rect.h"
@@ -1182,9 +1181,15 @@ ResourceProvider::ScopedSkSurfaceProvider::ScopedSkSurfaceProvider(
   GrGLTextureInfo texture_info;
   texture_info.fID = texture_provider_.texture_id();
   texture_info.fTarget = resource_lock->target();
-  GrBackendTexture backend_texture(
-      resource_lock->size().width(), resource_lock->size().height(),
-      ToGrPixelConfig(resource_lock->format()), texture_info);
+  GrBackendTextureDesc desc;
+  desc.fFlags = kRenderTarget_GrBackendTextureFlag;
+  desc.fWidth = resource_lock->size().width();
+  desc.fHeight = resource_lock->size().height();
+  desc.fConfig = ToGrPixelConfig(resource_lock->format());
+  desc.fOrigin = kTopLeft_GrSurfaceOrigin;
+  desc.fTextureHandle = skia::GrGLTextureInfoToGrBackendObject(texture_info);
+  desc.fSampleCnt = msaa_sample_count;
+
   uint32_t flags =
       use_distance_field_text ? SkSurfaceProps::kUseDistanceFieldFonts_Flag : 0;
   // Use unknown pixel geometry to disable LCD text.
@@ -1195,8 +1200,7 @@ ResourceProvider::ScopedSkSurfaceProvider::ScopedSkSurfaceProvider(
         SkSurfaceProps(flags, SkSurfaceProps::kLegacyFontHost_InitType);
   }
   sk_surface_ = SkSurface::MakeFromBackendTextureAsRenderTarget(
-      context_provider->GrContext(), backend_texture, kTopLeft_GrSurfaceOrigin,
-      msaa_sample_count, nullptr, &surface_props);
+      context_provider->GrContext(), desc, nullptr, &surface_props);
 }
 
 ResourceProvider::ScopedSkSurfaceProvider::~ScopedSkSurfaceProvider() {
@@ -1235,14 +1239,15 @@ ResourceProvider::ScopedReadLockSkImage::ScopedReadLockSkImage(
     GrGLTextureInfo texture_info;
     texture_info.fID = resource->gl_id;
     texture_info.fTarget = resource->target;
-    GrBackendTexture backend_texture(
-        resource->size.width(), resource->size.height(),
-        ToGrPixelConfig(resource->format), texture_info);
     GrBackendTextureDesc desc;
+    desc.fWidth = resource->size.width();
+    desc.fHeight = resource->size.height();
+    desc.fConfig = ToGrPixelConfig(resource->format);
+    desc.fOrigin = kTopLeft_GrSurfaceOrigin;
+    desc.fTextureHandle = skia::GrGLTextureInfoToGrBackendObject(texture_info);
     sk_image_ = SkImage::MakeFromTexture(
-        resource_provider->compositor_context_provider_->GrContext(),
-        backend_texture, kTopLeft_GrSurfaceOrigin, kPremul_SkAlphaType,
-        nullptr);
+        resource_provider->compositor_context_provider_->GrContext(), desc,
+        kPremul_SkAlphaType);
   } else if (resource->pixels) {
     SkBitmap sk_bitmap;
     resource_provider->PopulateSkBitmapWithResource(&sk_bitmap, resource);

@@ -510,6 +510,8 @@ void JumpList::StartLoadingFavicon() {
     return;
   }
 
+  base::ElapsedTimer timer;
+
   // Ask FaviconService if it has a favicon of a URL.
   // When FaviconService has one, it will call OnFaviconDataAvailable().
   favicon::FaviconService* favicon_service =
@@ -526,6 +528,8 @@ void JumpList::StartLoadingFavicon() {
 void JumpList::OnFaviconDataAvailable(
     const favicon_base::FaviconImageResult& image_result) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  base::ElapsedTimer timer;
 
   // If there is currently a favicon request in progress, it is now outdated,
   // as we have received another, so nullify the handle from the old request.

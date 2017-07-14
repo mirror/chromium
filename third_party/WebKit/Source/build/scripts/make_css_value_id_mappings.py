@@ -32,7 +32,6 @@ class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
 
         return {
             'include_paths': list(sorted(include_paths)),
-            'input_files': self._input_files,
             'mappings': mappings,
         }
 

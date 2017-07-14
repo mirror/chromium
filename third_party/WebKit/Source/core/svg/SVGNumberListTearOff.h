@@ -52,9 +52,7 @@ class SVGNumberListTearOff final
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGListPropertyTearOffHelper<SVGNumberListTearOff,
-                                 SVGNumberList>::TraceWrappers(visitor);
-    ScriptWrappable::TraceWrappers(visitor);
+    visitor->TraceWrappers(contextElement());
   }
 
  private:

@@ -204,6 +204,7 @@
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/display/display_switches.h"
+#include "ui/gfx/color_space_switches.h"
 #include "ui/gl/gl_switches.h"
 #include "ui/gl/gpu_switching_manager.h"
 #include "ui/native_theme/native_theme_features.h"
@@ -318,6 +319,7 @@ void GetContexts(
 
 // Creates a file used for handing over to the renderer.
 IPC::PlatformFileForTransit CreateFileForProcess(base::FilePath file_path) {
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   base::File dump_file(file_path,
                        base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_APPEND);
   if (!dump_file.IsValid()) {
@@ -1640,14 +1642,13 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
         registry.get(), base::Bind(&CreateMemoryCoordinatorHandle, GetID()));
   }
 
-  registry->AddInterface(
-      base::Bind(&MimeRegistryImpl::Create),
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN,
-           base::TaskPriority::USER_BLOCKING}));
+  scoped_refptr<base::SingleThreadTaskRunner> file_task_runner =
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE);
+  registry->AddInterface(base::Bind(&MimeRegistryImpl::Create),
+                         file_task_runner);
 #if BUILDFLAG(USE_MINIKIN_HYPHENATION)
   registry->AddInterface(base::Bind(&hyphenation::HyphenationImpl::Create),
-                         hyphenation::HyphenationImpl::GetTaskRunner());
+                         file_task_runner);
 #endif
 
   registry->AddInterface(base::Bind(&device::GamepadMonitor::Create));
@@ -2867,11 +2868,11 @@ void RenderProcessHostImpl::EnableAudioDebugRecordings(
 void RenderProcessHostImpl::DisableAudioDebugRecordings() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  // Posting on the sequence and then replying back on the UI thread is only
-  // for avoiding races between enable and disable. Nothing is done on the
-  // sequence.
-  GetAecDumpFileTaskRunner().PostTaskAndReply(
-      FROM_HERE, base::Bind(&base::DoNothing),
+  // Posting on the FILE thread and then replying back on the UI thread is only
+  // for avoiding races between enable and disable. Nothing is done on the FILE
+  // thread.
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::FILE, FROM_HERE, base::Bind(&base::DoNothing),
       base::Bind(&RenderProcessHostImpl::SendDisableAecDumpToRenderer,
                  weak_factory_.GetWeakPtr()));
 
@@ -3752,8 +3753,8 @@ void RenderProcessHostImpl::UnregisterAecDumpConsumerOnUIThread(int id) {
 void RenderProcessHostImpl::EnableAecDumpForId(const base::FilePath& file,
                                                int id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::PostTaskAndReplyWithResult(
-      &GetAecDumpFileTaskRunner(), FROM_HERE,
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::FILE, FROM_HERE,
       base::Bind(&CreateFileForProcess, file.AddExtension(IntToStringType(id))),
       base::Bind(&RenderProcessHostImpl::SendAecDumpFileToRenderer,
                  weak_factory_.GetWeakPtr(), id));
@@ -3775,16 +3776,6 @@ base::FilePath RenderProcessHostImpl::GetAecDumpFilePathWithExtensions(
     const base::FilePath& file) {
   return file.AddExtension(IntToStringType(base::GetProcId(GetHandle())))
       .AddExtension(kAecDumpFileNameAddition);
-}
-
-base::SequencedTaskRunner& RenderProcessHostImpl::GetAecDumpFileTaskRunner() {
-  if (!audio_debug_recordings_file_task_runner_) {
-    audio_debug_recordings_file_task_runner_ =
-        base::CreateSequencedTaskRunnerWithTraits(
-            {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN,
-             base::TaskPriority::USER_BLOCKING});
-  }
-  return *audio_debug_recordings_file_task_runner_;
 }
 #endif  // BUILDFLAG(ENABLE_WEBRTC)
 

@@ -1508,7 +1508,10 @@ void Editor::ChangeSelectionAfterCommand(
   // sequence, but we want to do these things (matches AppKit).
   if (selection_did_not_change_dom_position) {
     Client().RespondToChangedSelection(
-        frame_, GetFrame().Selection().GetSelectionInDOMTree().Type());
+        frame_, GetFrame()
+                    .Selection()
+                    .GetSelectionInDOMTree()
+                    .SelectionTypeWithLegacyGranularity());
   }
 }
 
@@ -1757,8 +1760,11 @@ void Editor::RespondToChangedSelection(
     const Position& old_selection_start,
     FrameSelection::SetSelectionOptions options) {
   GetSpellChecker().RespondToChangedSelection(old_selection_start, options);
-  Client().RespondToChangedSelection(
-      &GetFrame(), GetFrame().Selection().GetSelectionInDOMTree().Type());
+  Client().RespondToChangedSelection(&GetFrame(),
+                                     GetFrame()
+                                         .Selection()
+                                         .GetSelectionInDOMTree()
+                                         .SelectionTypeWithLegacyGranularity());
   SetStartNewKillRingSequence(true);
 }
 

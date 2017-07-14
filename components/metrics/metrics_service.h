@@ -23,6 +23,7 @@
 #include "base/metrics/histogram_snapshot_manager.h"
 #include "base/metrics/user_metrics.h"
 #include "base/observer_list.h"
+#include "base/single_thread_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -181,7 +182,8 @@ class MetricsService : public base::HistogramFlattener {
   // Check if this install was cloned or imaged from another machine. If a
   // clone is detected, reset the client id and low entropy source. This
   // should not be called more than once.
-  void CheckForClonedInstall();
+  void CheckForClonedInstall(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // Clears the stability metrics that are saved in local state.
   void ClearSavedStabilityMetrics();

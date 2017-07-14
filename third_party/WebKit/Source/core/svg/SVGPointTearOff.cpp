@@ -73,8 +73,7 @@ SVGPointTearOff* SVGPointTearOff::CreateDetached(const FloatPoint& point) {
 }
 
 DEFINE_TRACE_WRAPPERS(SVGPointTearOff) {
-  SVGPropertyTearOff<SVGPoint>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
+  visitor->TraceWrappers(contextElement());
 }
 
 }  // namespace blink

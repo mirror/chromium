@@ -50,8 +50,7 @@ class SVGAnimatedPreserveAspectRatio
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGAnimatedProperty<SVGPreserveAspectRatio>::TraceWrappers(visitor);
-    ScriptWrappable::TraceWrappers(visitor);
+    visitor->TraceWrappers(contextElement());
   }
 
  protected:

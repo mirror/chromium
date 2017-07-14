@@ -67,10 +67,6 @@ void GeolocationProviderImpl::UserDidOptIntoLocationServices() {
     InformProvidersPermissionGranted();
 }
 
-bool GeolocationProviderImpl::HighAccuracyLocationInUse() {
-  return !high_accuracy_callbacks_.empty();
-}
-
 void GeolocationProviderImpl::OverrideLocationForTesting(
     const Geoposition& position) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());

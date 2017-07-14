@@ -419,10 +419,6 @@ PrefService* Shell::GetActiveUserPrefService() const {
   return shell_delegate_->GetActiveUserPrefService();
 }
 
-PrefService* Shell::GetLocalStatePrefService() const {
-  return shell_delegate_->GetLocalStatePrefService();
-}
-
 WebNotificationTray* Shell::GetWebNotificationTray() {
   return GetPrimaryRootWindowController()
       ->GetStatusAreaWidget()

@@ -1445,7 +1445,6 @@ test("browser_tests") {
       "../browser/ssl/cert_verifier_browser_test.h",
       "../browser/ssl/certificate_reporting_test_utils.cc",
       "../browser/ssl/certificate_reporting_test_utils.h",
-      "../browser/ssl/chrome_expect_ct_reporter_browser_tests.cc",
       "../browser/ssl/chrome_ssl_host_state_delegate_test.cc",
       "../browser/ssl/security_state_tab_helper_browser_tests.cc",
       "../browser/ssl/ssl_browser_tests.cc",
@@ -1535,7 +1534,6 @@ test("browser_tests") {
       "../browser/ui/toolbar/mock_component_toolbar_actions_factory.cc",
       "../browser/ui/toolbar/mock_component_toolbar_actions_factory.h",
       "../browser/ui/update_chrome_dialog_browsertest.cc",
-      "../browser/ui/views/apps/app_info_dialog/app_info_dialog_views_browsertest.cc",
       "../browser/ui/views/chrome_cleaner_dialog_browsertest_win.cc",
       "../browser/ui/views/extensions/chooser_dialog_view_browsertest.cc",
       "../browser/ui/views/hung_renderer_view_browsertest.cc",
@@ -2209,7 +2207,6 @@ test("browser_tests") {
         "../browser/chromeos/first_run/goodies_displayer_browsertest.cc",
         "../browser/chromeos/input_method/input_method_engine_browsertests.cc",
         "../browser/chromeos/input_method/mode_indicator_browsertest.cc",
-        "../browser/chromeos/lock_screen_apps/note_taking_browsertest.cc",
         "../browser/chromeos/login/auto_launched_kiosk_browsertest.cc",
         "../browser/chromeos/login/bluetooth_host_pairing_browsertest.cc",
         "../browser/chromeos/login/crash_restore_browsertest.cc",
@@ -2513,7 +2510,6 @@ test("browser_tests") {
     if (is_win) {
       sources += [
         "../browser/extensions/api/networking_private/networking_private_credentials_getter_browsertest.cc",
-        "../browser/ui/views/accessibility/invert_bubble_view_browsertest.cc",
         "../browser/ui/views/settings_reset_prompt_dialog_browsertest.cc",
       ]
     }
@@ -3160,7 +3156,6 @@ test("unit_tests") {
     "../browser/metrics/chrome_browser_main_extra_parts_metrics_unittest.cc",
     "../browser/metrics/chrome_metrics_service_accessor_unittest.cc",
     "../browser/metrics/perf/perf_provider_chromeos_unittest.cc",
-    "../browser/metrics/process_memory_metrics_emitter_unittest.cc",
     "../browser/metrics/subprocess_metrics_provider_unittest.cc",
     "../browser/metrics/thread_watcher_android_unittest.cc",
     "../browser/metrics/thread_watcher_unittest.cc",

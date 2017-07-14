@@ -14,28 +14,26 @@ suite('SiteDetailsPermission', function() {
    * An example pref with only camera allowed.
    * @type {SiteSettingsPref}
    */
-  var prefs;
+  var prefs = {
+    defaults: {
+      camera: {
+        setting: settings.ContentSetting.ALLOW,
+      }
+    },
+    exceptions: {
+      camera: [
+        {
+          embeddingOrigin: '',
+          origin: 'https://www.example.com',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'preference',
+        },
+      ]
+    }
+  };
 
   // Initialize a site-details-permission before each test.
   setup(function() {
-    prefs = {
-      defaults: {
-        camera: {
-          setting: settings.ContentSetting.ALLOW,
-        }
-      },
-      exceptions: {
-        camera: [
-          {
-            embeddingOrigin: '',
-            origin: 'https://www.example.com',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
-          },
-        ]
-      }
-    };
-
     browserProxy = new TestSiteSettingsPrefsBrowserProxy();
     settings.SiteSettingsPrefsBrowserProxyImpl.instance_ = browserProxy;
     PolymerTest.clearBody();

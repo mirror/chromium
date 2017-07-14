@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "net/http2/hpack/decoder/hpack_varint_decoder.h"
+#include "net/http2/platform/api/http2_string_utils.h"
 
 // Tests of HpackVarintDecoder.
 
@@ -19,7 +20,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "net/http2/hpack/tools/hpack_block_builder.h"
 #include "net/http2/platform/api/http2_string_piece.h"
-#include "net/http2/platform/api/http2_string_utils.h"
 #include "net/http2/tools/failure.h"
 #include "net/http2/tools/http2_random.h"
 #include "net/http2/tools/random_decoder_test.h"

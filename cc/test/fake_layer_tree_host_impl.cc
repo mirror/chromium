@@ -86,8 +86,9 @@ void FakeLayerTreeHostImpl::UpdateNumChildrenAndDrawPropertiesForActiveTree() {
 
 void FakeLayerTreeHostImpl::UpdateNumChildrenAndDrawProperties(
     LayerTreeImpl* layerTree) {
+  bool update_lcd_text = false;
   layerTree->BuildLayerListAndPropertyTreesForTesting();
-  layerTree->UpdateDrawProperties();
+  layerTree->UpdateDrawProperties(update_lcd_text);
 }
 
 AnimationHost* FakeLayerTreeHostImpl::animation_host() const {

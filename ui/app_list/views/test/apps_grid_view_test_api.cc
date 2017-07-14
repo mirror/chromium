@@ -36,10 +36,6 @@ void AppsGridViewTestApi::LayoutToIdealBounds() {
   view_->Layout();
 }
 
-gfx::Rect AppsGridViewTestApi::GetItemTileRectAt(int row, int col) const {
-  return view_->GetExpectedTileBounds(row, col);
-}
-
 void AppsGridViewTestApi::SetPageFlipDelay(int page_flip_delay_in_ms) {
   view_->page_flip_delay_in_ms_ = page_flip_delay_in_ms;
 }
@@ -52,10 +48,6 @@ void AppsGridViewTestApi::PressItemAt(int index) {
 bool AppsGridViewTestApi::HasPendingPageFlip() const {
   return view_->page_flip_timer_.IsRunning() ||
          view_->pagination_model()->has_transition();
-}
-
-int AppsGridViewTestApi::TilesPerPage(int page) const {
-  return view_->TilesPerPage(page);
 }
 
 }  // namespace test

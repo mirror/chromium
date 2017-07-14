@@ -65,7 +65,7 @@ class SiteSettingsHandler : public SettingsPageUIHandler,
   FRIEND_TEST_ALL_PREFIXES(SiteSettingsHandlerTest, Incognito);
   FRIEND_TEST_ALL_PREFIXES(SiteSettingsHandlerTest, Origins);
   FRIEND_TEST_ALL_PREFIXES(SiteSettingsHandlerTest, Patterns);
-  FRIEND_TEST_ALL_PREFIXES(SiteSettingsHandlerTest, SetOriginPermissions);
+  FRIEND_TEST_ALL_PREFIXES(SiteSettingsHandlerTest, ResetOriginPermissions);
   FRIEND_TEST_ALL_PREFIXES(SiteSettingsHandlerTest, ZoomLevels);
 
   // Asynchronously fetches the usage for a given origin. Replies back with

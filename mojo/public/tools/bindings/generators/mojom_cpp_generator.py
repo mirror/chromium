@@ -285,24 +285,23 @@ class Generator(generator.Generator):
       all_enums.extend(interface.enums)
 
     return {
-      "all_enums": all_enums,
-      "enums": self.module.enums,
-      "export_attribute": self.export_attribute,
-      "export_header": self.export_header,
-      "extra_public_headers": self._GetExtraPublicHeaders(),
-      "extra_traits_headers": self._GetExtraTraitsHeaders(),
-      "for_blink": self.for_blink,
-      "imports": self.module.imports,
-      "interfaces": self.module.interfaces,
-      "kinds": self.module.kinds,
       "module": self.module,
       "namespace": self.module.namespace,
       "namespaces_as_array": NamespaceToArray(self.module.namespace),
+      "imports": self.module.imports,
+      "kinds": self.module.kinds,
+      "enums": self.module.enums,
+      "all_enums": all_enums,
       "structs": self.module.structs,
-      "support_lazy_serialization": self.support_lazy_serialization,
       "unions": self.module.unions,
-      "use_once_callback": self.use_once_callback,
+      "interfaces": self.module.interfaces,
       "variant": self.variant,
+      "extra_traits_headers": self._GetExtraTraitsHeaders(),
+      "extra_public_headers": self._GetExtraPublicHeaders(),
+      "for_blink": self.for_blink,
+      "use_once_callback": self.use_once_callback,
+      "export_attribute": self.export_attribute,
+      "export_header": self.export_header,
     }
 
   @staticmethod
@@ -333,8 +332,6 @@ class Generator(generator.Generator):
       "get_qualified_name_for_kind": self._GetQualifiedNameForKind,
       "has_callbacks": mojom.HasCallbacks,
       "has_sync_methods": mojom.HasSyncMethods,
-      "method_supports_lazy_serialization":
-          self._MethodSupportsLazySerialization,
       "requires_context_for_data_view": RequiresContextForDataView,
       "should_inline": ShouldInlineStruct,
       "should_inline_union": ShouldInlineUnion,
@@ -573,8 +570,7 @@ class Generator(generator.Generator):
     if mojom.IsArrayKind(kind):
       return self._IsMoveOnlyKind(kind.kind)
     if mojom.IsMapKind(kind):
-      return (self._IsMoveOnlyKind(kind.value_kind) or
-              self._IsMoveOnlyKind(kind.key_kind))
+      return self._IsMoveOnlyKind(kind.value_kind)
     if mojom.IsAnyHandleOrInterfaceKind(kind):
       return True
     return False
@@ -650,11 +646,6 @@ class Generator(generator.Generator):
       return "%s&" % self._GetCppWrapperType(kind,
                                              add_same_module_namespaces=True)
     return self._GetCppWrapperType(kind, add_same_module_namespaces=True)
-
-  def _MethodSupportsLazySerialization(self, method):
-    return self.support_lazy_serialization and (
-        not mojom.MethodPassesAssociatedKinds(method) and
-        not mojom.MethodPassesInterfaces(method))
 
   def _TranslateConstants(self, token, kind):
     if isinstance(token, mojom.NamedValue):

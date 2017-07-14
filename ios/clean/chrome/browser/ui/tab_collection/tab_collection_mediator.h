@@ -7,7 +7,6 @@
 
 #import "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.h"
 
-@class SnapshotCache;
 @protocol TabCollectionConsumer;
 class WebStateList;
 
@@ -21,9 +20,6 @@ class WebStateList;
 // This consumer is updated whenever there are relevant changes to the web state
 // list.
 @property(nonatomic, weak) id<TabCollectionConsumer> consumer;
-
-// Takes a snapshot of the active webState and updates the consumer.
-- (void)takeSnapshotWithCache:(SnapshotCache*)snapshotCache;
 
 // Stops observing all objects.
 - (void)disconnect;

@@ -140,8 +140,7 @@ void NativeMessageProcessHost::OnHostProcessLaunched(
 
   process_ = std::move(process);
 #if defined(OS_POSIX)
-  // |read_stream_| will take ownership of |read_file|, so note the underlying
-  // file descript for use with FileDescriptorWatcher.
+  // This object is not the owner of the file so it should not keep an fd.
   read_file_ = read_file.GetPlatformFile();
 #endif
 
@@ -209,11 +208,9 @@ void NativeMessageProcessHost::WaitRead() {
   // would always be consuming one thread in the thread pool. On Windows
   // FileStream uses overlapped IO, so that optimization isn't necessary there.
 #if defined(OS_POSIX)
-  if (!read_controller_) {
-    read_controller_ = base::FileDescriptorWatcher::WatchReadable(
-        read_file_,
-        base::Bind(&NativeMessageProcessHost::DoRead, base::Unretained(this)));
-  }
+  read_controller_ = base::FileDescriptorWatcher::WatchReadable(
+      read_file_,
+      base::Bind(&NativeMessageProcessHost::DoRead, base::Unretained(this)));
 #else  // defined(OS_POSIX)
   DoRead();
 #endif  // defined(!OS_POSIX)
@@ -221,6 +218,10 @@ void NativeMessageProcessHost::WaitRead() {
 
 void NativeMessageProcessHost::DoRead() {
   DCHECK(task_runner_->BelongsToCurrentThread());
+
+#if defined(OS_POSIX)
+  read_controller_.reset();
+#endif
 
   while (!closed_ && !read_pending_) {
     read_buffer_ = new net::IOBuffer(kReadBufferSize);
@@ -256,7 +257,8 @@ void NativeMessageProcessHost::HandleReadResult(int result) {
     // Posix read() returns 0 in that case.
     Close(kNativeHostExited);
   } else {
-    Close(kHostInputOutputError);
+    LOG(ERROR) << "Error when reading from Native Messaging host: " << result;
+    Close(kHostInputOuputError);
   }
 }
 
@@ -276,7 +278,7 @@ void NativeMessageProcessHost::ProcessIncomingData(
     if (message_size > kMaximumMessageSize) {
       LOG(ERROR) << "Native Messaging host tried sending a message that is "
                  << message_size << " bytes long.";
-      Close(kHostInputOutputError);
+      Close(kHostInputOuputError);
       return;
     }
 
@@ -320,7 +322,7 @@ void NativeMessageProcessHost::HandleWriteResult(int result) {
       write_pending_ = true;
     } else {
       LOG(ERROR) << "Error when writing to Native Messaging host: " << result;
-      Close(kHostInputOutputError);
+      Close(kHostInputOuputError);
     }
     return;
   }
@@ -343,9 +345,6 @@ void NativeMessageProcessHost::Close(const std::string& error_message) {
 
   if (!closed_) {
     closed_ = true;
-#if defined(OS_POSIX)
-    read_controller_.reset();
-#endif
     read_stream_.reset();
     write_stream_.reset();
     client_->CloseChannel(error_message);

@@ -5,7 +5,6 @@
 #ifndef MOJO_PUBLIC_CPP_SYSTEM_SIMPLE_WATCHER_H_
 #define MOJO_PUBLIC_CPP_SYSTEM_SIMPLE_WATCHER_H_
 
-#include "base/bind.h"
 #include "base/callback.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -14,7 +13,6 @@
 #include "base/sequence_checker.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "mojo/public/c/system/types.h"
-#include "mojo/public/cpp/system/handle_signals_state.h"
 #include "mojo/public/cpp/system/system_export.h"
 #include "mojo/public/cpp/system/watcher.h"
 
@@ -51,11 +49,6 @@ class MOJO_CPP_SYSTEM_EXPORT SimpleWatcher {
   // Note that unlike the first two conditions, this callback may be invoked
   // with |MOJO_RESULT_CANCELLED| even while the SimpleWatcher is disarmed.
   using ReadyCallback = base::Callback<void(MojoResult result)>;
-
-  // Like above but also receives the last known handle signal state at the time
-  // of the notification.
-  using ReadyCallbackWithState =
-      base::Callback<void(MojoResult result, const HandleSignalsState& state)>;
 
   // Selects how this SimpleWatcher is to be armed.
   enum class ArmingPolicy {
@@ -119,18 +112,13 @@ class MOJO_CPP_SYSTEM_EXPORT SimpleWatcher {
   MojoResult Watch(Handle handle,
                    MojoHandleSignals signals,
                    MojoWatchCondition condition,
-                   const ReadyCallbackWithState& callback);
+                   const ReadyCallback& callback);
 
   // DEPRECATED: Please use the above signature instead.
-  //
-  // This watches a handle for |signals| to be satisfied, provided with a
-  // callback which takes only a MojoResult value corresponding to the result of
-  // a notification.
   MojoResult Watch(Handle handle,
                    MojoHandleSignals signals,
                    const ReadyCallback& callback) {
-    return Watch(handle, signals, MOJO_WATCH_CONDITION_SATISFIED,
-                 base::Bind(&DiscardReadyState, callback));
+    return Watch(handle, signals, MOJO_WATCH_CONDITION_SATISFIED, callback);
   }
 
   // Cancels the current watch. Once this returns, the ReadyCallback previously
@@ -155,14 +143,11 @@ class MOJO_CPP_SYSTEM_EXPORT SimpleWatcher {
   // is NOT armed, and this call fails with a return value of
   // |MOJO_RESULT_FAILED_PRECONDITION|. In that case, what would have been the
   // result code for that immediate notification is instead placed in
-  // |*ready_result| if |ready_result| is non-null, and the last known signaling
-  // state of the handle is placed in |*ready_state| if |ready_state| is
-  // non-null.
+  // |*ready_result| if |ready_result| is non-null.
   //
   // If the watcher is successfully armed, this returns |MOJO_RESULT_OK| and
-  // |ready_result| and |ready_state| are ignored.
-  MojoResult Arm(MojoResult* ready_result = nullptr,
-                 HandleSignalsState* ready_state = nullptr);
+  // |ready_result| is ignored.
+  MojoResult Arm(MojoResult* ready_result = nullptr);
 
   // Manually arms the SimpleWatcher OR posts a task to invoke the ReadyCallback
   // with the ready result of the failed arming attempt.
@@ -176,7 +161,7 @@ class MOJO_CPP_SYSTEM_EXPORT SimpleWatcher {
   void ArmOrNotify();
 
   Handle handle() const { return handle_; }
-  ReadyCallbackWithState ready_callback() const { return callback_; }
+  ReadyCallback ready_callback() const { return callback_; }
 
   // Sets the tag used by the heap profiler.
   // |tag| must be a const string literal.
@@ -187,15 +172,7 @@ class MOJO_CPP_SYSTEM_EXPORT SimpleWatcher {
  private:
   class Context;
 
-  static void DiscardReadyState(const ReadyCallback& callback,
-                                MojoResult result,
-                                const HandleSignalsState& state) {
-    callback.Run(result);
-  }
-
-  void OnHandleReady(int watch_id,
-                     MojoResult result,
-                     const HandleSignalsState& state);
+  void OnHandleReady(int watch_id, MojoResult result);
 
   SEQUENCE_CHECKER(sequence_checker_);
 
@@ -226,7 +203,7 @@ class MOJO_CPP_SYSTEM_EXPORT SimpleWatcher {
   int watch_id_ = 0;
 
   // The callback to call when the handle is signaled.
-  ReadyCallbackWithState callback_;
+  ReadyCallback callback_;
 
   // Tracks if the SimpleWatcher has already notified of unsatisfiability. This
   // is used to prevent redundant notifications in AUTOMATIC mode.

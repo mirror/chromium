@@ -8,7 +8,6 @@
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebClientHintsType.h"
 
 namespace blink {
 
@@ -18,7 +17,10 @@ class PLATFORM_EXPORT ClientHintsPreferences {
  public:
   class Context {
    public:
-    virtual void CountClientHints(WebClientHintsType) = 0;
+    virtual void CountClientHintsDeviceRAM() = 0;
+    virtual void CountClientHintsDPR() = 0;
+    virtual void CountClientHintsResourceWidth() = 0;
+    virtual void CountClientHintsViewportWidth() = 0;
 
    protected:
     virtual ~Context() {}
@@ -29,15 +31,27 @@ class PLATFORM_EXPORT ClientHintsPreferences {
   void UpdateFrom(const ClientHintsPreferences&);
   void UpdateFromAcceptClientHintsHeader(const String& header_value, Context*);
 
-  bool ShouldSend(WebClientHintsType type) const {
-    return enabled_types_[type];
+  bool ShouldSendDeviceRAM() const { return should_send_device_ram_; }
+  void SetShouldSendDeviceRAM(bool should) { should_send_device_ram_ = should; }
+
+  bool ShouldSendDPR() const { return should_send_dpr_; }
+  void SetShouldSendDPR(bool should) { should_send_dpr_ = should; }
+
+  bool ShouldSendResourceWidth() const { return should_send_resource_width_; }
+  void SetShouldSendResourceWidth(bool should) {
+    should_send_resource_width_ = should;
   }
-  void SetShouldSendForTesting(WebClientHintsType type) {
-    enabled_types_[type] = true;
+
+  bool ShouldSendViewportWidth() const { return should_send_viewport_width_; }
+  void SetShouldSendViewportWidth(bool should) {
+    should_send_viewport_width_ = should;
   }
 
  private:
-  bool enabled_types_[kWebClientHintsTypeLast + 1] = {};
+  bool should_send_device_ram_;
+  bool should_send_dpr_;
+  bool should_send_resource_width_;
+  bool should_send_viewport_width_;
 };
 
 }  // namespace blink

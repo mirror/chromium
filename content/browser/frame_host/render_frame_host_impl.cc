@@ -169,15 +169,9 @@ int g_next_accessibility_reset_token = 1;
 // The next value to use for the javascript callback id.
 int g_next_javascript_callback_id = 1;
 
-#if defined(OS_ANDROID)
 // Whether to allow injecting javascript into any kind of frame (for Android
 // WebView).
 bool g_allow_injecting_javascript = false;
-
-// Whether to allow data URL navigations for Android WebView.
-// TODO(meacer): Remove after PlzNavigate ships.
-bool g_allow_data_url_navigation = false;
-#endif
 
 // The (process id, routing id) pair that identifies one RenderFrame.
 typedef std::pair<int32_t, int32_t> RenderFrameHostID;
@@ -384,23 +378,12 @@ void RenderFrameHost::AllowInjectingJavaScriptForAndroidWebView() {
   g_allow_injecting_javascript = true;
 }
 
-// static
-void RenderFrameHost::AllowDataUrlNavigationForAndroidWebView() {
-  g_allow_data_url_navigation = true;
-}
-
-// static
-bool RenderFrameHost::IsDataUrlNavigationAllowedForAndroidWebView() {
-  return g_allow_data_url_navigation;
-}
-
 void CreateMediaPlayerRenderer(
-    int process_id,
-    int routing_id,
+    content::RenderFrameHost* render_frame_host,
     const service_manager::BindSourceInfo& source_info,
     media::mojom::RendererRequest request) {
   std::unique_ptr<MediaPlayerRenderer> renderer =
-      base::MakeUnique<MediaPlayerRenderer>(process_id, routing_id);
+      base::MakeUnique<MediaPlayerRenderer>(render_frame_host);
 
   // base::Unretained is safe here because the lifetime of the MediaPlayerRender
   // is tied to the lifetime of the MojoRendererService.
@@ -2876,9 +2859,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
 #if defined(OS_ANDROID)
   // Creates a MojoRendererService, passing it a MediaPlayerRender.
-  GetInterfaceRegistry()->AddInterface<media::mojom::Renderer>(
-      base::Bind(&content::CreateMediaPlayerRenderer, GetProcess()->GetID(),
-                 GetRoutingID()));
+  GetInterfaceRegistry()->AddInterface<media::mojom::Renderer>(base::Bind(
+      &content::CreateMediaPlayerRenderer, base::Unretained(this)));
 #endif  // defined(OS_ANDROID)
 
   GetInterfaceRegistry()->AddInterface(base::Bind(
@@ -3793,11 +3775,8 @@ void RenderFrameHostImpl::UpdatePermissionsForNavigation(
 }
 
 bool RenderFrameHostImpl::CanExecuteJavaScript() {
-#if defined(OS_ANDROID)
-  if (g_allow_injecting_javascript)
-    return true;
-#endif
-  return !frame_tree_node_->current_url().is_valid() ||
+  return g_allow_injecting_javascript ||
+         !frame_tree_node_->current_url().is_valid() ||
          frame_tree_node_->current_url().SchemeIs(kChromeDevToolsScheme) ||
          ChildProcessSecurityPolicyImpl::GetInstance()->HasWebUIBindings(
              GetProcess()->GetID()) ||

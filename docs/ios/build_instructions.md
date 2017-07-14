@@ -14,6 +14,14 @@ Are you a Google employee? See
 
 * A 64-bit Mac running 10.11+.
 * [Xcode](https://developer.apple.com/xcode) 8.0+.
+* The OS X 10.10 SDK. Run
+
+    ```shell
+    $ ls `xcode-select -p`/Platforms/MacOSX.platform/Developer/SDKs
+    ```
+
+  to check whether you have it.  Building with the 10.11 SDK works too, but
+  the releases currently use the 10.10 SDK.
 * The current version of the JDK (required for the Closure compiler).
 
 ## Install `depot_tools`
@@ -224,18 +232,6 @@ command line, you can use `iossim`. For example, to run a debug build of
 
 ```shell
 $ out/Debug-iphonesimulator/iossim out/Debug-iphonesimulator/Chromium.app
-```
-
-### Running EarlGrey tests
-
-EarlGrey tests are run differently than other test targets, as there is an
-XCTest bundle that is injected into the target application. Therefore you must
-also pass in the test bundle:
-
-```shell
-$ out/Debug-iphonesimulator/iossim \
-    out/Debug-iphonesimulator/ios_chrome_ui_egtests.app \
-    out/Debug-iphonesimulator/ios_chrome_ui_egtests.app/PlugIns/ios_chrome_ui_egtests_module.xctest
 ```
 
 ## Update your checkout

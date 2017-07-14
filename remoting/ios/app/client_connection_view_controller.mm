@@ -59,15 +59,11 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   SessionErrorCode _lastError;
   HostInfo* _hostInfo;
 }
-
-@property(nonatomic, assign) SessionErrorCode lastError;
-
 @end
 
 @implementation ClientConnectionViewController
 
 @synthesize state = _state;
-@synthesize lastError = _lastError;
 
 - (instancetype)initWithHostInfo:(HostInfo*)hostInfo {
   self = [super init];
@@ -378,24 +374,16 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)attemptConnectionToHost {
   _client = [[RemotingClient alloc] init];
-  __weak ClientConnectionViewController* weakSelf = self;
   __weak RemotingClient* weakClient = _client;
   __weak HostInfo* weakHostInfo = _hostInfo;
   [RemotingService.instance.authentication
       callbackWithAccessToken:^(RemotingAuthenticationStatus status,
                                 NSString* userEmail, NSString* accessToken) {
-        if (status == RemotingAuthenticationStatusSuccess) {
-          [weakClient connectToHost:weakHostInfo
-                           username:userEmail
-                        accessToken:accessToken];
-        } else {
-          LOG(ERROR) << "Failed to fetch access token for connectToHost. ("
-                     << status << ")";
-          weakSelf.lastError = SessionErrorOAuthTokenInvalid;
-          weakSelf.state = ClientViewError;
-        }
+        [weakClient connectToHost:weakHostInfo
+                         username:userEmail
+                      accessToken:accessToken];
       }];
-  self.state = ClientViewConnecting;
+  [self setState:ClientViewConnecting];
 }
 
 - (void)showConnectingState {
@@ -536,11 +524,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
       message = [MDCSnackbarMessage
           messageWithText:@"Error: SessionErrorUnknownError."];
       break;
-    case SessionErrorOAuthTokenInvalid:
-      message = [MDCSnackbarMessage
-          messageWithText:
-              @"Error: SessionErrorOAuthTokenInvalid. Please login again."];
-      break;
   }
   if (message.text) {
     [MDCSnackbarManager showMessage:message];
@@ -553,12 +536,8 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kHostSessionPinProvided
                     object:self
-                  userInfo:@{
-                    kHostSessionHostName : _remoteHostName,
-                    kHostSessionPin : pin,
-                    kHostSessionCreatePairing :
-                        [NSNumber numberWithBool:createPairing]
-                  }];
+                  userInfo:[NSDictionary dictionaryWithObject:pin
+                                                       forKey:kHostSessionPin]];
 }
 
 - (void)didTapCancel:(id)sender {
@@ -580,8 +559,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
       state = ClientViewConnecting;
       break;
     case SessionPinPrompt:
-      _pinEntryView.supportsPairing = [[[notification userInfo]
-          objectForKey:kSessionSupportsPairing] boolValue];
       state = ClientViewPinPrompt;
       break;
     case SessionConnected:
@@ -594,16 +571,13 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
       // If the session closes, offer the user to reconnect.
       state = ClientViewReconnect;
       break;
-    case SessionCancelled:
-      state = ClientViewClosed;
-      break;
     default:
       LOG(ERROR) << "Unknown State for Session, " << sessionDetails.state;
       return;
   }
   _lastError = sessionDetails.error;
   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-    self.state = state;
+    [self setState:state];
   }];
 }
 

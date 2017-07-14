@@ -94,7 +94,7 @@ public class OfflinePageBridge {
          * @param offlineId The offline ID of the deleted offline page.
          * @param clientId The client supplied ID of the deleted offline page.
          */
-        public void offlinePageDeleted(DeletedPageInfo deletedPage) {}
+        public void offlinePageDeleted(long offlineId, ClientId clientId) {}
     }
 
     /**
@@ -568,9 +568,9 @@ public class OfflinePageBridge {
     }
 
     @CalledByNative
-    void offlinePageDeleted(DeletedPageInfo deletedPage) {
+    void offlinePageDeleted(long offlineId, ClientId clientId) {
         for (OfflinePageModelObserver observer : mObservers) {
-            observer.offlinePageDeleted(deletedPage);
+            observer.offlinePageDeleted(offlineId, clientId);
         }
     }
 
@@ -593,12 +593,6 @@ public class OfflinePageBridge {
     @CalledByNative
     private static ClientId createClientId(String clientNamespace, String id) {
         return new ClientId(clientNamespace, id);
-    }
-
-    @CalledByNative
-    private static DeletedPageInfo createDeletedPageInfo(
-            long offlineId, String clientNamespace, String clientId, String requestOrigin) {
-        return new DeletedPageInfo(offlineId, clientNamespace, clientId, requestOrigin);
     }
 
     private static native boolean nativeIsOfflineBookmarksEnabled();

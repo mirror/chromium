@@ -619,10 +619,7 @@ void ChildThreadImpl::OnChannelConnected(int32_t peer_pid) {
 
 void ChildThreadImpl::OnChannelError() {
   on_channel_error_called_ = true;
-  // If this thread runs in the browser process, only Thread::Stop should
-  // stop its message loop. Otherwise, QuitWhenIdle could race Thread::Stop.
-  if (!IsInBrowserProcess())
-    base::MessageLoop::current()->QuitWhenIdle();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 bool ChildThreadImpl::Send(IPC::Message* msg) {

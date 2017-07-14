@@ -82,9 +82,9 @@ public class OfflinePageBridgeUnitTest {
         public long lastDeletedOfflineId;
         public ClientId lastDeletedClientId;
 
-        public void offlinePageDeleted(DeletedPageInfo deletedPage) {
-            lastDeletedOfflineId = deletedPage.getOfflineId();
-            lastDeletedClientId = deletedPage.getClientId();
+        public void offlinePageDeleted(long offlineId, ClientId clientId) {
+            lastDeletedOfflineId = offlineId;
+            lastDeletedClientId = clientId;
         }
     }
 
@@ -110,7 +110,7 @@ public class OfflinePageBridgeUnitTest {
 
         ClientId testClientId = new ClientId(TEST_NAMESPACE, TEST_ID);
         long testOfflineId = 123;
-        mBridge.offlinePageDeleted(new DeletedPageInfo(testOfflineId, testClientId, ""));
+        mBridge.offlinePageDeleted(testOfflineId, testClientId);
         assertEquals(testOfflineId, observer1.lastDeletedOfflineId);
         assertEquals(testClientId, observer1.lastDeletedClientId);
         assertEquals(testOfflineId, observer2.lastDeletedOfflineId);

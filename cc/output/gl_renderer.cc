@@ -59,7 +59,6 @@
 #include "third_party/skia/include/core/SkColorFilter.h"
 #include "third_party/skia/include/core/SkImage.h"
 #include "third_party/skia/include/core/SkSurface.h"
-#include "third_party/skia/include/gpu/GrBackendSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLInterface.h"
 #include "third_party/skia/include/gpu/gl/GrGLTypes.h"
@@ -639,17 +638,20 @@ static sk_sp<SkImage> WrapTexture(
     const ResourceProvider::ScopedReadLockGL& lock,
     GrContext* context,
     bool flip_texture) {
-  // Wrap a given texture in a Ganesh backend texture.
+  // Wrap a given texture in a Ganesh platform texture.
+  GrBackendTextureDesc backend_texture_description;
   GrGLTextureInfo texture_info;
   texture_info.fTarget = lock.target();
   texture_info.fID = lock.texture_id();
-  GrBackendTexture backend_texture(lock.size().width(), lock.size().height(),
-                                   kSkia8888_GrPixelConfig, texture_info);
-  GrSurfaceOrigin origin =
+  backend_texture_description.fWidth = lock.size().width();
+  backend_texture_description.fHeight = lock.size().height();
+  backend_texture_description.fConfig = kSkia8888_GrPixelConfig;
+  backend_texture_description.fTextureHandle =
+      skia::GrGLTextureInfoToGrBackendObject(texture_info);
+  backend_texture_description.fOrigin =
       flip_texture ? kBottomLeft_GrSurfaceOrigin : kTopLeft_GrSurfaceOrigin;
 
-  return SkImage::MakeFromTexture(context, backend_texture, origin,
-                                  kPremul_SkAlphaType, nullptr);
+  return SkImage::MakeFromTexture(context, backend_texture_description);
 }
 
 static sk_sp<SkImage> ApplyImageFilter(

@@ -28,7 +28,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/push_event_payload.h"
-#include "content/public/common/push_messaging_status.mojom.h"
+#include "content/public/common/push_messaging_status.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -47,7 +47,8 @@ void StatusNoOpKeepingRegistration(
     ServiceWorkerStatusCode status) {
 }
 
-void PushDeliveryNoOp(mojom::PushDeliveryStatus status) {}
+void PushDeliveryNoOp(PushDeliveryStatus status) {
+}
 
 const std::string GetVersionRunningStatusString(
     EmbeddedWorkerStatus running_status) {

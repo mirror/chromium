@@ -37,8 +37,6 @@ FakeSafeBrowsingDatabaseManager::~FakeSafeBrowsingDatabaseManager() {}
 bool FakeSafeBrowsingDatabaseManager::CheckUrlForSubresourceFilter(
     const GURL& url,
     Client* client) {
-  DCHECK(CanCheckSubresourceFilter());
-
   if (synchronous_failure_ && !url_to_threat_type_.count(url))
     return true;
 
@@ -95,10 +93,6 @@ void FakeSafeBrowsingDatabaseManager::CancelCheck(Client* client) {
 }
 bool FakeSafeBrowsingDatabaseManager::CanCheckResourceType(
     content::ResourceType /* resource_type */) const {
-  return true;
-}
-
-bool FakeSafeBrowsingDatabaseManager::CanCheckSubresourceFilter() const {
   return true;
 }
 

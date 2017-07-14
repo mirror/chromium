@@ -34,9 +34,7 @@ SystemHotkeyHelperMac* SystemHotkeyHelperMac::GetInstance() {
 
 void SystemHotkeyHelperMac::DeferredLoadSystemHotkeys() {
   base::PostDelayedTaskWithTraits(
-      FROM_HERE,
-      {base::TaskPriority::USER_VISIBLE,
-       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN, base::MayBlock()},
+      FROM_HERE, {base::MayBlock()},
       base::Bind(&SystemHotkeyHelperMac::LoadSystemHotkeys,
                  base::Unretained(this)),
       base::TimeDelta::FromSeconds(kLoadHotkeysDelaySeconds));

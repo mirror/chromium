@@ -33,7 +33,6 @@ class ArcNotificationDelegate : public message_center::NotificationDelegate {
   void Close(bool by_user) override;
   void Click() override;
   bool SettingsClick() override;
-  bool ShouldDisplaySettingsButton() override;
 
  private:
   // The destructor is private since this class is ref-counted.

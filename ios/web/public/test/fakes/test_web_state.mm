@@ -235,7 +235,8 @@ bool TestWebState::HasOpener() const {
 
 void TestWebState::TakeSnapshot(const SnapshotCallback& callback,
                                 CGSize target_size) const {
-  callback.Run(gfx::Image([[UIImage alloc] init]));
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, gfx::Image()));
 }
 
 base::WeakPtr<WebState> TestWebState::AsWeakPtr() {

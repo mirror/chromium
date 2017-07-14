@@ -43,6 +43,10 @@ class PrefRegistrySimple;
 class PrefService;
 class SigninClient;
 
+namespace browser_sync {
+class ProfileSyncService;
+}
+
 namespace password_manager {
 class PasswordStoreSigninNotifierImpl;
 }
@@ -73,6 +77,7 @@ class SigninManagerBase : public KeyedService {
     // Observers that can observer the password of the Google account after a
     // successful sign-in.
     friend class PasswordStoreSigninNotifierImpl;
+    friend class browser_sync::ProfileSyncService;
 
     // SigninManagers that fire |GoogleSigninSucceededWithPassword|
     // notifications.

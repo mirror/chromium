@@ -8,9 +8,11 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
@@ -91,9 +93,8 @@ public class DropdownPopupWindow extends ListPopupWindow {
         // An ugly hack to keep the popup from expanding on top of the keyboard.
         setInputMethodMode(INPUT_METHOD_NEEDED);
 
-        assert mAdapter != null : "Set the adapter before showing the popup.";
-        final int contentWidth = UiUtils.computeMaxWidthOfListAdapterItems(mAdapter);
-        final float anchorWidth = mAnchorView.getLayoutParams().width;
+        int contentWidth = measureContentWidth();
+        float anchorWidth = mAnchorView.getLayoutParams().width;
         assert anchorWidth > 0;
         Rect padding = new Rect();
         getBackground().getPadding(padding);
@@ -170,6 +171,21 @@ public class DropdownPopupWindow extends ListPopupWindow {
      */
     private int measureContentWidth() {
         assert mAdapter != null : "Set the adapter before showing the popup.";
-        return UiUtils.computeMaxWidthOfListAdapterItems(mAdapter);
+        int maxWidth = 0;
+        View[] itemViews = new View[mAdapter.getViewTypeCount()];
+        final int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        final int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            int type = mAdapter.getItemViewType(i);
+            itemViews[type] = mAdapter.getView(i, itemViews[type], null);
+            View itemView = itemViews[type];
+            LinearLayout.LayoutParams params =
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+            itemView.setLayoutParams(params);
+            itemView.measure(widthMeasureSpec, heightMeasureSpec);
+            maxWidth = Math.max(maxWidth, itemView.getMeasuredWidth());
+        }
+        return maxWidth;
     }
 }

@@ -20,12 +20,9 @@ namespace mojo {
 namespace edk {
 
 BrokerHost::BrokerHost(base::ProcessHandle client_process,
-                       ScopedPlatformHandle platform_handle,
-                       const ProcessErrorCallback& process_error_callback)
-    : process_error_callback_(process_error_callback)
+                       ScopedPlatformHandle platform_handle)
 #if defined(OS_WIN)
-      ,
-      client_process_(client_process)
+    : client_process_(client_process)
 #endif
 {
   CHECK(platform_handle.is_valid());
@@ -149,17 +146,12 @@ void BrokerHost::OnChannelMessage(const void* payload,
       break;
 
     default:
-      DLOG(ERROR) << "Unexpected broker message type: " << header->type;
+      LOG(ERROR) << "Unexpected broker message type: " << header->type;
       break;
   }
 }
 
-void BrokerHost::OnChannelError(Channel::Error error) {
-  if (process_error_callback_ &&
-      error == Channel::Error::kReceivedMalformedData) {
-    process_error_callback_.Run("Broker host received malformed message");
-  }
-
+void BrokerHost::OnChannelError() {
   delete this;
 }
 

@@ -981,7 +981,7 @@ void LayerTreeImpl::SetElementIdsForTesting() {
   }
 }
 
-bool LayerTreeImpl::UpdateDrawProperties() {
+bool LayerTreeImpl::UpdateDrawProperties(bool update_lcd_text) {
   if (!needs_update_draw_properties_)
     return true;
 
@@ -1095,6 +1095,24 @@ bool LayerTreeImpl::UpdateDrawProperties() {
         occlusion_tracker.ComputeVisibleRegionInScreen(this);
   }
 
+  // It'd be ideal if this could be done earlier, but when the raster source
+  // is updated from the main thread during push properties, update draw
+  // properties has not occurred yet and so it's not clear whether or not the
+  // layer can or cannot use lcd text.  So, this is the cleanup pass to
+  // determine if the raster source needs to be replaced with a non-lcd
+  // raster source due to draw properties.
+  if (update_lcd_text) {
+    // TODO(enne): Make LTHI::sync_tree return this value.
+    LayerTreeImpl* sync_tree = layer_tree_host_impl_->CommitToActiveTree()
+                                   ? layer_tree_host_impl_->active_tree()
+                                   : layer_tree_host_impl_->pending_tree();
+    // If this is not the sync tree, then it is not safe to update lcd text
+    // as it causes invalidations and the tiles may be in use.
+    DCHECK_EQ(this, sync_tree);
+    for (auto* layer : picture_layers_)
+      layer->UpdateCanUseLCDTextAfterCommit();
+  }
+
   // Resourceless draw do not need tiles and should not affect existing tile
   // priorities.
   if (!is_in_resourceless_software_draw_mode()) {
@@ -1120,17 +1138,6 @@ bool LayerTreeImpl::UpdateDrawProperties() {
   DCHECK(!needs_update_draw_properties_)
       << "CalcDrawProperties should not set_needs_update_draw_properties()";
   return true;
-}
-
-void LayerTreeImpl::UpdateCanUseLCDText() {
-  // If this is not the sync tree, then it is not safe to update lcd text
-  // as it causes invalidations and the tiles may be in use.
-  DCHECK(IsSyncTree());
-  bool tile_priorities_updated = false;
-  for (auto* layer : picture_layers_)
-    tile_priorities_updated |= layer->UpdateCanUseLCDTextAfterCommit();
-  if (tile_priorities_updated)
-    DidModifyTilePriorities();
 }
 
 void LayerTreeImpl::BuildLayerListAndPropertyTreesForTesting() {
@@ -1650,20 +1657,15 @@ void LayerTreeImpl::RegisterScrollbar(ScrollbarLayerImplBase* scrollbar_layer) {
     return;
 
   auto& scrollbar_ids = element_id_to_scrollbar_layer_ids_[scroll_element_id];
-  int& scrollbar_layer_id = scrollbar_layer->orientation() == HORIZONTAL
-                                ? scrollbar_ids.horizontal
-                                : scrollbar_ids.vertical;
-
-  // We used to DCHECK this was not the case but this can occur on Android: as
-  // the visual viewport supplies scrollbars for the outer viewport, if the
-  // outer viewport is changed, we race between updating the visual viewport
-  // scrollbars and registering new scrollbars on the old outer viewport. It'd
-  // be nice if we could fix this to be cleaner but its harmless to just
-  // unregister here.
-  if (scrollbar_layer_id != Layer::INVALID_ID)
-    UnregisterScrollbar(scrollbar_layer);
-
-  scrollbar_layer_id = scrollbar_layer->id();
+  if (scrollbar_layer->orientation() == HORIZONTAL) {
+    DCHECK_EQ(scrollbar_ids.horizontal, Layer::INVALID_ID)
+        << "Existing scrollbar should have been unregistered.";
+    scrollbar_ids.horizontal = scrollbar_layer->id();
+  } else {
+    DCHECK_EQ(scrollbar_ids.vertical, Layer::INVALID_ID)
+        << "Existing scrollbar should have been unregistered.";
+    scrollbar_ids.vertical = scrollbar_layer->id();
+  }
 
   if (IsActiveTree() && scrollbar_layer->is_overlay_scrollbar() &&
       scrollbar_layer->GetScrollbarAnimator() !=
@@ -1917,7 +1919,8 @@ LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPoint(
     const gfx::PointF& screen_space_point) {
   if (layer_list_.empty())
     return NULL;
-  if (!UpdateDrawProperties())
+  bool update_lcd_text = false;
+  if (!UpdateDrawProperties(update_lcd_text))
     return NULL;
   FindClosestMatchingLayerState state;
   FindClosestMatchingLayer(screen_space_point, layer_list_[0],
@@ -1956,7 +1959,8 @@ LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion(
     const gfx::PointF& screen_space_point) {
   if (layer_list_.empty())
     return NULL;
-  if (!UpdateDrawProperties())
+  bool update_lcd_text = false;
+  if (!UpdateDrawProperties(update_lcd_text))
     return NULL;
   FindTouchEventLayerFunctor func = {screen_space_point};
   FindClosestMatchingLayerState state;

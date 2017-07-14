@@ -67,11 +67,8 @@ class PLATFORM_EXPORT ResourceFetcher
 
  public:
   static ResourceFetcher* Create(FetchContext* context,
-                                 RefPtr<WebTaskRunner> task_runner = nullptr) {
-    return new ResourceFetcher(
-        context, task_runner
-                     ? std::move(task_runner)
-                     : context->GetFrameScheduler()->LoadingTaskRunner());
+                                 RefPtr<WebTaskRunner> task_runner) {
+    return new ResourceFetcher(context, std::move(task_runner));
   }
   virtual ~ResourceFetcher();
   DECLARE_VIRTUAL_TRACE();

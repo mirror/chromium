@@ -1,6 +1,5 @@
 <link rel="import" href="chrome://resources/cr_elements/cr_drawer/cr_drawer.html">
 <link rel="import" href="chrome://resources/cr_elements/cr_toolbar/cr_toolbar.html">
-<link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="chrome://resources/html/cr.html">
 <link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="chrome://resources/html/polymer.html">
@@ -25,7 +24,11 @@
 
 <dom-module id="extensions-manager">
   <template>
-    <style include="cr-hidden-style">
+    <style>
+      [hidden] {
+        display: none !important;
+      }
+
       :host {
         height: 100%;
       }
@@ -86,7 +89,8 @@
           selected="items-list">
         <extensions-item-list id="items-list" items="[[extensions]]"
             delegate="[[itemDelegate]]" in-dev-mode="[[inDevMode]]"
-            filter="[[filter]]" hidden$="[[!didInitPage_]]">
+            filter="[[filter]]"
+            hidden$="[[computeListHidden_(extensions, extensions.splices, apps, apps.splices)]]">
         </extensions-item-list>
         <extensions-detail-view id="details-view" delegate="[[itemDelegate]]"
             in-dev-mode="[[inDevMode]]" data="[[detailViewItem_]]"

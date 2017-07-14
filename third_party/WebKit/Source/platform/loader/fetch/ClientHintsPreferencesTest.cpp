@@ -27,34 +27,14 @@ TEST_F(ClientHintsPreferencesTest, Basic) {
 
   for (const auto& test_case : cases) {
     ClientHintsPreferences preferences;
-    preferences.UpdateFromAcceptClientHintsHeader(test_case.header_value,
-                                                  nullptr);
-    EXPECT_EQ(test_case.expectation_resource_width,
-              preferences.ShouldSend(kWebClientHintsTypeResourceWidth));
-    EXPECT_EQ(test_case.expectation_dpr,
-              preferences.ShouldSend(kWebClientHintsTypeDpr));
-    EXPECT_EQ(test_case.expectation_viewport_width,
-              preferences.ShouldSend(kWebClientHintsTypeViewportWidth));
+    const char* value = test_case.header_value;
 
-    // Calling UpdateFromAcceptClientHintsHeader with empty header should have
-    // no impact on client hint preferences.
-    preferences.UpdateFromAcceptClientHintsHeader("", nullptr);
+    preferences.UpdateFromAcceptClientHintsHeader(value, nullptr);
     EXPECT_EQ(test_case.expectation_resource_width,
-              preferences.ShouldSend(kWebClientHintsTypeResourceWidth));
-    EXPECT_EQ(test_case.expectation_dpr,
-              preferences.ShouldSend(kWebClientHintsTypeDpr));
+              preferences.ShouldSendResourceWidth());
+    EXPECT_EQ(test_case.expectation_dpr, preferences.ShouldSendDPR());
     EXPECT_EQ(test_case.expectation_viewport_width,
-              preferences.ShouldSend(kWebClientHintsTypeViewportWidth));
-
-    // Calling UpdateFromAcceptClientHintsHeader with an invalid header should
-    // have no impact on client hint preferences.
-    preferences.UpdateFromAcceptClientHintsHeader("foobar", nullptr);
-    EXPECT_EQ(test_case.expectation_resource_width,
-              preferences.ShouldSend(kWebClientHintsTypeResourceWidth));
-    EXPECT_EQ(test_case.expectation_dpr,
-              preferences.ShouldSend(kWebClientHintsTypeDpr));
-    EXPECT_EQ(test_case.expectation_viewport_width,
-              preferences.ShouldSend(kWebClientHintsTypeViewportWidth));
+              preferences.ShouldSendViewportWidth());
   }
 }
 

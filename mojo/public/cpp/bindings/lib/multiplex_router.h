@@ -101,7 +101,6 @@ class MOJO_CPP_BINDINGS_EXPORT MultiplexRouter
   void DetachEndpointClient(
       const ScopedInterfaceEndpointHandle& handle) override;
   void RaiseError() override;
-  bool PrefersSerializedMessages() override;
 
   // ---------------------------------------------------------------------------
   // The following public methods are called on the creating thread.

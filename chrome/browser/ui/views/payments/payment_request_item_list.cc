@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/payments/payment_request_item_list.h"
 
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
+#include "chrome/browser/ui/views/payments/payment_request_row_view.h"
 #include "chrome/browser/ui/views/payments/payment_request_views_util.h"
 #include "components/payments/content/payment_request_state.h"
 #include "components/strings/grit/components_strings.h"
@@ -26,18 +27,7 @@ namespace payments {
 
 namespace {
 
-constexpr SkColor kCheckmarkColor = 0xFF609265;
-
-constexpr gfx::Insets kRowInsets = gfx::Insets(
-    kPaymentRequestRowVerticalInsets,
-    kPaymentRequestRowHorizontalInsets,
-    kPaymentRequestRowVerticalInsets,
-    kPaymentRequestRowHorizontalInsets + kPaymentRequestRowExtraRightInset);
-
-// The space between the checkmark, extra view, and edit button.
-constexpr int kExtraViewSpacing = 16;
-
-constexpr int kEditIconSize = 16;
+const SkColor kCheckmarkColor = 0xFF609265;
 
 }  // namespace
 
@@ -45,10 +35,8 @@ PaymentRequestItemList::Item::Item(PaymentRequestSpec* spec,
                                    PaymentRequestState* state,
                                    PaymentRequestItemList* list,
                                    bool selected,
-                                   bool clickable,
                                    bool show_edit_button)
-    : PaymentRequestRowView(this, clickable, kRowInsets),
-      spec_(spec),
+    : spec_(spec),
       state_(state),
       list_(list),
       selected_(selected),
@@ -56,12 +44,20 @@ PaymentRequestItemList::Item::Item(PaymentRequestSpec* spec,
 
 PaymentRequestItemList::Item::~Item() {}
 
-void PaymentRequestItemList::Item::Init() {
-  std::unique_ptr<views::View> content =
-      CreateContentView(&accessible_item_description_);
+std::unique_ptr<views::View> PaymentRequestItemList::Item::CreateItemView() {
+  base::string16 accessible_content;
+  std::unique_ptr<views::View> content = CreateContentView(&accessible_content);
 
-  views::GridLayout* layout = new views::GridLayout(this);
-  SetLayoutManager(layout);
+  const gfx::Insets row_insets(
+      kPaymentRequestRowVerticalInsets, kPaymentRequestRowHorizontalInsets,
+      kPaymentRequestRowVerticalInsets,
+      kPaymentRequestRowHorizontalInsets + kPaymentRequestRowExtraRightInset);
+  std::unique_ptr<PaymentRequestRowView> row =
+      base::MakeUnique<PaymentRequestRowView>(this,
+                                              /* clickable= */ IsEnabled(),
+                                              row_insets);
+  views::GridLayout* layout = new views::GridLayout(row.get());
+  row->SetLayoutManager(layout);
 
   // Add a column for the item's content view.
   views::ColumnSet* columns = layout->AddColumnSet(0);
@@ -72,6 +68,8 @@ void PaymentRequestItemList::Item::Init() {
   columns->AddColumn(views::GridLayout::TRAILING, views::GridLayout::CENTER, 0,
                      views::GridLayout::USE_PREF, 0, 0);
 
+  // The space between the checkmark, extra view, and edit button.
+  constexpr int kExtraViewSpacing = 16;
   std::unique_ptr<views::View> extra_view = CreateExtraView();
   if (extra_view) {
     columns->AddPaddingColumn(0, kExtraViewSpacing);
@@ -80,6 +78,7 @@ void PaymentRequestItemList::Item::Init() {
                        0, views::GridLayout::USE_PREF, 0, 0);
   }
 
+  constexpr int kEditIconSize = 16;
   if (show_edit_button_) {
     columns->AddPaddingColumn(0, kExtraViewSpacing);
     // Add a column for the edit_button if it exists.
@@ -92,7 +91,7 @@ void PaymentRequestItemList::Item::Init() {
   content->set_can_process_events_within_subtree(false);
   layout->AddView(content.release());
 
-  checkmark_ = CreateCheckmark(selected() && clickable());
+  checkmark_ = CreateCheckmark(selected() && IsEnabled());
   layout->AddView(checkmark_.get());
 
   if (extra_view)
@@ -113,7 +112,11 @@ void PaymentRequestItemList::Item::Init() {
     layout->AddView(edit_button);
   }
 
-  UpdateAccessibleName();
+  row->SetAccessibleName(
+      l10n_util::GetStringFUTF16(IDS_PAYMENTS_ROW_ACCESSIBLE_NAME_FORMAT,
+                                 accessible_content, base::string16()));
+
+  return std::move(row);
 }
 
 void PaymentRequestItemList::Item::SetSelected(bool selected, bool notify) {
@@ -123,8 +126,6 @@ void PaymentRequestItemList::Item::SetSelected(bool selected, bool notify) {
   // instantiated.
   if (checkmark_)
     checkmark_->SetVisible(selected_);
-
-  UpdateAccessibleName();
 
   if (notify)
     SelectedStateChanged();
@@ -140,7 +141,6 @@ std::unique_ptr<views::ImageView> PaymentRequestItemList::Item::CreateCheckmark(
   checkmark->SetImage(
       gfx::CreateVectorIcon(views::kMenuCheckIcon, kCheckmarkColor));
   checkmark->SetVisible(selected);
-  checkmark->SetFocusBehavior(views::View::FocusBehavior::NEVER);
   return checkmark;
 }
 
@@ -159,17 +159,6 @@ void PaymentRequestItemList::Item::ButtonPressed(views::Button* sender,
   }
 }
 
-void PaymentRequestItemList::Item::UpdateAccessibleName() {
-  base::string16 accessible_content =
-      selected_ ? l10n_util::GetStringFUTF16(
-                      IDS_PAYMENTS_ROW_ACCESSIBLE_NAME_SELECTED_FORMAT,
-                      GetNameForDataType(), accessible_item_description_)
-                : l10n_util::GetStringFUTF16(
-                      IDS_PAYMENTS_ROW_ACCESSIBLE_NAME_FORMAT,
-                      GetNameForDataType(), accessible_item_description_);
-  SetAccessibleName(accessible_content);
-}
-
 PaymentRequestItemList::PaymentRequestItemList() : selected_item_(nullptr) {}
 
 PaymentRequestItemList::~PaymentRequestItemList() {}
@@ -185,10 +174,6 @@ void PaymentRequestItemList::AddItem(
   }
 }
 
-void PaymentRequestItemList::Clear() {
-  items_.clear();
-}
-
 std::unique_ptr<views::View> PaymentRequestItemList::CreateListView() {
   std::unique_ptr<views::View> content_view = base::MakeUnique<views::View>();
 
@@ -198,7 +183,7 @@ std::unique_ptr<views::View> PaymentRequestItemList::CreateListView() {
   content_view->SetLayoutManager(layout);
 
   for (auto& item : items_)
-    content_view->AddChildView(item.release());
+    content_view->AddChildView(item->CreateItemView().release());
 
   return content_view;
 }

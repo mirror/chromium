@@ -10,6 +10,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/html/HTMLAreaElement.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/layout/ImageQualityController.h"
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutReplaced.h"
 #include "core/layout/TextRunConstructor.h"
@@ -148,8 +149,21 @@ void ImagePainter::PaintIntoRect(GraphicsContext& context,
   if (!image || image->IsNull())
     return;
 
+  // FIXME: why is interpolation quality selection not included in the
+  // Instrumentation reported cost of drawing an image?
+  double frame_time = layout_image_.GetFrameView()
+                          ->GetPage()
+                          ->GetChromeClient()
+                          .LastFrameTimeMonotonic();
+  const Settings* settings = layout_image_.GetFrame()
+                                 ? layout_image_.GetFrame()->GetSettings()
+                                 : nullptr;
   InterpolationQuality interpolation_quality =
-      layout_image_.StyleRef().GetInterpolationQuality();
+      ImageQualityController::GetImageQualityController()
+          ->ChooseInterpolationQuality(
+              layout_image_, layout_image_.StyleRef(), settings, image.Get(),
+              image.Get(), LayoutSize(pixel_snapped_dest_rect.Size()),
+              frame_time);
 
   FloatRect src_rect = image->Rect();
   // If the content rect requires clipping, adjust |srcRect| and

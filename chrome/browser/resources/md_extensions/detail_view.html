@@ -1,4 +1,3 @@
-<link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="chrome://resources/html/cr.html">
 <link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="chrome://resources/html/polymer.html">
@@ -13,7 +12,11 @@
 
 <dom-module id="extensions-detail-view">
   <template>
-    <style include="iron-flex cr-hidden-style">
+    <style include="iron-flex">
+      [hidden] {
+        display: none !important;
+      }
+
       :host {
         display: flex;
         justify-content: center;
