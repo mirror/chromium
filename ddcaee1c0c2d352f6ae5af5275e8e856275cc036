@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4fd3e088_e0943605",
+        "filename": "chrome/browser/resources/settings/controls/controlled_button.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T19:09:59Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be an explicit \u003clink rel\u003d\"import\"...\u003e to the file that defines --cr-button-edge-spacing. Or do we assume that settings_shared_css.html transitively includes that other element?",
+      "revId": "ddcaee1c0c2d352f6ae5af5275e8e856275cc036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05c3a00b_ac9ae3ad",
         "filename": "ui/webui/resources/cr_elements/paper_button_style_css.html",
         "patchSetId": 3
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "I actually thought about that but not quite sure.. if we have it in shared_vars_css, then would this file import shared_vars_css, which will then bring in a bunch of unused variables?\n\nOn the other hand, this variable\u0027s also used in other places of md-settings, which I guess is fine for now because settings_shared_style.html does import this file, but what if one day it doesn\u0027t? Do we move it to shared_vars_css at that point?\n\nThoughts?",
       "parentUuid": "05c3a00b_ac9ae3ad",
+      "revId": "ddcaee1c0c2d352f6ae5af5275e8e856275cc036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4887bad2_63464a94",
+        "filename": "ui/webui/resources/cr_elements/paper_button_style_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T19:09:59Z",
+      "side": 1,
+      "message": "In general, explicitly declaring all direct dependencies is a good approach. It prevents the case you are describing. See also my comment at controlled_button.html.",
+      "parentUuid": "f6ca0fa4_4023c4ec",
       "revId": "ddcaee1c0c2d352f6ae5af5275e8e856275cc036",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -72,6 +107,30 @@
       "side": 1,
       "message": "The |name| for hidden_style_css, shared_style_css, shared_vars_css etc. all have \"CR_\" immediately beforehand, so I was following that. Do you think those \"CR_\"s should all be removed?",
       "parentUuid": "4353292f_a80b7a78",
+      "range": {
+        "startLine": 179,
+        "startChar": 19,
+        "endLine": 179,
+        "endChar": 59
+      },
+      "revId": "ddcaee1c0c2d352f6ae5af5275e8e856275cc036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d971659e_d7b4661e",
+        "filename": "ui/webui/resources/cr_elements_resources.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T19:09:59Z",
+      "side": 1,
+      "message": "Yes. Per my understanding the convention is\nfoo_bar_baz/my_element_css.html -\u003e IDR_FOO_BAR_BAZ_MY_ELEMENT_CSS_HTML\n\nI would not rename those in the same CL though. Suggesting to simply change the one you are adding here, and rename the others on a separate CL.",
+      "parentUuid": "3cda1d03_3ddab2bf",
       "range": {
         "startLine": 179,
         "startChar": 19,
