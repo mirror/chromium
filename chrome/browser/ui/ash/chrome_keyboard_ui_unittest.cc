@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/keyboard/content/keyboard_ui_content.h"
+#include "chrome/browser/ui/ash/chrome_keyboard_ui.h"
 
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_content_client_initializer.h"
@@ -11,21 +11,17 @@
 #include "ui/aura/window.h"
 #include "ui/gfx/geometry/rect.h"
 
-namespace keyboard {
-namespace {
-
-class TestKeyboardUIContent : public KeyboardUIContent {
+class TestChromeKeyboardUI : public ChromeKeyboardUI {
  public:
-  TestKeyboardUIContent(content::BrowserContext* context,
-                        content::WebContents* contents)
-      : KeyboardUIContent(context), contents_(contents) {}
-  ~TestKeyboardUIContent() override {}
+  TestChromeKeyboardUI(content::BrowserContext* context,
+                       content::WebContents* contents)
+      : ChromeKeyboardUI(context), contents_(contents) {}
+  ~TestChromeKeyboardUI() override {}
 
   ui::InputMethod* GetInputMethod() override { return nullptr; }
-  void RequestAudioInput(
-      content::WebContents* web_contents,
-      const content::MediaStreamRequest& request,
-      const content::MediaResponseCallback& callback) override {}
+  void RequestAudioInput(content::WebContents* web_contents,
+                         const content::MediaStreamRequest& request,
+                         const content::MediaResponseCallback& callback) {}
 
   content::WebContents* CreateWebContents() override { return contents_; }
 
@@ -33,9 +29,7 @@ class TestKeyboardUIContent : public KeyboardUIContent {
   content::WebContents* contents_;
 };
 
-}  // namespace
-
-class KeyboardUIContentTest : public content::RenderViewHostTestHarness {
+class ChromeKeyboardUITest : public content::RenderViewHostTestHarness {
  public:
   void SetUp() override {
     initializer_ = base::MakeUnique<content::TestContentClientInitializer>();
@@ -52,9 +46,9 @@ class KeyboardUIContentTest : public content::RenderViewHostTestHarness {
 };
 
 // A test for crbug.com/734534
-TEST_F(KeyboardUIContentTest, DoesNotCrashWhenParentDoesNotExist) {
+TEST_F(ChromeKeyboardUITest, DoesNotCrashWhenParentDoesNotExist) {
   content::WebContents* contents = CreateTestWebContents();
-  TestKeyboardUIContent keyboard_ui(contents->GetBrowserContext(), contents);
+  TestChromeKeyboardUI keyboard_ui(contents->GetBrowserContext(), contents);
 
   EXPECT_FALSE(keyboard_ui.HasContentsWindow());
   aura::Window* view = keyboard_ui.GetContentsWindow();
@@ -65,5 +59,3 @@ TEST_F(KeyboardUIContentTest, DoesNotCrashWhenParentDoesNotExist) {
   // Change window size to trigger OnWindowBoundsChanged.
   view->SetBounds(gfx::Rect(0, 0, 1200, 800));
 }
-
-}  // namespace keyboard
