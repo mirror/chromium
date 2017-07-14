@@ -22,6 +22,30 @@
       "revId": "0599206311233bf62ffe73f06694257440e452c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd80c578_db194973",
+        "filename": "components/feature_engagement_tracker/test/test_feature_engagement_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-14T14:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3bdb13d_432ec831",
+      "range": {
+        "startLine": 105,
+        "startChar": 51,
+        "endLine": 105,
+        "endChar": 55
+      },
+      "revId": "0599206311233bf62ffe73f06694257440e452c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
