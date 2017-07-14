@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "bff14baf_9ed655e1",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-14T16:10:58Z",
+      "side": 1,
+      "message": "For your second question, WebView defaults to MIXED_CONTENT_NEVER_ALLOW. For applications targeting Android Kitkat and below, the default is to MIXED_CONTENT_ALWAYS_ALLOW. Either way this is an app setting.",
+      "parentUuid": "9745dfef_b91a9e35",
+      "range": {
+        "startLine": 687,
+        "startChar": 53,
+        "endLine": 687,
+        "endChar": 56
+      },
+      "revId": "5461ed1cff2ba6976bd73f2bffdfe1edad3d939f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9a659be_d844f107",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 1
