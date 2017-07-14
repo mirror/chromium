@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "0b61f5cb_1684cb1e",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "We\u0027ve been keeping lifetime management separate as that allows for a bit more flexibility. Can have one delegate for multiple instances, allocate the delegate as part of some other object or on the stack in unit tests.",
+      "parentUuid": "413d2849_d6ec9bcf",
+      "revId": "1ea0201f596c1a9dbe85b1456607abfbacc0340e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61bed65a_1bfc1bfc",
         "filename": "components/exo/data_device.h",
         "patchSetId": 5

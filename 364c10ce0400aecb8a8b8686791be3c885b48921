@@ -1,0 +1,1058 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97512dd2_ada31c44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "The term \u0027wrappers\u0027 confused me and I don\u0027t think they are the best description. This patch seems to be adding stubs. s/wrappers/stubs/ here and below?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ec72dd_1f0e73fd",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: we avoid referring to wayland specifics in exo code outside exo/wayland directory. please explain what this class is used for here instead. some copy and paste of wayland interface description is fine.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2571e346_c22c24b7",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: comments should end with \".\" even when they are short.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac78f6f_f2b6d659",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "what is \u0027serial\u0027 from a non-wayland exo point of view?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0a2d24_50a23988",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa5cb84_23b69125",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "\"Handles events on data devices in context-specific ways.\" would be more consistent with other delegates. Maybe not the most useful comment but at least we\u0027re consistent.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6479eb16_88cb93b9",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit:\n\n// Called at the top of the data device\u0027s destructor, to give observers a\n// chance to remove themselves.\n\nto be consistent with other delegates",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a19d660_212e7e97",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: add argument name: \"DataDevice* data_device\"",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140e47ab_bcbe165b",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: we\u0027ve been using language such as \"Called when keyboard modifier state changed.\" for these type of comments in other delegates. ie. \"called\" instead of notifies. please adjust these comments to match that. makes reading exo code more consistent and as a result easier.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0aabf99_f3e571ce",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "do you have to pass this by value? \"const std::vector\u003cstd::string\u003e\u0026 mime_types\" instead?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4746d5c2_4529bd5b",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "uint32_t for these makes sense at the protocol level but not here. we should add an enum to for these actions at a minimum. flat_set might be good for source_actions and preferred over using a bitmask",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6084d40a_7b6b525f",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "Comment doesn\u0027t make it perfectly clear when this is called. Is \"Called during a drag operation when pointer enters |surface|.\" correct? Something like it would be useful as a comment in that case I think. Some for comments below.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57fa4cfc_25cf6fca",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "where does |serial| come from? is this not the responsibility of the protocol bindings. ie. wayland code in server.cc?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b1c4eb_5307d49f",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "Use \"const gfx::PointF\u0026 location\" instead of float x, y",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd46804_8933a120",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "why \"class\" and not just \"const DataOffer\u0026 data_offer\"?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58db5fd4_bf3a8dda",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "\"base::TimeTicks time_stamp, const gfx::PointF\u0026 location\" please",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fadf94_16490685",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "why \"class\" and not just \"const DataOffer\u0026 data_offer\"?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4857556_cfa23621",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "\"virtual ~DataDeviceDelegate() {}\" or we change all other abstract classes in exo to use \"\u003d default\" in a patch prior to this if that\u0027s preferred.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7351c5a2_c527938b",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: blank line after this include",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3abc1cd_e90d48eb",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "Please describe this properly without referring to wayland too. Copy and paste of wayland description that is adjusted to match exo implementation is fine.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271bab55_176de836",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: comments should end with \".\"",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c115b74_c74e6f44",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "Can you explain how |fd| will be used for this?\n\nnit: comments should end with \".\"",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f54523d_937c308e",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: comments should end with \".\" and s/Notifies that/Called when/",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d175871_d4886a3c",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: comments should end with \".\"",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6636c5_00973a36",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "Use enum for actions and flat_set for a set of them. See my other comment regarding this.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a2194d_bed6fe81",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "what is this needed for?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1d7269_312c0a51",
+        "filename": "components/exo/data_offer_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "See my comments on the other delegate class. Same applies here.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f3429d_9db6fc96",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "what are these includes for?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700b7cb7_b5d6c2c9",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "and these includes?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a66f59_918da45a",
+        "filename": "components/exo/data_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "same request as other classes. dont\u0027 refer to wayland here",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88770c70_27f3b97b",
+        "filename": "components/exo/data_source_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "Same comments apply here as other delegate classes.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22d5f11_72d3965f",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2652,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: \"// Overridden from DataSourceDelegate:\" comment above this",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a69f2a_16bc4ace",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2653,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: no blank line between DataSourceDelegate functions as they should be in the same group under the \"Overridden from..\" comment",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d729f80_172b5dc0",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a060d1_fff07b1f",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2661,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d607d71b_628b0bf4",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2663,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed62cd3a_49db4111",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2667,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba52b84_d4f2119c",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2669,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf97bd7_bb7782c7",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2675,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: s/source_/data_source_resource_/",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02ee0ce_1cc544aa",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2706,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: \"// Overridden from DataOfferDelegate:\" comment above this",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b38218_2c84bcdb",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2707,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: no blank line between DataOfferDelegate functions as they should be in the same group under the \"Overridden from..\" comment",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28987e9d_c62feee9",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2711,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90655c2_bfec534f",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2715,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f868ecf3_5804bef9",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2720,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "We should use a UI property for this. See how we use kSurfaceResourceKey to get the resource associated with a Surface.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12da128_2ae43cc9",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2726,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: s/offer_/data_offer_resource_/",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9664b8cf_ca81540b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2769,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: s/device/device_resource/",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d6733a_acc86eec",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2773,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: no blank line between DataDeviceDelegate functions as they should be in the same group under the \"Overridden from..\" comment",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97d0cc3_e271c23a",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2777,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: no need to use \u0027const\u0027 for local variables. better to be consistent and not use it here",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4eb7e15_7ba12271",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2778,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "what it client doesn\u0027t support version 3? we need to use the highest version supported by both us and the client here. see other resource types for examples of who to do this.",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bf1e44_d1f98fc5",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: remove \"/* use available ID */\" or add the same comment in other places where we generate server side resources",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b249691c_889b552f",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2788,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492fe672_81c5c4d4",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2799,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647fe7f9_2285ebe5",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a79b6f6_3d214ead",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2806,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cee80b_fc82215f",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2808,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3babb94b_a7a5c859",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2816,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: s/device_/data_device_resource_/",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44af5bc4_0623549b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2854,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: no need to use \u0027const\u0027 for local variables. better to be consistent and not use it here",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a1d1db_cccf4bd6",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2855,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "version must be supported by client. what if version 3 is not?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f576cc2_0cce161a",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2865,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: no need to use \u0027const\u0027 for local variables. better to be consistent and not use it here",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223ccba3_0d026154",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2866,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "version must be supported by client. what if version 3 is not?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22860e7f_afb943cc",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2881,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "nit: no need to use \u0027const\u0027 for local variables. better to be consistent and not use it here",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0233de45_257ff1d6",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T11:31:27Z",
+      "side": 1,
+      "message": "version must be supported by client. what if version 3 is not?",
+      "revId": "364c10ce0400aecb8a8b8686791be3c885b48921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
