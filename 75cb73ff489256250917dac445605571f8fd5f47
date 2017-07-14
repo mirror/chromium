@@ -69,6 +69,24 @@
       "revId": "75cb73ff489256250917dac445605571f8fd5f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18001b67_aa250da2",
+        "filename": "media/video/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-07-14T06:53:00Z",
+      "side": 1,
+      "message": "\"//gpu\" dependency will work in deps and \"//media/audio\" can be removed from public_deps.",
+      "parentUuid": "2f7a6b26_82c81d41",
+      "revId": "75cb73ff489256250917dac445605571f8fd5f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
