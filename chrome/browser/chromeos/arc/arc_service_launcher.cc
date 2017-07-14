@@ -101,8 +101,6 @@ void ArcServiceLauncher::Initialize() {
   arc_service_manager_->AddService(
       base::MakeUnique<ArcBootErrorNotification>(arc_bridge_service));
   arc_service_manager_->AddService(
-      base::MakeUnique<ArcClipboardBridge>(arc_bridge_service));
-  arc_service_manager_->AddService(
       base::MakeUnique<ArcCrashCollectorBridge>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcDownloadsWatcherService>(arc_bridge_service));
@@ -202,6 +200,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   // List in lexicographical order.
   ArcAccessibilityHelperBridge::GetForBrowserContext(profile);
   ArcAuthService::GetForBrowserContext(profile);
+  ArcClipboardBridge::GetForBrowserContext(profile);
 
   arc_service_manager_->AddService(base::MakeUnique<ArcBootPhaseMonitorBridge>(
       arc_service_manager_->arc_bridge_service(),
