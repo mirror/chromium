@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2d6cd58_a636cd4d",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 2607,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-14T00:20:55Z",
+      "side": 1,
+      "message": "This is probably ok. It potentially means that SetNeedsBeginFrame could be delayed a little bit (since it\u0027s on the same interface), which could cause an extraneous BeginFrame being sent while unwanted, or delay for the next BeginFrame which could make us lose a frame.\n\nI don\u0027t know that it would really be any worse than as it was before the mojo switch - when we get here the shared bitmap allocation should already be in the pipe so it should really just be a matter of message ordering.\n\nIf we find that in practice we block for long, maybe we can replace saved_frame_ by a queue, but that\u0027s probably not needed right now.\n\nIt would be useful though to add a TRACE_EVENT_BEGIN here and TRACE_EVENT_END in DidAllocateSharedBitmap after the Resume, so that we can see in traces that messages are paused and can detect issues related to that.",
+      "revId": "1584b3c7ff7adc0d8993882f67b5ef078b05ac0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
