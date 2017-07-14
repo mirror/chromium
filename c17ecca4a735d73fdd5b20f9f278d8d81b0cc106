@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8ec30c8_a141e821",
+        "filename": "chrome/browser/chromeos/enrollment_dialog_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-14T18:59:26Z",
+      "side": 1,
+      "message": "Oops, I haven\u0027t finished going through the bot failures.\n\nI considered making this change but I thought there was a place that needed to not call SetLayoutManager right away... in retrospect that doesn\u0027t make a lot of sense. I think it\u0027s appropriate to do in this change, since I\u0027m changing most callsites anyway.",
+      "parentUuid": "508ea3fe_18fccd38",
+      "revId": "c17ecca4a735d73fdd5b20f9f278d8d81b0cc106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc03ae23_76456258",
         "filename": "chrome/browser/chromeos/options/vpn_config_view.cc",
         "patchSetId": 8
@@ -50,6 +68,24 @@
       "revId": "c17ecca4a735d73fdd5b20f9f278d8d81b0cc106",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781bd36a_77bdba92",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-14T18:59:26Z",
+      "side": 1,
+      "message": "The entire method is duplicated. I\u0027d like to refactor it someday.",
+      "parentUuid": "1066209f_3e212957",
+      "revId": "c17ecca4a735d73fdd5b20f9f278d8d81b0cc106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
