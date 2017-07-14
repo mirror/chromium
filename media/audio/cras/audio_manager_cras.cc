@@ -7,6 +7,8 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <map>
+#include <utility>
 
 #include "base/command_line.h"
 #include "base/environment.h"
@@ -258,6 +260,63 @@ AudioParameters AudioManagerCras::GetInputStreamParameters(
     }
   }
   return params;
+}
+
+std::string AudioManagerCras::GetAssociatedOutputDeviceID(
+    const std::string& input_device_id) {
+  if (!base::FeatureList::IsEnabled(features::kEnumerateAudioDevices))
+    return "";
+
+  chromeos::AudioDeviceList devices;
+  chromeos::CrasAudioHandler::Get()->GetAudioDevices(&devices);
+
+  if ((beamforming_on_device_id_ &&
+       input_device_id == beamforming_on_device_id_) ||
+      (beamforming_off_device_id_ &&
+       input_device_id == beamforming_off_device_id_)) {
+    // These are special devices derived from the internal mic array, so they
+    // should be associated to the internal speaker.
+    auto device_it = std::find_if(
+        devices.begin(), devices.end(),
+        [](const chromeos::AudioDevice& device) {
+          return device.type == chromeos::AUDIO_TYPE_INTERNAL_SPEAKER;
+        });
+    return device_it == devices.end() ? ""
+                                      : base::Uint64ToString(device_it->id);
+  }
+
+  // At this point, we know we have an ordinary input device, so we find it in
+  // the devices array and look up its device_name, which identifies which
+  // hardware device it belongs to.
+  auto input_device_it =
+      std::find_if(devices.begin(), devices.end(),
+                   [&input_device_id](const chromeos::AudioDevice& device) {
+                     return device.is_input &&
+                            base::Uint64ToString(device.id) == input_device_id;
+                   });
+  if (input_device_it == devices.end())
+    return "";
+
+  const base::StringPiece device_name = input_device_it->device_name;
+
+  // Now search for an output device with the same device name.
+  auto output_device_it = std::find_if(
+      devices.begin(), devices.end(),
+      [device_name](const chromeos::AudioDevice& device) {
+        return !device.is_input && device.device_name == device_name;
+      });
+  return output_device_it == devices.end()
+             ? ""
+             : base::Uint64ToString(output_device_it->id);
+}
+
+std::string AudioManagerCras::GetDefaultOutputDeviceID() {
+  chromeos::AudioDevice device;
+  if (!chromeos::CrasAudioHandler::Get()->GetPrimaryActiveOutputDevice(
+          &device)) {
+    return "";
+  }
+  return base::Uint64ToString(device.id);
 }
 
 const char* AudioManagerCras::GetName() {
