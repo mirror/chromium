@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "decb66d6_8dbd0450",
+        "filename": "chrome/browser/printing/print_preview_message_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T22:57:36Z",
+      "side": 1,
+      "message": "Should probably mention what does the return bool mean.",
+      "revId": "8878f5fbdd65aaa7b0c602796e0c92ed34bf8bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c984c4f6_aa60f0fe",
+        "filename": "chrome/browser/printing/print_preview_message_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T22:57:36Z",
+      "side": 1,
+      "message": "Are cookies unique? Could this be a map instead of a vector?",
+      "revId": "8878f5fbdd65aaa7b0c602796e0c92ed34bf8bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
