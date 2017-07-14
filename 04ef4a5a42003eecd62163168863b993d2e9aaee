@@ -22,6 +22,30 @@
       "revId": "04ef4a5a42003eecd62163168863b993d2e9aaee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a397547a_9a4cbbd0",
+        "filename": "components/variations/synthetic_trial_registry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-14T23:34:07Z",
+      "side": 1,
+      "message": "Done.  Also removed GetCurrentSyntheticFieldTrialsForTesting since it turns out to be dead code.",
+      "parentUuid": "3e554128_0c066c05",
+      "range": {
+        "startLine": 42,
+        "startChar": 75,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "04ef4a5a42003eecd62163168863b993d2e9aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
