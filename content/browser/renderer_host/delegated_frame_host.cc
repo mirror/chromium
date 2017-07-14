@@ -67,6 +67,11 @@ void DelegatedFrameHost::WasShown(const ui::LatencyInfo& latency_info) {
       released_front_lock_ = compositor_->GetCompositorLock(nullptr);
   }
 
+  if (evict_frame_when_visible_) {
+    evict_frame_when_visible_ = false;
+    EvictDelegatedFrame();
+  }
+
   if (compositor_) {
     compositor_->SetLatencyInfo(latency_info);
   }
@@ -486,6 +491,18 @@ void DelegatedFrameHost::SubmitCompositorFrame(
 }
 
 void DelegatedFrameHost::ClearDelegatedFrame() {
+  if (!has_frame_)
+    return;
+
+  // On Mac, the compositor is suspended when its RenderWidgetHostView is
+  // hidden, so it is not possible to evict frames at this time. Instead, this
+  // signals for a frame eviction to happen when the view becomes visible
+  // again.
+  if (!client_->DelegatedFrameHostIsVisible()) {
+    evict_frame_when_visible_ = true;
+    return;
+  }
+
   EvictDelegatedFrame();
 }
 

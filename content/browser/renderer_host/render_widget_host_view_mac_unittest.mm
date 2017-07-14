@@ -20,6 +20,7 @@
 #include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/viz/common/surfaces/local_surface_id.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/compositor/test/no_transport_image_transport_factory.h"
 #include "content/browser/frame_host/render_widget_host_view_guest.h"
@@ -2087,6 +2088,42 @@ TEST_F(RenderWidgetHostViewMacTest, ForwardKeyEquivalentsOnlyIfKey) {
   EXPECT_EQ("RawKeyDown Char", GetInputMessageTypes(process_host));
 
   rwhv_mac_->release_pepper_fullscreen_window_for_testing();
+}
+
+// Verify that a compositor frame is successfully evicted while the
+// RenderWidgetHostViewMac is hidden.
+TEST_F(RenderWidgetHostViewMacTest, EvictFrameWhileHidden) {
+  rwhv_mac_->Show();
+
+  cc::CompositorFrame frame;
+  frame.metadata.device_scale_factor = 1.0f;
+  frame.metadata.begin_frame_ack = cc::BeginFrameAck(0, 1, true);
+  std::unique_ptr<cc::RenderPass> pass = cc::RenderPass::Create();
+  pass->SetNew(1, gfx::Rect(100, 100), gfx::Rect(0, 0), gfx::Transform());
+  frame.render_pass_list.push_back(std::move(pass));
+  cc::TransferableResource resource;
+  resource.id = 1;
+  frame.resource_list.push_back(std::move(resource));
+
+  cc::mojom::CompositorFrameSinkClientPtr renderer_compositor_frame_sink_ptr;
+  cc::mojom::CompositorFrameSinkClientRequest client_request =
+      mojo::MakeRequest(&renderer_compositor_frame_sink_ptr);
+  rwhv_mac_->DidCreateNewRendererCompositorFrameSink(
+      renderer_compositor_frame_sink_ptr.get());
+
+  rwhv_mac_->SubmitCompositorFrame(
+      viz::LocalSurfaceId(1, base::UnguessableToken::Deserialize(1, 2)),
+      std::move(frame));
+
+  EXPECT_TRUE(rwhv_mac_->browser_compositor_->GetDelegatedFrameHost()
+                  ->HasFrameForTesting());
+
+  rwhv_mac_->Hide();
+  rwhv_mac_->ClearCompositorFrame();
+  rwhv_mac_->Show();
+
+  EXPECT_FALSE(rwhv_mac_->browser_compositor_->GetDelegatedFrameHost()
+                   ->HasFrameForTesting());
 }
 
 }  // namespace content

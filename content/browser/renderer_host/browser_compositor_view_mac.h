@@ -38,7 +38,7 @@ class BrowserCompositorMacClient {
 //   is visible.
 // - The RenderWidgetHostViewMac that is used to display these frames is
 //   attached to the NSView hierarchy of an NSWindow.
-class BrowserCompositorMac : public DelegatedFrameHostClient {
+class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
  public:
   BrowserCompositorMac(
       ui::AcceleratedWidgetMacNSView* accelerated_widget_mac_ns_view,
