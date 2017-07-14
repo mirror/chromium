@@ -52,6 +52,10 @@ class PlatformDisplayDefault : public PlatformDisplay,
   void UpdateViewportMetrics(const display::ViewportMetrics& metrics) override;
   gfx::AcceleratedWidget GetAcceleratedWidget() const override;
   FrameGenerator* GetFrameGenerator() override;
+#if defined(USE_OZONE)
+  void SetCursorConfig(display::Display::Rotation rotation,
+                       float scale) override;
+#endif
 
  private:
   // ui::PlatformWindowDelegate:
