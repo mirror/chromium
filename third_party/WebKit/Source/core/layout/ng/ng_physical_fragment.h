@@ -42,14 +42,14 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
     // enough to store.
   };
 
+  // The accessors in this class shouldn't be used by layout code directly,
+  // instead should be accessed by the NGFragmentBase classes. These accessors
+  // exist for paint, hit-testing, etc.
+
   NGFragmentType Type() const { return static_cast<NGFragmentType>(type_); }
   bool IsBox() const { return Type() == NGFragmentType::kFragmentBox; }
   bool IsText() const { return Type() == NGFragmentType::kFragmentText; }
   bool IsLineBox() const { return Type() == NGFragmentType::kFragmentLineBox; }
-
-  // The accessors in this class shouldn't be used by layout code directly,
-  // instead should be accessed by the NGFragmentBase classes. These accessors
-  // exist for paint, hit-testing, etc.
 
   // Returns the border-box size.
   NGPhysicalSize Size() const { return size_; }
