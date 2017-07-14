@@ -83,6 +83,10 @@ const base::Feature kProtectedPasswordEntryPinging{
 const base::Feature kPasswordProtectionInterstitial{
     "PasswordProtectionInterstitial", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kGoogleBrandedPhishingWarning{
+    "PasswordProtectionGoogleBrandedPhishingWarning",
+    base::FEATURE_ENABLED_BY_DEFAULT};
+
 const char kPasswordOnFocusRequestOutcomeHistogramName[] =
     "PasswordProtection.RequestOutcome.PasswordFieldOnFocus";
 const char kPasswordEntryRequestOutcomeHistogramName[] =
@@ -108,6 +112,7 @@ PasswordProtectionService::PasswordProtectionService(
 }
 
 PasswordProtectionService::~PasswordProtectionService() {
+  LOG(ERROR) << "Somehow destructor called";
   tracker_.TryCancelAll();
   CancelPendingRequests();
   history_service_observer_.RemoveAll();
@@ -387,6 +392,15 @@ void PasswordProtectionService::RequestFinished(
       ShowPhishingInterstitial(request->main_frame_url(),
                                response->verdict_token(),
                                request->web_contents());
+    }
+
+    if (request->trigger_type() ==
+            LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
+        response->verdict_type() != LoginReputationClientResponse::SAFE &&
+        base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning)) {
+      LOG(ERROR) << "Start update security state";
+      UpdateSecurityState(SB_THREAT_TYPE_GOOGLE_BRANDED_PHISHING,
+                          request->web_contents());
     }
   }
 

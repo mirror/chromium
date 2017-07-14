@@ -125,6 +125,10 @@ enum SBThreatType {
 
   // Url detected by password protection service.
   SB_THREAT_TYPE_URL_PASSWORD_PROTECTION_PHISHING,
+
+  // Url and page content detected by password protection service as
+  // Google-branded phishing,
+  SB_THREAT_TYPE_GOOGLE_BRANDED_PHISHING,
 };
 
 using SBThreatTypeSet = base::flat_set<SBThreatType>;

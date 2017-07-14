@@ -25,6 +25,7 @@
 #include "components/signin/core/browser/account_info.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
@@ -101,7 +102,8 @@ bool ChromePasswordProtectionService::IsIncognito() {
 bool ChromePasswordProtectionService::IsPingingEnabled(
     const base::Feature& feature,
     RequestOutcome* reason) {
-  // Don't start pinging on an invalid profile, or if user turns off Safe
+  return true;
+  /*// Don't start pinging on an invalid profile, or if user turns off Safe
   // Browsing service.
   if (!profile_ ||
       !profile_->GetPrefs()->GetBoolean(prefs::kSafeBrowsingEnabled)) {
@@ -139,7 +141,7 @@ bool ChromePasswordProtectionService::IsPingingEnabled(
     *reason = DISABLED_DUE_TO_USER_POPULATION;
   }
 
-  return allowed_all_population;
+  return allowed_all_population;*/
 }
 
 bool ChromePasswordProtectionService::IsHistorySyncEnabled() {
@@ -195,6 +197,35 @@ void ChromePasswordProtectionService::ShowPhishingInterstitial(
     web_contents->GetController().DiscardNonCommittedEntries();
   }
   ui_manager_->DisplayBlockingPage(resource);
+}
+
+void ChromePasswordProtectionService::UpdateSecurityState(
+    safe_browsing::SBThreatType threat_type,
+    content::WebContents* web_contents) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  content::NavigationEntry* entry =
+      web_contents->GetController().GetVisibleEntry();
+  if (!ui_manager_ || !entry)
+    return;
+
+  const GURL url = entry->GetURL().GetWithEmptyPath();
+  if (threat_type == SB_THREAT_TYPE_SAFE) {
+    ui_manager_->AddToWhitelistUrlSet(url, web_contents, false, threat_type);
+    return;
+  }
+
+  safe_browsing::SBThreatType current_threat_type;
+  // If user already click-through interstitial warning, or if there's already
+  // a dangerous security state showing.
+  if (ui_manager_->IsUrlWhitelistedOrPendingForWebContents(
+          url, false, web_contents->GetController().GetVisibleEntry(),
+          web_contents, false, &current_threat_type)) {
+    if (current_threat_type == threat_type)
+      return;
+    else
+      ui_manager_->RemoveWhitelistUrlSet(url, web_contents, false);
+  }
+  ui_manager_->AddToWhitelistUrlSet(url, web_contents, true, threat_type);
 }
 
 ChromePasswordProtectionService::ChromePasswordProtectionService(

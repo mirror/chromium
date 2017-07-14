@@ -56,6 +56,9 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
 
   PasswordProtectionService::SyncAccountType GetSyncAccountType() override;
 
+  void UpdateSecurityState(safe_browsing::SBThreatType threat_type,
+                           content::WebContents* web_contents) override;
+
   FRIEND_TEST_ALL_PREFIXES(
       ChromePasswordProtectionServiceTest,
       VerifyFinchControlForLowReputationPingSBEROnlyNoIncognito);

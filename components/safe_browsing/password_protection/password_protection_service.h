@@ -18,6 +18,7 @@
 #include "base/values.h"
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/safe_browsing/csd.pb.h"
+#include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "third_party/protobuf/src/google/protobuf/repeated_field.h"
 
@@ -40,6 +41,7 @@ class PasswordProtectionRequest;
 extern const base::Feature kPasswordFieldOnFocusPinging;
 extern const base::Feature kProtectedPasswordEntryPinging;
 extern const base::Feature kPasswordProtectionInterstitial;
+extern const base::Feature kGoogleBrandedPhishingWarning;
 extern const char kPasswordOnFocusRequestOutcomeHistogramName[];
 extern const char kPasswordEntryRequestOutcomeHistogramName[];
 extern const char kSyncPasswordEntryRequestOutcomeHistogramName[];
@@ -139,6 +141,20 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // (6) Its hostname is a dotless domain.
   static bool CanGetReputationOfURL(const GURL& url);
 
+  void OnChangePasswordButtonShownInPageInfo(
+      content::WebContents* web_contents) {
+    LOG(ERROR) << "OnChangePasswordButtonShowInPageInfo";
+  }
+
+  void OnPageInfoChangePasswordButtonPressed(
+      content::WebContents* web_contents) {
+    LOG(ERROR) << "OnPageInfoChangePasswordButtonPressed";
+  }
+
+  void OnPageInfoIgnoreButtonPressed(content::WebContents* web_contents) {
+    LOG(ERROR) << "OnPageInfoIgnoreButtonPressed";
+  }
+
  protected:
   friend class PasswordProtectionRequest;
 
@@ -194,13 +210,16 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
 
   virtual bool IsHistorySyncEnabled() = 0;
 
+  // Gets the type of sync account associated with current profile or
+  // |NOT_SIGNED_IN|.
+  virtual SyncAccountType GetSyncAccountType() = 0;
+
   virtual void ShowPhishingInterstitial(const GURL& phishing_url,
                                         const std::string& token,
                                         content::WebContents* web_contents) = 0;
 
-  // Gets the type of sync account associated with current profile or
-  // |NOT_SIGNED_IN|.
-  virtual SyncAccountType GetSyncAccountType() = 0;
+  virtual void UpdateSecurityState(safe_browsing::SBThreatType threat_type,
+                                   content::WebContents* web_contents) {}
 
   void CheckCsdWhitelistOnIOThread(const GURL& url, bool* check_result);
 

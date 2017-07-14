@@ -33,6 +33,11 @@
 #include "chrome/browser/chromeos/policy/policy_cert_service_factory.h"
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(SAFE_BROWSING_DB_LOCAL)
+#include "base/feature_list.h"
+#include "components/safe_browsing/password_protection/password_protection_service.h"
+#endif
+
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(SecurityStateTabHelper);
 
 using safe_browsing::SafeBrowsingUIManager;
@@ -195,6 +200,14 @@ SecurityStateTabHelper::GetMaliciousContentStatus() const {
       case safe_browsing::SB_THREAT_TYPE_URL_UNWANTED:
         return security_state::MALICIOUS_CONTENT_STATUS_UNWANTED_SOFTWARE;
         break;
+      case safe_browsing::SB_THREAT_TYPE_GOOGLE_BRANDED_PHISHING:
+#if defined(SAFE_BROWSING_DB_LOCAL)
+        if (base::FeatureList::IsEnabled(
+                safe_browsing::kGoogleBrandedPhishingWarning)) {
+          return security_state::
+              MALICIOUS_CONTENT_STATUS_GOOGLE_BRANDED_PHISHING;
+        }
+#endif
       case safe_browsing::SB_THREAT_TYPE_URL_BINARY_MALWARE:
       case safe_browsing::SB_THREAT_TYPE_EXTENSION:
       case safe_browsing::SB_THREAT_TYPE_BLACKLISTED_RESOURCE:

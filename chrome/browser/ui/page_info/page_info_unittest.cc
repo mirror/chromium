@@ -344,6 +344,18 @@ TEST_F(PageInfoTest, UnwantedSoftware) {
             page_info()->site_identity_status());
 }
 
+TEST_F(PageInfoTest, GoogleBrandedPhishing) {
+  security_info_.security_level = security_state::DANGEROUS;
+  security_info_.malicious_content_status =
+      security_state::MALICIOUS_CONTENT_STATUS_GOOGLE_BRANDED_PHISHING;
+  SetDefaultUIExpectations(mock_ui());
+
+  EXPECT_EQ(PageInfo::SITE_CONNECTION_STATUS_UNENCRYPTED,
+            page_info()->site_connection_status());
+  EXPECT_EQ(PageInfo::SITE_IDENTITY_STATUS_GOOGLE_BRANDED_PHISHING,
+            page_info()->site_identity_status());
+}
+
 TEST_F(PageInfoTest, HTTPConnection) {
   SetDefaultUIExpectations(mock_ui());
   EXPECT_EQ(PageInfo::SITE_CONNECTION_STATUS_UNENCRYPTED,
