@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1b68a6a_3b5e802f",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_test_harness.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-14T17:30:06Z",
+      "side": 1,
+      "message": "As best I can tell, by putting this in an anonymous namespace, ScopedSubresourceFilterConfigurator will be available to every translation unit that includes this file. It\u0027s just a test file, but still, probably not the best idea?",
+      "revId": "a6c2d9c797134067a6fdc80142cabac3b3490319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
