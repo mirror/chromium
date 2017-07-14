@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fe5cb2a_d887e84b",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-14T17:16:58Z",
+      "side": 1,
+      "message": "is this changing the logic, or was this a mistake earlier?",
+      "revId": "b65fc5b7e7e5ff30f8909f42b419560100ec49ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
