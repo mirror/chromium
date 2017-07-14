@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85eb0eb5_36c823f7",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-14T22:21:09Z",
+      "side": 1,
+      "message": "nit: ShouldShowLandscape() or similar.",
+      "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98835d26_c37e33bb",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-14T22:21:09Z",
+      "side": 1,
+      "message": "I\u0027m finding the list-of-rotation-actions code confusing. I have a hard time reasoning about what actions will actually happen on which views. I think I understand why they are RepeatingCallback, but I\u0027m not certain.\n\nIs there a way to do this more explicitly/imperatively, perhaps by caching pointers to all the various padding views you need to modify and having an explicit Refresh() or Update() method?",
+      "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13834b57_877639dc",
+        "filename": "ash/login/ui/lock_contents_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-14T22:21:09Z",
+      "side": 1,
+      "message": "Would it be useful to say something about it being GT or LT?",
+      "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025630e4_2329794f",
+        "filename": "ash/login/ui/lock_contents_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-14T22:21:09Z",
+      "side": 1,
+      "message": "Please also test rotating back from portrait -\u003e landscape.\n\nAlso, the code under test seems pretty different depending on the number of users. WDYT of exercising rotation in both the low and medium density cases?",
+      "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
