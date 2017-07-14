@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c93a13b5_06f4a991",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:17:34Z",
+      "side": 1,
+      "message": "BTW, pursuant to our conversation the other day: this name is actually now worse than the old one as a reader, because it looks as if this call gives a me a new tab (not a feature engagement tracker).  The old name was verbose; this is misleading.\n\nI still think one of the following courses would be best:\n* No namespace, keep NewTabFeatureEngagementTracker as classname\n* Namespace feature_engagement[_tracker]::, classname NewTab[Tracker]Factory (I\u0027d probably put the \"tracker\" on the classname here and not the namespace).  If you do this, make the directory name for the general feature engagement stuff match the namespace name and put everything in there in that namespace",
+      "revId": "4d3aced56e0e44ab1c634d0b22f489ed17689115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7810351_9fd2ea86",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:17:34Z",
+      "side": 1,
+      "message": "These #includes should not be needed in this otherwise-untouched file",
+      "revId": "4d3aced56e0e44ab1c634d0b22f489ed17689115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f700311b_4524889b",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:17:34Z",
+      "side": 1,
+      "message": "Nit: Cool, this is clearer.  I\u0027d add more to really make it explicit: \"If ShouldDisplayURL() is true, that\u0027s a good signal that the previous page was part of some other session.  We could go further to try to analyze the difference between the previous and current URLs, but users edit URLs rarely enough that this is a reasonable approximation.\"",
+      "revId": "4d3aced56e0e44ab1c634d0b22f489ed17689115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e1764c_b3279f65",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:17:34Z",
+      "side": 1,
+      "message": "Nit: For both this and NotifyNewTabOpened(), I\u0027d name them OnXXX instead of NotifyXXX(), since they don\u0027t cause notifications to be sent out but are rather \"I\u0027m alerting you directly that some event you cared about has happened\".",
+      "revId": "4d3aced56e0e44ab1c634d0b22f489ed17689115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd96b35_86b8b1ca",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:17:34Z",
+      "side": 1,
+      "message": "Nit: Here I\u0027d add: \"While focusing the omnibox is not always a precursor to starting a new session, we don\u0027t want to wait until the user is in the middle of editing or navigating, because we\u0027d like to show them the promo at the time when it would be immediately useful.\"",
+      "revId": "4d3aced56e0e44ab1c634d0b22f489ed17689115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a06a6e_3b2b9dc4",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:17:34Z",
+      "side": 1,
+      "message": "Nit: I\u0027d name this function OnOmniboxFocused(); \"on\" usually goes at the beginning of \"getting notified about X\" functions.",
+      "revId": "4d3aced56e0e44ab1c634d0b22f489ed17689115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
