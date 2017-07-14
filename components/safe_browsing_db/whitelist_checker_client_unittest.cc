@@ -25,7 +25,34 @@ using MockBoolCallback = testing::StrictMock<base::MockCallback<BoolCallback>>;
 
 class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
-  MockSafeBrowsingDatabaseManager(){};
+  MockSafeBrowsingDatabaseManager()
+      : cancel_check_called_(false), cancel_check_expected_(false){
+    DLOG(ERROR) << __FUNCTION__ << ": this: " << this;
+    DLOG(ERROR) << __FUNCTION__ << ": cancel_check_called_: " << cancel_check_called_;
+    DLOG(ERROR) << __FUNCTION__ << ": cancel_check_expected_: " << cancel_check_expected_;
+  };
+
+  void CancelCheck(SafeBrowsingDatabaseManager::Client* client) override {
+    DLOG(ERROR) << __FUNCTION__ << ": this: " << this;
+    DLOG(ERROR) << __FUNCTION__ << ": cancel_check_called_: " << cancel_check_called_;
+    DLOG(ERROR) << __FUNCTION__ << ": cancel_check_expected_: " << cancel_check_expected_;
+    DLOG(ERROR) << __FUNCTION__ << ": client: " << client;
+    int* p = 0;
+    DLOG(ERROR) << __FUNCTION__ << ": nullptr: " << *((int*)(p));
+    ASSERT_TRUE(cancel_check_expected_);
+    cancel_check_called_ = true;
+  }
+  bool cancel_check_called() {
+    DLOG(ERROR) << __FUNCTION__ << ": this: " << this;
+    DLOG(ERROR) << __FUNCTION__ << ": cancel_check_called_: " << cancel_check_called_;
+    DLOG(ERROR) << __FUNCTION__ << ": cancel_check_expected_: " << cancel_check_expected_;
+    int* p = 0;
+    DLOG(ERROR) << __FUNCTION__ << ": nullptr: " << *((int*)(p));
+    return cancel_check_called_;
+  }
+  void set_cancel_check_expected(bool value) {
+    cancel_check_expected_ = value;
+  }
 
   MOCK_METHOD2(CheckCsdWhitelistUrl,
                AsyncMatch(const GURL&, SafeBrowsingDatabaseManager::Client*));
@@ -34,6 +61,8 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
   ~MockSafeBrowsingDatabaseManager() override {}
 
  private:
+  bool cancel_check_called_;
+  bool cancel_check_expected_;
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingDatabaseManager);
 };
 
@@ -42,7 +71,8 @@ class WhitelistCheckerClientTest : public testing::Test {
   WhitelistCheckerClientTest() : target_url_("http://foo.bar"){};
 
   void SetUp() override {
-    database_manager_ = new MockSafeBrowsingDatabaseManager;
+    database_manager_ = new testing::NiceMock<MockSafeBrowsingDatabaseManager>();
+    ASSERT_FALSE(database_manager_->cancel_check_called());
     task_runner_ = new base::TestMockTimeTaskRunner(base::Time::Now(),
                                                     base::TimeTicks::Now());
     message_loop_.reset(new base::MessageLoop);
@@ -65,6 +95,7 @@ class WhitelistCheckerClientTest : public testing::Test {
 };
 
 TEST_F(WhitelistCheckerClientTest, TestMatch) {
+  ASSERT_FALSE(database_manager_->cancel_check_called());
   EXPECT_CALL(*database_manager_.get(), CheckCsdWhitelistUrl(target_url_, _))
       .WillOnce(Return(AsyncMatch::MATCH));
 
@@ -72,9 +103,11 @@ TEST_F(WhitelistCheckerClientTest, TestMatch) {
   EXPECT_CALL(callback, Run(true /* is_whitelisted */));
   WhitelistCheckerClient::StartCheckCsdWhitelist(database_manager_, target_url_,
                                                  callback.Get());
+  ASSERT_FALSE(database_manager_->cancel_check_called());
 }
 
 TEST_F(WhitelistCheckerClientTest, TestNoMatch) {
+  ASSERT_FALSE(database_manager_->cancel_check_called());
   EXPECT_CALL(*database_manager_.get(), CheckCsdWhitelistUrl(target_url_, _))
       .WillOnce(Return(AsyncMatch::NO_MATCH));
 
@@ -82,9 +115,11 @@ TEST_F(WhitelistCheckerClientTest, TestNoMatch) {
   EXPECT_CALL(callback, Run(false /* is_whitelisted */));
   WhitelistCheckerClient::StartCheckCsdWhitelist(database_manager_, target_url_,
                                                  callback.Get());
+  ASSERT_FALSE(database_manager_->cancel_check_called());
 }
 
 TEST_F(WhitelistCheckerClientTest, TestAsyncNoMatch) {
+  ASSERT_FALSE(database_manager_->cancel_check_called());
   SafeBrowsingDatabaseManager::Client* client;
   EXPECT_CALL(*database_manager_.get(), CheckCsdWhitelistUrl(target_url_, _))
       .WillOnce(DoAll(SaveArg<1>(&client), Return(AsyncMatch::ASYNC)));
@@ -97,11 +132,15 @@ TEST_F(WhitelistCheckerClientTest, TestAsyncNoMatch) {
   EXPECT_CALL(callback, Run(false /* is_whitelisted */));
   // The self-owned client deletes itself here.
   client->OnCheckWhitelistUrlResult(false);
+  ASSERT_FALSE(database_manager_->cancel_check_called());
 }
 
 TEST_F(WhitelistCheckerClientTest, TestAsyncTimeout) {
+  ASSERT_FALSE(database_manager_->cancel_check_called());
+  database_manager_->set_cancel_check_expected(true);
+  SafeBrowsingDatabaseManager::Client* client;
   EXPECT_CALL(*database_manager_.get(), CheckCsdWhitelistUrl(target_url_, _))
-      .WillOnce(Return(AsyncMatch::ASYNC));
+      .WillOnce(DoAll(SaveArg<1>(&client), Return(AsyncMatch::ASYNC)));
 
   MockBoolCallback callback;
   WhitelistCheckerClient::StartCheckCsdWhitelist(database_manager_, target_url_,
@@ -111,6 +150,7 @@ TEST_F(WhitelistCheckerClientTest, TestAsyncTimeout) {
 
   EXPECT_CALL(callback, Run(true /* is_whitelisted */));
   task_runner_->FastForwardBy(base::TimeDelta::FromSeconds(5));
+  EXPECT_TRUE(database_manager_->cancel_check_called());
 }
 
 }  // namespace safe_browsing
