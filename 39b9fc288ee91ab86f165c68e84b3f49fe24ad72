@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4dbdc91d_d1f11e92",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-14T10:49:18Z",
+      "side": 1,
+      "message": "nit: if you plan to make additional changes, use early returns everywhere to avoid the nested ifs? That seems to be the style used across the codebase.",
+      "range": {
+        "startLine": 188,
+        "startChar": 34,
+        "endLine": 188,
+        "endChar": 40
+      },
+      "revId": "39b9fc288ee91ab86f165c68e84b3f49fe24ad72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1ae1eea_238985be",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
         "patchSetId": 2
