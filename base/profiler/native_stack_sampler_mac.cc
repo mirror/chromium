@@ -8,6 +8,7 @@
 #include <libkern/OSByteOrder.h>
 #include <libunwind.h>
 #include <mach-o/compact_unwind_encoding.h>
+#include <mach-o/getsect.h>
 #include <mach-o/swap.h>
 #include <mach/kern_return.h>
 #include <mach/mach.h>
@@ -29,6 +30,9 @@
 namespace base {
 
 namespace {
+
+// A loaded module's address range in memory.
+using AddressInterval = std::pair<uintptr_t, uintptr_t>;
 
 // Stack walking --------------------------------------------------------------
 
@@ -269,21 +273,40 @@ std::string GetUniqueId(const void* module_addr) {
 // determined for |module|.
 size_t GetModuleIndex(const uintptr_t instruction_pointer,
                       std::vector<StackSamplingProfiler::Module>* modules,
-                      std::map<const void*, size_t>* profile_module_index) {
-  Dl_info inf;
-  if (!dladdr(reinterpret_cast<const void*>(instruction_pointer), &inf))
-    return StackSamplingProfiler::Frame::kUnknownModuleIndex;
+                      std::map<AddressInterval, size_t>* profile_module_index) {
+  // Check if |instruction_pointer| is in the address range of a module we've
+  // already seen.
+  auto module_index = std::find_if(
+      profile_module_index->begin(), profile_module_index->end(),
+      [instruction_pointer](const std::pair<AddressInterval, size_t>& element) {
+        AddressInterval interval = element.first;
+        return instruction_pointer >= interval.first &&
+               instruction_pointer < interval.second;
+      });
 
-  auto module_index = profile_module_index->find(inf.dli_fbase);
   if (module_index == profile_module_index->end()) {
+    Dl_info inf;
+    if (!dladdr(reinterpret_cast<const void*>(instruction_pointer), &inf))
+      return StackSamplingProfiler::Frame::kUnknownModuleIndex;
+
     StackSamplingProfiler::Module module(
         reinterpret_cast<uintptr_t>(inf.dli_fbase), GetUniqueId(inf.dli_fbase),
         base::FilePath(inf.dli_fname));
     modules->push_back(module);
-    module_index =
-        profile_module_index
-            ->insert(std::make_pair(inf.dli_fbase, modules->size() - 1))
-            .first;
+
+    const mach_header_64* mach_header =
+        reinterpret_cast<const mach_header_64*>(inf.dli_fbase);
+    DCHECK_EQ(MH_MAGIC_64, mach_header->magic);
+
+    unsigned long module_size;
+    getsegmentdata(mach_header, SEG_TEXT, &module_size);
+    uintptr_t base_module_address = reinterpret_cast<uintptr_t>(mach_header);
+
+    AddressInterval interval =
+        std::make_pair(base_module_address, base_module_address + module_size);
+    module_index = profile_module_index
+                       ->insert(std::make_pair(interval, modules->size() - 1))
+                       .first;
   }
   return module_index->second;
 }
@@ -350,9 +373,9 @@ class NativeStackSamplerMac : public NativeStackSampler {
   // between ProfileRecordingStarting() and ProfileRecordingStopped().
   std::vector<StackSamplingProfiler::Module>* current_modules_ = nullptr;
 
-  // Maps a module's base address to the corresponding Module's index within
+  // Maps a module's address range to the corresponding Module's index within
   // current_modules_.
-  std::map<const void*, size_t> profile_module_index_;
+  std::map<AddressInterval, size_t> profile_module_index_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeStackSamplerMac);
 };
