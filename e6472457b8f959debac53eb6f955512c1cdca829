@@ -45,6 +45,30 @@
       "revId": "e6472457b8f959debac53eb6f955512c1cdca829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f21e99b_8287b7f1",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-14T22:45:26Z",
+      "side": 1,
+      "message": "440px height seems to be not enough, we need 56 for search box, 48*6 for search results, 122 for suggested apps and 2 for separators. That would be 468px. I am discussing this with the UX.",
+      "parentUuid": "f6a80ab0_d4452109",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 31
+      },
+      "revId": "e6472457b8f959debac53eb6f955512c1cdca829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
