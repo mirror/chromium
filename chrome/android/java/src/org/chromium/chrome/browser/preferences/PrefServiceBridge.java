@@ -198,6 +198,13 @@ public final class PrefServiceBridge {
         return nativeGetAutoplayEnabled();
     }
 
+    /**
+     * @return Whether audio is enabled.
+     */
+    public boolean isAudioEnabled() {
+        return nativeGetAudioEnabled();
+    }
+
     public boolean isAcceptCookiesEnabled() {
         return nativeGetAcceptCookiesEnabled();
     }
@@ -677,6 +684,10 @@ public final class PrefServiceBridge {
         nativeSetAutoplayEnabled(allow);
     }
 
+    public void setAudioEnabled(boolean allow) {
+        nativeSetAudioEnabled(allow);
+    }
+
     public void setBlockThirdPartyCookiesEnabled(boolean enabled) {
         nativeSetBlockThirdPartyCookiesEnabled(enabled);
     }
@@ -957,6 +968,7 @@ public final class PrefServiceBridge {
     private native boolean nativeGetAcceptCookiesUserModifiable();
     private native boolean nativeGetAcceptCookiesManagedByCustodian();
     private native boolean nativeGetAutoplayEnabled();
+    private native boolean nativeGetAudioEnabled();
     private native boolean nativeGetBackgroundSyncEnabled();
     private native boolean nativeGetBlockThirdPartyCookiesEnabled();
     private native boolean nativeGetBlockThirdPartyCookiesManaged();
@@ -1003,6 +1015,7 @@ public final class PrefServiceBridge {
     private native void nativeMigrateBrowsingDataPreferences();
     private native boolean nativeCanDeleteBrowsingHistory();
     private native void nativeSetAutoplayEnabled(boolean allow);
+    private native void nativeSetAudioEnabled(boolean allow);
     private native void nativeSetAllowCookiesEnabled(boolean allow);
     private native void nativeSetBackgroundSyncEnabled(boolean allow);
     private native void nativeSetBlockThirdPartyCookiesEnabled(boolean enabled);

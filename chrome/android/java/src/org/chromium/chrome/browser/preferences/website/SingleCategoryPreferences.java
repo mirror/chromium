@@ -219,6 +219,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
             return website.site().getAdsPermission() == ContentSetting.BLOCK;
         } else if (mCategory.showAutoplaySites()) {
             return website.site().getAutoplayPermission() == ContentSetting.BLOCK;
+        } else if (mCategory.showAudioSites()) {
+            return website.site().getAudioPermission() == ContentSetting.BLOCK;
         } else if (mCategory.showBackgroundSyncSites()) {
             return website.site().getBackgroundSyncPermission() == ContentSetting.BLOCK;
         } else if (mCategory.showCameraSites()) {
@@ -480,6 +482,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
                 PrefServiceBridge.getInstance().setAllowAdsEnabled((boolean) newValue);
             } else if (mCategory.showAutoplaySites()) {
                 PrefServiceBridge.getInstance().setAutoplayEnabled((boolean) newValue);
+            } else if (mCategory.showAudioSites()) {
+                PrefServiceBridge.getInstance().setAudioEnabled((boolean) newValue);
             } else if (mCategory.showBackgroundSyncSites()) {
                 PrefServiceBridge.getInstance().setBackgroundSyncEnabled((boolean) newValue);
             } else if (mCategory.showCameraSites()) {
@@ -707,6 +711,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
                 } else if (mCategory.showAutoplaySites()) {
                     globalToggle.setChecked(
                             PrefServiceBridge.getInstance().isAutoplayEnabled());
+                } else if (mCategory.showAudioSites()) {
+                    globalToggle.setChecked(PrefServiceBridge.getInstance().isAudioEnabled());
                 } else if (mCategory.showBackgroundSyncSites()) {
                     globalToggle.setChecked(
                             PrefServiceBridge.getInstance().isBackgroundSyncAllowed());

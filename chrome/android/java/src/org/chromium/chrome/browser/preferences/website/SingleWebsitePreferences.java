@@ -75,6 +75,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
     public static final String PREF_RESET_SITE = "reset_site_button";
     // Website permissions (if adding new, see hasPermissionsPreferences and resetSite below):
     public static final String PREF_AUTOPLAY_PERMISSION = "autoplay_permission_list";
+    public static final String PREF_AUDIO_PERMISSION = "audio_permission_list";
     public static final String PREF_BACKGROUND_SYNC_PERMISSION = "background_sync_permission_list";
     public static final String PREF_CAMERA_CAPTURE_PERMISSION = "camera_permission_list";
     public static final String PREF_COOKIES_PERMISSION = "cookies_permission_list";
@@ -91,6 +92,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
     // All permissions from the permissions preference category must be listed here.
     // TODO(mvanouwerkerk): Use this array in more places to reduce verbosity.
     private static final String[] PERMISSION_PREFERENCE_KEYS = {
+            PREF_AUDIO_PERMISSION,
             PREF_AUTOPLAY_PERMISSION,
             PREF_BACKGROUND_SYNC_PERMISSION,
             PREF_CAMERA_CAPTURE_PERMISSION,
@@ -255,6 +257,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
             // set on Android.
             // TODO(mvanouwerkerk): Merge in JavaScriptExceptionInfo? It uses a pattern.
             // TODO(lshang): Merge in CookieException? It will use patterns.
+            // TODO(steimel): Does this apply to AudioInfo?
         }
         return merged;
     }
@@ -312,6 +315,8 @@ public class SingleWebsitePreferences extends PreferenceFragment
             preference.setOnPreferenceClickListener(this);
         } else if (PREF_ADS_PERMISSION.equals(key)) {
             setUpAdsPreference(preference);
+        } else if (PREF_AUDIO_PERMISSION.equals(key)) {
+            setUpListPreference(preference, mSite.getAudioPermission());
         } else if (PREF_AUTOPLAY_PERMISSION.equals(key)) {
             setUpListPreference(preference, mSite.getAutoplayPermission());
         } else if (PREF_BACKGROUND_SYNC_PERMISSION.equals(key)) {
@@ -718,6 +723,8 @@ public class SingleWebsitePreferences extends PreferenceFragment
         switch (preferenceKey) {
             case PREF_ADS_PERMISSION:
                 return ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS;
+            case PREF_AUDIO_PERMISSION:
+                return ContentSettingsType.CONTENT_SETTINGS_TYPE_AUDIO;
             case PREF_AUTOPLAY_PERMISSION:
                 return ContentSettingsType.CONTENT_SETTINGS_TYPE_AUTOPLAY;
             case PREF_BACKGROUND_SYNC_PERMISSION:
@@ -777,6 +784,8 @@ public class SingleWebsitePreferences extends PreferenceFragment
             mSite.setAdsPermission(permission);
         } else if (PREF_AUTOPLAY_PERMISSION.equals(preference.getKey())) {
             mSite.setAutoplayPermission(permission);
+        } else if (PREF_AUDIO_PERMISSION.equals(preference.getKey())) {
+            mSite.setAudioPermission(permission);
         } else if (PREF_BACKGROUND_SYNC_PERMISSION.equals(preference.getKey())) {
             mSite.setBackgroundSyncPermission(permission);
         } else if (PREF_CAMERA_CAPTURE_PERMISSION.equals(preference.getKey())) {
@@ -858,6 +867,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
 
         // Clear the permissions.
         mSite.setAdsPermission(ContentSetting.DEFAULT);
+        mSite.setAudioPermission(ContentSetting.DEFAULT);
         mSite.setAutoplayPermission(ContentSetting.DEFAULT);
         mSite.setBackgroundSyncPermission(ContentSetting.DEFAULT);
         mSite.setCameraPermission(ContentSetting.DEFAULT);

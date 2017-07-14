@@ -78,6 +78,8 @@ public class WebsitePermissionsFetcher {
         queue.add(new AdsExceptionInfoFetcher());
         // JavaScript exceptions are host-based patterns.
         queue.add(new JavaScriptExceptionInfoFetcher());
+        // Audio exceptions are host-based.
+        queue.add(new AudioExceptionInfoFetcher());
         // Protected media identifier permission is per-origin and per-embedder.
         queue.add(new ProtectedMediaIdentifierInfoFetcher());
         // Notification permission is per-origin.
@@ -138,6 +140,9 @@ public class WebsitePermissionsFetcher {
         } else if (category.showJavaScriptSites()) {
             // JavaScript exceptions are host-based patterns.
             queue.add(new JavaScriptExceptionInfoFetcher());
+        } else if (category.showAudioSites()) {
+            // Audio exceptions are host-based.
+            queue.add(new AudioExceptionInfoFetcher());
         } else if (category.showNotificationsSites()) {
             // Push notification permission is per-origin.
             queue.add(new NotificationInfoFetcher());
@@ -183,6 +188,9 @@ public class WebsitePermissionsFetcher {
             switch (contentSettingsType) {
                 case ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS:
                     site.setAdsException(exception);
+                    break;
+                case ContentSettingsType.CONTENT_SETTINGS_TYPE_AUDIO:
+                    site.setAudioException(exception);
                     break;
                 case ContentSettingsType.CONTENT_SETTINGS_TYPE_AUTOPLAY:
                     site.setAutoplayException(exception);
@@ -284,6 +292,13 @@ public class WebsitePermissionsFetcher {
         @Override
         public void run() {
             setException(ContentSettingsType.CONTENT_SETTINGS_TYPE_JAVASCRIPT);
+        }
+    }
+
+    private class AudioExceptionInfoFetcher extends Task {
+        @Override
+        public void run() {
+            setException(ContentSettingsType.CONTENT_SETTINGS_TYPE_AUDIO);
         }
     }
 
