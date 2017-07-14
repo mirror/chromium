@@ -69,6 +69,24 @@
       "revId": "8830e2331f8a56921ab19890a0c1394fefb527d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a39224_1113e54f",
+        "filename": "chrome/browser/search_engines/template_url_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T16:01:28Z",
+      "side": 1,
+      "message": "Whatever you think is best!",
+      "parentUuid": "004b29e3_f2786390",
+      "revId": "8830e2331f8a56921ab19890a0c1394fefb527d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
