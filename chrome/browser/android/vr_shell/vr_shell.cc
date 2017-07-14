@@ -719,6 +719,14 @@ content::WebContents* VrShell::GetActiveWebContents() const {
   return web_contents_;
 }
 
+bool VrShell::ShouldDisplayURL() const {
+  if (!GetActiveWebContents()) {
+    return false;
+  }
+
+  return ChromeToolbarModelDelegate::ShouldDisplayURL();
+}
+
 // ----------------------------------------------------------------------------
 // Native JNI methods
 // ----------------------------------------------------------------------------

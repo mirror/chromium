@@ -183,6 +183,7 @@ class VrShell : public device::GvrDelegate,
 
   // ChromeToolbarModelDelegate implementation.
   content::WebContents* GetActiveWebContents() const override;
+  bool ShouldDisplayURL() const override;
 
  private:
   ~VrShell() override;

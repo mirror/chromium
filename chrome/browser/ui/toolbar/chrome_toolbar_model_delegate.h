@@ -22,6 +22,7 @@ class ChromeToolbarModelDelegate : public ToolbarModelDelegate {
  public:
   // Returns active WebContents.
   virtual content::WebContents* GetActiveWebContents() const = 0;
+  bool ShouldDisplayURL() const override;
 
  protected:
   ChromeToolbarModelDelegate();
@@ -32,7 +33,6 @@ class ChromeToolbarModelDelegate : public ToolbarModelDelegate {
       const GURL& url,
       const base::string16& formatted_url) const override;
   bool GetURL(GURL* url) const override;
-  bool ShouldDisplayURL() const override;
   SecurityLevel GetSecurityLevel() const override;
   scoped_refptr<net::X509Certificate> GetCertificate() const override;
   bool FailsMalwareCheck() const override;
