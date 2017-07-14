@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff7d969_0c6e1ca6",
+        "filename": "third_party/WebKit/Source/core/paint/FilterPainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-14T17:42:42Z",
+      "side": 1,
+      "message": "Please be more explicit in this comment by referring to where these comments are in PLP",
+      "revId": "683912d5e23cb116af529bbefa136ccc5fbca35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252d38d2_3be15dba",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-14T17:42:42Z",
+      "side": 1,
+      "message": "typeo: presence",
+      "revId": "683912d5e23cb116af529bbefa136ccc5fbca35b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
