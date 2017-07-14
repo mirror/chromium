@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5304ccd_12d16eed",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-14T18:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2762535_37a5371d",
+      "range": {
+        "startLine": 139,
+        "startChar": 21,
+        "endLine": 139,
+        "endChar": 26
+      },
+      "revId": "797e5a15bb70396ba35b179fd7e9aacecc998c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f8de8d1_1e1ab38a",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/InstallHostBrowserDialog.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "797e5a15bb70396ba35b179fd7e9aacecc998c57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b1386a_07783fc5",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/InstallHostBrowserDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-14T18:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f8de8d1_1e1ab38a",
+      "range": {
+        "startLine": 98,
+        "startChar": 24,
+        "endLine": 98,
+        "endChar": 34
+      },
+      "revId": "797e5a15bb70396ba35b179fd7e9aacecc998c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
