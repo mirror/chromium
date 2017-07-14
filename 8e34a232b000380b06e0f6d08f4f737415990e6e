@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63e1db14_aa0f049a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T07:45:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8010f4b_2e5923c1",
+      "revId": "8e34a232b000380b06e0f6d08f4f737415990e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6514dc85_ffbfa39c",
         "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "78dfbeaa_b00a9038",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T07:45:53Z",
+      "side": 1,
+      "message": "Hmm, okay, so let me remove all ordering comments because it adds the complexity of comments. Instead, added \"on WorkerThread::InitializeOnWorkerThread.\" on each \"when\" clause to clarify the methods are called on startup.",
+      "parentUuid": "6514dc85_ffbfa39c",
+      "revId": "8e34a232b000380b06e0f6d08f4f737415990e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "337f7017_a7e1696c",
         "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "8e34a232b000380b06e0f6d08f4f737415990e6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a388d59e_505af185",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T07:45:53Z",
+      "side": 1,
+      "message": "Fair enough. Removed, thanks.",
+      "parentUuid": "337f7017_a7e1696c",
+      "revId": "8e34a232b000380b06e0f6d08f4f737415990e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
