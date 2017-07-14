@@ -35,7 +35,6 @@ class DownloadFileWithError: public DownloadFileImpl {
       const base::FilePath& default_download_directory,
       std::unique_ptr<ByteStreamReader> byte_stream,
       const net::NetLogWithSource& net_log,
-      base::WeakPtr<DownloadDestinationObserver> observer,
       const TestFileErrorInjector::FileErrorInfo& error_info,
       const base::Closure& ctor_callback,
       const base::Closure& dtor_callback);
@@ -45,6 +44,7 @@ class DownloadFileWithError: public DownloadFileImpl {
   void Initialize(const InitializeCallback& initialize_callback,
                   const CancelRequestCallback& cancel_request_callback,
                   const DownloadItem::ReceivedSlices& received_slices,
+                  base::WeakPtr<DownloadDestinationObserver> observer,
                   bool is_parallelizable) override;
 
   // DownloadFile interface.
@@ -109,15 +109,13 @@ DownloadFileWithError::DownloadFileWithError(
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> byte_stream,
     const net::NetLogWithSource& net_log,
-    base::WeakPtr<DownloadDestinationObserver> observer,
     const TestFileErrorInjector::FileErrorInfo& error_info,
     const base::Closure& ctor_callback,
     const base::Closure& dtor_callback)
     : DownloadFileImpl(std::move(save_info),
                        default_download_directory,
                        std::move(byte_stream),
-                       net_log,
-                       observer),
+                       net_log),
       error_info_(error_info),
       destruction_callback_(dtor_callback) {
   // DownloadFiles are created on the UI thread and are destroyed on the FILE
@@ -138,6 +136,7 @@ void DownloadFileWithError::Initialize(
     const InitializeCallback& initialize_callback,
     const CancelRequestCallback& cancel_request_callback,
     const DownloadItem::ReceivedSlices& received_slices,
+    base::WeakPtr<DownloadDestinationObserver> observer,
     bool is_parallelizable) {
   DownloadInterruptReason error_to_return = DOWNLOAD_INTERRUPT_REASON_NONE;
   InitializeCallback callback_to_use = initialize_callback;
@@ -160,7 +159,7 @@ void DownloadFileWithError::Initialize(
   }
 
   DownloadFileImpl::Initialize(callback_to_use, cancel_request_callback,
-                               received_slices, is_parallelizable);
+                               received_slices, observer, is_parallelizable);
 }
 
 DownloadInterruptReason DownloadFileWithError::WriteDataToFile(
@@ -263,12 +262,10 @@ class DownloadFileWithErrorFactory : public DownloadFileFactory {
   ~DownloadFileWithErrorFactory() override;
 
   // DownloadFileFactory interface.
-  DownloadFile* CreateFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
-      const base::FilePath& default_download_directory,
-      std::unique_ptr<ByteStreamReader> byte_stream,
-      const net::NetLogWithSource& net_log,
-      base::WeakPtr<DownloadDestinationObserver> observer) override;
+  DownloadFile* CreateFile(std::unique_ptr<DownloadSaveInfo> save_info,
+                           const base::FilePath& default_download_directory,
+                           std::unique_ptr<ByteStreamReader> byte_stream,
+                           const net::NetLogWithSource& net_log) override;
 
   bool SetError(TestFileErrorInjector::FileErrorInfo error);
 
@@ -297,13 +294,11 @@ DownloadFile* DownloadFileWithErrorFactory::CreateFile(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> byte_stream,
-    const net::NetLogWithSource& net_log,
-    base::WeakPtr<DownloadDestinationObserver> observer) {
+    const net::NetLogWithSource& net_log) {
   return new DownloadFileWithError(std::move(save_info),
                                    default_download_directory,
                                    std::move(byte_stream),
                                    net_log,
-                                   observer,
                                    injected_error_,
                                    construction_callback_,
                                    destruction_callback_);

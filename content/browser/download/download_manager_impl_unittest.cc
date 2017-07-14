@@ -295,12 +295,10 @@ class MockDownloadFileFactory
   MOCK_METHOD2(MockCreateFile,
                MockDownloadFile*(const DownloadSaveInfo&, ByteStreamReader*));
 
-  DownloadFile* CreateFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
-      const base::FilePath& default_download_directory,
-      std::unique_ptr<ByteStreamReader> byte_stream,
-      const net::NetLogWithSource& net_log,
-      base::WeakPtr<DownloadDestinationObserver> observer) override {
+  DownloadFile* CreateFile(std::unique_ptr<DownloadSaveInfo> save_info,
+                           const base::FilePath& default_download_directory,
+                           std::unique_ptr<ByteStreamReader> byte_stream,
+                           const net::NetLogWithSource& net_log) override {
     return MockCreateFile(*save_info, byte_stream.get());
   }
 };

@@ -1144,11 +1144,6 @@ void DownloadItemImpl::OnDownloadedFileRemoved() {
   UpdateObservers();
 }
 
-base::WeakPtr<DownloadDestinationObserver>
-DownloadItemImpl::DestinationObserverAsWeakPtr() {
-  return weak_ptr_factory_.GetWeakPtr();
-}
-
 const net::NetLogWithSource& DownloadItemImpl::GetNetLogWithSource() const {
   return net_log_;
 }

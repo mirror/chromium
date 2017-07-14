@@ -57,7 +57,8 @@ void DownloadJob::Start(DownloadFile* download_file_,
                             weak_ptr_factory_.GetWeakPtr(), callback),
                  base::Bind(&DownloadJob::CancelRequestWithOffset,
                             weak_ptr_factory_.GetWeakPtr()),
-                 received_slices, IsParallelizable()));
+                 received_slices, weak_ptr_factory_.GetWeakPtr(),
+                 IsParallelizable()));
 }
 
 void DownloadJob::OnDownloadFileInitialized(
@@ -94,6 +95,27 @@ bool DownloadJob::IsParallelizable() const {
 
 bool DownloadJob::IsSavePackageDownload() const {
   return false;
+}
+
+void DownloadJob::DestinationUpdate(
+    int64_t bytes_so_far,
+    int64_t bytes_per_sec,
+    const std::vector<DownloadItem::ReceivedSlice>& received_slices) {
+  download_item_->DestinationUpdate(bytes_so_far, bytes_per_sec,
+                                    received_slices);
+}
+
+void DownloadJob::DestinationError(
+    DownloadInterruptReason reason,
+    int64_t bytes_so_far,
+    std::unique_ptr<crypto::SecureHash> hash_state) {
+  download_item_->DestinationError(reason, bytes_so_far, std::move(hash_state));
+}
+
+void DownloadJob::DestinationCompleted(
+    int64_t total_bytes,
+    std::unique_ptr<crypto::SecureHash> hash_state) {
+  download_item_->DestinationCompleted(total_bytes, std::move(hash_state));
 }
 
 }  // namespace content

@@ -16,10 +16,9 @@ DownloadFile* DownloadFileFactory::CreateFile(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_downloads_directory,
     std::unique_ptr<ByteStreamReader> byte_stream,
-    const net::NetLogWithSource& net_log,
-    base::WeakPtr<DownloadDestinationObserver> observer) {
+    const net::NetLogWithSource& net_log) {
   return new DownloadFileImpl(std::move(save_info), default_downloads_directory,
-                              std::move(byte_stream), net_log, observer);
+                              std::move(byte_stream), net_log);
 }
 
 }  // namespace content
