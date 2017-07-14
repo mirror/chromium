@@ -161,7 +161,10 @@ static_library("lib") {
   ]
 
   if (use_ozone) {
-    public_deps += [ "//ui/ozone:ozone" ]
+    public_deps += [
+      "//ui/events/ozone:events_ozone",
+      "//ui/ozone",
+    ]
   }
   if (is_chromeos) {
     public_deps += [ "//ui/chromeos/events" ]

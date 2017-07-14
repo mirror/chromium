@@ -74,6 +74,7 @@ void Display::Init(const display::ViewportMetrics& metrics,
   platform_display_ = PlatformDisplay::Create(
       root_.get(), metrics, window_server_->GetThreadedImageCursorsFactory());
   platform_display_->Init(this);
+  SetCursorConfig();
 }
 
 int64_t Display::GetId() const {
@@ -83,6 +84,8 @@ int64_t Display::GetId() const {
 
 void Display::SetDisplay(const display::Display& display) {
   display_ = display;
+
+  SetCursorConfig();
 }
 
 const display::Display& Display::GetDisplay() {
@@ -273,6 +276,18 @@ void Display::CreateRootWindow(const gfx::Size& size) {
   root_->SetVisible(true);
   focus_controller_ = base::MakeUnique<FocusController>(this, root_.get());
   focus_controller_->AddObserver(this);
+}
+
+void Display::SetCursorConfig() {
+#if defined(USE_OZONE)
+  float scale = display_.device_scale_factor();
+
+  if (!display_.IsInternal())
+    scale *= ui::mojom::kCursorMultiplierForExternalDisplays;
+
+  if (platform_display_)
+    platform_display_->SetCursorConfig(display_.rotation(), scale);
+#endif
 }
 
 ServerWindow* Display::GetRootWindow() {

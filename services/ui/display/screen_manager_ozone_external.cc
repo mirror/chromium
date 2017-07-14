@@ -33,4 +33,9 @@ display::ScreenBase* ScreenManagerOzoneExternal::GetScreen() {
   return screen_.get();
 }
 
+display::Display::Rotation ScreenManagerOzoneExternal::GetDisplayRotation(
+    int64_t display_id) {
+  NOTIMPLEMENTED();
+}
+
 }  // namespace display

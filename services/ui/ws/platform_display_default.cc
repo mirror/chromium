@@ -25,6 +25,7 @@
 #elif defined(OS_ANDROID)
 #include "ui/platform_window/android/platform_window_android.h"
 #elif defined(USE_OZONE)
+#include "ui/events/ozone/chromeos/cursor_controller.h"
 #include "ui/ozone/public/cursor_factory_ozone.h"
 #include "ui/ozone/public/ozone_platform.h"
 #endif
@@ -42,6 +43,11 @@ PlatformDisplayDefault::PlatformDisplayDefault(
       widget_(gfx::kNullAcceleratedWidget) {}
 
 PlatformDisplayDefault::~PlatformDisplayDefault() {
+#if defined(USE_OZONE)
+  ui::CursorController::GetInstance()->ClearCursorConfigForWindow(
+      GetAcceleratedWidget());
+#endif
+
   // Don't notify the delegate from the destructor.
   delegate_ = nullptr;
 
@@ -190,6 +196,15 @@ void PlatformDisplayDefault::UpdateViewportMetrics(
 gfx::AcceleratedWidget PlatformDisplayDefault::GetAcceleratedWidget() const {
   return widget_;
 }
+
+#if defined(USE_OZONE)
+void PlatformDisplayDefault::SetCursorConfig(
+    display::Display::Rotation rotation,
+    float scale) {
+  ui::CursorController::GetInstance()->SetCursorConfigForWindow(
+      GetAcceleratedWidget(), rotation, scale);
+}
+#endif
 
 void PlatformDisplayDefault::OnBoundsChanged(const gfx::Rect& new_bounds) {
   // We only care if the window size has changed.

@@ -5,11 +5,14 @@
 #ifndef SERVICES_UI_DISPLAY_SCREEN_MANAGER_H_
 #define SERVICES_UI_DISPLAY_SCREEN_MANAGER_H_
 
+#include <stdint.h>
+
 #include <memory>
 
 #include "base/macros.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/ui/display/screen_manager_delegate.h"
+#include "ui/display/display.h"
 
 namespace display {
 

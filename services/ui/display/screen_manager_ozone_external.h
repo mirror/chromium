@@ -27,6 +27,7 @@ class ScreenManagerOzoneExternal : public ScreenManager {
   void Init(ScreenManagerDelegate* delegate) override;
   void RequestCloseDisplay(int64_t display_id) override;
   display::ScreenBase* GetScreen() override;
+  display::Display::Rotation GetDisplayRotation(int64_t display_id) override;
 
   std::unique_ptr<display::ScreenBase> screen_;
 
