@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d5e6ac9_62df94d3",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-14T17:40:12Z",
+      "side": 1,
+      "message": "That doesn\u0027t look right.\n\ninstance_ is already a member variable and gets deleted when the test is done.\n\nWhereas DeleteInstanceForTesting is a static method (and thus shouldn\u0027t be called on an instance) and affects the global singleton, rather than the instance this test creates.",
+      "range": {
+        "startLine": 75,
+        "startChar": 39,
+        "endLine": 75,
+        "endChar": 63
+      },
+      "revId": "2323a53f88ae53367a078ef8ca438621cd675892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
