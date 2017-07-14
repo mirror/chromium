@@ -362,6 +362,7 @@ source_set("unit_tests") {
     "//base/test:test_support",
     "//components/crx_file:crx_file",
     "//content/public/child",
+    "//content/test:test_support",
     "//extensions:extensions_renderer_resources",
     "//extensions:test_support",
     "//gin:gin_test",

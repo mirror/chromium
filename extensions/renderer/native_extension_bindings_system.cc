@@ -13,6 +13,8 @@
 #include "extensions/common/extension_api.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/features/feature_provider.h"
+#include "extensions/common/manifest_constants.h"
+#include "extensions/common/manifest_handlers/externally_connectable.h"
 #include "extensions/renderer/api_activity_logger.h"
 #include "extensions/renderer/bindings/api_binding_bridge.h"
 #include "extensions/renderer/bindings/api_binding_hooks.h"
@@ -346,6 +348,21 @@ v8::Local<v8::Object> CreateFullBinding(
   return root_binding;
 }
 
+// Returns true if any portion of the runtime API is available to the given
+// |context|. This is different than just checking features because runtime's
+// availability depends on the installed extensions and the active URL (in the
+// case of extensions communicating with external websites).
+bool IsRuntimeAvailableToContext(ScriptContext* context) {
+  for (const auto& extension :
+       *RendererExtensionRegistry::Get()->GetMainThreadExtensionSet()) {
+    ExternallyConnectableInfo* info = static_cast<ExternallyConnectableInfo*>(
+        extension->GetManifestData(manifest_keys::kExternallyConnectable));
+    if (info && info->matches.MatchesURL(context->url()))
+      return true;
+  }
+  return false;
+}
+
 }  // namespace
 
 NativeExtensionBindingsSystem::NativeExtensionBindingsSystem(
@@ -420,14 +437,64 @@ void NativeExtensionBindingsSystem::WillReleaseScriptContext(
 
 void NativeExtensionBindingsSystem::UpdateBindingsForContext(
     ScriptContext* context) {
-  v8::HandleScope handle_scope(context->isolate());
+  v8::Isolate* isolate = context->isolate();
+  v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> v8_context = context->v8_context();
   v8::Local<v8::Object> chrome = GetOrCreateChrome(v8_context);
   if (chrome.IsEmpty())
     return;
 
-  BindingsSystemPerContextData* data = GetBindingsDataFromContext(v8_context);
-  DCHECK(data);
+  DCHECK(GetBindingsDataFromContext(v8_context));
+
+  auto set_accessor = [chrome, isolate,
+                       v8_context](base::StringPiece accessor_name) {
+    v8::Local<v8::String> api_name =
+        gin::StringToSymbol(isolate, accessor_name);
+    v8::Maybe<bool> success = chrome->SetAccessor(
+        v8_context, api_name, &BindingAccessor, nullptr, api_name);
+    return success.IsJust() && success.FromJust();
+  };
+
+  bool is_webpage = false;
+  switch (context->context_type()) {
+    case Feature::UNSPECIFIED_CONTEXT:
+    case Feature::WEB_PAGE_CONTEXT:
+    case Feature::BLESSED_WEB_PAGE_CONTEXT:
+      is_webpage = true;
+      break;
+    case Feature::SERVICE_WORKER_CONTEXT:
+      DCHECK(ExtensionsClient::Get()
+                 ->ExtensionAPIEnabledInExtensionServiceWorkers());
+    // Intentional fallthrough.
+    case Feature::BLESSED_EXTENSION_CONTEXT:
+    case Feature::UNBLESSED_EXTENSION_CONTEXT:
+    case Feature::CONTENT_SCRIPT_CONTEXT:
+    case Feature::WEBUI_CONTEXT:
+      is_webpage = false;
+  }
+
+  if (is_webpage) {
+    // Hard-code registration of any APIs that are exposed to webpage-like
+    // contexts, because it's more expensive to iterate over all the existing
+    // features when only a handful could ever be available.
+    // All of the same permission checks will still apply.
+    static const char* kWebAvailableFeatures[] = {
+        "app", "webstore", "dashboardPrivate",
+    };
+    for (const char* feature_name : kWebAvailableFeatures) {
+      if (context->GetAvailability(feature_name).is_available() &&
+          !set_accessor(feature_name)) {
+        LOG(ERROR) << "Failed to create API on Chrome object.";
+        return;
+      }
+    }
+
+    // Runtime is special (see IsRuntimeAvailableToContext()).
+    if (IsRuntimeAvailableToContext(context) && !set_accessor("runtime"))
+      LOG(ERROR) << "Failed to create API on Chrome object.";
+
+    return;
+  }
 
   const FeatureProvider* api_feature_provider =
       FeatureProvider::GetAPIFeatures();
@@ -471,11 +538,7 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
     base::StringPiece accessor_name =
         GetFirstDifferentAPIName(map_entry.first, base::StringPiece());
     last_accessor = accessor_name;
-    v8::Local<v8::String> api_name =
-        gin::StringToSymbol(v8_context->GetIsolate(), accessor_name);
-    v8::Maybe<bool> success = chrome->SetAccessor(
-        v8_context, api_name, &BindingAccessor, nullptr, api_name);
-    if (!success.IsJust() || !success.FromJust()) {
+    if (!set_accessor(accessor_name)) {
       LOG(ERROR) << "Failed to create API on Chrome object.";
       return;
     }
