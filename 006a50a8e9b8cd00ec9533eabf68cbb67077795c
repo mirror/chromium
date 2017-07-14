@@ -45,6 +45,30 @@
       "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822c8377_d7a640a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-14T00:46:59Z",
+      "side": 1,
+      "message": "I think if we increment size regardless of item visibility TalkBack will read showing # of ## items using the incorrect numbers. We could remove support for \"invisible\" header items and push the responsibility onto HistoryAdapter (this sounds like a good design to me).\n\nYes, this method should be calling notifyDataSetChanged(). It\u0027s working without the call because.. The header item visibility may change in response to sign-in state change; when that happens we re-query the backend. When the query returns, we load the new items which causes a notifyDataSetChanged(), at which point the changes made by calling setHeaders() would be detected.\n\nWe also need to call setGroupPositions() now that this method can be called while there are other ItemGroups. Both of these are methods called in removeHeader() below. Maybe if mHasListHeader is true, instead of calling removeHeader() we could do the mSize -\u003d and mGroups.remove() but skip the rest of the method to avoid duplicate calls.",
+      "parentUuid": "d954063b_7b5c368f",
+      "range": {
+        "startLine": 510,
+        "startChar": 21,
+        "endLine": 510,
+        "endChar": 30
+      },
+      "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
