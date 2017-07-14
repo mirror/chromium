@@ -34,6 +34,24 @@
       "revId": "3a143c82415eef142c434287076ecdf576a69413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa8b23a_e8d27187",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-14T17:50:32Z",
+      "side": 1,
+      "message": "sgtm. Update the CL description, though.",
+      "parentUuid": "5183a592_928b6a02",
+      "revId": "3a143c82415eef142c434287076ecdf576a69413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
