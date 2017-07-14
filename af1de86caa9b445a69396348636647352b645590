@@ -25,6 +25,63 @@
     },
     {
       "key": {
+        "uuid": "499cb4bf_8ba26d55",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "Per other comment, this seems more appropriately named something like |utf8_rule|. Or pass string16 to emphasize that these are wide strings. The main implication is whether you expect callers to be able to specify internationalized domain names in unicode, or if they are required to convert those to punycode rules.",
+      "range": {
+        "startLine": 32,
+        "startChar": 34,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443aa46c_969fa5b7",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "I can better comment when seeing a full specification of the intended format. But url_formatter::SegmentURL() is very permissive, and probably not what you want here (it will normalize errors like using semicolon in place of colon, and lots of other crazy hacks that aren\u0027t really necessary).\n\nRather than allowing consumers to input crazy things like \"http://foo.com\" (when we are going to disregard the scheme anyway), can the valid input be limited to a much more restricted grammar?\n\nI would suggest just these 4 rules:\n\nHOSTNAME\n.HOSTNAME\nIPV4_LITERAL\nIPV6_LITERAL_WITH_BRACKETS\n\nSo for example:\n\nwww.google.com\n.www.google.com\n192.168.1.1\n[::1]\n\nAnd consider everything else an invalid rule. The oddity as usual is what to do with IPv6 literals (depending on the context we either bracket or don\u0027t bracket). Keeping them bracketed is the simplest choice here, and will make it easier to extend the format in the future if we wanted to support optional port rules.\n\nWith the simplified grammar parsing the rules is pretty simple -- all you need to do is check if it starts with a dot. If it does, flag it as an exact match, and then parse the rest as a hostname. (And also a second check I guess to see if it was an IP literal).\n\nHere is a completely untested proof of concept, but I think it handles the cases you need more simply. (It assumes |rule| is ASCII, but could otherwise use wide version to initialize GURL.)\n\nif (rule.empty())\n  return false;\n\nbool started_with_dot \u003d false;\n\n// Leading dot means to do an exact match.\nbool match_subdomains \u003d true;\nif (rule.front \u003d\u003d \u0027.\u0027) {\n  rule.erase(0);  // Strip it for the rest of the handling.\n  started_with_dot \u003d true;\n}\n\n// With the dot removed |rule| should look like a hostname.\nGURL test_url(\"http://\" + rule);\nif (!test_url.is_valid())\n  return false;\n\n// Verify that it just was a hostname.\nif (!test_url.has_host() || test_url.has_path() || test_url.has_port() || test_url.has_query() || test_url_.has_password() || test_url.has_username() || test_url.has_ref())\n  return false;\n\nbool is_ip_literal \u003d test_url.HostIsIPAddress();\n\nif (is_ip_literal) {\n  // Add |test_url.host()| a single component to the Trie\n  // Could optionally reject if |started_with_dot|\n} else {\n  bool match_subdomains \u003d !started_with_dot;\n  \n  // Iterate the dotted components of |test_url.host()| in reverse order\n  // and insert each into the Trie.\n}\n\nDONE.",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e10022_fd2799d5",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "See comment above. The disregarding of schemes is not something I think we want to code. The notion of \"IsStandard()\" depends on the how the URL library was configured. By default it accepts weird stuff like gopher, file and filesystem URLs... which doesn\u0027t make sense in this context.",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f70b5bd_8bc1ebbd",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -184,6 +241,23 @@
     },
     {
       "key": {
+        "uuid": "9a89a4f9_d8182dd7",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "A couple things:\n\n(1) GURL::host() is already canonicalized\n\n(2) I think you are only doing this to determine if it is an IP literal. For that you can use url.HostIsIPAddress() instead.\n\n(3) Depending what layer is calling this, GURL::is_valid() may be false. In which case you shouldn\u0027t try to access anything else on it including host(). If you aren\u0027t sure, just add a check for \"if (!url.is_valid()) return false;\" at the start.",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa0f09b0_25b72b7c",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 8
@@ -241,6 +315,23 @@
     },
     {
       "key": {
+        "uuid": "0b1797db_a766cdba",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "Please document the format for these rules. Also rather than calling this |hosts| I think it should be called |rules|, since in the network sense of the word these strings are not (necessarily) hostnames. Lastly, please describe the encoding of these strings. My assumption would have been these are ASCII rules, however given how this is initialized from Java strings they are in fact UTF-8 encoded wide strings. (An important distinction for the subsequent parsing code).",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f151403_d3ee963d",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
         "patchSetId": 8
@@ -258,6 +349,142 @@
         "endLine": 44,
         "endChar": 18
       },
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8ada07_635329f5",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "What about a test for IsURLWhitelisted() on \"https://www.google.com\" -- here the scheme of URL differs from scheme used as rule in whitelist (which is disregarded).",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d09e59_bc539f43",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "Suggest removing the leading dot from all of these. It is not how the URL will be canonicalized so a bit misleading.",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8168b9c_5c6401fb",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "Did you intentionally make this an invalid IPv6 literal? (ends with trailing colon, which changes the meaning of these tests).",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abbd9f1_9acf9d96",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "Is this resulting in a valid GURL?",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14dfd0e4_9c7fc935",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "Is this intentionally using an invalid IPv6 literal? Should be eight 16 bit components, separated by colons (or contractions, or other crazy forms like embedded IPv4).",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bc21ca_3a1c5c1e",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "OK, so this one is valid :)",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62c5862_5ec52f25",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "No need for trailing semicolon on all of these.",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125b61f4_e13eedc2",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T22:51:39Z",
+      "side": 1,
+      "message": "Other tests to consider:\n\n* URLs which have trailing dots in the hostname, like \"https://www.google.com.\" Both in the test URL, and whitelist rule.\n\n* Non-standard scheme like \"data:\" or \"mailto:\" (no slashes)\n\n* Include more URL craziness like embedded username/password\n\n* Test a URL where the path component contains something from the whitelist, to make sure it isn\u0027t confused. For instance:   http://www.evil.com/www.google.com\n\n* URLs/Rules where the hostname is encoded as punicode (ASCII representation of IDN)\n\n* Whitelist rules which use a UTF-8 string. Use a straight up crazy one, as well as a valid representation of an IDN. In the latter case then test with a GURL using punycode representation.",
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
