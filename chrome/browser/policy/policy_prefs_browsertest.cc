@@ -612,29 +612,41 @@ class PolicyPrefIndicatorTest
 // Verifies that controlled setting indicators correctly show whether a pref's
 // value is recommended or enforced by a corresponding policy.
 IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
+  LOG(INFO) << "DEBUG: 1";
   const PolicyTestCases test_cases;
   PrefService* local_state = g_browser_process->local_state();
   PrefService* user_prefs = browser()->profile()->GetPrefs();
 
+  LOG(INFO) << "DEBUG: 2";
+
   ui_test_utils::NavigateToURL(browser(),
                                GURL(chrome::kChromeUISettingsFrameURL));
 
+  LOG(INFO) << "DEBUG: 3";
+  int i = 0;
   for (std::vector<std::string>::const_iterator policy = GetParam().begin();
        policy != GetParam().end();
        ++policy) {
+    i++;
+    LOG(INFO) << "DEBUG: 4." << i;
     const std::vector<PolicyTestCase*>* policy_test_cases =
         test_cases.Get(*policy);
     ASSERT_TRUE(policy_test_cases) << "PolicyTestCase not found for "
                                    << *policy;
+    LOG(INFO) << "DEBUG: 5." << i;
+    int j = 0;
     for (std::vector<PolicyTestCase*>::const_iterator test_case =
              policy_test_cases->begin();
          test_case != policy_test_cases->end();
          ++test_case) {
+      LOG(INFO) << "DEBUG: 6." << i << "." << j;
       PolicyTestCase* policy_test_case = *test_case;
       if (!policy_test_case->IsSupported())
         continue;
+      LOG(INFO) << "DEBUG: 7." << i << "." << j;
       const auto& pref_mappings = policy_test_case->pref_mappings();
       if (policy_test_case->indicator_selector().empty()) {
+        LOG(INFO) << "DEBUG: 8." << i << "." << j;
         bool has_pref_indicator_tests = false;
         for (const auto& pref_mapping : pref_mappings) {
           PrefService* prefs =
@@ -649,10 +661,12 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
         if (!has_pref_indicator_tests)
           continue;
       }
+      LOG(INFO) << "DEBUG: 9." << i << "." << j;
 
       LOG(INFO) << "Testing policy: " << *policy;
 
       if (!policy_test_case->indicator_selector().empty()) {
+        LOG(INFO) << "DEBUG: 10." << i << "." << j;
         // Check that no controlled setting indicator is visible when no value
         // is set by policy.
         ClearProviderPolicy();
@@ -662,6 +676,7 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
             std::string(),
             std::string(),
             false);
+        LOG(INFO) << "DEBUG: 11." << i << "." << j;
         // Check that the appropriate controlled setting indicator is shown when
         // a value is enforced by policy.
         SetProviderPolicy(policy_test_case->test_policy(),
@@ -672,6 +687,7 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
             std::string(),
             "policy",
             false);
+        LOG(INFO) << "DEBUG: 12." << i << "." << j;
         // Check that no controlled setting indicator is visible when previously
         // enforced value is removed.
         ClearProviderPolicy();
@@ -683,6 +699,7 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
             false);
       }
 
+      LOG(INFO) << "DEBUG: 13." << i << "." << j;
       for (const auto& pref_mapping : pref_mappings) {
         const auto& indicator_test_cases = pref_mapping->indicator_test_cases();
         if (indicator_test_cases.empty())
@@ -693,6 +710,7 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
               browser()->tab_strip_model()->GetActiveWebContents(),
               pref_mapping->indicator_test_setup_js()));
         }
+        LOG(INFO) << "DEBUG: 14." << i << "." << j;
 
         // A non-empty indicator_test_url is expected to be used in very
         // few cases, so it's currently implemented by navigating to the URL
@@ -705,6 +723,7 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
           ui_test_utils::NavigateToURL(
               browser(), GURL(pref_mapping->indicator_test_url()));
         }
+        LOG(INFO) << "DEBUG: 15." << i << "." << j;
 
         std::string indicator_selector = pref_mapping->indicator_selector();
         if (indicator_selector.empty())
@@ -712,6 +731,7 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
         for (auto indicator_test_case = indicator_test_cases.begin();
              indicator_test_case != indicator_test_cases.end();
              ++indicator_test_case) {
+          LOG(INFO) << "DEBUG: 16." << i << "." << j;
           // Check that no controlled setting indicator is visible when no value
           // is set by policy.
           ClearProviderPolicy();
@@ -721,12 +741,14 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
                                             std::string(),
                                             false);
 
+          LOG(INFO) << "DEBUG: 17." << i << "." << j;
           if (pref_mapping->check_for_mandatory()) {
             // Check that the appropriate controlled setting indicator is shown
             // when a value is enforced by policy.
             SetProviderPolicy((*indicator_test_case)->policy(),
                               POLICY_LEVEL_MANDATORY);
 
+            LOG(INFO) << "DEBUG: 18." << i << "." << j;
             VerifyControlledSettingIndicators(
                 browser(),
                 indicator_selector,
@@ -735,11 +757,13 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
                 (*indicator_test_case)->readonly());
           }
 
+          LOG(INFO) << "DEBUG: 19." << i << "." << j;
           if (!policy_test_case->can_be_recommended() ||
               !pref_mapping->check_for_recommended()) {
             continue;
           }
 
+          LOG(INFO) << "DEBUG: 20." << i << "." << j;
           PrefService* prefs =
               pref_mapping->is_local_state() ? local_state : user_prefs;
           // The preference must have been registered.
@@ -757,6 +781,7 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
                                             (*indicator_test_case)->value(),
                                             "recommended",
                                             (*indicator_test_case)->readonly());
+          LOG(INFO) << "DEBUG: 21." << i << "." << j;
           // Check that the appropriate controlled setting indicator is shown
           // when a value is recommended by policy and the user has overridden
           // the recommendation.
@@ -769,6 +794,7 @@ IN_PROC_BROWSER_TEST_P(PolicyPrefIndicatorTest, CheckPolicyIndicators) {
           prefs->ClearPref(pref_mapping->pref().c_str());
         }
 
+        LOG(INFO) << "DEBUG: 22." << i << "." << j;
         if (!pref_mapping->indicator_test_url().empty()) {
           ui_test_utils::NavigateToURL(browser(),
                                        GURL(chrome::kChromeUISettingsFrameURL));
