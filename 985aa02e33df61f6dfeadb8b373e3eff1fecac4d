@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "010d14b1_b3f559d1",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 11752,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-14T06:30:45Z",
+      "side": 1,
+      "message": "The point of checking WebLayer::ScrollPosition was to verify that it is different with RLS, by the inverse of the difference in layer position.  (See my earlier comments about scroll origin propagation strategies.)\n\nBut from the way you\u0027ve written this check it seems that the WebLayer::ScrollPosition is the same with RLS, so that doesn\u0027t add up.  How can the content end up in the same place if the layer position is different and everything else is the same?",
+      "range": {
+        "startLine": 11752,
+        "startChar": 12,
+        "endLine": 11752,
+        "endChar": 17
+      },
+      "revId": "985aa02e33df61f6dfeadb8b373e3eff1fecac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
