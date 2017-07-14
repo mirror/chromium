@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30d408a5_80e49ff3",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:35:16Z",
+      "side": 1,
+      "message": "Maybe the name should more clearly be about recording score at playback?",
+      "revId": "9509bce627c632a6957f6c290333608e5a89562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6863c809_d7ed8319",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:35:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we should keep this. We would allow unmuting without gesture if the page has no autoplay restrictions but we might end up recording unmuting with a gesture which is allowed per autoplay muted rules. In other words, I\u0027m not sure how much interesting data vs noise this will add. Up to you :)",
+      "revId": "9509bce627c632a6957f6c290333608e5a89562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f13bbd_5c6e15c6",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:35:16Z",
+      "side": 1,
+      "message": "nit: `score_recorded` so it\u0027s clear it\u0027s not the recorded score",
+      "revId": "9509bce627c632a6957f6c290333608e5a89562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd88b1f3_a77997f5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 29736,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:35:16Z",
+      "side": 1,
+      "message": "Maybe mention it\u0027s only recorded for playback that are either lacking an audio track or non-muted (ie. audible)?",
+      "revId": "9509bce627c632a6957f6c290333608e5a89562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
