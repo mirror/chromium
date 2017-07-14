@@ -142,10 +142,29 @@ group("bindings_core_v8_generated") {
 # Interface IDL files: generate individual bindings (includes testing)
 idl_compiler("generate_bindings_core_v8_interfaces") {
   sources = core_definition_idl_files + core_testing_definition_idl_files +
-            generated_webcore_testing_idl_files
+            generated_webcore_testing_idl_files - core_dictionary_idl_files
   output_dir = bindings_core_v8_output_dir
   output_name_suffix = ""
   target_component = "core"
+}
+
+generate_cpp_code("generate_bindings_core_cpp_files") {
+  generated_cpp_files_ =
+      process_file_template(
+          core_dictionary_idl_files,
+          [
+            # implementation
+            "$bindings_core_v8_output_dir/{{source_name_part}}.cpp",
+            "$bindings_core_v8_output_dir/{{source_name_part}}.h",
+
+            # bindings
+            "$bindings_core_v8_output_dir/V8{{source_name_part}}.cpp",
+            "$bindings_core_v8_output_dir/V8{{source_name_part}}.h",
+          ])
+
+  outputs = generated_cpp_files_
+  output_dir = bindings_core_v8_output_dir
+  component = "core"
 }
 
 aggregate_generated_bindings("generate_bindings_core_v8_all_interfaces") {
