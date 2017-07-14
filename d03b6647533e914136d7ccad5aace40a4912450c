@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00eb13c0_2b7a7136",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:46:28Z",
+      "side": 1,
+      "message": "I\u0027d argue that if the status is ASK, and this is currently a non-top level context, the status should be returned as DENIED. If the origin doesn\u0027t have permission it can\u0027t request it from a non-top-level origin.\n\nDevs have been told to use Notification.permission to work out if they can prompt (e.g. with embargo), and seeing \"default\" will make them think they can prompt.",
+      "range": {
+        "startLine": 372,
+        "startChar": 9,
+        "endLine": 372,
+        "endChar": 25
+      },
+      "revId": "d03b6647533e914136d7ccad5aace40a4912450c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
