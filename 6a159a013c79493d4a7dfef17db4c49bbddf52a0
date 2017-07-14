@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19f7d5c1_35a03108",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 7
+      },
+      "lineNbr": 2875,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-14T08:40:55Z",
+      "side": 1,
+      "message": "Why are we adding a failure expectation to this test? Does that mean that we\u0027re not testing that code change?",
+      "range": {
+        "startLine": 2875,
+        "startChar": 104,
+        "endLine": 2875,
+        "endChar": 111
+      },
+      "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
