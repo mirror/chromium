@@ -192,6 +192,9 @@ class WebServiceWorkerContextClient {
       int event_id,
       const WebPaymentAppResponse& response,
       double event_dispatch_time) {}
+  virtual bool IsPaymentRequestCancelled(const int payment_request_id) {
+    return false;
+  }
   virtual void DidHandleFetchEvent(int fetch_event_id,
                                    WebServiceWorkerEventResult result,
                                    double event_dispatch_time) {}

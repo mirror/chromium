@@ -121,6 +121,12 @@ void PaymentRequestRespondWithObserver::OnNoResponse() {
                                      event_dispatch_time_);
 }
 
+bool PaymentRequestRespondWithObserver::IsCancelled() {
+  DCHECK(GetExecutionContext());
+  return ServiceWorkerGlobalScopeClient::From(GetExecutionContext())
+      ->IsPaymentRequestCancelled(event_id_);
+}
+
 PaymentRequestRespondWithObserver::PaymentRequestRespondWithObserver(
     ExecutionContext* context,
     int event_id,

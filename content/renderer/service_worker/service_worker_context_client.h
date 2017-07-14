@@ -206,6 +206,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       int payment_request_id,
       const blink::WebPaymentAppResponse& response,
       double dispatch_event_time) override;
+  bool IsPaymentRequestCancelled(const int payment_request_id) override;
   void DidHandlePaymentRequestEvent(int payment_request_id,
                                     blink::WebServiceWorkerEventResult result,
                                     double dispatch_event_time) override;

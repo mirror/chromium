@@ -37,6 +37,9 @@ class CONTENT_EXPORT PaymentAppProvider {
   using InvokePaymentAppCallback =
       base::Callback<void(payments::mojom::PaymentAppResponsePtr)>;
 
+  // Used by payment app to check whether the invocation is cancelled.
+  using InvokePaymentAppStatusCallback = base::Callback<bool()>;
+
   // Should be accessed only on the UI thread.
   virtual void GetAllPaymentApps(BrowserContext* browser_context,
                                  GetAllPaymentAppsCallback callback) = 0;
@@ -44,7 +47,8 @@ class CONTENT_EXPORT PaymentAppProvider {
       BrowserContext* browser_context,
       int64_t registration_id,
       payments::mojom::PaymentRequestEventDataPtr event_data,
-      const InvokePaymentAppCallback& callback) = 0;
+      const InvokePaymentAppCallback& callback,
+      const InvokePaymentAppStatusCallback& statusCallback) = 0;
 
  protected:
   virtual ~PaymentAppProvider() {}
