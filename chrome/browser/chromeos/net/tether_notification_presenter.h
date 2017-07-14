@@ -68,10 +68,14 @@ class TetherNotificationPresenter
   };
 
  private:
+  // IDs associated with Tether notification types.
   static const char kTetherNotifierId[];
   static const char kPotentialHotspotNotificationId[];
   static const char kActiveHostNotificationId[];
   static const char kSetupRequiredNotificationId[];
+
+  // IDs of all notifications which, when cilcked, open mobile data settings.
+  static const char* const kIdsWhichOpenSettingsOnClick[];
 
   static std::unique_ptr<message_center::Notification> CreateNotification(
       const std::string& id,
