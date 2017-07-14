@@ -85,6 +85,12 @@ class ASH_EXPORT WallpaperController
   void SetWallpaperImage(const gfx::ImageSkia& image,
                          wallpaper::WallpaperLayout layout);
 
+  // The same with |SetWallpaperImage| except for providing a unique ID of the
+  // image for color caching purpose.
+  void SetWallpaperImageWithId(const gfx::ImageSkia& image,
+                               const std::string& cache_id,
+                               wallpaper::WallpaperLayout layout);
+
   // Creates an empty wallpaper. Some tests require a wallpaper widget is ready
   // when running. However, the wallpaper widgets are now created
   // asynchronously. If loading a real wallpaper, there are cases that these
@@ -127,6 +133,9 @@ class ASH_EXPORT WallpaperController
   void SetWallpaperPicker(mojom::WallpaperPickerPtr picker) override;
   void SetWallpaper(const SkBitmap& wallpaper,
                     wallpaper::WallpaperLayout layout) override;
+  void SetWallpaperWithId(const SkBitmap& wallpaper,
+                          const std::string& cache_id,
+                          wallpaper::WallpaperLayout layout) override;
   void GetWallpaperColors(GetWallpaperColorsCallback callback) override;
 
   // WallpaperResizerObserver:
@@ -160,6 +169,16 @@ class ASH_EXPORT WallpaperController
 
   // Sets |prominent_colors_| and notifies the observers if there is a change.
   void SetProminentColors(const std::vector<SkColor>& prominent_colors);
+
+  // Caches |prominent_colors_| in local state pref service.
+  void CacheProminentColors(const std::vector<SkColor>& colors);
+
+  // Gets |prominent_colors_| from local state pref service. Returns true if
+  // the cache is available.
+  bool GetCachedColors(std::vector<SkColor>* cached_colors_out);
+
+  // Sets a unique ID for the image. An empty ID disables color caching.
+  void SetCacheId(const std::string& cache_id);
 
   // Calculates prominent colors based on the wallpaper image and notifies
   // |observers_| of the value, either synchronously or asynchronously. In some
@@ -211,6 +230,8 @@ class ASH_EXPORT WallpaperController
 
   // Caches the color profiles that need to do wallpaper color extracting.
   const std::vector<color_utils::ColorProfile> color_profiles_;
+
+  base::Optional<std::string> cache_id_;
 
   gfx::Size current_max_display_size_;
 
