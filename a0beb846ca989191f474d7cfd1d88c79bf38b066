@@ -22,6 +22,30 @@
       "revId": "a0beb846ca989191f474d7cfd1d88c79bf38b066",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409eebee_aa658113",
+        "filename": "third_party/WebKit/LayoutTests/storage/websql/fts-crash-703507.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-14T02:41:39Z",
+      "side": 1,
+      "message": "Thanks for catching this!\n\nThe test is mildly deceptive. My intent was to drop any \"main\" table there might be in the database, to give this test a clean slate. I didn\u0027t want the CREATE TABLE below to fail because there _is_ a main.",
+      "parentUuid": "55ae287d_a30bfbf8",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "a0beb846ca989191f474d7cfd1d88c79bf38b066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
