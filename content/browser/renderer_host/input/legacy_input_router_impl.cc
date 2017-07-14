@@ -268,6 +268,13 @@ void LegacyInputRouterImpl::OnTouchEventAck(
   // in some cases we may filter out sending the touchstart - catch those here.
   if (WebTouchEventTraits::IsTouchSequenceStart(event.event) &&
       ack_result == INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS) {
+    // Report effective touch action as kTouchActionAuto.
+    // Since |cc::kTouchActionAuto| is equivalent to |cc::kTouchActionMax|
+    // we must add one to the upper bound to be able to visualize the number
+    // of times |cc::kTouchActionAuto| is hit.
+    UMA_HISTOGRAM_ENUMERATION("TouchAction.EffectiveTouchAction",
+                              cc::kTouchActionAuto, cc::kTouchActionMax + 1);
+
     touch_action_filter_.ResetTouchAction();
     UpdateTouchAckTimeoutEnabled();
   }
@@ -505,6 +512,13 @@ void LegacyInputRouterImpl::OnSetTouchAction(cc::TouchAction touch_action) {
   TRACE_EVENT1("input", "LegacyInputRouterImpl::OnSetTouchAction", "action",
                touch_action);
 
+  // Report effective touch action such as kTouchActionNone, kTouchActionPanX,
+  // etc.
+  // Since |cc::kTouchActionAuto| is equivalent to |cc::kTouchActionMax|
+  // we must add one to the upper bound to be able to visualize the number of
+  // times |cc::kTouchActionAuto| is hit.
+  UMA_HISTOGRAM_ENUMERATION("TouchAction.EffectiveTouchAction", touch_action,
+                            cc::kTouchActionMax + 1);
   touch_action_filter_.OnSetTouchAction(touch_action);
 
   // kTouchActionNone should disable the touch ack timeout.
