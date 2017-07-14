@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c911364c_2ed5a674",
+        "filename": "third_party/WebKit/Source/modules/eventsource/EventSource.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-14T09:23:06Z",
+      "side": 1,
+      "message": "This message is now not used?",
+      "revId": "82f0b3bd33a0c004eb3e3977ed5b00cdd2840188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
