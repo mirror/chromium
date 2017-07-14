@@ -226,6 +226,8 @@ class GNRoller(object):
     email = ''
     rpc_server = upload.GetRpcServer(CODE_REVIEW_SERVER, email)
     try:
+      import pdb
+      pdb.set_trace()
       props = json.loads(rpc_server.Send('/api/%d' % issue))
     except Exception as e:
       print('Failed to load patch data: %s' % e)
