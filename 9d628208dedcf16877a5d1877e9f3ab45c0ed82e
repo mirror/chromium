@@ -242,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "74877960_ac28b744",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-07-14T21:58:15Z",
+      "side": 1,
+      "message": "Well, that\u0027s too bad. gcc for C definitely does this... Oh, well.",
+      "parentUuid": "0776ba45_4670ac42",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e031d4e_257810cb",
         "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
         "patchSetId": 2
