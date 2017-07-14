@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "451d302e_44f31351",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-14T13:57:59Z",
+      "side": 1,
+      "message": "Well I think all this could be just \nRemovePendingResponse(client_process, current-\u003etype) now :)",
+      "range": {
+        "startLine": 201,
+        "startChar": 6,
+        "endLine": 210,
+        "endChar": 7
+      },
+      "revId": "b98e5944c4afdf85fdecdce6bd3fdd502ca80956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "061663a5_f6efc083",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-14T13:57:59Z",
+      "side": 1,
+      "message": "Add a comment saying: // regression test (crbug.com/nnnn) to make sure that RemovePendingResponse doesn\u0027t accidentally change the requests collection\n\nor something like this.\nOtherwise future ourselves will just look at this DCHECK and remove it saying \"this is nonsense, why this is here?\"",
+      "range": {
+        "startLine": 212,
+        "startChar": 6,
+        "endLine": 212,
+        "endChar": 34
+      },
+      "revId": "b98e5944c4afdf85fdecdce6bd3fdd502ca80956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013f176e_4f67a2b1",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-14T13:57:59Z",
+      "side": 1,
+      "message": "just realized about this, since you are here can you squeeze this into one line and ma keit:\nif (!clients_.count(client)) ?",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 31
+      },
+      "revId": "b98e5944c4afdf85fdecdce6bd3fdd502ca80956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6dbdbe_f5ff2441",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-14T13:57:59Z",
+      "side": 1,
+      "message": "I think at this point, since we have to deal with null dump_ptr the else part can go away",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 331,
+        "endChar": 3
+      },
+      "revId": "b98e5944c4afdf85fdecdce6bd3fdd502ca80956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204b762a_9ef66122",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-14T13:57:59Z",
+      "side": 1,
+      "message": "this wording is a bit hard to parse to me (I guess a comma between \"for\" and \"this\" might have helped). how about:\n// The dump might be nullptr if the client crashed / disconnected before replying.",
+      "range": {
+        "startLine": 405,
+        "startChar": 7,
+        "endLine": 405,
+        "endChar": 70
+      },
+      "revId": "b98e5944c4afdf85fdecdce6bd3fdd502ca80956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d8b524_d5cee498",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-14T13:57:59Z",
+      "side": 1,
+      "message": "\"Self\" is IMHO a bit hard to parse. By just looking at the names, I can\u0027t tell the difference between ClientSelfCrashDuringGlobalDump and ClientCrashDuringGlobalDump.\nI\u0027d rename this (no strong ideas, maybe SingleClientCrashDuringGlobalDump) and add a comment\n\n// Like ClientCrashDuringGlobalDump but covers the case of having only one client.\n// Regression testing for crbug.com/NNNN.\nTEST_F(....",
+      "range": {
+        "startLine": 233,
+        "startChar": 34,
+        "endLine": 233,
+        "endChar": 38
+      },
+      "revId": "b98e5944c4afdf85fdecdce6bd3fdd502ca80956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85b309e_ae0b9883",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-14T13:57:59Z",
+      "side": 1,
+      "message": "adda comment saying: the dtor here will cause mojo to post an UnregisterClient call to the coordinator.",
+      "range": {
+        "startLine": 249,
+        "startChar": 12,
+        "endLine": 249,
+        "endChar": 35
+      },
+      "revId": "b98e5944c4afdf85fdecdce6bd3fdd502ca80956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
