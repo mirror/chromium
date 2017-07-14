@@ -18,7 +18,10 @@ void onConnectionError() {}
 
 // static
 bool FrameResourceCoordinator::IsEnabled() {
-  return base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator);
+  // TODO(lpy): Enable, possibly with a new feature flag, once
+  // the network client signal that depends on the
+  // |FrameResourceCoordinator| needs to be activated.
+  return false;
 }
 
 // static
