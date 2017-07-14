@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b768787_825b07d1",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-14T00:18:00Z",
+      "side": 1,
+      "message": "Yeah, this will be taken care of by the TODO I added to RawSiteException in site_settings_prefs_browser_proxy.js - for now I changed this back to a hardcoded string.",
+      "parentUuid": "a6e349bf_65c98282",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1658b825_bfd2d959",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fd493b43_52953879",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-14T00:18:00Z",
+      "side": 1,
+      "message": "Lol, done. :)",
+      "parentUuid": "1658b825_bfd2d959",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3ddff46_2a54d4ba",
         "filename": "chrome/browser/resources/settings/site_settings/site_settings_behavior.js",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99325bd2_d5d55c38",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_behavior.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-14T00:18:00Z",
+      "side": 1,
+      "message": "Yes - since I updated the type definitions in site_settings_prefs_browser_proxy.cc to force a SiteException\u0027s |controlledBy| to be a chrome.settingsPrivate.ControlledBy type, the Closure compiler will fail if an empty string is passed (since that\u0027s not one of the enum values).\n\nSame with the null fix above (|enforcement| has to be a chrome.settingsPrivate.Enforcement enum value or null).",
+      "parentUuid": "e3ddff46_2a54d4ba",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1c85654c_1fb3a866",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-14T00:18:00Z",
+      "side": 1,
+      "message": "Ohh. I think git got confused (I deleted the Cookies setting in crrev/563137, which included deleting an entry for it here, i.e. |prefs.exceptions.cookies|), and I also got confused merging it and fixed popups below properly but not images? Or something. I changed it back now.",
+      "parentUuid": "129f0bec_06a96b24",
+      "range": {
+        "startLine": 98,
+        "startChar": 19,
+        "endLine": 98,
+        "endChar": 51
+      },
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b61d48c8_4e7fb5f6",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 8
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-12T07:14:52Z",
       "side": 1,
       "message": "ContentSettingProvider.PREFERENCE?",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e88ee2_caac8b1f",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-14T00:18:00Z",
+      "side": 1,
+      "message": "I thought about it, but realised there are strings hardcoded here that aren\u0027t represented in ContentSettingProvider (e.g. geolocation above\u0027s |source| is \"policy\", which isn\u0027t in ContentSettingProvider), and thought that maybe that should wait until the typedef for RawSiteException says |source| is a specific enum instead of string. See the discussion I had with Raymes about it here: https://chromium-review.googlesource.com/c/558541/7/chrome%252Fbrowser%252Fresources%252Fsettings%252Fsite_settings%252Fsite_settings_prefs_browser_proxy.js#25",
+      "parentUuid": "b61d48c8_4e7fb5f6",
       "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "05e7edbc_3388d1be",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-14T00:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a178969b_d3e3d8fd",
+      "range": {
+        "startLine": 194,
+        "startChar": 50,
+        "endLine": 194,
+        "endChar": 60
+      },
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78952ea1_d9f0c642",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 8
@@ -130,6 +250,24 @@
       "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd471af1_75821f07",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-14T00:18:00Z",
+      "side": 1,
+      "message": "I did this and then realised stuff was failing because you need to map the category names -\u003e pref names (similar to the logic in test_site_settings_prefs_browser_proxy.js getOriginPermissions). I left it as-is because I think that\u0027s probably cleaner.",
+      "parentUuid": "78952ea1_d9f0c642",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

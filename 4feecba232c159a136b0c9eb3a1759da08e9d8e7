@@ -412,6 +412,24 @@
     },
     {
       "key": {
+        "uuid": "e9aae2c8_34b754c4",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-14T00:18:00Z",
+      "side": 1,
+      "message": "Ah, ok - so we should try and make it a separate enum that doesn\u0027t affect the other things that use the ContentSettingProvider type? That makes sense. I\u0027ll remove mention of ContentSettingProvider in the TODO.",
+      "parentUuid": "dac64369_3dd9027c",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf7e1d81_568bd5a0",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
         "patchSetId": 7
@@ -763,6 +781,30 @@
       "side": 1,
       "message": "Nit: remove the type and just use Map\u003cstring.... here. It\u0027s cleaner.",
       "parentUuid": "e2c4c138_93019186",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40111db6_c56ee393",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-14T00:18:00Z",
+      "side": 1,
+      "message": "Ok, I replaced both CategoryDefaultsPref and ExceptionListPref (on the line below).",
+      "parentUuid": "6621bc22_02468951",
       "range": {
         "startLine": 49,
         "startChar": 24,
