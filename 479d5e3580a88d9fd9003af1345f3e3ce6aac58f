@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4855a56b_f77a34c6",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T21:16:03Z",
+      "side": 1,
+      "message": "Actually, this line turns out to be unnecessary as well. Just line 457 above is critical (near 100% failure without it, 100% with it).",
+      "range": {
+        "startLine": 462,
+        "startChar": 38,
+        "endLine": 462,
+        "endChar": 53
+      },
+      "revId": "479d5e3580a88d9fd9003af1345f3e3ce6aac58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
