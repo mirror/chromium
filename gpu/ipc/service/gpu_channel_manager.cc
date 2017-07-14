@@ -257,10 +257,23 @@ void GpuChannelManager::OnApplicationStateChange(
     return;
   }
 
-  if (!task_runner_->BelongsToCurrentThread()) {
-    task_runner_->PostTask(
-        FROM_HERE, base::Bind(&GpuChannelManager::OnApplicationStateChange,
-                              weak_factory_.GetWeakPtr(), state));
+  // Clear the GL context on low-end devices after a 5 second delay, so that we
+  // don't clear in case the user pressed the home or recents button by mistake
+  // and got back to Chrome quickly.
+  const kDelayToClearContextMs = 5000;
+
+  task_runner_->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&GpuChannelManager::OnApplicationBackgrounded,
+                 weak_factory_.GetWeakPtr()),
+      base::TimeDelta::FromMilliseconds(kDelayToClearContextMs));
+  return;
+}
+
+void GpuChannelManager::OnApplicationBackgrounded() {
+  // Check if the app is still in background after the delay.
+  if (base::android::ApplicationStatusListener::GetState() !=
+      base::android::APPLICATION_STATE_HAS_STOPPED_ACTIVITIES) {
     return;
   }
 
