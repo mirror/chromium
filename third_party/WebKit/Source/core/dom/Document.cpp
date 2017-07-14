@@ -2369,6 +2369,8 @@ void Document::ClearFocusedElementTimerFired(TimerBase*) {
 // lets us get reasonable answers. The long term solution to this problem is
 // to instead suspend JavaScript execution.
 void Document::UpdateStyleAndLayoutTreeIgnorePendingStylesheets() {
+  // See comment for equivalent DCHECK in Document::UpdateStyleAndLayoutTree.
+  DCHECK(Lifecycle().StateAllowsTreeMutations());
   StyleEngine::IgnoringPendingStylesheet ignoring(GetStyleEngine());
 
   if (GetStyleEngine().HasPendingScriptBlockingSheets()) {

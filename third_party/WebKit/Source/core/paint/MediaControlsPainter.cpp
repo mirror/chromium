@@ -199,9 +199,14 @@ bool MediaControlsPainter::PaintMediaOverlayPlayButton(
 
   // TODO(mlamouri): it might be possible to use the PanelLayoutObject() call
   // instead.
-  HTMLDivElement* panel_element = nullptr;
-  if (media_element->GetMediaControls())
-    panel_element = media_element->GetMediaControls()->PanelElement();
+  LayoutBox* panel_box = nullptr;
+  if (media_element->GetMediaControls()) {
+    if (LayoutObject* object =
+            media_element->GetMediaControls()->PanelLayoutObject()) {
+      if (object->IsBox())
+        panel_box = ToLayoutBox(object);
+    }
+  }
 
   static Image* media_overlay_play = PlatformResource("mediaplayerOverlayPlay");
 
@@ -214,7 +219,11 @@ bool MediaControlsPainter::PaintMediaOverlayPlayButton(
   if (!box)
     return false;
   int media_height = box->PixelSnappedHeight();
-  int media_panel_height = panel_element ? panel_element->clientHeight() : 0;
+  int media_panel_height = panel_box
+                               ? AdjustLayoutUnitForAbsoluteZoom(
+                                     panel_box->ClientHeight(), *panel_box)
+                                     .Round()
+                               : 0;
   button_rect.SetX(rect.Center().X() - kMediaOverlayPlayButtonWidth / 2);
   button_rect.SetY(rect.Center().Y() - kMediaOverlayPlayButtonHeight / 2 +
                    (media_height - rect.Height() - media_panel_height) / 2);
