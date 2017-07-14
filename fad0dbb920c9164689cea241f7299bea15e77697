@@ -94,6 +94,30 @@
       "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a76045_13421da6",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-14T19:15:10Z",
+      "side": 1,
+      "message": "Hmm, that\u0027s certainly implementable easily, though I am not sure it avoids all of the flakery of the current CL --- is \"DeleteAndStartOver will never be called before InitWith*Backend\" a true property? OTOH, I am not sure I can fix the close thing w/o a context object.",
+      "parentUuid": "6253ad53_d361ac38",
+      "range": {
+        "startLine": 1940,
+        "startChar": 18,
+        "endLine": 1940,
+        "endChar": 24
+      },
+      "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
