@@ -123,6 +123,24 @@
       "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b773aef_fe6018df",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-14T15:21:55Z",
+      "side": 1,
+      "message": "What I meant was: ignore Windows. Let\u0027s only consider Linux/cros.\n\nPreviously on linux/cros, this method would return SANDBOX_TYPE_PPAPI. Now, it returns SANDBOX_TYPE_PPAPI only if is_broker_ is set. It\u0027ll return SANDBOX_TYPE_PPAPI otherwise. Isn\u0027t this a behavior change on linux/cros?",
+      "parentUuid": "76e7b477_085757e6",
+      "revId": "d0e321773f3a6dcc5a72efbfb6838138a4bbc947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
