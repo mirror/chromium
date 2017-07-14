@@ -44,7 +44,8 @@ const DWORD kProcessKilledExitCode = 1;
 
 bool GetAppOutputInternal(const StringPiece16& cl,
                           bool include_stderr,
-                          std::string* output) {
+                          std::string* output,
+                          int* exit_code) {
   HANDLE out_read = nullptr;
   HANDLE out_write = nullptr;
 
@@ -122,11 +123,10 @@ bool GetAppOutputInternal(const StringPiece16& cl,
   // Let's wait for the process to finish.
   WaitForSingleObject(proc_info.process_handle(), INFINITE);
 
-  int exit_code;
   base::TerminationStatus status = GetTerminationStatus(
-      proc_info.process_handle(), &exit_code);
+      proc_info.process_handle(), exit_code);
   base::debug::GlobalActivityTracker::RecordProcessExitIfEnabled(
-      proc_info.process_id(), exit_code);
+      proc_info.process_id(), *exit_code);
   return status != base::TERMINATION_STATUS_PROCESS_CRASHED &&
          status != base::TERMINATION_STATUS_ABNORMAL_TERMINATION;
 }
@@ -381,11 +381,18 @@ bool GetAppOutput(const CommandLine& cl, std::string* output) {
 }
 
 bool GetAppOutputAndError(const CommandLine& cl, std::string* output) {
-  return GetAppOutputInternal(cl.GetCommandLineString(), true, output);
+  return GetAppOutputInternal(cl.GetCommandLineString(), true, output, &int());
+}
+
+bool GetAppOutputWithExitCode(const CommandLine& cl,
+                              std::string* output,
+                              int* exit_code) {
+  return GetAppOutputInternal(
+      cl.GetCommandLineString(), false, output, exit_code);
 }
 
 bool GetAppOutput(const StringPiece16& cl, std::string* output) {
-  return GetAppOutputInternal(cl, false, output);
+  return GetAppOutputInternal(cl, false, output, &int());
 }
 
 void RaiseProcessToHighPriority() {
