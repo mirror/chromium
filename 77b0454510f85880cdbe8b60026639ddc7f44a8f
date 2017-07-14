@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "680c2143_2d299395",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaSessionStats.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-14T20:34:46Z",
+      "side": 1,
+      "message": "Please inline this function too as there\u0027s nothign \"sessions-y\" about this code (it was just here because it was an easy to way to get to native before the RecordHistogram code was added)",
+      "range": {
+        "startLine": 147,
+        "startChar": 23,
+        "endLine": 147,
+        "endChar": 39
+      },
+      "revId": "77b0454510f85880cdbe8b60026639ddc7f44a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2149907_812206fc",
+        "filename": "chrome/browser/metrics/chrome_stability_metrics_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-14T20:34:46Z",
+      "side": 1,
+      "message": "nit: space after (int)",
+      "range": {
+        "startLine": 135,
+        "startChar": 13,
+        "endLine": 135,
+        "endChar": 14
+      },
+      "revId": "77b0454510f85880cdbe8b60026639ddc7f44a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
