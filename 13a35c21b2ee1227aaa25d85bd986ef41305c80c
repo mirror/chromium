@@ -22,6 +22,30 @@
       "revId": "13a35c21b2ee1227aaa25d85bd986ef41305c80c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a121fa62_e1253fb2",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-14T22:31:07Z",
+      "side": 1,
+      "message": "Looks like they are in the right place.\n\nIn terms of the Y axis, it should be fine since we have:\n\n[_iconView.centerYAnchor\n      constraintEqualToAnchor:_activityIndicator.centerYAnchor]",
+      "parentUuid": "b10597ba_7c9f5463",
+      "range": {
+        "startLine": 238,
+        "startChar": 60,
+        "endLine": 238,
+        "endChar": 72
+      },
+      "revId": "13a35c21b2ee1227aaa25d85bd986ef41305c80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
