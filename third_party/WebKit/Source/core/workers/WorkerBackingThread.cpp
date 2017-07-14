@@ -58,9 +58,11 @@ WorkerBackingThread::WorkerBackingThread(WebThread* thread,
 
 WorkerBackingThread::~WorkerBackingThread() {}
 
-void WorkerBackingThread::Initialize(const WorkerV8Settings& settings) {
+void WorkerBackingThread::InitializeOnThread(const WorkerV8Settings& settings) {
+  DCHECK(backing_thread_->IsCurrentThread());
+  backing_thread_->InitializeOnThread();
+
   DCHECK(!isolate_);
-  backing_thread_->Initialize();
   isolate_ = V8PerIsolateData::Initialize(
       backing_thread_->PlatformThread().GetWebTaskRunner());
   AddWorkerIsolate(isolate_);
@@ -91,7 +93,8 @@ void WorkerBackingThread::Initialize(const WorkerV8Settings& settings) {
                                 WorkerV8Settings::AtomicsWaitMode::kAllow);
 }
 
-void WorkerBackingThread::Shutdown() {
+void WorkerBackingThread::ShutdownOnThread() {
+  DCHECK(backing_thread_->IsCurrentThread());
   if (is_owning_thread_)
     Platform::Current()->WillStopWorkerThread();
 
@@ -101,7 +104,7 @@ void WorkerBackingThread::Shutdown() {
     // This statement runs only in tests.
     V8GCController::CollectAllGarbageForTesting(isolate_);
   }
-  backing_thread_->Shutdown();
+  backing_thread_->ShutdownOnThread();
 
   RemoveWorkerIsolate(isolate_);
   V8PerIsolateData::Destroy(isolate_);
