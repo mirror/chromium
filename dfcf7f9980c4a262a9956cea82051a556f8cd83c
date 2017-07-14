@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25bf090b_66adc6c3",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T15:15:41Z",
+      "side": 1,
+      "message": "#include \"base/strings/string_piece_forward.h\"",
+      "revId": "dfcf7f9980c4a262a9956cea82051a556f8cd83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
