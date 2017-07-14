@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f4960bb_f48a08c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T10:09:19Z",
+      "side": 1,
+      "message": "Seems like the button isn\u0027t aligned on the left with the text",
+      "range": {
+        "startLine": 9,
+        "startChar": 124,
+        "endLine": 9,
+        "endChar": 131
+      },
+      "revId": "18454e4a48585c2844a07c28844698811182daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e3abb0_8699edc0",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T10:09:19Z",
+      "side": 1,
+      "message": "TODO(crbug.com/734965)",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 9
+      },
+      "revId": "18454e4a48585c2844a07c28844698811182daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62459f3_46dc6822",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T10:09:19Z",
+      "side": 1,
+      "message": "Don\u0027t forget that we want to edit empty usernames too.",
+      "range": {
+        "startLine": 51,
+        "startChar": 11,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "18454e4a48585c2844a07c28844698811182daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0feb7c1_c922fe59",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T10:09:19Z",
+      "side": 1,
+      "message": "It\u0027s a parent class that is responsible for layout.",
+      "range": {
+        "startLine": 85,
+        "startChar": 17,
+        "endLine": 85,
+        "endChar": 31
+      },
+      "revId": "18454e4a48585c2844a07c28844698811182daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8eadb5_05f17d7a",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T10:09:19Z",
+      "side": 1,
+      "message": "Why isn\u0027t the new button in the list?",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 11
+      },
+      "revId": "18454e4a48585c2844a07c28844698811182daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60bccff_ba92bfe2",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T10:09:19Z",
+      "side": 1,
+      "message": "There should be a unit test for the new button.",
+      "range": {
+        "startLine": 94,
+        "startChar": 13,
+        "endLine": 94,
+        "endChar": 23
+      },
+      "revId": "18454e4a48585c2844a07c28844698811182daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
