@@ -4888,6 +4888,8 @@ class TestSwapPromise : public SwapPromise {
   }
 
   void DidSwap() override {}
+  void DidSwap(double timestamp) override {}
+  bool NeedsSwapTimestamp() const override { return false; }
 
   DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override {
     base::AutoLock lock(result_->lock);

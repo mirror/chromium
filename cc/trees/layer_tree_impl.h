@@ -666,6 +666,8 @@ class CC_EXPORT LayerTreeImpl {
   LayerTreeLifecycle lifecycle_;
 
  private:
+  static double MonotonicallyIncreasingTime();
+
   DISALLOW_COPY_AND_ASSIGN(LayerTreeImpl);
 };
 

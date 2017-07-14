@@ -33,6 +33,8 @@ class MockSwapPromise : public SwapPromise {
   void DidActivate() override {}
   void WillSwap(CompositorFrameMetadata* metadata) override {}
   void DidSwap() override {}
+  void DidSwap(double timestamp) override {}
+  bool NeedsSwapTimestamp() const override { return false; }
   DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override {
     return DidNotSwapAction::BREAK_PROMISE;
   }

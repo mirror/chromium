@@ -92,11 +92,6 @@ namespace {
 
 using ReportTimeCallback = base::Callback<void(bool, double)>;
 
-double MonotonicallyIncreasingTime() {
-  return static_cast<double>(base::TimeTicks::Now().ToInternalValue()) /
-         base::Time::kMicrosecondsPerSecond;
-}
-
 class ReportTimeSwapPromise : public cc::SwapPromise {
  public:
   ReportTimeSwapPromise(
@@ -107,6 +102,8 @@ class ReportTimeSwapPromise : public cc::SwapPromise {
   void DidActivate() override {}
   void WillSwap(cc::CompositorFrameMetadata* metadata) override {}
   void DidSwap() override;
+  void DidSwap(double timestamp) override;
+  bool NeedsSwapTimestamp() const override;
   DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override;
 
   int64_t TraceId() const override;
@@ -126,9 +123,15 @@ ReportTimeSwapPromise::ReportTimeSwapPromise(
 ReportTimeSwapPromise::~ReportTimeSwapPromise() {}
 
 void ReportTimeSwapPromise::DidSwap() {
-  task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(callback_, true, MonotonicallyIncreasingTime()));
+  NOTREACHED();
+}
+
+void ReportTimeSwapPromise::DidSwap(double timestamp) {
+  task_runner_->PostTask(FROM_HERE, base::BindOnce(callback_, true, timestamp));
+}
+
+bool ReportTimeSwapPromise::NeedsSwapTimestamp() const {
+  return true;
 }
 
 cc::SwapPromise::DidNotSwapAction ReportTimeSwapPromise::DidNotSwap(

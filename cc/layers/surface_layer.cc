@@ -38,6 +38,9 @@ class SatisfySwapPromise : public SwapPromise {
     main_task_runner_->PostTask(FROM_HERE, reference_returner_);
   }
 
+  void DidSwap(double timestamp) override {}
+  bool NeedsSwapTimestamp() const override { return false; }
+
   DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override {
     main_task_runner_->PostTask(FROM_HERE, reference_returner_);
     return DidNotSwapAction::BREAK_PROMISE;

@@ -2274,6 +2274,9 @@ class PersistentSwapPromise
   MOCK_METHOD1(WillSwap, void(CompositorFrameMetadata* metadata));
   MOCK_METHOD0(DidSwap, void());
 
+  bool NeedsSwapTimestamp() override { return false; }
+  void DidSwap(double timestamp) override { CHECK(false); }
+
   DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override {
     return DidNotSwapAction::KEEP_ACTIVE;
   }
@@ -2292,6 +2295,9 @@ class NotPersistentSwapPromise
   void DidActivate() override {}
   void WillSwap(CompositorFrameMetadata* metadata) override {}
   void DidSwap() override {}
+
+  bool NeedsSwapTimestamp() const override { return false; }
+  void DidSwap(double timestamp) override { CHECK(false); }
 
   DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override {
     return DidNotSwapAction::BREAK_PROMISE;

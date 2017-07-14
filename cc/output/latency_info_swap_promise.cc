@@ -42,6 +42,12 @@ void LatencyInfoSwapPromise::WillSwap(CompositorFrameMetadata* metadata) {
 
 void LatencyInfoSwapPromise::DidSwap() {}
 
+void LatencyInfoSwapPromise::DidSwap(double timestamp) {}
+
+bool LatencyInfoSwapPromise::NeedsSwapTimestamp() const {
+  return false;
+}
+
 SwapPromise::DidNotSwapAction LatencyInfoSwapPromise::DidNotSwap(
     DidNotSwapReason reason) {
   latency_.AddLatencyNumber(DidNotSwapReasonToLatencyComponentType(reason), 0,

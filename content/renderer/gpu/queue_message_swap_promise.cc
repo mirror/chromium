@@ -70,6 +70,12 @@ void QueueMessageSwapPromise::WillSwap(cc::CompositorFrameMetadata* metadata) {
 
 void QueueMessageSwapPromise::DidSwap() {}
 
+void QueueMessageSwapPromise::DidSwap(double timestamp) {}
+
+bool QueueMessageSwapPromise::NeedsSwapTimestamp() const {
+  return false;
+}
+
 cc::SwapPromise::DidNotSwapAction QueueMessageSwapPromise::DidNotSwap(
     DidNotSwapReason reason) {
 #if DCHECK_IS_ON()

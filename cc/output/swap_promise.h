@@ -62,6 +62,10 @@ class CC_EXPORT SwapPromise {
   virtual void DidActivate() = 0;
   virtual void WillSwap(CompositorFrameMetadata* metadata) = 0;
   virtual void DidSwap() = 0;
+  virtual void DidSwap(double timestamp) = 0;
+  // The version of DidSwap() that gets called depends on what NeedsTimestamp()
+  // returns.
+  virtual bool NeedsSwapTimestamp() const = 0;
   // Return |KEEP_ACTIVE| if this promise should remain active (should not be
   // broken by the owner).
   virtual DidNotSwapAction DidNotSwap(DidNotSwapReason reason) = 0;

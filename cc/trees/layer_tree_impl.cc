@@ -1557,11 +1557,29 @@ void LayerTreeImpl::FinishSwapPromises(CompositorFrameMetadata* metadata) {
 }
 
 void LayerTreeImpl::ClearSwapPromises() {
-  for (const auto& swap_promise : swap_promise_list_)
-    swap_promise->DidSwap();
+  // We report the timestamp to any SwapPromises that need it, but we only
+  // compute it once because it's not cheap on some platforms.
+  double timestamp = 0.0;
+
+  for (const auto& swap_promise : swap_promise_list_) {
+    if (swap_promise->NeedsSwapTimestamp()) {
+      if (timestamp == 0.0)
+        timestamp = MonotonicallyIncreasingTime();
+      swap_promise->DidSwap(timestamp);
+    } else {
+      swap_promise->DidSwap();
+    }
+  }
   swap_promise_list_.clear();
-  for (const auto& swap_promise : pinned_swap_promise_list_)
-    swap_promise->DidSwap();
+  for (const auto& swap_promise : pinned_swap_promise_list_) {
+    if (swap_promise->NeedsSwapTimestamp()) {
+      if (timestamp == 0.0)
+        timestamp = MonotonicallyIncreasingTime();
+      swap_promise->DidSwap(timestamp);
+    } else {
+      swap_promise->DidSwap();
+    }
+  }
   pinned_swap_promise_list_.clear();
 }
 
@@ -2074,6 +2092,12 @@ void LayerTreeImpl::ResetAllChangeTracking() {
   for (auto& layer : *layers_)
     layer->ResetChangeTracking();
   property_trees_.ResetAllChangeTracking();
+}
+
+// static
+double LayerTreeImpl::MonotonicallyIncreasingTime() {
+  return static_cast<double>(base::TimeTicks::Now().ToInternalValue()) /
+         base::Time::kMicrosecondsPerSecond;
 }
 
 }  // namespace cc

@@ -313,6 +313,8 @@ class CopyRequestSwapPromise : public cc::SwapPromise {
         std::move(copy_request_));
   }
   void DidSwap() override {}
+  void DidSwap(double timestamp) override {}
+  bool NeedsSwapTimestamp() const override { return false; }
   DidNotSwapAction DidNotSwap(DidNotSwapReason r) override {
     // The compositor should always swap in layout test mode.
     NOTREACHED() << "did not swap for reason " << r;
