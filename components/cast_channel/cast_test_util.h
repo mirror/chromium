@@ -66,10 +66,17 @@ class MockCastSocketObserver : public CastSocket::Observer {
 
 class MockCastSocket : public CastSocket {
  public:
+  using MockOnOpenCallback =
+      base::Callback<void(int channel_id, ChannelError error_state)>;
+
   MockCastSocket();
   ~MockCastSocket() override;
 
-  MOCK_METHOD1(Connect, void(const OnOpenCallback& callback));
+  void Connect(CastSocket::OnOpenCallback callback) override {
+    ConnectInternal(base::AdaptCallbackForRepeating(std::move(callback)));
+  }
+
+  MOCK_METHOD1(ConnectInternal, void(const MockOnOpenCallback& callback));
   MOCK_METHOD1(Close, void(const net::CompletionCallback& callback));
   MOCK_CONST_METHOD0(ready_state, ReadyState());
   MOCK_METHOD1(AddObserver, void(Observer* observer));
