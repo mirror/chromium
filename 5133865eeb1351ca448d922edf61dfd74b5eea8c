@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "639b9d9c_83c1fcd9",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-14T04:53:33Z",
+      "side": 1,
+      "message": "Is this cast from ContentSettingsType -\u003e int -\u003e ContentSettingsType necessary?",
+      "revId": "5133865eeb1351ca448d922edf61dfd74b5eea8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98124efa_e0a9cf8a",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-14T04:53:33Z",
+      "side": 1,
+      "message": "Calling this list2 is a little strange, since there\u0027s no other list at this point. Can this variable also just be called `category_list` ?",
+      "revId": "5133865eeb1351ca448d922edf61dfd74b5eea8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
