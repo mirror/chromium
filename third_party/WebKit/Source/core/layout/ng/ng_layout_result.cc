@@ -4,6 +4,8 @@
 
 #include "core/layout/ng/ng_layout_result.h"
 
+#include "core/layout/ng/ng_unpositioned_float.h"
+
 namespace blink {
 
 NGLayoutResult::NGLayoutResult(

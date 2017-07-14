@@ -14,6 +14,7 @@ NGPhysicalLineBoxFragment::NGPhysicalLineBoxFragment(
     : NGPhysicalFragment(nullptr,
                          size,
                          kFragmentLineBox,
+                         /* is_anonymous */ false,
                          std::move(break_token)),
       metrics_(metrics) {
   children_.swap(children);

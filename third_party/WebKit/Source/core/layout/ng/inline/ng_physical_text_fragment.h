@@ -21,7 +21,10 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
                          unsigned start_offset,
                          unsigned end_offset,
                          NGPhysicalSize size)
-      : NGPhysicalFragment(layout_object, size, kFragmentText),
+      : NGPhysicalFragment(layout_object,
+                           size,
+                           kFragmentText,
+                           /* is_anonymous */ false),
         node_(node),
         item_index_(item_index),
         start_offset_(start_offset),
