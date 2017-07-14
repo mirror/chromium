@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0b58faa_eea29b87",
+        "filename": "chrome/browser/password_manager/password_store_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T13:33:23Z",
+      "side": 1,
+      "message": "Cool to see this test fixed! Was the fixing tied to the migration away from BrowserThread::DB, or was it something we could separate in a different CL (to avoid this one being reverted if the test flakes again)? Was the problem the PasswordForm data prepared on line CreatePasswordFormFromDataForTesting?\n\nCould you please also add bug 71385 to the Bug: line in the CL description if you end up enabling the test here?",
+      "range": {
+        "startLine": 184,
+        "startChar": 29,
+        "endLine": 184,
+        "endChar": 44
+      },
+      "revId": "a66012f56f7e6d3289c58cd4035642a0a8570446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
