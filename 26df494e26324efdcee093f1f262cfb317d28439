@@ -46,6 +46,30 @@
       "revId": "26df494e26324efdcee093f1f262cfb317d28439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52066f7d_653123b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-14T21:48:54Z",
+      "side": 1,
+      "message": "On my testing device, the bgPadding.top is 14px and bgPadding.bottom is 45px. The padding difference is 31px (8dp on my device is 28px). They are a little bit different but I guess the 31px from app menu padding should be the correct value since bgPadding.right is also 14px.\n\nThe physical menu button won\u0027t work if I set ClippingEnabled to false, so I\u0027m not setting clipping to false in this case and the app menu opened from physical button will appear the same as when chrome home is disabled (in the middle at the bottom of the screen on a Samsung device).",
+      "parentUuid": "8a21e58c_52f2e61b",
+      "range": {
+        "startLine": 101,
+        "startChar": 50,
+        "endLine": 101,
+        "endChar": 87
+      },
+      "revId": "26df494e26324efdcee093f1f262cfb317d28439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
