@@ -237,8 +237,8 @@ void BoxPainter::PaintFillLayers(const PaintInfo& paint_info,
 
   for (auto it = reversed_paint_list.rbegin(); it != reversed_paint_list.rend();
        ++it) {
-    PaintFillLayer(layout_box_, paint_info, c, **it, rect, bleed_avoidance,
-                   geometry, 0, LayoutSize(), op);
+    PaintFillLayer(paint_info, c, **it, rect, bleed_avoidance, geometry, 0,
+                   LayoutSize(), op);
   }
 
   if (should_draw_background_in_separate_buffer)
@@ -433,8 +433,52 @@ void PaintFillLayerTextFillBox(GraphicsContext& context,
 
 }  // anonymous namespace
 
-void BoxPainter::PaintFillLayer(const LayoutBoxModelObject& obj,
-                                const PaintInfo& paint_info,
+LayoutRectOutsets BoxPainter::BorderOutsets(
+    const BoxPainterBase::FillLayerInfo& info) const {
+  return LayoutRectOutsets(
+      layout_box_.BorderTop(),
+      info.include_right_edge ? layout_box_.BorderRight() : LayoutUnit(),
+      layout_box_.BorderBottom(),
+      info.include_left_edge ? layout_box_.BorderLeft() : LayoutUnit());
+}
+
+LayoutRectOutsets BoxPainter::PaddingOutsets(
+    const BoxPainterBase::FillLayerInfo& info) const {
+  return LayoutRectOutsets(
+      layout_box_.PaddingTop(),
+      info.include_right_edge ? layout_box_.PaddingRight() : LayoutUnit(),
+      layout_box_.PaddingBottom(),
+      info.include_left_edge ? layout_box_.PaddingLeft() : LayoutUnit());
+}
+
+LayoutRect BoxPainter::AdjustForScrolledContent(
+    const PaintInfo& paint_info,
+    const BoxPainterBase::FillLayerInfo& info,
+    const LayoutRect& rect,
+    const LayoutRectOutsets& border) const {
+  GraphicsContext& context = paint_info.context;
+  LayoutRect scrolled_paint_rect = rect;
+  if (info.is_clipped_with_local_scrolling &&
+      !IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
+          &layout_box_, paint_info)) {
+    // Clip to the overflow area.
+    // TODO(chrishtr): this should be pixel-snapped.
+    context.Clip(FloatRect(layout_box_.OverflowClipRect(rect.Location())));
+
+    // Adjust the paint rect to reflect a scrolled content box with borders at
+    // the ends.
+    IntSize offset = layout_box_.ScrolledContentOffset();
+    scrolled_paint_rect.Move(-offset);
+    scrolled_paint_rect.SetWidth(border.Left() + layout_box_.ScrollWidth() +
+                                 border.Right());
+    scrolled_paint_rect.SetHeight(layout_box_.BorderTop() +
+                                  layout_box_.ScrollHeight() +
+                                  layout_box_.BorderBottom());
+  }
+  return scrolled_paint_rect;
+}
+
+void BoxPainter::PaintFillLayer(const PaintInfo& paint_info,
                                 const Color& color,
                                 const FillLayer& bg_layer,
                                 const LayoutRect& rect,
@@ -448,38 +492,18 @@ void BoxPainter::PaintFillLayer(const LayoutBoxModelObject& obj,
     return;
 
   const BoxPainterBase::FillLayerInfo info(
-      obj.GetDocument(), obj.StyleRef(), obj.HasOverflowClip(), color, bg_layer,
-      bleed_avoidance, (box ? box->IncludeLogicalLeftEdge() : true),
+      layout_box_.GetDocument(), layout_box_.StyleRef(),
+      layout_box_.HasOverflowClip(), color, bg_layer, bleed_avoidance,
+      (box ? box->IncludeLogicalLeftEdge() : true),
       (box ? box->IncludeLogicalRightEdge() : true));
 
   bool has_line_box_sibling = box && (box->NextLineBox() || box->PrevLineBox());
-  LayoutRectOutsets border(
-      obj.BorderTop(),
-      info.include_right_edge ? obj.BorderRight() : LayoutUnit(),
-      obj.BorderBottom(),
-      info.include_left_edge ? obj.BorderLeft() : LayoutUnit());
+  LayoutRectOutsets border = BorderOutsets(info);
 
   GraphicsContextStateSaver clip_with_scrolling_state_saver(
       context, info.is_clipped_with_local_scrolling);
-  LayoutRect scrolled_paint_rect = rect;
-  if (info.is_clipped_with_local_scrolling &&
-      !IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
-          &obj, paint_info)) {
-    // Clip to the overflow area.
-    const LayoutBox& this_box = ToLayoutBox(obj);
-    // TODO(chrishtr): this should be pixel-snapped.
-    context.Clip(FloatRect(this_box.OverflowClipRect(rect.Location())));
-
-    // Adjust the paint rect to reflect a scrolled content box with borders at
-    // the ends.
-    IntSize offset = this_box.ScrolledContentOffset();
-    scrolled_paint_rect.Move(-offset);
-    scrolled_paint_rect.SetWidth(border.Left() + this_box.ScrollWidth() +
-                                 border.Right());
-    scrolled_paint_rect.SetHeight(this_box.BorderTop() +
-                                  this_box.ScrollHeight() +
-                                  this_box.BorderBottom());
-  }
+  LayoutRect scrolled_paint_rect =
+      AdjustForScrolledContent(paint_info, info, rect, border);
 
   RefPtr<Image> image;
   SkBlendMode composite_op = op;
@@ -503,26 +527,28 @@ void BoxPainter::PaintFillLayer(const LayoutBoxModelObject& obj,
   }
 
   FloatRoundedRect border_rect =
-      info.is_rounded_fill
-          ? RoundedBorderRectForClip(obj.StyleRef(), info, bg_layer, rect,
-                                     bleed_avoidance, has_line_box_sibling,
-                                     box_size, obj.BorderPaddingInsets())
-          : FloatRoundedRect();
+      info.is_rounded_fill ? RoundedBorderRectForClip(
+                                 layout_box_.StyleRef(), info, bg_layer, rect,
+                                 bleed_avoidance, has_line_box_sibling,
+                                 box_size, layout_box_.BorderPaddingInsets())
+                           : FloatRoundedRect();
+  Node* node = GetNode();
 
   // Fast path for drawing simple color backgrounds.
-  if (PaintFastBottomLayer(obj, obj.GeneratingNode(), paint_info, info, rect,
+  if (PaintFastBottomLayer(layout_box_, node, paint_info, info, rect,
                            border_rect, geometry, image.Get(), composite_op)) {
     return;
   }
 
   Optional<RoundedInnerRectClipper> clip_to_border;
-  if (info.is_rounded_fill)
-    clip_to_border.emplace(obj, paint_info, rect, border_rect, kApplyToContext);
-
+  if (info.is_rounded_fill) {
+    clip_to_border.emplace(layout_box_, paint_info, rect, border_rect,
+                           kApplyToContext);
+  }
   if (bg_layer.Clip() == kTextFillBox) {
     PaintFillLayerTextFillBox(context, info, image.Get(), composite_op,
-                              geometry, obj.GeneratingNode(), rect,
-                              scrolled_paint_rect, obj, box);
+                              geometry, node, rect, scrolled_paint_rect,
+                              layout_box_, box);
     return;
   }
 
@@ -536,14 +562,8 @@ void BoxPainter::PaintFillLayer(const LayoutBoxModelObject& obj,
       // Clip to the padding or content boxes as necessary.
       LayoutRect clip_rect = scrolled_paint_rect;
       clip_rect.Contract(border);
-      if (bg_layer.Clip() == kContentFillBox) {
-        LayoutRectOutsets padding(
-            obj.PaddingTop(),
-            info.include_right_edge ? obj.PaddingRight() : LayoutUnit(),
-            obj.PaddingBottom(),
-            info.include_left_edge ? obj.PaddingLeft() : LayoutUnit());
-        clip_rect.Contract(padding);
-      }
+      if (bg_layer.Clip() == kContentFillBox)
+        clip_rect.Contract(PaddingOutsets(info));
       background_clip_state_saver.Save();
       // TODO(chrishtr): this should be pixel-snapped.
       context.Clip(FloatRect(clip_rect));
@@ -558,7 +578,7 @@ void BoxPainter::PaintFillLayer(const LayoutBoxModelObject& obj,
   }
 
   PaintFillLayerBackground(context, info, image.Get(), composite_op, geometry,
-                           obj.GeneratingNode(), scrolled_paint_rect);
+                           node, scrolled_paint_rect);
 }
 
 void BoxPainter::PaintMask(const PaintInfo& paint_info,
