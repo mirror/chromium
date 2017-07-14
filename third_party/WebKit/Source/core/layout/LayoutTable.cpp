@@ -1305,12 +1305,13 @@ LayoutTableCell* LayoutTable::CellFollowing(const LayoutTableCell& cell) const {
   return cell.Section()->PrimaryCellAt(cell.RowIndex(), eff_col);
 }
 
-int LayoutTable::BaselinePosition(FontBaseline baseline_type,
-                                  bool first_line,
-                                  LineDirectionMode direction,
-                                  LinePositionMode line_position_mode) const {
+LayoutUnit LayoutTable::BaselinePosition(
+    FontBaseline baseline_type,
+    bool first_line,
+    LineDirectionMode direction,
+    LinePositionMode line_position_mode) const {
   DCHECK_EQ(line_position_mode, kPositionOnContainingLine);
-  int baseline = FirstLineBoxBaseline();
+  LayoutUnit baseline = LayoutUnit(FirstLineBoxBaseline());
   if (baseline != -1) {
     if (IsInline())
       return BeforeMarginInLineDirection(direction) + baseline;
@@ -1321,9 +1322,9 @@ int LayoutTable::BaselinePosition(FontBaseline baseline_type,
                                      line_position_mode);
 }
 
-int LayoutTable::InlineBlockBaseline(LineDirectionMode) const {
+LayoutUnit LayoutTable::InlineBlockBaseline(LineDirectionMode) const {
   // Tables are skipped when computing an inline-block's baseline.
-  return -1;
+  return LayoutUnit(-1);
 }
 
 int LayoutTable::FirstLineBoxBaseline() const {
