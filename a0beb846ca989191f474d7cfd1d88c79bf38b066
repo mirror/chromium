@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55ae287d_a30bfbf8",
+        "filename": "third_party/WebKit/LayoutTests/storage/websql/fts-crash-703507.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T01:49:58Z",
+      "side": 1,
+      "message": "Is this test is deceptive? I think this succeeds because there is no table called \u0027main\u0027. If there were an fts3 backed table called main, this statement would actually fail (i think).\n\nIf that\u0027s right, maybe put an existence test here instead, to verify that there is no table called \u0027main\u0027. Can content query the \u0027sqlite_master\u0027 table? If not, maybe select * from \u0027main\u0027 and expect a no such table error.",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "a0beb846ca989191f474d7cfd1d88c79bf38b066",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
