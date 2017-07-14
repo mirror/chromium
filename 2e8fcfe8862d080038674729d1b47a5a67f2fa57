@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6468845_ccb656cd",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-14T06:42:28Z",
+      "side": 1,
+      "message": "Please add a FIXME with the link to the bug that explains how this is going to be removed and when.",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
