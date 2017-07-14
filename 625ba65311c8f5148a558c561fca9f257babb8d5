@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87034b1a_dd679062",
+        "filename": "ash/mus/window_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-14T22:10:10Z",
+      "side": 1,
+      "message": "Yes. Config::MUS keeps all event handling in the unified ash/chrome process so the one CompoundEventFilter at the top of the current ash/chrome window tree takes care of this.",
+      "parentUuid": "840d6a3d_f161d1ff",
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0977de39_7d875136",
         "filename": "services/ui/public/interfaces/window_manager.mojom",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c627f56e_7d40b6d6",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-14T22:10:10Z",
+      "side": 1,
+      "message": "Changed to the new name.",
+      "parentUuid": "0977de39_7d875136",
+      "range": {
+        "startLine": 282,
+        "startChar": 33,
+        "endLine": 282,
+        "endChar": 51
+      },
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "57248e86_c64faa11",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-14T22:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c02d6af_5ac8d481",
+      "range": {
+        "startLine": 284,
+        "startChar": 45,
+        "endLine": 284,
+        "endChar": 51
+      },
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dad03e8_816eeea4",
         "filename": "services/ui/public/interfaces/window_manager.mojom",
         "patchSetId": 4
@@ -85,6 +151,30 @@
       "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ecac30_9133d9f2",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-14T22:10:10Z",
+      "side": 1,
+      "message": "Used: SetKeyEventsThatDontHideCursor() and dont_hide_cursor_list.",
+      "parentUuid": "6dad03e8_816eeea4",
+      "range": {
+        "startLine": 286,
+        "startChar": 8,
+        "endLine": 286,
+        "endChar": 12
+      },
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "58db7275_9540ce48",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-14T22:10:10Z",
+      "side": 1,
+      "message": "Added comment about why this is so.",
+      "parentUuid": "8b67cd86_729e1c4c",
+      "range": {
+        "startLine": 365,
+        "startChar": 4,
+        "endLine": 365,
+        "endChar": 23
+      },
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24dfe0da_2c72a735",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 4
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "ccc3a11c_ad7bfa42",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2273,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-14T22:10:10Z",
+      "side": 1,
+      "message": "Added a check to EventDispatcher::SetKeyEventsThatDontHideCursor to ensure we don\u0027t have pointer event matchers.",
+      "parentUuid": "24dfe0da_2c72a735",
+      "range": {
+        "startLine": 2273,
+        "startChar": 16,
+        "endLine": 2273,
+        "endChar": 29
+      },
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a69f30d_f571df48",
         "filename": "ui/aura/mus/window_tree_client.cc",
         "patchSetId": 4
@@ -154,6 +292,30 @@
       "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7929c7b_320c941b",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-14T22:10:10Z",
+      "side": 1,
+      "message": "(Not anymore; new name pushes it onto another line.)",
+      "parentUuid": "5a69f30d_f571df48",
+      "range": {
+        "startLine": 1904,
+        "startChar": 6,
+        "endLine": 1904,
+        "endChar": 28
+      },
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
