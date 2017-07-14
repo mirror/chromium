@@ -39,6 +39,29 @@
       "revId": "72ef6accec279651f0edd96e0f61da9c578ac297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60897571_9defe930",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-14T17:26:33Z",
+      "side": 1,
+      "message": "You can probably remove this restriction, as the VR browser does work (mostly) with Cardboard. Several of the other tests still have this restriction in place because they navigate from WebVR to something else, which has different behavior between Cardboard and Daydream View (Cardboard gets kicked back out to 2D Chrome).",
+      "range": {
+        "startLine": 265,
+        "startChar": 5,
+        "endLine": 265,
+        "endChar": 16
+      },
+      "revId": "72ef6accec279651f0edd96e0f61da9c578ac297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
