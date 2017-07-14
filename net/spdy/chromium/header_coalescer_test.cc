@@ -18,9 +18,12 @@ using ::testing::Pair;
 namespace net {
 namespace test {
 
+const uint32_t max_header_list_size_for_test = 1024;
+
 class HeaderCoalescerTest : public ::testing::Test {
  public:
-  HeaderCoalescerTest() : header_coalescer_(NetLogWithSource()) {}
+  HeaderCoalescerTest()
+      : header_coalescer_(max_header_list_size_for_test, NetLogWithSource()) {}
 
  protected:
   HeaderCoalescer header_coalescer_;
@@ -43,9 +46,9 @@ TEST_F(HeaderCoalescerTest, EmptyHeaderKey) {
 }
 
 TEST_F(HeaderCoalescerTest, HeaderBlockTooLarge) {
-  // 3 byte key, 256 * 1024 - 40 byte value, 32 byte overhead:
-  // less than 256 * 1024 bytes in total.
-  SpdyString data(256 * 1024 - 40, 'a');
+  // key + value + overhead = 3 + max_header_list_size_for_test - 40 + 32
+  // = max_header_list_size_for_test - 5
+  SpdyString data(max_header_list_size_for_test - 40, 'a');
   header_coalescer_.OnHeader("foo", data);
   EXPECT_FALSE(header_coalescer_.error_seen());
 
