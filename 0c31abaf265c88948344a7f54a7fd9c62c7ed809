@@ -22,6 +22,30 @@
       "revId": "0c31abaf265c88948344a7f54a7fd9c62c7ed809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b20d203_39dee04e",
+        "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_writer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-07-14T20:11:43Z",
+      "side": 1,
+      "message": "this is because the threads ping pong. A callback is posted to the main thread that posts back to the background thread that posts another task.",
+      "parentUuid": "b90b7f20_8ac2cbd7",
+      "range": {
+        "startLine": 253,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "0c31abaf265c88948344a7f54a7fd9c62c7ed809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
