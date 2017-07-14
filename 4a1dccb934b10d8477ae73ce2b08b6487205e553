@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b00d840_cde2d542",
+        "filename": "content/browser/image_capture/image_capture_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-14T06:18:13Z",
+      "side": 1,
+      "message": "Seems like ScopedCallbackRunner is indeed similar to ScopedResultCallback,\nwith the difference that the former binds the arguments to the failed \nversion of the callback on construction, which IMHO dilutes the message\nand forces a base:Unretained -ugh- which is not necessary with a static\nmethod as done here. \n\nIOW I prefer\n\n  ScopedResultCallback\u003cBlaCallback\u003e scoped_callback(\n      std::move(callback), base::BindOnce(\u0026SomethingWentWrong));\n\nthan:\n\n  media::ScopedCallbackRunner(std::move(callback), false);\n\nespecially since this type of bindings happen on the \"service\" landing \nof an IPC/mojo where it makes sense to explicit the semantics of this \ntype of scoped thingy.\n\nMoreover ScopedResultCallback predates ScopedCallbackRunner, and the latter \nis used in just a few places in the code, so I propose:\n\na) moving ScopedResultCallback to media/base \nb) adapting scoped_callback_runner_unittest\nc) adapting ScopedCallbackRunner sites to the former [1]\n\nWDYT?\n\n\n[1] https://cs.chromium.org/search/?sq\u003dpackage:chromium\u0026type\u003dcs\u0026q\u003dScopedCallbackRunner",
+      "range": {
+        "startLine": 110,
+        "startChar": 49,
+        "endLine": 110,
+        "endChar": 69
+      },
+      "revId": "4a1dccb934b10d8477ae73ce2b08b6487205e553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
