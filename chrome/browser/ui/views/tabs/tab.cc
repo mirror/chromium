@@ -443,6 +443,7 @@ Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
       alert_indicator_button_(nullptr),
       close_button_(nullptr),
       title_(new views::Label()),
+      title_animation_(this),
       tab_activated_with_last_tap_down_(false),
       hover_controller_(this),
       showing_icon_(false),
@@ -499,6 +500,9 @@ Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
   const int kPulseDurationMs = 200;
   pulse_animation_->SetSlideDuration(kPulseDurationMs);
   pulse_animation_->SetContainer(animation_container_.get());
+
+  title_animation_.SetDuration(100);
+  title_animation_.SetContainer(animation_container_.get());
 
   hover_controller_.SetAnimationContainer(animation_container_.get());
 }
@@ -664,8 +668,16 @@ int Tab::GetOverlap() {
 void Tab::AnimationProgressed(const gfx::Animation* animation) {
   // Ignore if the pulse animation is being performed on active tab because
   // it repaints the same image. See PaintTab().
-  if ((animation != pulse_animation_.get()) || !IsActive())
+  if (animation == pulse_animation_.get() && IsActive())
+    return;
+
+  if (animation == &title_animation_) {
+    title_->SetBoundsRect(gfx::Tween::RectValueBetween(
+        animation->GetCurrentValue(), start_title_bounds_,
+        target_title_bounds_));
+  } else {
     SchedulePaint();
+  }
 }
 
 void Tab::AnimationCanceled(const gfx::Animation* animation) {
@@ -673,7 +685,10 @@ void Tab::AnimationCanceled(const gfx::Animation* animation) {
 }
 
 void Tab::AnimationEnded(const gfx::Animation* animation) {
-  SchedulePaint();
+  if (animation == &title_animation_)
+    title_->SetBoundsRect(target_title_bounds_);
+  else
+    SchedulePaint();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -828,8 +843,18 @@ void Tab::Layout() {
     // The Label will automatically center the font's cap height within the
     // provided vertical space.
     const gfx::Rect title_bounds(title_left, lb.y(), title_width, lb.height());
-    title_->SetBoundsRect(title_bounds);
     show_title = title_width > 0;
+
+    if (title_->bounds().IsEmpty()) {
+      title_->SetBoundsRect(title_bounds);
+      start_title_bounds_ = target_title_bounds_ = gfx::Rect();
+    } else if (target_title_bounds_ != title_bounds &&
+               title_bounds != title_->bounds()) {
+      if (!title_animation_.is_animating())
+        start_title_bounds_ = title_->bounds();
+      target_title_bounds_ = title_bounds;
+      title_animation_.Start();
+    }
   }
   title_->SetVisible(show_title);
 }
