@@ -37,7 +37,12 @@ class BrowserMessageFilter::Internal : public IPC::MessageFilter {
     filter_->OnFilterAdded(channel);
   }
 
-  void OnFilterRemoved() override { filter_->OnFilterRemoved(); }
+  void OnFilterRemoved() override {
+    for (size_t i = 0; i < filter_->filter_removed_callbacks_.size(); ++i)
+      std::move(filter_->filter_removed_callbacks_[i]).Run();
+    filter_->filter_removed_callbacks_.clear();
+    filter_->OnFilterRemoved();
+  }
 
   void OnChannelClosing() override {
     filter_->sender_ = nullptr;
@@ -112,8 +117,10 @@ BrowserMessageFilter::BrowserMessageFilter(
 
 void BrowserMessageFilter::AddAssociatedInterface(
     const std::string& name,
-    const IPC::ChannelProxy::GenericAssociatedInterfaceFactory& factory) {
+    const IPC::ChannelProxy::GenericAssociatedInterfaceFactory& factory,
+    base::OnceClosure filter_removed_callback) {
   associated_interfaces_.emplace_back(name, factory);
+  filter_removed_callbacks_.emplace_back(std::move(filter_removed_callback));
 }
 
 base::ProcessHandle BrowserMessageFilter::PeerHandle() {
