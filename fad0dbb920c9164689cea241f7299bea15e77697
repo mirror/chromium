@@ -118,6 +118,30 @@
       "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32af1cc2_3823ab63",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T19:38:46Z",
+      "side": 1,
+      "message": "Regarding flackery, seems like a lateral move, the change described would behave just like tip-of-tree does? Is that not right? I think DeleteAndStartOver probably can get called prior to Init being called, but in that case, the disk_cache certainly doesn\u0027t have any files open.",
+      "parentUuid": "37a76045_13421da6",
+      "range": {
+        "startLine": 1940,
+        "startChar": 18,
+        "endLine": 1940,
+        "endChar": 24
+      },
+      "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
