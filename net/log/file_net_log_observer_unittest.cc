@@ -52,9 +52,6 @@ const int kLargeFileSize = 100000000;
 // where event size doesn't matter.
 const size_t kDummyEventSize = 150;
 
-const char kWinLineEnd[] = "\r\n";
-const char kLinuxLineEnd[] = "\n";
-
 void AddEntries(FileNetLogObserver* logger,
                 int num_entries,
                 size_t entry_size) {
@@ -103,31 +100,6 @@ void AddEntries(FileNetLogObserver* logger,
   }
 }
 
-// Loads and concatenates the contents of bounded log files into a string
-void ReadBoundedLogFiles(const base::FilePath& log_dir, std::string* input) {
-  base::ReadFileToString(log_dir.AppendASCII("constants.json"), input);
-  size_t input_no_events = input->length();
-  std::string to_add;
-  for (int i = 0; base::ReadFileToString(
-           log_dir.AppendASCII("event_file_" + std::to_string(i) + ".json"),
-           &to_add);
-       ++i) {
-    *input += to_add;
-  }
-
-  // Delete the hanging comma and newline from the events array.
-  if (input->length() > input_no_events) {
-    // Remove carriage returns in case of Windows machine.
-    base::ReplaceSubstringsAfterOffset(input, 0, kWinLineEnd, kLinuxLineEnd);
-    ASSERT_GE(input->length() - input_no_events, 2u);
-    ASSERT_EQ(std::string(",\n"), std::string(*input, input->length() - 2));
-    input->erase(input->end() - 2, input->end() - 1);
-  }
-
-  base::ReadFileToString(log_dir.AppendASCII("end_netlog.json"), &to_add);
-  *input += to_add;
-}
-
 ::testing::AssertionResult ParseNetLogString(const std::string& input,
                                              std::unique_ptr<base::Value>* root,
                                              base::ListValue** events) {
@@ -138,7 +110,8 @@ void ReadBoundedLogFiles(const base::FilePath& log_dir, std::string* input) {
   base::JSONReader reader;
   *root = reader.ReadToValue(input);
   if (!*root) {
-    return ::testing::AssertionFailure() << reader.GetErrorMessage();
+    return ::testing::AssertionFailure() << reader.GetErrorMessage() << "\n\n"
+                                         << input;
   }
 
   base::DictionaryValue* dict;
@@ -159,11 +132,7 @@ class FileNetLogObserverTest : public ::testing::TestWithParam<bool> {
  public:
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    if (IsBounded()) {
-      log_path_ = temp_dir_.GetPath();
-    } else {
-      log_path_ = temp_dir_.GetPath().AppendASCII("net-log.json");
-    }
+    log_path_ = temp_dir_.GetPath().AppendASCII("net-log.json");
   }
 
   bool IsBounded() const { return GetParam(); }
@@ -184,33 +153,19 @@ class FileNetLogObserverTest : public ::testing::TestWithParam<bool> {
       std::unique_ptr<base::Value>* root,
       base::ListValue** events) {
     std::string input;
-    if (IsBounded()) {
-      ReadBoundedLogFiles(log_path_, &input);
-    } else {
-      base::ReadFileToString(log_path_, &input);
+    if (!base::ReadFileToString(log_path_, &input)) {
+      return ::testing::AssertionFailure()
+             << "Failed reading file: " << log_path_.value();
     }
     return ParseNetLogString(input, root, events);
   }
 
-  bool LogFilesExist() {
+  bool LogFileExists() {
     // The log files are written by a sequenced task runner. Drain all the
     // scheduled tasks to ensure that the file writing ones have run before
     // checking if they exist.
     base::TaskScheduler::GetInstance()->FlushForTesting();
-
-    if (IsBounded()) {
-      if (base::PathExists(log_path_.AppendASCII("constants.json")) ||
-          base::PathExists(log_path_.AppendASCII("end_netlog.json")))
-        return true;
-      for (int i = 0; i < kTotalNumFiles; i++) {
-        if (base::PathExists(log_path_.AppendASCII(
-                "event_file_" + std::to_string(i) + ".json")))
-          return true;
-      }
-      return false;
-    } else {
-      return base::PathExists(log_path_);
-    }
+    return base::PathExists(log_path_);
   }
 
  protected:
@@ -225,14 +180,14 @@ class FileNetLogObserverBoundedTest : public ::testing::Test {
  public:
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    bounded_log_dir_ = temp_dir_.GetPath();
+    log_path_ = temp_dir_.GetPath().AppendASCII("net-log.json");
   }
 
   void CreateAndStartObserving(std::unique_ptr<base::Value> constants,
                                int total_file_size,
                                int num_files) {
     logger_ = FileNetLogObserver::CreateBounded(
-        bounded_log_dir_, total_file_size, num_files, std::move(constants));
+        log_path_, total_file_size, num_files, std::move(constants));
     logger_->StartObserving(&net_log_, NetLogCaptureMode::Default());
   }
 
@@ -240,21 +195,17 @@ class FileNetLogObserverBoundedTest : public ::testing::Test {
       std::unique_ptr<base::Value>* root,
       base::ListValue** events) {
     std::string input;
-    ReadBoundedLogFiles(bounded_log_dir_, &input);
+    base::ReadFileToString(log_path_, &input);
     return ParseNetLogString(input, root, events);
   }
 
-  base::FilePath GetEventFilePath(int index) const {
-    return bounded_log_dir_.AppendASCII("event_file_" + std::to_string(index) +
-                                        ".json");
+  base::FilePath GetInternalEventDirectory() const {
+    return log_path_.AddExtension(".inprogress");
   }
 
-  base::FilePath GetEndNetlogPath() const {
-    return bounded_log_dir_.AppendASCII("end_netlog.json");
-  }
-
-  base::FilePath GetConstantsPath() const {
-    return bounded_log_dir_.AppendASCII("constants.json");
+  base::FilePath GetInternalEventFilePath(int index) const {
+    return GetInternalEventDirectory().AppendASCII(
+        "event_file_" + std::to_string(index) + ".json");
   }
 
   static int64_t GetFileSize(const base::FilePath& path) {
@@ -266,7 +217,7 @@ class FileNetLogObserverBoundedTest : public ::testing::Test {
  protected:
   NetLog net_log_;
   std::unique_ptr<FileNetLogObserver> logger_;
-  base::FilePath bounded_log_dir_;
+  base::FilePath log_path_;
 
  private:
   base::ScopedTempDir temp_dir_;
@@ -285,13 +236,13 @@ TEST_P(FileNetLogObserverTest, ObserverDestroyedWithoutStopObserving) {
   AddEntries(logger_.get(), 1, kDummyEventSize);
 
   // The log files should have been started.
-  ASSERT_TRUE(LogFilesExist());
+  ASSERT_TRUE(LogFileExists());
 
   logger_.reset();
 
   // When the logger is re-set without having called StopObserving(), the
   // partially written log files are deleted.
-  ASSERT_FALSE(LogFilesExist());
+  ASSERT_FALSE(LogFileExists());
 }
 
 // Tests calling StopObserving() with a null closure.
@@ -302,14 +253,14 @@ TEST_P(FileNetLogObserverTest, StopObservingNullClosure) {
   AddEntries(logger_.get(), 1, kDummyEventSize);
 
   // The log files should have been started.
-  ASSERT_TRUE(LogFilesExist());
+  ASSERT_TRUE(LogFileExists());
 
   logger_->StopObserving(nullptr, base::OnceClosure());
 
   logger_.reset();
 
   // Since the logger was explicitly stopped, its files should still exist.
-  ASSERT_TRUE(LogFilesExist());
+  ASSERT_TRUE(LogFileExists());
 }
 
 // Tests creating a FileNetLogObserver using an invalid (can't be written to)
@@ -325,14 +276,14 @@ TEST_P(FileNetLogObserverTest, InitLogWithInvalidPath) {
 
   // No log files should have been written, as the log writer will not create
   // missing directories.
-  ASSERT_FALSE(LogFilesExist());
+  ASSERT_FALSE(LogFileExists());
 
   logger_->StopObserving(nullptr, base::OnceClosure());
 
   logger_.reset();
 
   // There should still be no files.
-  ASSERT_FALSE(LogFilesExist());
+  ASSERT_FALSE(LogFileExists());
 }
 
 TEST_P(FileNetLogObserverTest, GeneratesValidJSONWithNoEvents) {
@@ -509,14 +460,6 @@ TEST_F(FileNetLogObserverBoundedTest, EqualToOneFile) {
   int id;
   ASSERT_TRUE(id_value->GetAsInteger(&id));
   ASSERT_EQ(kNumEvents - 1, id);
-
-  // Check that events have been written to the first file.
-  ASSERT_GT(GetFileSize(GetEventFilePath(0)), 0);
-
-  // Check that all event files except the first do not exist.
-  for (int i = 1; i < kTotalNumFiles; i++) {
-    ASSERT_FALSE(base::PathExists(GetEventFilePath(i)));
-  }
 }
 
 // Sends enough events to fill one file, and partially fill a second file.
@@ -557,11 +500,6 @@ TEST_F(FileNetLogObserverBoundedTest, OneEventOverOneFile) {
   int id;
   ASSERT_TRUE(id_value->GetAsInteger(&id));
   ASSERT_EQ(kNumEvents - 1, id);
-
-  // Check that all event files except the first two do not exist.
-  for (int i = 2; i < kTotalNumFiles; i++) {
-    ASSERT_FALSE(base::PathExists(GetEventFilePath(i)));
-  }
 }
 
 // Sends enough events to the observer to completely fill two files.
@@ -598,19 +536,6 @@ TEST_F(FileNetLogObserverBoundedTest, EqualToTwoFiles) {
   int id;
   ASSERT_TRUE(id_value->GetAsInteger(&id));
   ASSERT_EQ(kNumEvents - 1, id);
-
-  // Check that the first two event files are full.
-  for (int i = 0; i < (kNumEvents * kEventSize) /
-                          ((kTotalFileSize - 1) / kTotalNumFiles + 1);
-       i++) {
-    ASSERT_GE(GetFileSize(GetEventFilePath(i)),
-              static_cast<int64_t>(kTotalFileSize / kTotalNumFiles));
-  }
-
-  // Check that all event files except the first two do not exist.
-  for (int i = 2; i < kTotalNumFiles; i++) {
-    ASSERT_FALSE(base::PathExists(GetEventFilePath(i)));
-  }
 }
 
 // Sends exactly enough events to the observer to completely fill all files,
@@ -650,12 +575,6 @@ TEST_F(FileNetLogObserverBoundedTest, FillAllFilesNoOverwriting) {
   int id;
   ASSERT_TRUE(id_value->GetAsInteger(&id));
   ASSERT_EQ(kNumEvents - 1, id);
-
-  // Check that all the event files are full.
-  for (int i = 0; i < kTotalNumFiles; i++) {
-    ASSERT_GE(GetFileSize(GetEventFilePath(i)),
-              static_cast<int64_t>(kTotalFileSize / kTotalNumFiles));
-  }
 }
 
 // Sends more events to the observer than will fill the WriteQueue, forcing the
@@ -770,12 +689,6 @@ TEST_F(FileNetLogObserverBoundedTest, OverwriteAllFiles) {
   // appeared in the |events| array.
   ASSERT_TRUE(std::all_of(std::begin(events_written), std::end(events_written),
                           [](bool j) { return j; }));
-
-  // Check that there are events written to all files.
-  for (int i = 0; i < kTotalNumFiles; i++) {
-    ASSERT_GE(GetFileSize(GetEventFilePath(i)),
-              static_cast<int64_t>(kEventSize));
-  }
 }
 
 // Sends enough events to the observer to fill all event files, plus overwrite
@@ -831,21 +744,14 @@ TEST_F(FileNetLogObserverBoundedTest, PartiallyOverwriteFiles) {
   }
   ASSERT_TRUE(std::all_of(std::begin(events_written), std::end(events_written),
                           [](bool j) { return j; }));
-
-  // Check that there are events written to all files.
-  for (int i = 0; i < kTotalNumFiles; i++) {
-    ASSERT_GE(GetFileSize(GetEventFilePath(i)),
-              static_cast<int64_t>(kEventSize));
-  }
 }
 
-// Start logging in bounded mode. Create directories in places where the logger
-// expects to create files, in order to cause that file creation to fail.
+// Start logging in bounded mode. Create a directory at the path where the
+// logger expects to create its first event file, in order to cause that file
+// creation to fail.
 //
-//   constants.json      -- succeess
 //   event_file_0.json   -- fails to open
-//   end_netlog.json     -- fails to open
-TEST_F(FileNetLogObserverBoundedTest, SomeFilesFailToOpen) {
+TEST_F(FileNetLogObserverBoundedTest, EventFileFailsToOpen) {
   // The total size of events is equal to the total size of all files.
   // |kEventSize| * |kNumEvents| = |kTotalFileSize|
   const int kTotalFileSize = 10000;
@@ -854,9 +760,10 @@ TEST_F(FileNetLogObserverBoundedTest, SomeFilesFailToOpen) {
   const int kNumEvents = kTotalNumFiles * ((kFileSize - 1) / kEventSize + 1);
   TestClosure closure;
 
-  // Create directories as a means to block files from being created by logger.
-  EXPECT_TRUE(base::CreateDirectory(GetEventFilePath(0)));
-  EXPECT_TRUE(base::CreateDirectory(GetEndNetlogPath()));
+  // This works because FileNetLogObserver doesn't mind if the directory already
+  // exists.
+  EXPECT_TRUE(base::CreateDirectory(GetInternalEventDirectory()));
+  EXPECT_TRUE(base::CreateDirectory(GetInternalEventFilePath(0)));
 
   CreateAndStartObserving(nullptr, kTotalFileSize, kTotalNumFiles);
 
@@ -866,40 +773,88 @@ TEST_F(FileNetLogObserverBoundedTest, SomeFilesFailToOpen) {
 
   closure.WaitForResult();
 
-  // Verify that the log directory only contains 3 files -- the
-  // original directories we created to block file creation, plus events.json.
-  base::FileEnumerator log_files(
-      bounded_log_dir_, /*recursive=*/true,
-      base::FileEnumerator::FILES | base::FileEnumerator::DIRECTORIES);
+  std::unique_ptr<base::Value> root;
+  base::ListValue* events;
+  ASSERT_TRUE(ReadNetLogFromDisk(&root, &events));
 
-  int matched_files = 0;
-  for (base::FilePath name = log_files.Next(); !name.empty();
-       name = log_files.Next()) {
-    // Either constants.json
-    if (name == GetConstantsPath()) {
-      matched_files++;
-      EXPECT_FALSE(log_files.GetInfo().IsDirectory());
-      continue;
-    }
+  // The log file has no events, because creation of events fail was blocked.
+  EXPECT_EQ(0u, events->GetSize());
 
-    // Or event_file_0.json
-    if (name == GetEventFilePath(0)) {
-      matched_files++;
-      EXPECT_TRUE(log_files.GetInfo().IsDirectory());
-      continue;
-    }
+  // Because we created the event directory ourselves outside of
+  // FileNetLogObserver, it should have taken care not to delete it.
+  base::DirectoryExists(GetInternalEventDirectory());
 
-    // Or end_netlog.json
-    if (name == GetEndNetlogPath()) {
-      matched_files++;
-      EXPECT_TRUE(log_files.GetInfo().IsDirectory());
-      continue;
-    }
+  // Similarly, it should not have deleted our directory that happened to be
+  // named the same as an event file.
+  EXPECT_TRUE(base::DirectoryExists(GetInternalEventFilePath(0)));
+}
 
-    ADD_FAILURE() << "Unexpected file: " << name.value();
-  }
+// Start logging in bounded mode. Create a file at the path where the logger
+// expects to create its internal directory to store event files, so it cannot
+// open it.
+//
+//   event_file_0.json   -- fails to open
+TEST_F(FileNetLogObserverBoundedTest, InternalEventDirectoryBlocked) {
+  // The total size of events is equal to the total size of all files.
+  // |kEventSize| * |kNumEvents| = |kTotalFileSize|
+  const int kTotalFileSize = 10000;
+  const int kEventSize = 200;
+  const int kFileSize = kTotalFileSize / kTotalNumFiles;
+  const int kNumEvents = kTotalNumFiles * ((kFileSize - 1) / kEventSize + 1);
+  TestClosure closure;
 
-  EXPECT_EQ(3, matched_files);
+  // By creating a file where a directory should be, it will not be possible to
+  // write any event files.
+  EXPECT_TRUE(base::WriteFile(GetInternalEventDirectory(), "x", 1));
+
+  CreateAndStartObserving(nullptr, kTotalFileSize, kTotalNumFiles);
+
+  AddEntries(logger_.get(), kNumEvents, kEventSize);
+
+  logger_->StopObserving(nullptr, closure.closure());
+
+  closure.WaitForResult();
+
+  std::unique_ptr<base::Value> root;
+  base::ListValue* events;
+  ASSERT_TRUE(ReadNetLogFromDisk(&root, &events));
+
+  // The log file has no events, because creation of events fail was blocked.
+  EXPECT_EQ(0u, events->GetSize());
+
+  // Test that FileNetLogObserver hasn't been naughty and deleted a file which
+  // we created.
+  base::PathExists(GetInternalEventDirectory());
+}
+
+// Start logging in bounded mode. Create a file with the same name as the
+// special ".inprogress" directory that holds the events files.
+TEST_F(FileNetLogObserverBoundedTest, EventDirectoryBlocked) {
+  // The total size of events is equal to the total size of all files.
+  // |kEventSize| * |kNumEvents| = |kTotalFileSize|
+  const int kTotalFileSize = 10000;
+  const int kEventSize = 200;
+  const int kFileSize = kTotalFileSize / kTotalNumFiles;
+  const int kNumEvents = kTotalNumFiles * ((kFileSize - 1) / kEventSize + 1);
+  TestClosure closure;
+
+  // Create directories as a means to block files from being created by logger.
+  EXPECT_TRUE(base::CreateDirectory(GetInternalEventFilePath(0)));
+
+  CreateAndStartObserving(nullptr, kTotalFileSize, kTotalNumFiles);
+
+  AddEntries(logger_.get(), kNumEvents, kEventSize);
+
+  logger_->StopObserving(nullptr, closure.closure());
+
+  closure.WaitForResult();
+
+  std::unique_ptr<base::Value> root;
+  base::ListValue* events;
+  ASSERT_TRUE(ReadNetLogFromDisk(&root, &events));
+
+  // The log file has no events, because creation of events fail was blocked.
+  EXPECT_EQ(0u, events->GetSize());
 }
 
 void AddEntriesViaNetLog(NetLog* net_log, int num_entries) {
@@ -939,7 +894,7 @@ TEST_P(FileNetLogObserverTest, AddEventsFromMultipleThreadsWithStopObserving) {
   // Join all the threads.
   threads.clear();
 
-  ASSERT_TRUE(LogFilesExist());
+  ASSERT_TRUE(LogFileExists());
 }
 
 TEST_P(FileNetLogObserverTest,
@@ -973,7 +928,7 @@ TEST_P(FileNetLogObserverTest,
   threads.clear();
 
   // The log file doesn't exist since StopObserving() was not called.
-  ASSERT_FALSE(LogFilesExist());
+  ASSERT_FALSE(LogFileExists());
 }
 
 }  // namespace

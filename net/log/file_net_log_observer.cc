@@ -4,10 +4,10 @@
 
 #include "net/log/file_net_log_observer.h"
 
+#include <algorithm>
 #include <limits>
 #include <memory>
 #include <queue>
-#include <set>
 #include <string>
 #include <utility>
 
@@ -75,6 +75,8 @@ size_t WriteToFile(const base::ScopedFILE& file,
 }  // namespace
 
 namespace net {
+
+const size_t FileNetLogObserver::kNoLimit = std::numeric_limits<size_t>::max();
 
 // Used to store events to be written to file.
 using EventQueue = std::queue<std::unique_ptr<std::string>>;
@@ -182,9 +184,10 @@ class FileNetLogObserver::FileWriter {
 class FileNetLogObserver::BoundedFileWriter
     : public FileNetLogObserver::FileWriter {
  public:
-  BoundedFileWriter(const base::FilePath& directory,
-                    size_t max_file_size,
-                    size_t total_num_files,
+  // If max_event_file_size == kNoLimit, then no limit is enforced.
+  BoundedFileWriter(const base::FilePath& log_path,
+                    size_t max_event_file_size,
+                    size_t total_num_event_files,
                     scoped_refptr<base::SequencedTaskRunner> task_runner);
 
   ~BoundedFileWriter() override;
@@ -196,46 +199,70 @@ class FileNetLogObserver::BoundedFileWriter
   void DeleteAllFiles() override;
 
  private:
-  // Increments |current_file_idx_|, and handles the and opening of
+  // Returns true if there is no file size bound to enforce. In this case, the
+  // data can be written directly to the output destination without needing to
+  // cycle through temporary events files.
+  bool IsUnbounded() const;
+  bool IsBounded() const;
+
+  // Increments |current_event_file_number_|, and handles the and opening of
   // the new current file. Also sets |current_event_file_| to point to the new
   // file.
-  void IncrementCurrentFile();
+  void IncrementCurrentEventFile();
 
-  // Sets the current events file to |index| and opens the file for writing.
-  void SetCurrentFile(size_t index);
+  // Sets the current events file number to |file_number| and opens the file for
+  // writing. The "file number" is a zero-based counter that does NOT wrap
+  // around.
+  void SetCurrentEventFile(size_t file_number);
+
+  base::FilePath GetEventFileDirectory() const;
 
   // Returns the path to the event file numbered |index|. This looks like
   // "LOGDIR/event_file_<index>.json".
   base::FilePath GetEventFilePath(size_t index) const;
 
-  // Gets the file path where constants are saved at the start of
-  // logging. This looks like "LOGDIR/constants.json".
-  base::FilePath GetConstantsFilePath() const;
+  // Returns the corresponding index in range [0, total_num_event_files_) where
+  // the logic event file |file_number| is saved to. File numbers increase
+  // monotonically, whereas the index used for file paths wrap around.
+  size_t FileNumberToIndex(size_t file_number) const;
 
-  // Gets the file path where the final data is written at the end of logging.
-  // This looks like "LOGDIR/end_netlog.json".
-  base::FilePath GetClosingFilePath() const;
+  // Resets all open file handles. This has the effect of flushing any writes on
+  // them as well.
+  void CloseAllFileHandles();
+
+  // Concatenates all the events files to |log_file_|. This is called a "Move"
+  // since after copying the data the source events files are deleted, in order
+  // to avoid using too much disk space.
+  void MoveEventFilesToLogFile();
+
+  // The path (and associated file handle) where the final netlog is written.
+  const base::FilePath log_path_;
+  base::ScopedFILE log_file_;
 
   // Holds the file handle for the numbered events file where data is currently
   // being written to. The file path of this file is
-  // GetEventFilePath(current_file_idx_). The file handle may be null if an
-  // error previously occurred opening the file, or logging has been stopped.
+  // GetEventFilePath(current_event_file_number_). The
+  // file handle may be null if an error previously occurred opening the file,
+  // or logging has been stopped.
   base::ScopedFILE current_event_file_;
   size_t current_event_file_size_;
 
-  // The directory where the netlog files are created.
-  const base::FilePath directory_;
-
   // Indicates the total number of netlog event files allowed.
-  // This does not count the constants file (GetConstantsFilePath()), or the
-  // closing file (GetClosingFilePath()) against the total.
-  const size_t total_num_files_;
+  const size_t total_num_event_files_;
 
-  // Indicates the index of the events file currently being written into.
-  size_t current_file_idx_;
+  // Counter for the events file currently being written into.
+  size_t current_event_file_number_;
 
-  // Indicates the maximum size of each individual events file.
-  const size_t max_file_size_;
+  // Indicates the maximum size of each individual events file. May be kNoLimit
+  // to indicate there it can grow arbitrarily large.
+  const size_t max_event_file_size_;
+
+  // Whether any bytes were written for events.
+  bool wrote_event_bytes_;
+
+  // Whether the GetEventFileDirectory() was successfully created during
+  // initialization.
+  bool created_event_file_directory_;
 
   // Task runner for doing file operations.
   const scoped_refptr<base::SequencedTaskRunner> task_runner_;
@@ -243,46 +270,19 @@ class FileNetLogObserver::BoundedFileWriter
   DISALLOW_COPY_AND_ASSIGN(BoundedFileWriter);
 };
 
-// This implementation of FileWriter is used when the observer is in unbounded
-// mode.
-// UnboundedFileWriter can be constructed on any thread, and afterwards is only
-// accessed on the file task runner.
-class FileNetLogObserver::UnboundedFileWriter
-    : public FileNetLogObserver::FileWriter {
- public:
-  UnboundedFileWriter(const base::FilePath& path,
-                      scoped_refptr<base::SequencedTaskRunner> task_runner);
-
-  ~UnboundedFileWriter() override;
-
-  // FileNetLogObserver::FileWriter implementation
-  void Initialize(std::unique_ptr<base::Value> constants_value) override;
-  void Stop(std::unique_ptr<base::Value> polled_data) override;
-  void Flush(scoped_refptr<WriteQueue> write_queue) override;
-  void DeleteAllFiles() override;
-
- private:
-  base::FilePath file_path_;
-  base::ScopedFILE file_;
-
-  // Is set to true after the first event is written to the log file.
-  bool first_event_written_;
-
-  // Task runner for doing file operations.
-  const scoped_refptr<base::SequencedTaskRunner> task_runner_;
-
-  DISALLOW_COPY_AND_ASSIGN(UnboundedFileWriter);
-};
-
 std::unique_ptr<FileNetLogObserver> FileNetLogObserver::CreateBounded(
-    const base::FilePath& directory,
+    const base::FilePath& log_path,
     size_t max_total_size,
-    size_t total_num_files,
+    size_t total_num_event_files,
     std::unique_ptr<base::Value> constants) {
-  DCHECK_GT(total_num_files, 0u);
+  DCHECK_GT(total_num_event_files, 0u);
 
   scoped_refptr<base::SequencedTaskRunner> file_task_runner =
       CreateFileTaskRunner();
+
+  const size_t max_event_file_size =
+      max_total_size == kNoLimit ? kNoLimit
+                                 : max_total_size / total_num_event_files;
 
   // The BoundedFileWriter uses a soft limit to write events to file that allows
   // the size of the file to exceed the limit, but the WriteQueue uses a hard
@@ -296,9 +296,8 @@ std::unique_ptr<FileNetLogObserver> FileNetLogObserver::CreateBounded(
   // TODO(dconnol): Handle the case when the WriteQueue  still doesn't
   // contain enough events to fill all files, because of very large events
   // relative to file size.
-  std::unique_ptr<FileWriter> file_writer(
-      new BoundedFileWriter(directory, max_total_size / total_num_files,
-                            total_num_files, file_task_runner));
+  std::unique_ptr<FileWriter> file_writer(new BoundedFileWriter(
+      log_path, max_event_file_size, total_num_event_files, file_task_runner));
 
   scoped_refptr<WriteQueue> write_queue(new WriteQueue(max_total_size * 2));
 
@@ -310,18 +309,7 @@ std::unique_ptr<FileNetLogObserver> FileNetLogObserver::CreateBounded(
 std::unique_ptr<FileNetLogObserver> FileNetLogObserver::CreateUnbounded(
     const base::FilePath& log_path,
     std::unique_ptr<base::Value> constants) {
-  scoped_refptr<base::SequencedTaskRunner> file_task_runner =
-      CreateFileTaskRunner();
-
-  std::unique_ptr<FileWriter> file_writer(
-      new UnboundedFileWriter(log_path, file_task_runner));
-
-  scoped_refptr<WriteQueue> write_queue(
-      new WriteQueue(std::numeric_limits<size_t>::max()));
-
-  return std::unique_ptr<FileNetLogObserver>(
-      new FileNetLogObserver(file_task_runner, std::move(file_writer),
-                             std::move(write_queue), std::move(constants)));
+  return CreateBounded(log_path, kNoLimit, 1, std::move(constants));
 }
 
 FileNetLogObserver::~FileNetLogObserver() {
@@ -435,15 +423,21 @@ void FileNetLogObserver::FileWriter::FlushThenStop(
 }
 
 FileNetLogObserver::BoundedFileWriter::BoundedFileWriter(
-    const base::FilePath& directory,
-    size_t max_file_size,
-    size_t total_num_files,
+    const base::FilePath& log_path,
+    size_t max_event_file_size,
+    size_t total_num_event_files,
     scoped_refptr<base::SequencedTaskRunner> task_runner)
-    : directory_(directory),
-      total_num_files_(total_num_files),
-      current_file_idx_(0),
-      max_file_size_(max_file_size),
+    : log_path_(log_path),
+      total_num_event_files_(total_num_event_files),
+      current_event_file_number_(0),
+      max_event_file_size_(max_event_file_size),
+      wrote_event_bytes_(false),
+      created_event_file_directory_(false),
       task_runner_(std::move(task_runner)) {
+  // By convention, if max_event_file_size is unlimited total_num_event_files
+  // should be set to 1. When operating in unlimited mode total_num_event_files
+  // isn't used, so fix this to avoid confused expectations from callers.
+  DCHECK(IsBounded() || total_num_event_files == 1);
 }
 
 FileNetLogObserver::BoundedFileWriter::~BoundedFileWriter() {}
@@ -452,70 +446,139 @@ void FileNetLogObserver::BoundedFileWriter::Initialize(
     std::unique_ptr<base::Value> constants_value) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
-  // Open the initial events file.
-  SetCurrentFile(0);
+  log_file_ = OpenFileForWrite(log_path_);
 
-  base::ScopedFILE constants_file = OpenFileForWrite(GetConstantsFilePath());
-
-  // Print constants to file and open events array.
+  // Print constants to the log file and open the events array.
   std::string json;
 
   // It should always be possible to convert constants to JSON.
   if (!base::JSONWriter::Write(*constants_value, &json))
     DCHECK(false);
-  WriteToFile(constants_file, "{\"constants\":", json, ",\n\"events\": [\n");
+  WriteToFile(log_file_, "{\"constants\":", json, ",\n\"events\": [\n");
+
+  if (IsBounded()) {
+    created_event_file_directory_ =
+        base::CreateDirectory(GetEventFileDirectory());
+    if (!created_event_file_directory_) {
+      LOG(WARNING) << "Failed creating directory: "
+                   << GetEventFileDirectory().value();
+    }
+    SetCurrentEventFile(0);
+  }
 }
 
 void FileNetLogObserver::BoundedFileWriter::Stop(
     std::unique_ptr<base::Value> polled_data) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
-  base::ScopedFILE closing_file = OpenFileForWrite(GetClosingFilePath());
+  // If operating in bounded mode, the events were written to seprate files in
+  // chunks. Assemble them into the final destination.
+  if (IsBounded())
+    MoveEventFilesToLogFile();
 
-  std::string json;
-  if (polled_data)
-    base::JSONWriter::Write(*polled_data, &json);
+  if (log_file_ && wrote_event_bytes_) {
+    // To be valid JSON the events array should not end with a comma. However if
+    // it may currently end with ",\n". Seek back 2 bytes to fix that.
+    fseek(log_file_.get(), -2, SEEK_END);
+  }
 
-  WriteToFile(closing_file, "]");
-  if (!json.empty())
-    WriteToFile(closing_file, ",\n\"polledData\": ", json, "\n");
-  WriteToFile(closing_file, "}\n");
+  // Close the events array.
+  WriteToFile(log_file_, "]");
 
-  // Close the current event file handle to ensure it flushes its writes. When
-  // the callback runs caller expects all the log files to be written and safe
-  // to read from. (Don't require the stronger guarantees of fsync() - may not
-  // be persisted to storage.).
-  current_event_file_.reset();
+  // Write the polled data (if any).
+  if (polled_data) {
+    std::string polled_data_json;
+    base::JSONWriter::Write(*polled_data, &polled_data_json);
+    if (!polled_data_json.empty())
+      WriteToFile(log_file_, ",\n\"polledData\": ", polled_data_json, "\n");
+  }
+
+  // Close the log.
+  WriteToFile(log_file_, "}\n");
+
+  CloseAllFileHandles();
 }
 
-void FileNetLogObserver::BoundedFileWriter::IncrementCurrentFile() {
-  DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  SetCurrentFile((current_file_idx_ + 1) % total_num_files_);
+bool FileNetLogObserver::BoundedFileWriter::IsUnbounded() const {
+  return max_event_file_size_ == kNoLimit;
 }
 
-void FileNetLogObserver::BoundedFileWriter::SetCurrentFile(size_t index) {
-  DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  DCHECK_LT(current_file_idx_, total_num_files_);
+bool FileNetLogObserver::BoundedFileWriter::IsBounded() const {
+  return !IsUnbounded();
+}
 
-  current_file_idx_ = index;
-  current_event_file_ = OpenFileForWrite(GetEventFilePath(current_file_idx_));
+void FileNetLogObserver::BoundedFileWriter::IncrementCurrentEventFile() {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(IsBounded());
+  SetCurrentEventFile(current_event_file_number_ + 1);
+}
+
+void FileNetLogObserver::BoundedFileWriter::SetCurrentEventFile(
+    size_t file_number) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(IsBounded());
+
+  current_event_file_number_ = file_number;
+  current_event_file_ = OpenFileForWrite(
+      GetEventFilePath(FileNumberToIndex(current_event_file_number_)));
   current_event_file_size_ = 0;
+}
+
+base::FilePath FileNetLogObserver::BoundedFileWriter::GetEventFileDirectory()
+    const {
+  return log_path_.AddExtension(".inprogress");
 }
 
 base::FilePath FileNetLogObserver::BoundedFileWriter::GetEventFilePath(
     size_t index) const {
-  return directory_.AppendASCII("event_file_" + base::SizeTToString(index) +
-                                ".json");
+  DCHECK_LT(index, total_num_event_files_);
+  return GetEventFileDirectory().AppendASCII(
+      "event_file_" + base::SizeTToString(index) + ".json");
 }
 
-base::FilePath FileNetLogObserver::BoundedFileWriter::GetConstantsFilePath()
-    const {
-  return directory_.AppendASCII("constants.json");
+size_t FileNetLogObserver::BoundedFileWriter::FileNumberToIndex(
+    size_t file_number) const {
+  return file_number % total_num_event_files_;
 }
 
-base::FilePath FileNetLogObserver::BoundedFileWriter::GetClosingFilePath()
-    const {
-  return directory_.AppendASCII("end_netlog.json");
+void FileNetLogObserver::BoundedFileWriter::CloseAllFileHandles() {
+  log_file_.reset();
+  current_event_file_.reset();
+}
+
+void FileNetLogObserver::BoundedFileWriter::MoveEventFilesToLogFile() {
+  current_event_file_.reset();
+
+  // Because files wrap around, the oldest events file is either at index 0 (no
+  // wrap-around happened) or it is at the next index from the current position.
+  size_t first_index = current_event_file_number_ < total_num_event_files_
+                           ? 0
+                           : FileNumberToIndex(current_event_file_number_ + 1);
+  size_t last_index = FileNumberToIndex(current_event_file_number_);
+
+  // Iterate through the event file indices in order from oldest towards the
+  // newest.
+  for (size_t index = first_index;;
+       index = (index + 1) % total_num_event_files_) {
+    // Read the event file to a string and then delete it.
+    base::FilePath event_file_path = GetEventFilePath(index);
+    std::string event_file_contents;
+    if (ReadFileToString(event_file_path, &event_file_contents)) {
+      base::DeleteFile(event_file_path, false);
+    } else {
+      LOG(ERROR) << "Failed reading: " << event_file_path;
+      event_file_contents.clear();
+    }
+
+    // Append the event file contents to the log file.
+    WriteToFile(log_file_, event_file_contents);
+
+    if (index == last_index)
+      break;
+  }
+
+  if (created_event_file_directory_)
+    base::DeleteFile(GetEventFileDirectory(), true);
 }
 
 void FileNetLogObserver::BoundedFileWriter::Flush(
@@ -525,13 +588,25 @@ void FileNetLogObserver::BoundedFileWriter::Flush(
   EventQueue local_file_queue;
   write_queue->SwapQueue(&local_file_queue);
 
+  // If there is no size bound on the log file, write directly to the
+  // destination log file. Otherwise write to the current temporary events file.
+  const base::ScopedFILE& output_file =
+      IsBounded() ? current_event_file_ : log_file_;
+
   while (!local_file_queue.empty()) {
-    if (current_event_file_size_ >= max_file_size_) {
+    if (IsBounded() && current_event_file_size_ >= max_event_file_size_) {
       // The current file is full. Start a new current file.
-      IncrementCurrentFile();
+      IncrementCurrentEventFile();
     }
-    current_event_file_size_ +=
-        WriteToFile(current_event_file_, *local_file_queue.front(), ",\n");
+
+    size_t bytes_written =
+        WriteToFile(output_file, *local_file_queue.front(), ",\n");
+
+    wrote_event_bytes_ |= bytes_written > 0;
+
+    if (IsBounded())
+      current_event_file_size_ += bytes_written;
+
     local_file_queue.pop();
   }
 }
@@ -539,81 +614,10 @@ void FileNetLogObserver::BoundedFileWriter::Flush(
 void FileNetLogObserver::BoundedFileWriter::DeleteAllFiles() {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
-  // Reset |current_event_file_| so base::DeleteFile() can unlink it.
-  current_event_file_.reset();
-
-  base::DeleteFile(GetConstantsFilePath(), false);
-  base::DeleteFile(GetClosingFilePath(), false);
-  for (size_t i = 0; i < total_num_files_; i++)
-    base::DeleteFile(GetEventFilePath(i), false);
-}
-
-FileNetLogObserver::UnboundedFileWriter::UnboundedFileWriter(
-    const base::FilePath& path,
-    scoped_refptr<base::SequencedTaskRunner> task_runner)
-    : file_path_(path), task_runner_(std::move(task_runner)) {}
-
-FileNetLogObserver::UnboundedFileWriter::~UnboundedFileWriter() {}
-
-void FileNetLogObserver::UnboundedFileWriter::Initialize(
-    std::unique_ptr<base::Value> constants_value) {
-  DCHECK(task_runner_->RunsTasksInCurrentSequence());
-
-  file_ = OpenFileForWrite(file_path_);
-  first_event_written_ = false;
-
-  // Print constants to file and open events array.
-  std::string json;
-
-  // It should always be possible to convert constants to JSON.
-  if (!base::JSONWriter::Write(*constants_value, &json))
-    DCHECK(false);
-  WriteToFile(file_, "{\"constants\":", json, ",\n\"events\": [\n");
-}
-
-void FileNetLogObserver::UnboundedFileWriter::Stop(
-    std::unique_ptr<base::Value> polled_data) {
-  DCHECK(task_runner_->RunsTasksInCurrentSequence());
-
-  std::string json;
-  if (polled_data)
-    base::JSONWriter::Write(*polled_data, &json);
-
-  WriteToFile(file_, "]");
-  if (!json.empty())
-    WriteToFile(file_, ",\n\"polledData\": ", json, "\n");
-  WriteToFile(file_, "}\n");
-
-  // Flush all writes to disk so that the file can be safely accessed on
-  // callback.
-  file_.reset();
-}
-
-void FileNetLogObserver::UnboundedFileWriter::Flush(
-    scoped_refptr<FileNetLogObserver::WriteQueue> write_queue) {
-  DCHECK(task_runner_->RunsTasksInCurrentSequence());
-
-  EventQueue local_file_queue;
-  write_queue->SwapQueue(&local_file_queue);
-
-  while (!local_file_queue.empty()) {
-    if (first_event_written_) {
-      WriteToFile(file_, ",\n");
-    } else {
-      first_event_written_ = true;
-    }
-    WriteToFile(file_, *local_file_queue.front());
-    local_file_queue.pop();
-  }
-}
-
-void FileNetLogObserver::UnboundedFileWriter::DeleteAllFiles() {
-  DCHECK(task_runner_->RunsTasksInCurrentSequence());
-
-  // Reset |file_| to release the file handle so base::DeleteFile can
-  // safely access it.
-  file_.reset();
-  base::DeleteFile(file_path_, false);
+  CloseAllFileHandles();
+  if (created_event_file_directory_)
+    base::DeleteFile(GetEventFileDirectory(), true);
+  base::DeleteFile(log_path_, false);
 }
 
 }  // namespace net
