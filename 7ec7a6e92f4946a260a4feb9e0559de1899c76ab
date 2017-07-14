@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37a9559a_95e4e9ac",
+        "filename": "ash/display/display_configuration_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-14T02:23:58Z",
+      "side": 1,
+      "message": "Nit: typo.",
+      "range": {
+        "startLine": 58,
+        "startChar": 51,
+        "endLine": 58,
+        "endChar": 59
+      },
+      "revId": "7ec7a6e92f4946a260a4feb9e0559de1899c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e96b8e8_8c6263a3",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-14T02:23:58Z",
+      "side": 1,
+      "message": "Why did you prefer this over HasSwitch()? Was that to be able to remove the switch in unittests?",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 69
+      },
+      "revId": "7ec7a6e92f4946a260a4feb9e0559de1899c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7ce2f1_b2c2b036",
+        "filename": "ash/rotator/screen_rotation_animator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-14T02:23:58Z",
+      "side": 1,
+      "message": "Nit: if?",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "7ec7a6e92f4946a260a4feb9e0559de1899c76ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
