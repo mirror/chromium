@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f0a8e331_d013b1d9",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T14:37:05Z",
+      "side": 1,
+      "message": "Maybe I should have shared a bit more background.\nAs for introducing a flag to control individual methods behavior,\nin the past CL review, Ryo, the chromeos/dbus reviewer, didn\u0027t want to do it.\ncf) https://chromium-review.googlesource.com/c/563153/1/chromeos%252Fdbus%252Ffake_cryptohome_client.h#228\n\nNow I\u0027m ok in either way but I\u0027d like to make a consensus across all of our three\nbefore working on actual change :-).\n\nOptions I have come up with:\n1) Move forward with the current way. As Maksim pointed, now two DBusError tests get same, so we should merge them.\n2) Introduce a flag to control individual methods behavior precisely.\n3) Inherit chromeos::FakeCryptohomeClient to implement custom behavior for this test suites.\n  3-1) As Maksim recommended, introduce a flag to control individual method behavior.\n  3-2) Add a feature to force setting SetServiceIsAvailable(false) in TpmAttestationIsPrepared() call.\n4) IIUC, the first TpmAttestationIsPrepared() is called synchronously, while TpmAttestationDoesKeyExist() is called in the next task in the message loop.\nThus, here schedule to set cryptohome_client service unavailable by just PostTask(), like;\n\nPostTask(\n  FROM_HERE, base::BindOnce([](){ cryptohome_client_.SetServiceIsAvailable(false); }));\n\nso we can emulate the current situation (though, there\u0027s no strong guarantee it.).\n\nNote that we need to do same thing for private APIs,\nhttps://chromium-review.googlesource.com/c/571244/\nso, maybe 3) looks better to avoid IMHO, although technically we can do same for private APIs, too?\n\nWDYT, Maksim, Ryo?",
+      "parentUuid": "642978e4_350eb32e",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 50
+      },
+      "revId": "cfd3c01ab600db7c336b6bf9780b75ebf0622382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdaa8be2_5cab4987",
         "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api_unittest.cc",
         "patchSetId": 3
