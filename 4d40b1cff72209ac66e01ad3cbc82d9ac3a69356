@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c590884b_796f8881",
+        "filename": "net/log/file_net_log_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T20:21:28Z",
+      "side": 1,
+      "message": "FYI I am addressing this in a follow-up: https://chromium-review.googlesource.com/c/572185/",
+      "revId": "4d40b1cff72209ac66e01ad3cbc82d9ac3a69356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
