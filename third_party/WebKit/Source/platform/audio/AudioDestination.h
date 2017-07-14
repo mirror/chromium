@@ -82,7 +82,7 @@ class PLATFORM_EXPORT AudioDestination : public WebAudioDevice::RenderCallback {
                                 double delay_timestamp,
                                 size_t prior_frames_skipped);
 
-  virtual void Start();
+  virtual void Start(WebThread* worklet_backing_thread = nullptr);
   virtual void Stop();
 
   // Getters must be accessed from the main thread.
@@ -108,6 +108,10 @@ class PLATFORM_EXPORT AudioDestination : public WebAudioDevice::RenderCallback {
 
   bool IsRenderingThread();
 
+  // Because the alternative thread can exist, this method returns what is
+  // currently valid/available.
+  WebThread* GetRenderingThread();
+
   // Accessed by the main thread.
   std::unique_ptr<WebAudioDevice> web_audio_device_;
   const unsigned number_of_output_channels_;
@@ -116,6 +120,9 @@ class PLATFORM_EXPORT AudioDestination : public WebAudioDevice::RenderCallback {
 
   // Accessed by the device thread. Rendering thread for WebAudio graph.
   std::unique_ptr<WebThread> rendering_thread_;
+
+  // The experimental worklet rendering thread.
+  WebThread* worklet_backing_thread_ = nullptr;
 
   // Accessed by both threads: resolves the buffer size mismatch between the
   // WebAudio engine and the callback function from the actual audio device.

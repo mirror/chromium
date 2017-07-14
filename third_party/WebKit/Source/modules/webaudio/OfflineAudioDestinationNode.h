@@ -108,6 +108,12 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
                             AudioBus* destination_bus,
                             size_t number_of_frames);
 
+  // The context can on run two types of threads: when the AudioWorklet is
+  // enabled, the context runs on AudioWorkletThread whereas it runs on the
+  // normal WebThread owned by AudioDestination without AudioWorklet feature.
+  // This method returns the current thread regardless of the thread type.
+  WebThread* GetRenderingThread();
+
   // This AudioHandler renders into this AudioBuffer.
   // This Persistent doesn't make a reference cycle including the owner
   // OfflineAudioDestinationNode. It is accessed by both audio and main thread.
@@ -115,8 +121,12 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
   // Temporary AudioBus for each render quantum.
   RefPtr<AudioBus> render_bus_;
 
-  // Rendering thread.
+  // Rendering thread. Owned by this destination node.
   std::unique_ptr<WebThread> render_thread_;
+
+  // The experimental worklet rendering thread. Point the thread borrowed from
+  // AudioWorkletThread.
+  WebThread* worklet_backing_thread_ = nullptr;
 
   // These variables are for counting the number of frames for the current
   // progress and the remaining frames to be processed.
