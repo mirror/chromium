@@ -1009,13 +1009,11 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 }
 
 - (void)scheduleCheckNativeApps {
-  void (^checkInstalledApps)(void) = ^{
-    [ios::GetChromeBrowserProvider()->GetNativeAppWhitelistManager()
-            checkInstalledApps];
-  };
   [[DeferredInitializationRunner sharedInstance]
       enqueueBlockNamed:kCheckNativeApps
-                  block:checkInstalledApps];
+                  block:^{
+                    ios::GetChromeBrowserProvider()->CheckInstalledApps();
+                  }];
 }
 
 - (void)scheduleAppDistributionPings {
