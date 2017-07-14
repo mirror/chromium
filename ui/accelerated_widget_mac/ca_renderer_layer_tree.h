@@ -57,8 +57,14 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
   // layer on a black background. If so, then set |fullscreen_low_power_layer|
   // to draw this content and return true. Otherwise return false. This is to
   // be called after committing scheduled CALayers.
+
+// AVSampleBufferDisplayLayer has incorrectly been marked as available from
+// macOS 10.10, whereas it's been available since at least macOS 10.9.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
   bool CommitFullscreenLowPowerLayer(
       AVSampleBufferDisplayLayer* fullscreen_low_power_layer);
+#pragma clang diagnostic pop
 
   // Returns the contents used for a given solid color.
   id ContentsForSolidColorForTesting(unsigned int color);
@@ -182,9 +188,14 @@ class ACCELERATED_WIDGET_MAC_EXPORT CARendererLayerTree {
     NSString* const ca_filter = nil;
     base::scoped_nsobject<CALayer> ca_layer;
 
+// AVSampleBufferDisplayLayer has incorrectly been marked as available from
+// macOS 10.10, whereas it's been available since at least macOS 10.9.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
     // If this layer's contents can be represented as an
     // AVSampleBufferDisplayLayer, then |ca_layer| will point to |av_layer|.
     base::scoped_nsobject<AVSampleBufferDisplayLayer> av_layer;
+#pragma clang diagnostic pop
     bool use_av_layer = false;
 
    private:

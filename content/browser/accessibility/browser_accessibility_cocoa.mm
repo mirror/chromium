@@ -13,6 +13,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/mac/availability.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/strings/string16.h"
@@ -521,13 +522,14 @@ bool InitializeAccessibilityTreeSearch(
 #if !defined(MAC_OS_X_VERSION_10_12) || \
     MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_12
 extern "C" {
-NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
+NSString* const NSAccessibilityRequiredAttribute API_AVAILABLE(macos(10.12)) =
+    @"AXRequired";
 }
 #endif  // MAC_OS_X_VERSION_10_12
 
 @implementation BrowserAccessibilityCocoa
 
-+ (void)initialize {
++ (void)initialize API_AVAILABLE(macos(10.12)) {
   const struct {
     NSString* attribute;
     NSString* methodName;

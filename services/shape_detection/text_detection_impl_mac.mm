@@ -36,9 +36,11 @@ void TextDetectionImpl::Create(
 
 TextDetectionImplMac::TextDetectionImplMac() {
   NSDictionary* const opts = @{CIDetectorAccuracy : CIDetectorAccuracyHigh};
-  detector_.reset([[CIDetector detectorOfType:CIDetectorTypeText
-                                      context:nil
-                                      options:opts] retain]);
+  if (@available(macOS 10.11, *)) {
+    detector_.reset(
+        [[CIDetector detectorOfType:CIDetectorTypeText context:nil options:opts]
+            retain]);
+  }
 }
 
 TextDetectionImplMac::~TextDetectionImplMac() {}
@@ -57,17 +59,19 @@ void TextDetectionImplMac::Detect(const SkBitmap& bitmap,
 
   const int height = bitmap.height();
   std::vector<mojom::TextDetectionResultPtr> results;
-  for (CIRectangleFeature* const f in features) {
-    // CIRectangleFeature only has bounding box information.
-    auto result = mojom::TextDetectionResult::New();
-    // In the default Core Graphics coordinate space, the origin is located
-    // in the lower-left corner, and thus |ci_image| is flipped vertically.
-    // We need to adjust |y| coordinate of bounding box before sending it.
-    gfx::RectF boundingbox(f.bounds.origin.x,
-                           height - f.bounds.origin.y - f.bounds.size.height,
-                           f.bounds.size.width, f.bounds.size.height);
-    result->bounding_box = std::move(boundingbox);
-    results.push_back(std::move(result));
+  if (@available(macOS 10.10, *)) {
+    for (CIRectangleFeature* const f in features) {
+      // CIRectangleFeature only has bounding box information.
+      auto result = mojom::TextDetectionResult::New();
+      // In the default Core Graphics coordinate space, the origin is located
+      // in the lower-left corner, and thus |ci_image| is flipped vertically.
+      // We need to adjust |y| coordinate of bounding box before sending it.
+      gfx::RectF boundingbox(f.bounds.origin.x,
+                             height - f.bounds.origin.y - f.bounds.size.height,
+                             f.bounds.size.width, f.bounds.size.height);
+      result->bounding_box = std::move(boundingbox);
+      results.push_back(std::move(result));
+    }
   }
   scoped_callback.Run(std::move(results));
 }
