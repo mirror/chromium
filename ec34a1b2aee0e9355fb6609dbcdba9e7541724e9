@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6e04bd95_7a1a879f",
+        "filename": "chrome/browser/chromeos/file_manager/arc_file_tasks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-14T21:53:21Z",
+      "side": 1,
+      "message": "IIUC that should be the case: https://cs.chromium.org/chromium/src/chrome/browser/chrome_browser_main.cc?type\u003dcs\u0026l\u003d2003 destroys the Profiles, and that\u0027s called in PostMainMessageLoopRun(). The callback is expected to be run in the UI thread, so it should be impossible for the callback to be executed.\n\nHaving said that, can you add a base::Unretained and a short comment for future readers?",
+      "parentUuid": "ab1fcdaa_5a7ffa54",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb8f8c47_7000d753",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
         "patchSetId": 1
@@ -104,6 +122,29 @@
         "startChar": 19,
         "endLine": 46,
         "endChar": 21
+      },
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d047eaa_64ade96c",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-14T21:53:21Z",
+      "side": 1,
+      "message": "please mention ownership",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 39
       },
       "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
