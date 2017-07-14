@@ -74,12 +74,13 @@ class PolicyWatcher : public policy::PolicyService::Observer {
   // the policy from files / registry / preferences (which are blocking
   // operations). |file_task_runner| should be of TYPE_IO type.
   //
-  // When |policy_service| is specified then |file_task_runner| argument is
-  // ignored and 1) BrowserThread::UI is used for PolicyUpdatedCallback and
-  // PolicyErrorCallback and 2) BrowserThread::FILE is used for reading the
-  // policy from files / registry / preferences (although (2) is just an
-  // implementation detail and should likely be ignored outside of
-  // PolicyWatcher).
+  // When |policy_service| is specified then:
+  // - |file_task_runner| argument is ignored
+  // - BrowserThread::UI is used for PolicyUpdatedCallback and
+  //   PolicyErrorCallback
+  // - BrowserThread::FILE is used for reading the policy from files / registry
+  //   preferences (although this is just an implementation detail and should
+  //   likely be ignored outside of PolicyWatcher).
   static std::unique_ptr<PolicyWatcher> Create(
       policy::PolicyService* policy_service,
       const scoped_refptr<base::SingleThreadTaskRunner>& file_task_runner);

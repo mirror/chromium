@@ -15,11 +15,12 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/arc/extensions/arc_support_message_host.h"
-#include "content/public/browser/browser_thread.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/url_pattern.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -29,6 +30,9 @@
 #include "remoting/host/policy_watcher.h"
 #include "ui/gfx/native_widget_types.h"
 #include "url/gurl.h"
+
+// TODO: REMOVE THIS:
+#include "content/public/browser/browser_thread.h"
 
 namespace extensions {
 
@@ -97,15 +101,25 @@ struct BuiltInHost {
 std::unique_ptr<NativeMessageHost> CreateIt2MeHost() {
   std::unique_ptr<remoting::It2MeHostFactory> host_factory(
       new remoting::It2MeHostFactory());
+  // TODO: REMOVE THE OLD CODE:
+  // std::unique_ptr<remoting::ChromotingHostContext> context =
+  //     remoting::ChromotingHostContext::CreateForChromeOS(
+  //         make_scoped_refptr(g_browser_process->system_request_context()),
+  //         content::BrowserThread::GetTaskRunnerForThread(
+  //             content::BrowserThread::IO),
+  //         content::BrowserThread::GetTaskRunnerForThread(
+  //             content::BrowserThread::UI),
+  //         content::BrowserThread::GetTaskRunnerForThread(
+  //             content::BrowserThread::FILE));
   std::unique_ptr<remoting::ChromotingHostContext> context =
       remoting::ChromotingHostContext::CreateForChromeOS(
           make_scoped_refptr(g_browser_process->system_request_context()),
-          content::BrowserThread::GetTaskRunnerForThread(
-              content::BrowserThread::IO),
+          base::CreateSingleThreadTaskRunnerWithTraits(
+              {base::TaskPriority::USER_VISIBLE}),
           content::BrowserThread::GetTaskRunnerForThread(
               content::BrowserThread::UI),
-          content::BrowserThread::GetTaskRunnerForThread(
-              content::BrowserThread::FILE));
+          base::CreateSingleThreadTaskRunnerWithTraits(
+             {base::MayBlock(), base::TaskPriority::BACKGROUND}));
   std::unique_ptr<remoting::PolicyWatcher> policy_watcher =
       remoting::PolicyWatcher::Create(g_browser_process->policy_service(),
                                       context->file_task_runner());
