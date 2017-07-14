@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5efa5677_6da89003",
+        "filename": "chrome/browser/search_engines/template_url_parser_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T00:47:37Z",
+      "side": 1,
+      "message": "Nit: Add comments here and below about what in general these are testing?",
+      "revId": "dd67622f6431f5a3d925b42eaa044b84db6994ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf26459_5bbba2f0",
+        "filename": "chrome/browser/search_engines/template_url_parser_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T00:47:37Z",
+      "side": 1,
+      "message": "Nit: .get() unnecessary",
+      "revId": "dd67622f6431f5a3d925b42eaa044b84db6994ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
