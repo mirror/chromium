@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49cf48a6_acb497ce",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-14T20:16:54Z",
+      "side": 1,
+      "message": "Good idea, I think that\u0027s a lot cleaner! Implemented in patchset 2. Note: I had to move PaintTiming::PaintEvent into its own header because this introduced a circular dependency of nested enums.",
+      "parentUuid": "8eb16426_d4e73540",
+      "range": {
+        "startLine": 104,
+        "startChar": 63,
+        "endLine": 104,
+        "endChar": 64
+      },
+      "revId": "54ac82b7f4f12ef6ff1967c20250ffad7965d76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0518f9bd_ce23bcb5",
         "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
         "patchSetId": 1
@@ -72,6 +96,24 @@
       "side": 1,
       "message": "I\u0027m fine with this if you are planning to add UMA to see how often this happens.",
       "parentUuid": "51138c02_77fb93d7",
+      "revId": "54ac82b7f4f12ef6ff1967c20250ffad7965d76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2519eeb_31ed076f",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-14T20:16:54Z",
+      "side": 1,
+      "message": "I added a TODO for this in ReportSwaptime (prev. ReportProvisionalFirstMeaningfulPaintSwap) in the latest patchset.",
+      "parentUuid": "e89b0e0b_75634f2a",
       "revId": "54ac82b7f4f12ef6ff1967c20250ffad7965d76d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
