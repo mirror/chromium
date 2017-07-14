@@ -92,6 +92,10 @@ class TestDriverMessageFilter
     return true;
   }
 
+  void OnFilterRemoved() override {
+    EXPECT_FALSE(internal_state_->bindings_.get());
+  }
+
   // mojom::BrowserAssociatedInterfaceTestDriver:
   void ExpectString(const std::string& expected) override {
     next_expected_string_ = expected;
