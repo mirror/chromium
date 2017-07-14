@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6a9f9b7_12818dbf",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-14T07:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a31bc7_fa439b0c",
+      "range": {
+        "startLine": 269,
+        "startChar": 42,
+        "endLine": 269,
+        "endChar": 43
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62efcce2_57466e01",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T16:46:20Z",
       "side": 1,
       "message": "OMG, how it even compiles?\nIf you don\u0027t know what Gmock is about then either I or Tanya should fix this gap :)\nPlease avoid writing the code that you don\u0027t understand.",
+      "range": {
+        "startLine": 409,
+        "startChar": 29,
+        "endLine": 409,
+        "endChar": 30
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c962b0ca_f2ed433f",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-14T07:48:27Z",
+      "side": 1,
+      "message": "I see that the unittests here are compiled separately from the others, that\u0027s why i missed it. Sorry. Fixed.",
+      "parentUuid": "62efcce2_57466e01",
       "range": {
         "startLine": 409,
         "startChar": 29,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "555b3bf3_9777b7dc",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2296,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-14T07:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a77ff60_dbced23b",
+      "range": {
+        "startLine": 2296,
+        "startChar": 7,
+        "endLine": 2296,
+        "endChar": 18
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a643bbbb_da4e22b0",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3400b000_86473213",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-14T07:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a643bbbb_da4e22b0",
+      "range": {
+        "startLine": 2306,
+        "startChar": 2,
+        "endLine": 2306,
+        "endChar": 11
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "18a43a9c_07f08858",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2316,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-14T07:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ea7fd3_fa8dcb74",
+      "range": {
+        "startLine": 2316,
+        "startChar": 15,
+        "endLine": 2316,
+        "endChar": 26
+      },
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d87f618_032f6a51",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 10
@@ -131,6 +251,24 @@
       "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35038aed_34212bd4",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2340,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-14T07:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d87f618_032f6a51",
+      "revId": "34580ef5926baa9e07c17f5ed7f7c2be6c963eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
