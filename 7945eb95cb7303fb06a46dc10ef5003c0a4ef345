@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "074b08fe_d597a3a5",
+        "filename": "services/viz/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-14T18:56:42Z",
+      "side": 1,
+      "message": "nit: that\u0027s true of GPU channels (brokered by the privileged client), but then the untrusted client can use the GPU channel to create GL command buffers directly.",
+      "revId": "7945eb95cb7303fb06a46dc10ef5003c0a4ef345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60ee510_88f4858a",
+        "filename": "services/viz/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-14T18:56:42Z",
+      "side": 1,
+      "message": "Not sure what exactly is the meaning of indentation, but if it\u0027s meant to convey that less-indented can depend on more-indented, I think you want to unindent this one, as services/viz/public/interfaces/* should not depend on services/viz/private/interfaces/*, but services/viz/public/\u003clanguage\u003e/* can.",
+      "revId": "7945eb95cb7303fb06a46dc10ef5003c0a4ef345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
