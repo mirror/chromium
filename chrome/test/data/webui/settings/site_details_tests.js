@@ -204,4 +204,30 @@ suite('SiteDetails', function() {
           });
     });
   });
+
+  test('show confirmation dialog on reset settings', function() {
+    browserProxy.setPrefs(prefs);
+    testElement.origin = 'https://foo-allow.com:443';
+
+    testElement.$.clearAndReset.dispatchEvent(new CustomEvent('tap'));
+    assertTrue(testElement.$.confirmDeleteDialog.open);
+    var actionButtonList =
+        testElement.$.confirmDeleteDialog.getElementsByClassName(
+            'action-button');
+    assertEquals(1, actionButtonList.length);
+    actionButtonList[0].dispatchEvent(new CustomEvent('tap'));
+    assertFalse(testElement.$.confirmDeleteDialog.open);
+
+    var categoryList = Array.prototype.map.call(
+        testElement.root.querySelectorAll('site-details-permission'),
+        (element) => {
+          return element.category;
+        });
+
+    return browserProxy.whenCalled('setOriginPermissions').then(function(args) {
+      assertEquals(testElement.origin, args[0]);
+      assertDeepEquals(categoryList, args[1]);
+      assertEquals(settings.ContentSetting.DEFAULT, args[2]);
+    })
+  });
 });
