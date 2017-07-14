@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9340722_bf7e5cbf",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-07-14T18:02:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7c925963_c786c844",
+      "range": {
+        "startLine": 387,
+        "startChar": 5,
+        "endLine": 387,
+        "endChar": 31
+      },
+      "revId": "2fce78b31971af79eda593d56995e0e098581c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b154d9cd_eea0dcfb",
         "filename": "ash/accelerators/accelerator_controller.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-14T17:34:49Z",
       "side": 1,
       "message": "Shouldn\u0027t we have uma for each (show/hide)?",
+      "revId": "2fce78b31971af79eda593d56995e0e098581c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decf3492_edc65566",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-07-14T18:02:36Z",
+      "side": 1,
+      "message": "I am not sure if hiding is that interesting as a metric... Maybe we should move the call into \"if\" body? If we want to have a dedicated UMA, is it as simple as doing:\n\nbase::RecordAction(UserMetricsAction(\"Accel_Hide_System_Tray_Bubble\"));\n\nor there is more to it?",
+      "parentUuid": "b154d9cd_eea0dcfb",
       "revId": "2fce78b31971af79eda593d56995e0e098581c02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
