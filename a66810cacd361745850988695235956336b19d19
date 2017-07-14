@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19c95d77_7ded9d55",
+        "filename": "third_party/WebKit/Source/build/scripts/helper_function.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-14T06:34:35Z",
+      "side": 1,
+      "message": "Maybe rename this file to helpers.py or helper_functions.py.",
+      "revId": "a66810cacd361745850988695235956336b19d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d78ed0_6d0131d6",
+        "filename": "third_party/WebKit/Source/build/scripts/helper_function.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-14T06:34:35Z",
+      "side": 1,
+      "message": "Maybe add a comment saying what order you\u0027re sorting by, and why?",
+      "revId": "a66810cacd361745850988695235956336b19d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dce7a5d_2a83cbb4",
+        "filename": "third_party/WebKit/Source/build/scripts/helper_function.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-14T06:34:35Z",
+      "side": 1,
+      "message": "nit: blank line after this",
+      "revId": "a66810cacd361745850988695235956336b19d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069918c8_ea797554",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-14T06:34:35Z",
+      "side": 1,
+      "message": "you can merge this with the previous if as an else.",
+      "revId": "a66810cacd361745850988695235956336b19d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
