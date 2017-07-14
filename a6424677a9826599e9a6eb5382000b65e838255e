@@ -170,6 +170,30 @@
       "revId": "a6424677a9826599e9a6eb5382000b65e838255e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa46ad5f_82b48610",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31558,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-07-14T23:54:45Z",
+      "side": 1,
+      "message": "Cool. I have modified the names.",
+      "parentUuid": "5fed2f71_4431414a",
+      "range": {
+        "startLine": 31558,
+        "startChar": 36,
+        "endLine": 31558,
+        "endChar": 44
+      },
+      "revId": "a6424677a9826599e9a6eb5382000b65e838255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
