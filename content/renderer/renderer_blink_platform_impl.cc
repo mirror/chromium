@@ -57,6 +57,7 @@
 #include "content/renderer/dom_storage/webstoragenamespace_impl.h"
 #include "content/renderer/gamepad_shared_memory_reader.h"
 #include "content/renderer/image_capture/image_capture_frame_grabber.h"
+#include "content/renderer/image_capture/video_frame_reader.h"
 #include "content/renderer/media/audio_decoder.h"
 #include "content/renderer/media/audio_device_factory.h"
 #include "content/renderer/media/renderer_webaudiodevice_impl.h"
@@ -102,6 +103,7 @@
 #include "third_party/WebKit/public/platform/WebThread.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
+#include "third_party/WebKit/public/platform/WebVideoFrameReader.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceMotionListener.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceOrientationListener.h"
 #include "third_party/WebKit/public/platform/modules/webmidi/WebMIDIAccessor.h"
@@ -169,6 +171,7 @@ using blink::WebSize;
 using blink::WebString;
 using blink::WebURL;
 using blink::WebVector;
+using blink::WebVideoFrameReader;
 
 namespace content {
 
@@ -926,6 +929,17 @@ std::unique_ptr<WebImageCaptureFrameGrabber>
 RendererBlinkPlatformImpl::CreateImageCaptureFrameGrabber() {
 #if BUILDFLAG(ENABLE_WEBRTC)
   return base::MakeUnique<ImageCaptureFrameGrabber>();
+#else
+  return nullptr;
+#endif  // BUILDFLAG(ENABLE_WEBRTC)
+}
+
+//------------------------------------------------------------------------------
+
+std::unique_ptr<WebVideoFrameReader>
+RendererBlinkPlatformImpl::CreateVideoFrameReader() {
+#if BUILDFLAG(ENABLE_WEBRTC)
+  return base::MakeUnique<VideoFrameReader>();
 #else
   return nullptr;
 #endif  // BUILDFLAG(ENABLE_WEBRTC)

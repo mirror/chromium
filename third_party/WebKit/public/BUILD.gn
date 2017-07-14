@@ -363,6 +363,8 @@ source_set("blink_headers") {
     "platform/WebURLRequest.h",
     "platform/WebURLResponse.h",
     "platform/WebVector.h",
+    "platform/WebVideoFrameReader.h",
+    "platform/WebVideoFrameReaderClient.h",
     "platform/WebViewportStyle.h",
     "platform/WebWorkerFetchContext.h",
     "platform/linux/WebFallbackFont.h",
