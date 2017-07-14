@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ca8674e_228b197a",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-14T07:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d7cc3f5_4030dde4",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 59
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9854cdba_c206a003",
         "filename": "components/download/internal/entry.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118d24b5_23aaef17",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-14T07:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9854cdba_c206a003",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4afec60a_ddc85d14",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-14T07:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63d63135_a0d0a370",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eabafaff_bee31740",
         "filename": "components/download/internal/entry.h",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-13T16:54:15Z",
       "side": 1,
       "message": "Was this added for tests?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 39
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1a9060_9b0a62a8",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-14T07:22:28Z",
+      "side": 1,
+      "message": "The default assignment operator uses the default assignment of all member objects, and for unqiue_ptr, it includes a \u0027move\u0027 of the pointer instead of creating a new instance.\nI implemented it to overcome that.",
+      "parentUuid": "eabafaff_bee31740",
       "range": {
         "startLine": 48,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "71b4f3c5_1697f64f",
+        "filename": "components/download/internal/entry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-14T07:22:28Z",
+      "side": 1,
+      "message": "This is the problem that resulted in this complexity:\nNetworkTrafficAnnotationTag has a constant value in its definition, and cannot hold UNASSIGNED or DEFAULT values and be set later.\nAs Entry is in some cases created uninitialized and receives value later, we need to somehow keep an empty annotation. That\u0027s why I have added a unique_ptr.\nIs there a better alternative?",
+      "parentUuid": "1f7aca3d_32c7e154",
+      "range": {
+        "startLine": 97,
+        "startChar": 18,
+        "endLine": 97,
+        "endChar": 50
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f2617e8_120d7f3f",
         "filename": "components/download/internal/test/download_params_utils.h",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0e374bb3_5725c975",
+        "filename": "components/download/internal/test/download_params_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-14T07:22:28Z",
+      "side": 1,
+      "message": "Sure, I had not noted that function this is only used in test.",
+      "parentUuid": "0f2617e8_120d7f3f",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 62
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0457ce42_638ae5fc",
         "filename": "components/download/public/download_params.h",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-13T16:54:15Z",
       "side": 1,
       "message": "Don\u0027t put this in the constructor.  We can just early-fail the download in ControllerImpl::StartDownload().  We can add a new StartResult called INVALID_PARAMS an use that.  We can then also validate other required params as well.",
+      "range": {
+        "startLine": 128,
+        "startChar": 17,
+        "endLine": 128,
+        "endChar": 75
+      },
+      "revId": "6efae8cb1a9cfb6a61a6225014ce9a217ca5ea23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7ceac8_69ecc960",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-14T07:22:28Z",
+      "side": 1,
+      "message": "I didn\u0027t quite get what you mean, could you please elaborate?\nAlso please note that NetworkTrafficAnnotationTag has a const member variable and hence if we would need to change it, we need to use unique_ptr (or an alternative approach).",
+      "parentUuid": "0457ce42_638ae5fc",
       "range": {
         "startLine": 128,
         "startChar": 17,
