@@ -23,9 +23,12 @@ using testing::SaveArg;
 using BoolCallback = base::Callback<void(bool /* is_whitelisted */)>;
 using MockBoolCallback = testing::StrictMock<base::MockCallback<BoolCallback>>;
 
+namespace {
 class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
-  MockSafeBrowsingDatabaseManager(){};
+  MockSafeBrowsingDatabaseManager() {}
+
+  MOCK_METHOD1(CancelCheck, void(SafeBrowsingDatabaseManager::Client*));
 
   MOCK_METHOD2(CheckCsdWhitelistUrl,
                AsyncMatch(const GURL&, SafeBrowsingDatabaseManager::Client*));
@@ -36,13 +39,15 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  private:
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingDatabaseManager);
 };
+}  // namespace
 
 class WhitelistCheckerClientTest : public testing::Test {
  public:
   WhitelistCheckerClientTest() : target_url_("http://foo.bar"){};
 
   void SetUp() override {
-    database_manager_ = new MockSafeBrowsingDatabaseManager;
+    database_manager_ =
+        new testing::NiceMock<MockSafeBrowsingDatabaseManager>();
     task_runner_ = new base::TestMockTimeTaskRunner(base::Time::Now(),
                                                     base::TimeTicks::Now());
     message_loop_.reset(new base::MessageLoop);
@@ -100,8 +105,10 @@ TEST_F(WhitelistCheckerClientTest, TestAsyncNoMatch) {
 }
 
 TEST_F(WhitelistCheckerClientTest, TestAsyncTimeout) {
+  SafeBrowsingDatabaseManager::Client* client;
   EXPECT_CALL(*database_manager_.get(), CheckCsdWhitelistUrl(target_url_, _))
-      .WillOnce(Return(AsyncMatch::ASYNC));
+      .WillOnce(DoAll(SaveArg<1>(&client), Return(AsyncMatch::ASYNC)));
+  EXPECT_CALL(*database_manager_.get(), CancelCheck(_)).Times(1);
 
   MockBoolCallback callback;
   WhitelistCheckerClient::StartCheckCsdWhitelist(database_manager_, target_url_,
