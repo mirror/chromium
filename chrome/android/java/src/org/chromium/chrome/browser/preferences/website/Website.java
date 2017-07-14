@@ -34,6 +34,7 @@ public class Website implements Serializable {
     private ContentSettingException mCookieException;
     private GeolocationInfo mGeolocationInfo;
     private ContentSettingException mJavaScriptException;
+    private ContentSettingException mAudioException;
     private LocalStorageInfo mLocalStorageInfo;
     private MicrophoneInfo mMicrophoneInfo;
     private MidiInfo mMidiInfo;
@@ -278,6 +279,29 @@ public class Website implements Serializable {
      */
     public void setJavaScriptException(ContentSettingException exception) {
         mJavaScriptException = exception;
+    }
+
+    /**
+     * Returns what permission governs audio access.
+     */
+    public ContentSetting getAudioPermission() {
+        return mAudioException != null ? mAudioException.getContentSetting() : null;
+    }
+
+    /**
+     * Configure audio permission access setting for this site.
+     */
+    public void setAudioPermission(ContentSetting value) {
+        if (mAudioException != null) {
+            mAudioException.setContentSetting(value);
+        }
+    }
+
+    /**
+     * Sets the audio exception info for this Website.
+     */
+    public void setAudioException(ContentSettingException exception) {
+        mAudioException = exception;
     }
 
     /**

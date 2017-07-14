@@ -35,6 +35,7 @@ public class SiteSettingsPreferences extends PreferenceFragment
     // The keys for each category shown on the Site Settings page.
     static final String ALL_SITES_KEY = "all_sites";
     static final String ADS_KEY = "ads";
+    static final String AUDIO_KEY = "audio";
     static final String AUTOPLAY_KEY = "autoplay";
     static final String BACKGROUND_SYNC_KEY = "background_sync";
     static final String CAMERA_KEY = "camera";
@@ -82,6 +83,8 @@ public class SiteSettingsPreferences extends PreferenceFragment
             return ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS;
         } else if (AUTOPLAY_KEY.equals(key)) {
             return ContentSettingsType.CONTENT_SETTINGS_TYPE_AUTOPLAY;
+        } else if (AUDIO_KEY.equals(key)) {
+            return ContentSettingsType.CONTENT_SETTINGS_TYPE_AUDIO;
         } else if (BACKGROUND_SYNC_KEY.equals(key)) {
             return ContentSettingsType.CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC;
         } else if (CAMERA_KEY.equals(key)) {
@@ -181,6 +184,8 @@ public class SiteSettingsPreferences extends PreferenceFragment
                 checked = PrefServiceBridge.getInstance().adsEnabled();
             } else if (AUTOPLAY_KEY.equals(prefName)) {
                 checked = PrefServiceBridge.getInstance().isAutoplayEnabled();
+            } else if (AUDIO_KEY.equals(prefName)) {
+                checked = PrefServiceBridge.getInstance().isAudioEnabled();
             } else if (BACKGROUND_SYNC_KEY.equals(prefName)) {
                 checked = PrefServiceBridge.getInstance().isBackgroundSyncAllowed();
             } else if (CAMERA_KEY.equals(prefName)) {

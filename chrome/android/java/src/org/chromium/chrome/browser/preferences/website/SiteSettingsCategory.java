@@ -36,6 +36,7 @@ public class SiteSettingsCategory {
     // Valid values for passing to fromString() in this class.
     public static final String CATEGORY_ALL_SITES = "all_sites";
     public static final String CATEGORY_ADS = "ads";
+    public static final String CATEGORY_AUDIO = "audio";
     public static final String CATEGORY_AUTOPLAY = "autoplay";
     public static final String CATEGORY_BACKGROUND_SYNC = "background_sync";
     public static final String CATEGORY_CAMERA = "camera";
@@ -110,6 +111,10 @@ public class SiteSettingsCategory {
             return new SiteSettingsCategory(CATEGORY_JAVASCRIPT, "",
                     ContentSettingsType.CONTENT_SETTINGS_TYPE_JAVASCRIPT);
         }
+        if (CATEGORY_AUDIO.equals(category)) {
+            return new SiteSettingsCategory(
+                    CATEGORY_AUDIO, "", ContentSettingsType.CONTENT_SETTINGS_TYPE_AUDIO);
+        }
         if (CATEGORY_DEVICE_LOCATION.equals(category)) {
             return new LocationCategory();
         }
@@ -165,6 +170,9 @@ public class SiteSettingsCategory {
         }
         if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_JAVASCRIPT) {
             return fromString(CATEGORY_JAVASCRIPT);
+        }
+        if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_AUDIO) {
+            return fromString(CATEGORY_AUDIO);
         }
         if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_GEOLOCATION) {
             return fromString(CATEGORY_DEVICE_LOCATION);
@@ -251,6 +259,13 @@ public class SiteSettingsCategory {
      */
     public boolean showJavaScriptSites() {
         return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_JAVASCRIPT;
+    }
+
+    /**
+     * Returns whether this category is the Audio category.
+     */
+    public boolean showAudioSites() {
+        return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_AUDIO;
     }
 
     /**
