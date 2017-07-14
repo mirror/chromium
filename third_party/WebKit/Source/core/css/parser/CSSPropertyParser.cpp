@@ -2450,6 +2450,8 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
       return Consume4Values(scrollPaddingShorthand(), important);
     case CSSPropertyScrollSnapMargin:
       return Consume4Values(scrollSnapMarginShorthand(), important);
+    case CSSPropertyScrollBoundaryBehavior:
+      return Consume2Values(scrollBoundaryBehaviorShorthand(), important);
     default:
       return false;
   }
