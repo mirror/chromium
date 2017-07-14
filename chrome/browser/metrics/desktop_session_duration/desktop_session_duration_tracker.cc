@@ -35,6 +35,11 @@ DesktopSessionDurationTracker* DesktopSessionDurationTracker::Get() {
   return g_instance;
 }
 
+void DesktopSessionDurationTracker::DeleteInstanceForTesting() {
+  delete g_instance;
+  g_instance = nullptr;
+}
+
 void DesktopSessionDurationTracker::StartTimer(base::TimeDelta duration) {
   timer_.Start(FROM_HERE, duration,
                base::Bind(&DesktopSessionDurationTracker::OnTimerFired,
