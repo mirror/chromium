@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c08766e_24fad549",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-14T08:26:48Z",
+      "side": 1,
+      "message": "Yeah, the reason I put this here is that we actually do need to be able to specify this on a per-BrowserContext basis, i.e. we need to be able to have different \"kinds\" of BrowserContexts in the same browser. They\u0027re both headless, but the one kind is controlled by external BeginFrames, and the other kind is controlled by regular BeginFrameSources (and using the regular deadline mode).\n\nI ideally wanted this to be per-WebContents as in patch set 3, but we can live with per-BrowserContext, too. Overriding this method in HeadlessBrowserContext to return the value of a per-HeadlessBrowserContext-setting would give us that flexibility.\n\nLet\u0027s loop in piman@, maybe he has a suggestion how to plumb this best with the smallest changes necessary to content API.",
+      "parentUuid": "c759e57b_cc5c7439",
+      "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d46f1300_9f29589a",
         "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T06:27:39Z",
       "side": 1,
       "message": "nit: I wonder if OutputSurface is the right place to hook headless into. OutputSurface::SwapBuffers is roughly equivalent to DisplayObserver::DisplayDidFinishFrame except for the BeginFrameAck (which isn\u0027t useful here anyway). We can add a HeadlessOutputSurface which controls the begin frame source and implements an ExternalBeginFrameController like interface to headless code.\n\nI don\u0027t think we want to expose GpuProcessTransportFactory to headless. Exposing a minimal interface implemented either by ui::Compositor (implements DisplayObserver and ExternalBFSClient) or by the OutputSurface seems more reasonable IMO.",
+      "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b58c84_1d6f3f1c",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-14T08:26:48Z",
+      "side": 1,
+      "message": "AFAIU, OutputSurface::SwapBuffers is only called if there was damage. We won\u0027t always have that, because we won\u0027t have a CopyRequest on every BeginFrame. Still, we need to know when the Display(Scheduler) completes it.\n\nI\u0027m trying to expose a BeginFrameControl interface (SendBeginFrame / DidFinishFrame / NeedsBeginFrame) from the future DisplayCompositor service to the browser, where devtools can use it. It seems that should eventually be implemented by FrameSinkManagerImpl as Fady suggested, but that\u0027s not yet possible. GpuPTF will eventually be replaced by FSMI - and at that point, we can move the ExternalBFController there.\n\nSince we\u0027re not quite there yet, I think we need to expose the interface via GpuPTF and ui::Compositor for now. In this setup, DevTools would interact with ui::Compositor only, not puPTF. (ExternalBFController is really only an implementation detail now, it\u0027s not exposed to anyone anymore.)\n\nAFAIU (Fady can confirm or correct :)), the Display and BeginFrameSource will soon live in viz, but the ui::Compositor won\u0027t. So it seems we should avoid a dependency on DisplayObserver / ExternalBeginFrameSourceClient in ui::Compositor.",
+      "parentUuid": "d46f1300_9f29589a",
       "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2abfd93c_45dcf139",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2382,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-14T08:26:48Z",
+      "side": 1,
+      "message": "We want to support either mode with headless, so can\u0027t use --headless to decide this here.",
+      "parentUuid": "84a659d6_1dbd2076",
+      "range": {
+        "startLine": 2382,
+        "startChar": 6,
+        "endLine": 2382,
+        "endChar": 46
+      },
+      "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04c41ac9_5302e75d",
         "filename": "ui/compositor/compositor.cc",
         "patchSetId": 12
@@ -73,6 +133,24 @@
       "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa284914_037522f6",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-14T08:26:48Z",
+      "side": 1,
+      "message": "As above :)",
+      "parentUuid": "04c41ac9_5302e75d",
+      "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
