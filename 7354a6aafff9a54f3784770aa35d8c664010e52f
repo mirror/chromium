@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74c87cf2_baf9ec23",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-14T22:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "535002f0_d339a8c6",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33a8ae0f_ff1428e0",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7e8c8d83_fab27169",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-14T22:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a8ae0f_ff1428e0",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcb741ee_a9cd8ff5",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-14T19:47:22Z",
       "side": 1,
       "message": "It\u0027s not clear when this function should be called (UI? business logic?). I would perhaps add a comment somewhere",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e9237b_7a51de02",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-14T22:38:59Z",
+      "side": 1,
+      "message": "This is called either by the BrowserViewController when PaymentRequestManager has to be nuked for some reason or when the active WebState changes. I updated the comments in the header file.",
+      "parentUuid": "fcb741ee_a9cd8ff5",
       "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "4a960dfe_ca28378f",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-14T22:38:59Z",
+      "side": 1,
+      "message": "In a way yes. payments::PaymentRequest::Compare compares two unique pointers of payments::PaymentRequest though.",
+      "parentUuid": "0f47859b_19ebf735",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9661757d_6ef6efa0",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 1
@@ -128,6 +200,24 @@
       "writtenOn": "2017-07-14T19:47:22Z",
       "side": 1,
       "message": "it that right? I would think payment_methods_ would be better?",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f54143_4bfacfcb",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-14T22:38:59Z",
+      "side": 1,
+      "message": "IIRC this is according to the spec.\nhttps://cs.chromium.org/chromium/src/components/payments/content/payment_request.cc?type\u003dcs\u0026l\u003d131\n\nMaybe I should also check for url_payment_method_identifiers_ after Randy\u0027s change (https://chromium-review.googlesource.com/c/567438/)?",
+      "parentUuid": "9661757d_6ef6efa0",
       "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -192,6 +282,30 @@
       "writtenOn": "2017-07-14T19:47:22Z",
       "side": 1,
       "message": "the name implies no side effects. I\u0027m bad with names but I would recommend something like \"setActivePaymentRequest\"",
+      "range": {
+        "startLine": 941,
+        "startChar": 8,
+        "endLine": 941,
+        "endChar": 29
+      },
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1c66a0_4d674f5a",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-14T22:38:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "81881f43_db2628d0",
       "range": {
         "startLine": 941,
         "startChar": 8,
