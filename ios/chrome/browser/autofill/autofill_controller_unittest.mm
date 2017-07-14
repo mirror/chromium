@@ -10,6 +10,7 @@
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/test/histogram_tester.h"
 #import "base/test/ios/wait_util.h"
 #include "components/autofill/core/browser/autofill_manager.h"
@@ -442,8 +443,11 @@ TEST_F(AutofillControllerTest, KeyValueImport) {
           chrome_browser_state_.get(), ServiceAccessType::EXPLICIT_ACCESS);
   __block TestConsumer consumer;
   const int limit = 1;
+  consumer.result_ = {base::UTF8ToUTF16("This"), base::UTF8ToUTF16("is"),
+                      base::UTF8ToUTF16("garbage")};
   web_data_service->GetFormValuesForElementName(
       base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   WaitForBackgroundTasks();
   // No value should be returned before anything is loaded via form submission.
   ASSERT_EQ(0U, consumer.result_.size());
@@ -453,6 +457,7 @@ TEST_F(AutofillControllerTest, KeyValueImport) {
         base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer);
     return consumer.result_.size();
   });
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   WaitForBackgroundTasks();
   // One result should be returned, matching the filled value.
   ASSERT_EQ(1U, consumer.result_.size());
