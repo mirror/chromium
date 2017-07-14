@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64e4a57b_750819d8",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-14T22:35:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d26bca0_4bf9f007",
+      "range": {
+        "startLine": 39,
+        "startChar": 46,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7078e515_5982bb1b",
         "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d6fdf187_a01a1d9d",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-14T22:35:00Z",
+      "side": 1,
+      "message": "Tried to remove listener and use observer only. Got a failing browser test DiscoveryNoListeners (https://cs.chromium.org/chromium/src/chrome/test/data/extensions/api_test/dial/experimental/discovery_no_listeners.js?sq\u003dpackage:chromium\u0026dr).\n\nWe need to register observer for errors, but if we register observer there won\u0027t be no listener error. (Seems need to seperate OnDialDeviceEvent and OnDialError to keep this behavior).\n\nIf that case does not matter I change to use observer only and remove this test.",
+      "parentUuid": "7078e515_5982bb1b",
+      "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68d6211e_b9ccc7d0",
         "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-12T22:14:46Z",
       "side": 1,
       "message": "I think this will still have the same problem, because this may not get executed before another callback from the DialRegistry via OnDialDeviceEvent.\n\nI think you\u0027ll want to update OnDialDeviceEvent/OnDialError to not post tasks if the DialAPI is being shut down.",
+      "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a23a0b8_314a10ab",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-14T22:35:00Z",
+      "side": 1,
+      "message": "I think it might help a little...\n\ncase 1:\n\nDialRegistry::OnDialDeviceEvent() // DialAPI is guarantee to have ref_count \u003e\u003d1 here, because \nUnregisterObserver() adds ref_count. After posting task to UI, DialAPI ref_count \u003e\u003d2.\nDialRegistry::UnregisterObserver() // --ref_count, but won\u0027t be 0 until UI task is released.\n\ncase 2:\nDialRegistry::UnregisterObserver() // \nDialRegistry::OnDialDeviceEvent() // won\u0027t invoke DialAPI::OnDeviceEventList and wont post task to UI.\n\nNot sure how to make DialAPI not posting tasks to OnDialDeviceEvent when shutting down in a simple way...a simple flag seems not working, since the flag will be set on UI thread, and accessed on IO thread.",
+      "parentUuid": "68d6211e_b9ccc7d0",
       "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
