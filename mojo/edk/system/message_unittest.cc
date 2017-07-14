@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
+#include "base/numerics/safe_math.h"
 #include "mojo/edk/test/mojo_test_base.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 
@@ -26,16 +27,16 @@ class TestMessageBase {
 
   static MojoMessageHandle MakeMessageHandle(
       std::unique_ptr<TestMessageBase> message) {
-    MojoMessageOperationThunks thunks;
-    thunks.struct_size = sizeof(MojoMessageOperationThunks);
-    thunks.get_serialized_size = &CallGetSerializedSize;
-    thunks.serialize_handles = &CallSerializeHandles;
-    thunks.serialize_payload = &CallSerializePayload;
-    thunks.destroy = &Destroy;
     MojoMessageHandle handle;
-    MojoResult rv = MojoCreateMessage(
-        reinterpret_cast<uintptr_t>(message.release()), &thunks, &handle);
+    MojoResult rv = MojoCreateMessage(&handle);
     DCHECK_EQ(MOJO_RESULT_OK, rv);
+
+    rv = MojoAttachMessageContext(
+        handle, reinterpret_cast<uintptr_t>(message.release()),
+        &TestMessageBase::SerializeMessageContext,
+        &TestMessageBase::DestroyMessageContext);
+    DCHECK_EQ(MOJO_RESULT_OK, rv);
+
     return handle;
   }
 
@@ -58,22 +59,28 @@ class TestMessageBase {
   virtual void SerializePayload(void* buffer) = 0;
 
  private:
-  static void CallGetSerializedSize(uintptr_t context,
-                                    size_t* num_bytes,
-                                    size_t* num_handles) {
-    reinterpret_cast<TestMessageBase*>(context)->GetSerializedSize(num_bytes,
-                                                                   num_handles);
+  static void SerializeMessageContext(MojoMessageHandle message_handle,
+                                      uintptr_t context) {
+    auto* message = reinterpret_cast<TestMessageBase*>(context);
+    size_t num_bytes = 0;
+    size_t num_handles = 0;
+    message->GetSerializedSize(&num_bytes, &num_handles);
+    std::vector<MojoHandle> handles(num_handles);
+    if (num_handles)
+      message->SerializeHandles(handles.data());
+
+    void* buffer;
+    uint32_t buffer_size;
+    MojoResult rv = MojoAttachSerializedMessageBuffer(
+        message_handle, base::checked_cast<uint32_t>(num_bytes), handles.data(),
+        base::checked_cast<uint32_t>(num_handles), &buffer, &buffer_size);
+    DCHECK_EQ(MOJO_RESULT_OK, rv);
+    DCHECK_GE(buffer_size, base::checked_cast<uint32_t>(num_bytes));
+    if (num_bytes)
+      message->SerializePayload(buffer);
   }
 
-  static void CallSerializeHandles(uintptr_t context, MojoHandle* handles) {
-    reinterpret_cast<TestMessageBase*>(context)->SerializeHandles(handles);
-  }
-
-  static void CallSerializePayload(uintptr_t context, void* buffer) {
-    reinterpret_cast<TestMessageBase*>(context)->SerializePayload(buffer);
-  }
-
-  static void Destroy(uintptr_t context) {
+  static void DestroyMessageContext(uintptr_t context) {
     delete reinterpret_cast<TestMessageBase*>(context);
   }
 };
@@ -156,10 +163,24 @@ TEST_F(MessageTest, InvalidMessageObjects) {
             MojoSerializeMessage(MOJO_MESSAGE_HANDLE_INVALID));
 
   MojoMessageHandle message_handle;
+  void* buffer;
+  uint32_t buffer_size;
+  ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT, MojoCreateMessage(nullptr));
+  ASSERT_EQ(MOJO_RESULT_OK, MojoCreateMessage(&message_handle));
   ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
-            MojoCreateMessage(0, nullptr, &message_handle));
+            MojoAttachMessageContext(message_handle, 0, nullptr, nullptr));
   ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
-            MojoCreateMessage(1234, nullptr, nullptr));
+            MojoAttachSerializedMessageBuffer(message_handle, 0, nullptr, 0,
+                                              &buffer, nullptr));
+  ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
+            MojoAttachSerializedMessageBuffer(message_handle, 0, nullptr, 0,
+                                              nullptr, &buffer_size));
+  ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
+            MojoAttachSerializedMessageBuffer(message_handle, 0, nullptr, 0,
+                                              nullptr, nullptr));
+  ASSERT_EQ(MOJO_RESULT_OK,
+            MojoAttachSerializedMessageBuffer(message_handle, 0, nullptr, 0,
+                                              &buffer, &buffer_size));
 }
 
 TEST_F(MessageTest, SendLocalMessageWithContext) {
