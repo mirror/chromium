@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1807f04_130ce180",
+        "filename": "components/feedback/feedback_uploader_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-14T01:17:59Z",
+      "side": 1,
+      "message": "I suppose we can make this delegate own this pending report, and passes the ownership back to the uploader on failure so that it can push it back to the queue.\n\nAll the code in this folder uses FeedbackReport through means of refptr\u0027s, so I didn\u0027t want to deviate too much from that here. We should probably revise the decisions behind this legacy code together.",
+      "parentUuid": "105b3085_945a5261",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "2a546e8a69a8170e5a57d784c246957e2f2dd37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1aeee316_97629ea6",
         "filename": "components/feedback/feedback_uploader_factory.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T22:50:08Z",
       "side": 1,
       "message": "Why does this need to be a refptr?",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "2a546e8a69a8170e5a57d784c246957e2f2dd37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e7f98b_5166ad87",
+        "filename": "components/feedback/feedback_uploader_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-14T01:17:59Z",
+      "side": 1,
+      "message": "That\u0027s what base::CreateSingleThreadTaskRunnerWithTraits() (and its sisters) return, and I think that\u0027s how they\u0027re expected to be used. https://cs.chromium.org/chromium/src/base/task_scheduler/post_task.h?type\u003dcs\u0026q\u003dbase::CreateSingleThreadTaskRunnerWithTraits\u0026sq\u003dpackage:chromium\u0026l\u003d205\n\nWe cannot assume to be the sole owners of the task runner, because our task runner is shared (which is the default: https://cs.chromium.org/chromium/src/base/task_scheduler/post_task.h?type\u003dcs\u0026q\u003dbase::CreateSingleThreadTaskRunnerWithTraits\u0026sq\u003dpackage:chromium\u0026l\u003d208), so other tasks can share the same thread with us when we\u0027re idle.",
+      "parentUuid": "1aeee316_97629ea6",
       "range": {
         "startLine": 55,
         "startChar": 2,
