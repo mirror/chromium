@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65847721_679b59af",
+        "filename": "ash/display/display_configuration_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T01:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8506f4cd_f1d49844",
+      "revId": "1b0ddde8b35b072ac7d4d8bf042106475b1e53f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44778362_2b96104a",
         "filename": "ash/display/display_configuration_controller_unittest.cc",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-14T01:00:48Z",
       "side": 1,
       "message": "By the default, do we get empty string if we do not AppendSwitchASCII to kAshDisableSmoothScreenRotation?",
+      "revId": "1b0ddde8b35b072ac7d4d8bf042106475b1e53f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a10ad37_24d6da6d",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T01:09:02Z",
+      "side": 1,
+      "message": "yep",
+      "parentUuid": "d636a778_dc3ffca2",
       "revId": "1b0ddde8b35b072ac7d4d8bf042106475b1e53f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
