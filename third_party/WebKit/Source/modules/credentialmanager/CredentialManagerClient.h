@@ -5,58 +5,58 @@
 #ifndef CredentialManagerClient_h
 #define CredentialManagerClient_h
 
-#include "core/page/Page.h"
+#include <memory>
+
 #include "modules/ModulesExport.h"
 #include "platform/Supplementable.h"
-#include "public/platform/WebCredentialManagerClient.h"
+#include "public/platform/WebCallbacks.h"
+#include "public/platform/WebCredentialManagerError.h"
 #include "public/platform/WebCredentialMediationRequirement.h"
 #include "public/platform/WebVector.h"
+#include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
 
 namespace blink {
 
 class ExecutionContext;
-class Page;
 class WebCredential;
-class WebURL;
 
-// CredentialManagerClient lives as a supplement to Page, and wraps the
+// CredentialManagerClient lives as a supplement to Document, and wraps the
 // embedder-provided WebCredentialManagerClient's methods to make them visible
 // to the bindings code.
-class MODULES_EXPORT CredentialManagerClient final
+class MODULES_EXPORT CredentialManagerClient
     : public GarbageCollectedFinalized<CredentialManagerClient>,
-      public Supplement<Page> {
+      public Supplement<ExecutionContext> {
   USING_GARBAGE_COLLECTED_MIXIN(CredentialManagerClient);
 
  public:
-  explicit CredentialManagerClient(WebCredentialManagerClient*);
+  using RequestCallbacks =
+      WebCallbacks<std::unique_ptr<WebCredential>, WebCredentialManagerError>;
+  using NotificationCallbacks = WebCallbacks<void, WebCredentialManagerError>;
+
+  explicit CredentialManagerClient(ExecutionContext*);
   virtual ~CredentialManagerClient();
   DECLARE_VIRTUAL_TRACE();
 
   static const char* SupplementName();
-  static CredentialManagerClient* From(Page*);
   static CredentialManagerClient* From(ExecutionContext*);
+  static void ProvideToExecutionContext(ExecutionContext*,
+                                        CredentialManagerClient*);
 
   // Ownership of the callback is transferred to the callee for each of
   // the following methods.
-  virtual void DispatchFailedSignIn(
-      const WebCredential&,
-      WebCredentialManagerClient::NotificationCallbacks*);
-  virtual void DispatchStore(
-      const WebCredential&,
-      WebCredentialManagerClient::NotificationCallbacks*);
-  virtual void DispatchPreventSilentAccess(
-      WebCredentialManagerClient::NotificationCallbacks*);
+  virtual void DispatchFailedSignIn(std::unique_ptr<WebCredential>,
+                                    NotificationCallbacks*);
+  virtual void DispatchStore(std::unique_ptr<WebCredential>,
+                             NotificationCallbacks*);
+  virtual void DispatchPreventSilentAccess(NotificationCallbacks*);
   virtual void DispatchGet(WebCredentialMediationRequirement,
                            bool include_passwords,
-                           const WebVector<WebURL>& federations,
-                           WebCredentialManagerClient::RequestCallbacks*);
+                           const ::WTF::Vector<KURL>& federations,
+                           RequestCallbacks*);
 
  private:
-  WebCredentialManagerClient* client_;
+  ::password_manager::mojom::blink::CredentialManagerPtr mojo_cm_service_;
 };
-
-MODULES_EXPORT void ProvideCredentialManagerClientTo(Page&,
-                                                     CredentialManagerClient*);
 
 }  // namespace blink
 

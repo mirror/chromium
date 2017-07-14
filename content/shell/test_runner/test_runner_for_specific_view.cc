@@ -17,7 +17,7 @@
 #include "content/shell/test_runner/layout_and_paint_async_then.h"
 #include "content/shell/test_runner/layout_dump.h"
 #include "content/shell/test_runner/mock_content_settings_client.h"
-#include "content/shell/test_runner/mock_credential_manager_client.h"
+#include "content/shell/test_runner/mock_credential_manager.h"
 #include "content/shell/test_runner/mock_screen_orientation_client.h"
 #include "content/shell/test_runner/mock_web_speech_recognizer.h"
 #include "content/shell/test_runner/mock_web_user_media_client.h"

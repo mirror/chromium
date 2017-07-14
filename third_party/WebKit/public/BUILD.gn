@@ -161,7 +161,6 @@ source_set("blink_headers") {
     "platform/WebContentSettingsClient.h",
     "platform/WebCookieJar.h",
     "platform/WebCredential.h",
-    "platform/WebCredentialManagerClient.h",
     "platform/WebCredentialManagerError.h",
     "platform/WebCredentialMediationRequirement.h",
     "platform/WebCrypto.h",

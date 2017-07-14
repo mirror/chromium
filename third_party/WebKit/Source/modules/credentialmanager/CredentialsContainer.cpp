@@ -29,7 +29,6 @@
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCredential.h"
-#include "public/platform/WebCredentialManagerClient.h"
 #include "public/platform/WebCredentialManagerError.h"
 #include "public/platform/WebCredentialMediationRequirement.h"
 #include "public/platform/WebFederatedCredential.h"
@@ -60,7 +59,7 @@ static void RejectDueToCredentialManagerError(
 }
 
 class NotificationCallbacks
-    : public WebCredentialManagerClient::NotificationCallbacks {
+    : public CredentialManagerClient::NotificationCallbacks {
   WTF_MAKE_NONCOPYABLE(NotificationCallbacks);
 
  public:
@@ -85,7 +84,7 @@ class NotificationCallbacks
   const Persistent<ScriptPromiseResolver> resolver_;
 };
 
-class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
+class RequestCallbacks : public CredentialManagerClient::RequestCallbacks {
   WTF_MAKE_NONCOPYABLE(RequestCallbacks);
 
  public:
@@ -93,7 +92,7 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
       : resolver_(resolver) {}
   ~RequestCallbacks() override {}
 
-  void OnSuccess(std::unique_ptr<WebCredential> web_credential) override {
+  void OnSuccess(std::unique_ptr<WebCredential> credential) override {
     ExecutionContext* context =
         ExecutionContext::From(resolver_->GetScriptState());
     if (!context)
@@ -101,8 +100,6 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
     Frame* frame = ToDocument(context)->GetFrame();
     SECURITY_CHECK(!frame || frame == frame->Tree().Top());
 
-    std::unique_ptr<WebCredential> credential =
-        WTF::WrapUnique(web_credential.release());
     if (!credential || !frame) {
       resolver_->Resolve();
       return;
@@ -238,7 +235,8 @@ ScriptPromise CredentialsContainer::store(ScriptState* script_state,
   auto web_credential =
       WebCredential::Create(credential->GetPlatformCredential());
   CredentialManagerClient::From(ExecutionContext::From(script_state))
-      ->DispatchStore(*web_credential, new NotificationCallbacks(resolver));
+      ->DispatchStore(std::move(web_credential),
+                      new NotificationCallbacks(resolver));
   return promise;
 }
 

@@ -307,9 +307,7 @@ void WebView::DidExitModalLoop() {
 
 void WebViewImpl::SetCredentialManagerClient(
     WebCredentialManagerClient* web_credential_manager_client) {
-  DCHECK(page_);
-  ProvideCredentialManagerClientTo(
-      *page_, new CredentialManagerClient(web_credential_manager_client));
+  // Not reached.
 }
 
 void WebViewImpl::SetPrerendererClient(
