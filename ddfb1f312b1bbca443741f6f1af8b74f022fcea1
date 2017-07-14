@@ -1,0 +1,260 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8588f053_e6b842b4",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "nit: No need to put function descriptions as comments in the .cc file. The comment is already in the .h file.",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c514878_923ea172",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "// Returns a list of preferences to be shown in chrome://safe-browsing. The preferences are passed as an alternating sequence of preference names and values represented as strings.",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98884a9_6649bff9",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "nit: true\n\nnote that you can do these changes in a separate CL.",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db114eea_9da8e48a",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "nit: false",
+      "range": {
+        "startLine": 37,
+        "startChar": 22,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051b9ed1_ded7f1a1",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "nit: you could express this as\n\nconstexpr struct {\n  const base::Feature* feature;\n  // True if the feature is running at a probability other than 1 or 0.\n  bool probabilistically_enabled;\n} kExperimentalFeatures {\n  {\u0026kLocalDatabaseManagerEnabled, true},\n  {\u0026kV4OnlyEnabled, true},\n  {\u0026kThreatDomDetailsTagAndAttributeFeature, false},\n};",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af1e362_2b3235a9",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "If you do the change above, this function becomes:\nbase::ListValue param_list;\nfor (const auto\u0026 feature_status : kExperimentalFeatures) {\n  if (feature_status.probabilisitcally_enabled)\n    AddFeatureAndAvailability(feature_status.feature, \u0026param_list);\n}\nreturn param_list;",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c5d7d2_3c0893ab",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "+1 spaces?",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0504f94d_abb67777",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "-2 spaces also below.\nhttps://google.github.io/styleguide/jsguide.html#formatting-block-indentation",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11521dc3_0349d7eb",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "exp \u003d\u003e addExperiments\n\nSorry for not mentioning it before, this should actually be\nthen((experiments) \u003d\u003e addExperiments(experiments))\n\nhttps://google.github.io/styleguide/jsguide.html#formatting-function-expressions\n\n\nsame below. (\"prefs\" is commonly used. I think that does not need to be expanded to preferences)",
+      "range": {
+        "startLine": 14,
+        "startChar": 51,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243b3ea9_af8af8e1",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "This should not go here.",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cf16d7_e2703a64",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "Proper indentation:\n  function addPreferences(result) {\n    var resLength \u003d result.length;\n    var preferencesListFormatted \u003d \"\";\n\n    for (var i \u003d 0; i \u003c resLength; i +\u003d 2) {\n      preferencesListFormatted +\u003d \"\u003cdiv\u003e\u003cb\u003e\" + result[i + 1] + \"\u003c/b\u003e: \" +\n// operator goes to the end https://google.github.io/styleguide/jsguide.html#formatting-where-to-break\n         result[i] + \"\u003c/div\u003e\";\n// +4 indentation for continuations\n    }\n    $(\u0027preferencesList\u0027).innerHTML \u003d preferencesListFormatted;\n  }\n\n  return {\n    initialize: initialize,\n  };",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b9bbed_7d58f471",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "nit: cleanup unused?",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db18c1b9_bfc169dc",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "Nit: The destructor should go directly under the constructor.",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e022fa_1be105e6",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "namespace base {\nclass ListValue;\n}\ninstead of #include \"base/values.h\" here.\nsame for content::BrowserContext and content::WebUI.\n\nI think that base/bind.h is not used. Same for\nurl_data_source.h, web_contents.h, web_ui.h, web_ui_data_source.h",
+      "revId": "ddfb1f312b1bbca443741f6f1af8b74f022fcea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

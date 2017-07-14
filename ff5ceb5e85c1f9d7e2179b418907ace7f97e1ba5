@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "bc544d06_6ce8d424",
+        "filename": "components/safe_browsing/web_ui/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T08:33:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "961e85db_1f80be79",
+      "revId": "ff5ceb5e85c1f9d7e2179b418907ace7f97e1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb24af71_b4ed4814",
         "filename": "components/safe_browsing/web_ui/resources/safe_browsing.css",
         "patchSetId": 7
