@@ -4,7 +4,6 @@
 
 #include "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.h"
 
-#include <string>
 #include <utility>
 
 #include "base/callback.h"
@@ -20,25 +19,20 @@
 #include "chrome/common/chrome_features.h"
 #include "components/google/core/browser/google_url_tracker.h"
 #include "components/safe_json/safe_json_parser.h"
-#include "components/signin/core/browser/access_token_fetcher.h"
-#include "components/signin/core/browser/signin_manager.h"
 #include "components/variations/net/variations_http_headers.h"
-#include "google_apis/gaia/oauth2_token_service.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_status_code.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace {
 
-const char kApiUrl[] = "https://onegoogle-pa.googleapis.com/v1/getbar";
+const char kApiUrl[] = "https://onegoogle-pa.clients6.google.com/v1/getbar";
 
 const char kApiKeyFormat[] = "?key=%s";
-
-const char kApiScope[] = "https://www.googleapis.com/auth/onegoogle.api";
-const char kAuthorizationRequestHeaderFormat[] = "Bearer %s";
 
 const char kResponsePreamble[] = ")]}'";
 
@@ -132,78 +126,65 @@ class OneGoogleBarFetcherImpl::AuthenticatedURLFetcher
  public:
   using FetchDoneCallback = base::OnceCallback<void(const net::URLFetcher*)>;
 
-  AuthenticatedURLFetcher(SigninManagerBase* signin_manager,
-                          OAuth2TokenService* token_service,
-                          net::URLRequestContextGetter* request_context,
+  AuthenticatedURLFetcher(net::URLRequestContextGetter* request_context,
                           const GURL& google_base_url,
+                          const GetAuthTokenCallback& get_auth_token,
                           FetchDoneCallback callback);
   ~AuthenticatedURLFetcher() override = default;
 
   void Start();
 
  private:
-  GURL GetApiUrl(bool use_oauth) const;
+  GURL GetApiUrl() const;
   std::string GetRequestBody() const;
   std::string GetExtraRequestHeaders(const GURL& url,
-                                     const std::string& access_token) const;
+                                     const std::string& auth_token) const;
 
-  void GotAccessToken(const GoogleServiceAuthError& error,
-                      const std::string& access_token);
+  void GotAuthToken(const std::string& auth_token);
 
   // URLFetcherDelegate implementation.
   void OnURLFetchComplete(const net::URLFetcher* source) override;
 
-  SigninManagerBase* const signin_manager_;
-  OAuth2TokenService* const token_service_;
   net::URLRequestContextGetter* const request_context_;
   const GURL google_base_url_;
+  GetAuthTokenCallback get_auth_token_;
 
   FetchDoneCallback callback_;
 
-  std::unique_ptr<AccessTokenFetcher> token_fetcher_;
-
   // The underlying URLFetcher which does the actual fetch.
   std::unique_ptr<net::URLFetcher> url_fetcher_;
+
+  base::WeakPtrFactory<AuthenticatedURLFetcher> weak_ptr_factory_;
 };
 
 OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::AuthenticatedURLFetcher(
-    SigninManagerBase* signin_manager,
-    OAuth2TokenService* token_service,
     net::URLRequestContextGetter* request_context,
     const GURL& google_base_url,
+    const GetAuthTokenCallback& get_auth_token,
     FetchDoneCallback callback)
-    : signin_manager_(signin_manager),
-      token_service_(token_service),
-      request_context_(request_context),
+    : request_context_(request_context),
       google_base_url_(google_base_url),
-      callback_(std::move(callback)) {}
+      get_auth_token_(get_auth_token),
+      callback_(std::move(callback)),
+      weak_ptr_factory_(this) {}
 
 void OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::Start() {
-  if (!signin_manager_->IsAuthenticated()) {
-    GotAccessToken(GoogleServiceAuthError::AuthErrorNone(), std::string());
-    return;
-  }
-  OAuth2TokenService::ScopeSet scopes;
-  scopes.insert(kApiScope);
-  token_fetcher_ = base::MakeUnique<AccessTokenFetcher>(
-      "one_google", signin_manager_, token_service_, scopes,
-      base::BindOnce(&AuthenticatedURLFetcher::GotAccessToken,
-                     base::Unretained(this)));
+  get_auth_token_.Run(
+      request_context_, google_base_url_,
+      base::Bind(
+          &OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GotAuthToken,
+          weak_ptr_factory_.GetWeakPtr()));
 }
 
-GURL OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetApiUrl(
-    bool use_oauth) const {
+GURL OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetApiUrl() const {
   std::string api_url = base::GetFieldTrialParamValueByFeature(
       features::kOneGoogleBarOnLocalNtp, "one-google-api-url");
   if (api_url.empty()) {
     api_url = kApiUrl;
   }
 
-  // Append the API key only for unauthenticated requests.
-  if (!use_oauth) {
-    api_url +=
-        base::StringPrintf(kApiKeyFormat, google_apis::GetAPIKey().c_str());
-  }
+  api_url +=
+      base::StringPrintf(kApiKeyFormat, google_apis::GetAPIKey().c_str());
 
   return GURL(api_url);
 }
@@ -245,13 +226,16 @@ std::string OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetRequestBody()
 std::string
 OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetExtraRequestHeaders(
     const GURL& url,
-    const std::string& access_token) const {
+    const std::string& auth_token) const {
   net::HttpRequestHeaders headers;
-  headers.SetHeader("Content-Type", "application/json; charset=UTF-8");
-  if (!access_token.empty()) {
-    headers.SetHeader("Authorization",
-                      base::StringPrintf(kAuthorizationRequestHeaderFormat,
-                                         access_token.c_str()));
+  headers.SetHeader(net::HttpRequestHeaders::kContentType,
+                    "application/json; charset=UTF-8");
+
+  if (!auth_token.empty()) {
+    headers.SetHeader(net::HttpRequestHeaders::kAuthorization, auth_token);
+
+    headers.SetHeader(net::HttpRequestHeaders::kOrigin,
+                      url::Origin(google_base_url_).Serialize());
   }
   // Note: It's OK to pass |is_signed_in| false if it's unknown, as it does
   // not affect transmission of experiments coming from the variations server.
@@ -261,14 +245,9 @@ OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetExtraRequestHeaders(
   return headers.ToString();
 }
 
-void OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GotAccessToken(
-    const GoogleServiceAuthError& error,
-    const std::string& access_token) {
-  // Delete the token fetcher after we leave this method.
-  std::unique_ptr<AccessTokenFetcher> deleter(std::move(token_fetcher_));
-
-  bool use_oauth = !access_token.empty();
-  GURL url = GetApiUrl(use_oauth);
+void OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GotAuthToken(
+    const std::string& auth_token) {
+  GURL url = GetApiUrl();
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("one_google_bar_service", R"(
         semantics {
@@ -281,7 +260,8 @@ void OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GotAccessToken(
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: false
+          cookies_allowed: true
+          cookies_store: "user"
           setting:
             "Users can control this feature via selecting a non-Google default "
             "search engine in Chrome settings under 'Search Engine'."
@@ -297,11 +277,9 @@ void OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GotAccessToken(
   url_fetcher_->SetRequestContext(request_context_);
 
   url_fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SEND_AUTH_DATA |
-                             net::LOAD_DO_NOT_SEND_COOKIES |
                              net::LOAD_DO_NOT_SAVE_COOKIES);
   url_fetcher_->SetUploadData("application/json", GetRequestBody());
-  url_fetcher_->SetExtraRequestHeaders(
-      GetExtraRequestHeaders(url, access_token));
+  url_fetcher_->SetExtraRequestHeaders(GetExtraRequestHeaders(url, auth_token));
 
   url_fetcher_->Start();
 }
@@ -312,14 +290,12 @@ void OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::OnURLFetchComplete(
 }
 
 OneGoogleBarFetcherImpl::OneGoogleBarFetcherImpl(
-    SigninManagerBase* signin_manager,
-    OAuth2TokenService* token_service,
     net::URLRequestContextGetter* request_context,
-    GoogleURLTracker* google_url_tracker)
-    : signin_manager_(signin_manager),
-      token_service_(token_service),
-      request_context_(request_context),
+    GoogleURLTracker* google_url_tracker,
+    const GetAuthTokenCallback& get_auth_token)
+    : request_context_(request_context),
       google_url_tracker_(google_url_tracker),
+      get_auth_token_(get_auth_token),
       weak_ptr_factory_(this) {}
 
 OneGoogleBarFetcherImpl::~OneGoogleBarFetcherImpl() = default;
@@ -331,13 +307,15 @@ void OneGoogleBarFetcherImpl::Fetch(OneGoogleCallback callback) {
 
 void OneGoogleBarFetcherImpl::IssueRequestIfNoneOngoing() {
   // If there is an ongoing request, let it complete.
+  // TODO(treib): This is probably not safe - e.g. the auth state might have
+  // changed since the previous request was sent. Probably better to just
+  // abandon and restart the request.
   if (pending_request_.get()) {
     return;
   }
 
   pending_request_ = base::MakeUnique<AuthenticatedURLFetcher>(
-      signin_manager_, token_service_, request_context_,
-      google_url_tracker_->google_url(),
+      request_context_, google_url_tracker_->google_url(), get_auth_token_,
       base::BindOnce(&OneGoogleBarFetcherImpl::FetchDone,
                      base::Unretained(this)));
   pending_request_->Start();

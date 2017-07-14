@@ -9,14 +9,15 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_fetcher.h"
 
 class GoogleURLTracker;
-class OAuth2TokenService;
-class SigninManagerBase;
+class GURL;
 
 namespace base {
 class Value;
@@ -31,10 +32,14 @@ struct OneGoogleBarData;
 
 class OneGoogleBarFetcherImpl : public OneGoogleBarFetcher {
  public:
-  OneGoogleBarFetcherImpl(SigninManagerBase* signin_manager,
-                          OAuth2TokenService* token_service,
-                          net::URLRequestContextGetter* request_context,
-                          GoogleURLTracker* google_url_tracker);
+  using GetAuthTokenCallback = base::Callback<void(
+      net::URLRequestContextGetter* request_context_getter,
+      const GURL& google_base_url,
+      base::OnceCallback<void(const std::string&)> callback)>;
+
+  OneGoogleBarFetcherImpl(net::URLRequestContextGetter* request_context,
+                          GoogleURLTracker* google_url_tracker,
+                          const GetAuthTokenCallback& get_auth_token);
   ~OneGoogleBarFetcherImpl() override;
 
   void Fetch(OneGoogleCallback callback) override;
@@ -51,10 +56,9 @@ class OneGoogleBarFetcherImpl : public OneGoogleBarFetcher {
 
   void Respond(Status status, const base::Optional<OneGoogleBarData>& data);
 
-  SigninManagerBase* signin_manager_;
-  OAuth2TokenService* token_service_;
   net::URLRequestContextGetter* request_context_;
   GoogleURLTracker* google_url_tracker_;
+  GetAuthTokenCallback get_auth_token_;
 
   std::vector<OneGoogleCallback> callbacks_;
   std::unique_ptr<AuthenticatedURLFetcher> pending_request_;

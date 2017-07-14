@@ -4,6 +4,7 @@
 
 #include "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.h"
 
+#include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
@@ -15,12 +16,6 @@
 #include "chrome/browser/search/one_google_bar/one_google_bar_data.h"
 #include "components/google/core/browser/google_url_tracker.h"
 #include "components/safe_json/testing_json_parser.h"
-#include "components/signin/core/browser/account_tracker_service.h"
-#include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
-#include "components/signin/core/browser/fake_signin_manager.h"
-#include "components/signin/core/browser/test_signin_client.h"
-#include "components/sync_preferences/testing_pref_service_syncable.h"
-#include "google_apis/gaia/fake_oauth2_token_service_delegate.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/test_url_fetcher_factory.h"
@@ -61,39 +56,18 @@ class GoogleURLTrackerClientStub : public GoogleURLTrackerClient {
 class OneGoogleBarFetcherImplTest : public testing::Test {
  public:
   OneGoogleBarFetcherImplTest()
-      : signin_client_(&pref_service_),
-        signin_manager_(&signin_client_, &account_tracker_),
-        task_runner_(new base::TestSimpleTaskRunner()),
+      : task_runner_(new base::TestSimpleTaskRunner()),
         request_context_getter_(
             new net::TestURLRequestContextGetter(task_runner_)),
-        token_service_(base::MakeUnique<FakeOAuth2TokenServiceDelegate>(
-            request_context_getter_.get())),
         google_url_tracker_(base::MakeUnique<GoogleURLTrackerClientStub>(),
                             GoogleURLTracker::UNIT_TEST_MODE),
-        one_google_bar_fetcher_(&signin_manager_,
-                                &token_service_,
-                                request_context_getter_.get(),
-                                &google_url_tracker_) {
-    SigninManagerBase::RegisterProfilePrefs(pref_service_.registry());
-    SigninManagerBase::RegisterPrefs(pref_service_.registry());
-  }
+        one_google_bar_fetcher_(
+            request_context_getter_.get(),
+            &google_url_tracker_,
+            base::Bind(&OneGoogleBarFetcherImplTest::GetAuthToken,
+                       base::Unretained(this))) {}
 
-  void SignIn() {
-    signin_manager_.SignIn("account");
-    token_service_.GetDelegate()->UpdateCredentials("account", "refresh_token");
-  }
-
-  void IssueAccessToken() {
-    token_service_.IssueAllTokensForAccount(
-        "account", "access_token",
-        base::Time::Now() + base::TimeDelta::FromHours(1));
-  }
-
-  void IssueAccessTokenError() {
-    token_service_.IssueErrorForAllPendingRequestsForAccount(
-        "account",
-        GoogleServiceAuthError(GoogleServiceAuthError::SERVICE_UNAVAILABLE));
-  }
+  void SetAuthToken(const std::string& auth_token) { auth_token_ = auth_token; }
 
   net::TestURLFetcher* GetRunningURLFetcher() {
     // All created URLFetchers have ID 0 by default.
@@ -130,6 +104,12 @@ class OneGoogleBarFetcherImplTest : public testing::Test {
   }
 
  private:
+  void GetAuthToken(net::URLRequestContextGetter* request_context_getter,
+                    const GURL& google_base_url,
+                    base::OnceCallback<void(const std::string&)> callback) {
+    std::move(callback).Run(auth_token_);
+  }
+
   // variations::AppendVariationHeaders and SafeJsonParser require a
   // ThreadTaskRunnerHandle to be set.
   base::MessageLoop message_loop_;
@@ -137,16 +117,12 @@ class OneGoogleBarFetcherImplTest : public testing::Test {
   safe_json::TestingJsonParser::ScopedFactoryOverride factory_override_;
 
   net::TestURLFetcherFactory url_fetcher_factory_;
-  sync_preferences::TestingPrefServiceSyncable pref_service_;
-
-  TestSigninClient signin_client_;
-  AccountTrackerService account_tracker_;
-  FakeSigninManagerBase signin_manager_;
 
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   scoped_refptr<net::TestURLRequestContextGetter> request_context_getter_;
-  FakeProfileOAuth2TokenService token_service_;
   GoogleURLTracker google_url_tracker_;
+
+  std::string auth_token_;
 
   OneGoogleBarFetcherImpl one_google_bar_fetcher_;
 };
@@ -164,12 +140,10 @@ TEST_F(OneGoogleBarFetcherImplTest, UnauthenticatedRequestReturns) {
 }
 
 TEST_F(OneGoogleBarFetcherImplTest, AuthenticatedRequestReturns) {
-  SignIn();
+  SetAuthToken("token");
 
   base::MockCallback<OneGoogleBarFetcher::OneGoogleCallback> callback;
   one_google_bar_fetcher()->Fetch(callback.Get());
-
-  IssueAccessToken();
 
   base::Optional<OneGoogleBarData> data;
   EXPECT_CALL(callback, Run(OneGoogleBarFetcher::Status::OK, _))
@@ -193,41 +167,23 @@ TEST_F(OneGoogleBarFetcherImplTest, UnauthenticatedRequestHasApiKey) {
   EXPECT_FALSE(headers.HasHeader("Authorization"));
 }
 
-TEST_F(OneGoogleBarFetcherImplTest, AuthenticatedRequestHasAuthHeader) {
-  SignIn();
+TEST_F(OneGoogleBarFetcherImplTest,
+       AuthenticatedRequestHasApiKeyAndAuthHeader) {
+  SetAuthToken("token");
 
   base::MockCallback<OneGoogleBarFetcher::OneGoogleCallback> callback;
   one_google_bar_fetcher()->Fetch(callback.Get());
 
-  IssueAccessToken();
-
-  // The request should *not* have an API key (as a query param).
-  EXPECT_THAT(GetRunningURLFetcher()->GetOriginalURL().query(), IsEmpty());
+  // The request should have an API key (as a query param).
+  EXPECT_THAT(GetRunningURLFetcher()->GetOriginalURL().query(),
+              StartsWith("key="));
 
   // It should have an "Authorization" header.
   net::HttpRequestHeaders headers;
   GetRunningURLFetcher()->GetExtraRequestHeaders(&headers);
-  EXPECT_TRUE(headers.HasHeader("Authorization"));
-}
-
-TEST_F(OneGoogleBarFetcherImplTest,
-       AuthenticatedRequestFallsBackToUnauthenticated) {
-  SignIn();
-
-  base::MockCallback<OneGoogleBarFetcher::OneGoogleCallback> callback;
-  one_google_bar_fetcher()->Fetch(callback.Get());
-
-  IssueAccessTokenError();
-
-  // The request should have fallen back to unauthenticated mode with an API key
-  // (as a query param).
-  EXPECT_THAT(GetRunningURLFetcher()->GetOriginalURL().query(),
-              StartsWith("key="));
-
-  // But no "Authorization" header.
-  net::HttpRequestHeaders headers;
-  GetRunningURLFetcher()->GetExtraRequestHeaders(&headers);
-  EXPECT_FALSE(headers.HasHeader("Authorization"));
+  std::string auth_header;
+  EXPECT_TRUE(headers.GetHeader("Authorization", &auth_header));
+  EXPECT_EQ("token", auth_header);
 }
 
 TEST_F(OneGoogleBarFetcherImplTest, HandlesResponsePreamble) {
