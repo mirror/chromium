@@ -1005,7 +1005,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
         if (mInVr) mVSyncEstimator.pause();
 
-        cancelPendingVrEntry();
+        if (!mInVr) cancelPendingVrEntry();
 
         // When the active web page has a vrdisplayactivate event handler,
         // mListeningForWebVrActivate should be set to true, which means a vrdisplayactive event
