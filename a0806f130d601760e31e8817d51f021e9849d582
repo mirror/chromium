@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b58216f6_7f54ec15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "Agreed, I found the notion of \"start\" strange too.",
+      "parentUuid": "5002b5af_c3a56c18",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6657013c_88b2efb2",
         "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
         "patchSetId": 4
@@ -36,6 +54,57 @@
     },
     {
       "key": {
+        "uuid": "d5dc69fe_d21ac921",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerGlobalScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "|startup_data| is finalized (destroyed?) on return, after the relevant parts have been passed along to |context|.",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73782f82_51fdb25b",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeStartupData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "super nit: \"A \u003cclass\u003e does...\" doesn\u0027t seem like a conventional documentation structure. Most I\u0027ve seen are just \"\u003cclass\u003e does...\". Quickly looking through base/, for example: base/timer/timer.h, base/location.h, base/memory/shared_memory.h.\n\nCan you talk about how this is a global scope for workers and worklets also? I think we consider \"window\" to be a \"global scope\" as well.",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42e6ff4_a304aaa0",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerGlobalScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "ditto as above",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d5b6a5a_66731e9c",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
         "patchSetId": 4
@@ -47,6 +116,125 @@
       "writtenOn": "2017-07-14T06:33:01Z",
       "side": 1,
       "message": "ditto",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5f58d9_51169116",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThreadStartupData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "ditto about the super nit",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2623d834_5494c223",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThreadStartupData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "It\u0027s kind of weird that Gerrit highlights Default(). Is Default a C++ reserved keyword or something?\n\nMaybe it\u0027s better to just call this Create() or CreateDefault() something.",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb0c87a_87c89e65",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThreadStartupData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "Can you document why this is needed?",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12914484_00942949",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "not sure about \"starting\" a global scope here too",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da6eb4d_931c2d6b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "pretty nitty but I find the concept of \"starting\" and \"terminating\" a global scope to be a bit strange.  I think we usually talk about \"creating\" and \"closing\" a global scope instead.\n\nStarts the underlying thread and creates the global scope?",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfed9df_118a7c6c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "Closes the global scope and terminates the underlying thread?",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a0a3cd_1c47397d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:44:02Z",
+      "side": 1,
+      "message": "ditto as above",
       "revId": "a0806f130d601760e31e8817d51f021e9849d582",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
