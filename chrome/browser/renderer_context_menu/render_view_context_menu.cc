@@ -1438,7 +1438,6 @@ void RenderViewContextMenu::AppendPasswordItems() {
 }
 
 // Menu delegate functions -----------------------------------------------------
-
 bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
   {
     bool enabled = false;
@@ -1651,6 +1650,13 @@ bool RenderViewContextMenu::IsCommandIdChecked(int id) const {
     return extension_items_.IsCommandIdChecked(id);
 
   return false;
+}
+
+bool RenderViewContextMenu::IsCommandIdVisible(int id) const {
+  if (ContextMenuMatcher::IsExtensionsCustomCommandId(id)) {
+    return extension_items_.IsCommandIdVisible(id);
+  }
+  return true;
 }
 
 void RenderViewContextMenu::ExecuteCommand(int id, int event_flags) {

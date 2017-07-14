@@ -65,8 +65,8 @@ void ContextMenuMatcher::AppendExtensionItems(
   const Extension* extension = NULL;
   MenuItem::List items;
   bool can_cross_incognito;
-  if (!GetRelevantExtensionTopLevelItems(
-          extension_key, &extension, &can_cross_incognito, &items))
+  if (!GetRelevantExtensionTopLevelItems(extension_key, &extension,
+                                         &can_cross_incognito, &items))
     return;
 
   if (items.empty())
@@ -85,37 +85,68 @@ void ContextMenuMatcher::AppendExtensionItems(
   // Otherwise, we automatically push them into a submenu if there is more than
   // one top-level item.
   if (extension->is_platform_app() || is_action_menu) {
-    RecursivelyAppendExtensionItems(items,
-                                    can_cross_incognito,
-                                    selection_text,
-                                    menu_model_,
-                                    index,
-                                    is_action_menu);
+    RecursivelyAppendExtensionItems(items, can_cross_incognito, selection_text,
+                                    menu_model_, index, is_action_menu);
   } else {
     int menu_id = ConvertToExtensionsCustomCommandId(*index);
     (*index)++;
     base::string16 title;
     MenuItem::List submenu_items;
 
-    if (items.size() > 1 || items[0]->type() != MenuItem::NORMAL) {
+    MenuItem* top_level_item = nullptr;
+    bool top_level_item_is_extension_name =
+        ShowExtensionNameAsTopLevelItem(items);
+
+    if (top_level_item_is_extension_name) {
       title = base::UTF8ToUTF16(extension->name());
+      // |submenu_items| gauranteed to be >= 1.
       submenu_items = items;
     } else {
-      MenuItem* item = items[0];
-      extension_item_map_[menu_id] = item->id();
-      title = item->TitleWithReplacement(selection_text,
-                                       kMaxExtensionItemTitleLength);
-      submenu_items = GetRelevantExtensionItems(item->children(),
+      // There is only one top-level item. If it has child items, those are put
+      // a submenu under the single top-level parent item.
+      top_level_item = items[0];
+
+      // Regardless of the |top_level_item|'s visibility, we add the item to the
+      // item map to track its state.
+      extension_item_map_[menu_id] = top_level_item->id();
+
+      title = top_level_item->TitleWithReplacement(
+          selection_text, kMaxExtensionItemTitleLength);
+      // The top-level item may or may not have child items, so |submenu_items|
+      // can be >= 0.
+      submenu_items = GetRelevantExtensionItems(top_level_item->children(),
                                                 can_cross_incognito);
     }
 
     // Now add our item(s) to the menu_model_.
+    bool is_top_level_item_visible = IsItemVisible(top_level_item);
+    // |submenu| is empty when there is only one top-level item, and the top
+    // level item has no child items. Here we check if we should add the single
+    // top-level item to the ui model.
     if (submenu_items.empty()) {
-      menu_model_->AddItem(menu_id, title);
+      // The top-level item is only added to the ui model if it is visible.
+      if (is_top_level_item_visible) {
+        menu_model_->AddItem(menu_id, title);
+      }
     } else {
+      // The top-level item has child items. Here we check if those child items
+      // should be added to the ui model.
       ui::SimpleMenuModel* submenu = new ui::SimpleMenuModel(delegate_);
       extension_menu_models_.push_back(base::WrapUnique(submenu));
-      menu_model_->AddSubMenu(menu_id, title, submenu);
+
+      // We only add a submenu to the ui model if at least one of the top-level
+      // item's child items are visible.
+      if ((top_level_item_is_extension_name || is_top_level_item_visible) &&
+          AreSomeChildrenVisible(submenu_items))
+        menu_model_->AddSubMenu(menu_id, title, submenu);
+      // If none of the child items are visible, we add the menu item to the
+      // top-level as command item, not as a submenu.
+      else if (is_top_level_item_visible &&
+               !AreSomeChildrenVisible(submenu_items))
+        menu_model_->AddItem(menu_id, title);
+
+      // We repeat appending menu items for |submenu_items| regardless of the
+      // items' visibility statuses.
       RecursivelyAppendExtensionItems(submenu_items, can_cross_incognito,
                                       selection_text, submenu, index,
                                       false);  // is_action_menu_top_level
@@ -158,6 +189,39 @@ bool ContextMenuMatcher::IsCommandIdChecked(int command_id) const {
   if (!item)
     return false;
   return item->checked();
+}
+
+bool ContextMenuMatcher::IsItemVisible(const MenuItem* item) const {
+  if (!item)
+    return false;
+  MenuItem::Id* parent_id = item->parent_id();
+  if (!parent_id)
+    return item->visible();
+  MenuManager* manager = MenuManager::Get(browser_context_);
+  MenuItem* parent = manager->GetItemById(*parent_id);
+  return IsItemVisible(parent) && item->visible();
+}
+
+bool ContextMenuMatcher::AreSomeChildrenVisible(const MenuItem::List& items) {
+  if (items.empty())
+    return false;
+  for (size_t i = 0; i < items.size(); ++i) {
+    if (items[i]->visible())
+      return true;
+  }
+  return false;
+}
+
+bool ContextMenuMatcher::ShowExtensionNameAsTopLevelItem(
+    const MenuItem::List& items) {
+  return items.size() > 1 || items[0]->type() != MenuItem::NORMAL;
+}
+
+bool ContextMenuMatcher::IsCommandIdVisible(int command_id) const {
+  MenuItem* item = GetExtensionMenuItem(command_id);
+  if (!item)
+    return false;
+  return IsItemVisible(item);
 }
 
 bool ContextMenuMatcher::IsCommandIdEnabled(int command_id) const {
@@ -235,16 +299,18 @@ void ContextMenuMatcher::RecursivelyAppendExtensionItems(
   for (auto i = items.begin(); i != items.end(); ++i) {
     MenuItem* item = *i;
 
+    bool is_visible = IsItemVisible(item);
+
     // If last item was of type radio but the current one isn't, auto-insert
     // a separator.  The converse case is handled below.
-    if (last_type == MenuItem::RADIO &&
-        item->type() != MenuItem::RADIO) {
+    if (last_type == MenuItem::RADIO && item->type() != MenuItem::RADIO &&
+        is_visible) {
       menu_model->AddSeparator(ui::NORMAL_SEPARATOR);
       last_type = MenuItem::SEPARATOR;
     }
 
     int menu_id = ConvertToExtensionsCustomCommandId(*index);
-    // Action context menus have a limit for top level extension items to
+    // Action context menus have a limit for top-level extension items to
     // prevent control items from being pushed off the screen, since extension
     // items will not be placed in a submenu.
     const int top_level_limit = api::context_menus::ACTION_MENU_TOP_LEVEL_LIMIT;
@@ -258,22 +324,35 @@ void ContextMenuMatcher::RecursivelyAppendExtensionItems(
     extension_item_map_[menu_id] = item->id();
     base::string16 title = item->TitleWithReplacement(selection_text,
                                                 kMaxExtensionItemTitleLength);
+    // TODO: Refactor out the is_visible variable
     if (item->type() == MenuItem::NORMAL) {
       MenuItem::List children =
           GetRelevantExtensionItems(item->children(), can_cross_incognito);
       if (children.empty()) {
-        menu_model->AddItem(menu_id, title);
+        if (is_visible)
+          menu_model->AddItem(menu_id, title);
       } else {
         ui::SimpleMenuModel* submenu = new ui::SimpleMenuModel(delegate_);
         extension_menu_models_.push_back(base::WrapUnique(submenu));
-        menu_model->AddSubMenu(menu_id, title, submenu);
+
+        // We only add a submenu to the ui model if at least one of the parent
+        // item's child items are visible.
+        if (is_visible) {
+          if (AreSomeChildrenVisible(children))
+            menu_model->AddSubMenu(menu_id, title, submenu);
+          else
+            menu_model->AddItem(menu_id, title);
+        }
+
+        // We repeat appending menu items for |children| regardless of the
+        // items' visibility statuses.
         RecursivelyAppendExtensionItems(children, can_cross_incognito,
                                         selection_text, submenu, index,
                                         false);  // is_action_menu_top_level
       }
-    } else if (item->type() == MenuItem::CHECKBOX) {
+    } else if (item->type() == MenuItem::CHECKBOX && is_visible) {
       menu_model->AddCheckItem(menu_id, title);
-    } else if (item->type() == MenuItem::RADIO) {
+    } else if (item->type() == MenuItem::RADIO && is_visible) {
       if (i != items.begin() &&
           last_type != MenuItem::RADIO) {
         radio_group_id++;
@@ -283,10 +362,11 @@ void ContextMenuMatcher::RecursivelyAppendExtensionItems(
       }
 
       menu_model->AddRadioItem(menu_id, title, radio_group_id);
-    } else if (item->type() == MenuItem::SEPARATOR) {
+    } else if (item->type() == MenuItem::SEPARATOR && is_visible) {
       menu_model->AddSeparator(ui::NORMAL_SEPARATOR);
     }
-    last_type = item->type();
+    if (is_visible)
+      last_type = item->type();
   }
 }
 

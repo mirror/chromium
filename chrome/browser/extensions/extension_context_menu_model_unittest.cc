@@ -82,6 +82,7 @@ class MenuBuilder {
         extension_.get(),
         base::MakeUnique<MenuItem>(id, kTestExtensionItemLabel,
                                    false,  // check`ed
+                                   true,   // visible
                                    true,   // enabled
                                    MenuItem::NORMAL,
                                    MenuItem::ContextList(context)));
@@ -108,7 +109,9 @@ int CountExtensionItems(const ExtensionContextMenuModel& model) {
       ++num_items_found;
     int command_id = model.GetCommandIdAt(i);
     if (command_id >= IDC_EXTENSIONS_CONTEXT_CUSTOM_FIRST &&
-        command_id <= IDC_EXTENSIONS_CONTEXT_CUSTOM_LAST)
+        command_id <= IDC_EXTENSIONS_CONTEXT_CUSTOM_LAST &&
+        // If the command id is not visible, it should not be counted.
+        model.IsCommandIdVisible(command_id))
       ++num_custom_found;
   }
   // The only custom extension items present on the menu should be those we
@@ -221,6 +224,8 @@ TEST_F(ExtensionContextMenuModelTest, RequiredInstallationsDisablesItems) {
 
   // Uninstallation should be, by default, enabled.
   EXPECT_TRUE(menu.IsCommandIdEnabled(ExtensionContextMenuModel::UNINSTALL));
+  // Uninstallation should always be visible.
+  EXPECT_TRUE(menu.IsCommandIdVisible(ExtensionContextMenuModel::UNINSTALL));
 
   TestManagementPolicyProvider policy_provider(
       TestManagementPolicyProvider::PROHIBIT_MODIFY_STATUS);
@@ -337,6 +342,32 @@ TEST_F(ExtensionContextMenuModelTest, ExtensionItemTest) {
   // We shouldn't go above the limit of top-level items.
   EXPECT_EQ(api::context_menus::ACTION_MENU_TOP_LEVEL_LIMIT,
             CountExtensionItems(*builder.BuildMenu()));
+}
+
+// Tests that the standard menu items (e.g. uninstall, manage) are always
+// visible.
+TEST_F(ExtensionContextMenuModelTest,
+       ExtensionContextMenuStandardItemsAlwaysVisible) {
+  InitializeEmptyExtensionService();
+  const Extension* extension =
+      AddExtension("extension", manifest_keys::kPageAction, Manifest::INTERNAL);
+
+  ExtensionContextMenuModel menu(extension, GetBrowser(),
+                                 ExtensionContextMenuModel::VISIBLE, nullptr);
+  EXPECT_TRUE(menu.IsCommandIdVisible(ExtensionContextMenuModel::NAME));
+  EXPECT_TRUE(menu.IsCommandIdVisible(ExtensionContextMenuModel::CONFIGURE));
+  EXPECT_TRUE(
+      menu.IsCommandIdVisible(ExtensionContextMenuModel::TOGGLE_VISIBILITY));
+  EXPECT_TRUE(menu.IsCommandIdVisible(ExtensionContextMenuModel::UNINSTALL));
+  EXPECT_TRUE(menu.IsCommandIdVisible(ExtensionContextMenuModel::MANAGE));
+  EXPECT_TRUE(
+      menu.IsCommandIdVisible(ExtensionContextMenuModel::INSPECT_POPUP));
+  EXPECT_TRUE(menu.IsCommandIdVisible(
+      ExtensionContextMenuModel::PAGE_ACCESS_RUN_ON_CLICK));
+  EXPECT_TRUE(menu.IsCommandIdVisible(
+      ExtensionContextMenuModel::PAGE_ACCESS_RUN_ON_SITE));
+  EXPECT_TRUE(menu.IsCommandIdVisible(
+      ExtensionContextMenuModel::PAGE_ACCESS_RUN_ON_ALL_SITES));
 }
 
 // Test that the "show" and "hide" menu items appear correctly in the extension
