@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a052b00_43d94bbd",
+        "filename": "ipc/ipc_channel_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-14T19:38:20Z",
+      "side": 1,
+      "message": "you gots some newline issues",
+      "revId": "6e8be01d35174c629c0ae9bd5984a2dc7300dd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
