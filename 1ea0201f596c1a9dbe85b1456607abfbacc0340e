@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdf734ac_a896926e",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T01:05:29Z",
+      "side": 1,
+      "message": "why all these includes?",
+      "revId": "1ea0201f596c1a9dbe85b1456607abfbacc0340e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17000755_9c4f6603",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T01:05:29Z",
+      "side": 1,
+      "message": "what is this include for?",
+      "revId": "1ea0201f596c1a9dbe85b1456607abfbacc0340e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a475a494_d3b80580",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T01:05:29Z",
+      "side": 1,
+      "message": "Please follow existing structure and put the delegate in a different file.",
+      "revId": "1ea0201f596c1a9dbe85b1456607abfbacc0340e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e17095_25d1cfd6",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T01:05:29Z",
+      "side": 1,
+      "message": "nit: blank line after this",
+      "revId": "1ea0201f596c1a9dbe85b1456607abfbacc0340e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca82fc2_7953f7c6",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T01:05:29Z",
+      "side": 1,
+      "message": "each one of the virtual functions below deserve a comment to explain what they are used for",
+      "revId": "1ea0201f596c1a9dbe85b1456607abfbacc0340e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e181ca_3273b496",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T01:05:29Z",
+      "side": 1,
+      "message": "please follow existing exo code design and pass DataDeviceDelegate* delegate to this instead",
+      "revId": "1ea0201f596c1a9dbe85b1456607abfbacc0340e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61bed65a_1bfc1bfc",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T01:05:29Z",
+      "side": 1,
+      "message": "DataDeviceDelegate* const delegate_;",
+      "revId": "1ea0201f596c1a9dbe85b1456607abfbacc0340e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
