@@ -52,6 +52,24 @@
       "revId": "a337add9b896c93a27327190657497381f8085c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f17708_b92e080a",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T18:45:37Z",
+      "side": 0,
+      "message": "I understand, and will try out the suggestion with RunAllBlockingPoolTasksUntilIdle() as soon as possible. Currently I rebased my checkout and am compiling without GOMA (poor connectivity at home), so it will take some time, but hopefully I will be able to report back today.",
+      "parentUuid": "93e79c55_32cb74da",
+      "revId": "a337add9b896c93a27327190657497381f8085c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
