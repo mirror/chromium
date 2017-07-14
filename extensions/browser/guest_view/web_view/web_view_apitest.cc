@@ -141,7 +141,7 @@ void WebViewAPITest::LaunchApp(const std::string& app_location) {
   PathService::Get(DIR_TEST_DATA, &test_data_dir);
   test_data_dir = test_data_dir.AppendASCII(app_location.c_str());
 
-  const Extension* extension = extension_system_->LoadApp(test_data_dir);
+  const Extension* extension = extension_system_->LoadExtension(test_data_dir);
   ASSERT_TRUE(extension);
   extension_system_->LaunchApp(extension->id());
 

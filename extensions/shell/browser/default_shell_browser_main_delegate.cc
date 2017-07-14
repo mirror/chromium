@@ -36,7 +36,6 @@ void DefaultShellBrowserMainDelegate::Start(
   if (command_line->HasSwitch(switches::kLoadApps)) {
     ShellExtensionSystem* extension_system = static_cast<ShellExtensionSystem*>(
         ExtensionSystem::Get(browser_context));
-    extension_system->Init();
 
     base::CommandLine::StringType path_list =
         command_line->GetSwitchValueNative(switches::kLoadApps);
@@ -50,7 +49,8 @@ void DefaultShellBrowserMainDelegate::Start(
       base::FilePath app_absolute_dir =
           base::MakeAbsoluteFilePath(base::FilePath(tokenizer.token()));
 
-      const Extension* extension = extension_system->LoadApp(app_absolute_dir);
+      const Extension* extension =
+          extension_system->LoadExtension(app_absolute_dir);
       if (extension && !launch_app)
         launch_app = extension;
     }

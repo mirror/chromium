@@ -60,6 +60,9 @@ const char kForceDevModeHighlighting[] = "force-dev-mode-highlighting";
 // the list will be launched.
 const char kLoadApps[] = "load-apps";
 
+// Path to an extension to load at startup.
+const char kLoadExtension[] = "load-extension";
+
 // Notify the user and require consent for extensions running scripts.
 // Appending --scripts-require-action=1 has the same effect as
 // --enable-scripts-require-action (see below).

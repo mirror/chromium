@@ -73,6 +73,9 @@ class ShellBrowserMainParts : public content::BrowserMainParts {
   // Creates and initializes the ExtensionSystem.
   void CreateExtensionSystem();
 
+  // Loads extensions from --load-extension flags.
+  void LoadExtensionsFromCommandLine();
+
 #if defined(OS_CHROMEOS)
   std::unique_ptr<ShellNetworkController> network_controller_;
   std::unique_ptr<ShellAudioController> audio_controller_;

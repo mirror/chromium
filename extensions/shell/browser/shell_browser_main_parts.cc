@@ -7,7 +7,10 @@
 #include <string>
 
 #include "base/command_line.h"
+#include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/run_loop.h"
+#include "base/strings/string_tokenizer.h"
 #include "build/build_config.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/prefs/pref_service.h"
@@ -231,14 +234,19 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
 
   content::ShellDevToolsManagerDelegate::StartHttpHandler(
       browser_context_.get());
+
   if (parameters_.ui_task) {
     // For running browser tests.
     parameters_.ui_task->Run();
     delete parameters_.ui_task;
     run_message_loop_ = false;
-  } else {
-    browser_main_delegate_->Start(browser_context_.get());
+    return;
   }
+
+  // Load extensions from command line.
+  extension_system_->Init();
+  LoadExtensionsFromCommandLine();
+  browser_main_delegate_->Start(browser_context_.get());
 }
 
 bool ShellBrowserMainParts::MainMessageLoopRun(int* result_code) {
@@ -314,6 +322,22 @@ void ShellBrowserMainParts::CreateExtensionSystem() {
   extension_system_ = static_cast<ShellExtensionSystem*>(
       ExtensionSystem::Get(browser_context_.get()));
   extension_system_->InitForRegularProfile(true);
+}
+
+void ShellBrowserMainParts::LoadExtensionsFromCommandLine() {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (!command_line->HasSwitch(switches::kLoadExtension))
+    return;
+  base::CommandLine::StringType path_list =
+      command_line->GetSwitchValueNative(switches::kLoadExtension);
+  base::StringTokenizerT<base::CommandLine::StringType,
+                         base::CommandLine::StringType::const_iterator>
+      tokenizer(path_list, FILE_PATH_LITERAL(","));
+  while (tokenizer.GetNext()) {
+    base::FilePath app_absolute_dir =
+        base::MakeAbsoluteFilePath(base::FilePath(tokenizer.token()));
+    extension_system_->LoadExtension(app_absolute_dir);
+  }
 }
 
 }  // namespace extensions

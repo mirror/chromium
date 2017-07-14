@@ -22,30 +22,40 @@ ShellApiTest::ShellApiTest() {
 ShellApiTest::~ShellApiTest() {
 }
 
-const Extension* ShellApiTest::LoadApp(const std::string& app_dir) {
+const Extension* ShellApiTest::LoadExtension(const std::string& extension_dir) {
   base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::FilePath test_data_dir;
   PathService::Get(extensions::DIR_TEST_DATA, &test_data_dir);
-  test_data_dir = test_data_dir.AppendASCII(app_dir);
+  base::FilePath extension_path = test_data_dir.AppendASCII(extension_dir);
 
-  const Extension* extension = extension_system_->LoadApp(test_data_dir);
-  if (!extension)
-    return NULL;
-
-  extension_system_->LaunchApp(extension->id());
-
+  // TODO: What? How does this remain alive?
+  const Extension* extension = extension_system_->LoadExtension(extension_path);
   return extension;
+}
+
+const Extension* ShellApiTest::LoadApp(const std::string& app_dir) {
+  const Extension* extension = LoadExtension(app_dir);
+  if (extension)
+    extension_system_->LaunchApp(extension->id());
+  return extension;
+}
+
+bool ShellApiTest::RunExtensionTest(const std::string& extension_dir) {
+  ResultCatcher catcher;
+  return RunTest(LoadExtension(extension_dir), &catcher);
 }
 
 bool ShellApiTest::RunAppTest(const std::string& app_dir) {
   ResultCatcher catcher;
+  return RunTest(LoadApp(app_dir), &catcher);
+}
 
-  const Extension* extension = LoadApp(app_dir);
+bool ShellApiTest::RunTest(const Extension* extension, ResultCatcher* catcher) {
   if (!extension)
     return false;
 
-  if (!catcher.GetNextResult()) {
-    message_ = catcher.message();
+  if (!catcher->GetNextResult()) {
+    message_ = catcher->message();
     return false;
   }
 
