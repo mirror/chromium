@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "182a5d50_617d4dc9",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T10:09:24Z",
+      "side": 1,
+      "message": "s/static/constexpr/",
+      "revId": "c95353025295e0742a9f066d73da7502081210ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bb3711_677bc215",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T10:09:24Z",
+      "side": 1,
+      "message": "style: drop { }",
+      "revId": "c95353025295e0742a9f066d73da7502081210ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c624370c_b1db30d7",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T10:09:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be done above to avoid creating the histogram and all?",
+      "revId": "c95353025295e0742a9f066d73da7502081210ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb7eaed_df95a971",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T10:09:24Z",
+      "side": 1,
+      "message": "Why are those outside of the class? Could they be moved in the private section of the class to be properly scoped?",
+      "revId": "c95353025295e0742a9f066d73da7502081210ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66718115_b30b2757",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T10:09:24Z",
+      "side": 1,
+      "message": "Could this be moved in the TEST_F() that needs it?",
+      "revId": "c95353025295e0742a9f066d73da7502081210ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12fcbc97_dc73f0e1",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T10:09:24Z",
+      "side": 1,
+      "message": "As discussed offline, that doesn\u0027t sound good: if each playback gets many recording, we will not be able to know what are the real causes. Sounds like you have a plan to fix this though :)",
+      "revId": "c95353025295e0742a9f066d73da7502081210ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
