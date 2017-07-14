@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c80d319_8161fd61",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T21:41:14Z",
+      "side": 1,
+      "message": "C is for Chromium",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "311bafc0fe35903f00469d06035ac11a10f13598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366729b0_b22fb242",
+        "filename": "third_party/WebKit/Source/modules/webusb/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T21:41:14Z",
+      "side": 1,
+      "message": "It communicates with the browser process through the [public Mojo interface] of `//device/usb`.\n\n[public Mojo interface]: /device/usb/public/interfaces\n\n(This will be replaced by an actual \"WebUSB service\" when USB servicification happens but for now there is no such specific service.)",
+      "range": {
+        "startLine": 4,
+        "startChar": 32,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "311bafc0fe35903f00469d06035ac11a10f13598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
