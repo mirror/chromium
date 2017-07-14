@@ -7,6 +7,7 @@
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_suite.h"
 #include "build/build_config.h"
+#include "mojo/edk/embedder/embedder.h"  // nogncheck
 
 namespace {
 
@@ -39,8 +40,9 @@ void OzoneTestSuite::Shutdown() {
 int main(int argc, char** argv) {
   OzoneTestSuite test_suite(argc, argv);
 
-  return base::LaunchUnitTests(argc,
-                               argv,
-                               base::Bind(&OzoneTestSuite::Run,
-                                          base::Unretained(&test_suite)));
+  mojo::edk::Init();
+
+  return base::LaunchUnitTests(
+      argc, argv,
+      base::Bind(&OzoneTestSuite::Run, base::Unretained(&test_suite)));
 }
