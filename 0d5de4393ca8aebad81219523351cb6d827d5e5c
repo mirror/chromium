@@ -22,6 +22,91 @@
       "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6812170e_99d90d0a",
+        "filename": "content/browser/screen_orientation/screen_orientation_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T13:02:16Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s the best solution just because we will end up firing the wrong error message to the page. No need to block this CL for this but worth adding a TODO. To give more context, this will tell the page that the device doesn\u0027t support orientation locking.",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a504995_c432a651",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T13:02:16Z",
+      "side": 1,
+      "message": "style: empty line between `package` and `import`",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87bf528_1e13c360",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T13:02:16Z",
+      "side": 1,
+      "message": "The name of this method is confusing. Something like `onBeforeUnlockOrientation` or `willUnlockOrientation` might be clearer.",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2fd45d_66dfd5d9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T13:02:16Z",
+      "side": 1,
+      "message": "Could this be `private`?",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4cc1ac_2d7bc1f8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T13:02:16Z",
+      "side": 1,
+      "message": "It\u0027s probably adding more indirection but it might be cleaner to have this as part of the delegate instead. WDYT?",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
