@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb1cd2ce_2a49b231",
+        "filename": "cc/ipc/transferable_resource.mojom",
+        "patchSetId": 44
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-14T16:49:27Z",
+      "side": 1,
+      "message": "do these wrap?  int64 maybe?",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "4628be7a2c1e58f1d4f9a7a621af0a4c6983c332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
