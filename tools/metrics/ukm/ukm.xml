@@ -278,10 +278,44 @@ be describing additional metrics about the same event.
     Ranker.  These metrics are recorded each time the user triggers the
     Contextual Search UI via a tap gesture (when enabled).
   </summary>
+  <metric name="DidOptIn">
+    <summary>
+      Whether the user has Opted-in to the privacy conditions for Contextual
+      Search or not.
+    </summary>
+  </metric>
   <metric name="DurationAfterScrollMs">
     <summary>
       Duration in MS between showing the UI and a subsequent scroll event, or
       not recorded if there was no subsequent scroll.
+    </summary>
+  </metric>
+  <metric name="IsEntity">
+    <summary>
+      Whether the word tapped appears to be part of an entity, given simple
+      English language rules that check capitalization and punctuation.
+    </summary>
+  </metric>
+  <metric name="IsLongWord">
+    <summary>
+      Whether the word tapped was considered long (at least 10 chars in length).
+    </summary>
+  </metric>
+  <metric name="IsShortWord">
+    <summary>
+      Whether the word tapped was considered short (less than 4 characters in
+      length).
+    </summary>
+  </metric>
+  <metric name="IsWordEdge">
+    <summary>
+      Whether the tap gesture was on the edge of a word, rather than in the
+      middle 50% of the word.
+    </summary>
+  </metric>
+  <metric name="OutcomeWasCardsDataShown">
+    <summary>
+      Whether any Contextual Cards data was shown in the Contextual Search Bar.
     </summary>
   </metric>
   <metric name="OutcomeWasPanelOpened">
@@ -330,6 +364,11 @@ be describing additional metrics about the same event.
     <summary>
       The location of the tap relative to the top of the screen, expressed in
       DPs.
+    </summary>
+  </metric>
+  <metric name="TapDuration">
+    <summary>
+      The duration of the tap gesture expressed in milliseconds.
     </summary>
   </metric>
   <metric name="WasScreenBottom">
