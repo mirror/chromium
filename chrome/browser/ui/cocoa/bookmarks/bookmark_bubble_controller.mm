@@ -4,6 +4,7 @@
 
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h"
 
+#include "base/mac/availability.h"
 #include "base/mac/bundle_locations.h"
 #import "base/mac/sdk_forward_declarations.h"
 #include "base/metrics/user_metrics.h"
@@ -218,7 +219,7 @@ NSString* const kDoneTouchBarId = @"DONE";
   [super close];
 }
 
-- (NSTouchBar*)makeTouchBar {
+- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2)) {
   if (!base::FeatureList::IsEnabled(features::kBrowserTouchBar))
     return nil;
 
@@ -239,7 +240,8 @@ NSString* const kDoneTouchBarId = @"DONE";
 }
 
 - (NSTouchBarItem*)touchBar:(NSTouchBar*)touchBar
-      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier {
+      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier
+    API_AVAILABLE(macos(10.12.2)) {
   NSButton* button = nil;
   if ([identifier hasSuffix:kRemoveTouchBarId]) {
     button = [NSButton buttonWithTitle:l10n_util::GetNSString(

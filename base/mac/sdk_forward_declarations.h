@@ -200,10 +200,6 @@ BASE_EXPORT extern NSString* const CIDetectorTypeText;
     NSLayoutDimension* widthAnchor API_AVAILABLE(macos(10.11));
 @end
 
-@interface NSWindow (ElCapitanSDK)
-- (void)performWindowDragWithEvent:(NSEvent*)event;
-@end
-
 @interface CIRectangleFeature (ElCapitanSDK)
 @property(readonly) CGRect bounds;
 @end

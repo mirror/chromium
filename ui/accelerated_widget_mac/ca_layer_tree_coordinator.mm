@@ -28,8 +28,10 @@ CALayerTreeCoordinator::CALayerTreeCoordinator(
     [root_ca_layer_ setOpaque:YES];
 
     if (allow_av_sample_buffer_display_layer_) {
-      fullscreen_low_power_layer_.reset(
-          [[AVSampleBufferDisplayLayer alloc] init]);
+      if (@available(macOS 10.10, *)) {
+        fullscreen_low_power_layer_.reset(
+            [[AVSampleBufferDisplayLayer alloc] init]);
+      }
     }
   }
 }
