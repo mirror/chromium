@@ -16,6 +16,24 @@
       "revId": "3a143c82415eef142c434287076ecdf576a69413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5183a592_928b6a02",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-14T17:48:29Z",
+      "side": 1,
+      "message": "\"--update\" updates all packages. From \"sdkmanager --help\":\n\nUsage: \n  sdkmanager [--uninstall] [\u003ccommon args\u003e] [--package_file \u003cfile\u003e] [\u003cpackages\u003e...]\n  sdkmanager --update [\u003ccommon args\u003e]\n  sdkmanager --list [\u003ccommon args\u003e]\n  sdkmanager --licenses [\u003ccommon args\u003e]\n\nIn its first form, installs, or uninstalls, or updates packages.\n    By default, the listed packages are installed or (if already installed)\n    updated to the latest version.\n\n    --uninstall: uninstalled listed packages.\n\n    \u003cpackage\u003e is a sdk-style path (e.g. \"build-tools;23.0.0\" or\n             \"platforms;android-23\").\n    \u003cpackage-file\u003e is a text file where each line is a sdk-style path\n                   of a package to install or uninstall.\n    Multiple --package_file arguments may be specified in combination\n    with explicit paths.\n\nIn its second form (with --update), all installed packages are\n    updated to the latest version.\n...",
+      "parentUuid": "ed934c7e_0ab92900",
+      "revId": "3a143c82415eef142c434287076ecdf576a69413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
