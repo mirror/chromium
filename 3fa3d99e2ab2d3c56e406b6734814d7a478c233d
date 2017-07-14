@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c8d0e8c_8b671d54",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "Mention that it should be called after ProvisionallySave()",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59e5f5a_7418572e",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "Assign some normal strings here. saved_match() shouldn\u0027t be in a test that doesn\u0027t emulate presaved passwords.",
+      "range": {
+        "startLine": 2298,
+        "startChar": 43,
+        "endLine": 2298,
+        "endChar": 44
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f84778b_c962c3b2",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2299,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s needed.",
+      "range": {
+        "startLine": 2299,
+        "startChar": 13,
+        "endLine": 2299,
+        "endChar": 22
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50404ada_18edca10",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "I\u0027d rather check the password value in the end of the test or in both places.",
+      "range": {
+        "startLine": 2306,
+        "startChar": 12,
+        "endLine": 2306,
+        "endChar": 23
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf80b46f_6aaf674b",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2311,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "You can improve the test by placing IsEmpty() on the second argument",
+      "range": {
+        "startLine": 2311,
+        "startChar": 57,
+        "endLine": 2311,
+        "endChar": 58
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb758cb9_39e738fa",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2321,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "Why PSL? Should be saved_match",
+      "range": {
+        "startLine": 2321,
+        "startChar": 40,
+        "endLine": 2321,
+        "endChar": 55
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b194cb_c2de4e54",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2327,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "Not needed?",
+      "range": {
+        "startLine": 2327,
+        "startChar": 13,
+        "endLine": 2327,
+        "endChar": 22
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e5cd90_cc15e59a",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2342,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "If this test passes, it\u0027s a bug in the production. We shouldn\u0027t update the PSL credential, we should save a new one.\nExtremely important here is to test |credentials_to_update| parameter. Testing |best_matches| wouldn\u0027t harm too",
+      "range": {
+        "startLine": 2342,
+        "startChar": 24,
+        "endLine": 2342,
+        "endChar": 25
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074d3461_e2315a5a",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2348,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "The flow is the following\n- There was a PSL credential saved.\n- User changes the username to match that credential.\n- A new password should be saved.",
+      "range": {
+        "startLine": 2348,
+        "startChar": 18,
+        "endLine": 2348,
+        "endChar": 22
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51eb754e_a3619bd7",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2350,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "use psl_saved_match here",
+      "range": {
+        "startLine": 2350,
+        "startChar": 44,
+        "endLine": 2350,
+        "endChar": 50
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bad300_500db146",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2354,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:55:00Z",
+      "side": 1,
+      "message": "Don\u0027t use save_match. Also ProvisionallySave on a credential with is_public_suffix_match \u003d true is impossible",
+      "range": {
+        "startLine": 2354,
+        "startChar": 7,
+        "endLine": 2354,
+        "endChar": 18
+      },
+      "revId": "3fa3d99e2ab2d3c56e406b6734814d7a478c233d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
