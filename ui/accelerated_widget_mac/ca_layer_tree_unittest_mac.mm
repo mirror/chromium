@@ -89,12 +89,22 @@ class CALayerTreeTest : public testing::Test {
  protected:
   void SetUp() override {
     superlayer_.reset([[CALayer alloc] init]);
+// AVSampleBufferDisplayLayer has incorrectly been marked as available from
+// macOS 10.10, whereas it's been available since at least macOS 10.9.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
     fullscreen_low_power_layer_.reset(
         [[AVSampleBufferDisplayLayer alloc] init]);
+#pragma clang diagnostic pop
   }
 
   base::scoped_nsobject<CALayer> superlayer_;
+// AVSampleBufferDisplayLayer has incorrectly been marked as available from
+// macOS 10.10, whereas it's been available since at least macOS 10.9.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
   base::scoped_nsobject<AVSampleBufferDisplayLayer> fullscreen_low_power_layer_;
+#pragma clang diagnostic pop
 };
 
 // Test updating each layer's properties.

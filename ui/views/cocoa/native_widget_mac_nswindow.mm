@@ -129,7 +129,9 @@
           postNotificationName:NSWindowWillMoveNotification
                         object:self];
 
-      [self performWindowDragWithEvent:event];
+      if (@available(macOS 10.11, *)) {
+        [self performWindowDragWithEvent:event];
+      }
       return;
     }
   }

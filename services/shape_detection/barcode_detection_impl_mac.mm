@@ -59,27 +59,30 @@ void BarcodeDetectionImplMac::Detect(const SkBitmap& bitmap,
 
   std::vector<mojom::BarcodeDetectionResultPtr> results;
   const int height = bitmap.height();
-  for (CIQRCodeFeature* const f in features) {
-    shape_detection::mojom::BarcodeDetectionResultPtr result =
-        shape_detection::mojom::BarcodeDetectionResult::New();
-    // In the default Core Graphics coordinate space, the origin is located
-    // in the lower-left corner, and thus |ci_image| is flipped vertically.
-    // We need to adjust |y| coordinate of bounding box before sending it.
-    gfx::RectF boundingbox(f.bounds.origin.x,
-                           height - f.bounds.origin.y - f.bounds.size.height,
-                           f.bounds.size.width, f.bounds.size.height);
-    result->bounding_box = std::move(boundingbox);
+  if (@available(macOS 10.10, *)) {
+    for (CIQRCodeFeature* const f in features) {
+      shape_detection::mojom::BarcodeDetectionResultPtr result =
+          shape_detection::mojom::BarcodeDetectionResult::New();
+      // In the default Core Graphics coordinate space, the origin is located
+      // in the lower-left corner, and thus |ci_image| is flipped vertically.
+      // We need to adjust |y| coordinate of bounding box before sending it.
+      gfx::RectF boundingbox(f.bounds.origin.x,
+                             height - f.bounds.origin.y - f.bounds.size.height,
+                             f.bounds.size.width, f.bounds.size.height);
+      result->bounding_box = std::move(boundingbox);
 
-    // Enumerate corner points starting from top-left in clockwise fashion:
-    // https://wicg.github.io/shape-detection-api/#dom-detectedbarcode-cornerpoints
-    result->corner_points.emplace_back(f.topLeft.x, height - f.topLeft.y);
-    result->corner_points.emplace_back(f.topRight.x, height - f.topRight.y);
-    result->corner_points.emplace_back(f.bottomRight.x,
-                                       height - f.bottomRight.y);
-    result->corner_points.emplace_back(f.bottomLeft.x, height - f.bottomLeft.y);
+      // Enumerate corner points starting from top-left in clockwise fashion:
+      // https://wicg.github.io/shape-detection-api/#dom-detectedbarcode-cornerpoints
+      result->corner_points.emplace_back(f.topLeft.x, height - f.topLeft.y);
+      result->corner_points.emplace_back(f.topRight.x, height - f.topRight.y);
+      result->corner_points.emplace_back(f.bottomRight.x,
+                                         height - f.bottomRight.y);
+      result->corner_points.emplace_back(f.bottomLeft.x,
+                                         height - f.bottomLeft.y);
 
-    result->raw_value = base::SysNSStringToUTF8(f.messageString);
-    results.push_back(std::move(result));
+      result->raw_value = base::SysNSStringToUTF8(f.messageString);
+      results.push_back(std::move(result));
+    }
   }
   scoped_callback.Run(std::move(results));
 }
