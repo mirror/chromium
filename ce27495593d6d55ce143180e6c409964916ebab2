@@ -46,6 +46,30 @@
       "revId": "ce27495593d6d55ce143180e6c409964916ebab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "815fc744_ea102816",
+        "filename": "media/midi/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-07-14T04:47:15Z",
+      "side": 1,
+      "message": "Alright. This will also mean that the (is_chromeos \u0026\u0026 !use_midis) will either continue using midi_manager_alsa, or , if they are using midi_manager_cros, will have to write a new client that doesn\u0027t use libmidis at all (since it won\u0027t be compiled)",
+      "parentUuid": "9f8ef741_a6ca7677",
+      "range": {
+        "startLine": 162,
+        "startChar": 18,
+        "endLine": 162,
+        "endChar": 27
+      },
+      "revId": "ce27495593d6d55ce143180e6c409964916ebab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
