@@ -18,6 +18,7 @@ namespace blink {
 class NGInlineItem;
 struct NGInlineItemResult;
 class NGLineBoxFragmentBuilder;
+class ShapeResult;
 
 // Fragments that require the layout position/size of ancestor are packed in
 // this struct.
@@ -33,9 +34,9 @@ struct NGPendingPositions {
 // require ancestor position or size.
 // This is a transient object only while building line boxes in a block.
 struct NGInlineBoxState {
-  unsigned fragment_start;
-  const NGInlineItem* item;
-  const ComputedStyle* style;
+  unsigned fragment_start = 0;
+  const NGInlineItem* item = nullptr;
+  const ComputedStyle* style = nullptr;
 
   // The united metrics for the current box. This includes all objects in this
   // box, including descendants, and adjusted by placement properties such as
@@ -65,10 +66,7 @@ struct NGInlineBoxState {
 
   // Compute text metrics for a box. All text in a box share the same metrics.
   void ComputeTextMetrics(const ComputedStyle& style, FontBaseline);
-  void AccumulateUsedFonts(const NGInlineItem&,
-                           unsigned start,
-                           unsigned end,
-                           FontBaseline);
+  void AccumulateUsedFonts(const ShapeResult*, FontBaseline);
 
   // Create a box fragment for this box.
   void SetNeedsBoxFragment(bool when_empty);
