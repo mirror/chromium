@@ -16,6 +16,24 @@
       "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1acdb4_91c51c77",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-14T19:37:51Z",
+      "side": 1,
+      "message": "Gzipping .png files or .svg files seem to corrupt them, preventing them from being displayed.\nI tried using the same approach as https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/md_downloads/md_downloads_ui.cc?l\u003d106\u0026rcl\u003d49b77ab73d86d6c6ef797f3305f8b7685b5ccafc",
+      "parentUuid": "60e4af2f_41f7df6d",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
