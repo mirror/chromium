@@ -274,13 +274,15 @@ void MdTextButton::UpdateColors() {
     bg_color = color_utils::GetResultingPaintColor(shade, bg_color);
   }
 
-  // Specified text color: 5a5a5a @ 1.0 alpha
-  // Specified stroke color: 000000 @ 0.2 alpha
-  // 000000 @ 0.2 is very close to 5a5a5a @ 0.308 (== 0x4e); both are cccccc @
-  // 1.0, and this way if NativeTheme changes the button color, the button
-  // stroke will also change colors to match.
+  // Specified text color: 5a5a5a @ 1.0 alpha, 757575 @ 1.0 alpha for Harmony
+  // Specified stroke color: 000000 @ 0.2 alpha, Harmony and non-Harmony
+  // 000000 @ 0.2 is very close to 5a5a5a @ 0.308 (== 0x4e) or 757575 @ 0.37
+  // (== 0x5f); both are cccccc @ 1.0, and this way if NativeTheme changes the
+  // button color, the button stroke will also change colors to match.
   SkColor stroke_color =
-      is_prominent_ ? SK_ColorTRANSPARENT : SkColorSetA(text_color, 0x4e);
+      is_prominent_ ? SK_ColorTRANSPARENT
+                    : SkColorSetA(text_color,
+                                  UseMaterialSecondaryButtons() ? 0x5f : 0x4e);
 
   // Disabled, non-prominent buttons need their stroke lightened. Prominent
   // buttons need it left at SK_ColorTRANSPARENT from above.
