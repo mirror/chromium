@@ -36,9 +36,6 @@ Polymer({
      * @private
      */
     storageType_: Number,
-
-    /** @private */
-    confirmationDeleteMsg_: String,
   },
 
   listeners: {
@@ -99,10 +96,8 @@ Polymer({
    * @param {!Event} e
    * @private
    */
-  onConfirmClearStorage_: function(e) {
+  onConfirmClearSettings_: function(e) {
     e.preventDefault();
-    this.confirmationDeleteMsg_ = loadTimeData.getStringF(
-        'siteSettingsSiteRemoveConfirmation', this.toUrl(this.origin).href);
     this.$.confirmDeleteDialog.showModal();
   },
 
@@ -138,5 +133,7 @@ Polymer({
 
     if (this.storedData_ != '')
       this.onClearStorage_();
+
+    this.$.confirmDeleteDialog.close();
   },
 });
