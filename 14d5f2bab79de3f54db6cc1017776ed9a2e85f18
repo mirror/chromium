@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "18af32f3_66af2dec",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-14T07:48:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ceb3c5d_d1b37573",
+      "revId": "14d5f2bab79de3f54db6cc1017776ed9a2e85f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92205ecf_afd0bd81",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "14d5f2bab79de3f54db6cc1017776ed9a2e85f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf94b770_07de060b",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-14T07:48:15Z",
+      "side": 1,
+      "message": "Sure - I will still trim the line to 80 characters as the rest of the file is formatted that way.",
+      "parentUuid": "92205ecf_afd0bd81",
+      "revId": "14d5f2bab79de3f54db6cc1017776ed9a2e85f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
