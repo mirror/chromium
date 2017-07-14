@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c08e2781_1e0d192d",
+        "filename": "components/metrics/metrics_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-14T03:24:12Z",
+      "side": 1,
+      "message": "I\u0027d prefer to avoid this inheritance relationship.  What code is relying on it?",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "9f605ee5c3895171ab97d781422b91a9d46aa84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
