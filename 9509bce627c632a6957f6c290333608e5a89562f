@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0b28fc7_5270b470",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-14T10:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30d408a5_80e49ff3",
+      "revId": "9509bce627c632a6957f6c290333608e5a89562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6863c809_d7ed8319",
         "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "9509bce627c632a6957f6c290333608e5a89562f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d786d8_c7911bff",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-14T10:26:09Z",
+      "side": 1,
+      "message": "I added this because the playing event and muted state are not received at the same time. Therefore if we receive the play event but the player has not sent the muted state yet we won\u0027t record to the histogram. The recorded_score flag will block any duplicate scores being recorded on subsequent events.\n\nI added a playing check to RecordEngagementScoreToHistogramAtPlayback in case the events are the other way round.",
+      "parentUuid": "6863c809_d7ed8319",
+      "revId": "9509bce627c632a6957f6c290333608e5a89562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6fc66bcb_9dd8d598",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-14T10:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f13bbd_5c6e15c6",
+      "revId": "9509bce627c632a6957f6c290333608e5a89562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd88b1f3_a77997f5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "9509bce627c632a6957f6c290333608e5a89562f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37e8c39_198269db",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 29736,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-14T10:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd88b1f3_a77997f5",
+      "revId": "9509bce627c632a6957f6c290333608e5a89562f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
