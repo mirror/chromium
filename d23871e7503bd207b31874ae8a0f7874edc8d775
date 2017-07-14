@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4d4677b_434f14ab",
+        "filename": "base/trace_event/process_memory_maps.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-14T15:01:09Z",
+      "side": 1,
+      "message": "just checking do you actually mean |size_in_bytes| here or file_offset ?\nEven if you do, can we maybe emit the file_offset only when it\u0027s non-0.\njust concerned about keep overloading the trace with more data, we can shelve something from the trace size if the offset is often 0. On linux at least, offset is 0  in 95%+ of the cases.",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 28
+      },
+      "revId": "d23871e7503bd207b31874ae8a0f7874edc8d775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
