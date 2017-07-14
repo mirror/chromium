@@ -55,7 +55,6 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
   class JobQueue {
    public:
     JobQueue();
-    JobQueue(JobQueue&&);
     ~JobQueue();
 
     // Adds a job to the queue. If an identical job is already at the end of the
@@ -64,19 +63,17 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
     ServiceWorkerRegisterJobBase* Push(
         std::unique_ptr<ServiceWorkerRegisterJobBase> job);
 
-    // Dooms the installing worker of the running register/update job if a
-    // register/update job is scheduled to run after it. This corresponds to
-    // the "Terminate installing worker" steps at the beginning of the spec's
-    // [[Update]] and [[Install]] algorithms.
-    void DoomInstallingWorkerIfNeeded();
-
-    // Starts the first job in the queue.
-    void StartOneJob();
-
     // Removes a job from the queue.
     void Pop(ServiceWorkerRegisterJobBase* job);
 
     bool empty() { return jobs_.empty(); }
+
+    // The job timeout timer periodically calls OnJobTimeoutTimer, which aborts
+    // the job if it is excessively pending to complete.
+    void StartJobTimeoutTimer();
+    void OnJobTimeoutTimer();
+
+    base::TimeDelta GetTickDuration(base::TimeTicks start_time) const;
 
     // Aborts all jobs in the queue and removes them.
     void AbortAll();
@@ -87,6 +84,14 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
 
    private:
     std::deque<std::unique_ptr<ServiceWorkerRegisterJobBase>> jobs_;
+
+    // Timeout for the current registration job, and also the timeout timer
+    // interval.
+    static constexpr base::TimeDelta kJobTimeoutAndTimerDelay =
+        base::TimeDelta::FromMinutes(30);
+
+    // Starts running in job StartImpl and continues until the job is completed.
+    base::RepeatingTimer job_timeout_timer_;
 
     DISALLOW_COPY_AND_ASSIGN(JobQueue);
   };
