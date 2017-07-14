@@ -48,6 +48,75 @@
     },
     {
       "key": {
+        "uuid": "929b01e2_2a30ded4",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-14T16:00:35Z",
+      "side": 1,
+      "message": "Add logging.info before this to note we\u0027re sleeping for x secs.",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 38
+      },
+      "revId": "aa214d482d3ea21891fe8f3e9309135f303e762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be095cd_26eb0333",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-14T16:00:35Z",
+      "side": 1,
+      "message": "Add logging.info before this to note something like \u0027Taking screenshot X of Y.\"",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "aa214d482d3ea21891fe8f3e9309135f303e762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7515193_fd7bcb0a",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-14T16:00:35Z",
+      "side": 1,
+      "message": "Adding logging.info, for the case where this condition passes, to output what the percentage of pixels was for this screenshot, seems potentially useful if something comes up and we\u0027re debugging.",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "aa214d482d3ea21891fe8f3e9309135f303e762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c12989ce_1e55f127",
         "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
         "patchSetId": 2
