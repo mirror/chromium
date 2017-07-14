@@ -63,6 +63,14 @@ class TapWordLengthSuppression extends ContextualSearchHeuristic {
         return mIsShortWordConditionSatisfied;
     }
 
+    @Override
+    protected void logRankerTapSuppression(ContextualSearchRankerLogger logger) {
+        logger.logFeature(
+                ContextualSearchRankerLogger.Feature.IS_SHORT_WORD, mIsShortWordConditionSatisfied);
+        logger.logFeature(ContextualSearchRankerLogger.Feature.IS_LONG_WORD,
+                !mIsNotLongWordConditionSatisfied);
+    }
+
     /**
      * @return Whether the tap is on a word longer than the given word length maximum.
      */
