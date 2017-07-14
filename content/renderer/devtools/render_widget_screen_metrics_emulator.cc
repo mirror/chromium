@@ -50,30 +50,12 @@ void RenderWidgetScreenMetricsEmulator::Apply() {
   if (!applied_widget_rect_.height())
     applied_widget_rect_.set_height(original_size().height());
 
-  if (emulation_params_.fit_to_view && !original_size().IsEmpty()) {
-    int original_width = std::max(original_size().width(), 1);
-    int original_height = std::max(original_size().height(), 1);
-    float width_ratio =
-        static_cast<float>(applied_widget_rect_.width()) / original_width;
-    float height_ratio =
-        static_cast<float>(applied_widget_rect_.height()) / original_height;
-    float ratio = std::max(1.0f, std::max(width_ratio, height_ratio));
-    scale_ = 1.f / ratio;
-
-    // Center emulated view inside available view space.
-    offset_.set_x(
-        (original_size().width() - scale_ * applied_widget_rect_.width()) / 2);
-    offset_.set_y(
-        (original_size().height() - scale_ * applied_widget_rect_.height()) /
-        2);
-  } else {
-    scale_ = emulation_params_.scale;
-    offset_.SetPoint(0, 0);
-    if (!emulation_params_.view_size.width &&
-        !emulation_params_.view_size.height && scale_) {
-      applied_widget_rect_.set_size(
-          gfx::ScaleToRoundedSize(original_size(), 1.f / scale_));
-    }
+  scale_ = emulation_params_.scale;
+  offset_.SetPoint(0, 0);
+  if (!emulation_params_.view_size.width &&
+      !emulation_params_.view_size.height && scale_) {
+    applied_widget_rect_.set_size(
+        gfx::ScaleToRoundedSize(original_size(), 1.f / scale_));
   }
 
   gfx::Rect window_screen_rect;

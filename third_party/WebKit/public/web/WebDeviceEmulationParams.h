@@ -61,7 +61,6 @@ struct WebDeviceEmulationParams {
   WebDeviceEmulationParams()
       : screen_position(kDesktop),
         device_scale_factor(0),
-        fit_to_view(false),
         scale(1),
         viewport_offset(-1, -1),
         viewport_scale(0),
@@ -74,8 +73,8 @@ inline bool operator==(const WebDeviceEmulationParams& a,
   return a.screen_position == b.screen_position &&
          a.screen_size == b.screen_size && a.view_position == b.view_position &&
          a.device_scale_factor == b.device_scale_factor &&
-         a.view_size == b.view_size && a.fit_to_view == b.fit_to_view &&
-         a.offset == b.offset && a.scale == b.scale &&
+         a.view_size == b.view_size && a.offset == b.offset &&
+         a.scale == b.scale &&
          a.screen_orientation_type == b.screen_orientation_type &&
          a.screen_orientation_angle == b.screen_orientation_angle &&
          a.viewport_offset == b.viewport_offset &&
