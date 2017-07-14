@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32770b23_2b801cde",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-14T20:40:16Z",
+      "side": 1,
+      "message": "can we specify which are autofill profiles (addresses) and which are user profiles?",
+      "range": {
+        "startLine": 1365,
+        "startChar": 35,
+        "endLine": 1365,
+        "endChar": 42
+      },
+      "revId": "6e06f8223e6fc92ee2e364788e5fcb79b41790cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52bbf15b_ce285e75",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4692,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-14T20:40:16Z",
+      "side": 1,
+      "message": "Is this value subject to change? It seems like it\u0027s the kind of thing I could easily forget to update while changing that value in the code.",
+      "range": {
+        "startLine": 4692,
+        "startChar": 13,
+        "endLine": 4692,
+        "endChar": 16
+      },
+      "revId": "6e06f8223e6fc92ee2e364788e5fcb79b41790cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
