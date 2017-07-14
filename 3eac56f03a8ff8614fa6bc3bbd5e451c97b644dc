@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07c2b000_f35f61b4",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-14T17:38:06Z",
+      "side": 1,
+      "message": "suggestion: \"Autofill suggestions are disabled because the document isn\u0027t a secure context or the form\u0027s action attribute isn\u0027t secure.\"",
+      "range": {
+        "startLine": 703,
+        "startChar": 21,
+        "endLine": 704,
+        "endChar": 45
+      },
+      "revId": "3eac56f03a8ff8614fa6bc3bbd5e451c97b644dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
