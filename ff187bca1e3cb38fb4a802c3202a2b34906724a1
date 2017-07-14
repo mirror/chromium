@@ -140,6 +140,30 @@
       "revId": "ff187bca1e3cb38fb4a802c3202a2b34906724a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe6fb8c_2f126d56",
+        "filename": "media/mojo/services/cdm_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T17:13:26Z",
+      "side": 1,
+      "message": "I guess I don\u0027t feel strongly as long as there\u0027s a distinct way to express and connect to an explicit media service vs an explicit cdm service vs whatever other services we might need. Having separate interfaces would be one way, but another way might be to provide different ways of getting the associated InterfaceFactory that are scoped to CDM/media.",
+      "parentUuid": "f9885d54_b8f6c8a2",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "ff187bca1e3cb38fb4a802c3202a2b34906724a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
