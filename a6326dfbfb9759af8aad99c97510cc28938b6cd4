@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9c303ce2_d814e5a4",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-14T10:31:01Z",
+      "side": 1,
+      "message": "Yes, because it\u0027s simply to drop the record identified by the subscription_token.",
+      "parentUuid": "41488a9d_e3423c0f",
+      "range": {
+        "startLine": 195,
+        "startChar": 58,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "a6326dfbfb9759af8aad99c97510cc28938b6cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "623cf486_cde410d6",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
         "patchSetId": 1
@@ -68,6 +92,30 @@
       "revId": "a6326dfbfb9759af8aad99c97510cc28938b6cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9fcb92_08db0bda",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-14T10:31:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "623cf486_cde410d6",
+      "range": {
+        "startLine": 64,
+        "startChar": 66,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "a6326dfbfb9759af8aad99c97510cc28938b6cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
