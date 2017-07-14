@@ -1,0 +1,11 @@
+Tests that console logging dumps properly styled messages.
+
+VM:4 Blue!.
+Styled text #0: color: blue;
+VM:5 Blue! Red!
+Styled text #0: color: blue;
+Styled text #1: color: red;
+VM:6 www.google.com
+Styled text #0: color: blue;
+Styled text #1: color: blue;
+

@@ -1,0 +1,8 @@
+Tests that console logging dumps proper messages.
+
+VM:7 #document
+VM:8 #document-fragment
+VM:9 <p></p>
+VM:10 [p]
+VM:11 (3) [document, document-fragment, span]
+
