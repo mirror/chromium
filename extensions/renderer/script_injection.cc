@@ -373,7 +373,7 @@ void ScriptInjection::OnJsInjectionCompleted(
     injector_->OnInjectionComplete(std::move(execution_result_), run_location_,
                                    render_frame_);
     // Warning: this object can be destroyed after this line!
-    async_completion_callback_.Run(this);
+    async_completion_callback_.Run(this, elapsed);
   }
 }
 
