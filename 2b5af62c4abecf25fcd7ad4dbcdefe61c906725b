@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "7d54b555_2f62b8d4",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:24:03Z",
+      "side": 1,
+      "message": "I just figured GridLayout::kFixed/kStretchy.  If that sucks, I don\u0027t have a better idea.",
+      "parentUuid": "0523016c_a59439a6",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cdcb860_ffa8e2d6",
         "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
         "patchSetId": 10
@@ -259,6 +277,24 @@
       "side": 1,
       "message": "Done. Although I am not sure this is better -- I liked that the client code is not forced to figure out what DISTANCE_ metric they should be using. It now increases the likelihood of a wrong choice, or of the necessary padding being ignored.",
       "parentUuid": "9cdcb860_ffa8e2d6",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f26a0c8_1b898c18",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:24:03Z",
+      "side": 1,
+      "message": "I think it\u0027s OK.  It\u0027s easy to imagine a row of textboxes below something that should not have UNRELATED_CONTROL_VERTICAL_LARGE.\n\nProbably all this will get simpler in the handwavey Harmony v2 world.",
+      "parentUuid": "2b8e3b6e_88ee52e9",
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -489,6 +525,24 @@
       "side": 1,
       "message": "Done. Note (even as is): I think this change adds complexity that we don\u0027t have a clear use-case for.\n\nAlso I sunk a lot of time trying to get this to work in a more general way (e.g. inside Textfield), but too many things inherit from textfield already, and rely on Textfield::GetInsets() to return special things, e.g., for the omnibox. I don\u0027t think it\u0027s appropriate to introduce Harmony layout ideas in a way that conflicts with Textfield being used outside of secondary UI.\n\nI also can\u0027t make it work for MdTextButton any more, since line heights are only meaningful with --secondary-ui-md.\n\nThe result is that only textfield_layout.cc uses this - nothing in ui/views - so the plumbing for this is now on ChromeLayoutProvider. Moving it to live entirely in textfield_layout.cc would also be a sane choice, IMO.\n\n(But TBH kRowHeight \u003d 28 also satisfies the current set of use cases that the spec caters for. Wiht that, font sizes configured to have a height of more than 22 will still increase the size of the textbox, while those between 15 and 22 will fit within the 28px used for smaller fonts. We don\u0027t start \"snapping\" line heights to a grid in that case, so using 3px for padding rather than 4px for padding doesn\u0027t seem like an important distinction to make).",
       "parentUuid": "038510c3_056bcc24",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6d1df6_b38bb634",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:24:03Z",
+      "side": 1,
+      "message": "Probably long-term we should find and eliminate cases where doing this inside Textfield breaks something.  For example, the omnibox should probably be using the same insets as other textfields.  For now, trying to deal with all that just means scope creep, so definitely we shouldn\u0027t do it.  But I think this is the right long-term path.\n\nIt also seems like line heights being meaningful all the time would allow this to work on buttons.  It is almost certainly not worth trying to make that happen pre-Harmony, so that sounds like a \"wait for Harmony to be default and then use this there as well\" type case.",
+      "parentUuid": "ffcd6292_23d1379f",
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

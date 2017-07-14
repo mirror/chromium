@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b1abac6_fa2c347e",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:24:03Z",
+      "side": 1,
+      "message": "Nit: Configure -\u003e Configures",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8a25b2d_c2908954",
         "filename": "chrome/browser/ui/views/login_view.cc",
         "patchSetId": 13
@@ -19,6 +36,41 @@
     },
     {
       "key": {
+        "uuid": "55deca74_33e1d2d0",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:24:03Z",
+      "side": 1,
+      "message": "I\u0027m fine dealing with it later.  What do you mean by \"how textfields should align\"?  The layoutunit-snapping thing?  This seems kinda orthogonal to that (one is preferred size and the other is alignment) but it doesn\u0027t matter much.",
+      "parentUuid": "e8a25b2d_c2908954",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fbb210_f79898e4",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:24:03Z",
+      "side": 1,
+      "message": "Nit: I might put this under the AddHeaderLabel() calls since it doesn\u0027t really require the textfield stack to be configured first (it\u0027s more \"above the stack\" than \"part of it\")",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfa7f405_319f4b8b",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 13
@@ -30,6 +82,24 @@
       "writtenOn": "2017-07-13T06:35:02Z",
       "side": 1,
       "message": "not really sure it\u0027s worth changing this file to add this comment, but it\u0027s here for now",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43bd46e3_1ea9ed1b",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:24:03Z",
+      "side": 1,
+      "message": "It\u0027s a good comment.",
+      "parentUuid": "dfa7f405_319f4b8b",
       "revId": "8f0d58ccc306554706322309030acb1c320adc33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
