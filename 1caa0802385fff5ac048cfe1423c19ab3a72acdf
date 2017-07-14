@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9d971ceb_e73d45f3",
+        "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1131485
+      },
+      "writtenOn": "2017-07-14T19:50:04Z",
+      "side": 0,
+      "message": "Based on it\u0027s name, I expect the test to check the behavior if StopOngoingDumps is called while it is in the stopping state. As far as I can tell there is nothing in the test that actually ensures this particular thread timing (in either new or old code), but it probably happens some amount of the time. However, regardless of the thread timings, I\u0027d expect the calls to be made in sequence for the following reasons:\n\nStopDump changes state to STOPPING and calls dump_writer_-\u003eEndDump(...) which calls FlushBuffer which posts FileWorker::CompressAndWriteToFileOnFileThread to the background_task_runner with a callback that reposts FileWorker::CompressAndWriteToFileOnFileThread to the background_task_runner. (The first task writes the incoming file and the second task writes the outgoing file.) dump_writer-\u003eEndDump will finish by calling OnDumpEnded which changes the state to STOPPED and executes the OnStopDumpFinished callback.\n\nStopOngoingDumps may either run the callback (if both incoming and outgoing is in STOPPED state), or post itself as a callback from an empty task on dump_writer_-\u003ebackground_task_runner() (if either state is STOPPING).\n\nSo it seems like StopOngoingDumps won\u0027t run the OnStopOngoingDumpsFinished callback until the state is STOPPED, and the state changes to STOPPED just before running OnStopDumpFinished in OnDumpEnded.\n\nIs there any indication (e.g. test failures) that this no longer run in sequence? If so, could that affect any of the other tests that also expect certain calls to be made in sequence?",
+      "parentUuid": "c8fb67d7_f8662656",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 24
+      },
+      "revId": "1caa0802385fff5ac048cfe1423c19ab3a72acdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63d45438_e2f19645",
         "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_writer_unittest.cc",
         "patchSetId": 1
