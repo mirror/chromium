@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0590343d_eb3b78e8",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T04:57:39Z",
+      "side": 1,
+      "message": "Could you update the comment?",
+      "revId": "f77de3df96884f91973b9fd440df7d3fa5759669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
