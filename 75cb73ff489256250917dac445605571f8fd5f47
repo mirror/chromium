@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fdf720c_46d0f619",
+        "filename": "media/video/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-14T05:53:37Z",
+      "side": 1,
+      "message": "There are a lot of targets under //media. Can you make this more strict that only //media/filters can depend on it? This is more critical because you have //media:media_implementation in the config below. If this source_set is depended by some other targets under //media that is not part of the \"media\" target, odds things could happen around MEDIA_EXPORT.",
+      "revId": "75cb73ff489256250917dac445605571f8fd5f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0ee60d_f91675c7",
+        "filename": "media/video/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-14T05:53:37Z",
+      "side": 1,
+      "message": "Which file needs this? It\u0027s a bit odd that \"video\" depends on \"audio\" :)",
+      "revId": "75cb73ff489256250917dac445605571f8fd5f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
