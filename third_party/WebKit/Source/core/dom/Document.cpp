@@ -2102,7 +2102,6 @@ void Document::UpdateStyleAndLayoutTree() {
   // containing iframe, which when asked HTMLFrameElementBase::isURLAllowed hits
   // a null-dereference due to security code always assuming the document has a
   // SecurityOrigin.
-
   UpdateStyle();
 
   NotifyLayoutTreeOfSubtreeChanges();
@@ -2391,6 +2390,8 @@ void Document::UpdateStyleAndLayoutTreeIgnorePendingStylesheets() {
       // sheets still pending, some nodes may not have had their real style
       // calculated yet.  Normally this gets cleaned when style sheets arrive
       // but here we need up-to-date style immediately.
+      LOG(ERROR) << "[Document " << (void*)this
+                 << "] dirtied document due to pending script blocking sheets";
       SetNeedsStyleRecalc(kSubtreeStyleChange,
                           StyleChangeReasonForTracing::Create(
                               StyleChangeReason::kCleanupPlaceholderStyles));

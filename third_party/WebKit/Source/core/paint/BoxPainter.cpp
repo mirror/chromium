@@ -103,6 +103,7 @@ void BoxPainter::PaintBoxDecorationBackgroundWithRect(
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset,
     const LayoutRect& paint_rect) {
+  const auto& style = layout_box_.StyleRef();
   bool painting_overflow_contents =
       IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
           &layout_box_, paint_info);
@@ -161,9 +162,13 @@ void BoxPainter::PaintBoxDecorationBackgroundWithRect(
   // CSS background.
   IntRect snapped_paint_rect(PixelSnappedIntRect(paint_rect));
   ThemePainter& theme_painter = LayoutTheme::GetTheme().Painter();
+  LOG(ERROR) << "[BoxPainter " << (void*)this
+             << "] Painting. Original style: " << &style;
   bool theme_painted =
       box_decoration_data.has_appearance &&
       !theme_painter.Paint(layout_box_, paint_info, snapped_paint_rect);
+  LOG(ERROR) << "[BoxPainter " << (void*)this
+             << "] Finished painting. New style: " << &layout_box_.StyleRef();
   bool should_paint_background =
       !theme_painted && (!paint_info.SkipRootBackground() ||
                          paint_info.PaintContainer() != &layout_box_);
@@ -178,7 +183,7 @@ void BoxPainter::PaintBoxDecorationBackgroundWithRect(
   }
 
   if (!painting_overflow_contents) {
-    PaintInsetBoxShadow(paint_info, paint_rect, layout_box_.StyleRef());
+    PaintInsetBoxShadow(paint_info, paint_rect, style);
 
     // The theme will tell us whether or not we should also paint the CSS
     // border.

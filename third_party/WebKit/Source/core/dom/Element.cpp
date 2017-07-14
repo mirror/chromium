@@ -150,6 +150,8 @@
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/TextPosition.h"
 
+#include <base/debug/stack_trace.h>
+
 namespace blink {
 
 namespace {
@@ -838,6 +840,7 @@ int Element::clientHeight() {
   // When in quirks mode, clientHeight for the body element should return the
   // height of the containing frame.
   bool in_quirks_mode = GetDocument().InQuirksMode();
+  LOG(ERROR) << "[Element " << (void*)this << "] clientHeight";
 
   if ((!in_quirks_mode && GetDocument().documentElement() == this) ||
       (in_quirks_mode && IsHTMLElement() && GetDocument().body() == this)) {
@@ -858,6 +861,8 @@ int Element::clientHeight() {
     }
   }
 
+  LOG(ERROR) << "[Element " << (void*)this
+             << "] UpdateStyleAndLayoutIgnorePendingStylesheetsForNode";
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
 
   if (LayoutBox* layout_object = GetLayoutBox())

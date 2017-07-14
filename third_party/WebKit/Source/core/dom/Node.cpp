@@ -825,6 +825,8 @@ void Node::SetNeedsReattachLayoutTree() {
 void Node::SetNeedsStyleRecalc(StyleChangeType change_type,
                                const StyleChangeReasonForTracing& reason) {
   DCHECK(change_type != kNoStyleChange);
+  LOG(ERROR) << "[Node " << (void*)this
+             << " was dirtied with change_type: " << change_type;
   if (!InActiveDocument())
     return;
 

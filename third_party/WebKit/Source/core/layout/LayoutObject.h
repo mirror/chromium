@@ -55,6 +55,8 @@
 #include "platform/transforms/TransformationMatrix.h"
 #include "platform/wtf/AutoReset.h"
 
+#include <base/debug/stack_trace.h>
+
 namespace blink {
 
 class AffineTransform;
