@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb086d71_39f244e0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-14T21:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef64cee8_a49db755",
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "626cf500_9fd26244",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 4
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "e18719cd_c92eabd3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-14T21:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91df614c_5dca7640",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bac5a5e_ac42feef",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 4
@@ -79,6 +121,30 @@
       "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b39706_70ebebf6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-14T21:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bac5a5e_ac42feef",
+      "range": {
+        "startLine": 40,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +188,48 @@
     },
     {
       "key": {
+        "uuid": "1d4128c8_f9723649",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-14T21:07:25Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "bc5333fd_ea72496f",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e608b2c1_ff1b213d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-14T21:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da856ad_8b7e771c",
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e11d5e2c_48cb7c05",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.h",
         "patchSetId": 4
@@ -142,6 +250,30 @@
       "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a020d5e6_baa8cd8a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-14T21:07:25Z",
+      "side": 1,
+      "message": "Done. Forgot about NGPhysicalSize",
+      "parentUuid": "e11d5e2c_48cb7c05",
+      "range": {
+        "startLine": 59,
+        "startChar": 10,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "f671a9c9_69452700",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-14T21:07:25Z",
+      "side": 1,
+      "message": "Done. Love it, much cleaner.",
+      "parentUuid": "44183f9f_f64ca481",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 16
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e86bbf6_0eab57ff",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
         "patchSetId": 4
@@ -188,6 +344,30 @@
       "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac985fb_de9a5173",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-14T21:07:25Z",
+      "side": 1,
+      "message": "No. IntrinsicSize() always returns content size.",
+      "parentUuid": "5e86bbf6_0eab57ff",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 23
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
