@@ -28,6 +28,7 @@ const char kPushSubscriptionBackendParam[] = "push_subscription_backend";
 // Variation parameter for chrome-push-unsubscription backend.
 const char kPushUnsubscriptionBackendParam[] = "push_unsubscription_backend";
 
+const char kSubscriptionServerNonAuthorizedFormat[] = "%s?key=%s";
 const char kAuthorizationRequestHeaderFormat[] = "Bearer %s";
 
 }  // namespace
@@ -35,9 +36,8 @@ const char kAuthorizationRequestHeaderFormat[] = "Bearer %s";
 class SubscriptionManager::SigninObserver : public SigninManagerBase::Observer {
  public:
   SigninObserver(SigninManagerBase* signin_manager,
-                 const base::Closure& signin_status_changed_callback)
-      : signin_manager_(signin_manager),
-        signin_status_changed_callback_(signin_status_changed_callback) {
+                 const base::Closure& callback)
+      : signin_manager_(signin_manager), callback_(callback) {
     signin_manager_->AddObserver(this);
   }
 
@@ -47,16 +47,16 @@ class SubscriptionManager::SigninObserver : public SigninManagerBase::Observer {
   // SigninManagerBase::Observer implementation.
   void GoogleSigninSucceeded(const std::string& account_id,
                              const std::string& username) override {
-    signin_status_changed_callback_.Run();
+    callback_.Run();
   }
 
   void GoogleSignedOut(const std::string& account_id,
                        const std::string& username) override {
-    signin_status_changed_callback_.Run();
+    callback_.Run();
   }
 
   SigninManagerBase* const signin_manager_;
-  base::Closure signin_status_changed_callback_;
+  base::Closure callback_;
 };
 
 SubscriptionManager::SubscriptionManager(
@@ -64,6 +64,7 @@ SubscriptionManager::SubscriptionManager(
     PrefService* pref_service,
     SigninManagerBase* signin_manager,
     OAuth2TokenService* access_token_service,
+    const std::string& api_key,
     const GURL& subscribe_url,
     const GURL& unsubscribe_url)
     : url_request_context_getter_(std::move(url_request_context_getter)),
@@ -74,6 +75,7 @@ SubscriptionManager::SubscriptionManager(
           base::Bind(&SubscriptionManager::SigninStatusChanged,
                      base::Unretained(this)))),
       access_token_service_(access_token_service),
+      api_key_(api_key),
       subscribe_url_(subscribe_url),
       unsubscribe_url_(unsubscribe_url) {}
 
@@ -96,11 +98,17 @@ void SubscriptionManager::SubscribeInternal(
     const std::string& access_token) {
   SubscriptionJsonRequest::Builder builder;
   builder.SetToken(subscription_token)
-      .SetUrlRequestContextGetter(url_request_context_getter_)
-      .SetUrl(subscribe_url_);
+      .SetUrlRequestContextGetter(url_request_context_getter_);
+
   if (!access_token.empty()) {
+    builder.SetUrl(subscribe_url_);
     builder.SetAuthenticationHeader(base::StringPrintf(
         kAuthorizationRequestHeaderFormat, access_token.c_str()));
+  } else {
+    // When not providing OAuth token, we need to pass the Google API key.
+    builder.SetUrl(GURL(
+        base::StringPrintf(kSubscriptionServerNonAuthorizedFormat,
+                           subscribe_url_.spec().c_str(), api_key_.c_str())));
   }
 
   request_ = builder.Build();
@@ -182,7 +190,9 @@ void SubscriptionManager::ResubscribeInternal(const std::string& old_token,
   SubscriptionJsonRequest::Builder builder;
   builder.SetToken(old_token)
       .SetUrlRequestContextGetter(url_request_context_getter_)
-      .SetUrl(unsubscribe_url_);
+      .SetUrl(GURL(base::StringPrintf(kSubscriptionServerNonAuthorizedFormat,
+                                      unsubscribe_url_.spec().c_str(),
+                                      api_key_.c_str())));
 
   request_ = builder.Build();
   request_->Start(base::BindOnce(&SubscriptionManager::DidUnsubscribe,
@@ -207,7 +217,8 @@ void SubscriptionManager::Resubscribe(const std::string& new_token) {
   std::string old_token =
       pref_service_->GetString(prefs::kBreakingNewsSubscriptionDataToken);
   if (old_token == new_token) {
-    // If the token didn't change, subscribe directly. The server handles the
+    // If the token didn't change, subscribe directly because the subscription
+    // request contains the complete state. The server handles the
     // unsubscription if previous subscriptions exists.
     Subscribe(old_token);
   } else {
