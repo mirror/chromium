@@ -8,6 +8,10 @@
 #include "media/audio/audio_system.h"
 #include "media/base/media_export.h"
 
+namespace audio {
+class AudioSystemInfo;
+}
+
 namespace base {
 class SingleThreadTaskRunner;
 }
@@ -46,6 +50,7 @@ class MEDIA_EXPORT AudioManagerHelper : public AudioSystemInterface {
 
  private:
   friend class AudioSystemImpl;
+  friend class ::audio::AudioSystemInfo;
 
   AudioManagerHelper(AudioManager* audio_manager);
   ~AudioManagerHelper() override;

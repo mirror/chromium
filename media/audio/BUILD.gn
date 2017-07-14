@@ -51,7 +51,10 @@ config("platform_config") {
 }
 
 source_set("audio") {
-  visibility = [ "//media/*" ]
+  visibility = [
+    "//media/*",
+    "//services/audio/*",
+  ]
   sources = [
     "agc_audio_stream.h",
     "audio_debug_file_writer.cc",
