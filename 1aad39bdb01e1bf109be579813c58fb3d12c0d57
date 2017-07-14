@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ccccd218_e3154976",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-14T02:02:02Z",
+      "side": 1,
+      "message": "This seems potentially bad for perf.\n\nAttributeChanged is called really frequently.\nIsn\u0027t UpdateDistribution a bit heavyweight?\n\nI feel like we should address the issue\ndownstream. Maybe either IsInert needs to\nnot depend on UpdateDistribution, or\nAXObjectCache::HandleAttributeChanged\nshouldn\u0027t call IsInert.",
+      "revId": "1aad39bdb01e1bf109be579813c58fb3d12c0d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb28b123_6d60e7ee",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 4
@@ -66,6 +83,23 @@
       "writtenOn": "2017-07-12T08:06:21Z",
       "side": 1,
       "message": "Ack.",
+      "revId": "1aad39bdb01e1bf109be579813c58fb3d12c0d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496cdc27_47eebc47",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-14T02:02:02Z",
+      "side": 1,
+      "message": "This seems okay to me. Long-term I\u0027m going to try to\nmake it so that we don\u0027t need to check this right\nat the moment an attribute changes, that\u0027s just causing\nso many problems. I\u0027m thinking we just want to mark\nsome nodes dirty and then only at serialization time\nfigure out what events to fire.\n\nBut until then, checking NeedsDistributionRecalc\nseems like a better idea than calling\nUpdateDistribution.\n\nDoes this change alone not fix it? If not, why not?",
       "revId": "1aad39bdb01e1bf109be579813c58fb3d12c0d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
