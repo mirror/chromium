@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c841082e_3d0d3409",
+        "filename": "services/shape_detection/barcode_detection_impl_mac_unittest.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T21:44:56Z",
+      "side": 1,
+      "message": "Is this necessary because the annotation on the BarcodeDetectionImplMac class makes this type unavailable on previous versions of macOS?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "bb7d2339307a546104eaf8da79ec8f362b6b6cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e24c8d3_6aa8084d",
+        "filename": "services/shape_detection/barcode_detection_impl_mac_unittest.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T21:44:56Z",
+      "side": 1,
+      "message": "Why not keep the availability check in the condition above and avoid indenting the entire test?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "bb7d2339307a546104eaf8da79ec8f362b6b6cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
