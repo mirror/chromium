@@ -1,0 +1,271 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5942a36e_9d2bc46a",
+        "filename": "ui/chromeos/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "keep this list alphabetized",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e2535d_b8b8cc5e",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "layout_id",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3300ed5e_22ed49dd",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "nit: \"Invalid \" \u003c\u003c kLayoutProperty \u003c\u003c \" \u0027\" \u003c\u003c layout \u003c\u003c \"\u0027\"; so the log messages are more useful",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbec834_bd0dc0de",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "why\u0027d the arg get pushed off this line? does this all fit in two lines otherwise? please run \"git cl format\" if you aren\u0027t already.",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a06594_93d462bd",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "nit: Chrome OS",
+      "range": {
+        "startLine": 1007,
+        "startChar": 30,
+        "endLine": 1007,
+        "endChar": 38
+      },
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3a2efe_51c992d2",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "const KeyboardRemapping* mapping \u003d nullptr;",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e031d4e_257810cb",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "size_t mapping_size \u003d 0u;",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788e6088_7ce95ae1",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "indent two spaces: https://google.github.io/styleguide/cppguide.html#Loops_and_Switch_Statements",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015b7bfc_0907d736",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "delete blank line",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1487a451_29f18513",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "probably this should be the legacy/1 value instead of the default value?",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb68b20b_e19d5139",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "remove spaces within curly brackets",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e84e2f_4e64ac2d",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "please add a comment above each of these documenting what it means. i.e. for this one, explain that it\u0027s the layout used from launch until 2017, and for the next one, explain the differences. might even be worthwhile to explicitly enumerate the keys left-to-right.\n\nalso, don\u0027t use \"legacy\" here since we already use \"legacy keyboard\" elsewhere to refer to non-chrome-os keyboards. maybe just call this one \"1\" instead?",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a284fc_a113e387",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "i\u0027d hardcode \"\u003d 2\" here to make sure people don\u0027t reorder these.",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c040fb4a_27b3c1ea",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "does this need to be public? if not, move it to the private section.",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aae8794_1cd0a740",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T20:03:17Z",
+      "side": 1,
+      "message": "top_row_layout: https://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "range": {
+        "startLine": 59,
+        "startChar": 25,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
