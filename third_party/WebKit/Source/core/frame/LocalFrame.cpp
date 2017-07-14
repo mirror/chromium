@@ -762,7 +762,7 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       text_zoom_factor_(ParentTextZoomFactor(this)),
       in_view_source_mode_(false),
       interface_registry_(interface_registry) {
-  if (FrameResourceCoordinator::IsEnabled()) {
+  if (FrameResourceCoordinator::IsEnabled() && !client->IsFake()) {
     frame_resource_coordinator_ =
         FrameResourceCoordinator::Create(client->GetInterfaceProvider());
   }
