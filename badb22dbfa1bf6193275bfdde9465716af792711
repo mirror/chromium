@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7391b3c_ca67cc5d",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-14T06:25:50Z",
+      "side": 1,
+      "message": "Added a brief comment for each method. For details, defer to wl_data_device spec mentioned in the class comment.",
+      "parentUuid": "30a20874_cd376a43",
+      "revId": "badb22dbfa1bf6193275bfdde9465716af792711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8805bbf_1354397a",
         "filename": "components/exo/data_device_delegate.h",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3fafef0e_f2a7aa18",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-14T06:25:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8805bbf_1354397a",
+      "revId": "badb22dbfa1bf6193275bfdde9465716af792711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daf12cd7_085ddfee",
         "filename": "components/exo/data_offer_delegate.h",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "badb22dbfa1bf6193275bfdde9465716af792711",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b78f9d_84659f94",
+        "filename": "components/exo/data_offer_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-14T06:25:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daf12cd7_085ddfee",
+      "revId": "badb22dbfa1bf6193275bfdde9465716af792711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
