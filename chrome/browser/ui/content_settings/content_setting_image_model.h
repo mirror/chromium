@@ -36,6 +36,9 @@ class ContentSettingImageModel {
   static size_t GetContentSettingImageModelIndexForTesting(
       ContentSettingsType content_type);
 
+  // FIXME
+  static const gfx::VectorIcon& GetIconForType(ContentSettingsType type);
+
   // Notifies this model that its setting might have changed and it may need to
   // update its visibility, icon and tooltip.
   virtual void UpdateFromWebContents(content::WebContents* web_contents) = 0;

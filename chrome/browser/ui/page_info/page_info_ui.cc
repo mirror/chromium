@@ -8,12 +8,14 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/permissions/permission_manager.h"
 #include "chrome/browser/permissions/permission_result.h"
 #include "chrome/browser/permissions/permission_util.h"
 #include "chrome/browser/plugins/plugin_utils.h"
 #include "chrome/browser/plugins/plugins_field_trial.h"
+#include "chrome/browser/ui/content_settings/content_setting_image_model.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/grit/generated_resources.h"
@@ -24,6 +26,8 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/gfx/vector_icon_types.h"
 #include "url/gurl.h"
 
 #if defined(OS_ANDROID)
@@ -94,44 +98,27 @@ static_assert(arraysize(kPermissionButtonTextIDDefaultSetting) ==
 struct PermissionsUIInfo {
   ContentSettingsType type;
   int string_id;
-  int blocked_icon_id;
-  int allowed_icon_id;
 };
 
 const PermissionsUIInfo kPermissionsUIInfo[] = {
-    {CONTENT_SETTINGS_TYPE_COOKIES, 0, IDR_BLOCKED_COOKIES,
-     IDR_ACCESSED_COOKIES},
-    {CONTENT_SETTINGS_TYPE_IMAGES, IDS_PAGE_INFO_TYPE_IMAGES,
-     IDR_BLOCKED_IMAGES, IDR_ALLOWED_IMAGES},
-    {CONTENT_SETTINGS_TYPE_JAVASCRIPT, IDS_PAGE_INFO_TYPE_JAVASCRIPT,
-     IDR_BLOCKED_JAVASCRIPT, IDR_ALLOWED_JAVASCRIPT},
-    {CONTENT_SETTINGS_TYPE_POPUPS, IDS_PAGE_INFO_TYPE_POPUPS,
-     IDR_BLOCKED_POPUPS, IDR_ALLOWED_POPUPS},
+    {CONTENT_SETTINGS_TYPE_COOKIES, 0},
+    {CONTENT_SETTINGS_TYPE_IMAGES, IDS_PAGE_INFO_TYPE_IMAGES},
+    {CONTENT_SETTINGS_TYPE_JAVASCRIPT, IDS_PAGE_INFO_TYPE_JAVASCRIPT},
+    {CONTENT_SETTINGS_TYPE_POPUPS, IDS_PAGE_INFO_TYPE_POPUPS},
 #if BUILDFLAG(ENABLE_PLUGINS)
-    {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_PAGE_INFO_TYPE_FLASH,
-     IDR_BLOCKED_PLUGINS, IDR_ALLOWED_PLUGINS},
+    {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_PAGE_INFO_TYPE_FLASH},
 #endif
-    {CONTENT_SETTINGS_TYPE_GEOLOCATION, IDS_PAGE_INFO_TYPE_LOCATION,
-     IDR_BLOCKED_LOCATION, IDR_ALLOWED_LOCATION},
-    {CONTENT_SETTINGS_TYPE_NOTIFICATIONS, IDS_PAGE_INFO_TYPE_NOTIFICATIONS,
-     IDR_BLOCKED_NOTIFICATION, IDR_ALLOWED_NOTIFICATION},
-    {CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC, IDS_PAGE_INFO_TYPE_MIC,
-     IDR_BLOCKED_MIC, IDR_ALLOWED_MIC},
-    {CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA, IDS_PAGE_INFO_TYPE_CAMERA,
-     IDR_BLOCKED_CAMERA, IDR_ALLOWED_CAMERA},
+    {CONTENT_SETTINGS_TYPE_GEOLOCATION, IDS_PAGE_INFO_TYPE_LOCATION},
+    {CONTENT_SETTINGS_TYPE_NOTIFICATIONS, IDS_PAGE_INFO_TYPE_NOTIFICATIONS},
+    {CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC, IDS_PAGE_INFO_TYPE_MIC},
+    {CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA, IDS_PAGE_INFO_TYPE_CAMERA},
     {CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS,
-     IDS_AUTOMATIC_DOWNLOADS_TAB_LABEL, IDR_BLOCKED_DOWNLOADS,
-     IDR_ALLOWED_DOWNLOADS},
-    {CONTENT_SETTINGS_TYPE_MIDI_SYSEX, IDS_PAGE_INFO_TYPE_MIDI_SYSEX,
-     IDR_BLOCKED_MIDI_SYSEX, IDR_ALLOWED_MIDI_SYSEX},
-    {CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC, IDS_PAGE_INFO_TYPE_BACKGROUND_SYNC,
-     IDR_BLOCKED_BACKGROUND_SYNC, IDR_ALLOWED_BACKGROUND_SYNC},
-    // Autoplay is Android-only at the moment, and the Page Info popup on
-    // Android ignores these block/allow icon pairs, so we can specify 0 there.
-    {CONTENT_SETTINGS_TYPE_AUTOPLAY, IDS_PAGE_INFO_TYPE_AUTOPLAY, 0, 0},
-    {CONTENT_SETTINGS_TYPE_ADS, IDS_PAGE_INFO_TYPE_ADS, IDR_BLOCKED_ADS,
-     IDR_ALLOWED_ADS},
-};
+     IDS_AUTOMATIC_DOWNLOADS_TAB_LABEL},
+    {CONTENT_SETTINGS_TYPE_MIDI_SYSEX, IDS_PAGE_INFO_TYPE_MIDI_SYSEX},
+    {CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC, IDS_PAGE_INFO_TYPE_BACKGROUND_SYNC},
+    // Autoplay is Android-only at the moment.
+    {CONTENT_SETTINGS_TYPE_AUTOPLAY, IDS_PAGE_INFO_TYPE_AUTOPLAY},
+    {CONTENT_SETTINGS_TYPE_ADS, IDS_PAGE_INFO_TYPE_ADS}};
 
 std::unique_ptr<PageInfoUI::SecurityDescription> CreateSecurityDescription(
     int summary_id,
@@ -297,18 +284,6 @@ base::string16 PageInfoUI::PermissionActionToUIString(
 }
 
 // static
-int PageInfoUI::GetPermissionIconID(ContentSettingsType type,
-                                    ContentSetting setting) {
-  bool use_blocked = (setting == CONTENT_SETTING_BLOCK);
-  for (const PermissionsUIInfo& info : kPermissionsUIInfo) {
-    if (info.type == type)
-      return use_blocked ? info.blocked_icon_id : info.allowed_icon_id;
-  }
-  NOTREACHED();
-  return IDR_INFO;
-}
-
-// static
 base::string16 PageInfoUI::PermissionDecisionReasonToUIString(
     Profile* profile,
     const PageInfoUI::PermissionInfo& permission,
@@ -356,12 +331,16 @@ SkColor PageInfoUI::GetPermissionDecisionTextColor() {
 }
 
 // static
-const gfx::Image& PageInfoUI::GetPermissionIcon(const PermissionInfo& info) {
+const gfx::Image PageInfoUI::GetPermissionIcon(const PermissionInfo& info) {
   ContentSetting setting = info.setting;
   if (setting == CONTENT_SETTING_DEFAULT)
     setting = info.default_setting;
-  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  return rb.GetNativeImageNamed(GetPermissionIconID(info.type, setting));
+
+  gfx::IconDescription icon(
+      ContentSettingImageModel::GetIconForType(info.type), 16,
+      gfx::kChromeIconGrey, base::TimeDelta(),
+      setting == CONTENT_SETTING_BLOCK ? kBlockedBadgeIcon : gfx::kNoneIcon);
+  return gfx::Image(gfx::CreateVectorIcon(icon));
 }
 
 // static

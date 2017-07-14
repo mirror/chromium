@@ -19,6 +19,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -113,26 +114,24 @@ namespace {
 
 struct ContentSettingsImageDetails {
   ContentSettingsType type;
-  const gfx::VectorIcon& icon;
   int blocked_tooltip_id;
   int blocked_explanatory_text_id;
   int accessed_tooltip_id;
 };
 
 const ContentSettingsImageDetails kImageDetails[] = {
-    {CONTENT_SETTINGS_TYPE_COOKIES, kCookieIcon, IDS_BLOCKED_COOKIES_TITLE, 0,
+    {CONTENT_SETTINGS_TYPE_COOKIES, IDS_BLOCKED_COOKIES_TITLE, 0,
      IDS_ACCESSED_COOKIES_TITLE},
-    {CONTENT_SETTINGS_TYPE_IMAGES, kImageIcon, IDS_BLOCKED_IMAGES_TITLE, 0, 0},
-    {CONTENT_SETTINGS_TYPE_JAVASCRIPT, kCodeIcon, IDS_BLOCKED_JAVASCRIPT_TITLE,
-     0, 0},
-    {CONTENT_SETTINGS_TYPE_PLUGINS, kExtensionIcon, IDS_BLOCKED_PLUGINS_MESSAGE,
+    {CONTENT_SETTINGS_TYPE_IMAGES, IDS_BLOCKED_IMAGES_TITLE, 0, 0},
+    {CONTENT_SETTINGS_TYPE_JAVASCRIPT, IDS_BLOCKED_JAVASCRIPT_TITLE, 0, 0},
+    {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_BLOCKED_PLUGINS_MESSAGE,
      IDS_BLOCKED_PLUGIN_EXPLANATORY_TEXT, 0},
-    {CONTENT_SETTINGS_TYPE_POPUPS, kWebIcon, IDS_BLOCKED_POPUPS_TOOLTIP,
+    {CONTENT_SETTINGS_TYPE_POPUPS, IDS_BLOCKED_POPUPS_TOOLTIP,
      IDS_BLOCKED_POPUPS_EXPLANATORY_TEXT, 0},
-    {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, kMixedContentIcon,
-     IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT, 0, 0},
-    {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, kExtensionIcon,
-     IDS_BLOCKED_PPAPI_BROKER_TITLE, 0, IDS_ALLOWED_PPAPI_BROKER_TITLE},
+    {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT,
+     0, 0},
+    {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, IDS_BLOCKED_PPAPI_BROKER_TITLE, 0,
+     IDS_ALLOWED_PPAPI_BROKER_TITLE},
 };
 
 // The ordering of the models here influences the order in which icons are
@@ -290,7 +289,7 @@ void ContentSettingBlockedImageModel::UpdateFromWebContents(
   else if (content_settings->IsContentBlocked(type))
     badge_id = &kBlockedBadgeIcon;
 
-  set_icon(image_details->icon, *badge_id);
+  set_icon(GetIconForType(type), *badge_id);
   set_explanatory_string_id(explanation_id);
   DCHECK(tooltip_id);
   set_tooltip(l10n_util::GetStringUTF16(tooltip_id));
@@ -323,7 +322,8 @@ void ContentSettingGeolocationImageModel::UpdateFromWebContents(
   usages_state.GetDetailedInfo(nullptr, &state_flags);
   bool allowed =
       !!(state_flags & ContentSettingsUsagesState::TABSTATE_HAS_ANY_ALLOWED);
-  set_icon(kMyLocationIcon, allowed ? gfx::kNoneIcon : kBlockedBadgeIcon);
+  set_icon(GetIconForType(content_type()),
+           allowed ? gfx::kNoneIcon : kBlockedBadgeIcon);
   set_tooltip(l10n_util::GetStringUTF16(allowed
                                             ? IDS_GEOLOCATION_ALLOWED_TOOLTIP
                                             : IDS_GEOLOCATION_BLOCKED_TOOLTIP));
@@ -471,7 +471,7 @@ void ContentSettingSubresourceFilterImageModel::SetAnimationHasRun(
 
 ContentSettingRPHImageModel::ContentSettingRPHImageModel()
     : ContentSettingSimpleImageModel(CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS) {
-  set_icon(ui::kProtocolHandlerIcon, gfx::kNoneIcon);
+  set_icon(GetIconForType(content_type()), gfx::kNoneIcon);
   set_tooltip(l10n_util::GetStringUTF16(IDS_REGISTER_PROTOCOL_HANDLER_TOOLTIP));
 }
 
@@ -518,7 +518,8 @@ void ContentSettingMIDISysExImageModel::UpdateFromWebContents(
   usages_state.GetDetailedInfo(nullptr, &state_flags);
   bool allowed =
       !!(state_flags & ContentSettingsUsagesState::TABSTATE_HAS_ANY_ALLOWED);
-  set_icon(ui::kMidiIcon, allowed ? gfx::kNoneIcon : kBlockedBadgeIcon);
+  set_icon(GetIconForType(content_type()),
+           allowed ? gfx::kNoneIcon : kBlockedBadgeIcon);
   set_tooltip(l10n_util::GetStringUTF16(allowed
                                             ? IDS_MIDI_SYSEX_ALLOWED_TOOLTIP
                                             : IDS_MIDI_SYSEX_BLOCKED_TOOLTIP));
@@ -546,13 +547,13 @@ void ContentSettingDownloadsImageModel::UpdateFromWebContents(
   switch (download_request_limiter->GetDownloadStatus(web_contents)) {
     case DownloadRequestLimiter::ALLOW_ALL_DOWNLOADS:
       set_visible(true);
-      set_icon(kFileDownloadIcon, gfx::kNoneIcon);
+      set_icon(GetIconForType(content_type()), gfx::kNoneIcon);
       set_explanatory_string_id(0);
       set_tooltip(l10n_util::GetStringUTF16(IDS_ALLOWED_DOWNLOAD_TITLE));
       return;
     case DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED:
       set_visible(true);
-      set_icon(kFileDownloadIcon, kBlockedBadgeIcon);
+      set_icon(GetIconForType(content_type()), gfx::kNoneIcon);
       set_explanatory_string_id(IDS_BLOCKED_DOWNLOADS_EXPLANATION);
       set_tooltip(l10n_util::GetStringUTF16(IDS_BLOCKED_DOWNLOAD_TITLE));
       return;
@@ -628,6 +629,50 @@ size_t ContentSettingImageModel::GetContentSettingImageModelIndexForTesting(
   }
   NOTREACHED();
   return arraysize(kContentTypeIconOrder);
+}
+
+// static
+const gfx::VectorIcon& ContentSettingImageModel::GetIconForType(
+    ContentSettingsType type) {
+  switch (type) {
+    case CONTENT_SETTINGS_TYPE_COOKIES:
+      return kCookieIcon;
+    case CONTENT_SETTINGS_TYPE_IMAGES:
+      return kImageIcon;
+    case CONTENT_SETTINGS_TYPE_JAVASCRIPT:
+      return kCodeIcon;
+    case CONTENT_SETTINGS_TYPE_PLUGINS:
+      return kExtensionIcon;
+    case CONTENT_SETTINGS_TYPE_POPUPS:
+      return kWebIcon;
+    case CONTENT_SETTINGS_TYPE_GEOLOCATION:
+      return ui::kLocationOnIcon;
+    case CONTENT_SETTINGS_TYPE_NOTIFICATIONS:
+      return ui::kNotificationsIcon;
+    case CONTENT_SETTINGS_TYPE_MIXEDSCRIPT:
+      return kMixedContentIcon;
+    case CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC:
+      return ui::kMicrophoneIcon;
+    case CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA:
+      return ui::kVideocamIcon;
+    case CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS:
+      return ui::kProtocolHandlerIcon;
+    case CONTENT_SETTINGS_TYPE_PPAPI_BROKER:
+      return kExtensionIcon;
+    case CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS:
+      return kFileDownloadIcon;
+    case CONTENT_SETTINGS_TYPE_MIDI_SYSEX:
+      return ui::kMidiIcon;
+    case CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC:
+      return vector_icons::kSyncIcon;
+    case CONTENT_SETTINGS_TYPE_ADS:
+      // TODO(estade): get the right icon for this type.
+      return vector_icons::kSyncIcon;
+
+    default:
+      NOTREACHED() << "No icon for type " << type;
+      return gfx::kNoneIcon;
+  }
 }
 
 #if defined(OS_MACOSX)

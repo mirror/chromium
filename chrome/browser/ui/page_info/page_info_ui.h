@@ -165,14 +165,10 @@ class PageInfoUI {
   // Returns the color to use for the permission decision reason strings.
   static SkColor GetPermissionDecisionTextColor();
 
-  // Returns the icon resource ID for the given permission |type| and |setting|.
-  static int GetPermissionIconID(ContentSettingsType type,
-                                 ContentSetting setting);
-
   // Returns the icon for the given permissionInfo |info|.  If |info|'s current
   // setting is CONTENT_SETTING_DEFAULT, it will return the icon for |info|'s
   // default setting.
-  static const gfx::Image& GetPermissionIcon(const PermissionInfo& info);
+  static const gfx::Image GetPermissionIcon(const PermissionInfo& info);
 
   // Returns the UI string describing the given object |info|.
   static base::string16 ChosenObjectToUIString(const ChosenObjectInfo& info);

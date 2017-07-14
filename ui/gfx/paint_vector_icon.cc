@@ -587,6 +587,9 @@ ImageSkia CreateVectorIconFromSource(const std::string& source,
 }
 
 int GetDefaultSizeOfVectorIcon(const VectorIcon& icon) {
+  if (icon.is_empty())
+    return 0;
+
   const PathElement* one_x_path = icon.path_1x ? icon.path_1x : icon.path;
   return one_x_path[0].command == CANVAS_DIMENSIONS ? one_x_path[1].arg
                                                     : kReferenceSizeDip;
