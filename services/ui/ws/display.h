@@ -76,8 +76,7 @@ class Display : public PlatformDisplayDelegate,
   // display::Display ID. In external mode this hasn't been defined yet.
   int64_t GetId() const;
 
-  // Sets the display::Display corresponding to this ws::Display. This is only
-  // valid in internal window mode.
+  // Sets the display::Display corresponding to this ws::Display.
   void SetDisplay(const display::Display& display);
 
   // PlatformDisplayDelegate:
@@ -188,6 +187,8 @@ class Display : public PlatformDisplayDelegate,
   // Creates the root ServerWindow for this display, where |size| is in physical
   // pixels.
   void CreateRootWindow(const gfx::Size& size);
+
+  void SetCursorConfig();
 
   // PlatformDisplayDelegate:
   ServerWindow* GetRootWindow() override;
