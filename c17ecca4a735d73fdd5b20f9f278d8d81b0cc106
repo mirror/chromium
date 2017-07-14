@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "508ea3fe_18fccd38",
+        "filename": "chrome/browser/chromeos/enrollment_dialog_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T02:09:34Z",
+      "side": 1,
+      "message": "grid_layout\n\nNote: Maybe as a separate change, but in either case consider making GridLayout() call host-\u003eSetLayoutManager(this).  I don\u0027t think it\u0027d ever be correct to have GridLayout have a view as its host, but not be the layout manager of that view; and that would save a lot of redundant and error-prone calls like this.",
+      "revId": "c17ecca4a735d73fdd5b20f9f278d8d81b0cc106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc03ae23_76456258",
+        "filename": "chrome/browser/chromeos/options/vpn_config_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T02:09:34Z",
+      "side": 1,
+      "message": "SetLayoutManager(layout_)",
+      "revId": "c17ecca4a735d73fdd5b20f9f278d8d81b0cc106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1066209f_3e212957",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T02:09:34Z",
+      "side": 1,
+      "message": "Nit: It vaguely bugs me that this code duplicates the code above but I don\u0027t know if it\u0027s worth factoring.",
+      "revId": "c17ecca4a735d73fdd5b20f9f278d8d81b0cc106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
