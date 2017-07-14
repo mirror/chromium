@@ -389,7 +389,7 @@ void HandleShowSystemTrayBubble() {
   aura::Window* target_root = Shell::GetRootWindowForNewWindows();
   SystemTray* tray =
       RootWindowController::ForWindow(target_root)->GetSystemTray();
-  if (!tray->HasSystemBubble()) {
+  if (!tray->CloseSystemBubble()) {
     tray->ShowDefaultView(BUBBLE_CREATE_NEW);
     tray->ActivateBubble();
   }
