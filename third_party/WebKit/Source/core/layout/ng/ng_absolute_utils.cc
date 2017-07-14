@@ -381,13 +381,16 @@ NGAbsolutePhysicalPosition ComputePartialAbsoluteWithChildInlineSize(
     const NGConstraintSpace& space,
     const ComputedStyle& style,
     const NGStaticPosition& static_position,
-    const Optional<MinMaxContentSize>& child_minmax) {
+    const Optional<MinMaxContentSize>& child_minmax,
+    const Optional<NGPhysicalSize>& intrinsic_size) {
   NGAbsolutePhysicalPosition position;
   if (style.IsHorizontalWritingMode()) {
     Optional<LayoutUnit> width;
     if (!style.Width().IsAuto()) {
       width = ResolveWidth(style.Width(), space, style, child_minmax,
                            LengthResolveType::kContentSize);
+    } else if (intrinsic_size.has_value()) {
+      width = intrinsic_size.value().width;
     }
     ComputeAbsoluteHorizontal(space, style, width, static_position,
                               child_minmax, &position);
@@ -396,6 +399,8 @@ NGAbsolutePhysicalPosition ComputePartialAbsoluteWithChildInlineSize(
     if (!style.Height().IsAuto()) {
       height = ResolveHeight(style.Height(), space, style, child_minmax,
                              LengthResolveType::kContentSize);
+    } else if (intrinsic_size.has_value()) {
+      height = intrinsic_size.value().height;
     }
     ComputeAbsoluteVertical(space, style, height, static_position, child_minmax,
                             &position);
@@ -408,6 +413,7 @@ void ComputeFullAbsoluteWithChildBlockSize(
     const ComputedStyle& style,
     const NGStaticPosition& static_position,
     const Optional<LayoutUnit>& child_block_size,
+    const Optional<NGPhysicalSize>& intrinsic_size,
     NGAbsolutePhysicalPosition* position) {
   // After partial size has been computed, child block size is either
   // unknown, or fully computed, there is no minmax.
@@ -422,6 +428,8 @@ void ComputeFullAbsoluteWithChildBlockSize(
     if (!style.Height().IsAuto()) {
       height = ResolveHeight(style.Height(), space, style, child_minmax,
                              LengthResolveType::kContentSize);
+    } else if (intrinsic_size.has_value()) {
+      height = intrinsic_size.value().height;
     }
     ComputeAbsoluteVertical(space, style, height, static_position, child_minmax,
                             position);
@@ -430,6 +438,8 @@ void ComputeFullAbsoluteWithChildBlockSize(
     if (!style.Width().IsAuto()) {
       width = ResolveWidth(style.Width(), space, style, child_minmax,
                            LengthResolveType::kContentSize);
+    } else if (intrinsic_size.has_value()) {
+      width = intrinsic_size.value().width;
     }
     ComputeAbsoluteHorizontal(space, style, width, static_position,
                               child_minmax, position);

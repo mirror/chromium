@@ -38,7 +38,10 @@ class CORE_EXPORT NGConstraintSpace final
  public:
   // This should live on NGBlockNode or another layout bridge and probably take
   // a root NGConstraintSpace.
-  static RefPtr<NGConstraintSpace> CreateFromLayoutObject(const LayoutBox&);
+  static RefPtr<NGConstraintSpace> CreateFromLayoutObject(
+      const LayoutBox&,
+      Optional<LayoutUnit> override_logical_width,
+      Optional<LayoutUnit> override_logical_height);
 
   const std::shared_ptr<NGExclusions>& Exclusions() const {
     return exclusions_;

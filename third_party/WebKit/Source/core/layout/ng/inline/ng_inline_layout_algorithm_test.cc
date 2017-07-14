@@ -99,8 +99,9 @@ TEST_F(NGInlineLayoutAlgorithmTest, ContainerBorderPadding) {
   LayoutNGBlockFlow* block_flow =
       ToLayoutNGBlockFlow(GetLayoutObjectByElementId("container"));
   NGBlockNode block_node(block_flow);
+  Optional<LayoutUnit> ignore;
   RefPtr<NGConstraintSpace> space =
-      NGConstraintSpace::CreateFromLayoutObject(*block_flow);
+      NGConstraintSpace::CreateFromLayoutObject(*block_flow, ignore, ignore);
   RefPtr<NGLayoutResult> layout_result = block_node.Layout(space.Get());
 
   auto* block_box =
@@ -135,9 +136,10 @@ TEST_F(NGInlineLayoutAlgorithmTest, MAYBE_VerticalAlignBottomReplaced) {
   )HTML");
   LayoutNGBlockFlow* block_flow =
       ToLayoutNGBlockFlow(GetLayoutObjectByElementId("container"));
+  Optional<LayoutUnit> ignore;
   NGInlineNode inline_node(block_flow);
   RefPtr<NGConstraintSpace> space =
-      NGConstraintSpace::CreateFromLayoutObject(*block_flow);
+      NGConstraintSpace::CreateFromLayoutObject(*block_flow, ignore, ignore);
   RefPtr<NGLayoutResult> layout_result = inline_node.Layout(space.Get());
   auto* wrapper =
       ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().Get());

@@ -28,9 +28,10 @@ std::pair<RefPtr<NGPhysicalBoxFragment>, RefPtr<NGConstraintSpace>>
 NGBaseLayoutAlgorithmTest::RunBlockLayoutAlgorithmForElement(Element* element) {
   LayoutNGBlockFlow* block_flow =
       ToLayoutNGBlockFlow(element->GetLayoutObject());
+  Optional<LayoutUnit> ignore;
   NGBlockNode node(block_flow);
   RefPtr<NGConstraintSpace> space =
-      NGConstraintSpace::CreateFromLayoutObject(*block_flow);
+      NGConstraintSpace::CreateFromLayoutObject(*block_flow, ignore, ignore);
 
   RefPtr<NGLayoutResult> result =
       NGBlockLayoutAlgorithm(node, space.Get()).Layout();

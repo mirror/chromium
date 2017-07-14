@@ -65,8 +65,9 @@ TEST_F(NGOutOfFlowLayoutPartTest, FixedInsideAbs) {
   // Test whether the oof fragments have been collected at NG->Legacy boundary.
   Element* rel = GetDocument().getElementById("rel");
   LayoutNGBlockFlow* block_flow = ToLayoutNGBlockFlow(rel->GetLayoutObject());
+  Optional<LayoutUnit> ignore;
   RefPtr<NGConstraintSpace> space =
-      NGConstraintSpace::CreateFromLayoutObject(*block_flow);
+      NGConstraintSpace::CreateFromLayoutObject(*block_flow, ignore, ignore);
   NGBlockNode node(block_flow);
   RefPtr<NGLayoutResult> result = node.Layout(space.Get());
   EXPECT_EQ(result->OutOfFlowPositionedDescendants().size(), (size_t)2);
@@ -106,8 +107,9 @@ TEST_F(NGOutOfFlowLayoutPartTest, OrthogonalWritingMode1) {
   LayoutNGBlockFlow* block_flow =
       ToLayoutNGBlockFlow(GetLayoutObjectByElementId("container"));
   NGBlockNode node(block_flow);
+  Optional<LayoutUnit> ignore;
   RefPtr<NGConstraintSpace> space =
-      NGConstraintSpace::CreateFromLayoutObject(*block_flow);
+      NGConstraintSpace::CreateFromLayoutObject(*block_flow, ignore, ignore);
 
   RefPtr<const NGPhysicalFragment> fragment =
       node.Layout(space.Get())->PhysicalFragment();
@@ -145,8 +147,9 @@ TEST_F(NGOutOfFlowLayoutPartTest, OrthogonalWritingMode2) {
   LayoutNGBlockFlow* block_flow =
       ToLayoutNGBlockFlow(GetLayoutObjectByElementId("container"));
   NGBlockNode node(block_flow);
+  Optional<LayoutUnit> ignore;
   RefPtr<NGConstraintSpace> space =
-      NGConstraintSpace::CreateFromLayoutObject(*block_flow);
+      NGConstraintSpace::CreateFromLayoutObject(*block_flow, ignore, ignore);
 
   RefPtr<const NGPhysicalFragment> fragment =
       node.Layout(space.Get())->PhysicalFragment();

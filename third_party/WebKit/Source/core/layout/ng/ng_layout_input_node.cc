@@ -7,7 +7,9 @@
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_block_node.h"
+#include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_length_utils.h"
 #include "core/layout/ng/ng_min_max_content_size.h"
 #include "platform/wtf/text/StringBuilder.h"
 
@@ -76,6 +78,10 @@ bool NGLayoutInputNode::CreatesNewFormattingContext() const {
   return box_->AvoidsFloats();
 }
 
+bool NGLayoutInputNode::IsReplaced() const {
+  return box_->IsLayoutReplaced();
+}
+
 RefPtr<NGLayoutResult> NGLayoutInputNode::Layout(NGConstraintSpace* space,
                                                  NGBreakToken* break_token) {
   return IsInline() ? ToNGInlineNode(*this).Layout(space, break_token)
@@ -85,6 +91,20 @@ RefPtr<NGLayoutResult> NGLayoutInputNode::Layout(NGConstraintSpace* space,
 MinMaxContentSize NGLayoutInputNode::ComputeMinMaxContentSize() {
   return IsInline() ? ToNGInlineNode(*this).ComputeMinMaxContentSize()
                     : ToNGBlockNode(*this).ComputeMinMaxContentSize();
+}
+
+NGPhysicalSize NGLayoutInputNode::IntrinsicSize(
+    const NGConstraintSpace& container_space) {
+  DCHECK(IsReplaced());
+  LayoutSize content_size = box_->IntrinsicSize();
+  NGPhysicalBoxStrut borders_and_padding =
+      (ComputeBorders(container_space, box_->StyleRef()) +
+       ComputePadding(container_space, box_->StyleRef()))
+          .ConvertToPhysical(container_space.WritingMode(),
+                             container_space.Direction());
+  return NGPhysicalSize(
+      content_size.Width() + borders_and_padding.HorizontalSum(),
+      content_size.Height() + borders_and_padding.VerticalSum());
 }
 
 NGLayoutInputNode NGLayoutInputNode::NextSibling() {
