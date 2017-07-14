@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c606efdf_459e212a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-14T16:17:26Z",
+      "side": 1,
+      "message": "You need to explicitly Close the binding before re-binding it or Bind will DCHECK",
+      "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
