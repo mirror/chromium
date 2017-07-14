@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c1733861_b4efde71",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-14T07:47:42Z",
+      "side": 1,
+      "message": "This function is used in these place: https://cs.chromium.org/chromium/src/base/process/process_metrics.cc?l\u003d33\u0026dr\u003dC\nhttps://cs.chromium.org/chromium/src/base/process/process_metrics.cc?l\u003d33\u0026dr\u003dC\n\nNot only they store the value and do not do anything else, but |GetSwapInfo| either give 0 or a valid value, I thought it is OK to change void to bool.\n\nBy the way, many methods like |SystemMetrics SystemMetrics::Sample()| did not check the return value of the parsing methods even if they already have return boolean value.\nEx:\nhttps://cs.chromium.org/chromium/src/base/process/process_metrics_linux.cc?dr\u003dC\u0026l\u003d696",
+      "parentUuid": "c62c2bf3_9736a871",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8fb0c18_5aea27c1",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 7
@@ -148,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "31444e65_b60b19be",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-14T07:47:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f707994c_060f8ed5",
+      "range": {
+        "startLine": 1019,
+        "startChar": 9,
+        "endLine": 1019,
+        "endChar": 15
+      },
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b5eafcd_5aa8afc1",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 7
@@ -162,6 +204,24 @@
       "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f84023_a47b4bec",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-14T07:47:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b5eafcd_5aa8afc1",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
