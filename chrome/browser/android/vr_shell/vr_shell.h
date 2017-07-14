@@ -104,6 +104,8 @@ class VrShell : public device::GvrDelegate,
                     bool show_toast);
   bool GetWebVrMode(JNIEnv* env,
                     const base::android::JavaParamRef<jobject>& obj);
+  bool IsDisplayingURL(JNIEnv* env,
+                       const base::android::JavaParamRef<jobject>& obj);
   void OnFullscreenChanged(bool enabled);
   void OnLoadProgressChanged(JNIEnv* env,
                              const base::android::JavaParamRef<jobject>& obj,

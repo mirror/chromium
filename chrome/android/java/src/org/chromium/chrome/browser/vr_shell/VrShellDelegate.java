@@ -251,6 +251,11 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         return getInstance();
     }
 
+    @VisibleForTesting
+    public static boolean isDisplayingURL() {
+        return sInstance.mVrShell.isDisplayingURL();
+    }
+
     /**
      * Whether or not we are currently in VR.
      */

@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.vr_shell;
 
+import static org.chromium.chrome.browser.UrlConstants.NTP_URL;
 import static org.chromium.chrome.browser.vr_shell.VrTestRule.PAGE_LOAD_TIMEOUT_S;
 import static org.chromium.chrome.browser.vr_shell.VrTestRule.POLL_TIMEOUT_LONG_MS;
 import static org.chromium.chrome.browser.vr_shell.VrTestRule.POLL_TIMEOUT_SHORT_MS;
@@ -51,7 +52,7 @@ public class VrShellNavigationTest {
     private static final String TEST_PAGE_WEBVR_URL =
             VrTestRule.getHtmlTestFile("test_navigation_webvr_page");
 
-    private enum Page { PAGE_2D, PAGE_WEBVR }
+    private enum Page { PAGE_2D, PAGE_WEBVR, PAGE_NTP }
     private enum PresentationMode { NON_PRESENTING, PRESENTING }
     private enum FullscreenMode { NON_FULLSCREENED, FULLSCREENED }
 
@@ -67,6 +68,8 @@ public class VrShellNavigationTest {
                 return TEST_PAGE_2D_URL + "?id=0";
             case PAGE_WEBVR:
                 return TEST_PAGE_WEBVR_URL + "?id=0";
+            case PAGE_NTP:
+                return NTP_URL;
             default:
                 throw new UnsupportedOperationException("Don't know page type " + page);
         }
@@ -252,5 +255,26 @@ public class VrShellNavigationTest {
 
         assertState(mVrTestRule.getFirstTabWebContents(), Page.PAGE_WEBVR,
                 PresentationMode.NON_PRESENTING, FullscreenMode.NON_FULLSCREENED);
+    }
+
+    /**
+     * Tests navigation to the NTP
+     */
+    @Test
+    @MediumTest
+    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
+    public void testNavigation2dFromNTP()
+            throws IllegalArgumentException, InterruptedException, TimeoutException {
+        // We call loadUrl directly because we cannot depend on javascript.
+        mVrTestRule.loadUrl(NTP_URL, PAGE_LOAD_TIMEOUT_S);
+
+        // TODO(tiborg): Update this. crbug.com/738583
+        Assert.assertTrue("Should be showing URL", VrShellDelegate.isDisplayingURL());
+
+        // Again, navigation cannot depend on javascript, so rather than navigateTo,
+        // we call loadUrlAndAwaitInitialization.
+        mVrTestRule.loadUrlAndAwaitInitialization(TEST_PAGE_2D_URL, PAGE_LOAD_TIMEOUT_S);
+
+        Assert.assertTrue("Should be showing URL", VrShellDelegate.isDisplayingURL());
     }
 }
