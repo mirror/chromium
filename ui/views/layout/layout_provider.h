@@ -75,6 +75,13 @@ enum DistanceMetric {
   // The spacing between a pair of related vertical controls, used for
   // dialog layout.
   DISTANCE_RELATED_CONTROL_VERTICAL,
+  // Horizontal spacing between an item such as an icon or checkbox and a
+  // label related to it.
+  DISTANCE_RELATED_LABEL_HORIZONTAL,
+  // Horizontal margin between a table cell and its contents.
+  DISTANCE_TABLE_CELL_HORIZONTAL_MARGIN,
+  // Minimum height of a table row.
+  DISTANCE_TABLE_ROW_MINIMUM_HEIGHT,
   // Vertical spacing between controls that are logically unrelated.
   DISTANCE_UNRELATED_CONTROL_VERTICAL,
 

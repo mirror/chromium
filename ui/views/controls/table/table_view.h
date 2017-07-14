@@ -219,6 +219,9 @@ class VIEWS_EXPORT TableView
     ADVANCE_INCREMENT,
   };
 
+  int GetCellMargin() const;
+  int GetCellElementSpacing() const;
+
   // Invoked when the number of rows changes in some way.
   void NumRowsChanged();
 
