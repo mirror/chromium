@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0c60d21_e631af8a",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 11753,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-14T20:56:53Z",
+      "side": 1,
+      "message": "Let\u0027s just skip this test with RLS, with something like this at the top:\n\n  // With RLS, scroll origin changes do not update layer positions.\n  // It\u0027s unclear why it was ever desirable to update layer positions,\n  // even without RLS, because the position adjustment in the PLC scroll\n  // layer was negated by the position adjustment in the content root layer.\n  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled())\n    return;",
+      "revId": "8f8c811b5a8a135188fdd0bded640f29fbec6ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
