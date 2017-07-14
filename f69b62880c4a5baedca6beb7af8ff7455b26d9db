@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b08e72d1_b6a23ae1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T16:06:46Z",
+      "side": 1,
+      "message": "nit: s/controll/control/",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "f69b62880c4a5baedca6beb7af8ff7455b26d9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc94c6b_e73ae9a5",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T16:06:46Z",
+      "side": 1,
+      "message": "nit: Is there a reason to have policy key and the pref name different? It can be a bit confusing, given that semantically they\u0027re doing the same.",
+      "range": {
+        "startLine": 689,
+        "startChar": 9,
+        "endLine": 689,
+        "endChar": 39
+      },
+      "revId": "f69b62880c4a5baedca6beb7af8ff7455b26d9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86eb9894_04f261f9",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4468,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T16:06:46Z",
+      "side": 1,
+      "message": "nit: Maybe add a blank line after #if and before #endif?",
+      "range": {
+        "startLine": 4468,
+        "startChar": 0,
+        "endLine": 4468,
+        "endChar": 24
+      },
+      "revId": "f69b62880c4a5baedca6beb7af8ff7455b26d9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1a92ff_3f8c1f3c",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4478,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T16:06:46Z",
+      "side": 1,
+      "message": "nit: Could you drop a short comment explaining why this command line flag is needed?",
+      "range": {
+        "startLine": 4476,
+        "startChar": 4,
+        "endLine": 4478,
+        "endChar": 44
+      },
+      "revId": "f69b62880c4a5baedca6beb7af8ff7455b26d9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d005fe4_70bf4b19",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4478,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T16:06:46Z",
+      "side": 1,
+      "message": "nit: Maybe introduce a constant for this ID?\nThis would allow to check that the loaded app has the expected ID.",
+      "range": {
+        "startLine": 4478,
+        "startChar": 9,
+        "endLine": 4478,
+        "endChar": 41
+      },
+      "revId": "f69b62880c4a5baedca6beb7af8ff7455b26d9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfdf9ce4_75ae688c",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4487,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T16:06:46Z",
+      "side": 1,
+      "message": "nit: s/Takingi/Taking/",
+      "range": {
+        "startLine": 4487,
+        "startChar": 23,
+        "endLine": 4487,
+        "endChar": 59
+      },
+      "revId": "f69b62880c4a5baedca6beb7af8ff7455b26d9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45236ab9_4405c373",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4491,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T16:06:46Z",
+      "side": 1,
+      "message": "nit: Maybe extract repeated pieces into test fixture methods?\nThis will also make reading the tests easier, for instance:\n\n  InstallTestApp();\n  SetUserLevelPrefValue(true);\n  EXPECT_EQ(NoteTakingLockScreenSupport::kSelected,\n            GetPreferredAppSupportLevel());\n  SetPolicyValue(base::Value(false));\n  EXPECT_EQ(NoteTakingLockScreenSupport::kSupported,\n            GetPreferredAppSupportLevel());\n  EXPECT_FALSE(GetPrefValue());\n  SetPolicyValue(base::Value());\n  EXPECT_EQ(NoteTakingLockScreenSupport::kSelected,\n            GetPreferredAppSupportLevel());\n  EXPECT_TRUE(GetPrefValue());",
+      "range": {
+        "startLine": 4490,
+        "startChar": 2,
+        "endLine": 4491,
+        "endChar": 59
+      },
+      "revId": "f69b62880c4a5baedca6beb7af8ff7455b26d9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93313b6_87c573bf",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4579,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T16:06:46Z",
+      "side": 1,
+      "message": "nit: Leave a blank line before the closing bracket.",
+      "range": {
+        "startLine": 4579,
+        "startChar": 0,
+        "endLine": 4579,
+        "endChar": 22
+      },
+      "revId": "f69b62880c4a5baedca6beb7af8ff7455b26d9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee75026e_bb460761",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 9768,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T16:06:46Z",
+      "side": 1,
+      "message": "nit: s/chrome.chrome_os/chrome_os/\n(Not sure why it worked that way - it\u0027s probably the parser being too permissive.)",
+      "range": {
+        "startLine": 9768,
+        "startChar": 9,
+        "endLine": 9768,
+        "endChar": 25
+      },
+      "revId": "f69b62880c4a5baedca6beb7af8ff7455b26d9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
