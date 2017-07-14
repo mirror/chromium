@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "103179f5_b05d34fd",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-14T08:04:40Z",
+      "side": 1,
+      "message": "Please add: Caution is needed when using posting tasks to this WebTaskRunner because they could starve out other work. \n\nNote there is some starvation protection for every 5 (iirc) high priority tasks 1 other task is allowed to run.",
+      "range": {
+        "startLine": 89,
+        "startChar": 19,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "77d849a6231cfd73447bf881eff36823adb15a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0347c0_fd651d37",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-14T08:04:40Z",
+      "side": 1,
+      "message": "Please add, Tasks posted to this queue must execute quickly.",
+      "range": {
+        "startLine": 165,
+        "startChar": 27,
+        "endLine": 165,
+        "endChar": 34
+      },
+      "revId": "77d849a6231cfd73447bf881eff36823adb15a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
