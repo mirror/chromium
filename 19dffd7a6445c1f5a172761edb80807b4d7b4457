@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58c25433_7fb0851c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/clear-site-data/support/page_with_resource.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T11:15:33Z",
+      "side": 1,
+      "message": "This hard-coding won\u0027t work either: please flip to `.sub.html` and `{{ports[https][0]}}`, etc.",
+      "revId": "19dffd7a6445c1f5a172761edb80807b4d7b4457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b49ada0_32432469",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/clear-site-data/support/test_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T11:15:33Z",
+      "side": 1,
+      "message": "Hard-coding the domain won\u0027t work in practice; I\u0027d suggest changing the name of this file to `test_utils.sub.js`, and changing this to `{{domains[www]}}`.",
+      "revId": "19dffd7a6445c1f5a172761edb80807b4d7b4457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb359954_1f680334",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/clear-site-data/support/test_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T11:15:33Z",
+      "side": 1,
+      "message": "And this to `{{ports[https][0]}} : {{ports[http][0]}}",
+      "revId": "19dffd7a6445c1f5a172761edb80807b4d7b4457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
