@@ -22,6 +22,30 @@
       "revId": "63a25016ea64fe502791ad6b894d6a5930320c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e111b43_8fea8d17",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-14T14:59:18Z",
+      "side": 1,
+      "message": "GetAllocationKind() sounds nice.",
+      "parentUuid": "c3f4d210_0e15211c",
+      "range": {
+        "startLine": 125,
+        "startChar": 19,
+        "endLine": 125,
+        "endChar": 33
+      },
+      "revId": "63a25016ea64fe502791ad6b894d6a5930320c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
