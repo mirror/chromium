@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "228fd037_9e033aa7",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-14T18:09:03Z",
+      "side": 1,
+      "message": "Many of these DCHECKs (across the whole file) should probably be early returns with NotifyError. |vea_client_| checks in particular, since a compromised renderer could be calling these methods in any order.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 8
+      },
+      "revId": "a63675c032c6f887457c41d60482938233e38f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
