@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f156113_490e474a",
+        "filename": "ui/platform_window/mojo/ime_type_converters.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-14T14:48:19Z",
+      "side": 1,
+      "message": "Can you also add an assertion on last so that we don\u0027t miss new values that get added?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "4017825f531f30ca44ad0de02899fa45cc051430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
