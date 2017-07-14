@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63699d0b_180135c5",
+        "filename": "base/process/launch_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T17:49:52Z",
+      "side": 1,
+      "message": "Nit: let\u0027s just require this (the other GetAppOutput helpers can just put a dummy int on the stack); then it\u0027s consistent that all output args are required.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 3
+      },
+      "revId": "7c4da546e7de710ade142faeeabb7d5adb121b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
