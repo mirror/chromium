@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5833d511_20f69321",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-14T18:44:04Z",
+      "side": 1,
+      "message": "I\u0027d rather expose infobars_enabled() on the InfobarManager or made sure service was not available when switch there. @pkasting: which one is better?",
+      "revId": "3ede7c7966c10983cde1111ffa8cc1bc5a1bed10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
