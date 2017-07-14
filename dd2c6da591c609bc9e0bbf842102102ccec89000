@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d5044b5_8fe92fb6",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T00:12:35Z",
+      "side": 0,
+      "message": "This line break is awkward, if it\u0027s too long after indenting 4 times, let\u0027s put disabled and value\u003d... on separate lines",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 38,
+        "endChar": 69
+      },
+      "revId": "dd2c6da591c609bc9e0bbf842102102ccec89000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

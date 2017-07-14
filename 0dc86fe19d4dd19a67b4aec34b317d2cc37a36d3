@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d40543c7_25367a27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T00:12:35Z",
+      "side": 1,
+      "message": "Maybe simplify this to \"[MD Settings] Fixed accessibility issues in passwords section.",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c7fbfc_9ed8a07a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T00:12:35Z",
+      "side": 1,
+      "message": "No need to comment on what files changed b/c they\u0027re already included as part of the CL",
+      "range": {
+        "startLine": 9,
+        "startChar": 202,
+        "endLine": 9,
+        "endChar": 304
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4bf3cd_234f1de7",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T00:12:35Z",
+      "side": 1,
+      "message": "Let\u0027s use \"Password\" as the label and let\u0027s get it using the $i18n{...} mechanis.",
+      "range": {
+        "startLine": 36,
+        "startChar": 43,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446d2df5_44261820",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T00:12:35Z",
+      "side": 1,
+      "message": "Nit: extra space",
+      "range": {
+        "startLine": 36,
+        "startChar": 73,
+        "endLine": 36,
+        "endChar": 74
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b9301c_27890c2f",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T00:12:35Z",
+      "side": 1,
+      "message": "These lines should be indented 4 spaces to match coding style.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 79
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f24d7a_e094fcca",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_subpage_search.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T00:12:35Z",
+      "side": 1,
+      "message": "Is this also hidden from sighted users?",
+      "range": {
+        "startLine": 74,
+        "startChar": 25,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
