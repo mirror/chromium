@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff605e3f_cdd48eec",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-14T19:46:25Z",
+      "side": 1,
+      "message": "Am I notifying it too early here? Should I notify the CSSPaintImageGenerator ready only when the registerPaint is called twice?",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 58
+      },
+      "revId": "36e107afa4e45308f567aa227246d2ac1b2a59f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
