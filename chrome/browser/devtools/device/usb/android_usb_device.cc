@@ -64,6 +64,11 @@ typedef std::set<scoped_refptr<UsbDevice> > UsbDeviceSet;
 base::LazyInstance<std::vector<AndroidUsbDevice*>>::Leaky g_devices =
     LAZY_INSTANCE_INITIALIZER;
 
+// Stores the GUIDs of devices that are currently opened so that they are not
+// re-probed.
+base::LazyInstance<std::vector<std::string>>::Leaky g_open_devices =
+    LAZY_INSTANCE_INITIALIZER;
+
 bool IsAndroidInterface(const UsbInterfaceDescriptor& interface) {
   if (interface.alternate_setting != 0 ||
       interface.interface_class != kAdbClass ||
@@ -133,6 +138,7 @@ void DumpMessage(bool outgoing, const char* data, size_t length) {
 
 void CloseDevice(scoped_refptr<UsbDeviceHandle> usb_device,
                  bool release_successful) {
+  base::Erase(g_open_devices.Get(), usb_device->GetDevice()->guid());
   usb_device->Close();
 }
 
@@ -195,7 +201,9 @@ void OnDeviceOpened(AndroidUsbDevices* devices,
                     const base::Closure& barrier,
                     scoped_refptr<UsbDeviceHandle> usb_handle) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   if (usb_handle.get()) {
+    g_open_devices.Get().push_back(usb_handle->GetDevice()->guid());
     usb_handle->ClaimInterface(
         interface_number,
         base::Bind(&CreateDeviceOnInterfaceClaimed, devices, rsa_key,
@@ -212,6 +220,12 @@ void OpenAndroidDevice(AndroidUsbDevices* devices,
                        scoped_refptr<UsbDevice> device,
                        int interface_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  if (base::ContainsValue(g_open_devices.Get(), device->guid())) {
+    barrier.Run();
+    return;
+  }
+
   if (device->serial_number().empty()) {
     barrier.Run();
     return;
@@ -459,9 +473,8 @@ void AndroidUsbDevice::ProcessOutgoing() {
 void AndroidUsbDevice::OutgoingMessageSent(UsbTransferStatus status,
                                            scoped_refptr<net::IOBuffer> buffer,
                                            size_t result) {
-  if (status != UsbTransferStatus::COMPLETED) {
+  if (status != UsbTransferStatus::COMPLETED)
     return;
-  }
 
   task_runner_->PostTask(
       FROM_HERE, base::BindOnce(&AndroidUsbDevice::ProcessOutgoing, this));
