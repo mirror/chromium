@@ -16,6 +16,24 @@
       "revId": "ac1c5ca9011ad9dd5a2a4eb5c7e838c63b81b6ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42ba007_6eedfa74",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-14T06:45:02Z",
+      "side": 1,
+      "message": "To avoid including \"SpellChecker.h\" in \"Editor.h\", I don\u0027t want to\ndefine TypeContinuation in SpellChecker class.\n\nReal user of TypeContinuation is SpellChecker, but it is passed by\nEdditor. From FrameSelection view, the user is Editor.",
+      "parentUuid": "ebc4a157_1cba39c3",
+      "revId": "ac1c5ca9011ad9dd5a2a4eb5c7e838c63b81b6ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
