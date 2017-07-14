@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6bc6111_215c558e",
+        "filename": "chromeos/cryptohome/mock_homedir_methods.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Why did you reformat this line? You do not seem to have touched the file otherwise.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41179d63_c57413c7",
+        "filename": "chromeos/cryptohome/mock_homedir_methods.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Nit: Where is this used?",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb26bff_149988ab",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Maybe we should log this in UMA. The server does not distinguish between regular policy fetches and these session-less fetches. If load spikes at some point, it will be hard to reason which of the two code paths is responsible for it.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bac3e8_13245f29",
+        "filename": "chromeos/dbus/session_manager_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Nit 1: s/callback/|callback|/\nNit 2: The \"|callback| is invoked up on completion.\" used in the next method\u0027s description is more concise.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af5ee44_2afb2f26",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 9760,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Nit: s/ext4/ext4-encrypted/",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7a6475_f0e0e6ea",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 9772,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Nit: This is not per-profile. Any additional profiles\u0027 policy value will be simply ignored.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79055b10_a0ed2ec6",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 9780,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Nit: You use \"profile\" and \"home directory\" interchangeably. Better settle on one term.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb89996e_c318688a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 9786,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Nit: the \"as necessary (currently when Android N becomes available on the device)\" applies to this whole policy, not just this one option.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fe87ea_a4713d92",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Nit: Const pointer.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b349f2d1_a51e5ccf",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 10828,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Nit: It looks like you picked up an unrelated change accidentally here.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6807973b_19188ee4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 10831,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T16:14:10Z",
+      "side": 1,
+      "message": "Nit: It looks like you picked up an unrelated change accidentally here.",
+      "revId": "c3b10789fe1d6e65db9171046a6e42a2e935e20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
