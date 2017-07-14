@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e10686be_871bc316",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1826,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-07-14T18:25:47Z",
+      "side": 1,
+      "message": "This is not a good public API to expose off CTA. It doesn\u0027t make much sense on its own and depends on input from previous computation.\n\nI don\u0027t have any problem with exposing backShouldCloseTab() as that makes a lot of sense.\n\nMy suggestion would be to expose only the first one and just reimplement this logic inside Vr. I don\u0027t think it makese sense as a separate function like this.",
+      "range": {
+        "startLine": 1826,
+        "startChar": 19,
+        "endLine": 1826,
+        "endChar": 40
+      },
+      "revId": "e92df3faaec8d03ce1277184c17d26b4018335c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
