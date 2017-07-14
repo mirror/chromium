@@ -22,6 +22,29 @@
       "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2f2d30_43d99181",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-14T09:08:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the same logic also apply to CORS with forced preflight? Maybe generalize https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp?type\u003dcs\u0026l\u003d131 and use it here?",
+      "range": {
+        "startLine": 880,
+        "startChar": 38,
+        "endLine": 880,
+        "endChar": 59
+      },
+      "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
