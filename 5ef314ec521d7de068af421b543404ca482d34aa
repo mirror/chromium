@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "e893bec7_40c22816",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-14T13:55:02Z",
+      "side": 1,
+      "message": "Sorry, only the beginning /* -\u003e /**. At the end: be different.*/ -\u003e be different. */, add a space between . and */.",
+      "parentUuid": "d013e026_029651c1",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 14
+      },
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60738fda_bacb0f79",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
         "patchSetId": 4
@@ -99,6 +123,30 @@
       "writtenOn": "2017-07-14T13:40:45Z",
       "side": 1,
       "message": "/* -\u003e /**\n*/ -\u003e **/",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 14
+      },
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a522eadf_4d2c0d96",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/InstallHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-14T13:55:02Z",
+      "side": 1,
+      "message": "I just realize you use a different style for comments. Please keep the style consistent with other functions:)",
+      "parentUuid": "08f50618_1619cbbc",
       "range": {
         "startLine": 83,
         "startChar": 7,
