@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a024d98_bc80d08c",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-14T00:16:12Z",
+      "side": 1,
+      "message": "Since this gets called pretty often over the course of a dragging, consider throttling this a bit - maybe only invoke setCurrentMediaVolume if it\u0027s been more than 300ms since the last invocation?",
+      "range": {
+        "startLine": 326,
+        "startChar": 75,
+        "endLine": 326,
+        "endChar": 0
+      },
+      "revId": "0e8eb4d33b0d8d271efd3b93202b6c9f4786689d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
