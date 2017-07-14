@@ -441,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "725ce04a_76a4b3d3",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/content_setting.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T01:38:07Z",
+      "side": 1,
+      "message": "Yes.\n\nThe current patchset is causing a layering violation: core/workers/ and shared_worker/ should not include content_setting.mojom under serviceworker/. They cannot depend on service worker components.",
+      "parentUuid": "ecd6f959_f042b2d1",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cb2642e_5c1f4e7c",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/content_setting.mojom",
         "patchSetId": 3
