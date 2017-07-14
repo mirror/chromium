@@ -7,19 +7,18 @@
 
 #include <memory>
 
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
-
 namespace service_manager {
 class ServiceContextRef;
 }
 
 namespace resource_coordinator {
 
+class CoordinationUnitBase;
 struct CoordinationUnitID;
 
 namespace coordination_unit_factory {
 
-std::unique_ptr<CoordinationUnitImpl> CreateCoordinationUnit(
+std::unique_ptr<CoordinationUnitBase> CreateCoordinationUnit(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref);
 

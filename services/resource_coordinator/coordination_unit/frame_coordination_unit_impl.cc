@@ -9,11 +9,11 @@ namespace resource_coordinator {
 FrameCoordinationUnitImpl::FrameCoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : CoordinationUnitImpl(id, std::move(service_ref)) {}
+    : CoordinationUnitBase(id, std::move(service_ref)) {}
 
 FrameCoordinationUnitImpl::~FrameCoordinationUnitImpl() = default;
 
-std::set<CoordinationUnitImpl*>
+std::set<CoordinationUnitBase*>
 FrameCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
     CoordinationUnitType type) {
   switch (type) {
@@ -33,7 +33,7 @@ FrameCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
       return frame_coordination_units;
     }
     default:
-      return std::set<CoordinationUnitImpl*>();
+      return std::set<CoordinationUnitBase*>();
   }
 }
 

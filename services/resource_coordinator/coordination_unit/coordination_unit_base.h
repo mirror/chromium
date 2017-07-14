@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_IMPL_H_
-#define SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_IMPL_H_
+#ifndef SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_BASE_H_
+#define SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_BASE_H_
 
 #include <memory>
 #include <set>
@@ -25,15 +25,18 @@ namespace resource_coordinator {
 class CoordinationUnitGraphObserver;
 class FrameCoordinationUnitImpl;
 
-class CoordinationUnitImpl : public mojom::CoordinationUnit {
+// CoordinationUnitBase implements shared functionality among different types of
+// coordination units. A specific type of coordination unit will derive from
+// this class and can override shared funtionality when needed.
+class CoordinationUnitBase : public mojom::CoordinationUnit {
  public:
-  CoordinationUnitImpl(
+  CoordinationUnitBase(
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
-  ~CoordinationUnitImpl() override;
+  ~CoordinationUnitBase() override;
 
   static const FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
-      const CoordinationUnitImpl* coordination_unit);
+      const CoordinationUnitBase* coordination_unit);
 
   // Overridden from mojom::CoordinationUnit:
   void SendEvent(mojom::EventPtr event) override;
@@ -47,10 +50,10 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   void SetCoordinationPolicyCallback(
       mojom::CoordinationPolicyCallbackPtr callback) override;
 
-  // Return all of the reachable |CoordinationUnitImpl| instances
+  // Return all of the reachable |CoordinationUnitBase| instances
   // of type |CoordinationUnitType|. Note that a callee should
   // never be associated with itself.
-  virtual std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
+  virtual std::set<CoordinationUnitBase*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type);
   // Recalculate property internally.
   virtual void RecalculateProperty(const mojom::PropertyType property_type) {}
@@ -65,27 +68,27 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
 
   // Getters and setters.
   const CoordinationUnitID& id() const { return id_; }
-  const std::set<CoordinationUnitImpl*>& children() const { return children_; }
-  const std::set<CoordinationUnitImpl*>& parents() const { return parents_; }
+  const std::set<CoordinationUnitBase*>& children() const { return children_; }
+  const std::set<CoordinationUnitBase*>& parents() const { return parents_; }
   const std::map<mojom::PropertyType, std::unique_ptr<base::Value>>&
   properties_for_testing() const {
     return properties_;
   }
 
  protected:
-  // Propagate property change to relevant |CoordinationUnitImpl| instances.
+  // Propagate property change to relevant |CoordinationUnitBase| instances.
   virtual void PropagateProperty(mojom::PropertyType property_type,
                                  const base::Value& value) {}
 
   // Coordination unit graph traversal helper functions.
-  std::set<CoordinationUnitImpl*> GetChildCoordinationUnitsOfType(
+  std::set<CoordinationUnitBase*> GetChildCoordinationUnitsOfType(
       CoordinationUnitType type);
-  std::set<CoordinationUnitImpl*> GetParentCoordinationUnitsOfType(
+  std::set<CoordinationUnitBase*> GetParentCoordinationUnitsOfType(
       CoordinationUnitType type);
 
   const CoordinationUnitID id_;
-  std::set<CoordinationUnitImpl*> children_;
-  std::set<CoordinationUnitImpl*> parents_;
+  std::set<CoordinationUnitBase*> children_;
+  std::set<CoordinationUnitBase*> parents_;
 
  private:
   enum StateFlags : uint8_t {
@@ -96,12 +99,12 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
     kNumStateFlags
   };
 
-  bool AddChild(CoordinationUnitImpl* child);
-  bool RemoveChild(CoordinationUnitImpl* child);
-  void AddParent(CoordinationUnitImpl* parent);
-  void RemoveParent(CoordinationUnitImpl* parent);
-  bool HasParent(CoordinationUnitImpl* unit);
-  bool HasChild(CoordinationUnitImpl* unit);
+  bool AddChild(CoordinationUnitBase* child);
+  bool RemoveChild(CoordinationUnitBase* child);
+  void AddParent(CoordinationUnitBase* parent);
+  void RemoveParent(CoordinationUnitBase* parent);
+  bool HasParent(CoordinationUnitBase* unit);
+  bool HasChild(CoordinationUnitBase* unit);
   bool SelfOrParentHasFlagSet(StateFlags state);
   // TODO(crbug.com/691886) Consider removing these.
   void RecalcCoordinationPolicy();
@@ -120,9 +123,9 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   // TODO(crbug.com/691886) Consider switching properties_.
   base::Optional<bool> state_flags_[kNumStateFlags];
 
-  DISALLOW_COPY_AND_ASSIGN(CoordinationUnitImpl);
+  DISALLOW_COPY_AND_ASSIGN(CoordinationUnitBase);
 };
 
 }  // namespace resource_coordinator
 
-#endif  // SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_IMPL_H_
+#endif  // SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_BASE_H_

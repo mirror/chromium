@@ -7,7 +7,7 @@
 #include <memory>
 #include <utility>
 
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
@@ -19,7 +19,7 @@ namespace resource_coordinator {
 
 namespace coordination_unit_factory {
 
-std::unique_ptr<CoordinationUnitImpl> CreateCoordinationUnit(
+std::unique_ptr<CoordinationUnitBase> CreateCoordinationUnit(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref) {
   switch (id.type) {
@@ -33,7 +33,7 @@ std::unique_ptr<CoordinationUnitImpl> CreateCoordinationUnit(
       return base::MakeUnique<WebContentsCoordinationUnitImpl>(
           id, std::move(service_ref));
     default:
-      return base::MakeUnique<CoordinationUnitImpl>(id, std::move(service_ref));
+      return base::MakeUnique<CoordinationUnitBase>(id, std::move(service_ref));
   }
 }
 

@@ -10,7 +10,7 @@
 
 namespace resource_coordinator {
 
-class CoordinationUnitImpl;
+class CoordinationUnitBase;
 
 // An observer API for the coordination unit graph maintained by GRC.
 //
@@ -33,45 +33,45 @@ class CoordinationUnitGraphObserver {
 
   // Determines whether or not the observer should be registered with, and
   // invoked for, the |coordination_unit|.
-  virtual bool ShouldObserve(const CoordinationUnitImpl* coordination_unit) = 0;
+  virtual bool ShouldObserve(const CoordinationUnitBase* coordination_unit) = 0;
 
   // Called whenever a CoordinationUnit is created.
   virtual void OnCoordinationUnitCreated(
-      const CoordinationUnitImpl* coordination_unit) {}
+      const CoordinationUnitBase* coordination_unit) {}
 
   // Called whenever a new parent-child relationship occurs where the
   // |coordination_unit| is the parent of |child_coordination_unit|
   virtual void OnChildAdded(
-      const CoordinationUnitImpl* coordination_unit,
-      const CoordinationUnitImpl* child_coordination_unit) {}
+      const CoordinationUnitBase* coordination_unit,
+      const CoordinationUnitBase* child_coordination_unit) {}
 
   // Called whenever a new parent-child relationship occurs where the
   // |coordination_unit| is the child of |parent_coordination_unit|.
   virtual void OnParentAdded(
-      const CoordinationUnitImpl* coordination_unit,
-      const CoordinationUnitImpl* parent_coordination_unit) {}
+      const CoordinationUnitBase* coordination_unit,
+      const CoordinationUnitBase* parent_coordination_unit) {}
 
   // Called whenever a |property| within the |coordination_unit|'s
   // internal property store has changed.
-  virtual void OnPropertyChanged(const CoordinationUnitImpl* coordination_unit,
+  virtual void OnPropertyChanged(const CoordinationUnitBase* coordination_unit,
                                  const mojom::PropertyType property_type,
                                  const base::Value& value) {}
 
   // Called whenever parent-child relationship ends where the
   // |coordination_unit| was the parent and the |child_coordination_unit|.
   virtual void OnChildRemoved(
-      const CoordinationUnitImpl* coordination_unit,
-      const CoordinationUnitImpl* child_coordination_unit) {}
+      const CoordinationUnitBase* coordination_unit,
+      const CoordinationUnitBase* child_coordination_unit) {}
 
   // Called whenever parent-child relationship ends where the
   // |coordination_unit| was the child and the |child_coordination_unit|.
   virtual void OnParentRemoved(
-      const CoordinationUnitImpl* coordination_unit,
-      const CoordinationUnitImpl* parent_coordination_unit) {}
+      const CoordinationUnitBase* coordination_unit,
+      const CoordinationUnitBase* parent_coordination_unit) {}
 
   // Called when the |coordination_unit| is about to be destroyed.
   virtual void OnBeforeCoordinationUnitDestroyed(
-      const CoordinationUnitImpl* coordination_unit) {}
+      const CoordinationUnitBase* coordination_unit) {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CoordinationUnitGraphObserver);

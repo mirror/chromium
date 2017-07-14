@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest_util.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.h"
 
 #include <string>
 
 #include "base/bind.h"
 #include "base/run_loop.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_factory.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 
@@ -22,25 +23,24 @@ void OnLastServiceRefDestroyed() {
 
 }  // namespace
 
-CoordinationUnitImplTestBase::CoordinationUnitImplTestBase()
+CoordinationUnitTestHarness::CoordinationUnitTestHarness()
     : service_ref_factory_(base::Bind(&OnLastServiceRefDestroyed)),
       provider_(&service_ref_factory_, &coordination_unit_manager_) {}
 
-CoordinationUnitImplTestBase::~CoordinationUnitImplTestBase() = default;
+CoordinationUnitTestHarness::~CoordinationUnitTestHarness() = default;
 
-void CoordinationUnitImplTestBase::TearDown() {
+void CoordinationUnitTestHarness::TearDown() {
   base::RunLoop().RunUntilIdle();
 }
 
-std::unique_ptr<CoordinationUnitImpl>
-CoordinationUnitImplTestBase::CreateCoordinationUnit(CoordinationUnitID cu_id) {
+std::unique_ptr<CoordinationUnitBase>
+CoordinationUnitTestHarness::CreateCoordinationUnit(CoordinationUnitID cu_id) {
   return coordination_unit_factory::CreateCoordinationUnit(
       cu_id, service_context_ref_factory()->CreateRef());
 }
 
-std::unique_ptr<CoordinationUnitImpl>
-CoordinationUnitImplTestBase::CreateCoordinationUnit(
-    CoordinationUnitType type) {
+std::unique_ptr<CoordinationUnitBase>
+CoordinationUnitTestHarness::CreateCoordinationUnit(CoordinationUnitType type) {
   CoordinationUnitID cu_id(type, std::string());
   return CreateCoordinationUnit(cu_id);
 }
