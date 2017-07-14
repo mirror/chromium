@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fb87d95_38b44a43",
+        "filename": "media/midi/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-07-14T04:02:14Z",
+      "side": 1,
+      "message": "use_midis can be set as a GN flag inside chromeos-chrome\u0027s ebuild, so it will never be set for any build of Chrome that doesn\u0027t ship with ChromeOS.",
+      "range": {
+        "startLine": 162,
+        "startChar": 18,
+        "endLine": 162,
+        "endChar": 27
+      },
+      "revId": "ce27495593d6d55ce143180e6c409964916ebab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
