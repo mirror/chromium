@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bea9624a_b9460bea",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-14T01:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27a96cfa_8d5fb4be",
+      "revId": "6827e5561b58860730036d6fbdcab757c1297516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7775dc85_d20ea04f",
         "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T00:47:57Z",
       "side": 1,
       "message": "I see the \"Print using system dialog\" on Linux too. Could this test cover that case too?",
+      "revId": "6827e5561b58860730036d6fbdcab757c1297516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad57e41_d3640d69",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-14T01:07:07Z",
+      "side": 1,
+      "message": "No, because Linux works differently. Requesting the system dialog\non other platforms does not trigger a print request, see:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/print_preview.js?l\u003d635",
+      "parentUuid": "7775dc85_d20ea04f",
       "revId": "6827e5561b58860730036d6fbdcab757c1297516",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
