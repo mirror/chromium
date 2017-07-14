@@ -9,10 +9,22 @@
 var appWindow = null;
 
 /**
- * Contains Web content provided by Google authorization server.
+ * Contains web content provided by Google authorization server.
  * @type {WebView}
  */
 var lsoView = null;
+
+/**
+ * Contains web content provided by Active Directory Federation Services.
+ * @type {WebView}
+ */
+var adAuthView = null;
+
+/**
+ * DM Server URL prefix used to detect if the SAML flow reached its endpoint.
+ * @type {string}
+ */
+var adAuthDmUrlPrefix = null;
 
 /** @type {TermsOfServicePage} */
 var termsPage = null;
@@ -378,9 +390,7 @@ class TermsOfServicePage {
 
   /** Called when "CANCEL" button is clicked. */
   onCancel_() {
-    if (appWindow) {
-      appWindow.close();
-    }
+    closeWindow();
   }
 
   /** Called when metrics preference is updated. */
@@ -456,16 +466,16 @@ function onNativeMessage(message) {
   } else if (message.action == 'setLocationServiceMode') {
     termsPage.onLocationServicePreferenceChanged(
         message.enabled, message.managed);
-  } else if (message.action == 'closeWindow') {
-    if (appWindow) {
-      appWindow.close();
-    }
   } else if (message.action == 'showPage') {
     showPage(message.page);
   } else if (message.action == 'showErrorPage') {
     showErrorPage(message.errorMessage, message.shouldShowSendFeedback);
+  } else if (message.action == 'closeWindow') {
+    closeWindow();
   } else if (message.action == 'setWindowBounds') {
     setWindowBounds();
+  } else if (message.action == 'setAdAuthUrls') {
+    setAdAuthUrls(message.federationUrl, message.dmUrlPrefix);
   }
 }
 
@@ -596,6 +606,16 @@ function showPrivacyPolicyOverlay() {
 }
 
 /**
+ * Sets URLs used for Active Directory user SAML authentication.
+ * @param {federationUrl} The Active Directory Federation Services URL.
+ * @param {dmUrlPrefix} The URL prefix of DM server.
+ */
+function setAdAuthUrls(federationUrl, dmUrlPrefix) {
+  adAuthView.src = federationUrl;
+  adAuthDmUrlPrefix = dmUrlPrefix;
+}
+
+/**
  * Hides overlay dialog.
  */
 function hideOverlay() {
@@ -637,6 +657,12 @@ function setWindowBounds() {
   appWindow.outerBounds.top = Math.ceil((screen.availHeight - outerHeight) / 2);
 }
 
+function closeWindow() {
+  if (appWindow) {
+    appWindow.close();
+  }
+}
+
 chrome.app.runtime.onLaunched.addListener(function() {
   var onAppContentLoad = function() {
     var doc = appWindow.contentWindow.document;
@@ -648,14 +674,14 @@ chrome.app.runtime.onLaunched.addListener(function() {
       run_at: 'document_end'
     }]);
 
-    var isApprovalResponse = function(url) {
+    var isLsoApprovalResponse = function(url) {
       var resultUrlPrefix = 'https://accounts.google.com/o/oauth2/approval?';
       return url.substring(0, resultUrlPrefix.length) == resultUrlPrefix;
     };
 
     var lsoError = false;
     var onLsoViewRequestResponseStarted = function(details) {
-      if (isApprovalResponse(details.url)) {
+      if (isLsoApprovalResponse(details.url)) {
         showPage('arc-loading');
       }
       lsoError = false;
@@ -672,7 +698,7 @@ chrome.app.runtime.onLaunched.addListener(function() {
         return;
       }
 
-      if (!isApprovalResponse(lsoView.src)) {
+      if (!isLsoApprovalResponse(lsoView.src)) {
         // Show LSO page when its content is ready.
         showPage('lso');
         // We have fixed width for LSO page in css file in order to prevent
@@ -689,7 +715,7 @@ chrome.app.runtime.onLaunched.addListener(function() {
           var authCode = results[0].substring(authCodePrefix.length);
           sendNativeMessage('onAuthSucceeded', {code: authCode});
         } else {
-          sendNativeMessage('onAuthFailed');
+          sendNativeMessage('onAuthFailed', {error_msg: 'Bad results.'});
           showErrorPage(appWindow.contentWindow.loadTimeData.getString(
               'authorizationFailed'));
         }
@@ -704,6 +730,42 @@ chrome.app.runtime.onLaunched.addListener(function() {
         onLsoViewErrorOccurred, requestFilter);
     lsoView.addEventListener('contentload', onLsoViewContentLoad);
 
+    adAuthView = doc.getElementById('ad-auth-view');
+
+    var onAdAuthViewRequestResponseStarted = function(details) {
+      // See if we hit DM server. This should happen at the end of the SAML
+      // flow. Before that, we're on the AD FS server.
+      if (adAuthDmUrlPrefix &&
+          details.url.substring(0, adAuthDmUrlPrefix.length) ==
+              adAuthDmUrlPrefix) {
+        // Did it actually work?
+        if (details.statusCode == 200) {
+          // code is unused, but it needs to be there.
+          sendNativeMessage('onAuthSucceeded', {code: ''});
+        } else {
+          sendNativeMessage('onAuthFailed', {
+            error_msg:
+                'Status code ' + details.statusCode + ' in DM server response.'
+          });
+        }
+      }
+    };
+
+    var onAdAuthViewErrorOccurred = function(details) {
+      // Retry triggers net::ERR_ABORTED, so ignore it.
+      if (details.error != 'net::ERR_ABORTED') {
+        sendNativeMessage(
+            'onAuthFailed', {error_msg: 'Error occurred: ' + details.error});
+      }
+    };
+
+    var requestFilter = {urls: ['<all_urls>'], types: ['main_frame']};
+
+    adAuthView.request.onResponseStarted.addListener(
+        onAdAuthViewRequestResponseStarted, requestFilter);
+    adAuthView.request.onErrorOccurred.addListener(
+        onAdAuthViewErrorOccurred, requestFilter);
+
     var onRetry = function() {
       sendNativeMessage('onRetryClicked');
     };
@@ -712,27 +774,15 @@ chrome.app.runtime.onLaunched.addListener(function() {
       sendNativeMessage('onSendFeedbackClicked');
     };
 
-    var onAdAuthNext = function() {
-      sendNativeMessage('onAgreed', {
-        isMetricsEnabled: false,          // ignored
-        isBackupRestoreEnabled: false,    // ignored
-        isLocationServiceEnabled: false,  // ignored
-      });
-    };
-
     var onAdAuthCancel = function() {
-      if (appWindow) {
-        appWindow.close();
-      }
+      closeWindow();
     };
 
     doc.getElementById('button-retry').addEventListener('click', onRetry);
-    doc.getElementById('button-ad-auth-next')
-        .addEventListener('click', onAdAuthNext);
-    doc.getElementById('button-ad-auth-cancel')
-        .addEventListener('click', onAdAuthCancel);
     doc.getElementById('button-send-feedback')
         .addEventListener('click', onSendFeedback);
+    doc.getElementById('button-ad-auth-cancel')
+        .addEventListener('click', onAdAuthCancel);
     doc.getElementById('overlay-close').addEventListener('click', hideOverlay);
     doc.getElementById('privacy-policy-link')
         .addEventListener('click', showPrivacyPolicyOverlay);

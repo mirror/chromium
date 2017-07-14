@@ -11,22 +11,20 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/arc/arc_support_host.h"
 #include "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h"
-#include "chrome/browser/chromeos/arc/auth/arc_auth_code_fetcher.h"
-#include "chrome/browser/chromeos/arc/auth/arc_auth_service.h"
+#include "chrome/browser/chromeos/arc/extensions/fake_arc_support.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/dm_token_storage.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/policy/cloud/test_request_interceptor.h"
-#include "chrome/browser/ui/browser.h"
-#include "chrome/browser/ui/browser_list.h"
-#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/test/base/in_process_browser_test.h"
-#include "chrome/test/base/testing_profile.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_cryptohome_client.h"
 #include "components/arc/arc_util.h"
 #include "components/policy/core/common/cloud/device_management_service.h"
 #include "components/policy/core/common/policy_switches.h"
+#include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/base/network_delegate.h"
 #include "net/base/upload_bytes_element_reader.h"
@@ -39,6 +37,7 @@
 
 namespace em = enterprise_management;
 
+namespace arc {
 namespace {
 
 constexpr char kFakeDmToken[] = "fake-dm-token";
@@ -47,23 +46,70 @@ constexpr char kFakeUserId[] = "fake-user-id";
 constexpr char kFakeAuthSessionId[] = "fake-auth-session-id";
 constexpr char kFakeAdfsServerUrl[] = "http://example.com/adfs/ls/awesome.aspx";
 constexpr char kNotYetFetched[] = "NOT-YET-FETCHED";
-constexpr char kRedirectHeaderFormat[] =
-    "HTTP/1.1 302 MOVED\n"
-    "Location: %s\n"
-    "\n";
 constexpr char kBadRequestHeader[] = "HTTP/1.1 400 Bad Request";
 
-// Returns a fake URL where the fake AD FS server redirects to
-std::string GetDmServerRedirectUrl() {
+using Status = ArcActiveDirectoryEnrollmentTokenFetcher::Status;
+
+std::string GetDmServerUrl() {
   policy ::BrowserPolicyConnectorChromeOS* const connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  return connector->device_management_service()->GetServerUrl() +
-         "/path/to/api?somedata=somevalue";
+  return connector->device_management_service()->GetServerUrl();
 }
 
-}  // namespace
+Profile* GetProfile() {
+  const user_manager::User* const primary_user =
+      user_manager::UserManager::Get()->GetPrimaryUser();
+  return chromeos::ProfileHelper::Get()->GetProfileByUser(primary_user);
+}
 
-namespace arc {
+// Encapsulates state while fetching enrollment tokens.
+class FetchContext {
+ public:
+  explicit FetchContext(Status expected_status)
+      : expected_status_(expected_status) {
+    Reset();
+  }
+
+  // Resets state. The fetch status is reset to a state that is NOT expected.
+  void Reset() {
+    // Reset to a non-trivial, unexpected value.
+    enrollment_token_ = kNotYetFetched;
+    user_id_ = kNotYetFetched;
+
+    // Reset to the value we do NOT expect.
+    fetch_status_ =
+        expected_status_ == Status::SUCCESS ? Status::FAILURE : Status::SUCCESS;
+  }
+
+  void Set(Status fetch_status,
+           const std::string& enrollment_token,
+           const std::string& user_id) {
+    fetch_status_ = fetch_status;
+    enrollment_token_ = enrollment_token;
+    user_id_ = user_id;
+  }
+
+  // Verifies whether the current state matches the expected state, depending on
+  // the value of |expected_status| passed into the constructor.
+  void VerifyExpectations() {
+    EXPECT_EQ(expected_status_, fetch_status_);
+    if (expected_status_ == Status::SUCCESS) {
+      EXPECT_EQ(kFakeEnrollmentToken, enrollment_token_);
+      EXPECT_EQ(kFakeUserId, user_id_);
+    } else {
+      EXPECT_TRUE(enrollment_token_.empty());
+      EXPECT_TRUE(user_id_.empty());
+    }
+  }
+
+ private:
+  Status expected_status_ = Status::SUCCESS;
+  Status fetch_status_ = Status::SUCCESS;
+  std::string enrollment_token_ = kNotYetFetched;
+  std::string user_id_ = kNotYetFetched;
+};
+
+}  // namespace
 
 // Checks whether |request| is a valid request to enroll a play user and returns
 // the corresponding protobuf.
@@ -154,17 +200,6 @@ net::URLRequestJob* InitiateSamlResponseJob(
   return SendResponse(request, network_delegate, response);
 }
 
-// JobCallback to redirect from ADFS server back to DM server.
-net::URLRequestJob* RedirectResponseJob(
-    const std::string& redirect_url,
-    net::URLRequest* request,
-    net::NetworkDelegate* network_delegate) {
-  std::string redirect_header =
-      base::StringPrintf(kRedirectHeaderFormat, redirect_url.c_str());
-  return new net::URLRequestTestJob(request, network_delegate, redirect_header,
-                                    std::string(), true);
-}
-
 // JobCallback returns a 400 Bad Request.
 net::URLRequestJob* BadRequestResponseJob(
     net::URLRequest* request,
@@ -173,15 +208,7 @@ net::URLRequestJob* BadRequestResponseJob(
                                     kBadRequestHeader, std::string(), true);
 }
 
-// JobCallback that just returns HTTP 200 (DM server endpoint)
-net::URLRequestJob* HttpOkResponseJob(net::URLRequest* request,
-                                      net::NetworkDelegate* network_delegate) {
-  return new net::URLRequestTestJob(request, network_delegate,
-                                    net::URLRequestTestJob::test_headers(),
-                                    std::string(), true);
-}
-
-// JobCallback for the interceptor to start the SAML flow.
+// JobCallback for the interceptor to end the SAML flow.
 net::URLRequestJob* FinishSamlResponseJob(
     net::URLRequest* request,
     net::NetworkDelegate* network_delegate) {
@@ -202,33 +229,86 @@ net::URLRequestJob* FinishSamlResponseJob(
   return SendResponse(request, network_delegate, response);
 }
 
-// JobCallback that closes the current browser tab.
-net::URLRequestJob* CloseTabJob(Browser* browser,
-                                net::URLRequest* request,
-                                net::NetworkDelegate* network_delegate) {
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&TabStripModel::CloseSelectedTabs,
-                     base::Unretained(browser->tab_strip_model())));
-
-  return nullptr;
-}
-
-// JobCallback that closes the browser.
-net::URLRequestJob* CloseBrowserJob(base::Closure close_closure,  // Haha!
-                                    net::URLRequest* request,
-                                    net::NetworkDelegate* network_delegate) {
-  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
-                                   close_closure);
-
-  return nullptr;
-}
-
 class ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest
-    : public InProcessBrowserTest {
+    : public InProcessBrowserTest,
+      public ArcSupportHost::ErrorDelegate {
  public:
-  // Public wrapper, required for base::Bind.
-  void CloseAllBrowsers_Wrapper() { CloseAllBrowsers(); }
+  bool CheckOnAdAuthPageAndVerify(ArcSupportHost::UIPage page) {
+    if (page != ArcSupportHost::UIPage::AD_AUTH)
+      return false;
+    EXPECT_EQ(kFakeAdfsServerUrl,
+              fake_arc_support_->get_ad_auth_federation_url());
+    EXPECT_EQ(GetDmServerUrl(), fake_arc_support_->get_ad_auth_dm_url_prefix());
+    return true;
+  }
+
+  // SAML flow callback that simulates SAML authentication success.
+  void SimulateAdAuthSucceeds(ArcSupportHost::UIPage page) {
+    if (CheckOnAdAuthPageAndVerify(page))
+      fake_arc_support_->EmulateAuthSuccess("" /* auth_code unused */);
+  }
+
+  // SAML flow callback that simulates pressing the Cancel button or closing the
+  // window.
+  void SimulateAdAuthCancelled(base::RunLoop* run_loop,
+                               ArcSupportHost::UIPage page) {
+    if (!CheckOnAdAuthPageAndVerify(page))
+      return;
+    fake_arc_support_->Close();
+
+    // Since ArcActiveDirectoryEnrollmentTokenFetcher won't call the
+    // FetchCallback in case of an error, we break the runloop manually.
+    run_loop->Quit();
+  }
+
+  // SAML flow callback that simulates SAML authentication failure.
+  void SimulateAdAuthFails(base::RunLoop* run_loop,
+                           ArcSupportHost::UIPage page) {
+    if (!CheckOnAdAuthPageAndVerify(page))
+      return;
+    fake_arc_support_->EmulateAuthFailure("error");
+
+    // Since ArcActiveDirectoryEnrollmentTokenFetcher won't call the
+    // FetchCallback in case of an error, we break the runloop manually.
+    run_loop->Quit();
+  }
+
+  // SAML flow callback that simulates SAML authentication retry.
+  void SimulateAdAuthRetry(ArcSupportHost::UIPage page) {
+    if (!CheckOnAdAuthPageAndVerify(page))
+      return;
+    saml_auth_count_++;
+
+    if (saml_auth_count_ == 1) {
+      // First saml auth attempt, trigger error and retry.
+      fake_arc_support_->EmulateAuthFailure("error");
+      EXPECT_EQ(ArcSupportHost::UIPage::ERROR, fake_arc_support_->ui_page());
+      fake_arc_support_->ClickRetryButton();
+    } else if (saml_auth_count_ == 2) {
+      // Second saml auth attempt, trigger success.
+      fake_arc_support_->EmulateAuthSuccess("" /* auth_code unused */);
+    } else {
+      NOTREACHED() << saml_auth_count_;
+    }
+  }
+
+  // FetchCallback that receives fetch data and quits the loop.
+  void OnEnrollmentTokenFetched(base::RunLoop* run_loop,
+                                FetchContext* context,
+                                Status fetch_status,
+                                const std::string& enrollment_token,
+                                const std::string& user_id) {
+    context->Set(fetch_status, enrollment_token, user_id);
+    run_loop->Quit();
+  }
+
+  // Callback to ArcActiveDirectoryEnrollmentTokenFetcher::Fetch that should
+  // never be called.
+  void OnEnrollmentTokenFetched_NotReached(Status fetch_status,
+                                           const std::string& enrollment_token,
+                                           const std::string& user_id) {
+    NOTREACHED();
+  }
 
  protected:
   ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest() = default;
@@ -249,20 +329,28 @@ class ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest
   }
 
   void SetUpOnMainThread() override {
-    dm_interceptor_ = base::MakeUnique<policy::TestRequestInterceptor>(
+    interceptor_ = base::MakeUnique<policy::TestRequestInterceptor>(
         "localhost", content::BrowserThread::GetTaskRunnerForThread(
                          content::BrowserThread::IO));
 
-    adfs_interceptor_ = base::MakeUnique<policy::TestRequestInterceptor>(
-        "example.com", content::BrowserThread::GetTaskRunnerForThread(
-                           content::BrowserThread::IO));
-
-    token_fetcher_ =
-        base::MakeUnique<ArcActiveDirectoryEnrollmentTokenFetcher>();
+    support_host_ = base::MakeUnique<ArcSupportHost>(GetProfile());
+    support_host_->SetErrorDelegate(this);
+    fake_arc_support_ = base::MakeUnique<FakeArcSupport>(support_host_.get());
+    token_fetcher_ = base::MakeUnique<ArcActiveDirectoryEnrollmentTokenFetcher>(
+        support_host_.get());
   }
 
-  // Stores a correct (fake) DM token. ArcActiveDirectoryEnrollmentTokenFetcher
-  // will succeed to fetch the DM token.
+  void TearDownOnMainThread() override {
+    token_fetcher_.reset();
+    fake_arc_support_.reset();
+    support_host_->SetErrorDelegate(nullptr);
+    support_host_.reset();
+    interceptor_.reset();
+  }
+
+  // Stores a correct (fake) DM token.
+  // ArcActiveDirectoryEnrollmentTokenFetcher will succeed to fetch the DM
+  // token.
   void StoreCorrectDmToken() {
     fake_cryptohome_client_->set_system_salt(
         chromeos::FakeCryptohomeClient::GetStubSystemSalt());
@@ -279,231 +367,190 @@ class ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest
                           },
                           &run_loop));
     // Because the StoreDMToken() operation interacts with the I/O thread,
-    // RunUntilIdle() won't work here. Instead, use Run() and Quit() explicitly
-    // in the callback.
+    // RunUntilIdle() won't work here. Instead, use Run() and Quit()
+    // explicitly in the callback.
     run_loop.Run();
   }
 
-  // Does not store a correct DM token. ArcActiveDirectoryEnrollmentTokenFetcher
-  // will fail to fetch the DM token.
+  // Does not store a correct DM token.
+  // ArcActiveDirectoryEnrollmentTokenFetcher will fail to fetch the DM token.
   void FailDmToken() {
     fake_cryptohome_client_->set_system_salt(std::vector<uint8_t>());
     fake_cryptohome_client_->SetServiceIsAvailable(true);
   }
 
-  void TearDownOnMainThread() override {
-    token_fetcher_.reset();
-    adfs_interceptor_.reset();
-    dm_interceptor_.reset();
-  }
-
-  void FetchEnrollmentToken(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status* output_fetch_status,
-      std::string* output_enrollment_token,
-      std::string* output_user_id) {
+  void FetchEnrollmentTokenAndCheck(Status expected_status) {
+    FetchContext context(expected_status);
     base::RunLoop run_loop;
-
-    token_fetcher_->Fetch(base::Bind(
-        [](ArcActiveDirectoryEnrollmentTokenFetcher::Status*
-               output_fetch_status,
-           std::string* output_enrollment_token, std::string* output_user_id,
-           base::RunLoop* run_loop,
-           ArcActiveDirectoryEnrollmentTokenFetcher::Status fetch_status,
-           const std::string& enrollment_token, const std::string& user_id) {
-          *output_fetch_status = fetch_status;
-          *output_enrollment_token = enrollment_token;
-          *output_user_id = user_id;
-          run_loop->Quit();
-        },
-        output_fetch_status, output_enrollment_token, output_user_id,
-        &run_loop));
+    token_fetcher_->Fetch(
+        base::Bind(&ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest::
+                       OnEnrollmentTokenFetched,
+                   base::Unretained(this), &run_loop, &context));
     // Because the Fetch() operation needs to interact with other threads,
-    // RunUntilIdle() won't work here. Instead, use Run() and Quit() explicitly
-    // in the callback.
+    // RunUntilIdle() won't work here. Instead, use Run() and Quit()
+    // explicitly in the callback.
     run_loop.Run();
+    context.VerifyExpectations();
   }
 
-  void ExpectEnrollmentTokenFetchSucceeds() {
-    std::string enrollment_token;
-    std::string user_id;
-    ArcActiveDirectoryEnrollmentTokenFetcher::Status fetch_status =
-        ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE;
-
-    FetchEnrollmentToken(&fetch_status, &enrollment_token, &user_id);
-
-    EXPECT_EQ(ArcActiveDirectoryEnrollmentTokenFetcher::Status::SUCCESS,
-              fetch_status);
-    EXPECT_EQ(kFakeEnrollmentToken, enrollment_token);
-    EXPECT_EQ(kFakeUserId, user_id);
+  void FetchEnrollmentTokenAndExpectCallbackNotReached(
+      base::RunLoop* run_loop) {
+    FetchContext context(Status::FAILURE);  // Status is never actually used.
+    token_fetcher_->Fetch(
+        base::Bind(&ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest::
+                       OnEnrollmentTokenFetched_NotReached,
+                   base::Unretained(this)));
+    run_loop->Run();
   }
 
-  void ExpectEnrollmentTokenFetchFails(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status expected_status) {
-    CHECK_NE(expected_status,
-             ArcActiveDirectoryEnrollmentTokenFetcher::Status::SUCCESS);
-
-    // We expect enrollment_token is empty in this case. So initialize with
-    // non-empty value.
-    std::string enrollment_token = kNotYetFetched;
-    std::string user_id = kNotYetFetched;
-    ArcActiveDirectoryEnrollmentTokenFetcher::Status fetch_status =
-        ArcActiveDirectoryEnrollmentTokenFetcher::Status::SUCCESS;
-
-    FetchEnrollmentToken(&fetch_status, &enrollment_token, &user_id);
-
-    EXPECT_EQ(expected_status, fetch_status);
-    EXPECT_TRUE(enrollment_token.empty());
-    EXPECT_TRUE(user_id.empty());
-  }
-
-  std::unique_ptr<policy::TestRequestInterceptor> dm_interceptor_;
-  std::unique_ptr<policy::TestRequestInterceptor> adfs_interceptor_;
+  std::unique_ptr<policy::TestRequestInterceptor> interceptor_;
+  std::unique_ptr<FakeArcSupport> fake_arc_support_;
+  std::unique_ptr<ArcActiveDirectoryEnrollmentTokenFetcher> token_fetcher_;
 
  private:
-  std::unique_ptr<ArcActiveDirectoryEnrollmentTokenFetcher> token_fetcher_;
+  ArcSupportHost::AuthDelegate* GetAuthDelegate() {
+    return static_cast<ArcSupportHost::AuthDelegate*>(token_fetcher_.get());
+  }
+
+ private:
+  // ArcSupportHost:::ErrorDelegate:
+  // Settings these prevents some DCHECK failures.
+  void OnWindowClosed() override {}
+  void OnRetryClicked() override {}
+  void OnSendFeedbackClicked() override {}
+
+  std::unique_ptr<ArcSupportHost> support_host_;
   // DBusThreadManager owns this.
   chromeos::FakeCryptohomeClient* fake_cryptohome_client_;
+  int saml_auth_count_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest);
-};
+};  // namespace arc
 
 // Non-SAML flow fetches valid enrollment token and user id.
 IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
                        RequestAccountInfoSuccess) {
-  dm_interceptor_->PushJobCallback(base::Bind(&NonSamlResponseJob));
   StoreCorrectDmToken();
-  ExpectEnrollmentTokenFetchSucceeds();
+  interceptor_->PushJobCallback(base::Bind(&NonSamlResponseJob));
+  FetchEnrollmentTokenAndCheck(Status::SUCCESS);
 }
 
 // Failure to fetch DM token leads to token fetch failure.
 IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
                        DmTokenRetrievalFailed) {
-  dm_interceptor_->PushJobCallback(base::Bind(NotReachedResponseJob));
   FailDmToken();
-  ExpectEnrollmentTokenFetchFails(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE);
+  interceptor_->PushJobCallback(base::Bind(NotReachedResponseJob));
+  FetchEnrollmentTokenAndCheck(Status::FAILURE);
 }
 
 // Server responds with bad request and fails token fetch.
 IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
                        RequestAccountInfoError) {
-  dm_interceptor_->PushJobCallback(
-      policy::TestRequestInterceptor::BadRequestJob());
   StoreCorrectDmToken();
-  ExpectEnrollmentTokenFetchFails(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE);
+  interceptor_->PushJobCallback(
+      policy::TestRequestInterceptor::BadRequestJob());
+  FetchEnrollmentTokenAndCheck(Status::FAILURE);
 }
 
 // ARC disabled leads to failed token fetch.
 IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
                        ArcDisabled) {
-  dm_interceptor_->PushJobCallback(
-      policy::TestRequestInterceptor::HttpErrorJob("904 ARC Disabled"));
   StoreCorrectDmToken();
-  ExpectEnrollmentTokenFetchFails(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status::ARC_DISABLED);
+  interceptor_->PushJobCallback(
+      policy::TestRequestInterceptor::HttpErrorJob("904 ARC Disabled"));
+  FetchEnrollmentTokenAndCheck(Status::ARC_DISABLED);
 }
 
 // Successful enrollment token fetch including SAML authentication.
 // SAML flow works as follows:
-//   1) Request to DM server responds with a redirect URL to the ADFS server.
-//      ArcActiveDirectoryEnrollmentTokenFetcher opens a page with that URL.
-//   2) ADFS authenticates and responds with a redirect back to DM server.
-//   3) DM server acklowledges auth and responds with HTTP OK.
-//   4) ArcActiveDirectoryEnrollmentTokenFetcher notices this, closes the page
-//      and performs another request to DM server to fetch the token.
+//   1) |token_fetcher_| sends a request to DM server to fetch the token.
+//   2) DM server responds with an auth session id and a redirect URL to the
+//      ADFS server. This is emulated in InitiateSamlResponseJob.
+//   3) |token_fetcher_| sets the redirect URL in |fake_arc_support_| and
+//   opens
+//      the AD auth page, which triggers SimulateAdAuthSucceeds.
+//   4) SimulateAdAuthSucceeds triggers the onAuthSucceeded event, which
+//   causes
+//      |arc_support_host_| to call into |token_fetcher_|'s OnAuthSucceeded.
+//   5) |token_fetcher_| sends another request to DM server to fetch the
+//   token,
+//      this time with the auth session id from 2).
+//   6) DM server responds with the token. This is emulated in
+//      FinishSamlResponseJob.
 IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
                        SamlFlowSuccess) {
-  dm_interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
-  adfs_interceptor_->PushJobCallback(
-      base::Bind(&RedirectResponseJob, GetDmServerRedirectUrl()));
-  dm_interceptor_->PushJobCallback(base::Bind(&HttpOkResponseJob));
-  dm_interceptor_->PushJobCallback(base::Bind(&FinishSamlResponseJob));
   StoreCorrectDmToken();
-  ExpectEnrollmentTokenFetchSucceeds();
-}
-
-// SAML flow fails since 3) responds with a bad request (see above).
-IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
-                       SamlFlowFailsHttpError) {
-  dm_interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
-  adfs_interceptor_->PushJobCallback(
-      base::Bind(&RedirectResponseJob, GetDmServerRedirectUrl()));
-  dm_interceptor_->PushJobCallback(base::Bind(&BadRequestResponseJob));
-  StoreCorrectDmToken();
-  ExpectEnrollmentTokenFetchFails(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE);
-}
-
-// SAML flow fails since 3) responds with a network error.
-IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
-                       SamlFlowFailsNetworkError) {
-  dm_interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
-  adfs_interceptor_->PushJobCallback(
-      base::Bind(&RedirectResponseJob, GetDmServerRedirectUrl()));
-  dm_interceptor_->PushJobCallback(
-      policy::TestRequestInterceptor::ErrorJob(net::ERR_INVALID_RESPONSE));
-  StoreCorrectDmToken();
-  ExpectEnrollmentTokenFetchFails(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE);
-}
-
-// Failed SAML flow followed by a successful one.
-IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
-                       SamlFlowSuccessAfterFailure) {
-  StoreCorrectDmToken();
-
-  // Failing flow.
-  dm_interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
-  adfs_interceptor_->PushJobCallback(
-      base::Bind(&RedirectResponseJob, GetDmServerRedirectUrl()));
-  dm_interceptor_->PushJobCallback(base::Bind(&BadRequestResponseJob));
-
-  StoreCorrectDmToken();
-  ExpectEnrollmentTokenFetchFails(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE);
-  EXPECT_EQ(0u, dm_interceptor_->GetPendingSize());
-  EXPECT_EQ(0u, adfs_interceptor_->GetPendingSize());
-
-  // Need to close the tab. Otherwise, there's a race condition where the
-  // existing tab makes a request to http://localhost/favicon.ico that is issued
-  // at an unspecified time and can't be handled in dm_interceptor_
-  // deterministically.
-  browser()->tab_strip_model()->CloseSelectedTabs();
-
-  // Successful flow.
-  dm_interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
-  adfs_interceptor_->PushJobCallback(
-      base::Bind(&RedirectResponseJob, GetDmServerRedirectUrl()));
-  dm_interceptor_->PushJobCallback(base::Bind(&HttpOkResponseJob));
-  dm_interceptor_->PushJobCallback(base::Bind(&FinishSamlResponseJob));
-
-  ExpectEnrollmentTokenFetchSucceeds();
-}
-
-// SAML flow fails if user closes the browser tab with the ADFS auth page.
-IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
-                       SamlFlowFailsTabClosed) {
-  dm_interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
-  adfs_interceptor_->PushJobCallback(base::Bind(&CloseTabJob, browser()));
-  StoreCorrectDmToken();
-  ExpectEnrollmentTokenFetchFails(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE);
-}
-
-// SAML flow fails gracefully and doesn't blow up if user closes the whole
-// browser with the ADFS auth page.
-IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
-                       SamlFlowFailsBrowserClosed) {
-  dm_interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
-  adfs_interceptor_->PushJobCallback(base::Bind(
-      &CloseBrowserJob,
+  interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
+  interceptor_->PushJobCallback(base::Bind(&FinishSamlResponseJob));
+  fake_arc_support_->set_on_page_changed(
       base::Bind(&ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest::
-                     CloseAllBrowsers_Wrapper,
-                 base::Unretained(this))));
+                     SimulateAdAuthSucceeds,
+                 base::Unretained(this)));
+  FetchEnrollmentTokenAndCheck(Status::SUCCESS);
+}
+
+// SAML flow fails since the user closed the window or clicked the Cancel
+// button.
+IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
+                       SamlFlowFailsUserCancelled) {
   StoreCorrectDmToken();
-  ExpectEnrollmentTokenFetchFails(
-      ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE);
+  interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
+  base::RunLoop run_loop;
+  fake_arc_support_->set_on_page_changed(
+      base::Bind(&ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest::
+                     SimulateAdAuthCancelled,
+                 base::Unretained(this), &run_loop));
+
+  // On user cancel, the FetchCallback should not be called (in fact, the
+  // window closes silently).
+  FetchEnrollmentTokenAndExpectCallbackNotReached(&run_loop);
+}
+
+// SAML flow fails because of an error.
+IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
+                       SamlFlowFailsError) {
+  StoreCorrectDmToken();
+  interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
+  base::RunLoop run_loop;
+  fake_arc_support_->set_on_page_changed(base::Bind(
+      &ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest::SimulateAdAuthFails,
+      base::Unretained(this), &run_loop));
+
+  // Similar to user cancel, the callback to Fetch should never be called.
+  // Instead, we should end up on the error page.
+  FetchEnrollmentTokenAndExpectCallbackNotReached(&run_loop);
+  EXPECT_EQ(ArcSupportHost::UIPage::ERROR, fake_arc_support_->ui_page());
+}
+
+// SAML flow fails first during initial DM server request, but the retry
+// works.
+IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
+                       SamlFlowSucceedsWithDmRetry) {
+  StoreCorrectDmToken();
+  interceptor_->PushJobCallback(base::Bind(&BadRequestResponseJob));
+  FetchEnrollmentTokenAndCheck(Status::FAILURE);
+
+  interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
+  interceptor_->PushJobCallback(base::Bind(&FinishSamlResponseJob));
+  fake_arc_support_->set_on_page_changed(
+      base::Bind(&ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest::
+                     SimulateAdAuthSucceeds,
+                 base::Unretained(this)));
+  FetchEnrollmentTokenAndCheck(Status::SUCCESS);
+}
+
+// SAML flow fails first during SAML auth, but the retry works.
+IN_PROC_BROWSER_TEST_F(ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest,
+                       SamlFlowSucceedsWithAuthRetry) {
+  StoreCorrectDmToken();
+  interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
+  interceptor_->PushJobCallback(base::Bind(&InitiateSamlResponseJob));
+  interceptor_->PushJobCallback(base::Bind(&FinishSamlResponseJob));
+  fake_arc_support_->set_on_page_changed(base::Bind(
+      &ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest::SimulateAdAuthRetry,
+      base::Unretained(this)));
+  FetchEnrollmentTokenAndCheck(Status::SUCCESS);
+  EXPECT_EQ(0u, interceptor_->GetPendingSize());
 }
 
 }  // namespace arc
