@@ -246,6 +246,7 @@ source_set("blink_headers") {
     "platform/WebMediaPlayer.h",
     "platform/WebMediaPlayerClient.h",
     "platform/WebMediaPlayerEncryptedMediaClient.h",
+    "platform/WebMediaPlayerFactory.h",
     "platform/WebMediaPlayerSource.h",
     "platform/WebMediaRecorderHandler.h",
     "platform/WebMediaRecorderHandlerClient.h",

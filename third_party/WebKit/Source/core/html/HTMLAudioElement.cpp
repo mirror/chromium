@@ -49,7 +49,7 @@ HTMLAudioElement* HTMLAudioElement::CreateForJSConstructor(
   audio->EnsureUserAgentShadowRoot();
   audio->setPreload(AtomicString("auto"));
   if (!src.IsNull())
-    audio->SetSrc(src);
+    audio->setSrc(src);
   audio->SuspendIfNeeded();
   return audio;
 }

@@ -355,7 +355,7 @@ class MediaControlsOrientationLockAndRotateToFullscreenDelegateTest
   void InitVideo(int video_width, int video_height) {
     // Set up the WebMediaPlayer instance.
     GetDocument().body()->AppendChild(&Video());
-    Video().SetSrc("https://example.com");
+    Video().setSrc("https://example.com");
     testing::RunPendingTasks();
     SimulateVideoReadyState(HTMLMediaElement::kHaveMetadata);
 
@@ -490,7 +490,7 @@ TEST_F(MediaControlsOrientationLockDelegateTest,
   // State set to PendingMetadata.
 
   // Set up the WebMediaPlayer instance.
-  Video().SetSrc("http://example.com");
+  Video().setSrc("http://example.com");
   testing::RunPendingTasks();
 
   SimulateVideoNetworkState(HTMLMediaElement::kNetworkIdle);
@@ -509,7 +509,7 @@ TEST_F(MediaControlsOrientationLockDelegateTest, ReceivedMetadataLater) {
   SimulateExitFullscreen();
 
   // Set up the WebMediaPlayer instance.
-  Video().SetSrc("http://example.com");
+  Video().setSrc("http://example.com");
   testing::RunPendingTasks();
 
   SimulateVideoNetworkState(HTMLMediaElement::kNetworkIdle);
@@ -521,7 +521,7 @@ TEST_F(MediaControlsOrientationLockDelegateTest, ReceivedMetadataLater) {
 
 TEST_F(MediaControlsOrientationLockDelegateTest, ComputeOrientationLock) {
   // Set up the WebMediaPlayer instance.
-  Video().SetSrc("http://example.com");
+  Video().setSrc("http://example.com");
   testing::RunPendingTasks();
 
   SimulateVideoNetworkState(HTMLMediaElement::kNetworkIdle);
