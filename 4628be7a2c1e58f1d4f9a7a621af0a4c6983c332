@@ -22,6 +22,30 @@
       "revId": "4628be7a2c1e58f1d4f9a7a621af0a4c6983c332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f34d72_5508351c",
+        "filename": "cc/ipc/transferable_resource.mojom",
+        "patchSetId": 44
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-14T17:28:56Z",
+      "side": 1,
+      "message": "When it wraps it won\u0027t work as intended anymore, but the worst thing that can happen is we show solid color instead of the content for a brief time. I believe a well-behaving renderer is not going to allocate shared memory 2 billion times, but if you think it makes sense to use int64 let me know. It\u0027ll be a quick fix.",
+      "parentUuid": "bb1cd2ce_2a49b231",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "4628be7a2c1e58f1d4f9a7a621af0a4c6983c332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
