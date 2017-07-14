@@ -46,6 +46,30 @@
       "revId": "ee776f7d18efe84fe023623a7c72ec64c0c89c33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf129be_9803868d",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-14T13:34:24Z",
+      "side": 1,
+      "message": "Got it. optional nit: kUkmUserActionSimplified?",
+      "parentUuid": "20781aa2_4f100cd8",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "ee776f7d18efe84fe023623a7c72ec64c0c89c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
