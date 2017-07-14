@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee42a71_8743c9e0",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T17:46:53Z",
+      "side": 1,
+      "message": "Is this really a test-only interface? Or is the TODO on line 114 for a specific set of services?",
+      "range": {
+        "startLine": 120,
+        "startChar": 10,
+        "endLine": 120,
+        "endChar": 42
+      },
+      "revId": "0a0cf65559a5154b3d5d7fdfb1e9fc92a44a0669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30656ab6_ee83311f",
+        "filename": "content/public/app/mojo/content_renderer_manifest.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T17:46:53Z",
+      "side": 1,
+      "message": "Based on the CL description, should I expect these to all go away as well?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "0a0cf65559a5154b3d5d7fdfb1e9fc92a44a0669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
