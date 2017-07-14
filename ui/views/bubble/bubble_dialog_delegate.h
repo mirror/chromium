@@ -79,12 +79,6 @@ class VIEWS_EXPORT BubbleDialogDelegateView : public DialogDelegateView,
     color_explicitly_set_ = true;
   }
 
-  const gfx::Insets& margins() const { return margins_; }
-  void set_margins(const gfx::Insets& margins) { margins_ = margins; }
-  void set_title_margins(const gfx::Insets& title_margins) {
-    title_margins_ = title_margins;
-  }
-
   const gfx::Insets& anchor_view_insets() const { return anchor_view_insets_; }
   void set_anchor_view_insets(const gfx::Insets& i) { anchor_view_insets_ = i; }
 
@@ -103,9 +97,6 @@ class VIEWS_EXPORT BubbleDialogDelegateView : public DialogDelegateView,
   // Allows delegates to provide custom parameters before widget initialization.
   virtual void OnBeforeBubbleWidgetInit(Widget::InitParams* params,
                                         Widget* widget) const;
-
-  // Sets |margins_| to a default picked for smaller bubbles.
-  void UseCompactMargins();
 
   // Sets the bubble alignment relative to the anchor. This may only be called
   // after calling CreateBubble.
@@ -184,13 +175,6 @@ class VIEWS_EXPORT BubbleDialogDelegateView : public DialogDelegateView,
   // The background color of the bubble; and flag for when it's explicitly set.
   SkColor color_;
   bool color_explicitly_set_;
-
-  // The margins between the content and the inside of the border.
-  gfx::Insets margins_;
-
-  // The margins around the title.
-  // TODO(tapted): Investigate deleting this when MD is default.
-  gfx::Insets title_margins_;
 
   // Insets applied to the |anchor_view_| bounds.
   gfx::Insets anchor_view_insets_;

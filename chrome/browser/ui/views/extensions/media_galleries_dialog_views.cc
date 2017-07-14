@@ -101,7 +101,8 @@ void MediaGalleriesDialogViews::InitChildViews() {
 
   int dialog_content_width = views::Widget::GetLocalizedContentsWidth(
       IDS_MEDIA_GALLERIES_DIALOG_CONTENT_WIDTH_CHARS);
-  views::GridLayout* layout = views::GridLayout::CreatePanel(contents_);
+  views::GridLayout* layout = new views::GridLayout(contents_);
+  contents_->SetLayoutManager(layout);
 
   int column_set_id = 0;
   views::ColumnSet* columns = layout->AddColumnSet(column_set_id);
@@ -151,7 +152,7 @@ void MediaGalleriesDialogViews::InitChildViews() {
       header->SetHorizontalAlignment(gfx::ALIGN_LEFT);
       header->SetBorder(views::CreateEmptyBorder(
           vertical_padding,
-          provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS).left(),
+          provider->GetInsetsMetric(views::INSETS_DIALOG).left(),
           vertical_padding, 0));
       scroll_container->AddChildView(header);
     }

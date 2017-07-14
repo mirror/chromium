@@ -26,6 +26,7 @@
 #include "ui/gfx/image/image.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/background.h"
+#include "ui/views/border.h"
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/md_text_button.h"
@@ -102,10 +103,14 @@ TryChromeDialogView::Result TryChromeDialogView::ShowDialog(
   root_view->SetBackground(
       views::CreateSolidBackground(SkColorSetRGB(0xfc, 0xfc, 0xfc)));
 
-  views::GridLayout* layout = views::GridLayout::CreatePanel(root_view);
+  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+
+  views::GridLayout* layout = new views::GridLayout(root_view);
+  root_view->SetLayoutManager(layout);
+  root_view->SetBorder(views::CreateEmptyBorder(
+      provider->GetInsetsMetric(views::INSETS_DIALOG)));
   views::ColumnSet* columns;
 
-  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
   const int label_spacing =
       provider->GetDistanceMetric(DISTANCE_RELATED_LABEL_HORIZONTAL);
   const int unrelated_space_horiz =

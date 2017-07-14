@@ -197,7 +197,8 @@ void CertificateSelector::Show() {
 
 void CertificateSelector::InitWithText(
     std::unique_ptr<views::View> text_label) {
-  views::GridLayout* const layout = views::GridLayout::CreatePanel(this);
+  views::GridLayout* const layout = new views::GridLayout(this);
+  SetLayoutManager(layout);
 
   const int kColumnSetId = 0;
   views::ColumnSet* const column_set = layout->AddColumnSet(kColumnSetId);
