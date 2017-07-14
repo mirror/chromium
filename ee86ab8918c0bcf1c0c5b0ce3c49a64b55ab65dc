@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "79587975_fac1f808",
+        "filename": "cc/tiles/image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-14T22:03:08Z",
+      "side": 1,
+      "message": "It doesn\u0027t /need/ a sparse histogram.  You can also use UMA_HISTOGRAM_LINEAR or UMA_HISTOGRAM_ENUMERATION.  My point was that (a) the current args being passed to UMA_HISTOGRAM_CUSTOM_COUNTS do not look quite right, and (b) the sparse histogram API is more intuitive.  If you\u0027d prefer to use a non-sparse histogram that\u0027s fine, but in that case please take the time to make really sure that the args are not off-by-one nor off-by-two.  (I *think* the bucket count is currently off-by-two, though honestly I\u0027d have to double-check, probably using chrome:histograms or some other debugging tool.  The API is a bit awkward for this sort of linear histogram.)",
+      "parentUuid": "522e9da4_42be5092",
+      "range": {
+        "startLine": 13,
+        "startChar": 38,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "ee86ab8918c0bcf1c0c5b0ce3c49a64b55ab65dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb677d94_ee90594b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
