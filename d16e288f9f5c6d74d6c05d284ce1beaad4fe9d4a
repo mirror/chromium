@@ -16,6 +16,24 @@
       "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6431cbba_85f29f73",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-14T19:14:49Z",
+      "side": 1,
+      "message": "It\u0027s actually much more fun than that!\n\nWe normally close the previous binding in response to DidCommitProvisionalLoad, but the failing test uses CommitBeforeSwapAckSentHelper [1].\n\nNow CommitBeforeSwapAckSentHelper runs a nested message loop inside the IPC handler for FrameMsg_DidCommitProvisionalLoad, before it is actually dispatched to RFHI, so the BindInterfaceProviderForNewDocument that is sent afterwards, arrives first. :-/\n\nDo you see and quick \u0026 easy fixes?\n\n[1]: https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_view_browsertest.cc?rcl\u003dcbdd0ee2333b75ef32a4b02a3c243ab99ebead99\u0026l\u003d218",
+      "parentUuid": "c606efdf_459e212a",
+      "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
