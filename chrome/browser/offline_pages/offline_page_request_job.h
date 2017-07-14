@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_ANDROID_OFFLINE_PAGES_OFFLINE_PAGE_REQUEST_JOB_H_
-#define CHROME_BROWSER_ANDROID_OFFLINE_PAGES_OFFLINE_PAGE_REQUEST_JOB_H_
+#ifndef CHROME_BROWSER_OFFLINE_PAGES_OFFLINE_PAGE_REQUEST_JOB_H_
+#define CHROME_BROWSER_OFFLINE_PAGES_OFFLINE_PAGE_REQUEST_JOB_H_
 
 #include <memory>
 
@@ -133,4 +133,4 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
 
 }  // namespace offline_pages
 
-#endif  // CHROME_BROWSER_ANDROID_OFFLINE_PAGES_OFFLINE_PAGE_REQUEST_JOB_H_
+#endif  // CHROME_BROWSER_OFFLINE_PAGES_OFFLINE_PAGE_REQUEST_JOB_H_

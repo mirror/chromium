@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/offline_pages/test_request_coordinator_builder.h"
+#include "chrome/browser/offline_pages/test_request_coordinator_builder.h"
 
 #include <utility>
 

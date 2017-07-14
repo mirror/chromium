@@ -74,7 +74,7 @@
 #include "storage/browser/quota/special_storage_policy.h"
 
 #if defined(OS_ANDROID)
-#include "chrome/browser/android/offline_pages/offline_page_request_interceptor.h"
+#include "chrome/browser/offline_pages/offline_page_request_interceptor.h"
 #endif  // defined(OS_ANDROID)
 
 namespace {

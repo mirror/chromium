@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/offline_pages/offline_page_request_interceptor.h"
+#include "chrome/browser/offline_pages/offline_page_request_interceptor.h"
 
 #include "base/supports_user_data.h"
-#include "chrome/browser/android/offline_pages/offline_page_request_job.h"
+#include "chrome/browser/offline_pages/offline_page_request_job.h"
 #include "components/previews/core/previews_decider.h"
 
 namespace offline_pages {

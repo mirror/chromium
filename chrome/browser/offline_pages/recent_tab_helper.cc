@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/offline_pages/recent_tab_helper.h"
+#include "chrome/browser/offline_pages/recent_tab_helper.h"
 
 #include <queue>
 #include <vector>
@@ -17,9 +17,9 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/browser/android/offline_pages/downloads/offline_page_notification_bridge.h"
-#include "chrome/browser/android/offline_pages/offline_page_mhtml_archiver.h"
 #include "chrome/browser/android/offline_pages/offline_page_utils.h"
 #include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
+#include "chrome/browser/offline_pages/offline_page_mhtml_archiver.h"
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/client_namespace_constants.h"

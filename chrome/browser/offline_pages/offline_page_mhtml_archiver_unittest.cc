@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/offline_pages/offline_page_mhtml_archiver.h"
+#include "chrome/browser/offline_pages/offline_page_mhtml_archiver.h"
 
 #include <stdint.h>
 
