@@ -50,6 +50,8 @@ public class DisplayAndroid {
     private int mBitsPerPixel;
     private int mBitsPerComponent;
     private int mRotation;
+    private boolean mIsDisplayWideColorGamut;
+    private boolean mIsScreenWideColorGamut;
 
     protected static DisplayAndroidManager getManager() {
         return DisplayAndroidManager.getInstance();
@@ -146,6 +148,21 @@ public class DisplayAndroid {
     }
 
     /**
+     * @return Whether or not the display itself is wide color gamut.
+     */
+    public boolean getIsDisplayWideColorGamut() {
+        return mIsDisplayWideColorGamut;
+    }
+
+    /**
+     * @return Whether or not the system compositor supports wide color gamut
+     * compositing. This is updated from the WindowAndroid's context.
+     */
+    public boolean getIsScreenWideColorGamut() {
+        return mIsScreenWideColorGamut;
+    }
+
+    /**
      * Add observer. Note repeat observers will be called only one.
      * Observers are held only weakly by Display.
      */
@@ -187,11 +204,16 @@ public class DisplayAndroid {
         return mObservers.keySet().toArray(EMPTY_OBSERVER_ARRAY);
     }
 
+    public void updateIsScreenWideColorGamut(Boolean isScreenWideColorGamut) {
+        update(null, null, null, null, null, null, isScreenWideColorGamut);
+    }
+
     /**
      * Update the display to the provided parameters. Null values leave the parameter unchanged.
      */
     protected void update(Point size, Float dipScale, Integer bitsPerPixel,
-            Integer bitsPerComponent, Integer rotation) {
+            Integer bitsPerComponent, Integer rotation, Boolean isDisplayWideColorGamut,
+            Boolean isScreenWideColorGamut) {
         boolean sizeChanged = size != null && !mSize.equals(size);
         // Intentional comparison of floats: we assume that if scales differ, they differ
         // significantly.
@@ -200,9 +222,14 @@ public class DisplayAndroid {
         boolean bitsPerComponentChanged =
                 bitsPerComponent != null && mBitsPerComponent != bitsPerComponent;
         boolean rotationChanged = rotation != null && mRotation != rotation;
+        boolean isDisplayWideColorGamutChanged = isDisplayWideColorGamut != null
+                && mIsDisplayWideColorGamut != isDisplayWideColorGamut;
+        boolean isScreenWideColorGamutChanged =
+                isScreenWideColorGamut != null && mIsScreenWideColorGamut != isScreenWideColorGamut;
 
         boolean changed = sizeChanged || dipScaleChanged || bitsPerPixelChanged
-                || bitsPerComponentChanged || rotationChanged;
+                || bitsPerComponentChanged || rotationChanged || isDisplayWideColorGamutChanged
+                || isDisplayWideColorGamutChanged;
         if (!changed) return;
 
         if (sizeChanged) mSize = size;
@@ -210,6 +237,8 @@ public class DisplayAndroid {
         if (bitsPerPixelChanged) mBitsPerPixel = bitsPerPixel;
         if (bitsPerComponentChanged) mBitsPerComponent = bitsPerComponent;
         if (rotationChanged) mRotation = rotation;
+        if (isDisplayWideColorGamutChanged) mIsDisplayWideColorGamut = isDisplayWideColorGamut;
+        if (isScreenWideColorGamutChanged) mIsScreenWideColorGamut = isScreenWideColorGamut;
 
         getManager().updateDisplayOnNativeSide(this);
         if (rotationChanged) {
