@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec3c549f_c1f9582e",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-07-14T10:12:10Z",
+      "side": 1,
+      "message": "You are an author already. Please remove the above wildcard.",
+      "revId": "949e4bfb0642411d24f94c030f7189044a7f8e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
