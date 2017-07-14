@@ -6,6 +6,7 @@
 #include "base/memory/ptr_util.h"
 #include "ipc/ipc_channel_factory.h"
 #include "ipc/ipc_channel_mojo.h"
+#include "ipc/ipc_channel_win.h"
 
 namespace IPC {
 
@@ -24,9 +25,7 @@ class PlatformChannelFactory : public ChannelFactory {
     return Channel::Create(handle_, mode_, listener);
 #else
     DCHECK(handle_.is_mojo_channel_handle());
-    return ChannelMojo::Create(
-        mojo::ScopedMessagePipeHandle(handle_.mojo_handle), mode_, listener,
-        ipc_task_runner_);
+    return std::unique_ptr<Channel>(new ChannelWin(mode_, listener));
 #endif
   }
 
