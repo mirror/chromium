@@ -110,6 +110,7 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
   void RespondToPaymentRequestEvent(int event_id,
                                     const WebPaymentAppResponse&,
                                     double event_dispatch_time);
+  bool IsPaymentRequestCancelled(int event_id);
   void DidHandleFetchEvent(int fetch_event_id,
                            WebServiceWorkerEventResult,
                            double event_dispatch_time);
