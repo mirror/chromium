@@ -139,6 +139,24 @@
       "revId": "3620125b0ec7629e6c1d98eff80bc7386e8407aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4fe3ad_3f80b1be",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T08:35:24Z",
+      "side": 1,
+      "message": "Ah, sorry for the confusion. Current code lgtm then. Thanks for explaining.",
+      "parentUuid": "07ebe11b_7ea6a24a",
+      "revId": "3620125b0ec7629e6c1d98eff80bc7386e8407aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
