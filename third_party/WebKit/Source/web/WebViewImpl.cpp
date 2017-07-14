@@ -53,6 +53,7 @@
 #include "core/events/UIEventWithKeyState.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/events/WheelEvent.h"
+#include "core/exported/WebDevToolsAgentCore.h"
 #include "core/exported/WebFactory.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebRemoteFrameImpl.h"
@@ -172,7 +173,6 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
-#include "web/WebDevToolsAgentImpl.h"
 
 #if defined(WTF_USE_DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"
@@ -320,7 +320,7 @@ void WebViewImpl::SetPrerendererClient(
 }
 
 // static
-HashSet<WebViewBase*>& WebViewBase::AllInstances() {
+WEB_EXPORT HashSet<WebViewBase*>& WebViewBase::AllInstances() {
   DEFINE_STATIC_LOCAL(HashSet<WebViewBase*>, all_instances, ());
   return all_instances;
 }
@@ -419,9 +419,9 @@ ValidationMessageClient* WebViewImpl::GetValidationMessageClient() const {
   return page_ ? &page_->GetValidationMessageClient() : nullptr;
 }
 
-WebDevToolsAgentImpl* WebViewImpl::MainFrameDevToolsAgentImpl() {
+WebDevToolsAgentCore* WebViewImpl::MainFrameDevToolsAgentCore() {
   WebLocalFrameBase* main_frame = MainFrameImpl();
-  return main_frame ? main_frame->DevToolsAgentImpl() : nullptr;
+  return main_frame ? main_frame->DevToolsAgentCore() : nullptr;
 }
 
 WebLocalFrameBase* WebViewImpl::MainFrameImpl() const {
@@ -791,7 +791,7 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
       // screencasting, since it's implemented outside of compositor pipeline
       // and is not being screencasted itself. This leads to bad user
       // experience.
-      WebDevToolsAgentImpl* dev_tools = MainFrameDevToolsAgentImpl();
+      WebDevToolsAgentCore* dev_tools = MainFrameDevToolsAgentCore();
       VisualViewport& visual_viewport = GetPage()->GetVisualViewport();
       bool screencast_enabled = dev_tools && dev_tools->ScreencastEnabled();
       if (event.data.tap.width > 0 &&
@@ -2027,7 +2027,7 @@ void WebViewImpl::UpdateAllLifecyclePhases() {
 
   if (auto* client = GetValidationMessageClient())
     client->PaintOverlay();
-  if (WebDevToolsAgentImpl* devtools = MainFrameDevToolsAgentImpl())
+  if (WebDevToolsAgentCore* devtools = MainFrameDevToolsAgentCore())
     devtools->PaintOverlay();
   if (page_color_overlay_)
     page_color_overlay_->GetGraphicsLayer()->Paint(nullptr);
@@ -2165,7 +2165,7 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
   if (dev_tools_emulator_->HandleInputEvent(input_event))
     return WebInputEventResult::kHandledSuppressed;
 
-  if (WebDevToolsAgentImpl* devtools = MainFrameDevToolsAgentImpl()) {
+  if (WebDevToolsAgentCore* devtools = MainFrameDevToolsAgentCore()) {
     if (devtools->HandleInputEvent(input_event))
       return WebInputEventResult::kHandledSuppressed;
   }
@@ -3878,7 +3878,7 @@ void WebViewImpl::SetRootGraphicsLayer(GraphicsLayer* graphics_layer) {
     layer_tree_view_->SetDeferCommits(true);
     layer_tree_view_->ClearRootLayer();
     layer_tree_view_->ClearViewportLayers();
-    if (WebDevToolsAgentImpl* dev_tools = MainFrameDevToolsAgentImpl())
+    if (WebDevToolsAgentCore* dev_tools = MainFrameDevToolsAgentCore())
       dev_tools->RootLayerCleared();
   }
 }
@@ -3899,7 +3899,7 @@ void WebViewImpl::SetRootLayer(WebLayer* layer) {
     layer_tree_view_->SetDeferCommits(true);
     layer_tree_view_->ClearRootLayer();
     layer_tree_view_->ClearViewportLayers();
-    if (WebDevToolsAgentImpl* dev_tools = MainFrameDevToolsAgentImpl())
+    if (WebDevToolsAgentCore* dev_tools = MainFrameDevToolsAgentCore())
       dev_tools->RootLayerCleared();
   }
 }
@@ -3959,7 +3959,7 @@ void WebViewImpl::InitializeLayerTreeView() {
     }
   }
 
-  if (WebDevToolsAgentImpl* dev_tools = MainFrameDevToolsAgentImpl())
+  if (WebDevToolsAgentCore* dev_tools = MainFrameDevToolsAgentCore())
     dev_tools->LayerTreeViewChanged(layer_tree_view_);
 
   page_->GetSettings().SetAcceleratedCompositingEnabled(layer_tree_view_);
@@ -4123,7 +4123,7 @@ void WebViewImpl::UpdatePageOverlays() {
     page_color_overlay_->Update();
   if (auto* client = GetValidationMessageClient())
     client->LayoutOverlay();
-  if (WebDevToolsAgentImpl* devtools = MainFrameDevToolsAgentImpl())
+  if (WebDevToolsAgentCore* devtools = MainFrameDevToolsAgentCore())
     devtools->LayoutOverlay();
 }
 

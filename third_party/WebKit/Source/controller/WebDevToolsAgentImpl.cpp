@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/WebDevToolsAgentImpl.h"
+#include "controller/WebDevToolsAgentImpl.h"
 
 #include <v8-inspector.h>
 #include <memory>
@@ -100,7 +100,7 @@ bool IsMainFrame(WebLocalFrameBase* frame) {
   // though |frame| is meant to be main frame.  See http://crbug.com/526162.
   return frame->ViewImpl() && !frame->Parent();
 }
-}
+}  // namespace
 
 class ClientMessageLoopAdapter : public MainThreadDebugger::ClientMessageLoop {
  public:
@@ -161,7 +161,7 @@ class ClientMessageLoopAdapter : public MainThreadDebugger::ClientMessageLoop {
 
   void RunLoop(WebLocalFrameBase* frame) {
     // 0. Flush pending frontend messages.
-    WebDevToolsAgentImpl* agent = frame->DevToolsAgentImpl();
+    WebDevToolsAgentCore* agent = frame->DevToolsAgentCore();
     agent->FlushProtocolNotifications();
 
     // 1. Disable input events.
@@ -212,8 +212,8 @@ class ClientMessageLoopAdapter : public MainThreadDebugger::ClientMessageLoop {
     if (QuitForCreateWindow())
       return;
     // Otherwise, pass to the client (embedded workers do it differently).
-    WebDevToolsAgentImpl* agent =
-        WebLocalFrameBase::FromFrame(frame)->DevToolsAgentImpl();
+    WebDevToolsAgentCore* agent =
+        WebLocalFrameBase::FromFrame(frame)->DevToolsAgentCore();
     if (agent && agent->Client())
       agent->Client()->ResumeStartup();
   }
@@ -271,6 +271,7 @@ WebDevToolsAgentImpl::~WebDevToolsAgentImpl() {
 }
 
 DEFINE_TRACE(WebDevToolsAgentImpl) {
+  WebDevToolsAgentCore::Trace(visitor);
   visitor->Trace(web_local_frame_impl_);
   visitor->Trace(probe_sink_);
   visitor->Trace(resource_content_loader_);
@@ -651,9 +652,10 @@ void WebDevToolsAgentImpl::RunDebuggerTask(
 
   WebDevToolsAgentImpl* agent_impl =
       static_cast<WebDevToolsAgentImpl*>(webagent);
-  if (agent_impl->Attached())
+  if (agent_impl->Attached()) {
     agent_impl->DispatchMessageFromFrontend(session_id, descriptor->Method(),
                                             descriptor->Message());
+  }
 }
 
 void WebDevToolsAgent::InterruptAndDispatch(int session_id,

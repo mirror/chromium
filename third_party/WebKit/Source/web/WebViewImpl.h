@@ -86,7 +86,7 @@ class PaintLayerCompositor;
 class UserGestureToken;
 class ValidationMessageClient;
 class WebActiveGestureAnimation;
-class WebDevToolsAgentImpl;
+class WebDevToolsAgentCore;
 class WebElement;
 class WebInputMethodController;
 class WebLayerTreeView;
@@ -290,7 +290,7 @@ class WEB_EXPORT WebViewImpl final
 
   // Returns a ValidationMessageClient associated to the Page. This is nullable.
   ValidationMessageClient* GetValidationMessageClient() const;
-  WebDevToolsAgentImpl* MainFrameDevToolsAgentImpl();
+  WebDevToolsAgentCore* MainFrameDevToolsAgentCore();
 
   DevToolsEmulator* GetDevToolsEmulator() const override {
     return dev_tools_emulator_.Get();
