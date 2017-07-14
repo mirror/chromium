@@ -50,6 +50,9 @@ viz_component("service") {
     "frame_sinks/gpu_compositor_frame_sink_delegate.h",
     "frame_sinks/gpu_root_compositor_frame_sink.cc",
     "frame_sinks/gpu_root_compositor_frame_sink.h",
+    "frame_sinks/surface_resource_holder.cc",
+    "frame_sinks/surface_resource_holder.h",
+    "frame_sinks/surface_resource_holder_client.h",
     "viz_service_export.h",
   ]
 
