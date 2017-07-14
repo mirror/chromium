@@ -223,7 +223,7 @@ class PrintWebViewHelper
                          const PrintMsg_Print_Params& print_params);
 
   // Finalize the print ready preview document.
-  bool FinalizePrintReadyDocument();
+  bool FinalizePrintReadyDocument(bool is_final);
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
   // Enable/Disable printing.

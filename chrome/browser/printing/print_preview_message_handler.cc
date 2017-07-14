@@ -138,10 +138,23 @@ void PrintPreviewMessageHandler::OnDidPreviewPage(
   print_preview_ui->OnDidPreviewPage(page_number, params.preview_request_id);
 }
 
+bool PrintPreviewMessageHandler::UIMessageSentForCookie(int cookie) {
+  for (auto it = cookies_.begin(); it != cookies_.end(); ++it) {
+    if (*it == cookie) {
+      cookies_.erase(it);
+      return true;
+    }
+  }
+  return false;
+}
+
 void PrintPreviewMessageHandler::OnMetafileReadyForPrinting(
     const PrintHostMsg_DidPreviewDocument_Params& params) {
-  // Always try to stop the worker.
-  StopWorker(params.document_cookie);
+  if (UIMessageSentForCookie(params.document_cookie)) {
+    // Draft data done, so stop the worker.
+    StopWorker(params.document_cookie);
+    return;
+  }
 
   if (params.expected_pages_count <= 0) {
     NOTREACHED();
@@ -151,6 +164,8 @@ void PrintPreviewMessageHandler::OnMetafileReadyForPrinting(
   PrintPreviewUI* print_preview_ui = GetPrintPreviewUI();
   if (!print_preview_ui)
     return;
+
+  cookies_.push_back(params.document_cookie);
 
   // TODO(joth): This seems like a good match for using RefCountedStaticMemory
   // to avoid the memory copy, but the SetPrintPreviewData call chain below
@@ -168,6 +183,11 @@ void PrintPreviewMessageHandler::OnMetafileReadyForPrinting(
 
 void PrintPreviewMessageHandler::OnPrintPreviewFailed(int document_cookie) {
   StopWorker(document_cookie);
+
+  // Make sure we have not already notified the UI about this preview. This can
+  // happen if the preview fails while generating draft pages.
+  if (UIMessageSentForCookie(document_cookie))
+    return;
 
   PrintPreviewUI* print_preview_ui = GetPrintPreviewUI();
   if (!print_preview_ui)
@@ -190,6 +210,11 @@ void PrintPreviewMessageHandler::OnDidGetDefaultPageLayout(
 void PrintPreviewMessageHandler::OnPrintPreviewCancelled(int document_cookie) {
   // Always need to stop the worker.
   StopWorker(document_cookie);
+
+  // Make sure we have not already notified the UI about this preview. This can
+  // happen if the preview is cancelled while generating draft pages.
+  if (UIMessageSentForCookie(document_cookie))
+    return;
 
   // Notify UI
   PrintPreviewUI* print_preview_ui = GetPrintPreviewUI();
