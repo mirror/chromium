@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b532e8f7_93c24df3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-14T04:26:51Z",
+      "side": 1,
+      "message": "Yup! I still need to write tests and hide it behind the new windowing flag.",
+      "parentUuid": "0f160d5d_bcb5e1f6",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 62
+      },
+      "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fea767d_173fc09b",
         "filename": "chrome/browser/extensions/convert_web_app.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d7d112_199f8c59",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-14T04:26:51Z",
+      "side": 1,
+      "message": "Each url handler needs a list of url patterns, a title and an identifier. This is the identifier. I changed it to a better id.",
+      "parentUuid": "6fea767d_173fc09b",
+      "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "554e3c90_98ea5dfb",
+        "filename": "chrome/browser/extensions/extension_sync_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-14T04:26:51Z",
+      "side": 1,
+      "message": "I looked around a bit.\n\nIt seems that for regular apps we queue requests[1] to fetch the app from the store[2] (or wherever the app set as its update_url) and then install that[3]. The only thing we actually sync for them are settings[4][5]- the rest is downloaded from the store or somewhere else.\n\nFor bookmark apps, we can\u0027t actually fetch them from the store so we sync all the necessary data[6] and update the app manually[7]. This patch makes it so that we also sync the scope.\n\nOne thing that I noticed is that even after we manually update a Bookmark App[7] we don\u0027t return, so we are trying to fetch bookmark apps from the store O.O I have a patch to return immediately; we\u0027ll see if tests pass. https://chromium-review.googlesource.com/c/571520/\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/extensions/extension_sync_service.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d522\n[2] https://cs.chromium.org/chromium/src/extensions/browser/updater/extension_downloader.cc?q\u003dextension+downloader\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d525\n[3] https://cs.chromium.org/chromium/src/chrome/browser/extensions/updater/extension_updater.cc?gsn\u003dCheckForUpdatesSoon\u0026l\u003d433\n[4] https://cs.chromium.org/chromium/src/components/sync/protocol/app_specifics.proto?dr\u0026l\u003d57\n[5] https://cs.chromium.org/chromium/src/components/sync/protocol/extension_specifics.proto?dr\u0026l\u003d20\n[6] https://cs.chromium.org/chromium/src/components/sync/protocol/app_specifics.proto?dr\u0026l\u003d82\n[7] https://cs.chromium.org/chromium/src/chrome/browser/extensions/extension_sync_service.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d511",
+      "parentUuid": "7aef19ed_14c28822",
+      "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40ff2762_b97025c1",
         "filename": "chrome/common/extensions/api/_manifest_features.json",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5603d4cf_529b73f7",
+        "filename": "chrome/common/extensions/api/_manifest_features.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-14T04:26:51Z",
+      "side": 1,
+      "message": "Good question. Both the url_handlers[1] and hosted apps[2] docs are manually written so I think we are safe.\n\n[1] https://cs.chromium.org/chromium/src/chrome/common/extensions/docs/templates/articles/manifest/url_handlers.html\n[2] https://github.com/GoogleChrome/webstore-docs/blob/master/hosted_apps.html",
+      "parentUuid": "40ff2762_b97025c1",
+      "revId": "f2861d7df23d4dd2fd2b7d95581ceeac9e672563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
