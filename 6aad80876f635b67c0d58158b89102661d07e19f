@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e838ec13_3d0749df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-14T05:13:08Z",
+      "side": 1,
+      "message": "This function is called from shutdownVr and a bunch of other places where mInVr could be true. This function won\u0027t do anything in those cases except the single call above. Is that okay? If so, should we even be calling from there?\n\nIf this will be a problem, probably just call it unconditionally from onPause?",
+      "range": {
+        "startLine": 1143,
+        "startChar": 12,
+        "endLine": 1143,
+        "endChar": 17
+      },
+      "revId": "6aad80876f635b67c0d58158b89102661d07e19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
