@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e554128_0c066c05",
+        "filename": "components/variations/synthetic_trial_registry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-14T23:14:34Z",
+      "side": 1,
+      "message": "As discussed offline, let\u0027s keep this private, and restrict access via the MetricsServiceAccessor.  Other than that, LGTM -- thanks!",
+      "range": {
+        "startLine": 42,
+        "startChar": 75,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "04ef4a5a42003eecd62163168863b993d2e9aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
