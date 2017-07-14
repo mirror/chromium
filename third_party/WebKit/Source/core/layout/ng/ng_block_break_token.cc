@@ -5,6 +5,7 @@
 #include "core/layout/ng/ng_block_break_token.h"
 
 #include "core/layout/ng/ng_block_node.h"
+#include "core/layout/ng/ng_layout_result.h"
 
 namespace blink {
 
