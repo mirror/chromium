@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d72c8dd3_d0ce195e",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T18:59:01Z",
+      "side": 1,
+      "message": "I just realized that this is likely to be wrong since Geolocation.cpp closes the GeolocationServicePtr immediately after making a call to it. If you try this out in an interactive browser I think you will find the permission prompt is always immediately dismissed.\n\nWhat you actually want to do is kinda tricky because you want to know if the GeolocationPtr being held by the renderer has been closed but since it is not bound to anything yet there is no way to get notified of this. I think the only workaround is to modify Geolocation.cpp so that it keeps the GeolocationServicePtr open all the time.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 75
+      },
+      "revId": "03fbad98a1c0ced20a3377491bb7af82235d5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7311d6_0b1e231d",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T18:59:01Z",
+      "side": 1,
+      "message": "GeolocationService client may",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "03fbad98a1c0ced20a3377491bb7af82235d5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83efaf45_f334fe28",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T18:59:01Z",
+      "side": 1,
+      "message": "*binding_set_.dispatch_context() \u003d\u003d 0",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 39
+      },
+      "revId": "03fbad98a1c0ced20a3377491bb7af82235d5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a42108c_a6ca833e",
+        "filename": "content/browser/geolocation/geolocation_service_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T18:59:01Z",
+      "side": 1,
+      "message": "This is the old style license comment. No \"(c)\" in new files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "03fbad98a1c0ced20a3377491bb7af82235d5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987edc47_6769a80a",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T18:59:01Z",
+      "side": 1,
+      "message": "Given my comments on the previous file let\u0027s add some tests for the various cases where the permission request is not satisfied immediately and may be cancelled.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "03fbad98a1c0ced20a3377491bb7af82235d5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
