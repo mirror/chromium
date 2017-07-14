@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe77deea_dd1fbf84",
+        "filename": "AUTHORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1230071
+      },
+      "writtenOn": "2017-07-14T12:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e3c2e7_4c4cdf3c",
+      "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad829969_01254c8a",
         "filename": "chrome/VERSION",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c0bc56_5e01f930",
+        "filename": "chrome/VERSION",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1230071
+      },
+      "writtenOn": "2017-07-14T12:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad829969_01254c8a",
+      "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f7026b3f_172541e7",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3175,
+      "author": {
+        "id": 1230071
+      },
+      "writtenOn": "2017-07-14T12:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6577eb5_25a78ddf",
+      "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe75000f_8f5b75d0",
         "filename": "extensions/browser/extension_function_histogram_value.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2d1ff3_f2c1c56a",
+        "filename": "extensions/browser/extension_function_histogram_value.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1230071
+      },
+      "writtenOn": "2017-07-14T12:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe75000f_8f5b75d0",
+      "revId": "f5d0aed934e45ce3947c7d618627fb756d8cbded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
