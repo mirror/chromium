@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3effeab0_dcb919a6",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-14T00:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d70544_bdc740aa",
+      "revId": "735a390d578d4b06c7d09c7281f6fc709fd6e9c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fd7f1de_82187eb7",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fa34dc12_42cfd643",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-14T00:08:38Z",
+      "side": 1,
+      "message": "Done. Somehow |sinks| is an array but doesn\u0027t have the methods, so I wrapped it in Array.from().",
+      "parentUuid": "8fd7f1de_82187eb7",
+      "revId": "735a390d578d4b06c7d09c7281f6fc709fd6e9c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d4a20ba_17d9c97b",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "735a390d578d4b06c7d09c7281f6fc709fd6e9c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdebcbf4_0703471d",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-14T00:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d4a20ba_17d9c97b",
+      "revId": "735a390d578d4b06c7d09c7281f6fc709fd6e9c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
