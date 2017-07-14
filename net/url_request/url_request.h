@@ -466,7 +466,7 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
 
   // Returns true if the URLRequest was delivered through a proxy.
   bool was_fetched_via_proxy() const {
-    return response_info_.was_fetched_via_proxy;
+    return response_info_.was_fetched_via_proxy_method();
   }
 
   // Returns true if the URLRequest was delivered over SPDY.
