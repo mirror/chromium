@@ -569,6 +569,24 @@ gfx::Vector2dF TouchSelectionController::GetEndLineOffset() const {
   return ComputeLineOffsetFromBottom(end_);
 }
 
+int TouchSelectionController::GetStartAlpha() const {
+  if (active_status_ == SELECTION_ACTIVE)
+    return start_selection_handle_->GetAlpha();
+  else if (active_status_ == INSERTION_ACTIVE)
+    return insertion_handle_->GetAlpha();
+  else
+    return 0;
+}
+
+int TouchSelectionController::GetEndAlpha() const {
+  if (active_status_ == SELECTION_ACTIVE)
+    return end_selection_handle_->GetAlpha();
+  else if (active_status_ == INSERTION_ACTIVE)
+    return insertion_handle_->GetAlpha();
+  else
+    return 0;
+}
+
 bool TouchSelectionController::GetStartVisible() const {
   if (!start_.visible())
     return false;

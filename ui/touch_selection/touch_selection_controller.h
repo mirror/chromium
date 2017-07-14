@@ -175,6 +175,8 @@ class UI_TOUCH_SELECTION_EXPORT TouchSelectionController
   gfx::Vector2dF GetEndLineOffset() const;
   bool GetStartVisible() const;
   bool GetEndVisible() const;
+  int GetStartAlpha() const;
+  int GetEndAlpha() const;
   TouchHandle::AnimationStyle GetAnimationStyle(bool was_active) const;
 
   void LogSelectionEnd();

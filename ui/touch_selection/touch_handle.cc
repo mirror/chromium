@@ -234,7 +234,7 @@ bool TouchHandle::Animate(base::TimeTicks frame_time) {
   float position_u = (focus_bottom_ - fade_start_position_).LengthSquared() /
                      kFadeDistanceSquared;
   float u = std::max(time_u, position_u);
-  SetAlpha(is_visible_ ? u : 1.f - u);
+  SetAlpha(is_visible_ ? u : 0);
 
   if (u >= 1.f) {
     EndFade();
