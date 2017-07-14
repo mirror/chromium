@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d90d0051_2ba1d755",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T17:09:59Z",
+      "side": 1,
+      "message": "browsePreload is \u0027chrome://md-settings/\u0027, so these exclusions may not be necessary.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 6
+      },
+      "revId": "ed67ddc24a62e55c3e9ee34f7f52d07446d8265c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7f79f9_2643c9bf",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T17:09:59Z",
+      "side": 1,
+      "message": "Please declare the class before adding functions to it. (move this line above line 20)",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 34
+      },
+      "revId": "ed67ddc24a62e55c3e9ee34f7f52d07446d8265c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f3087e_90312abd",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-14T17:09:59Z",
+      "side": 1,
+      "message": "Nit: swap params so that expected value is first. (Elsewhere also please)\n\nIn this case we expect |passwordSection.passwordManager_| to be equal to |passwordManager|",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 62
+      },
+      "revId": "ed67ddc24a62e55c3e9ee34f7f52d07446d8265c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
