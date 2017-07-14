@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "899c4e8f_7819c1a6",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-14T23:49:27Z",
+      "side": 1,
+      "message": "We are going to resolve subsequent calls while ClaimInterface above is in flight. For a clean fix, we might need to collect the barriers and bulk resolve them.\n\nBtw, we were not touching this code for a long time, do you have an idea on what triggered the failures?",
+      "revId": "81c03e21a14ae319b9f37d421e5eac6e12f679f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
