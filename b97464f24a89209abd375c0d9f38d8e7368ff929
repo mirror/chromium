@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91dda645_bed9343e",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T14:26:03Z",
+      "side": 1,
+      "message": "Nit: s/instantiate/instantiates an/",
+      "revId": "b97464f24a89209abd375c0d9f38d8e7368ff929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500cde8a_d417dcb3",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T14:26:03Z",
+      "side": 1,
+      "message": "Nit 1: s/it //\nNit 2: s/Here schedule to/During this call, we/",
+      "revId": "b97464f24a89209abd375c0d9f38d8e7368ff929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb0d394_ef3fabd6",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T14:26:03Z",
+      "side": 1,
+      "message": "Nit: s/in retry/on retry/",
+      "revId": "b97464f24a89209abd375c0d9f38d8e7368ff929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9955e681_2faca114",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-14T14:26:03Z",
+      "side": 1,
+      "message": "Nit: #include \"base/bind_helpers.h\"",
+      "revId": "b97464f24a89209abd375c0d9f38d8e7368ff929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
