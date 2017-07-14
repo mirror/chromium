@@ -171,6 +171,15 @@ bool PaletteTray::PerformAction(const ui::Event& event) {
     return true;
   }
 
+  // Deactivate the active tool if there is one.
+  PaletteToolId active_tool_id =
+      palette_tool_manager_->GetActiveTool(PaletteGroup::MODE);
+  if (active_tool_id != PaletteToolId::NONE) {
+    palette_tool_manager_->DeactivateTool(active_tool_id);
+    SetIsActive(false);
+    return true;
+  }
+
   return ShowPalette();
 }
 
@@ -206,17 +215,30 @@ bool PaletteTray::ShowPalette() {
   bubble_view->AddChildView(title_view);
 
   // Add horizontal separator.
-  views::Separator* separator = new views::Separator();
-  separator->SetColor(kPaletteSeparatorColor);
-  separator->SetBorder(views::CreateEmptyBorder(gfx::Insets(
+  views::Separator* title_separator = new views::Separator();
+  title_separator->SetColor(kPaletteSeparatorColor);
+  title_separator->SetBorder(views::CreateEmptyBorder(gfx::Insets(
       kPaddingBetweenTitleAndSeparator, 0, kMenuSeparatorVerticalPadding, 0)));
-  bubble_view->AddChildView(separator);
+  bubble_view->AddChildView(title_separator);
 
   // Add palette tools.
   // TODO(tdanderson|jdufault): Use SystemMenuButton to get the material design
   // ripples.
-  std::vector<PaletteToolView> views = palette_tool_manager_->CreateViews();
-  for (const PaletteToolView& view : views)
+  std::vector<PaletteToolView> action_views =
+      palette_tool_manager_->CreateActionViews();
+  for (const PaletteToolView& view : action_views)
+    bubble_view->AddChildView(view.view);
+
+  // Add horizontal seperator between action tools and mode tools.
+  views::Separator* tools_separator = new views::Separator();
+  tools_separator->SetColor(kPaletteSeparatorColor);
+  tools_separator->SetBorder(views::CreateEmptyBorder(gfx::Insets(
+      kPaddingBetweenTitleAndSeparator, 0, kMenuSeparatorVerticalPadding, 0)));
+  bubble_view->AddChildView(tools_separator);
+
+  std::vector<PaletteToolView> mode_views =
+      palette_tool_manager_->CreateModeViews();
+  for (const PaletteToolView& view : mode_views)
     bubble_view->AddChildView(view.view);
 
   // Show the bubble.
@@ -293,7 +315,9 @@ void PaletteTray::OnStylusStateChanged(ui::StylusState stylus_state) {
 
 void PaletteTray::BubbleViewDestroyed() {
   palette_tool_manager_->NotifyViewsDestroyed();
-  SetIsActive(false);
+  // The tray button remains active if the current active tool is a mode.
+  SetIsActive(palette_tool_manager_->GetActiveTool(PaletteGroup::MODE) !=
+              PaletteToolId::NONE);
 }
 
 void PaletteTray::OnMouseEnteredView() {}

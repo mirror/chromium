@@ -49,17 +49,11 @@ void CommonPaletteTool::OnViewDestroyed() {
 void CommonPaletteTool::OnEnable() {
   PaletteTool::OnEnable();
   start_time_ = base::TimeTicks::Now();
-
-  if (highlight_view_)
-    TrayPopupUtils::UpdateCheckMarkVisibility(highlight_view_, true);
 }
 
 void CommonPaletteTool::OnDisable() {
   PaletteTool::OnDisable();
   AddHistogramTimes(GetToolId(), base::TimeTicks::Now() - start_time_);
-
-  if (highlight_view_)
-    TrayPopupUtils::UpdateCheckMarkVisibility(highlight_view_, false);
 }
 
 void CommonPaletteTool::OnViewClicked(views::View* sender) {
@@ -80,7 +74,6 @@ views::View* CommonPaletteTool::CreateDefaultView(const base::string16& name) {
       CreateVectorIcon(GetPaletteIcon(), kMenuIconSize, gfx::kChromeIconGrey);
   highlight_view_ = new HoverHighlightView(this);
   highlight_view_->AddIconAndLabel(icon, name);
-  TrayPopupUtils::InitializeAsCheckableRow(highlight_view_, enabled());
   return highlight_view_;
 }
 

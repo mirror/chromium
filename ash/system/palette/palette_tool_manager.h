@@ -86,8 +86,11 @@ class ASH_EXPORT PaletteToolManager : public PaletteTool::Delegate {
   // not available.
   const gfx::VectorIcon& GetActiveTrayIcon(PaletteToolId tool_id) const;
 
-  // Create views for all of the registered tools.
-  std::vector<PaletteToolView> CreateViews();
+  // Create views for all of the registered action tools.
+  std::vector<PaletteToolView> CreateActionViews();
+
+  // Create views for all of the registered mode tools.
+  std::vector<PaletteToolView> CreateModeViews();
 
   // Called when the views returned by CreateViews have been destroyed. This
   // should clear any (now) stale references.
@@ -107,6 +110,8 @@ class ASH_EXPORT PaletteToolManager : public PaletteTool::Delegate {
   void RecordPaletteModeCancellation(PaletteModeCancelType type) override;
 
   PaletteTool* FindToolById(PaletteToolId tool_id) const;
+
+  std::vector<PaletteToolView> CreateViewsForGroup(PaletteGroup group);
 
   // Unowned pointer to the delegate to provide external functionality.
   Delegate* delegate_;

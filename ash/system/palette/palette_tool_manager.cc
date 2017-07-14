@@ -82,18 +82,29 @@ const gfx::VectorIcon& PaletteToolManager::GetActiveTrayIcon(
   return tool->GetActiveTrayIcon();
 }
 
-std::vector<PaletteToolView> PaletteToolManager::CreateViews() {
-  std::vector<PaletteToolView> views;
-  views.reserve(tools_.size());
+std::vector<PaletteToolView> PaletteToolManager::CreateActionViews() {
+  return CreateViewsForGroup(PaletteGroup::ACTION);
+}
 
-  for (size_t i = 0; i < tools_.size(); ++i) {
-    views::View* tool_view = tools_[i]->CreateView();
+std::vector<PaletteToolView> PaletteToolManager::CreateModeViews() {
+  return CreateViewsForGroup(PaletteGroup::MODE);
+}
+
+std::vector<PaletteToolView> PaletteToolManager::CreateViewsForGroup(
+    PaletteGroup group) {
+  std::vector<PaletteToolView> views;
+
+  for (auto& tool : tools_) {
+    if (tool->GetGroup() != group)
+      continue;
+
+    views::View* tool_view = tool->CreateView();
     if (!tool_view)
       continue;
 
     PaletteToolView view;
-    view.group = tools_[i]->GetGroup();
-    view.tool_id = tools_[i]->GetToolId();
+    view.group = tool->GetGroup();
+    view.tool_id = tool->GetToolId();
     view.view = tool_view;
     views.push_back(view);
   }

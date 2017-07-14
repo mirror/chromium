@@ -27,8 +27,9 @@ class ImageView;
 
 namespace ash {
 
-class TrayBubbleWrapper;
 class PaletteToolManager;
+class PaletteTrayTest;
+class TrayBubbleWrapper;
 
 // The PaletteTray shows the palette in the bottom area of the screen. This
 // class also controls the lifetime for all of the tools available in the
@@ -75,6 +76,8 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   bool ContainsPointInScreen(const gfx::Point& point);
 
  private:
+  friend PaletteTrayTest;
+
   // ui::InputDeviceObserver:
   void OnTouchscreenDeviceConfigurationChanged() override;
   void OnStylusStateChanged(ui::StylusState stylus_state) override;
