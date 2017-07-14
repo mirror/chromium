@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f100838_d0a3c1f1",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-14T20:12:47Z",
+      "side": 1,
+      "message": "I don\u0027t think we should have a dependency on cc. Perhaps this flag could be passed in?",
+      "range": {
+        "startLine": 355,
+        "startChar": 44,
+        "endLine": 355,
+        "endChar": 66
+      },
+      "revId": "1f4665edf6570cacf7c2013cfd1c38c40d3f760d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b8ff51_ac562a72",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-14T20:12:47Z",
+      "side": 1,
+      "message": "Moving this to the component is nice. However, I don\u0027t think we should move these flags to base/.\n\nHow about moving them to components/variations?",
+      "range": {
+        "startLine": 396,
+        "startChar": 52,
+        "endLine": 396,
+        "endChar": 68
+      },
+      "revId": "1f4665edf6570cacf7c2013cfd1c38c40d3f760d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
