@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4de98a1f_7f675937",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-14T06:55:30Z",
+      "side": 1,
+      "message": "nit: can you please make this a link?",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94457199_7485f855",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-14T06:55:30Z",
+      "side": 1,
+      "message": "nit: Missing bug ID",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3aadfbb_32ab5833",
+        "filename": "third_party/WebKit/Source/build/scripts/helper_function.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-14T06:55:30Z",
+      "side": 1,
+      "message": "Please add function doc",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea7ed14_6f5554a8",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-14T06:55:30Z",
+      "side": 1,
+      "message": "nit: can we give this file a better name? Helper function is too generic. We could consider something like keyword_utils?",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccff6f3_fcc9dd5c",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-14T06:55:30Z",
+      "side": 1,
+      "message": "nit: This is the opposite of if enum.type_name in enums:, and isn\u0027t necessary since if we enter the other if, the program throws an assertion error.",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ebeee4_d5ad1630",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-14T06:55:30Z",
+      "side": 1,
+      "message": "Please put this documentation with the code it refers to (line 524). This makes it sound like the purpose of ComputedStyleBaseWriter is to sort enum values.",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
