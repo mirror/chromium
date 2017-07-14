@@ -22,6 +22,23 @@
       "revId": "bba8ba8bdc09d21c5e5f7d4f0c1ea10289452c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3795aa_94aa5e98",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/baseline_policy_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-14T14:57:16Z",
+      "side": 1,
+      "message": "Please add a comment like:\n\n\"TODO(https://crbug.com/739879): Mincore should only be allowed in the baseline policy for x86 (https://crbug.com/701137), but currently this policy is used directly by //content, and mincore needs to be allowed per https://crbug.com/741984.\"",
+      "revId": "bba8ba8bdc09d21c5e5f7d4f0c1ea10289452c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
