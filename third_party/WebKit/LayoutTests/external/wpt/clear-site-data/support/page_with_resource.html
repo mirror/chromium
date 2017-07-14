@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clear-Site-Data</title>
+    <script src="test_utils.js"></script>
+  </head>
+  <body>
+    <script>
+      var scheme = location.search.match("scheme=([^&$]+)")[1];
+
+      var image = new Image();
+      image.onload = image.onerror = function() {
+        location.href = "send_report.html";
+      }
+
+      // TODO(@msramek): Move this logic to TestUtils.
+      image.src = location.origin
+          .replace(/https?/, scheme)
+          .replace(/:[0-9]+/, scheme == "https" ? ":8444" : ":8001") +
+          "/clear-site-data/support/echo-clear-site-data.py?cookies";
+    </script>
+  </body>
+</html>
