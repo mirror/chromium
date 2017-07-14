@@ -39,6 +39,24 @@
       "revId": "677fde62ff6a7450e766c5108eef8c2adb5e9406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c643fc7c_ee746656",
+        "filename": "media/mojo/services/media_capabilities_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T16:09:56Z",
+      "side": 1,
+      "message": "One option would be to use the mojo pref service (it\u0027s new) but I\u0027m not sure if that\u0027s the safest route.",
+      "parentUuid": "f63aea39_48f65d81",
+      "revId": "677fde62ff6a7450e766c5108eef8c2adb5e9406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
