@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1896cfa_91426a1f",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_boot_error_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-14T19:21:03Z",
+      "side": 1,
+      "message": "Please note the lifetime of this, and while you\u0027re at it, of the whole class.",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "e0e0ad07489a1a80033571af24bbcae31e7e2ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
