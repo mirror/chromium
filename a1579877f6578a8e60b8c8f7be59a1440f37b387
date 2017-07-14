@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dee6a868_5c6abd91",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T17:45:46Z",
+      "side": 1,
+      "message": "No need to pass this in. It\u0027s not being used.",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 70
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2dd37d_5ad3cbde",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T17:45:46Z",
+      "side": 1,
+      "message": "You can use AttachCurrentThread() directly, because it\u0027s used only once.",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 9
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccacfe8_bb6b4020",
+        "filename": "content/browser/payments/payment_app_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T17:45:46Z",
+      "side": 1,
+      "message": "Can you verify somehow that opening a window will fail?",
+      "range": {
+        "startLine": 226,
+        "startChar": 2,
+        "endLine": 226,
+        "endChar": 77
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3f2176_df1d7bd0",
+        "filename": "content/browser/payments/payment_app_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T17:45:46Z",
+      "side": 1,
+      "message": "Newline above.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b778d4c6_0c0f464d",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T17:45:46Z",
+      "side": 1,
+      "message": "Add a comment about the meaning of -1 and why it works for your purposes.",
+      "range": {
+        "startLine": 23,
+        "startChar": 52,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c572029_bdbf3bd5",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T17:45:46Z",
+      "side": 1,
+      "message": "What happens if someone calls ::Create() with -1 for event_id parameter?",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4a05c3_96296d54",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T17:45:46Z",
+      "side": 1,
+      "message": "Why is the event_id_ required?",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d130ae99_744992a4",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T17:45:46Z",
+      "side": 1,
+      "message": "Does this have to be synchronous? I\u0027m highly against introducing sync IPCs.",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 13
+      },
+      "revId": "a1579877f6578a8e60b8c8f7be59a1440f37b387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
