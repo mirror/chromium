@@ -1,0 +1,417 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ecc8ee2_ee6d3c6c",
+        "filename": "chrome/browser/app_controller_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "You can remove this if now that you added the inner one.",
+      "range": {
+        "startLine": 379,
+        "startChar": 18,
+        "endLine": 379,
+        "endChar": 24
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ea5720_5ca09623",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "https://developer.apple.com/documentation/appkit/nsresponder/2544690-maketouchbar claims 10.12.1, is that wrong?",
+      "range": {
+        "startLine": 91,
+        "startChar": 50,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602d8edd_b2a73856",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "https://developer.apple.com/documentation/appkit/nsresponder/2544690-maketouchbar claims 10.12.1, is that wrong?",
+      "range": {
+        "startLine": 91,
+        "startChar": 50,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcd57ba_ba23c9c0",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "https://developer.apple.com/documentation/appkit/nsresponder/2544690-maketouchbar claims 10.12.1, is that wrong?",
+      "range": {
+        "startLine": 91,
+        "startChar": 50,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c28ae3a_2f114b68",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "nit: not needed since the .h already includes it (and it must, since the declaration of a method implemented in the mm has the annotation)",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0643dbba_f5edd1f5",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "i think you don\u0027t need that since the declaration already has it",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a736a0_cdfe1cf9",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_editor_base_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "(same comments in this file)",
+      "range": {
+        "startLine": 363,
+        "startChar": 37,
+        "endLine": 363,
+        "endChar": 44
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbdedbb_dc76831a",
+        "filename": "chrome/browser/ui/cocoa/l10n_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "this should be in the .h too, so that the compiler can check that callers of this method are 10.12+ code",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8999c46_5c93081c",
+        "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_editor_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "Drop this if, the outer if dominates it",
+      "range": {
+        "startLine": 202,
+        "startChar": 42,
+        "endLine": 202,
+        "endChar": 49
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47eec134_30bb31bd",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "This looks wrong, this function doesn\u0027t run only on 10.12.",
+      "range": {
+        "startLine": 532,
+        "startChar": 23,
+        "endLine": 532,
+        "endChar": 40
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f0e720_a4dcbbb9",
+        "filename": "net/ssl/ssl_platform_key_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "This looks wrong too (but if SignDigest() _is_ only called on 10.12+, please let me know why and ignore the rest of this comment). I think this file should lose the SecKeyAPIs stuff completely, then grow an if (!@available(10.12, *)) at the start that does the !apis.valid stuff and then the else where it calls the algorithms directly. …oh, I guess we\u0027re preparing for 10.12 switch in a separate CL from the actual switch – hm, can we just declare all the kSecKey thingies in this file if the SDK version is too old and still do what I said?",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2bfe9cd_2a57ecf8",
+        "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "I think the way this file works is that the ImplMac object is created only on 10.10. So I\u0027d mark the ImplMac class API_AVAILABLE(mac(10.10)), instantiate it in an @available if here, and remove the @available in the ctor below.",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f0d2d4_4aa6410c",
+        "filename": "services/shape_detection/text_detection_impl_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "same here, but with 10.11 instead of 10.10",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ddf63c_17f567ab",
+        "filename": "third_party/WebKit/Source/platform/fonts/mac/FontFamilyMatcherMac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "This isn\u0027t clear to me.",
+      "range": {
+        "startLine": 135,
+        "startChar": 40,
+        "endLine": 135,
+        "endChar": 59
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01270bfc_e0cfb388",
+        "filename": "third_party/WebKit/Source/platform/fonts/mac/FontFamilyMatcherMac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "See the #pragma warning part on https://reviews.llvm.org/D35379",
+      "range": {
+        "startLine": 162,
+        "startChar": 44,
+        "endLine": 163,
+        "endChar": 52
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a348aa5_21ece791",
+        "filename": "ui/accelerated_widget_mac/ca_layer_tree_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "adding this here contradicts the comments in the next file (\"actually exists since 10.9\")",
+      "range": {
+        "startLine": 31,
+        "startChar": 14,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13107907_cfb00b28",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "This happens so often, I wonder if we should have\n\n// ...has incorrectly been marked ...\n#define AVSampleBufferDisplayLayer109 \\\n#pragma clang diagnostic push \\\n#pragma clang diagnositc ignored \"...\" \\\nAVampleBufferDisplayLayer \\\n#pragma clang diagnostic pop\n\nin some fitting header in ui/a_w_m/ and then use that everywhere",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf86d17_0bf020de",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 691,
+        "startChar": 17,
+        "endLine": 691,
+        "endChar": 29
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e626f10_803d5305",
+        "filename": "ui/base/cocoa/touch_bar_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 1,
+      "message": "Is this ever supposed to be called before 10.12.1 (or .2)? If not, maybe mark the function in the .h as API_AVAIL",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

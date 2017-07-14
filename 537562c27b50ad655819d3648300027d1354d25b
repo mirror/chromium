@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8cfae12_c418c076",
+        "filename": "ui/views/cocoa/native_widget_mac_nswindow.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T02:06:59Z",
+      "side": 0,
+      "message": "Did this just crash on 10.10 previously?\n\n…aha, ShouldUseDragEventMonitor() is basically the check you added: https://cs.chromium.org/chromium/src/ui/views/cocoa/bridged_native_widget.mm?type\u003dcs\u0026q\u003dShouldUseDragEventMonitor\u0026sq\u003dpackage:chromium\u0026l\u003d349\n\nI think we want to get rid of that function and use @available in its stead directly.",
+      "range": {
+        "startLine": 132,
+        "startChar": 14,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "537562c27b50ad655819d3648300027d1354d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
