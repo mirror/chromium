@@ -299,6 +299,10 @@ HttpHandler::HttpHandler(
           kGet,
           "session/:sessionId/cookie",
           WrapToCommand("GetCookies", base::Bind(&ExecuteGetCookies))),
+      CommandMapping(
+          kGet,
+          "session/:sessionId/cookie/:name",
+          WrapToCommand("GetNamedCookie", base::Bind(&ExecuteGetNamedCookie))),
       CommandMapping(kPost,
                      "session/:sessionId/cookie",
                      WrapToCommand("AddCookie", base::Bind(&ExecuteAddCookie))),
@@ -823,6 +827,7 @@ HttpHandler::PrepareStandardResponse(
     case kChromeNotReachable:
     case kDisconnected:
     case kForbidden:
+    case kNoSuchCookie:
     case kTabCrashed:
       response.reset(
           new net::HttpServerResponseInfo(net::HTTP_INTERNAL_SERVER_ERROR));
