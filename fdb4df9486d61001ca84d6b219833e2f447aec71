@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "3248d556_287059a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-14T03:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4e75184_e0a8c6d8",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 11
+      },
+      "revId": "fdb4df9486d61001ca84d6b219833e2f447aec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98478ec6_8d7c6165",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 2
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "de28c3d7_7dd91139",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-14T03:03:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98478ec6_8d7c6165",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 29
+      },
+      "revId": "fdb4df9486d61001ca84d6b219833e2f447aec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deca7c50_4c4b5a72",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 2
@@ -201,6 +249,30 @@
       "writtenOn": "2017-07-13T07:25:02Z",
       "side": 1,
       "message": "Nit: set mCompositorViewHolder to null as the first line in the run() method? No need to keep it around after this.",
+      "range": {
+        "startLine": 211,
+        "startChar": 19,
+        "endLine": 211,
+        "endChar": 23
+      },
+      "revId": "fdb4df9486d61001ca84d6b219833e2f447aec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e706e09_4aa1b78d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-14T03:03:47Z",
+      "side": 1,
+      "message": "does it harm keeping it around in any way? increasing mutability of the object makes it harder to reason about it.\n\nNow that I added assert for mCompositorViewHolder !\u003d null, if I set it to null here I won\u0027t be able to call hideSplashScreenOnNextFrameSwap() safely, because a race condition might nullify it in the meantime. Unless we\u0027re sure it\u0027s all happening on the same thread, which I\u0027m not sure about (even if, it requires deeper reasoning). WDYT?",
+      "parentUuid": "deca7c50_4c4b5a72",
       "range": {
         "startLine": 211,
         "startChar": 19,
