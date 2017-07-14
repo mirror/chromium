@@ -50,6 +50,57 @@
       "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1232a750_3994834a",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-14T11:01:49Z",
+      "side": 1,
+      "message": "Creating temporary AtomicString looks bad, as we are unlikely to dedupe any string here.\nCan we eliminate this by using FindIgnoringCase instead?",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f05e328_d5e95f53",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLConstructionSite.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-14T11:01:49Z",
+      "side": 1,
+      "message": "This logic implicitly depends on ReserveInitialCapacity on AtomicHTMLToken::InitializeAttributes and is very fragile.\nCan we add a field indicating that it had a duplicated attribute in AtomicHTMLToken?",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57fb6a7_5ce62bd9",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLConstructionSite.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-14T11:01:49Z",
+      "side": 1,
+      "message": "+1 to hiroshige@\u0027s comments.\nCan we make this a NodeFlag or store this as a new ElementRareData field?",
+      "revId": "56f50ef6f0f9e321bc3a6fc03b482380b3cf7316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
