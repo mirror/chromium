@@ -67,6 +67,10 @@ void SearchResult::SetIsMouseInView(bool mouse_is_inside) {
     observer.OnViewHoverStateChanged();
 }
 
+const std::string& SearchResult::CalculateComparableId() const {
+  return !comparable_id_.empty() ? comparable_id_ : id_;
+}
+
 void SearchResult::SetActions(const Actions& sets) {
   actions_ = sets;
   for (auto& observer : observers_)

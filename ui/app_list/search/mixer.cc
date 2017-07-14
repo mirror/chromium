@@ -229,7 +229,7 @@ void Mixer::RemoveDuplicates(SortedResults* results) {
 
   std::set<std::string> id_set;
   for (const SortData& sort_data : *results) {
-    if (!id_set.insert(sort_data.result->id()).second)
+    if (!id_set.insert(sort_data.result->CalculateComparableId()).second)
       continue;
 
     final.emplace_back(sort_data);
