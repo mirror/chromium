@@ -33,6 +33,23 @@
       "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f9a50b2_14adac43",
+        "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-14T16:46:43Z",
+      "side": 1,
+      "message": "MOJO_ERROR sounds like there is something wrong with Mojo. Because it is used mostly for the not-yet-supported case (the browser never tries to disconnect if the feature is supported), shall we name it \"NOT_SUPPORTED\"?\n\nActually we know exactly on what platform it is not yet supported. So maybe this value is not useful and could be removed.\n\nWDYT?",
+      "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
