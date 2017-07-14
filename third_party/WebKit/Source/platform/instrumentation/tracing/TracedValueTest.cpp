@@ -20,10 +20,10 @@ std::unique_ptr<base::Value> ParseTracedValue(
 
 TEST(TracedValueTest, FlatDictionary) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
-  value->SetInteger("int", 2014);
-  value->SetDouble("double", 0.0);
-  value->SetBoolean("bool", true);
-  value->SetString("string", "string");
+  value->SetIntegerWithCopiedName("int", 2014);
+  value->SetDoubleWithCopiedName("double", 0.0);
+  value->SetBooleanWithCopiedName("bool", true);
+  value->SetStringWithCopiedName("string", "string");
 
   std::unique_ptr<base::Value> parsed = ParseTracedValue(std::move(value));
   base::DictionaryValue* dictionary;
@@ -41,24 +41,24 @@ TEST(TracedValueTest, FlatDictionary) {
 
 TEST(TracedValueTest, Hierarchy) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
-  value->SetInteger("i0", 2014);
-  value->BeginDictionary("dict1");
-  value->SetInteger("i1", 2014);
-  value->BeginDictionary("dict2");
-  value->SetBoolean("b2", false);
+  value->SetIntegerWithCopiedName("i0", 2014);
+  value->BeginDictionaryWithCopiedName("dict1");
+  value->SetIntegerWithCopiedName("i1", 2014);
+  value->BeginDictionaryWithCopiedName("dict2");
+  value->SetBooleanWithCopiedName("b2", false);
   value->EndDictionary();
-  value->SetString("s1", "foo");
+  value->SetStringWithCopiedName("s1", "foo");
   value->EndDictionary();
-  value->SetDouble("d0", 0.0);
-  value->SetBoolean("b0", true);
-  value->BeginArray("a1");
+  value->SetDoubleWithCopiedName("d0", 0.0);
+  value->SetBooleanWithCopiedName("b0", true);
+  value->BeginArrayWithCopiedName("a1");
   value->PushInteger(1);
   value->PushBoolean(true);
   value->BeginDictionary();
-  value->SetInteger("i2", 3);
+  value->SetIntegerWithCopiedName("i2", 3);
   value->EndDictionary();
   value->EndArray();
-  value->SetString("s0", "foo");
+  value->SetStringWithCopiedName("s0", "foo");
 
   std::unique_ptr<base::Value> parsed = ParseTracedValue(std::move(value));
   base::DictionaryValue* dictionary;
@@ -101,11 +101,11 @@ TEST(TracedValueTest, Hierarchy) {
 
 TEST(TracedValueTest, Escape) {
   std::unique_ptr<TracedValue> value = TracedValue::Create();
-  value->SetString("s0", "value0\\");
-  value->SetString("s1", "value\n1");
-  value->SetString("s2", "\"value2\"");
-  value->SetString("s3\\", "value3");
-  value->SetString("\"s4\"", "value4");
+  value->SetStringWithCopiedName("s0", "value0\\");
+  value->SetStringWithCopiedName("s1", "value\n1");
+  value->SetStringWithCopiedName("s2", "\"value2\"");
+  value->SetStringWithCopiedName("s3\\", "value3");
+  value->SetStringWithCopiedName("\"s4\"", "value4");
 
   std::unique_ptr<base::Value> parsed = ParseTracedValue(std::move(value));
   base::DictionaryValue* dictionary;

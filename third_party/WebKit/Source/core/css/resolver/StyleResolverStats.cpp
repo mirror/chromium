@@ -68,37 +68,48 @@ bool StyleResolverStats::AllCountersEnabled() const {
 
 std::unique_ptr<TracedValue> StyleResolverStats::ToTracedValue() const {
   std::unique_ptr<TracedValue> traced_value = TracedValue::Create();
-  traced_value->SetInteger("sharedStyleLookups", shared_style_lookups);
-  traced_value->SetInteger("sharedStyleCandidates", shared_style_candidates);
-  traced_value->SetInteger("sharedStyleFound", shared_style_found);
-  if (AllCountersEnabled())
-    traced_value->SetInteger("sharedStyleMissed", shared_style_missed);
-  traced_value->SetInteger("sharedStyleRejectedByUncommonAttributeRules",
-                           shared_style_rejected_by_uncommon_attribute_rules);
-  traced_value->SetInteger("sharedStyleRejectedBySiblingRules",
-                           shared_style_rejected_by_sibling_rules);
-  traced_value->SetInteger("sharedStyleRejectedByParent",
-                           shared_style_rejected_by_parent);
-  traced_value->SetInteger("matchedPropertyApply", matched_property_apply);
-  traced_value->SetInteger("matchedPropertyCacheHit",
-                           matched_property_cache_hit);
-  traced_value->SetInteger("matchedPropertyCacheInheritedHit",
-                           matched_property_cache_inherited_hit);
-  traced_value->SetInteger("matchedPropertyCacheAdded",
-                           matched_property_cache_added);
-  traced_value->SetInteger("rulesRejected", rules_rejected);
-  traced_value->SetInteger("rulesFastRejected", rules_fast_rejected);
-  traced_value->SetInteger("rulesMatched", rules_matched);
-  traced_value->SetInteger("stylesChanged", styles_changed);
-  traced_value->SetInteger("stylesUnchanged", styles_unchanged);
-  traced_value->SetInteger("stylesAnimated", styles_animated);
-  traced_value->SetInteger("elementsStyled", elements_styled);
-  traced_value->SetInteger("pseudoElementsStyled", pseudo_elements_styled);
-  traced_value->SetInteger("baseStylesUsed", base_styles_used);
-  traced_value->SetInteger("independentInheritedStylesPropagated",
-                           independent_inherited_styles_propagated);
-  traced_value->SetInteger("customPropertiesApplied",
-                           custom_properties_applied);
+  traced_value->SetIntegerWithCopiedName("sharedStyleLookups",
+                                         shared_style_lookups);
+  traced_value->SetIntegerWithCopiedName("sharedStyleCandidates",
+                                         shared_style_candidates);
+  traced_value->SetIntegerWithCopiedName("sharedStyleFound",
+                                         shared_style_found);
+  if (AllCountersEnabled()) {
+    traced_value->SetIntegerWithCopiedName("sharedStyleMissed",
+                                           shared_style_missed);
+  }
+  traced_value->SetIntegerWithCopiedName(
+      "sharedStyleRejectedByUncommonAttributeRules",
+      shared_style_rejected_by_uncommon_attribute_rules);
+  traced_value->SetIntegerWithCopiedName(
+      "sharedStyleRejectedBySiblingRules",
+      shared_style_rejected_by_sibling_rules);
+  traced_value->SetIntegerWithCopiedName("sharedStyleRejectedByParent",
+                                         shared_style_rejected_by_parent);
+  traced_value->SetIntegerWithCopiedName("matchedPropertyApply",
+                                         matched_property_apply);
+  traced_value->SetIntegerWithCopiedName("matchedPropertyCacheHit",
+                                         matched_property_cache_hit);
+  traced_value->SetIntegerWithCopiedName("matchedPropertyCacheInheritedHit",
+                                         matched_property_cache_inherited_hit);
+  traced_value->SetIntegerWithCopiedName("matchedPropertyCacheAdded",
+                                         matched_property_cache_added);
+  traced_value->SetIntegerWithCopiedName("rulesRejected", rules_rejected);
+  traced_value->SetIntegerWithCopiedName("rulesFastRejected",
+                                         rules_fast_rejected);
+  traced_value->SetIntegerWithCopiedName("rulesMatched", rules_matched);
+  traced_value->SetIntegerWithCopiedName("stylesChanged", styles_changed);
+  traced_value->SetIntegerWithCopiedName("stylesUnchanged", styles_unchanged);
+  traced_value->SetIntegerWithCopiedName("stylesAnimated", styles_animated);
+  traced_value->SetIntegerWithCopiedName("elementsStyled", elements_styled);
+  traced_value->SetIntegerWithCopiedName("pseudoElementsStyled",
+                                         pseudo_elements_styled);
+  traced_value->SetIntegerWithCopiedName("baseStylesUsed", base_styles_used);
+  traced_value->SetIntegerWithCopiedName(
+      "independentInheritedStylesPropagated",
+      independent_inherited_styles_propagated);
+  traced_value->SetIntegerWithCopiedName("customPropertiesApplied",
+                                         custom_properties_applied);
   return traced_value;
 }
 
