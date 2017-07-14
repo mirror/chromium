@@ -142,6 +142,30 @@
       "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43fe42c_8484017b",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-14T19:51:33Z",
+      "side": 1,
+      "message": "I meant more in terms of code brittleness...\n\nAnyway, I was thinking along the lines of:\nclass CleanupContext {\n public:\n  typedef OnceCallback\u003cvoid(scoped_refptr\u003cbase::SequencedTaskRunner\u003e)\u003e PostCleanupCallback;\n\n  // The provide callback will be executed, and handed a task runner,\n  // when it\u0027s safe to queue an op to that task runner to delete the cache\u0027s\n  // directory without any interference from its operations or open files.\n  void ExecuteWhenCleanupComplete(PostCleanupCallback callback)\n}\n\n... with the understanding that the Execute... call would correspond to the last call to disk_cache::CreateCacheBackend (maybe it can even work without one), and that there should only be one for each. \n\nA simpler take would make the object non-reusable while the Execute... is pending.",
+      "parentUuid": "32af1cc2_3823ab63",
+      "range": {
+        "startLine": 1940,
+        "startChar": 18,
+        "endLine": 1940,
+        "endChar": 24
+      },
+      "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
