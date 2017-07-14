@@ -22,6 +22,47 @@
       "revId": "391cb08eda2018e99858465440783dc8bec4d662",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a43cda8_9c4b6a32",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-14T00:00:17Z",
+      "side": 1,
+      "message": "I can revert the whole change that plumbed this in a follow up. It\u0027s a rather large change, so probably better to revert on its own. I\u0027ll revert tomorrow, but it would be ideal if this could land first, so we don\u0027t regress behavior in the interim period.",
+      "parentUuid": "8965fd62_e7143984",
+      "range": {
+        "startLine": 68,
+        "startChar": 47,
+        "endLine": 68,
+        "endChar": 59
+      },
+      "revId": "391cb08eda2018e99858465440783dc8bec4d662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048244a8_516532e2",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-14T00:00:17Z",
+      "side": 1,
+      "message": "let\u0027s use /title1.html here",
+      "revId": "391cb08eda2018e99858465440783dc8bec4d662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
