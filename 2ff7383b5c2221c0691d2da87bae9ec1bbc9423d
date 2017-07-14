@@ -117,6 +117,30 @@
       "revId": "2ff7383b5c2221c0691d2da87bae9ec1bbc9423d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d313bd64_c4f8d0cf",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-14T16:14:37Z",
+      "side": 1,
+      "message": "Can you still LGTM this CL and push it into the CQ? I think that it can help us being sure that we understand the issue. I agree with your approach if our assumption is correct.",
+      "parentUuid": "bb332c40_e728a656",
+      "range": {
+        "startLine": 580,
+        "startChar": 36,
+        "endLine": 580,
+        "endChar": 58
+      },
+      "revId": "2ff7383b5c2221c0691d2da87bae9ec1bbc9423d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
