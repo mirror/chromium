@@ -7,6 +7,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include "base/mac/availability.h"
 #include "ui/base/ui_base_export.h"
 
 namespace ui {
@@ -21,7 +22,8 @@ UI_BASE_EXPORT Class NSCustomTouchBarItem();
 // |action| from the |target|.
 UI_BASE_EXPORT NSButton* GetBlueTouchBarButton(NSString* title,
                                                id target,
-                                               SEL action);
+                                               SEL action)
+    API_AVAILABLE(macosx(10.12.2));
 
 // Creates a touch bar identifier with the given |id|.
 UI_BASE_EXPORT NSString* GetTouchBarId(NSString* touch_bar_id);
