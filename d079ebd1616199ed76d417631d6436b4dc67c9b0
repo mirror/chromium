@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a9d9fb8_0f521a77",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayUmaHelper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-14T01:18:29Z",
+      "side": 1,
+      "message": "As discussed in platform-architecture-dev@, I think it\u0027s fine to use GURL at the boundary layer like this.",
+      "revId": "d079ebd1616199ed76d417631d6436b4dc67c9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0627415d_b2d5709a",
+        "filename": "third_party/WebKit/Source/core/html/media/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-14T01:18:29Z",
+      "side": 1,
+      "message": "Nit: Regarding core/, I\u0027d prefer centralizing all DEPS rules to core/DEPS.",
+      "revId": "d079ebd1616199ed76d417631d6436b4dc67c9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
