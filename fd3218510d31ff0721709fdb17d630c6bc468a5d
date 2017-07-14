@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b23cad3b_cafacfe5",
+        "filename": "cc/ipc/copy_output_request_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-14T15:08:15Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "fd3218510d31ff0721709fdb17d630c6bc468a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
