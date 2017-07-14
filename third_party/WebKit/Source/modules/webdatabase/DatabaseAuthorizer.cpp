@@ -86,8 +86,6 @@ const FunctionNameList& WhitelistedFunctions() {
           // SQLite aggregate functions
           // max() and min() are already in the list
           "avg", "count", "group_concat", "sum", "total",
-          // SQLite FTS functions
-          "match", "snippet", "offsets", "optimize",
           // SQLite ICU functions
           // like(), lower() and upper() are already in the list
           "regexp",
@@ -245,31 +243,36 @@ int DatabaseAuthorizer::DropTempView(const String&) {
 
 int DatabaseAuthorizer::CreateVTable(const String& table_name,
                                      const String& module_name) {
+  // TODO(https://crbug.com/742645): This method should eventually be removed.
+
   if (!AllowWrite())
     return kSQLAuthDeny;
 
-  // Allow only the FTS3 extension
-  if (!DeprecatedEqualIgnoringCase(module_name, "fts3"))
-    return kSQLAuthDeny;
+  // Count attempts to use the FTS3 extension that would have succeeded before
+  // the removal.
+  if (DeprecatedEqualIgnoringCase(module_name, "fts3")) {
+    UseCounter::Count(database_context_->GetExecutionContext(),
+                      WebFeature::kWebDatabaseCreateDropFTS3Table);
+  }
 
-  UseCounter::Count(database_context_->GetExecutionContext(),
-                    WebFeature::kWebDatabaseCreateDropFTS3Table);
-  last_action_changed_database_ = true;
-  return DenyBasedOnTableName(table_name);
+  return kSQLAuthDeny;
 }
 
 int DatabaseAuthorizer::DropVTable(const String& table_name,
                                    const String& module_name) {
+  // TODO(https://crbug.com/742645): This method should eventually be removed.
+
   if (!AllowWrite())
     return kSQLAuthDeny;
 
-  // Allow only the FTS3 extension
-  if (!DeprecatedEqualIgnoringCase(module_name, "fts3"))
-    return kSQLAuthDeny;
+  // Count attempts to use the FTS3 extension that would have succeeded before
+  // the removal.
+  if (DeprecatedEqualIgnoringCase(module_name, "fts3")) {
+    UseCounter::Count(database_context_->GetExecutionContext(),
+                      WebFeature::kWebDatabaseCreateDropFTS3Table);
+  }
 
-  UseCounter::Count(database_context_->GetExecutionContext(),
-                    WebFeature::kWebDatabaseCreateDropFTS3Table);
-  return UpdateDeletesBasedOnTableName(table_name);
+  return kSQLAuthDeny;
 }
 
 int DatabaseAuthorizer::AllowDelete(const String& table_name) {
