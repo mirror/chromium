@@ -38,6 +38,10 @@ class DesktopSessionDurationTracker : public AudibleContentsTracker::Observer {
   // Returns the |DesktopSessionDurationTracker| instance.
   static DesktopSessionDurationTracker* Get();
 
+  // To avoid memory leaks when using the |DesktopSessionDurationTracker|
+  // instance in tests.
+  static void DeleteInstanceForTesting();
+
   // Called when user interaction with the browser is caught.
   void OnUserEvent();
 
