@@ -160,6 +160,11 @@ if (!(is_win && is_component_build)) {
   }
 }  # !(is_win && is_component_build)
 
+service_manifest("cdm_manifest") {
+  name = "cdm"
+  source = "cdm_manifest.json"
+}
+
 service_manifest("media_manifest") {
   name = "media"
   source = "media_manifest.json"
