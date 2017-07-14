@@ -41,6 +41,8 @@ class MESSAGE_CENTER_EXPORT NotificationControlButtonsView
   // Set the background color of the view.
   void SetBackgroundColor(const SkColor& target_bgcolor);
 
+  void SetVisible(bool visible) override;
+
   // Request the focus on the close button.
   void RequestFocusOnCloseButton();
 
