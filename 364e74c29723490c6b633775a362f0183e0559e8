@@ -22,6 +22,30 @@
       "revId": "364e74c29723490c6b633775a362f0183e0559e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b876d614_3e93be08",
+        "filename": "base/message_loop/message_loop_io_posix_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T22:04:28Z",
+      "side": 1,
+      "message": "This is a hold-over from the original MessageLoop unit-test, but yes, I think it makes more sense to replace QuitWatcher with RecordNotificationAndQuitWatcher throughout, since one is a superset of the the other, and it allows sanity-checking the event notifications.",
+      "parentUuid": "8020f6c3_61cd9692",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 25
+      },
+      "revId": "364e74c29723490c6b633775a362f0183e0559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
