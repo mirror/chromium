@@ -282,6 +282,30 @@
       "revId": "fdb4df9486d61001ca84d6b219833e2f447aec71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1355da9_0fba9a88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-14T03:20:47Z",
+      "side": 1,
+      "message": "Will nullify it, but quit on null mCompositorViewHolder in hideSplashScreenOnNextFrameSwap(...), as both mSplashScreen and mCompositorViewHolder should be nullified at the same time.\n\nWe don\u0027t hold any extra references and it\u0027s safe this way.",
+      "parentUuid": "5e706e09_4aa1b78d",
+      "range": {
+        "startLine": 211,
+        "startChar": 19,
+        "endLine": 211,
+        "endChar": 23
+      },
+      "revId": "fdb4df9486d61001ca84d6b219833e2f447aec71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
