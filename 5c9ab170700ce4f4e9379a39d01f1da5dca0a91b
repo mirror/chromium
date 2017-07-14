@@ -317,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "6e688531_b4578ac3",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T13:25:30Z",
+      "side": 1,
+      "message": "It is enabled. Or, it should be. Otherwise we\u0027d never be able to upstream any tests until we launched things, which isn\u0027t the case.",
+      "parentUuid": "827d44ff_a12de908",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24582e64_063dd7e9",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 1
@@ -384,6 +402,24 @@
       "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a05af45_df169057",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicyTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T13:25:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7eb8b7f5_b4424a20",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
