@@ -151,6 +151,24 @@
       "revId": "161437262bfe0976952ba446b5f10bd602a19d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18013226_0bd16f09",
+        "filename": "tools/copyright_scanner/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-07-14T07:48:52Z",
+      "side": 1,
+      "message": "Deleting unused code is an obvious thing to do.\n\nAs for license checking requirements, you may need legal review.",
+      "parentUuid": "f20db5f0_47751c85",
+      "revId": "161437262bfe0976952ba446b5f10bd602a19d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
