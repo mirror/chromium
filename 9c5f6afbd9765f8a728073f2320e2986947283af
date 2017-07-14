@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd61098e_96d3bb02",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-14T22:17:30Z",
+      "side": 1,
+      "message": "Presubmit complained about not using this, but doing so is important (as is supporting a configurable adb path). There are a lot of existing examples of doing so: https://codesearch.chromium.org/search/?q\u003ddevil_chromium%5C.Initialize%5C(\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "9c5f6afbd9765f8a728073f2320e2986947283af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
