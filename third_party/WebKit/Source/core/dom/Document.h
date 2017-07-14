@@ -1169,6 +1169,9 @@ class CORE_EXPORT Document : public ContainerNode,
   }
   HTMLImportLoader* ImportLoader() const;
 
+  bool IsImport() const;
+  Document& MasterDocument() const;
+
   void DidLoadAllImports();
 
   void AdjustFloatQuadsForScrollAndAbsoluteZoom(Vector<FloatQuad>&,

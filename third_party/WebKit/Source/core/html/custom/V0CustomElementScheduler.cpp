@@ -42,7 +42,6 @@
 #include "core/html/custom/V0CustomElementRegistrationContext.h"
 #include "core/html/custom/V0CustomElementSyncMicrotaskQueue.h"
 #include "core/html/imports/HTMLImportChild.h"
-#include "core/html/imports/HTMLImportsController.h"
 
 namespace blink {
 
@@ -150,9 +149,7 @@ void V0CustomElementScheduler::EnqueueMicrotaskStep(
     Document& document,
     V0CustomElementMicrotaskStep* step,
     bool import_is_sync) {
-  Document& master = document.ImportsController()
-                         ? *(document.ImportsController()->Master())
-                         : document;
+  Document& master = document.MasterDocument();
   master.CustomElementMicrotaskRunQueue()->Enqueue(document.ImportLoader(),
                                                    step, import_is_sync);
 }

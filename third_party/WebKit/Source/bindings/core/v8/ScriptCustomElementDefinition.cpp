@@ -172,10 +172,7 @@ HTMLElement* ScriptCustomElementDefinition::CreateElementSync(
   {
     v8::TryCatch try_catch(script_state_->GetIsolate());
 
-    bool is_import_document =
-        document.ImportsController() &&
-        document.ImportsController()->Master() != document;
-    if (is_import_document) {
+    if (document.IsImport()) {
       // V8HTMLElement::constructorCustom() can only refer to
       // window.document() which is not the import document. Create
       // elements in import documents ahead of time so they end up in
