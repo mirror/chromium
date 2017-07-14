@@ -9,20 +9,34 @@
 
 #include "base/macros.h"
 #include "ui/events/event.h"
+#include "ui/gfx/geometry/point.h"
+#include "ui/gfx/native_widget_types.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/link_listener.h"
 
 namespace views {
 class EventMonitor;
+class View;
+class WidgetDelegate;
 }
 
 class Browser;
 
+namespace first_run {
+
+void ShowFirstRunBubbleViews(Browser* browser);
+views::WidgetDelegate* ShowFirstRunBubbleViewsForTest(views::View* anchor_view);
+
+}  // namespace first_run
+
 class FirstRunBubble : public views::BubbleDialogDelegateView,
                        public views::LinkListener {
  public:
-  // |browser| is the opening browser and is NULL in unittests.
-  static FirstRunBubble* ShowBubble(Browser* browser, views::View* anchor_view);
+  FirstRunBubble(Browser* browser,
+                 views::View* anchor_view,
+                 const gfx::Point& anchor_point,
+                 gfx::NativeWindow parent_window);
+  ~FirstRunBubble() override;
 
  protected:
   // views::BubbleDialogDelegateView overrides:
@@ -30,15 +44,12 @@ class FirstRunBubble : public views::BubbleDialogDelegateView,
   int GetDialogButtons() const override;
 
  private:
-  FirstRunBubble(Browser* browser, views::View* anchor_view);
-  ~FirstRunBubble() override;
-
   // This class observes keyboard events, mouse clicks and touch down events
   // targeted towards the anchor widget and dismisses the first run bubble
   // accordingly.
   class FirstRunBubbleCloser : public ui::EventHandler {
    public:
-    FirstRunBubbleCloser(FirstRunBubble* bubble, views::View* anchor_view);
+    FirstRunBubbleCloser(FirstRunBubble* bubble, gfx::NativeWindow parent);
     ~FirstRunBubbleCloser() override;
 
     // ui::EventHandler overrides.
