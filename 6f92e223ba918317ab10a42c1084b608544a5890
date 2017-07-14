@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b12a2a25_3a6385d1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-14T19:47:41Z",
+      "side": 1,
+      "message": "Nit: change to \u0027Tests navigation from a NTP to a 2D page.\u0027",
+      "revId": "6f92e223ba918317ab10a42c1084b608544a5890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a4bbce_27815897",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-14T19:47:41Z",
+      "side": 1,
+      "message": "Nit: rename to testNavigationNtpTo2d to be in line with the test naming of the rest of the file.",
+      "revId": "6f92e223ba918317ab10a42c1084b608544a5890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
