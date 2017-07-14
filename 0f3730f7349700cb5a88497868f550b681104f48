@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c2830db_e8d1d1d3",
+        "filename": "ui/accelerated_widget_mac/availability_macros.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T20:52:48Z",
+      "side": 1,
+      "message": "It\u0027d be good if someone familiar with this code could check that this comment is, in fact, correct. (Either ccameron, or maybe you\u0027re sure that this is true, in that case this is fine without further checking.)\n\nMaybe add \"Since we don\u0027t deploy to lower than 10.9, just disabling the warning is fine.\"\n\n(If we were to deploy to 10.8 we might want to come up with something more clever, e.g. a typedef that itself has a API_AVAL annotation for 10.9)",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "0f3730f7349700cb5a88497868f550b681104f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
