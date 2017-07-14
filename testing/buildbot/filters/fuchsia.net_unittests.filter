@@ -1,0 +1,39 @@
+# This test passes but it's slow because sockets() waits for 10
+# seconds before returning EIO.
+-AddressSorterTest.Sort
+
+# These tests currently fail.
+-*HTTPS*
+-*QuicEndToEndTest.Large*
+-*QuicEndToEndTest.TokenBinding*
+-*QuicEndToEndTest.Uber*
+-*QuicHttpStreamTest*
+-*RootCert*
+-*Socket*
+-BbrSenderTest.SimpleTransferAckDecimation2
+-CertNetFetcherImplTest*
+-CertVerifyProcInternalTest.*
+-CloseOnConnectHttpServerTest.ServerImmediatelyClosesConnection
+-DiskCache*
+-EffectiveConnectionTypeTest*
+-EmbeddedTestServer*
+-FilenameUtilTest.Generate*
+-FileStreamTest.*
+-HttpNetworkTransactionTest.UploadUnreadableFile
+-HttpServerTest.*
+-MimeUtilTest.*
+-NetworkInterfacesTest.GetNetworkList
+-NetworkQualitiesPrefManager*
+-NetworkQualityEstimatorTest*
+-Proxy*
+-PythonUtils*
+-QuicSimpleClientTest*
+-ReportingUploader*
+-SimpleIndexFileTest*
+-SpdyNetworkTransactionTest.UnreadableFilePost
+-SQLite*
+-SSL*
+-ThroughputAnalyzerTest*
+-TokenBindingURLRequest*
+-URLFetcher*
+-URLRequest*

@@ -11336,7 +11336,6 @@
   "Fuchsia": {
     "additional_compile_targets": [
       "d8",
-      "net_unittests",
       "skia_unittests"
     ],
     "gtest_tests": [
@@ -11357,13 +11356,21 @@
           "can_use_on_swarming_builders": false
         },
         "test": "ipc_tests"
+      },
+      {
+        "args": [
+          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.net_unittests.filter"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "net_unittests"
       }
     ]
   },
   "Fuchsia (dbg)": {
     "additional_compile_targets": [
       "d8",
-      "net_unittests",
       "skia_unittests"
     ],
     "gtest_tests": [
@@ -11384,6 +11391,15 @@
           "can_use_on_swarming_builders": false
         },
         "test": "ipc_tests"
+      },
+      {
+        "args": [
+          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.net_unittests.filter"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "net_unittests"
       }
     ]
   },
