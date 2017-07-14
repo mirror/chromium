@@ -105,6 +105,24 @@
       "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da5031a2_4affc39f",
+        "filename": "third_party/WebKit/LayoutTests/fast/files/xhr-response-blob-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-14T06:31:27Z",
+      "side": 1,
+      "message": "I added that comment in script-tests/xhr-response-blob.js to address that concern.",
+      "parentUuid": "997ffdb2_ce655be7",
+      "revId": "b127a3cc290d7b00b4e1a9b76426fdae59088f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
