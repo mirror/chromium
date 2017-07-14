@@ -1677,31 +1677,30 @@ void LayoutGrid::UpdateAutoMarginsInColumnAxisIfNeeded(LayoutBox& child) {
 
 // TODO(lajava): This logic is shared by LayoutFlexibleBox, so it might be
 // refactored somehow.
-int LayoutGrid::SynthesizedBaselineFromContentBox(const LayoutBox& box,
-                                                  LineDirectionMode direction) {
+LayoutUnit LayoutGrid::SynthesizedBaselineFromContentBox(
+    const LayoutBox& box,
+    LineDirectionMode direction) {
   if (direction == kHorizontalLine) {
-    return (box.Size().Height() - box.BorderBottom() - box.PaddingBottom() -
-            box.HorizontalScrollbarHeight())
-        .ToInt();
+    return box.Size().Height() - box.BorderBottom() - box.PaddingBottom() -
+           box.HorizontalScrollbarHeight();
   }
-  return (box.Size().Width() - box.BorderLeft() - box.PaddingLeft() -
-          box.VerticalScrollbarWidth())
-      .ToInt();
+  return box.Size().Width() - box.BorderLeft() - box.PaddingLeft() -
+         box.VerticalScrollbarWidth();
 }
 
-int LayoutGrid::SynthesizedBaselineFromBorderBox(const LayoutBox& box,
-                                                 LineDirectionMode direction) {
-  return (direction == kHorizontalLine ? box.Size().Height()
-                                       : box.Size().Width())
-      .ToInt();
+LayoutUnit LayoutGrid::SynthesizedBaselineFromBorderBox(
+    const LayoutBox& box,
+    LineDirectionMode direction) {
+  return direction == kHorizontalLine ? box.Size().Height()
+                                      : box.Size().Width();
 }
 
-int LayoutGrid::BaselinePosition(FontBaseline,
-                                 bool,
-                                 LineDirectionMode direction,
-                                 LinePositionMode mode) const {
+LayoutUnit LayoutGrid::BaselinePosition(FontBaseline,
+                                        bool,
+                                        LineDirectionMode direction,
+                                        LinePositionMode mode) const {
   DCHECK_EQ(mode, kPositionOnContainingLine);
-  int baseline = FirstLineBoxBaseline();
+  LayoutUnit baseline = LayoutUnit(FirstLineBoxBaseline());
   // We take content-box's bottom if no valid baseline.
   if (baseline == -1)
     baseline = SynthesizedBaselineFromContentBox(*this, direction);
@@ -1763,13 +1762,13 @@ int LayoutGrid::FirstLineBoxBaseline() const {
   return (baseline + baseline_child->LogicalTop()).ToInt();
 }
 
-int LayoutGrid::InlineBlockBaseline(LineDirectionMode direction) const {
+LayoutUnit LayoutGrid::InlineBlockBaseline(LineDirectionMode direction) const {
   int baseline = FirstLineBoxBaseline();
   if (baseline != -1)
-    return baseline;
+    return LayoutUnit(baseline);
 
-  int margin_height =
-      (direction == kHorizontalLine ? MarginTop() : MarginRight()).ToInt();
+  LayoutUnit margin_height =
+      direction == kHorizontalLine ? MarginTop() : MarginRight();
   return SynthesizedBaselineFromContentBox(*this, direction) + margin_height;
 }
 

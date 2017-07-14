@@ -61,7 +61,7 @@ int LayoutNGBlockFlow::FirstLineBoxBaseline() const {
   return LayoutBlockFlow::FirstLineBoxBaseline();
 }
 
-int LayoutNGBlockFlow::InlineBlockBaseline(
+LayoutUnit LayoutNGBlockFlow::InlineBlockBaseline(
     LineDirectionMode line_direction) const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
