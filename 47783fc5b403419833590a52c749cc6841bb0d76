@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "5611697c_746a65c9",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T00:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1beffd_b175d247",
+      "revId": "47783fc5b403419833590a52c749cc6841bb0d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb62f7e_370e451f",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 2
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "12b37b50_7223f17a",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T00:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eb62f7e_370e451f",
+      "revId": "47783fc5b403419833590a52c749cc6841bb0d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d9fb82_5dbe6a6e",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 2
@@ -70,6 +106,24 @@
       "writtenOn": "2017-07-06T20:26:32Z",
       "side": 1,
       "message": "the BoxLayout constructor can accept insets, does that work instead?",
+      "revId": "47783fc5b403419833590a52c749cc6841bb0d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c238fe7_1483fc6e",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T00:51:23Z",
+      "side": 1,
+      "message": "This is replaced by setting the alignment to center.",
+      "parentUuid": "a5d9fb82_5dbe6a6e",
       "revId": "47783fc5b403419833590a52c749cc6841bb0d76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -96,6 +150,30 @@
       "revId": "47783fc5b403419833590a52c749cc6841bb0d76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005167ff_25d97313",
+        "filename": "ash/login/ui/login_pin_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T00:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730dc784_0e3b97cc",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "47783fc5b403419833590a52c749cc6841bb0d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
