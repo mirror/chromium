@@ -201,6 +201,14 @@ public class TileGroup implements MostVisitedSites.Observer {
     private boolean mHasReceivedData;
 
     /**
+     * The number of columns tiles get rendered it. Precalculated upon calling
+     * {@link #startObserving(int, int)} and constant from then on. Used for pinning the home page
+     * tile to the first tile row.
+     * @see #renderTileViews(ViewGroup, boolean)
+     */
+    private int mNumColumns;
+
+    /**
      * @param context Used for initialisation and resolving resources.
      * @param uiDelegate Delegate used to interact with the rest of the system.
      * @param contextMenuManager Used to handle context menu invocations on the tiles.
@@ -285,11 +293,13 @@ public class TileGroup implements MostVisitedSites.Observer {
     /**
      * Instructs this instance to start listening for data. The {@link TileGroup.Observer} may be
      * called immediately if new data is received synchronously.
-     * @param maxResults The maximum number of sites to retrieve.
+     * @param maxRows The maximum number of rows to fetch.
+     * @param maxColumns The maximum number of columns to fetch.
      */
-    public void startObserving(int maxResults) {
+    public void startObserving(int maxRows, int maxColumns) {
         addTask(TileTask.FETCH_DATA);
-        mTileGroupDelegate.setMostVisitedSitesObserver(this, maxResults);
+        mTileGroupDelegate.setMostVisitedSitesObserver(this, maxRows * maxColumns);
+        mNumColumns = Math.max(maxColumns, TileGridLayout.calculatemNumColumns());
     }
 
     /**
@@ -311,7 +321,8 @@ public class TileGroup implements MostVisitedSites.Observer {
         // added back in the correct order.
         parent.removeAllViews();
 
-        for (Tile tile : mTiles) {
+        for (int i = 0; i < mTiles.length; i++) {
+            Tile tile = mTiles[i];
             TileView tileView = oldTileViews.get(tile.getUrl());
             if (tileView == null) {
                 tileView = buildTileView(tile, parent, condensed);
@@ -319,7 +330,17 @@ public class TileGroup implements MostVisitedSites.Observer {
                 tileView.updateIfDataChanged(tile);
             }
 
-            parent.addView(tileView);
+            // The home page tile is pinned to the first row of tiles. It will appear on
+            // the position corresponding to its ranking among all tiles (obtained from the
+            // ntp_tiles C++ component). If its position is larger than the number of tiles
+            // in the first row, it will appear on the last position of the first row.
+            // Do note, that the number of tiles in a row (column number) is determined upon
+            // initialization and not changed afterwards.
+            if (tile.getSource() == TileSource.HOMEPAGE) {
+                parent.addView(tileView, Math.min(i, mNumColumns - 1));
+            } else {
+                parent.addView(tileView);
+            }
         }
 
         // Icon fetch scheduling was done when building the tile views.
