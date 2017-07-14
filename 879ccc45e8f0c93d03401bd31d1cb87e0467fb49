@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f3b0ec9_8a0b0eec",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T21:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ce5831_fd021bf4",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0b28198_fed5057b",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe6a0bb_be00e337",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T21:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b28198_fed5057b",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0ff84aa0_03b03382",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T21:51:05Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "25410b0d_9681aaf5",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30793059_9d1d0a21",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d4ef512e_48b0d2a6",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T21:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30793059_9d1d0a21",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd4a5cef_03ebfea5",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3e3c81_6d056c24",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T21:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd4a5cef_03ebfea5",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
