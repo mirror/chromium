@@ -64,6 +64,7 @@ class ContextMenuMatcher {
       const base::string16& selection_text);
 
   bool IsCommandIdChecked(int command_id) const;
+  bool IsCommandIdVisible(int command_id) const;
   bool IsCommandIdEnabled(int command_id) const;
   void ExecuteCommand(int command_id,
                       content::WebContents* web_contents,
@@ -72,6 +73,17 @@ class ContextMenuMatcher {
 
  private:
   friend class ::ExtensionContextMenuBrowserTest;
+  friend class ExtensionContextMenuApiTest;
+
+  // A helper method to IsCommandIdVisible() to check an item's visibility.
+  bool IsItemVisible(const MenuItem* item) const;
+
+  // Checks if all direct children of an item are visible.
+  bool AreSomeChildrenVisible(const MenuItem::List& children);
+
+  // A helper method to AppendExtensionItems() to determine if the top level
+  // menu item should labeled with the extension name.
+  bool ShowExtensionNameAsTopLevelItem(const MenuItem::List& items);
 
   bool GetRelevantExtensionTopLevelItems(
       const MenuItem::ExtensionKey& extension_key,

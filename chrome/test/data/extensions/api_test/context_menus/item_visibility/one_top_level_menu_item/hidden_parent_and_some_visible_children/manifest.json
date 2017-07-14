@@ -1,0 +1,12 @@
+{
+  "name": "chrome.contextMenus visible property",
+  "description": "Tests hiding a top-level parent menu item and its children of different visibility states.",
+  "version": "1.0",
+  "manifest_version": 2,
+  "permissions": [
+    "contextMenus"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
