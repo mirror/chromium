@@ -268,6 +268,24 @@
       "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ab51928_fc680b24",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-14T04:55:49Z",
+      "side": 1,
+      "message": "Add a method to the test browser proxy like ContentSettingNameToForSomeReasonItsDifferentTestContentSettingName() and use that as a key everywhere.\n\nIn the test browser proxy, getExceptionList could easily be pref \u003d this.prefs.exceptions[translatedContentType] and getOriginPermissions could be this.prefs_.exceptions[translatedContentType].\n\nThere\u0027s no good reason to have these massive switches, _even_ if there is a translation mismatch. Encapsulating the translation now is worthwhile, and switching the keys to match the real content settings types will be easier next patch.\n\nOkay, after offline discussion, this can wait til the next patch.",
+      "parentUuid": "dd471af1_75821f07",
+      "revId": "5b95dafaf232ad9330dc85493ba421d238cad776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
