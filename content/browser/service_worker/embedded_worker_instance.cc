@@ -477,6 +477,7 @@ EmbeddedWorkerInstance::~EmbeddedWorkerInstance() {
 
 void EmbeddedWorkerInstance::Start(
     std::unique_ptr<EmbeddedWorkerStartParams> params,
+    ProviderInfoGetter provider_info_getter,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
     const StatusCallback& callback) {
@@ -495,6 +496,8 @@ void EmbeddedWorkerInstance::Start(
   status_ = EmbeddedWorkerStatus::STARTING;
   starting_phase_ = ALLOCATING_PROCESS;
   network_accessed_for_script_ = false;
+  provider_info_getter_ = std::move(provider_info_getter);
+
   for (auto& observer : listener_list_)
     observer.OnStarting();
 
@@ -507,7 +510,6 @@ void EmbeddedWorkerInstance::Start(
       mojo::MakeRequest(&client_);
   client_.set_connection_error_handler(
       base::Bind(&CallDetach, base::Unretained(this)));
-
   pending_dispatcher_request_ = std::move(dispatcher_request);
   pending_installed_scripts_info_ = std::move(installed_scripts_info);
 
@@ -647,9 +649,11 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
 
   const bool is_script_streaming = !pending_installed_scripts_info_.is_null();
   inflight_start_task_->set_start_worker_sent_time(base::TimeTicks::Now());
+  mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info =
+      std::move(provider_info_getter_).Run(process_id());
   client_->StartWorker(*params, std::move(pending_dispatcher_request_),
                        std::move(pending_installed_scripts_info_),
-                       std::move(host_ptr_info));
+                       std::move(host_ptr_info), std::move(provider_info));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
   OnStartWorkerMessageSent(is_script_streaming);
   if (starting_phase() == SCRIPT_STREAMING) {
@@ -659,6 +663,7 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
     TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "SENT_START_WORKER",
                                       this);
   }
+
   return SERVICE_WORKER_OK;
 }
 
@@ -764,19 +769,9 @@ void EmbeddedWorkerInstance::OnWorkerVersionDoomed() {
     devtools_proxy_->NotifyWorkerVersionDoomed();
 }
 
-void EmbeddedWorkerInstance::OnThreadStarted(int thread_id, int provider_id) {
+void EmbeddedWorkerInstance::OnThreadStarted(int thread_id) {
   if (!context_ || !inflight_start_task_)
     return;
-
-  ServiceWorkerProviderHost* provider_host =
-      context_->GetProviderHost(process_id(), provider_id);
-  if (!provider_host) {
-    bad_message::ReceivedBadMessage(
-        process_id(), bad_message::SWDH_WORKER_SCRIPT_LOAD_NO_HOST);
-    return;
-  }
-
-  provider_host->SetReadyToSendMessagesToWorker(thread_id);
 
   TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", "LAUNCHING_WORKER_THREAD",
                                   this);
@@ -881,6 +876,8 @@ void EmbeddedWorkerInstance::OnDetached() {
 }
 
 void EmbeddedWorkerInstance::Detach() {
+  if (status() == EmbeddedWorkerStatus::STOPPED)
+    return;
   registry_->DetachWorker(process_id(), embedded_worker_id());
   OnDetached();
 }
@@ -957,7 +954,6 @@ void EmbeddedWorkerInstance::ReleaseProcess() {
   // Abort an inflight start task.
   inflight_start_task_.reset();
 
-  client_.reset();
   instance_host_binding_.Close();
   devtools_proxy_.reset();
   process_handle_.reset();
