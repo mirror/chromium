@@ -52,6 +52,24 @@
       "revId": "677375e950fae1173585800e1e2d4d07331cd98f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a23036_830940bc",
+        "filename": "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-14T01:08:07Z",
+      "side": 1,
+      "message": "Good point! I moved the check into the VR code since we also return the null web contents there.",
+      "parentUuid": "48f49dcb_e25af41c",
+      "revId": "677375e950fae1173585800e1e2d4d07331cd98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
