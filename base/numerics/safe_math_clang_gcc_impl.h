@@ -126,6 +126,49 @@ struct ClampedAddFastOp {
   }
 };
 
+// This is the fastest negation on Intel, and a decent fallback on arm.
+__attribute__((always_inline)) inline int8_t ClampedNegate(uint8_t value) {
+  uint8_t carry;
+  return __builtin_subcb(0, value, 0, &carry) + carry;
+}
+
+__attribute__((always_inline)) inline int8_t ClampedNegate(int8_t value) {
+  return ClampedNegate(static_cast<uint8_t>(value));
+}
+
+__attribute__((always_inline)) inline int16_t ClampedNegate(uint16_t value) {
+  uint16_t carry;
+  return __builtin_subcs(0, value, 0, &carry) + carry;
+}
+
+__attribute__((always_inline)) inline int16_t ClampedNegate(int16_t value) {
+  return ClampedNegate(static_cast<uint16_t>(value));
+}
+
+__attribute__((always_inline)) inline int32_t ClampedNegate(uint32_t value) {
+  uint32_t carry;
+  return __builtin_subc(0, value, 0, &carry) + carry;
+}
+
+__attribute__((always_inline)) inline int32_t ClampedNegate(int32_t value) {
+  return ClampedNegate(static_cast<uint32_t>(value));
+}
+
+#if defined(__LP64__) && __LP64__
+__attribute__((always_inline)) inline int64_t ClampedNegate(uint64_t value) {
+  uint64_t carry;
+  return __builtin_subcl(0, value, 0, &carry) + carry;
+}
+#else
+__attribute__((always_inline)) inline int64_t ClampedNegate(uint64_t value) {
+  uint64_t carry;
+  return __builtin_subcll(0, value, 0, &carry) + carry;
+}
+#endif
+__attribute__((always_inline)) inline int64_t ClampedNegate(int64_t value) {
+  return ClampedNegate(static_cast<uint64_t>(value));
+}
+
 template <typename T, typename U>
 struct ClampedSubFastOp {
   static const bool is_supported = true;
@@ -135,6 +178,10 @@ struct ClampedSubFastOp {
         ClampedSubFastAsmOp<T, U>::is_supported) {
       return ClampedSubFastAsmOp<T, U>::template Do<V>(x, y);
     }
+
+    // Fast path for clamped negation.
+    if (IsCompileTimeConstant(x) && x == 0 && !IsCompileTimeConstant(y))
+      return ClampedNegate(y);
 
     V result;
     return !__builtin_sub_overflow(x, y, &result)
