@@ -93,6 +93,30 @@
       "revId": "2ff7383b5c2221c0691d2da87bae9ec1bbc9423d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb332c40_e728a656",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-14T15:53:09Z",
+      "side": 1,
+      "message": "Oops, I had thought that these were pulled from TestDispatcherHostDelegate when skimming the code.\n\nMaybe we could just specify the URL to wait for a request for?  Seems more robust against unexpected requests.  I know bonus requests are more a problem for Chrome than content/, but depending the exact URLs / numbers of requests issued by other random stuff in a test seems not great.",
+      "parentUuid": "fdd3a384_05142ed9",
+      "range": {
+        "startLine": 580,
+        "startChar": 36,
+        "endLine": 580,
+        "endChar": 58
+      },
+      "revId": "2ff7383b5c2221c0691d2da87bae9ec1bbc9423d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
