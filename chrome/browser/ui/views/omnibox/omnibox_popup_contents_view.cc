@@ -213,19 +213,30 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
   // Update the match cached by each row, in the process of doing so make sure
   // we have enough row views.
   const size_t result_size = model_->result().size();
-  max_match_contents_width_ = 0;
+  bool any_tail_suggestions = false;
+  base::string16 common_prefix;
+  // |SetVisible()| below triggers a 'show', so get our data set-up first.
+  for (size_t i = 0; i < result_size && !any_tail_suggestions; ++i) {
+    const AutocompleteMatch& match = GetMatchAtIndex(i);
+    if (match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
+      any_tail_suggestions = true;
+      int common_length;
+      base::StringToInt(
+          match.GetAdditionalInfo(kACMatchPropertyContentsStartIndex),
+          &common_length);
+      common_prefix = base::UTF8ToUTF16(match.GetAdditionalInfo(
+                                            kACMatchPropertySuggestionText))
+                          .substr(0, common_length);
+    }
+  }
   for (size_t i = 0; i < result_size; ++i) {
     OmniboxResultView* view = result_view_at(i);
     const AutocompleteMatch& match = GetMatchAtIndex(i);
-    view->SetMatch(match);
+    view->SetMatch(match, any_tail_suggestions, common_prefix);
     view->SetVisible(true);
     if (match.answer && !model_->answer_bitmap().isNull()) {
       view->SetAnswerImage(
           gfx::ImageSkia::CreateFrom1xBitmap(model_->answer_bitmap()));
-    }
-    if (match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
-      max_match_contents_width_ = std::max(
-          max_match_contents_width_, view->GetMatchContentsWidth());
     }
   }
 

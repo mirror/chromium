@@ -57,7 +57,9 @@ class OmniboxResultView : public views::View,
   // Updates the match used to paint the contents of this result view. We copy
   // the match so that we can continue to paint the last result even after the
   // model has changed.
-  void SetMatch(const AutocompleteMatch& match);
+  void SetMatch(const AutocompleteMatch& match,
+                bool any_tail_suggestions,
+                const base::string16& common_prefix);
 
   void ShowKeyword(bool show_keyword);
 
@@ -151,13 +153,6 @@ class OmniboxResultView : public views::View,
   // gfx::AnimationDelegate:
   void AnimationProgressed(const gfx::Animation* animation) override;
 
-  // Returns the offset at which the contents of the |match| should be displayed
-  // within the text bounds. The directionality of UI and match contents is used
-  // to determine the offset relative to the correct edge.
-  int GetDisplayOffset(const AutocompleteMatch& match,
-                       bool is_ui_rtl,
-                       bool is_match_contents_rtl) const;
-
   // Returns the font to use for the description section of answer suggestions.
   const gfx::FontList& GetAnswerFont() const;
 
@@ -166,6 +161,10 @@ class OmniboxResultView : public views::View,
 
   // Returns the margin that should appear at the top and bottom of the result.
   int GetVerticalMargin() const;
+
+  // Makes adjustments to |match_| to handle tail suggestions.
+  void FixUpContents(bool any_tail_suggestions,
+                     const base::string16& common_prefix);
 
   // Creates a RenderText with text and styling from the image line.
   std::unique_ptr<gfx::RenderText> CreateAnswerText(
