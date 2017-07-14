@@ -235,11 +235,8 @@ bool MediaValues::ComputeLengthImpl(double value,
 }
 
 LocalFrame* MediaValues::FrameFrom(Document& document) {
-  Document* executing_document = document.ImportsController()
-                                     ? document.ImportsController()->Master()
-                                     : &document;
-  DCHECK(executing_document);
-  return executing_document->GetFrame();
+  Document& executing_document = document.MasterDocument();
+  return executing_document.GetFrame();
 }
 
 }  // namespace blink
