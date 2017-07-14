@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1917f106_ea054f11",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T20:38:00Z",
+      "side": 1,
+      "message": "Need to sort.",
+      "range": {
+        "startLine": 531,
+        "startChar": 5,
+        "endLine": 531,
+        "endChar": 38
+      },
+      "revId": "c8bc9fd86e24043cff7c4177dade59c151eee51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ad808c_e27f7683",
+        "filename": "components/payments/test/data/util.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-14T20:38:00Z",
+      "side": 1,
+      "message": "Which warning are you disabling?",
+      "range": {
+        "startLine": 12,
+        "startChar": 57,
+        "endLine": 12,
+        "endChar": 76
+      },
+      "revId": "c8bc9fd86e24043cff7c4177dade59c151eee51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
