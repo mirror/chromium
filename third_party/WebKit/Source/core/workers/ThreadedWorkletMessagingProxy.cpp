@@ -5,15 +5,16 @@
 #include "core/workers/ThreadedWorkletMessagingProxy.h"
 
 #include "bindings/core/v8/ScriptSourceCode.h"
+#include "bindings/core/v8/V8CacheOptions.h"
 #include "core/dom/Document.h"
 #include "core/dom/SecurityContext.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/origin_trials/OriginTrialContext.h"
+#include "core/workers/GlobalScopeStartupData.h"
 #include "core/workers/ThreadedWorkletObjectProxy.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerInspectorProxy.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "core/workers/WorkletGlobalScope.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WebTaskRunner.h"
@@ -104,14 +105,16 @@ void ThreadedWorkletMessagingProxy::Initialize() {
       WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
 
   // TODO(ikilpatrick): Decide on sensible a value for referrerPolicy.
-  std::unique_ptr<WorkerThreadStartupData> startup_data =
-      WorkerThreadStartupData::Create(
-          script_url, document->UserAgent(), String(), nullptr, start_mode,
-          csp->Headers().get(), /* referrerPolicy */ String(), starter_origin,
-          ReleaseWorkerClients(), document->AddressSpace(),
-          OriginTrialContext::GetTokens(document).get(),
-          std::move(worker_settings), WorkerV8Settings::Default());
-  InitializeWorkerThread(std::move(startup_data), script_url);
+  auto startup_data = WTF::MakeUnique<GlobalScopeStartupData>(
+      script_url, document->UserAgent(), String(), nullptr, start_mode,
+      csp->Headers().get(), /* referrerPolicy */ String(), starter_origin,
+      ReleaseWorkerClients(), document->AddressSpace(),
+      OriginTrialContext::GetTokens(document).get(), std::move(worker_settings),
+      kV8CacheOptionsDefault);
+
+  // Worklets share the pre-initialized backing thread so that we don't have to
+  // specify the backing thread startup data.
+  InitializeWorkerThread(std::move(startup_data), WTF::nullopt, script_url);
 }
 
 DEFINE_TRACE(ThreadedWorkletMessagingProxy) {

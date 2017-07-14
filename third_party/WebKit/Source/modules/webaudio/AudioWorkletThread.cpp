@@ -5,8 +5,8 @@
 #include "modules/webaudio/AudioWorkletThread.h"
 
 #include <memory>
+#include "core/workers/GlobalScopeStartupData.h"
 #include "core/workers/WorkerBackingThread.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
@@ -75,21 +75,21 @@ void AudioWorkletThread::CreateSharedBackingThreadForTest() {
 }
 
 WorkerOrWorkletGlobalScope* AudioWorkletThread::CreateWorkerGlobalScope(
-    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+    std::unique_ptr<GlobalScopeStartupData> startup_data) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("audio-worklet"),
                "AudioWorkletThread::createWorkerGlobalScope");
 
   RefPtr<SecurityOrigin> security_origin =
-      SecurityOrigin::Create(startup_data->script_url_);
-  if (startup_data->starter_origin_privilege_data_) {
+      SecurityOrigin::Create(startup_data->script_url);
+  if (startup_data->starter_origin_privilege_data) {
     security_origin->TransferPrivilegesFrom(
-        std::move(startup_data->starter_origin_privilege_data_));
+        std::move(startup_data->starter_origin_privilege_data));
   }
 
   return AudioWorkletGlobalScope::Create(
-      startup_data->script_url_, startup_data->user_agent_,
+      startup_data->script_url, startup_data->user_agent,
       std::move(security_origin), this->GetIsolate(), this,
-      startup_data->worker_clients_);
+      startup_data->worker_clients);
 }
 
 }  // namespace blink

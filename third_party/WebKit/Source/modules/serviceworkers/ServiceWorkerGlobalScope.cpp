@@ -44,8 +44,8 @@
 #include "core/inspector/WorkerThreadDebugger.h"
 #include "core/loader/ThreadableLoader.h"
 #include "core/origin_trials/OriginTrialContext.h"
+#include "core/workers/GlobalScopeStartupData.h"
 #include "core/workers/WorkerClients.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "modules/EventTargetModules.h"
 #include "modules/fetch/GlobalFetch.h"
 #include "modules/serviceworkers/RespondWithObserver.h"
@@ -71,24 +71,23 @@ namespace blink {
 
 ServiceWorkerGlobalScope* ServiceWorkerGlobalScope::Create(
     ServiceWorkerThread* thread,
-    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+    std::unique_ptr<GlobalScopeStartupData> startup_data) {
   // Note: startupData is finalized on return. After the relevant parts has been
   // passed along to the created 'context'.
   ServiceWorkerGlobalScope* context = new ServiceWorkerGlobalScope(
-      startup_data->script_url_, startup_data->user_agent_, thread,
+      startup_data->script_url, startup_data->user_agent, thread,
       MonotonicallyIncreasingTime(),
-      std::move(startup_data->starter_origin_privilege_data_),
-      startup_data->worker_clients_);
+      std::move(startup_data->starter_origin_privilege_data),
+      startup_data->worker_clients);
 
-  context->SetV8CacheOptions(
-      startup_data->worker_v8_settings_.v8_cache_options_);
+  context->SetV8CacheOptions(startup_data->v8_cache_options);
   context->ApplyContentSecurityPolicyFromVector(
-      *startup_data->content_security_policy_headers_);
-  if (!startup_data->referrer_policy_.IsNull())
-    context->ParseAndSetReferrerPolicy(startup_data->referrer_policy_);
-  context->SetAddressSpace(startup_data->address_space_);
+      *startup_data->content_security_policy_headers);
+  if (!startup_data->referrer_policy.IsNull())
+    context->ParseAndSetReferrerPolicy(startup_data->referrer_policy);
+  context->SetAddressSpace(startup_data->address_space);
   OriginTrialContext::AddTokens(context,
-                                startup_data->origin_trial_tokens_.get());
+                                startup_data->origin_trial_tokens.get());
 
   return context;
 }
