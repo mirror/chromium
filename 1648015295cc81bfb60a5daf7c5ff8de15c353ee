@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4cf5d43_0b2d4d04",
+        "filename": "components/arc/audio/arc_audio_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-14T19:14:50Z",
+      "side": 1,
+      "message": "Please mention something about the lifetime of this (and IIUC that this is going to go away once everything has the correct dependencies?)",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "1648015295cc81bfb60a5daf7c5ff8de15c353ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
