@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "8bead037_fa1dda57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSites.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-14T08:58:48Z",
+      "side": 1,
+      "message": "We can get rid off onMostVisited[...]. \nWith the latest patch, it\u0027s not called anymore. I would vote for cleaning up the unused stuff once we are done to keep the noise on this CL low.",
+      "parentUuid": "317f9e70_8a862c8b",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85198823_53152ac0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
         "patchSetId": 1
@@ -426,6 +450,30 @@
       "side": 1,
       "message": "it will definitely be shown on the NTP, but it will also be shown outside of it, so no reason to make it sound like it\u0027s restricted to it! :)",
       "parentUuid": "a8ebccc3_a8fc3fc6",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "a07d5afca8811233442b7d290ad20d6277409dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c7a9f52_ff3b5f23",
+        "filename": "components/ntp_tiles/constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-14T08:58:48Z",
+      "side": 1,
+      "message": "To be or not to be [consistent]; that is the question.\nWhat you say is true, that\u0027s why I dropped it but the same applies for the other features here ;)",
+      "parentUuid": "c04a1c9b_dc7bd419",
       "range": {
         "startLine": 22,
         "startChar": 5,
