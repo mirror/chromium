@@ -81,6 +81,7 @@ class CC_EXPORT RecordingSource {
   void DetermineIfSolidColor();
 
   InvalidationRegion invalidation_;
+  mutable scoped_refptr<RasterSource> cached_raster_source_;
 
   DISALLOW_COPY_AND_ASSIGN(RecordingSource);
 };

@@ -35,7 +35,12 @@ RasterSource::RasterSource(const RecordingSource* other)
       clear_canvas_with_debug_color_(other->clear_canvas_with_debug_color_),
       slow_down_raster_scale_factor_for_debug_(
           other->slow_down_raster_scale_factor_for_debug_),
-      image_decode_cache_(nullptr) {}
+      image_decode_cache_(nullptr) {
+  if (display_list_) {
+    image_map_.Generate(display_list_->paint_op_buffer(),
+                        display_list_->GetBounds());
+  }
+}
 RasterSource::~RasterSource() = default;
 
 void RasterSource::PlaybackToCanvas(
@@ -228,14 +233,12 @@ void RasterSource::GetDiscardableImagesInRect(
     const gfx::ColorSpace& target_color_space,
     std::vector<DrawImage>* images) const {
   DCHECK_EQ(0u, images->size());
-  display_list_->GetDiscardableImagesInRect(layer_rect, contents_scale,
-                                            target_color_space, images);
+  image_map_.GetDiscardableImagesInRect(layer_rect, contents_scale,
+                                        target_color_space, images);
 }
 
 gfx::Rect RasterSource::GetRectForImage(PaintImage::Id image_id) const {
-  if (!display_list_)
-    return gfx::Rect();
-  return display_list_->GetRectForImage(image_id);
+  return image_map_.GetRectForImage(image_id);
 }
 
 bool RasterSource::CoversRect(const gfx::Rect& layer_rect) const {

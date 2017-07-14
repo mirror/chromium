@@ -109,6 +109,8 @@ class CC_PAINT_EXPORT DisplayItemList
 
   int NumSlowPaths() const { return paint_op_buffer_.numSlowPaths(); }
   bool HasNonAAPaint() const { return paint_op_buffer_.HasNonAAPaint(); }
+  gfx::Rect GetBounds() const { return rtree_.GetBounds(); }
+  const PaintOpBuffer* paint_op_buffer() const { return &paint_op_buffer_; }
 
   // This gives the total number of PaintOps.
   size_t op_count() const { return paint_op_buffer_.size(); }
@@ -116,22 +118,7 @@ class CC_PAINT_EXPORT DisplayItemList
 
   void EmitTraceSnapshot() const;
 
-  void GenerateDiscardableImagesMetadata();
-  void GetDiscardableImagesInRect(const gfx::Rect& rect,
-                                  float contents_scale,
-                                  const gfx::ColorSpace& target_color_space,
-                                  std::vector<DrawImage>* images);
-  gfx::Rect GetRectForImage(PaintImage::Id image_id) const;
-
   gfx::Rect VisualRectForTesting(int index) { return visual_rects_[index]; }
-
-  const DiscardableImageMap& discardable_image_map_for_testing() const {
-    return image_map_;
-  }
-
-  bool HasDiscardableImages() const {
-    return paint_op_buffer_.HasDiscardableImages();
-  }
 
   // Generate a PaintRecord from this DisplayItemList, leaving |this| in
   // an empty state.
@@ -162,7 +149,6 @@ class CC_PAINT_EXPORT DisplayItemList
   // RTree stores indices into the paint op buffer.
   // TODO(vmpstr): Update the rtree to store offsets instead.
   RTree<size_t> rtree_;
-  DiscardableImageMap image_map_;
   PaintOpBuffer paint_op_buffer_;
 
   // The visual rects associated with each of the display items in the

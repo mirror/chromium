@@ -60,7 +60,7 @@ void RecordingSource::FinishDisplayItemListUpdate() {
   TRACE_EVENT0("cc", "RecordingSource::FinishDisplayItemListUpdate");
   DetermineIfSolidColor();
   display_list_->EmitTraceSnapshot();
-  display_list_->GenerateDiscardableImagesMetadata();
+  cached_raster_source_ = nullptr;
 }
 
 void RecordingSource::SetNeedsDisplayRect(const gfx::Rect& layer_rect) {
@@ -76,8 +76,10 @@ bool RecordingSource::UpdateAndExpandInvalidation(
     const gfx::Rect& new_recorded_viewport) {
   bool updated = false;
 
-  if (size_ != layer_size)
+  if (size_ != layer_size) {
     size_ = layer_size;
+    cached_raster_source_ = nullptr;
+  }
 
   invalidation_.Swap(invalidation);
   invalidation_.Clear();
@@ -103,7 +105,6 @@ void RecordingSource::UpdateDisplayItemList(
     const size_t& painter_reported_memory_usage) {
   display_list_ = display_list;
   painter_reported_memory_usage_ = painter_reported_memory_usage;
-
   FinishDisplayItemListUpdate();
 }
 
@@ -118,6 +119,7 @@ void RecordingSource::SetEmptyBounds() {
   recorded_viewport_ = gfx::Rect();
   display_list_ = nullptr;
   painter_reported_memory_usage_ = 0;
+  cached_raster_source_ = nullptr;
 }
 
 void RecordingSource::SetSlowdownRasterScaleFactor(int factor) {
@@ -137,7 +139,9 @@ const DisplayItemList* RecordingSource::GetDisplayItemList() {
 }
 
 scoped_refptr<RasterSource> RecordingSource::CreateRasterSource() const {
-  return scoped_refptr<RasterSource>(new RasterSource(this));
+  if (!cached_raster_source_)
+    cached_raster_source_ = make_scoped_refptr(new RasterSource(this));
+  return cached_raster_source_;
 }
 
 void RecordingSource::DetermineIfSolidColor() {
