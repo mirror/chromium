@@ -523,15 +523,19 @@ void AppListView::UpdateDrag(const gfx::Point& location) {
   // Update the bounds of the widget while maintaining the
   // relative position of the top of the widget and the mouse/gesture.
   // Block drags north of 0 and recalculate the initial_drag_point_.
-  int const new_y_position = location.y() - initial_drag_point_.y() +
-                             fullscreen_widget_->GetWindowBoundsInScreen().y();
-  gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
+  int new_y_position = location.y() - initial_drag_point_.y() +
+                       fullscreen_widget_->GetWindowBoundsInScreen().y();
+
   if (new_y_position < 0) {
-    new_widget_bounds.set_y(0);
+    new_y_position = 0;
     initial_drag_point_ = location;
-  } else {
-    new_widget_bounds.set_y(new_y_position);
   }
+  UpdateBoundsOnYPosition(new_y_position);
+}
+
+void AppListView::UpdateBoundsOnYPosition(int64_t y_position_in_screen) {
+  gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
+  new_widget_bounds.set_y(y_position_in_screen);
   fullscreen_widget_->SetBounds(new_widget_bounds);
 }
 
