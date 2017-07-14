@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "373c23a2_1f0b56c0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-14T08:56:33Z",
+      "side": 1,
+      "message": "I don\u0027t like to have duplicate trace points. Can you introduce DetermineRevalidationPolicyInternal which is current DtermineRevalidationPolicy and DetermineRevalidationPolicy which calls the internal function and put a trace event?",
+      "range": {
+        "startLine": 699,
+        "startChar": 22,
+        "endLine": 699,
+        "endChar": 37
+      },
+      "revId": "f633a4e9759f30ff0ff1329bb5845f6ca3d4e1c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fdddfc_97073aa8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-14T08:56:33Z",
+      "side": 1,
+      "message": "This name is a bit confusing but I don\u0027t have a good alternative.",
+      "revId": "f633a4e9759f30ff0ff1329bb5845f6ca3d4e1c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5b5077e_a14d0c19",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 9
