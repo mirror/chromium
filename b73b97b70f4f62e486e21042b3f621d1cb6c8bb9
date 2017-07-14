@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6d782894_57a1d997",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-14T07:58:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "73258fd8_1883991d",
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "061662e6_cba4fc8c",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
         "patchSetId": 6
