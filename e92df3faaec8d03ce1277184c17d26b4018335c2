@@ -46,6 +46,30 @@
       "revId": "e92df3faaec8d03ce1277184c17d26b4018335c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "219c7ade_61ef1742",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1826,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-14T18:34:23Z",
+      "side": 1,
+      "message": "On second thought I have no idea how we would catch changes to this with a test, if, for example, a new case was added that minimized the app.\n\nAny thoughts on how to best deal with this?",
+      "parentUuid": "117beb79_59997a9c",
+      "range": {
+        "startLine": 1826,
+        "startChar": 19,
+        "endLine": 1826,
+        "endChar": 40
+      },
+      "revId": "e92df3faaec8d03ce1277184c17d26b4018335c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
