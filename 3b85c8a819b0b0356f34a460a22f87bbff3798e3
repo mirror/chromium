@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9574127_d588465d",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-14T19:32:36Z",
+      "side": 1,
+      "message": "I have mild preference that this be in the protected namespace, and the tests made friends of this class.",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 62,
+        "endChar": 31
+      },
+      "revId": "3b85c8a819b0b0356f34a460a22f87bbff3798e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
