@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6567047_0743d43d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-14T08:02:58Z",
+      "side": 1,
+      "message": "Could you change this to DCHECK_LE(visible_start, visible_end)?\nOr put a failed layout test or a comment when this is happend.",
+      "revId": "5c004ebd6e472397abd8798eb7562cc7a3ffd267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
