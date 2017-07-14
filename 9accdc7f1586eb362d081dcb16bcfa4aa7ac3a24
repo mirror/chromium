@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c759e57b_cc5c7439",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-14T06:27:39Z",
+      "side": 1,
+      "message": "nit: Is there a difference between specifying this via BrowserContext vs command line flags passed to the browser process? Do we create different kinds of BrowserContexts (headless and regular) in the same browser process? I\u0027m asking because it seems out of place for a compositing related setting in BrowserContext (I can\u0027t find any other example of this).\n\nI noticed that we look at the --headless command line flag (ui/gfx/switches.h) when creating the output surface. Can we use that instead?",
+      "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46f1300_9f29589a",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-14T06:27:39Z",
+      "side": 1,
+      "message": "nit: I wonder if OutputSurface is the right place to hook headless into. OutputSurface::SwapBuffers is roughly equivalent to DisplayObserver::DisplayDidFinishFrame except for the BeginFrameAck (which isn\u0027t useful here anyway). We can add a HeadlessOutputSurface which controls the begin frame source and implements an ExternalBeginFrameController like interface to headless code.\n\nI don\u0027t think we want to expose GpuProcessTransportFactory to headless. Exposing a minimal interface implemented either by ui::Compositor (implements DisplayObserver and ExternalBFSClient) or by the OutputSurface seems more reasonable IMO.",
+      "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a659d6_1dbd2076",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2382,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-14T06:27:39Z",
+      "side": 1,
+      "message": "nit: I wonder if we could check the --headless command line flag here instead of using BrowserContext. (see also comment in BrowserContext)",
+      "range": {
+        "startLine": 2382,
+        "startChar": 6,
+        "endLine": 2382,
+        "endChar": 46
+      },
+      "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c41ac9_5302e75d",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-14T06:27:39Z",
+      "side": 1,
+      "message": "nit: can we look at the --headless command line flag here instead? If so, maybe we don\u0027t need the CompositorSettings struct (surface synchronization is a temporary flag AFAIK)",
+      "revId": "9accdc7f1586eb362d081dcb16bcfa4aa7ac3a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
