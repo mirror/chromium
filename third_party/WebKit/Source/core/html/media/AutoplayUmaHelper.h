@@ -13,6 +13,10 @@
 
 #include <set>
 
+namespace ukm {
+class UkmEntryBuilder;
+}
+
 namespace blink {
 
 // These values are used for histograms. Do not reorder.
@@ -113,6 +117,8 @@ class CORE_EXPORT AutoplayUmaHelper : public EventListener,
 
   bool ShouldListenToContextDestroyed() const;
   bool ShouldRecordUserPausedAutoplayingCrossOriginVideo() const;
+
+  std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmBuilder(const char*);
 
   // The autoplay sources.
   std::set<AutoplaySource> sources_;

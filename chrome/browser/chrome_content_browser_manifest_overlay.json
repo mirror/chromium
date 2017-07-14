@@ -18,9 +18,7 @@
           "spellcheck::mojom::SpellCheckHost",
           "spellcheck::mojom::SpellCheckPanelHost",
           "startup_metric_utils::mojom::StartupMetricHost",
-          "translate::mojom::ContentTranslateDriver"
-	],
-        "url_keyed_metrics": [
+          "translate::mojom::ContentTranslateDriver",
           "ukm::mojom::UkmRecorderInterface"
         ],
         "gpu": [
@@ -70,6 +68,7 @@
           "page_load_metrics::mojom::PageLoadMetrics",
           "password_manager::mojom::CredentialManager",
           "translate::mojom::ContentTranslateDriver",
+          "ukm::mojom::UkmRecorderInterface",
 
           // TODO(beng): These should be moved to a separate capability.
           "mojom::OmniboxPageHandler",
