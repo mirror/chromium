@@ -3,17 +3,19 @@
 // found in the LICENSE file.
 
 #include <memory>
+#include "bindings/core/v8/V8CacheOptions.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/workers/DedicatedWorkerGlobalScope.h"
 #include "core/workers/DedicatedWorkerThread.h"
+#include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/InProcessWorkerMessagingProxy.h"
 #include "core/workers/InProcessWorkerObjectProxy.h"
+#include "core/workers/WorkerBackingThreadStartupData.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerThread.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "core/workers/WorkerThreadTestHelper.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -45,11 +47,11 @@ class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
   }
 
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
-      std::unique_ptr<WorkerThreadStartupData> startup_data) override {
+      std::unique_ptr<GlobalScopeCreationParams> creation_params) override {
     return new DedicatedWorkerGlobalScope(
-        startup_data->script_url_, startup_data->user_agent_, this,
-        time_origin_, std::move(startup_data->starter_origin_privilege_data_),
-        std::move(startup_data->worker_clients_));
+        creation_params->script_url, creation_params->user_agent, this,
+        time_origin_, std::move(creation_params->starter_origin_privilege_data),
+        std::move(creation_params->worker_clients));
   }
 
   // Emulates API use on DedicatedWorkerGlobalScope.
@@ -131,17 +133,17 @@ class InProcessWorkerMessagingProxyForTest
     CSPHeaderAndType header_and_type("contentSecurityPolicy",
                                      kContentSecurityPolicyHeaderTypeReport);
     headers->push_back(header_and_type);
-    WorkerV8Settings worker_v8_settings = WorkerV8Settings::Default();
-    worker_v8_settings.atomics_wait_mode_ =
-        WorkerV8Settings::AtomicsWaitMode::kAllow;
     InitializeWorkerThread(
-        WorkerThreadStartupData::Create(
+        WTF::MakeUnique<GlobalScopeCreationParams>(
             script_url, "fake user agent", source, nullptr /* cachedMetaData */,
             kDontPauseWorkerGlobalScopeOnStart, headers.get(),
             "" /* referrerPolicy */, security_origin_.Get(),
             nullptr /* workerClients */, kWebAddressSpaceLocal,
             nullptr /* originTrialTokens */, nullptr /* workerSettings */,
-            worker_v8_settings),
+            kV8CacheOptionsDefault),
+        WorkerBackingThreadStartupData(
+            WorkerBackingThreadStartupData::HeapLimitMode::kDefault,
+            WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow),
         script_url);
   }
 
