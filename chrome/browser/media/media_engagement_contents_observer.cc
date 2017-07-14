@@ -9,16 +9,13 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 
-namespace {
-
-constexpr base::TimeDelta kSignificantMediaPlaybackTime =
-    base::TimeDelta::FromSeconds(7);
-
-}  // namespace.
-
 // This is the minimum size (in px) of each dimension that a media
 // element has to be in order to be determined significant.
 const int MediaEngagementContentsObserver::kSignificantSize = 200;
+
+const base::TimeDelta
+    MediaEngagementContentsObserver::kSignificantMediaPlaybackTime =
+        base::TimeDelta::FromSeconds(7);
 
 MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     content::WebContents* web_contents,
@@ -197,7 +194,8 @@ void MediaEngagementContentsObserver::UpdateTimer() {
       return;
 
     playback_timer_->Start(
-        FROM_HERE, kSignificantMediaPlaybackTime,
+        FROM_HERE,
+        MediaEngagementContentsObserver::kSignificantMediaPlaybackTime,
         base::Bind(
             &MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime,
             base::Unretained(this)));
