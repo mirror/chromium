@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abdd5a5f_e10319ed",
+        "filename": "media/audio/audio_manager_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-14T18:10:32Z",
+      "side": 1,
+      "message": "Why not use the AudioSystemInfo naming from your other CL?",
+      "revId": "e372f15f54527032261e3ce2dbabdd2a922a897d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
