@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0922063c_ada7606a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "I\u0027m sure there\u0027s some definition language or something where [] means optional :)\n\nMeant to say primarily for hash based policies but not only.",
+      "parentUuid": "d38c7f80_f709a473",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8c6d388_aa0730d9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a0bb29_3db58529",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c6d388_aa0730d9",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a94384c7_2134db83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "321d2ba3_0337affe",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f490d835_d2f80477",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/script-src-multiple-policies-multiple-hashing-algorithms.html",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-13T19:22:28Z",
       "side": 1,
       "message": "Rather than timing out, consider something like:\n\n```\n\u003cscript nonce\u003d\"abc\"\u003evar executed \u003d false;\u003c/script\u003e\n\u003cscript\u003eexecuted \u003d true\u003c/script\u003e\u003c!-- \u003c-- Hash matches this --\u003e\n\u003cscript nonce\u003d\"abc\"\u003et.step_func(_ \u003d\u003e assert_true(executed))\u003c/script\u003e\n```\n\nThat seems like it would run without timeouts in both the success and failure cases.",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0e442a_288c8900",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/script-src-multiple-policies-multiple-hashing-algorithms.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "Much better!",
+      "parentUuid": "f490d835_d2f80477",
       "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d5e1be88_c45ce763",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/script-src/script-src-report-only-policy-works-with-hash-policy.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "505f7b54_85d17c2c",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4be2a954_87d7ac03",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/style-src/style-src-multiple-policies-multiple-hashing-algorithms.html",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c67a61_172b0e09",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/style-src/style-src-multiple-policies-multiple-hashing-algorithms.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be2a954_87d7ac03",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c7cc2ac9_1c1c007c",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "389bfbf4_ce5dad76",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47e99864_d82df817",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-13T19:22:28Z",
       "side": 1,
       "message": "const? I guess it doesn\u0027t make much difference.",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6b2ecb_a0ed077d",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "I don\u0027t think const actually does anything for parameters passed through value.",
+      "parentUuid": "47e99864_d82df817",
       "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "827d44ff_a12de908",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "I wanted to but I don\u0027t think ExperimentalContentSecurityPolicyFeaturesEnabled is enabled for wpt tests so I could not get the tests working.",
+      "parentUuid": "b129945e_db667128",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24582e64_063dd7e9",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 1
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "babb8bf8_11c95246",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "Reminder set.",
+      "parentUuid": "24582e64_063dd7e9",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d354403_9fb00a7b",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicyTest.cpp",
         "patchSetId": 1
@@ -183,6 +363,24 @@
       "writtenOn": "2017-07-13T19:22:28Z",
       "side": 1,
       "message": "Would you mind adding similar unit tests for hashes?",
+      "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb8b7f5_b4424a20",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicyTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-14T12:03:30Z",
+      "side": 1,
+      "message": "It will have to be in a different patch when I come back from holiday.",
+      "parentUuid": "7d354403_9fb00a7b",
       "revId": "5c9ab170700ce4f4e9379a39d01f1da5dca0a91b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
