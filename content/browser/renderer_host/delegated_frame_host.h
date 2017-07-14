@@ -317,6 +317,8 @@ class CONTENT_EXPORT DelegatedFrameHost
       nullptr;
 
   std::unique_ptr<viz::FrameEvictor> frame_evictor_;
+
+  bool evict_frame_when_visible_ = false;
 };
 
 }  // namespace content
