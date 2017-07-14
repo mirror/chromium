@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7bf99d71_2286213c",
+        "filename": "components/payments/test/data/.eslintrc.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-14T21:31:13Z",
+      "side": 0,
+      "message": "Done.",
+      "parentUuid": "2919af2b_6c45e3ac",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 44
+      },
+      "revId": "babd8603bbf6b24ce8bad0f01f84aacd3b778422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0db896b9_3086d824",
         "filename": "components/payments/test/data/.eslintrc.js",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-14T20:38:00Z",
       "side": 0,
       "message": "Deleted?",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "babd8603bbf6b24ce8bad0f01f84aacd3b778422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb30e049_a440aa0e",
+        "filename": "components/payments/test/data/.eslintrc.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-14T21:31:13Z",
+      "side": 0,
+      "message": "I couldn\u0027t figure out how to stop js_checker.py from checking this file for JS style errors. I was getting the following presubmit error:\nhttps://cs.chromium.org/chromium/src/tools/web_dev_style/js_checker.py?l\u003d43\n\nI don\u0027t find it an important enough rule anyway. That\u0027s why I removed it.",
+      "parentUuid": "0db896b9_3086d824",
       "range": {
         "startLine": 64,
         "startChar": 5,
@@ -68,6 +116,30 @@
       "revId": "babd8603bbf6b24ce8bad0f01f84aacd3b778422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724fe677_109995d6",
+        "filename": "components/payments/test/data/.eslintrc.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-14T21:31:13Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e70326e5_60dc799a",
+      "range": {
+        "startLine": 91,
+        "startChar": 5,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "babd8603bbf6b24ce8bad0f01f84aacd3b778422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
