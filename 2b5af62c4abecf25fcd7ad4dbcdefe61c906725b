@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "e753d60a_a983c4d4",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T04:25:42Z",
+      "side": 1,
+      "message": "I suspect the iceberg yak here is that using something other than 0 or 1 for `resize_percent` is a rare use-case, but the API is currently optimized for that.\n\nTo fix, the ticket may be something like (in grid_layout.h)\n\nnamespace views {\n\nstruct ProportionalResize {\n  const float ratio;\n  explicit constexpr ProportionalResize(float ratio) : ratio(ratio) {}\n};\n\nconstexpr ProportionalResize kFixed(0.f);\nconstexpr ProportionalResize kStretchy(1.f);\n\n...\n\n\n(_maybe_ with kFixed/kStretchy nested in `class GridLayout`, but I\u0027d rather not..)\n\n\nThen client code is forced to pick fixed/stretchy or to pass ProportionalResize(0.3) to the Add[Padding]{Row,Column}() methods (or preferably their own named constant rather than a magic rvalue).\n\nBut introducing this piecemeal into GridLayout could make the API more confusing, so it\u0027s an epic refactor.\n\nI\u0027ll play around with this when I\u0027m next in a brute-force refactoring kinda mood..",
+      "parentUuid": "7d54b555_2f62b8d4",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cdcb860_ffa8e2d6",
         "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
         "patchSetId": 10
@@ -295,6 +313,24 @@
       "side": 1,
       "message": "I think it\u0027s OK.  It\u0027s easy to imagine a row of textboxes below something that should not have UNRELATED_CONTROL_VERTICAL_LARGE.\n\nProbably all this will get simpler in the handwavey Harmony v2 world.",
       "parentUuid": "2b8e3b6e_88ee52e9",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84a08361_ee974e6c",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T04:25:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9f26a0c8_1b898c18",
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -546,6 +582,24 @@
       "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41cb27f_920d413e",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T04:25:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed6d1df6_b38bb634",
+      "revId": "2b5af62c4abecf25fcd7ad4dbcdefe61c906725b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

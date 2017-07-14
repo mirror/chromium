@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f497cdb9_8852185e",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T04:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b1abac6_fa2c347e",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8a25b2d_c2908954",
         "filename": "chrome/browser/ui/views/login_view.cc",
         "patchSetId": 13
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4e599ecc_891e60a5",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T04:25:42Z",
+      "side": 1,
+      "message": "yup I mean the snapping thing. Or the label-minimum-length thing. Since that might determine the \"target\" characters-in-textfield we want under harmony. (This is inferring that a subgoal is for the dialog to never snap to the smallest snap width of 320, since I think I think a UX person would see that and think it\u0027s a bug, even if it abides by all the guides they\u0027ve given us).",
+      "parentUuid": "55deca74_33e1d2d0",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4fbb210_f79898e4",
         "filename": "chrome/browser/ui/views/login_view.cc",
         "patchSetId": 13
@@ -68,6 +104,24 @@
       "revId": "8f0d58ccc306554706322309030acb1c320adc33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c49f281_364395bc",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T04:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4fbb210_f79898e4",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -103,6 +157,24 @@
       "revId": "8f0d58ccc306554706322309030acb1c320adc33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42420de_6b7cb26f",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T04:25:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43bd46e3_1ea9ed1b",
+      "revId": "8f0d58ccc306554706322309030acb1c320adc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
