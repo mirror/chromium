@@ -16,6 +16,24 @@
       "revId": "fd3218510d31ff0721709fdb17d630c6bc468a5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa1a1d2_0c9cfbac",
+        "filename": "cc/ipc/copy_output_request_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-14T20:57:44Z",
+      "side": 1,
+      "message": "Whoops. Missed this after `git cl format`. I should just always use braces, since the style guide allows it. I went through the rest of the change and made sure there weren\u0027t any issues.",
+      "parentUuid": "b23cad3b_cafacfe5",
+      "revId": "fd3218510d31ff0721709fdb17d630c6bc468a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
