@@ -1768,6 +1768,9 @@ inline CSSIdentifierValue::CSSIdentifierValue(ItemPosition item_position)
     case kItemPositionAuto:
       value_id_ = CSSValueAuto;
       break;
+    case kItemPositionLegacy:
+      value_id_ = CSSValueLegacy;
+      break;
     case kItemPositionNormal:
       value_id_ = CSSValueNormal;
       break;
@@ -1815,6 +1818,8 @@ inline ItemPosition CSSIdentifierValue::ConvertTo() const {
   switch (value_id_) {
     case CSSValueAuto:
       return kItemPositionAuto;
+    case CSSValueLegacy:
+      return kItemPositionLegacy;
     case CSSValueNormal:
       return kItemPositionNormal;
     case CSSValueStretch:

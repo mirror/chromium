@@ -2259,12 +2259,18 @@ bool CSSPropertyParser::ConsumePlaceItemsShorthand(bool important) {
       CSSPropertyAlignmentUtils::ConsumeSimplifiedItemPosition(range_);
   if (!align_items_value)
     return false;
+  // justify-items property does not allow the 'auto' value.
+  if (IdentMatches<CSSValueAuto>(range_.Peek().Id()))
+    return false;
   CSSValue* justify_items_value =
       range_.AtEnd()
           ? align_items_value
           : CSSPropertyAlignmentUtils::ConsumeSimplifiedItemPosition(range_);
-  if (!justify_items_value)
-    return false;
+  if (!justify_items_value) {
+    if (!IdentMatches<CSSValueLegacy>(range_.Peek().Id()))
+      return false;
+    justify_items_value = CSSPropertyParserHelpers::ConsumeIdent(range_);
+  }
 
   if (!range_.AtEnd())
     return false;

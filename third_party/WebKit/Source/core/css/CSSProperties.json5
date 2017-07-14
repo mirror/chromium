@@ -1523,7 +1523,7 @@
       field_template: "external",
       type_name: "StyleSelfAlignmentData",
       field_group: "rare-non-inherited",
-      default_value: "StyleSelfAlignmentData(kItemPositionAuto, kOverflowAlignmentDefault)",
+      default_value: "StyleSelfAlignmentData(kItemPositionLegacy, kOverflowAlignmentDefault)",
       include_paths: ["core/style/StyleSelfAlignmentData.h"],
     },
     {

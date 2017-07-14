@@ -226,25 +226,25 @@ test(function() {
     element.style.justifyItems = "left legacy";
     checkValues(element, "justifyItems", "justify-items",  "legacy left", "legacy left");
 
-    element.style.justifyItems = "auto";
-    checkValues(element, "justifyItems", "justify-items",  "auto", "normal");
+    element.style.justifyItems = "legacy";
+    checkValues(element, "justifyItems", "justify-items",  "legacy", "normal");
 
     element.style.display = "flex";
-    element.style.justifyItems = "auto";
-    checkValues(element, "justifyItems", "justify-items",  "auto", "normal");
+    element.style.justifyItems = "legacy";
+    checkValues(element, "justifyItems", "justify-items",  "legacy", "normal");
 
     element.style.display = "grid";
-    element.style.justifyItems = "auto";
-    checkValues(element, "justifyItems", "justify-items",  "auto", "normal");
+    element.style.justifyItems = "legacy";
+    checkValues(element, "justifyItems", "justify-items",  "legacy", "normal");
 
     element.style.justifyItems = "self-end";
     checkValues(element, "justifyItems", "justify-items",  "self-end", "self-end");
 }, "Test getting and setting justify-items through JS");
 
 test(function() {
-    document.documentElement.style.justifyItems = "auto";
-    checkValues(document.documentElement, "justifyItems", "justify-items",  "auto", "normal");
-}, "Test 'auto' value resolution for the root node");
+    document.documentElement.style.justifyItems = "legacy";
+    checkValues(document.documentElement, "justifyItems", "justify-items",  "legacy", "normal");
+}, "Test 'legacy' value resolution for the root node");
 
 test(function() {
     container = document.createElement("div");
@@ -274,7 +274,7 @@ test(function() {
     checkBadValues(element, "justifyItems", "justify-items",  "legacy right unsafe");
     checkBadValues(element, "justifyItems", "justify-items",  "legacy auto");
     checkBadValues(element, "justifyItems", "justify-items",  "legacy stretch");
-    checkBadValues(element, "justifyItems", "justify-items",  "legacy");
+    checkBadValues(element, "justifyItems", "justify-items",  "auto");
     checkBadValues(element, "justifyItems", "justify-items",  "legacy left right");
 }, "Test bad combinations of justify-items");
 
