@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce1e7de4_daa63c09",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4048,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-14T20:05:03Z",
+      "side": 1,
+      "message": "This is logged once per User Profile load, for each address profile, right?",
+      "revId": "438cfbe3222a33fe5d151848f1df2763a4cb08fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
