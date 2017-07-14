@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a06445d2_3c2f2bdc",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-14T13:43:07Z",
+      "side": 1,
+      "message": "Why this change? IIRC, we need `document.completeURL` here in order to resolve relative URLs",
+      "range": {
+        "startLine": 344,
+        "startChar": 35,
+        "endLine": 344,
+        "endChar": 39
+      },
+      "revId": "a53ca030cd9d270971fc541c3ecc9db992d0d67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295513d8_51b11036",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-14T13:43:07Z",
+      "side": 1,
+      "message": "Similar comment regarding relative URLs",
+      "range": {
+        "startLine": 381,
+        "startChar": 37,
+        "endLine": 381,
+        "endChar": 41
+      },
+      "revId": "a53ca030cd9d270971fc541c3ecc9db992d0d67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
