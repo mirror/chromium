@@ -29,8 +29,7 @@ PaletteToolId MetalayerMode::GetToolId() const {
 void MetalayerMode::OnEnable() {
   CommonPaletteTool::OnEnable();
 
-  Shell::Get()->palette_delegate()->ShowMetalayer(
-      base::Bind(&MetalayerMode::OnMetalayerDone, weak_factory_.GetWeakPtr()));
+  Shell::Get()->palette_delegate()->ShowMetalayer();
   delegate()->HidePalette();
 }
 
@@ -54,10 +53,6 @@ views::View* MetalayerMode::CreateView() {
 
   return CreateDefaultView(
       l10n_util::GetStringUTF16(IDS_ASH_STYLUS_TOOLS_METALAYER_MODE));
-}
-
-void MetalayerMode::OnMetalayerDone() {
-  delegate()->DisableTool(GetToolId());
 }
 
 }  // namespace ash

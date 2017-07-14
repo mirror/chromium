@@ -13,8 +13,6 @@
 #include "components/arc/common/voice_interaction_framework.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "ui/base/accelerators/accelerator.h"
-#include "ui/events/event_handler.h"
 
 namespace gfx {
 class Rect;
@@ -28,8 +26,6 @@ namespace arc {
 class ArcVoiceInteractionFrameworkService
     : public ArcService,
       public mojom::VoiceInteractionFrameworkHost,
-      public ui::AcceleratorTarget,
-      public ui::EventHandler,
       public InstanceHolder<
           mojom::VoiceInteractionFrameworkInstance>::Observer {
  public:
@@ -41,24 +37,16 @@ class ArcVoiceInteractionFrameworkService
   void OnInstanceReady() override;
   void OnInstanceClosed() override;
 
-  // ui::AcceleratorTarget overrides.
-  bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
-  bool CanHandleAccelerators() const override;
-
-  // ui::EventHandler overrides.
-  void OnTouchEvent(ui::TouchEvent* event) override;
-
   // mojom::VoiceInteractionFrameworkHost overrides.
   void CaptureFocusedWindow(
       const CaptureFocusedWindowCallback& callback) override;
   void CaptureFullscreen(const CaptureFullscreenCallback& callback) override;
+  // TODO(kaznacheev) remove usages of this obsolete method from the container.
   void OnMetalayerClosed() override;
   void SetMetalayerEnabled(bool enabled) override;
   void SetVoiceInteractionRunning(bool running) override;
 
   bool IsMetalayerSupported();
-  void ShowMetalayer(const base::Closure& closed);
-  void HideMetalayer();
 
   // Starts a voice interaction session after user-initiated interaction.
   // Records a timestamp and sets number of allowed requests to 2 since by
@@ -90,14 +78,9 @@ class ArcVoiceInteractionFrameworkService
   static const char kArcServiceName[];
 
  private:
-  void SetMetalayerVisibility(bool visible);
-
-  void CallAndResetMetalayerCallback();
-
   bool InitiateUserInteraction();
 
   mojo::Binding<mojom::VoiceInteractionFrameworkHost> binding_;
-  base::Closure metalayer_closed_callback_;
   bool metalayer_enabled_ = false;
 
   // The time when a user initated an interaction.

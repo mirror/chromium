@@ -61,19 +61,19 @@ TEST_F(MetalayerToolTest, ViewOnlyCreatedWhenMetalayerIsSupported) {
 }
 
 // Verifies that enabling the tool triggers the metalayer in the delegate.
-// Invoking the callback passed to the delegate disables the tool.
-TEST_F(MetalayerToolTest, EnablingMetalayerCallsDelegateAndDisablesTool) {
+TEST_F(MetalayerToolTest, EnablingDisablingMetalayerCallsDelegate) {
   // Showing a metalayer calls the palette delegate to show
   // the metalayer and hides the palette.
   EXPECT_CALL(*palette_tool_delegate_.get(), HidePalette());
   tool_->OnEnable();
   EXPECT_EQ(1, test_palette_delegate()->show_metalayer_count());
+  EXPECT_EQ(0, test_palette_delegate()->hide_metalayer_count());
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 
-  // Calling the associated callback (metalayer closed) will disable the tool.
-  EXPECT_CALL(*palette_tool_delegate_.get(),
-              DisableTool(PaletteToolId::METALAYER));
-  test_palette_delegate()->metalayer_closed().Run();
+  tool_->OnDisable();
+  EXPECT_EQ(1, test_palette_delegate()->show_metalayer_count());
+  EXPECT_EQ(1, test_palette_delegate()->hide_metalayer_count());
+  testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 }
 
 }  // namespace ash
