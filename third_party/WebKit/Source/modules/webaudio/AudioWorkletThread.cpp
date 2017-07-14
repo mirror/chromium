@@ -5,8 +5,8 @@
 #include "modules/webaudio/AudioWorkletThread.h"
 
 #include <memory>
+#include "core/workers/GlobalScopeStartupData.h"
 #include "core/workers/WorkerBackingThread.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
@@ -75,7 +75,7 @@ void AudioWorkletThread::CreateSharedBackingThreadForTest() {
 }
 
 WorkerOrWorkletGlobalScope* AudioWorkletThread::CreateWorkerGlobalScope(
-    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+    std::unique_ptr<GlobalScopeStartupData> startup_data) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("audio-worklet"),
                "AudioWorkletThread::createWorkerGlobalScope");
 

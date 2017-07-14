@@ -23,7 +23,7 @@ class MODULES_EXPORT AnimationWorkletThread final
 
  protected:
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
-      std::unique_ptr<WorkerThreadStartupData>) final;
+      std::unique_ptr<GlobalScopeStartupData>) final;
 
  private:
   AnimationWorkletThread(ThreadableLoadingContext*, WorkerReportingProxy&);

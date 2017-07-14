@@ -12,14 +12,15 @@
 #include "bindings/core/v8/V8GCController.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/workers/GlobalScopeStartupData.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/WorkerBackingThread.h"
+#include "core/workers/WorkerBackingThreadStartupData.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThread.h"
 #include "core/workers/WorkerThreadLifecycleObserver.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebThreadSupportingGC.h"
@@ -67,7 +68,7 @@ class WorkerThreadForTest : public WorkerThread {
   void ClearWorkerBackingThread() override { worker_backing_thread_ = nullptr; }
 
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
-      std::unique_ptr<WorkerThreadStartupData>) override;
+      std::unique_ptr<GlobalScopeStartupData>) override;
 
   void StartWithSourceCode(SecurityOrigin* security_origin,
                            const String& source,
@@ -80,13 +81,12 @@ class WorkerThreadForTest : public WorkerThread {
 
     WorkerClients* clients = nullptr;
 
-    Start(
-        WorkerThreadStartupData::Create(
-            KURL(kParsedURLString, "http://fake.url/"), "fake user agent",
-            source, nullptr, kDontPauseWorkerGlobalScopeOnStart, headers.get(),
-            "", security_origin, clients, kWebAddressSpaceLocal, nullptr,
-            nullptr, WorkerV8Settings::Default()),
-        parent_frame_task_runners);
+    Start(WTF::MakeUnique<GlobalScopeStartupData>(
+              KURL(kParsedURLString, "http://fake.url/"), "fake user agent",
+              source, nullptr, kDontPauseWorkerGlobalScopeOnStart,
+              headers.get(), "", security_origin, clients,
+              kWebAddressSpaceLocal, nullptr, nullptr, kV8CacheOptionsDefault),
+          WorkerBackingThreadStartupData::Default(), parent_frame_task_runners);
   }
 
   void WaitForInit() {
@@ -129,7 +129,7 @@ class FakeWorkerGlobalScope : public WorkerGlobalScope {
 };
 
 inline WorkerOrWorkletGlobalScope* WorkerThreadForTest::CreateWorkerGlobalScope(
-    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+    std::unique_ptr<GlobalScopeStartupData> startup_data) {
   return new FakeWorkerGlobalScope(
       startup_data->script_url_, startup_data->user_agent_, this,
       std::move(startup_data->starter_origin_privilege_data_),

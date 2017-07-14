@@ -37,16 +37,16 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/DedicatedWorkerThread.h"
+#include "core/workers/GlobalScopeStartupData.h"
 #include "core/workers/InProcessWorkerObjectProxy.h"
 #include "core/workers/WorkerClients.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "platform/bindings/ScriptState.h"
 
 namespace blink {
 
 DedicatedWorkerGlobalScope* DedicatedWorkerGlobalScope::Create(
     DedicatedWorkerThread* thread,
-    std::unique_ptr<WorkerThreadStartupData> startup_data,
+    std::unique_ptr<GlobalScopeStartupData> startup_data,
     double time_origin) {
   // Note: startupData is finalized on return. After the relevant parts has been
   // passed along to the created 'context'.

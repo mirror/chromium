@@ -33,6 +33,7 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/workers/ParentFrameTaskRunners.h"
+#include "core/workers/WorkerBackingThreadStartupData.h"
 #include "core/workers/WorkerThreadLifecycleContext.h"
 #include "core/workers/WorkerThreadLifecycleObserver.h"
 #include "platform/WaitableEvent.h"
@@ -40,6 +41,7 @@
 #include "platform/scheduler/child/worker_global_scope_scheduler.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Functional.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/PassRefPtr.h"
 #include "public/platform/WebThread.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -54,7 +56,7 @@ class WorkerBackingThread;
 class WorkerInspectorController;
 class WorkerOrWorkletGlobalScope;
 class WorkerReportingProxy;
-class WorkerThreadStartupData;
+struct GlobalScopeStartupData;
 
 enum WorkerThreadStartMode {
   kDontPauseWorkerGlobalScopeOnStart,
@@ -89,7 +91,9 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   virtual ~WorkerThread();
 
   // Called on the main thread.
-  void Start(std::unique_ptr<WorkerThreadStartupData>, ParentFrameTaskRunners*);
+  void Start(std::unique_ptr<GlobalScopeStartupData>,
+             const WTF::Optional<WorkerBackingThreadStartupData>&,
+             ParentFrameTaskRunners*);
   void Terminate();
 
   // Called on the main thread for the leak detector. Forcibly terminates the
@@ -173,7 +177,7 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // Factory method for creating a new worker context for the thread.
   // Called on the worker thread.
   virtual WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
-      std::unique_ptr<WorkerThreadStartupData>) = 0;
+      std::unique_ptr<GlobalScopeStartupData>) = 0;
 
   // Returns true when this WorkerThread owns the associated
   // WorkerBackingThread exclusively. If this function returns true, the
@@ -217,7 +221,9 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   void EnsureScriptExecutionTerminates(ExitCode);
 
   void InitializeSchedulerOnWorkerThread(WaitableEvent*);
-  void InitializeOnWorkerThread(std::unique_ptr<WorkerThreadStartupData>);
+  void InitializeOnWorkerThread(
+      std::unique_ptr<GlobalScopeStartupData>,
+      const WTF::Optional<WorkerBackingThreadStartupData>&);
   void PrepareForShutdownOnWorkerThread();
   void PerformShutdownOnWorkerThread();
   template <WTF::FunctionThreadAffinity threadAffinity>

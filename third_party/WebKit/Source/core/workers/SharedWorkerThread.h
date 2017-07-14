@@ -37,7 +37,7 @@
 
 namespace blink {
 
-class WorkerThreadStartupData;
+class GlobalScopeStartupData;
 
 class CORE_EXPORT SharedWorkerThread : public WorkerThread {
  public:
@@ -53,7 +53,7 @@ class CORE_EXPORT SharedWorkerThread : public WorkerThread {
 
  protected:
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
-      std::unique_ptr<WorkerThreadStartupData>) override;
+      std::unique_ptr<GlobalScopeStartupData>) override;
 
  private:
   std::unique_ptr<WorkerBackingThread> worker_backing_thread_;

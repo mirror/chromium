@@ -9,8 +9,8 @@
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/CompositorWorkerProxyClient.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/workers/GlobalScopeStartupData.h"
 #include "core/workers/InProcessWorkerObjectProxy.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "modules/EventTargetModules.h"
 #include "modules/compositorworker/CompositorWorkerThread.h"
 #include "platform/bindings/ScriptState.h"
@@ -20,7 +20,7 @@ namespace blink {
 
 CompositorWorkerGlobalScope* CompositorWorkerGlobalScope::Create(
     CompositorWorkerThread* thread,
-    std::unique_ptr<WorkerThreadStartupData> startup_data,
+    std::unique_ptr<GlobalScopeStartupData> startup_data,
     double time_origin) {
   // Note: startupData is finalized on return. After the relevant parts has been
   // passed along to the created 'context'.

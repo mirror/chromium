@@ -54,7 +54,7 @@ MessageEvent* CreateConnectEvent(MessagePort* port) {
 SharedWorkerGlobalScope* SharedWorkerGlobalScope::Create(
     const String& name,
     SharedWorkerThread* thread,
-    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+    std::unique_ptr<GlobalScopeStartupData> startup_data) {
   // Note: startupData is finalized on return. After the relevant parts has been
   // passed along to the created 'context'.
   SharedWorkerGlobalScope* context = new SharedWorkerGlobalScope(

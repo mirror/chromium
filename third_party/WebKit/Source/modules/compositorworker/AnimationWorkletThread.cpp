@@ -4,7 +4,7 @@
 
 #include "modules/compositorworker/AnimationWorkletThread.h"
 
-#include "core/workers/WorkerThreadStartupData.h"
+#include "core/workers/GlobalScopeStartupData.h"
 #include "modules/compositorworker/AnimationWorkletGlobalScope.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -30,7 +30,7 @@ AnimationWorkletThread::AnimationWorkletThread(
 AnimationWorkletThread::~AnimationWorkletThread() {}
 
 WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
-    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+    std::unique_ptr<GlobalScopeStartupData> startup_data) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("animation-worklet"),
                "AnimationWorkletThread::createWorkerGlobalScope");
 

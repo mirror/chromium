@@ -15,7 +15,7 @@ namespace blink {
 
 class CompositorWorkerThread;
 class InProcessWorkerObjectProxy;
-class WorkerThreadStartupData;
+struct GlobalScopeStartupData;
 
 class MODULES_EXPORT CompositorWorkerGlobalScope final
     : public WorkerGlobalScope {
@@ -24,7 +24,7 @@ class MODULES_EXPORT CompositorWorkerGlobalScope final
  public:
   static CompositorWorkerGlobalScope* Create(
       CompositorWorkerThread*,
-      std::unique_ptr<WorkerThreadStartupData>,
+      std::unique_ptr<GlobalScopeStartupData>,
       double time_origin);
   ~CompositorWorkerGlobalScope() override;
 
