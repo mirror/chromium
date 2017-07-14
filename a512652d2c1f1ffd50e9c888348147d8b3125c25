@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "689f7758_e16e22bd",
+        "filename": "chrome/browser/resources/media/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:46:58Z",
+      "side": 1,
+      "message": "Internals\u003eMedia\u003eUI maybe? or Internals\u003eMedia",
+      "revId": "a512652d2c1f1ffd50e9c888348147d8b3125c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cfaf4d_640fe7f0",
+        "filename": "chrome/browser/resources/media/media_engagement.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:46:58Z",
+      "side": 1,
+      "message": "Should this be called `score`? I was a bit confused by \"total\" as it sounds like the sum of something else.",
+      "revId": "a512652d2c1f1ffd50e9c888348147d8b3125c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f772f607_b725fad9",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:46:58Z",
+      "side": 1,
+      "message": "wouldn\u0027t `score.toFixed(2)` be shorter? I see this is used in two places so feel free to keep the method but maybe it should be computed this way instead of *100/100 with some rounding tricks ;)",
+      "revId": "a512652d2c1f1ffd50e9c888348147d8b3125c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6cc2b9b_927f249e",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:46:58Z",
+      "side": 1,
+      "message": "nit: you can drop the () around `info`",
+      "revId": "a512652d2c1f1ffd50e9c888348147d8b3125c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e87820_45ae4281",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:46:58Z",
+      "side": 1,
+      "message": "ditto for `response`",
+      "revId": "a512652d2c1f1ffd50e9c888348147d8b3125c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c564629_d6065ef7",
+        "filename": "chrome/browser/ui/webui/media/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:46:58Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "a512652d2c1f1ffd50e9c888348147d8b3125c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5aa69d4_c9e967b5",
+        "filename": "chrome/browser/ui/webui/media/media_engagement_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T09:46:58Z",
+      "side": 1,
+      "message": "nit: `\u003d default;`",
+      "revId": "a512652d2c1f1ffd50e9c888348147d8b3125c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
