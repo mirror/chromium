@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "b8453160_5f91bdc9",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-14T11:17:14Z",
+      "side": 1,
+      "message": "I don\u0027t ever call |start| on this coordinator!\n\nThe goal here was to mimic the FIP flow, where the coordinator always exists (so that it can handle commands) but doesn\u0027t start its UI until needed.  I\u0027m not sure of:\n\n1) How that model works with ChromeCoordinators (as opposed to BrowserCoordinators).\n\n2) How |start| works when this UI needs to be started up with the appropriate share |data|.",
+      "revId": "7a07e85a89a648fffdd74862c33bb79014ba04b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e9deb52_96c73f42",
         "filename": "ios/chrome/browser/ui/activity_services/activity_service_coordinator.mm",
         "patchSetId": 1
