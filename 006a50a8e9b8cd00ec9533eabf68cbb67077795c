@@ -141,6 +141,30 @@
       "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5510007f_7a62734e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-14T18:44:38Z",
+      "side": 1,
+      "message": "Thanks for the explanation! I also feel it is cleaner after removing HeaderItem\u0027s visibility.",
+      "parentUuid": "dd14133c_eb58c660",
+      "range": {
+        "startLine": 510,
+        "startChar": 21,
+        "endLine": 510,
+        "endChar": 30
+      },
+      "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
