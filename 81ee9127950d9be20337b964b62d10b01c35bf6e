@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16631f7b_1303b41b",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1133564
+      },
+      "writtenOn": "2017-07-14T14:49:03Z",
+      "side": 1,
+      "message": "Please add // defined(USE_ALSA)",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "81ee9127950d9be20337b964b62d10b01c35bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8d5c43_e7e952e5",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1133564
+      },
+      "writtenOn": "2017-07-14T14:49:03Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 221,
+        "startChar": 6,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "81ee9127950d9be20337b964b62d10b01c35bf6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

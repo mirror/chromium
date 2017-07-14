@@ -37,6 +37,63 @@
     },
     {
       "key": {
+        "uuid": "5bf6f838_05fdb046",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133564
+      },
+      "writtenOn": "2017-07-14T14:49:03Z",
+      "side": 1,
+      "message": "Old style Did you copy the code from somewhere?\n\nIt is your call whether to fix it.",
+      "range": {
+        "startLine": 136,
+        "startChar": 14,
+        "endLine": 136,
+        "endChar": 18
+      },
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a7daaf_d082b797",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1133564
+      },
+      "writtenOn": "2017-07-14T14:49:03Z",
+      "side": 1,
+      "message": "Ditto. Old style.",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9afbc55_0e1fe2bc",
+        "filename": "chromecast/media/audio/cast_audio_manager_alsa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1133564
+      },
+      "writtenOn": "2017-07-14T14:49:03Z",
+      "side": 1,
+      "message": "Need to be static? And I really don\u0027t like returning char*.",
+      "revId": "a7ea902d48d7bcfe3645f06011375225c14711bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5693e07_de8eb703",
         "filename": "chromecast/media/audio/cast_audio_manager_alsa.h",
         "patchSetId": 2
