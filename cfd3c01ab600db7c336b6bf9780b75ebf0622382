@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f95b8a8f_0b0bfacd",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T10:31:56Z",
+      "side": 1,
+      "message": "I\u0027m a bit unhappy about possible change of semantics of this test: this test was previously strictly about the TpmAttestationDoesKeyExist returning an error. But now, given that the whole service is marked unavailable, if the function\u0027s implementation starts calling other methods of cryptohome client - then the test will start testing a completely different path.\n\nDo you think it will be reasonable to extend FakeCryptohomeClient in a way that allows to set up failure responses for individual methods?\n\nOr, if not, then please rename the test to just \"DBusError\" to represent the actual new semantics.",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 50
+      },
+      "revId": "cfd3c01ab600db7c336b6bf9780b75ebf0622382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdaa8be2_5cab4987",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys/enterprise_platform_keys_api_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T10:31:56Z",
+      "side": 1,
+      "message": "This test becomes equivalent to DoesKeyExistDbusFailed.\nSo, if you decide to not preserve the existing fine-grained faking (see my comment for the DoesKeyExistDbusFailed test), then please remove this one.",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 410,
+        "endChar": 67
+      },
+      "revId": "cfd3c01ab600db7c336b6bf9780b75ebf0622382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
