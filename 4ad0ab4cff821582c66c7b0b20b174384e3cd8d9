@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78e3831f_962da4fb",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-14T09:10:36Z",
+      "side": 1,
+      "message": "Nit: You could even directly use `urls.shown` here, right?",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "4ad0ab4cff821582c66c7b0b20b174384e3cd8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
