@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ecff9bc_6071ef77",
+        "filename": "chrome/common/extensions/api/feedback_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-14T21:20:30Z",
+      "side": 1,
+      "message": "what\u0027s atrus?\n(I\u0027m not clear on how it fits into issue to \"Expose USB and display info \"; should the cl be linked to another bug?)",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 12
+      },
+      "revId": "0d9fb0b6c75b260f2322643c776f3a889f5b1dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
