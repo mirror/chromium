@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "535002f0_d339a8c6",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-14T19:47:22Z",
+      "side": 1,
+      "message": "Should probably be in a private function such as RecordPayClicked since it\u0027s used twice.",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a8ae0f_ff1428e0",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-14T19:47:22Z",
+      "side": 1,
+      "message": "whether",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb741ee_a9cd8ff5",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-14T19:47:22Z",
+      "side": 1,
+      "message": "It\u0027s not clear when this function should be called (UI? business logic?). I would perhaps add a comment somewhere",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6723355e_40990be4",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 1
@@ -49,6 +100,40 @@
     },
     {
       "key": {
+        "uuid": "0f47859b_19ebf735",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-14T19:47:22Z",
+      "side": 1,
+      "message": "This looks a lot like payments::PaymentRequest::Compare, no?",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9661757d_6ef6efa0",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-14T19:47:22Z",
+      "side": 1,
+      "message": "it that right? I would think payment_methods_ would be better?",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97588e45_d6319b40",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 1
@@ -89,6 +174,29 @@
         "startChar": 60,
         "endLine": 670,
         "endChar": 0
+      },
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81881f43_db2628d0",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-14T19:47:22Z",
+      "side": 1,
+      "message": "the name implies no side effects. I\u0027m bad with names but I would recommend something like \"setActivePaymentRequest\"",
+      "range": {
+        "startLine": 941,
+        "startChar": 8,
+        "endLine": 941,
+        "endChar": 29
       },
       "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
