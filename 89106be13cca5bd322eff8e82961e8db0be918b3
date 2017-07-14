@@ -22,6 +22,30 @@
       "revId": "89106be13cca5bd322eff8e82961e8db0be918b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a780170c_bad8f814",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-14T10:40:36Z",
+      "side": 1,
+      "message": "I did before uploading ;-)\nActually it\u0027s used in other places in the code.\n\nChromeOS has different signing in process (e.g. you cannot signout, cannot signin after opening Chrome) so all those callbacks are relevant\nIn addition the same is done here\nhttps://cs.chromium.org/chromium/src/services/identity/identity_manager_unittest.cc?q\u003dSigninManagerForTest\u0026sq\u003dpackage:chromium\u0026l\u003d491",
+      "parentUuid": "0bfac8ed_4b700350",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 25
+      },
+      "revId": "89106be13cca5bd322eff8e82961e8db0be918b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
