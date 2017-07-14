@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31214021_386d7c07",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-14T19:19:14Z",
+      "side": 1,
+      "message": "Is there a way in which this can use the singleton instance? Should we make the ctor private/protected?",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "27a0e6e31ebe3d45c1ef1536fe332496e81c5b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
