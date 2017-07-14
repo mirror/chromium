@@ -146,6 +146,9 @@ component("media") {
     "//media/filters",
     "//media/formats",
     "//ui/gfx:color_space",
+    # Testing -- normally don't do this.  this is really the only target that
+    # needs to be run, rather than doing the whole build.
+    ":build_ffmpeg_config",
   ]
 
   include_dirs = [ "." ]
@@ -648,4 +651,18 @@ if (proprietary_codecs) {
       "//base",
     ]
   }
+}
+
+# Build and uuencode ffmpeg config.
+action("build_ffmpeg_config") {
+    script = "build_ffmpeg_config.py"
+    deps = [ "//third_party/opus", "//third_party/yasm" ]
+    # TODO(liberato): select this automatically.
+    use_system_xcode_arg="false"
+    if (use_system_xcode) {
+        use_system_xcode_arg="true"
+    }
+    args = [ rebase_path("//third_party/ffmpeg", root_build_dir), "mac", "x64", target_gen_dir, rebase_path(target_out_dir, root_build_dir), use_system_xcode_arg, hermetic_xcode_path ]
+#    args = [ rebase_path("//third_party/ffmpeg", root_build_dir), "linux", "x64" ]
+    outputs = [ "$target_gen_dir/output" ]
 }
