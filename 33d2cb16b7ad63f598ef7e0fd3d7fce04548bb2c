@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e459daf5_c8941c97",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T20:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "644d0472_74c25fc3",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdd050c7_4a7f3102",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e80219d1_83b43828",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T20:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdd050c7_4a7f3102",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a5fbfff_403a7c66",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-14T01:16:32Z",
       "side": 1,
       "message": "How did you come up with 0x57?",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30ef556_abe90648",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T20:36:11Z",
+      "side": 1,
+      "message": "Found some info here: https://stackoverflow.com/questions/15852122/hex-transparency-in-colors\n\nBasically, alpha value of 100% \u003d 0xFF and 0% \u003d 0x00\n34% * 255 \u003d 86.7(decimal) ~0x57",
+      "parentUuid": "2a5fbfff_403a7c66",
       "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4ce0d87d_6f5a0aad",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T20:36:11Z",
+      "side": 1,
+      "message": "Thanks! I think inheritance would make it much cleaner. Right now it is a little confusing to have 3 ctor.",
+      "parentUuid": "448891c7_91440201",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e6ca463_4913b178",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-14T01:16:32Z",
       "side": 1,
       "message": "What do you about making this ctor a static method? Otherwise it is confusing which ctor should be used when.",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae631ac6_74e84498",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T20:36:11Z",
+      "side": 1,
+      "message": "Moved this to DigitPinButton.",
+      "parentUuid": "1e6ca463_4913b178",
       "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "24526dab_05ff4d24",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T20:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2008ef3c_8ad68c14",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdce5e51_f0e9d2f7",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 6
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "58a9e1c7_40259268",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T20:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdce5e51_f0e9d2f7",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "614f5ef5_c174e3ba",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d8241a_30ae25c4",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-07-14T20:36:11Z",
+      "side": 1,
+      "message": "Moved this to BasePinButton ctor.",
+      "parentUuid": "614f5ef5_c174e3ba",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
