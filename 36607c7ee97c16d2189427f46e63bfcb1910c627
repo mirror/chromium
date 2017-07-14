@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c6407fd_3c01ff67",
+        "filename": "content/shell/android/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-14T19:56:27Z",
+      "side": 1,
+      "message": "seems a little worrisome to have to specify these in GN but I haven\u0027t thought of a better way :/",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 25
+      },
+      "revId": "36607c7ee97c16d2189427f46e63bfcb1910c627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
