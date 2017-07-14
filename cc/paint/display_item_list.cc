@@ -14,7 +14,6 @@
 #include "cc/base/math_util.h"
 #include "cc/base/render_surface_filters.h"
 #include "cc/debug/picture_debug_util.h"
-#include "cc/paint/discardable_image_store.h"
 #include "cc/paint/solid_color_analyzer.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkPictureRecorder.h"
@@ -78,7 +77,6 @@ void DisplayItemList::Finalize() {
 size_t DisplayItemList::BytesUsed() const {
   // TODO(jbroman): Does anything else owned by this class substantially
   // contribute to memory usage?
-  // TODO(vmpstr): Probably DiscardableImageMap is worth counting here.
   return sizeof(*this) + paint_op_buffer_.bytes_used();
 }
 
@@ -140,37 +138,11 @@ DisplayItemList::CreateTracedValue(bool include_items) const {
   return state;
 }
 
-void DisplayItemList::GenerateDiscardableImagesMetadata() {
-  // This should be only called once.
-  DCHECK(image_map_.empty());
-  if (!paint_op_buffer_.HasDiscardableImages())
-    return;
-
-  gfx::Rect bounds = rtree_.GetBounds();
-  DiscardableImageMap::ScopedMetadataGenerator generator(
-      &image_map_, gfx::Size(bounds.right(), bounds.bottom()));
-  generator.image_store()->GatherDiscardableImages(&paint_op_buffer_);
-}
-
-void DisplayItemList::GetDiscardableImagesInRect(
-    const gfx::Rect& rect,
-    float contents_scale,
-    const gfx::ColorSpace& target_color_space,
-    std::vector<DrawImage>* images) {
-  image_map_.GetDiscardableImagesInRect(rect, contents_scale,
-                                        target_color_space, images);
-}
-
-gfx::Rect DisplayItemList::GetRectForImage(PaintImage::Id image_id) const {
-  return image_map_.GetRectForImage(image_id);
-}
-
 void DisplayItemList::Reset() {
   DCHECK(!in_painting_);
   DCHECK_EQ(0, in_paired_begin_count_);
 
   rtree_.Reset();
-  image_map_.Reset();
   paint_op_buffer_.Reset();
   visual_rects_.clear();
   begin_paired_indices_.clear();

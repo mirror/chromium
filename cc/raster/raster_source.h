@@ -14,6 +14,7 @@
 #include "cc/cc_export.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "cc/layers/recording_source.h"
+#include "cc/paint/discardable_image_map.h"
 #include "cc/paint/image_id.h"
 #include "skia/ext/analysis_canvas.h"
 #include "third_party/skia/include/core/SkPicture.h"
@@ -153,6 +154,7 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
   const gfx::Size size_;
   const bool clear_canvas_with_debug_color_;
   const int slow_down_raster_scale_factor_for_debug_;
+  DiscardableImageMap image_map_;
 
   // In practice, this is only set once before raster begins, so it's ok with
   // respect to threading.
