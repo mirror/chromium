@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92efbe84_b6d57d4c",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "nit: {} not needed",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ec3f14_ac6bb20a",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "nit: \"swept_angle \u003d 0.0;\" is chromium code style",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579cc1ca_c3871eff",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "nit: \"prev_angle \u003d 0.0;\"",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c696840c_f3c73206",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "nit: has_prev_angle",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0c23c5_5b5c5f81",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "maybe \"for (const auto\u0026 point : points)\" ?",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8212812b_f4a9330b",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "nit: diff_angle",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eacfca6_6542c922",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "nit: use static_cast",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e1eb3c_00a7f48f",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493cd68b_75bade2e",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "not following the logic here. why destroy if root_window is null?",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bec0bd4_d15ae0b3",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "hm, should we be calling this if root_window is null?",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2adbb6c_575bcfa7",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "kSrc? is this needed?",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d823cf2a_c987db4e",
+        "filename": "ash/highlighter/highlighter_result_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "use base::TimeDelta here and below?",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d87d65_438094ec",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T15:54:34Z",
+      "side": 1,
+      "message": "This looks good but would be nice to refactor so we could reuse some of the code between the laser pointer and this before we land it.",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
