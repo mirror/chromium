@@ -1773,29 +1773,9 @@ public class ChromeTabbedActivity
             return true;
         }
 
-        // [true]: Reached the bottom of the back stack on a tab the user did not explicitly
-        // create (i.e. it was created by an external app or opening a link in background, etc).
-        // [false]: Reached the bottom of the back stack on a tab that the user explicitly
-        // created (e.g. selecting "new tab" from menu).
-        final int parentId = currentTab.getParentId();
-        final boolean shouldCloseTab = type == TabLaunchType.FROM_LINK
-                || type == TabLaunchType.FROM_EXTERNAL_APP
-                || type == TabLaunchType.FROM_LONGPRESS_FOREGROUND
-                || type == TabLaunchType.FROM_LONGPRESS_BACKGROUND
-                || (type == TabLaunchType.FROM_RESTORE && parentId != Tab.INVALID_TAB_ID);
-
-        // Minimize the app if either:
-        // - we decided not to close the tab
-        // - we decided to close the tab, but it was opened by an external app, so we will go
-        //   exit Chrome on top of closing the tab
-        final boolean minimizeApp = !shouldCloseTab || currentTab.isCreatedForExternalApp();
+        final boolean shouldCloseTab = backShouldCloseTab(currentTab);
+        final boolean minimizeApp = backShouldMinimizeApp(shouldCloseTab, currentTab);
         if (minimizeApp) {
-            // TODO(mthiesse): We never want to close Chrome through the in-vr back button (but we
-            // want to reuse CTA logic for how the back button should otherwise behave). We should
-            // refactor the behaviour in this function so that we can either re-use the parts of
-            // this behaviour we want, or be able to know in advance whether or not clicking the
-            // back button would close Chrome so that we can disable it.
-            if (VrShellDelegate.isInVr()) return true;
             if (shouldCloseTab) {
                 recordBackPressedUma("Minimized and closed tab", BACK_PRESSED_MINIMIZED_TAB_CLOSED);
                 mActivityStopMetrics.setStopReason(ActivityStopMetrics.STOP_REASON_BACK_BUTTON);
@@ -1816,6 +1796,35 @@ public class ChromeTabbedActivity
         assert false : "The back button should have already been handled by this point";
         recordBackPressedUma("Unhandled", BACK_PRESSED_NOTHING_HAPPENED);
         return false;
+    }
+
+    /**
+     * [true]: Reached the bottom of the back stack on a tab the user did not explicitly
+     * create (i.e. it was created by an external app or opening a link in background, etc).
+     * [false]: Reached the bottom of the back stack on a tab that the user explicitly
+     * created (e.g. selecting "new tab" from menu).
+     *
+     * @return Whether pressing the back button on the provided Tab should close the Tab.
+     */
+    public boolean backShouldCloseTab(Tab tab) {
+        final TabLaunchType type = tab.getLaunchType();
+
+        return type == TabLaunchType.FROM_LINK || type == TabLaunchType.FROM_EXTERNAL_APP
+                || type == TabLaunchType.FROM_LONGPRESS_FOREGROUND
+                || type == TabLaunchType.FROM_LONGPRESS_BACKGROUND
+                || (type == TabLaunchType.FROM_RESTORE && tab.getParentId() != Tab.INVALID_TAB_ID);
+    }
+
+    /**
+     * Minimize the app if either:
+     *   - we decided not to close the tab
+     *   - we decided to close the tab, but it was opened by an external app, so we will go
+     *     exit Chrome on top of closing the tab
+     *
+     * @return Whether pressing the back button on the provided Tab should minimize the app.
+     */
+    public boolean backShouldMinimizeApp(boolean backShouldCloseTab, Tab tab) {
+        return !backShouldCloseTab || tab.isCreatedForExternalApp();
     }
 
     /**

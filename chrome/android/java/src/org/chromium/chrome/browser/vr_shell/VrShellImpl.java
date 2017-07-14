@@ -33,7 +33,6 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
-import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
@@ -689,11 +688,13 @@ public class VrShellImpl
             nativeSetHistoryButtonsEnabled(mNativeVrShell, false, false);
             return;
         }
-        // Hitting back when on the NTP usually closes Chrome, which we don't allow in VR, so we
-        // just disable the back button.
-        boolean shouldAlwaysGoBack = mActivity instanceof ChromeTabbedActivity
-                && (mNativePage == null || !(mNativePage instanceof NewTabPage));
-        boolean canGoBack = mTab.canGoBack() || shouldAlwaysGoBack;
+        boolean willCloseTab = false;
+        if (mActivity instanceof ChromeTabbedActivity) {
+            ChromeTabbedActivity cta = (ChromeTabbedActivity) mActivity;
+            boolean willClose = cta.backShouldCloseTab(mTab);
+            willCloseTab = willClose && !cta.backShouldMinimizeApp(willClose, mTab);
+        }
+        boolean canGoBack = mTab.canGoBack() || willCloseTab;
         boolean canGoForward = mTab.canGoForward();
         if ((mCanGoBack != null && canGoBack == mCanGoBack)
                 && (mCanGoForward != null && canGoForward == mCanGoForward)) {
