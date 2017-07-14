@@ -731,7 +731,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
 
   bool called1 = false;
   auto request = cc::CopyOutputRequest::CreateRequest(
-      base::Bind(&CopyRequestTestCallback, &called1));
+      base::BindOnce(&CopyRequestTestCallback, &called1));
   request->set_source(kArbitrarySourceId1);
 
   support_->RequestCopyOfSurface(std::move(request));
@@ -739,7 +739,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
 
   bool called2 = false;
   request = cc::CopyOutputRequest::CreateRequest(
-      base::Bind(&CopyRequestTestCallback, &called2));
+      base::BindOnce(&CopyRequestTestCallback, &called2));
   request->set_source(kArbitrarySourceId2);
 
   support_->RequestCopyOfSurface(std::move(request));
@@ -749,7 +749,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
 
   bool called3 = false;
   request = cc::CopyOutputRequest::CreateRequest(
-      base::Bind(&CopyRequestTestCallback, &called3));
+      base::BindOnce(&CopyRequestTestCallback, &called3));
   request->set_source(kArbitrarySourceId1);
 
   support_->RequestCopyOfSurface(std::move(request));
