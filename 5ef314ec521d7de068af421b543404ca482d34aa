@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebe00c79_a66bc5ad",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-14T15:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f40efe8_d367809d",
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4876b000_0d132728",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-14T13:03:52Z",
       "side": 1,
       "message": "NIT: omit \"ChooseHostBrowserDialog.\"",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59226816_f75d677a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-14T15:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4876b000_0d132728",
       "range": {
         "startLine": 100,
         "startChar": 8,
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "7875e91f_67221b2d",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-14T15:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e893bec7_40c22816",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 14
+      },
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60738fda_bacb0f79",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
         "patchSetId": 4
@@ -109,6 +175,30 @@
       "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b68b6ae_530991fb",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-14T15:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60738fda_bacb0f79",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 35
+      },
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +246,30 @@
       "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b556a024_a7e57812",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/InstallHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-14T15:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a522eadf_4d2c0d96",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 14
+      },
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
