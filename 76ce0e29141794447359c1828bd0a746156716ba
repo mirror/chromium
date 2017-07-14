@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c55763dc_bc822a77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-14T15:37:43Z",
+      "side": 1,
+      "message": "Under NewTabPageView it uses no padding (see new_tab_page_layout.xml) while under TileGrid it uses 12dp (suggestions_site_tile_grid.xml)",
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad05e0d_3f7e6970",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-14T15:37:43Z",
+      "side": 1,
+      "message": "s/calculatemNumColumns/calculateNumColumns",
+      "range": {
+        "startLine": 47,
+        "startChar": 22,
+        "endLine": 47,
+        "endChar": 42
+      },
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57676756_f99bbbfa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-14T15:37:43Z",
+      "side": 1,
+      "message": "|i| that is passed here is the index of the tile and is sent back to the backend for UMA. So when there are home tiles moves in another position it will be wrong. \n\nfhorschig@: Do you want the UMA value to be the real one or the one after the home tile is moved?\n\nIf it should be the real one then the reordering could be done here and the index fixed.\n\nAs it is used only in TileGroup.Delegate#openMostVisitedItem, another option is to remove the index from Tile completely, modify TileGroup.Delegate and TileInteractionDelegate to send it from the view\u0027s position in its parent.",
+      "range": {
+        "startLine": 263,
+        "startChar": 82,
+        "endLine": 263,
+        "endChar": 83
+      },
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
