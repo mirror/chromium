@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f480304_0b06e4dd",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-14T17:44:28Z",
+      "side": 1,
+      "message": "Comments for methods start with verbs.\n\nThis can be\nDeletes the global DesktopSessionDurationTracker instance for testing to avoid memory leaks.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "2323a53f88ae53367a078ef8ca438621cd675892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f8387b_3f040bdc",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-14T17:44:28Z",
+      "side": 1,
+      "message": "Instead of Delete, maybe CleanupForTesting?\n\nThen the comment can be robust to implementation changes\n// Cleans up any global state for testing.",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "2323a53f88ae53367a078ef8ca438621cd675892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18024ed_2b449d7f",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-14T17:44:28Z",
+      "side": 1,
+      "message": "Move to the end of the public declarations since this should be for testing.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "2323a53f88ae53367a078ef8ca438621cd675892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d5e6ac9_62df94d3",
         "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
         "patchSetId": 4
@@ -13,6 +82,30 @@
       "writtenOn": "2017-07-14T17:40:12Z",
       "side": 1,
       "message": "That doesn\u0027t look right.\n\ninstance_ is already a member variable and gets deleted when the test is done.\n\nWhereas DeleteInstanceForTesting is a static method (and thus shouldn\u0027t be called on an instance) and affects the global singleton, rather than the instance this test creates.",
+      "range": {
+        "startLine": 75,
+        "startChar": 39,
+        "endLine": 75,
+        "endChar": 63
+      },
+      "revId": "2323a53f88ae53367a078ef8ca438621cd675892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ac0095_0a97ec7d",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-14T17:44:28Z",
+      "side": 1,
+      "message": "Use the static call form here.",
+      "parentUuid": "1d5e6ac9_62df94d3",
       "range": {
         "startLine": 75,
         "startChar": 39,
