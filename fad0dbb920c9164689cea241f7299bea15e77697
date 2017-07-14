@@ -46,6 +46,30 @@
       "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c3d425_ef107ebd",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-14T15:09:24Z",
+      "side": 1,
+      "message": "So one option for this would be to require a separate Create variant that fills in some sort of CleanupContext or such object, guaranteed, even if backend creation has failed; this can also potentially be used to keep track of outstanding closes/other ops to sequence after them independent of backend object\u0027s lifetime.",
+      "parentUuid": "c82e2b03_3653b44a",
+      "range": {
+        "startLine": 1940,
+        "startChar": 18,
+        "endLine": 1940,
+        "endChar": 24
+      },
+      "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
