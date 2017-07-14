@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "caed31d5_10137fd4",
+        "filename": "chrome/common/page_load_metrics/page_load_metrics.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-14T18:26:45Z",
+      "side": 1,
+      "message": "circling back to earlier comments here, if we anticipate adding service worker timings to this struct in a follow up change in the near term, then calling it ServiceWorkerTiming seems ok. Otherwise, I\u0027d prefer to either name the struct ServiceWorkerMetadata, or, if we don\u0027t anticipate adding other fields beyond preparation_type, moving it into PageLoadMetadata as service_worker_preparation_type (can make it optional, and leave it unset for non SW controlled pages)",
+      "revId": "368fda9a5677788f179ab6a7996d47e4ccce0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f038cfe_d7906ac0",
+        "filename": "chrome/common/page_load_metrics/page_load_timing.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-14T18:26:45Z",
+      "side": 1,
+      "message": "this should be updated to also test that timing.service_worker_timing is empty",
+      "revId": "368fda9a5677788f179ab6a7996d47e4ccce0a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5191828a_efe5d641",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
         "patchSetId": 10
