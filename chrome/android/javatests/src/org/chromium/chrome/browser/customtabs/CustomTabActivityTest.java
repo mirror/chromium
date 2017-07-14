@@ -73,6 +73,7 @@ import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.TabsOpenedFromExternalAppTest;
 import org.chromium.chrome.browser.WarmupManager;
 import org.chromium.chrome.browser.appmenu.AppMenuHandler;
+import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CustomTabsUiType;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.history.BrowsingHistoryBridge;
@@ -548,7 +549,7 @@ public class CustomTabActivityTest {
     @RetryOnFailure
     public void testAppMenuForMediaViewer() throws InterruptedException {
         Intent intent = createMinimalCustomTabIntent();
-        intent.putExtra(CustomTabIntentDataProvider.EXTRA_IS_MEDIA_VIEWER, true);
+        intent.putExtra(CustomTabIntentDataProvider.EXTRA_UI_TYPE, CustomTabsUiType.MEDIA_VIEWER);
         IntentHandler.addTrustedIntentExtras(intent);
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
 
