@@ -112,9 +112,8 @@ class ChannelWin : public Channel,
     if (write_error) {
       // Do not synchronously invoke OnError(). Write() may have been called by
       // the delegate and we don't want to re-enter it.
-      io_task_runner_->PostTask(
-          FROM_HERE,
-          base::Bind(&ChannelWin::OnError, this, Error::kDisconnected));
+      io_task_runner_->PostTask(FROM_HERE,
+                                base::Bind(&ChannelWin::OnError, this));
     }
   }
 
@@ -159,7 +158,7 @@ class ChannelWin : public Channel,
                                  &connect_context_.overlapped);
       if (ok) {
         PLOG(ERROR) << "Unexpected success while waiting for pipe connection";
-        OnError(Error::kConnectionFailed);
+        OnError();
         return;
       }
 
@@ -172,7 +171,7 @@ class ChannelWin : public Channel,
           AddRef();
           return;
         case ERROR_NO_DATA:
-          OnError(Error::kConnectionFailed);
+          OnError();
           return;
       }
     }
@@ -218,7 +217,7 @@ class ChannelWin : public Channel,
                      DWORD bytes_transfered,
                      DWORD error) override {
     if (error != ERROR_SUCCESS) {
-      OnError(Error::kDisconnected);
+      OnError();
     } else if (context == &connect_context_) {
       DCHECK(wait_for_connect_);
       wait_for_connect_ = false;
@@ -244,10 +243,10 @@ class ChannelWin : public Channel,
       if (OnReadComplete(bytes_read, &next_read_size)) {
         ReadMore(next_read_size);
       } else {
-        OnError(Error::kReceivedMalformedData);
+        OnError();
       }
     } else if (bytes_read == 0) {
-      OnError(Error::kDisconnected);
+      OnError();
     }
   }
 
@@ -277,7 +276,7 @@ class ChannelWin : public Channel,
         reject_writes_ = write_error = true;
     }
     if (write_error)
-      OnError(Error::kDisconnected);
+      OnError();
   }
 
   void ReadMore(size_t next_read_size_hint) {
@@ -294,7 +293,7 @@ class ChannelWin : public Channel,
     if (ok || GetLastError() == ERROR_IO_PENDING) {
       AddRef();  // Will be balanced in OnIOCompleted
     } else {
-      OnError(Error::kDisconnected);
+      OnError();
     }
   }
 

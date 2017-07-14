@@ -140,8 +140,9 @@ void TestLayerTreeHostBase::SetupPendingTree(
       host_impl()->pending_tree()->LayerById(id_));
 
   // Add tilings/tiles for the layer.
+  bool update_lcd_text = false;
   RebuildPropertyTreesOnPendingTree();
-  host_impl()->pending_tree()->UpdateDrawProperties();
+  host_impl()->pending_tree()->UpdateDrawProperties(update_lcd_text);
 }
 
 void TestLayerTreeHostBase::ActivateTree() {
@@ -154,7 +155,8 @@ void TestLayerTreeHostBase::ActivateTree() {
   active_layer_ = static_cast<FakePictureLayerImpl*>(
       host_impl()->active_tree()->LayerById(id_));
 
-  host_impl()->active_tree()->UpdateDrawProperties();
+  bool update_lcd_text = false;
+  host_impl()->active_tree()->UpdateDrawProperties(update_lcd_text);
 }
 
 void TestLayerTreeHostBase::PerformImplSideInvalidation() {

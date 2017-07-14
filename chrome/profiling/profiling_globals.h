@@ -9,12 +9,13 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/message_loop/message_loop.h"
+#include "base/threading/thread.h"
 #include "chrome/profiling/backtrace_storage.h"
 #include "chrome/profiling/memlog_connection_manager.h"
-#include "chrome/profiling/profiling_process.h"
 
 namespace base {
+class MessageLoopForUI;
+class SingleThreadTaskRunner;
 class TaskRunner;
 }  // namespace base
 
@@ -22,26 +23,27 @@ namespace profiling {
 
 class ProfilingGlobals {
  public:
-  ProfilingGlobals();
-  ~ProfilingGlobals();
-
-  static inline ProfilingGlobals* Get() { return singleton_; }
+  static ProfilingGlobals* Get();
 
   base::TaskRunner* GetIORunner();
-
-  ProfilingProcess* GetProfilingProcess();
   MemlogConnectionManager* GetMemlogConnectionManager();
   BacktraceStorage* GetBacktraceStorage();
+
+  // Returns non-null when inside RunMainMessageLoop. Call only on the
+  // main thread (otherwise there's a shutdown race).
+  scoped_refptr<base::SingleThreadTaskRunner> GetMainThread() const;
 
   void RunMainMessageLoop();
   void QuitWhenIdle();
 
  private:
-  static ProfilingGlobals* singleton_;
+  ProfilingGlobals();
+  ~ProfilingGlobals();
 
-  base::MessageLoopForIO message_loop_;
+  // Non-null inside RunMainMessageLoop.
+  base::MessageLoopForUI* main_message_loop_ = nullptr;
 
-  ProfilingProcess process_;
+  base::Thread io_thread_;
   MemlogConnectionManager memlog_connection_manager_;
   BacktraceStorage backtrace_storage_;
 

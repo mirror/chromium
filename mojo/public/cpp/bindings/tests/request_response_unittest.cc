@@ -8,7 +8,6 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "mojo/public/cpp/bindings/tests/bindings_test_base.h"
 #include "mojo/public/cpp/test_support/test_utils.h"
 #include "mojo/public/interfaces/bindings/tests/sample_import.mojom.h"
 #include "mojo/public/interfaces/bindings/tests/sample_interfaces.mojom.h"
@@ -83,15 +82,18 @@ void RecordEnum(sample::Enum* storage,
   closure.Run();
 }
 
-class RequestResponseTest : public BindingsTestBase {
+class RequestResponseTest : public testing::Test {
  public:
   RequestResponseTest() {}
   ~RequestResponseTest() override { base::RunLoop().RunUntilIdle(); }
 
   void PumpMessages() { base::RunLoop().RunUntilIdle(); }
+
+ private:
+  base::MessageLoop loop_;
 };
 
-TEST_P(RequestResponseTest, EchoString) {
+TEST_F(RequestResponseTest, EchoString) {
   sample::ProviderPtr provider;
   ProviderImpl provider_impl(MakeRequest(&provider));
 
@@ -105,7 +107,7 @@ TEST_P(RequestResponseTest, EchoString) {
   EXPECT_EQ(std::string("hello"), buf);
 }
 
-TEST_P(RequestResponseTest, EchoStrings) {
+TEST_F(RequestResponseTest, EchoStrings) {
   sample::ProviderPtr provider;
   ProviderImpl provider_impl(MakeRequest(&provider));
 
@@ -119,7 +121,7 @@ TEST_P(RequestResponseTest, EchoStrings) {
   EXPECT_EQ(std::string("hello world"), buf);
 }
 
-TEST_P(RequestResponseTest, EchoMessagePipeHandle) {
+TEST_F(RequestResponseTest, EchoMessagePipeHandle) {
   sample::ProviderPtr provider;
   ProviderImpl provider_impl(MakeRequest(&provider));
 
@@ -137,7 +139,7 @@ TEST_P(RequestResponseTest, EchoMessagePipeHandle) {
   EXPECT_EQ(std::string("hello"), value);
 }
 
-TEST_P(RequestResponseTest, EchoEnum) {
+TEST_F(RequestResponseTest, EchoEnum) {
   sample::ProviderPtr provider;
   ProviderImpl provider_impl(MakeRequest(&provider));
 
@@ -149,8 +151,6 @@ TEST_P(RequestResponseTest, EchoEnum) {
 
   EXPECT_EQ(sample::Enum::VALUE, value);
 }
-
-INSTANTIATE_MOJO_BINDINGS_TEST_CASE_P(RequestResponseTest);
 
 }  // namespace
 }  // namespace test

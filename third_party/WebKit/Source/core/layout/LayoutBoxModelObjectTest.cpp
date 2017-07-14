@@ -7,6 +7,7 @@
 #include "core/dom/DOMTokenList.h"
 #include "core/dom/DocumentLifecycle.h"
 #include "core/html/HTMLElement.h"
+#include "core/layout/ImageQualityController.h"
 #include "core/layout/LayoutTestHelper.h"
 #include "core/page/scrolling/StickyPositionScrollingConstraints.h"
 #include "core/paint/PaintLayer.h"

@@ -23,13 +23,14 @@ class TestKeyboardUI : public keyboard::KeyboardUI {
   TestKeyboardUI();
   ~TestKeyboardUI() override;
 
-  bool HasContentsWindow() const override;
+  bool HasKeyboardWindow() const override;
   bool ShouldWindowOverscroll(aura::Window* window) const override;
-  aura::Window* GetContentsWindow() override;
+  aura::Window* GetKeyboardWindow() override;
 
  private:
   // Overridden from keyboard::KeyboardUI:
   ui::InputMethod* GetInputMethod() override;
+  void SetUpdateInputType(ui::TextInputType type) override;
   void ReloadKeyboardIfNeeded() override;
   void InitInsets(const gfx::Rect& keyboard_bounds) override;
   void ResetInsets() override;

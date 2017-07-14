@@ -1136,43 +1136,50 @@ void NavigationHandleImpl::RunCompleteCallback(
 }
 
 void NavigationHandleImpl::RegisterNavigationThrottles() {
-  // Note: |throttle_| might not be empty. Some NavigationThrottles might have
-  // been registered with RegisterThrottleForTesting. These must reside at the
-  // end of |throttles_|. TestNavigationManagerThrottle expects that the
-  // NavigationThrottles added for test are the last NavigationThrottles to
-  // execute. Take them out while appending the rest of the
-  // NavigationThrottles.
-  std::vector<std::unique_ptr<NavigationThrottle>> testing_throttles =
-      std::move(throttles_);
-
-  throttles_ = GetDelegate()->CreateThrottlesForNavigation(this);
+  // Register the navigation throttles. The vector returned by
+  // CreateThrottlesForNavigation is not assigned to throttles_ directly because
+  // it would overwrite any throttles previously added with
+  // RegisterThrottleForTesting.
+  // TODO(carlosk, arthursonzogni): should simplify this to either use
+  // |throttles_| directly (except for the case described above) or
+  // |throttles_to_register| for registering all throttles.
+  std::vector<std::unique_ptr<NavigationThrottle>> throttles_to_register =
+      GetDelegate()->CreateThrottlesForNavigation(this);
 
   // Check for renderer-inititated main frame navigations to data URLs. This is
   // done first as it may block the main frame navigation altogether.
-  AddThrottle(DataUrlNavigationThrottle::CreateThrottleForNavigation(this));
+  std::unique_ptr<NavigationThrottle> data_url_navigation_throttle =
+      DataUrlNavigationThrottle::CreateThrottleForNavigation(this);
+  if (data_url_navigation_throttle)
+    throttles_to_register.push_back(std::move(data_url_navigation_throttle));
 
-  AddThrottle(AncestorThrottle::MaybeCreateThrottleFor(this));
-  AddThrottle(FormSubmissionThrottle::MaybeCreateThrottleFor(this));
+  std::unique_ptr<content::NavigationThrottle> ancestor_throttle =
+      content::AncestorThrottle::MaybeCreateThrottleFor(this);
+  if (ancestor_throttle)
+    throttles_.push_back(std::move(ancestor_throttle));
+
+  std::unique_ptr<content::NavigationThrottle> form_submission_throttle =
+      content::FormSubmissionThrottle::MaybeCreateThrottleFor(this);
+  if (form_submission_throttle)
+    throttles_.push_back(std::move(form_submission_throttle));
 
   // Check for mixed content. This is done after the AncestorThrottle and the
   // FormSubmissionThrottle so that when folks block mixed content with a CSP
   // policy, they don't get a warning. They'll still get a warning in the
   // console about CSP blocking the load.
-  AddThrottle(
-      MixedContentNavigationThrottle::CreateThrottleForNavigation(this));
+  std::unique_ptr<NavigationThrottle> mixed_content_throttle =
+      MixedContentNavigationThrottle::CreateThrottleForNavigation(this);
+  if (mixed_content_throttle)
+    throttles_to_register.push_back(std::move(mixed_content_throttle));
 
-  AddThrottle(RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(this));
+  std::unique_ptr<NavigationThrottle> devtools_throttle =
+      RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(this);
+  if (devtools_throttle)
+    throttles_to_register.push_back(std::move(devtools_throttle));
 
-  // Insert all testing NavigationThrottles last.
-  throttles_.insert(throttles_.end(),
-                    std::make_move_iterator(testing_throttles.begin()),
-                    std::make_move_iterator(testing_throttles.end()));
-}
-
-void NavigationHandleImpl::AddThrottle(
-    std::unique_ptr<NavigationThrottle> throttle) {
-  if (throttle)
-    throttles_.push_back(std::move(throttle));
+  throttles_.insert(throttles_.begin(),
+                    std::make_move_iterator(throttles_to_register.begin()),
+                    std::make_move_iterator(throttles_to_register.end()));
 }
 
 bool NavigationHandleImpl::IsSelfReferentialURL() {

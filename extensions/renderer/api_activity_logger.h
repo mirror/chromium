@@ -34,8 +34,6 @@ class APIActivityLogger : public ObjectBackedNativeHandler {
                          const std::string& call_name,
                          const std::vector<v8::Local<v8::Value>>& arguments);
 
-  static void set_log_for_testing(bool log);
-
  private:
   // Used to distinguish API calls & events from each other in LogInternal.
   enum CallType { APICALL, EVENT };

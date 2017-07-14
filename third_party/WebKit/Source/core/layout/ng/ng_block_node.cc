@@ -132,10 +132,7 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(NGConstraintSpace* constraint_space,
   RefPtr<NGLayoutResult> layout_result =
       LayoutWithAlgorithm(Style(), *this, constraint_space, break_token);
 
-  if (layout_result->Status() == NGLayoutResult::kSuccess &&
-      layout_result->UnpositionedFloats().IsEmpty())
-    CopyFragmentDataToLayoutBox(*constraint_space, layout_result.Get());
-
+  CopyFragmentDataToLayoutBox(*constraint_space, layout_result.Get());
   return layout_result;
 }
 
@@ -283,16 +280,10 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
     if (child_fragment->IsPlaced())
       FragmentPositionUpdated(ToNGPhysicalBoxFragment(*child_fragment));
 
-    if (child_fragment->GetLayoutObject()->IsLayoutBlockFlow())
-      ToLayoutBlockFlow(child_fragment->GetLayoutObject())
-          ->AddOverflowFromFloats();
-
-    if (child_fragment->GetLayoutObject() == box_) {
-      for (const NGPositionedFloat& positioned_float :
-           ToNGPhysicalBoxFragment(child_fragment.Get())->PositionedFloats()) {
-        FloatingObjectPositionedUpdated(
-            positioned_float, ToLayoutBox(child_fragment->GetLayoutObject()));
-      }
+    for (const NGPositionedFloat& positioned_float :
+         ToNGPhysicalBoxFragment(child_fragment.Get())->PositionedFloats()) {
+      FloatingObjectPositionedUpdated(
+          positioned_float, ToLayoutBox(child_fragment->GetLayoutObject()));
     }
   }
 
@@ -309,11 +300,7 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   box_->ClearNeedsLayout();
 
   if (box_->IsLayoutBlockFlow()) {
-    LayoutBlockFlow* block_flow = ToLayoutBlockFlow(box_);
-    block_flow->UpdateIsSelfCollapsing();
-
-    if (block_flow->CreatesNewFormattingContext())
-      block_flow->AddOverflowFromFloats();
+    ToLayoutBlockFlow(box_)->UpdateIsSelfCollapsing();
   }
 }
 
@@ -370,62 +357,7 @@ RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
       .SetDirection(box_->StyleRef().Direction())
       .SetWritingMode(writing_mode)
       .SetOverflowSize(overflow_size);
-  CopyBaselinesFromOldLayout(constraint_space, &builder);
   return builder.ToBoxFragment();
-}
-
-void NGBlockNode::CopyBaselinesFromOldLayout(
-    const NGConstraintSpace& constraint_space,
-    NGFragmentBuilder* builder) {
-  const Vector<NGBaselineRequest>& requests =
-      constraint_space.BaselineRequests();
-  if (requests.IsEmpty())
-    return;
-
-  for (const auto& request : requests) {
-    switch (request.algorithm_type) {
-      case NGBaselineAlgorithmType::kAtomicInline:
-        AddAtomicInlineBaselineFromOldLayout(request, false, builder);
-        break;
-      case NGBaselineAlgorithmType::kAtomicInlineForFirstLine:
-        AddAtomicInlineBaselineFromOldLayout(request, true, builder);
-        break;
-      case NGBaselineAlgorithmType::kFirstLine: {
-        int position = box_->FirstLineBoxBaseline();
-        if (position != -1) {
-          builder->AddBaseline(request.algorithm_type, request.baseline_type,
-                               LayoutUnit(position));
-        }
-        break;
-      }
-    }
-  }
-}
-
-void NGBlockNode::AddAtomicInlineBaselineFromOldLayout(
-    const NGBaselineRequest& request,
-    bool is_first_line,
-    NGFragmentBuilder* builder) {
-  LineDirectionMode line_direction =
-      IsHorizontalWritingMode(builder->WritingMode())
-          ? LineDirectionMode::kHorizontalLine
-          : LineDirectionMode::kVerticalLine;
-  LayoutUnit position = LayoutUnit(box_->BaselinePosition(
-      request.baseline_type, is_first_line, line_direction));
-
-  // Some form controls return 0 for BaselinePosition() if 'display:block'.
-  // Blocks without line boxes should not produce baselines.
-  if (!position && !box_->IsAtomicInlineLevel() &&
-      !box_->IsLayoutNGBlockFlow() &&
-      box_->InlineBlockBaseline(line_direction) == -1) {
-    return;
-  }
-
-  // BaselinePosition() uses margin edge for atomic inlines.
-  if (box_->IsAtomicInlineLevel())
-    position -= box_->MarginOver();
-
-  builder->AddBaseline(request.algorithm_type, request.baseline_type, position);
 }
 
 void NGBlockNode::UseOldOutOfFlowPositioning() {

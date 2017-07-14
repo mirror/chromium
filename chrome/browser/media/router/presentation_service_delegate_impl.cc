@@ -106,8 +106,9 @@ class PresentationFrame {
   base::small_map<
       std::map<std::string, std::unique_ptr<PresentationMediaSinksObserver>>>
       url_to_sinks_observer_;
-  std::unordered_map<MediaRoute::Id,
-                     std::unique_ptr<PresentationConnectionStateSubscription>>
+  std::unordered_map<
+      MediaRoute::Id,
+      std::unique_ptr<PresentationConnectionStateSubscription>>
       connection_state_subscriptions_;
   std::unordered_map<MediaRoute::Id,
                      std::unique_ptr<BrowserPresentationConnectionProxy>>
@@ -206,7 +207,8 @@ void PresentationFrame::Reset() {
 void PresentationFrame::AddPresentation(
     const content::PresentationInfo& presentation_info,
     const MediaRoute& route) {
-  presentation_id_to_route_.emplace(presentation_info.presentation_id, route);
+  presentation_id_to_route_.insert(
+      std::make_pair(presentation_info.presentation_id, route));
 }
 
 void PresentationFrame::ConnectToPresentation(
@@ -245,7 +247,8 @@ void PresentationFrame::ConnectToPresentation(
     auto* proxy = new BrowserPresentationConnectionProxy(
         router_, route_id, std::move(receiver_connection_request),
         std::move(controller_connection_ptr));
-    browser_connection_proxies_.emplace(route_id, base::WrapUnique(proxy));
+    browser_connection_proxies_.insert(
+        std::make_pair(route_id, base::WrapUnique(proxy)));
   }
 }
 
@@ -282,9 +285,9 @@ void PresentationFrame::ListenForConnectionStateChange(
     return;
   }
 
-  connection_state_subscriptions_.emplace(
+  connection_state_subscriptions_.insert(std::make_pair(
       route_id, router_->AddPresentationConnectionStateChangedCallback(
-                    route_id, state_changed_cb));
+                    route_id, state_changed_cb)));
 }
 
 PresentationServiceDelegateImpl*

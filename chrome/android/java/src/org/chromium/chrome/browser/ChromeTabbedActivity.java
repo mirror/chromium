@@ -1643,19 +1643,13 @@ public class ChromeTabbedActivity
                 RecordUserAction.record("MobileMenuAllBookmarks");
             }
         } else if (id == R.id.recent_tabs_menu_id) {
-            if (currentTab != null
-                    || (getBottomSheet() != null && getBottomSheet().isShowingNewTab())) {
-                LoadUrlParams params = new LoadUrlParams(
-                        UrlConstants.RECENT_TABS_URL, PageTransition.AUTO_BOOKMARK);
-                if (currentTab != null) {
-                    currentTab.loadUrl(params);
-                    if (currentTabIsNtp) {
-                        NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_RECENT_TABS_MANAGER);
-                    }
-                } else {
-                    getBottomSheet().loadUrl(params, getCurrentTabModel().isIncognito());
+            if (currentTab != null) {
+                currentTab.loadUrl(new LoadUrlParams(
+                        UrlConstants.RECENT_TABS_URL,
+                        PageTransition.AUTO_BOOKMARK));
+                if (currentTabIsNtp) {
+                    NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_RECENT_TABS_MANAGER);
                 }
-
                 RecordUserAction.record("MobileMenuRecentTabs");
             }
         } else if (id == R.id.close_all_tabs_menu_id) {

@@ -1,7 +1,5 @@
-{% from "templates/macros.tmpl" import license, source_files_for_generated_file %}
+{% from "templates/macros.tmpl" import license %}
 {{ license() }}
-
-{{source_files_for_generated_file(template_file, input_files)}}
 
 #ifndef {{namespace}}{{suffix}}Names_h
 #define {{namespace}}{{suffix}}Names_h
@@ -19,6 +17,11 @@
 {% else %}
 #include "platform/PlatformExport.h"
 {% endif %}
+
+// Generated from:
+{% for entry in in_files|sort %}
+// - {{entry}}
+{% endfor %}
 
 namespace blink {
 namespace {{namespace}}Names {

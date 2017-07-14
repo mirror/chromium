@@ -383,11 +383,12 @@ void DownloadSuggestionsProvider::OfflinePageAdded(
 }
 
 void DownloadSuggestionsProvider::OfflinePageDeleted(
-    const offline_pages::OfflinePageModel::DeletedPageInfo& page_info) {
+    int64_t offline_id,
+    const offline_pages::ClientId& client_id) {
   DCHECK(offline_page_model_);
   if (IsClientIdForOfflinePageDownload(
-          offline_page_model_->GetPolicyController(), page_info.client_id)) {
-    InvalidateSuggestion(GetOfflinePagePerCategoryID(page_info.offline_id));
+          offline_page_model_->GetPolicyController(), client_id)) {
+    InvalidateSuggestion(GetOfflinePagePerCategoryID(offline_id));
   }
 }
 

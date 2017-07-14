@@ -4,7 +4,6 @@
 
 #include "core/layout/ng/ng_fragment_builder.h"
 
-#include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
@@ -148,6 +147,12 @@ NGFragmentBuilder& NGFragmentBuilder::AddOutOfFlowChildCandidate(
   return *this;
 }
 
+NGFragmentBuilder& NGFragmentBuilder::AddUnpositionedFloat(
+    RefPtr<NGUnpositionedFloat> unpositioned_float) {
+  unpositioned_floats_.push_back(std::move(unpositioned_float));
+  return *this;
+}
+
 void NGFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
     Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates) {
   DCHECK(descendant_candidates->IsEmpty());
@@ -187,12 +192,6 @@ NGFragmentBuilder& NGFragmentBuilder::AddOutOfFlowDescendant(
   return *this;
 }
 
-void NGFragmentBuilder::AddBaseline(NGBaselineAlgorithmType algorithm_type,
-                                    FontBaseline baseline_type,
-                                    LayoutUnit offset) {
-  baselines_.push_back(NGBaseline{algorithm_type, baseline_type, offset});
-}
-
 RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
   DCHECK_EQ(type_, NGPhysicalFragment::kFragmentBox);
   DCHECK_EQ(offsets_.size(), children_.size());
@@ -230,19 +229,12 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
 
   RefPtr<NGPhysicalBoxFragment> fragment = AdoptRef(new NGPhysicalBoxFragment(
       layout_object_, physical_size, overflow_.ConvertToPhysical(writing_mode_),
-      children_, positioned_floats_, baselines_,
-      border_edges_.ToPhysical(writing_mode_), std::move(break_token)));
+      children_, positioned_floats_, border_edges_.ToPhysical(writing_mode_),
+      std::move(break_token)));
 
-  return AdoptRef(new NGLayoutResult(
-      std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,
-      bfc_offset_, end_margin_strut_, NGLayoutResult::kSuccess));
-}
-
-RefPtr<NGLayoutResult> NGFragmentBuilder::Abort(
-    NGLayoutResult::NGLayoutResultStatus status) {
-  return AdoptRef(new NGLayoutResult(
-      nullptr, Vector<NGOutOfFlowPositionedDescendant>(), unpositioned_floats_,
-      bfc_offset_, end_margin_strut_, status));
+  return AdoptRef(
+      new NGLayoutResult(std::move(fragment), oof_positioned_descendants_,
+                         unpositioned_floats_, bfc_offset_, end_margin_strut_));
 }
 
 }  // namespace blink

@@ -609,8 +609,6 @@ class SSLUITest : public InProcessBrowserTest {
         std::move(ssl_cert_reporter));
 
     EXPECT_EQ(std::string(), reporter_callback.GetLatestHostnameReported());
-    EXPECT_EQ(certificate_reporting::CertLoggerRequest::CHROME_CHANNEL_NONE,
-              reporter_callback.GetLatestChromeChannelReported());
 
     // Leave the interstitial (either by proceeding or going back)
     if (proceed == SSL_INTERSTITIAL_PROCEED) {
@@ -628,13 +626,9 @@ class SSLUITest : public InProcessBrowserTest {
       run_loop.Run();
       EXPECT_EQ(https_server_expired_.GetURL("/title1.html").host(),
                 reporter_callback.GetLatestHostnameReported());
-      EXPECT_NE(certificate_reporting::CertLoggerRequest::CHROME_CHANNEL_NONE,
-                reporter_callback.GetLatestChromeChannelReported());
     } else {
       base::RunLoop().RunUntilIdle();
       EXPECT_EQ(std::string(), reporter_callback.GetLatestHostnameReported());
-      EXPECT_EQ(certificate_reporting::CertLoggerRequest::CHROME_CHANNEL_NONE,
-                reporter_callback.GetLatestChromeChannelReported());
     }
   }
 
@@ -4355,35 +4349,6 @@ IN_PROC_BROWSER_TEST_F(SSLUITest,
       tab, "location.replace(window.location.href + '#1')"));
   observer.Wait();
   content::WaitForLoadStop(tab);
-  CheckAuthenticatedState(tab, AuthState::NONE);
-}
-
-// Checks that a restore followed immediately by a history navigation doesn't
-// lose SSL state.
-// Disabled since this is a test for bug 738177.
-IN_PROC_BROWSER_TEST_F(SSLUITest, DISABLED_RestoreThenNavigateHasSSLState) {
-  // This race condition only happens with PlzNavigate.
-  if (!content::IsBrowserSideNavigationEnabled())
-    return;
-  ASSERT_TRUE(https_server_.Start());
-  GURL url1(https_server_.GetURL("/ssl/google.html"));
-  GURL url2(https_server_.GetURL("/ssl/page_with_refs.html"));
-  ui_test_utils::NavigateToURLWithDisposition(
-      browser(), url1, WindowOpenDisposition::NEW_FOREGROUND_TAB,
-      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
-  ui_test_utils::NavigateToURL(browser(), url2);
-  chrome::CloseTab(browser());
-
-  content::WindowedNotificationObserver tab_added_observer(
-      chrome::NOTIFICATION_TAB_PARENTED,
-      content::NotificationService::AllSources());
-  chrome::RestoreTab(browser());
-  tab_added_observer.Wait();
-
-  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
-  content::TestNavigationManager observer(tab, url1);
-  chrome::GoBack(browser(), WindowOpenDisposition::CURRENT_TAB);
-  observer.WaitForNavigationFinished();
   CheckAuthenticatedState(tab, AuthState::NONE);
 }
 

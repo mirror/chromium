@@ -36,10 +36,6 @@ class PluginMetricsProvider;
 class Profile;
 class PrefRegistrySimple;
 
-#if defined(OS_ANDROID)
-class TabModelListObserver;
-#endif  // defined(OS_ANDROID)
-
 namespace browser_watcher {
 class WatcherMetricsProviderWin;
 }  // namespace browser_watcher
@@ -186,13 +182,6 @@ class ChromeMetricsServiceClient : public metrics::MetricsServiceClient,
   std::unique_ptr<ukm::UkmService> ukm_service_;
 
   content::NotificationRegistrar registrar_;
-
-#if defined(OS_ANDROID)
-  // Listener for changes in incognito activity.
-  // Desktop platform use BrowserList, and can listen for
-  // chrome::NOTIFICATION_BROWSER_OPENED instead.
-  std::unique_ptr<TabModelListObserver> incognito_observer_;
-#endif  // defined(OS_ANDROID)
 
 #if defined(OS_CHROMEOS)
   // On ChromeOS, holds a weak pointer to the ChromeOSMetricsProvider instance

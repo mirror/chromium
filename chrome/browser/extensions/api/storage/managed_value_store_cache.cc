@@ -26,7 +26,6 @@
 #include "components/policy/core/common/schema_map.h"
 #include "components/policy/core/common/schema_registry.h"
 #include "content/public/browser/browser_thread.h"
-#include "extensions/browser/api/storage/backend_task_runner.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_registry_observer.h"
@@ -260,7 +259,7 @@ ManagedValueStoreCache::ManagedValueStoreCache(
 }
 
 ManagedValueStoreCache::~ManagedValueStoreCache() {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   // Delete the PolicyValueStores on FILE.
   store_map_.clear();
 }
@@ -274,13 +273,13 @@ void ManagedValueStoreCache::ShutdownOnUI() {
 void ManagedValueStoreCache::RunWithValueStoreForExtension(
     const StorageCallback& callback,
     scoped_refptr<const Extension> extension) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   callback.Run(GetStoreFor(extension->id()));
 }
 
 void ManagedValueStoreCache::DeleteStorageSoon(
     const std::string& extension_id) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   // It's possible that the store exists, but hasn't been loaded yet
   // (because the extension is unloaded, for example). Open the database to
   // clear it if it exists.
@@ -328,10 +327,11 @@ void ManagedValueStoreCache::OnPolicyUpdated(const policy::PolicyNamespace& ns,
     return;
   }
 
-  GetBackendTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&ManagedValueStoreCache::UpdatePolicyOnBackend,
-                                base::Unretained(this), ns.component_id,
-                                base::Passed(current.DeepCopy())));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::BindOnce(&ManagedValueStoreCache::UpdatePolicyOnFILE,
+                     base::Unretained(this), ns.component_id,
+                     base::Passed(current.DeepCopy())));
 }
 
 // static
@@ -345,10 +345,10 @@ policy::PolicyDomain ManagedValueStoreCache::GetPolicyDomain(Profile* profile) {
 #endif
 }
 
-void ManagedValueStoreCache::UpdatePolicyOnBackend(
+void ManagedValueStoreCache::UpdatePolicyOnFILE(
     const std::string& extension_id,
     std::unique_ptr<policy::PolicyMap> current_policy) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   if (!HasStore(extension_id) && current_policy->empty()) {
     // Don't create the store now if there are no policies configured for this
@@ -362,7 +362,7 @@ void ManagedValueStoreCache::UpdatePolicyOnBackend(
 
 PolicyValueStore* ManagedValueStoreCache::GetStoreFor(
     const std::string& extension_id) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   auto it = store_map_.find(extension_id);
   if (it != store_map_.end())

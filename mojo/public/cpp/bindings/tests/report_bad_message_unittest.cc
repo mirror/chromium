@@ -10,7 +10,6 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/message.h"
-#include "mojo/public/cpp/bindings/tests/bindings_test_base.h"
 #include "mojo/public/interfaces/bindings/tests/test_bad_messages.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -58,7 +57,7 @@ class TestBadMessagesImpl : public TestBadMessages {
   DISALLOW_COPY_AND_ASSIGN(TestBadMessagesImpl);
 };
 
-class ReportBadMessageTest : public BindingsTestBase {
+class ReportBadMessageTest : public testing::Test {
  public:
   ReportBadMessageTest() {}
 
@@ -89,12 +88,13 @@ class ReportBadMessageTest : public BindingsTestBase {
       error_handler_.Run();
   }
 
+  base::MessageLoop message_loop;
   TestBadMessagesPtr proxy_;
   TestBadMessagesImpl impl_;
   base::Closure error_handler_;
 };
 
-TEST_P(ReportBadMessageTest, Request) {
+TEST_F(ReportBadMessageTest, Request) {
   // Verify that basic immediate error reporting works.
   bool error = false;
   SetErrorHandler(base::Bind([] (bool* flag) { *flag = true; }, &error));
@@ -102,7 +102,7 @@ TEST_P(ReportBadMessageTest, Request) {
   EXPECT_TRUE(error);
 }
 
-TEST_P(ReportBadMessageTest, RequestAsync) {
+TEST_F(ReportBadMessageTest, RequestAsync) {
   bool error = false;
   SetErrorHandler(base::Bind([] (bool* flag) { *flag = true; }, &error));
 
@@ -119,7 +119,7 @@ TEST_P(ReportBadMessageTest, RequestAsync) {
   EXPECT_TRUE(error);
 }
 
-TEST_P(ReportBadMessageTest, Response) {
+TEST_F(ReportBadMessageTest, Response) {
   bool error = false;
   SetErrorHandler(base::Bind([] (bool* flag) { *flag = true; }, &error));
 
@@ -137,7 +137,7 @@ TEST_P(ReportBadMessageTest, Response) {
   EXPECT_TRUE(error);
 }
 
-TEST_P(ReportBadMessageTest, ResponseAsync) {
+TEST_F(ReportBadMessageTest, ResponseAsync) {
   bool error = false;
   SetErrorHandler(base::Bind([] (bool* flag) { *flag = true; }, &error));
 
@@ -161,7 +161,7 @@ TEST_P(ReportBadMessageTest, ResponseAsync) {
   EXPECT_TRUE(error);
 }
 
-TEST_P(ReportBadMessageTest, ResponseSync) {
+TEST_F(ReportBadMessageTest, ResponseSync) {
   bool error = false;
   SetErrorHandler(base::Bind([] (bool* flag) { *flag = true; }, &error));
 
@@ -173,7 +173,7 @@ TEST_P(ReportBadMessageTest, ResponseSync) {
   EXPECT_TRUE(error);
 }
 
-TEST_P(ReportBadMessageTest, ResponseSyncDeferred) {
+TEST_F(ReportBadMessageTest, ResponseSyncDeferred) {
   bool error = false;
   SetErrorHandler(base::Bind([] (bool* flag) { *flag = true; }, &error));
 
@@ -188,8 +188,6 @@ TEST_P(ReportBadMessageTest, ResponseSyncDeferred) {
   bad_message_callback.Run("nope nope nope");
   EXPECT_TRUE(error);
 }
-
-INSTANTIATE_MOJO_BINDINGS_TEST_CASE_P(ReportBadMessageTest);
 
 }  // namespace
 }  // namespace test

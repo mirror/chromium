@@ -18,6 +18,14 @@ namespace tether {
 // Test double for HostScanCache which stores cache results in memory.
 class FakeHostScanCache : public HostScanCache {
  public:
+  struct CacheEntry {
+    std::string device_name;
+    std::string carrier;
+    int battery_percentage;
+    int signal_strength;
+    bool setup_required;
+  };
+
   FakeHostScanCache();
   ~FakeHostScanCache() override;
 
@@ -32,23 +40,29 @@ class FakeHostScanCache : public HostScanCache {
   }
 
   // Getters for contents of the cache.
-  const HostScanCacheEntry* GetCacheEntry(
+  const FakeHostScanCache::CacheEntry* GetCacheEntry(
       const std::string& tether_network_guid);
   size_t size() { return cache_.size(); }
   bool empty() { return cache_.empty(); }
-  const std::unordered_map<std::string, HostScanCacheEntry> cache() {
+  const std::unordered_map<std::string, FakeHostScanCache::CacheEntry> cache() {
     return cache_;
   }
 
   // HostScanCache:
-  void SetHostScanResult(const HostScanCacheEntry& entry) override;
+  void SetHostScanResult(const std::string& tether_network_guid,
+                         const std::string& device_name,
+                         const std::string& carrier,
+                         int battery_percentage,
+                         int signal_strength,
+                         bool setup_required) override;
   bool RemoveHostScanResult(const std::string& tether_network_guid) override;
   void ClearCacheExceptForActiveHost() override;
   bool DoesHostRequireSetup(const std::string& tether_network_guid) override;
+  void OnPreviouslyConnectedHostIdsChanged() override;
 
  private:
   std::string active_host_tether_network_guid_;
-  std::unordered_map<std::string, HostScanCacheEntry> cache_;
+  std::unordered_map<std::string, CacheEntry> cache_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeHostScanCache);
 };

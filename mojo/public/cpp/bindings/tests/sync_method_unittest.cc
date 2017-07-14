@@ -14,7 +14,6 @@
 #include "base/threading/thread.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "mojo/public/cpp/bindings/tests/bindings_test_base.h"
 #include "mojo/public/interfaces/bindings/tests/test_sync_methods.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -244,9 +243,7 @@ class PtrWrapper {
 // The type parameter for SyncMethodCommonTests and
 // SyncMethodOnSequenceCommonTests for varying the Interface and whether to use
 // InterfacePtr or ThreadSafeInterfacePtr.
-template <typename InterfaceT,
-          bool use_thread_safe_ptr,
-          BindingsTestSerializationMode serialization_mode>
+template <typename InterfaceT, bool use_thread_safe_ptr>
 struct TestParams {
   using Interface = InterfaceT;
   static const bool kIsThreadSafeInterfacePtrTest = use_thread_safe_ptr;
@@ -259,9 +256,6 @@ struct TestParams {
       return PtrWrapper<Interface>(std::move(ptr));
     }
   }
-
-  static const BindingsTestSerializationMode kSerializationMode =
-      serialization_mode;
 };
 
 template <typename Interface>
@@ -315,15 +309,11 @@ class SyncMethodTest : public testing::Test {
   base::test::ScopedTaskEnvironment task_environment;
 };
 
-template <typename TypeParam>
+template <typename T>
 class SyncMethodCommonTest : public SyncMethodTest {
  public:
   SyncMethodCommonTest() {}
   ~SyncMethodCommonTest() override {}
-
-  void SetUp() override {
-    BindingsTestBase::SetupSerializationBehavior(TypeParam::kSerializationMode);
-  }
 };
 
 class SyncMethodAssociatedTest : public SyncMethodTest {
@@ -455,7 +445,6 @@ template <typename TypeParam>
 class SyncMethodOnSequenceCommonTest : public SequencedTaskRunnerTestBase {
  public:
   void SetUp() override {
-    BindingsTestBase::SetupSerializationBehavior(TypeParam::kSerializationMode);
     impl_ = base::MakeUnique<ImplTypeFor<typename TypeParam::Interface>>(
         MakeRequest(&ptr_));
   }
@@ -479,42 +468,11 @@ void RunTestOnSequencedTaskRunner(
 // interfaces) exercise MultiplexRouter with different configurations.
 // Each test is run once with an InterfacePtr and once with a
 // ThreadSafeInterfacePtr to ensure that they behave the same with respect to
-// sync calls. Finally, all such combinations are tested in different message
-// serialization modes.
-using InterfaceTypes = testing::Types<
-    TestParams<TestSync,
-               true,
-               BindingsTestSerializationMode::kSerializeBeforeSend>,
-    TestParams<TestSync,
-               false,
-               BindingsTestSerializationMode::kSerializeBeforeSend>,
-    TestParams<TestSyncMaster,
-               true,
-               BindingsTestSerializationMode::kSerializeBeforeSend>,
-    TestParams<TestSyncMaster,
-               false,
-               BindingsTestSerializationMode::kSerializeBeforeSend>,
-    TestParams<TestSync,
-               true,
-               BindingsTestSerializationMode::kSerializeBeforeDispatch>,
-    TestParams<TestSync,
-               false,
-               BindingsTestSerializationMode::kSerializeBeforeDispatch>,
-    TestParams<TestSyncMaster,
-               true,
-               BindingsTestSerializationMode::kSerializeBeforeDispatch>,
-    TestParams<TestSyncMaster,
-               false,
-               BindingsTestSerializationMode::kSerializeBeforeDispatch>,
-    TestParams<TestSync, true, BindingsTestSerializationMode::kNeverSerialize>,
-    TestParams<TestSync, false, BindingsTestSerializationMode::kNeverSerialize>,
-    TestParams<TestSyncMaster,
-               true,
-               BindingsTestSerializationMode::kNeverSerialize>,
-    TestParams<TestSyncMaster,
-               false,
-               BindingsTestSerializationMode::kNeverSerialize>>;
-
+// sync calls.
+using InterfaceTypes = testing::Types<TestParams<TestSync, true>,
+                                      TestParams<TestSync, false>,
+                                      TestParams<TestSyncMaster, true>,
+                                      TestParams<TestSyncMaster, false>>;
 TYPED_TEST_CASE(SyncMethodCommonTest, InterfaceTypes);
 TYPED_TEST_CASE(SequencedTaskRunnerTestLauncher, InterfaceTypes);
 

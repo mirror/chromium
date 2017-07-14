@@ -40,6 +40,11 @@ EasyUnlockSettingsHandler* EasyUnlockSettingsHandler::Create(
   if (!allowed)
     return nullptr;
 
+  html_source->AddBoolean(
+      "easyUnlockProximityDetectionAllowed",
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          proximity_auth::switches::kEnableProximityDetection));
+
   return new EasyUnlockSettingsHandler(profile);
 }
 

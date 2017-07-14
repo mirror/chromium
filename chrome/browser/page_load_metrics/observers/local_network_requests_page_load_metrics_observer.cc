@@ -197,35 +197,36 @@ GetNonlocalhostHistogramNames() {
   if (histogram_names.Get().empty()) {
     histogram_names.Get()[internal::DOMAIN_TYPE_PUBLIC]
                          [internal::RESOURCE_TYPE_PRIVATE][true] =
-        "LocalNetworkRequests.PublicPage.PrivateRequests.Successful";
+        "LocalNetworkRequests.PublicPage.PrivateRequestCount.Successful";
     histogram_names.Get()[internal::DOMAIN_TYPE_PUBLIC]
                          [internal::RESOURCE_TYPE_PRIVATE][false] =
-        "LocalNetworkRequests.PublicPage.PrivateRequests.Failed";
+        "LocalNetworkRequests.PublicPage.PrivateRequestCount.Failed";
     histogram_names.Get()[internal::DOMAIN_TYPE_PUBLIC]
                          [internal::RESOURCE_TYPE_ROUTER][true] =
-        "LocalNetworkRequests.PublicPage.RouterRequests.Successful";
+        "LocalNetworkRequests.PublicPage.RouterRequestCount.Successful";
     histogram_names.Get()[internal::DOMAIN_TYPE_PUBLIC]
                          [internal::RESOURCE_TYPE_ROUTER][false] =
-        "LocalNetworkRequests.PublicPage.RouterRequests.Failed";
+        "LocalNetworkRequests.PublicPage.RouterRequestCount.Failed";
 
     histogram_names.Get()[internal::DOMAIN_TYPE_PRIVATE]
                          [internal::RESOURCE_TYPE_PUBLIC][true] =
-        "LocalNetworkRequests.PrivatePage.PublicRequests.Successful";
+        "LocalNetworkRequests.PrivatePage.PublicRequestCount.Successful";
     histogram_names.Get()[internal::DOMAIN_TYPE_PRIVATE]
                          [internal::RESOURCE_TYPE_PUBLIC][false] =
-        "LocalNetworkRequests.PrivatePage.PublicRequests.Failed";
+        "LocalNetworkRequests.PrivatePage.PublicRequestCount.Failed";
     histogram_names.Get()[internal::DOMAIN_TYPE_PRIVATE]
                          [internal::RESOURCE_TYPE_LOCAL_SAME_SUBNET][true] =
-        "LocalNetworkRequests.PrivatePage.SameSubnetRequests.Successful";
+        "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Successful";
     histogram_names.Get()[internal::DOMAIN_TYPE_PRIVATE]
                          [internal::RESOURCE_TYPE_LOCAL_SAME_SUBNET][false] =
-        "LocalNetworkRequests.PrivatePage.SameSubnetRequests.Failed";
+        "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Failed";
     histogram_names.Get()[internal::DOMAIN_TYPE_PRIVATE]
                          [internal::RESOURCE_TYPE_LOCAL_DIFF_SUBNET][true] =
-        "LocalNetworkRequests.PrivatePage.DifferentSubnetRequests.Successful";
+        "LocalNetworkRequests.PrivatePage."
+        "DifferentSubnetRequestCount.Successful";
     histogram_names.Get()[internal::DOMAIN_TYPE_PRIVATE]
                          [internal::RESOURCE_TYPE_LOCAL_DIFF_SUBNET][false] =
-        "LocalNetworkRequests.PrivatePage.DifferentSubnetRequests.Failed";
+        "LocalNetworkRequests.PrivatePage.DifferentSubnetRequestCount.Failed";
   }
 
   return histogram_names.Get();
@@ -242,65 +243,85 @@ GetLocalhostHistogramNames() {
   if (histogram_names.Get().empty()) {
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_WEB][true] =
-        "LocalNetworkRequests.PublicPage.Localhost.WebRequests.Successful";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "WebRequestCount.Successful";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_WEB][false] =
-        "LocalNetworkRequests.PublicPage.Localhost.WebRequests.Failed";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "WebRequestCount.Failed";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_DB][true] =
-        "LocalNetworkRequests.PublicPage.Localhost.DbRequests.Successful";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "DatabaseRequestCount.Successful";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_DB][false] =
-        "LocalNetworkRequests.PublicPage.Localhost.DbRequests.Failed";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "DatabaseRequestCount.Failed";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_PRINT][true] =
-        "LocalNetworkRequests.PublicPage.Localhost.PrinterRequests.Successful";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "PrinterRequestCount.Successful";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_PRINT][false] =
-        "LocalNetworkRequests.PublicPage.Localhost.PrinterRequests.Failed";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "PrinterRequestCount.Failed";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_DEV][true] =
-        "LocalNetworkRequests.PublicPage.Localhost.DevRequests.Successful";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "DevelopmentRequestCount.Successful";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_DEV][false] =
-        "LocalNetworkRequests.PublicPage.Localhost.DevRequests.Failed";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "DevelopmentRequestCount.Failed";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_OTHER][true] =
-        "LocalNetworkRequests.PublicPage.Localhost.OtherRequests.Successful";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "OtherRequestCount.Successful";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PUBLIC][internal::PORT_TYPE_OTHER][false] =
-        "LocalNetworkRequests.PublicPage.Localhost.OtherRequests.Failed";
+        "LocalNetworkRequests.PublicPage.Localhost."
+        "OtherRequestCount.Failed";
 
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PRIVATE][internal::PORT_TYPE_WEB][true] =
-        "LocalNetworkRequests.PrivatePage.Localhost.WebRequests.Successful";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "WebRequestCount.Successful";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PRIVATE][internal::PORT_TYPE_WEB][false] =
-        "LocalNetworkRequests.PrivatePage.Localhost.WebRequests.Failed";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "WebRequestCount.Failed";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PRIVATE][internal::PORT_TYPE_DB][true] =
-        "LocalNetworkRequests.PrivatePage.Localhost.DbRequests.Successful";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "DatabaseRequestCount.Successful";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PRIVATE][internal::PORT_TYPE_DB][false] =
-        "LocalNetworkRequests.PrivatePage.Localhost.DbRequests.Failed";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "DatabaseRequestCount.Failed";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PRIVATE][internal::PORT_TYPE_PRINT][true] =
-        "LocalNetworkRequests.PrivatePage.Localhost.PrinterRequests.Successful";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "PrinterRequestCount.Successful";
     histogram_names.Get()[internal::DOMAIN_TYPE_PRIVATE]
                          [internal::PORT_TYPE_PRINT][false] =
-        "LocalNetworkRequests.PrivatePage.Localhost.PrinterRequests.Failed";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "PrinterRequestCount.Failed";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PRIVATE][internal::PORT_TYPE_DEV][true] =
-        "LocalNetworkRequests.PrivatePage.Localhost.DevRequests.Successful";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "DevelopmentRequestCount.Successful";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PRIVATE][internal::PORT_TYPE_DEV][false] =
-        "LocalNetworkRequests.PrivatePage.Localhost.DevRequests.Failed";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "DevelopmentRequestCount.Failed";
     histogram_names
         .Get()[internal::DOMAIN_TYPE_PRIVATE][internal::PORT_TYPE_OTHER][true] =
-        "LocalNetworkRequests.PrivatePage.Localhost.OtherRequests.Successful";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "OtherRequestCount.Successful";
     histogram_names.Get()[internal::DOMAIN_TYPE_PRIVATE]
                          [internal::PORT_TYPE_OTHER][false] =
-        "LocalNetworkRequests.PrivatePage.Localhost.OtherRequests.Failed";
+        "LocalNetworkRequests.PrivatePage.Localhost."
+        "OtherRequestCount.Failed";
   }
 
   return histogram_names.Get();

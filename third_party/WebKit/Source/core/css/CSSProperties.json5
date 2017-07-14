@@ -3043,11 +3043,6 @@
       default_value: "auto",
       field_group: "rare-inherited",
     },
-    {
-      name: "line-break",
-      inherited: true,
-      type_name: "LineBreak",
-    },
     // An Apple extension.
     {
       name: "-webkit-line-clamp",
@@ -3807,8 +3802,6 @@
     {
       name: "outline",
       longhands: ["outline-color", "outline-style", "outline-width"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "overflow",
@@ -3840,8 +3833,6 @@
     {
       name: "scroll-padding-block",
       longhands: ["scroll-padding-block-start", "scroll-padding-block-end"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
       runtime_flag: "CSSScrollSnapPoints",
     },
     {
@@ -3871,26 +3862,18 @@
     {
       name: "-webkit-border-after",
       longhands: ["-webkit-border-after-width", "-webkit-border-after-style", "-webkit-border-after-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "-webkit-border-before",
       longhands: ["-webkit-border-before-width", "-webkit-border-before-style", "-webkit-border-before-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "-webkit-border-end",
       longhands: ["-webkit-border-end-width", "-webkit-border-end-style", "-webkit-border-end-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "-webkit-border-start",
       longhands: ["-webkit-border-start-width", "-webkit-border-start-style", "-webkit-border-start-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "-webkit-column-break-after",
@@ -3947,8 +3930,6 @@
     {
       name: "-webkit-text-stroke",
       longhands: ["-webkit-text-stroke-width", "-webkit-text-stroke-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
 
     // Aliases; these map to the same CSSPropertyID
@@ -4154,6 +4135,10 @@
     {
       name: "-webkit-justify-content",
       alias_for: "justify-content",
+    },
+    {
+      name: "line-break",
+      alias_for: "-webkit-line-break",
     },
     {
       name: "-webkit-opacity",

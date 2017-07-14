@@ -102,8 +102,7 @@ bool StructTraits<
     return false;
 
   media::BitstreamBuffer bitstream_buffer(
-      input.id(), memory_handle, input.size(),
-      base::checked_cast<off_t>(input.offset()), timestamp);
+      input.id(), memory_handle, input.size(), input.offset(), timestamp);
   bitstream_buffer.SetDecryptConfig(
       media::DecryptConfig(key_id, iv, subsamples));
   *output = bitstream_buffer;

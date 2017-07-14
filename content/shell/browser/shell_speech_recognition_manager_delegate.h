@@ -25,8 +25,7 @@ class ShellSpeechRecognitionManagerDelegate
   // SpeechRecognitionManagerDelegate methods.
   void CheckRecognitionIsAllowed(
       int session_id,
-      base::OnceCallback<void(bool ask_user, bool is_allowed)> callback)
-      override;
+      base::Callback<void(bool ask_user, bool is_allowed)> callback) override;
   SpeechRecognitionEventListener* GetEventListener() override;
   bool FilterProfanities(int render_process_id) override;
 

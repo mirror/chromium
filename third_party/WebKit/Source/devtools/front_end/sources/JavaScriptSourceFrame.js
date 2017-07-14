@@ -1568,17 +1568,14 @@ Sources.JavaScriptSourceFrame = class extends SourceFrame.UISourceCodeFrame {
     }
   }
 
-  /**
-   * @param {boolean} onlyDisable
-   */
-  toggleBreakpointOnCurrentLine(onlyDisable) {
+  toggleBreakpointOnCurrentLine() {
     if (this._muted)
       return;
 
     var selection = this.textEditor.selection();
     if (!selection)
       return;
-    this._toggleBreakpoint(selection.startLine, onlyDisable);
+    this._toggleBreakpoint(selection.startLine, false);
   }
 
   /**

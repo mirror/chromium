@@ -88,8 +88,8 @@ class MockFileMonitor : public FileMonitor {
   MOCK_METHOD1(CleanupFilesForCompletedEntries,
                std::vector<Entry*>(const Model::EntryList&));
   MOCK_METHOD2(DeleteFiles,
-               void(const std::set<base::FilePath>&, stats::FileCleanupReason));
-  MOCK_METHOD1(HardRecover, void(const FileMonitor::InitCallback&));
+               void(const std::vector<base::FilePath>&,
+                    stats::FileCleanupReason));
 };
 
 void MockFileMonitor::Initialize(const FileMonitor::InitCallback& callback) {
@@ -306,7 +306,6 @@ TEST_F(DownloadServiceControllerImplTest,
 
 TEST_F(DownloadServiceControllerImplTest, FailedInitWithBadModel) {
   EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(0);
-  EXPECT_CALL(*client_, OnServiceUnavailable()).Times(1);
 
   controller_->Initialize();
   store_->TriggerInit(false, base::MakeUnique<std::vector<Entry>>());

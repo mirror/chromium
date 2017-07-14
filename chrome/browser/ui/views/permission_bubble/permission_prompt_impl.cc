@@ -58,11 +58,11 @@ class PermissionsBubbleDialogDelegateView
   void CloseBubble();
 
   // BubbleDialogDelegateView:
-  ui::AXRole GetAccessibleWindowRole() const override;
   bool ShouldShowCloseButton() const override;
   base::string16 GetWindowTitle() const override;
   void AddedToWidget() override;
   void OnWidgetDestroying(views::Widget* widget) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   bool Cancel() override;
   bool Accept() override;
   bool Close() override;
@@ -147,11 +147,6 @@ void PermissionsBubbleDialogDelegateView::CloseBubble() {
   GetWidget()->Close();
 }
 
-ui::AXRole PermissionsBubbleDialogDelegateView::GetAccessibleWindowRole()
-    const {
-  return ui::AX_ROLE_ALERT_DIALOG;
-}
-
 bool PermissionsBubbleDialogDelegateView::ShouldShowCloseButton() const {
   return true;
 }
@@ -180,6 +175,12 @@ void PermissionsBubbleDialogDelegateView::OnWidgetDestroying(
     owner_->Closing();
     owner_ = nullptr;
   }
+}
+
+void PermissionsBubbleDialogDelegateView::GetAccessibleNodeData(
+    ui::AXNodeData* node_data) {
+  views::BubbleDialogDelegateView::GetAccessibleNodeData(node_data);
+  node_data->role = ui::AX_ROLE_ALERT_DIALOG;
 }
 
 int PermissionsBubbleDialogDelegateView::GetDefaultDialogButton() const {

@@ -66,7 +66,7 @@ void ShellSpeechRecognitionManagerDelegate::OnAudioLevelsChange(
 
 void ShellSpeechRecognitionManagerDelegate::CheckRecognitionIsAllowed(
     int session_id,
-    base::OnceCallback<void(bool ask_user, bool is_allowed)> callback) {
+    base::Callback<void(bool ask_user, bool is_allowed)> callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   const content::SpeechRecognitionSessionContext& context =
@@ -76,10 +76,11 @@ void ShellSpeechRecognitionManagerDelegate::CheckRecognitionIsAllowed(
   // |render_process_id| field, which is needed later to retrieve the profile.
   DCHECK_NE(context.render_process_id, 0);
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&CheckRenderViewType, std::move(callback),
-                     context.render_process_id, context.render_view_id));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::Bind(&CheckRenderViewType,
+                                     callback,
+                                     context.render_process_id,
+                                     context.render_view_id));
 }
 
 content::SpeechRecognitionEventListener*
@@ -95,7 +96,7 @@ bool ShellSpeechRecognitionManagerDelegate::FilterProfanities(
 
 // static
 void ShellSpeechRecognitionManagerDelegate::CheckRenderViewType(
-    base::OnceCallback<void(bool ask_user, bool is_allowed)> callback,
+    base::Callback<void(bool ask_user, bool is_allowed)> callback,
     int render_process_id,
     int render_view_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -118,9 +119,8 @@ void ShellSpeechRecognitionManagerDelegate::CheckRenderViewType(
     }
   }
 
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(std::move(callback), check_permission, allowed));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(callback, check_permission, allowed));
 }
 
 }  // namespace speech

@@ -35,8 +35,7 @@ class NoBackendProgramCache : public ProgramCache {
       GLenum /* transform_feedback_buffer_mode */,
       GLES2DecoderClient* /* client */) override {}
 
-  void LoadProgram(const std::string& /*key*/,
-                   const std::string& /* program */) override {}
+  void LoadProgram(const std::string& /* program */) override {}
 
   void ClearBackend() override {}
 

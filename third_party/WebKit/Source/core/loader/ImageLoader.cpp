@@ -51,7 +51,6 @@
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebCachePolicy.h"
-#include "public/platform/WebClientHintsType.h"
 #include "public/platform/WebURLRequest.h"
 
 namespace blink {
@@ -231,7 +230,7 @@ static void ConfigureRequest(
         element.GetDocument().GetSecurityOrigin(), cross_origin);
   }
 
-  if (client_hints_preferences.ShouldSend(kWebClientHintsTypeResourceWidth) &&
+  if (client_hints_preferences.ShouldSendResourceWidth() &&
       isHTMLImageElement(element))
     params.SetResourceWidth(toHTMLImageElement(element).GetResourceWidth());
 }

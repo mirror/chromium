@@ -23,7 +23,7 @@ class OZONE_BASE_EXPORT CursorFactoryOzone {
   CursorFactoryOzone();
   virtual ~CursorFactoryOzone();
 
-  // Returns the thread-local instance.
+  // Returns the singleton instance.
   static CursorFactoryOzone* GetInstance();
 
   // Return the default cursor of the specified type. The types are listed in
@@ -53,6 +53,9 @@ class OZONE_BASE_EXPORT CursorFactoryOzone {
 
   // Decrement platform image cursor refcount.
   virtual void UnrefImageCursor(PlatformCursor cursor);
+
+ private:
+  static CursorFactoryOzone* impl_;  // not owned
 };
 
 }  // namespace ui

@@ -165,7 +165,6 @@ left
 length
 letterSpacing
 lightingColor
-lineBreak
 lineHeight
 listStyle
 listStyleImage

@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '27b3d272a8fcce24813212f5816b177090111ec6',
+  'skia_revision': 'd96ed9d0def2d660f537e4ab5c79e9e66470ee22',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '1e323b4a73e01bc1c3520dd10ec533af0e8b9f3f',
+  'v8_revision': 'f2c153fcf5e641c0b1537214e22f2652bc17d4ac',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -56,7 +56,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
-  'buildtools_revision': 'c2827ae578be603fb41a141631c27c3c09191dca',
+  'buildtools_revision': '3d2d34dde457f07ca410d1c06f4f3b9063c28643',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'e4d806cd4821f1e82d11d9ca1b1e1f500e503c11',
+  'catapult_revision': '08d8c9f0860202115b653dc31a06d366a5978623',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -208,7 +208,7 @@ deps = {
     Var('chromium_git') + '/webm/libvpx.git' + '@' +  '4e16f7070354fa91c1a617ee18335e580a0b8c8c',
 
   'src/third_party/ffmpeg':
-    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + 'f82eb1989c0cdd5ed179ee4979ffb18a8030c78a',
+    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + 'ddb09a0d5aaf6aacf846355b7629953b2496b8ea',
 
   'src/third_party/usrsctp/usrsctplib':
     Var('chromium_git') + '/external/github.com/sctplab/usrsctp' + '@' + '2f6478eb8d40f1766a96b5b033ed26c0c2244589',

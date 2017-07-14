@@ -464,7 +464,52 @@ STDMETHODIMP BrowserAccessibilityComWin::accNavigate(LONG nav_dir,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::accNavigate(nav_dir, start, end);
+  // Forward all non-spatial directions (e.g. NAVDIR_NEXT) to the platform node
+  // implementation.
+  if (nav_dir != NAVDIR_DOWN && nav_dir != NAVDIR_UP &&
+      nav_dir != NAVDIR_LEFT && nav_dir != NAVDIR_RIGHT) {
+    return AXPlatformNodeWin::accNavigate(nav_dir, start, end);
+  }
+
+  if (end) {
+    end->vt = VT_EMPTY;
+  } else {
+    return E_INVALIDARG;
+  }
+
+  BrowserAccessibilityComWin* target = GetTargetFromChildID(start);
+  if (!target)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* result = nullptr;
+  // Only handle spatial directions for tables here.
+  switch (nav_dir) {
+    case NAVDIR_DOWN:
+      result = target->owner()->GetTableCell(
+          owner()->GetTableRow() + owner()->GetTableRowSpan(),
+          owner()->GetTableColumn());
+      break;
+    case NAVDIR_UP:
+      result = target->owner()->GetTableCell(owner()->GetTableRow() - 1,
+                                             owner()->GetTableColumn());
+      break;
+    case NAVDIR_LEFT:
+      result = target->owner()->GetTableCell(owner()->GetTableRow(),
+                                             owner()->GetTableColumn() - 1);
+      break;
+    case NAVDIR_RIGHT:
+      result = target->owner()->GetTableCell(
+          owner()->GetTableRow(),
+          owner()->GetTableColumn() + owner()->GetTableColumnSpan());
+      break;
+  }
+
+  if (!result)
+    return S_FALSE;
+
+  end->vt = VT_DISPATCH;
+  end->pdispVal = ToBrowserAccessibilityComWin(result)->NewReference();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_accChild(VARIANT var_child,
@@ -1068,7 +1113,19 @@ STDMETHODIMP BrowserAccessibilityComWin::get_accessibleAt(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_accessibleAt(row, column, accessible);
+  if (!accessible)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* cell =
+      owner()->GetTableCell(static_cast<int>(row), static_cast<int>(column));
+  if (cell && ToBrowserAccessibilityComWin(cell)) {
+    *accessible = static_cast<IAccessible*>(
+        ToBrowserAccessibilityComWin(cell)->NewReference());
+    return S_OK;
+  }
+
+  *accessible = nullptr;
+  return E_INVALIDARG;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_caption(IUnknown** accessible) {
@@ -1077,7 +1134,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_caption(IUnknown** accessible) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_caption(accessible);
+  if (!accessible)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): implement
+  *accessible = nullptr;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_childIndex(long row,
@@ -1088,7 +1150,18 @@ STDMETHODIMP BrowserAccessibilityComWin::get_childIndex(long row,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_childIndex(row, column, cell_index);
+  if (!cell_index)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* cell =
+      owner()->GetTableCell(static_cast<int>(row), static_cast<int>(column));
+  if (cell) {
+    *cell_index = static_cast<LONG>(cell->GetTableCellIndex());
+    return S_OK;
+  }
+
+  *cell_index = 0;
+  return E_INVALIDARG;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnDescription(
@@ -1099,7 +1172,39 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnDescription(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_columnDescription(column, description);
+  if (!description)
+    return E_INVALIDARG;
+
+  int columns = owner()->GetTableColumnCount();
+  if (column < 0 || column >= columns)
+    return E_INVALIDARG;
+
+  int rows = owner()->GetTableRowCount();
+  if (rows <= 0) {
+    *description = nullptr;
+    return S_FALSE;
+  }
+
+  for (int i = 0; i < rows; ++i) {
+    BrowserAccessibility* cell = owner()->GetTableCell(i, column);
+    if (ToBrowserAccessibilityComWin(cell) &&
+        cell->GetRole() == ui::AX_ROLE_COLUMN_HEADER) {
+      base::string16 cell_name = cell->GetString16Attribute(ui::AX_ATTR_NAME);
+      if (cell_name.size() > 0) {
+        *description = SysAllocString(cell_name.c_str());
+        return S_OK;
+      }
+
+      if (ToBrowserAccessibilityComWin(cell)->description().size() > 0) {
+        *description = SysAllocString(
+            ToBrowserAccessibilityComWin(cell)->description().c_str());
+        return S_OK;
+      }
+    }
+  }
+
+  *description = nullptr;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnExtentAt(
@@ -1111,7 +1216,16 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnExtentAt(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_columnExtentAt(row, column, n_columns_spanned);
+  if (!n_columns_spanned)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* cell =
+      owner()->GetTableCell(static_cast<int>(row), static_cast<int>(column));
+  if (!cell)
+    return E_INVALIDARG;
+
+  *n_columns_spanned = cell->GetTableColumnSpan();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnHeader(
@@ -1119,12 +1233,8 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnHeader(
     long* starting_row_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_HEADER);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-
-  if (!owner())
-    return E_FAIL;
-
-  return AXPlatformNodeWin::get_columnHeader(accessible_table,
-                                             starting_row_index);
+  // TODO(dmazzoni): implement
+  return E_NOTIMPL;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnIndex(long cell_index,
@@ -1134,7 +1244,14 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnIndex(long cell_index,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_columnIndex(cell_index, column_index);
+  if (!column_index)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* cell = owner()->GetTableCell(cell_index);
+  if (!cell)
+    return E_INVALIDARG;
+  *column_index = cell->GetTableColumn();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nColumns(long* column_count) {
@@ -1143,7 +1260,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_nColumns(long* column_count) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_nColumns(column_count);
+  if (!column_count)
+    return E_INVALIDARG;
+
+  *column_count = owner()->GetTableColumnCount();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nRows(long* row_count) {
@@ -1152,7 +1273,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_nRows(long* row_count) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_nRows(row_count);
+  if (!row_count)
+    return E_INVALIDARG;
+
+  *row_count = owner()->GetTableRowCount();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedChildren(
@@ -1162,7 +1287,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedChildren(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_nSelectedChildren(cell_count);
+  if (!cell_count)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): add support for selected cells/rows/columns in tables.
+  *cell_count = 0;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedColumns(
@@ -1172,7 +1302,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedColumns(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_nSelectedColumns(column_count);
+  if (!column_count)
+    return E_INVALIDARG;
+
+  *column_count = 0;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedRows(long* row_count) {
@@ -1181,7 +1315,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedRows(long* row_count) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_nSelectedRows(row_count);
+  if (!row_count)
+    return E_INVALIDARG;
+
+  *row_count = 0;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowDescription(long row,
@@ -1191,7 +1329,38 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowDescription(long row,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_rowDescription(row, description);
+  if (!description)
+    return E_INVALIDARG;
+
+  if (row < 0 || row >= owner()->GetTableRowCount())
+    return E_INVALIDARG;
+
+  int columns = owner()->GetTableColumnCount();
+  if (columns <= 0) {
+    *description = nullptr;
+    return S_FALSE;
+  }
+
+  for (int i = 0; i < columns; ++i) {
+    BrowserAccessibility* cell = owner()->GetTableCell(row, i);
+    if (ToBrowserAccessibilityComWin(cell) &&
+        cell->GetRole() == ui::AX_ROLE_ROW_HEADER) {
+      base::string16 cell_name = cell->GetString16Attribute(ui::AX_ATTR_NAME);
+      if (cell_name.size() > 0) {
+        *description = SysAllocString(cell_name.c_str());
+        return S_OK;
+      }
+
+      if (ToBrowserAccessibilityComWin(cell)->description().size() > 0) {
+        *description = SysAllocString(
+            ToBrowserAccessibilityComWin(cell)->description().c_str());
+        return S_OK;
+      }
+    }
+  }
+
+  *description = nullptr;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowExtentAt(long row,
@@ -1202,7 +1371,15 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowExtentAt(long row,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_rowExtentAt(row, column, n_rows_spanned);
+  if (!n_rows_spanned)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* cell = owner()->GetTableCell(row, column);
+  if (!cell)
+    return E_INVALIDARG;
+
+  *n_rows_spanned = owner()->GetTableRowSpan();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowHeader(
@@ -1210,11 +1387,8 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowHeader(
     long* starting_column_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_HEADER);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-  if (!owner())
-    return E_FAIL;
-
-  return AXPlatformNodeWin::get_rowHeader(accessible_table,
-                                          starting_column_index);
+  // TODO(dmazzoni): implement
+  return E_NOTIMPL;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowIndex(long cell_index,
@@ -1224,7 +1398,15 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowIndex(long cell_index,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_rowIndex(cell_index, row_index);
+  if (!row_index)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* cell = owner()->GetTableCell(cell_index);
+  if (!cell)
+    return E_INVALIDARG;
+
+  *row_index = cell->GetTableRow();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedChildren(
@@ -1236,8 +1418,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedChildren(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_selectedChildren(max_children, children,
-                                                 n_children);
+  if (!children || !n_children)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): Implement this.
+  *n_children = 0;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedColumns(long max_columns,
@@ -1248,8 +1434,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedColumns(long max_columns,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_selectedColumns(max_columns, columns,
-                                                n_columns);
+  if (!columns || !n_columns)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): Implement this.
+  *n_columns = 0;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long max_rows,
@@ -1260,7 +1450,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long max_rows,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_selectedRows(max_rows, rows, n_rows);
+  if (!rows || !n_rows)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): Implement this.
+  *n_rows = 0;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_summary(IUnknown** accessible) {
@@ -1269,7 +1464,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_summary(IUnknown** accessible) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_summary(accessible);
+  if (!accessible)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): implement
+  *accessible = nullptr;
+  return S_FALSE;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_isColumnSelected(
@@ -1280,7 +1480,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_isColumnSelected(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_isColumnSelected(column, is_selected);
+  if (!is_selected)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): Implement this.
+  *is_selected = false;
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_isRowSelected(
@@ -1291,7 +1496,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_isRowSelected(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_isRowSelected(row, is_selected);
+  if (!is_selected)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): Implement this.
+  *is_selected = false;
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_isSelected(long row,
@@ -1302,7 +1512,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_isSelected(long row,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_isSelected(row, column, is_selected);
+  if (!is_selected)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): Implement this.
+  *is_selected = false;
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowColumnExtentsAtIndex(
@@ -1317,52 +1532,49 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowColumnExtentsAtIndex(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_rowColumnExtentsAtIndex(
-      index, row, column, row_extents, column_extents, is_selected);
+  if (!row || !column || !row_extents || !column_extents || !is_selected)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* cell = owner()->GetTableCell(index);
+  if (!cell)
+    return E_INVALIDARG;
+
+  *row = cell->GetTableRow();
+  *column = cell->GetTableColumn();
+  *row_extents = owner()->GetTableRowSpan();
+  *column_extents = owner()->GetTableColumnSpan();
+  *is_selected = false;  // Not supported.
+
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::selectRow(long row) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_SELECT_ROW);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-  if (!owner())
-    return E_FAIL;
-
-  return AXPlatformNodeWin::selectRow(row);
+  return E_NOTIMPL;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::selectColumn(long column) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_SELECT_COLUMN);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-  if (!owner())
-    return E_FAIL;
-
-  return AXPlatformNodeWin::selectColumn(column);
+  return E_NOTIMPL;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::unselectRow(long row) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_UNSELECT_ROW);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-  if (!owner())
-    return E_FAIL;
-
-  return AXPlatformNodeWin::unselectRow(row);
+  return E_NOTIMPL;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::unselectColumn(long column) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_UNSELECT_COLUMN);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-  if (!owner())
-    return E_FAIL;
-
-  return AXPlatformNodeWin::unselectColumn(column);
+  return E_NOTIMPL;
 }
 
 STDMETHODIMP
 BrowserAccessibilityComWin::get_modelChange(IA2TableModelChange* model_change) {
-  if (!owner())
-    return E_FAIL;
-
-  return AXPlatformNodeWin::get_modelChange(model_change);
+  return E_NOTIMPL;
 }
 
 //
@@ -1377,16 +1589,24 @@ STDMETHODIMP BrowserAccessibilityComWin::get_cellAt(long row,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_cellAt(row, column, cell);
+  if (!cell)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* table_cell =
+      owner()->GetTableCell(static_cast<int>(row), static_cast<int>(column));
+  if (ToBrowserAccessibilityComWin(table_cell)) {
+    return ToBrowserAccessibilityComWin(table_cell)
+        ->QueryInterface(IID_IUnknown, reinterpret_cast<void**>(cell));
+  }
+
+  *cell = nullptr;
+  return E_INVALIDARG;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedCells(long* cell_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_CELLS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-  if (!owner())
-    return E_FAIL;
-
-  return AXPlatformNodeWin::get_nSelectedCells(cell_count);
+  return get_nSelectedChildren(cell_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedCells(
@@ -1397,7 +1617,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedCells(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_selectedCells(cells, n_selected_cells);
+  if (!cells || !n_selected_cells)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): Implement this.
+  *n_selected_cells = 0;
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedColumns(long** columns,
@@ -1407,7 +1632,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedColumns(long** columns,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_selectedColumns(columns, n_columns);
+  if (!columns || !n_columns)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): Implement this.
+  *n_columns = 0;
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long** rows,
@@ -1417,7 +1647,12 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long** rows,
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_selectedRows(rows, n_rows);
+  if (!rows || !n_rows)
+    return E_INVALIDARG;
+
+  // TODO(dmazzoni): Implement this.
+  *n_rows = 0;
+  return S_OK;
 }
 
 //
@@ -1431,7 +1666,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnExtent(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_columnExtent(n_columns_spanned);
+  if (!n_columns_spanned)
+    return E_INVALIDARG;
+
+  *n_columns_spanned = owner()->GetTableColumnSpan();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnHeaderCells(
@@ -1442,8 +1681,41 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnHeaderCells(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_columnHeaderCells(cell_accessibles,
-                                                  n_column_header_cells);
+  if (!cell_accessibles || !n_column_header_cells)
+    return E_INVALIDARG;
+
+  *n_column_header_cells = 0;
+  BrowserAccessibility* table = owner()->GetTable();
+  if (!table) {
+    NOTREACHED();
+    return S_FALSE;
+  }
+
+  int column = owner()->GetTableColumn();
+  int columns = owner()->GetTableColumnCount();
+  int rows = owner()->GetTableRowCount();
+  if (columns <= 0 || rows <= 0 || column < 0 || column >= columns)
+    return S_FALSE;
+
+  for (int i = 0; i < rows; ++i) {
+    BrowserAccessibility* cell = owner()->GetTableCell(i, column);
+    if (cell && cell->GetRole() == ui::AX_ROLE_COLUMN_HEADER)
+      (*n_column_header_cells)++;
+  }
+
+  *cell_accessibles = static_cast<IUnknown**>(
+      CoTaskMemAlloc((*n_column_header_cells) * sizeof(cell_accessibles[0])));
+  int index = 0;
+  for (int i = 0; i < rows; ++i) {
+    BrowserAccessibility* cell = owner()->GetTableCell(i, column);
+    if (cell && cell->GetRole() == ui::AX_ROLE_COLUMN_HEADER) {
+      (*cell_accessibles)[index] = static_cast<IAccessible*>(
+          ToBrowserAccessibilityComWin(cell)->NewReference());
+      ++index;
+    }
+  }
+
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnIndex(long* column_index) {
@@ -1452,7 +1724,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnIndex(long* column_index) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_columnIndex(column_index);
+  if (!column_index)
+    return E_INVALIDARG;
+
+  *column_index = owner()->GetTableColumn();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowExtent(long* n_rows_spanned) {
@@ -1461,7 +1737,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowExtent(long* n_rows_spanned) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_rowExtent(n_rows_spanned);
+  if (!n_rows_spanned)
+    return E_INVALIDARG;
+
+  *n_rows_spanned = owner()->GetTableRowSpan();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowHeaderCells(
@@ -1472,8 +1752,41 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowHeaderCells(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_rowHeaderCells(cell_accessibles,
-                                               n_row_header_cells);
+  if (!cell_accessibles || !n_row_header_cells)
+    return E_INVALIDARG;
+
+  *n_row_header_cells = 0;
+  BrowserAccessibility* table = owner()->GetTable();
+  if (!table) {
+    NOTREACHED();
+    return S_FALSE;
+  }
+
+  int row = owner()->GetTableRow();
+  int columns = owner()->GetTableColumnCount();
+  int rows = owner()->GetTableRowCount();
+  if (columns <= 0 || rows <= 0 || row < 0 || row >= rows)
+    return S_FALSE;
+
+  for (int i = 0; i < columns; ++i) {
+    BrowserAccessibility* cell = owner()->GetTableCell(row, i);
+    if (cell && cell->GetRole() == ui::AX_ROLE_ROW_HEADER)
+      (*n_row_header_cells)++;
+  }
+
+  *cell_accessibles = static_cast<IUnknown**>(
+      CoTaskMemAlloc((*n_row_header_cells) * sizeof(cell_accessibles[0])));
+  int index = 0;
+  for (int i = 0; i < columns; ++i) {
+    BrowserAccessibility* cell = owner()->GetTableCell(row, i);
+    if (cell && cell->GetRole() == ui::AX_ROLE_ROW_HEADER) {
+      (*cell_accessibles)[index] = static_cast<IAccessible*>(
+          ToBrowserAccessibilityComWin(cell)->NewReference());
+      ++index;
+    }
+  }
+
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowIndex(long* row_index) {
@@ -1482,7 +1795,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowIndex(long* row_index) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_rowIndex(row_index);
+  if (!row_index)
+    return E_INVALIDARG;
+
+  *row_index = owner()->GetTableRow();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_isSelected(boolean* is_selected) {
@@ -1491,7 +1808,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_isSelected(boolean* is_selected) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_isSelected(is_selected);
+  if (!is_selected)
+    return E_INVALIDARG;
+
+  *is_selected = false;
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowColumnExtents(
@@ -1505,8 +1826,18 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowColumnExtents(
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_rowColumnExtents(
-      row_index, column_index, row_extents, column_extents, is_selected);
+  if (!row_index || !column_index || !row_extents || !column_extents ||
+      !is_selected) {
+    return E_INVALIDARG;
+  }
+
+  *row_index = owner()->GetTableRow();
+  *column_index = owner()->GetTableColumn();
+  *row_extents = owner()->GetTableRowSpan();
+  *column_extents = owner()->GetTableColumnSpan();
+  *is_selected = false;  // Not supported.
+
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_table(IUnknown** table) {
@@ -1515,7 +1846,18 @@ STDMETHODIMP BrowserAccessibilityComWin::get_table(IUnknown** table) {
   if (!owner())
     return E_FAIL;
 
-  return AXPlatformNodeWin::get_table(table);
+  if (!table)
+    return E_INVALIDARG;
+
+  BrowserAccessibility* find_table = owner()->GetTable();
+  if (!find_table || !ToBrowserAccessibilityComWin(find_table)) {
+    *table = nullptr;
+    return S_FALSE;
+  }
+
+  *table = static_cast<IAccessibleTable*>(
+      ToBrowserAccessibilityComWin(find_table)->NewReference());
+  return S_OK;
 }
 
 //
@@ -3050,36 +3392,30 @@ HRESULT WINAPI BrowserAccessibilityComWin::InternalQueryInterface(
     void** object) {
   BrowserAccessibilityComWin* accessibility =
       reinterpret_cast<BrowserAccessibilityComWin*>(this_ptr);
-
-  if (!accessibility->owner()) {
-    *object = nullptr;
-    return E_NOINTERFACE;
-  }
-
   int32_t ia_role = accessibility->MSAARole();
   if (iid == IID_IAccessibleImage) {
     if (ia_role != ROLE_SYSTEM_GRAPHIC) {
-      *object = nullptr;
+      *object = NULL;
       return E_NOINTERFACE;
     }
   } else if (iid == IID_IAccessibleTable || iid == IID_IAccessibleTable2) {
     if (ia_role != ROLE_SYSTEM_TABLE) {
-      *object = nullptr;
+      *object = NULL;
       return E_NOINTERFACE;
     }
   } else if (iid == IID_IAccessibleTableCell) {
     if (!ui::IsCellOrTableHeaderRole(accessibility->owner()->GetRole())) {
-      *object = nullptr;
+      *object = NULL;
       return E_NOINTERFACE;
     }
   } else if (iid == IID_IAccessibleValue) {
     if (!accessibility->IsRangeValueSupported()) {
-      *object = nullptr;
+      *object = NULL;
       return E_NOINTERFACE;
     }
   } else if (iid == IID_ISimpleDOMDocument) {
     if (ia_role != ROLE_SYSTEM_DOCUMENT) {
-      *object = nullptr;
+      *object = NULL;
       return E_NOINTERFACE;
     }
   } else if (iid == IID_IAccessibleHyperlink) {
@@ -3294,13 +3630,9 @@ void BrowserAccessibilityComWin::UpdateStep1ComputeWinAttributes() {
 
   // Expose table cell index.
   if (ui::IsCellOrTableHeaderRole(owner()->GetRole())) {
-    BrowserAccessibilityWin* win_parent =
-        static_cast<BrowserAccessibilityWin*>(owner()->PlatformGetParent());
-    AXPlatformNodeBase* table = win_parent->GetCOM();
-
-    while (table && !ui::IsTableLikeRole(table->GetData().role))
-      table = FromNativeViewAccessible(table->GetParent());
-
+    BrowserAccessibility* table = owner()->PlatformGetParent();
+    while (table && !ui::IsTableLikeRole(table->GetRole()))
+      table = table->PlatformGetParent();
     if (table) {
       const std::vector<int32_t>& unique_cell_ids =
           table->GetIntListAttribute(ui::AX_ATTR_UNIQUE_CELL_IDS);

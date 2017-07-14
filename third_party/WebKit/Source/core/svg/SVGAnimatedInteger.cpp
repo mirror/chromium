@@ -50,8 +50,7 @@ DEFINE_TRACE(SVGAnimatedInteger) {
 }
 
 DEFINE_TRACE_WRAPPERS(SVGAnimatedInteger) {
-  SVGAnimatedProperty<SVGInteger>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
+  visitor->TraceWrappers(contextElement());
 }
 
 }  // namespace blink

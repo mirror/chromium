@@ -35,8 +35,7 @@ class VIEWS_EXPORT RadioButton : public Checkbox {
 
   // Overridden from Checkbox:
   void SetChecked(bool checked) override;
-  void PaintFocusRing(View* view,
-                      gfx::Canvas* canvas,
+  void PaintFocusRing(gfx::Canvas* canvas,
                       const cc::PaintFlags& flags) override;
   const gfx::VectorIcon& GetVectorIcon() const override;
 

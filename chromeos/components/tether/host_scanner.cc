@@ -11,7 +11,6 @@
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
 #include "chromeos/components/tether/device_status_util.h"
 #include "chromeos/components/tether/host_scan_cache.h"
-#include "chromeos/components/tether/master_host_scan_cache.h"
 #include "chromeos/components/tether/tether_host_fetcher.h"
 #include "chromeos/network/network_state.h"
 #include "components/cryptauth/remote_device_loader.h"
@@ -50,10 +49,9 @@ bool HostScanner::HasRecentlyScanned() {
   if (previous_scan_time_.is_null())
     return false;
 
-  // TODO(khorimoto): Don't depend on MasterHostScanCache here.
   base::TimeDelta difference = clock_->Now() - previous_scan_time_;
   return difference.InMinutes() <
-         MasterHostScanCache::kNumMinutesBeforeCacheEntryExpires;
+         HostScanCache::kNumMinutesBeforeCacheEntryExpires;
 }
 
 void HostScanner::StartScan() {
@@ -147,16 +145,10 @@ void HostScanner::SetCacheEntry(
                         &signal_strength);
 
   host_scan_cache_->SetHostScanResult(
-      *HostScanCacheEntry::Builder()
-           .SetTetherNetworkGuid(device_id_tether_network_guid_map_
-                                     ->GetTetherNetworkGuidForDeviceId(
-                                         remote_device.GetDeviceId()))
-           .SetDeviceName(remote_device.name)
-           .SetCarrier(carrier)
-           .SetBatteryPercentage(battery_percentage)
-           .SetSignalStrength(signal_strength)
-           .SetSetupRequired(scanned_device_info.setup_required)
-           .Build());
+      device_id_tether_network_guid_map_->GetTetherNetworkGuidForDeviceId(
+          remote_device.GetDeviceId()),
+      remote_device.name, carrier, battery_percentage, signal_strength,
+      scanned_device_info.setup_required);
 }
 
 void HostScanner::RecordHostScanResult(HostScanResultEventType event_type) {

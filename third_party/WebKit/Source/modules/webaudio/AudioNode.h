@@ -95,7 +95,7 @@ class MODULES_EXPORT AudioHandler : public ThreadSafeRefCounted<AudioHandler> {
     kNodeTypeWaveShaper = 18,
     kNodeTypeIIRFilter = 19,
     kNodeTypeConstantSource = 20,
-    kNodeTypeAudioWorklet = 21,
+    kNoteTypeAudioWorklet = 21,
     kNodeTypeEnd = 22
   };
 

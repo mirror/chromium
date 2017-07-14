@@ -47,7 +47,8 @@ void ShowPermissionsDialogHelper::Show(content::BrowserContext* browser_context,
                                 AppInfoLaunchSource::NUM_LAUNCH_SOURCES);
     }
 
-    ShowAppInfoInNativeDialog(web_contents, profile, extension, on_complete);
+    ShowAppInfoInNativeDialog(web_contents, GetAppInfoNativeDialogSize(),
+                              profile, extension, on_complete);
 
     return;  // All done.
   }

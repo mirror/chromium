@@ -6,11 +6,9 @@
 #define NGFragmentBuilder_h
 
 #include "core/layout/ng/geometry/ng_static_position.h"
-#include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_break_token.h"
 #include "core/layout/ng/ng_constraint_space.h"
-#include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_out_of_flow_positioned_descendant.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "core/layout/ng/ng_positioned_float.h"
@@ -18,6 +16,8 @@
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
+
+class NGLayoutResult;
 
 class CORE_EXPORT NGFragmentBuilder final {
   DISALLOW_NEW();
@@ -31,7 +31,6 @@ class CORE_EXPORT NGFragmentBuilder final {
 
   using WeakBoxList = PersistentHeapLinkedHashSet<WeakMember<NGBlockNode>>;
 
-  NGWritingMode WritingMode() const { return writing_mode_; }
   NGFragmentBuilder& SetWritingMode(NGWritingMode);
   NGFragmentBuilder& SetDirection(TextDirection);
 
@@ -49,6 +48,9 @@ class CORE_EXPORT NGFragmentBuilder final {
   NGFragmentBuilder& AddPositionedFloat(NGPositionedFloat);
 
   NGFragmentBuilder& SetBfcOffset(const NGLogicalOffset& offset);
+
+  NGFragmentBuilder& AddUnpositionedFloat(
+      RefPtr<NGUnpositionedFloat> unpositioned_float);
 
   // Builder has non-trivial out-of-flow descendant methods.
   // These methods are building blocks for implementation of
@@ -104,13 +106,18 @@ class CORE_EXPORT NGFragmentBuilder final {
   // Creates the fragment. Can only be called once.
   RefPtr<NGLayoutResult> ToBoxFragment();
 
-  RefPtr<NGLayoutResult> Abort(NGLayoutResult::NGLayoutResultStatus);
+  Vector<RefPtr<NGPhysicalFragment>>& MutableChildren() { return children_; }
 
   Vector<NGLogicalOffset>& MutableOffsets() { return offsets_; }
 
-  void SwapUnpositionedFloats(
-      Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats) {
-    unpositioned_floats_.swap(*unpositioned_floats);
+  // Mutable list of floats that need to be positioned.
+  Vector<RefPtr<NGUnpositionedFloat>>& MutableUnpositionedFloats() {
+    return unpositioned_floats_;
+  }
+
+  // List of floats that need to be positioned.
+  const Vector<RefPtr<NGUnpositionedFloat>>& UnpositionedFloats() const {
+    return unpositioned_floats_;
   }
 
   const WTF::Optional<NGLogicalOffset>& BfcOffset() const {
@@ -121,16 +128,12 @@ class CORE_EXPORT NGFragmentBuilder final {
     return children_;
   }
 
-  const Vector<NGLogicalOffset>& Offsets() const { return offsets_; }
-
   bool DidBreak() const { return did_break_; }
 
   NGFragmentBuilder& SetBorderEdges(NGBorderEdges border_edges) {
     border_edges_ = border_edges;
     return *this;
   }
-
-  void AddBaseline(NGBaselineAlgorithmType, FontBaseline, LayoutUnit);
 
  private:
   // An out-of-flow positioned-candidate is a temporary data structure used
@@ -183,8 +186,6 @@ class CORE_EXPORT NGFragmentBuilder final {
 
   WTF::Optional<NGLogicalOffset> bfc_offset_;
   NGMarginStrut end_margin_strut_;
-
-  Vector<NGBaseline> baselines_;
 
   NGBorderEdges border_edges_;
 };

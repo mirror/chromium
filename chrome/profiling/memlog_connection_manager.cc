@@ -22,11 +22,7 @@ struct MemlogConnectionManager::Connection {
         pipe(p),
         tracker(std::move(complete_cb)) {}
 
-  ~Connection() {
-    // The parser may outlive this class because it's refcounted, make sure no
-    // callbacks are issued.
-    parser->DisconnectReceivers();
-  }
+  ~Connection() {}
 
   base::Thread thread;
 
@@ -51,14 +47,6 @@ void MemlogConnectionManager::StartConnections(const std::string& pipe_id) {
   server_->Start();
 }
 
-void MemlogConnectionManager::OnStartMojoControl() {
-  ProfilingGlobals::Get()->GetIORunner()->PostTask(
-      FROM_HERE,
-      base::Bind(
-          &ProfilingProcess::EnsureMojoStarted,
-          base::Unretained(ProfilingGlobals::Get()->GetProfilingProcess())));
-}
-
 void MemlogConnectionManager::OnNewConnection(
     scoped_refptr<MemlogReceiverPipe> new_pipe) {
   int remote_process = new_pipe->GetRemoteProcessID();
@@ -74,7 +62,7 @@ void MemlogConnectionManager::OnNewConnection(
       std::move(complete_cb), remote_process, new_pipe);
   connection->thread.Start();
 
-  connection->parser = new MemlogStreamParser(this, &connection->tracker);
+  connection->parser = new MemlogStreamParser(&connection->tracker);
   new_pipe->SetReceiver(connection->thread.task_runner(), connection->parser);
 
   connections_[remote_process] = std::move(connection);

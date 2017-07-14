@@ -250,8 +250,6 @@ class ChannelAssociatedGroupController
     }
   }
 
-  bool PrefersSerializedMessages() override { return true; }
-
  private:
   class Endpoint;
   class ControlMessageProxyThunk;

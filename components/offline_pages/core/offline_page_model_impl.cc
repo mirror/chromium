@@ -982,9 +982,8 @@ void OfflinePageModelImpl::OnRemoveOfflinePagesDone(
   }
 
   for (const auto& page : result->updated_items) {
-    DeletedPageInfo info(page.offline_id, page.client_id, page.request_origin);
     for (Observer& observer : observers_)
-      observer.OfflinePageDeleted(info);
+      observer.OfflinePageDeleted(page.offline_id, page.client_id);
   }
 
   DeletePageResult delete_result;

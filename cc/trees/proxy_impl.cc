@@ -643,8 +643,11 @@ DrawResult ProxyImpl::DrawInternal(bool forced_draw) {
 
   base::AutoReset<bool> mark_inside(&inside_draw_, true);
 
-  if (layer_tree_host_impl_->pending_tree())
-    layer_tree_host_impl_->pending_tree()->UpdateDrawProperties();
+  if (layer_tree_host_impl_->pending_tree()) {
+    bool update_lcd_text = false;
+    layer_tree_host_impl_->pending_tree()->UpdateDrawProperties(
+        update_lcd_text);
+  }
 
   // This method is called on a forced draw, regardless of whether we are able
   // to produce a frame, as the calling site on main thread is blocked until its

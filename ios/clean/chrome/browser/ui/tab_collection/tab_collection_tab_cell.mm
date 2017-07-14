@@ -64,7 +64,7 @@ const CGFloat kSelectedBorderWidth = 4.0f;
                        callback:^(UIImage* snapshot) {
                          // PLACEHOLDER: This operation will be cancellable.
                          if ([weakSelf.item.tabID isEqualToString:item.tabID]) {
-                           weakSelf.snapshot = snapshot;
+                           [weakSelf setSnapshot:snapshot];
                          }
                        }];
 }

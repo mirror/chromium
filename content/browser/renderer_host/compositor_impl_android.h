@@ -17,7 +17,7 @@
 #include "base/timer/timer.h"
 #include "cc/trees/layer_tree_host_client.h"
 #include "cc/trees/layer_tree_host_single_thread_client.h"
-#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/frame_sink_id.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/android/compositor.h"
 #include "gpu/command_buffer/common/capabilities.h"
@@ -33,6 +33,7 @@ struct ANativeWindow;
 
 namespace cc {
 class AnimationHost;
+class Display;
 class FrameSinkId;
 class FrameSinkManager;
 class Layer;
@@ -42,7 +43,6 @@ class VulkanContextProvider;
 }
 
 namespace viz {
-class Display;
 class HostFrameSinkManager;
 }
 
@@ -154,7 +154,7 @@ class CONTENT_EXPORT CompositorImpl
   std::unique_ptr<cc::LayerTreeHost> host_;
   ui::ResourceManagerImpl resource_manager_;
 
-  std::unique_ptr<viz::Display> display_;
+  std::unique_ptr<cc::Display> display_;
 
   gfx::ColorSpace display_color_space_;
   gfx::Size size_;

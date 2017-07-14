@@ -30,9 +30,11 @@ class FakeRasterSource : public RasterSource {
       const gfx::Rect& recorded_viewport);
   static scoped_refptr<FakeRasterSource> CreateEmpty(const gfx::Size& size);
   static scoped_refptr<FakeRasterSource> CreateFromRecordingSource(
-      const RecordingSource* recording_source);
+      const RecordingSource* recording_source,
+      bool can_use_lcd);
   static scoped_refptr<FakeRasterSource> CreateFromRecordingSourceWithWaitable(
       const RecordingSource* recording_source,
+      bool can_use_lcd,
       base::WaitableEvent* playback_allowed_event);
 
   void PlaybackToCanvas(SkCanvas* canvas,
@@ -40,8 +42,9 @@ class FakeRasterSource : public RasterSource {
                         const PlaybackSettings& settings) const override;
 
  protected:
-  explicit FakeRasterSource(const RecordingSource* recording_source);
+  FakeRasterSource(const RecordingSource* recording_source, bool can_use_lcd);
   FakeRasterSource(const RecordingSource* recording_source,
+                   bool can_use_lcd,
                    base::WaitableEvent* playback_allowed_event);
   ~FakeRasterSource() override;
 

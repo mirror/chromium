@@ -217,8 +217,7 @@ void DevToolsEmulator::EnableDeviceEmulation(
       emulation_params_.screen_position == params.screen_position &&
       emulation_params_.device_scale_factor == params.device_scale_factor &&
       emulation_params_.offset == params.offset &&
-      emulation_params_.scale == params.scale &&
-      emulation_params_.viewport_offset == params.viewport_offset) {
+      emulation_params_.scale == params.scale) {
     return;
   }
   if (emulation_params_.device_scale_factor != params.device_scale_factor ||
@@ -239,11 +238,7 @@ void DevToolsEmulator::EnableDeviceEmulation(
     DisableMobileEmulation();
 
   web_view_->SetCompositorDeviceScaleFactorOverride(params.device_scale_factor);
-  if (params.viewport_offset.x >= 0)
-    ForceViewport(params.viewport_offset, params.viewport_scale);
-  else
-    ResetViewport();
-
+  UpdateRootLayerTransform();
   // TODO(dgozman): mainFrameImpl() is null when it's remote. Figure out how
   // we end up with enabling emulation in this case.
   if (web_view_->MainFrameImpl()) {
@@ -390,10 +385,8 @@ void DevToolsEmulator::ForceViewport(const WebFloatPoint& position,
 }
 
 void DevToolsEmulator::ResetViewport() {
-  if (!viewport_override_) {
-    UpdateRootLayerTransform();
+  if (!viewport_override_)
     return;
-  }
 
   bool original_masking = viewport_override_->original_visual_viewport_masking;
   viewport_override_ = WTF::nullopt;

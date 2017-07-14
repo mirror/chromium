@@ -51,7 +51,6 @@ class InternalRuntimeFlagsWriter(make_runtime_features.RuntimeFeatureWriter):
     def generate_idl(self):
         return {
             'features': self._features,
-            'input_files': self._input_files,
             'standard_features': self._standard_features,
         }
 
@@ -60,7 +59,6 @@ class InternalRuntimeFlagsWriter(make_runtime_features.RuntimeFeatureWriter):
         return {
             'features': self._features,
             'feature_sets': self._feature_sets(),
-            'input_files': self._input_files,
             'standard_features': self._standard_features,
         }
 

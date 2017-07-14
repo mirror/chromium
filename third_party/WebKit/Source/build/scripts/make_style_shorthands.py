@@ -63,7 +63,6 @@ class StylePropertyShorthandWriter(css_properties.CSSProperties):
     @template_expander.use_jinja('templates/StylePropertyShorthand.cpp.tmpl')
     def generate_style_property_shorthand_cpp(self):
         return {
-            'input_files': self._input_files,
             'properties': self._properties,
             'longhands_dictionary': self._longhand_dictionary,
         }
@@ -71,7 +70,6 @@ class StylePropertyShorthandWriter(css_properties.CSSProperties):
     @template_expander.use_jinja('templates/StylePropertyShorthand.h.tmpl')
     def generate_style_property_shorthand_h(self):
         return {
-            'input_files': self._input_files,
             'properties': self._properties,
         }
 

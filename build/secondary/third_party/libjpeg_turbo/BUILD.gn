@@ -86,6 +86,7 @@ if (current_cpu == "x86" || current_cpu == "x64") {
 
     if (is_win) {
       defines += [ "MSVC" ]
+      include_dirs = [ "win" ]
       if (current_cpu == "x86") {
         defines += [ "WIN32" ]
       } else {
@@ -93,8 +94,10 @@ if (current_cpu == "x86" || current_cpu == "x64") {
       }
     } else if (is_mac || is_ios) {
       defines += [ "MACHO" ]
-    } else if (is_linux || is_android || is_fuchsia) {
+      include_dirs = [ "mac" ]
+    } else if (is_linux || is_android) {
       defines += [ "ELF" ]
+      include_dirs = [ "linux" ]
     }
   }
 }

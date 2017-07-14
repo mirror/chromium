@@ -127,7 +127,7 @@ void BufferedSpdyFramer::OnHeaderFrameEnd(SpdyStreamId stream_id,
   control_frame_fields_.reset(NULL);
 }
 
-void BufferedSpdyFramer::OnSettings() {
+void BufferedSpdyFramer::OnSettings(bool clear_persisted) {
   visitor_->OnSettings();
 }
 

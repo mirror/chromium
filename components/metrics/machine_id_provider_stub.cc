@@ -4,18 +4,20 @@
 
 #include "components/metrics/machine_id_provider.h"
 
-#include "base/logging.h"
-
 namespace metrics {
 
-// static
-bool MachineIdProvider::HasId() {
-  return false;
+MachineIdProvider::MachineIdProvider() {
+}
+
+MachineIdProvider::~MachineIdProvider() {
 }
 
 // static
+MachineIdProvider* MachineIdProvider::CreateInstance() {
+  return NULL;
+}
+
 std::string MachineIdProvider::GetMachineId() {
-  NOTREACHED();
   return std::string();
 }
 

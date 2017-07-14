@@ -73,8 +73,6 @@ class AX_EXPORT AXPlatformNodeDelegate {
   // has focus.
   virtual gfx::NativeViewAccessible GetFocus() = 0;
 
-  virtual ui::AXPlatformNode* GetFromNodeID(int32_t id) = 0;
-
   //
   // Events.
   //

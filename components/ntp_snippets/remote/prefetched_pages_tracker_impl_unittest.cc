@@ -141,8 +141,7 @@ TEST_F(PrefetchedPagesTrackerImplTest, ShouldDeletePrefetchedURLWhenNotified) {
 
   ASSERT_TRUE(
       tracker.PrefetchedOfflinePageExists(GURL("http://prefetched.com")));
-  tracker.OfflinePageDeleted(offline_pages::OfflinePageModel::DeletedPageInfo(
-      item.offline_id, item.client_id, "" /* request_origin */));
+  tracker.OfflinePageDeleted(item.offline_id, item.client_id);
   EXPECT_FALSE(
       tracker.PrefetchedOfflinePageExists(GURL("http://prefetched.com")));
 }
@@ -161,9 +160,8 @@ TEST_F(PrefetchedPagesTrackerImplTest,
 
   ASSERT_TRUE(
       tracker.PrefetchedOfflinePageExists(GURL("http://prefetched.com")));
-  tracker.OfflinePageDeleted(offline_pages::OfflinePageModel::DeletedPageInfo(
-      manually_downloaded_item.offline_id, manually_downloaded_item.client_id,
-      "" /* request_origin */));
+  tracker.OfflinePageDeleted(manually_downloaded_item.offline_id,
+                             manually_downloaded_item.client_id);
   EXPECT_TRUE(
       tracker.PrefetchedOfflinePageExists(GURL("http://prefetched.com")));
 }

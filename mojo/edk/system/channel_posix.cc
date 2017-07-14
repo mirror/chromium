@@ -133,9 +133,8 @@ class ChannelPosix : public Channel,
     if (write_error) {
       // Do not synchronously invoke OnError(). Write() may have been called by
       // the delegate and we don't want to re-enter it.
-      io_task_runner_->PostTask(
-          FROM_HERE,
-          base::Bind(&ChannelPosix::OnError, this, Error::kDisconnected));
+      io_task_runner_->PostTask(FROM_HERE,
+                                base::Bind(&ChannelPosix::OnError, this));
     }
   }
 
@@ -289,7 +288,7 @@ class ChannelPosix : public Channel,
       ScopedPlatformHandle accept_fd;
       ServerAcceptConnection(handle_.get(), &accept_fd);
       if (!accept_fd.is_valid()) {
-        OnError(Error::kConnectionFailed);
+        OnError();
         return;
       }
       handle_ = std::move(accept_fd);
@@ -300,7 +299,6 @@ class ChannelPosix : public Channel,
       return;
     }
 
-    bool validation_error = false;
     bool read_error = false;
     size_t next_read_size = 0;
     size_t buffer_capacity = 0;
@@ -319,7 +317,6 @@ class ChannelPosix : public Channel,
         total_bytes_read += bytes_read;
         if (!OnReadComplete(bytes_read, &next_read_size)) {
           read_error = true;
-          validation_error = true;
           break;
         }
       } else if (read_result == 0 ||
@@ -332,10 +329,8 @@ class ChannelPosix : public Channel,
     if (read_error) {
       // Stop receiving read notifications.
       read_watcher_.reset();
-      if (validation_error)
-        OnError(Error::kReceivedMalformedData);
-      else
-        OnError(Error::kDisconnected);
+
+      OnError();
     }
   }
 
@@ -348,7 +343,7 @@ class ChannelPosix : public Channel,
         reject_writes_ = write_error = true;
     }
     if (write_error)
-      OnError(Error::kDisconnected);
+      OnError();
   }
 
   // Attempts to write a message directly to the channel. If the full message

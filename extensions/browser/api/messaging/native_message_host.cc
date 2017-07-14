@@ -15,7 +15,7 @@ const char NativeMessageHost::kNotFoundError[] =
     "Specified native messaging host not found.";
 const char NativeMessageHost::kForbiddenError[] =
     "Access to the specified native messaging host is forbidden.";
-const char NativeMessageHost::kHostInputOutputError[] =
+const char NativeMessageHost::kHostInputOuputError[] =
     "Error when communicating with the native messaging host.";
 
 }  // extensions

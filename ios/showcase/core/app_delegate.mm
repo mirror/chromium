@@ -5,7 +5,6 @@
 #import "ios/showcase/core/app_delegate.h"
 
 #include "base/command_line.h"
-#include "base/i18n/icu_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #import "ios/showcase/core/showcase_model.h"
@@ -35,7 +34,6 @@
   base::CommandLine::Init(0, nullptr);
   ResourceBundle::InitSharedInstanceWithLocale(
       std::string(), nullptr, ResourceBundle::LOAD_COMMON_RESOURCES);
-  CHECK(base::i18n::InitializeICU());
 
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   [self setupUI];

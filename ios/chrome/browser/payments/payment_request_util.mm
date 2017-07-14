@@ -66,7 +66,7 @@ NSString* GetEmailLabelFromAutofillProfile(
 }
 
 NSString* GetAddressNotificationLabelFromAutofillProfile(
-    const payments::PaymentRequest& payment_request,
+    payments::PaymentRequest& payment_request,
     const autofill::AutofillProfile& profile) {
   base::string16 label =
       payment_request.profile_comparator()->GetStringForMissingShippingFields(
@@ -75,7 +75,7 @@ NSString* GetAddressNotificationLabelFromAutofillProfile(
 }
 
 NSString* GetPaymentMethodNotificationLabelFromPaymentMethod(
-    const payments::PaymentInstrument& payment_method,
+    payments::PaymentInstrument& payment_method,
     const std::vector<autofill::AutofillProfile*>& billing_profiles) {
   base::string16 label = payment_method.GetMissingInfoLabel();
   return !label.empty() ? base::SysUTF16ToNSString(label) : nil;
@@ -129,15 +129,6 @@ NSString* GetShippingOptionSelectorErrorMessage(
       NOTREACHED();
       return nil;
   }
-}
-
-NSString* GetContactNotificationLabelFromAutofillProfile(
-    const payments::PaymentRequest& payment_request,
-    const autofill::AutofillProfile& profile) {
-  const base::string16 notification =
-      payment_request.profile_comparator()->GetStringForMissingContactFields(
-          profile);
-  return !notification.empty() ? base::SysUTF16ToNSString(notification) : nil;
 }
 
 }  // namespace payment_request_util

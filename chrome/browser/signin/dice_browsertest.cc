@@ -57,7 +57,6 @@ const char kGoogleSignoutResponseHeader[] = "Google-Accounts-SignOut";
 const char kMainEmail[] = "main_email@example.com";
 const char kMainGaiaID[] = "main_gaia_id";
 const char kOAuth2TokenExchangeURL[] = "/oauth2/v4/token";
-const char kOAuth2TokenRevokeURL[] = "/o/oauth2/revoke";
 const char kSecondaryEmail[] = "secondary_email@example.com";
 const char kSecondaryGaiaID[] = "secondary_gaia_id";
 const char kSigninURL[] = "/signin";
@@ -153,26 +152,12 @@ std::unique_ptr<HttpResponse> HandleOAuth2TokenExchangeURL(
   std::string content =
       "{"
       "  \"access_token\":\"access_token\","
-      "  \"refresh_token\":\"new_refresh_token\","
+      "  \"refresh_token\":\"refresh_token\","
       "  \"expires_in\":9999"
       "}";
 
   http_response->set_content(content);
   http_response->set_content_type("text/plain");
-  http_response->AddCustomHeader("Cache-Control", "no-store");
-  return std::move(http_response);
-}
-
-// Handler for OAuth2 token revocation.
-std::unique_ptr<HttpResponse> HandleOAuth2TokenRevokeURL(
-    int* out_token_revoked_count,
-    const HttpRequest& request) {
-  if (!net::test_server::ShouldHandle(request, kOAuth2TokenRevokeURL))
-    return nullptr;
-
-  ++(*out_token_revoked_count);
-
-  std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
   http_response->AddCustomHeader("Cache-Control", "no-store");
   return std::move(http_response);
 }
@@ -187,17 +172,13 @@ class DiceBrowserTest : public InProcessBrowserTest,
   DiceBrowserTest()
       : https_server_(net::EmbeddedTestServer::TYPE_HTTPS),
         token_requested_(false),
-        refresh_token_available_(false),
-        token_revoked_notification_count_(0),
-        token_revoked_count_(0) {
+        refresh_token_available_(false) {
     https_server_.RegisterDefaultHandler(
         base::Bind(&FakeGaia::HandleSigninURL));
     https_server_.RegisterDefaultHandler(
         base::Bind(&FakeGaia::HandleSignoutURL));
     https_server_.RegisterDefaultHandler(
         base::Bind(&FakeGaia::HandleOAuth2TokenExchangeURL, &token_requested_));
-    https_server_.RegisterDefaultHandler(base::Bind(
-        &FakeGaia::HandleOAuth2TokenRevokeURL, &token_revoked_count_));
   }
 
   // Navigates to the given path on the test server.
@@ -238,7 +219,7 @@ class DiceBrowserTest : public InProcessBrowserTest,
     // Signin main account.
     SigninManager* signin_manager = GetSigninManager();
     signin_manager->StartSignInWithRefreshToken(
-        "existing_refresh_token", kMainGaiaID, kMainEmail, "password",
+        "refresh_token", kMainGaiaID, kMainEmail, "password",
         SigninManager::OAuthTokenFetchedCallback());
     ASSERT_TRUE(GetTokenService()->RefreshTokenIsAvailable(GetMainAccountID()));
     ASSERT_EQ(GetMainAccountID(), signin_manager->GetAuthenticatedAccountId());
@@ -274,7 +255,6 @@ class DiceBrowserTest : public InProcessBrowserTest,
     const GURL& base_url = https_server_.base_url();
     command_line->AppendSwitchASCII(switches::kGaiaUrl, base_url.spec());
     command_line->AppendSwitchASCII(switches::kGoogleApisUrl, base_url.spec());
-    command_line->AppendSwitchASCII(switches::kLsoUrl, base_url.spec());
     switches::EnableAccountConsistencyDiceForTesting(command_line);
   }
 
@@ -294,15 +274,9 @@ class DiceBrowserTest : public InProcessBrowserTest,
       refresh_token_available_ = true;
   }
 
-  void OnRefreshTokenRevoked(const std::string& account_id) override {
-    ++token_revoked_notification_count_;
-  }
-
   net::EmbeddedTestServer https_server_;
   bool token_requested_;
   bool refresh_token_available_;
-  int token_revoked_notification_count_;
-  int token_revoked_count_;
 };
 
 // Checks that signin on Gaia triggers the fetch for a refresh token.
@@ -355,9 +329,6 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, Reauth) {
   EXPECT_TRUE(refresh_token_available_);
   EXPECT_EQ(GetMainAccountID(),
             GetSigninManager()->GetAuthenticatedAccountId());
-  // Old token must be revoked silently.
-  EXPECT_EQ(0, token_revoked_notification_count_);
-  EXPECT_EQ(1, token_revoked_count_);
 }
 
 // Checks that the Dice signout flow works and deletes all tokens.
@@ -373,8 +344,6 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, SignoutMainAccount) {
   EXPECT_FALSE(GetTokenService()->RefreshTokenIsAvailable(GetMainAccountID()));
   EXPECT_FALSE(
       GetTokenService()->RefreshTokenIsAvailable(GetSecondaryAccountID()));
-  EXPECT_EQ(2, token_revoked_notification_count_);
-  EXPECT_EQ(2, token_revoked_count_);
 }
 
 // Checks that signing out from a secondary account does not delete the main
@@ -393,8 +362,6 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, SignoutSecondaryAccount) {
   EXPECT_TRUE(GetTokenService()->RefreshTokenIsAvailable(GetMainAccountID()));
   EXPECT_FALSE(
       GetTokenService()->RefreshTokenIsAvailable(GetSecondaryAccountID()));
-  EXPECT_EQ(1, token_revoked_notification_count_);
-  EXPECT_EQ(1, token_revoked_count_);
 }
 
 // Checks that the Dice signout flow works and deletes all tokens.
@@ -410,6 +377,4 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, SignoutAllAccounts) {
   EXPECT_FALSE(GetTokenService()->RefreshTokenIsAvailable(GetMainAccountID()));
   EXPECT_FALSE(
       GetTokenService()->RefreshTokenIsAvailable(GetSecondaryAccountID()));
-  EXPECT_EQ(2, token_revoked_notification_count_);
-  EXPECT_EQ(2, token_revoked_count_);
 }

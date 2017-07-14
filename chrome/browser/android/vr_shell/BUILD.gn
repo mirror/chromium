@@ -61,7 +61,6 @@ static_library("vr_android") {
     "//content/public/browser",
     "//content/public/common",
     "//device/gamepad",
-    "//device/geolocation/public/interfaces",
     "//device/vr",
     "//services/ui/public/cpp/gpu",
     "//ui/android",

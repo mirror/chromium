@@ -38,7 +38,6 @@
 #include "SkTypeface.h"
 
 #include "build/build_config.h"
-#include "platform/FontFamilyNames.h"
 #include "platform/Language.h"
 #include "platform/fonts/AlternateFontFamily.h"
 #include "platform/fonts/FontCache.h"
@@ -157,63 +156,59 @@ PassRefPtr<SimpleFontData> FontCache::GetLastResortFallbackFont(
   // We should at least have Sans or Arial which is the last resort fallback of
   // SkFontHost ports.
   if (!font_platform_data) {
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontFaceCreationParams,
-                                    sans_creation_params,
-                                    (FontFamilyNames::Sans));
+    DEFINE_STATIC_LOCAL(const FontFaceCreationParams, sans_creation_params,
+                        (AtomicString("Sans")));
     font_platform_data = GetFontPlatformData(description, sans_creation_params,
                                              AlternateFontName::kLastResort);
   }
   if (!font_platform_data) {
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontFaceCreationParams,
-                                    arial_creation_params,
-                                    (FontFamilyNames::Arial));
+    DEFINE_STATIC_LOCAL(const FontFaceCreationParams, arial_creation_params,
+                        (AtomicString("Arial")));
     font_platform_data = GetFontPlatformData(description, arial_creation_params,
                                              AlternateFontName::kLastResort);
   }
 #if defined(OS_WIN)
   // Try some more Windows-specific fallbacks.
   if (!font_platform_data) {
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontFaceCreationParams,
-                                    msuigothic_creation_params,
-                                    (FontFamilyNames::MS_UI_Gothic));
+    DEFINE_STATIC_LOCAL(const FontFaceCreationParams,
+                        msuigothic_creation_params,
+                        (AtomicString("MS UI Gothic")));
     font_platform_data =
         GetFontPlatformData(description, msuigothic_creation_params,
                             AlternateFontName::kLastResort);
   }
   if (!font_platform_data) {
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontFaceCreationParams,
-                                    mssansserif_creation_params,
-                                    (FontFamilyNames::Microsoft_Sans_Serif));
+    DEFINE_STATIC_LOCAL(const FontFaceCreationParams,
+                        mssansserif_creation_params,
+                        (AtomicString("Microsoft Sans Serif")));
     font_platform_data =
         GetFontPlatformData(description, mssansserif_creation_params,
                             AlternateFontName::kLastResort);
   }
   if (!font_platform_data) {
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontFaceCreationParams,
-                                    segoeui_creation_params,
-                                    (FontFamilyNames::Segoe_UI));
+    DEFINE_STATIC_LOCAL(const FontFaceCreationParams, segoeui_creation_params,
+                        (AtomicString("Segoe UI")));
     font_platform_data = GetFontPlatformData(
         description, segoeui_creation_params, AlternateFontName::kLastResort);
   }
   if (!font_platform_data) {
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontFaceCreationParams,
-                                    calibri_creation_params,
-                                    (FontFamilyNames::Calibri));
+    DEFINE_STATIC_LOCAL(const FontFaceCreationParams, calibri_creation_params,
+                        (AtomicString("Calibri")));
     font_platform_data = GetFontPlatformData(
         description, calibri_creation_params, AlternateFontName::kLastResort);
   }
   if (!font_platform_data) {
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontFaceCreationParams,
-                                    timesnewroman_creation_params,
-                                    (FontFamilyNames::Times_New_Roman));
+    DEFINE_STATIC_LOCAL(const FontFaceCreationParams,
+                        timesnewroman_creation_params,
+                        (AtomicString("Times New Roman")));
     font_platform_data =
         GetFontPlatformData(description, timesnewroman_creation_params,
                             AlternateFontName::kLastResort);
   }
   if (!font_platform_data) {
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontFaceCreationParams,
-                                    couriernew_creation_params,
-                                    (FontFamilyNames::Courier_New));
+    DEFINE_STATIC_LOCAL(const FontFaceCreationParams,
+                        couriernew_creation_params,
+                        (AtomicString("Courier New")));
     font_platform_data =
         GetFontPlatformData(description, couriernew_creation_params,
                             AlternateFontName::kLastResort);

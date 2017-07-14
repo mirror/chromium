@@ -14,138 +14,136 @@ suite('SiteDetails', function() {
    * An example pref with 1 pref in each category.
    * @type {SiteSettingsPref}
    */
-  var prefs;
+  var prefs = {
+    defaults: {
+      auto_downloads: {
+        setting: settings.ContentSetting.ASK,
+      },
+      background_sync: {
+        setting: settings.ContentSetting.ALLOW,
+      },
+      camera: {
+        setting: settings.ContentSetting.ASK,
+      },
+      geolocation: {
+        setting: settings.ContentSetting.ASK,
+      },
+      images: {
+        setting: settings.ContentSetting.ALLOW,
+      },
+      javascript: {
+        setting: settings.ContentSetting.ALLOW,
+      },
+      mic: {
+        setting: settings.ContentSetting.ASK,
+      },
+      notifications: {
+        setting: settings.ContentSetting.ASK,
+      },
+      plugins: {
+        setting: settings.ContentSetting.ASK,
+      },
+      popups: {
+        setting: settings.ContentSetting.BLOCK,
+      },
+      unsandboxed_plugins: {
+        setting: settings.ContentSetting.ASK,
+      },
+    },
+    exceptions: {
+      auto_downloads: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'preference',
+        },
+      ],
+      background_sync: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'preference',
+        },
+      ],
+      camera: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'extension',
+        },
+      ],
+      geolocation: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.BLOCK,
+          source: 'policy',
+        },
+      ],
+      images: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.DEFAULT,
+          source: 'preference',
+        },
+      ],
+      javascript: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'preference',
+        },
+      ],
+      mic: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'preference',
+        },
+      ],
+      notifications: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'preference',
+        },
+      ],
+      plugins: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'preference',
+        },
+      ],
+      popups: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.DEFAULT,
+          source: 'preference',
+        },
+      ],
+      unsandboxed_plugins: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: settings.ContentSetting.ALLOW,
+          source: 'preference',
+        },
+      ],
+    }
+  };
 
   // Initialize a site-details before each test.
   setup(function() {
-    prefs = {
-      defaults: {
-        auto_downloads: {
-          setting: settings.ContentSetting.ASK,
-        },
-        background_sync: {
-          setting: settings.ContentSetting.ALLOW,
-        },
-        camera: {
-          setting: settings.ContentSetting.ASK,
-        },
-        geolocation: {
-          setting: settings.ContentSetting.ASK,
-        },
-        images: {
-          setting: settings.ContentSetting.ALLOW,
-        },
-        javascript: {
-          setting: settings.ContentSetting.ALLOW,
-        },
-        mic: {
-          setting: settings.ContentSetting.ASK,
-        },
-        notifications: {
-          setting: settings.ContentSetting.ASK,
-        },
-        plugins: {
-          setting: settings.ContentSetting.ASK,
-        },
-        popups: {
-          setting: settings.ContentSetting.BLOCK,
-        },
-        unsandboxed_plugins: {
-          setting: settings.ContentSetting.ASK,
-        },
-      },
-      exceptions: {
-        auto_downloads: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
-          },
-        ],
-        background_sync: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
-          },
-        ],
-        camera: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'extension',
-          },
-        ],
-        geolocation: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.BLOCK,
-            source: 'policy',
-          },
-        ],
-        images: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.DEFAULT,
-            source: 'preference',
-          },
-        ],
-        javascript: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
-          },
-        ],
-        mic: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
-          },
-        ],
-        notifications: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
-          },
-        ],
-        plugins: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
-          },
-        ],
-        popups: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.DEFAULT,
-            source: 'preference',
-          },
-        ],
-        unsandboxed_plugins: [
-          {
-            embeddingOrigin: 'https://foo-allow.com:443',
-            origin: 'https://foo-allow.com:443',
-            setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
-          },
-        ],
-      }
-    };
-
     browserProxy = new TestSiteSettingsPrefsBrowserProxy();
     settings.SiteSettingsPrefsBrowserProxyImpl.instance_ = browserProxy;
     PolymerTest.clearBody();
@@ -203,5 +201,31 @@ suite('SiteDetails', function() {
                 expectedSetting, siteDetailsPermission.$.permission.value);
           });
     });
+  });
+
+  test('show confirmation dialog on reset settings', function() {
+    browserProxy.setPrefs(prefs);
+    testElement.origin = 'https://foo-allow.com:443';
+
+    testElement.$.clearAndReset.dispatchEvent(new CustomEvent('tap'));
+    assertTrue(testElement.$.confirmDeleteDialog.open);
+    var actionButtonList =
+        testElement.$.confirmDeleteDialog.getElementsByClassName(
+            'action-button');
+    assertEquals(1, actionButtonList.length);
+    actionButtonList[0].dispatchEvent(new CustomEvent('tap'));
+    assertFalse(testElement.$.confirmDeleteDialog.open);
+
+    var categoryList = Array.prototype.map.call(
+        testElement.root.querySelectorAll('site-details-permission'),
+        (element) => {
+          return element.category;
+        });
+
+    return browserProxy.whenCalled('setOriginPermissions').then(function(args) {
+      assertEquals(testElement.origin, args[0]);
+      assertDeepEquals(categoryList, args[1]);
+      assertEquals(settings.ContentSetting.DEFAULT, args[2]);
+    })
   });
 });

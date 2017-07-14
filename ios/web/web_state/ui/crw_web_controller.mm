@@ -3156,20 +3156,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
   if ([self shouldCancelLoadForCancelledError:error]) {
     [self loadCancelled];
     [[self sessionController] discardNonCommittedItems];
-    // If discarding the non-committed entries results in native content URL,
-    // reload it in its native view.
-    if (!self.nativeController) {
-      GURL lastCommittedURL = self.webState->GetLastCommittedURL();
-      if ([self shouldLoadURLInNativeView:lastCommittedURL]) {
-        [self loadCurrentURLInNativeView];
-      }
-    }
   }
 }
 
 - (BOOL)shouldCancelLoadForCancelledError:(NSError*)error {
-  DCHECK(error.code == NSURLErrorCancelled ||
-         error.code == web::kWebKitErrorFrameLoadInterruptedByPolicyChange);
+  DCHECK_EQ(error.code, NSURLErrorCancelled);
   // Do not cancel the load if it is for an app specific URL, as such errors
   // are produced during the app specific URL load process.
   const GURL errorURL =
@@ -4511,7 +4502,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // Handle load cancellation for directly cancelled navigations without
   // handling their potential errors. Otherwise, handle the error.
   if ([_pendingNavigationInfo cancelled]) {
-    [self handleCancelledError:error];
+    [self loadCancelled];
   } else {
     error = WKWebViewErrorWithSource(error, PROVISIONAL_LOAD);
 

@@ -10,8 +10,6 @@ namespace test {
 void EmptyClient::OnServiceInitialized(
     const std::vector<std::string>& outstanding_download_guids) {}
 
-void EmptyClient::OnServiceUnavailable() {}
-
 Client::ShouldDownload EmptyClient::OnDownloadStarted(
     const std::string& guid,
     const std::vector<GURL>& url_chain,

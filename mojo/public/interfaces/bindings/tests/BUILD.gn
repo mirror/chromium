@@ -71,8 +71,6 @@ mojom("test_interfaces") {
 
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
   use_once_callback = false
-
-  support_lazy_serialization = true
 }
 
 component("test_export_component") {
@@ -193,8 +191,6 @@ mojom("test_struct_traits_interfaces") {
 
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
   use_once_callback = false
-
-  support_lazy_serialization = true
 }
 
 mojom("test_associated_interfaces") {

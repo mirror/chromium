@@ -7,7 +7,6 @@
 #include "core/dom/Element.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
-#include "core/layout/LayoutView.h"
 #include "core/loader/EmptyClients.h"
 #include "core/page/Page.h"
 #include "core/page/PagePopupClient.h"
@@ -33,10 +32,6 @@ class ValidationMessageChromeClient : public EmptyChromeClient {
 
   void ScheduleAnimation(const PlatformFrameView* frame_view) override {
     main_chrome_client_->ScheduleAnimation(frame_view);
-  }
-
-  float WindowToViewportScalar(const float scalar_value) const override {
-    return main_chrome_client_->WindowToViewportScalar(scalar_value);
   }
 
  private:
@@ -99,11 +94,6 @@ void ValidationMessageOverlayDelegate::UpdateFrameViewState(
     page_->GetVisualViewport().SetSize(view_size);
   }
   AdjustBubblePosition(view_size);
-
-  // This manual invalidation is necessary to avoid a DCHECK failure in
-  // FindVisualRectNeedingUpdateScopeBase::CheckVisualRect().
-  FrameView().GetLayoutView()->SetMayNeedPaintInvalidationSubtree();
-
   FrameView().UpdateAllLifecyclePhases();
 }
 
@@ -135,11 +125,6 @@ void ValidationMessageOverlayDelegate::EnsurePage(const PageOverlay& overlay,
 
   RefPtr<SharedBuffer> data = SharedBuffer::Create();
   WriteDocument(data.Get());
-  float zoom_factor = anchor_->GetDocument().GetFrame()->PageZoomFactor();
-  frame->SetPageZoomFactor(zoom_factor);
-  // Propagate deprecated DSF for platforms without use-zoom-for-dsf.
-  page_->SetDeviceScaleFactorDeprecated(
-      main_page_->DeviceScaleFactorDeprecated());
   frame->Loader().Load(
       FrameLoadRequest(nullptr, ResourceRequest(BlankURL()),
                        SubstituteData(data, "text/html", "UTF-8", KURL(),
@@ -154,11 +139,8 @@ void ValidationMessageOverlayDelegate::EnsurePage(const PageOverlay& overlay,
   // Add one because the content sometimes exceeds the exact width due to
   // rounding errors.
   bubble_size_.Expand(1, 0);
-  container.SetInlineStyleProperty(CSSPropertyMinWidth,
-                                   bubble_size_.Width() / zoom_factor,
+  container.SetInlineStyleProperty(CSSPropertyMinWidth, bubble_size_.Width(),
                                    CSSPrimitiveValue::UnitType::kPixels);
-  container.setAttribute(HTMLNames::classAttr, "shown-initially");
-  FrameView().UpdateAllLifecyclePhases();
 }
 
 void ValidationMessageOverlayDelegate::WriteDocument(SharedBuffer* data) {
@@ -207,7 +189,6 @@ Element& ValidationMessageOverlayDelegate::GetElementById(
 
 void ValidationMessageOverlayDelegate::AdjustBubblePosition(
     const IntSize& view_size) {
-  float zoom_factor = ToLocalFrame(page_->MainFrame())->PageZoomFactor();
   IntRect anchor_rect = anchor_->VisibleBoundsInVisualViewport();
   bool show_bottom_arrow = false;
   double bubble_y = anchor_rect.MaxY();
@@ -223,54 +204,50 @@ void ValidationMessageOverlayDelegate::AdjustBubblePosition(
     bubble_x = view_size.Width() - bubble_size_.Width();
 
   Element& container = GetElementById("container");
-  container.SetInlineStyleProperty(CSSPropertyLeft, bubble_x / zoom_factor,
+  container.SetInlineStyleProperty(CSSPropertyLeft, bubble_x,
                                    CSSPrimitiveValue::UnitType::kPixels);
-  container.SetInlineStyleProperty(CSSPropertyTop, bubble_y / zoom_factor,
+  container.SetInlineStyleProperty(CSSPropertyTop, bubble_y,
                                    CSSPrimitiveValue::UnitType::kPixels);
-  if (show_bottom_arrow) {
-    container.setAttribute(HTMLNames::classAttr, "shown-fully bottom-arrow");
-    container.SetInlineStyleProperty(CSSPropertyTransformOrigin,
-                                     "center bottom");
-  } else {
-    container.setAttribute(HTMLNames::classAttr, "shown-fully");
-    container.SetInlineStyleProperty(CSSPropertyTransformOrigin, "center top");
-  }
+  container.SetInlineStyleProperty(CSSPropertyOpacity, 1.0,
+                                   CSSPrimitiveValue::UnitType::kNumber);
+  if (show_bottom_arrow)
+    container.setAttribute(HTMLNames::classAttr, "bottom-arrow");
+  else
+    container.removeAttribute(HTMLNames::classAttr);
 
   // Should match to --arrow-size in validation_bubble.css.
   const int kArrowSize = 8;
   const int kArrowMargin = 10;
   const int kMinArrowAnchorX = kArrowSize + kArrowMargin;
   double max_arrow_anchor_x =
-      bubble_size_.Width() - (kArrowSize + kArrowMargin) * zoom_factor;
+      bubble_size_.Width() - (kArrowSize + kArrowMargin);
   double arrow_anchor_x;
   const int kOffsetToAnchorRect = 8;
   double anchor_rect_center = anchor_rect.X() + anchor_rect.Width() / 2;
   if (!Locale::DefaultLocale().IsRTL()) {
-    double anchor_rect_left =
-        anchor_rect.X() + kOffsetToAnchorRect * zoom_factor;
+    double anchor_rect_left = anchor_rect.X() + kOffsetToAnchorRect;
     if (anchor_rect_left > anchor_rect_center)
       anchor_rect_left = anchor_rect_center;
 
-    arrow_anchor_x = kMinArrowAnchorX * zoom_factor;
+    arrow_anchor_x = kMinArrowAnchorX;
     if (bubble_x + arrow_anchor_x < anchor_rect_left) {
       arrow_anchor_x = anchor_rect_left - bubble_x;
       if (arrow_anchor_x > max_arrow_anchor_x)
         arrow_anchor_x = max_arrow_anchor_x;
     }
   } else {
-    double anchor_rect_right =
-        anchor_rect.MaxX() - kOffsetToAnchorRect * zoom_factor;
+    double anchor_rect_right = anchor_rect.MaxX() - kOffsetToAnchorRect;
     if (anchor_rect_right < anchor_rect_center)
       anchor_rect_right = anchor_rect_center;
 
     arrow_anchor_x = max_arrow_anchor_x;
     if (bubble_x + arrow_anchor_x > anchor_rect_right) {
       arrow_anchor_x = anchor_rect_right - bubble_x;
-      if (arrow_anchor_x < kMinArrowAnchorX * zoom_factor)
-        arrow_anchor_x = kMinArrowAnchorX * zoom_factor;
+      if (arrow_anchor_x < kMinArrowAnchorX)
+        arrow_anchor_x = kMinArrowAnchorX;
     }
   }
-  double arrow_x = arrow_anchor_x / zoom_factor - kArrowSize;
+  double arrow_x = arrow_anchor_x - kArrowSize;
   if (show_bottom_arrow) {
     GetElementById("outer-arrow-bottom")
         .SetInlineStyleProperty(CSSPropertyLeft, arrow_x,

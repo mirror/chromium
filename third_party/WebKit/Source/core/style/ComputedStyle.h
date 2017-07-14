@@ -2249,8 +2249,6 @@ class ComputedStyle : public ComputedStyleBase,
   bool RequireTransformOrigin(ApplyTransformOrigin apply_origin,
                               ApplyMotionPath) const;
 
-  InterpolationQuality GetInterpolationQuality() const;
-
  private:
   void SetVisitedLinkBackgroundColor(const StyleColor& v) {
     SetVisitedLinkBackgroundColorInternal(v);

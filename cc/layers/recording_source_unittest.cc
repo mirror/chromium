@@ -29,6 +29,13 @@ std::unique_ptr<FakeRecordingSource> CreateRecordingSource(
   return recording_source;
 }
 
+scoped_refptr<RasterSource> CreateRasterSource(
+    FakeRecordingSource* recording_source) {
+  bool can_use_lcd_text = true;
+  return RasterSource::CreateFromRecordingSource(recording_source,
+                                                 can_use_lcd_text);
+}
+
 TEST(RecordingSourceTest, DiscardableImagesWithTransform) {
   gfx::Rect recorded_viewport(256, 256);
 
@@ -63,8 +70,10 @@ TEST(RecordingSourceTest, DiscardableImagesWithTransform) {
                                                   rotate_transform);
   recording_source->Rerecord();
 
+  bool can_use_lcd_text = true;
   scoped_refptr<RasterSource> raster_source =
-      recording_source->CreateRasterSource();
+      RasterSource::CreateFromRecordingSource(recording_source.get(),
+                                              can_use_lcd_text);
 
   // Tile sized iterators. These should find only one pixel ref.
   {
@@ -125,7 +134,7 @@ TEST(RecordingSourceTest, EmptyImages) {
   recording_source->Rerecord();
 
   scoped_refptr<RasterSource> raster_source =
-      recording_source->CreateRasterSource();
+      CreateRasterSource(recording_source.get());
 
   // Tile sized iterators.
   {
@@ -179,7 +188,7 @@ TEST(RecordingSourceTest, NoDiscardableImages) {
   recording_source->Rerecord();
 
   scoped_refptr<RasterSource> raster_source =
-      recording_source->CreateRasterSource();
+      CreateRasterSource(recording_source.get());
 
   // Tile sized iterators.
   {
@@ -228,7 +237,7 @@ TEST(RecordingSourceTest, DiscardableImages) {
   recording_source->Rerecord();
 
   scoped_refptr<RasterSource> raster_source =
-      recording_source->CreateRasterSource();
+      CreateRasterSource(recording_source.get());
 
   // Tile sized iterators. These should find only one image.
   {
@@ -300,7 +309,7 @@ TEST(RecordingSourceTest, DiscardableImagesBaseNonDiscardable) {
   recording_source->Rerecord();
 
   scoped_refptr<RasterSource> raster_source =
-      recording_source->CreateRasterSource();
+      CreateRasterSource(recording_source.get());
 
   // Tile sized iterators. These should find only one image.
   {

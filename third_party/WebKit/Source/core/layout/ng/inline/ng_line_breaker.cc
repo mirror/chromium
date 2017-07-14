@@ -56,16 +56,13 @@ std::pair<unsigned, LayoutUnit> ShapeLineMock(
 
 }  // namespace
 
-NGLineBreaker::NGLineBreaker(
-    NGInlineNode node,
-    NGConstraintSpace* space,
-    NGFragmentBuilder* container_builder,
-    Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats,
-    const NGInlineBreakToken* break_token)
+NGLineBreaker::NGLineBreaker(NGInlineNode node,
+                             NGConstraintSpace* space,
+                             NGFragmentBuilder* container_builder,
+                             const NGInlineBreakToken* break_token)
     : node_(node),
       constraint_space_(space),
       container_builder_(container_builder),
-      unpositioned_floats_(unpositioned_floats),
       item_index_(0),
       offset_(0),
       break_iterator_(node.Text()),
@@ -167,7 +164,7 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
     if (item.Type() == NGInlineItem::kText) {
       state = HandleText(*item_results, item, item_result);
     } else if (item.Type() == NGInlineItem::kAtomicInline) {
-      state = HandleAtomicInline(item, item_result, *line_info);
+      state = HandleAtomicInline(item, item_result);
     } else if (item.Type() == NGInlineItem::kControl) {
       state = HandleControlItem(item, item_result);
       if (state == LineBreakState::kForcedBreak) {
@@ -352,26 +349,13 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleControlItem(
 
 NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
     const NGInlineItem& item,
-    NGInlineItemResult* item_result,
-    const NGLineInfo& line_info) {
+    NGInlineItemResult* item_result) {
   DCHECK_EQ(item.Type(), NGInlineItem::kAtomicInline);
   should_create_line_box_ = true;
 
-  LayoutBox* layout_box = ToLayoutBox(item.GetLayoutObject());
-  NGBlockNode node = NGBlockNode(layout_box);
+  NGBlockNode node = NGBlockNode(ToLayoutBox(item.GetLayoutObject()));
   const ComputedStyle& style = node.Style();
   NGConstraintSpaceBuilder constraint_space_builder(constraint_space_);
-  // Request to compute baseline during the layout, except when we know the box
-  // would synthesize box-baseline.
-  if (NGBaseline::ShouldPropagateBaselines(layout_box)) {
-    constraint_space_builder.AddBaselineRequest(
-        line_info.UseFirstLineStyle()
-            ? NGBaselineAlgorithmType::kAtomicInlineForFirstLine
-            : NGBaselineAlgorithmType::kAtomicInline,
-        IsHorizontalWritingMode(constraint_space_->WritingMode())
-            ? FontBaseline::kAlphabeticBaseline
-            : FontBaseline::kIdeographicBaseline);
-  }
   RefPtr<NGConstraintSpace> constraint_space =
       constraint_space_builder.SetIsNewFormattingContext(true)
           .SetIsShrinkToFit(true)
@@ -439,20 +423,17 @@ void NGLineBreaker::HandleFloat(const NGInlineItem& item,
   // I.e. we may not have come across any text yet, in order to be able to
   // resolve the BFC position.
   bool float_does_not_fit =
-      (!constraint_space_->FloatsBfcOffset() ||
-       container_builder_->BfcOffset()) &&
-      (!HasAvailableWidth() ||
-       position_ + inline_size + margins.InlineSum() > AvailableWidth());
+      !HasAvailableWidth() ||
+      position_ + inline_size + margins.InlineSum() > AvailableWidth();
 
   // Check if we already have a pending float. That's because a float cannot be
   // higher than any block or floated box generated before.
-  if (!unpositioned_floats_->IsEmpty() || float_does_not_fit) {
-    unpositioned_floats_->push_back(std::move(unpositioned_float));
+  if (!container_builder_->UnpositionedFloats().IsEmpty() ||
+      float_does_not_fit) {
+    container_builder_->AddUnpositionedFloat(unpositioned_float);
   } else {
     NGLogicalOffset container_bfc_offset =
-        container_builder_->BfcOffset()
-            ? container_builder_->BfcOffset().value()
-            : constraint_space_->FloatsBfcOffset().value();
+        container_builder_->BfcOffset().value();
     LayoutUnit origin_block_offset =
         container_bfc_offset.block_offset + content_offset_.block_offset;
 
@@ -462,8 +443,7 @@ void NGLineBreaker::HandleFloat(const NGInlineItem& item,
 
     // We need to recalculate the available_width as the float probably
     // consumed space on the line.
-    if (container_builder_->BfcOffset())
-      UpdateAvailableWidth();
+    UpdateAvailableWidth();
   }
 
   // Floats are already positioned in the container_builder.

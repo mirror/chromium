@@ -20,7 +20,6 @@ typedef NS_ENUM(NSInteger, SessionState) {
   SessionConnected,
   SessionFailed,
   SessionClosed,
-  SessionCancelled,
 };
 
 // Session states that map to |remoting::protocol::ConnectionToHost::Error|.
@@ -38,7 +37,6 @@ typedef NS_ENUM(NSInteger, SessionErrorCode) {
   SessionErrorMaxSessionLength,
   SessionErrorHostConfigurationError,
   SessionErrorUnknownError,
-  SessionErrorOAuthTokenInvalid,  // Custom for app.
 };
 
 // The current state of a session and data needed for session context.

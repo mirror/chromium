@@ -189,18 +189,16 @@ bool PaymentDetails::operator!=(const PaymentDetails& other) const {
   return !(*this == other);
 }
 
-bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
-                                         bool requires_total) {
+bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value) {
   this->display_items.clear();
   this->shipping_options.clear();
   this->modifiers.clear();
 
   const base::DictionaryValue* total_dict = nullptr;
-  if (!value.GetDictionary(kPaymentDetailsTotal, &total_dict) &&
-      requires_total) {
+  if (!value.GetDictionary(kPaymentDetailsTotal, &total_dict)) {
     return false;
   }
-  if (total_dict && !this->total.FromDictionaryValue(*total_dict)) {
+  if (!this->total.FromDictionaryValue(*total_dict)) {
     return false;
   }
 
@@ -326,8 +324,7 @@ bool PaymentRequest::FromDictionaryValue(const base::DictionaryValue& value) {
   // Parse the payment details.
   const base::DictionaryValue* payment_details_dict = nullptr;
   if (!value.GetDictionary(kPaymentRequestDetails, &payment_details_dict) ||
-      !this->details.FromDictionaryValue(*payment_details_dict,
-                                         /*requires_total=*/true)) {
+      !this->details.FromDictionaryValue(*payment_details_dict)) {
     return false;
   }
 

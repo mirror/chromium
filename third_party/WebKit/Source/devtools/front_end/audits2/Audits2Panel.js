@@ -112,9 +112,6 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
    * @return {?string}
    */
   _unauditablePageMessage() {
-    if (!this._manager)
-      return null;
-
     var inspectedURL = SDK.targetManager.mainTarget().inspectedURL();
     if (/^about:/.test(inspectedURL))
       return Common.UIString('Cannot audit about:* pages. Navigate to a different page to start an audit.');

@@ -176,13 +176,9 @@ void MaybeShowInvertBubbleView(BrowserView* browser_view) {
   if (color_utils::IsInvertedColorScheme() && anchor && anchor->GetWidget() &&
       !pref_service->GetBoolean(prefs::kInvertNotificationShown)) {
     pref_service->SetBoolean(prefs::kInvertNotificationShown, true);
-    ShowInvertBubbleView(browser, anchor);
+    InvertBubbleView* delegate = new InvertBubbleView(browser, anchor);
+    views::BubbleDialogDelegateView::CreateBubble(delegate)->Show();
   }
-}
-
-void ShowInvertBubbleView(Browser* browser, views::View* anchor) {
-  InvertBubbleView* delegate = new InvertBubbleView(browser, anchor);
-  views::BubbleDialogDelegateView::CreateBubble(delegate)->Show();
 }
 
 }  // namespace chrome

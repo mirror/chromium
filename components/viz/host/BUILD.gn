@@ -2,9 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//components/viz/viz.gni")
-
-viz_component("host") {
+component("host") {
   defines = [ "VIZ_HOST_IMPLEMENTATION" ]
 
   sources = [
@@ -31,7 +29,7 @@ viz_component("host") {
   ]
 }
 
-viz_source_set("unit_tests") {
+source_set("unit_tests") {
   testonly = true
 
   sources = [

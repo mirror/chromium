@@ -61,6 +61,7 @@
 #include "cc/test/layer_test_common.h"
 #include "cc/test/layer_tree_test.h"
 #include "cc/test/skia_common.h"
+#include "cc/test/test_layer_tree_frame_sink.h"
 #include "cc/test/test_task_graph_runner.h"
 #include "cc/test/test_web_graphics_context_3d.h"
 #include "cc/trees/effect_node.h"
@@ -70,7 +71,6 @@
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/transform_node.h"
-#include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "media/base/media.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -3475,7 +3475,7 @@ void LayerTreeHostImplTest::SetupMouseMoveAtWithDeviceScale(
   host_impl_->active_tree()->DidBecomeActive();
 
   DrawFrame();
-  host_impl_->active_tree()->UpdateDrawProperties();
+  host_impl_->active_tree()->UpdateDrawProperties(false);
 
   ScrollbarAnimationController* scrollbar_animation_controller =
       host_impl_->ScrollbarAnimationControllerForElementId(
@@ -8414,7 +8414,8 @@ TEST_F(LayerTreeHostImplTest, FarAwayQuadsDontNeedAA) {
           scrolling_layer->element_id(), scroll_offset);
   host_impl_->ActivateSyncTree();
 
-  host_impl_->active_tree()->UpdateDrawProperties();
+  bool update_lcd_text = false;
+  host_impl_->active_tree()->UpdateDrawProperties(update_lcd_text);
   ASSERT_EQ(1u, host_impl_->active_tree()->GetRenderSurfaceList().size());
 
   TestFrameData frame;
@@ -8782,7 +8783,7 @@ TEST_F(LayerTreeHostImplTest, CreateETC1UIResource) {
 void ShutdownReleasesContext_Callback(
     std::unique_ptr<CopyOutputResult> result) {}
 
-class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
+class FrameSinkClient : public TestLayerTreeFrameSinkClient {
  public:
   explicit FrameSinkClient(
       scoped_refptr<ContextProvider> display_context_provider)
@@ -8812,7 +8813,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   constexpr bool synchronous_composite = true;
   constexpr bool disable_display_vsync = false;
   constexpr double refresh_rate = 60.0;
-  auto layer_tree_frame_sink = base::MakeUnique<viz::TestLayerTreeFrameSink>(
+  auto layer_tree_frame_sink = base::MakeUnique<TestLayerTreeFrameSink>(
       context_provider, TestContextProvider::CreateWorker(), nullptr, nullptr,
       RendererSettings(), base::ThreadTaskRunnerHandle::Get().get(),
       synchronous_composite, disable_display_vsync, refresh_rate);
@@ -10646,21 +10647,22 @@ TEST_F(LayerTreeHostImplTest, ExternalTileConstraintReflectedInPendingTree) {
   EXPECT_FALSE(host_impl_->CommitToActiveTree());
   const gfx::Size layer_size(100, 100);
   host_impl_->SetViewportSize(layer_size);
+  bool update_lcd_text = false;
 
   // Set up active and pending tree.
   host_impl_->CreatePendingTree();
   host_impl_->pending_tree()->SetRootLayerForTesting(
       LayerImpl::Create(host_impl_->pending_tree(), 1));
   host_impl_->pending_tree()->BuildPropertyTreesForTesting();
-  host_impl_->pending_tree()->UpdateDrawProperties();
+  host_impl_->pending_tree()->UpdateDrawProperties(update_lcd_text);
 
   host_impl_->ActivateSyncTree();
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  host_impl_->active_tree()->UpdateDrawProperties();
+  host_impl_->active_tree()->UpdateDrawProperties(update_lcd_text);
 
   host_impl_->CreatePendingTree();
-  host_impl_->pending_tree()->UpdateDrawProperties();
-  host_impl_->active_tree()->UpdateDrawProperties();
+  host_impl_->pending_tree()->UpdateDrawProperties(update_lcd_text);
+  host_impl_->active_tree()->UpdateDrawProperties(update_lcd_text);
 
   EXPECT_FALSE(host_impl_->pending_tree()->needs_update_draw_properties());
   EXPECT_FALSE(host_impl_->active_tree()->needs_update_draw_properties());
@@ -10683,8 +10685,10 @@ TEST_F(LayerTreeHostImplTest, ExternalViewportAffectsVisibleRects) {
                                  ->test_properties()
                                  ->children[0];
 
+  bool update_lcd_text = false;
+
   host_impl_->SetViewportSize(gfx::Size(90, 90));
-  host_impl_->active_tree()->UpdateDrawProperties();
+  host_impl_->active_tree()->UpdateDrawProperties(update_lcd_text);
   EXPECT_EQ(gfx::Rect(90, 90), content_layer->visible_layer_rect());
 
   gfx::Transform external_transform;
@@ -10714,8 +10718,10 @@ TEST_F(LayerTreeHostImplTest, ExternalTransformAffectsVisibleRects) {
                                  ->test_properties()
                                  ->children[0];
 
+  bool update_lcd_text = false;
+
   host_impl_->SetViewportSize(gfx::Size(50, 50));
-  host_impl_->active_tree()->UpdateDrawProperties();
+  host_impl_->active_tree()->UpdateDrawProperties(update_lcd_text);
   EXPECT_EQ(gfx::Rect(50, 50), content_layer->visible_layer_rect());
 
   gfx::Transform external_transform;
@@ -10760,8 +10766,10 @@ TEST_F(LayerTreeHostImplTest, ExternalTransformAffectsSublayerScaleFactor) {
   test_layer->test_properties()->transform = perspective_transform;
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
+  bool update_lcd_text = false;
+
   host_impl_->SetViewportSize(gfx::Size(50, 50));
-  host_impl_->active_tree()->UpdateDrawProperties();
+  host_impl_->active_tree()->UpdateDrawProperties(update_lcd_text);
   EffectNode* node =
       host_impl_->active_tree()->property_trees()->effect_tree.Node(
           test_layer->effect_tree_index());
@@ -12052,14 +12060,14 @@ TEST_F(LayerTreeHostImplTest, UpdatePageScaleFactorOnActiveTree) {
   EXPECT_EQ(pending_tree_node->post_local_scale_factor, 1.f);
   EXPECT_EQ(host_impl_->pending_tree()->current_page_scale_factor(), 2.f);
 
-  host_impl_->pending_tree()->UpdateDrawProperties();
+  host_impl_->pending_tree()->UpdateDrawProperties(false);
   pending_tree_node =
       host_impl_->pending_tree()->property_trees()->transform_tree.Node(
           page_scale_layer->transform_tree_index());
   EXPECT_EQ(pending_tree_node->post_local_scale_factor, 2.f);
 
   host_impl_->ActivateSyncTree();
-  host_impl_->active_tree()->UpdateDrawProperties();
+  host_impl_->active_tree()->UpdateDrawProperties(false);
   active_tree_node =
       host_impl_->active_tree()->property_trees()->transform_tree.Node(
           page_scale_layer->transform_tree_index());
@@ -12118,7 +12126,7 @@ TEST_F(LayerTreeHostImplTest, JitterTest) {
         UpdateState(gfx::Point(), gfx::Vector2dF(0, scroll)).get());
     accumulated_scroll += scroll;
     host_impl_->ScrollEnd(EndState().get());
-    host_impl_->active_tree()->UpdateDrawProperties();
+    host_impl_->active_tree()->UpdateDrawProperties(false);
 
     host_impl_->CreatePendingTree();
     host_impl_->pending_tree()->set_source_frame_number(i + 1);
@@ -12156,7 +12164,7 @@ TEST_F(LayerTreeHostImplTest, JitterTest) {
     pending_tree->LayerById(content_layer->id())->SetNeedsPushProperties();
 
     pending_tree->set_needs_update_draw_properties();
-    pending_tree->UpdateDrawProperties();
+    pending_tree->UpdateDrawProperties(false);
     float jitter = LayerTreeHostCommon::CalculateLayerJitter(content_layer);
     // There should not be any jitter measured till we hit the fixed point hits
     // threshold.
@@ -12248,7 +12256,7 @@ void LayerTreeHostImplTest::SetupMouseMoveAtTestScrollbarStates(
   host_impl_->active_tree()->DidBecomeActive();
 
   DrawFrame();
-  host_impl_->active_tree()->UpdateDrawProperties();
+  host_impl_->active_tree()->UpdateDrawProperties(false);
 
   ScrollbarAnimationController* scrollbar_1_animation_controller =
       host_impl_->ScrollbarAnimationControllerForElementId(
@@ -12471,8 +12479,9 @@ TEST_F(LayerTreeHostImplTest, CheckerImagingTileInvalidation) {
   recording_source->add_draw_rect_with_flags(gfx::Rect(0, 510, 200, 400),
                                              non_solid_flags);
   recording_source->Rerecord();
-  scoped_refptr<RasterSource> raster_source =
-      recording_source->CreateRasterSource();
+  scoped_refptr<FakeRasterSource> raster_source =
+      FakeRasterSource::CreateFromRecordingSource(recording_source.get(),
+                                                  false);
 
   // Create the pending tree.
   host_impl_->BeginCommit();
@@ -12565,7 +12574,7 @@ TEST_F(LayerTreeHostImplTest, UpdatedTilingsForNonDrawingLayers) {
   host_impl_->pending_tree()->BuildLayerListAndPropertyTreesForTesting();
   EXPECT_FALSE(animated_transform_layer->HasValidTilePriorities());
   EXPECT_EQ(animated_transform_layer->tilings()->num_tilings(), 0u);
-  host_impl_->pending_tree()->UpdateDrawProperties();
+  host_impl_->pending_tree()->UpdateDrawProperties(false);
   EXPECT_FALSE(animated_transform_layer->raster_even_if_not_drawn());
   EXPECT_FALSE(animated_transform_layer->contributes_to_drawn_render_surface());
   EXPECT_EQ(animated_transform_layer->tilings()->num_tilings(), 0u);
@@ -12585,7 +12594,7 @@ TEST_F(LayerTreeHostImplTest, UpdatedTilingsForNonDrawingLayers) {
   // rasterized, we should be creating tilings for it in UpdateDrawProperties.
   // However, none of these tiles should be required for activation.
   host_impl_->pending_tree()->BuildLayerListAndPropertyTreesForTesting();
-  host_impl_->pending_tree()->UpdateDrawProperties();
+  host_impl_->pending_tree()->UpdateDrawProperties(false);
   EXPECT_TRUE(animated_transform_layer->raster_even_if_not_drawn());
   EXPECT_FALSE(animated_transform_layer->contributes_to_drawn_render_surface());
   EXPECT_EQ(animated_transform_layer->tilings()->num_tilings(), 1u);

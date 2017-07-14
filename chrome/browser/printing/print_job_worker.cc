@@ -114,11 +114,7 @@ void PostOnOwnerThread(const scoped_refptr<PrintJobWorkerOwner>& owner,
 PrintJobWorker::PrintJobWorker(int render_process_id,
                                int render_frame_id,
                                PrintJobWorkerOwner* owner)
-    : render_process_id_(render_process_id),
-      render_frame_id_(render_frame_id),
-      owner_(owner),
-      thread_("Printing_Worker"),
-      weak_factory_(this) {
+    : owner_(owner), thread_("Printing_Worker"), weak_factory_(this) {
   // The object is created in the IO thread.
   DCHECK(owner_->RunsTasksInCurrentSequence());
 
@@ -234,7 +230,7 @@ void PrintJobWorker::GetSettingsWithUI(
     // call will return since startPendingPrint will make it return immediately
     // in case of error.
     if (tab)
-      tab->SetPendingPrint(render_process_id_, render_frame_id_);
+      tab->SetPendingPrint();
   }
 #endif
 

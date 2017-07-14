@@ -11,7 +11,6 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.datausage.DataUseTabUIManager;
-import org.chromium.chrome.browser.externalnav.ExternalNavigationDelegateImpl;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler.OverrideUrlLoadingResult;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationParams;
@@ -49,14 +48,6 @@ public class InterceptNavigationDelegateImpl implements InterceptNavigationDeleg
      */
     public InterceptNavigationDelegateImpl(Tab tab) {
         this(new ExternalNavigationHandler(tab), tab);
-    }
-
-    /**
-     * Constructs a new instance of {@link InterceptNavigationDelegateImpl} with the given
-     * {@link ExternalNavigationDelegate}.
-     */
-    public InterceptNavigationDelegateImpl(ExternalNavigationDelegateImpl delegate, Tab tab) {
-        this(new ExternalNavigationHandler(delegate), tab);
     }
 
     /**

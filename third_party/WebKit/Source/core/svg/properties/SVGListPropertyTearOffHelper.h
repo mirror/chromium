@@ -182,10 +182,6 @@ class SVGListPropertyTearOffHelper : public SVGPropertyTearOff<ListProperty> {
     return CreateItemTearOff(value);
   }
 
-  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGPropertyTearOff<ListProperty>::TraceWrappers(visitor);
-  }
-
  protected:
   SVGListPropertyTearOffHelper(
       ListPropertyType* target,

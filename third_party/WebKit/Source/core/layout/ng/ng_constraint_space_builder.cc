@@ -145,20 +145,7 @@ NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetIsAnonymous(
 
 NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetUnpositionedFloats(
     Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats) {
-  unpositioned_floats_ = unpositioned_floats;
-  return *this;
-}
-
-void NGConstraintSpaceBuilder::AddBaselineRequests(
-    const Vector<NGBaselineRequest>& requests) {
-  baseline_requests_.AppendVector(requests);
-}
-
-NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::AddBaselineRequest(
-    NGBaselineAlgorithmType algorithm_type,
-    FontBaseline baseline_type) {
-  baseline_requests_.push_back(
-      NGBaselineRequest{algorithm_type, baseline_type});
+  unpositioned_floats_.swap(unpositioned_floats);
   return *this;
 }
 
@@ -210,10 +197,10 @@ RefPtr<NGConstraintSpace> NGConstraintSpaceBuilder::ToConstraintSpace(
   WTF::Optional<NGLogicalOffset> floats_bfc_offset =
       is_new_fc_ ? WTF::nullopt : floats_bfc_offset_;
 
-  if (floats_bfc_offset) {
-    floats_bfc_offset = NGLogicalOffset(
-        {bfc_offset.inline_offset, floats_bfc_offset.value().block_offset});
-  }
+  // The inline_offsets of the bfc_offset and floats_bfc_offset should match.
+  if (floats_bfc_offset)
+    DCHECK_EQ(bfc_offset.inline_offset,
+              floats_bfc_offset.value().inline_offset);
 
   if (is_in_parallel_flow) {
     return AdoptRef(new NGConstraintSpace(
@@ -226,7 +213,7 @@ RefPtr<NGConstraintSpace> NGConstraintSpaceBuilder::ToConstraintSpace(
         is_block_direction_triggers_scrollbar_,
         static_cast<NGFragmentationType>(fragmentation_type_), is_new_fc_,
         is_anonymous_, margin_strut, bfc_offset, floats_bfc_offset, exclusions,
-        unpositioned_floats_, clearance_offset, baseline_requests_));
+        unpositioned_floats_, clearance_offset));
   }
   return AdoptRef(new NGConstraintSpace(
       out_writing_mode, static_cast<TextDirection>(text_direction_),
@@ -237,7 +224,7 @@ RefPtr<NGConstraintSpace> NGConstraintSpaceBuilder::ToConstraintSpace(
       is_inline_direction_triggers_scrollbar_,
       static_cast<NGFragmentationType>(fragmentation_type_), is_new_fc_,
       is_anonymous_, margin_strut, bfc_offset, floats_bfc_offset, exclusions,
-      unpositioned_floats_, clearance_offset, baseline_requests_));
+      unpositioned_floats_, clearance_offset));
 }
 
 }  // namespace blink

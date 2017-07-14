@@ -43,36 +43,6 @@ scoped_refptr<base::SequencedTaskRunner> CreateFileTaskRunner() {
        base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 }
 
-// Opens |path| in write mode. Returns the file handle on success, or nullptr on
-// failure.
-base::ScopedFILE OpenFileForWrite(const base::FilePath& path) {
-  base::ScopedFILE result(base::OpenFile(path, "w"));
-  LOG_IF(ERROR, !result) << "Failed opening: " << path.value();
-  return result;
-}
-
-// Helper to write data to a file. The |file| handle may optionally be null, in
-// which case nothing will be written. Returns the number of bytes successfully
-// written (may be less than input data in case of errors).
-size_t WriteToFile(const base::ScopedFILE& file,
-                   base::StringPiece data1,
-                   base::StringPiece data2 = base::StringPiece(),
-                   base::StringPiece data3 = base::StringPiece()) {
-  size_t bytes_written = 0;
-
-  if (file) {
-    // Append each of data1, data2 and data3.
-    if (!data1.empty())
-      bytes_written += fwrite(data1.data(), 1, data1.size(), file.get());
-    if (!data2.empty())
-      bytes_written += fwrite(data2.data(), 1, data2.size(), file.get());
-    if (!data3.empty())
-      bytes_written += fwrite(data3.data(), 1, data3.size(), file.get());
-  }
-
-  return bytes_written;
-}
-
 }  // namespace
 
 namespace net {
@@ -203,8 +173,7 @@ class FileNetLogObserver::BoundedFileWriter
   void IncrementCurrentFile();
 
   // Each ScopedFILE points to a netlog event file with the file name
-  // "event_file_<index>.json". Consumers must verify that entries are non-null
-  // before using them.
+  // "event_file_<index>.json".
   std::vector<base::ScopedFILE> event_files_;
 
   // The directory where the netlog files are created.
@@ -438,13 +407,11 @@ void FileNetLogObserver::BoundedFileWriter::Initialize(
     std::unique_ptr<base::Value> constants_value) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
-  // Failure opening the file will result in null entries - consumers are
-  // responsible for checking.
-  event_files_[current_file_idx_] =
-      OpenFileForWrite(directory_.AppendASCII("event_file_0.json"));
+  event_files_[current_file_idx_] = base::ScopedFILE(
+      base::OpenFile(directory_.AppendASCII("event_file_0.json"), "w"));
 
-  base::ScopedFILE constants_file =
-      OpenFileForWrite(directory_.AppendASCII("constants.json"));
+  base::ScopedFILE constants_file(
+      base::OpenFile(directory_.AppendASCII("constants.json"), "w"));
 
   // Print constants to file and open events array.
   std::string json;
@@ -452,26 +419,26 @@ void FileNetLogObserver::BoundedFileWriter::Initialize(
   // It should always be possible to convert constants to JSON.
   if (!base::JSONWriter::Write(*constants_value, &json))
     DCHECK(false);
-  WriteToFile(constants_file, "{\"constants\":", json, ",\n\"events\": [\n");
+  fprintf(constants_file.get(), "{\"constants\":%s,\n\"events\": [\n",
+          json.c_str());
 }
 
 void FileNetLogObserver::BoundedFileWriter::Stop(
     std::unique_ptr<base::Value> polled_data) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
-  base::ScopedFILE closing_file =
-      OpenFileForWrite(directory_.AppendASCII("end_netlog.json"));
+  base::ScopedFILE closing_file(
+      base::OpenFile(directory_.AppendASCII("end_netlog.json"), "w"));
 
   std::string json;
   if (polled_data)
     base::JSONWriter::Write(*polled_data, &json);
 
-  WriteToFile(closing_file, "]");
-  if (!json.empty())
-    WriteToFile(closing_file, ",\n\"polledData\": ", json, "\n");
-  WriteToFile(closing_file, "}\n");
+  fprintf(closing_file.get(), "]%s}\n",
+          json.empty() ? "" : (",\n\"polledData\": " + json + "\n").c_str());
 
-  // Flush all writes to disk so that files can be safely accessed on callback.
+  // Flush all fprintfs to disk so that files can be safely accessed on
+  // callback.
   event_files_.clear();
 }
 
@@ -481,8 +448,10 @@ void FileNetLogObserver::BoundedFileWriter::IncrementCurrentFile() {
   current_file_idx_++;
   current_file_idx_ %= total_num_files_;
   event_files_[current_file_idx_].reset();
-  event_files_[current_file_idx_] = OpenFileForWrite(directory_.AppendASCII(
-      "event_file_" + base::SizeTToString(current_file_idx_) + ".json"));
+  event_files_[current_file_idx_] = base::ScopedFILE(base::OpenFile(
+      directory_.AppendASCII("event_file_" +
+                             base::SizeTToString(current_file_idx_) + ".json"),
+      "w"));
 }
 
 void FileNetLogObserver::BoundedFileWriter::Flush(
@@ -494,9 +463,8 @@ void FileNetLogObserver::BoundedFileWriter::Flush(
 
   std::string to_print;
   CHECK(!event_files_.empty());
-  size_t file_size = event_files_[current_file_idx_]
-                         ? ftell(event_files_[current_file_idx_].get())
-                         : 0;
+  size_t file_size = ftell(event_files_[current_file_idx_].get());
+  size_t memory_freed = 0;
 
   while (!local_file_queue.empty()) {
     if (file_size >= max_file_size_) {
@@ -504,8 +472,10 @@ void FileNetLogObserver::BoundedFileWriter::Flush(
       IncrementCurrentFile();
       file_size = 0;
     }
-    file_size += WriteToFile(event_files_[current_file_idx_],
-                             *local_file_queue.front(), ",\n");
+    fprintf(event_files_[current_file_idx_].get(), "%s,\n",
+            local_file_queue.front().get()->c_str());
+    file_size += local_file_queue.front()->size();
+    memory_freed += local_file_queue.front()->size();
     local_file_queue.pop();
   }
 }
@@ -537,7 +507,7 @@ void FileNetLogObserver::UnboundedFileWriter::Initialize(
     std::unique_ptr<base::Value> constants_value) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
-  file_ = OpenFileForWrite(file_path_);
+  file_.reset(base::OpenFile(file_path_, "w"));
   first_event_written_ = false;
 
   // Print constants to file and open events array.
@@ -546,7 +516,7 @@ void FileNetLogObserver::UnboundedFileWriter::Initialize(
   // It should always be possible to convert constants to JSON.
   if (!base::JSONWriter::Write(*constants_value, &json))
     DCHECK(false);
-  WriteToFile(file_, "{\"constants\":", json, ",\n\"events\": [\n");
+  fprintf(file_.get(), "{\"constants\":%s,\n\"events\": [\n", json.c_str());
 }
 
 void FileNetLogObserver::UnboundedFileWriter::Stop(
@@ -557,12 +527,10 @@ void FileNetLogObserver::UnboundedFileWriter::Stop(
   if (polled_data)
     base::JSONWriter::Write(*polled_data, &json);
 
-  WriteToFile(file_, "]");
-  if (!json.empty())
-    WriteToFile(file_, ",\n\"polledData\": ", json, "\n");
-  WriteToFile(file_, "}\n");
+  fprintf(file_.get(), "]%s}\n",
+          json.empty() ? "" : (",\n\"polledData\": " + json + "\n").c_str());
 
-  // Flush all writes to disk so that the file can be safely accessed on
+  // Flush all fprintfs to disk so that the file can be safely accessed on
   // callback.
   file_.reset();
 }
@@ -576,11 +544,11 @@ void FileNetLogObserver::UnboundedFileWriter::Flush(
 
   while (!local_file_queue.empty()) {
     if (first_event_written_) {
-      WriteToFile(file_, ",\n");
+      fputs(",\n", file_.get());
     } else {
       first_event_written_ = true;
     }
-    WriteToFile(file_, *local_file_queue.front());
+    fputs(local_file_queue.front()->c_str(), file_.get());
     local_file_queue.pop();
   }
 }

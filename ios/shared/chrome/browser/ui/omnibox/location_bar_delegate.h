@@ -24,6 +24,7 @@ class WebState;
 - (void)locationBarHasBecomeFirstResponder;
 - (void)locationBarHasResignedFirstResponder;
 - (void)locationBarBeganEdit;
+- (void)locationBarChanged;
 - (web::WebState*)getWebState;
 - (ToolbarModel*)toolbarModel;
 @end

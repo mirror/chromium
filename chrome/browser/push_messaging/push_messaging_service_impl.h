@@ -31,6 +31,7 @@
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/push_messaging_service.h"
 #include "content/public/common/push_event_payload.h"
+#include "content/public/common/push_messaging_status.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission_status.mojom.h"
 #include "third_party/WebKit/public/platform/modules/push_messaging/WebPushPermissionStatus.h"
 
@@ -40,13 +41,6 @@ class PushMessagingServiceObserver;
 class PushMessagingServiceTest;
 class ScopedKeepAlive;
 struct PushSubscriptionOptions;
-
-namespace content {
-namespace mojom {
-enum class PushDeliveryStatus;
-enum class PushRegistrationStatus;
-}  // namespace mojom
-}  // namespace content
 
 namespace gcm {
 class GCMDriver;
@@ -99,7 +93,7 @@ class PushMessagingServiceImpl : public content::PushMessagingService,
                            const std::string& sender_id,
                            const std::string& subscription_id,
                            const SubscriptionInfoCallback& callback) override;
-  void Unsubscribe(content::mojom::PushUnregistrationReason reason,
+  void Unsubscribe(content::PushUnregistrationReason reason,
                    const GURL& requesting_origin,
                    int64_t service_worker_registration_id,
                    const std::string& sender_id,
@@ -157,7 +151,7 @@ class PushMessagingServiceImpl : public content::PushMessagingService,
                               int64_t service_worker_registration_id,
                               const gcm::IncomingMessage& message,
                               const base::Closure& message_handled_closure,
-                              content::mojom::PushDeliveryStatus status);
+                              content::PushDeliveryStatus status);
 
   void DidHandleMessage(const std::string& app_id,
                         const base::Closure& completion_closure);
@@ -173,10 +167,10 @@ class PushMessagingServiceImpl : public content::PushMessagingService,
                     const std::string& subscription_id,
                     const std::vector<uint8_t>& p256dh,
                     const std::vector<uint8_t>& auth,
-                    content::mojom::PushRegistrationStatus status);
+                    content::PushRegistrationStatus status);
 
   void SubscribeEndWithError(const RegisterCallback& callback,
-                             content::mojom::PushRegistrationStatus status);
+                             content::PushRegistrationStatus status);
 
   void DidSubscribe(const PushMessagingAppIdentifier& app_identifier,
                     const std::string& sender_id,
@@ -208,18 +202,17 @@ class PushMessagingServiceImpl : public content::PushMessagingService,
   // whenever they can be obtained. It's valid for |origin| to be empty and
   // |service_worker_registration_id| to be kInvalidServiceWorkerRegistrationId,
   // or for app_id to be empty, but not both at once.
-  void UnsubscribeInternal(content::mojom::PushUnregistrationReason reason,
+  void UnsubscribeInternal(content::PushUnregistrationReason reason,
                            const GURL& origin,
                            int64_t service_worker_registration_id,
                            const std::string& app_id,
                            const std::string& sender_id,
                            const UnregisterCallback& callback);
 
-  void DidClearPushSubscriptionId(
-      content::mojom::PushUnregistrationReason reason,
-      const std::string& app_id,
-      const std::string& sender_id,
-      const UnregisterCallback& callback);
+  void DidClearPushSubscriptionId(content::PushUnregistrationReason reason,
+                                  const std::string& app_id,
+                                  const std::string& sender_id,
+                                  const UnregisterCallback& callback);
 
   void DidUnregister(bool was_subscribed, gcm::GCMClient::Result result);
   void DidDeleteID(const std::string& app_id,

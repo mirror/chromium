@@ -10,7 +10,6 @@
 #include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/geometry/ng_margin_strut.h"
 #include "core/layout/ng/geometry/ng_physical_size.h"
-#include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/ng_exclusion.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/layout/ng/ng_writing_mode.h"
@@ -148,16 +147,12 @@ class CORE_EXPORT NGConstraintSpace final
     return floats_bfc_offset_;
   }
 
-  const Vector<RefPtr<NGUnpositionedFloat>>& UnpositionedFloats() const {
+  Vector<RefPtr<NGUnpositionedFloat>>& UnpositionedFloats() {
     return unpositioned_floats_;
   }
 
   WTF::Optional<LayoutUnit> ClearanceOffset() const {
     return clearance_offset_;
-  }
-
-  const Vector<NGBaselineRequest>& BaselineRequests() const {
-    return baseline_requests_;
   }
 
   bool operator==(const NGConstraintSpace&) const;
@@ -187,8 +182,7 @@ class CORE_EXPORT NGConstraintSpace final
                     const WTF::Optional<NGLogicalOffset>& floats_bfc_offset,
                     const std::shared_ptr<NGExclusions>& exclusions,
                     Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
-                    const WTF::Optional<LayoutUnit>& clearance_offset,
-                    Vector<NGBaselineRequest>& baseline_requests);
+                    const WTF::Optional<LayoutUnit>& clearance_offset);
 
   NGPhysicalSize InitialContainingBlockSize() const {
     return initial_containing_block_size_;
@@ -226,8 +220,6 @@ class CORE_EXPORT NGConstraintSpace final
   const std::shared_ptr<NGExclusions> exclusions_;
   WTF::Optional<LayoutUnit> clearance_offset_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
-
-  Vector<NGBaselineRequest> baseline_requests_;
 };
 
 inline std::ostream& operator<<(std::ostream& stream,

@@ -196,7 +196,7 @@ public class ChromeLauncherActivity extends Activity
 
         // Check if we should launch the ChromeTabbedActivity.
         if (!mIsCustomTabIntent && !FeatureUtilities.isDocumentMode(this)) {
-            launchTabbedMode();
+            launchTabbedMode(false);
             finish();
             return;
         }
@@ -383,9 +383,10 @@ public class ChromeLauncherActivity extends Activity
 
     /**
      * Handles launching a {@link ChromeTabbedActivity}.
+     * @param skipFre Whether skip the First Run Experience in ChromeTabbedActivity.
      */
     @SuppressLint("InlinedApi")
-    private void launchTabbedMode() {
+    private void launchTabbedMode(boolean skipFre) {
         maybePrefetchDnsInBackground();
 
         Intent newIntent = new Intent(getIntent());
@@ -404,6 +405,9 @@ public class ChromeLauncherActivity extends Activity
         }
         if (mIsInLegacyMultiInstanceMode) {
             MultiWindowUtils.getInstance().makeLegacyMultiInstanceIntent(this, newIntent);
+        }
+        if (skipFre) {
+            newIntent.putExtra(FirstRunFlowSequencer.SKIP_FIRST_RUN_EXPERIENCE, true);
         }
 
         // This system call is often modified by OEMs and not actionable. http://crbug.com/619646.

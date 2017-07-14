@@ -12,8 +12,10 @@
 #include "chrome/browser/extensions/api/storage/settings_sync_util.h"
 #include "components/sync/model/sync_data.h"
 #include "components/sync/protocol/extension_setting_specifics.pb.h"
-#include "extensions/browser/api/storage/backend_task_runner.h"
+#include "content/public/browser/browser_thread.h"
 #include "extensions/browser/api/storage/settings_namespace.h"
+
+using content::BrowserThread;
 
 namespace extensions {
 
@@ -29,26 +31,26 @@ SyncableSettingsStorage::SyncableSettingsStorage(
       delegate_(delegate),
       sync_type_(sync_type),
       flare_(flare) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 }
 
 SyncableSettingsStorage::~SyncableSettingsStorage() {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 }
 
 size_t SyncableSettingsStorage::GetBytesInUse(const std::string& key) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   return delegate_->GetBytesInUse(key);
 }
 
 size_t SyncableSettingsStorage::GetBytesInUse(
     const std::vector<std::string>& keys) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   return delegate_->GetBytesInUse(keys);
 }
 
 size_t SyncableSettingsStorage::GetBytesInUse() {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   return delegate_->GetBytesInUse();
 }
 
@@ -68,24 +70,24 @@ T SyncableSettingsStorage::HandleResult(T result) {
 
 ValueStore::ReadResult SyncableSettingsStorage::Get(
     const std::string& key) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   return HandleResult(delegate_->Get(key));
 }
 
 ValueStore::ReadResult SyncableSettingsStorage::Get(
     const std::vector<std::string>& keys) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   return HandleResult(delegate_->Get(keys));
 }
 
 ValueStore::ReadResult SyncableSettingsStorage::Get() {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   return HandleResult(delegate_->Get());
 }
 
 ValueStore::WriteResult SyncableSettingsStorage::Set(
     WriteOptions options, const std::string& key, const base::Value& value) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   WriteResult result = HandleResult(delegate_->Set(options, key, value));
   if (!result->status().ok())
     return result;
@@ -95,7 +97,7 @@ ValueStore::WriteResult SyncableSettingsStorage::Set(
 
 ValueStore::WriteResult SyncableSettingsStorage::Set(
     WriteOptions options, const base::DictionaryValue& values) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   WriteResult result = HandleResult(delegate_->Set(options, values));
   if (!result->status().ok())
     return result;
@@ -105,7 +107,7 @@ ValueStore::WriteResult SyncableSettingsStorage::Set(
 
 ValueStore::WriteResult SyncableSettingsStorage::Remove(
     const std::string& key) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   WriteResult result = HandleResult(delegate_->Remove(key));
   if (!result->status().ok())
     return result;
@@ -115,7 +117,7 @@ ValueStore::WriteResult SyncableSettingsStorage::Remove(
 
 ValueStore::WriteResult SyncableSettingsStorage::Remove(
     const std::vector<std::string>& keys) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   WriteResult result = HandleResult(delegate_->Remove(keys));
   if (!result->status().ok())
     return result;
@@ -124,7 +126,7 @@ ValueStore::WriteResult SyncableSettingsStorage::Remove(
 }
 
 ValueStore::WriteResult SyncableSettingsStorage::Clear() {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   WriteResult result = HandleResult(delegate_->Clear());
   if (!result->status().ok())
     return result;
@@ -154,7 +156,7 @@ void SyncableSettingsStorage::SyncResultIfEnabled(
 syncer::SyncError SyncableSettingsStorage::StartSyncing(
     std::unique_ptr<base::DictionaryValue> sync_state,
     std::unique_ptr<SettingsSyncProcessor> sync_processor) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(sync_state);
   DCHECK(!sync_processor_.get());
 
@@ -180,7 +182,7 @@ syncer::SyncError SyncableSettingsStorage::StartSyncing(
 
 syncer::SyncError SyncableSettingsStorage::SendLocalSettingsToSync(
     std::unique_ptr<base::DictionaryValue> local_state) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   if (local_state->empty())
     return syncer::SyncError();
@@ -205,7 +207,7 @@ syncer::SyncError SyncableSettingsStorage::SendLocalSettingsToSync(
 syncer::SyncError SyncableSettingsStorage::OverwriteLocalSettingsWithSync(
     std::unique_ptr<base::DictionaryValue> sync_state,
     std::unique_ptr<base::DictionaryValue> local_state) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   // This is implemented by building up a list of sync changes then sending
   // those to ProcessSyncChanges. This generates events like onStorageChanged.
   std::unique_ptr<SettingSyncDataList> changes(new SettingSyncDataList());
@@ -247,13 +249,13 @@ syncer::SyncError SyncableSettingsStorage::OverwriteLocalSettingsWithSync(
 }
 
 void SyncableSettingsStorage::StopSyncing() {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   sync_processor_.reset();
 }
 
 syncer::SyncError SyncableSettingsStorage::ProcessSyncChanges(
     std::unique_ptr<SettingSyncDataList> sync_changes) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(!sync_changes->empty()) << "No sync changes for " << extension_id_;
 
   if (!sync_processor_.get()) {

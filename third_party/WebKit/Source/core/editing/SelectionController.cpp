@@ -1195,7 +1195,7 @@ void SelectionController::NotifySelectionChanged() {
 
   const SelectionInDOMTree& selection =
       this->Selection().GetSelectionInDOMTree();
-  switch (selection.Type()) {
+  switch (selection.SelectionTypeWithLegacyGranularity()) {
     case kNoSelection:
       selection_state_ = SelectionState::kHaveNotStartedSelection;
       return;

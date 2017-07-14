@@ -40,7 +40,7 @@ def _symbol(entry):
     # FIXME: Remove this special case for the ugly x-webkit-foo attributes.
     if entry['name'].startswith('-webkit-'):
         return entry['name'].replace('-', '_')[1:]
-    return name_utilities.cpp_name(entry).replace('-', '_').replace(' ', '_')
+    return name_utilities.cpp_name(entry).replace('-', '_')
 
 
 class MakeNamesWriter(json5_generator.Writer):
@@ -81,7 +81,7 @@ class MakeNamesWriter(json5_generator.Writer):
             'suffix': suffix,
             'export': export,
             'entries': self.json5_file.name_dictionaries,
-            'input_files': self._input_files,
+            'in_files': self.json5_file.file_paths,
         }
 
     @template_expander.use_jinja("templates/MakeNames.h.tmpl", filters=filters)

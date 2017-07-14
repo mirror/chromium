@@ -51,7 +51,6 @@ using chrome_test_util::ButtonWithAccessibilityLabel;
 using chrome_test_util::ButtonWithAccessibilityLabelId;
 using chrome_test_util::NavigationBarDoneButton;
 using chrome_test_util::SettingsMenuButton;
-using chrome_test_util::SettingsMenuBackButton;
 
 namespace {
 
@@ -366,6 +365,16 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       performAction:grey_tap()];
 }
 
+// Tap back arrow, to get one level higher in settings.
+- (void)tapBackArrow {
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(
+                                   grey_accessibilityID(@"ic_arrow_back"),
+                                   grey_accessibilityTrait(
+                                       UIAccessibilityTraitButton),
+                                   nil)] performAction:grey_tap()];
+}
+
 // Tap Edit in any settings view.
 - (void)tapEdit {
   [[EarlGrey selectElementWithMatcher:EditButton()] performAction:grey_tap()];
@@ -400,11 +409,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       selectElementWithMatcher:Entry(@"https://example.com, concrete username")]
       performAction:grey_tap()];
   chrome_test_util::VerifyAccessibilityForCurrentScreen();
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -456,10 +463,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(snackbarLabel)]
       performAction:grey_tap()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -491,10 +496,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(snackbarLabel)]
       performAction:grey_tap()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -526,10 +529,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(snackbarLabel)]
       performAction:grey_tap()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -570,7 +571,7 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   // of the list of passwords.
   [[EarlGrey selectElementWithMatcher:
                  grey_allOf(grey_accessibilityLabel(l10n_util::GetNSString(
-                                IDS_IOS_SETTINGS_PASSWORDS_SAVED_HEADING)),
+                                IDS_PASSWORD_MANAGER_SHOW_PASSWORDS_TAB_TITLE)),
                             grey_accessibilityTrait(UIAccessibilityTraitHeader),
                             nullptr)] assertWithMatcher:grey_notNil()];
 
@@ -579,8 +580,7 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
       selectElementWithMatcher:Entry(@"https://example.com, concrete username")]
       assertWithMatcher:grey_not(grey_sufficientlyVisible())];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -623,14 +623,12 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
   // Go back to the list view and verify that the password is still in the
   // list.
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
   [[EarlGrey
       selectElementWithMatcher:Entry(@"https://example.com, concrete username")]
       assertWithMatcher:grey_sufficientlyVisible()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -656,8 +654,7 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:CopyPasswordButton()]
       assertWithMatcher:grey_nil()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -694,10 +691,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:PasswordHeader()]
       assertWithMatcher:grey_nil()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -737,10 +732,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(snackbarLabel)]
       performAction:grey_tap()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -781,10 +774,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(snackbarLabel)]
       performAction:grey_tap()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -832,10 +823,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(snackbarLabel)]
       performAction:grey_tap()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -901,10 +890,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
                                @"PasswordDetailsCollectionViewController")]
       assertWithMatcher:grey_sufficientlyVisible()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }
@@ -969,10 +956,8 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:PasswordHeader()]
       assertWithMatcher:grey_nil()];
 
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      performAction:grey_tap()];
+  [self tapBackArrow];
+  [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];
 }

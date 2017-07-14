@@ -9,7 +9,6 @@
 #include "core/layout/ng/geometry/ng_logical_offset.h"
 #include "core/layout/ng/inline/ng_line_height_metrics.h"
 #include "core/layout/ng/ng_physical_fragment.h"
-#include "platform/fonts/FontBaseline.h"
 
 namespace blink {
 
@@ -26,9 +25,6 @@ class CORE_EXPORT NGPhysicalLineBoxFragment final : public NGPhysicalFragment {
   }
 
   const NGLineHeightMetrics& Metrics() const { return metrics_; }
-
-  // Compute baseline for the specified baseline type.
-  LayoutUnit BaselinePosition(FontBaseline) const;
 
  private:
   Vector<RefPtr<NGPhysicalFragment>> children_;

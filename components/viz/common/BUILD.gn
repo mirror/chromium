@@ -2,17 +2,23 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//components/viz/viz.gni")
 import("//testing/test.gni")
 
-viz_source_set("common") {
+source_set("common") {
   sources = [
+    "frame_sink_id.cc",
+    "frame_sink_id.h",
+    "frame_sink_id_allocator.h",
     "gl_helper.cc",
     "gl_helper.h",
     "gl_helper_readback_support.cc",
     "gl_helper_readback_support.h",
     "gl_helper_scaling.cc",
     "gl_helper_scaling.h",
+    "local_surface_id.cc",
+    "local_surface_id.h",
+    "local_surface_id_allocator.cc",
+    "local_surface_id_allocator.h",
     "quads/resource_format.h",
     "quads/shared_bitmap.cc",
     "quads/shared_bitmap.h",
@@ -26,15 +32,8 @@ viz_source_set("common") {
     "resources/resource_settings.cc",
     "resources/resource_settings.h",
     "resources/shared_bitmap_manager.h",
-    "surfaces/frame_sink_id.cc",
-    "surfaces/frame_sink_id.h",
-    "surfaces/frame_sink_id_allocator.h",
-    "surfaces/local_surface_id.cc",
-    "surfaces/local_surface_id.h",
-    "surfaces/local_surface_id_allocator.cc",
-    "surfaces/local_surface_id_allocator.h",
-    "surfaces/surface_id.cc",
-    "surfaces/surface_id.h",
+    "surface_id.cc",
+    "surface_id.h",
   ]
 
   deps = [
@@ -53,7 +52,9 @@ viz_source_set("common") {
   ]
 }
 
-viz_source_set("unit_tests") {
+# These tests don't pass on Android so this target isn't in viz_unittests. If
+# you add a test here that should run on Android you need to change that.
+source_set("unit_tests") {
   testonly = true
   sources = [
     "gl_helper_unittest.cc",
@@ -76,12 +77,12 @@ viz_source_set("unit_tests") {
 
 # Microbenchmark to measure performance of GLHelper code, for use in
 # debugging, profiling, and optimizing.
-viz_test("viz_benchmark") {
+test("viz_benchmark") {
   sources = [
     "gl_helper_benchmark.cc",
   ]
 
-  configs = [
+  configs += [
     "//build/config/compiler:no_size_t_to_int_warning",
     "//third_party/khronos:khronos_headers",
   ]

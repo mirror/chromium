@@ -24,20 +24,19 @@ OffsetAdjuster::Adjustment::Adjustment(size_t original_offset,
 }
 
 // static
-void OffsetAdjuster::AdjustOffsets(const Adjustments& adjustments,
-                                   std::vector<size_t>* offsets_for_adjustment,
-                                   size_t limit) {
-  DCHECK(offsets_for_adjustment);
+void OffsetAdjuster::AdjustOffsets(
+    const Adjustments& adjustments,
+    std::vector<size_t>* offsets_for_adjustment) {
+  if (!offsets_for_adjustment || adjustments.empty())
+    return;
   for (std::vector<size_t>::iterator i(offsets_for_adjustment->begin());
        i != offsets_for_adjustment->end(); ++i)
-    AdjustOffset(adjustments, &(*i), limit);
+    AdjustOffset(adjustments, &(*i));
 }
 
 // static
 void OffsetAdjuster::AdjustOffset(const Adjustments& adjustments,
-                                  size_t* offset,
-                                  size_t limit) {
-  DCHECK(offset);
+                                  size_t* offset) {
   if (*offset == string16::npos)
     return;
   int adjustment = 0;
@@ -52,9 +51,6 @@ void OffsetAdjuster::AdjustOffset(const Adjustments& adjustments,
     adjustment += static_cast<int>(i->original_length - i->output_length);
   }
   *offset -= adjustment;
-
-  if (*offset > limit)
-    *offset = string16::npos;
 }
 
 // static
@@ -240,10 +236,9 @@ string16 UTF8ToUTF16WithAdjustments(
 string16 UTF8ToUTF16AndAdjustOffsets(
     const base::StringPiece& utf8,
     std::vector<size_t>* offsets_for_adjustment) {
-  for (size_t& offset : *offsets_for_adjustment) {
-    if (offset > utf8.length())
-      offset = string16::npos;
-  }
+  std::for_each(offsets_for_adjustment->begin(),
+                offsets_for_adjustment->end(),
+                LimitOffset<base::StringPiece>(utf8.length()));
   OffsetAdjuster::Adjustments adjustments;
   string16 result = UTF8ToUTF16WithAdjustments(utf8, &adjustments);
   OffsetAdjuster::AdjustOffsets(adjustments, offsets_for_adjustment);
@@ -253,10 +248,9 @@ string16 UTF8ToUTF16AndAdjustOffsets(
 std::string UTF16ToUTF8AndAdjustOffsets(
     const base::StringPiece16& utf16,
     std::vector<size_t>* offsets_for_adjustment) {
-  for (size_t& offset : *offsets_for_adjustment) {
-    if (offset > utf16.length())
-      offset = string16::npos;
-  }
+  std::for_each(offsets_for_adjustment->begin(),
+                offsets_for_adjustment->end(),
+                LimitOffset<base::StringPiece16>(utf16.length()));
   std::string result;
   PrepareForUTF8Output(utf16.data(), utf16.length(), &result);
   OffsetAdjuster::Adjustments adjustments;

@@ -75,8 +75,6 @@ public class AppMenuPropertiesDelegate {
         boolean isPageMenu;
         boolean isOverviewMenu;
         boolean isTabletEmptyModeMenu;
-        boolean isBottomSheetNtpMenu =
-                mActivity.getBottomSheet() != null && mActivity.getBottomSheet().isShowingNewTab();
 
         boolean isOverview = mActivity.isInOverviewMode();
         boolean isIncognito = mActivity.getCurrentTabModel().isIncognito();
@@ -89,14 +87,13 @@ public class AppMenuPropertiesDelegate {
             isOverviewMenu = hasTabs && isOverview;
             isTabletEmptyModeMenu = !hasTabs;
         } else {
-            isPageMenu = !isBottomSheetNtpMenu && !isOverview;
-            isOverviewMenu = !isBottomSheetNtpMenu && isOverview;
+            isPageMenu = !isOverview;
+            isOverviewMenu = isOverview;
             isTabletEmptyModeMenu = false;
         }
 
         menu.setGroupVisible(R.id.PAGE_MENU, isPageMenu);
         menu.setGroupVisible(R.id.OVERVIEW_MODE_MENU, isOverviewMenu);
-        menu.setGroupVisible(R.id.BOTTOM_SHEET_NTP_MENU, isBottomSheetNtpMenu);
         menu.setGroupVisible(R.id.TABLET_EMPTY_MODE_MENU, isTabletEmptyModeMenu);
 
         if (isPageMenu && currentTab != null) {
@@ -214,17 +211,12 @@ public class AppMenuPropertiesDelegate {
             }
         }
 
-        if (isBottomSheetNtpMenu) {
-            disableEnableMenuItem(menu, R.id.recent_tabs_menu_id, !isIncognito, true, false);
-            disableEnableMenuItem(menu, R.id.new_tab_menu_id, isIncognito, true, false);
-        }
-
-        boolean incognitoMenuItemVisible = !isBottomSheetNtpMenu || !isIncognito;
         // Disable new incognito tab when it is blocked (e.g. by a policy).
         // findItem(...).setEnabled(...)" is not enough here, because of the inflated
         // main_menu.xml contains multiple items with the same id in different groups
         // e.g.: new_incognito_tab_menu_id.
-        disableEnableMenuItem(menu, R.id.new_incognito_tab_menu_id, incognitoMenuItemVisible,
+        disableEnableMenuItem(menu, R.id.new_incognito_tab_menu_id,
+                true,
                 PrefServiceBridge.getInstance().isIncognitoModeEnabled(),
                 PrefServiceBridge.getInstance().isIncognitoModeManaged());
         mActivity.prepareMenu(menu);

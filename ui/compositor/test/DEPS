@@ -1,5 +1,4 @@
 include_rules = [
-  "+components/viz/service/display",
   "+components/viz/service/frame_sinks",
   "+gpu/command_buffer/client",
   "+gpu/command_buffer/common",

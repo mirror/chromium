@@ -22,7 +22,6 @@
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/permissions/permission_update_infobar_delegate_android.h"
 #include "chrome/browser/ui/android/view_android_helper.h"
-#include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/grit/chromium_strings.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -31,12 +30,17 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/common/referrer.h"
+#include "device/vr/features/features.h"
 #include "jni/DownloadController_jni.h"
 #include "net/base/filename_util.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "ui/android/view_android.h"
 #include "ui/android/window_android.h"
 #include "ui/base/page_transition_types.h"
+
+#if BUILDFLAG(ENABLE_VR)
+#include "chrome/browser/android/vr_shell/vr_tab_helper.h"
+#endif  // BUILDFLAG(ENABLE_VR)
 
 using base::android::ConvertUTF8ToJavaString;
 using base::android::JavaParamRef;
@@ -219,9 +223,11 @@ void DownloadController::AcquireFileAccessPermission(
     const DownloadControllerBase::AcquireFileAccessPermissionCallback& cb) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+#if BUILDFLAG(ENABLE_VR)
   WebContents* web_contents = web_contents_getter.Run();
-  if (vr::VrTabHelper::IsInVr(web_contents))
+  if (vr_shell::VrTabHelper::IsInVr(web_contents))
     return;
+#endif
 
   if (HasFileAccessPermission()) {
     BrowserThread::PostTask(

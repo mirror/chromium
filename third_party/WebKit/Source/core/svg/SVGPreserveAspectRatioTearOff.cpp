@@ -82,8 +82,7 @@ SVGPreserveAspectRatioTearOff::SVGPreserveAspectRatioTearOff(
                                                  attribute_name) {}
 
 DEFINE_TRACE_WRAPPERS(SVGPreserveAspectRatioTearOff) {
-  SVGPropertyTearOff<SVGPreserveAspectRatio>::TraceWrappers(visitor);
-  ScriptWrappable::TraceWrappers(visitor);
+  visitor->TraceWrappers(contextElement());
 }
 
 }  // namespace blink

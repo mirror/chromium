@@ -223,11 +223,11 @@ bool RootScrollerController::ScrollsViewport(const Element& element) const {
 }
 
 void RootScrollerController::ElementRemoved(const Element& element) {
-  if (element != effective_root_scroller_.Get())
+  if ((Node&)element != effective_root_scroller_)
     return;
 
   RecomputeEffectiveRootScroller();
-  DCHECK(element != effective_root_scroller_.Get());
+  DCHECK((Node&)element != effective_root_scroller_);
 }
 
 }  // namespace blink

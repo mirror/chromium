@@ -212,10 +212,6 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #   define SK_USE_LEGACY_DISTANCE_FIELDS
 #endif
 
-#ifndef SK_SUPPORT_LEGACY_INDEX_8_COLORTYPE
-#define SK_SUPPORT_LEGACY_INDEX_8_COLORTYPE
-#endif
-
 #ifndef SK_DISABLE_DEFERRED_PROXIES
 #define SK_DISABLE_DEFERRED_PROXIES
 #endif
@@ -226,6 +222,10 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 
 #ifndef SK_SUPPORT_NONSTD_BLENDMODES
 #define SK_SUPPORT_NONSTD_BLENDMODES
+#endif
+
+#ifndef SK_SUPPORT_LEGACY_BILERP_IGNORING_HACK
+#define SK_SUPPORT_LEGACY_BILERP_IGNORING_HACK
 #endif
 
 #ifndef SK_SUPPORT_LEGACY_MASK_BLUR

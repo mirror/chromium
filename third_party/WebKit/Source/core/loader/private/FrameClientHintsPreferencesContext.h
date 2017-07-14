@@ -19,7 +19,10 @@ class FrameClientHintsPreferencesContext final
  public:
   explicit FrameClientHintsPreferencesContext(LocalFrame*);
 
-  void CountClientHints(WebClientHintsType) override;
+  void CountClientHintsDeviceRAM() override;
+  void CountClientHintsDPR() override;
+  void CountClientHintsResourceWidth() override;
+  void CountClientHintsViewportWidth() override;
 
  private:
   Member<LocalFrame> frame_;

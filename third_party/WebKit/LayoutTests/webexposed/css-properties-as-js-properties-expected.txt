@@ -169,7 +169,6 @@ left
 length
 letterSpacing
 lightingColor
-lineBreak
 lineHeight
 lineHeightStep
 listStyle

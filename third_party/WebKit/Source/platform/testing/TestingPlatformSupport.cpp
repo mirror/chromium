@@ -41,7 +41,6 @@
 #include "cc/blink/web_compositor_support_impl.h"
 #include "cc/test/ordered_simple_task_runner.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
-#include "platform/FontFamilyNames.h"
 #include "platform/HTTPNames.h"
 #include "platform/Language.h"
 #include "platform/heap/Heap.h"
@@ -359,7 +358,6 @@ ScopedUnittestsEnvironmentSetup::ScopedUnittestsEnvironmentSetup(int argc,
   FetchInitiatorTypeNames::init();
 
   InitializePlatformLanguage();
-  FontFamilyNames::init();
 }
 
 ScopedUnittestsEnvironmentSetup::~ScopedUnittestsEnvironmentSetup() {}

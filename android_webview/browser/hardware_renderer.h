@@ -11,14 +11,17 @@
 #include "android_webview/browser/compositor_id.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "components/viz/common/surfaces/frame_sink_id.h"
-#include "components/viz/common/surfaces/surface_id.h"
-#include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
+#include "cc/surfaces/compositor_frame_sink_support_client.h"
+#include "components/viz/common/frame_sink_id.h"
+#include "components/viz/common/surface_id.h"
 
 struct AwDrawGLInfo;
 
-namespace viz {
+namespace cc {
 class CompositorFrameSinkSupport;
+}
+
+namespace viz {
 class LocalSurfaceIdAllocator;
 }
 
@@ -28,7 +31,7 @@ class ChildFrame;
 class RenderThreadManager;
 class SurfacesInstance;
 
-class HardwareRenderer : public viz::CompositorFrameSinkSupportClient {
+class HardwareRenderer : public cc::CompositorFrameSinkSupportClient {
  public:
   // Two rules:
   // 1) Never wait on |new_frame| on the UI thread, or in kModeSync. Otherwise
@@ -49,7 +52,7 @@ class HardwareRenderer : public viz::CompositorFrameSinkSupportClient {
   void CommitFrame();
 
  private:
-  // viz::CompositorFrameSinkSupportClient implementation.
+  // cc::CompositorFrameSinkSupportClient implementation.
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
@@ -92,7 +95,7 @@ class HardwareRenderer : public viz::CompositorFrameSinkSupportClient {
   viz::FrameSinkId frame_sink_id_;
   const std::unique_ptr<viz::LocalSurfaceIdAllocator>
       local_surface_id_allocator_;
-  std::unique_ptr<viz::CompositorFrameSinkSupport> support_;
+  std::unique_ptr<cc::CompositorFrameSinkSupport> support_;
   viz::LocalSurfaceId child_id_;
   CompositorID compositor_id_;
   // HardwareRenderer guarantees resources are returned in the order of

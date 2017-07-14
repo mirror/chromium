@@ -410,8 +410,8 @@ TEST_F(SiteSettingsHandlerTest, DefaultSettingSource) {
   ValidateOrigin(google, google, google, "allow", "policy", 8U);
 }
 
-TEST_F(SiteSettingsHandlerTest, SetOriginPermissions) {
-  const std::string origin("https://www.example.com");
+TEST_F(SiteSettingsHandlerTest, ResetOriginPermissions) {
+  const std::string origin("https://www.example.com:443");
   base::ListValue getargs;
   getargs.AppendString(kCallbackId);
   getargs.AppendString(origin);

@@ -3002,7 +3002,6 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return ZoomAdjustedPixelValue(style.WordSpacing(), style);
     case CSSPropertyWordWrap:
       return CSSIdentifierValue::Create(style.OverflowWrap());
-    case CSSPropertyLineBreak:
     case CSSPropertyWebkitLineBreak:
       return CSSIdentifierValue::Create(style.GetLineBreak());
     case CSSPropertyResize:

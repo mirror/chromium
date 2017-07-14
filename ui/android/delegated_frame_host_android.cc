@@ -13,7 +13,7 @@
 #include "cc/output/copy_output_result.h"
 #include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
-#include "components/viz/common/surfaces/surface_id.h"
+#include "components/viz/common/surface_id.h"
 #include "ui/android/view_android.h"
 #include "ui/android/window_android_compositor.h"
 #include "ui/display/display.h"
@@ -199,7 +199,7 @@ void DelegatedFrameHostAndroid::CreateNewCompositorFrameSinkSupport() {
   constexpr bool handles_frame_sink_id_invalidation = false;
   constexpr bool needs_sync_points = true;
   support_.reset();
-  support_ = viz::CompositorFrameSinkSupport::Create(
+  support_ = cc::CompositorFrameSinkSupport::Create(
       this, frame_sink_manager_, frame_sink_id_, is_root,
       handles_frame_sink_id_invalidation, needs_sync_points);
 }
