@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7e4dd8ad_241609c9",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-14T15:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54fb11ef_943acd61",
+      "range": {
+        "startLine": 111,
+        "startChar": 78,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "a6326dfbfb9759af8aad99c97510cc28938b6cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41488a9d_e3423c0f",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
         "patchSetId": 1
@@ -141,6 +165,30 @@
       "revId": "a6326dfbfb9759af8aad99c97510cc28938b6cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c6db22_4741123c",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-14T15:12:41Z",
+      "side": 1,
+      "message": "Well, he still needs the api key.",
+      "parentUuid": "e27162da_4bd53545",
+      "range": {
+        "startLine": 195,
+        "startChar": 58,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "a6326dfbfb9759af8aad99c97510cc28938b6cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
