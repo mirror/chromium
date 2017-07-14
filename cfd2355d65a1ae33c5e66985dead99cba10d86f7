@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3562bbf0_ba6aaa85",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T12:42:36Z",
+      "side": 1,
+      "message": "s/,/;/ on line 233, after which `git cl format` will do the right thing here?",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42ab8d7_ddbd732a",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T12:42:36Z",
+      "side": 1,
+      "message": "Will the BackgroundFetchJobController continue to maintain the state?",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9423f3_6a0caa78",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T12:42:36Z",
+      "side": 1,
+      "message": "nit: no need for `explicit` (we only use that for single argument constructors)",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd757c58_9db448d7",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T12:42:36Z",
+      "side": 1,
+      "message": "What is the ownership model you have in mind? We have N BackgroundFetchJobControllers that\u0027ll have to talk to 1 OfflineContentProvider. Is the idea that each BGFetchJobController owns a BGFetchDelegateProxy that talks to the same BGFetchDelegate that\u0027s provided by the BrowserContext?",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64afab1_33d48fd3",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T12:42:36Z",
+      "side": 1,
+      "message": "nit: we can probably move the annotation to this class now?",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fb38d9_4aa6281d",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T12:42:36Z",
+      "side": 1,
+      "message": "nit: detail ownership (\"owns |this|\" or similar)",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
