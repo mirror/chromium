@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67a00261_ed37d5c0",
+        "filename": "extensions/renderer/bindings/api_binding_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T03:28:49Z",
+      "side": 1,
+      "message": "It doesn\u0027t handle it well, but in testing, that\u0027s almost desired behavior IMO.  Most tests shouldn\u0027t be throwing an exception; if we add an exception handler, they will handle that exception gracefully - thus hiding a potential test failure.  This way, if an exception is thrown, the test will certainly fail.  Tests that intend to throw exceptions should a) pass in their own exception handler and b) check the exceptions thrown.\n\nWe do this in other places, as well, where we pass in null versions of callbacks (which if Run() is called will also crash).\n\nLet me know if you don\u0027t agree; happy to chat further :)  (I\u0027ll probably submit this in the meantime, since I don\u0027t think it should be blocking)",
+      "parentUuid": "1dd88fdb_2c4eb492",
+      "revId": "99e06a13597d1e888afbfe190d2c42896dc4446c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "528e609c_6742dc02",
         "filename": "extensions/renderer/bindings/event_emitter.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-12T23:13:00Z",
       "side": 1,
       "message": "nit: Why move this TryCatch inside the loop? It seems like it still ought to work outside the loop, especially since the exception handler is expected to clear it. Keeping it outside saves the work of having to register/unregister the TryCatch with the isolate.",
+      "revId": "99e06a13597d1e888afbfe190d2c42896dc4446c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec80421b_de48798a",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T03:28:49Z",
+      "side": 1,
+      "message": "Whoops!  Rebase issues.  Thanks for catching this. :)",
+      "parentUuid": "528e609c_6742dc02",
       "revId": "99e06a13597d1e888afbfe190d2c42896dc4446c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
