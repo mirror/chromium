@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb334ec9_d70b018f",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-14T16:53:45Z",
+      "side": 1,
+      "message": "This might be correct, but I\u0027d like to understand a bit better: It feels like context-loss would invalidate all quads, and the LTHI should be handling this anyway? Do we actually need to evict the problematic quad, or can we just early-out here?",
+      "range": {
+        "startLine": 182,
+        "startChar": 9,
+        "endLine": 182,
+        "endChar": 23
+      },
+      "revId": "89c4556eb785e727a355e5db878ca62172385d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9197b0a_18271bb2",
+        "filename": "cc/layers/heads_up_display_layer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-14T16:53:45Z",
+      "side": 1,
+      "message": "If we do need to do this, can we just call this directly from UpdateHudTexture? Would require passing RenderPassList into that function, but seems easier to reason about.",
+      "range": {
+        "startLine": 826,
+        "startChar": 30,
+        "endLine": 826,
+        "endChar": 42
+      },
+      "revId": "89c4556eb785e727a355e5db878ca62172385d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
