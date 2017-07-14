@@ -280,7 +280,7 @@ void MdTextButton::UpdateColors() {
   // 1.0, and this way if NativeTheme changes the button color, the button
   // stroke will also change colors to match.
   SkColor stroke_color =
-      is_prominent_ ? SK_ColorTRANSPARENT : SkColorSetA(text_color, 0x4e);
+      is_prominent_ ? SK_ColorTRANSPARENT : SkColorSetA(text_color, 0x5f);
 
   // Disabled, non-prominent buttons need their stroke lightened. Prominent
   // buttons need it left at SK_ColorTRANSPARENT from above.
