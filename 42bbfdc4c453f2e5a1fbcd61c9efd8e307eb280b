@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22be11d5_341cbdf5",
+        "filename": "chrome/browser/ui/webui/browsing_history_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-14T04:34:56Z",
+      "side": 1,
+      "message": "Also removable. (Along with usages in externs.js and test_util.js)\n\nAlso, kEnableGroupedHistoryName and kEnableGroupedHistoryDescription can be removed from flag_descriptions.h/cc.",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 418,
+        "endChar": 69
+      },
+      "revId": "42bbfdc4c453f2e5a1fbcd61c9efd8e307eb280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
