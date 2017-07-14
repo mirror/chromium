@@ -26,7 +26,8 @@ from benchmarks import system_health
 
 def GetSystemHealthBenchmarksToSmokeTest():
   sh_benchmark_classes = discover.DiscoverClassesInModule(
-      system_health, perf_benchmark.PerfBenchmark,
+      system_health,
+      perf_benchmark.PerfBenchmark,
       index_by_class_name=True).values()
   return list(b for b in sh_benchmark_classes if
               b.Name().startswith('system_health.memory'))
