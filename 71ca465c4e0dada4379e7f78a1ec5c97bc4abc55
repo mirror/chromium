@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f469147e_cf95355e",
+        "filename": "chrome/browser/extensions/extension_user_script_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-14T00:30:12Z",
+      "side": 0,
+      "message": "Think this was already redundant. Was required initially in https://codereview.chromium.org/7472. (greasemonkey_master_unittest.cc).",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 51
+      },
+      "revId": "71ca465c4e0dada4379e7f78a1ec5c97bc4abc55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
