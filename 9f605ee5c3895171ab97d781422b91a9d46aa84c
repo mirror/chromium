@@ -46,6 +46,30 @@
       "revId": "9f605ee5c3895171ab97d781422b91a9d46aa84c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88667b91_954aa4dc",
+        "filename": "components/metrics/metrics_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-14T22:20:46Z",
+      "side": 1,
+      "message": "Changed it to use composition.",
+      "parentUuid": "a04dfc32_c5306019",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "9f605ee5c3895171ab97d781422b91a9d46aa84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
