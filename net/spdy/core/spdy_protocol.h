@@ -279,21 +279,21 @@ const size_t kPriorityWeightPayloadSize = 1;
 namespace size_utils {
 
 // Returns the (minimum) size of frames (sans variable-length portions).
-size_t GetDataFrameMinimumSize();
-size_t GetFrameHeaderSize();
-size_t GetRstStreamSize();
-size_t GetSettingsMinimumSize();
-size_t GetPingSize();
-size_t GetGoAwayMinimumSize();
-size_t GetHeadersMinimumSize();
-size_t GetWindowUpdateSize();
-size_t GetPushPromiseMinimumSize();
-size_t GetContinuationMinimumSize();
-size_t GetAltSvcMinimumSize();
-size_t GetPrioritySize();
+SPDY_EXPORT_PRIVATE size_t GetDataFrameMinimumSize();
+SPDY_EXPORT_PRIVATE size_t GetFrameHeaderSize();
+SPDY_EXPORT_PRIVATE size_t GetRstStreamSize();
+SPDY_EXPORT_PRIVATE size_t GetSettingsMinimumSize();
+SPDY_EXPORT_PRIVATE size_t GetPingSize();
+SPDY_EXPORT_PRIVATE size_t GetGoAwayMinimumSize();
+SPDY_EXPORT_PRIVATE size_t GetHeadersMinimumSize();
+SPDY_EXPORT_PRIVATE size_t GetWindowUpdateSize();
+SPDY_EXPORT_PRIVATE size_t GetPushPromiseMinimumSize();
+SPDY_EXPORT_PRIVATE size_t GetContinuationMinimumSize();
+SPDY_EXPORT_PRIVATE size_t GetAltSvcMinimumSize();
+SPDY_EXPORT_PRIVATE size_t GetPrioritySize();
 
 // Returns the minimum size a frame can be (data or control).
-size_t GetFrameMinimumSize();
+SPDY_EXPORT_PRIVATE size_t GetFrameMinimumSize();
 
 }  // namespace size_utils
 

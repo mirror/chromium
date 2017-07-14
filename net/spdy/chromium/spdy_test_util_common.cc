@@ -47,6 +47,8 @@ namespace net {
 
 namespace {
 
+const uint32_t max_header_list_size_for_test = 1024;
+
 // Parses a URL into the scheme, host, and path components required for a
 // SPDY request.
 void ParseUrl(SpdyStringPiece url,
@@ -238,7 +240,7 @@ class PriorityGetter : public BufferedSpdyFramerVisitorInterface {
 
 bool GetSpdyPriority(const SpdySerializedFrame& frame, SpdyPriority* priority) {
   NetLogWithSource net_log;
-  BufferedSpdyFramer framer(net_log);
+  BufferedSpdyFramer framer(max_header_list_size_for_test, net_log);
   PriorityGetter priority_getter;
   framer.set_visitor(&priority_getter);
   size_t frame_size = frame.size();

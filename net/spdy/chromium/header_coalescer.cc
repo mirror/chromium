@@ -31,8 +31,9 @@ std::unique_ptr<base::Value> ElideNetLogHeaderCallback(
 
 }  // namespace
 
-HeaderCoalescer::HeaderCoalescer(const NetLogWithSource& net_log)
-    : net_log_(net_log) {}
+HeaderCoalescer::HeaderCoalescer(uint32_t max_header_list_size,
+                                 const NetLogWithSource& net_log)
+    : max_header_list_size_(max_header_list_size), net_log_(net_log) {}
 
 void HeaderCoalescer::OnHeader(SpdyStringPiece key, SpdyStringPiece value) {
   if (error_seen_)
@@ -78,7 +79,7 @@ bool HeaderCoalescer::AddHeader(SpdyStringPiece key, SpdyStringPiece value) {
 
   // 32 byte overhead according to RFC 7540 Section 6.5.2.
   header_list_size_ += key.size() + value.size() + 32;
-  if (header_list_size_ > kMaxHeaderListSize)
+  if (header_list_size_ > max_header_list_size_)
     return false;
 
   // End of line delimiter is forbidden according to RFC 7230 Section 3.2.
