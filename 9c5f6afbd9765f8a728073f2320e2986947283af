@@ -16,6 +16,24 @@
       "revId": "9c5f6afbd9765f8a728073f2320e2986947283af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f76e372_4b4c5f0c",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-14T22:35:14Z",
+      "side": 1,
+      "message": "Thank you for the info :-)",
+      "parentUuid": "fd61098e_96d3bb02",
+      "revId": "9c5f6afbd9765f8a728073f2320e2986947283af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
