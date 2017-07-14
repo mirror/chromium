@@ -3119,6 +3119,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"mac-touchbar", flag_descriptions::kMacTouchBarName,
      flag_descriptions::kMacTouchBarDescription, kOsMac,
      FEATURE_VALUE_TYPE(features::kBrowserTouchBar)},
+    {"credit-card-autofill-touchbar",
+     flag_descriptions::kCreditCardAutofillTouchBarName,
+     flag_descriptions::kCreditCardAutofillTouchBarDescription, kOsMac,
+     FEATURE_VALUE_TYPE(features::kCreditCardAutofillTouchBar)},
 #endif  // defined(OS_MACOSX)
 
 #if defined(TOOLKIT_VIEWS)

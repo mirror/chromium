@@ -4,8 +4,14 @@
 
 #import "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.h"
 
+#include "chrome/browser/ui/autofill/autofill_popup_controller.h"
+#include "chrome/browser/ui/autofill/autofill_popup_layout_model.h"
 #include "chrome/browser/ui/autofill/autofill_popup_view_delegate.h"
 #include "chrome/browser/ui/autofill/popup_constants.h"
+#import "chrome/browser/ui/cocoa/browser_window_controller.h"
+#import "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h"
+#import "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h"
+#import "chrome/browser/ui/cocoa/web_textfield_touch_bar_controller.h"
 #include "ui/base/cocoa/window_size_constants.h"
 
 @implementation AutofillPopupBaseViewCocoa
@@ -45,10 +51,13 @@
 #pragma mark Public methods
 
 - (id)initWithDelegate:(autofill::AutofillPopupViewDelegate*)delegate
+            controller:(autofill::AutofillPopupController*)controller
                  frame:(NSRect)frame {
   self = [super initWithFrame:frame];
-  if (self)
+  if (self) {
     popup_delegate_ = delegate;
+    popup_controller_ = controller;
+  }
 
   return self;
 }
@@ -161,8 +170,22 @@
   [window setOpaque:YES];
 
   [self updateBoundsAndRedrawPopup];
-  [[popup_delegate_->container_view() window] addChildWindow:window
-                                                     ordered:NSWindowAbove];
+
+  NSWindow* parentWindow = [popup_delegate_->container_view() window];
+  [parentWindow addChildWindow:window ordered:NSWindowAbove];
+
+  // Show the credit card autofill items on the touch bar if applicable.
+  if (popup_controller_ &&
+      popup_controller_->layout_model().is_credit_card_popup()) {
+    BrowserWindowController* bwc =
+        [BrowserWindowController browserWindowControllerForWindow:parentWindow];
+    TabContentsController* tabContentsController =
+        [[bwc tabStripController] activeTabContentsController];
+    WebTextfieldTouchBarController* touchBarController =
+        [tabContentsController webTextfieldTouchBarController];
+    [touchBarController showCreditCardAutofillForWindow:window
+                                             controller:popup_controller_];
+  }
 }
 
 - (void)hidePopup {

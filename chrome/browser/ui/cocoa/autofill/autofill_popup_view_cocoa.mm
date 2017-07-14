@@ -90,7 +90,7 @@ using autofill::AutofillPopupLayoutModel;
 - (id)initWithController:(autofill::AutofillPopupController*)controller
                    frame:(NSRect)frame
                 delegate:(autofill::AutofillPopupViewCocoaDelegate*)delegate {
-  self = [super initWithDelegate:controller frame:frame];
+  self = [super initWithDelegate:controller controller:controller frame:frame];
   if (self) {
     controller_ = controller;
     delegate_ = delegate;
