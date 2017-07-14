@@ -31,9 +31,9 @@
 #include "core/workers/SharedWorkerThread.h"
 
 #include <memory>
+#include "core/workers/GlobalScopeStartupData.h"
 #include "core/workers/SharedWorkerGlobalScope.h"
 #include "core/workers/WorkerBackingThread.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
@@ -54,7 +54,7 @@ void SharedWorkerThread::ClearWorkerBackingThread() {
 }
 
 WorkerOrWorkletGlobalScope* SharedWorkerThread::CreateWorkerGlobalScope(
-    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+    std::unique_ptr<GlobalScopeStartupData> startup_data) {
   return SharedWorkerGlobalScope::Create(name_, this, std::move(startup_data));
 }
 

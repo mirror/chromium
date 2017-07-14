@@ -38,7 +38,7 @@
 namespace blink {
 
 class ServiceWorkerInstalledScriptsManager;
-class WorkerThreadStartupData;
+struct GlobalScopeStartupData;
 
 class MODULES_EXPORT ServiceWorkerThread final : public WorkerThread {
  public:
@@ -54,7 +54,7 @@ class MODULES_EXPORT ServiceWorkerThread final : public WorkerThread {
 
  protected:
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
-      std::unique_ptr<WorkerThreadStartupData>) override;
+      std::unique_ptr<GlobalScopeStartupData>) override;
 
   InstalledScriptsManager* GetInstalledScriptsManager() override;
 
