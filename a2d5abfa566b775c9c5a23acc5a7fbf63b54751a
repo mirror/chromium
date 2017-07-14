@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87fe9bc9_7a8955ee",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_flex_layout.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T17:16:52Z",
+      "side": 1,
+      "message": "Why is this file necessary? The proposed replacement of iron-flex-layout.html is to use [1] and properly include the style that you need as in\n\u003cstyle include\u003d\"iron-flex\"\u003c/style\u003e\n\nSee example from MD Settings at [2].\n\n[1] https://cs.chromium.org/chromium/src/third_party/polymer/v1_0/components-chromium/iron-flex-layout/iron-flex-layout-classes.html\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/people_page/people_page.html?l\u003d13,41",
+      "revId": "a2d5abfa566b775c9c5a23acc5a7fbf63b54751a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
