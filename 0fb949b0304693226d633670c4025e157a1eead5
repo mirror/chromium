@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c44c2bcf_fbf9374a",
+        "filename": "extensions/common/api/_api_features.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "Our feature files determine the possible \"entities\" of a given category; api_features define all possible APIs, permission_features define all possible permissions, and manifest_features define all possible manifest entries.  What this dependency is saying is that the availability (i.e., whether or not an extension can use it) of the API is dependent on it also having the associated permission - which is what we want.  The inverse would mean that whether or not the extension could have the permission was dependent on if it had access to the API (where having access to the API was only restricted by type).  This wouldn\u0027t be good, since then extensions could use any API, and just not request permissions. :)\n\nNote that API features depending on manifest features is just fine (since it still requires the extension to statically declare something in the manifest).",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68e1ff8_5beef835",
+        "filename": "extensions/common/api/_manifest_features.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "legacy packaged apps are also known as v1 packaged apps, and have been heavily deprecated.  We should not allow them to use any new APIs.",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3353c0c9_8d5a8586",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "It\u0027s generally good to include a permission in most cases anyway, because it makes it easy to audit permissions through e.g. UMA, static analysis, etc.  It\u0027s a low cost, and makes a lot easier.",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801372f5_f20e2a66",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "nit: What is the technical definition of a \"host\"?  Does it have to be fully qualified, or would \"maps\" be considered a host, even if it refers to maps.google.com?\n\nI\u0027d probably lean towards just saying \"domain\".",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2c0cf7_4bbc999c",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "Can you give an example of this?",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7dcf780_768964f8",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "Right, default values are handled in the API implementation.  It could be neat to add them to the api specification and auto-generate them, but we don\u0027t yet.",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254189cc_b5d8fa24",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "nit: avoid abbreviations in documentation, so s/no./number",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b219f398_f7b62d86",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "Do we need this if we also have whitelist as a rule action?",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f8ed82_576f1dd9",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "How is this different than ensuring it\u0027s relative, doesn\u0027t reference the parent, and exists (from Validate())?",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c289fdf7_88c98c0b",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "As I mentioned in the features file, sometimes it\u0027s nice to just require them to add the permission as well for static analysis purposes (though I don\u0027t feel super strongly).",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a10cc6_64063719",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "Should we validate the rules file?",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88868312_d53d14d2",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-14T23:04:43Z",
+      "side": 1,
+      "message": "no need for declarative_net_request:: prefix.",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
