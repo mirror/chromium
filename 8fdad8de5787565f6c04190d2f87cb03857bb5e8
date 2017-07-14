@@ -71,6 +71,75 @@
     },
     {
       "key": {
+        "uuid": "e43b549d_ad17215c",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-07-14T15:14:57Z",
+      "side": 1,
+      "message": "I think CamelCase does not match the style guide, correct? (should be weekly_timestamp)? Here and also below with things like TimeOfDay?",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 21
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0a92df_aff7e789",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-07-14T15:14:57Z",
+      "side": 1,
+      "message": "It\u0027s a bit odd to see a timestamp represented as H:M:S rather than in \"milliseconds from midnight\". Maybe we should change this to a single integer \"milliseconds from midnight\" field? You\u0027d have to deal with DST transitions when converting it to a \"real\" time, but I don\u0027t think that should be a big deal?",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 17
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b1a2b7_2fc8806d",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-07-14T15:14:57Z",
+      "side": 1,
+      "message": "nit, incorrect variable naming style (should be off_hours)",
+      "range": {
+        "startLine": 943,
+        "startChar": 43,
+        "endLine": 943,
+        "endChar": 51
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08eac2c1_8a5e64ea",
         "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
         "patchSetId": 4
@@ -186,6 +255,30 @@
     },
     {
       "key": {
+        "uuid": "955b8a86_9c18bc3a",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-07-14T15:14:57Z",
+      "side": 1,
+      "message": "I think in theory it\u0027d be OK to break it up like this (definition of policy separate from use), if you have unit tests to confirm that we can set the correct CrosSettings, etc from policy.",
+      "parentUuid": "d4b86f8f_7aa8b4d0",
+      "range": {
+        "startLine": 981,
+        "startChar": 18,
+        "endLine": 981,
+        "endChar": 38
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca201bc_545c04cc",
         "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
         "patchSetId": 4
@@ -283,6 +376,30 @@
       "writtenOn": "2017-07-14T14:12:57Z",
       "side": 1,
       "message": "These changes seem to be unrelated to your CL.",
+      "range": {
+        "startLine": 92450,
+        "startChar": 0,
+        "endLine": 92468,
+        "endChar": 23
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58553c8f_7b758335",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92468,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-07-14T15:14:57Z",
+      "side": 1,
+      "message": "Suspect this might be due to running \"git cl format\" which is required by presubmit.",
+      "parentUuid": "bbe4d106_f0ca152f",
       "range": {
         "startLine": 92450,
         "startChar": 0,
