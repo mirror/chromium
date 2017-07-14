@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dfe628_9e4b7adc",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-14T08:48:18Z",
+      "side": 1,
+      "message": "Seems unused?",
+      "range": {
+        "startLine": 192,
+        "startChar": 44,
+        "endLine": 192,
+        "endChar": 86
+      },
+      "revId": "fa2ccfe61a5000e8a5f62a304f95857d3946e8b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45952140_2016d4e0",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-14T08:48:18Z",
+      "side": 1,
+      "message": "this line break seems unnecessary.",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 15
+      },
+      "revId": "fa2ccfe61a5000e8a5f62a304f95857d3946e8b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b720b6c8_81a2581e",
+        "filename": "ui/file_manager/file_manager/main.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-14T08:48:18Z",
+      "side": 1,
+      "message": "Use a proper tooltip, or remove this and file a bug to set a proper tooltip.",
+      "range": {
+        "startLine": 376,
+        "startChar": 38,
+        "endLine": 376,
+        "endChar": 57
+      },
+      "revId": "fa2ccfe61a5000e8a5f62a304f95857d3946e8b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
