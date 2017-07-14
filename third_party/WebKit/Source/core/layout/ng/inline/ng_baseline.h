@@ -29,6 +29,8 @@ struct NGBaselineRequest {
   FontBaseline baseline_type;
 };
 
+bool operator==(const NGBaselineRequest&, const NGBaselineRequest&);
+
 // Represents a computed baseline position.
 struct NGBaseline {
   NGBaselineAlgorithmType algorithm_type;
@@ -39,6 +41,8 @@ struct NGBaseline {
   static bool ShouldPropagateBaselines(const NGLayoutInputNode);
   static bool ShouldPropagateBaselines(LayoutBox*);
 };
+
+bool operator==(const NGBaseline&, const NGBaselineRequest&);
 
 }  // namespace blink
 

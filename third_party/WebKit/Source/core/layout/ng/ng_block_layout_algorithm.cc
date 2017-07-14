@@ -863,9 +863,8 @@ RefPtr<NGConstraintSpace> NGBlockLayoutAlgorithm::CreateConstraintSpaceForChild(
 }
 
 bool NGBlockLayoutAlgorithm::AddBaseline(const NGBaselineRequest& request,
-                                         unsigned child_index) {
-  const NGPhysicalFragment* child =
-      container_builder_.Children()[child_index].Get();
+                                         const NGPhysicalFragment* child,
+                                         LayoutUnit child_offset) {
   if (!child->IsBox())
     return false;
   LayoutObject* layout_object = child->GetLayoutObject();
@@ -874,10 +873,7 @@ bool NGBlockLayoutAlgorithm::AddBaseline(const NGBaselineRequest& request,
 
   const NGPhysicalBoxFragment* box = ToNGPhysicalBoxFragment(child);
   if (const NGBaseline* baseline = box->Baseline(request)) {
-    container_builder_.AddBaseline(
-        request.algorithm_type, request.baseline_type,
-        baseline->offset +
-            container_builder_.Offsets()[child_index].block_offset);
+    container_builder_.AddBaseline(request, baseline->offset + child_offset);
     return true;
   }
   return false;
@@ -896,13 +892,15 @@ void NGBlockLayoutAlgorithm::PropagateBaselinesFromChildren() {
       case NGBaselineAlgorithmType::kAtomicInline:
       case NGBaselineAlgorithmType::kAtomicInlineForFirstLine:
         for (unsigned i = container_builder_.Children().size(); i--;) {
-          if (AddBaseline(request, i))
+          if (AddBaseline(request, container_builder_.Children()[i].Get(),
+                          container_builder_.Offsets()[i].block_offset))
             break;
         }
         break;
       case NGBaselineAlgorithmType::kFirstLine:
         for (unsigned i = 0; i < container_builder_.Children().size(); i++) {
-          if (AddBaseline(request, i))
+          if (AddBaseline(request, container_builder_.Children()[i].Get(),
+                          container_builder_.Offsets()[i].block_offset))
             break;
         }
         break;

@@ -187,10 +187,14 @@ NGFragmentBuilder& NGFragmentBuilder::AddOutOfFlowDescendant(
   return *this;
 }
 
-void NGFragmentBuilder::AddBaseline(NGBaselineAlgorithmType algorithm_type,
-                                    FontBaseline baseline_type,
+void NGFragmentBuilder::AddBaseline(NGBaselineRequest request,
                                     LayoutUnit offset) {
-  baselines_.push_back(NGBaseline{algorithm_type, baseline_type, offset});
+#if DCHECK_IS_ON()
+  for (const auto& baseline : baselines_)
+    DCHECK(!(baseline == request));
+#endif
+  baselines_.push_back(
+      NGBaseline{request.algorithm_type, request.baseline_type, offset});
 }
 
 RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
