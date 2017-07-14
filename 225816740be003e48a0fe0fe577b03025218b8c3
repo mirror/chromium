@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e55f905f_59a7c075",
+        "filename": "components/certificate_reporting/error_report_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-14T17:44:55Z",
+      "side": 1,
+      "message": "nit: Rename to TestIsEnterpriseManagedPopulated",
+      "range": {
+        "startLine": 289,
+        "startChar": 22,
+        "endLine": 289,
+        "endChar": 63
+      },
+      "revId": "225816740be003e48a0fe0fe577b03025218b8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
