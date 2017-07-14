@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b034b9ce_da750f64",
+        "filename": "content/browser/ssl/ignore_errors_cert_verifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T10:19:22Z",
+      "side": 1,
+      "message": "I like this, FWIW. Allowing the embedder to define the requirement here seems pretty reasonable, and this approach to doing so is clever.",
+      "revId": "79e93f07c095802d0745029ae4d98d19a13cb98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cb3482_b2269fa4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T10:19:22Z",
+      "side": 1,
+      "message": "This seems like it\u0027s going to be fragile. I can\u0027t think of a better way to link it up, though, without a ton of work. Let\u0027s see how often it causes problems. :)",
+      "revId": "79e93f07c095802d0745029ae4d98d19a13cb98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
