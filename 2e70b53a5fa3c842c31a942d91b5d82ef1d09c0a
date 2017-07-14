@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bd19870_697cb117",
+        "filename": "media/cdm/ppapi/external_clear_key/clear_key_cdm.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-14T05:09:59Z",
+      "side": 1,
+      "message": "Verify the storage ID as well? e.g. empty for now, non-empty in the future, or if it\u0027s fixed size, check the size etc.",
+      "revId": "2e70b53a5fa3c842c31a942d91b5d82ef1d09c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9faf92e_304b669c",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-14T05:09:59Z",
+      "side": 1,
+      "message": "Can you do linked_ptr\u003cpp::Var\u003e given there\u0027s only one member of the struct?",
+      "revId": "2e70b53a5fa3c842c31a942d91b5d82ef1d09c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
