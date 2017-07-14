@@ -16,6 +16,24 @@
       "revId": "205e47f63a2543f9fe5ae4c6ae42770abe21cf03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049a3489_bd5094ad",
+        "filename": "ui/compositor/layer_animator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-14T22:29:16Z",
+      "side": 1,
+      "message": "Yes, that\u0027s correct. We researched this here:\n\nhttps://chromium-review.googlesource.com/c/522405#message-cf3be3826f8a54efb93273e851226bb393265955\n\nand I think it\u0027s ok.",
+      "parentUuid": "d52f423e_3be8d934",
+      "revId": "205e47f63a2543f9fe5ae4c6ae42770abe21cf03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
