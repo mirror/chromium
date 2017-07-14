@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd37595f_3198a6da",
+        "filename": "chrome/browser/browsing_data/browsing_data_database_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T01:00:18Z",
+      "side": 1,
+      "message": "would it work to bind directly to the DeleteDatabase method without the intermediary lambda?",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 46
+      },
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3364d6_62bd5098",
+        "filename": "storage/browser/database/database_quota_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T01:00:18Z",
+      "side": 1,
+      "message": "is this cast safe or does it depend on what our caller has passed in?",
+      "range": {
+        "startLine": 133,
+        "startChar": 50,
+        "endLine": 133,
+        "endChar": 55
+      },
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07f3d36_548c2c6d",
+        "filename": "storage/browser/database/database_quota_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T01:00:18Z",
+      "side": 1,
+      "message": "This is confusing, we create a repeating binding and then cast it to once here? Does this cast produce a new binding for one-time-use given a repeating binding as input?",
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34954335_70fcd1c6",
+        "filename": "storage/browser/database/database_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T01:00:18Z",
+      "side": 1,
+      "message": "Let\u0027s figure it out before landing.",
+      "range": {
+        "startLine": 100,
+        "startChar": 25,
+        "endLine": 100,
+        "endChar": 63
+      },
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020448cd_b43412fc",
+        "filename": "storage/browser/database/database_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T01:00:18Z",
+      "side": 1,
+      "message": "instead of retaining the ctor parameter, maybe add an inline set_task_runner_for_testing() to make it more obvious it\u0027s not the usual case",
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d27ad5_679f084c",
+        "filename": "storage/browser/database/database_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T01:00:18Z",
+      "side": 1,
+      "message": "\u003d 0 this datamember too?",
+      "range": {
+        "startLine": 315,
+        "startChar": 6,
+        "endLine": 315,
+        "endChar": 45
+      },
+      "revId": "dc486be5d09bd12954a8d182eaac203ebc2a53d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
