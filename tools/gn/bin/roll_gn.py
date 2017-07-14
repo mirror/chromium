@@ -100,7 +100,7 @@ class GNRoller(object):
   def SetUp(self):
     if sys.platform != 'linux2':
       print('roll_gn is only tested and working on Linux for now.')
-      return 1
+      #return 1
 
     ret, out, _ = self.Call('git config --get remote.origin.url')
     origin = out.strip()
@@ -193,6 +193,8 @@ class GNRoller(object):
       time.sleep(30)
       print('Checking build')
       results = self.CheckBuild()
+
+    time.sleep(100);
 
     ret = 0 if all(r['state'] == 'success' for r in results.values()) else 1
     if ret:
