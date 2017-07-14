@@ -36,7 +36,8 @@ TEST_F(LayerTreeHostFiltersPixelTest, BackgroundFilterBlur) {
   background->AddChild(blur);
 
   FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(2.f));
+  filters.Append(FilterOperation::CreateBlurFilter(
+      2.f, SkBlurImageFilter::kClamp_TileMode));
   blur->SetBackgroundFilters(filters);
 
 #if defined(OS_WIN)
@@ -138,7 +139,8 @@ TEST_F(LayerTreeHostFiltersPixelTest, BackgroundFilterBlurOffAxis) {
   blur->SetTransform(blur_transform);
 
   FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(2.f));
+  filters.Append(FilterOperation::CreateBlurFilter(
+      2.f, SkBlurImageFilter::kClamp_TileMode));
   blur->SetBackgroundFilters(filters);
 
 #if defined(OS_WIN)
@@ -478,7 +480,8 @@ class ImageBackgroundFilter : public LayerTreeHostFiltersPixelTest {
 
     // Add a blur filter to the blue layer.
     FilterOperations filters;
-    filters.Append(FilterOperation::CreateBlurFilter(5.0f));
+    filters.Append(FilterOperation::CreateBlurFilter(
+        5.0f, SkBlurImageFilter::kClamp_TileMode));
     filter->SetBackgroundFilters(filters);
 
     // Allow some fuzziness so that this doesn't fail when Skia makes minor
@@ -935,7 +938,8 @@ class BlurFilterWithClip : public LayerTreeHostFiltersPixelTest {
     filter_layer->AddChild(child4);
 
     FilterOperations filters;
-    filters.Append(FilterOperation::CreateBlurFilter(2.f));
+    filters.Append(FilterOperation::CreateBlurFilter(
+        2.f, SkBlurImageFilter::kClamp_TileMode));
     filter_layer->SetFilters(filters);
 
     // Force the allocation a larger textures.
