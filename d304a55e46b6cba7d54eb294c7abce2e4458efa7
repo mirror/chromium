@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d8cd71e_16623a99",
+        "filename": "storage/browser/blob/blob_data_builder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T23:28:06Z",
+      "side": 1,
+      "message": "Nit: I would be super happy if this was uint8_t \u003d)",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 7
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e4ea57_5dec174d",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T23:28:06Z",
+      "side": 1,
+      "message": "This might just be my unfamiliarity with blobs, but maybe \"unref\u0027ed\" would be more clear? The current wording reads like a pointer deref.",
+      "range": {
+        "startLine": 88,
+        "startChar": 32,
+        "endLine": 88,
+        "endChar": 44
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba40caa_270753d5",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T23:28:06Z",
+      "side": 1,
+      "message": "Do you know if it\u0027s actually possible for encountered_error() to be true on an InterfacePtr at the moment of arrival? My understanding is that even if the pipe is closed, we don\u0027t actually get a connection error until we read from the message pipe...\n\nIt would be nice if we didn\u0027t need to do this. And having to do this seems to imply all the other call sites that have a connection error handler but don\u0027t check this would be racy?",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 7
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4552389_1ce48caf",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T23:28:06Z",
+      "side": 1,
+      "message": "Ditto the earlier comment about unref\u0027ing vs dereference.",
+      "range": {
+        "startLine": 354,
+        "startChar": 30,
+        "endLine": 354,
+        "endChar": 43
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19824d6a_ee005d46",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T23:28:06Z",
+      "side": 1,
+      "message": "I am uncertain about the safety of this. I guess it\u0027s probably prevented by the size check we do before creating a transport strategy, but if size_t were 32 bits, then we could force this loop to make zero progress by setting bytes-\u003elength \u003d 0x100000000ull... and it\u0027s possible for the limits to change independently of this code.",
+      "range": {
+        "startLine": 108,
+        "startChar": 14,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b93b6a8_5a810cb0",
+        "filename": "storage/browser/blob/blob_transport_strategy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T23:28:06Z",
+      "side": 1,
+      "message": "Maybe a return would be clearer?",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 14
+      },
+      "revId": "d304a55e46b6cba7d54eb294c7abce2e4458efa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
