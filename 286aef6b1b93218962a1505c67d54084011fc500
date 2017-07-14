@@ -70,6 +70,30 @@
       "revId": "286aef6b1b93218962a1505c67d54084011fc500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a248d57b_fdfcc9e5",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1230959
+      },
+      "writtenOn": "2017-07-14T02:53:34Z",
+      "side": 1,
+      "message": "Good idea. it\u0027s more concise.",
+      "parentUuid": "2b54cb53_f019848d",
+      "range": {
+        "startLine": 623,
+        "startChar": 4,
+        "endLine": 623,
+        "endChar": 78
+      },
+      "revId": "286aef6b1b93218962a1505c67d54084011fc500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
