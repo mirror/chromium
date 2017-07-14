@@ -54,6 +54,8 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
            (base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>)
                resultDelegate;
 
+- (void)launchAppWithUniversalLink:(std::string)universalLink;
+
 @end
 
 namespace payments {
