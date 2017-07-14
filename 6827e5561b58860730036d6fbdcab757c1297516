@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27a96cfa_8d5fb4be",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T00:47:57Z",
+      "side": 1,
+      "message": "Nit (optional): Probably not necessary, but it might make it clearer to wrap this entire test in an\n\nif (cr.isMac) {\n  test(\u0027MacOpenPDFInPreview\u0027, function() {\n    ...\n  });\n}\n\nand similar for the other test below.",
+      "revId": "6827e5561b58860730036d6fbdcab757c1297516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7775dc85_d20ea04f",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T00:47:57Z",
+      "side": 1,
+      "message": "I see the \"Print using system dialog\" on Linux too. Could this test cover that case too?",
+      "revId": "6827e5561b58860730036d6fbdcab757c1297516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
