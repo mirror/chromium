@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8010f4b_2e5923c1",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T05:02:35Z",
+      "side": 1,
+      "message": "please delete lines 132-135, and line 137",
+      "revId": "8e34a232b000380b06e0f6d08f4f737415990e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6514dc85_ffbfa39c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T05:02:35Z",
+      "side": 1,
+      "message": "Hmm I guess we don\u0027t know the ordering of DidCreateWorkerGlobalScope() wrt the other methods? +nhiroki as a pain point for blink docathon .",
+      "revId": "8e34a232b000380b06e0f6d08f4f737415990e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337f7017_a7e1696c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T05:02:35Z",
+      "side": 1,
+      "message": "This comment looks wrong too since WorkerThread seems to sometimes calls this after DidCreateWorkerScope(), but sometimes doesn\u0027t (there is an if() about whether intializing the context is needed).\n\nSo I\u0027d remove this sentence too.",
+      "revId": "8e34a232b000380b06e0f6d08f4f737415990e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
