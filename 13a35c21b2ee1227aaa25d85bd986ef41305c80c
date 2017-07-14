@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b10597ba_7c9f5463",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-14T22:11:05Z",
+      "side": 1,
+      "message": "Does this make the spinner and icon view touch?",
+      "range": {
+        "startLine": 238,
+        "startChar": 60,
+        "endLine": 238,
+        "endChar": 72
+      },
+      "revId": "13a35c21b2ee1227aaa25d85bd986ef41305c80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
