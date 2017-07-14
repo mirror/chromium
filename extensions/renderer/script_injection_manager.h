@@ -59,7 +59,8 @@ class ScriptInjectionManager : public UserScriptSetManager::Observer {
   using ScriptInjectionVector = std::vector<std::unique_ptr<ScriptInjection>>;
 
   // Notifies that an injection has been finished.
-  void OnInjectionFinished(ScriptInjection* injection);
+  void OnInjectionFinished(ScriptInjection* injection,
+                           base::Optional<base::TimeDelta> elapsed);
 
   // UserScriptSetManager::Observer implementation.
   void OnUserScriptsUpdated(const std::set<HostID>& changed_hosts) override;
@@ -119,6 +120,9 @@ class ScriptInjectionManager : public UserScriptSetManager::Observer {
 
   // Whether or not dom activity should be logged for scripts injected.
   bool activity_logging_enabled_ = false;
+
+  // Time stamp of the last OnInjectionFinished() call.
+  base::TimeTicks last_injection_finish_time_;
 
   ScopedObserver<UserScriptSetManager, UserScriptSetManager::Observer>
       user_script_set_manager_observer_;
