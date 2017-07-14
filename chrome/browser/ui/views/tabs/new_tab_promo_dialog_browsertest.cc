@@ -6,6 +6,8 @@
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/tabs/new_tab_button.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/grit/generated_resources.h"
+#include "ui/base/l10n/l10n_util.h"
 
 class NewTabPromoDialogTest : public DialogBrowserTest {
  public:
@@ -14,8 +16,9 @@ class NewTabPromoDialogTest : public DialogBrowserTest {
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
     BrowserView* browser_view =
-        BrowserView::GetBrowserViewForBrowser(browser());
-    browser_view->tabstrip()->new_tab_button()->ShowPromo();
+        static_cast<BrowserView*>(InProcessBrowserTest::browser()->window());
+    browser_view->tabstrip()->new_tab_button()->ShowPromo(
+        l10n_util::GetStringUTF16(IDS_NEWTAB_PROMO_2));
   }
 
  private:
