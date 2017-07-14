@@ -22,6 +22,30 @@
       "revId": "9f605ee5c3895171ab97d781422b91a9d46aa84c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04dfc32_c5306019",
+        "filename": "components/metrics/metrics_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-14T21:41:43Z",
+      "side": 1,
+      "message": "Mostly MetricsServiceAccessor, which in turn exposes elsewhere, and some internal uses by MetricsService.  I agree that this probably doesn\u0027t belong here, and plan to propogate this change out to callers so this can eventually be removed from components/metrics entirely, but this seems like the smallest change.",
+      "parentUuid": "c08e2781_1e0d192d",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "9f605ee5c3895171ab97d781422b91a9d46aa84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
