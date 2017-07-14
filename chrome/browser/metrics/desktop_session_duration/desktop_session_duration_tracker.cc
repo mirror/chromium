@@ -55,6 +55,11 @@ void DesktopSessionDurationTracker::OnVisibilityChanged(
   }
 }
 
+void DesktopSessionDurationTracker::DeleteInstanceForTesting() {
+  delete g_instance;
+  g_instance = nullptr;
+}
+
 void DesktopSessionDurationTracker::AddObserver(Observer* observer) {
   observer_list_.AddObserver(observer);
 }
