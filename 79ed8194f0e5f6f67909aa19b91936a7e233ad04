@@ -330,6 +330,24 @@
     },
     {
       "key": {
+        "uuid": "f1a53167_b75323e5",
+        "filename": "chrome/browser/ui/cocoa/l10n_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:28:03Z",
+      "side": 1,
+      "message": "The initial implementation was wrong. I\u0027ve fixed it.",
+      "parentUuid": "7f483214_47b77cba",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8999c46_5c93081c",
         "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_editor_unittest.mm",
         "patchSetId": 4
@@ -477,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "e55f6ba0_a51e63f6",
+        "filename": "net/ssl/ssl_platform_key_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:28:03Z",
+      "side": 1,
+      "message": "I\u0027ve marked the whole class as API_AVAILABLE(10.12)",
+      "parentUuid": "df2ff0e7_3630cf28",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2bfe9cd_2a57ecf8",
         "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
         "patchSetId": 4
@@ -536,6 +572,30 @@
       "side": 1,
       "message": "Not done?",
       "parentUuid": "49c1d7e9_6d324eac",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c5aa512_84729020",
+        "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:28:03Z",
+      "side": 1,
+      "message": "Were you looking at the wrong PS? This appears done to me.",
+      "parentUuid": "3f8af7ea_0131b0b0",
       "range": {
         "startLine": 32,
         "startChar": 12,
@@ -827,6 +887,30 @@
       "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ebf936_aeec02dc",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff56dcf6_78164f2e",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -70,6 +70,30 @@
       "revId": "537562c27b50ad655819d3648300027d1354d25b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0c6b3d_dbcccfbd",
+        "filename": "ui/views/cocoa/native_widget_mac_nswindow.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:28:03Z",
+      "side": 0,
+      "message": "I updated line 121 to use an @available block. I chose to keep ShouldUseDragEventMonitor() as it has more semantic meaning than just {if OS \u003c\u003d 10.10}. I updated its implementation/documentation to indicate that it\u0027s equivalent to an OS version check.",
+      "parentUuid": "baf5756f_e322acfe",
+      "range": {
+        "startLine": 132,
+        "startChar": 14,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "537562c27b50ad655819d3648300027d1354d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
