@@ -80,7 +80,7 @@ class MediaEngagementService : public KeyedService,
                             const base::Time& delete_end);
 
   // Retrieves the MediaEngagementScore for |url|.
-  MediaEngagementScore* CreateEngagementScore(const GURL& url) const;
+  MediaEngagementScore CreateEngagementScore(const GURL& url) const;
 
  private:
   friend class MediaEngagementServiceTest;
