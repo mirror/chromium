@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31d8005c_41be4508",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-14T17:08:51Z",
+      "side": 1,
+      "message": "Can we check decoded_images_unique_ids_ when we unlock an image, and if it no longer exists, assume that the image needs to be deleted. This would let us clean-up any in-flight images eventually... If this seems too heavy weight, can you add a TOOD note that we should find a way to clean up locked images?",
+      "range": {
+        "startLine": 873,
+        "startChar": 45,
+        "endLine": 873,
+        "endChar": 75
+      },
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe9e51bc_34010fe7",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-14T17:08:51Z",
+      "side": 1,
+      "message": "Can this ever be false? Should we dcheck instead? Maybe it can if we failed to delete a locked image below... But we might want to handle that case differently.",
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b11c34_69036764",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-14T17:08:51Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1cb20a_8059f37f",
+        "filename": "cc/tiles/software_image_decode_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-14T17:08:51Z",
+      "side": 1,
+      "message": "How big/ heavy wight are ImageKeys? Can we just store a const\u0026 here rather than making a copy?",
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
