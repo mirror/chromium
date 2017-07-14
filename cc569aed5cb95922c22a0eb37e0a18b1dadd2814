@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1dbfa75_f21a1324",
+        "filename": "ash/accelerators/accelerator_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T22:17:33Z",
+      "side": 1,
+      "message": "is this getting renamed to TOGGLE_ per oshima\u0027s suggestion on the other change?",
+      "range": {
+        "startLine": 137,
+        "startChar": 43,
+        "endLine": 137,
+        "endChar": 66
+      },
+      "revId": "cc569aed5cb95922c22a0eb37e0a18b1dadd2814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
