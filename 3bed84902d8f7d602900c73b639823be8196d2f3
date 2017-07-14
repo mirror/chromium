@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b28d30d_9ca1db4d",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-07-14T17:29:48Z",
+      "side": 1,
+      "message": "The use of map is kind of misleading here since we\u0027re no longer using the O(log(n)) lookup property. How about just storing this as a vector of structs containing the module address range and index? That would be a little less overhead as well.",
+      "range": {
+        "startLine": 276,
+        "startChar": 22,
+        "endLine": 276,
+        "endChar": 55
+      },
+      "revId": "3bed84902d8f7d602900c73b639823be8196d2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
