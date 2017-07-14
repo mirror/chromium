@@ -113,8 +113,6 @@ void ArcServiceLauncher::Initialize() {
   arc_service_manager_->AddService(
       base::MakeUnique<ArcImeService>(arc_bridge_service));
   arc_service_manager_->AddService(
-      base::MakeUnique<ArcIntentHelperBridge>(arc_bridge_service));
-  arc_service_manager_->AddService(
       base::MakeUnique<ArcMetricsService>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcNetHostImpl>(arc_bridge_service));
@@ -202,6 +200,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   // List in lexicographical order.
   ArcAccessibilityHelperBridge::GetForBrowserContext(profile);
   ArcAuthService::GetForBrowserContext(profile);
+  ArcIntentHelperBridge::GetForBrowserContext(profile);
 
   arc_service_manager_->AddService(base::MakeUnique<ArcBootPhaseMonitorBridge>(
       arc_service_manager_->arc_bridge_service(),
