@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3e4ded_486b5ca9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T09:44:30Z",
+      "side": 1,
+      "message": "I\u0027d prefer to know for sure of course. But definitely this CL doesn\u0027t make the things worse.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 6
+      },
+      "revId": "b00d0a10bbe9dfdb5b277d3f660bc362dc271fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
