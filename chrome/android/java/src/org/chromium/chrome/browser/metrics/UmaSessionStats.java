@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.DefaultBrowserInfo;
 import org.chromium.chrome.browser.preferences.privacy.PrivacyPreferencesManager;
 import org.chromium.chrome.browser.tab.Tab;
@@ -144,7 +145,7 @@ public class UmaSessionStats {
     }
 
     public static void logRendererCrash() {
-        nativeLogRendererCrash();
+        RecordHistogram.recordBooleanHistogram("Stability.Android.RendererCrash", true);
     }
 
     /**
@@ -205,7 +206,6 @@ public class UmaSessionStats {
     private static native void nativeUpdateMetricsServiceState(boolean mayUpload);
     private native void nativeUmaResumeSession(long nativeUmaSessionStats);
     private native void nativeUmaEndSession(long nativeUmaSessionStats);
-    private static native void nativeLogRendererCrash();
     private static native void nativeRegisterExternalExperiment(
             String studyName, int[] experimentIds);
     private static native void nativeRegisterSyntheticFieldTrial(

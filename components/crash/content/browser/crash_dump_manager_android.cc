@@ -20,6 +20,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/post_task.h"
 #include "components/crash/content/app/breakpad_linux.h"
+#include "components/metrics/metrics_pref_names.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/browser/file_descriptor_info.h"
 #include "content/public/browser/notification_service.h"
@@ -30,8 +31,11 @@
 namespace breakpad {
 
 CrashDumpManager::CrashDumpManager(const base::FilePath& crash_dump_dir,
-                                   int descriptor_id)
-    : crash_dump_dir_(crash_dump_dir), descriptor_id_(descriptor_id) {}
+                                   int descriptor_id,
+                                   PrefService* pref_service)
+    : crash_dump_dir_(crash_dump_dir),
+      descriptor_id_(descriptor_id),
+      pref_service_(pref_service) {}
 
 CrashDumpManager::~CrashDumpManager() {
 }
@@ -74,7 +78,8 @@ void CrashDumpManager::ProcessMinidump(
     base::ProcessHandle pid,
     content::ProcessType process_type,
     base::TerminationStatus termination_status,
-    base::android::ApplicationState app_state) {
+    base::android::ApplicationState app_state,
+    PrefService* pref_service) {
   int64_t file_size = 0;
   int r = base::GetFileSize(minidump_path, &file_size);
   DCHECK(r) << "Failed to retrieve size for minidump "
@@ -110,6 +115,14 @@ void CrashDumpManager::ProcessMinidump(
     }
     if (process_type == content::PROCESS_TYPE_RENDERER) {
       if (termination_status == base::TERMINATION_STATUS_OOM_PROTECTED) {
+        // There is a delay for OOM flag to be removed when app goes to
+        // background, so we can't just check for OOM_PROTECTED flag.
+        if (pref_service && (is_running || is_paused)) {
+          int value = pref_service->GetInteger(
+              metrics::prefs::kStabilityRendererCrashCount);
+          pref_service->SetInteger(metrics::prefs::kStabilityRendererCrashCount,
+                                   value + 1);
+        }
         UMA_HISTOGRAM_ENUMERATION("Tab.RendererDetailedExitStatus",
                                   exit_status,
                                   ExitStatus::MINIDUMP_STATUS_COUNT);
@@ -184,7 +197,7 @@ void CrashDumpManager::OnChildExit(int child_process_id,
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&CrashDumpManager::ProcessMinidump, minidump_path,
                  crash_dump_dir_, pid, process_type, termination_status,
-                 app_state));
+                 app_state, pref_service_));
 }
 
 }  // namespace breakpad
