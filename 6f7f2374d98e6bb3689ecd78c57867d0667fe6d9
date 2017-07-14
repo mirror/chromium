@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "359dba54_7bdfb40e",
+        "filename": "third_party/WebKit/Source/modules/websockets/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-14T09:22:08Z",
+      "side": 1,
+      "message": "This could also mention that it connects to a mojo service exported by content/browser/websockets. Also, content/browser/websockets should probably have a README.md.",
+      "revId": "6f7f2374d98e6bb3689ecd78c57867d0667fe6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
