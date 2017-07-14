@@ -222,5 +222,6 @@ Polymer({
           easing: 'ease-in-out',
           iterations: 1,
         }));
+    e.preventDefault();
   },
 });
