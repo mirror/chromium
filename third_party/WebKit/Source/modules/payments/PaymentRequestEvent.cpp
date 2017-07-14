@@ -20,16 +20,17 @@ namespace blink {
 PaymentRequestEvent* PaymentRequestEvent::Create(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer) {
-  return new PaymentRequestEvent(type, initializer, nullptr, nullptr);
+  return new PaymentRequestEvent(type, initializer, -1, nullptr, nullptr);
 }
 
 PaymentRequestEvent* PaymentRequestEvent::Create(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer,
+    int event_id,
     RespondWithObserver* respond_with_observer,
     WaitUntilObserver* wait_until_observer) {
-  return new PaymentRequestEvent(type, initializer, respond_with_observer,
-                                 wait_until_observer);
+  return new PaymentRequestEvent(type, initializer, event_id,
+                                 respond_with_observer, wait_until_observer);
 }
 
 PaymentRequestEvent::~PaymentRequestEvent() {}
@@ -73,11 +74,15 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
   ScriptPromise promise = resolver->Promise();
   ExecutionContext* context = ExecutionContext::From(script_state);
 
-  // TODO(gogerald): Check payment request state so as to reject promise with
-  // "InvalidStateError" appropriately (refer
-  // https://w3c.github.io/payment-handler/#dfn-open-window-algorithm).
-
   KURL parsed_url_to_open = context->CompleteURL(url);
+  if (ServiceWorkerGlobalScopeClient::From(context)->IsPaymentRequestCancelled(
+          event_id_)) {
+    resolver->Reject(DOMException::Create(
+        kInvalidStateError,
+        "payment request from '" + payment_request_origin_ + "' is cancelled"));
+    return promise;
+  }
+
   if (!parsed_url_to_open.IsValid()) {
     resolver->Reject(V8ThrowException::CreateTypeError(
         script_state->GetIsolate(), "'" + url + "' is not a valid URL."));
@@ -127,9 +132,11 @@ DEFINE_TRACE(PaymentRequestEvent) {
 PaymentRequestEvent::PaymentRequestEvent(
     const AtomicString& type,
     const PaymentRequestEventInit& initializer,
+    int event_id,
     RespondWithObserver* respond_with_observer,
     WaitUntilObserver* wait_until_observer)
     : ExtendableEvent(type, initializer, wait_until_observer),
+      event_id_(event_id),
       top_level_origin_(initializer.topLevelOrigin()),
       payment_request_origin_(initializer.paymentRequestOrigin()),
       payment_request_id_(initializer.paymentRequestId()),
