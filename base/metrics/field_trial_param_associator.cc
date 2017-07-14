@@ -18,14 +18,14 @@ FieldTrialParamAssociator* FieldTrialParamAssociator::GetInstance() {
 }
 
 bool FieldTrialParamAssociator::AssociateFieldTrialParams(
-    const std::string& trial_name,
-    const std::string& group_name,
+    base::StringPiece trial_name,
+    StringPiece group_name,
     const FieldTrialParams& params) {
   if (FieldTrialList::IsTrialActive(trial_name))
     return false;
 
   AutoLock scoped_lock(lock_);
-  const FieldTrialKey key(trial_name, group_name);
+  const FieldTrialKey key(trial_name.as_string(), group_name.as_string());
   if (ContainsKey(field_trial_params_, key))
     return false;
 
@@ -34,7 +34,7 @@ bool FieldTrialParamAssociator::AssociateFieldTrialParams(
 }
 
 bool FieldTrialParamAssociator::GetFieldTrialParams(
-    const std::string& trial_name,
+    base::StringPiece trial_name,
     FieldTrialParams* params) {
   FieldTrial* field_trial = FieldTrialList::Find(trial_name);
   if (!field_trial)
@@ -51,12 +51,12 @@ bool FieldTrialParamAssociator::GetFieldTrialParams(
 }
 
 bool FieldTrialParamAssociator::GetFieldTrialParamsWithoutFallback(
-    const std::string& trial_name,
-    const std::string& group_name,
+    base::StringPiece trial_name,
+    StringPiece group_name,
     FieldTrialParams* params) {
   AutoLock scoped_lock(lock_);
 
-  const FieldTrialKey key(trial_name, group_name);
+  const FieldTrialKey key(trial_name.as_string(), group_name.as_string());
   if (!ContainsKey(field_trial_params_, key))
     return false;
 

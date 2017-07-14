@@ -115,16 +115,16 @@ class GroupMapAccessor {
 }  // namespace
 
 void AssociateGoogleVariationID(IDCollectionKey key,
-                                const std::string& trial_name,
-                                const std::string& group_name,
+                                base::StringPiece trial_name,
+                                base::StringPiece group_name,
                                 VariationID id) {
   GroupMapAccessor::GetInstance()->AssociateID(
       key, MakeActiveGroupId(trial_name, group_name), id, false);
 }
 
 void AssociateGoogleVariationIDForce(IDCollectionKey key,
-                                     const std::string& trial_name,
-                                     const std::string& group_name,
+                                     base::StringPiece trial_name,
+                                     base::StringPiece group_name,
                                      VariationID id) {
   AssociateGoogleVariationIDForceHashes(
       key, MakeActiveGroupId(trial_name, group_name), id);
@@ -137,8 +137,8 @@ void AssociateGoogleVariationIDForceHashes(IDCollectionKey key,
 }
 
 VariationID GetGoogleVariationID(IDCollectionKey key,
-                                 const std::string& trial_name,
-                                 const std::string& group_name) {
+                                 base::StringPiece trial_name,
+                                 base::StringPiece group_name) {
   return GetGoogleVariationIDFromHashes(
       key, MakeActiveGroupId(trial_name, group_name));
 }
@@ -150,13 +150,13 @@ VariationID GetGoogleVariationIDFromHashes(
 }
 
 bool AssociateVariationParams(
-    const std::string& trial_name,
-    const std::string& group_name,
+    base::StringPiece trial_name,
+    base::StringPiece group_name,
     const std::map<std::string, std::string>& params) {
   return base::AssociateFieldTrialParams(trial_name, group_name, params);
 }
 
-bool GetVariationParams(const std::string& trial_name,
+bool GetVariationParams(base::StringPiece trial_name,
                         std::map<std::string, std::string>* params) {
   return base::GetFieldTrialParams(trial_name, params);
 }
@@ -166,32 +166,32 @@ bool GetVariationParamsByFeature(const base::Feature& feature,
   return base::GetFieldTrialParamsByFeature(feature, params);
 }
 
-std::string GetVariationParamValue(const std::string& trial_name,
-                                   const std::string& param_name) {
+std::string GetVariationParamValue(base::StringPiece trial_name,
+                                   base::StringPiece param_name) {
   return base::GetFieldTrialParamValue(trial_name, param_name);
 }
 
 std::string GetVariationParamValueByFeature(const base::Feature& feature,
-                                            const std::string& param_name) {
+                                            base::StringPiece param_name) {
   return base::GetFieldTrialParamValueByFeature(feature, param_name);
 }
 
 int GetVariationParamByFeatureAsInt(const base::Feature& feature,
-                                    const std::string& param_name,
+                                    base::StringPiece param_name,
                                     int default_value) {
   return base::GetFieldTrialParamByFeatureAsInt(feature, param_name,
                                                 default_value);
 }
 
 double GetVariationParamByFeatureAsDouble(const base::Feature& feature,
-                                          const std::string& param_name,
+                                          base::StringPiece param_name,
                                           double default_value) {
   return base::GetFieldTrialParamByFeatureAsDouble(feature, param_name,
                                                    default_value);
 }
 
 bool GetVariationParamByFeatureAsBool(const base::Feature& feature,
-                                      const std::string& param_name,
+                                      base::StringPiece param_name,
                                       bool default_value) {
   return base::GetFieldTrialParamByFeatureAsBool(feature, param_name,
                                                  default_value);

@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/base_export.h"
+#include "base/strings/string_piece.h"
 
 namespace base {
 
@@ -19,8 +20,8 @@ struct Feature;
 // specified field trial already has params associated with it or the trial
 // is already active (group() has been called on it). Thread safe.
 BASE_EXPORT bool AssociateFieldTrialParams(
-    const std::string& trial_name,
-    const std::string& group_name,
+    StringPiece trial_name,
+    StringPiece group_name,
     const std::map<std::string, std::string>& params);
 
 // Retrieves the set of key-value |params| for the specified field trial, based
@@ -30,7 +31,7 @@ BASE_EXPORT bool AssociateFieldTrialParams(
 // trial being marked as active if found (i.e. group() will be called on it),
 // if it wasn't already. Thread safe.
 BASE_EXPORT bool GetFieldTrialParams(
-    const std::string& trial_name,
+    StringPiece trial_name,
     std::map<std::string, std::string>* params);
 
 // Retrieves the set of key-value |params| for the field trial associated with
@@ -50,8 +51,8 @@ BASE_EXPORT bool GetFieldTrialParamsByFeature(
 // string. Calling this function will result in the field trial being marked as
 // active if found (i.e. group() will be called on it), if it wasn't already.
 // Thread safe.
-BASE_EXPORT std::string GetFieldTrialParamValue(const std::string& trial_name,
-                                                const std::string& param_name);
+BASE_EXPORT std::string GetFieldTrialParamValue(StringPiece trial_name,
+                                                StringPiece param_name);
 
 // Retrieves a specific parameter value corresponding to |param_name| for the
 // field trial associated with the specified |feature|. A feature is associated
@@ -62,14 +63,14 @@ BASE_EXPORT std::string GetFieldTrialParamValue(const std::string& trial_name,
 // found (i.e. group() will be called on it), if it wasn't already. Thread safe.
 BASE_EXPORT std::string GetFieldTrialParamValueByFeature(
     const base::Feature& feature,
-    const std::string& param_name);
+    StringPiece param_name);
 
 // Same as GetFieldTrialParamValueByFeature(). On top of that, it converts the
 // string value into an int using base::StringToInt() and returns it, if
 // successful. Otherwise, it returns |default_value|. If the string value is not
 // empty and the conversion does not succeed, it produces a warning to LOG.
 BASE_EXPORT int GetFieldTrialParamByFeatureAsInt(const base::Feature& feature,
-                                                 const std::string& param_name,
+                                                 StringPiece param_name,
                                                  int default_value);
 
 // Same as GetFieldTrialParamValueByFeature(). On top of that, it converts the
@@ -78,7 +79,7 @@ BASE_EXPORT int GetFieldTrialParamByFeatureAsInt(const base::Feature& feature,
 // empty and the conversion does not succeed, it produces a warning to LOG.
 BASE_EXPORT double GetFieldTrialParamByFeatureAsDouble(
     const base::Feature& feature,
-    const std::string& param_name,
+    StringPiece param_name,
     double default_value);
 
 // Same as GetFieldTrialParamValueByFeature(). On top of that, it converts the
@@ -86,10 +87,9 @@ BASE_EXPORT double GetFieldTrialParamByFeatureAsDouble(
 // returns |default_value|. The only string representations accepted here are
 // "true" and "false". If the string value is not empty and the conversion does
 // not succeed, it produces a warning to LOG.
-BASE_EXPORT bool GetFieldTrialParamByFeatureAsBool(
-    const base::Feature& feature,
-    const std::string& param_name,
-    bool default_value);
+BASE_EXPORT bool GetFieldTrialParamByFeatureAsBool(const base::Feature& feature,
+                                                   StringPiece param_name,
+                                                   bool default_value);
 
 }  // namespace base
 

@@ -18,6 +18,7 @@
 #include "base/process/process_info.h"
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -388,7 +389,7 @@ void FieldTrial::EnableBenchmarking() {
 
 // static
 FieldTrial* FieldTrial::CreateSimulatedFieldTrial(
-    const std::string& trial_name,
+    StringPiece trial_name,
     Probability total_probability,
     const std::string& default_group_name,
     double entropy_value) {
@@ -396,7 +397,7 @@ FieldTrial* FieldTrial::CreateSimulatedFieldTrial(
                         entropy_value);
 }
 
-FieldTrial::FieldTrial(const std::string& trial_name,
+FieldTrial::FieldTrial(StringPiece trial_name,
                        const Probability total_probability,
                        const std::string& default_group_name,
                        double entropy_value)
@@ -522,7 +523,7 @@ FieldTrialList::~FieldTrialList() {
 
 // static
 FieldTrial* FieldTrialList::FactoryGetFieldTrial(
-    const std::string& trial_name,
+    StringPiece trial_name,
     FieldTrial::Probability total_probability,
     const std::string& default_group_name,
     const int year,
@@ -537,7 +538,7 @@ FieldTrial* FieldTrialList::FactoryGetFieldTrial(
 
 // static
 FieldTrial* FieldTrialList::FactoryGetFieldTrialWithRandomizationSeed(
-    const std::string& trial_name,
+    StringPiece trial_name,
     FieldTrial::Probability total_probability,
     const std::string& default_group_name,
     const int year,
@@ -602,7 +603,7 @@ FieldTrial* FieldTrialList::FactoryGetFieldTrialWithRandomizationSeed(
 }
 
 // static
-FieldTrial* FieldTrialList::Find(const std::string& trial_name) {
+FieldTrial* FieldTrialList::Find(StringPiece trial_name) {
   if (!global_)
     return NULL;
   AutoLock auto_lock(global_->lock_);
@@ -610,7 +611,7 @@ FieldTrial* FieldTrialList::Find(const std::string& trial_name) {
 }
 
 // static
-int FieldTrialList::FindValue(const std::string& trial_name) {
+int FieldTrialList::FindValue(StringPiece trial_name) {
   FieldTrial* field_trial = Find(trial_name);
   if (field_trial)
     return field_trial->group();
@@ -618,7 +619,7 @@ int FieldTrialList::FindValue(const std::string& trial_name) {
 }
 
 // static
-std::string FieldTrialList::FindFullName(const std::string& trial_name) {
+std::string FieldTrialList::FindFullName(StringPiece trial_name) {
   FieldTrial* field_trial = Find(trial_name);
   if (field_trial)
     return field_trial->group_name();
@@ -626,12 +627,12 @@ std::string FieldTrialList::FindFullName(const std::string& trial_name) {
 }
 
 // static
-bool FieldTrialList::TrialExists(const std::string& trial_name) {
+bool FieldTrialList::TrialExists(StringPiece trial_name) {
   return Find(trial_name) != NULL;
 }
 
 // static
-bool FieldTrialList::IsTrialActive(const std::string& trial_name) {
+bool FieldTrialList::IsTrialActive(StringPiece trial_name) {
   FieldTrial* field_trial = Find(trial_name);
   FieldTrial::ActiveGroup active_group;
   return field_trial && field_trial->GetActiveGroup(&active_group);
@@ -1070,7 +1071,7 @@ void FieldTrialList::ClearParamsFromSharedMemoryForTesting() {
     // Update the ref on the field trial and add it to the list to be made
     // iterable.
     FieldTrial::FieldTrialRef new_ref = allocator->GetAsReference(new_entry);
-    FieldTrial* trial = global_->PreLockedFind(trial_name.as_string());
+    FieldTrial* trial = global_->PreLockedFind(trial_name);
     trial->ref_ = new_ref;
     new_refs.push_back(new_ref);
 
@@ -1414,8 +1415,8 @@ const FieldTrial::EntropyProvider*
   return global_->entropy_provider_.get();
 }
 
-FieldTrial* FieldTrialList::PreLockedFind(const std::string& name) {
-  RegistrationMap::iterator it = registered_.find(name);
+FieldTrial* FieldTrialList::PreLockedFind(StringPiece name) {
+  RegistrationMap::iterator it = registered_.find(name.as_string());
   if (registered_.end() == it)
     return NULL;
   return it->second;

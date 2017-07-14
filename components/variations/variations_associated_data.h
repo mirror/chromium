@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/strings/string_piece.h"
 #include "components/variations/active_field_trials.h"
 
 // This file provides various helpers that extend the functionality around
@@ -80,14 +81,14 @@ enum IDCollectionKey {
 // associated with it so Google servers can recognize the FieldTrial.
 // Thread safe.
 void AssociateGoogleVariationID(IDCollectionKey key,
-                                const std::string& trial_name,
-                                const std::string& group_name,
+                                base::StringPiece trial_name,
+                                base::StringPiece group_name,
                                 VariationID id);
 
 // As above, but overwrites any previously set id. Thread safe.
 void AssociateGoogleVariationIDForce(IDCollectionKey key,
-                                     const std::string& trial_name,
-                                     const std::string& group_name,
+                                     base::StringPiece trial_name,
+                                     base::StringPiece group_name,
                                      VariationID id);
 
 // As above, but takes an ActiveGroupId hash pair, rather than the string names.
@@ -102,8 +103,8 @@ void AssociateGoogleVariationIDForceHashes(IDCollectionKey key,
 // FieldTrial::GetActiveFieldTrialGroups() to enumerate the variation IDs for
 // all active FieldTrial groups. Thread safe.
 VariationID GetGoogleVariationID(IDCollectionKey key,
-                                 const std::string& trial_name,
-                                 const std::string& group_name);
+                                 base::StringPiece trial_name,
+                                 base::StringPiece group_name);
 
 // Same as GetGoogleVariationID(), but takes in a hashed |active_group| rather
 // than the string trial and group name.
@@ -111,12 +112,12 @@ VariationID GetGoogleVariationIDFromHashes(IDCollectionKey key,
                                            const ActiveGroupId& active_group);
 
 // Deprecated. Use base::AssociateFieldTrialParams() instead.
-bool AssociateVariationParams(const std::string& trial_name,
-                              const std::string& group_name,
+bool AssociateVariationParams(base::StringPiece trial_name,
+                              base::StringPiece group_name,
                               const std::map<std::string, std::string>& params);
 
 // Deprecated. Use base::GetFieldTrialParams() instead.
-bool GetVariationParams(const std::string& trial_name,
+bool GetVariationParams(base::StringPiece trial_name,
                         std::map<std::string, std::string>* params);
 
 // Deprecated. Use base::GetFieldTrialParamsByFeature() instead.
@@ -124,26 +125,26 @@ bool GetVariationParamsByFeature(const base::Feature& feature,
                                  std::map<std::string, std::string>* params);
 
 // Deprecated. Use base::GetFieldTrialParamValue() instead.
-std::string GetVariationParamValue(const std::string& trial_name,
-                                   const std::string& param_name);
+std::string GetVariationParamValue(base::StringPiece trial_name,
+                                   base::StringPiece param_name);
 
 // Deprecated. Use base::GetFieldTrialParamValueByFeature() instead.
 std::string GetVariationParamValueByFeature(const base::Feature& feature,
-                                            const std::string& param_name);
+                                            base::StringPiece param_name);
 
 // Deprecated. Use base::GetFieldTrialParamByFeatureAsInt() instead.
 int GetVariationParamByFeatureAsInt(const base::Feature& feature,
-                                    const std::string& param_name,
+                                    base::StringPiece param_name,
                                     int default_value);
 
 // Deprecated. Use base::GetFieldTrialParamByFeatureAsDouble() instead.
 double GetVariationParamByFeatureAsDouble(const base::Feature& feature,
-                                          const std::string& param_name,
+                                          base::StringPiece param_name,
                                           double default_value);
 
 // Deprecated. Use base::GetFieldTrialParamByFeatureAsBool() instead.
 bool GetVariationParamByFeatureAsBool(const base::Feature& feature,
-                                      const std::string& param_name,
+                                      base::StringPiece param_name,
                                       bool default_value);
 
 // Expose some functions for testing.

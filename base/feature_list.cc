@@ -108,7 +108,7 @@ void FeatureList::InitializeFromSharedMemory(
     if (!entry->GetFeatureAndTrialName(&feature_name, &trial_name))
       continue;
 
-    FieldTrial* trial = FieldTrialList::Find(trial_name.as_string());
+    FieldTrial* trial = FieldTrialList::Find(trial_name);
     RegisterOverride(feature_name, override_state, trial);
   }
 }
@@ -348,7 +348,7 @@ void FeatureList::RegisterOverridesFromCommandLine(
     std::string::size_type pos = feature_name.find('<');
     if (pos != std::string::npos) {
       feature_name.set(value.data(), pos);
-      trial = base::FieldTrialList::Find(value.substr(pos + 1).as_string());
+      trial = base::FieldTrialList::Find(value.substr(pos + 1));
     }
 
     RegisterOverride(feature_name, overridden_state, trial);

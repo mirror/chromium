@@ -12,14 +12,14 @@
 namespace base {
 
 bool AssociateFieldTrialParams(
-    const std::string& trial_name,
-    const std::string& group_name,
+    StringPiece trial_name,
+    StringPiece group_name,
     const std::map<std::string, std::string>& params) {
   return base::FieldTrialParamAssociator::GetInstance()
       ->AssociateFieldTrialParams(trial_name, group_name, params);
 }
 
-bool GetFieldTrialParams(const std::string& trial_name,
+bool GetFieldTrialParams(StringPiece trial_name,
                          std::map<std::string, std::string>* params) {
   return base::FieldTrialParamAssociator::GetInstance()->GetFieldTrialParams(
       trial_name, params);
@@ -37,11 +37,12 @@ bool GetFieldTrialParamsByFeature(const base::Feature& feature,
   return GetFieldTrialParams(trial->trial_name(), params);
 }
 
-std::string GetFieldTrialParamValue(const std::string& trial_name,
-                                    const std::string& param_name) {
+std::string GetFieldTrialParamValue(StringPiece trial_name,
+                                    StringPiece param_name) {
   std::map<std::string, std::string> params;
   if (GetFieldTrialParams(trial_name, &params)) {
-    std::map<std::string, std::string>::iterator it = params.find(param_name);
+    std::map<std::string, std::string>::iterator it =
+        params.find(param_name.as_string());
     if (it != params.end())
       return it->second;
   }
@@ -49,7 +50,7 @@ std::string GetFieldTrialParamValue(const std::string& trial_name,
 }
 
 std::string GetFieldTrialParamValueByFeature(const base::Feature& feature,
-                                             const std::string& param_name) {
+                                             StringPiece param_name) {
   if (!base::FeatureList::IsEnabled(feature))
     return std::string();
 
@@ -61,7 +62,7 @@ std::string GetFieldTrialParamValueByFeature(const base::Feature& feature,
 }
 
 int GetFieldTrialParamByFeatureAsInt(const base::Feature& feature,
-                                     const std::string& param_name,
+                                     StringPiece param_name,
                                      int default_value) {
   std::string value_as_string =
       GetFieldTrialParamValueByFeature(feature, param_name);
@@ -80,7 +81,7 @@ int GetFieldTrialParamByFeatureAsInt(const base::Feature& feature,
 }
 
 double GetFieldTrialParamByFeatureAsDouble(const base::Feature& feature,
-                                           const std::string& param_name,
+                                           StringPiece param_name,
                                            double default_value) {
   std::string value_as_string =
       GetFieldTrialParamValueByFeature(feature, param_name);
@@ -99,7 +100,7 @@ double GetFieldTrialParamByFeatureAsDouble(const base::Feature& feature,
 }
 
 bool GetFieldTrialParamByFeatureAsBool(const base::Feature& feature,
-                                       const std::string& param_name,
+                                       StringPiece param_name,
                                        bool default_value) {
   std::string value_as_string =
       GetFieldTrialParamValueByFeature(feature, param_name);
