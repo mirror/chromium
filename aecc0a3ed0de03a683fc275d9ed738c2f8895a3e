@@ -22,6 +22,30 @@
       "revId": "aecc0a3ed0de03a683fc275d9ed738c2f8895a3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1740d3bd_0150ec74",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-14T20:59:53Z",
+      "side": 1,
+      "message": "Done. I am now using the callback, let me know if this makes sense!",
+      "parentUuid": "30c9a5be_3db0ed95",
+      "range": {
+        "startLine": 61,
+        "startChar": 26,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "aecc0a3ed0de03a683fc275d9ed738c2f8895a3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
