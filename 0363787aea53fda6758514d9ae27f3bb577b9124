@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20c40e82_06b4a503",
+        "filename": "content/browser/service_worker/service_worker_register_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-14T08:43:20Z",
+      "side": 1,
+      "message": "Delete this comments?",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "0363787aea53fda6758514d9ae27f3bb577b9124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
