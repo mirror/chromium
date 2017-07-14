@@ -299,6 +299,8 @@ void NetworkState::GetStateProperties(base::DictionaryValue* dictionary) const {
                                               eap_method());
     dictionary->SetIntegerWithoutPathExpansion(shill::kWifiFrequency,
                                                frequency_);
+    dictionary->SetStringWithoutPathExpansion(shill::kTetheringProperty,
+                                              tethering_state_);
   }
 
   // Mobile properties

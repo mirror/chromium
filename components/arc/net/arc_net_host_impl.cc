@@ -25,6 +25,7 @@
 #include "chromeos/network/onc/onc_utils.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/user_manager/user_manager.h"
+#include "third_party/cros_system_api/dbus/shill/dbus-constants.h"
 
 namespace {
 
@@ -88,6 +89,7 @@ arc::mojom::WiFiPtr TranslateONCWifi(const base::DictionaryValue* dict) {
       GetStringFromOncDictionary(dict, onc::wifi::kBSSID, false /* required */);
   wifi->hex_ssid = GetStringFromOncDictionary(dict, onc::wifi::kHexSSID,
                                               true /* required */);
+  LOG(ERROR) << "XXX: hexSsid: " << wifi->hex_ssid;
 
   // Optional; defaults to false.
   dict->GetBoolean(onc::wifi::kHiddenSSID, &wifi->hidden_ssid);
@@ -96,6 +98,13 @@ arc::mojom::WiFiPtr TranslateONCWifi(const base::DictionaryValue* dict) {
 
   // Optional; defaults to 0.
   dict->GetInteger(onc::wifi::kSignalStrength, &wifi->signal_strength);
+
+  std::string tethering_state;
+  dict->GetString(onc::wifi::kTetheringState, &tethering_state);
+  wifi->is_tethered =
+      (tethering_state == onc::tethering_state::kTetheringConfirmedState);
+  LOG(ERROR) << "XXX: tetherting_state: " << tethering_state
+             << " is_tethered: " << wifi->is_tethered;
 
   return wifi;
 }
@@ -638,6 +647,7 @@ void ArcNetHostImpl::DefaultNetworkChanged(
   }
 
   VLOG(1) << "New default network: " << network->path();
+  LOG(ERROR) << "XXX: TetheringState: " << network->tethering_state();
   std::string user_id_hash = chromeos::LoginState::Get()->primary_user_hash();
   GetManagedConfigurationHandler()->GetProperties(
       user_id_hash, network->path(),
