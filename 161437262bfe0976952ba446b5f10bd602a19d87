@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "3e0adccc_8eb9fe6b",
+        "filename": "docs/adding_to_third_party.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-14T15:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c86187_a6685312",
+      "revId": "161437262bfe0976952ba446b5f10bd602a19d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7942b577_dcaf4928",
         "filename": "tools/copyright_scanner/PRESUBMIT.py",
         "patchSetId": 1
