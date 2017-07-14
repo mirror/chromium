@@ -51,6 +51,7 @@
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
+#include "platform/scroll/ScrollbarTheme.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 
@@ -151,6 +152,13 @@ bool LayoutView::HitTestNoLifecycleUpdate(HitTestResult& result) {
             GetFrameView()->ScrollbarAtFramePoint(frame_point))
       result.SetScrollbar(frame_scrollbar);
 
+    Scrollbar* scrollbar = result.GetScrollbar();
+    if (scrollbar && scrollbar->IsOverlayScrollbar()) {
+      ScrollbarPart part =
+          scrollbar->GetTheme().HitTest(*scrollbar, frame_point);
+      if (part != kThumbPart)
+        result.SetScrollbar(nullptr);
+    }
     // If hitTestResult include scrollbar, innerNode should be the parent of the
     // scrollbar.
     if (result.GetScrollbar()) {
