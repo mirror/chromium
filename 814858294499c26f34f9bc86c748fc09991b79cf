@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c9e3e1_b508c78b",
+        "filename": "extensions/shell/browser/default_shell_browser_main_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-14T03:58:20Z",
+      "side": 0,
+      "message": "Did you want to give any errors if no apps or extensions are loaded? Might be useful for newcomers to app_shell.",
+      "range": {
+        "startLine": 68,
+        "startChar": 26,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "814858294499c26f34f9bc86c748fc09991b79cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
