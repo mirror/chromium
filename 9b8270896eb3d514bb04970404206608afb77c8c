@@ -52,6 +52,24 @@
       "revId": "9b8270896eb3d514bb04970404206608afb77c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2286a69d_8498378c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-07-14T08:04:46Z",
+      "side": 1,
+      "message": "Yeah probably it\u0027d be better to distinguish tabs started in background and then foregrounded (throttled -\u003e unthrottled) from tabs loaded in foreground (never throttled).\nIn patch set 8 I added another histogram, \"partially throttled\" for that case.\n\nWDYT?",
+      "parentUuid": "c8065058_d7dec886",
+      "revId": "9b8270896eb3d514bb04970404206608afb77c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
