@@ -224,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "0776ba45_4670ac42",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-14T21:32:02Z",
+      "side": 1,
+      "message": "maybe the compiler could warn about this, but it doesn\u0027t.\n\nthe style guide says \"initialize variables in the declaration\": https://google.github.io/styleguide/cppguide.html#Local_Variables",
+      "parentUuid": "8671ed3c_3b346bf8",
+      "revId": "9d628208dedcf16877a5d1877e9f3ab45c0ed82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e031d4e_257810cb",
         "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
         "patchSetId": 2
