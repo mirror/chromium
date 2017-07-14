@@ -22,6 +22,30 @@
       "revId": "1b0335dbe961d4ca985cb845c5bf7af37b24e7b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59194fe_4fc73b5a",
+        "filename": "ash/system/palette/palette_tool_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T21:17:43Z",
+      "side": 0,
+      "message": "Looks like a minor perf win. Feel free to remove it since it sounds like keeping it will not be worth the complexity especially if count_if is involved. If these lists were huge (ie, 10k elements) it would be worth while.",
+      "parentUuid": "3ff705c0_f09b9e0e",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "1b0335dbe961d4ca985cb845c5bf7af37b24e7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
