@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb801715_75ce07fa",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/FrameResourceCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-14T23:59:41Z",
+      "side": 1,
+      "message": "TODO(lpy): Enable once fake local frame creation from ServiceWorker is addressed correctly.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "1a5139a97260a29179d1c122f1f578fbcb3fe53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
