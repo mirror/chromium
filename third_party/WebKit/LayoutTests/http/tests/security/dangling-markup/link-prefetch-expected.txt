@@ -1,0 +1,28 @@
+CONSOLE DEBUG: line 11: Preconnect triggered for http://1.should.preconnect.test/
+CONSOLE DEBUG: line 13: Preconnect triggered for http://2.should.preconnect.test/
+CONSOLE DEBUG: line 18: DNS prefetch triggered for 1.should.dns-prefetch.test
+CONSOLE DEBUG: line 20: DNS prefetch triggered for 2.should.dns-prefetch.test
+CONSOLE WARNING: line 73: Resource requests whose URLs contained both removed whitespace (`\n`, `\r`, `\t`) characters and less-than characters (`<`) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources. See https://www.chromestatus.com/feature/5735596811091968 for more details.
+This is a testharness.js-based test.
+PASS Prefetch: /resources/square.png 
+PASS Prefetch: /resources/squ\nare.png 
+PASS Prefetch: /resources/squ\tare.png 
+PASS Prefetch: /resources/squ\rare.png 
+PASS Prefetch: /resources/square.png?img=< 
+PASS Prefetch: /resources/square.png?img=&lt; 
+PASS Prefetch: /resources/square.png?img=%3C 
+PASS Prefetch: /resources/squ\nare.png?img=%3C 
+PASS Prefetch: /resources/squ\rare.png?img=%3C 
+PASS Prefetch: /resources/squ\tare.png?img=%3C 
+PASS Prefetch: /resources/square.png?img=&#10; 
+PASS Prefetch: /resources/squ\nare.png?img=&#10; 
+PASS Prefetch: /resources/squ\rare.png?img=&#10; 
+PASS Prefetch: /resources/squ\tare.png?img=&#10; 
+PASS Prefetch: /resources/squ\nare.png?img=< 
+PASS Prefetch: /resources/squ\rare.png?img=< 
+PASS Prefetch: /resources/squ\tare.png?img=< 
+PASS Prefetch: /resources/square.png?<\n=block 
+PASS Prefetch: /resources/square.png?<\r=block 
+PASS Prefetch: /resources/square.png?<\t=block 
+Harness: the test ran to completion.
+
