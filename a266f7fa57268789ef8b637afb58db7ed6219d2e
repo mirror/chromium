@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc39b2d_6db8c252",
+        "filename": "content/browser/browser_associated_interface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-14T06:45:50Z",
+      "side": 1,
+      "message": "nit: \u0027Check that the bindings are cleared by ClearBindings callbacks.\u0027",
+      "revId": "a266f7fa57268789ef8b637afb58db7ed6219d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f254a0_dc7c3586",
+        "filename": "content/public/browser/browser_message_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-14T06:45:50Z",
+      "side": 1,
+      "message": "remove_callback -\u003e filter_removed_callback? (\u0027remove_callback\u0027 sounds like it removes callback)",
+      "revId": "a266f7fa57268789ef8b637afb58db7ed6219d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
