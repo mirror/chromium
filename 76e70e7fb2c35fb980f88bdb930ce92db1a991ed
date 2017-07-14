@@ -16,6 +16,29 @@
       "revId": "76e70e7fb2c35fb980f88bdb930ce92db1a991ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a961105_d58f327e",
+        "filename": "content/public/browser/browser_associated_interface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T06:55:43Z",
+      "side": 1,
+      "message": "// I think |bindings_| should not be outlive BrowserAssociatedInterface, so how about adding DCHECK(!HasOneRef()) here?\n\nHmm, after I typed the comment above, I realized |this| is shared among callbacks so it won\u0027t hit.",
+      "range": {
+        "startLine": 90,
+        "startChar": 6,
+        "endLine": 90,
+        "endChar": 24
+      },
+      "revId": "76e70e7fb2c35fb980f88bdb930ce92db1a991ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
