@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd224d8f_d5d4dbc6",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-14T06:28:34Z",
+      "side": 1,
+      "message": "Could you move this block below L114, since the logic is almost same as L111-114?",
+      "revId": "9c282fed72c16dcd2afd1ca960773bda54a80029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade93125_c5c0d56b",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_uma.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-14T06:28:34Z",
+      "side": 1,
+      "message": "As mentioned in the comment, this enum should be kept in sync with histgrams.xml.\n\nCould you mention in bug description that you checked the new UMA in chrome://histograms?",
+      "revId": "9c282fed72c16dcd2afd1ca960773bda54a80029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
