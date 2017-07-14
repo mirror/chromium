@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "fc905251_d7c83a98",
+        "filename": "components/leveldb_proto/leveldb_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-14T20:22:37Z",
+      "side": 1,
+      "message": "one more comment - since we\u0027re not sure about thread safety here, can we inialize this non-lazily? So instead of setting nullptr, just immediately call leveldb::NewLRUCache(DefaultBlockCacheSize())? I\u0027ve heard through others that this is safe now? and we shouldn\u0027t use lazy initializer?",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 55
+      },
+      "revId": "d6709b54f60daada299c47e1aff2a1f55e542f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "265d224f_5b69a8b7",
         "filename": "content/browser/indexed_db/leveldb/leveldb_database.cc",
         "patchSetId": 8
@@ -51,6 +74,24 @@
       "revId": "d6709b54f60daada299c47e1aff2a1f55e542f9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4b2cbae_e6a1b50a",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-14T20:22:37Z",
+      "side": 1,
+      "message": "Fine for now. Can be combined in refactor by dskiba@\u0027s project.",
+      "parentUuid": "265d224f_5b69a8b7",
+      "revId": "d6709b54f60daada299c47e1aff2a1f55e542f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
