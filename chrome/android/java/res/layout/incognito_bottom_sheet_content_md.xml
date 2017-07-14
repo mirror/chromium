@@ -12,5 +12,11 @@
     android:paddingTop="@dimen/tab_strip_height" >
 
     <include layout="@layout/new_tab_page_incognito_md_common"/>
+    
+    <org.chromium.chrome.browser.widget.FadingShadowView
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/action_bar_shadow_height"
+        android:visibility="gone" />
 
 </org.chromium.chrome.browser.ntp.IncognitoNewTabPageViewMD>
