@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "644d0472_74c25fc3",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T01:16:32Z",
+      "side": 1,
+      "message": "nit: 0 -\u003e kNonEmptyWidthDp, see kNonEmptyHeightDp as an example.",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd050c7_4a7f3102",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T01:16:32Z",
+      "side": 1,
+      "message": "I think we should create a helper so these can be written as\n\n  AddChildView(CreateEmptyViewWithHeight(kDistanceBetweenXAndY));",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5fbfff_403a7c66",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T01:16:32Z",
+      "side": 1,
+      "message": "How did you come up with 0x57?",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448891c7_91440201",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T01:16:32Z",
+      "side": 1,
+      "message": "I usually try hard to avoid inheritance, but maybe the code would be simpler here if there was\n\n  BasePinPin\n    DigitPinButton\n    BackspacePinButton\n\nwdyt?",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6ca463_4913b178",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T01:16:32Z",
+      "side": 1,
+      "message": "What do you about making this ctor a static method? Otherwise it is confusing which ctor should be used when.",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2008ef3c_8ad68c14",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T01:16:32Z",
+      "side": 1,
+      "message": "nit: remove spaces before after *, so /*visible_opacity*/",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdce5e51_f0e9d2f7",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T01:16:32Z",
+      "side": 1,
+      "message": "Eliminate temporary |highlight|",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614f5ef5_c174e3ba",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T01:16:32Z",
+      "side": 1,
+      "message": "nit: rename to CommonInit()",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
