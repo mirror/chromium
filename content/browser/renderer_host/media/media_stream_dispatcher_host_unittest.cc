@@ -260,7 +260,8 @@ class MediaStreamDispatcherHostTest : public testing::Test {
     mock_video_capture_provider_ = mock_video_capture_provider.get();
     // Create our own MediaStreamManager.
     media_stream_manager_ = base::MakeUnique<MediaStreamManager>(
-        audio_system_.get(), std::move(mock_video_capture_provider));
+        audio_system_.get(), audio_manager_->GetTaskRunner(),
+        std::move(mock_video_capture_provider));
 
     host_ = new MockMediaStreamDispatcherHost(
         browser_context_.GetMediaDeviceIDSalt(),
