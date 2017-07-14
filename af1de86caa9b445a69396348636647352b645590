@@ -389,6 +389,24 @@
     },
     {
       "key": {
+        "uuid": "103c5771_8812285d",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-14T23:09:44Z",
+      "side": 1,
+      "message": "To clarify -- .www.google.com is distinct from www.google.com at the URL parsing layer. But the former is not a common thing to navigate to (so I think most tests should be using www.google.com unless intending to test leading dot specifically).",
+      "parentUuid": "44d09e59_bc539f43",
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8168b9c_5c6401fb",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
         "patchSetId": 8
