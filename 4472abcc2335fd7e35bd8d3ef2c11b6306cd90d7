@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be513acb_38ec2750",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:58:23Z",
+      "side": 0,
+      "message": "ooh - this IsActive() stuff should be preserved too. A check on `browser-\u003ewindow()-\u003eIsActive()` should be sufficient, and is cross-platform, so can be done in FirstRunBubblePresenter\u0027s observer hook, with the comment above.",
+      "revId": "4472abcc2335fd7e35bd8d3ef2c11b6306cd90d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
