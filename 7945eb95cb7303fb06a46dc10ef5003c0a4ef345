@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59cb5f04_ac1b6ac1",
+        "filename": "services/viz/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-14T19:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "074b08fe_d597a3a5",
+      "revId": "7945eb95cb7303fb06a46dc10ef5003c0a4ef345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c60ee510_88f4858a",
         "filename": "services/viz/README.md",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T18:56:42Z",
       "side": 1,
       "message": "Not sure what exactly is the meaning of indentation, but if it\u0027s meant to convey that less-indented can depend on more-indented, I think you want to unindent this one, as services/viz/public/interfaces/* should not depend on services/viz/private/interfaces/*, but services/viz/public/\u003clanguage\u003e/* can.",
+      "revId": "7945eb95cb7303fb06a46dc10ef5003c0a4ef345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd0dec6_d142cd84",
+        "filename": "services/viz/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-14T19:18:38Z",
+      "side": 1,
+      "message": "Oops yes. They are dependencies",
+      "parentUuid": "c60ee510_88f4858a",
       "revId": "7945eb95cb7303fb06a46dc10ef5003c0a4ef345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
