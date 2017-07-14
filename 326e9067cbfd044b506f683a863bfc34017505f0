@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b6681e2_72802419",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-14T17:36:28Z",
+      "side": 1,
+      "message": "nit: be more explicit here by saying \"Iframes with the resize property set can resize. This requires scroll corner painting which is implemented, in part, by PaintLayerScrollableArea.\"\n\nsupernit: move GetLayoutBox check down here:\nif (GetLayoutBox() \u0026\u0026 GetLayoutBox()-\u003eCanResize())\n  return true;",
+      "revId": "326e9067cbfd044b506f683a863bfc34017505f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
