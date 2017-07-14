@@ -41,7 +41,6 @@
 #include "chrome/browser/net/dns_probe_service.h"
 #include "chrome/browser/net/proxy_service_factory.h"
 #include "chrome/browser/net/sth_distributor_provider.h"
-#include "chrome/browser/ssl/ignore_errors_cert_verifier.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_switches.h"
@@ -63,6 +62,7 @@
 #include "components/variations/variations_associated_data.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/ignore_errors_cert_verifier.h"
 #include "content/public/browser/network_quality_observer_factory.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -825,8 +825,10 @@ void IOThread::ConstructSystemRequestContext() {
       base::MakeUnique<net::MultiThreadedCertVerifier>(
           new chromeos::CertVerifyProcChromeOS())));
 #else
-  builder->SetCertVerifier(IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
-      command_line, net::CertVerifier::CreateDefault()));
+  builder->SetCertVerifier(
+      content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+          command_line, switches::kUserDataDir,
+          net::CertVerifier::CreateDefault()));
   UMA_HISTOGRAM_BOOLEAN(
       "Net.Certificate.IgnoreCertificateErrorsSPKIListPresent",
       command_line.HasSwitch(switches::kIgnoreCertificateErrorsSPKIList));
