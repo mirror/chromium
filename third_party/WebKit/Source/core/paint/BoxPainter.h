@@ -6,7 +6,7 @@
 #define BoxPainter_h
 
 #include "core/layout/BackgroundBleedAvoidance.h"
-#include "core/paint/BoxPainterBase.h"
+#include "core/paint/BoxModelObjectPainter.h"
 #include "core/paint/RoundedInnerRectClipper.h"
 #include "platform/geometry/LayoutSize.h"
 #include "platform/graphics/GraphicsTypes.h"
@@ -15,19 +15,17 @@
 namespace blink {
 
 class FillLayer;
-class InlineFlowBox;
 class LayoutPoint;
 class LayoutRect;
 struct PaintInfo;
 class LayoutBox;
-class LayoutBoxModelObject;
 class BackgroundImageGeometry;
 
-class BoxPainter : public BoxPainterBase {
+class BoxPainter : public BoxModelObjectPainter {
   STACK_ALLOCATED();
 
  public:
-  BoxPainter(const LayoutBox& layout_box) : layout_box_(layout_box) {}
+  BoxPainter(const LayoutBox&);
   void Paint(const PaintInfo&, const LayoutPoint&);
 
   void PaintChildren(const PaintInfo&, const LayoutPoint&);
@@ -46,31 +44,16 @@ class BoxPainter : public BoxPainterBase {
   void PaintBoxDecorationBackgroundWithRect(const PaintInfo&,
                                             const LayoutPoint&,
                                             const LayoutRect&);
-  static void PaintFillLayer(const LayoutBoxModelObject&,
-                             const PaintInfo&,
-                             const Color&,
-                             const FillLayer&,
-                             const LayoutRect&,
-                             BackgroundBleedAvoidance,
-                             BackgroundImageGeometry&,
-                             const InlineFlowBox* = nullptr,
-                             const LayoutSize& = LayoutSize(),
-                             SkBlendMode = SkBlendMode::kSrcOver);
   LayoutRect BoundsForDrawingRecorder(const PaintInfo&,
                                       const LayoutPoint& adjusted_paint_offset);
-
-  static bool IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
-      const LayoutBoxModelObject*,
-      const PaintInfo&);
 
  private:
   void PaintBackground(const PaintInfo&,
                        const LayoutRect&,
                        const Color& background_color,
                        BackgroundBleedAvoidance = kBackgroundBleedNone);
-  Node* GetNode();
 
-  const LayoutBox& layout_box_;
+  const LayoutBox& GetLayoutBox() const;
 };
 
 }  // namespace blink

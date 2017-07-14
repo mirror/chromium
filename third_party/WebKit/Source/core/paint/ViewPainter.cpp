@@ -161,11 +161,11 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
   }
 
   BoxPainter::FillLayerOcclusionOutputList reversed_paint_list;
+  BoxPainter box_painter(layout_view_);
   bool should_draw_background_in_separate_buffer =
-      BoxPainter(layout_view_)
-          .CalculateFillLayerOcclusionCulling(
-              reversed_paint_list, layout_view_.Style()->BackgroundLayers(),
-              layout_view_.GetDocument(), layout_view_.StyleRef());
+      box_painter.CalculateFillLayerOcclusionCulling(
+          reversed_paint_list, layout_view_.Style()->BackgroundLayers(),
+          layout_view_.GetDocument(), layout_view_.StyleRef());
   DCHECK(reversed_paint_list.size());
 
   // If the root background color is opaque, isolation group can be skipped
@@ -218,7 +218,7 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
     bool should_paint_in_viewport_space =
         (*it)->Attachment() == kFixedBackgroundAttachment;
     if (should_paint_in_viewport_space) {
-      BoxPainter::PaintFillLayer(layout_view_, paint_info, Color(), **it,
+      box_painter.PaintFillLayer(paint_info, Color(), **it,
                                  LayoutRect(LayoutRect::InfiniteIntRect()),
                                  kBackgroundBleedNone, geometry);
     } else {
@@ -226,7 +226,7 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
       // TODO(trchen): We should be able to handle 3D-transformed root
       // background with slimming paint by using transform display items.
       context.ConcatCTM(transform.ToAffineTransform());
-      BoxPainter::PaintFillLayer(layout_view_, paint_info, Color(), **it,
+      box_painter.PaintFillLayer(paint_info, Color(), **it,
                                  LayoutRect(paint_rect), kBackgroundBleedNone,
                                  geometry);
       context.Restore();
