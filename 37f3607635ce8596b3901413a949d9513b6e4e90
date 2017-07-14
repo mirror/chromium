@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef64cee8_a49db755",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T18:01:40Z",
+      "side": 1,
+      "message": "add comment here, something like:\n\n// As the existing layout code doesn\u0027t \"force\" a size on a OOF positioned child like we do in LayoutNG, we need to calculate the size of the current layout before entering into LayoutNG.",
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626cf500_9fd26244",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T18:01:40Z",
+      "side": 1,
+      "message": "cbiesinger, does this look ok to you?",
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91df614c_5dca7640",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T18:01:40Z",
+      "side": 1,
+      "message": "s/width_is_shrink_to_fit/logical_width_is_shrink_to_fit/",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bac5a5e_ac42feef",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T18:01:40Z",
+      "side": 1,
+      "message": "a newline below this bracket for visual spacing.",
+      "range": {
+        "startLine": 40,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da856ad_8b7e771c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T18:01:40Z",
+      "side": 1,
+      "message": "add newlines around this block for visual spacing.",
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5333fd_ea72496f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T18:01:40Z",
+      "side": 1,
+      "message": "Add comment something like:\n\n// Clears the overridden sizes set above.",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11d5e2c_48cb7c05",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T18:01:40Z",
+      "side": 1,
+      "message": "Any reason not to use NGPhysicalSize ?",
+      "range": {
+        "startLine": 59,
+        "startChar": 10,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44183f9f_f64ca481",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T18:01:40Z",
+      "side": 1,
+      "message": "may be nicer at the moment to change this to:\n\ndescendant.IsReplaced()\n \u0026 descendant.IntrinsicSize() below - just so its easier later to see what the api surface for LayoutObject we are using.",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 16
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e86bbf6_0eab57ff",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T18:01:40Z",
+      "side": 1,
+      "message": "Does this change at all for style.BoxSizing() \u003d\u003d EBoxSizing::kBorderBox?",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 23
+      },
+      "revId": "37f3607635ce8596b3901413a949d9513b6e4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
