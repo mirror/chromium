@@ -39,6 +39,75 @@
       "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d013e026_029651c1",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-14T13:40:45Z",
+      "side": 1,
+      "message": "Nit: The comments start with /** and end with **/, two stars:)",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 14
+      },
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60738fda_bacb0f79",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-14T13:40:45Z",
+      "side": 1,
+      "message": "You don\u0027t need ChooseHostBrowserDialog here.",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 35
+      },
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f50618_1619cbbc",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/InstallHostBrowserDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-14T13:40:45Z",
+      "side": 1,
+      "message": "/* -\u003e /**\n*/ -\u003e **/",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 14
+      },
+      "revId": "5ef314ec521d7de068af421b543404ca482d34aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
