@@ -558,6 +558,30 @@
     },
     {
       "key": {
+        "uuid": "f9ebdfc0_d2c9b6df",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-14T09:08:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02b40525_26ea9f1c",
+      "range": {
+        "startLine": 1019,
+        "startChar": 3,
+        "endLine": 1019,
+        "endChar": 0
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b5ca874_a01134fc",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 18
