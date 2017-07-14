@@ -2,6 +2,131 @@
   "comments": [
     {
       "key": {
+        "uuid": "2dd1b5ff_e4693d62",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T20:59:58Z",
+      "side": 1,
+      "message": "Nit: Use the same syntax for multiline CSS comments as at https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_shared_css.html?l\u003d85-87.",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075ade68_ab64b4c1",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T20:59:58Z",
+      "side": 1,
+      "message": "What would happen if you simply say width: 100% here?",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f1372e_4d6b3f58",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T20:59:58Z",
+      "side": 1,
+      "message": "Unnecessary ID. Maybe replace with the following?\n#powered-by-container \u003e span",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471cef2d_0b7e8dcb",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T20:59:58Z",
+      "side": 1,
+      "message": "Is this used anywhere?",
+      "range": {
+        "startLine": 108,
+        "startChar": 18,
+        "endLine": 108,
+        "endChar": 38
+      },
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf128fcc_f217c7b9",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T20:59:58Z",
+      "side": 1,
+      "message": "Can this be achieved in an easier way? It seems that first you are using a non-HTML placeholder to bypass i18n() restrictions, then manually replacing with HTML code.\n\nCould you alternatively leverage the $i18nRaw{} functionality (and fully construct the HTML subset in C++)? See example at [1] and [2]\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/about_handler.cc?l\u003d321-324\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/about_page/about_page.html?l\u003d209",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369a6675_8e755969",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T20:59:58Z",
+      "side": 1,
+      "message": "@return missing",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de4ff6d_7586f91a",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T20:59:58Z",
+      "side": 1,
+      "message": "showPoweredBy_: function() {\n  return return this.showFilesToRemove_ \u0026\u0026 this.isPartnerPowered_;\n},\n\nSee styleguide at https://chromium.googlesource.com/chromium/src/+/master/styleguide/web/web.md#Polymer (3rd bullet point).",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60e4af2f_41f7df6d",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 7
