@@ -43,9 +43,11 @@ OverviewButtonTray::OverviewButtonTray(Shelf* shelf)
   set_separator_visibility(false);
 
   Shell::Get()->AddShellObserver(this);
+  Shell::Get()->maximize_mode_controller()->AddMaximizeModeObserver(this);
 }
 
 OverviewButtonTray::~OverviewButtonTray() {
+  Shell::Get()->maximize_mode_controller()->RemoveMaximizeModeObserver(this);
   Shell::Get()->RemoveShellObserver(this);
 }
 

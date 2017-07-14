@@ -81,6 +81,7 @@ AppListPresenterDelegate::AppListPresenterDelegate(
     app_list::AppListViewDelegateFactory* view_delegate_factory)
     : presenter_(presenter), view_delegate_factory_(view_delegate_factory) {
   Shell::Get()->AddShellObserver(this);
+  Shell::Get()->maximize_mode_controller()->AddMaximizeModeObserver(this);
 }
 
 AppListPresenterDelegate::~AppListPresenterDelegate() {
@@ -89,6 +90,7 @@ AppListPresenterDelegate::~AppListPresenterDelegate() {
       keyboard::KeyboardController::GetInstance();
   if (keyboard_controller)
     keyboard_controller->RemoveObserver(this);
+  Shell::Get()->maximize_mode_controller()->RemoveMaximizeModeObserver(this);
   Shell::Get()->RemovePreTargetHandler(this);
   Shell::Get()->RemoveShellObserver(this);
 }

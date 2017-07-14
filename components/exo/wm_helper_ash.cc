@@ -20,7 +20,7 @@ namespace exo {
 // WMHelperAsh, public:
 
 WMHelperAsh::WMHelperAsh() {
-  ash::Shell::Get()->AddShellObserver(this);
+  ash::Shell::Get()->maximize_mode_controller()->AddMaximizeModeObserver(this);
   ash::Shell::Get()->activation_client()->AddObserver(this);
   // TODO(crbug.com/631103): Mushrome doesn't have a cursor manager yet.
   if (ash::Shell::GetAshConfig() != ash::Config::MUS)
@@ -43,7 +43,8 @@ WMHelperAsh::~WMHelperAsh() {
   if (ash::Shell::GetAshConfig() != ash::Config::MUS)
     ash::Shell::Get()->cursor_manager()->RemoveObserver(this);
   ash::Shell::Get()->activation_client()->RemoveObserver(this);
-  ash::Shell::Get()->RemoveShellObserver(this);
+  ash::Shell::Get()->maximize_mode_controller()->RemoveMaximizeModeObserver(
+      this);
   ui::InputDeviceManager::GetInstance()->RemoveObserver(this);
 }
 

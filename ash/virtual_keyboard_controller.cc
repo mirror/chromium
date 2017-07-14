@@ -69,13 +69,13 @@ VirtualKeyboardController::VirtualKeyboardController()
       has_internal_keyboard_(false),
       has_touchscreen_(false),
       ignore_external_keyboard_(false) {
-  Shell::Get()->AddShellObserver(this);
+  Shell::Get()->maximize_mode_controller()->AddMaximizeModeObserver(this);
   ui::InputDeviceManager::GetInstance()->AddObserver(this);
   UpdateDevices();
 }
 
 VirtualKeyboardController::~VirtualKeyboardController() {
-  Shell::Get()->RemoveShellObserver(this);
+  Shell::Get()->maximize_mode_controller()->RemoveMaximizeModeObserver(this);
   ui::InputDeviceManager::GetInstance()->RemoveObserver(this);
 }
 
