@@ -61,11 +61,11 @@ MediaEngagementScore::MediaEngagementScore(
     last_media_playback_time_ = base::Time::FromInternalValue(internal_time);
 }
 
-media::mojom::MediaEngagementScoreDetails
+media::mojom::MediaEngagementScoreDetailsPtr
 MediaEngagementScore::GetScoreDetails() const {
-  return media::mojom::MediaEngagementScoreDetails(origin_, GetTotalScore(),
-                                                   visits(), media_playbacks(),
-                                                   last_media_playback_time());
+  return media::mojom::MediaEngagementScoreDetails::New(
+      origin_, GetTotalScore(), visits(), media_playbacks(),
+      last_media_playback_time().ToJsTime());
 }
 
 MediaEngagementScore::~MediaEngagementScore() = default;

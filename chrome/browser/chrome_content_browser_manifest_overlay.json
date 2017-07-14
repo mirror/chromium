@@ -75,6 +75,7 @@
           "mojom::OmniboxPageHandler",
           "mojom::PluginsPageHandler",
           "mojom::SiteEngagementDetailsProvider",
+	  "media::mojom::MediaEngagementScoreDetailsProvider",
           "mojom::UsbInternalsPageHandler"
         ]
       }
