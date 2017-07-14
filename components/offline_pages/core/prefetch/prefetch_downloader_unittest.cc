@@ -16,6 +16,7 @@
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_test_taco.h"
 #include "net/base/url_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -90,7 +91,7 @@ class TestDownloadService : public DownloadService {
       if (iter->guid == guid)
         return *iter;
     }
-    return DownloadParams();
+    return DownloadParams(TRAFFIC_ANNOTATION_FOR_TESTS);
   }
 
   void set_ready(bool ready) { ready_ = ready; }

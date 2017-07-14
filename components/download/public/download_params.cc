@@ -22,7 +22,10 @@ bool SchedulingParams::operator==(const SchedulingParams& rhs) const {
 
 RequestParams::RequestParams() : method("GET") {}
 
-DownloadParams::DownloadParams() : client(DownloadClient::INVALID) {}
+DownloadParams::DownloadParams(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation)
+    : client(DownloadClient::INVALID),
+      traffic_annotation_(traffic_annotation) {}
 
 DownloadParams::DownloadParams(const DownloadParams& other) = default;
 
