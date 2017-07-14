@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8b69b98_5710ec8f",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentCore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-14T06:37:19Z",
+      "side": 1,
+      "message": "Could you elaborate on why this file is necessary in the comments and explain how and when it will go away?",
+      "revId": "ccf20712f9d3482f87e32259f9fd037b654b4412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
