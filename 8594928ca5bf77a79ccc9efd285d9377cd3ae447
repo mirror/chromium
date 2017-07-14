@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dd3dd59_7653c73f",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-14T18:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9071a567_43d19f1f",
+      "revId": "8594928ca5bf77a79ccc9efd285d9377cd3ae447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24dff2b3_4498fa37",
         "filename": "device/geolocation/public/interfaces/geolocation.mojom",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "8594928ca5bf77a79ccc9efd285d9377cd3ae447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13194f99_b9c46cd4",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-14T18:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24dff2b3_4498fa37",
+      "revId": "8594928ca5bf77a79ccc9efd285d9377cd3ae447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
