@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1197612c_b3ead3c4",
+        "filename": "ui/ozone/public/interfaces/typemaps.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-14T19:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dff4fb2_1758f5ca",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "0438063c5cedad6188e0effdbce86c97afa82bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8cb33cf_a772bb4d",
         "filename": "ui/ozone/public/overlay_candidates_ozone.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b9ff0cd1_e5a30786",
+        "filename": "ui/ozone/public/overlay_candidates_ozone.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-14T19:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8cb33cf_a772bb4d",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 1
+      },
+      "revId": "0438063c5cedad6188e0effdbce86c97afa82bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "164dc78a_d951b03e",
         "filename": "ui/ozone/public/overlay_surface_candidate.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-14T16:07:03Z",
       "side": 1,
       "message": "Perhaps silly question (since I\u0027m not as familiar with mojo): Why can\u0027t Ozone directly use the mojo struct? In particular why can\u0027t this be typedefed to the mojo one? And similarly for enums.\n\nI suppose the gfx geometry types might be a contention point. Not sure what to say there ... :(",
+      "range": {
+        "startLine": 17,
+        "startChar": 24,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "0438063c5cedad6188e0effdbce86c97afa82bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a021924f_5b9dbc31",
+        "filename": "ui/ozone/public/overlay_surface_candidate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-14T19:16:47Z",
+      "side": 1,
+      "message": "At present, the implementation of a struct containing embedded classes (e.g. gfx::Rect* here) contains a pointer to a separately allocated gfx::Rect object. So there\u0027s a perf cost to not using struct traits. The mojo implementation is suppose to fix that later.",
+      "parentUuid": "164dc78a_d951b03e",
       "range": {
         "startLine": 17,
         "startChar": 24,
