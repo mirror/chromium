@@ -73,6 +73,24 @@
       "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635bd0ad_0c5890cb",
+        "filename": "cc/tiles/software_image_decode_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-14T18:25:42Z",
+      "side": 1,
+      "message": "Actually, this won\u0027t work as the keys are stack allocated. I think this is ~fine, but I still worry about the overhead.",
+      "parentUuid": "8b1cb20a_8059f37f",
+      "revId": "faa05dd5f76a8a4a00fca0682f5cc128bb694135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
