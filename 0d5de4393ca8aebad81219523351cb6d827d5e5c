@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9cda5daf_36813813",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-14T20:00:03Z",
+      "side": 1,
+      "message": "I removed these, and added \"assert mRestoreOrientation \u003d\u003d null;\", but that trigger when entering vr.  I\u0027ll remove the assert for now, but something we may want to look at later.",
+      "parentUuid": "8930faad_5fd13b48",
+      "range": {
+        "startLine": 626,
+        "startChar": 8,
+        "endLine": 626,
+        "endChar": 25
+      },
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6812170e_99d90d0a",
         "filename": "content/browser/screen_orientation/screen_orientation_provider.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256969e9_7e9dd301",
+        "filename": "content/browser/screen_orientation/screen_orientation_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-14T20:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6812170e_99d90d0a",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "4c1698d1_203c384d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-14T20:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a504995_c432a651",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d87bf528_1e13c360",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbcf876c_1fb35beb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-14T20:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d87bf528_1e13c360",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "64935c31_3d73a8f0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-14T20:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc2fd45d_66dfd5d9",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb4cc1ac_2d7bc1f8",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationProvider.java",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0cf298_6f9cc643",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ScreenOrientationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-14T20:00:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb4cc1ac_2d7bc1f8",
+      "revId": "0d5de4393ca8aebad81219523351cb6d827d5e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
