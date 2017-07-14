@@ -10,7 +10,8 @@
 namespace {
 
 void RunCallback(const ui::mojom::Gpu::CreateGpuMemoryBufferCallback& callback,
-                 const gfx::GpuMemoryBufferHandle& handle) {
+                 const gfx::GpuMemoryBufferHandle& handle,
+                 const gpu::GpuMemoryBufferImpl::DestructionCallback& destroy) {
   callback.Run(handle);
 }
 
