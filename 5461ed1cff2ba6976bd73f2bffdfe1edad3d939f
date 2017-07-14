@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40d98938_860e3728",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-07-14T00:58:03Z",
+      "side": 1,
+      "message": "Did you actually refer to this implementation? Document::IsSecureContextImpl()  https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Document.cpp?rcl\u003d19cbc1d36c775115307c12cc99a67770ee108eff\u0026l\u003d4091\n\nIf so, I may just use it.",
+      "parentUuid": "01d9bbf1_19333a69",
+      "range": {
+        "startLine": 687,
+        "startChar": 53,
+        "endLine": 687,
+        "endChar": 56
+      },
+      "revId": "5461ed1cff2ba6976bd73f2bffdfe1edad3d939f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9a659be_d844f107",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 1
