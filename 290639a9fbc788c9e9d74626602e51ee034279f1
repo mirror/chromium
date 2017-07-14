@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25de233d_2c0e751e",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "Is it responsible for one tab?",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d0592a_0fa8a4fb",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "Isn\u0027t it generated automatically because you have a property?",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d396027_a04c4caf",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "use @synthesize",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461c105d_5d96bb08",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "How are you gonna use this thing?\nSo far we only write into it.",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b53d640_03175c6d",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "This line makes me think that it\u0027s somebody else who injects the JS. However, didLoadPageWithSuccess proves otherwise. Can you describe what the normal flow for this class is?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042566e5_e91d6e4d",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "Why won\u0027t you inline this method?",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862f5168_2f1b6a07",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "Isn\u0027t it also an override of something?",
+      "range": {
+        "startLine": 92,
+        "startChar": 42,
+        "endLine": 92,
+        "endChar": 64
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b758baf_1cbabac3",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "Can you make sure we don\u0027t inject on non secure pages",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe83f84c_26852883",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "Isn\u0027t it too late for injection? What if page executes the script on load?",
+      "range": {
+        "startLine": 99,
+        "startChar": 3,
+        "endLine": 99,
+        "endChar": 13
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52ee2e5_a26c22fd",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "Is this class responsible for both communications browser -\u003e web site and back?",
+      "range": {
+        "startLine": 12,
+        "startChar": 35,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3855fbe4_fb591505",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:07:08Z",
+      "side": 1,
+      "message": "Are you sure we need it later?",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "290639a9fbc788c9e9d74626602e51ee034279f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
