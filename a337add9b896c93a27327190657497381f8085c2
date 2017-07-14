@@ -16,6 +16,24 @@
       "revId": "a337add9b896c93a27327190657497381f8085c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda8baf0_d6149bbe",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T18:11:32Z",
+      "side": 0,
+      "message": "If I observed correctly, the refcounted AutofillWebDataService created here is referenced by the WebState, which outlives this test and is only scheduled for destruction during the TearDown. So at the end of this test, the destruction of objects referencing |consumer| is not even scheduled, the less executed. I found it necessary to both let consumer survive past TearDown, and to spin the message loops after TearDown.",
+      "parentUuid": "ed76b3e1_0a0a832c",
+      "revId": "a337add9b896c93a27327190657497381f8085c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
