@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a27f594_5ab0e254",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-14T19:55:44Z",
+      "side": 1,
+      "message": "Please add a name for this parameter, it is otherwise not clear what this means. Perhaps add a brief comment as well, explaining that this gets the baseline off of the fragment",
+      "revId": "bbdfd185b0218cbddd5064df7e601b842812ab23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10f3988_4c05f513",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-14T19:55:44Z",
+      "side": 1,
+      "message": "Here too please add a name",
+      "revId": "bbdfd185b0218cbddd5064df7e601b842812ab23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
