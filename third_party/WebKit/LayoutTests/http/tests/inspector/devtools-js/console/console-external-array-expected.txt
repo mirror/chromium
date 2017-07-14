@@ -1,0 +1,19 @@
+Tests that console logging detects external arrays as arrays.
+
+VM:4 Int8Array(10) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+VM:5 Int16Array(10) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+VM:6 Int32Array(10) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+VM:7 Uint8Array(10) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+VM:8 Uint16Array(10) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+VM:9 Uint32Array(10) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+VM:10 Float32Array(10) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+VM:11 Float64Array(10) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+VM:13 Int8Array(10)
+VM:14 Int16Array(10)
+VM:15 Int32Array(10)
+VM:16 Uint8Array(10)
+VM:17 Uint16Array(10)
+VM:18 Uint32Array(10)
+VM:19 Float32Array(10)
+VM:20 Float64Array(10)
+
