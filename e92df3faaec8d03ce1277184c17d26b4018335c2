@@ -22,6 +22,30 @@
       "revId": "e92df3faaec8d03ce1277184c17d26b4018335c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117beb79_59997a9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1826,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-14T18:33:04Z",
+      "side": 1,
+      "message": "I\u0027m worried about a hidden dependency where CTA changes the logic for when to minimize the app, but the VR code doesn\u0027t get updated. I guess adding a test is the right solution?",
+      "parentUuid": "e10686be_871bc316",
+      "range": {
+        "startLine": 1826,
+        "startChar": 19,
+        "endLine": 1826,
+        "endChar": 40
+      },
+      "revId": "e92df3faaec8d03ce1277184c17d26b4018335c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
