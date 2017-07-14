@@ -1713,15 +1713,20 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
   }
 
   const DrawMode draw_mode = GetDrawMode();
+  ResourceId evict_resource_id = 0U;
 
   // Because the contents of the HUD depend on everything else in the frame, the
   // contents of its texture are updated as the last thing before the frame is
   // drawn.
   if (active_tree_->hud_layer()) {
     TRACE_EVENT0("cc", "DrawLayers.UpdateHudTexture");
-    active_tree_->hud_layer()->UpdateHudTexture(
+    // For Ganesh backed HUD, a context loss may cause the drawing canvas to be
+    // invalid, return the resource id to evicted from quadlist.
+    evict_resource_id = active_tree_->hud_layer()->UpdateHudTexture(
         draw_mode, resource_provider_.get(),
         layer_tree_frame_sink_->context_provider());
+    if (evict_resource_id != 0)
+      active_tree_->hud_layer()->EvictHudQuad(frame->render_passes);
   }
 
   CompositorFrameMetadata metadata = MakeCompositorFrameMetadata();

@@ -77,8 +77,7 @@ HeadsUpDisplayLayerImpl::HeadsUpDisplayLayerImpl(LayerTreeImpl* tree_impl,
       internal_contents_scale_(1.f),
       fps_graph_(60.0, 80.0),
       paint_time_graph_(16.0, 48.0),
-      fade_step_(0) {
-}
+      fade_step_(0) {}
 
 HeadsUpDisplayLayerImpl::~HeadsUpDisplayLayerImpl() {}
 
@@ -158,12 +157,12 @@ void HeadsUpDisplayLayerImpl::AppendQuads(
   ValidateQuadResources(quad);
 }
 
-void HeadsUpDisplayLayerImpl::UpdateHudTexture(
+ResourceId HeadsUpDisplayLayerImpl::UpdateHudTexture(
     DrawMode draw_mode,
     ResourceProvider* resource_provider,
     ContextProvider* context_provider) {
   if (draw_mode == DRAW_MODE_RESOURCELESS_SOFTWARE || !resources_.back()->id())
-    return;
+    return 0U;
 
   if (context_provider) {
     gpu::gles2::GLES2Interface* gl = context_provider->ContextGL();
@@ -180,6 +179,8 @@ void HeadsUpDisplayLayerImpl::UpdateHudTexture(
     ResourceProvider::ScopedSkSurfaceProvider scoped_surface(
         context_provider, &lock, using_worker_context, use_distance_field_text,
         can_use_lcd_text, msaa_sample_count);
+    if (!scoped_surface.sk_surface())
+      return resources_.back()->id();
     SkCanvas* gpu_raster_canvas = scoped_surface.sk_surface()->getCanvas();
     TRACE_EVENT_END0("cc", "CreateHudCanvas");
 
@@ -224,6 +225,8 @@ void HeadsUpDisplayLayerImpl::UpdateHudTexture(
         resources_.back()->id(), static_cast<const uint8_t*>(pixmap.addr()),
         internal_content_bounds_);
   }
+
+  return 0U;
 }
 
 void HeadsUpDisplayLayerImpl::ReleaseResources() {
@@ -816,6 +819,25 @@ void HeadsUpDisplayLayerImpl::DrawDebugRects(
                     DebugColors::PaintRectFillColor(fade_step_),
                     DebugColors::PaintRectBorderWidth(),
                     "");
+    }
+  }
+}
+
+void HeadsUpDisplayLayerImpl::EvictHudQuad(const RenderPassList& list) {
+  ResourceId evict_resource_id = resources_.back()->id();
+  // This iterates over the render pass list of quads to evict the hud quad
+  // appended during render pass preparation. We need this eviction when we
+  // have a context loss during SkSurface creation in UpdateHudTexture, and
+  // we early out without updating the Hud contents.
+  for (const auto& render_pass : list) {
+    for (auto it = render_pass->quad_list.begin();
+         it != render_pass->quad_list.end(); ++it) {
+      for (ResourceId resource_id : it->resources) {
+        if (resource_id == evict_resource_id) {
+          render_pass->quad_list.EraseAndInvalidateAllPointers(it);
+          return;
+        }
+      }
     }
   }
 }
