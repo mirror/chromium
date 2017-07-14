@@ -28,8 +28,13 @@ CALayerTreeCoordinator::CALayerTreeCoordinator(
     [root_ca_layer_ setOpaque:YES];
 
     if (allow_av_sample_buffer_display_layer_) {
+// AVSampleBufferDisplayLayer has incorrectly been marked as available from
+// macOS 10.10, whereas it's been available since at least macOS 10.9.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
       fullscreen_low_power_layer_.reset(
           [[AVSampleBufferDisplayLayer alloc] init]);
+#pragma clang diagnostic pop
     }
   }
 }
