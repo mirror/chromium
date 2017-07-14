@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "content/common/content_export.h"
+#include "content/common/media/media_stream.mojom.h"
 #include "content/common/media/media_stream_options.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/renderer/media/media_stream_dispatcher_eventhandler.h"
@@ -125,6 +126,10 @@ class CONTENT_EXPORT MediaStreamDispatcher
       const std::string& label,
       const StreamDeviceInfo& device_info);
   void OnDeviceOpenFailed(int request_id);
+
+  ::mojom::MediaStreamDispatcherHost* GetMediaStreamDispatcherHost();
+
+  ::mojom::MediaStreamDispatcherHostAssociatedPtr dispatcher_host_;
 
   // Used for DCHECKs so methods calls won't execute in the wrong thread.
   base::ThreadChecker thread_checker_;

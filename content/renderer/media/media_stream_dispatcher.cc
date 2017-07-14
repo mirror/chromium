@@ -8,6 +8,8 @@
 
 #include "base/logging.h"
 #include "content/common/media/media_stream_messages.h"
+#include "content/public/common/associated_interface_provider.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/renderer/media/media_stream_dispatcher_eventhandler.h"
 #include "content/renderer/render_thread_impl.h"
 #include "media/base/audio_parameters.h"
@@ -96,8 +98,8 @@ void MediaStreamDispatcher::CancelGenerateStream(
     if (it->IsThisRequest(request_id, event_handler)) {
       int ipc_request = it->ipc_request;
       requests_.erase(it);
-      Send(new MediaStreamHostMsg_CancelGenerateStream(routing_id(),
-                                                       ipc_request));
+      GetMediaStreamDispatcherHost()->CancelGenerateStream(routing_id(),
+                                                           ipc_request);
       break;
     }
   }
@@ -127,8 +129,8 @@ void MediaStreamDispatcher::StopStreamDevice(
   }
   DCHECK(device_found);
 
-  Send(new MediaStreamHostMsg_StopStreamDevice(routing_id(),
-                                               device_info.device.id));
+  GetMediaStreamDispatcherHost()->StopStreamDevice(routing_id(),
+                                                   device_info.device.id);
 }
 
 void MediaStreamDispatcher::OpenDevice(
@@ -165,14 +167,14 @@ void MediaStreamDispatcher::CloseDevice(const std::string& label) {
     return;
   label_stream_map_.erase(it);
 
-  Send(new MediaStreamHostMsg_CloseDevice(routing_id(), label));
+  GetMediaStreamDispatcherHost()->CloseDevice(label);
 }
 
 void MediaStreamDispatcher::OnStreamStarted(const std::string& label) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DVLOG(1) << "MediaStreamDispatcher::OnStreamStarted(" << label << ")";
 
-  Send(new MediaStreamHostMsg_StreamStarted(label));
+  GetMediaStreamDispatcherHost()->StreamStarted(label);
 }
 
 StreamDeviceInfoArray MediaStreamDispatcher::GetNonScreenCaptureDevices() {
@@ -346,6 +348,16 @@ void MediaStreamDispatcher::OnDeviceOpenFailed(int request_id) {
     }
   }
 }
+
+::mojom::MediaStreamDispatcherHost*
+MediaStreamDispatcher::GetMediaStreamDispatcherHost() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  if (!dispatcher_host_.get()) {
+    render_frame()->GetRemoteAssociatedInterfaces()->GetInterface(
+        &dispatcher_host_);
+  }
+  return dispatcher_host_.get();
+};
 
 int MediaStreamDispatcher::audio_session_id(const std::string& label,
                                             int index) {

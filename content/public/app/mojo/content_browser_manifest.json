@@ -39,6 +39,7 @@
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_coordinator::mojom::MemoryCoordinatorHandle",
           "metrics::mojom::SingleSampleMetricsProvider",
+          "mojom::MediaStreamDispatcherHost",
           "payments::mojom::PaymentManager",
           "shape_detection::mojom::BarcodeDetection",
           "shape_detection::mojom::FaceDetectionProvider",

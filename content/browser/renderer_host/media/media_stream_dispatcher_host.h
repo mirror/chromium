@@ -14,7 +14,9 @@
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/browser/renderer_host/media/media_stream_requester.h"
 #include "content/common/content_export.h"
+#include "content/common/media/media_stream.mojom.h"
 #include "content/common/media/media_stream_options.h"
+#include "content/public/browser/browser_associated_interface.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "content/public/browser/resource_context.h"
 
@@ -28,8 +30,11 @@ class MediaStreamManager;
 // MediaStreamDispatcherHost is a delegate for Media Stream API messages used by
 // MediaStreamImpl.  There is one MediaStreamDispatcherHost per
 // RenderProcessHost, the former owned by the latter.
-class CONTENT_EXPORT MediaStreamDispatcherHost : public BrowserMessageFilter,
-                                                 public MediaStreamRequester {
+class CONTENT_EXPORT MediaStreamDispatcherHost
+    : public BrowserMessageFilter,
+      public BrowserAssociatedInterface<::mojom::MediaStreamDispatcherHost>,
+      public ::mojom::MediaStreamDispatcherHost,
+      public MediaStreamRequester {
  public:
   MediaStreamDispatcherHost(int render_process_id,
                             const std::string& salt,
@@ -63,35 +68,29 @@ class CONTENT_EXPORT MediaStreamDispatcherHost : public BrowserMessageFilter,
  private:
   friend class MockMediaStreamDispatcherHost;
 
+  // IPC message handlers.
   void OnGenerateStream(int render_frame_id,
                         int page_request_id,
                         const StreamControls& controls,
                         const url::Origin& security_origin,
                         bool user_gesture);
-  void OnCancelGenerateStream(int render_frame_id,
-                              int page_request_id);
-  void OnStopStreamDevice(int render_frame_id,
-                          const std::string& device_id);
-
   void OnOpenDevice(int render_frame_id,
                     int page_request_id,
                     const std::string& device_id,
                     MediaStreamType type,
                     const url::Origin& security_origin);
-
-  void OnCloseDevice(int render_frame_id,
-                     const std::string& label);
-
-  void StoreRequest(int render_frame_id,
-                    int page_request_id,
-                    const std::string& label);
-
-  // IPC message handler: Set if the video capturing is secure.
+  // Set if the video capturing is secure.
   void OnSetCapturingLinkSecured(int session_id,
                                  content::MediaStreamType type,
                                  bool is_secure);
 
-  void OnStreamStarted(const std::string& label);
+  // ::mojom::MediaStreamDispatcherHost implementation
+  void CancelGenerateStream(int32_t render_frame_id,
+                            int32_t request_id) override;
+  void StopStreamDevice(int32_t render_frame_id,
+                        const std::string& device_id) override;
+  void CloseDevice(const std::string& label) override;
+  void StreamStarted(const std::string& label) override;
 
   int render_process_id_;
   std::string salt_;

@@ -20,6 +20,7 @@ MediaStreamDispatcherHost::MediaStreamDispatcherHost(
     const std::string& salt,
     MediaStreamManager* media_stream_manager)
     : BrowserMessageFilter(MediaStreamMsgStart),
+      BrowserAssociatedInterface(this, this),
       render_process_id_(render_process_id),
       salt_(salt),
       media_stream_manager_(media_stream_manager) {}
@@ -81,17 +82,10 @@ bool MediaStreamDispatcherHost::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(MediaStreamDispatcherHost, message)
     IPC_MESSAGE_HANDLER(MediaStreamHostMsg_GenerateStream, OnGenerateStream)
-    IPC_MESSAGE_HANDLER(MediaStreamHostMsg_CancelGenerateStream,
-                        OnCancelGenerateStream)
-    IPC_MESSAGE_HANDLER(MediaStreamHostMsg_StopStreamDevice,
-                        OnStopStreamDevice)
     IPC_MESSAGE_HANDLER(MediaStreamHostMsg_OpenDevice,
                         OnOpenDevice)
-    IPC_MESSAGE_HANDLER(MediaStreamHostMsg_CloseDevice,
-                        OnCloseDevice)
     IPC_MESSAGE_HANDLER(MediaStreamHostMsg_SetCapturingLinkSecured,
                         OnSetCapturingLinkSecured)
-    IPC_MESSAGE_HANDLER(MediaStreamHostMsg_StreamStarted, OnStreamStarted)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -127,25 +121,6 @@ void MediaStreamDispatcherHost::OnGenerateStream(
       controls, security_origin, user_gesture);
 }
 
-void MediaStreamDispatcherHost::OnCancelGenerateStream(int render_frame_id,
-                                                       int page_request_id) {
-  DVLOG(1) << "MediaStreamDispatcherHost::OnCancelGenerateStream("
-           << render_frame_id << ", "
-           << page_request_id << ")";
-  media_stream_manager_->CancelRequest(render_process_id_, render_frame_id,
-                                       page_request_id);
-}
-
-void MediaStreamDispatcherHost::OnStopStreamDevice(
-    int render_frame_id,
-    const std::string& device_id) {
-  DVLOG(1) << "MediaStreamDispatcherHost::OnStopStreamDevice("
-           << render_frame_id << ", "
-           << device_id << ")";
-  media_stream_manager_->StopStreamDevice(render_process_id_, render_frame_id,
-                                          device_id);
-}
-
 void MediaStreamDispatcherHost::OnOpenDevice(
     int render_frame_id,
     int page_request_id,
@@ -164,16 +139,6 @@ void MediaStreamDispatcherHost::OnOpenDevice(
                                     security_origin);
 }
 
-void MediaStreamDispatcherHost::OnCloseDevice(
-    int render_frame_id,
-    const std::string& label) {
-  DVLOG(1) << "MediaStreamDispatcherHost::OnCloseDevice("
-           << render_frame_id << ", "
-           << label << ")";
-
-  media_stream_manager_->CancelRequest(label);
-}
-
 void MediaStreamDispatcherHost::OnSetCapturingLinkSecured(int session_id,
                                                           MediaStreamType type,
                                                           bool is_secure) {
@@ -183,9 +148,29 @@ void MediaStreamDispatcherHost::OnSetCapturingLinkSecured(int session_id,
                                                  type, is_secure);
 }
 
-void MediaStreamDispatcherHost::OnStreamStarted(const std::string& label) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+void MediaStreamDispatcherHost::CancelGenerateStream(int render_frame_id,
+                                                     int page_request_id) {
+  DVLOG(1) << "MediaStreamDispatcherHost::OnCancelGenerateStream("
+           << render_frame_id << ", " << page_request_id << ")";
+  media_stream_manager_->CancelRequest(render_process_id_, render_frame_id,
+                                       page_request_id);
+}
 
+void MediaStreamDispatcherHost::StopStreamDevice(int render_frame_id,
+                                                 const std::string& device_id) {
+  DVLOG(1) << "MediaStreamDispatcherHost::OnStopStreamDevice("
+           << render_frame_id << ", " << device_id << ")";
+  media_stream_manager_->StopStreamDevice(render_process_id_, render_frame_id,
+                                          device_id);
+}
+
+void MediaStreamDispatcherHost::CloseDevice(const std::string& label) {
+  DVLOG(1) << "MediaStreamDispatcherHost::OnCloseDevice(" << label << ")";
+  media_stream_manager_->CancelRequest(label);
+}
+
+void MediaStreamDispatcherHost::StreamStarted(const std::string& label) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   media_stream_manager_->OnStreamStarted(label);
 }
 
