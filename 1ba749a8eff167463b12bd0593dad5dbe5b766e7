@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33224b60_35849aaf",
+        "filename": "cc/test/test_context_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-14T14:29:10Z",
+      "side": 1,
+      "message": "I went with TestGLES2InterfaceForContextProvider. The overrides here (extensions) are required by various tests. That is, various tests assume the functionality that gets enables by the extensions. I added a comment to this effect.",
+      "parentUuid": "f497a948_f585ab53",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "1ba749a8eff167463b12bd0593dad5dbe5b766e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bde9792_dbd84268",
         "filename": "cc/test/test_context_provider.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "1ba749a8eff167463b12bd0593dad5dbe5b766e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48012fa_0e3c2375",
+        "filename": "cc/test/test_context_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-14T14:29:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5bde9792_dbd84268",
+      "range": {
+        "startLine": 208,
+        "startChar": 48,
+        "endLine": 208,
+        "endChar": 74
+      },
+      "revId": "1ba749a8eff167463b12bd0593dad5dbe5b766e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
