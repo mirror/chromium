@@ -949,9 +949,8 @@ bool SkCanvasVideoRenderer::CopyVideoFrameTexturesToGLTexture(
           dest_rect.y(), dest_rect.width(), dest_rect.height(), flip_y,
           premultiply_alpha, false);
     } else {
-      destination_gl->CopyTextureCHROMIUM(intermediate_texture, 0, target,
-                                          texture, level, internal_format, type,
-                                          flip_y, premultiply_alpha, false);
+      destination_gl->BindTexture(mailbox_holder.texture_target,
+                                  intermediate_texture);
     }
 
     destination_gl->DeleteTextures(1, &intermediate_texture);
