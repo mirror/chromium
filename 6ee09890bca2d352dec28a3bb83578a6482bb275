@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfa93f64_7a60f494",
+        "filename": "chrome/browser/ui/cocoa/l10n_util.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fe21c5_695c00a7",
+      "range": {
+        "startLine": 97,
+        "startChar": 60,
+        "endLine": 97,
+        "endChar": 64
+      },
+      "revId": "6ee09890bca2d352dec28a3bb83578a6482bb275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "079dceeb_272b0288",
         "filename": "chrome/browser/ui/cocoa/l10n_util.mm",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dd6b76ce_1fdfa580",
+        "filename": "chrome/browser/ui/cocoa/l10n_util.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "079dceeb_272b0288",
+      "range": {
+        "startLine": 107,
+        "startChar": 5,
+        "endLine": 107,
+        "endChar": 10
+      },
+      "revId": "6ee09890bca2d352dec28a3bb83578a6482bb275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "518a68c7_1fa46415",
         "filename": "ui/accelerated_widget_mac/ca_layer_tree_coordinator.mm",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-14T20:39:03Z",
       "side": 1,
       "message": "I can\u0027t find the definition of this class in the CL. Did I miss it, or do you need to add some file to this CL?",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "6ee09890bca2d352dec28a3bb83578a6482bb275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db768ea9_43abd007",
+        "filename": "ui/accelerated_widget_mac/ca_layer_tree_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:49:50Z",
+      "side": 1,
+      "message": "added.",
+      "parentUuid": "518a68c7_1fa46415",
       "range": {
         "startLine": 33,
         "startChar": 12,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "99a5a744_5f2ef1e4",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1649e3ad_aa52c3f8",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "6ee09890bca2d352dec28a3bb83578a6482bb275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbb87637_6c56b561",
         "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.h",
         "patchSetId": 10
@@ -108,6 +204,24 @@
       "revId": "6ee09890bca2d352dec28a3bb83578a6482bb275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708c7cf2_7f87b6bf",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T20:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb87637_6c56b561",
+      "revId": "6ee09890bca2d352dec28a3bb83578a6482bb275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
