@@ -1,0 +1,436 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b508cae_85600918",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "This is OK.. But I think a nicer alternative would be to move this to first_run_bubble_controller.mm . Then, rather than calling `FirstRunBubble::ShowBubble(browser);` have it call ShowFirstRunBubbleViews(browser).\n\nWhere ShowFirstRunBubbleViews is defined in this file as\n\nvoid ShowFirstRunBubbleViews(Browser* browser) {\n  return FirstRunBubble::ShowBubble(browser);\n}\n\n(edit: or rename FirstRunBubble::ShowBubble to ShowFirstRunBubbleViews and define it in first_run_bubble.cc -- see comment in first_run_bubble.h)\n\nThis is similar to the other things in this file, it would involve fewer dependencies creeping in to browser_dialogs_views_mac.mm and it could remain a .cc file.\n\n\nBut if you think this alternative is more confusing that what you have is OK too.",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97cd758d_cc0cbee0",
+        "filename": "chrome/browser/ui/cocoa/bubble_anchor_util_views.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "Perhaps a comment here, like\n\n  // This file contains the bubble_anchor_util implementation for a Cocoa browser window (BrowserWindowCocoa).",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918ff538_3c00dacf",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271060a2_8bbf94a8",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "I\u0027m guessing this can go now too?",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0fdc90_0b349039",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de34446_74d01ccf",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "I think this weak_ptr_factory_ can be removed now (also from the header)",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abbe375_1d6c4c1c",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "nit: It\u0027s common practice to have a comment like\n\n  // Deletes itself.",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07828468_663f8bc7",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "I think we want to null-check browser here, since (in theory at least..) the session can go away before the url service loads. E.g. if the browser window closes. In that case, there\u0027s nowhere to show the bubble, so I think the only thing to do is to `delete this` and never show a bubble.",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78dd2464_e3509240",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c73ad4_df04adde",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "nit: forward declare",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b673e0a3_625906fd",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "nit: needs a comment",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66078e82_5ee24ac7",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "LocationBarView had an `#if !defined(OS_CHROMEOS)` around this - we probably need the same here (perhaps reuse the #ifdef just below). Also you probably need a #include to call this [or ShowFirstRunBubbleViews] (behind a similar guard)\n\nIf things are set up correctly -- first_run_bubble.cc shouldn\u0027t be getting compiled on ChromeOS, so there\u0027s probably a link error floating around without these steps.",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed77ec6_7cbcb994",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "Perhaps a comment here, like\n\n  // This file contains the bubble_anchor_util implementation for a toolkit-Views browser window (BrowserView).",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee82e53_7be1865f",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "nit: if clang-format lets you keep it... add a blank like before this, and after GetPageInfoAnchorPoint()",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e1b743_bf6042ee",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "|location| -\u003e |browser|\u0027s \"PageInfo\" anchor, at the leading edge of the location bar. The AnchorView should take precedence, but may return null (e.g. in full screen). AnchorPoint returns a point in screen coordinates.",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 15
+      },
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61192302_2949e6e8",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "nit: keep old copyright",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0dc0f0e_2eaa496b",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "hm - ShowBubbleForTest does make things a little awkward here, but I think the right thing to do is to pass all the arguments to UpdateAnchors into the constructor and remove UpdateAnchors(). This ensures it\u0027s impossible to \"forget\" to call UpdateAnchors (sets up a better class contract/invariant), and would allow the |bubble_closer_| data member to remain a value member rather than having to switch it to unique_ptr",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e0acfe_925bff0a",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "nit: I guess this copyright doesn\u0027t need updating now..",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe94822_f98b0fed",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "merge with #includes below \u003cmemory\u003e",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd592c2_6363b7f1",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "remove duplicate forward-dec",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dbc3410_515b7fd8",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "merge with namespace views above",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5704af1_3a0d3899",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "hm. I guess we don\u0027t really need this class. style guide discourages declaring a class of only static functions. per the comment in browser_dialogs_views_mac.mm I think we can have\n\nShowFirstRunBubbleViews\nShowFirstRunBubbleViewsForTest",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b096721_989b20ae",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "then unless there\u0027s a conflict I\u0027ve missed, we don\u0027t need to rename this class",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e15c1c_19f29304",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-14T01:51:46Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
