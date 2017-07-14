@@ -166,6 +166,30 @@
       "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f59d28e_5e65a651",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T21:17:32Z",
+      "side": 1,
+      "message": "I definitely agree in principal with having the disk_cache lib provide the functionality of letting callers know what its done.\n\nAnother slightly different (simpler) api idea could be to provide the postcleanupcallback as an input to the disk_cache::CreateCacheBackend function. We don\u0027t need a queue.",
+      "parentUuid": "f43fe42c_8484017b",
+      "range": {
+        "startLine": 1940,
+        "startChar": 18,
+        "endLine": 1940,
+        "endChar": 24
+      },
+      "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
