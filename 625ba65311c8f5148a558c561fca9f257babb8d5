@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0977de39_7d875136",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-14T04:27:04Z",
+      "side": 1,
+      "message": "show_cursor_matchers?",
+      "range": {
+        "startLine": 282,
+        "startChar": 33,
+        "endLine": 282,
+        "endChar": 51
+      },
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c02d6af_5ac8d481",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-14T04:27:04Z",
+      "side": 1,
+      "message": "Document how the cursor is made visible again.",
+      "range": {
+        "startLine": 284,
+        "startChar": 45,
+        "endLine": 284,
+        "endChar": 51
+      },
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dad03e8_816eeea4",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-14T04:27:04Z",
+      "side": 1,
+      "message": "optional: mild preference for SetShowCursorKeyList().",
+      "range": {
+        "startLine": 286,
+        "startChar": 8,
+        "endLine": 286,
+        "endChar": 12
+      },
+      "revId": "625ba65311c8f5148a558c561fca9f257babb8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
