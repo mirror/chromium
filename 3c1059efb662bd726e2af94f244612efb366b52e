@@ -82,6 +82,30 @@
     },
     {
       "key": {
+        "uuid": "f707994c_060f8ed5",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-14T03:58:12Z",
+      "side": 1,
+      "message": "Oops my fault.",
+      "parentUuid": "a8fb0c18_5aea27c1",
+      "range": {
+        "startLine": 1019,
+        "startChar": 9,
+        "endLine": 1019,
+        "endChar": 15
+      },
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b5eafcd_5aa8afc1",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 7
@@ -156,6 +180,30 @@
     },
     {
       "key": {
+        "uuid": "4f587c4c_8c5056d4",
+        "filename": "base/process/process_metrics_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-14T03:58:12Z",
+      "side": 1,
+      "message": "I misunderstood it is a part of coding style since line 130 is \"struct SystemMemoryInfoKB meminfo;\"",
+      "parentUuid": "4687c383_f172966b",
+      "range": {
+        "startLine": 401,
+        "startChar": 18,
+        "endLine": 401,
+        "endChar": 25
+      },
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d6351ab_25a50da2",
         "filename": "base/process/process_metrics_unittest.cc",
         "patchSetId": 7
@@ -184,6 +232,24 @@
       "writtenOn": "2017-07-13T23:40:56Z",
       "side": 1,
       "message": "Another invalid input would be \"1 2 3 4 5 6 a\"",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b44ab11_d5fb2f49",
+        "filename": "base/process/process_metrics_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-14T03:58:12Z",
+      "side": 1,
+      "message": "I only need the first three number of this line, so I do not check the rest value.\nShould I modify |ParseZramMmStat| to check if all the value are integers?",
+      "parentUuid": "bb2c5a94_d1a54d7f",
       "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

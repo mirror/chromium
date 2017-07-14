@@ -111,6 +111,30 @@
     },
     {
       "key": {
+        "uuid": "890a6145_bda94899",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-14T03:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8acf4f3c_904c3033",
+      "range": {
+        "startLine": 946,
+        "startChar": 5,
+        "endLine": 946,
+        "endChar": 54
+      },
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90a01873_cfaa6fec",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 5
@@ -131,6 +155,30 @@
       "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae44e5ec_c8268c9c",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-14T03:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90a01873_cfaa6fec",
+      "range": {
+        "startLine": 971,
+        "startChar": 5,
+        "endLine": 971,
+        "endChar": 61
+      },
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +229,24 @@
       "side": 1,
       "message": "Do you know why the kernel version is not a reliable signal for determining which zram interface to use?",
       "parentUuid": "a5525d29_faf3f462",
+      "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f80e748_85f8bfef",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-14T03:58:12Z",
+      "side": 1,
+      "message": "Since Upstream kernel 3.18 does not have this patch(https://chromium-review.googlesource.com/c/508043/), I do not know whether all Cros 3.18 have this patch.\nI think it is safer by checking the file existence than checking the kernel version.",
+      "parentUuid": "939d89c5_d19b5944",
       "revId": "f1c5ff1cd247956c44d09d66f678365ad3b66800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
