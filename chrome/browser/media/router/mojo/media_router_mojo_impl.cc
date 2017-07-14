@@ -65,11 +65,11 @@ MediaRouterMojoImpl::MediaSinksQuery::~MediaSinksQuery() = default;
 
 MediaRouterMojoImpl::MediaRouterMojoImpl(content::BrowserContext* context,
                                          FirewallCheck check_firewall)
-    : instance_id_(base::GenerateGUID()),
+    : event_page_request_manager_(
+          EventPageRequestManagerFactory::GetApiForBrowserContext(context)),
+      instance_id_(base::GenerateGUID()),
       availability_(mojom::MediaRouter::SinkAvailability::UNAVAILABLE),
       context_(context),
-      event_page_request_manager_(
-          EventPageRequestManagerFactory::GetApiForBrowserContext(context)),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(event_page_request_manager_);
@@ -266,11 +266,8 @@ void MediaRouterMojoImpl::CreateRoute(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   int tab_id = SessionTabHelper::IdForTab(web_contents);
-  event_page_request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterMojoImpl::DoCreateRoute,
-                     weak_factory_.GetWeakPtr(), source_id, sink_id, origin,
-                     tab_id, std::move(callbacks), timeout, incognito),
-      MediaRouteProviderWakeReason::CREATE_ROUTE);
+  DoCreateRoute(source_id, sink_id, origin, tab_id, std::move(callbacks),
+                timeout, incognito);
 }
 
 void MediaRouterMojoImpl::JoinRoute(
@@ -433,6 +430,10 @@ void MediaRouterMojoImpl::ProvideSinks(const std::string& provider_name,
                      weak_factory_.GetWeakPtr(), provider_name,
                      std::move(sinks)),
       MediaRouteProviderWakeReason::PROVIDE_SINKS);
+}
+
+base::WeakPtr<MediaRouterMojoImpl> MediaRouterMojoImpl::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
 }
 
 bool MediaRouterMojoImpl::RegisterMediaSinksObserver(

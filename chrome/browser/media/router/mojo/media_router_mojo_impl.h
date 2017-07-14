@@ -119,6 +119,34 @@ class MediaRouterMojoImpl : public MediaRouterBase,
     instance_id_ = instance_id;
   }
 
+ protected:
+  enum class FirewallCheck {
+    // Skips the firewall check for the benefit of unit tests so they do not
+    // have to depend on the system's firewall configuration.
+    SKIP_FOR_TESTING,
+    // Perform the firewall check (default).
+    RUN,
+  };
+
+  // Standard constructor, used by
+  // MediaRouterMojoImplFactory::GetApiForBrowserContext.
+  MediaRouterMojoImpl(content::BrowserContext* context,
+                      FirewallCheck check_firewall = FirewallCheck::RUN);
+
+  base::WeakPtr<MediaRouterMojoImpl> GetWeakPtr();
+
+  virtual void DoCreateRoute(const MediaSource::Id& source_id,
+                             const MediaSink::Id& sink_id,
+                             const url::Origin& origin,
+                             int tab_id,
+                             std::vector<MediaRouteResponseCallback> callbacks,
+                             base::TimeDelta timeout,
+                             bool incognito);
+
+  // Request manager responsible for waking the component extension and calling
+  // the requests to it.
+  EventPageRequestManager* const event_page_request_manager_;
+
  private:
   friend class MediaRouterFactory;
   friend class MediaRouterMojoExtensionTest;
@@ -200,18 +228,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
     DISALLOW_COPY_AND_ASSIGN(MediaRoutesQuery);
   };
 
-  enum class FirewallCheck {
-    // Skips the firewall check for the benefit of unit tests so they do not
-    // have to depend on the system's firewall configuration.
-    SKIP_FOR_TESTING,
-    // Perform the firewall check (default).
-    RUN,
-  };
-
-  // Standard constructor, used by
-  // MediaRouterMojoImplFactory::GetApiForBrowserContext.
-  MediaRouterMojoImpl(content::BrowserContext* context,
-                      FirewallCheck check_firewall = FirewallCheck::RUN);
 
   // Binds |this| to a Mojo interface request, so that clients can acquire a
   // handle to a MediaRouterMojoImpl instance via the Mojo service connector.
@@ -238,13 +254,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                                           MediaRoutesObserver* observer) const;
 
   // These calls invoke methods in the component extension via Mojo.
-  void DoCreateRoute(const MediaSource::Id& source_id,
-                     const MediaSink::Id& sink_id,
-                     const url::Origin& origin,
-                     int tab_id,
-                     std::vector<MediaRouteResponseCallback> callbacks,
-                     base::TimeDelta timeout,
-                     bool incognito);
   void DoJoinRoute(const MediaSource::Id& source_id,
                    const std::string& presentation_id,
                    const url::Origin& origin,
@@ -417,10 +426,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   scoped_refptr<CastMediaSinkService> cast_media_sink_service_;
 
   content::BrowserContext* const context_;
-
-  // Request manager responsible for waking the component extension and calling
-  // the requests to it.
-  EventPageRequestManager* const event_page_request_manager_;
 
   // A flag to ensure that we record the provider version once, during the
   // initial event page wakeup attempt.
