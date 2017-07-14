@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3587917_0611ebed",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T13:26:59Z",
+      "side": 1,
+      "message": "nit: Indenting is off here.",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 15
+      },
+      "revId": "7a9f41814ea637e34fd71ebb4c9995c8a7842c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f842bd6_ab8275d6",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T13:26:59Z",
+      "side": 1,
+      "message": "Is this used?\n(Also please check that all the other #includes are needed.)",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "7a9f41814ea637e34fd71ebb4c9995c8a7842c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec957027_8eca143f",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T13:26:59Z",
+      "side": 1,
+      "message": "This should be compiled with automatic reference counting (ARC), so we might need the __has_feature(objc_arc) guard block, see other .mm files in this directory for how it looks like.",
+      "revId": "7a9f41814ea637e34fd71ebb4c9995c8a7842c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66eb5208_bf323b03",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T13:26:59Z",
+      "side": 1,
+      "message": "#include \"url/gurl.h\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 12
+      },
+      "revId": "7a9f41814ea637e34fd71ebb4c9995c8a7842c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358a78ca_9401608b",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T13:26:59Z",
+      "side": 1,
+      "message": "is this used?",
+      "range": {
+        "startLine": 8,
+        "startChar": 19,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "7a9f41814ea637e34fd71ebb4c9995c8a7842c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5cd2c1_f89fde4a",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T13:26:59Z",
+      "side": 1,
+      "message": "is this used?",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "7a9f41814ea637e34fd71ebb4c9995c8a7842c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5c9ad7_64af8ee0",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T13:26:59Z",
+      "side": 1,
+      "message": "Seems unused (also all the others below).",
+      "range": {
+        "startLine": 7,
+        "startChar": 20,
+        "endLine": 7,
+        "endChar": 31
+      },
+      "revId": "7a9f41814ea637e34fd71ebb4c9995c8a7842c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209627ac_4ee34030",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T13:26:59Z",
+      "side": 1,
+      "message": "What is this used for?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "7a9f41814ea637e34fd71ebb4c9995c8a7842c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
