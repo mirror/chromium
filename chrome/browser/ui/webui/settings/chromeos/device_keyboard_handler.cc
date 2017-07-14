@@ -9,7 +9,6 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/values.h"
-#include "chrome/browser/profiles/profile.h"
 #include "chromeos/chromeos_switches.h"
 #include "content/public/browser/web_ui.h"
 #include "ui/events/devices/input_device_manager.h"
@@ -31,11 +30,21 @@ bool HasExternalKeyboard() {
 namespace chromeos {
 namespace settings {
 
-KeyboardHandler::KeyboardHandler(content::WebUI* webui)
-    : profile_(Profile::FromWebUI(webui)), observer_(this) {}
+const char KeyboardHandler::kShowKeysChangedName[] = "show-keys-changed";
 
-KeyboardHandler::~KeyboardHandler() {
+KeyboardHandler::TestAPI::TestAPI(KeyboardHandler* handler)
+    : handler_(handler) {}
+
+KeyboardHandler::TestAPI::~TestAPI() = default;
+
+void KeyboardHandler::TestAPI::Initialize() {
+  base::ListValue args;
+  handler_->HandleInitialize(&args);
 }
+
+KeyboardHandler::KeyboardHandler() : observer_(this) {}
+
+KeyboardHandler::~KeyboardHandler() = default;
 
 void KeyboardHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
@@ -71,11 +80,17 @@ void KeyboardHandler::HandleShowKeyboardShortcutsOverlay(
 }
 
 void KeyboardHandler::UpdateShowKeys() {
-  const base::Value has_caps_lock(HasExternalKeyboard());
+  // kHasChromeOSKeyboard will be unset on Chromebooks that lack external
+  // keyboards but that have Caps Lock keys in the place where Search would
+  // usually be. We want to show the Caps Lock remap setting there.
+  const base::Value has_caps_lock(
+      HasExternalKeyboard() ||
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kHasChromeOSKeyboard));
   const base::Value has_diamond_key(
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kHasChromeOSDiamondKey));
-  FireWebUIListener("show-keys-changed", has_caps_lock, has_diamond_key);
+  FireWebUIListener(kShowKeysChangedName, has_caps_lock, has_diamond_key);
 }
 
 }  // namespace settings
