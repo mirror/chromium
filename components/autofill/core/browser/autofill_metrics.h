@@ -872,6 +872,12 @@ class AutofillMetrics {
   static void LogStoredProfileCount(size_t num_profiles);
 
   // This should be called each time a new profile is launched.
+  static void LogStoredProfileDisusedCount(size_t num_profiles);
+
+  // This should be called each time a new profile is launched.
+  static void LogStoredProfileDaysSinceLastUse(size_t days);
+
+  // This should be called each time a new profile is launched.
   static void LogStoredLocalCreditCardCount(size_t num_local_cards);
 
   // This should be called each time a new profile is launched.

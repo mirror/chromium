@@ -4087,7 +4087,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Autofill.DaysSinceLastUse.Profile" units="days">
   <owner>sebsg@chromium.org</owner>
   <summary>
-    Logs the number of days that have passed since the profile was last used.
+    Logged at the time of autofill address use, this histogram captures the
+    number of days that have passed since the address was last used. I.e., the
+    distribution of time between uses of an &quot;active&quot; autofill
+    addresses.
+  </summary>
+</histogram>
+
+<histogram name="Autofill.DaysSinceLastUse.StoredProfile" units="days">
+  <owner>rogerm@chromium.org</owner>
+  <summary>
+    Logged once per User Profile (not autofill address profile) load, this
+    histogram captures the number of days that have passed since the address was
+    last used. I.e., the distribution of time all autofill addresses have
+    remained unused.
   </summary>
 </histogram>
 
@@ -4669,6 +4682,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of Autofill addresses a user has stored, measured when an
     autofillable form is submitted.
+  </summary>
+</histogram>
+
+<histogram name="Autofill.StoredProfileDisusedCount">
+  <owner>rogerm@chromium.org</owner>
+  <summary>
+    The number of stored Autofill address profiles which have not been used in
+    the last 180 days. Measured at launch time.
   </summary>
 </histogram>
 
