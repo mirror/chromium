@@ -235,6 +235,9 @@ void PasswordFormMetricsRecorder::RecordHistogramsOnSuppressedAccounts(
       GetHistogramSampleForSuppressedAccounts(best_match),
       kMaxSuppressedAccountStats);
   RecordUkmMetric("SuppressedAccount.Manual.SameOrganizationName", best_match);
+
+  if (current_bubble_ != CurrentBubble::kNoneOfTheOther)
+    RecordUIDismissalReason(metrics_util::NO_DIRECT_INTERACTION);
 }
 
 void PasswordFormMetricsRecorder::RecordPasswordBubbleShown(
@@ -242,6 +245,7 @@ void PasswordFormMetricsRecorder::RecordPasswordBubbleShown(
     metrics_util::UIDisplayDisposition display_disposition) {
   if (credential_source_type == metrics_util::CredentialSourceType::kUnknown)
     return;
+  DCHECK_EQ(CurrentBubble::kNoneOfTheOther, current_bubble_);
   BubbleTrigger automatic_trigger_type =
       credential_source_type ==
               metrics_util::CredentialSourceType::kPasswordManager
@@ -256,11 +260,13 @@ void PasswordFormMetricsRecorder::RecordPasswordBubbleShown(
   switch (display_disposition) {
     // New credential cases:
     case metrics_util::AUTOMATIC_WITH_PASSWORD_PENDING:
+      current_bubble_ = CurrentBubble::kSaveBubble;
       save_prompt_shown_ = true;
       RecordUkmMetric(kUkmSavingPromptTrigger,
                       static_cast<int64_t>(automatic_trigger_type));
       break;
     case metrics_util::MANUAL_WITH_PASSWORD_PENDING:
+      current_bubble_ = CurrentBubble::kSaveBubble;
       save_prompt_shown_ = true;
       RecordUkmMetric(kUkmSavingPromptTrigger,
                       static_cast<int64_t>(manual_trigger_type));
@@ -268,11 +274,13 @@ void PasswordFormMetricsRecorder::RecordPasswordBubbleShown(
 
     // Update cases:
     case metrics_util::AUTOMATIC_WITH_PASSWORD_PENDING_UPDATE:
+      current_bubble_ = CurrentBubble::kUpdateBubble;
       update_prompt_shown_ = true;
       RecordUkmMetric(kUkmUpdatingPromptTrigger,
                       static_cast<int64_t>(automatic_trigger_type));
       break;
     case metrics_util::MANUAL_WITH_PASSWORD_PENDING_UPDATE:
+      current_bubble_ = CurrentBubble::kUpdateBubble;
       update_prompt_shown_ = true;
       RecordUkmMetric(kUkmUpdatingPromptTrigger,
                       static_cast<int64_t>(manual_trigger_type));
@@ -296,11 +304,12 @@ void PasswordFormMetricsRecorder::RecordPasswordBubbleShown(
 
 void PasswordFormMetricsRecorder::RecordUIDismissalReason(
     metrics_util::UIDismissalReason ui_dismissal_reason) {
-  DCHECK(!(update_prompt_shown_ && save_prompt_shown_));
-  if (!(update_prompt_shown_ || save_prompt_shown_))
+  if (current_bubble_ != CurrentBubble::kUpdateBubble &&
+      current_bubble_ != CurrentBubble::kSaveBubble)
     return;
-  const char* metric = update_prompt_shown_ ? kUkmUpdatingPromptInteraction
-                                            : kUkmSavingPromptInteraction;
+  const char* metric = current_bubble_ == CurrentBubble::kUpdateBubble
+                           ? kUkmUpdatingPromptInteraction
+                           : kUkmSavingPromptInteraction;
   switch (ui_dismissal_reason) {
     // Accepted by user.
     case metrics_util::CLICKED_SAVE:
@@ -338,6 +347,8 @@ void PasswordFormMetricsRecorder::RecordUIDismissalReason(
       NOTREACHED();
       break;
   }
+
+  current_bubble_ = CurrentBubble::kNoneOfTheOther;
 }
 
 void PasswordFormMetricsRecorder::RecordFillEvent(ManagerAutofillEvent event) {
