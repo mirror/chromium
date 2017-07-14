@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7c945fb7_30cbe57e",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-14T13:50:40Z",
+      "side": 1,
+      "message": "I just realized that the original code doesn\u0027t allow ChromeOS to ignore cert errors. I\u0027m curious if the bots are going to run into this?\n\nIt likely means that it should be something like\n\nscoped_ptr\u003cnet::CertVerifier\u003e cert_verifier;\n#if defined(...)\ncert_verifier \u003d\n#else\ncert_verifier \u003d\n#endif\nbuilder-\u003eSetCertVerifier(content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(..., std::move(cert_verifier));",
+      "revId": "79e93f07c095802d0745029ae4d98d19a13cb98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b034b9ce_da750f64",
         "filename": "content/browser/ssl/ignore_errors_cert_verifier.cc",
         "patchSetId": 2
@@ -66,6 +83,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "c0cb3482_b2269fa4",
+      "revId": "79e93f07c095802d0745029ae4d98d19a13cb98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "418d3a04_ff27cd6d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-14T13:50:40Z",
+      "side": 1,
+      "message": "What dependencies is this python file allowed to have, to see if I can offer suggestions?",
+      "parentUuid": "eb98c660_b2fa291e",
       "revId": "79e93f07c095802d0745029ae4d98d19a13cb98f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
