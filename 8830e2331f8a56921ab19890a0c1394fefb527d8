@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce0c702e_45ebb8bb",
+        "filename": "chrome/browser/search_engines/template_url_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T00:46:01Z",
+      "side": 1,
+      "message": "Nit: osdd_dir_ ?",
+      "revId": "8830e2331f8a56921ab19890a0c1394fefb527d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7b5af3_579fbfb9",
+        "filename": "chrome/browser/search_engines/template_url_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T00:46:01Z",
+      "side": 1,
+      "message": "Nit: Can we just check in the removal first, roll the src-internal DEPS, and then check in this addition?  For a brief time no one will run these tests, that seems OK; better than churning the directory.",
+      "revId": "8830e2331f8a56921ab19890a0c1394fefb527d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
