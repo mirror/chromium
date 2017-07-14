@@ -2298,6 +2298,10 @@ void RenderWidget::SetTouchAction(cc::TouchAction touch_action) {
   if (input_handler_->handling_event_type() != WebInputEvent::kTouchStart)
     return;
 
+  // Report effective touch actions, such as kTouchActionNone, kTouchActionPanX,
+  // etc.
+  UMA_HISTOGRAM_ENUMERATION("TouchAction.EffectiveTouchAction", touch_action,
+                            cc::kTouchActionMax);
   Send(new InputHostMsg_SetTouchAction(routing_id_, touch_action));
 }
 
