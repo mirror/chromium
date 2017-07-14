@@ -69,6 +69,24 @@
       "revId": "cfc24270bfc43126129faa67579555fd531c0691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe144527_dda6515a",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T21:20:35Z",
+      "side": 1,
+      "message": "Does that case need the destruction callback? Can we refactor this so we don\u0027t have to deal with the destruction callback in that case and as a result make the code easier to understand? It feels like these two types of allocations should share the code used on the allocation thread but not the code used on other threads. Ie. create the GpuMemoryBufferImpl in the allocation thread and avoid the callback return value but still reuse some of the allocation logic for the GpuClient case but not the GpuMemoryBufferImpl creation part of course.",
+      "parentUuid": "c07ae955_b3344d26",
+      "revId": "cfc24270bfc43126129faa67579555fd531c0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
