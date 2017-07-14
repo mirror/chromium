@@ -175,6 +175,30 @@
       "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c95a44_7886db5e",
+        "filename": "ui/app_list/search_result.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T20:51:45Z",
+      "side": 1,
+      "message": "This is still bit confusing :(.\nWe have more options, make it virtual for example and by default return id.\nfor your Card return search_striped_url_.\n\nOne more idea.\nyou may make \n\ncomparable_id_raw() is protected and use this like:\n  return base::MakeUnique\u003cAnswerCardResult\u003e(\n      profile_, list_controller_, id() /* result_url */, comparable_id_raw() /* stripped_result_url */, title(), contents_);\n\n\nWDYT?",
+      "parentUuid": "1214ef31_55421fb7",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 54
+      },
+      "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
