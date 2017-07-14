@@ -22,6 +22,30 @@
       "revId": "0d9fb0b6c75b260f2322643c776f3a889f5b1dc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6530c43_18bf5f4b",
+        "filename": "chrome/common/extensions/api/feedback_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-07-14T21:24:27Z",
+      "side": 1,
+      "message": "I changed the BUG\u003d.\n\nAtrus is a device used in one of the Chrome OS devices, and monitored by a daemon. See code under CrOS: src/third_party/atrusctl.\n\nSupport for reading from the log file was previously added to https://codereview.chromium.org/2948813002",
+      "parentUuid": "6ecff9bc_6071ef77",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 12
+      },
+      "revId": "0d9fb0b6c75b260f2322643c776f3a889f5b1dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
