@@ -22,6 +22,30 @@
       "revId": "a66012f56f7e6d3289c58cd4035642a0a8570446",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fbe904_140ec133",
+        "filename": "chrome/browser/password_manager/password_store_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T17:46:01Z",
+      "side": 1,
+      "message": "The prepared PasswordForm was wrong, but that caused an outright failure, not the flakiness originally reported against the bug.\n\nI think the main issue was the use of explicit message loop quits, rather than simply EXPECT_CALL + RunUntilIdle().  That pattern is inherently flaky because if you don\u0027t get the call back the test hangs.  Now the test would just fail in such a scenario, which should be easier to deal with.\n\nAs to whether the underlying flakiness is actually fixed, I don\u0027t know.  Flakiness is rather hard to test without re-enabling the test and seeing, so that\u0027s my goal :)",
+      "parentUuid": "c0b58faa_eea29b87",
+      "range": {
+        "startLine": 184,
+        "startChar": 29,
+        "endLine": 184,
+        "endChar": 44
+      },
+      "revId": "a66012f56f7e6d3289c58cd4035642a0a8570446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
