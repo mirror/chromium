@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58500c4c_d872cb72",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-14T00:15:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2ebc6b_401709b4",
+      "range": {
+        "startLine": 110,
+        "startChar": 49,
+        "endLine": 110,
+        "endChar": 55
+      },
+      "revId": "a8befccc96755d26a87d885297c23236e9ac5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caf6191a_b3d07adc",
         "filename": "ui/keyboard/keyboard_layout_manager.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "148d3a47_133ec1f5",
+        "filename": "ui/keyboard/keyboard_layout_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-14T00:15:38Z",
+      "side": 1,
+      "message": "\u003e nit: update the comment\n\nDone. Removed the comment which I believe obsolete.",
+      "parentUuid": "caf6191a_b3d07adc",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "a8befccc96755d26a87d885297c23236e9ac5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb3b2c6c_e029bc54",
         "filename": "ui/keyboard/keyboard_layout_manager.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "a8befccc96755d26a87d885297c23236e9ac5855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d079404_75ecbbc8",
+        "filename": "ui/keyboard/keyboard_layout_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-14T00:15:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb3b2c6c_e029bc54",
+      "range": {
+        "startLine": 111,
+        "startChar": 18,
+        "endLine": 111,
+        "endChar": 24
+      },
+      "revId": "a8befccc96755d26a87d885297c23236e9ac5855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
