@@ -16,6 +16,7 @@
 // We also need greg_t for the sandbox, include it in this header as well.
 typedef unsigned long greg_t;
 
+#if _MIPS_SIM == _ABIO32
 typedef struct {
   uint32_t regmask;
   uint32_t status;
@@ -36,6 +37,25 @@ typedef struct {
   uint32_t hi3;
   uint32_t lo3;
 } mcontext_t;
+#elif _MIPS_SIM == _ABIO64
+typedef struct {
+  uint64_t gregs[32];
+  uint64_t fpregs[32];
+  uint64_t mdhi;
+  uint64_t hi1;
+  uint64_t hi2;
+  uint64_t hi3;
+  uint64_t mdlo;
+  uint64_t lo1;
+  uint64_t lo2;
+  uint64_t lo3;
+  uint64_t pc;
+  uint32_t fpc_csr;
+  uint32_t used_math;
+  uint32_t dsp;
+  uint32_t reserved;
+}mcontext_t;
+#endif
 
 typedef struct ucontext {
   uint32_t uc_flags;
