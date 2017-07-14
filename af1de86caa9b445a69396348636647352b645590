@@ -215,6 +215,52 @@
       "revId": "af1de86caa9b445a69396348636647352b645590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16ab51f_35d29295",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-14T05:20:00Z",
+      "side": 1,
+      "message": "Does MakeUnique work here? Same question applies to above.",
+      "range": {
+        "startLine": 150,
+        "startChar": 17,
+        "endLine": 150,
+        "endChar": 29
+      },
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f151403_d3ee963d",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-14T05:20:00Z",
+      "side": 1,
+      "message": "I think we can update this now that URL matcher is dropped.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "af1de86caa9b445a69396348636647352b645590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
