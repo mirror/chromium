@@ -4,7 +4,6 @@
 
 #include "modules/compositorworker/CompositorWorkerMessagingProxy.h"
 
-#include "core/workers/WorkerThreadStartupData.h"
 #include "modules/compositorworker/CompositorWorkerThread.h"
 #include <memory>
 
