@@ -2,6 +2,109 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2bceb91_478c2819",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "You can simply say like \"Mojoify WebContentSettingsClient for shared worker\".",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbaac366_c1053c4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "Is this correct?",
+      "range": {
+        "startLine": 10,
+        "startChar": 50,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedfb768_1a439616",
+        "filename": "content/browser/shared_worker/content_setting_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "A blank line is needed between each type of #include as per:\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes\nIt\u0027d be good to refer to the example:)",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2858aad5_ac973410",
+        "filename": "content/browser/shared_worker/content_setting_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "This seems not to be used.",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0602b9bc_1fab4b7a",
+        "filename": "content/browser/shared_worker/content_setting_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "These seem not to be used.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 49
+      },
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "818a2ff2_52508c18",
         "filename": "content/browser/shared_worker/content_setting_instance.cc",
         "patchSetId": 3
@@ -30,6 +133,29 @@
       "writtenOn": "2017-07-13T12:31:39Z",
       "side": 1,
       "message": "2013 -\u003e 2017",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ed959e_7e1d4db2",
+        "filename": "content/browser/shared_worker/content_setting_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "This is not necessary because you\u0027ve already added #include \"base/callback.h\".",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 33
+      },
       "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +219,120 @@
     },
     {
       "key": {
+        "uuid": "3e0fdcf9_2e6006c2",
+        "filename": "content/browser/shared_worker/content_setting_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(ContentSettingInstance);",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5046e4_4f37b00a",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "base::Passed usually takes its pointer like base::Passed(\u0026callback).",
+      "range": {
+        "startLine": 197,
+        "startChar": 30,
+        "endLine": 197,
+        "endChar": 40
+      },
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4175e1bb_35e7984f",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "Can you keep DCHECK_CURRENTLY_ON(BrowserThread::IO)?",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3e42db_2970703e",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "Rebase error?",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4d20a65_30d200df",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "DCHECK_NE(MSG_ROUTING_NONE, route_id_);",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28843ea_fbf1924e",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "This should be in a set of includes below.",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e31140a4_2e80bf1a",
         "filename": "third_party/WebKit/Source/core/workers/ContentSettingInstanceClient.cpp",
         "patchSetId": 3
@@ -127,6 +367,120 @@
     },
     {
       "key": {
+        "uuid": "d36d6dcf_ca2915bf",
+        "filename": "third_party/WebKit/Source/core/workers/ContentSettingInstanceClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "I prefer SharedWorkerContentSettingsClient to clarify this class is only for shared workers. What do you think?",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 34
+      },
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf749aa_cbdacb6d",
+        "filename": "third_party/WebKit/Source/core/workers/ContentSettingInstanceClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "Can you add a comment to say why we need to use IsolatedCopy() for each method? I remember it\u0027s set at the main thread and used on the worker thread, right?",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cab26e_694013bb",
+        "filename": "third_party/WebKit/Source/core/workers/ContentSettingInstanceClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "Can you also add why we need to establish the connection on each method call?",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd6f959_f042b2d1",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/content_setting.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "I think this file should be placed in placed in the same with other WebSharedWorker* files, so it would be public/web.\nnhiroki@ Is this correct?",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb2642e_5c1f4e7c",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/content_setting.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "Could you add interface-level comments here?\n- When/where this is created/destroyed\n- What this interface do\n\nfor example,\n\"Created on the browser process. This interface is to check the content settings for shared workers. Each method is called on every relevant method calls, and the result should be returned synchronously because the exposed APIs are synchronous. The connection is established on each method calls and destruct just after used.\"",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08f8541_5e183530",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/content_setting.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "If this is only for shared workers, I\u0027d like to add \"SharedWorker\" prefix. \nAlso, \"ContentSettings\" seems common word rather than \"ContentSetting\" looking at WebContentSettingsClient. \n\nHow about SharedWorkerContentSettingsManager or SharedWorkerContentSettingsProxy?\n\"Host\" is mainly used when two interfaces exist for bi-directional communication. It\u0027s single direction in this case, so I think \"Host\" is not necessary.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afdef602_36a65ae2",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/content_setting.mojom",
         "patchSetId": 3
@@ -155,6 +509,40 @@
       "writtenOn": "2017-07-13T12:31:39Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4093325_e4c135fb",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/content_setting.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "Looks indentation is different from l.13? I guess this could be moved to l.15?",
+      "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0995a5b4_b932e7f9",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 1,
+      "message": "Can you add some short comments here like\n\"Returns shared worker\u0027s unique id used in content side. It\u0027ll be sent over Mojo interfaces to identify the receiver of the message.\"",
       "revId": "317c3393ddbfc085e4c6a161be94b0daee9b2fa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

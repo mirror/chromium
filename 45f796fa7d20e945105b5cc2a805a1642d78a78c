@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b33d6a5_380dba21",
+        "filename": "content/common/worker_messages.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 0,
+      "message": "Great cleanup:)",
+      "revId": "45f796fa7d20e945105b5cc2a805a1642d78a78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7006054f_4c0263a1",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T01:01:15Z",
+      "side": 0,
+      "message": "You can also remove the method in the base class.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 36
+      },
+      "revId": "45f796fa7d20e945105b5cc2a805a1642d78a78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
