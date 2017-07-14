@@ -49,7 +49,7 @@ class ServiceWorkerClients;
 class ServiceWorkerRegistration;
 class ServiceWorkerThread;
 class WaitUntilObserver;
-class WorkerThreadStartupData;
+struct GlobalScopeStartupData;
 
 typedef RequestOrUSVString RequestInfo;
 
@@ -59,7 +59,7 @@ class MODULES_EXPORT ServiceWorkerGlobalScope final : public WorkerGlobalScope {
  public:
   static ServiceWorkerGlobalScope* Create(
       ServiceWorkerThread*,
-      std::unique_ptr<WorkerThreadStartupData>);
+      std::unique_ptr<GlobalScopeStartupData>);
 
   ~ServiceWorkerGlobalScope() override;
   bool IsServiceWorkerGlobalScope() const override { return true; }

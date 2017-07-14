@@ -31,8 +31,8 @@
 #include "modules/serviceworkers/ServiceWorkerThread.h"
 
 #include <memory>
+#include "core/workers/GlobalScopeStartupData.h"
 #include "core/workers/WorkerBackingThread.h"
-#include "core/workers/WorkerThreadStartupData.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h"
 #include "platform/wtf/PtrUtil.h"
@@ -56,7 +56,7 @@ void ServiceWorkerThread::ClearWorkerBackingThread() {
 }
 
 WorkerOrWorkletGlobalScope* ServiceWorkerThread::CreateWorkerGlobalScope(
-    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+    std::unique_ptr<GlobalScopeStartupData> startup_data) {
   return ServiceWorkerGlobalScope::Create(this, std::move(startup_data));
 }
 
