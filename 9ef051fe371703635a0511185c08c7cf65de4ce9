@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "4d51c664_3959e118",
+        "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-14T18:22:14Z",
+      "side": 1,
+      "message": "given that we reset this particular field on every send, it seems reasonable to std::move(new_features) into SendTiming on each invocation to avoid the clone.",
+      "revId": "9ef051fe371703635a0511185c08c7cf65de4ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a69ab1a8_43d01cd5",
         "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
         "patchSetId": 13
@@ -65,6 +82,47 @@
         "endLine": 57,
         "endChar": 21
       },
+      "revId": "9ef051fe371703635a0511185c08c7cf65de4ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff38a12_85414bbc",
+        "filename": "chrome/renderer/page_load_metrics/page_timing_metrics_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-14T18:22:14Z",
+      "side": 1,
+      "message": "Yes, looks like should be set() - let\u0027s add a simple renderer-side test for this logic as well.",
+      "parentUuid": "67c90afd_93df53a2",
+      "range": {
+        "startLine": 57,
+        "startChar": 17,
+        "endLine": 57,
+        "endChar": 21
+      },
+      "revId": "9ef051fe371703635a0511185c08c7cf65de4ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871f1b16_55487259",
+        "filename": "chrome/renderer/page_load_metrics/page_timing_metrics_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-14T18:22:14Z",
+      "side": 1,
+      "message": "given that this is only invoked in one place, let\u0027s just inline it. see related comment - we can std::move(new_features_) at the invocation of SendTiming() above, then do\nnew_features_ \u003d mojom::PageLoadFeatures::New(); to follow.",
       "revId": "9ef051fe371703635a0511185c08c7cf65de4ce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
