@@ -27,7 +27,8 @@ class MODULES_EXPORT AnimationWorklet final : public Worklet {
 
   // Implements Worklet.
   bool NeedsToCreateGlobalScope() final;
-  WorkletGlobalScopeProxy* CreateGlobalScope() final;
+  WorkletGlobalScopeProxy* CreateGlobalScope(
+      int global_scope_instance_count) final;
 };
 
 }  // namespace blink

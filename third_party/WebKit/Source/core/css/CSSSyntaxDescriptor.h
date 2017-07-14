@@ -59,6 +59,23 @@ class CORE_EXPORT CSSSyntaxDescriptor {
   Vector<CSSSyntaxComponent> syntax_components_;
 };
 
+inline bool operator==(const CSSSyntaxDescriptor& a,
+                       const CSSSyntaxDescriptor& b) {
+  if (a.Components().size() != b.Components().size())
+    return false;
+  for (size_t i = 0; i < a.Components().size(); i++) {
+    if ((a.Components()[i].type_ != b.Components()[i].type_) ||
+        (a.Components()[i].string_ != b.Components()[i].string_) ||
+        (a.Components()[i].repeatable_ != b.Components()[i].repeatable_))
+      return false;
+  }
+  return true;
+}
+inline bool operator!=(const CSSSyntaxDescriptor& a,
+                       const CSSSyntaxDescriptor& b) {
+  return !(a == b);
+}
+
 }  // namespace blink
 
 #endif  // CSSSyntaxDescriptor_h

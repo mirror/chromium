@@ -64,7 +64,8 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
   // necessary. CreateGlobalScope() will be called in that case. Each worklet
   // can define how to pool global scopes here.
   virtual bool NeedsToCreateGlobalScope() = 0;
-  virtual WorkletGlobalScopeProxy* CreateGlobalScope() = 0;
+  virtual WorkletGlobalScopeProxy* CreateGlobalScope(
+      int global_scope_instance_count) = 0;
 
   // "A Worklet has a list of the worklet's WorkletGlobalScopes. Initially this
   // list is empty; it is populated when the user agent chooses to create its
