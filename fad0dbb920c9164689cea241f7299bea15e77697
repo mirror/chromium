@@ -70,6 +70,30 @@
       "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6253ad53_d361ac38",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T18:52:06Z",
+      "side": 1,
+      "message": "A lite weight variant of the cleanup context idea could be for disk_cache::CreateCacheBackend to provide the task runner it creates as an out argument. Have that value returned immediately w/o having to wait for OnCreateBackendComplete. Thats a pretty clean way of exposing the runner, a very small change to one function signature, instead of taking a runner as input, it produces the runner as output. The potential issue you raised about guaranteeing things are closed might be a separate problem, but the task at hand is mostly about inverting responsibility for who creates the runner.",
+      "parentUuid": "a3c3d425_ef107ebd",
+      "range": {
+        "startLine": 1940,
+        "startChar": 18,
+        "endLine": 1940,
+        "endChar": 24
+      },
+      "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
