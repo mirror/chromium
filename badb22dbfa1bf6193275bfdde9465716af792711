@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a20874_cd376a43",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T05:38:38Z",
+      "side": 1,
+      "message": "Document? Ditto for other non Delegate classes\u0027 methods.",
+      "revId": "badb22dbfa1bf6193275bfdde9465716af792711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8805bbf_1354397a",
+        "filename": "components/exo/data_device_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T05:38:38Z",
+      "side": 1,
+      "message": "nit/optional: s/{}/\u003d default;/",
+      "revId": "badb22dbfa1bf6193275bfdde9465716af792711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf12cd7_085ddfee",
+        "filename": "components/exo/data_offer_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T05:38:38Z",
+      "side": 1,
+      "message": "nit: \u003d 0;",
+      "revId": "badb22dbfa1bf6193275bfdde9465716af792711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

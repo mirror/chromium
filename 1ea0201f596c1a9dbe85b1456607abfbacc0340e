@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "413d2849_d6ec9bcf",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T05:38:38Z",
+      "side": 1,
+      "message": "(Off topic): David, why not use unique_ptr in other classes, instead? (Note: not a blocker of this CL to me).",
+      "parentUuid": "12bc6d74_4d0af519",
+      "revId": "1ea0201f596c1a9dbe85b1456607abfbacc0340e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61bed65a_1bfc1bfc",
         "filename": "components/exo/data_device.h",
         "patchSetId": 5
