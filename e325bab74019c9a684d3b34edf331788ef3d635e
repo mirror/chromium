@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ebd33ab_e39d02be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-14T15:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a71d8337_762c22e8",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cf687f5_a8ff279e",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d730909_0242713c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5532,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-14T15:54:30Z",
+      "side": 1,
+      "message": "yep, see the previous PS. Basically I was making the wrong assumption that info.default_policy wouldn\u0027t be download here, when it can be due to alt-click downloads. See DownloadTest.LoadURLExternallyReferrerPolicy",
+      "parentUuid": "5cf687f5_a8ff279e",
+      "range": {
+        "startLine": 5531,
+        "startChar": 0,
+        "endLine": 5532,
+        "endChar": 47
+      },
+      "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bf7c6e30_2b98b8b9",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-14T15:54:30Z",
+      "side": 1,
+      "message": "I tidied up the language and mentioned PlzNavigate.",
+      "parentUuid": "8f50e487_73a581b2",
+      "range": {
+        "startLine": 1356,
+        "startChar": 0,
+        "endLine": 1359,
+        "endChar": 50
+      },
+      "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6363ddea_4f3b7228",
         "filename": "third_party/WebKit/Source/web/LocalFrameClientImpl.cpp",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8452ea_dfd9d37f",
+        "filename": "third_party/WebKit/Source/web/LocalFrameClientImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-14T15:54:30Z",
+      "side": 1,
+      "message": "I went through the blame history and confirmed this is true. The intent of the code was to exit full screen when there is a popup, I removed this.",
+      "parentUuid": "6363ddea_4f3b7228",
+      "range": {
+        "startLine": 651,
+        "startChar": 2,
+        "endLine": 651,
+        "endChar": 74
+      },
+      "revId": "e325bab74019c9a684d3b34edf331788ef3d635e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
