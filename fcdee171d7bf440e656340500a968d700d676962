@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64087835_50894ffa",
+        "filename": "third_party/WebKit/Source/core/testing/data/mhtml/simple_test.mht",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T23:42:26Z",
+      "side": 1,
+      "message": "This file was changed in pulling the latest Chrome build.\nI\u0027ll make sure it\u0027s removed in the next patch.",
+      "revId": "fcdee171d7bf440e656340500a968d700d676962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

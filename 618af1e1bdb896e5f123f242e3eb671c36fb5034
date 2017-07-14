@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5327b8_ca517d07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T23:42:26Z",
+      "side": 1,
+      "message": "Will remove the added braces in next patch.",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5876b803_f5f885a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T23:42:26Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ab7acb_c11ba640",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T23:42:26Z",
+      "side": 1,
+      "message": "Will add back the new line in the next patch.",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afcda108_d8239043",
+        "filename": "chrome/test/data/extensions/underscore_metadata_folders/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T23:42:26Z",
+      "side": 1,
+      "message": "This test extension was copied over from an existing directory.\nI can change the description, if you prefer.",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0118eed_d917b995",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T23:42:26Z",
+      "side": 1,
+      "message": "Will remove added curly braces in next patch.",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa244773_15be9013",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T23:42:26Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67da5b4_32bd9110",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T23:42:26Z",
+      "side": 1,
+      "message": "Will remove the new line in next patch.",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
