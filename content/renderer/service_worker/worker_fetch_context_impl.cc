@@ -91,6 +91,13 @@ void WorkerFetchContextImpl::DidDisplayContentWithCertificateErrors(
                                                                url));
 }
 
+void WorkerFetchContextImpl::DidRunInsecureContent(
+    const blink::WebSecurityOrigin& origin,
+    const blink::WebURL& url) {
+  Send(new FrameHostMsg_DidRunInsecureContent(
+      parent_frame_id_, GURL(origin.ToString().Utf8()), url));
+}
+
 void WorkerFetchContextImpl::SetSubresourceFilterBuilder(
     std::unique_ptr<blink::WebDocumentSubresourceFilter::Builder>
         subresource_filter_builder) {
