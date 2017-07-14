@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3cbf6e47_34234c89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-14T00:55:12Z",
+      "side": 1,
+      "message": "As discussed offline, we didn\u0027t find any info on performance implications.\n\nIn Chromium the style mentioned by Ted is by far more popular, though I personally find putting constants inside @interface more readable.\n\nI will revert this to more prevailing pattern to make reading this less surprising to people used to Chromium codebase.",
+      "parentUuid": "62982ed9_111891a6",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "37692113261f1eef6c96023fac769b798c338696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1681274e_7d636ee4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
         "patchSetId": 5
@@ -93,6 +117,30 @@
       "revId": "37692113261f1eef6c96023fac769b798c338696",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e25c131_56e16cab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-14T00:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c006aeca_763cd033",
+      "range": {
+        "startLine": 87,
+        "startChar": 31,
+        "endLine": 87,
+        "endChar": 49
+      },
+      "revId": "37692113261f1eef6c96023fac769b798c338696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
