@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c925963_c786c844",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T17:34:49Z",
+      "side": 1,
+      "message": "how about HandleToggleSystemTrayBubble ?",
+      "range": {
+        "startLine": 387,
+        "startChar": 5,
+        "endLine": 387,
+        "endChar": 31
+      },
+      "revId": "2fce78b31971af79eda593d56995e0e098581c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b154d9cd_eea0dcfb",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T17:34:49Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we have uma for each (show/hide)?",
+      "revId": "2fce78b31971af79eda593d56995e0e098581c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
