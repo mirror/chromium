@@ -45,6 +45,91 @@
       "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a248035d_5edd6cb6",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-14T00:34:14Z",
+      "side": 1,
+      "message": "I had a thought - could we pass viz::FrameSinkManagerImpl* here instead? the advantage is that we can coalesce some of the code then, because both frame_sink_manager_ptr_.get() and frame_sink_manager_impl are a mojo::FrameSinkManager, so we could keep a pointer to that and avoid the ifs in Register/UnregisterFrameSinkHierarchy. All the production callers pass the FrameSinkManagerImpl\u0027s frame_sync_manager() anyway, and fixing the test should be trivial.\n\nWhile it seems like a minor thing, it would make this class a lot more self-consistent instead of 2 different things mashed together.",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ddb802_fbe00bf4",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-14T00:34:14Z",
+      "side": 1,
+      "message": "nit: Can we DCHECK that frame_sink_manager_ptr_ isn\u0027t set? Those 2 paths are mutually exclusive, right?",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b59fca3_d006c4ed",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-14T00:34:14Z",
+      "side": 1,
+      "message": "nit: also DCHECK(!frame_sink_manager_)?",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1489145c_e98bd7d4",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-14T00:34:14Z",
+      "side": 1,
+      "message": "nit: it feels like both paths should share an interface? Or is it hard?",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2386e112_6e051c1d",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-14T00:34:14Z",
+      "side": 1,
+      "message": "nit: Could we now use GetHostFrameSinkManager() instead of GetFrameSinkManager()? Eventually reducing our dependency on FrameSinkManager would help, I think.",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
