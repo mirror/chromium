@@ -49,6 +49,8 @@
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/public/activation_client.h"
 
+#include "base/debug/stack_trace.h"
+
 #if defined(USE_X11)
 #include "ui/base/x/x11_util.h"  // nogncheck
 #include "ui/gfx/x/x11_types.h"  // nogncheck
@@ -314,10 +316,18 @@ void WindowTreeHostManager::InitHosts() {
 
 void WindowTreeHostManager::AddObserver(Observer* observer) {
   observers_.AddObserver(observer);
+  /*
+  base::debug::StackTrace trace;
+  LOG(ERROR) << trace.ToString();
+  */
 }
 
 void WindowTreeHostManager::RemoveObserver(Observer* observer) {
   observers_.RemoveObserver(observer);
+  /*
+  base::debug::StackTrace trace;
+  LOG(ERROR) << trace.ToString();
+  */
 }
 
 // static

@@ -44,6 +44,10 @@
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/views/mus/mus_client.h"
 
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+#include "chrome/browser/exo_init.h"
+#endif
+
 ChromeBrowserMainExtraPartsAsh::ChromeBrowserMainExtraPartsAsh() {}
 
 ChromeBrowserMainExtraPartsAsh::~ChromeBrowserMainExtraPartsAsh() {}
@@ -84,6 +88,10 @@ void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
   if (ash_util::ShouldOpenAshOnStartup())
     ash_init_ = base::MakeUnique<AshInit>();
 
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+  exo_init_ = ExoInit::Create();
+#endif
+
   if (ash_util::IsRunningInMash()) {
     immersive_context_ = base::MakeUnique<ImmersiveContextMus>();
     immersive_handler_factory_ = base::MakeUnique<ImmersiveHandlerFactoryMus>();
@@ -120,6 +128,12 @@ void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
 }
 
 void ChromeBrowserMainExtraPartsAsh::PostProfileInit() {
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+  // ExoInit uses state from ash, delete it before ash so that states is
+  // uninstalled correctly.
+  exo_init_.reset();
+#endif
+
   if (ash_util::IsRunningInMash()) {
     DCHECK(!ash::Shell::HasInstance());
     DCHECK(!ChromeLauncherController::instance());
