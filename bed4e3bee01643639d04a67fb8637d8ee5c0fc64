@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "0ca58c95_1397d3db",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T01:34:55Z",
+      "side": 1,
+      "message": "hmm, that\u0027s unfortunate.",
+      "parentUuid": "c4e53741_3ec8461f",
+      "revId": "bed4e3bee01643639d04a67fb8637d8ee5c0fc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d8463d8_eb602009",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 12

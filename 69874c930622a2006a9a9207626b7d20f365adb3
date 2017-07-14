@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "051a7b4b_6dda2c07",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T01:34:55Z",
+      "side": 1,
+      "message": "put this in anonymous namespace. (no need to move to the top)",
+      "revId": "69874c930622a2006a9a9207626b7d20f365adb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55fee1c7_2fdfc639",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2682,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T01:34:55Z",
+      "side": 1,
+      "message": "move This to the same anonymous namespace, and remove \"static\".",
+      "revId": "69874c930622a2006a9a9207626b7d20f365adb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
