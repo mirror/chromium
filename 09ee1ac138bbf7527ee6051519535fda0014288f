@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf1db5b7_8d8d042e",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-14T15:20:32Z",
+      "side": 1,
+      "message": "Move this above the IsOffTheRecord check. Incognito must be indistinguishable from non-incognito, so if regular immediately responds in iframes, then incognito must also do so and with the same value (rather than having a random delay, which is what happens with the current ordering).",
+      "range": {
+        "startLine": 223,
+        "startChar": 5,
+        "endLine": 223,
+        "endChar": 6
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96877643_e6c7b841",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-14T15:20:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be ASK? (see my reply to Dominick\u0027s comment)",
+      "range": {
+        "startLine": 224,
+        "startChar": 17,
+        "endLine": 224,
+        "endChar": 38
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e40938_6ea2bef4",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-14T15:20:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be ASK?",
+      "range": {
+        "startLine": 177,
+        "startChar": 20,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7ea99a_e15f5d78",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-14T15:20:32Z",
+      "side": 1,
+      "message": "Nit: Should we explicitly test that requesting/deciding permission doesn\u0027t change the permission (from block to ask/allow)?",
+      "range": {
+        "startLine": 197,
+        "startChar": 57,
+        "endLine": 197,
+        "endChar": 63
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a18177_1feab086",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-14T15:20:32Z",
+      "side": 1,
+      "message": "I think Dominick\u0027s proposal of returning DENIED when the state is really ASK would cause more confusion that it would resolve:\n\nDENIED is either misleading (since both developers and the specs expect there to be a single consistent permission state per origin), or unhelpful (since developers must now postMessage to another tab/SW in order to find the true value).\n\nBy contrast, ASK is actionable: developers can prompt in another tab, or open a popup window, or simply set a flag reminding themselves to prompt next time the user is in a top-level context.",
+      "range": {
+        "startLine": 381,
+        "startChar": 49,
+        "endLine": 381,
+        "endChar": 55
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
