@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14620938_bf700da3",
+        "filename": "components/payments/content/payment_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-14T17:28:08Z",
+      "side": 1,
+      "message": "Do you need to include base/memory/weak_ptr.h",
+      "revId": "cd56ce5ef92d6d36e16859a4580faab269115d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
