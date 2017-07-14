@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73258fd8_1883991d",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "If we do so, it cannot be defined inline, so we need additional line as definition.\nConsidering the goal of the CL, ptr looks simpler?",
+      "parentUuid": "9802229e_63982e88",
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "061662e6_cba4fc8c",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718df95f_2f84df38",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "061662e6_cba4fc8c",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 21
+      },
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6ec8831e_fe10e9c3",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be421fb4_c2d8044e",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3bb3118_5b76ecc9",
         "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.h",
         "patchSetId": 6
@@ -85,6 +151,30 @@
       "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da604c7_ad9b342b",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3bb3118_5b76ecc9",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "141c8129_99619eeb",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a243a1b2_46b4d2a0",
+      "range": {
+        "startLine": 33,
+        "startChar": 46,
+        "endLine": 33,
+        "endChar": 69
+      },
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6ab9644_cd7252c3",
         "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
         "patchSetId": 6
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "58c5ed2f_ae921d88",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6ab9644_cd7252c3",
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "763bb725_7a641495",
         "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
         "patchSetId": 6
@@ -142,6 +274,24 @@
       "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9cf9d9_6f9ffb0d",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "763bb725_7a641495",
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "2239821f_d2ff5c0c",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f65cdb_1a3d6523",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 6
+      },
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23496e96_f64f480a",
         "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
         "patchSetId": 6
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "c3e37403_a61ad26e",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23496e96_f64f480a",
+      "range": {
+        "startLine": 62,
+        "startChar": 56,
+        "endLine": 62,
+        "endChar": 62
+      },
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0c8a1fa_03d27d46",
         "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
         "patchSetId": 6
@@ -211,6 +409,30 @@
       "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0598766_3ca00fdb",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0c8a1fa_03d27d46",
+      "range": {
+        "startLine": 70,
+        "startChar": 39,
+        "endLine": 70,
+        "endChar": 62
+      },
+      "revId": "b73b97b70f4f62e486e21042b3f621d1cb6c8bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

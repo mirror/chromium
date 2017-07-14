@@ -16,6 +16,24 @@
       "revId": "9fc8b5226ecbb15641639c630846c0c3a0c0b243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ef01a7_c2ea91b6",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T07:41:51Z",
+      "side": 0,
+      "message": ":-)",
+      "parentUuid": "8af7c4ee_ee1367e6",
+      "revId": "9fc8b5226ecbb15641639c630846c0c3a0c0b243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
