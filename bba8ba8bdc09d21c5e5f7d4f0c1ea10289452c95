@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c76d272_4abaa16c",
+        "filename": "content/common/sandbox_linux/bpf_renderer_policy_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-07-14T13:55:00Z",
+      "side": 1,
+      "message": "Can you add a bug number here?",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "bba8ba8bdc09d21c5e5f7d4f0c1ea10289452c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
