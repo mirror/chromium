@@ -87,6 +87,24 @@
       "revId": "cfc24270bfc43126129faa67579555fd531c0691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8929e9a8_31cdcb73",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-14T21:29:04Z",
+      "side": 1,
+      "message": "GpuClient does not need the destruction callback. That\u0027s why I went the weak-ptr route in the earlier patchsets.\n\nThe function is used in two places, one where we need to create the GpuMemoryBufferImpl (and therefore, need a destruction callback), and one where we need just the handle. The common code that can deal with both cases is if this function only creates a handle, and have the caller construct GpuMemoryBufferImpl (and the destruction callback) as needed. The only complication is that the destruction callback needs to do a thread-hop, necessitating either a weak-ptr, or the destruction-callback being created from here too. I am not sure we can avoid the complexities (either in this patchset, or the earlier patchsets that use the weak-ptr)",
+      "parentUuid": "fe144527_dda6515a",
+      "revId": "cfc24270bfc43126129faa67579555fd531c0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
