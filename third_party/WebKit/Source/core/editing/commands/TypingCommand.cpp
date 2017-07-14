@@ -821,8 +821,7 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
           ? AdjustSelectionForBackwardDelete(selection_modifier.Selection())
           : selection_modifier.Selection();
 
-  if (!StartingSelection().IsRange() ||
-      selection_to_delete.Base() != StartingSelection().Start()) {
+  if (!StartingSelection().IsRange()) {
     DeleteKeyPressedInternal(selection_to_delete, selection_to_delete,
                              kill_ring, editing_state);
     return;
@@ -960,8 +959,7 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
 
       const VisibleSelection& selection_to_delete =
           selection_modifier.Selection();
-      if (!StartingSelection().IsRange() ||
-          selection_to_delete.Base() != StartingSelection().Start()) {
+      if (!StartingSelection().IsRange()) {
         ForwardDeleteKeyPressedInternal(
             selection_to_delete, selection_to_delete, kill_ring, editing_state);
         return;
