@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "345975e1_dfdbf52c",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-14T18:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc1d200d_f462257c",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "105320188c5c993dd47e231566a48cc220f34a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc0c4910_7dc35659",
         "filename": "remoting/ios/app/client_connection_view_controller.mm",
         "patchSetId": 4
