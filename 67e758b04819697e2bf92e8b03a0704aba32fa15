@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "195547c9_8572cc99",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-14T16:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac512214_55678e8e",
+      "range": {
+        "startLine": 1086,
+        "startChar": 7,
+        "endLine": 1086,
+        "endChar": 24
+      },
+      "revId": "67e758b04819697e2bf92e8b03a0704aba32fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d96f2892_d56a43e6",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-14T14:46:46Z",
       "side": 1,
       "message": "Useful comments are ones that describe \u0027why\u0027 the code is doing something. Given the name of the function this comment isn\u0027t helpful and I recommend nuking it.",
+      "range": {
+        "startLine": 1102,
+        "startChar": 12,
+        "endLine": 1102,
+        "endChar": 13
+      },
+      "revId": "67e758b04819697e2bf92e8b03a0704aba32fa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43d8632_c82464e2",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-14T16:28:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d96f2892_d56a43e6",
       "range": {
         "startLine": 1102,
         "startChar": 12,
