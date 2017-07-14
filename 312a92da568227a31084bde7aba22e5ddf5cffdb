@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1e550f7_35974eec",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-14T11:23:16Z",
+      "side": 1,
+      "message": "Started discussion about this on the design doc.\nAD: good point, will check.",
+      "parentUuid": "6b913729_8d6d848a",
+      "revId": "312a92da568227a31084bde7aba22e5ddf5cffdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f3cb3e9_cdc5f2a8",
         "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "312a92da568227a31084bde7aba22e5ddf5cffdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b9b0ec_40b380d4",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-14T11:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f3cb3e9_cdc5f2a8",
+      "revId": "312a92da568227a31084bde7aba22e5ddf5cffdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fa4718dd_eeb9b35c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-14T11:23:16Z",
+      "side": 1,
+      "message": "Right, let\u0027s just pass it to the ctor and get rid of ForTesting :)",
+      "parentUuid": "06a357cf_8857bcc1",
+      "revId": "312a92da568227a31084bde7aba22e5ddf5cffdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba0d79b7_b7946ecd",
         "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "312a92da568227a31084bde7aba22e5ddf5cffdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194c92d1_96c9e41c",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-14T11:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba0d79b7_b7946ecd",
+      "revId": "312a92da568227a31084bde7aba22e5ddf5cffdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
