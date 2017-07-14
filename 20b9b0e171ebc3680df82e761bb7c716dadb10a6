@@ -16,6 +16,75 @@
       "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef1f680_42a143c9",
+        "filename": "ui/compositor/paint_cache.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-14T15:42:34Z",
+      "side": 1,
+      "message": "Hmm, it\u0027s possible. But I do kinda think it just happens that View is the only LayerDelegate that caches right now, but others could want to too.",
+      "parentUuid": "7217dc96_f61c4bdd",
+      "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b03855a_85f39911",
+        "filename": "ui/compositor/paint_cache.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-14T15:42:34Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9468859_b398dae2",
+        "filename": "ui/compositor/paint_recorder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-14T15:42:34Z",
+      "side": 1,
+      "message": "nit: base::MakeRefCounted",
+      "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1883532_075b4a57",
+        "filename": "ui/compositor/paint_recorder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-14T15:42:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure you rly need to do this, it\u0027d be hella weird to use the cache before we finished the PaintRecorder. The old code did this but it was to get the context more than to null things. Up to you.",
+      "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
