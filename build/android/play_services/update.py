@@ -256,9 +256,8 @@ def UpdateSdk(args):
     with open(paths.source_prop, 'w') as prop_file:
       prop_file.write('Pkg.Revision=0.0.0\n')
 
-  sdk_manager = os.path.join(args.sdk_root, 'tools', 'android')
-  cmd = [sdk_manager, 'update', 'sdk', '--no-ui', '--filter', GMS_PACKAGE_ID]
-  cmd_helper.Call(cmd)
+  sdk_manager = os.path.join(args.sdk_root, 'tools', 'bin', 'sdkmanager')
+  cmd_helper.Call([sdk_manager, '--update'])
   # If no update is needed, it still returns successfully so we just do nothing
 
   return 0
