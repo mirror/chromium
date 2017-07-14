@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af2c4fb_763d7f44",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "Is indentation wrong here? Maybe a \"Tab\" character is present?",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31342cdb_bf09042c",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "Does this call have to be within the for loop?",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f474f58d_cda2fcea",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "td[3].textContent \u003d info.lastMediaPlaybackTime ?\n    new Date(info.lastMediaPlaybackTime).toISOString() : \u0027\u0027;",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d4ba70_2266c002",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "@param missing for a and b.",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7172840_56baed31",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "toFixed() returns a string, not a number. This method currently returns sometimes a string sometimes a number. Let\u0027s fix.",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b86f544a_b861f206",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "This is unnecessarily repeated within createRow(). Let\u0027s keep only one of the two places.",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e79300b_944742d7",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "This is passing |info| as a parameter to renderTable(), but renderTable() ignores the parameter and uses the global |info| instead? How about removing the global |info| and pass it use the parameter everywhere where needed?",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dbcef3_9b7e0888",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "Can the contents of this function be inlined here? It\u0027s not used anywhere else.",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b292306_f3d2b84b",
+        "filename": "chrome/browser/ui/webui/media/media_engagement_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "cmath not used anywhere. Can you remove?\nAlso can you double check whether \u003cutility\u003e and \u003cvector\u003e are used and remove if not?",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f276b093_5632ee58",
+        "filename": "chrome/test/data/webui/media/media_engagement_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T18:44:37Z",
+      "side": 1,
+      "message": "Nit: You can move lines 49-51 here, and eliminate the need to override setUp() completely.",
+      "revId": "adfcd49dc10324cb8c062c5c09c2408fd7069205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
