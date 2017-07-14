@@ -4,7 +4,7 @@
 
 #include "services/resource_coordinator/coordination_unit/tab_signal_generator.h"
 
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 
 namespace resource_coordinator {
 
@@ -13,7 +13,7 @@ TabSignalGenerator::TabSignalGenerator() = default;
 TabSignalGenerator::~TabSignalGenerator() = default;
 
 bool TabSignalGenerator::ShouldObserve(
-    const CoordinationUnitImpl* coordination_unit) {
+    const CoordinationUnitBase* coordination_unit) {
   return coordination_unit->id().type == CoordinationUnitType::kWebContents;
 }
 

@@ -10,7 +10,7 @@
 
 namespace resource_coordinator {
 
-class CoordinationUnitImpl;
+class CoordinationUnitBase;
 
 // The TabSignalGenerator is a unified |CoordinationUnitGraphObserver| for
 // calculating and emitting tab-scoped signals. Nonetheless, the observer
@@ -21,7 +21,7 @@ class TabSignalGenerator : public CoordinationUnitGraphObserver {
   TabSignalGenerator();
   ~TabSignalGenerator() override;
 
-  bool ShouldObserve(const CoordinationUnitImpl* coordination_unit) override;
+  bool ShouldObserve(const CoordinationUnitBase* coordination_unit) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TabSignalGenerator);

@@ -28,7 +28,7 @@ const int kCPUProfilingIntervalInSeconds = 5;
 ProcessCoordinationUnitImpl::ProcessCoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : CoordinationUnitImpl(id, std::move(service_ref)) {
+    : CoordinationUnitBase(id, std::move(service_ref)) {
   // ProcessCoordinationUnit ids should correspond to its pid
   base::ProcessId pid = id.id;
 #if defined(OS_WIN)
@@ -53,7 +53,7 @@ ProcessCoordinationUnitImpl::ProcessCoordinationUnitImpl(
 
 ProcessCoordinationUnitImpl::~ProcessCoordinationUnitImpl() = default;
 
-std::set<CoordinationUnitImpl*>
+std::set<CoordinationUnitBase*>
 ProcessCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
     CoordinationUnitType type) {
   switch (type) {
@@ -62,7 +62,7 @@ ProcessCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
       // tabs. However, frames are children of both processes and frames, so we
       // find all of the tabs that are reachable from the process's child
       // frames.
-      std::set<CoordinationUnitImpl*> web_contents_coordination_units;
+      std::set<CoordinationUnitBase*> web_contents_coordination_units;
 
       for (auto* frame_coordination_unit :
            GetChildCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
@@ -79,7 +79,7 @@ ProcessCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
     case CoordinationUnitType::kFrame:
       return GetChildCoordinationUnitsOfType(type);
     default:
-      return std::set<CoordinationUnitImpl*>();
+      return std::set<CoordinationUnitBase*>();
   }
 }
 

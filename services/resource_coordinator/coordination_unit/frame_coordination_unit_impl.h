@@ -8,21 +8,21 @@
 #include <set>
 
 #include "base/macros.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 
 namespace resource_coordinator {
 
 struct CoordinationUnitID;
 
-class FrameCoordinationUnitImpl : public CoordinationUnitImpl {
+class FrameCoordinationUnitImpl : public CoordinationUnitBase {
  public:
   FrameCoordinationUnitImpl(
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~FrameCoordinationUnitImpl() override;
 
-  // CoordinationUnitImpl implementation.
-  std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
+  // CoordinationUnitBase implementation.
+  std::set<CoordinationUnitBase*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) override;
 
  private:

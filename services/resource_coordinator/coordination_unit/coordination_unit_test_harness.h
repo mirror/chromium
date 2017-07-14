@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_IMPL_UNITTEST_UTIL_H_
-#define SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_IMPL_UNITTEST_UTIL_H_
+#ifndef SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_TEST_HARNESS_H_
+#define SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_TEST_HARNESS_H_
 
 #include <stdint.h>
 
@@ -12,25 +12,22 @@
 #include "base/message_loop/message_loop.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_manager.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_provider_impl.h"
-#include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace resource_coordinator {
 
-struct CoordinationUnitID;
-
-class CoordinationUnitImplTestBase : public testing::Test {
+class CoordinationUnitTestHarness : public testing::Test {
  public:
-  CoordinationUnitImplTestBase();
-  ~CoordinationUnitImplTestBase() override;
+  CoordinationUnitTestHarness();
+  ~CoordinationUnitTestHarness() override;
 
   // testing::Test:
   void TearDown() override;
 
-  std::unique_ptr<CoordinationUnitImpl> CreateCoordinationUnit(
+  std::unique_ptr<CoordinationUnitBase> CreateCoordinationUnit(
       CoordinationUnitID cu_id);
-  std::unique_ptr<CoordinationUnitImpl> CreateCoordinationUnit(
+  std::unique_ptr<CoordinationUnitBase> CreateCoordinationUnit(
       CoordinationUnitType type);
 
  protected:
@@ -51,4 +48,4 @@ class CoordinationUnitImplTestBase : public testing::Test {
 
 }  // namespace resource_coordinator
 
-#endif  // SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_IMPL_UNITTEST_UTIL_H_
+#endif  // SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_TEST_HARNESS_H_
