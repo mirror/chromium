@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "652f5a52_0efe01de",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-14T09:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "373c23a2_1f0b56c0",
+      "range": {
+        "startLine": 699,
+        "startChar": 22,
+        "endLine": 699,
+        "endChar": 37
+      },
+      "revId": "f633a4e9759f30ff0ff1329bb5845f6ca3d4e1c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32fdddfc_97073aa8",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-14T08:56:33Z",
       "side": 1,
       "message": "This name is a bit confusing but I don\u0027t have a good alternative.",
+      "revId": "f633a4e9759f30ff0ff1329bb5845f6ca3d4e1c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a72a3e_a49cc1e6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-14T09:50:17Z",
+      "side": 1,
+      "message": "Hopefully, this can be renamed to e.g. WasLoadedWithDifferentCORSConfiguration or something in the future.",
+      "parentUuid": "32fdddfc_97073aa8",
       "revId": "f633a4e9759f30ff0ff1329bb5845f6ca3d4e1c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
