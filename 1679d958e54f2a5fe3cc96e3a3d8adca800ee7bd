@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "65e54ca5_dab2e53f",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06c5fc66_dd48644f",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1781d466_8cd2fe64",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 7
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "eb508a22_32ba9993",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "I think we do this in numerous other places - I believe it is quite common to implicitly rely on the integer values of enums. \n\nIf you strongly prefer this it\u0027s ok, but I think it\u0027s unusual to spell out all the values this way unless you\u0027re deviating from defaults.",
+      "parentUuid": "b528a509_8e75b3d3",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d00fb1c_9f6979da",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 7
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "8d00fb1c_9f6979da",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fee28be_00a33940",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Oops, sorry, I meant -\none block for values, like:\nproto.has_value() || proto.vaule() \u003c 0 || proto.value() \u003e\u003d max\n\nand another for\nproto.has_policy_options() \u0026\u0026 policy_option().mode() \u003d\u003d UNSET\n\nI think this grouping makes sense?",
+      "parentUuid": "59660c77_b16171a9",
       "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -282,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "ec862322_c5d06ffe",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Thanks for the comments! Clearer now",
+      "parentUuid": "a23f2582_669f5c79",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "850153b9_ffdad97b",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 7
@@ -311,6 +383,24 @@
       "side": 1,
       "message": "We think that it is - see above :)",
       "parentUuid": "850153b9_ffdad97b",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfa61c7e_d8d8ae08",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bbebef23_15e84bb2",
       "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -349,6 +439,24 @@
       "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb6c7e1_589e223c",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d8dc0eef_2ad9ea6b",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -422,6 +530,24 @@
     },
     {
       "key": {
+        "uuid": "8072275f_55b01833",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9c594e4a_a3e9ef75",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16f0996f_f489fa15",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 7
@@ -454,6 +580,24 @@
       "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6a8734_c63a75bf",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ddadda62_67ed2fd9",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -667,6 +811,24 @@
     },
     {
       "key": {
+        "uuid": "58a6eb6a_7b521c5f",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "50a2ae55_061bacc5",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "773d08c6_832e9334",
         "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
         "patchSetId": 7
@@ -772,6 +934,24 @@
     },
     {
       "key": {
+        "uuid": "638aa760_35ab3fcf",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9f35ba07_21060519",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5333a937_428dec2b",
         "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
         "patchSetId": 7
@@ -801,6 +981,24 @@
       "side": 1,
       "message": "Hm, good point.\n\nThe original code (introduced in crrev.com/12183017) does a ReloadPolicyKey call even if the GetSanitizedUsername call failed.\nI don\u0027t think there is a reason to do that - if it failed, cached_policy_key_path_ will be empty so ReloadPolicyKey will be a no-op.\nThus, changing to what you suggested.",
       "parentUuid": "5333a937_428dec2b",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a14a5a6_817e088a",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "422cce87_7e2ea444",
       "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -909,6 +1107,24 @@
       "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626b8240_0eba51b5",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2ab29104_6f12d7f5",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1192,6 +1408,24 @@
     },
     {
       "key": {
+        "uuid": "7f933c37_1c4728a5",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d99d6cb9_59b6d5d1",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23b64e33_496f20c7",
         "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
         "patchSetId": 7
@@ -1221,6 +1455,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "23b64e33_496f20c7",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c803be3e_7b8d8e5e",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Don\u0027t think this was done",
+      "parentUuid": "8beff72e_892fec9d",
       "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -1326,6 +1578,24 @@
       "side": 1,
       "message": "[1] says \"Pass Callback objects by value if ownership is transferred; otherwise, pass it by const-reference.\"\nAs we\u0027re transferring ownership, passing by value should be fine.\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/docs/callback.md",
       "parentUuid": "205456cd_e949518c",
+      "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6870f753_edec8091",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-14T01:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31d02762_c0c15a1c",
       "revId": "1679d958e54f2a5fe3cc96e3a3d8adca800ee7bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
