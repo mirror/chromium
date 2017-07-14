@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d7e3cde_3faa6c63",
+        "filename": "content/browser/memory/swap_metrics_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-14T02:37:57Z",
+      "side": 1,
+      "message": "nit: Use base::TimeDelta?\n\nYou can use constexpr to define a constant TimeDelta\n\nconstexpr base::TimeDelta kSwapMetricsInterval \u003d base::TimeDelta::FromSeconds(60);",
+      "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac461416_c63cb10d",
+        "filename": "content/browser/memory/swap_metrics_driver_mac.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-14T02:37:57Z",
+      "side": 1,
+      "message": "nit: SwapMetricsDriverMac::~SwapMetricsDriverMac() \u003d default;",
+      "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38bc24e4_502c4f29",
+        "filename": "content/browser/memory/swap_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-14T02:37:57Z",
+      "side": 1,
+      "message": "Suggestion: Reading the CL I feel that this is a delegate class rather than an observer. What do you think about below?\n\n// NOTE: This is called SwapMetricsDriver in this CL\nclass SwapMetricsObserver {\n  // NOTE: This is called SwapMetricsObserver in this CL\n  class Delegate {\n    virtual void SwapsInPerSecond(double swaps_in_per_sec, base::TimeDelta interval) {}\n    ...\n  }\n\n  static std::unique_ptr\u003cSwapMetricsObserver\u003e Create(std::unique_ptr\u003cDelegate\u003e delegate);\n  void Start();\n  void Stop();\n  SwapMetricsUpdateResult UpdateMetrics();\n  ...\n}",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36624c9f_deeeffc1",
+        "filename": "content/browser/memory/swap_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-14T02:37:57Z",
+      "side": 1,
+      "message": "Suggestion: Does it make sense to change this like:\n\nOnSwapInCount(uint64_t count, base::TimeDelta interval)\n\n?",
+      "range": {
+        "startLine": 20,
+        "startChar": 32,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
