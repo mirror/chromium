@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "029d5bba_107fedea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-14T01:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16f5e9c6_33a2f9df",
+      "range": {
+        "startLine": 112,
+        "startChar": 22,
+        "endLine": 112,
+        "endChar": 26
+      },
+      "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d954063b_7b5c368f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
         "patchSetId": 11
@@ -59,6 +83,30 @@
       "writtenOn": "2017-07-14T00:46:59Z",
       "side": 1,
       "message": "I think if we increment size regardless of item visibility TalkBack will read showing # of ## items using the incorrect numbers. We could remove support for \"invisible\" header items and push the responsibility onto HistoryAdapter (this sounds like a good design to me).\n\nYes, this method should be calling notifyDataSetChanged(). It\u0027s working without the call because.. The header item visibility may change in response to sign-in state change; when that happens we re-query the backend. When the query returns, we load the new items which causes a notifyDataSetChanged(), at which point the changes made by calling setHeaders() would be detected.\n\nWe also need to call setGroupPositions() now that this method can be called while there are other ItemGroups. Both of these are methods called in removeHeader() below. Maybe if mHasListHeader is true, instead of calling removeHeader() we could do the mSize -\u003d and mGroups.remove() but skip the rest of the method to avoid duplicate calls.",
+      "parentUuid": "d954063b_7b5c368f",
+      "range": {
+        "startLine": 510,
+        "startChar": 21,
+        "endLine": 510,
+        "endChar": 30
+      },
+      "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4ea067_4c40b0dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-14T01:08:07Z",
+      "side": 1,
+      "message": "The parameter List\u003cHeaderItem\u003e headerItems can have non-visible HeaderItems, but only visible HeaderItems will be added to the header ItemGroup (we can still set HeaderItem to be visible even if the associated view is not). If view associated with the header item is made visible/invisible, visibility of that HeaderItem should be updated and setHeaders() should be called to update HeaderItems in the header ItemGroup. The child adapter class should be managing the visibility of header items and associated views.\n\nAnd right, this should be calling resetPosition() and notifyDataSetChanged() to get updated position for items in each group and notify observers. They weren\u0027t in the code before because addHeaders() would always be called immediately after clear(), but now they should be in setHeaders(). Sorry for missing them.",
       "parentUuid": "d954063b_7b5c368f",
       "range": {
         "startLine": 510,
