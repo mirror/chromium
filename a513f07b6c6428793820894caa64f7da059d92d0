@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2bb1bab_ce6dc7ac",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-14T08:30:56Z",
+      "side": 1,
+      "message": "nit: Remove this blank line, to be consistent with other controllers.",
+      "revId": "a513f07b6c6428793820894caa64f7da059d92d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edfec437_a7be9491",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-14T08:30:56Z",
+      "side": 1,
+      "message": "|check-select| is not changed.",
+      "range": {
+        "startLine": 44,
+        "startChar": 35,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "a513f07b6c6428793820894caa64f7da059d92d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bd93a6_eec5ac3c",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-14T08:30:56Z",
+      "side": 1,
+      "message": "Is this necessary?\nI don\u0027t see any custom style which depend of \u0027toolbar-menu\u0027\n\u0027 class.",
+      "revId": "a513f07b6c6428793820894caa64f7da059d92d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8cc297_517174d2",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-14T08:30:56Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a513f07b6c6428793820894caa64f7da059d92d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
