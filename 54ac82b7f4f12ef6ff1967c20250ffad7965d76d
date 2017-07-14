@@ -39,6 +39,24 @@
       "revId": "54ac82b7f4f12ef6ff1967c20250ffad7965d76d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51138c02_77fb93d7",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-14T02:06:05Z",
+      "side": 1,
+      "message": "When we switch to using the swap timestamps for UMAs, TBMs, etc. I thought we could add a temporary UMA to see how often this happens; we\u0027re planning to do something similar for FP and FCP. But maybe it would be better to move this logic to a helper function and have FMP set from either the network 2-quiet or ReportProvisionalFirstMeaningfulPaintSwap(), depending on timing? i.e. If it\u0027s 0 in NotifyPaint(), defer until ReportProvisionalFirstMeaningfulPaintSwap().",
+      "parentUuid": "0518f9bd_ce23bcb5",
+      "revId": "54ac82b7f4f12ef6ff1967c20250ffad7965d76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
