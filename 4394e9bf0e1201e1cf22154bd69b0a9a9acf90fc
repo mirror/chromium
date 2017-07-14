@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d786f10_dcbd88af",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T01:23:08Z",
+      "side": 1,
+      "message": "There ~8 more cases that could be tested and are not yet included here. Those tests are related to radio buttons, separators, and nested children visibility. \n\nI added a bunch of tests here, and I decided to stop for now and get your feedback before adding the next 8, which may take another day (and half) worth of work.",
+      "revId": "4394e9bf0e1201e1cf22154bd69b0a9a9acf90fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83001682_95b08a8a",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/extension_items_container/update_item/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T01:23:08Z",
+      "side": 1,
+      "message": "Lmk if you think its fine to leave the calls to chrome.test.assertNoLastError() or if you\u0027d prefer to use the callbackPass() approach instead.",
+      "revId": "4394e9bf0e1201e1cf22154bd69b0a9a9acf90fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d664411c_ec1ab384",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/one_top_level_menu_item/visible_parent_and_hidden_children/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T01:23:08Z",
+      "side": 1,
+      "message": "Will add 4 spaces instead of 2 spaces in the next patch.",
+      "revId": "4394e9bf0e1201e1cf22154bd69b0a9a9acf90fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b083674a_5c78d13c",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/one_top_level_menu_item/visible_parent_and_some_visible_children/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-14T01:23:08Z",
+      "side": 1,
+      "message": "2 \u003d\u003e 4 spaces in next patch.",
+      "revId": "4394e9bf0e1201e1cf22154bd69b0a9a9acf90fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
