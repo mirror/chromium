@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "95b2111b_d04d954f",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-14T09:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9904bb91_60d1481f",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 2
+      },
+      "revId": "7abc1fa3caf785fcdbe8ff61ba4afd7fd58fc2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cfe84b5_bcde9d92",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-14T09:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b19d848f_01ca9344",
+      "range": {
+        "startLine": 70,
+        "startChar": 3,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "7abc1fa3caf785fcdbe8ff61ba4afd7fd58fc2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "146bdc17_c59cd0f2",
         "filename": "chrome/browser/media/media_engagement_score_details.mojom",
         "patchSetId": 7
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c97d2f77_f1579fe0",
+        "filename": "chrome/browser/media/media_engagement_score_details.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-14T09:23:22Z",
+      "side": 1,
+      "message": "Time is a native type in Mojo which doesn\u0027t seem to actually pass the value properly to JS. Added a comment.",
+      "parentUuid": "146bdc17_c59cd0f2",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "7abc1fa3caf785fcdbe8ff61ba4afd7fd58fc2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47379608_81349aa3",
         "filename": "chrome/browser/ui/webui/media/media_engagement_ui.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "7abc1fa3caf785fcdbe8ff61ba4afd7fd58fc2ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b302ec99_b121749f",
+        "filename": "chrome/browser/ui/webui/media/media_engagement_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-14T09:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47379608_81349aa3",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 5
+      },
+      "revId": "7abc1fa3caf785fcdbe8ff61ba4afd7fd58fc2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
