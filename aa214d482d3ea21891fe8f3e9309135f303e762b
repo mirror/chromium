@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b2eef2_5e57cb06",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163624
+      },
+      "writtenOn": "2017-07-14T13:46:14Z",
+      "side": 1,
+      "message": "2 secs is a long time, maybe 1 sec is a better default. My main concern is how long a CT pixeldiff run will take and if we can trim time wherever not absolutely required.",
+      "range": {
+        "startLine": 12,
+        "startChar": 72,
+        "endLine": 12,
+        "endChar": 77
+      },
+      "revId": "aa214d482d3ea21891fe8f3e9309135f303e762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa612e7_865d94f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163624
+      },
+      "writtenOn": "2017-07-14T13:46:14Z",
+      "side": 1,
+      "message": "Note: I had used 50% in the chat conversation as an arbitrary value. It could be that it is a good value to use here but just wanted to mention this incase somebody has a better guess of what this value should be.",
+      "range": {
+        "startLine": 16,
+        "startChar": 27,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "aa214d482d3ea21891fe8f3e9309135f303e762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12989ce_1e55f127",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1163624
+      },
+      "writtenOn": "2017-07-14T13:46:14Z",
+      "side": 1,
+      "message": "Should this throw an error and fail instead?\nWe can document that behavior where the flag is defined.",
+      "revId": "aa214d482d3ea21891fe8f3e9309135f303e762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96c782f_3fbc50f2",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot_ct.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163624
+      },
+      "writtenOn": "2017-07-14T13:46:14Z",
+      "side": 1,
+      "message": "Would be useful to also add another line in help:\n\"Only works if --dc-detect flag is true.\" x 3",
+      "revId": "aa214d482d3ea21891fe8f3e9309135f303e762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62aa53f9_1e9b65fd",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot_ct.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163624
+      },
+      "writtenOn": "2017-07-14T13:46:14Z",
+      "side": 1,
+      "message": "--dc-extra-screenshots might be a more descriptive flag",
+      "revId": "aa214d482d3ea21891fe8f3e9309135f303e762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5287e3d2_5a362c97",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot_ct.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163624
+      },
+      "writtenOn": "2017-07-14T13:46:14Z",
+      "side": 1,
+      "message": "+ \"Throws an error if percentage of dynamic content is beyond this threshold\"",
+      "revId": "aa214d482d3ea21891fe8f3e9309135f303e762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
