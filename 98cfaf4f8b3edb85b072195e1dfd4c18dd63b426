@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea9cc69_65ca8a78",
+        "filename": "device/hid/hid_device_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-14T05:36:48Z",
+      "side": 1,
+      "message": "Each platform_device_id should have only one item in map.",
+      "revId": "98cfaf4f8b3edb85b072195e1dfd4c18dd63b426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b54b066_1dd68c5a",
+        "filename": "device/hid/hid_device_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-14T05:36:48Z",
+      "side": 1,
+      "message": "g_unique_key starts from 0. We use 0 as the KInvalidHidDeviceId, so let it start from 1.",
+      "revId": "98cfaf4f8b3edb85b072195e1dfd4c18dd63b426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
