@@ -9,6 +9,7 @@
  * @param {!MetadataModel} metadataModel File system metadata.
  * @param {!FileSelectionHandler} selectionHandler
  * @param {!ListContainer} listContainer
+ * @param {!cr.ui.MenuButton} selectionMenuButton
  * @param {!QuickViewModel} quickViewModel
  * @param {!TaskController} taskController
  * @param {!cr.ui.ListSelectionModel} fileListSelectionModel
@@ -20,8 +21,8 @@
  * @constructor
  */
 function QuickViewController(
-    metadataModel, selectionHandler, listContainer, quickViewModel,
-    taskController, fileListSelectionModel, quickViewUma,
+    metadataModel, selectionHandler, listContainer, selectionMenuButton,
+    quickViewModel, taskController, fileListSelectionModel, quickViewUma,
     metadataBoxController, dialogType, volumeManager) {
   /**
    * @type {FilesQuickView}
@@ -97,13 +98,18 @@ function QuickViewController(
    */
   this.entries_ = [];
 
+  selectionMenuButton.addEventListener('command', function(event) {
+    if (event.command.id === 'get-info')
+      this.display_(QuickViewUma.WayToOpen.SELECTION_MENU);
+  }.bind(this));
+
   this.selectionHandler_.addEventListener(
       FileSelectionHandler.EventType.CHANGE,
       this.onFileSelectionChanged_.bind(this));
   this.listContainer_.element.addEventListener(
       'keydown', this.onKeyDownToOpen_.bind(this));
   this.listContainer_.element.addEventListener('command', function(event) {
-    if(event.command.id === 'get-info')
+    if (event.command.id === 'get-info')
       this.display_(QuickViewUma.WayToOpen.CONTEXT_MENU);
   }.bind(this));
 }
