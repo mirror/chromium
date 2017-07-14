@@ -72,20 +72,6 @@ size_t WriteToFile(const base::ScopedFILE& file,
   return bytes_written;
 }
 
-// Copy all of the data at path |source| and append it to |destination|.
-void AppendToFile(const base::ScopedFILE& destination,
-                  const base::FilePath& source) {
-  // TODO(eroman): This is a bad implementation, as it reads the entire source
-  // file into memory. Should read it in chunks to bound memory usage, as source
-  // files could be large.
-  std::string contents;
-  if (!ReadFileToString(source, &contents))
-    return;
-
-  // Append the event file contents to the log file.
-  WriteToFile(destination, contents);
-}
-
 }  // namespace
 
 namespace net {
@@ -579,6 +565,11 @@ void FileNetLogObserver::BoundedFileWriter::MoveEventFilesToLogFile() {
   // Make sure all the events files are flushed (as will read them next).
   current_event_file_.reset();
 
+  // Allocate a 64K buffer used for reading the files. At most kReadBufferSize
+  // bytes will be in memory at a time.
+  const size_t kReadBufferSize = 1 << 16;  // 64K
+  std::unique_ptr<char[]> read_buffer(new char[kReadBufferSize]);
+
   // Iterate over the files, from oldest to most recent.
   size_t end_filenumber = current_event_file_number_ + 1;
   size_t begin_filenumber = current_event_file_number_ < total_num_event_files_
@@ -589,10 +580,25 @@ void FileNetLogObserver::BoundedFileWriter::MoveEventFilesToLogFile() {
     base::FilePath event_file_path =
         GetEventFilePath(FileNumberToIndex(filenumber));
 
-    AppendToFile(log_file_, event_file_path);
+    // Read |event_file_path|'s contents and append to |log_file_|. Copying the
+    // file is done in chunks of kReadBufferSize to avoid consuming too much
+    // memory.
+    base::ScopedFILE source_file(base::OpenFile(event_file_path, "rb"));
+    if (source_file) {
+      size_t num_bytes_read;
+      while ((num_bytes_read = fread(read_buffer.get(), 1, kReadBufferSize,
+                                     source_file.get())) > 0)
+        WriteToFile(log_file_,
+                    base::StringPiece(read_buffer.get(), num_bytes_read));
+    }
+
+    // Delete the file, as its contents were just appended to the log file. This
+    // is done after processing each file to avoid using too much disk space.
     base::DeleteFile(event_file_path, false);
   }
 
+  // Delete the directory hosting the event files, including any contents that
+  // may be left inside it (although should be empty by this point).
   base::DeleteFile(GetEventFileDirectory(), true);
 }
 
