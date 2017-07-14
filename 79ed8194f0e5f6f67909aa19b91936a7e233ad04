@@ -294,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "e556bf5d_c2585b71",
+        "filename": "chrome/browser/ui/cocoa/l10n_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T18:01:57Z",
+      "side": 1,
+      "message": "Lines 106 and 109 confuse me even more. There\u0027s a TODO saying \"Remove these wehnn all builds on on 10.12 SDK\" but then a warning that says \"deployment target\" instead of \"SDK version\".\n\nAnd if these functions are called from not-only-10.12+ code, then marking these functions as API_AVAIL(10.12) is wrong, isn\u0027t it?",
+      "parentUuid": "df3fe956_9ae41f38",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8999c46_5c93081c",
         "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_editor_unittest.mm",
         "patchSetId": 4
@@ -423,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "df2ff0e7_3630cf28",
+        "filename": "net/ssl/ssl_platform_key_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T18:01:57Z",
+      "side": 1,
+      "message": "Should we replace that with @available while at it? (only in this instance)",
+      "parentUuid": "665d04b3_ddd7fafb",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2bfe9cd_2a57ecf8",
         "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
         "patchSetId": 4
@@ -467,6 +503,53 @@
       "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f8af7ea_0131b0b0",
+        "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T18:01:57Z",
+      "side": 1,
+      "message": "Not done?",
+      "parentUuid": "49c1d7e9_6d324eac",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdd3de63_a29fb03a",
+        "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T18:01:57Z",
+      "side": 1,
+      "message": "(this shouldn\u0027t be needed when the comment further up is done)",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -693,6 +776,30 @@
       "side": 1,
       "message": "Writing macros to remove some copy-pastas? I\u0027ve elected to just keep the copy-pastes.",
       "parentUuid": "13107907_cfb00b28",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff56dcf6_78164f2e",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T18:01:57Z",
+      "side": 1,
+      "message": "Please do what I said if it works.",
+      "parentUuid": "735f23f1_0983e952",
       "range": {
         "startLine": 62,
         "startChar": 6,

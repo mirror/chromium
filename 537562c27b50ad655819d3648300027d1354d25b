@@ -46,6 +46,30 @@
       "revId": "537562c27b50ad655819d3648300027d1354d25b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf5756f_e322acfe",
+        "filename": "ui/views/cocoa/native_widget_mac_nswindow.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T18:01:57Z",
+      "side": 0,
+      "message": "We didn\u0027t have a choice. The compiler changed under us, and we have to cope. But if you give me a list of improvements you want to see, I\u0027ll pass them on, maybe the\u0027ll get implemented.\n\nMy comment above meant to say \"replace !views::BridgedNativeWidget::ShouldUseDragEventMonitor()\" with \"@available(10.11)\" – i.e. change line 121, and remove that function. In the test, instead of `if (using_drag_event_monitor)` use `if (@avail)` and switch if and else blocks.",
+      "parentUuid": "6b69b012_5697ff8b",
+      "range": {
+        "startLine": 132,
+        "startChar": 14,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "537562c27b50ad655819d3648300027d1354d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
