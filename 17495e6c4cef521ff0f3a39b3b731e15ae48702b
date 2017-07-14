@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc4683d7_fbe88f9d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:16:37Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n  // It\u0027s possible for there to be no web contents, e.g. on the new tab page.\n  return GetActiveWebContents() \u0026\u0026\n         ChromeToolbarModelDelegate::ShouldDisplayURL();",
+      "revId": "17495e6c4cef521ff0f3a39b3b731e15ae48702b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4a6c9f_3ef368c8",
+        "filename": "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T01:16:37Z",
+      "side": 1,
+      "message": "Nit: Put a blank line and a \"// ToolbarModelDelegate:\" comment above this.",
+      "revId": "17495e6c4cef521ff0f3a39b3b731e15ae48702b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
