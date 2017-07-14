@@ -40,7 +40,7 @@ import java.util.Set;
 public class PaymentManifestVerifier
         implements ManifestDownloadCallback, ManifestParseCallback,
                    PaymentManifestWebDataService.PaymentManifestWebDataServiceCallback {
-    private static final String TAG = "cr_PaymentManifest";
+    private static final String TAG = "PaymentManifest";
 
     /** Interface for the callback to invoke when finished verification. */
     public interface ManifestVerifyCallback {
@@ -126,7 +126,8 @@ public class PaymentManifestVerifier
      * Builds the manifest verifier.
      *
      * @param methodName             The name of the payment method name that apps offer to handle.
-     *                               Must be an absolute URI with HTTPS scheme.
+     *                               Must be an absolute URI with HTTPS scheme, but HTTP localhost
+     *                               is allowed in testing.
      * @param matchingApps           The identifying information for the native Android payment apps
      *                               that offer to handle this payment method.
      * @param webDataService         The web data service to cache manifest.
@@ -140,7 +141,9 @@ public class PaymentManifestVerifier
             PaymentManifestParser parser, PackageManagerDelegate packageManagerDelegate,
             ManifestVerifyCallback callback) {
         assert methodName.isAbsolute();
-        assert UrlConstants.HTTPS_SCHEME.equals(methodName.getScheme());
+        assert UrlConstants.HTTPS_SCHEME.equals(methodName.getScheme())
+                || ("127.0.0.1".equals(methodName.getHost())
+                           && UrlConstants.HTTP_SCHEME.equals(methodName.getScheme()));
         assert !matchingApps.isEmpty();
 
         mMethodName = methodName;
@@ -162,7 +165,7 @@ public class PaymentManifestVerifier
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             // Intentionally ignore.
-            Log.d(TAG, "Unable to generate SHA-256 hashes.");
+            Log.e(TAG, "Unable to generate SHA-256 hashes.");
         }
         mMessageDigest = md;
 
@@ -374,6 +377,8 @@ public class PaymentManifestVerifier
 
     @Nullable
     private String verifyAppWithWebAppManifest(WebAppManifestSection[] manifest) {
+        assert manifest.length > 0;
+
         List<Set<String>> sectionsFingerprints = new ArrayList<>();
         for (int i = 0; i < manifest.length; i++) {
             WebAppManifestSection section = manifest[i];
@@ -387,14 +392,41 @@ public class PaymentManifestVerifier
         for (int i = 0; i < manifest.length; i++) {
             WebAppManifestSection section = manifest[i];
             AppInfo appInfo = mMatchingApps.get(section.id);
-            if (appInfo != null && appInfo.version >= section.minVersion
-                    && appInfo.sha256CertFingerprints != null
-                    && appInfo.sha256CertFingerprints.equals(sectionsFingerprints.get(i))) {
-                return section.id;
+            if (appInfo == null) continue;
+
+            if (appInfo.version < section.minVersion) {
+                Log.e(TAG, "\"%s\" version is %d, but at least %d is required.", section.id,
+                        appInfo.version, section.minVersion);
+                continue;
             }
+
+            if (appInfo.sha256CertFingerprints == null) {
+                Log.e(TAG, "Unable to determine fingerprints of \"%s\".", section.id);
+                continue;
+            }
+
+            if (!appInfo.sha256CertFingerprints.equals(sectionsFingerprints.get(i))) {
+                Log.e(TAG,
+                        "\"%s\" fingerprints don't match the manifest. Expected %s, but found %s.",
+                        section.id, setToString(sectionsFingerprints.get(i)),
+                        setToString(appInfo.sha256CertFingerprints));
+                continue;
+            }
+
+            return section.id;
         }
 
         return null;
+    }
+
+    private static String setToString(Set<String> set) {
+        StringBuilder result = new StringBuilder("[");
+        for (String item : set) {
+            result.append(' ');
+            result.append(item);
+        }
+        result.append(" ]");
+        return result.toString();
     }
 
     @Override
