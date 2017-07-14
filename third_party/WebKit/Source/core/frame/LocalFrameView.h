@@ -223,8 +223,7 @@ class CORE_EXPORT LocalFrameView final
   float InputEventsScaleFactor() const;
 
   // Offset used to convert incoming input events while emulating device metics.
-  IntSize InputEventsOffsetForEmulation() const;
-  void SetInputEventsTransformForEmulation(const IntSize&, float);
+  void SetInputEventsScaleForEmulation(float);
 
   void DidChangeScrollOffset();
   void DidUpdateElasticOverscroll();
@@ -1101,7 +1100,6 @@ class CORE_EXPORT LocalFrameView final
   ViewportConstrainedObjectSet background_attachment_fixed_objects_;
   Member<FrameViewAutoSizeInfo> auto_size_info_;
 
-  IntSize input_events_offset_for_emulation_;
   float input_events_scale_factor_for_emulation_;
 
   IntSize layout_size_;
