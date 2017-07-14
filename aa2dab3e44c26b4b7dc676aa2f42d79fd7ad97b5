@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "845a6065_06804a72",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-14T07:01:22Z",
+      "side": 1,
+      "message": "This changes test meaning.\nIf you really unify start and base (and extent and end),\n I recommend you dchecking eq(start, base) at the end of VS::validate().",
+      "revId": "aa2dab3e44c26b4b7dc676aa2f42d79fd7ad97b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
