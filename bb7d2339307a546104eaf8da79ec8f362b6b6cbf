@@ -141,6 +141,30 @@
       "revId": "bb7d2339307a546104eaf8da79ec8f362b6b6cbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18b1684_ed04f8dd",
+        "filename": "services/shape_detection/barcode_detection_impl_mac_unittest.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T22:19:20Z",
+      "side": 1,
+      "message": "I didn\u0027t read the documentation. I simply assumed that it was a normal boolean condition because it was inside an if statement. The documentation is clear.",
+      "parentUuid": "546b6bf9_dddfa9cd",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "bb7d2339307a546104eaf8da79ec8f362b6b6cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
