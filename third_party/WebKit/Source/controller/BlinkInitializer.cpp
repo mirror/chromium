@@ -31,7 +31,9 @@
 #include "controller/BlinkInitializer.h"
 
 #include "bindings/core/v8/V8Initializer.h"
+#include "controller/WebDevToolsAgentImpl.h"
 #include "core/animation/AnimationClock.h"
+#include "core/exported/ControllerFactory.h"
 #include "modules/ModulesInitializer.h"
 #include "platform/bindings/Microtask.h"
 #include "platform/bindings/V8PerIsolateData.h"
@@ -41,7 +43,9 @@
 #include "platform/wtf/WTF.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
+#include "public/web/WebKit.h"
 #include "v8/include/v8.h"
+#include "web/WebFactoryImpl.h"
 
 namespace blink {
 
@@ -66,12 +70,36 @@ static ModulesInitializer& GetModulesInitializer() {
   return *initializer;
 }
 
+class ControllerFactoryImpl : public ControllerFactory {
+ public:
+  ControllerFactoryImpl() {}
+  ~ControllerFactoryImpl() {}
+
+  static void Initialize() {
+    ControllerFactory::SetInstance(*(new ControllerFactoryImpl()));
+  }
+
+  WebDevToolsAgentImpl* CreateWebDevToolsAgent(
+      WebLocalFrameBase* frame,
+      WebDevToolsAgentClient* client) const override {
+    return WebDevToolsAgentImpl::Create(frame, client);
+  }
+};
+
+void Initialize(Platform* platform) {
+  InitializeBlink(platform);
+
+  WebFactoryImpl::Initialize();
+}
+
 void InitializeBlink(Platform* platform) {
   Platform::Initialize(platform);
 
   V8Initializer::InitializeMainThread();
 
   GetModulesInitializer().Initialize();
+
+  ControllerFactoryImpl::Initialize();
 
   // currentThread is null if we are running on a thread without a message loop.
   if (WebThread* current_thread = platform->CurrentThread()) {

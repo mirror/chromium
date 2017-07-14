@@ -33,6 +33,7 @@
 
 #include <memory>
 
+#include "core/exported/WebDevToolsAgentCore.h"
 #include "core/inspector/InspectorEmulationAgent.h"
 #include "core/inspector/InspectorLayerTreeAgent.h"
 #include "core/inspector/InspectorPageAgent.h"
@@ -43,7 +44,6 @@
 #include "platform/wtf/Vector.h"
 #include "public/platform/WebSize.h"
 #include "public/platform/WebThread.h"
-#include "public/web/WebDevToolsAgent.h"
 
 namespace blink {
 
@@ -59,34 +59,32 @@ class WebLayerTreeView;
 class WebLocalFrameBase;
 class WebString;
 
-class WebDevToolsAgentImpl final
-    : public GarbageCollectedFinalized<WebDevToolsAgentImpl>,
-      public WebDevToolsAgent,
-      public InspectorEmulationAgent::Client,
-      public InspectorTracingAgent::Client,
-      public InspectorPageAgent::Client,
-      public InspectorSession::Client,
-      public InspectorLayerTreeAgent::Client,
-      private WebThread::TaskObserver {
+class WebDevToolsAgentImpl final : public WebDevToolsAgentCore,
+                                   public InspectorEmulationAgent::Client,
+                                   public InspectorTracingAgent::Client,
+                                   public InspectorPageAgent::Client,
+                                   public InspectorSession::Client,
+                                   public InspectorLayerTreeAgent::Client,
+                                   private WebThread::TaskObserver {
  public:
   static WebDevToolsAgentImpl* Create(WebLocalFrameBase*,
                                       WebDevToolsAgentClient*);
   ~WebDevToolsAgentImpl() override;
   DECLARE_VIRTUAL_TRACE();
 
-  void WillBeDestroyed();
-  WebDevToolsAgentClient* Client() { return client_; }
-  void FlushProtocolNotifications();
-  void PaintOverlay();
-  void LayoutOverlay();
-  bool HandleInputEvent(const WebInputEvent&);
+  void WillBeDestroyed() override;
+  WebDevToolsAgentClient* Client() override { return client_; }
+  void FlushProtocolNotifications() override;
+  void PaintOverlay() override;
+  void LayoutOverlay() override;
+  bool HandleInputEvent(const WebInputEvent&) override;
 
   // Instrumentation from web/ layer.
-  void DidCommitLoadForLocalFrame(LocalFrame*);
-  void DidStartProvisionalLoad(LocalFrame*);
-  bool ScreencastEnabled();
-  void LayerTreeViewChanged(WebLayerTreeView*);
-  void RootLayerCleared();
+  void DidCommitLoadForLocalFrame(LocalFrame*) override;
+  void DidStartProvisionalLoad(LocalFrame*) override;
+  bool ScreencastEnabled() override;
+  void LayerTreeViewChanged(WebLayerTreeView*) override;
+  void RootLayerCleared() override;
   bool CacheDisabled() override;
 
   // WebDevToolsAgent implementation.

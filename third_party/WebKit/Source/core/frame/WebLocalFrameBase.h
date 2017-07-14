@@ -21,7 +21,7 @@ class Page;
 class SharedWorkerRepositoryClientImpl;
 class TextCheckerClient;
 class TextFinder;
-class WebDevToolsAgentImpl;
+class WebDevToolsAgentCore;
 class WebDevToolsFrontendImpl;
 class WebFrameClient;
 class WebFrameWidgetBase;
@@ -56,7 +56,7 @@ class WebLocalFrameBase : public GarbageCollectedFinalized<WebLocalFrameBase>,
   virtual TextFinder& EnsureTextFinder() = 0;
   virtual WebFrameWidgetBase* FrameWidget() const = 0;
   virtual void SetFrameWidget(WebFrameWidgetBase*) = 0;
-  virtual WebDevToolsAgentImpl* DevToolsAgentImpl() const = 0;
+  virtual WebDevToolsAgentCore* DevToolsAgentCore() const = 0;
   virtual void SetDevToolsFrontend(WebDevToolsFrontendImpl*) = 0;
   virtual WebDevToolsFrontendImpl* DevToolsFrontend() = 0;
   virtual void WillBeDetached() = 0;

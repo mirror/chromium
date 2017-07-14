@@ -123,9 +123,11 @@
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/editing/spellcheck/TextCheckerClientImpl.h"
+#include "core/exported/ControllerFactory.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebAssociatedURLLoaderImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebDevToolsAgentCore.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebRemoteFrameImpl.h"
 #include "core/exported/WebViewBase.h"
@@ -162,6 +164,7 @@
 #include "core/loader/HistoryItem.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/loader/NavigationScheduler.h"
+#include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/FrameTree.h"
 #include "core/page/Page.h"
@@ -232,7 +235,6 @@
 #include "public/web/WebSerializedScriptValue.h"
 #include "public/web/WebTreeScopeType.h"
 #include "skia/ext/platform_canvas.h"
-#include "web/WebDevToolsAgentImpl.h"
 #include "web/WebFrameWidgetImpl.h"
 
 namespace blink {
@@ -1893,7 +1895,8 @@ WebAutofillClient* WebLocalFrameImpl::AutofillClient() {
 void WebLocalFrameImpl::SetDevToolsAgentClient(
     WebDevToolsAgentClient* dev_tools_client) {
   DCHECK(dev_tools_client);
-  dev_tools_agent_ = WebDevToolsAgentImpl::Create(this, dev_tools_client);
+  dev_tools_agent_ = ControllerFactory::GetInstance().CreateWebDevToolsAgent(
+      this, dev_tools_client);
 }
 
 WebDevToolsAgent* WebLocalFrameImpl::DevToolsAgent() {
