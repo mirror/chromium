@@ -16,6 +16,24 @@
       "revId": "43a2e8f0178b2ffd0e084c0395b93318100ae1d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cec1b7_cc262323",
+        "filename": "chrome/browser/chromeos/arc/downloads_watcher/arc_downloads_watcher_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-14T21:06:50Z",
+      "side": 1,
+      "message": "Maybe. On one hand having it is consistent with below, but I agree that it\u0027s verbose ¯\\_(ツ)_/¯ up to you.",
+      "parentUuid": "263e17b6_47ae5262",
+      "revId": "43a2e8f0178b2ffd0e084c0395b93318100ae1d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
