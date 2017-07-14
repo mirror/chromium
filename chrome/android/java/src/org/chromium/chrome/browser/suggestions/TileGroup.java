@@ -10,11 +10,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.util.SparseArray;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.ContextMenuItemId;
+import org.chromium.chrome.browser.ntp.cards.ImpressionTracker;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.widget.RoundedIconGenerator;
 import org.chromium.ui.mojom.WindowOpenDisposition;
@@ -243,18 +246,14 @@ public class TileGroup implements MostVisitedSites.Observer {
         boolean removalCompleted = mPendingRemovalUrl != null;
         boolean insertionCompleted = mPendingInsertionUrl == null;
 
-        Set<String> addedUrls = new HashSet<>();
         mPendingTiles = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
             assert urls[i] != null; // We assume everywhere that the url is not null.
 
-            // TODO(dgn): Checking this should not even be necessary as the backend is supposed to
-            // send non dupes URLs. Remove once https://crbug.com/703628 is fixed.
-            if (addedUrls.contains(urls[i])) continue;
-
             mPendingTiles.add(new Tile(titles[i], urls[i], whitelistIconPaths[i], i, sources[i]));
-            addedUrls.add(urls[i]);
 
+            // TODO(dgn): Only tiles in the personalised section can be modified, restrict this
+            // check to the relevant tiles.
             if (urls[i].equals(mPendingRemovalUrl)) removalCompleted = false;
             if (urls[i].equals(mPendingInsertionUrl)) insertionCompleted = true;
         }
@@ -411,8 +410,20 @@ public class TileGroup implements MostVisitedSites.Observer {
 
         boolean countChanged = isInitialLoad || mTiles.length != mPendingTiles.size();
         boolean dataChanged = countChanged;
+
+        SparseArray<SiteGroup> mSiteGroups = new SparseArray<>();
+        SparseArray<SiteGroup> newSites = new SparseArray<>();
         for (Tile newTile : mPendingTiles) {
-            if (newTile.importData(getTile(newTile.getUrl()))) dataChanged = true;
+            int tileGroup = 0;
+            Tile matchingTile = getTile(newTile.getUrl(), newTile.getCategory());
+            if (newTile.importData(matchingTile)) dataChanged = true;
+            SiteGroup group = newSites.get(tileGroup);
+            if (group == null) {
+                group = new SiteGroup();
+                newSites.append(tileGroup, group);
+            }
+            group.tiles.add(newTile);
+
         }
 
         mTiles = mPendingTiles.toArray(new Tile[mPendingTiles.size()]);
@@ -594,6 +605,90 @@ public class TileGroup implements MostVisitedSites.Observer {
         @Override
         public Iterable<Tile> getOfflinableSuggestions() {
             return Arrays.asList(mTiles);
+        }
+    }
+
+    // TODO(dgn): New problems
+    // - Can have multiple tiles for the same url, for example if they are on different pages
+    // -
+
+
+    private class SiteGroupInfo {
+        final int type = 0;
+        final String title = "";
+    }
+
+    private class SiteGroup {
+        SiteGroupInfo info;
+        List<Tile> tiles;
+    }
+
+    private final class SiteData {
+        final String title = "";
+        final String url = "";
+        final String whitelistsiteUrl = "";
+    }
+
+    private class TileData {
+
+
+
+        final String url = "";
+        final String title = "";
+        final String whitelistIconPath = "";
+
+
+
+        final SiteData site = null;
+
+
+        // Tile specific
+        final int source = 0;
+        final int category = 0;
+
+        final int index = 0; // TODO remove, but make sure we still detect ordering changes.
+
+        // Updated at runtime
+        final int visualType = 0;
+        Drawable icon;
+        Long offlinePageId;
+    }
+
+    SparseArray<SitePage> sitePages;
+    SparseArray<SitePage> pendingSitePages;
+
+
+    private void onSiteGroupsAvailable() {
+        // put things in pendingSitePages
+    }
+
+    // TODO(dgn): Change API to expose real objects rather than arrays?
+    private void onUrlsAvailable() {
+        // for each tile, if category exists in site pages, add it there.
+        // TODO(dgn) will we be notified for AAAAAALL the pages even with no changes or not?
+
+
+    }
+
+
+    // Maybe it will become the TileGroup, and TileGroup becomes a TileAdapter or smth?
+    private class SitePage implements ImpressionTracker.Listener {
+        SiteGroupInfo info;
+        Tile[] tiles;
+        int visibleTileCount;
+        final ImpressionTracker mTracker;
+
+        // renderTileViews should come here?
+
+        SitePage() {
+            mTracker = new ImpressionTracker(null, this);
+        }
+
+        public void onImpression() {
+            if (mTracker.wasTriggered()) return;
+            mTracker.reset(null);
+
+            // TODO: record metrics for the page.
         }
     }
 }

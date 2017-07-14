@@ -50,6 +50,8 @@ public class Tile implements OfflinableSuggestion {
      * difference between the two that would require a redraw.
      * Assumes that the current tile and the old tile (if provided) both describe the same site,
      * so the URLs have to be the same.
+     *
+     * @return Whether non-transient data is different and the tile should be redrawn.
      */
     public boolean importData(@Nullable Tile tile) {
         if (tile == null) return true;
