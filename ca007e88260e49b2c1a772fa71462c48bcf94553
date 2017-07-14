@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c095e996_9142c7c6",
+        "filename": "third_party/WebKit/Source/core/url/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T11:00:22Z",
+      "side": 1,
+      "message": "Could you add spec links for each of these bits?",
+      "revId": "ca007e88260e49b2c1a772fa71462c48bcf94553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd257554_db9894ea",
+        "filename": "third_party/WebKit/Source/core/url/URLUtilsReadOnly.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T11:00:22Z",
+      "side": 1,
+      "message": "Is there a bug to cover the work of aligning our implementation with the way the spec is written?",
+      "revId": "ca007e88260e49b2c1a772fa71462c48bcf94553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
