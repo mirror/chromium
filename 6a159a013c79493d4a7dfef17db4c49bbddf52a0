@@ -93,6 +93,30 @@
       "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6eb1d408_85023f13",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-14T11:46:08Z",
+      "side": 1,
+      "message": "So because CanReuse() is always called from ResourceFetcher new_mode can never be \"with forced preflight\"?\nThat makes sense, but existing_mode might be \"with forced preflight\", right? And if it is, shouldn\u0027t the resource sharing be avoided similarly?\n\nIn any case, it will be good to cement such assumptions with D_CHECKs and comments",
+      "parentUuid": "4d345d78_5447b843",
+      "range": {
+        "startLine": 880,
+        "startChar": 38,
+        "endLine": 880,
+        "endChar": 59
+      },
+      "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
