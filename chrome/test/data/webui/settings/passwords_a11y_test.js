@@ -35,7 +35,7 @@ suite('SettingsPasswordsAccessibility', function() {
 
       document.body.appendChild(settingsUi);
     });
-  })
+  });
 
   test('Accessible with 0 passwords', function() {
     assertEquals(passwordsSection.savedPasswords.length, 0);
@@ -45,7 +45,7 @@ suite('SettingsPasswordsAccessibility', function() {
   test('Accessible with 100 passwords', function() {
     var fakePasswords = [];
     for (var i = 0; i < 100; i++) {
-      fakePasswords.push(FakeDataMaker.passwordEntry())
+      fakePasswords.push(FakeDataMaker.passwordEntry());
     }
 
     // Set list of passwords.
@@ -57,4 +57,65 @@ suite('SettingsPasswordsAccessibility', function() {
 
     return SettingsAccessibilityTest.runAudit();
   });
+});
+
+/**
+ * Define a basic Mocha suite for testing a route given a specific path for
+ * accessibility.
+ *
+ * @param name Name of the suite.
+ * @param path Path associated with the route
+ */
+function defineSuite(name, path) {
+  suite(name, function() {
+    setup(function() {
+      return new Promise(function(resolve, fail) {
+        // Reset the blank to be a blank page.
+        PolymerTest.clearBody();
+
+        // Set the URL of the page to render to load the correct view upon
+        // injecting settings-ui without attaching listeners.
+        window.history.pushState('object or string', 'Test', path);
+
+        var settingsUi = document.createElement('settings-ui');
+        settingsUi.addEventListener('settings-section-expanded', resolve);
+        document.body.appendChild(settingsUi);
+      });
+    });
+
+    test('AccessibleWithNoChanges', function() {
+      return SettingsAccessibilityTest.runAudit();
+    });
+  });
+}
+
+
+// Map test suite names to the route tested by the suite.
+// TODO(quacht): Is there a better way? --> this can be programmatically
+// generated from the routes object.
+var settingsAccessibilityTests = {
+  'SettingsFontsAccessibility': '/fonts',
+  'SettingsSearchEnginesAccessibility': '/searchEngines',
+  'SettingsManageProfileAccessibility': '/manageProfile',
+  'SettingsHelpAccessibility': '/help',
+  'SettingsImportDataAccessibility': '/importData',
+  'SettingsSignOutAccessibility': '/signOut',
+  'SettingsClearBrowsingAccessibility': '/clearBrowserData',
+  'SettingsResetProfileAccessibility': '/resetProfile',
+  'SettingsAppearanceAccessibility': '/appearance',
+  'SettingsDefaultBrowserAccessibility': '/defaultBrowser',
+  'SettingsSearchAccessibility': '/search',
+  'SettingsStartupAccessibility': '/onStartup',
+  'SettingsPeopleAccessibility': '/people',
+  'SettingsLanguagesAccessibility': '/languages',
+  'SettingsEditDictionaryAccessibility': '/editDictionary',
+  'SettingsDownloadsAccessibility': '/downloads',
+  'SettingsPrintingAccessibility': '/printing',
+  'SettingsCloudPrintersAccessibility': '/cloudPrinters',
+  'SettingsSyncAccessibility': '/syncSetup',
+};
+
+Object.keys(settingsAccessibilityTests).forEach(function(test) {
+    var path = settingsAccessibilityTests[test];
+    defineSuite(test, path);
 });

@@ -39,7 +39,7 @@ SettingsAccessibilityTest.runAudit = function() {
         resolve();
       }
     });
-  })
+  });
 };
 
 SettingsAccessibilityTest.prototype = {
@@ -64,7 +64,39 @@ SettingsAccessibilityTest.prototype = {
   },
 };
 
-TEST_F('SettingsAccessibilityTest', 'All', function() {
-  mocha.run();
-});
+// TEST_F('SettingsAccessibilityTest', 'All', function() {
+//   mocha.run();
+// });
 
+// Run each mocha test in isolation (within a new TEST_F() call).
+[
+  //pass
+  'SettingsSearchEnginesAccessibility',
+  'SettingsFontsAccessibility',
+  'SettingsPasswordsAccessibility',
+  'SettingsCloudPrintersAccessibility',
+  // fail
+  'SettingsManageProfileAccessibility',
+  'SettingsSignOutAccessibility',
+  'SettingsEditDictionaryAccessibility',
+  // timeout
+  'SettingsSyncAccessibility',
+  'SettingsDownloadsAccessibility',
+  'SettingsPrintingAccessibility',
+  'SettingsPeopleAccessibility',
+  'SettingsStartupAccessibility',
+  'SettingsLanguagesAccessibility',
+  'SettingsDefaultBrowserAccessibility',
+  'SettingsSearchAccessibility',
+  'SettingsHelpAccessibility',
+  'SettingsImportDataAccessibility',
+  'SettingsClearBrowsingAccessibility',
+  'SettingsResetProfileAccessibility',
+  'SettingsAppearanceAccessibility',
+
+].forEach(function(testName) {
+  TEST_F('SettingsAccessibilityTest', testName, function() {
+    mocha.grep(new RegExp(testName)).run();
+    // mocha.grep(new RegExp(testName + '\\b')).run();
+  });
+});
