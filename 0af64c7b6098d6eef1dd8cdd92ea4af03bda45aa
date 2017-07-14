@@ -34,6 +34,24 @@
       "revId": "0af64c7b6098d6eef1dd8cdd92ea4af03bda45aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db5de4a_a7f4b146",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-14T14:50:03Z",
+      "side": 1,
+      "message": "Ok, moved fix-up closer to initialization, so all the code should use the \"correct\" contents.",
+      "parentUuid": "116f9093_d2167ec0",
+      "revId": "0af64c7b6098d6eef1dd8cdd92ea4af03bda45aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
