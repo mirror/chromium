@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "583ac466_28f56535",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T10:56:19Z",
+      "side": 1,
+      "message": "Will we ever be able to get rid of these for XHR? If so, great (but please add a bug link). If not, then we probably shouldn\u0027t call them \"deprecated\". The comment and the fact that they\u0027re locked away inside XHR should be enough to discourage other folks from re-extracting them. :)",
+      "revId": "214fad76efedaee64db5b8a30c9ed8142aa569b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
