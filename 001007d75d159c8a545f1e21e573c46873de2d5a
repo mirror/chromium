@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9585445f_c8bc9656",
+        "filename": "cc/scheduler/begin_frame_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-07-14T20:39:12Z",
+      "side": 1,
+      "message": "So this should prevent the frame times that are different only by a few micro-seconds, right?\nPerhaps the comment above should mention this.",
+      "range": {
+        "startLine": 201,
+        "startChar": 6,
+        "endLine": 203,
+        "endChar": 66
+      },
+      "revId": "001007d75d159c8a545f1e21e573c46873de2d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab91d57d_fb4b68fe",
+        "filename": "cc/scheduler/begin_frame_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-07-14T20:39:12Z",
+      "side": 1,
+      "message": "Is this comment is valid?",
+      "range": {
+        "startLine": 520,
+        "startChar": 5,
+        "endLine": 520,
+        "endChar": 41
+      },
+      "revId": "001007d75d159c8a545f1e21e573c46873de2d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
