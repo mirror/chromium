@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4b8e0de_e492fdcf",
+        "filename": "content/renderer/render_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-14T21:11:09Z",
+      "side": 1,
+      "message": "drive-by: please don\u0027t call this a \"service\" :)",
+      "revId": "f851391088fa318b33a276f5060da0b97fcb4974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
