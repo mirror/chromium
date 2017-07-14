@@ -33,6 +33,24 @@
       "revId": "75cb73ff489256250917dac445605571f8fd5f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7a6b26_82c81d41",
+        "filename": "media/video/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-07-14T06:17:28Z",
+      "side": 1,
+      "message": "It is not directly depend on it. It is needed for :\n#include \u003cGLES2/gl2.h\u003e",
+      "parentUuid": "7e0ee60d_f91675c7",
+      "revId": "75cb73ff489256250917dac445605571f8fd5f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
