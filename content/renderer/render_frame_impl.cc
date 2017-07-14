@@ -6660,6 +6660,9 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
   GetInterfaceRegistry()->AddInterface(base::Bind(
       &FrameInputHandlerImpl::CreateMojoService, weak_factory_.GetWeakPtr()));
 
+  GetInterfaceRegistry()->AddInterface(base::Bind(
+      &RenderViewImpl::CreateWidgetMojoService, render_view_->GetWeakPtr()));
+
   if (!frame_->Parent()) {
     // Only main frame have ImageDownloader service.
     GetInterfaceRegistry()->AddInterface(base::Bind(

@@ -383,6 +383,11 @@ class CONTENT_EXPORT RenderViewImpl
                         HandledEventCallback callback) override;
   void ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect);
 
+  static void CreateWidgetMojoService(
+      base::WeakPtr<RenderViewImpl> render_view,
+      const service_manager::BindSourceInfo& source_info,
+      mojom::WidgetRequest request);
+
  protected:
   // RenderWidget overrides:
   blink::WebWidget* GetWebWidget() const override;

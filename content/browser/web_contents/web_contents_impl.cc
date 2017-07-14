@@ -2392,8 +2392,8 @@ void WebContentsImpl::CreateNewWidget(int32_t render_process_id,
     return;
   }
 
-  RenderWidgetHostImpl* widget_host =
-      new RenderWidgetHostImpl(this, process, route_id, IsHidden());
+  RenderWidgetHostImpl* widget_host = new RenderWidgetHostImpl(
+      this, process, route_id, std::move(widget), IsHidden());
 
   RenderWidgetHostViewBase* widget_view =
       static_cast<RenderWidgetHostViewBase*>(

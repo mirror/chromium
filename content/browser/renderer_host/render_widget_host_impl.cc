@@ -263,6 +263,7 @@ std::vector<DropData::Metadata> DropDataToMetaData(const DropData& drop_data) {
 RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
                                            RenderProcessHost* process,
                                            int32_t routing_id,
+                                           mojom::WidgetPtr widget,
                                            bool hidden)
     : renderer_initialized_(false),
       destroyed_(false),
@@ -2693,5 +2694,10 @@ device::mojom::WakeLock* RenderWidgetHostImpl::GetWakeLock() {
   return wake_lock_.get();
 }
 #endif
+
+void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
+  // TODO(dtapuska): Bind the WidgetInputHandler when that code has
+  // landed. crbug.com/722928
+}
 
 }  // namespace content
