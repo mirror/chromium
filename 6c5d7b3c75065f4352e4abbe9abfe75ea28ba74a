@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39754d32_9a70a805",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-14T16:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "decaa5a0_33d50204",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5c3ed2d_08d0378e",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
         "patchSetId": 36
@@ -45,6 +69,30 @@
       "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f6bbda_32e0c3e9",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-14T16:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c3ed2d_08d0378e",
+      "range": {
+        "startLine": 11,
+        "startChar": 21,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6b0180cf_0a28fd28",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-14T16:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5419c9b_c46eb554",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a77f0d7f_b4f5c7b6",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
         "patchSetId": 36
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "74a352a4_c8ccf461",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-14T16:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a77f0d7f_b4f5c7b6",
+      "range": {
+        "startLine": 92,
+        "startChar": 17,
+        "endLine": 92,
+        "endChar": 47
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b3699f9_3e2dae7d",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
         "patchSetId": 36
@@ -114,6 +210,30 @@
       "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13fbb57c_d07c6573",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-14T16:44:11Z",
+      "side": 1,
+      "message": "Fixed, I have a separate CL with the \"reset\" method.",
+      "parentUuid": "7b3699f9_3e2dae7d",
+      "range": {
+        "startLine": 93,
+        "startChar": 44,
+        "endLine": 93,
+        "endChar": 54
+      },
+      "revId": "6c5d7b3c75065f4352e4abbe9abfe75ea28ba74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
