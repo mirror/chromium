@@ -60,6 +60,9 @@ class WebWorkerFetchContext {
   virtual void DidRunContentWithCertificateErrors(const WebURL& url) {}
   virtual void DidDisplayContentWithCertificateErrors(const WebURL& url) {}
 
+  virtual void DidRunInsecureContent(const WebSecurityOrigin&,
+                                     const WebURL& insecure_url) {}
+
   virtual void SetApplicationCacheHostID(int id) {}
   virtual int ApplicationCacheHostID() const {
     return WebApplicationCacheHost::kAppCacheNoHostId;
