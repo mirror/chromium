@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af2b0bc0_2aa5713e",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-14T02:12:12Z",
+      "side": 1,
+      "message": "Changing None::CanStartSelection has caused regression:\nhttps://codereview.chromium.org/2021793002/\n\nUnfortunately we don\u0027t have enough tests for it especially\n inheritance　case.\nAt least could you check it working with Shadow DOM? :\n(LayoutTests/editing/selection/mouse/select_user_select_in_shadow.html in\nhttps://codereview.chromium.org/2437473002/)",
+      "revId": "dbdfc56a6f74b9d6d780a743fc8f108bafb97fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
