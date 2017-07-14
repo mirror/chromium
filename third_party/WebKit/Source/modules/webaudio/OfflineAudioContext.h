@@ -127,6 +127,9 @@ class MODULES_EXPORT OfflineAudioContext final : public BaseAudioContext {
 
   // Total render sample length.
   size_t total_render_frames_;
+
+  unsigned number_of_channels_;
+  float sample_rate_;
 };
 
 }  // namespace blink
