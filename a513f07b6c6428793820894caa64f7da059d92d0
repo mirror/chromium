@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4bcfe8c_78a5bd4b",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-14T08:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2bb1bab_ce6dc7ac",
+      "revId": "a513f07b6c6428793820894caa64f7da059d92d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edfec437_a7be9491",
         "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
         "patchSetId": 12
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "67f089b4_d2eb0d8d",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-14T08:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edfec437_a7be9491",
+      "range": {
+        "startLine": 44,
+        "startChar": 35,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "a513f07b6c6428793820894caa64f7da059d92d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74bd93a6_eec5ac3c",
         "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
         "patchSetId": 12
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "de6c8821_7073fa07",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-14T08:41:44Z",
+      "side": 1,
+      "message": "No.\nNow I got that this is not necessary.",
+      "parentUuid": "74bd93a6_eec5ac3c",
+      "revId": "a513f07b6c6428793820894caa64f7da059d92d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8cc297_517174d2",
         "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
         "patchSetId": 12
@@ -73,6 +133,24 @@
       "revId": "a513f07b6c6428793820894caa64f7da059d92d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa8279f_3ad52d31",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-14T08:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e8cc297_517174d2",
+      "revId": "a513f07b6c6428793820894caa64f7da059d92d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
