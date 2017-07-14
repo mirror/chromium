@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35c87021_29253867",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2246,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-14T17:44:42Z",
+      "side": 1,
+      "message": "I can do that.  I added last_reported_paused_state_ to hand the case where both of the other flags indicate we should be paused so we don\u0027t send the pause message twice.  Sending the message twice in this case should have no ill effects, so I\u0027m OK with it.",
+      "parentUuid": "fe0c52cf_ac787c87",
+      "revId": "a29d95a1d0ea35934f2032a3a6af8385f9ff1552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc78f1ab_e78a74f8",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "359b67cd_5a60cc3c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2248,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-14T17:44:42Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "bc78f1ab_e78a74f8",
+      "revId": "a29d95a1d0ea35934f2032a3a6af8385f9ff1552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3d896e7_26231fd8",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-13T22:41:40Z",
       "side": 1,
       "message": "nit: can you make SendBeginFramePaused send (begin_frame_paused_ || !observing_root_window_) instead of passing the paused param into it? That would make it the one source of truth for what the paused state for the renderer is.",
+      "revId": "a29d95a1d0ea35934f2032a3a6af8385f9ff1552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8821d459_a2dce9b8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-14T17:44:42Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "a3d896e7_26231fd8",
       "revId": "a29d95a1d0ea35934f2032a3a6af8385f9ff1552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
