@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5323b244_ffb0a0b6",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-14T19:41:33Z",
+      "side": 1,
+      "message": "Why did you use Histogram::FactoryGet instead of LinearHistogram::FactoryGet.\n\nI was thinking of the functions in histogram_functions (https://codesearch.chromium.org/chromium/src/base/metrics/histogram_functions.h?l\u003d43). Of course it\u0027s not ideal to call those in a loop since it will have to find the histogram over and over.",
+      "range": {
+        "startLine": 224,
+        "startChar": 40,
+        "endLine": 224,
+        "endChar": 67
+      },
+      "revId": "6e3e02a14fd46516e9a23488ed43be2353b7b044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cab7778_072d008b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-14T19:41:33Z",
+      "side": 1,
+      "message": "This should be 1. The direct API is confusing.",
+      "range": {
+        "startLine": 229,
+        "startChar": 6,
+        "endLine": 229,
+        "endChar": 7
+      },
+      "revId": "6e3e02a14fd46516e9a23488ed43be2353b7b044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -140,6 +140,30 @@
       "revId": "f6bcd4c8d61c52cc87c86990f6deb51f0c801d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92dc3355_ab69d205",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29681,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-14T19:41:33Z",
+      "side": 1,
+      "message": "Ah, perfect, thank you for the clarification.",
+      "parentUuid": "e1100fa9_469a6fec",
+      "range": {
+        "startLine": 29679,
+        "startChar": 3,
+        "endLine": 29681,
+        "endChar": 44
+      },
+      "revId": "f6bcd4c8d61c52cc87c86990f6deb51f0c801d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
