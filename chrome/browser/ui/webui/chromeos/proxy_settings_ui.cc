@@ -5,6 +5,8 @@
 #include "chrome/browser/ui/webui/chromeos/proxy_settings_ui.h"
 
 #include <memory>
+#include <string>
+#include <utility>
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -14,6 +16,7 @@
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/options/chromeos/core_chromeos_options_handler.h"
+#include "chrome/browser/ui/webui/options/chromeos/internet_options_handler_strings.h"
 #include "chrome/browser/ui/webui/options/chromeos/proxy_handler.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/url_constants.h"
@@ -75,8 +78,12 @@ void ProxySettingsHTMLSource::StartDataRequest(
     const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
     const content::URLDataSource::GotDataCallback& callback) {
   const std::string& app_locale = g_browser_process->GetApplicationLocale();
+  // Proxy settings doesn't strictly need these strings, it includes code that
+  // does need them. Check on removing these strings when changing to Material
+  // Design proxy settings.
+  chromeos::internet_options_strings::RegisterLocalizedStrings(
+      localized_strings_.get());
   webui::SetLoadTimeDataDefaults(app_locale, localized_strings_.get());
-
   static const base::StringPiece html(
       ResourceBundle::GetSharedInstance().GetRawDataResource(
           IDR_PROXY_SETTINGS_HTML));
