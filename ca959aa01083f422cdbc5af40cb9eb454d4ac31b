@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2bea3bf2_fa5790e9",
+        "filename": "components/viz/host/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-14T15:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca375eaf_a1072c4e",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 29
+      },
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b165f7ac_9df9b41c",
         "filename": "components/viz/host/BUILD.gn",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "668be51e_9355a3fb",
+        "filename": "components/viz/host/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-14T15:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b165f7ac_9df9b41c",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a248035d_5edd6cb6",
         "filename": "components/viz/host/host_frame_sink_manager.cc",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b048bcf_d3dce8e9",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-14T15:43:33Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a248035d_5edd6cb6",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "763a85cc_73c3fd93",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-14T15:43:33Z",
+      "side": 1,
+      "message": "They were not. Although I made a \"local\" connection path that directly connects HostFrameSinkManager \u003c-\u003e FrameSinkManagerImpl using mojom* without Mojo that allows this. Done.",
+      "parentUuid": "83ddb802_fbe00bf4",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b59fca3_d006c4ed",
         "filename": "components/viz/host/host_frame_sink_manager.cc",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1bb9ba6_e53cd689",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-14T15:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b59fca3_d006c4ed",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "a1f00790_9b7273ed",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-14T15:43:33Z",
+      "side": 1,
+      "message": "It\u0027s not trivial, but done.",
+      "parentUuid": "1489145c_e98bd7d4",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2386e112_6e051c1d",
         "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
         "patchSetId": 4
@@ -130,6 +250,24 @@
       "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98586e65_329283b5",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-14T15:43:33Z",
+      "side": 1,
+      "message": "I\u0027ll do this in a follow up.",
+      "parentUuid": "2386e112_6e051c1d",
+      "revId": "ca959aa01083f422cdbc5af40cb9eb454d4ac31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

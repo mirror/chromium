@@ -16,6 +16,24 @@
       "revId": "860e34ab3f66ecc6eba359ce6d04c25e8d651284",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5e1cb3_df7ec24c",
+        "filename": "content/browser/compositor/surface_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-14T15:43:33Z",
+      "side": 0,
+      "message": "The issue is that there are a large number of tests that use GetFrameSinkManager() through RWHVCF which will now also use GetHostFrameSinkManager() (and eventually won\u0027t use the first after a couple more steps), and BrowserMainLoop is not instantiated in those tests.",
+      "parentUuid": "ec91918a_2e932f88",
+      "revId": "860e34ab3f66ecc6eba359ce6d04c25e8d651284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
