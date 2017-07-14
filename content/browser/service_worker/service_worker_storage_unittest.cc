@@ -27,6 +27,7 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/origin_trial_policy.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/test/test_content_browser_client.h"
 #include "ipc/ipc_message.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
@@ -1907,7 +1908,7 @@ class ServiceWorkerStorageOriginTrialsDiskTest
   };
   class TestContentClient : public ContentClient {
    public:
-    // ContentRendererClient methods
+    // ContentClient methods
     OriginTrialPolicy* GetOriginTrialPolicy() override {
       return &origin_trial_policy_;
     }
