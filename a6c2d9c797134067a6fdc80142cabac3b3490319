@@ -16,6 +16,24 @@
       "revId": "a6c2d9c797134067a6fdc80142cabac3b3490319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37718ff_afbf92ea",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_test_harness.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-14T17:34:30Z",
+      "side": 1,
+      "message": "Oops you\u0027re right, removed.",
+      "parentUuid": "a1b68a6a_3b5e802f",
+      "revId": "a6c2d9c797134067a6fdc80142cabac3b3490319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
