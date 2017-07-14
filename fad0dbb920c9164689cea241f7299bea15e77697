@@ -22,6 +22,30 @@
       "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82e2b03_3653b44a",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-14T14:22:42Z",
+      "side": 1,
+      "message": "Definitely worth thinking of --- I am not immediately certain how to implement it given the backend object is already destroyed by this point.\n\nHmm, and I am not sure that all FDs actually are guaranteed closed in the current code base --- mostly with the simple backend:\n1) Simple backend doesn\u0027t quite sequence everything on the task runner anyway, so the Close calls from AppCacheDiskCache::Disable() might not actually complete by the time you delete the directory. (What would happen on Unix would be just writing files to an unlink\u0027d dir, not sure about Windows; though, I think Windows + simple backend would only be ServiceWorker)\n2) If you call disk_cache::Entry::Close() on all entries, and destroy the backend object, the ops are still pending, and are expected to call the callback. How that\u0027s implemented differs\n--- Simple backend actually executes the ops. Block does a combination of blocking the I/O thread potentially waiting on disk (!!!) and aborting ops.\n\nNot sure if the code can even hit that, needs more knowledge than I can get by local \nexamination...",
+      "parentUuid": "3c4783a2_8f6222c0",
+      "range": {
+        "startLine": 1940,
+        "startChar": 18,
+        "endLine": 1940,
+        "endChar": 24
+      },
+      "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
