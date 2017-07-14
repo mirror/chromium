@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a44e850_591bf18b",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T16:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf1db5b7_8d8d042e",
+      "range": {
+        "startLine": 223,
+        "startChar": 5,
+        "endLine": 223,
+        "endChar": 6
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96877643_e6c7b841",
         "filename": "chrome/browser/notifications/notification_permission_context.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf0b912_46b0113b",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T16:10:03Z",
+      "side": 1,
+      "message": "Developers *cannot* request permission, so no, it\u0027d be denied by default.",
+      "parentUuid": "96877643_e6c7b841",
+      "range": {
+        "startLine": 224,
+        "startChar": 17,
+        "endLine": 224,
+        "endChar": 38
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "458125b6_c9fd41ac",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T16:10:03Z",
+      "side": 1,
+      "message": "No. DecidePermission needs to make a decision. It decides no.",
+      "parentUuid": "d8e40938_6ea2bef4",
+      "range": {
+        "startLine": 177,
+        "startChar": 20,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f7ea99a_e15f5d78",
         "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d7e9616c_39c6232b",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T16:10:03Z",
+      "side": 1,
+      "message": "That\u0027s the EXPECT on line 178, right?",
+      "parentUuid": "5f7ea99a_e15f5d78",
+      "range": {
+        "startLine": 197,
+        "startChar": 57,
+        "endLine": 197,
+        "endChar": 63
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20a18177_1feab086",
         "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46514a6d_422024f2",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-14T16:10:03Z",
+      "side": 1,
+      "message": "I disagree - `ask` implies they can ask for permission, which we shouldn\u0027t tell them when they really can\u0027t.\n\nHowever, John feels strongly, so let\u0027s move this to a follow-up CL so that we can get this in for the weekend builds :).",
+      "parentUuid": "20a18177_1feab086",
+      "range": {
+        "startLine": 381,
+        "startChar": 49,
+        "endLine": 381,
+        "endChar": 55
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
