@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9071a567_43d19f1f",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T01:41:10Z",
+      "side": 1,
+      "message": "We should put in a check and return early if a request is already in progress.",
+      "revId": "8594928ca5bf77a79ccc9efd285d9377cd3ae447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24dff2b3_4498fa37",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-14T01:41:10Z",
+      "side": 1,
+      "message": "Add a comment here about only supporting a single call to CreateGeolocation.",
+      "revId": "8594928ca5bf77a79ccc9efd285d9377cd3ae447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
