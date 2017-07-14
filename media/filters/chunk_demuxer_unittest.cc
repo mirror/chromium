@@ -197,6 +197,28 @@ class ChunkDemuxerTest : public ::testing::Test {
     ShutdownDemuxer();
   }
 
+  scoped_refptr<DecoderBuffer> BuildAudioTrackEntry(
+      bool use_alternate_audio_track_id,
+      bool use_alternate_sample_rate) {
+    scoped_refptr<DecoderBuffer> audio_track_entry =
+        ReadTestDataFile("webm_vorbis_track_entry");
+    // Verify that we have TrackNum (0xD7) EBML element at expected offset.
+    DCHECK_EQ(audio_track_entry->data()[9], kWebMIdTrackNumber);
+    // Verify that the size of TrackNum element is 1. The actual value is 0x81
+    // due to how element sizes are encoded in EBML.
+    DCHECK_EQ(audio_track_entry->data()[10], 0x81);
+    // Ensure the track id in TrackNum EBML element matches kAudioTrackNum.
+    DCHECK_EQ(audio_track_entry->data()[11], kAudioTrackNum);
+    if (use_alternate_audio_track_id)
+      audio_track_entry->writable_data()[11] = kAlternateAudioTrackNum;
+    if (use_alternate_sample_rate) {
+      // Replace the 44100.0 sample frequency with 22050.0
+      DCHECK_EQ(audio_track_entry->data()[54], 0xE5);
+      audio_track_entry->writable_data()[54] = 0xD5;
+    }
+    return audio_track_entry;
+  }
+
   void CreateInitSegment(int stream_flags,
                          bool is_audio_encrypted,
                          bool is_video_encrypted,
@@ -205,13 +227,23 @@ class ChunkDemuxerTest : public ::testing::Test {
     bool has_audio = (stream_flags & HAS_AUDIO) != 0;
     bool has_video = (stream_flags & HAS_VIDEO) != 0;
     bool has_text = (stream_flags & HAS_TEXT) != 0;
+    bool has_two_audio = (stream_flags & HAS_TWO_AUDIO) == HAS_TWO_AUDIO;
+    bool use_alternate_audio_track_id =
+        (stream_flags & USE_ALTERNATE_AUDIO_TRACK_ID) != 0;
     scoped_refptr<DecoderBuffer> ebml_header;
     scoped_refptr<DecoderBuffer> info;
     scoped_refptr<DecoderBuffer> audio_track_entry;
+    scoped_refptr<DecoderBuffer> second_audio_track_entry;
     scoped_refptr<DecoderBuffer> video_track_entry;
     scoped_refptr<DecoderBuffer> audio_content_encodings;
     scoped_refptr<DecoderBuffer> video_content_encodings;
     scoped_refptr<DecoderBuffer> text_track_entry;
+
+    // If using HAS_TWO_AUDIO, then HAS_AUDIO must be included. We'll use the
+    // alternate audio track ID for the second audio track, so HAS_TWO_AUDIO is
+    // incompatible with USE_ALTERNATE_AUDIO_TRACK_ID.
+    DCHECK(has_audio | !has_two_audio);
+    DCHECK(!(has_two_audio && use_alternate_audio_track_id));
 
     ebml_header = ReadTestDataFile("webm_ebml_element");
 
@@ -220,21 +252,22 @@ class ChunkDemuxerTest : public ::testing::Test {
     int tracks_element_size = 0;
 
     if (has_audio) {
-      audio_track_entry = ReadTestDataFile("webm_vorbis_track_entry");
+      audio_track_entry =
+          BuildAudioTrackEntry(use_alternate_audio_track_id, false);
       tracks_element_size += audio_track_entry->data_size();
-      // Verify that we have TrackNum (0xD7) EBML element at expected offset.
-      DCHECK_EQ(audio_track_entry->data()[9], kWebMIdTrackNumber);
-      // Verify that the size of TrackNum element is 1. The actual value is 0x81
-      // due to how element sizes are encoded in EBML.
-      DCHECK_EQ(audio_track_entry->data()[10], 0x81);
-      // Ensure the track id in TrackNum EBML element matches kAudioTrackNum.
-      DCHECK_EQ(audio_track_entry->data()[11], kAudioTrackNum);
-      if (stream_flags & USE_ALTERNATE_AUDIO_TRACK_ID)
-        audio_track_entry->writable_data()[11] = kAlternateAudioTrackNum;
       if (is_audio_encrypted) {
         audio_content_encodings = ReadTestDataFile("webm_content_encodings");
         tracks_element_size += audio_content_encodings->data_size();
       }
+    }
+
+    if (has_two_audio) {
+      second_audio_track_entry = BuildAudioTrackEntry(true, true);
+      tracks_element_size += second_audio_track_entry->data_size();
+      // TODO(xhwang): Include test support for HAS_TWO_AUDIO with
+      // is_audio_encrypted.
+      if (is_audio_encrypted)
+        NOTIMPLEMENTED();
     }
 
     if (has_video) {
@@ -328,6 +361,14 @@ class ChunkDemuxerTest : public ::testing::Test {
         buf += audio_content_encodings->data_size();
       }
       buf += audio_track_entry->data_size();
+
+      if (has_two_audio) {
+        memcpy(buf, second_audio_track_entry->data(),
+               second_audio_track_entry->data_size());
+        DCHECK(
+            !is_audio_encrypted);  // Test support not implemented. See above.
+        buf += second_audio_track_entry->data_size();
+      }
     }
 
     if (has_text) {
@@ -712,6 +753,7 @@ class ChunkDemuxerTest : public ::testing::Test {
     USE_ALTERNATE_AUDIO_TRACK_ID = 1 << 3,
     USE_ALTERNATE_VIDEO_TRACK_ID = 1 << 4,
     USE_ALTERNATE_TEXT_TRACK_ID = 1 << 5,
+    HAS_TWO_AUDIO = HAS_AUDIO | (1 << 6),
   };
 
   bool InitDemuxer(int stream_flags) {
@@ -724,6 +766,10 @@ class ChunkDemuxerTest : public ::testing::Test {
       EXPECT_MEDIA_LOG(CodecName("video", "vp8"));
     }
     if (stream_flags & HAS_AUDIO) {
+      EXPECT_MEDIA_LOG(FoundStream("audio"));
+      EXPECT_MEDIA_LOG(CodecName("audio", "vorbis"));
+    }
+    if ((stream_flags & HAS_TWO_AUDIO) == HAS_TWO_AUDIO) {
       EXPECT_MEDIA_LOG(FoundStream("audio"));
       EXPECT_MEDIA_LOG(CodecName("audio", "vorbis"));
     }
@@ -746,6 +792,8 @@ class ChunkDemuxerTest : public ::testing::Test {
 
       int need_key_count =
           (is_audio_encrypted ? 1 : 0) + (is_video_encrypted ? 1 : 0);
+      if (is_audio_encrypted && (stream_flags & HAS_TWO_AUDIO) == HAS_TWO_AUDIO)
+        need_key_count++;
       EXPECT_CALL(*this, OnEncryptedMediaInitData(
                              EmeInitDataType::WEBM,
                              std::vector<uint8_t>(
@@ -802,6 +850,7 @@ class ChunkDemuxerTest : public ::testing::Test {
     // Note: Unlike InitDemuxerWithEncryptionInfo, this method is currently
     // incompatible with InSequence tests. Refactoring of the duration
     // set expectation to not be added during CreateInitDoneCB() could fix this.
+    // Also, this method is currently incompatible with HAS_TWO_AUDIO usage.
     ExpectInitMediaLogs(audio_flags);
     EXPECT_CALL(*this, InitSegmentReceivedMock(_));
     EXPECT_TRUE(AppendInitSegmentWithSourceId(audio_id, audio_flags));
@@ -4062,6 +4111,17 @@ TEST_F(ChunkDemuxerTest, AppendWindow_AudioOverlapStartAndEnd) {
 
   // Verify the append is clipped to the append window.
   CheckExpectedRanges("{ [10,20) }");
+}
+
+TEST_F(ChunkDemuxerTest, AppendWindow_MultipleAudioTracksOneSourceBuffer) {
+  ASSERT_TRUE(InitDemuxer(HAS_TWO_AUDIO));
+
+  // Set the append window to [10,20).
+  append_window_start_for_next_append_ = base::TimeDelta::FromMilliseconds(10);
+  append_window_end_for_next_append_ = base::TimeDelta::FromMilliseconds(20);
+
+  // BIG TODO continue here once webm tracks parser actually recognizes both
+  // audio track entries.
 }
 
 TEST_F(ChunkDemuxerTest, AppendWindow_WebMFile_AudioOnly) {
