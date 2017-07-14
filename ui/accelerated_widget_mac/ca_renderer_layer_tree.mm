@@ -55,7 +55,12 @@ namespace {
 // This will enqueue |io_surface| to be drawn by |av_layer|. This will
 // retain |cv_pixel_buffer| until it is no longer being displayed.
 bool AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
+// AVSampleBufferDisplayLayer has incorrectly been marked as available from
+// macOS 10.10, whereas it's been available since at least macOS 10.9.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
     AVSampleBufferDisplayLayer* av_layer,
+#pragma clang diagnostic pop
     CVPixelBufferRef cv_pixel_buffer) {
   OSStatus os_status = noErr;
 
@@ -113,7 +118,12 @@ bool AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
 // |io_surface| in a CVPixelBuffer. This will increase the in-use count
 // of and retain |io_surface| until it is no longer being displayed.
 bool AVSampleBufferDisplayLayerEnqueueIOSurface(
+// AVSampleBufferDisplayLayer has incorrectly been marked as available from
+// macOS 10.10, whereas it's been available since at least macOS 10.9.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
     AVSampleBufferDisplayLayer* av_layer,
+#pragma clang diagnostic pop
     IOSurfaceRef io_surface) {
   CVReturn cv_return = kCVReturnSuccess;
 
@@ -245,7 +255,13 @@ void CARendererLayerTree::CommitScheduledCALayers(
 }
 
 bool CARendererLayerTree::CommitFullscreenLowPowerLayer(
-    AVSampleBufferDisplayLayer* fullscreen_low_power_layer) {
+// AVSampleBufferDisplayLayer has incorrectly been marked as available from
+// macOS 10.10, whereas it's been available since at least macOS 10.9.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+    AVSampleBufferDisplayLayer* fullscreen_low_power_layer)
+#pragma clang diagnostic pop
+{
   DCHECK(has_committed_);
   const ContentLayer* video_layer = nullptr;
   gfx::RectF video_layer_frame_dip;
@@ -672,7 +688,9 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
     update_ca_filter = old_layer->ca_filter != ca_filter;
   } else {
     if (use_av_layer) {
-      av_layer.reset([[AVSampleBufferDisplayLayer alloc] init]);
+      if (@available(macOS 10.10, *)) {
+        av_layer.reset([[AVSampleBufferDisplayLayer alloc] init]);
+      }
       ca_layer.reset([av_layer retain]);
       [av_layer setVideoGravity:AVLayerVideoGravityResize];
     } else {
@@ -691,11 +709,13 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
                          update_ca_filter;
   if (use_av_layer) {
     if (update_contents) {
-      if (cv_pixel_buffer) {
-        AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(av_layer,
-                                                       cv_pixel_buffer);
-      } else {
-        AVSampleBufferDisplayLayerEnqueueIOSurface(av_layer, io_surface);
+      if (@available(macOS 10.10, *)) {
+        if (cv_pixel_buffer) {
+          AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(av_layer,
+                                                         cv_pixel_buffer);
+        } else {
+          AVSampleBufferDisplayLayerEnqueueIOSurface(av_layer, io_surface);
+        }
       }
     }
   } else {

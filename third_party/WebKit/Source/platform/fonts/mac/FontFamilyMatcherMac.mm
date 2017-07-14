@@ -32,6 +32,7 @@
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 #import <math.h>
+#include "base/mac/availability.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/fonts/FontTraits.h"
@@ -131,7 +132,7 @@ static BOOL BetterChoice(NSFontTraitMask desired_traits,
 NSFont* MatchNSFontFamily(const AtomicString& desired_family_string,
                           NSFontTraitMask desired_traits,
                           FontWeight desired_weight,
-                          float size) {
+                          float size) API_AVAILABLE(macos(10.11)) {
   DCHECK_NE(desired_family_string, FontCache::LegacySystemFontFamily());
   if (desired_family_string == FontFamilyNames::system_ui) {
     // On OSX 10.9, the default system font depends on the SDK version. When
@@ -156,6 +157,9 @@ NSFont* MatchNSFontFamily(const AtomicString& desired_family_string,
       else
         font = [NSFont systemFontOfSize:size];
     } else {
+      // Normally we'd use an availability macro here, but
+      // systemFontOfSize:weight: is available but not visible on macOS 10.10,
+      // so it's been forward declared earlier in this file.
       // On OSX 10.10+, the default system font has more weights.
       font = [NSFont systemFontOfSize:size
                                weight:toYosemiteFontWeight(desired_weight)];

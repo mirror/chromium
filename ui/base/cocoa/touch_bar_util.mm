@@ -21,10 +21,12 @@ Class NSCustomTouchBarItem() {
 NSButton* GetBlueTouchBarButton(NSString* title, id target, SEL action) {
   NSButton* button =
       [NSButton buttonWithTitle:title target:target action:action];
-  [button setBezelColor:[NSColor colorWithSRGBRed:0.168
-                                            green:0.51
-                                             blue:0.843
-                                            alpha:1.0]];
+  if (@available(macOS 10.12.2, *)) {
+    [button setBezelColor:[NSColor colorWithSRGBRed:0.168
+                                              green:0.51
+                                               blue:0.843
+                                              alpha:1.0]];
+  }
   return button;
 }
 

@@ -377,7 +377,9 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
       MacStartupProfiler::WILL_FINISH_LAUNCHING);
 
   if ([NSWindow respondsToSelector:@selector(allowsAutomaticWindowTabbing)]) {
-    NSWindow.allowsAutomaticWindowTabbing = NO;
+    if (@available(macOS 10.12, *)) {
+      NSWindow.allowsAutomaticWindowTabbing = NO;
+    }
   }
 }
 
