@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "e93bbe4b_3eb0eb3a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-07-14T09:46:30Z",
+      "side": 1,
+      "message": "OK, I tried do this. I deviated a bit from the given suggestion; please let me know whether that\u0027s considered an improvement or whether I stick more closely to the original suggestions. I\u0027ll be happy either way.\n\n- I renamed the \u0027is important\u0027 bit \u0027used for control tasks\u0027, to explain a bit better what the purpose of that bit is, and since \u0027control task\u0027 is the term I\u0027m using everywhere else in that CL.\n\n- Since that bit is already \"encoded\" in the queue type, I changed RendererSchedulerImpl::NewLoadingTaskQueue to apply that bit depending on the queue type. So RendererSchedulerImpl no longer has separate member functions for the \u0027loading control queue\u0027.\n\n- TaskQueuePolicy::GetPriority returns HIGH_PRIORITY for \u0027used for control task\u0027 queues. I\u0027m not sure whether that\u0027s what you meant, but I guess at least the decision is now in the right place?",
+      "parentUuid": "6c7e9e1e_68214333",
+      "range": {
+        "startLine": 424,
+        "startChar": 2,
+        "endLine": 424,
+        "endChar": 28
+      },
+      "revId": "02d2c25d8e739f776241ae56e75684f7545e23cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21d9ca82_ab4c79d3",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
         "patchSetId": 13
