@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0a2e8d9_a8f0f8d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1231085
+      },
+      "writtenOn": "2017-07-14T09:12:56Z",
+      "side": 1,
+      "message": "Thank you, I have completely missed that part with proper formatting.\nDone.",
+      "parentUuid": "f0dd4b4d_97a798bc",
+      "revId": "7a7caa141518588dd556932c803dc1a7597ca59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3baa806d_cb81cbfd",
         "filename": "ui/gfx/platform_font_mac.mm",
         "patchSetId": 1
