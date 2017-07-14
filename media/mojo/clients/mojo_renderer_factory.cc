@@ -9,13 +9,13 @@
 #include "media/mojo/clients/mojo_renderer.h"
 #include "media/renderers/video_overlay_factory.h"
 #include "services/service_manager/public/cpp/connect.h"
-#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace media {
 
 MojoRendererFactory::MojoRendererFactory(
     const GetGpuFactoriesCB& get_gpu_factories_cb,
-    service_manager::mojom::InterfaceProvider* interface_provider)
+    service_manager::InterfaceProvider* interface_provider)
     : get_gpu_factories_cb_(get_gpu_factories_cb),
       interface_provider_(interface_provider) {
   DCHECK(interface_provider_);
@@ -39,8 +39,7 @@ std::unique_ptr<Renderer> MojoRendererFactory::CreateRenderer(
   }
 
   mojom::RendererPtr renderer_ptr;
-  service_manager::GetInterface<mojom::Renderer>(interface_provider_,
-                                                 &renderer_ptr);
+  interface_provider_->GetInterface(&renderer_ptr);
 
   return std::unique_ptr<Renderer>(
       new MojoRenderer(media_task_runner, std::move(overlay_factory),
