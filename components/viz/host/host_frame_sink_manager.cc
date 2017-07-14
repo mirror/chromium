@@ -18,7 +18,7 @@ HostFrameSinkManager::~HostFrameSinkManager() = default;
 
 void HostFrameSinkManager::BindAndSetManager(
     cc::mojom::FrameSinkManagerClientRequest request,
-    scoped_refptr<base::SequencedTaskRunner> task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     cc::mojom::FrameSinkManagerPtr ptr) {
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request), std::move(task_runner));

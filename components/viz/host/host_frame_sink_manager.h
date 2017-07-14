@@ -18,7 +18,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace base {
-class SequencedTaskRunner;
+class SingleThreadTaskRunner;
 }
 
 namespace cc {
@@ -39,9 +39,10 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   // Binds |this| as a FrameSinkManagerClient for |request| on |task_runner|. On
   // Mac |task_runner| will be the resize helper task runner. May only be called
   // once.
-  void BindAndSetManager(cc::mojom::FrameSinkManagerClientRequest request,
-                         scoped_refptr<base::SequencedTaskRunner> task_runner,
-                         cc::mojom::FrameSinkManagerPtr ptr);
+  void BindAndSetManager(
+      cc::mojom::FrameSinkManagerClientRequest request,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      cc::mojom::FrameSinkManagerPtr ptr);
 
   void AddObserver(FrameSinkObserver* observer);
   void RemoveObserver(FrameSinkObserver* observer);
