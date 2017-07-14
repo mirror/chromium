@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6941fb2e_01b27463",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-14T05:52:17Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 113
+      },
+      "revId": "b058e6fe1d5ddaa97c9051213eb51656ed0fcc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31318362_a2b725bc",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-14T05:52:17Z",
+      "side": 1,
+      "message": "This is actually the same variable as the pageTitle in the next block. Is this intentional? Will this cause problems?",
+      "range": {
+        "startLine": 456,
+        "startChar": 40,
+        "endLine": 456,
+        "endChar": 49
+      },
+      "revId": "b058e6fe1d5ddaa97c9051213eb51656ed0fcc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a94fe0e_17086519",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-14T05:52:17Z",
+      "side": 1,
+      "message": "nit: parens",
+      "range": {
+        "startLine": 86,
+        "startChar": 61,
+        "endLine": 86,
+        "endChar": 68
+      },
+      "revId": "b058e6fe1d5ddaa97c9051213eb51656ed0fcc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea57e81_4b95d463",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-14T05:52:17Z",
+      "side": 1,
+      "message": "Can we move this out and just make it this.pageTitle \u003d exceptionList[0].displayName?\n\nFeel free to add an assert(exceptionList.length \u003e 0).",
+      "revId": "b058e6fe1d5ddaa97c9051213eb51656ed0fcc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad33b17b_1b0e16f3",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-14T05:52:17Z",
+      "side": 1,
+      "message": "These should both be constants somewhere.",
+      "range": {
+        "startLine": 500,
+        "startChar": 73,
+        "endLine": 501,
+        "endChar": 26
+      },
+      "revId": "b058e6fe1d5ddaa97c9051213eb51656ed0fcc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
