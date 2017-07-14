@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60e4af2f_41f7df6d",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T19:25:42Z",
+      "side": 1,
+      "message": "Can you explain the problem you ran into that requires this?",
+      "revId": "472c78b543d2be5e87074b6aa078b131c0097e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
