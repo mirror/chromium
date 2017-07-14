@@ -378,6 +378,7 @@ void RenderViewHostImpl::SyncRendererPrefs() {
 }
 
 WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
+  LOG(ERROR) << "enderViewHostImpl::ComputeWebkitPrefs()";
   TRACE_EVENT0("browser", "RenderViewHostImpl::GetWebkitPrefs");
   WebPreferences prefs;
 

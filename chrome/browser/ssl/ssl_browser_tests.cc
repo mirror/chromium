@@ -31,8 +31,10 @@
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
+#include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/interstitials/security_interstitial_page_test_utils.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ssl/bad_clock_blocking_page.h"
@@ -54,11 +56,13 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/insecure_content_renderer.mojom.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/test_launcher_utils.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/content_settings/core/common/content_settings_types.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "components/network_time/network_time_test_utils.h"
 #include "components/network_time/network_time_tracker.h"
@@ -96,6 +100,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/page_state.h"
+#include "content/public/common/web_preferences.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
 #include "content/public/test/test_navigation_observer.h"
@@ -123,6 +128,7 @@
 #include "net/url_request/url_request_filter.h"
 #include "net/url_request/url_request_job.h"
 #include "net/url_request/url_request_test_util.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
@@ -538,11 +544,14 @@ class SSLUITest : public InProcessBrowserTest {
   }
 
   static void GetPageWithUnsafeImportingWorkerPath(
-      const net::EmbeddedTestServer& https_server,
+      const net::EmbeddedTestServer& unsafe_server,
+      const std::string& hostname,
       std::string* page_with_unsafe_importing_worker_path) {
     // Get the "imported.js" URL from the expired https server and
     // substitute it into the unsafe_importing_worker.js file.
-    GURL imported_js_url = https_server.GetURL("/ssl/imported.js");
+    GURL imported_js_url =
+        hostname.size() ? unsafe_server.GetURL(hostname, "/ssl/imported.js")
+                        : unsafe_server.GetURL("/ssl/imported.js");
     base::StringPairs replacement_text_for_unsafe_worker;
     replacement_text_for_unsafe_worker.push_back(
         make_pair("REPLACE_WITH_IMPORTED_JS_URL", imported_js_url.spec()));
@@ -555,11 +564,15 @@ class SSLUITest : public InProcessBrowserTest {
   }
 
   static void GetPageWithUnsafeFetchingWorkerPath(
-      const net::EmbeddedTestServer& https_server,
+      const net::EmbeddedTestServer& unsafe_server,
+      const std::string& hostname,
       std::string* page_with_unsafe_fetching_worker_path) {
     // Get the "imported.js" URL from the expired https server and
     // substitute it into the unsafe_fetching_worker.js file.
-    GURL test_file_url = https_server.GetURL("/ssl/imported.js");
+    GURL test_file_url =
+        hostname.size() ? unsafe_server.GetURL(hostname, "/ssl/imported.js")
+                        : unsafe_server.GetURL("/ssl/imported.js");
+    LOG(ERROR) << "test_file_url " << test_file_url;
     base::StringPairs replacement_text_for_unsafe_worker;
     replacement_text_for_unsafe_worker.push_back(
         make_pair("REPLACE_WITH_TEST_FILE_URL", test_file_url.spec()));
@@ -2660,6 +2673,34 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestUnauthenticatedFrameNavigation) {
   EXPECT_FALSE(is_content_evil);
 }
 
+class ChromeContentBrowserClientForMixedContentTest
+    : public ChromeContentBrowserClient {
+ public:
+  ChromeContentBrowserClientForMixedContentTest() {}
+  void OverrideWebkitPrefs(content::RenderViewHost* rvh,
+                           content::WebPreferences* web_prefs) override {
+    web_prefs->allow_running_insecure_content = allow_running_insecure_content_;
+    web_prefs->strict_mixed_content_checking = strict_mixed_content_checking_;
+    web_prefs->strictly_block_blockable_mixed_content =
+        strictly_block_blockable_mixed_content_;
+  }
+  void SetMixedContentSettings(bool allow_running_insecure_content,
+                               bool strict_mixed_content_checking,
+                               bool strictly_block_blockable_mixed_content) {
+    allow_running_insecure_content_ = allow_running_insecure_content;
+    strict_mixed_content_checking_ = strict_mixed_content_checking;
+    strictly_block_blockable_mixed_content_ =
+        strictly_block_blockable_mixed_content;
+  }
+
+ private:
+  bool allow_running_insecure_content_ = false;
+  bool strict_mixed_content_checking_ = false;
+  bool strictly_block_blockable_mixed_content_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(ChromeContentBrowserClientForMixedContentTest);
+};
+
 enum class OffMainThreadFetchMode { kEnabled, kDisabled };
 enum class SSLUIWorkerFetchTestType { kUseFetch, kUseImportScripts };
 
@@ -2670,7 +2711,6 @@ class SSLUIWorkerFetchTest
  public:
   ~SSLUIWorkerFetchTest() override {}
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    SSLUITest::SetUpCommandLine(command_line);
     if (GetParam().first == OffMainThreadFetchMode::kEnabled) {
       command_line->AppendSwitchASCII(switches::kEnableFeatures,
                                       features::kOffMainThreadFetch.name);
@@ -2682,16 +2722,93 @@ class SSLUIWorkerFetchTest
 
  protected:
   void GetTestWorkerPagePath(const net::EmbeddedTestServer& https_server,
+                             const std::string& hostname,
                              std::string* test_worker_page_path) {
     switch (GetParam().second) {
       case SSLUIWorkerFetchTestType::kUseFetch:
-        GetPageWithUnsafeFetchingWorkerPath(https_server,
+        GetPageWithUnsafeFetchingWorkerPath(https_server, hostname,
                                             test_worker_page_path);
         break;
       case SSLUIWorkerFetchTestType::kUseImportScripts:
-        GetPageWithUnsafeImportingWorkerPath(https_server,
+        GetPageWithUnsafeImportingWorkerPath(https_server, hostname,
                                              test_worker_page_path);
         break;
+    }
+  }
+
+  void SetAllowRunningInsecureContent() {
+    content::RenderFrameHost* render_frame_host =
+        browser()->tab_strip_model()->GetActiveWebContents()->GetMainFrame();
+    chrome::mojom::InsecureContentRendererPtr renderer;
+    render_frame_host->GetRemoteInterfaces()->GetInterface(&renderer);
+    renderer->SetAllowRunningInsecureContent();
+  }
+  void ClearErrorStateAndNavigateToURL(const GURL& test_url) {
+    WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+    {
+      content::TestNavigationObserver observer(tab, 1);
+      ui_test_utils::NavigateToURL(
+          browser(), embedded_test_server()->GetURL("/empty.html"));
+      observer.Wait();
+    }
+    EXPECT_FALSE(
+        TabSpecificContentSettings::FromWebContents(tab)->IsContentBlocked(
+            CONTENT_SETTINGS_TYPE_MIXEDSCRIPT));
+    CheckSecurityState(tab, CertError::NONE, security_state::NONE,
+                       AuthState::NONE);
+    {
+      content::TestNavigationObserver observer(tab, 1);
+      ui_test_utils::NavigateToURL(browser(), test_url);
+      observer.Wait();
+    }
+  }
+
+  void RunMixedContentSettingsTest(
+      ChromeContentBrowserClientForMixedContentTest* browser_client,
+      bool allow_running_insecure_content,
+      bool strict_mixed_content_checking,
+      bool strictly_block_blockable_mixed_content,
+      const GURL& test_url,
+      bool expected_load,
+      bool expected_show_blocked,
+      bool expected_show_danarous,
+      bool expected_load_after_allow,
+      bool expected_show_blocked_after_allow,
+      bool expected_show_danarous_after_allow) {
+    WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+
+    browser_client->SetMixedContentSettings(
+        allow_running_insecure_content, strict_mixed_content_checking,
+        strictly_block_blockable_mixed_content);
+    ClearErrorStateAndNavigateToURL(test_url);
+    CheckWorkerLoadResult(tab, expected_load);
+    EXPECT_EQ(
+        expected_show_blocked,
+        TabSpecificContentSettings::FromWebContents(tab)->IsContentBlocked(
+            CONTENT_SETTINGS_TYPE_MIXEDSCRIPT));
+    if (expected_show_danarous) {
+      CheckSecurityState(tab, CertError::NONE, security_state::DANGEROUS,
+                         AuthState::RAN_INSECURE_CONTENT);
+    } else {
+      CheckSecurityState(tab, CertError::NONE, security_state::SECURE,
+                         AuthState::NONE);
+    }
+
+    content::TestNavigationObserver observer(tab, 1);
+    SetAllowRunningInsecureContent();
+    observer.Wait();
+
+    CheckWorkerLoadResult(tab, expected_load_after_allow);
+    EXPECT_EQ(
+        expected_show_blocked_after_allow,
+        TabSpecificContentSettings::FromWebContents(tab)->IsContentBlocked(
+            CONTENT_SETTINGS_TYPE_MIXEDSCRIPT));
+    if (expected_show_danarous_after_allow) {
+      CheckSecurityState(tab, CertError::NONE, security_state::DANGEROUS,
+                         AuthState::RAN_INSECURE_CONTENT);
+    } else {
+      CheckSecurityState(tab, CertError::NONE, security_state::SECURE,
+                         AuthState::NONE);
     }
   }
 };
@@ -2704,7 +2821,7 @@ IN_PROC_BROWSER_TEST_P(SSLUIWorkerFetchTest,
   // This page will spawn a Worker which will try to load content from
   // BadCertServer.
   std::string test_worker_page_path;
-  GetTestWorkerPagePath(https_server_expired_, &test_worker_page_path);
+  GetTestWorkerPagePath(https_server_expired_, "", &test_worker_page_path);
   ui_test_utils::NavigateToURL(browser(),
                                https_server_.GetURL(test_worker_page_path));
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
@@ -2751,7 +2868,7 @@ IN_PROC_BROWSER_TEST_P(SSLUIWorkerFetchTest,
   // Expect content to load but be marked as auth broken due to running insecure
   // content.
   std::string test_worker_page_path;
-  GetTestWorkerPagePath(https_server_mismatched_, &test_worker_page_path);
+  GetTestWorkerPagePath(https_server_mismatched_, "", &test_worker_page_path);
 
   ui_test_utils::NavigateToURL(browser(),
                                https_server_.GetURL(test_worker_page_path));
@@ -2763,6 +2880,93 @@ IN_PROC_BROWSER_TEST_P(SSLUIWorkerFetchTest,
             security_info.mixed_content_status);
   EXPECT_EQ(security_state::CONTENT_STATUS_RAN,
             security_info.content_with_cert_errors_status);
+}
+
+IN_PROC_BROWSER_TEST_P(SSLUIWorkerFetchTest, MixedContentSettings) {
+  ChromeContentBrowserClientForMixedContentTest browser_client;
+  content::ContentBrowserClient* old_browser_client =
+      content::SetBrowserClientForTesting(&browser_client);
+  ASSERT_TRUE(https_server_.Start());
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  std::string test_worker_page_path;
+  GetTestWorkerPagePath(*embedded_test_server(), "example.com",
+                        &test_worker_page_path);
+  const GURL test_url = https_server_.GetURL(test_worker_page_path);
+
+  RunMixedContentSettingsTest(
+      &browser_client, false /* allow_running_insecure_content */,
+      false /* strict_mixed_content_checking */,
+      false /* strictly_block_blockable_mixed_content */, test_url,
+      false /* expected_load */, true /* expected_show_blocked */,
+      false /* expected_show_danarous */, true /* expected_load_after_allow */,
+      false /* expected_show_blocked_after_allow */,
+      true /* expected_show_danarous_after_allow */);
+
+  RunMixedContentSettingsTest(
+      &browser_client, false /* allow_running_insecure_content */,
+      false /* strict_mixed_content_checking */,
+      true /* strictly_block_blockable_mixed_content */, test_url,
+      false /* expected_load */, false /* expected_show_blocked */,
+      false /* expected_show_danarous */, false /* expected_load_after_allow */,
+      false /* expected_show_blocked_after_allow */,
+      false /* expected_show_danarous_after_allow */);
+
+  RunMixedContentSettingsTest(
+      &browser_client, false /* allow_running_insecure_content */,
+      true /* strict_mixed_content_checking */,
+      false /* strictly_block_blockable_mixed_content */, test_url,
+      false /* expected_load */, false /* expected_show_blocked */,
+      false /* expected_show_danarous */, false /* expected_load_after_allow */,
+      false /* expected_show_blocked_after_allow */,
+      false /* expected_show_danarous_after_allow */);
+
+  RunMixedContentSettingsTest(
+      &browser_client, false /* allow_running_insecure_content */,
+      true /* strict_mixed_content_checking */,
+      true /* strictly_block_blockable_mixed_content */, test_url,
+      false /* expected_load */, false /* expected_show_blocked */,
+      false /* expected_show_danarous */, false /* expected_load_after_allow */,
+      false /* expected_show_blocked_after_allow */,
+      false /* expected_show_danarous_after_allow */);
+
+  RunMixedContentSettingsTest(
+      &browser_client, true /* allow_running_insecure_content */,
+      false /* strict_mixed_content_checking */,
+      false /* strictly_block_blockable_mixed_content */, test_url,
+      true /* expected_load */, false /* expected_show_blocked */,
+      true /* expected_show_danarous */, true /* expected_load_after_allow */,
+      false /* expected_show_blocked_after_allow */,
+      true /* expected_show_danarous_after_allow */);
+
+  RunMixedContentSettingsTest(
+      &browser_client, true /* allow_running_insecure_content */,
+      false /* strict_mixed_content_checking */,
+      true /* strictly_block_blockable_mixed_content */, test_url,
+      true /* expected_load */, false /* expected_show_blocked */,
+      true /* expected_show_danarous */, true /* expected_load_after_allow */,
+      false /* expected_show_blocked_after_allow */,
+      true /* expected_show_danarous_after_allow */);
+
+  RunMixedContentSettingsTest(
+      &browser_client, true /* allow_running_insecure_content */,
+      true /* strict_mixed_content_checking */,
+      false /* strictly_block_blockable_mixed_content */, test_url,
+      false /* expected_load */, false /* expected_show_blocked */,
+      false /* expected_show_danarous */, false /* expected_load_after_allow */,
+      false /* expected_show_blocked_after_allow */,
+      false /* expected_show_danarous_after_allow */);
+
+  RunMixedContentSettingsTest(
+      &browser_client, true /* allow_running_insecure_content */,
+      true /* strict_mixed_content_checking */,
+      true /* strictly_block_blockable_mixed_content */, test_url,
+      false /* expected_load */, false /* expected_show_blocked */,
+      false /* expected_show_danarous */, false /* expected_load_after_allow */,
+      false /* expected_show_blocked_after_allow */,
+      false /* expected_show_danarous_after_allow */);
+
+  content::SetBrowserClientForTesting(old_browser_client);
 }
 
 INSTANTIATE_TEST_CASE_P(
