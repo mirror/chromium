@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "60f606c5_95a5cfb4",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-14T17:31:26Z",
+      "side": 1,
+      "message": "Nit: Instead of passing InspectorAgent::SessionInitArgs, I\u0027d prefer simply passing the three parameters.",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591154de_c83276d8",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewBase.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-14T17:31:26Z",
+      "side": 1,
+      "message": "Why do you need to move line 34 - 49 to WebViewBase.cpp?",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a2b574_2d372fc9",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorBaseAgent.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-14T17:31:26Z",
+      "side": 1,
+      "message": "WTF:: is not needed.",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5191ea_b942eda8",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorBaseAgent.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-14T17:31:26Z",
+      "side": 1,
+      "message": "cb \u003d\u003e callback",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6468845_ccb656cd",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 13

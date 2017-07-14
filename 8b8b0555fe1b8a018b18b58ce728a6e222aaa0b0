@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62f75668_0a3e326a",
+        "filename": "third_party/WebKit/Source/web/WebViewImpl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-14T17:31:26Z",
+      "side": 0,
+      "message": "What is this change for?\n\nWould you help me understand when we need to add NON_EXPORTED_BASE?",
+      "revId": "8b8b0555fe1b8a018b18b58ce728a6e222aaa0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
