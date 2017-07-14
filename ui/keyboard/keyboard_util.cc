@@ -352,8 +352,7 @@ bool SendKeyEvent(const std::string type,
 }
 
 void MarkKeyboardLoadStarted() {
-  if (g_keyboard_load_time_start.Get().is_null())
-    g_keyboard_load_time_start.Get() = base::Time::Now();
+  g_keyboard_load_time_start.Get() = base::Time::Now();
 }
 
 void MarkKeyboardLoadFinished() {
