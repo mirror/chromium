@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "532b52cb_f9728a18",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8adc6da_a55c5d32",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "719b56d1_154605e7",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "6f3a4c47_3c0db361",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "719b56d1_154605e7",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ecebbb_fed344af",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
@@ -79,6 +127,24 @@
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b679a1_e2f0c847",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ecebbb_fed344af",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +195,54 @@
     },
     {
       "key": {
+        "uuid": "d65ae7cc_93e245ff",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e596dad_f538d002",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "552d0154_67c7c7a2",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "When using OpenFile(..), it errors out with ThreadRestriction::AssertIOAllowed() in the browser test.",
+      "parentUuid": "8025b30e_20fa56e8",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35cbbbb8_dde8575b",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
@@ -176,6 +290,54 @@
     },
     {
       "key": {
+        "uuid": "5384fe8a_fa3acf15",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Ideally, I want UrlLog to stay alive forever to be more future-proof. Plus, it\u0027s for debugging anyway. If the statement doesn\u0027t matter, let\u0027s not add it.",
+      "parentUuid": "9fb245a1_74049939",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7cb3ed_43f7d951",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "We had a discussion around this before (https://chromium-review.googlesource.com/c/543564/12/components%252Furl_log%252Furl_log.cc#49). I\u0027m not sure whether or not to add DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);.",
+      "parentUuid": "35cbbbb8_dde8575b",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3940ea7c_c8734426",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
@@ -193,6 +355,24 @@
     },
     {
       "key": {
+        "uuid": "7d372d61_2d20ca40",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3940ea7c_c8734426",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fa6a63b_0a425840",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
@@ -207,6 +387,24 @@
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3bf4d3_741b0d8a",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "fwrite\u0027s API requires the size of string and the size of each character. They look like unnecessary detail for which we don\u0027t care. I wonder if it\u0027s ok to stick with fprintf because it\u0027s simpler.",
+      "parentUuid": "6fa6a63b_0a425840",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +431,30 @@
     },
     {
       "key": {
+        "uuid": "26086c01_31efacb0",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9ee7bef_d68ebae6",
+      "range": {
+        "startLine": 8,
+        "startChar": 18,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b200c9a0_11b95751",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 40
@@ -253,6 +475,30 @@
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfee234_9ea5497c",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b200c9a0_11b95751",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +525,30 @@
     },
     {
       "key": {
+        "uuid": "652b1af9_c0b91598",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d0008a1_57c5e594",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adb3f01a_7de5c276",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 40
@@ -293,6 +563,24 @@
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcec9a11_b4578f4c",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb3f01a_7de5c276",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -313,6 +601,24 @@
     },
     {
       "key": {
+        "uuid": "773b7b2b_5f5c316b",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cfb20c7_ae3593c0",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0875eb6a_0811ab45",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 40
@@ -324,6 +630,24 @@
       "writtenOn": "2017-07-13T20:54:49Z",
       "side": 1,
       "message": "[optional] You could remove this comment and just make it threadsafe. The cost of a single lock acquisition, given that we are already doing synchronous file writing, seems negligeable. This isn\u0027t necessary given the current callsites, but make it harder to mis-use.",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d40867_8f4cfe39",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Instead of slowing down when misused, I\u0027d prefer it errors out instead. (I think) that\u0027s what DCHECK_CALLED_ON_VALID_SEQUENCE achieves.",
+      "parentUuid": "0875eb6a_0811ab45",
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -353,6 +677,30 @@
     },
     {
       "key": {
+        "uuid": "226fa103_064fff9d",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0559d50b_558103f0",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53fd940c_b8e30d37",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 40
@@ -364,6 +712,30 @@
       "writtenOn": "2017-07-13T20:54:49Z",
       "side": 1,
       "message": "[optional] I wonder if the name \"AppendToFile()\" would make this more obvious when reading the callsites?",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49eff723_461211fb",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "The name UrlLog already communicates that this is logging. I wanted to name this Log(); but the name is already used below.\n\nEdit: this method is exposed. I think it\u0027s better to call this Log(); and rename the other method to AppendToFile();",
+      "parentUuid": "53fd940c_b8e30d37",
       "range": {
         "startLine": 37,
         "startChar": 14,
@@ -399,6 +771,30 @@
     },
     {
       "key": {
+        "uuid": "e97c734c_73213fca",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18de0a62_a4492452",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 10
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa0251e6_d0c56160",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 40
@@ -410,6 +806,30 @@
       "writtenOn": "2017-07-13T17:54:37Z",
       "side": 1,
       "message": "LogForTests...()",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209ccb2f_d3c806e4",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "This isn\u0027t for testing. UrlLog::AddEntry is also using it. And it cannot be private because the unittest is using it.",
+      "parentUuid": "aa0251e6_d0c56160",
       "range": {
         "startLine": 45,
         "startChar": 28,
@@ -445,6 +865,30 @@
     },
     {
       "key": {
+        "uuid": "a79047fc_4a80bccc",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "It seems GetInstance() and base::Singleton\u003cUrlLog, base::LeakySingletonTraits\u003cUrlLog\u003e\u003e::get() need the constructor to be public.",
+      "parentUuid": "98aaaf45_43241d5b",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63beb570_7845495f",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 40
@@ -465,6 +909,30 @@
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a99e5f2_23ddbf70",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63beb570_7845495f",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -491,6 +959,30 @@
     },
     {
       "key": {
+        "uuid": "7c852ff7_7f4574c8",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d682a809_c669e7ac",
+      "range": {
+        "startLine": 1,
+        "startChar": 26,
+        "endLine": 1,
+        "endChar": 34
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcd5979e_10006dd4",
         "filename": "components/url_log/url_log_browsertest.cc",
         "patchSetId": 40
@@ -502,6 +994,30 @@
       "writtenOn": "2017-07-13T17:54:37Z",
       "side": 1,
       "message": "I think it\u0027s better just to have two copies of this test, one in chrome/browser/net, and one in content/shell.  Duplicating code isn\u0027t great, but still seems the better option.",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ba227f_9026e88b",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Ok, I can see the benefit. It\u0027s a better option because it won\u0027t use the nogncheck (which is a good automated check).\n\nI\u0027ve avoid duplicating code as much as possible.",
+      "parentUuid": "bcd5979e_10006dd4",
       "range": {
         "startLine": 27,
         "startChar": 16,
@@ -537,6 +1053,30 @@
     },
     {
       "key": {
+        "uuid": "f4ca02b8_fc0377e5",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e9f73c9_2694c30a",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "401b74a7_603727fa",
         "filename": "components/url_log/url_log_browsertest.cc",
         "patchSetId": 40
@@ -557,6 +1097,30 @@
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65fba6ce_8c07ab7e",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "401b74a7_603727fa",
+      "range": {
+        "startLine": 58,
+        "startChar": 14,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -606,6 +1170,54 @@
     },
     {
       "key": {
+        "uuid": "9eaffda5_e4da3359",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32396742_fdb89e10",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5935798_e7362d76",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08192dc_1551cd39",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6964f474_8d72342a",
         "filename": "components/url_log/url_log_browsertest.cc",
         "patchSetId": 40
@@ -617,6 +1229,30 @@
       "writtenOn": "2017-07-13T17:54:37Z",
       "side": 1,
       "message": "I\u0027m not sure if this needed, but if we want to do this, makes more sense right below where we initialize log_path_",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5accdab_1bcf150d",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "When we initialize log_path_, the file doesn\u0027t exist. It only exists after Chrome starts.\n\nThis also prevents a random error when the file doesn\u0027t exist. It might be more difficult to understand why later expectations fail.",
+      "parentUuid": "6964f474_8d72342a",
       "range": {
         "startLine": 84,
         "startChar": 20,
@@ -652,6 +1288,30 @@
     },
     {
       "key": {
+        "uuid": "39a04dd0_c8e8a49b",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e47302f_245c646e",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 19
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf71ff51_9db60602",
         "filename": "components/url_log/url_log_browsertest.cc",
         "patchSetId": 40
@@ -675,6 +1335,30 @@
     },
     {
       "key": {
+        "uuid": "31132c76_9b7891eb",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf71ff51_9db60602",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372e5ee7_f1431ddc",
         "filename": "components/url_log/url_log_browsertest.cc",
         "patchSetId": 40
@@ -686,6 +1370,24 @@
       "writtenOn": "2017-07-13T20:54:49Z",
       "side": 1,
       "message": "This approach doesn\u0027t check that lines.size() \u003d\u003d expecteds.size(). Is that intentional?\n\nI suggest doing less string parsing, and just comparing the file contents more directly. Something like this perhaps:\n\nconst char kExpected[] \u003d\n    \"$1/test.html\\n\"\n    \"$1/testharness.js\\n\"\n    \"$1/styles.css\\n\"\n    \"$1/child.html\\n\"\n    \"$1/\"child.js\\n\";\n\nstd::string prefix \u003d net::FilePathToFileURL(test_data_dir_);\nstd::string expected_contents \u003d\n  base::ReplaceStringPlaceholders(kExpected, {prefix}, nullptr);\n\nEXPECT_EQ(expected_contents, actual_contents);",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc98379_c3723f71",
+        "filename": "components/url_log/url_log_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Under Chrome, it has the \"gstatic.com/something..\" url for which we don\u0027t care.\n\nWe could remove the URL. But I\u0027m afraid that the extra URL might change in the future.",
+      "parentUuid": "372e5ee7_f1431ddc",
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -715,6 +1417,30 @@
     },
     {
       "key": {
+        "uuid": "775cd4a7_0064ba7b",
+        "filename": "components/url_log/url_log_export.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5234df10_bdab3fed",
+      "range": {
+        "startLine": 1,
+        "startChar": 35,
+        "endLine": 1,
+        "endChar": 42
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "952315c4_035ac766",
         "filename": "components/url_log/url_log_export.h",
         "patchSetId": 40
@@ -738,6 +1464,30 @@
     },
     {
       "key": {
+        "uuid": "e7cf35d3_c49cfd48",
+        "filename": "components/url_log/url_log_export.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "952315c4_035ac766",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 36
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46d21ac9_3f7c6576",
         "filename": "components/url_log/url_log_unittest.cc",
         "patchSetId": 40
@@ -758,6 +1508,30 @@
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b306f559_eab98d2c",
+        "filename": "components/url_log/url_log_unittest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-14T03:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46d21ac9_3f7c6576",
+      "range": {
+        "startLine": 36,
+        "startChar": 18,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
