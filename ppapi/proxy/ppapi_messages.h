@@ -790,6 +790,9 @@ IPC_SYNC_MESSAGE_ROUTED1_2(
     PP_Bool /* result */)
 IPC_MESSAGE_ROUTED1(PpapiMsg_PPPPdf_EnableAccessibility,
                     PP_Instance /* instance */)
+IPC_SYNC_MESSAGE_ROUTED1_1(PpapiMsg_PPPPdf_CanCut,
+                           PP_Instance /* instance */,
+                           PP_Bool /* result */)
 
 // Find
 IPC_MESSAGE_ROUTED2(PpapiPluginMsg_PPPFind_StartFind,
