@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4980b47_1cdea254",
+        "filename": "chrome/browser/android/banners/app_banner_manager_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "Nit: Ui I think is right by the style guide (e.g. Px above).",
+      "range": {
+        "startLine": 92,
+        "startChar": 18,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399dc69e_693e82fb",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "Won\u0027t this metric will now be erroneously reported if the experimental flow is enabled and the developer doesn\u0027t call preventDefault() (e.g. they just call prompt() in the handler without a preventDefault)?",
+      "range": {
+        "startLine": 554,
+        "startChar": 4,
+        "endLine": 554,
+        "endChar": 27
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f7f6b8_d48f7bcc",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "I think this comment is redundant as the code is pretty clear.",
+      "range": {
+        "startLine": 593,
+        "startChar": 30,
+        "endLine": 593,
+        "endChar": 31
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62417af6_9f19ae0c",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "What if the developer calls prompt() again with a user gesture? Should they only get one chance to call it with a gesture? Or should we silently drop non-gestured calls?",
+      "range": {
+        "startLine": 595,
+        "startChar": 6,
+        "endLine": 595,
+        "endChar": 37
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a232c9ab_db0081e5",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "This comment is also redundant",
+      "range": {
+        "startLine": 598,
+        "startChar": 7,
+        "endLine": 598,
+        "endChar": 10
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15abdec5_7a7d2f4e",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "Nit: this comment is out of date.",
+      "range": {
+        "startLine": 606,
+        "startChar": 16,
+        "endLine": 606,
+        "endChar": 17
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25aaa772_44b50b2d",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "AppBannerManager:::IsExperimentalAppBannersEnabled() ?",
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedfff3c_2bbe3bcd",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "Nit: newline before closing brace.",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6019d7_57c18fe2",
+        "filename": "chrome/browser/installable/installable_logging.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "This is shown to developers in the console, can the string be something like:\n\n\"beforeinstallpromptevent.prompt() was not called with a user gesture\"",
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71a3365_f0105441",
+        "filename": "chrome/browser/installable/installable_logging.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-14T14:55:33Z",
+      "side": 1,
+      "message": "This needs to be added to enums.xml",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 12
+      },
+      "revId": "40c32fadc23bff7d6f207f6f77055cfaae5e7011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
