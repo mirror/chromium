@@ -11,6 +11,7 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/location_bar/location_bar.h"
+#include "chrome/browser/ui/tab_dialogs.h"
 #include "components/autofill/core/browser/autofill_metrics.h"
 #include "components/autofill/core/browser/validation.h"
 #include "components/autofill/core/common/autofill_constants.h"
@@ -281,9 +282,8 @@ void SaveCardBubbleControllerImpl::ShowBubble() {
   // unanchored.
   UpdateIcon();
 
-  Browser* browser = chrome::FindBrowserWithWebContents(web_contents());
-  save_card_bubble_view_ = browser->window()->ShowSaveCreditCardBubble(
-      web_contents(), this, is_reshow_);
+  save_card_bubble_view_ = TabDialogs::FromWebContents(web_contents())
+                               ->ShowSaveCardBubble(this, is_reshow_);
   DCHECK(save_card_bubble_view_);
 
   // Update icon after creating |save_card_bubble_view_| so that icon will show

@@ -27,6 +27,11 @@ class Profile;
 class WebShareTarget;
 struct WebApplicationInfo;
 
+namespace autofill {
+class SaveCardBubbleController;
+class SaveCardBubbleView;
+}  // namespace autofill
+
 namespace content {
 class BrowserContext;
 class ColorChooser;
@@ -126,6 +131,11 @@ void HideTaskManagerViews();
 
 // Show the Views "Chrome Update" dialog.
 void ShowUpdateChromeDialogViews(gfx::NativeWindow parent);
+
+autofill::SaveCardBubbleView* ShowSaveCardBubbleViews(
+    content::WebContents* web_contents,
+    autofill::SaveCardBubbleController* controller,
+    bool is_user_gesture);
 
 #endif  // OS_MACOSX
 

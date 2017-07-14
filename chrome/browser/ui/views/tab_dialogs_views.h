@@ -31,6 +31,9 @@ class TabDialogsViews : public TabDialogs {
       const gfx::Rect& anchor_in_root_view,
       const base::string16& main_text,
       const base::string16& sub_text) override;
+  autofill::SaveCardBubbleView* ShowSaveCardBubble(
+      autofill::SaveCardBubbleController* controller,
+      bool user_gesture) override;
 
  private:
   content::WebContents* web_contents_;  // Weak. Owns this.

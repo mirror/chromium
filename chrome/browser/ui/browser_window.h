@@ -32,11 +32,6 @@ class Profile;
 class StatusBubble;
 class ToolbarActionsBar;
 
-namespace autofill {
-class SaveCardBubbleController;
-class SaveCardBubbleView;
-}
-
 namespace content {
 class WebContents;
 struct NativeWebKeyboardEvent;
@@ -237,12 +232,6 @@ class BrowserWindow : public ui::BaseWindow {
   // Shows the Bookmark bubble. |url| is the URL being bookmarked,
   // |already_bookmarked| is true if the url is already bookmarked.
   virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked) = 0;
-
-  // Shows the "Save credit card" bubble.
-  virtual autofill::SaveCardBubbleView* ShowSaveCreditCardBubble(
-      content::WebContents* contents,
-      autofill::SaveCardBubbleController* controller,
-      bool is_user_gesture) = 0;
 
   // Shows the translate bubble.
   //

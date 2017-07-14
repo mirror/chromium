@@ -5,6 +5,8 @@
 #include "chrome/browser/ui/cocoa/tab_dialogs_cocoa.h"
 
 #include "base/memory/ptr_util.h"
+#import "chrome/browser/ui/cocoa/autofill/save_card_bubble_view_bridge.h"
+#import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/content_settings/collected_cookies_mac.h"
 #import "chrome/browser/ui/cocoa/hung_renderer_controller.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_cocoa.h"
@@ -84,4 +86,12 @@ base::WeakPtr<ValidationMessageBubble> TabDialogsCocoa::ShowValidationMessage(
     const base::string16& sub_text) {
   return (new ValidationMessageBubbleCocoa(
       web_contents_, anchor_in_root_view, main_text, sub_text))->AsWeakPtr();
+}
+
+autofill::SaveCardBubbleView* TabDialogsCocoa::ShowSaveCardBubble(
+    autofill::SaveCardBubbleController* controller,
+    bool user_gesture) {
+  BrowserWindowController* window_controller = [BrowserWindowController
+      browserWindowControllerForWindow:[web_contents_->GetNativeView() window]];
+  return new autofill::SaveCardBubbleViewBridge(controller, window_controller);
 }
