@@ -88,6 +88,24 @@
       "revId": "a337add9b896c93a27327190657497381f8085c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f491ac6c_2b436552",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T20:39:48Z",
+      "side": 0,
+      "message": "The critical bit is that you need to both spin message loops and drive the task scheduler.  Something like:\n\n  WaitForBackgroundTasks();\n  TaskScheduler::GetInstance()-\u003eFlushForTesting();\n\nIn general, FlushForTesting() may need to occur more frequently during the test body as well.",
+      "parentUuid": "1592bc99_e73c19a9",
+      "revId": "a337add9b896c93a27327190657497381f8085c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
