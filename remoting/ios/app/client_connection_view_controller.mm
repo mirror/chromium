@@ -58,6 +58,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   RemotingClient* _client;
   SessionErrorCode _lastError;
   HostInfo* _hostInfo;
+  BOOL _isViewAppeared;
 }
 
 @property(nonatomic, assign) SessionErrorCode lastError;
@@ -74,41 +75,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   if (self) {
     _hostInfo = hostInfo;
     _remoteHostName = hostInfo.hostName;
-
-    // TODO(yuweih): This logic may be reused by other views.
-    UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
-    [cancelButton
-        setImage:[RemotingTheme
-                         .backIcon imageFlippedForRightToLeftLayoutDirection]
-        forState:UIControlStateNormal];
-    [cancelButton addTarget:self
-                     action:@selector(didTapCancel:)
-           forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem =
-        [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
-
-    _navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
-    [_navBar observeNavigationItem:self.navigationItem];
-
-    [_navBar setBackgroundColor:RemotingTheme.connectionViewBackgroundColor];
-    MDCNavigationBarTextColorAccessibilityMutator* mutator =
-        [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
-    [mutator mutate:_navBar];
-    [self.view addSubview:_navBar];
-    _navBar.translatesAutoresizingMaskIntoConstraints = NO;
-
-    // Attach navBar to the top of the view.
-    [NSLayoutConstraint activateConstraints:@[
-      [[_navBar topAnchor] constraintEqualToAnchor:[self.view topAnchor]],
-      [[_navBar leadingAnchor]
-          constraintEqualToAnchor:[self.view leadingAnchor]],
-      [[_navBar trailingAnchor]
-          constraintEqualToAnchor:[self.view trailingAnchor]],
-      [[_navBar heightAnchor] constraintEqualToConstant:kBarHeight],
-    ]];
-
-    [self attemptConnectionToHost];
+    _isViewAppeared = NO;
   }
   return self;
 }
@@ -121,6 +88,39 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  // TODO(yuweih): This logic may be reused by other views.
+  UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
+  [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
+  [cancelButton
+      setImage:[RemotingTheme
+                       .backIcon imageFlippedForRightToLeftLayoutDirection]
+      forState:UIControlStateNormal];
+  [cancelButton addTarget:self
+                   action:@selector(didTapCancel:)
+         forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem =
+      [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+
+  _navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
+  [_navBar observeNavigationItem:self.navigationItem];
+
+  [_navBar setBackgroundColor:RemotingTheme.connectionViewBackgroundColor];
+  MDCNavigationBarTextColorAccessibilityMutator* mutator =
+      [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
+  [mutator mutate:_navBar];
+  [self.view addSubview:_navBar];
+  _navBar.translatesAutoresizingMaskIntoConstraints = NO;
+
+  // Attach navBar to the top of the view.
+  [NSLayoutConstraint activateConstraints:@[
+    [[_navBar topAnchor] constraintEqualToAnchor:[self.view topAnchor]],
+    [[_navBar leadingAnchor] constraintEqualToAnchor:[self.view leadingAnchor]],
+    [[_navBar trailingAnchor]
+        constraintEqualToAnchor:[self.view trailingAnchor]],
+    [[_navBar heightAnchor] constraintEqualToConstant:kBarHeight],
+  ]];
+
   self.view.backgroundColor = RemotingTheme.connectionViewBackgroundColor;
 
   _activityIndicator = [[MDCActivityIndicator alloc] initWithFrame:CGRectZero];
@@ -174,6 +174,8 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
          selector:@selector(hostSessionStatusChanged:)
              name:kHostSessionStatusChanged
            object:nil];
+
+  [self attemptConnectionToHost];
 }
 
 - (void)initializeLayoutConstraintsWithViews:(NSDictionary*)views {
@@ -280,6 +282,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  [_activityIndicator startAnimating];
   [[NSNotificationCenter defaultCenter]
       addObserver:self
          selector:@selector(keyboardWillShow:)
@@ -292,7 +295,9 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
              name:UIKeyboardWillHideNotification
            object:nil];
 
-  [_activityIndicator startAnimating];
+  _isViewAppeared = YES;
+
+  self.state = _state;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -305,9 +310,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 }
 
 #pragma mark - Keyboard
-
-// TODO(nicholss): We need to listen to screen rotation and re-adjust the
-// topAnchor.
 
 - (void)keyboardWillShow:(NSNotification*)notification {
   CGSize keyboardSize =
@@ -324,7 +326,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   _activityIndicatorTopConstraintKeyboard.active = NO;
   _activityIndicatorTopConstraintKeyboard = [_activityIndicator.topAnchor
       constraintEqualToAnchor:self.view.topAnchor
-                     constant:kTopPadding + overlap];
+                     constant:_activityIndicator.frame.origin.y + overlap];
   _activityIndicatorTopConstraintFull.active = NO;
   _activityIndicatorTopConstraintKeyboard.active = YES;
   [UIView animateWithDuration:kKeyboardAnimationTime
@@ -346,6 +348,11 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)setState:(ClientConnectionViewState)state {
   _state = state;
+  if (!_isViewAppeared) {
+    // Showing different state will re-layout the view, which will be broken if
+    // the view is not shown yet.
+    return;
+  }
   switch (_state) {
     case ClientViewConnecting:
       [self showConnectingState];
