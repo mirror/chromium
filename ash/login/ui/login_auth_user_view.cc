@@ -21,8 +21,23 @@ namespace {
 
 const char* kLoginAuthUserViewClassName = "LoginAuthUserView";
 
+// Any non-zero value used for separator width. Makes debugging easier.
+constexpr int kNonEmptyWidthDp = 30;
+
 // Distance between the username label and the password textfield.
-const int kDistanceBetweenUsernameAndPasswordDp = 32;
+const int kDistanceBetweenUsernameAndPasswordDp = 28;
+
+// Distance between the password textfield and the the pin keyboard.
+const int kDistanceBetweenPasswordFieldAndPinKeyboard = 20;
+
+// Distance from the end of pin keyboard to the bottom of the big user view.
+const int kDistanceFromPinKeyboardToBottomOfBigUserView = 48;
+
+views::View* CreateEmptyViewWithHeight(int height) {
+  auto* v1 = new views::View();
+  v1->SetPreferredSize(gfx::Size(kNonEmptyWidthDp, height));
+  return v1;
+}
 
 }  // namespace
 
@@ -50,15 +65,16 @@ LoginAuthUserView::LoginAuthUserView(const mojom::UserInfoPtr& user,
                                            base::Unretained(password_view_)));
 
   // Build layout.
-  SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical,
-                                        gfx::Insets(),
-                                        kDistanceBetweenUsernameAndPasswordDp));
+  SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical));
 
   // Note: |user_view_| will be sized to it's minimum size (not its preferred
   // size) because of the vertical box layout manager. This class expresses the
   // minimum preferred size again so everything works out as desired (ie, we can
   // control how far away the password auth is from the user label).
   AddChildView(user_view_);
+
+  AddChildView(
+      CreateEmptyViewWithHeight(kDistanceBetweenUsernameAndPasswordDp));
 
   {
     // We need to center LoginPasswordAuth.
@@ -76,6 +92,9 @@ LoginAuthUserView::LoginAuthUserView(const mojom::UserInfoPtr& user,
     row->AddChildView(password_view_);
   }
 
+  AddChildView(
+      CreateEmptyViewWithHeight(kDistanceBetweenPasswordFieldAndPinKeyboard));
+
   {
     // We need to center LoginPinAuth.
     auto* row = new views::View();
@@ -88,6 +107,9 @@ LoginAuthUserView::LoginAuthUserView(const mojom::UserInfoPtr& user,
 
     row->AddChildView(pin_view_);
   }
+
+  AddChildView(
+      CreateEmptyViewWithHeight(kDistanceFromPinKeyboardToBottomOfBigUserView));
 
   SetAuthMethods(auth_methods_);
   UpdateForUser(user);
