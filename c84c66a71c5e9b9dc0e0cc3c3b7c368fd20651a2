@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "147b267f_3878473e",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:24:29Z",
+      "side": 1,
+      "message": "!match || match-\u003eis_public_suffix_match;",
+      "range": {
+        "startLine": 464,
+        "startChar": 20,
+        "endLine": 464,
+        "endChar": 25
+      },
+      "revId": "c84c66a71c5e9b9dc0e0cc3c3b7c368fd20651a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea73dfcc_06236233",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2343,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:24:29Z",
+      "side": 1,
+      "message": "As I noted before, we can test all arguments and especially |credentials_to_update| parameter.",
+      "range": {
+        "startLine": 2343,
+        "startChar": 58,
+        "endLine": 2343,
+        "endChar": 59
+      },
+      "revId": "c84c66a71c5e9b9dc0e0cc3c3b7c368fd20651a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65191bd4_b4aa1ef6",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2350,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:24:29Z",
+      "side": 1,
+      "message": "The sentence is incomplete.",
+      "range": {
+        "startLine": 2350,
+        "startChar": 31,
+        "endLine": 2350,
+        "endChar": 39
+      },
+      "revId": "c84c66a71c5e9b9dc0e0cc3c3b7c368fd20651a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e748ddbc_183b6276",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2364,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:24:29Z",
+      "side": 1,
+      "message": "Here and everywhere: first parameter is the expected value, second - is the expression to be tested",
+      "range": {
+        "startLine": 2364,
+        "startChar": 12,
+        "endLine": 2364,
+        "endChar": 24
+      },
+      "revId": "c84c66a71c5e9b9dc0e0cc3c3b7c368fd20651a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b926fbd_65c8a77c",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:24:29Z",
+      "side": 1,
+      "message": "Check the second argument too.",
+      "range": {
+        "startLine": 2368,
+        "startChar": 58,
+        "endLine": 2368,
+        "endChar": 59
+      },
+      "revId": "c84c66a71c5e9b9dc0e0cc3c3b7c368fd20651a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
