@@ -105,6 +105,24 @@
       "revId": "cfc24270bfc43126129faa67579555fd531c0691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0bc8d8_b2b92b97",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-14T22:21:26Z",
+      "side": 1,
+      "message": "Let me try to ask in a different way; why are we not creating the GpuMemoryBufferImpl instance on the thread where we need to create the callback instead of the thread that ServerGpuMemoryBufferManager::CreateGpuMemoryBuffer is called? So we can eliminate the need to pass both a callback and a handle to the caller thread and just pass a GpuMemoryBufferImpl instance.",
+      "parentUuid": "8929e9a8_31cdcb73",
+      "revId": "cfc24270bfc43126129faa67579555fd531c0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
