@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4679085e_94576175",
+        "filename": "chrome/browser/search_engines/template_url_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-14T15:29:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0c702e_45ebb8bb",
+      "revId": "8830e2331f8a56921ab19890a0c1394fefb527d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf7b5af3_579fbfb9",
         "filename": "chrome/browser/search_engines/template_url_parser_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T00:46:01Z",
       "side": 1,
       "message": "Nit: Can we just check in the removal first, roll the src-internal DEPS, and then check in this addition?  For a brief time no one will run these tests, that seems OK; better than churning the directory.",
+      "revId": "8830e2331f8a56921ab19890a0c1394fefb527d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004b29e3_f2786390",
+        "filename": "chrome/browser/search_engines/template_url_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-14T15:29:47Z",
+      "side": 1,
+      "message": "Hm, that time would still have to be long enough to make sure almost everyone syncs over the removal (including people on vacation, etc.) before we can land the addition. I personally find a broken sync pretty annoying, so I\u0027d like to minimize the chances of that happening. WDYT?",
+      "parentUuid": "cf7b5af3_579fbfb9",
       "revId": "8830e2331f8a56921ab19890a0c1394fefb527d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
