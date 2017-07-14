@@ -22,6 +22,30 @@
       "revId": "479d5e3580a88d9fd9003af1345f3e3ce6aac58f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58d2356_343791c1",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T21:26:55Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d expect you to be able to remove this.  I\u0027d think you\u0027d also want to add a Flush to the wait at line 448, or else the subsequent ASSERT isn\u0027t actually checking the return value it thinks it is (e.g. if you forcibly populated |consumer| with bogus results before that GetFormValuesForElementName() call, I think such a Flush would change the test from \"failure\" to \"success\").\n\nMaybe SetUpKeyValueData() also needs a Flush, or else everyone who calls it needs to Flush in their next WaitForBackgroundTasks.",
+      "parentUuid": "4855a56b_f77a34c6",
+      "range": {
+        "startLine": 462,
+        "startChar": 38,
+        "endLine": 462,
+        "endChar": 53
+      },
+      "revId": "479d5e3580a88d9fd9003af1345f3e3ce6aac58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
