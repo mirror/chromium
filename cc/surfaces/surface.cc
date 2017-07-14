@@ -13,8 +13,8 @@
 #include "cc/output/copy_output_request.h"
 #include "cc/surfaces/surface_client.h"
 #include "cc/surfaces/surface_manager.h"
-#include "cc/surfaces/surface_resource_holder_client.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
+#include "components/viz/service/frame_sinks/surface_resource_holder_client.h"
 
 namespace cc {
 
