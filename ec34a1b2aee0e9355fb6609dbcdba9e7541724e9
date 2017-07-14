@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a431ebd9_b4a95d81",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/event_router_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-14T10:30:02Z",
+      "side": 1,
+      "message": "nice :D",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7b881f_5e45659e",
+        "filename": "chrome/browser/chromeos/file_manager/arc_file_tasks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-14T10:30:02Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with file_manager/ at all, but is it always safe to assume that the |profile| is still alive when the callback is called?",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8f8c47_7000d753",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-14T10:30:02Z",
+      "side": 1,
+      "message": "Not really sure if this is a good idea, but can we just pass |this| instead?",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e815078d_ca628ef7",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-14T10:30:02Z",
+      "side": 1,
+      "message": "L157 probably works fine because the returned object is relatively short-lived. The returned object is kept in an OpenWithMenuObserver object (chrome/browser/renderer_context_menu/open_with_menu_factory_ash.cc) but the object is live only while Chrome\u0027s right-click menu is shown.\n\nAnyway, I\u0027m not very familiar with BrowserContext. What can we assume about |context_|\u0027s lifetime?",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97891fb_f5b72b7f",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-14T10:30:02Z",
+      "side": 1,
+      "message": "same as before. the browser |context| ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf53f96_c636ae0d",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-14T10:30:02Z",
+      "side": 1,
+      "message": "can you add /* context */? I guess I can\u0027t remember what it is for.",
+      "revId": "ec34a1b2aee0e9355fb6609dbcdba9e7541724e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abcf0358_8bade5cf",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-14T10:30:02Z",
+      "side": 0,
+      "message": "whoa.",
+      "revId": "fd28ffd1df2854dfe330fd36e3c2358401e79b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
