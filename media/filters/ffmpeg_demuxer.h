@@ -143,6 +143,9 @@ class MEDIA_EXPORT FFmpegDemuxerStream : public DemuxerStream {
   base::TimeDelta start_time() const { return start_time_; }
   void set_start_time(base::TimeDelta time) { start_time_ = time; }
 
+  void StartEstimatingRendererReadBitrate();
+  double StopEstimatingRendererReadBitrate();
+
  private:
   friend class FFmpegDemuxerTest;
 
@@ -200,6 +203,11 @@ class MEDIA_EXPORT FFmpegDemuxerStream : public DemuxerStream {
   std::string encryption_key_id_;
   bool fixup_negative_timestamps_;
 
+  // An estimator to estimate the renderer reading bitrate. It is created when
+  // StartEstimatingRendererReadBitrate() is called and is destroyed when
+  // StopEstimatingRendererReadBitrate() is called.
+  std::unique_ptr<BitrateEstimator> bitrate_estimator_;
+
   DISALLOW_COPY_AND_ASSIGN(FFmpegDemuxerStream);
 };
 
@@ -227,6 +235,8 @@ class MEDIA_EXPORT FFmpegDemuxer : public Demuxer {
   void SetStreamStatusChangeCB(const StreamStatusChangeCB& cb) override;
   base::TimeDelta GetStartTime() const override;
   int64_t GetMemoryUsage() const override;
+  void StartEstimatingRendererReadBitrate() override;
+  double StopEstimatingRendererReadBitrate() override;
 
   // Calls |encrypted_media_init_data_cb_| with the initialization data
   // encountered in the file.

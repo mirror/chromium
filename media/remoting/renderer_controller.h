@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
+#include "base/timer/timer.h"
 #include "media/base/media_observer.h"
 #include "media/remoting/metrics.h"
 #include "media/remoting/shared_session.h"
@@ -69,6 +70,8 @@ class RendererController final : public SharedSession::Client,
   void OnRendererFatalError(StopTrigger stop_trigger);
 
  private:
+  friend class RendererControllerTest;  // Friend class for unit tests.
+
   bool has_audio() const {
     return pipeline_metadata_.has_audio &&
            pipeline_metadata_.audio_decoder_config.IsValidConfig();
@@ -98,6 +101,16 @@ class RendererController final : public SharedSession::Client,
   // |stop_trigger| must be the reason.
   void UpdateAndMaybeSwitch(StartTrigger start_trigger,
                             StopTrigger stop_trigger);
+
+  // Starts the transition to remoting.
+  void StartTransition(StartTrigger start_trigger);
+  // Remoting should not be started. Stop the transition timer if it is running.
+  void StopTransition();
+  // Called when |remoting_start_transition_timer_| is fired.
+  void OnStartTransitionTimerFired(StartTrigger start_trigger);
+
+  // Helper to request switching to remoting renderer.
+  void StartRemoting(StartTrigger start_trigger);
 
   // Indicates whether this media element is in full screen.
   bool is_fullscreen_ = false;
@@ -148,6 +161,10 @@ class RendererController final : public SharedSession::Client,
 
   // Not own by this class. Can only be set once by calling SetClient().
   MediaObserverClient* client_ = nullptr;
+
+  // The timer is running when in the transition to start remoting. Remoting is
+  // only started when condition keeps satisfying during the transition.
+  base::OneShotTimer remoting_start_transition_timer_;
 
   base::WeakPtrFactory<RendererController> weak_factory_;
 

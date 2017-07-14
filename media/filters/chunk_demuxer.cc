@@ -51,6 +51,8 @@ void ChunkDemuxerStream::AbortReads() {
   DVLOG(1) << "ChunkDemuxerStream::AbortReads()";
   base::AutoLock auto_lock(lock_);
   ChangeState_Locked(RETURNING_ABORT_FOR_READS);
+  if (bitrate_estimator_)
+    bitrate_estimator_->Reset();
   if (!read_cb_.is_null())
     base::ResetAndReturn(&read_cb_).Run(kAborted, NULL);
 }
@@ -67,6 +69,9 @@ void ChunkDemuxerStream::Shutdown() {
   DVLOG(1) << "ChunkDemuxerStream::Shutdown()";
   base::AutoLock auto_lock(lock_);
   ChangeState_Locked(SHUTDOWN);
+
+  if (bitrate_estimator_)
+    bitrate_estimator_->Reset();
 
   // Pass an end of stream buffer to the pending callback to signal that no more
   // data will be sent.
@@ -412,7 +417,33 @@ void ChunkDemuxerStream::CompletePendingReadIfPossible_Locked() {
       break;
   }
 
+  if (bitrate_estimator_) {
+    if (status == DemuxerStream::kAborted || state_ == SHUTDOWN ||
+        (buffer && buffer->end_of_stream())) {
+      bitrate_estimator_->Reset();
+    } else if (buffer) {
+      bitrate_estimator_->EnqueueOneFrame(buffer->data_size());
+    }
+  }
+
   base::ResetAndReturn(&read_cb_).Run(status, buffer);
+}
+
+void ChunkDemuxerStream::StartEstimatingRendererReadBitrate() {
+  if (bitrate_estimator_) {
+    VLOG(1) << "Warning: Start bitrate estimation while estimating in process.";
+    bitrate_estimator_->Reset();
+    return;
+  }
+  bitrate_estimator_ = base::MakeUnique<BitrateEstimator>();
+}
+
+double ChunkDemuxerStream::StopEstimatingRendererReadBitrate() {
+  if (!bitrate_estimator_)
+    return 0;
+  double bps = bitrate_estimator_->GetBitrate();
+  bitrate_estimator_.reset();
+  return bps;
 }
 
 ChunkDemuxer::ChunkDemuxer(
@@ -1365,6 +1396,18 @@ void ChunkDemuxer::ShutdownAllStreams() {
        ++itr) {
     itr->second->Shutdown();
   }
+}
+
+void ChunkDemuxer::StartEstimatingRendererReadBitrate() {
+  if (video_streams_.empty() || !video_streams_[0]->IsEnabled())
+    return;
+  video_streams_[0]->StartEstimatingRendererReadBitrate();
+}
+
+double ChunkDemuxer::StopEstimatingRendererReadBitrate() {
+  if (video_streams_.empty() || !video_streams_[0]->IsEnabled())
+    return 0;
+  return video_streams_[0]->StopEstimatingRendererReadBitrate();
 }
 
 }  // namespace media

@@ -132,6 +132,9 @@ class MEDIA_EXPORT ChunkDemuxerStream : public DemuxerStream {
 
   MediaTrack::Id media_track_id() const { return media_track_id_; }
 
+  void StartEstimatingRendererReadBitrate();
+  double StopEstimatingRendererReadBitrate();
+
  private:
   enum State {
     UNINITIALIZED,
@@ -160,6 +163,11 @@ class MEDIA_EXPORT ChunkDemuxerStream : public DemuxerStream {
   bool partial_append_window_trimming_enabled_;
   bool is_enabled_;
   StreamStatusChangeCB stream_status_change_cb_;
+
+  // An estimator to estimate the renderer reading bitrate. It is created when
+  // StartEstimatingRendererReadBitrate() is called and is destroyed when
+  // StopEstimatingRendererReadBitrate() is called.
+  std::unique_ptr<BitrateEstimator> bitrate_estimator_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(ChunkDemuxerStream);
 };
@@ -207,6 +215,9 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
   // associated JS method calls.
   void StartWaitingForSeek(base::TimeDelta seek_time) override;
   void CancelPendingSeek(base::TimeDelta seek_time) override;
+
+  void StartEstimatingRendererReadBitrate() override;
+  double StopEstimatingRendererReadBitrate() override;
 
   // Registers a new |id| to use for AppendData() calls. |type| indicates
   // the MIME type for the data that we intend to append for this ID.

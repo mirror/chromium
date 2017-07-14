@@ -8,11 +8,21 @@
 #include "base/logging.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
+#include "media/base/bind_to_current_loop.h"
 #include "media/remoting/remoting_cdm.h"
 #include "media/remoting/remoting_cdm_context.h"
 
 namespace media {
 namespace remoting {
+
+namespace {
+// Remoting is only started when condition keeps satisfying during the
+// transition.
+constexpr base::TimeDelta kStartTransitionWindow =
+    base::TimeDelta::FromSeconds(5);
+// The max bitrate that Media Remoting supports.
+constexpr int kMaxRemotingBitrate = 5000000;
+}  // namespace
 
 RendererController::RendererController(scoped_refptr<SharedSession> session)
     : session_(std::move(session)), weak_factory_(this) {
@@ -21,6 +31,7 @@ RendererController::RendererController(scoped_refptr<SharedSession> session)
 
 RendererController::~RendererController() {
   DCHECK(thread_checker_.CalledOnValidThread());
+  StopTransition();
   metrics_recorder_.WillStopSession(MEDIA_ELEMENT_DESTROYED);
   session_->RemoveClient(this);
 }
@@ -244,6 +255,8 @@ void RendererController::OnPaused() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   is_paused_ = true;
+  // Stop if in the transition to start remoting.
+  StopTransition();
 }
 
 bool RendererController::ShouldBeRemoting() {
@@ -313,8 +326,17 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
 
   bool should_be_remoting = ShouldBeRemoting();
 
+  if (!should_be_remoting)
+    StopTransition();
+
   if (remote_rendering_started_ == should_be_remoting)
     return;
+
+  if (is_encrypted_) {
+    DCHECK(should_be_remoting);
+    StartRemoting(start_trigger);
+    return;
+  }
 
   // Only switch to remoting when media is playing. Since the renderer is
   // created when video starts loading/playing, receiver will display a black
@@ -324,21 +346,11 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
   if (should_be_remoting && is_paused_)
     return;
 
-  // Switch between local renderer and remoting renderer.
-  remote_rendering_started_ = should_be_remoting;
-
-  DCHECK(client_);
-  if (remote_rendering_started_) {
-    if (session_->state() == SharedSession::SESSION_PERMANENTLY_STOPPED) {
-      client_->SwitchRenderer(true);
-      return;
-    }
-    DCHECK_NE(start_trigger, UNKNOWN_START_TRIGGER);
-    metrics_recorder_.WillStartSession(start_trigger);
-    // |MediaObserverClient::SwitchRenderer()| will be called after remoting is
-    // started successfully.
-    session_->StartRemoting(this);
+  if (should_be_remoting) {
+    // Remoting will start after transition ends.
+    StartTransition(start_trigger);
   } else {
+    remote_rendering_started_ = false;
     // For encrypted content, it's only valid to switch to remoting renderer,
     // and never back to the local renderer. The RemotingCdmController will
     // force-stop the session when remoting has ended; so no need to call
@@ -348,6 +360,60 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
     metrics_recorder_.WillStopSession(stop_trigger);
     client_->SwitchRenderer(false);
     session_->StopRemoting(this);
+  }
+}
+
+void RendererController::StartRemoting(StartTrigger start_trigger) {
+  DCHECK(client_);
+  remote_rendering_started_ = true;
+  if (session_->state() == SharedSession::SESSION_PERMANENTLY_STOPPED) {
+    client_->SwitchRenderer(true);
+    return;
+  }
+  DCHECK_NE(start_trigger, UNKNOWN_START_TRIGGER);
+  metrics_recorder_.WillStartSession(start_trigger);
+  // |MediaObserverClient::SwitchRenderer()| will be called after remoting is
+  // started successfully.
+  session_->StartRemoting(this);
+}
+
+void RendererController::StartTransition(StartTrigger start_trigger) {
+  // Exits if already in transition.
+  if (remoting_start_transition_timer_.IsRunning())
+    return;
+
+  DCHECK(!remote_rendering_started_);
+  DCHECK(!is_encrypted_);
+  DCHECK(client_);
+  remoting_start_transition_timer_.Start(
+      FROM_HERE, kStartTransitionWindow,
+      base::Bind(&RendererController::OnStartTransitionTimerFired,
+                 weak_factory_.GetWeakPtr(), start_trigger));
+  client_->StartEstimatingRendererReadBitrate();
+}
+
+void RendererController::StopTransition() {
+  if (remoting_start_transition_timer_.IsRunning()) {
+    DCHECK(client_);
+    remoting_start_transition_timer_.Stop();
+    client_->StopEstimatingRendererReadBitrate();
+  }
+}
+
+void RendererController::OnStartTransitionTimerFired(
+    StartTrigger start_trigger) {
+  DCHECK(is_dominant_content_);
+  DCHECK(!remote_rendering_started_);
+  DCHECK(!is_encrypted_);
+  DCHECK(client_);
+
+  double bps = client_->StopEstimatingRendererReadBitrate();
+  if (bps <= kMaxRemotingBitrate) {
+    StartRemoting(start_trigger);
+  } else {
+    VLOG(1) << "Content is rendered in too high bitrate: bitrate=" << bps;
+    encountered_renderer_fatal_error_ = true;
+    metrics_recorder_.WillStopSession(CONTENT_BITRATE_TOO_HIGH);
   }
 }
 

@@ -143,6 +143,8 @@ class MockDemuxer : public Demuxer {
                void(const std::vector<MediaTrack::Id>&, base::TimeDelta));
   MOCK_METHOD2(OnSelectedVideoTrackChanged,
                void(base::Optional<MediaTrack::Id>, base::TimeDelta));
+  MOCK_METHOD0(StartEstimatingRendererReadBitrate, void());
+  MOCK_METHOD0(StopEstimatingRendererReadBitrate, double());
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockDemuxer);

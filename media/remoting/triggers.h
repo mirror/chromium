@@ -72,8 +72,10 @@ enum StopTrigger {
   DATA_PIPE_CREATE_ERROR = 17,  // Mojo data pipe creation failed (OOM?).
   MOJO_PIPE_ERROR = 18,         // Mojo message/data pipe operation failed.
 
+  CONTENT_BITRATE_TOO_HIGH = 19,  // Stream is rendered in too high bitrate.
+
   // Change this to the highest value.
-  STOP_TRIGGER_MAX = 18,
+  STOP_TRIGGER_MAX = 19,
 };
 
 }  // namespace remoting

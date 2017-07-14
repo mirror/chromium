@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/time/time.h"
+#include "media/base/bitrate_estimator.h"
 #include "media/base/data_source.h"
 #include "media/base/demuxer_stream.h"
 #include "media/base/eme_constants.h"
@@ -151,6 +152,16 @@ class MEDIA_EXPORT Demuxer : public MediaResource {
   virtual void OnSelectedVideoTrackChanged(
       base::Optional<MediaTrack::Id> track_id,
       base::TimeDelta curr_time) = 0;
+
+  // These two methods are used to estimate how many bits that renderer reads
+  // per second from the first enabled video stream. The estimation starts when
+  // StartEstimatingRendererReadBitrate() is called, and restarts when the
+  // reading is aborted or stream is stopped. The estimated bitrate is returned
+  // when StopEstimatingRendererReadBitrate() is called. Returns 0 when the
+  // estimation was not started, or if the estimation duration was too short, or
+  // there was no rendering reading during the estimatior.
+  virtual void StartEstimatingRendererReadBitrate() = 0;
+  virtual double StopEstimatingRendererReadBitrate() = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Demuxer);

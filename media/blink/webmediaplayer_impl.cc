@@ -2608,4 +2608,22 @@ void WebMediaPlayerImpl::SetTickClockForTest(base::TickClock* tick_clock) {
   buffered_data_source_host_.SetTickClockForTest(tick_clock);
 }
 
+void WebMediaPlayerImpl::StartEstimatingRendererReadBitrate() {
+  if (chunk_demuxer_) {
+    chunk_demuxer_->StartEstimatingRendererReadBitrate();
+  } else {
+    DCHECK(demuxer_);
+    demuxer_->StartEstimatingRendererReadBitrate();
+  }
+}
+
+double WebMediaPlayerImpl::StopEstimatingRendererReadBitrate() {
+  if (chunk_demuxer_) {
+    return chunk_demuxer_->StopEstimatingRendererReadBitrate();
+  } else {
+    DCHECK(demuxer_);
+    return demuxer_->StopEstimatingRendererReadBitrate();
+  }
+}
+
 }  // namespace media

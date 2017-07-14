@@ -27,6 +27,10 @@ namespace {
 constexpr mojom::RemotingSinkCapabilities kAllCapabilities =
     mojom::RemotingSinkCapabilities::CONTENT_DECRYPTION_AND_RENDERING;
 
+// The Bitrates (bits per second) that the content should be rendered.
+constexpr double kNormalBitrate = 3000000;
+constexpr double kHighBitrate = 7000000;
+
 PipelineMetadata DefaultMetadata() {
   PipelineMetadata data;
   data.has_audio = true;
@@ -65,7 +69,29 @@ class RendererControllerTest : public ::testing::Test,
     activate_viewport_intersection_monitoring_ = activate;
   }
 
+  void StartEstimatingRendererReadBitrate() override {
+    started_estimating_bitrate_ = true;
+  }
+
+  double StopEstimatingRendererReadBitrate() override {
+    started_estimating_bitrate_ = false;
+    return local_renderer_read_bitrate_;
+  }
+
   void CreateCdm(bool is_remoting) { is_remoting_cdm_ = is_remoting; }
+
+  bool IsInTransition() {
+    return controller_->remoting_start_transition_timer_.IsRunning();
+  }
+
+  void TransitionEnds() {
+    EXPECT_TRUE(IsInTransition());
+    const base::Closure callback =
+        controller_->remoting_start_transition_timer_.user_task();
+    EXPECT_FALSE(callback.is_null());
+    callback.Run();
+    controller_->remoting_start_transition_timer_.Stop();
+  }
 
   base::MessageLoop message_loop_;
 
@@ -75,6 +101,8 @@ class RendererControllerTest : public ::testing::Test,
   bool is_remoting_cdm_ = false;
   bool activate_viewport_intersection_monitoring_ = false;
   bool disable_pipeline_suspend_ = false;
+  double local_renderer_read_bitrate_ = kNormalBitrate;
+  bool started_estimating_bitrate_ = false;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(RendererControllerTest);
@@ -104,10 +132,18 @@ TEST_F(RendererControllerTest, ToggleRendererOnFullscreenChange) {
   controller_->OnRemotePlaybackDisabled(false);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInTransition());
   controller_->OnPlaying();
+  RunUntilIdle();
+  // Transition starts.
+  EXPECT_TRUE(IsInTransition());
+  EXPECT_TRUE(started_estimating_bitrate_);
+  EXPECT_FALSE(is_rendering_remotely_);
+  TransitionEnds();
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_FALSE(started_estimating_bitrate_);
 
   // Leaving fullscreen should shut down remoting.
   controller_->OnExitedFullscreen();
@@ -149,13 +185,22 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(IsInTransition());
+  EXPECT_FALSE(started_estimating_bitrate_);
   // A sink that *does* support remote rendering *does* cause the controller to
   // toggle remote rendering on.
   shared_session->OnSinkAvailable(kAllCapabilities);
   RunUntilIdle();
-  EXPECT_TRUE(is_rendering_remotely_);
-  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  // Transition starts.
+  EXPECT_TRUE(IsInTransition());
+  EXPECT_TRUE(started_estimating_bitrate_);
+  EXPECT_FALSE(is_rendering_remotely_);
+  TransitionEnds();
+  RunUntilIdle();
+  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_FALSE(started_estimating_bitrate_);
+
   controller_->OnExitedFullscreen();
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
@@ -188,11 +233,19 @@ TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
   controller_->OnRemotePlaybackDisabled(false);
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInTransition());
+  EXPECT_FALSE(started_estimating_bitrate_);
   controller_->OnPlaying();
   RunUntilIdle();
+  // Transition starts.
+  EXPECT_TRUE(IsInTransition());
+  EXPECT_TRUE(started_estimating_bitrate_);
+  EXPECT_FALSE(is_rendering_remotely_);
+  TransitionEnds();
+  RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
-  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_FALSE(started_estimating_bitrate_);
 
   // If the page disables remote playback (e.g., by setting the
   // disableRemotePlayback attribute), this should shut down remoting.
@@ -231,6 +284,46 @@ TEST_F(RendererControllerTest, StartFailed) {
   EXPECT_FALSE(disable_pipeline_suspend_);
 }
 
+TEST_F(RendererControllerTest, StartFailedWithTooHighBitrate) {
+  EXPECT_FALSE(is_rendering_remotely_);
+  const scoped_refptr<SharedSession> shared_session =
+      FakeRemoterFactory::CreateSharedSession(false);
+  controller_ = base::MakeUnique<RendererController>(shared_session);
+  controller_->SetClient(this);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
+  shared_session->OnSinkAvailable(kAllCapabilities);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
+  controller_->OnEnteredFullscreen();
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  controller_->OnMetadataChanged(DefaultMetadata());
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  controller_->OnRemotePlaybackDisabled(false);
+  RunUntilIdle();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(IsInTransition());
+  EXPECT_FALSE(started_estimating_bitrate_);
+  controller_->OnPlaying();
+  RunUntilIdle();
+  // Transition starts.
+  EXPECT_TRUE(IsInTransition());
+  EXPECT_TRUE(started_estimating_bitrate_);
+  EXPECT_FALSE(is_rendering_remotely_);
+  local_renderer_read_bitrate_ = kHighBitrate;
+  TransitionEnds();
+  RunUntilIdle();
+  // All requirements satisfied except bitrate. Remoting shouldn't be started.
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(started_estimating_bitrate_);
+}
+
 TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {
   EXPECT_FALSE(is_rendering_remotely_);
   controller_ = base::MakeUnique<RendererController>(
@@ -263,6 +356,9 @@ TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {
       base::MakeUnique<RemotingCdmContext>(remoting_cdm.get());
   controller_->OnSetCdm(remoting_cdm_context.get());
   RunUntilIdle();
+  // No transition for encrypted contents.
+  EXPECT_FALSE(IsInTransition());
+  EXPECT_FALSE(started_estimating_bitrate_);
   EXPECT_TRUE(is_rendering_remotely_);
 
   // For encrypted contents, entering/exiting full screen has no effect.

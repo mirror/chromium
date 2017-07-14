@@ -23,6 +23,12 @@ class MEDIA_EXPORT MediaObserverClient {
 
   // Requests to activate monitoring changes on viewport intersection.
   virtual void ActivateViewportIntersectionMonitoring(bool activate) = 0;
+
+  // Requests to start estimating the renderer read bitrate.
+  virtual void StartEstimatingRendererReadBitrate() = 0;
+
+  // Requests to stop estimating the renderer read bitrate. Returns the result.
+  virtual double StopEstimatingRendererReadBitrate() = 0;
 };
 
 // This class is an observer of media player events.

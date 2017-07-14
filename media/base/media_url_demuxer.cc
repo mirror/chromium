@@ -80,4 +80,10 @@ void MediaUrlDemuxer::OnSelectedVideoTrackChanged(
     base::Optional<MediaTrack::Id> selected_track_id,
     base::TimeDelta curr_time) {}
 
+void MediaUrlDemuxer::StartEstimatingRendererReadBitrate() {}
+
+double MediaUrlDemuxer::StopEstimatingRendererReadBitrate() {
+  return 0;
+}
+
 }  // namespace media

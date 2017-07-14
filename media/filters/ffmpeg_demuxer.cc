@@ -626,6 +626,8 @@ void FFmpegDemuxerStream::FlushBuffers() {
 
 void FFmpegDemuxerStream::Abort() {
   aborted_ = true;
+  if (bitrate_estimator_)
+    bitrate_estimator_->Reset();
   if (!read_cb_.is_null())
     base::ResetAndReturn(&read_cb_).Run(DemuxerStream::kAborted, nullptr);
 }
@@ -633,6 +635,8 @@ void FFmpegDemuxerStream::Abort() {
 void FFmpegDemuxerStream::Stop() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   buffer_queue_.Clear();
+  if (bitrate_estimator_)
+    bitrate_estimator_->Reset();
   if (!read_cb_.is_null()) {
     base::ResetAndReturn(&read_cb_).Run(
         DemuxerStream::kOk, DecoderBuffer::CreateEOSBuffer());
@@ -643,7 +647,6 @@ void FFmpegDemuxerStream::Stop() {
 }
 
 DemuxerStream::Type FFmpegDemuxerStream::type() const {
-  DCHECK(task_runner_->BelongsToCurrentThread());
   return type_;
 }
 
@@ -751,7 +754,6 @@ VideoRotation FFmpegDemuxerStream::video_rotation() {
 }
 
 bool FFmpegDemuxerStream::IsEnabled() const {
-  DCHECK(task_runner_->BelongsToCurrentThread());
   return is_enabled_;
 }
 
@@ -797,9 +799,13 @@ void FFmpegDemuxerStream::SatisfyPendingRead() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   if (!read_cb_.is_null()) {
     if (!buffer_queue_.IsEmpty()) {
-      base::ResetAndReturn(&read_cb_).Run(
-          DemuxerStream::kOk, buffer_queue_.Pop());
+      scoped_refptr<DecoderBuffer> buffer = buffer_queue_.Pop();
+      if (bitrate_estimator_)
+        bitrate_estimator_->EnqueueOneFrame(buffer->data_size());
+      base::ResetAndReturn(&read_cb_).Run(DemuxerStream::kOk, buffer);
     } else if (end_of_stream_) {
+      if (bitrate_estimator_)
+        bitrate_estimator_->Reset();
       base::ResetAndReturn(&read_cb_).Run(
           DemuxerStream::kOk, DecoderBuffer::CreateEOSBuffer());
     }
@@ -850,6 +856,23 @@ base::TimeDelta FFmpegDemuxerStream::ConvertStreamTimestamp(
     return kNoTimestamp;
 
   return ConvertFromTimeBase(time_base, timestamp);
+}
+
+void FFmpegDemuxerStream::StartEstimatingRendererReadBitrate() {
+  if (bitrate_estimator_) {
+    VLOG(1) << "Warning: Start bitrate estimation while estimating in process.";
+    bitrate_estimator_->Reset();
+    return;
+  }
+  bitrate_estimator_ = base::MakeUnique<BitrateEstimator>();
+}
+
+double FFmpegDemuxerStream::StopEstimatingRendererReadBitrate() {
+  if (!bitrate_estimator_)
+    return 0;
+  double bps = bitrate_estimator_->GetBitrate();
+  bitrate_estimator_.reset();
+  return bps;
 }
 
 //
@@ -1900,6 +1923,24 @@ void FFmpegDemuxer::SetLiveness(DemuxerStream::Liveness liveness) {
     if (stream)
       stream->SetLiveness(liveness);
   }
+}
+
+void FFmpegDemuxer::StartEstimatingRendererReadBitrate() {
+  for (const auto& stream : streams_) {
+    if (stream->type() == DemuxerStream::VIDEO && stream->IsEnabled()) {
+      stream->StartEstimatingRendererReadBitrate();
+      break;
+    }
+  }
+}
+
+double FFmpegDemuxer::StopEstimatingRendererReadBitrate() {
+  for (const auto& stream : streams_) {
+    if (stream->type() == DemuxerStream::VIDEO && stream->IsEnabled()) {
+      return stream->StopEstimatingRendererReadBitrate();
+    }
+  }
+  return 0;
 }
 
 }  // namespace media
