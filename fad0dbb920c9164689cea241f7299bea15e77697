@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c4783a2_8f6222c0",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-14T02:59:57Z",
+      "side": 1,
+      "message": "The trouble stems from this function where we need any old instance to have closed all its file handles. What if instead the net library exposed a function with a completion callback to destroy any files on disk, that function would have to figure it out internally how to close handles prior to deleting files.\n\nint DestroyCacheBackend(...,path, completion_callback);\n\nSo nothing about task runners needs to be provided or exposed. The destroy function is what we\u0027re tyring to compose at this level, let\u0027s just make the disk_cache lib provide that function entirely. Wdyt?",
+      "range": {
+        "startLine": 1940,
+        "startChar": 18,
+        "endLine": 1940,
+        "endChar": 24
+      },
+      "revId": "fad0dbb920c9164689cea241f7299bea15e77697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
