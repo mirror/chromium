@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae5a629a_e55c4ea9",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T21:08:35Z",
+      "side": 1,
+      "message": "I\u0027ll look into adding new PRESUBMIT checks similar to the ones we have for the arrow function on IOS9, see CL that added them at https://codereview.chromium.org/2576253002/. I think that makes more sense than preserving the checks I am removing with this CL.",
+      "parentUuid": "18d5e119_5ebb68ca",
+      "revId": "06681f512ff6ff221232b1d4ed8ca885b050803c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e3dbf52_786efb36",
         "filename": "docs/es6_chromium.md",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T02:36:38Z",
       "side": 1,
       "message": "why not just remove this section?",
+      "revId": "06681f512ff6ff221232b1d4ed8ca885b050803c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57fa8808_c474d477",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-14T21:08:35Z",
+      "side": 1,
+      "message": "Presumably some \"features to be discussed\" could end up in this section. Since I am not adding this in this CL, let\u0027s defer this for a separate CL/discussion.",
+      "parentUuid": "3e3dbf52_786efb36",
       "revId": "06681f512ff6ff221232b1d4ed8ca885b050803c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
