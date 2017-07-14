@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79877832_89b1c5a9",
+        "filename": "content/browser/ssl/ignore_errors_cert_verifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T13:34:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b034b9ce_da750f64",
+      "revId": "79e93f07c095802d0745029ae4d98d19a13cb98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0cb3482_b2269fa4",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "79e93f07c095802d0745029ae4d98d19a13cb98f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb98c660_b2fa291e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T13:34:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c0cb3482_b2269fa4",
+      "revId": "79e93f07c095802d0745029ae4d98d19a13cb98f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
