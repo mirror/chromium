@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18d5e119_5ebb68ca",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-14T02:36:38Z",
+      "side": 1,
+      "message": "If let/const still cause trouble in iOS, should we keep the style checks (and whitelist the directories we know are excluded on iOS)?\n\nI suspect very few WebUI developers ever test anything on iOS, so we really don\u0027t want to let a runtime error slip through since it\u0027ll take ages to discover.",
+      "revId": "06681f512ff6ff221232b1d4ed8ca885b050803c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3dbf52_786efb36",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-14T02:36:38Z",
+      "side": 1,
+      "message": "why not just remove this section?",
+      "revId": "06681f512ff6ff221232b1d4ed8ca885b050803c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
