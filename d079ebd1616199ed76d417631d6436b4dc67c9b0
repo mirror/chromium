@@ -69,6 +69,24 @@
       "revId": "d079ebd1616199ed76d417631d6436b4dc67c9b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b78ba43_bd7eb34b",
+        "filename": "third_party/WebKit/Source/core/html/media/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-14T17:47:16Z",
+      "side": 1,
+      "message": "Yeah, I begin to think that having a helper function in platform/ is nice.\n\nIf GURL is used in many places in the boundary code in core/, it would be hard to implement a presubmit check that forbids GURL in normal code in core/.\n\nIf we have a helper function in platform/, the presubmit check can simply forbid GURL in core/.",
+      "parentUuid": "df6747ed_e4c5a6a8",
+      "revId": "d079ebd1616199ed76d417631d6436b4dc67c9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
