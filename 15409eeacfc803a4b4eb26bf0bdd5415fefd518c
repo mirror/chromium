@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bdb39e5_606f8314",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-14T19:09:22Z",
+      "side": 1,
+      "message": "I think this might be the wrong block to add this in.\n\nThis occurs when there are no touch listeners for the sequence which might be a common case but not all the cases.\n\nWould it be better to log it when you actually use the touch action?",
+      "range": {
+        "startLine": 271,
+        "startChar": 14,
+        "endLine": 271,
+        "endChar": 23
+      },
+      "revId": "15409eeacfc803a4b4eb26bf0bdd5415fefd518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565457ee_9e6e191e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 79758,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-14T19:09:22Z",
+      "side": 1,
+      "message": "shouldn\u0027t you set the enum here?",
+      "range": {
+        "startLine": 79758,
+        "startChar": 49,
+        "endLine": 79758,
+        "endChar": 50
+      },
+      "revId": "15409eeacfc803a4b4eb26bf0bdd5415fefd518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
