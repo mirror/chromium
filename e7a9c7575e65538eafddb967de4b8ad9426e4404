@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c6be919_a969b8a5",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T22:58:36Z",
+      "side": 1,
+      "message": "Is it valid case? May be DCHECK?",
+      "range": {
+        "startLine": 256,
+        "startChar": 25,
+        "endLine": 256,
+        "endChar": 75
+      },
+      "revId": "e7a9c7575e65538eafddb967de4b8ad9426e4404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11535a9_3c174c6e",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T22:58:36Z",
+      "side": 1,
+      "message": "Not sure about best name. Looks too long.\nWhat is about \u0027CanIgnoreAllOptInPreferences\u0027 ?",
+      "range": {
+        "startLine": 310,
+        "startChar": 5,
+        "endLine": 310,
+        "endChar": 55
+      },
+      "revId": "e7a9c7575e65538eafddb967de4b8ad9426e4404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f55580_595d7b74",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T22:58:36Z",
+      "side": 1,
+      "message": "nit: GetConnector()\n     GetDeviceManagementService() ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 40,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "e7a9c7575e65538eafddb967de4b8ad9426e4404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec3e0f4_28a4e0a1",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T22:58:36Z",
+      "side": 1,
+      "message": "nit: const GURL?",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 6
+      },
+      "revId": "e7a9c7575e65538eafddb967de4b8ad9426e4404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08790b8c_51929499",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T22:58:36Z",
+      "side": 1,
+      "message": "nit: DCHECK(unused_auth_code.empty())?",
+      "range": {
+        "startLine": 203,
+        "startChar": 23,
+        "endLine": 203,
+        "endChar": 39
+      },
+      "revId": "e7a9c7575e65538eafddb967de4b8ad9426e4404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a3673a_fc31953a",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T22:58:36Z",
+      "side": 1,
+      "message": "nit: LOG(ERROR) for consistency?",
+      "revId": "e7a9c7575e65538eafddb967de4b8ad9426e4404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
