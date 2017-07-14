@@ -217,8 +217,9 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
 
     bool should_paint_in_viewport_space =
         (*it)->Attachment() == kFixedBackgroundAttachment;
+    BoxPainter box_painter(layout_view_);
     if (should_paint_in_viewport_space) {
-      BoxPainter::PaintFillLayer(layout_view_, paint_info, Color(), **it,
+      box_painter.PaintFillLayer(paint_info, Color(), **it,
                                  LayoutRect(LayoutRect::InfiniteIntRect()),
                                  kBackgroundBleedNone, geometry);
     } else {
@@ -226,7 +227,7 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
       // TODO(trchen): We should be able to handle 3D-transformed root
       // background with slimming paint by using transform display items.
       context.ConcatCTM(transform.ToAffineTransform());
-      BoxPainter::PaintFillLayer(layout_view_, paint_info, Color(), **it,
+      box_painter.PaintFillLayer(paint_info, Color(), **it,
                                  LayoutRect(paint_rect), kBackgroundBleedNone,
                                  geometry);
       context.Restore();

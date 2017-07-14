@@ -46,16 +46,15 @@ class BoxPainter : public BoxPainterBase {
   void PaintBoxDecorationBackgroundWithRect(const PaintInfo&,
                                             const LayoutPoint&,
                                             const LayoutRect&);
-  static void PaintFillLayer(const LayoutBoxModelObject&,
-                             const PaintInfo&,
-                             const Color&,
-                             const FillLayer&,
-                             const LayoutRect&,
-                             BackgroundBleedAvoidance,
-                             BackgroundImageGeometry&,
-                             const InlineFlowBox* = nullptr,
-                             const LayoutSize& = LayoutSize(),
-                             SkBlendMode = SkBlendMode::kSrcOver);
+  void PaintFillLayer(const PaintInfo&,
+                      const Color&,
+                      const FillLayer&,
+                      const LayoutRect&,
+                      BackgroundBleedAvoidance,
+                      BackgroundImageGeometry&,
+                      const InlineFlowBox* = nullptr,
+                      const LayoutSize& = LayoutSize(),
+                      SkBlendMode = SkBlendMode::kSrcOver);
   LayoutRect BoundsForDrawingRecorder(const PaintInfo&,
                                       const LayoutPoint& adjusted_paint_offset);
 
@@ -68,6 +67,13 @@ class BoxPainter : public BoxPainterBase {
                        const LayoutRect&,
                        const Color& background_color,
                        BackgroundBleedAvoidance = kBackgroundBleedNone);
+
+  LayoutRectOutsets BorderOutsets(const BoxPainterBase::FillLayerInfo&) const;
+  LayoutRectOutsets PaddingOutsets(const BoxPainterBase::FillLayerInfo&) const;
+  LayoutRect AdjustForScrolledContent(const PaintInfo&,
+                                      const BoxPainterBase::FillLayerInfo&,
+                                      const LayoutRect&,
+                                      const LayoutRectOutsets& border) const;
   Node* GetNode();
 
   const LayoutBox& layout_box_;
