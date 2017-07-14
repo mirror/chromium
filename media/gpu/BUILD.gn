@@ -383,6 +383,7 @@ component("gpu") {
 if (is_win || is_android || is_chromeos) {
   test("video_decode_accelerator_unittest") {
     sources = [
+      "video_accelerator_unittest_helpers.cc",
       "video_accelerator_unittest_helpers.h",
     ]
 
@@ -517,6 +518,7 @@ if (is_chromeos || is_mac || is_win) {
       ":gpu_config",
     ]
     sources = [
+      "video_accelerator_unittest_helpers.cc",
       "video_accelerator_unittest_helpers.h",
       "video_encode_accelerator_unittest.cc",
     ]
@@ -552,6 +554,7 @@ if (is_chromeos) {
     ]
     sources = [
       "jpeg_decode_accelerator_unittest.cc",
+      "video_accelerator_unittest_helpers.cc",
       "video_accelerator_unittest_helpers.h",
     ]
     if (use_x11) {

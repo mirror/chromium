@@ -11,6 +11,7 @@
 
 #include "base/synchronization/condition_variable.h"
 #include "base/synchronization/lock.h"
+#include "media/base/video_frame.h"
 
 namespace media {
 
@@ -57,6 +58,20 @@ StateEnum ClientStateNotification<StateEnum>::Wait() {
   pending_states_for_notification_.pop();
   return ret;
 }
+
+struct FrameStats {
+  int width;
+  int height;
+  double ssim_y;
+  double ssim_u;
+  double ssim_v;
+  uint64_t mse_y;
+  uint64_t mse_u;
+  uint64_t mse_v;
+
+  static FrameStats CompareFrames(const VideoFrame& original_frame,
+                                  const VideoFrame& output_frame);
+};
 
 }  // namespace media
 
