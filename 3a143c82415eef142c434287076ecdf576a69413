@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed934c7e_0ab92900",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-14T17:31:17Z",
+      "side": 1,
+      "message": "The description mentions calling sdkmanager --update, but this doesn\u0027t appear to pass --update?",
+      "revId": "3a143c82415eef142c434287076ecdf576a69413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
