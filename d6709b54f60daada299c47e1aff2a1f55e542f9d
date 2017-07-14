@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "265d224f_5b69a8b7",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-14T20:12:20Z",
+      "side": 1,
+      "message": "For now this code is duplicated, though it could be shared. Happy to move\nit if desired. If so please tell me where.",
+      "revId": "d6709b54f60daada299c47e1aff2a1f55e542f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
