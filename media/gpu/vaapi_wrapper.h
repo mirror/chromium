@@ -27,12 +27,10 @@
 #include "media/video/jpeg_decode_accelerator.h"
 #include "media/video/video_decode_accelerator.h"
 #include "media/video/video_encode_accelerator.h"
-#include "third_party/libva/va/va.h"
-#include "third_party/libva/va/va_vpp.h"
 #include "ui/gfx/geometry/size.h"
 
 #if defined(USE_X11)
-#include "third_party/libva/va/va_x11.h"
+#include <va/va_x11.h>
 #endif  // USE_X11
 
 #if defined(USE_OZONE)

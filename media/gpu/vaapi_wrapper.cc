@@ -25,8 +25,8 @@
 #if defined(USE_X11)
 #include "ui/gfx/x/x11_types.h"  // nogncheck
 #elif defined(USE_OZONE)
-#include "third_party/libva/va/drm/va_drm.h"
-#include "third_party/libva/va/va_drmcommon.h"
+#include <va/va_drm.h>
+#include <va/va_drmcommon.h>
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
