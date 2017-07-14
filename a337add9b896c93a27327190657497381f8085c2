@@ -70,6 +70,24 @@
       "revId": "a337add9b896c93a27327190657497381f8085c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1592bc99_e73c19a9",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-14T20:36:28Z",
+      "side": 0,
+      "message": "Hm, first now I realised that there is of course no content::RunAllBlockingPoolTasksUntilIdle on in //ios. I think the only way to spin message loops is WaitForBackgroundTasks(); which certainly does not help by itself if placed at the end of the test.",
+      "parentUuid": "f7f17708_b92e080a",
+      "revId": "a337add9b896c93a27327190657497381f8085c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
