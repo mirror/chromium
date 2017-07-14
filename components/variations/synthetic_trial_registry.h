@@ -35,8 +35,6 @@ class SyntheticTrialRegistry {
   friend metrics::MetricsService;
   FRIEND_TEST_ALL_PREFIXES(SyntheticTrialRegistryTest, RegisterSyntheticTrial);
   FRIEND_TEST_ALL_PREFIXES(SyntheticTrialRegistryTest,
-                           RegisterSyntheticMultiGroupFieldTrial);
-  FRIEND_TEST_ALL_PREFIXES(SyntheticTrialRegistryTest,
                            GetSyntheticFieldTrialActiveGroups);
 
   // Registers a field trial name and group to be used to annotate a UMA report
@@ -49,13 +47,6 @@ class SyntheticTrialRegistry {
   // Note: Should not be used to replace trials that were registered with
   // RegisterMultiGroupSyntheticFieldTrial().
   void RegisterSyntheticFieldTrial(const SyntheticTrialGroup& trial_group);
-
-  // Similar to RegisterSyntheticFieldTrial(), but registers a synthetic trial
-  // that has multiple active groups for a given trial name hash. Any previous
-  // groups registered for |trial_name_hash| will be replaced.
-  void RegisterSyntheticMultiGroupFieldTrial(
-      uint32_t trial_name_hash,
-      const std::vector<uint32_t>& group_name_hashes);
 
   // Public accessor that returns the list of synthetic field trials. It must
   // only be used for testing.

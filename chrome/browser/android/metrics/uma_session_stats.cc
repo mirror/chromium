@@ -93,14 +93,6 @@ void UmaSessionStats::RegisterSyntheticFieldTrial(
                                                             group_name);
 }
 
-// static
-void UmaSessionStats::RegisterSyntheticMultiGroupFieldTrial(
-    const std::string& trial_name,
-    const std::vector<uint32_t>& group_name_hashes) {
-  ChromeMetricsServiceAccessor::RegisterSyntheticMultiGroupFieldTrial(
-      trial_name, group_name_hashes);
-}
-
 // Updates metrics reporting state managed by native code. This should only be
 // called when consent is changing, and UpdateMetricsServiceState() should be
 // called immediately after for metrics services to be started or stopped as

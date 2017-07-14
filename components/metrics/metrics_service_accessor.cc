@@ -34,42 +34,11 @@ bool MetricsServiceAccessor::RegisterSyntheticFieldTrial(
     MetricsService* metrics_service,
     base::StringPiece trial_name,
     base::StringPiece group_name) {
-  return RegisterSyntheticFieldTrialWithNameAndGroupHash(
-      metrics_service, HashName(trial_name), HashName(group_name));
-}
-
-// static
-bool MetricsServiceAccessor::RegisterSyntheticMultiGroupFieldTrial(
-    MetricsService* metrics_service,
-    base::StringPiece trial_name,
-    const std::vector<uint32_t>& group_name_hashes) {
   if (!metrics_service)
     return false;
 
-  metrics_service->synthetic_trial_registry()
-      ->RegisterSyntheticMultiGroupFieldTrial(HashName(trial_name),
-                                              group_name_hashes);
-  return true;
-}
-
-// static
-bool MetricsServiceAccessor::RegisterSyntheticFieldTrialWithNameHash(
-    MetricsService* metrics_service,
-    uint32_t trial_name_hash,
-    base::StringPiece group_name) {
-  return RegisterSyntheticFieldTrialWithNameAndGroupHash(
-      metrics_service, trial_name_hash, HashName(group_name));
-}
-
-// static
-bool MetricsServiceAccessor::RegisterSyntheticFieldTrialWithNameAndGroupHash(
-    MetricsService* metrics_service,
-    uint32_t trial_name_hash,
-    uint32_t group_name_hash) {
-  if (!metrics_service)
-    return false;
-
-  variations::SyntheticTrialGroup trial_group(trial_name_hash, group_name_hash);
+  variations::SyntheticTrialGroup trial_group(HashName(trial_name),
+                                              HashName(group_name));
   metrics_service->synthetic_trial_registry()->RegisterSyntheticFieldTrial(
       trial_group);
   return true;

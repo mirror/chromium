@@ -98,48 +98,6 @@ TEST_F(SyntheticTrialRegistryTest, RegisterSyntheticTrial) {
   EXPECT_TRUE(HasSyntheticTrial(synthetic_trials, "TestTrial3", "Group3"));
 }
 
-TEST_F(SyntheticTrialRegistryTest, RegisterSyntheticMultiGroupFieldTrial) {
-  SyntheticTrialRegistry registry;
-
-  // Register a synthetic trial TestTrial1 with groups A and B.
-  uint32_t trial_name_hash = metrics::HashName("TestTrial1");
-  std::vector<uint32_t> group_name_hashes = {metrics::HashName("A"),
-                                             metrics::HashName("B")};
-  registry.RegisterSyntheticMultiGroupFieldTrial(trial_name_hash,
-                                                 group_name_hashes);
-  // Ensure that time has advanced by at least a tick before proceeding.
-  WaitUntilTimeChanges(base::TimeTicks::Now());
-
-  std::vector<ActiveGroupId> synthetic_trials;
-  registry.GetSyntheticFieldTrialsOlderThan(base::TimeTicks::Now(),
-                                            &synthetic_trials);
-  EXPECT_EQ(2U, synthetic_trials.size());
-  EXPECT_TRUE(HasSyntheticTrial(synthetic_trials, "TestTrial1", "A"));
-  EXPECT_TRUE(HasSyntheticTrial(synthetic_trials, "TestTrial1", "B"));
-
-  // Change the group for the trial to a single group.
-  group_name_hashes = {metrics::HashName("X")};
-  registry.RegisterSyntheticMultiGroupFieldTrial(trial_name_hash,
-                                                 group_name_hashes);
-  // Ensure that time has advanced by at least a tick before proceeding.
-  WaitUntilTimeChanges(base::TimeTicks::Now());
-
-  registry.GetSyntheticFieldTrialsOlderThan(base::TimeTicks::Now(),
-                                            &synthetic_trials);
-  EXPECT_EQ(1U, synthetic_trials.size());
-  EXPECT_TRUE(HasSyntheticTrial(synthetic_trials, "TestTrial1", "X"));
-
-  // Register a trial with no groups, which should effectively remove the trial.
-  group_name_hashes.clear();
-  registry.RegisterSyntheticMultiGroupFieldTrial(trial_name_hash,
-                                                 group_name_hashes);
-  // Ensure that time has advanced by at least a tick before proceeding.
-  WaitUntilTimeChanges(base::TimeTicks::Now());
-
-  registry.GetSyntheticFieldTrialsOlderThan(base::TimeTicks::Now(),
-                                            &synthetic_trials);
-}
-
 TEST_F(SyntheticTrialRegistryTest, GetSyntheticFieldTrialActiveGroups) {
   SyntheticTrialRegistry registry;
 
