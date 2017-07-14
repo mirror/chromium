@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21ee990b_69af2273",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-14T16:36:42Z",
+      "side": 1,
+      "message": "Under what circumstance safe_browsing_service_ would be null? I thought it shouldn\u0027t be null when we reach here?",
+      "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556bdbcf_7f6dadf1",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-14T16:36:42Z",
+      "side": 1,
+      "message": "Does it make sense to:\n- put line 1322-1325 in a method, say, InitSafeBrowsingIfNecessary().\n- remove UsingSafeBrowsingMojoService.\n- directly check base::FeatureList::IsEnabled(features::kNetworkService) and call InitSafeBrowsingIfNecessary() in ChromeContentRendererClient::WillSendRequest().",
+      "revId": "98686b4e12a1d4f19d0e6b8f5425e52562a190dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
