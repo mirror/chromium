@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b186dd87_6b8d27f2",
+        "filename": "components/viz/common/gpu/context_cache_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-07-14T02:59:51Z",
+      "side": 0,
+      "message": "You mean convert source_set to component?\n\nFrom this https://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/style_guide.md#Source-sets-versus-static-libraries, I didn\u0027t understand why source_set will lead to dup. Any hints on this?\n\nBTW, there is already one libcommon.so, after rename above source_set to component, it will report Two or more targets generate the same output, libcommon.so, and collisions:\n  //components/gcm_driver/common:common\n  //components/viz/common:common",
+      "parentUuid": "f24ff7fb_e1a09ab8",
+      "revId": "5cb481239f13fdd3454fe56aadcb56d7ffb822d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "189a36d0_8ff50cfc",
         "filename": "components/viz/common/gpu/context_provider.h",
         "patchSetId": 12
