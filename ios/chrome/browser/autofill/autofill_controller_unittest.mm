@@ -262,6 +262,28 @@ void AutofillControllerTest::ExpectHappinessMetric(
   histogram_tester_->ExpectBucketCount("Autofill.UserHappiness", metric, 1);
 }
 
+// AutofillControllerTest extended with a TestConsumer.
+class AutofillControllerTestWithTestConsumer : public AutofillControllerTest {
+ public:
+  AutofillControllerTestWithTestConsumer() = default;
+  ~AutofillControllerTestWithTestConsumer() override = default;
+
+ protected:
+  void TearDown() override;
+
+  TestConsumer consumer_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(AutofillControllerTestWithTestConsumer);
+};
+
+void AutofillControllerTestWithTestConsumer::TearDown() {
+  AutofillControllerTest::TearDown();
+  // TearDown posts tasks which might still reference |consumer_|. Run them
+  // before |consumer_| is destroyed.
+  WaitForBackgroundTasks();
+}
+
 // Checks that viewing an HTML page containing a form results in the form being
 // registered as a FormStructure by the AutofillManager.
 TEST_F(AutofillControllerTest, ReadForm) {
@@ -434,29 +456,28 @@ TEST_F(AutofillControllerTest, MultipleProfileSuggestions) {
 // Check that an HTML page containing a key/value type form which is submitted
 // with scripts (simulating user form submission) results in data being
 // successfully registered.
-TEST_F(AutofillControllerTest, KeyValueImport) {
+TEST_F(AutofillControllerTestWithTestConsumer, KeyValueImport) {
   LoadHtml(kKeyValueFormHtml);
   ExecuteJavaScript(@"document.forms[0].greeting.value = 'Hello'");
   scoped_refptr<AutofillWebDataService> web_data_service =
       ios::WebDataServiceFactory::GetAutofillWebDataForBrowserState(
           chrome_browser_state_.get(), ServiceAccessType::EXPLICIT_ACCESS);
-  __block TestConsumer consumer;
   const int limit = 1;
   web_data_service->GetFormValuesForElementName(
-      base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer);
+      base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer_);
   WaitForBackgroundTasks();
   // No value should be returned before anything is loaded via form submission.
-  ASSERT_EQ(0U, consumer.result_.size());
+  ASSERT_EQ(0U, consumer_.result_.size());
   ExecuteJavaScript(@"submit.click()");
   WaitForCondition(^bool {
     web_data_service->GetFormValuesForElementName(
-        base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer);
-    return consumer.result_.size();
+        base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer_);
+    return !consumer_.result_.empty();
   });
   WaitForBackgroundTasks();
   // One result should be returned, matching the filled value.
-  ASSERT_EQ(1U, consumer.result_.size());
-  EXPECT_EQ(base::UTF8ToUTF16("Hello"), consumer.result_[0]);
+  ASSERT_EQ(1U, consumer_.result_.size());
+  EXPECT_EQ(base::UTF8ToUTF16("Hello"), consumer_.result_[0]);
 };
 
 void AutofillControllerTest::SetUpKeyValueData() {
