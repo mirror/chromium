@@ -22,6 +22,30 @@
       "revId": "3bed84902d8f7d602900c73b639823be8196d2f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8546ae_62867d4b",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-14T18:40:15Z",
+      "side": 1,
+      "message": "Done. Not super hot on the naming, so very open to suggestions.\n\nFWIW, this is still inherently sortable, but I couldn\u0027t figure out a straightforward way to binary search it with STL (and didn\u0027t press the issue since I think the number of modules is slow in practice).",
+      "parentUuid": "4b28d30d_9ca1db4d",
+      "range": {
+        "startLine": 276,
+        "startChar": 22,
+        "endLine": 276,
+        "endChar": 55
+      },
+      "revId": "3bed84902d8f7d602900c73b639823be8196d2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
