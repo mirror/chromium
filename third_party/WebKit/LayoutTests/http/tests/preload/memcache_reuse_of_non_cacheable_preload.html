@@ -30,6 +30,7 @@ var loadTimestampWithXHR = t.step_func(function() {
 var loadTimestampWithLink = (function() {
     var l = document.createElement('link');
     l.setAttribute('rel', 'preload');
+    l.setAttribute('crossorigin', 'use-credentials');
     l.setAttribute('href', "resources/timestamp.php");
     l.setAttribute('as', 'fetch');
     l.onload = loadTimestampWithXHR;
