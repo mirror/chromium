@@ -7,24 +7,22 @@
 #include <memory>
 #include <utility>
 
+#include "base/bind.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
-#include "content/public/test/test_browser_thread.h"
+#include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "extensions/browser/value_store/test_value_store_factory.h"
 #include "extensions/common/extension_paths.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using content::BrowserThread;
-
 class ValueStoreFrontendTest : public testing::Test {
  public:
-  ValueStoreFrontendTest()
-      : ui_thread_(BrowserThread::UI, base::MessageLoop::current()),
-        file_thread_(BrowserThread::FILE, base::MessageLoop::current()) {
-  }
+  ValueStoreFrontendTest() = default;
+  ~ValueStoreFrontendTest() override = default;
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
@@ -41,7 +39,7 @@ class ValueStoreFrontendTest : public testing::Test {
   }
 
   void TearDown() override {
-    base::RunLoop().RunUntilIdle();  // wait for storage to delete
+    content::RunAllBlockingPoolTasksUntilIdle();
     storage_.reset();
   }
 
@@ -54,7 +52,7 @@ class ValueStoreFrontendTest : public testing::Test {
   bool Get(const std::string& key, std::unique_ptr<base::Value>* output) {
     storage_->Get(key, base::Bind(&ValueStoreFrontendTest::GetAndWait,
                                   base::Unretained(this), output));
-    base::RunLoop().Run();  // wait for GetAndWait
+    content::RunAllBlockingPoolTasksUntilIdle();
     return !!output->get();
   }
 
@@ -62,16 +60,13 @@ class ValueStoreFrontendTest : public testing::Test {
   void GetAndWait(std::unique_ptr<base::Value>* output,
                   std::unique_ptr<base::Value> result) {
     *output = std::move(result);
-    base::MessageLoop::current()->QuitWhenIdle();
   }
 
+  content::TestBrowserThreadBundle browser_thread_bundle_;
   scoped_refptr<extensions::TestValueStoreFactory> factory_;
   std::unique_ptr<ValueStoreFrontend> storage_;
   base::ScopedTempDir temp_dir_;
   base::FilePath db_path_;
-  base::MessageLoop message_loop_;
-  content::TestBrowserThread ui_thread_;
-  content::TestBrowserThread file_thread_;
 };
 
 TEST_F(ValueStoreFrontendTest, GetExistingData) {
@@ -98,6 +93,8 @@ TEST_F(ValueStoreFrontendTest, ChangesPersistAfterReload) {
   storage_->Set("key0", std::unique_ptr<base::Value>(new base::Value(0)));
   storage_->Set("key1", std::unique_ptr<base::Value>(new base::Value("new1")));
   storage_->Remove("key2");
+
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   // Reload the DB and test our changes.
   ResetStorage();
