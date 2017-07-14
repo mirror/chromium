@@ -20,10 +20,12 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/test/histogram_tester.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/os_crypt/ie7_password_win.h"
+#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/password_manager_test_utils.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/browser/webdata/logins_table.h"
@@ -33,6 +35,7 @@
 #include "components/webdata/common/web_database_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "crypto/wincrypt_shim.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -195,6 +198,79 @@ MATCHER(EmptyWDResult, "") {
              const WDResult<std::vector<std::unique_ptr<PasswordForm>>>*>(arg)
       ->GetValue()
       .empty();
+}
+
+TEST_F(PasswordStoreWinTest, ReportIE7NoImport) {
+  base::HistogramTester histogram_tester;
+
+  store_ = CreatePasswordStore();
+  EXPECT_TRUE(store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr));
+
+  MockPasswordStoreConsumer consumer;
+
+  PasswordFormData form_data = {
+      PasswordForm::SCHEME_HTML,
+      "http://example.com/",
+      "http://example.com/origin",
+      "http://example.com/action",
+      L"submit_element",
+      L"username_element",
+      L"password_element",
+      L"",
+      L"",
+      true,
+      1,
+  };
+  PasswordStore::FormDigest form(
+      *CreatePasswordFormFromDataForTesting(form_data));
+
+  EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(_));
+
+  store_->GetLogins(form, &consumer);
+  content::RunAllBlockingPoolTasksUntilIdle();
+  histogram_tester.ExpectUniqueSample(
+      "PasswordManager.IE7LookUpResult",
+      password_manager::metrics_util::IE7_RESULTS_ABSENT, 1);
+}
+
+TEST_F(PasswordStoreWinTest, ReportIE7Import) {
+  base::HistogramTester histogram_tester;
+
+  IE7PasswordInfo password_info;
+  ASSERT_TRUE(CreateIE7PasswordInfo(L"http://example.com/origin",
+                                    base::Time::FromDoubleT(1),
+                                    &password_info));
+  // This IE7 password will be retrieved by the GetLogins call.
+  wds_->AddIE7Login(password_info);
+
+  store_ = CreatePasswordStore();
+  EXPECT_TRUE(store_->Init(syncer::SyncableService::StartSyncFlare(), nullptr));
+
+  MockPasswordStoreConsumer consumer;
+
+  PasswordFormData form_data = {
+      PasswordForm::SCHEME_HTML,
+      "http://example.com/",
+      "http://example.com/origin",
+      "http://example.com/action",
+      L"submit_element",
+      L"username_element",
+      L"password_element",
+      L"",
+      L"",
+      true,
+      1,
+  };
+  PasswordStore::FormDigest form(
+      *CreatePasswordFormFromDataForTesting(form_data));
+
+  EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(_));
+
+  store_->GetLogins(form, &consumer);
+  content::RunAllBlockingPoolTasksUntilIdle();
+  histogram_tester.ExpectUniqueSample(
+      "PasswordManager.IE7LookUpResult",
+      password_manager::metrics_util::IE7_RESULTS_PRESENT, 1);
 }
 
 // Hangs flakily, http://crbug.com/71385.
