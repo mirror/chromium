@@ -33,12 +33,10 @@ void ConnectFrameSinkManager() {
       mojo::MakeRequest(&manager_mojo);
 
   // Make the Mojo connections on both ends.
-  g_frame_sink_manager_impl->BindAndSetClient(
-      std::move(manager_mojo_request), base::SequencedTaskRunnerHandle::Get(),
-      std::move(host_mojo));
+  g_frame_sink_manager_impl->BindAndSetClient(std::move(manager_mojo_request),
+                                              nullptr, std::move(host_mojo));
   g_host_frame_sink_manager->BindAndSetManager(
-      std::move(host_mojo_request), base::SequencedTaskRunnerHandle::Get(),
-      std::move(manager_mojo));
+      std::move(host_mojo_request), nullptr, std::move(manager_mojo));
 }
 
 }  // namespace

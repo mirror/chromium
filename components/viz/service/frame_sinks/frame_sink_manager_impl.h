@@ -23,7 +23,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace base {
-class SequencedTaskRunner;
+class SingleThreadTaskRunner;
 }
 
 namespace viz {
@@ -47,13 +47,13 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
                        DisplayProvider* display_provider);
   ~FrameSinkManagerImpl() override;
 
-  viz::FrameSinkManager* frame_sink_manager() { return &manager_; }
+  FrameSinkManager* frame_sink_manager() { return &manager_; }
 
   // Binds |this| as a FrameSinkManager for |request| on |task_runner|. On Mac
   // |task_runner| will be the resize helper task runner. May only be called
   // once.
   void BindAndSetClient(cc::mojom::FrameSinkManagerRequest request,
-                        scoped_refptr<base::SequencedTaskRunner> task_runner,
+                        scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                         cc::mojom::FrameSinkManagerClientPtr client);
 
   // cc::mojom::FrameSinkManager implementation:
@@ -103,7 +103,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // FrameSinkManager should be the first object constructed and the last object
   // destroyed in order to ensure that all other objects that depend on it have
   // access to a valid pointer for the entirety of their lifetimes.
-  viz::FrameSinkManager manager_;
+  FrameSinkManager manager_;
 
   // Provides a Display for CreateRootCompositorFrameSink().
   DisplayProvider* const display_provider_;
