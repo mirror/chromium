@@ -42,7 +42,7 @@ const char kModalParamsUserGestureKey[] = "require_gesture";
 // static
 void PermissionDialogDelegate::Create(
     content::WebContents* web_contents,
-    PermissionPromptAndroid* permission_prompt) {
+    const base::WeakPtr<PermissionPromptAndroid>& permission_prompt) {
   DCHECK(web_contents);
 
   // If we don't have a tab, just act as though the prompt was dismissed.
@@ -226,7 +226,7 @@ void PermissionDialogDelegate::Destroy(JNIEnv* env,
 PermissionDialogDelegate::PermissionDialogDelegate(
     TabAndroid* tab,
     std::unique_ptr<PermissionInfoBarDelegate> infobar_delegate,
-    PermissionPromptAndroid* permission_prompt)
+    const base::WeakPtr<PermissionPromptAndroid>& permission_prompt)
     : content::WebContentsObserver(tab->web_contents()),
       tab_(tab),
       infobar_delegate_(std::move(infobar_delegate)),
