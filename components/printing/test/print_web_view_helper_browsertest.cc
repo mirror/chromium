@@ -569,7 +569,7 @@ class MAYBE_PrintWebViewHelperPreviewTest : public PrintWebViewHelperTestBase {
 
   void VerifyPrintPreviewGenerated(bool expect_generated) {
     const IPC::Message* preview_msg =
-        render_thread_->sink().GetUniqueMessageMatching(
+        render_thread_->sink().GetFirstMessageMatching(
             PrintHostMsg_MetafileReadyForPrinting::ID);
     bool got_preview_msg = !!preview_msg;
     ASSERT_EQ(expect_generated, got_preview_msg);
@@ -579,6 +579,13 @@ class MAYBE_PrintWebViewHelperPreviewTest : public PrintWebViewHelperTestBase {
       EXPECT_NE(0, std::get<0>(preview_param).document_cookie);
       EXPECT_NE(0, std::get<0>(preview_param).expected_pages_count);
       EXPECT_NE(0U, std::get<0>(preview_param).data_size);
+
+      // Ensure it is not unique. Should be a second message to indicate that
+      // all data was generated.
+      const IPC::Message* preview_msg_unique =
+          render_thread_->sink().GetUniqueMessageMatching(
+              PrintHostMsg_MetafileReadyForPrinting::ID);
+      ASSERT_TRUE(!preview_msg_unique);
     }
   }
 

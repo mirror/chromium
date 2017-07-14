@@ -52,6 +52,10 @@ class PrintPreviewMessageHandler
   // Gets the PrintPreviewUI associated with the WebContents being observed.
   PrintPreviewUI* GetPrintPreviewUI();
 
+  // Whether a message has already been sent to the UI for the preview document
+  // with cookie |cookie|. Helper for message handlers.
+  bool UIMessageSentForCookie(int cookie);
+
   // Message handlers.
   void OnRequestPrintPreview(
       content::RenderFrameHost* render_frame_host,
@@ -70,6 +74,7 @@ class PrintPreviewMessageHandler
   void OnSetOptionsFromDocument(
       const PrintHostMsg_SetOptionsFromDocument_Params& params);
 
+  std::vector<int> cookies_;
   DISALLOW_COPY_AND_ASSIGN(PrintPreviewMessageHandler);
 };
 
