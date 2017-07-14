@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc0c4910_7dc35659",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-14T02:46:18Z",
+      "side": 1,
+      "message": "The key here is to delay the setState operation until the view is appeared.",
+      "range": {
+        "startLine": 303,
+        "startChar": 7,
+        "endLine": 303,
+        "endChar": 12
+      },
+      "revId": "105320188c5c993dd47e231566a48cc220f34a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa505603_1c692379",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-14T02:46:18Z",
+      "side": 1,
+      "message": "Turns out the problem is keyboardWillShow may be called multiple times. For the second time _activityIndicator.frame.origin.y will not be equal to kTopPadding.\n\nWe probably want to get rid of the fixed kTopPadding since that looks terrible in landscape mode... We could attach the activity indicator to the centerY anchor of the view with some adjustments.",
+      "range": {
+        "startLine": 332,
+        "startChar": 30,
+        "endLine": 332,
+        "endChar": 48
+      },
+      "revId": "105320188c5c993dd47e231566a48cc220f34a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
