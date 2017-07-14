@@ -79,10 +79,10 @@
 #include "chrome/browser/android/banners/app_banner_manager_android.h"
 #include "chrome/browser/android/data_usage/data_use_tab_helper.h"
 #include "chrome/browser/android/offline_pages/offline_page_tab_helper.h"
-#include "chrome/browser/android/offline_pages/recent_tab_helper.h"
 #include "chrome/browser/android/search_geolocation/search_geolocation_disclosure_tab_helper.h"
 #include "chrome/browser/android/voice_search_tab_helper.h"
 #include "chrome/browser/android/webapps/single_tab_mode_tab_helper.h"
+#include "chrome/browser/offline_pages/recent_tab_helper.h"
 #include "chrome/browser/ui/android/context_menu_helper.h"
 #include "chrome/browser/ui/android/view_android_helper.h"
 #else

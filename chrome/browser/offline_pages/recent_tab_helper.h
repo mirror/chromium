@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_ANDROID_OFFLINE_PAGES_RECENT_TAB_HELPER_H_
-#define CHROME_BROWSER_ANDROID_OFFLINE_PAGES_RECENT_TAB_HELPER_H_
+#ifndef CHROME_BROWSER_OFFLINE_PAGES_RECENT_TAB_HELPER_H_
+#define CHROME_BROWSER_OFFLINE_PAGES_RECENT_TAB_HELPER_H_
 
 #include <memory>
 #include <vector>
@@ -167,4 +167,4 @@ class RecentTabHelper
 
 }  // namespace offline_pages
 
-#endif  // CHROME_BROWSER_ANDROID_OFFLINE_PAGES_RECENT_TAB_HELPER_H_
+#endif  // CHROME_BROWSER_OFFLINE_PAGES_RECENT_TAB_HELPER_H_

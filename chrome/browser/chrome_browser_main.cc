@@ -179,8 +179,8 @@
 #include "ui/base/resource/resource_bundle.h"
 
 #if defined(OS_ANDROID)
-#include "chrome/browser/android/offline_pages/offline_page_info_handler.h"
 #include "chrome/browser/metrics/thread_watcher_android.h"
+#include "chrome/browser/offline_pages/offline_page_info_handler.h"
 #include "ui/base/resource/resource_bundle_android.h"
 #else
 #include "chrome/browser/feedback/feedback_profile_observer.h"

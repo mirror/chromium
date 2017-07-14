@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/offline_pages/recent_tab_helper.h"
+#include "chrome/browser/offline_pages/recent_tab_helper.h"
 
 #include <memory>
 
@@ -13,9 +13,9 @@
 #include "base/test/scoped_mock_time_message_loop_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
-#include "chrome/browser/android/offline_pages/test_offline_page_model_builder.h"
-#include "chrome/browser/android/offline_pages/test_request_coordinator_builder.h"
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
+#include "chrome/browser/offline_pages/test_offline_page_model_builder.h"
+#include "chrome/browser/offline_pages/test_request_coordinator_builder.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/offline_page_feature.h"

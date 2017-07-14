@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/android/offline_pages/offline_page_info_handler.h"
+#include "chrome/browser/offline_pages/offline_page_info_handler.h"
 
 #include "base/strings/string_util.h"
 #include "components/offline_pages/core/request_header/offline_page_header.h"
