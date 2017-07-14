@@ -764,6 +764,16 @@ public class BottomToolbarPhone extends ToolbarPhone {
         updateMenuButtonClickableState();
     }
 
+    @Override
+    protected void updateToolbarBackground(int color) {
+        // Uncomment this to see the NTP UI drawing beneath the toolbar.
+        // if (mBottomSheet != null && mBottomSheet.isShowingNewTab() && !isIncognito()) {
+        //     color = Color.TRANSPARENT;
+        // }
+
+        super.updateToolbarBackground(color);
+    }
+
     private void updateToolbarButtonVisibility() {
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
 
