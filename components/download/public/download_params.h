@@ -9,6 +9,7 @@
 #include "base/time/time.h"
 #include "components/download/public/clients.h"
 #include "net/http/http_request_headers.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace download {
@@ -124,7 +125,7 @@ struct DownloadParams {
 
   using StartCallback = base::Callback<void(const std::string&, StartResult)>;
 
-  DownloadParams();
+  DownloadParams(const net::NetworkTrafficAnnotationTag& traffic_annotation);
   DownloadParams(const DownloadParams& other);
   ~DownloadParams();
 
@@ -146,6 +147,9 @@ struct DownloadParams {
 
   // The parameters that define the actual download request to make.
   RequestParams request_params;
+
+  // Traffic annotation for the network request.
+  const net::NetworkTrafficAnnotationTag traffic_annotation_;
 };
 
 }  // namespace download
