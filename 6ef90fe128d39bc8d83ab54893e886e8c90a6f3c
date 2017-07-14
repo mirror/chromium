@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c0041d6_d32a2c52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-14T15:00:44Z",
+      "side": 1,
+      "message": "This sentence is unclear, could you reword it? e.g. \"If the SetScrollable call happens before ScrollbarAnimationController creation then:\"\n\n(It can be but doesn\u0027t matter that it\u0027s in a separate commit right? i.e. even if that ordering happened in the same commit we\u0027d still have that problem).\n\nOtherwise, great description of the problem in the commit message!",
+      "range": {
+        "startLine": 17,
+        "startChar": 35,
+        "endLine": 19,
+        "endChar": 4
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79545951_d20feac6",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-14T15:00:44Z",
+      "side": 1,
+      "message": "Layer -\u003e LayerImpl already does this so I think this is the correct fix",
+      "range": {
+        "startLine": 329,
+        "startChar": 2,
+        "endLine": 329,
+        "endChar": 29
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c00b94_b32f226b",
+        "filename": "cc/layers/scrollbar_layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-14T15:00:44Z",
+      "side": 1,
+      "message": "What about this test is Aura specific? Doesn\u0027t this apply to Android as well?",
+      "range": {
+        "startLine": 187,
+        "startChar": 50,
+        "endLine": 187,
+        "endChar": 62
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb0524b_cc59dae4",
+        "filename": "cc/layers/scrollbar_layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-14T15:00:44Z",
+      "side": 1,
+      "message": "Scrollbar Layer can be created after SetScrollable is called and in a separate commit.",
+      "range": {
+        "startLine": 872,
+        "startChar": 5,
+        "endLine": 873,
+        "endChar": 20
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60d7ab8_1fbe0ed9",
+        "filename": "cc/layers/scrollbar_layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-14T15:00:44Z",
+      "side": 1,
+      "message": "Add an EXPECT_TRUE(scroll_layer-\u003eneeds_show_scrollbars())",
+      "range": {
+        "startLine": 895,
+        "startChar": 31,
+        "endLine": 895,
+        "endChar": 32
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
