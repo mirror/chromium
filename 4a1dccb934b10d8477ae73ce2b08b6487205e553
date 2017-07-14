@@ -22,6 +22,30 @@
       "revId": "4a1dccb934b10d8477ae73ce2b08b6487205e553",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f6a7ab_e8a4c580",
+        "filename": "content/browser/image_capture/image_capture_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-14T06:58:50Z",
+      "side": 1,
+      "message": "ISTM ScopedResultCallback is more powerful but ScopedCallbackRunner is simpler.\n\nScopedResultCallback takes a failure callback, which could call the original callback with different parameters based on different conditions at run time. It may also choose not to call the original callback at all. These are not possible with ScopedCallbackRunner.\n\nThat being said, as demonstrated by this CL, all current use cases of ScopedResultCallback do not need these power features, and can actually be replaced by ScopedCallbackRunner, which IMHO has simpler/cleaner interface and usage pattern:\n\n- It makes sure the original callback will always be called, at the API level.\n- It doesn\u0027t require defining another callback (see some of the removed code in this CL).\n- It makes it clear what parameters will be used in the failure case, so readers don\u0027t need to scroll up to check the definition of the failure callback.\n\nIn summary, I still like ScopedCallbackRunner is a better solution for the simpler use case, which is probably the most common use case for both ScopedResultCallback and ScopedCallbackRunner. Feel free to keep ScopedCallbackRunner if you feel we may need it for the power use cases though.\n\ntzik: WDYT",
+      "parentUuid": "2b00d840_cde2d542",
+      "range": {
+        "startLine": 110,
+        "startChar": 49,
+        "endLine": 110,
+        "endChar": 69
+      },
+      "revId": "4a1dccb934b10d8477ae73ce2b08b6487205e553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
