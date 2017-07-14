@@ -40,8 +40,9 @@ class PermissionDialogDelegate : public content::WebContentsObserver {
 
   // The interface for creating a modal dialog when the PermissionRequestManager
   // is enabled.
-  static void Create(content::WebContents* web_contents,
-                     PermissionPromptAndroid* permission_prompt);
+  static void Create(
+      content::WebContents* web_contents,
+      const base::WeakPtr<PermissionPromptAndroid>& permission_prompt);
 
   // The interface for creating a modal dialog when the PermissionRequestManager
   // is disabled, i.e. we're using the PermissionQueueController.
@@ -79,7 +80,7 @@ class PermissionDialogDelegate : public content::WebContentsObserver {
   PermissionDialogDelegate(
       TabAndroid* tab,
       std::unique_ptr<PermissionInfoBarDelegate> infobar_delegate,
-      PermissionPromptAndroid* permission_prompt);
+      const base::WeakPtr<PermissionPromptAndroid>& permission_prompt);
   ~PermissionDialogDelegate() override;
 
   void CreateJavaDelegate(JNIEnv* env);
@@ -102,8 +103,8 @@ class PermissionDialogDelegate : public content::WebContentsObserver {
 
   // The PermissionPromptAndroid is alive until the tab navigates or is closed.
   // We close the prompt on DidFinishNavigation and WebContentsDestroyed, so it
-  // should always be safe to use this pointer.
-  PermissionPromptAndroid* permission_prompt_;
+  // should always be safe to use this pointer, but we use a WeakPtr for safety.
+  base::WeakPtr<PermissionPromptAndroid> permission_prompt_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionDialogDelegate);
 };
