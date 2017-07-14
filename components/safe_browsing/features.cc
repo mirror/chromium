@@ -40,7 +40,7 @@ GetExperimentalFeaturesList() {
   std::vector<std::pair<const base::Feature*, bool>> experimental_features_list{
       std::make_pair(&kLocalDatabaseManagerEnabled, true),
       std::make_pair(&kV4OnlyEnabled, true),
-      std::make_pair(&kThreatDomDetailsTagAndAttributeFeature, true)};
+      std::make_pair(&kThreatDomDetailsTagAndAttributeFeature, false)};
 
   return experimental_features_list;
 }
