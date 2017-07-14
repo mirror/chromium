@@ -10,6 +10,7 @@
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/test/histogram_tester.h"
 #import "base/test/ios/wait_util.h"
 #include "components/autofill/core/browser/autofill_manager.h"
@@ -453,10 +454,12 @@ TEST_F(AutofillControllerTest, KeyValueImport) {
         base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer);
     return consumer.result_.size();
   });
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   WaitForBackgroundTasks();
   // One result should be returned, matching the filled value.
   ASSERT_EQ(1U, consumer.result_.size());
   EXPECT_EQ(base::UTF8ToUTF16("Hello"), consumer.result_[0]);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
 };
 
 void AutofillControllerTest::SetUpKeyValueData() {
