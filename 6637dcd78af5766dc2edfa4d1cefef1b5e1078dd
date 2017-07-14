@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e809c8e_fa5d01a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T04:10:25Z",
+      "side": 1,
+      "message": "super nit: trailing whitespace in the cl description",
+      "revId": "6637dcd78af5766dc2edfa4d1cefef1b5e1078dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ba5ebc_ecf4b1aa",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T04:10:25Z",
+      "side": 1,
+      "message": "This should be moved to the superclass documentation.\n\nDoes \"Loader\" mean \"ResourceLoader\"?",
+      "revId": "6637dcd78af5766dc2edfa4d1cefef1b5e1078dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7fa649_cb8f54aa",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T04:10:25Z",
+      "side": 1,
+      "message": "This function seems gone (fortunately, otherwise the new DidLoadScript() would be confusing). Can you edit this comment to make sense in the modern world?",
+      "revId": "6637dcd78af5766dc2edfa4d1cefef1b5e1078dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c39e175_d3bf5588",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T04:10:25Z",
+      "side": 1,
+      "message": "Would like to make this more clear that this is only for script streaming. Also, worker script means the main script right? Suggest:\n\nInvoked when the worker\u0027s main script is loaded. Only invoked when the script was loaded on the worker thread, i.e., via InstalledScriptsManager rather than via ResourceLoader. Called after DidInitializeWorkerContext().",
+      "revId": "6637dcd78af5766dc2edfa4d1cefef1b5e1078dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5366b64e_9d252dfc",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T04:10:25Z",
+      "side": 1,
+      "message": "let\u0027s just remove \"the thread\", to make more clear that this execution thread is what\u0027s blocking (rather than some other thread)",
+      "revId": "6637dcd78af5766dc2edfa4d1cefef1b5e1078dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
