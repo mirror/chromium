@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b5077e_a14d0c19",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-14T07:50:16Z",
+      "side": 1,
+      "message": "Sorry, my brain can\u0027t easily parse this double-negative...\n\nWe reload (don\u0027t reuse it) if it\u0027s not disallowed to be reused?",
+      "revId": "f633a4e9759f30ff0ff1329bb5845f6ca3d4e1c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
