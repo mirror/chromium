@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "522e9da4_42be5092",
+        "filename": "cc/tiles/image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-14T20:39:46Z",
+      "side": 1,
+      "message": "The samples here are guaranteed to be between 1 to 32, we have DCHECKs to assert that. Are you sure this still needs a sparse histogram?",
+      "parentUuid": "c9e0bdf9_6fa3f6c6",
+      "range": {
+        "startLine": 13,
+        "startChar": 38,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "ee86ab8918c0bcf1c0c5b0ce3c49a64b55ab65dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb677d94_ee90594b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "ee86ab8918c0bcf1c0c5b0ce3c49a64b55ab65dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e7860f_52b774a5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 61617,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-14T20:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb677d94_ee90594b",
+      "range": {
+        "startLine": 61617,
+        "startChar": 48,
+        "endLine": 61617,
+        "endChar": 0
+      },
+      "revId": "ee86ab8918c0bcf1c0c5b0ce3c49a64b55ab65dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
