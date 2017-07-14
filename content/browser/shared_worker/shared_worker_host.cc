@@ -189,25 +189,18 @@ void SharedWorkerHost::WorkerConnected(int connection_request_id) {
 
 void SharedWorkerHost::AllowFileSystem(
     const GURL& url,
-    std::unique_ptr<IPC::Message> reply_msg) {
+    base::OnceCallback<void(bool)> callback) {
   GetContentClient()->browser()->AllowWorkerFileSystem(
-      url,
-      instance_->resource_context(),
-      GetRenderFrameIDsForWorker(),
+      url, instance_->resource_context(), GetRenderFrameIDsForWorker(),
       base::Bind(&SharedWorkerHost::AllowFileSystemResponse,
-                 weak_factory_.GetWeakPtr(),
-                 base::Passed(&reply_msg)));
+                 weak_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
 
 void SharedWorkerHost::AllowFileSystemResponse(
-    std::unique_ptr<IPC::Message> reply_msg,
+    base::OnceCallback<void(bool)> callback,
     bool allowed) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-
-  WorkerProcessHostMsg_RequestFileSystemAccessSync::WriteReplyParams(
-      reply_msg.get(),
-      allowed);
-  Send(reply_msg.release());
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  std::move(callback).Run(allowed);
 }
 
 void SharedWorkerHost::AllowIndexedDB(const GURL& url,
