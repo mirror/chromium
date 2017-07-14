@@ -40,9 +40,11 @@ class PasswordProtectionRequest;
 extern const base::Feature kPasswordFieldOnFocusPinging;
 extern const base::Feature kProtectedPasswordEntryPinging;
 extern const base::Feature kPasswordProtectionInterstitial;
+extern const base::Feature kGoogleBrandedPhishingWarning;
 extern const char kPasswordOnFocusRequestOutcomeHistogramName[];
 extern const char kPasswordEntryRequestOutcomeHistogramName[];
 extern const char kSyncPasswordEntryRequestOutcomeHistogramName[];
+extern const char kSyncPasswordWarningDialogHistogramName[];
 
 // Manage password protection pings and verdicts. There is one instance of this
 // class per profile. Therefore, every PasswordProtectionService instance is
@@ -53,6 +55,9 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   using TriggerType = LoginReputationClientRequest::TriggerType;
   using SyncAccountType =
       LoginReputationClientRequest::PasswordReuseEvent::SyncAccountType;
+  using WebContentsToProtoMap = std::unordered_map<
+      content::WebContents*,
+      std::pair<LoginReputationClientRequest, LoginReputationClientResponse>>;
 
   // The outcome of the request. These values are used for UMA.
   // DO NOT CHANGE THE ORDERING OF THESE VALUES.
@@ -73,6 +78,16 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
     DISABLED_DUE_TO_USER_POPULATION = 13,
     URL_NOT_VALID_FOR_REPUTATION_COMPUTING = 14,
     MAX_OUTCOME
+  };
+
+  // Actions on modal warning dialog. These values are used for UMA.
+  // DO NOT CHANGE THE ORDERING OF THESE VALUES.
+  enum WarningDialogAction {
+    SHOWN = 0,
+    CHANGE_PASSWORD = 1,  // User clicks on "Change Password" button.
+    IGNORE_WARNING = 2,   // User clicks on "Ignore" button.
+    CLOSE = 3,  // User navigates page away or hit "ESC" to close dialog.
+    MAX_ACTION
   };
 
   PasswordProtectionService(
@@ -138,6 +153,9 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // (5) Its hostname is a not-yet-assigned by ICANN gTLD.
   // (6) Its hostname is a dotless domain.
   static bool CanGetReputationOfURL(const GURL& url);
+
+  virtual void OnModalWarningDone(content::WebContents* web_contents,
+                                  WarningDialogAction action);
 
  protected:
   friend class PasswordProtectionRequest;
@@ -205,6 +223,15 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   void CheckCsdWhitelistOnIOThread(const GURL& url, bool* check_result);
 
   HostContentSettingsMap* content_settings() const { return content_settings_; }
+
+  virtual void ShowModalWarningDialog(
+      content::WebContents* web_contents,
+      const LoginReputationClientRequest* request_proto,
+      const LoginReputationClientResponse* response_proto) {}
+
+  WebContentsToProtoMap web_contents_to_proto_map() const {
+    return web_contents_to_proto_map_;
+  }
 
  private:
   friend class PasswordProtectionServiceTest;
@@ -283,6 +310,8 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
 
   // Set of pending PasswordProtectionRequests.
   std::set<scoped_refptr<PasswordProtectionRequest>> requests_;
+
+  WebContentsToProtoMap web_contents_to_proto_map_;
 
   ScopedObserver<history::HistoryService, history::HistoryServiceObserver>
       history_service_observer_;

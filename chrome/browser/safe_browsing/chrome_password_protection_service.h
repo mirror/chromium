@@ -54,6 +54,11 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
                                 const std::string& token,
                                 content::WebContents* web_contents) override;
 
+  void ShowModalWarningDialog(
+      content::WebContents* web_contents,
+      const LoginReputationClientRequest* request_proto,
+      const LoginReputationClientResponse* response_proto) override;
+
   PasswordProtectionService::SyncAccountType GetSyncAccountType() override;
 
   FRIEND_TEST_ALL_PREFIXES(

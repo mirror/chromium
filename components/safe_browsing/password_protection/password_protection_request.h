@@ -78,11 +78,14 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
     return trigger_type_;
   }
 
+  bool IsSyncPasswordReuse() const;
+
  private:
   friend class base::RefCountedThreadSafe<PasswordProtectionRequest>;
   friend struct content::BrowserThread::DeleteOnThread<
       content::BrowserThread::UI>;
   friend class base::DeleteHelper<PasswordProtectionRequest>;
+  friend class ChromePasswordProtectionServiceTest;
   ~PasswordProtectionRequest() override;
 
   // Start checking the whitelist.
