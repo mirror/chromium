@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ba520d7_435ac3f2",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "nit. no trailing _",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e2ac03_eee42081",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "please add a comment explaining what this does",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce65792_f36c8ad8",
+        "filename": "content/public/common/resource_request_completion_status.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "comments should be full sentences (i.e. here: end in a . )",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7899e3_5e0b3f47",
+        "filename": "content/renderer/net/cors_url_loader.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "empty line after this line",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981af4d5_f523da6e",
+        "filename": "content/renderer/net/cors_url_loader.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "static not needed inside anon namespace",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3cf8745_e757f2a8",
+        "filename": "content/renderer/net/cors_url_loader.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "can this happen?",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e17839_dc53f40c",
+        "filename": "content/renderer/net/cors_url_loader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "should this ctor be private?",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15b78d2_11b538b3",
+        "filename": "content/renderer/net/cors_url_loader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "enum values should start with k, i.e. kPreflight",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa764c5_d67732a4",
+        "filename": "content/renderer/net/cors_url_loader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "add DISALLOW_COPY_AND_ASSIGN(CORSURLLoader)",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538c0062_15d914e3",
+        "filename": "content/renderer/net/cors_url_loader_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "please also add a dtor",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530f867d_8633b918",
+        "filename": "content/renderer/net/cors_url_loader_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "nit. empty line above this line",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2214b4f7_20be2a27",
+        "filename": "content/renderer/net/cors_url_loader_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "please also add a dtor",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c26dad_d8b2c280",
+        "filename": "content/renderer/net/cross_origin_access_control.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "there should be http header parsers in //net",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1024aa_2fee694f",
+        "filename": "content/renderer/net/cross_origin_access_control.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "a file with only static methods should be a namespace instead",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e87faa_749aa8c0",
+        "filename": "content/renderer/net/cross_origin_access_control.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "it looks like you only need those within the file?\n\nI\u0027d then move them to an anonymous namespace within the .cc file, and they should be named kAccessControlAllowExternal etc..",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab877d8_da658887",
+        "filename": "content/renderer/net/cross_origin_access_control_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "static not needed",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac192bdc_1ebeca4b",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "maybe use bash/hash.h - HashInts32(Hash(origin_url.first.Serialize), Hash(origin_url.second.spec()))",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1c8f2d_63a90f0b",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "please add comments explaining what the public methods are supposed to do",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe3a9e8_2e01e469",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "disallow copy/assign",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680a11e4_25cec185",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "nit. inline this",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37f6ad7_b9314073",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-14T20:34:18Z",
+      "side": 1,
+      "message": "i wonder whether a map\u003curl::Origin, map\u003cGURL, std::unique_ptr\u003c\u003e\u003e\u003e wouldn\u0027t do as well?",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
