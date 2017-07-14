@@ -20,6 +20,7 @@
 #include "chrome/browser/profiles/profile_window.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/signin/signin_tracker_factory.h"
+#include "chrome/browser/signin/signin_util.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -67,6 +68,19 @@ void SetUserChoiceHistogram(SigninChoice choice) {
   UMA_HISTOGRAM_ENUMERATION("Enterprise.UserSigninChoice",
                             choice,
                             SIGNIN_CHOICE_SIZE);
+}
+
+void EnableProfile(Profile* profile, bool enable) {
+  ProfileAttributesEntry* entry;
+  bool has_entry =
+      g_browser_process->profile_manager()
+          ->GetProfileAttributesStorage()
+          .GetProfileAttributesWithPath(profile->GetPath(), &entry);
+  DCHECK(has_entry);
+  if (enable)
+    entry->SetIsSigninRequired(false);
+  else
+    entry->LockForceSigninProfile(true);
 }
 
 }  // namespace
@@ -254,6 +268,10 @@ void OneClickSigninSyncStarter::OnRegisteredForPolicy(
                                       signin->GetUsernameForAuthInProgress(),
                                       base::MakeUnique<SigninDialogDelegate>(
                                           weak_pointer_factory_.GetWeakPtr()));
+  // If force signin enabled, lock the profile when dialog is being displayed to
+  // avoid new browser window opened.
+  if (signin_util::IsForceSigninEnabled())
+    EnableProfile(profile_, false);
 }
 
 void OneClickSigninSyncStarter::LoadPolicyWithCachedCredentials() {
@@ -269,6 +287,9 @@ void OneClickSigninSyncStarter::LoadPolicyWithCachedCredentials() {
       profile_->GetRequestContext(),
       base::Bind(&OneClickSigninSyncStarter::OnPolicyFetchComplete,
                  weak_pointer_factory_.GetWeakPtr()));
+
+  // Unlock the profile after loading policies.
+  EnableProfile(profile_, true);
 }
 
 void OneClickSigninSyncStarter::OnPolicyFetchComplete(bool success) {
@@ -342,18 +363,11 @@ void OneClickSigninSyncStarter::CompleteInitForNewProfile(
         DCHECK(!client_id_.empty());
         LoadPolicyWithCachedCredentials();
       } else {
-        // No policy to load - simply complete the signin process.
+        // No policy to load - simply complete the signin process and unlock the
+        // profile.
         SigninManagerFactory::GetForProfile(profile_)->CompletePendingSignin();
+        EnableProfile(profile_, true);
       }
-
-      // Unlock the new profile.
-      ProfileAttributesEntry* entry;
-      bool has_entry =
-          g_browser_process->profile_manager()
-              ->GetProfileAttributesStorage()
-              .GetProfileAttributesWithPath(new_profile->GetPath(), &entry);
-      DCHECK(has_entry);
-      entry->SetIsSigninRequired(false);
 
       // Open the profile's first window, after all initialization.
       profiles::FindOrCreateNewWindowForProfile(
