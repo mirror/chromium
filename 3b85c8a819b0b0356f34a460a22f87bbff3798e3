@@ -22,6 +22,30 @@
       "revId": "3b85c8a819b0b0356f34a460a22f87bbff3798e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ed1411_3c3036eb",
+        "filename": "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-14T20:00:52Z",
+      "side": 1,
+      "message": "The ForTesting() annotation should be sufficient to make it clear that you shouldn\u0027t call this in production code, right?\n\nWe do this in many other places.\nhttps://cs.chromium.org/search/?q\u003d.*ForTesting%5C(+-file:v8+-file:third_party\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "b9574127_d588465d",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 62,
+        "endChar": 31
+      },
+      "revId": "3b85c8a819b0b0356f34a460a22f87bbff3798e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
