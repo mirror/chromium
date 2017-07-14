@@ -22,6 +22,30 @@
       "revId": "6aad80876f635b67c0d58158b89102661d07e19f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1f397e_e4a1f025",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-14T14:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e838ec13_3d0749df",
+      "range": {
+        "startLine": 1143,
+        "startChar": 12,
+        "endLine": 1143,
+        "endChar": 17
+      },
+      "revId": "6aad80876f635b67c0d58158b89102661d07e19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
