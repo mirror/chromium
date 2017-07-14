@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ece08a5a_5ca2accf",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T01:50:22Z",
+      "side": 1,
+      "message": "As mentioned in the last reply on the discussing email thread,\nwe cannot simply. Instead an indirection is needed, like Traits, unfortunately.\n\ncf) https://stackoverflow.com/questions/5680263/use-curiously-recurring-template-pattern-crtp-with-additional-type-parameters\n\nConsidering the LoC of the subclass code, this looks simpler, IMHO.",
+      "parentUuid": "6a67a9b0_b67e7572",
+      "range": {
+        "startLine": 107,
+        "startChar": 10,
+        "endLine": 107,
+        "endChar": 38
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e829969a_8d77f3a2",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T22:31:11Z",
       "side": 1,
       "message": "I\u0027m not sure if I\u0027d like this blurb to say it\u0027s needed for ArcBrowserContextKeyedServiceFactoryImpl and keep the description of the behavior for the services that are actually going to be consumed through the dependency chain.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e818c0_fad0887a",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T01:50:22Z",
+      "side": 1,
+      "message": "Did you mean about DependsOn chain?\nIf so, this is not, actually, rather KeyedServiceFactoryBase* is needed.\nSo, in such a case, I\u0027d add GetFactory() static method and let DependsOn take it, but it is not the case for this class.",
+      "parentUuid": "e829969a_8d77f3a2",
       "range": {
         "startLine": 40,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "54049134_89841d24",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T01:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "754cf40c_50b0462f",
+      "range": {
+        "startLine": 198,
+        "startChar": 19,
+        "endLine": 198,
+        "endChar": 57
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c59c72d7_e958adb1",
         "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3d69f1_f88de927",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T01:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59c72d7_e958adb1",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2fd711d1_3b009c11",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T01:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e139b902_dc5b05ab",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59821a4b_4cec7a21",
         "filename": "components/arc/arc_browser_context_keyed_service_factory_impl.h",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ac44ab_5553a5e4",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-14T01:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59821a4b_4cec7a21",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 46
+      },
+      "revId": "ae8821f9dca8b90c464d6af0e3022d7a311e11ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
