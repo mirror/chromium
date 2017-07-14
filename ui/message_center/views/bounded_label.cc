@@ -317,7 +317,21 @@ int BoundedLabel::GetBaseline() const {
 }
 
 gfx::Size BoundedLabel::CalculatePreferredSize() const {
-  return visible() ? label_->GetSizeForWidthAndLines(-1, -1) : gfx::Size();
+  if (!visible())
+    return gfx::Size();
+
+  // TODO(tetsui): Workaround https://crbug.com/682266 by calculating height
+  // using previous width.
+  // Ideally, we should fix the original bug, but it seems there's no obvious
+  // solution for the bug according to https://crbug.com/678337#c7, we should
+  // ensure that the change will not break any of the users of BoxLayout class.
+  // BoundedLabel is only used by NotificationView and NotificationViewMD,
+  // so within the usage this workaround should be acceptable.
+  if (width() > 0) {
+    return label_->GetSizeForWidthAndLines(width(), GetLineLimit());
+  } else {
+    return label_->GetSizeForWidthAndLines(-1, -1);
+  }
 }
 
 int BoundedLabel::GetHeightForWidth(int width) const {

@@ -22,6 +22,7 @@
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/test/widget_test.h"
 
+#include "ui/message_center/views/bounded_label.h"
 namespace message_center {
 
 /* Test fixture ***************************************************************/
@@ -497,5 +498,26 @@ TEST_F(NotificationViewMDTest, Pinned) {
 }
 
 #endif  // defined(OS_CHROMEOS)
+
+TEST_F(NotificationViewMDTest, ExpandLongMessage) {
+  notification()->set_type(NotificationType::NOTIFICATION_TYPE_SIMPLE);
+  notification()->set_message(base::ASCIIToUTF16(
+      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore "
+      "et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud "
+      "exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."));
+
+  UpdateNotificationViews();
+  EXPECT_FALSE(notification_view()->expanded_);
+  const int collapsed_height = notification_view()->message_view_->height();
+  EXPECT_LT(0, collapsed_height);
+
+  notification_view()->ToggleExpanded();
+  EXPECT_TRUE(notification_view()->expanded_);
+  EXPECT_LT(collapsed_height, notification_view()->message_view_->height());
+
+  notification_view()->ToggleExpanded();
+  EXPECT_FALSE(notification_view()->expanded_);
+  EXPECT_EQ(collapsed_height, notification_view()->message_view_->height());
+}
 
 }  // namespace message_center
