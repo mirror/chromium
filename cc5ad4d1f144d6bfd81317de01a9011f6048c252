@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "02e28188_5a2280df",
+        "filename": "tools/perf/core/path_util.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-07-14T19:37:56Z",
+      "side": 1,
+      "message": "I\u0027d keep all the imports together unless you plan the inspect and traceback import above too?",
+      "revId": "cc5ad4d1f144d6bfd81317de01a9011f6048c252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31e91fdc_705efa00",
         "filename": "tools/perf/core/path_util.py",
         "patchSetId": 2
