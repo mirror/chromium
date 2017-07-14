@@ -77,8 +77,12 @@ class BrowserPolicyConnectorChromeOS
   // Checks whether this is an Active Directory managed enterprise device.
   bool IsActiveDirectoryManaged() const;
 
-  // Returns the enterprise domain if device is managed.
-  std::string GetEnterpriseDomain() const;
+  // Returns the enterprise enrollment domain if device is managed.
+  std::string GetEnterpriseEnrollmentDomain() const;
+
+  // Custom enterprise display domain used in UI if specified, otherwise
+  // defaults to enterprise enrollment domain.
+  std::string GetEnterpriseDisplayDomain() const;
 
   // Returns the Kerberos realm (aka Windows Domain) if the device is managed by
   // Active Directory.

@@ -93,7 +93,9 @@ class DeviceDisablingManager {
 
   // Returns the cached domain that owns the device. The domain is only
   // guaranteed to be up to date if the disabled screen was triggered.
-  const std::string& enrollment_domain() const { return enrollment_domain_; }
+  const std::string& enterprise_display_domain() const {
+    return enterprise_display_domain_;
+  }
 
   // Returns the cached disabled message. The message is only guaranteed to be
   // up to date if the disabled screen was triggered.
@@ -132,7 +134,7 @@ class DeviceDisablingManager {
   bool device_disabled_;
 
   // A cached copy of the domain that owns the device.
-  std::string enrollment_domain_;
+  std::string enterprise_display_domain_;
 
   // A cached copy of the message to show on the device disabled screen.
   std::string disabled_message_;

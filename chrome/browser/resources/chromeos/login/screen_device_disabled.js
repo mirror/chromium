@@ -8,7 +8,7 @@
 
 login.createScreen('DeviceDisabledScreen', 'device-disabled', function() {
   return {
-    EXTERNAL_API: ['setEnrollmentDomain', 'setMessage'],
+    EXTERNAL_API: ['setEnterpriseDisplayDomain', 'setMessage'],
 
     /**
      * Ignore any accelerators the user presses on this screen.
@@ -17,7 +17,7 @@ login.createScreen('DeviceDisabledScreen', 'device-disabled', function() {
 
     /** @override */
     decorate: function() {
-      this.setEnrollmentDomain(null);
+      this.setEnterpriseDisplayDomain(null);
     },
 
     /**
@@ -43,18 +43,18 @@ login.createScreen('DeviceDisabledScreen', 'device-disabled', function() {
 
     /**
      * Updates the explanation shown to the user. The explanation will indicate
-     * that the device is owned by |enrollment_domain|. If |enrollment_domain|
-     * is null or empty, a generic explanation will be used instead that does
-     * not reference any domain.
-     * @param {string} enrollment_domain The domain that owns the device.
+     * that the device is owned by |enterprise_display_domain|. If
+     * |enterprise_display_domain| is null or empty, a generic explanation will
+     * be used instead that does not reference any domain.
+     * @param {string} enterprise_display_domain The domain owning the device.
      */
-    setEnrollmentDomain: function(enrollment_domain) {
-      if (enrollment_domain) {
-        // The contents of |enrollment_domain| is untrusted. Set the resulting
-        // string as |textContent| so that it gets treated as plain text and
-        // cannot be used to inject JS or HTML.
+    setEnterpriseDisplayDomain: function(enterprise_display_domain) {
+      if (enterprise_display_domain) {
+        // The contents of |enterprise_display_domain| is untrusted. Set the
+        // resulting string as |textContent| so that it gets treated as plain
+        // text and cannot be used to inject JS or HTML.
         $('device-disabled-explanation').textContent = loadTimeData.getStringF(
-            'deviceDisabledExplanationWithDomain', enrollment_domain);
+            'deviceDisabledExplanationWithDomain', enterprise_display_domain);
       } else {
         $('device-disabled-explanation').textContent =
             loadTimeData.getString('deviceDisabledExplanationWithoutDomain');

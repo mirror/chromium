@@ -23,7 +23,7 @@ class DeviceDisabledScreenView {
     virtual void OnViewDestroyed(DeviceDisabledScreenView* view) = 0;
 
     // Returns the domain that owns the device.
-    virtual const std::string& GetEnrollmentDomain() const = 0;
+    virtual const std::string& GetEnterpriseDisplayDomain() const = 0;
 
     // Returns the message that should be shown to the user.
     virtual const std::string& GetMessage() const = 0;
