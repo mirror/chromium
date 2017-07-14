@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8020f6c3_61cd9692",
+        "filename": "base/message_loop/message_loop_io_posix_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-14T19:35:14Z",
+      "side": 1,
+      "message": "Is having this delegate actually important? We never run the associated message loop, right? Can we just EXPECT_TRUE(false); in OnFileCanWrite/ReadWithoutBlocking?",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 25
+      },
+      "revId": "364e74c29723490c6b633775a362f0183e0559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
