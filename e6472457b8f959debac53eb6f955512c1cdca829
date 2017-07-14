@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3cff309_0287a489",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-14T22:36:35Z",
+      "side": 1,
+      "message": "nit: can you use std::max?",
+      "range": {
+        "startLine": 408,
+        "startChar": 16,
+        "endLine": 408,
+        "endChar": 20
+      },
+      "revId": "e6472457b8f959debac53eb6f955512c1cdca829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a80ab0_d4452109",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-14T22:36:35Z",
+      "side": 1,
+      "message": "Likely not for this CL Q but screen resolution may be set to 640x400. What is the behavior in this case?",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 31
+      },
+      "revId": "e6472457b8f959debac53eb6f955512c1cdca829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
