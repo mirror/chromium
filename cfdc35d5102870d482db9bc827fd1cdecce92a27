@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a547614_e2f5d41a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T08:13:04Z",
+      "side": 1,
+      "message": "Can you specify which interface you added like \"via mojom::SharedWorkerContentSettingsProxy.\"?",
+      "range": {
+        "startLine": 11,
+        "startChar": 38,
+        "endLine": 11,
+        "endChar": 53
+      },
+      "revId": "cfdc35d5102870d482db9bc827fd1cdecce92a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562a5bed_b893edd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T08:13:04Z",
+      "side": 1,
+      "message": "thread?",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "cfdc35d5102870d482db9bc827fd1cdecce92a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ebb036_421b4f74",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T08:13:04Z",
+      "side": 1,
+      "message": "In this patch, three variants of names exist:\n- SharedWorkerContentSettingsProxy (blink)\n- SharedWorkerContentSettingsManager (mojom)\n- SharedWorkerContentSettings (content/browser)\n\nCould you unify them?\nFor example:\n- SharedWorkerContentSettingsProxy (blink)\n- SharedWorkerContentSettingsProxy (mojom)\n- SharedWorkerContentSettingsProxyImpl (content/browser)",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "cfdc35d5102870d482db9bc827fd1cdecce92a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c170e7_72530112",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T08:13:04Z",
+      "side": 1,
+      "message": "remove \"some\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 23,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "cfdc35d5102870d482db9bc827fd1cdecce92a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4284d470_4ea25ed9",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T08:13:04Z",
+      "side": 1,
+      "message": "is?",
+      "range": {
+        "startLine": 15,
+        "startChar": 20,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "cfdc35d5102870d482db9bc827fd1cdecce92a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e16c93a_464f599c",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T08:13:04Z",
+      "side": 1,
+      "message": "Could you also mention that this class is created on the main thread and called on the IO thread?",
+      "revId": "cfdc35d5102870d482db9bc827fd1cdecce92a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73093eb4_34157d65",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T08:13:04Z",
+      "side": 1,
+      "message": "|origin_url_| is set on the main thread at the constructor, so please use it with IsolatedCopy() in each method.",
+      "revId": "cfdc35d5102870d482db9bc827fd1cdecce92a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2a1778_470ed4d7",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T08:13:04Z",
+      "side": 1,
+      "message": "\"some\" isn\u0027t necessary.",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 39
+      },
+      "revId": "cfdc35d5102870d482db9bc827fd1cdecce92a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5120e7b6_aa27f225",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-14T08:13:04Z",
+      "side": 1,
+      "message": "Sorry, this might be better:\n\"when every relevant web exposed API is called,\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "cfdc35d5102870d482db9bc827fd1cdecce92a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
