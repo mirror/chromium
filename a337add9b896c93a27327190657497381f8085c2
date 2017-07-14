@@ -34,6 +34,24 @@
       "revId": "a337add9b896c93a27327190657497381f8085c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e79c55_32cb74da",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T18:16:29Z",
+      "side": 0,
+      "message": "IIUC based on your debugging, AutofillWebDataService itself doesn\u0027t reference |consumer|, but rather the tasks it runs do.  RunAllBlockingPoolTasksUntilIdle() ought to address that.\n\nI would be curious to just see what would happen rather than try to figure out in advance whether it would work or not :).  If this doesn\u0027t work, I\u0027d like to see more debugging info on why, since I\u0027m pretty sure the solution here isn\u0027t the right way to go (but it does do a good job of pointing at what the crash is!).",
+      "parentUuid": "eda8baf0_d6149bbe",
+      "revId": "a337add9b896c93a27327190657497381f8085c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
