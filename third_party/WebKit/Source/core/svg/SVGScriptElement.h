@@ -48,6 +48,13 @@ class SVGScriptElement final : public SVGElement,
 
   bool IsScriptElement() const override { return true; }
 
+  void SetDuplicateAttribute(bool dupe) override {
+    had_duplicate_attribute_ = dupe;
+  }
+  bool HadDuplicateAttribute() const override {
+    return had_duplicate_attribute_;
+  }
+
   DECLARE_VIRTUAL_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
@@ -99,6 +106,7 @@ class SVGScriptElement final : public SVGElement,
   Element* CloneElementWithoutAttributesAndChildren() override;
   bool LayoutObjectIsNeeded(const ComputedStyle&) override { return false; }
 
+  bool had_duplicate_attribute_ = false;
   TraceWrapperMember<ScriptLoader> loader_;
 };
 

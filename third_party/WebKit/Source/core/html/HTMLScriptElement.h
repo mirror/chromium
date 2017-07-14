@@ -56,6 +56,13 @@ class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
   bool IsScriptElement() const override { return true; }
   Document& GetDocument() const override;
 
+  void SetDuplicateAttribute(bool dupe) override {
+    had_duplicate_attribute_ = dupe;
+  }
+  bool HadDuplicateAttribute() const override {
+    return had_duplicate_attribute_;
+  }
+
   DECLARE_VIRTUAL_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
@@ -103,6 +110,7 @@ class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
 
   Element* CloneElementWithoutAttributesAndChildren() override;
 
+  bool had_duplicate_attribute_ = false;
   TraceWrapperMember<ScriptLoader> loader_;
 };
 

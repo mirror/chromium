@@ -37,6 +37,7 @@ class ScriptLoader;
 class CORE_EXPORT ScriptElementBase : public GarbageCollectedMixin {
  public:
   static ScriptElementBase* FromElementIfPossible(Element*);
+  static const ScriptElementBase* FromElementIfPossible(const Element*);
 
   virtual bool AsyncAttributeValue() const = 0;
   virtual String CharsetAttributeValue() const = 0;
@@ -65,6 +66,9 @@ class CORE_EXPORT ScriptElementBase : public GarbageCollectedMixin {
       HTMLScriptElementOrSVGScriptElement&) = 0;
 
   virtual ScriptLoader* Loader() const = 0;
+
+  virtual void SetDuplicateAttribute(bool dupe) = 0;
+  virtual bool HadDuplicateAttribute() const = 0;
 
  protected:
   ScriptLoader* InitializeScriptLoader(bool parser_inserted,

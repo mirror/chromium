@@ -15808,6 +15808,8 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="RequestMIDIAccessDisallowedByFeaturePolicyInCrossOriginIframe"/>
   <int value="2060" label="MediaSourceKeyframeTimeGreaterThanDependant"/>
   <int value="2061" label="MediaSourceMuxedSequenceMode"/>
+  <int value="2062" label="DuplicatedAttribute"/>
+  <int value="2063" label="DuplicatedAttributeForScript"/>
 </enum>
 
 <enum name="FeedbackSource">
