@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79cc2a73_9be4df7c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 79758,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-14T18:13:47Z",
+      "side": 1,
+      "message": "Per offline discussion with lunalu@, running git cl presubmit --upload should inform you if you need to add to enum.xml. Since there were no warnings, I have not added it.",
+      "parentUuid": "d7c9e79f_b83557e9",
+      "range": {
+        "startLine": 79758,
+        "startChar": 0,
+        "endLine": 79758,
+        "endChar": 51
+      },
+      "revId": "fcd1d2375328b76a20e9ec2962ea009cdd998d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "962c8b70_88e3bf2c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "fcd1d2375328b76a20e9ec2962ea009cdd998d91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855a57fb_c32b915a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 79759,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-14T18:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "962c8b70_88e3bf2c",
+      "range": {
+        "startLine": 79759,
+        "startChar": 2,
+        "endLine": 79759,
+        "endChar": 40
+      },
+      "revId": "fcd1d2375328b76a20e9ec2962ea009cdd998d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
