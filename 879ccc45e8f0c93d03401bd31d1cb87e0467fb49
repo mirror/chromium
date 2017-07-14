@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ce5831_fd021bf4",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T20:59:18Z",
+      "side": 1,
+      "message": "nit: v1 -\u003e view\n\nWe try to avoid abbreviations (v) and I\u0027m not sure why there is a 1.",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b28198_fed5057b",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T20:59:18Z",
+      "side": 1,
+      "message": "If you can get these statements on one line by renaming CreateEmptyViewWithHeight to CreateViewWithHeight or CreateViewOfHeight please do so :)",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25410b0d_9681aaf5",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T20:59:18Z",
+      "side": 1,
+      "message": "Do we need to cache label_ and sub_label_? It looks like we can just eliminate the variables.",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30793059_9d1d0a21",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T20:59:18Z",
+      "side": 1,
+      "message": "Please add a short description for each of these classes.",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4a5cef_03ebfea5",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T20:59:18Z",
+      "side": 1,
+      "message": "Ditto, eliminate image_",
+      "revId": "879ccc45e8f0c93d03401bd31d1cb87e0467fb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

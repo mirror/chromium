@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "44cf4a71_70d7a202",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-14T20:59:18Z",
+      "side": 1,
+      "message": "Maybe update the comment to\n\n// ... 34% \u003d 0x57 / 0xFF",
+      "parentUuid": "b30ef556_abe90648",
+      "revId": "33d2cb16b7ad63f598ef7e0fd3d7fce04548bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "448891c7_91440201",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 6
