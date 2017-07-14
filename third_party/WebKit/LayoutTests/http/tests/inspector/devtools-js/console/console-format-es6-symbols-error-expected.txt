@@ -1,0 +1,4 @@
+Tests that console properly displays information about ES6 Symbols.
+
+VM:6 Symbol
+
