@@ -16,6 +16,24 @@
       "revId": "a2d5abfa566b775c9c5a23acc5a7fbf63b54751a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da517a0_efbdb9cc",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_flex_layout.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-14T21:56:07Z",
+      "side": 1,
+      "message": "Mostly because the CL I was given as an example was partially rebuilding page layouts, adding new CSS rules, etc. So I decided it is easier to do it this way.\n\nI\u0027ll probably convert OOBE code later to iron-flex-layout-classes.html .",
+      "parentUuid": "87fe9bc9_7a8955ee",
+      "revId": "a2d5abfa566b775c9c5a23acc5a7fbf63b54751a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
