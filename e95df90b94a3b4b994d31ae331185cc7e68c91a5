@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67228259_6ecc299d",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-14T06:20:43Z",
+      "side": 0,
+      "message": "Don\u0027t we need to keep this if clause?",
+      "range": {
+        "startLine": 350,
+        "startChar": 2,
+        "endLine": 351,
+        "endChar": 11
+      },
+      "revId": "e95df90b94a3b4b994d31ae331185cc7e68c91a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

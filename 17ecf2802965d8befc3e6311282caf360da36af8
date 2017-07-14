@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c7812ac_0e227d70",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-14T06:20:43Z",
+      "side": 1,
+      "message": "const gfx::Rect\u0026 ?",
+      "range": {
+        "startLine": 351,
+        "startChar": 44,
+        "endLine": 351,
+        "endChar": 60
+      },
+      "revId": "17ecf2802965d8befc3e6311282caf360da36af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b8b0f9_9992619b",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-14T06:20:43Z",
+      "side": 1,
+      "message": "This may be false. We start to load the content when entering the touch view mode. If a user doesn\u0027t request to show the VK while loading the content, we don\u0027t have to show the VK after finishing the content loading.",
+      "range": {
+        "startLine": 188,
+        "startChar": 67,
+        "endLine": 189,
+        "endChar": 21
+      },
+      "revId": "17ecf2802965d8befc3e6311282caf360da36af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7929394_71dbd0d7",
+        "filename": "ui/keyboard/keyboard_layout_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-14T06:20:43Z",
+      "side": 1,
+      "message": "s/contnets/contents/",
+      "range": {
+        "startLine": 45,
+        "startChar": 41,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "17ecf2802965d8befc3e6311282caf360da36af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bfb268_6e4e5058",
+        "filename": "ui/keyboard/keyboard_layout_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-14T06:20:43Z",
+      "side": 1,
+      "message": "nit: changes?",
+      "range": {
+        "startLine": 64,
+        "startChar": 20,
+        "endLine": 64,
+        "endChar": 21
+      },
+      "revId": "17ecf2802965d8befc3e6311282caf360da36af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
