@@ -81,6 +81,24 @@
       "revId": "2fce78b31971af79eda593d56995e0e098581c02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28971e5_351a713f",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T19:05:46Z",
+      "side": 1,
+      "message": "Or rename it to \"Accel_Toggle_System_Tray_Bubble\". (you may need to just add new one)\n\nCan you also rename the accelerator action name from SHOW_ to TOGGLE_?",
+      "parentUuid": "decf3492_edc65566",
+      "revId": "2fce78b31971af79eda593d56995e0e098581c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
