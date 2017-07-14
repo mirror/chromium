@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a2ed4a_bcf32da7",
+        "filename": "third_party/WebKit/LayoutTests/editing/undo/undo-delete-boundary.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-14T06:24:09Z",
+      "side": 1,
+      "message": "Why did you limit to only mac?",
+      "revId": "c65e1f4194d8d6de443b4a3720287a44648ef9d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
