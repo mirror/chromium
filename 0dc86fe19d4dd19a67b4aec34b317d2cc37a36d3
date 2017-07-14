@@ -94,6 +94,54 @@
     },
     {
       "key": {
+        "uuid": "0e56f453_bd4cbe28",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-14T18:22:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a4bf3cd_234f1de7",
+      "range": {
+        "startLine": 36,
+        "startChar": 43,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "514c365e_4c2187e4",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-14T18:22:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "446d2df5_44261820",
+      "range": {
+        "startLine": 36,
+        "startChar": 73,
+        "endLine": 36,
+        "endChar": 74
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62b9301c_27890c2f",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
         "patchSetId": 2
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "8f5eeae4_6c7a4c3d",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-14T18:22:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62b9301c_27890c2f",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 79
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f24d7a_e094fcca",
         "filename": "chrome/browser/resources/settings/settings_page/settings_subpage_search.html",
         "patchSetId": 2
@@ -128,6 +200,30 @@
       "writtenOn": "2017-07-14T00:12:35Z",
       "side": 1,
       "message": "Is this also hidden from sighted users?",
+      "range": {
+        "startLine": 74,
+        "startChar": 25,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "0dc86fe19d4dd19a67b4aec34b317d2cc37a36d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6407015_b0b2013a",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_subpage_search.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-14T18:22:14Z",
+      "side": 1,
+      "message": "As per our discussion, I\u0027m removing this label and specifying a string directly as an aria-label on the input element",
+      "parentUuid": "d2f24d7a_e094fcca",
       "range": {
         "startLine": 74,
         "startChar": 25,
