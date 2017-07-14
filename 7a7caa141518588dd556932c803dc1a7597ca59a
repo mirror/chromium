@@ -101,6 +101,24 @@
       "revId": "7a7caa141518588dd556932c803dc1a7597ca59a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7410c729_58bf9860",
+        "filename": "ui/gfx/platform_font_mac_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1231085
+      },
+      "writtenOn": "2017-07-14T08:10:45Z",
+      "side": 1,
+      "message": "I\u0027ve been running this test on my masOS 10.10.5. Its system font is different from macOS 10.12 (it uses Helvetica Neue). I guess it can be the reason the test does not fail on macOs 10.12",
+      "parentUuid": "33e94ada_e4c2eb3b",
+      "revId": "7a7caa141518588dd556932c803dc1a7597ca59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
