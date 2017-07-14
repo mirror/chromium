@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ba1d97f9_ffb0553c",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-14T22:57:27Z",
+      "side": 1,
+      "message": "AudioTrackRecorder::AudioEncoder::EncodeAudio() should be called with an AudioBus with the same number of frames each time. The number of frames should always be equal to input_params_.frames_per_buffer(). Thus, since each AudioBus in |audio_bus_queue_| should have the same number of frames, you can always compute the total number of frames queued as |audio_bus_queue_.size() * input_params_.frames_per_buffer()|.",
+      "parentUuid": "1a8d9d34_e1e63554",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ad7a96d_32c2e1b2",
         "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Since kMaxNumberOfFifoBuffers \u003d 2, this would restrict queue size to 2 at any point of time.",
       "parentUuid": "6ad7a96d_32c2e1b2",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 3
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65d313b_49fe9a86",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-14T22:57:27Z",
+      "side": 1,
+      "message": "Yep. :)",
+      "parentUuid": "8f297111_f24c5a9a",
       "range": {
         "startLine": 246,
         "startChar": 0,
