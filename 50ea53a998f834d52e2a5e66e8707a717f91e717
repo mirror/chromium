@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3cbf727_546c4977",
+        "filename": "third_party/WebKit/LayoutTests/webmidi/state-check-utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-14T10:20:51Z",
+      "side": 1,
+      "message": "How about using Promise.all?\n\nconst portPromise \u003d new Promise(resolve \u003d\u003e {\n  port.onstatechange \u003d e \u003d\u003e {\n    ...\n    resolve();\n  }\n});\n\nconst accessPromise \u003d new Promise(resolve \u003d\u003e {\n  access.onstatechange \u003d e \u003d\u003e {\n    ...\n    resolve();\n  }\n});\n\nif (...) {\n  return Promise.all(portPromise, accessPromise);\n}",
+      "revId": "50ea53a998f834d52e2a5e66e8707a717f91e717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
