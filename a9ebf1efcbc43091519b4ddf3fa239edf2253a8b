@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d58dc99_aec24b5d",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-14T11:53:16Z",
+      "side": 1,
+      "message": "nit:\nI prefer to keep blacklisted, enabled and disabled three temp variables. It is easier to read.",
+      "range": {
+        "startLine": 936,
+        "startChar": 2,
+        "endLine": 939,
+        "endChar": 58
+      },
+      "revId": "a9ebf1efcbc43091519b4ddf3fa239edf2253a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
