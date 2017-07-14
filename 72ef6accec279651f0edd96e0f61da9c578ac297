@@ -16,6 +16,29 @@
       "revId": "72ef6accec279651f0edd96e0f61da9c578ac297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb2ef03_2200e8b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-14T17:22:06Z",
+      "side": 1,
+      "message": "Should probably add:\nassert sInstance !\u003d null;\nif (sInstance \u003d\u003d null) return false;",
+      "range": {
+        "startLine": 256,
+        "startChar": 34,
+        "endLine": 256,
+        "endChar": 49
+      },
+      "revId": "72ef6accec279651f0edd96e0f61da9c578ac297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
