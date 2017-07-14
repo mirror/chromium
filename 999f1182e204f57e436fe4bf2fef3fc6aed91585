@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e4bdc34_c4fec40f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-14T07:39:49Z",
+      "side": 1,
+      "message": "Please file a bug and explain the context (L9) in it, and here in this commit message just say that you\u0027re porting access-control-allow-lists...",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f5553e_804c90a3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-14T07:39:49Z",
+      "side": 1,
+      "message": "Pass this to async_test()",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a5ec98_1311b5e6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-14T07:39:49Z",
+      "side": 1,
+      "message": "pass this function directly to async_test()",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
