@@ -217,12 +217,18 @@ function cardsAndBobPayBuy() { // eslint-disable-line no-unused-vars
       });
     request.show()
       .then(function(resp) {
-        return resp.complete('success');
-      }).then(function() {
-        print(JSON.stringify(resp, undefined, 2));
-      }).catch(function(error) {
-        print(error);
-      });
+          resp.complete('success')
+              .then(function() {
+                print(resp.methodName + '<br>' +
+                      JSON.stringify(resp.details, undefined, 2));
+              })
+              .catch(function(error) {
+                print(error.message);
+              });
+        })
+        .catch(function(error) {
+          print(error.message);
+        });
   } catch (error) {
     print(error.message);
   }
