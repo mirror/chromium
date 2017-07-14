@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d9a17aa_c769c5c1",
+        "filename": "third_party/WebKit/Source/core/input/GestureManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-07-14T00:55:54Z",
+      "side": 1,
+      "message": "Is \u0027Selection\u0027 guaranteed to have anything to do with what was just tapped?  Eg. what if I tapped an element with a user-select:none style making it unselectable?",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 77
+      },
+      "revId": "0edfe26a55242e3a2a712ee358f5d58355a7d169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bda46f1_d57ef7cc",
+        "filename": "third_party/WebKit/public/web/WebWidgetClient.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-07-14T00:55:54Z",
+      "side": 1,
+      "message": "Does this need to be exposed here?  text_height isn\u0027t obviously associated with a generic \"show unhandled tap notification\".  Can\u0027t you get this information just as easily from existing APIs, eg. WebWidget::SelectionBounds?\n\nIf it really must be here, then at a minimum I think we\u0027d want:\n - a precise definition in the comments of the semantics.  I.e. this is the selection height which isn\u0027t necessarily about text, right?  What units is it in?  What\u0027s the value when there is no selection? \n - blink unit tests covering a variety of interesting cases (eg. multi-line selections, selections containing images, etc.)",
+      "range": {
+        "startLine": 169,
+        "startChar": 47,
+        "endLine": 169,
+        "endChar": 48
+      },
+      "revId": "0edfe26a55242e3a2a712ee358f5d58355a7d169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
