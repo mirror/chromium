@@ -23,6 +23,7 @@
 
 #if defined(USE_OZONE)
 #include <GLES2/gl2extchromium.h>
+#include "build/build_config.h"
 #include "components/exo/buffer.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_native_pixmap.h"
 #include "third_party/khronos/GLES2/gl2.h"
@@ -120,9 +121,15 @@ std::unique_ptr<Buffer> Display::CreateLinuxDMABufBuffer(
   // Using zero-copy for optimal performance.
   bool use_zero_copy = true;
 
+#if defined(ARCH_CPU_X86_FAMILY)
+  // TODO(dshwang): when flickering issue is resolved, remove this guard.
+  // crbug.com/743277
+  bool is_overlay_candidate = false;
+#else
   bool is_overlay_candidate =
       std::find(overlay_formats_.begin(), overlay_formats_.end(), format) !=
       overlay_formats_.end();
+#endif
 
   return base::MakeUnique<Buffer>(
       std::move(gpu_memory_buffer), GL_TEXTURE_EXTERNAL_OES,
