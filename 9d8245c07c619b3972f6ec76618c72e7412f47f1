@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02519012_d2d1610c",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T23:14:32Z",
+      "side": 1,
+      "message": "I think the reason you\u0027re done this encoding by hand is because you\u0027re trying to scrape by with the minimal serialization per value. You\u0027re relying on the caller to do length/type specification/encoding.\n\nMaybe add some comment to this effect?",
+      "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98de2d4d_ff61ca48",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T23:14:32Z",
+      "side": 1,
+      "message": "should this be \n\nsh \u003e sizeof(T) * 8 - 7 \n\n?",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254e3f4b_7514f236",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T23:14:32Z",
+      "side": 1,
+      "message": "Why only VarInt32 (?)\n\nPlease test all the other VarInts.",
+      "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2abbb8_ce55c68e",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T23:14:32Z",
+      "side": 1,
+      "message": "I don\u0027t undersatnd what you\u0027re trying to test here. delta - basis?\n\nOh I see. You meant to test EncodeVarInt, but you\u0027re actually testing VarUInt.",
+      "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8390eabf_6f9d2ffe",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T23:14:32Z",
+      "side": 1,
+      "message": "swap the names of your two tests.",
+      "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
