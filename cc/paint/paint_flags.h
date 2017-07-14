@@ -50,10 +50,6 @@ class CC_PAINT_EXPORT PaintFlags {
   ALWAYS_INLINE bool isSrcOver() const { return paint_.isSrcOver(); }
   ALWAYS_INLINE bool isAntiAlias() const { return paint_.isAntiAlias(); }
   ALWAYS_INLINE void setAntiAlias(bool aa) { paint_.setAntiAlias(aa); }
-  ALWAYS_INLINE bool isVerticalText() const { return paint_.isVerticalText(); }
-  ALWAYS_INLINE void setVerticalText(bool vertical) {
-    paint_.setVerticalText(vertical);
-  }
   ALWAYS_INLINE bool isSubpixelText() const { return paint_.isSubpixelText(); }
   ALWAYS_INLINE void setSubpixelText(bool subpixel_text) {
     paint_.setSubpixelText(subpixel_text);
