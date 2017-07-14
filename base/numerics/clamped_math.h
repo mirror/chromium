@@ -82,10 +82,13 @@ class ClampedNumeric {
         // The negation of two's complement int min is int min, so that's the
         // only overflow case we have to check for.
         std::is_signed<T>::value
-            ? ((std::is_floating_point<T>::value ||
-                NegateWrapper(value_) != std::numeric_limits<T>::lowest())
-                   ? NegateWrapper(value_)
-                   : std::numeric_limits<T>::max())
+            ? (IsCompileTimeConstant(value_)
+                   ? ((std::is_floating_point<T>::value ||
+                       NegateWrapper(value_) !=
+                           std::numeric_limits<T>::lowest())
+                          ? NegateWrapper(value_)
+                          : std::numeric_limits<T>::max())
+                   : ClampedSubOp<T, T>::template Do<T>(T(0), value_))
             : T(0));  // Clamped unsigned negation is always zero.
   }
 
