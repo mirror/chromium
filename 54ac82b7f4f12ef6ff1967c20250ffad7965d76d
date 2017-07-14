@@ -22,6 +22,23 @@
       "revId": "54ac82b7f4f12ef6ff1967c20250ffad7965d76d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0518f9bd_ce23bcb5",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-07-14T01:37:25Z",
+      "side": 1,
+      "message": "This will be 0 if the page reached network 2-quiet between NotifyPaint() and ReportProvisionalFirstMeaningfulPaintSwap(). Is that okay?",
+      "revId": "54ac82b7f4f12ef6ff1967c20250ffad7965d76d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
