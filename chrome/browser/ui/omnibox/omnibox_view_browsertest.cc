@@ -581,7 +581,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, Escape) {
   // Escape shall revert the text in omnibox.
   ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_ESCAPE, 0));
   EXPECT_EQ(old_text, omnibox_view->GetText());
-  EXPECT_TRUE(omnibox_view->IsSelectAll());
+  EXPECT_FALSE(omnibox_view->IsSelectAll());
 }
 
 #if defined(OS_LINUX)
@@ -1956,13 +1956,13 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, SelectAllStaysAfterUpdate) {
   test_toolbar_model->set_text(url_a);
   omnibox_view->Update();
   EXPECT_EQ(url_a, omnibox_view->GetText());
-  EXPECT_FALSE(omnibox_view->IsSelectAll());
+  EXPECT_TRUE(omnibox_view->IsSelectAll());
 
   // Test behavior of the "reversed" attribute of OmniboxView::SelectAll().
   test_toolbar_model->set_text(ASCIIToUTF16("AB"));
   omnibox_view->Update();
   // Should be at the end already. Shift+Left to select "reversed".
-  EXPECT_EQ(0u, GetSelectionSize(omnibox_view));
+  EXPECT_EQ(2u, GetSelectionSize(omnibox_view));
   ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_LEFT, ui::EF_SHIFT_DOWN));
   ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_LEFT, ui::EF_SHIFT_DOWN));
   EXPECT_EQ(2u, GetSelectionSize(omnibox_view));
