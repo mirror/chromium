@@ -14,6 +14,7 @@
 #include "components/download/internal/startup_status.h"
 #include "components/download/internal/test/download_params_utils.h"
 #include "components/download/internal/test/mock_controller.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 

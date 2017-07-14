@@ -34,6 +34,10 @@ namespace net {
 // Defined types for network traffic annotation tags.
 struct NetworkTrafficAnnotationTag {
   const int32_t unique_id_hash_code;
+
+  bool operator==(const NetworkTrafficAnnotationTag& other) const {
+    return unique_id_hash_code == other.unique_id_hash_code;
+  }
 };
 struct PartialNetworkTrafficAnnotationTag {
   const int32_t unique_id_hash_code;
@@ -259,6 +263,9 @@ struct MutablePartialNetworkTrafficAnnotationTag {
 #define MISSING_TRAFFIC_ANNOTATION     \
   net::DefineNetworkTrafficAnnotation( \
       "missing", "Function called without traffic annotation.")
+
+// Value for serialization of a none existing annotation.
+#define INVALID_TRAFFIC_ANNOTATION_TAG -1
 
 #undef COMPUTE_STRING_HASH
 
