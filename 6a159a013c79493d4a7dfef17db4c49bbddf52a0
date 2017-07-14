@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9528da82_6a32303d",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 7
+      },
+      "lineNbr": 2875,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-14T10:10:29Z",
+      "side": 1,
+      "message": "The original expectation was kept with additional crossorigin attribute, but it is unfortunately not yet implemented. That is the intention of the change.\n\nI added another test preload-fetch-mode-mismatch.html.",
+      "parentUuid": "19f7d5c1_35a03108",
+      "range": {
+        "startLine": 2875,
+        "startChar": 104,
+        "endLine": 2875,
+        "endChar": 111
+      },
+      "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb2f2d30_43d99181",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d345d78_5447b843",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-14T10:10:29Z",
+      "side": 1,
+      "message": "kFetchRequestModeCORSWithForcedPreflight is only used with DocumentThreadableLoader.",
+      "parentUuid": "fb2f2d30_43d99181",
+      "range": {
+        "startLine": 880,
+        "startChar": 38,
+        "endLine": 880,
+        "endChar": 59
+      },
+      "revId": "6a159a013c79493d4a7dfef17db4c49bbddf52a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
