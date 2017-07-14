@@ -22,6 +22,30 @@
       "revId": "4ad0ab4cff821582c66c7b0b20b174384e3cd8d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d27f66_739d09ed",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-14T09:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78e3831f_962da4fb",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "4ad0ab4cff821582c66c7b0b20b174384e3cd8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
