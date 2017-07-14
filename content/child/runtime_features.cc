@@ -395,6 +395,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
       base::GetFieldTrialParamValue("PreviewsClientLoFi",
                                     "replace_server_placeholders") == "true");
 
+  WebRuntimeFeatures::EnableLazyInitializeMediaControls(
+      base::FeatureList::IsEnabled(features::kLazyInitializeMediaControls));
+
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   if (command_line.HasSwitch(switches::kEnableBlinkFeatures)) {
