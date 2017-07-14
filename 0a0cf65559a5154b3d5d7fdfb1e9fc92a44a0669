@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf960ac1_ab0c1ea1",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-14T18:36:55Z",
+      "side": 1,
+      "message": "This is not a test-only interface. The TODO only applies to BrowserTarget. I added empty lines around that to clarify.",
+      "parentUuid": "8ee42a71_8743c9e0",
+      "range": {
+        "startLine": 120,
+        "startChar": 10,
+        "endLine": 120,
+        "endChar": 42
+      },
+      "revId": "0a0cf65559a5154b3d5d7fdfb1e9fc92a44a0669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30656ab6_ee83311f",
         "filename": "content/public/app/mojo/content_renderer_manifest.json",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-14T17:46:53Z",
       "side": 1,
       "message": "Based on the CL description, should I expect these to all go away as well?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "0a0cf65559a5154b3d5d7fdfb1e9fc92a44a0669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd672e91_054b36f3",
+        "filename": "content/public/app/mojo/content_renderer_manifest.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-14T18:36:55Z",
+      "side": 1,
+      "message": "Yes.\n\nDevice APIs are mostly exposed as web APIs. It is reasonable to let the interface requests be proxied by the browser and associated with the frame that generates them. It is easier to reasonable about, and we could do necessary permission check in the browser. (No permission check in the browser for these interfaces at the moment, but we could consider adding them.)",
+      "parentUuid": "30656ab6_ee83311f",
       "range": {
         "startLine": 24,
         "startChar": 0,
