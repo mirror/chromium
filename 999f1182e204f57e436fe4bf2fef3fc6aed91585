@@ -50,6 +50,40 @@
       "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8925e3cb_38c78eb2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-14T07:58:12Z",
+      "side": 1,
+      "message": "I\u0027d prefer const / let to var. Ditto below.",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eec0e60_9a240323",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-14T07:58:12Z",
+      "side": 1,
+      "message": "This seems unneeded (I ran all xhr layout tests without this line in access-control-allow-lists.php and they all pass). Can you remove this line, and remove the line from access-control-allow-lines.php separately?",
+      "revId": "999f1182e204f57e436fe4bf2fef3fc6aed91585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
