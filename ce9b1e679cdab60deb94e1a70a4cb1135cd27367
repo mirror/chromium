@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ce1aa85_fce08877",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-14T20:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a1f4d2b_778415ca",
+      "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cbaadf2_79d5197e",
         "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7f0e1b_5a146d5c",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-14T20:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cbaadf2_79d5197e",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 30
+      },
+      "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "839c6f1c_23712aeb",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-14T20:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6401b14_00e03097",
+      "range": {
+        "startLine": 101,
+        "startChar": 52,
+        "endLine": 101,
+        "endChar": 62
+      },
+      "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6751076_51842065",
         "filename": "ui/app_list/search_result.cc",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-14T20:13:41Z",
       "side": 1,
       "message": "nit: looks like GetComparableId() rather than Calculate.\n\nI am also OK to make it as getter in h file\n\nconst std::string\u0026 comparable_id() const {..}\n\nOtherwise it might be confusing between comparable_id and Get(Calculate)ComparableId()",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 54
+      },
+      "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1214ef31_55421fb7",
+        "filename": "ui/app_list/search_result.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-14T20:39:54Z",
+      "side": 1,
+      "message": "comparable_id() already exists (added by this CL), and we need it (as a straightforward getter) for result duplication.\n\nThen, to stress the difference between the straightforward getter and this method, I\u0027d prefer to not use Get, but Calculate.\n\nAs for moving it to .h, your preference doesn\u0027t seem to be too strong, so I\u0027d leave it as is...",
+      "parentUuid": "c6751076_51842065",
       "range": {
         "startLine": 70,
         "startChar": 33,
