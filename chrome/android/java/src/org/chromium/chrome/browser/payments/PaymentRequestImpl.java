@@ -527,8 +527,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         if (mRequestPayerName || mRequestPayerPhone || mRequestPayerEmail) {
             mContactEditor =
                     new ContactEditor(mRequestPayerName, mRequestPayerPhone, mRequestPayerEmail);
-            mContactSection = new ContactDetailsSection(
-                    activity, Collections.unmodifiableList(profiles), mContactEditor);
+            mContactSection = new ContactDetailsSection(activity,
+                    Collections.unmodifiableList(profiles), mContactEditor, mJourneyLogger);
         }
 
         setIsAnyPaymentRequestShowing(true);
@@ -590,9 +590,6 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
             }
         }
 
-        // Log the number of suggested shipping addresses.
-        mJourneyLogger.setNumberOfSuggestionsShown(Section.SHIPPING_ADDRESS, addresses.size());
-
         // Automatically select the first address if one is complete and if the merchant does
         // not require a shipping address to calculate shipping costs.
         int firstCompleteAddressIndex = SectionInformation.NO_SELECTION;
@@ -604,6 +601,10 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
             // country.
             addresses.get(firstCompleteAddressIndex).setShippingAddressLabelWithoutCountry();
         }
+
+        // Log the number of suggested shipping addresses.
+        mJourneyLogger.setNumberOfSuggestionsShown(Section.SHIPPING_ADDRESS, addresses.size(),
+                firstCompleteAddressIndex != SectionInformation.NO_SELECTION);
 
         mShippingAddressesSection = new SectionInformation(
                 PaymentRequestUI.TYPE_SHIPPING_ADDRESSES, firstCompleteAddressIndex, addresses);
@@ -1086,7 +1087,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
             assert option instanceof PaymentInstrument;
             if (option instanceof AutofillPaymentInstrument) {
                 // Log the change of credit card.
-                mJourneyLogger.incrementSelectionChanges(Section.CREDIT_CARDS);
+                mJourneyLogger.incrementSelectionChanges(Section.PAYMENT_METHOD);
                 AutofillPaymentInstrument card = (AutofillPaymentInstrument) option;
 
                 if (!card.isComplete()) {
@@ -1147,7 +1148,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         } else if (optionType == PaymentRequestUI.TYPE_PAYMENT_METHODS) {
             editCard(null);
             // Log the add of credit card.
-            mJourneyLogger.incrementSelectionAdds(Section.CREDIT_CARDS);
+            mJourneyLogger.incrementSelectionAdds(Section.PAYMENT_METHOD);
             return PaymentRequestUI.SELECTION_RESULT_EDITOR_LAUNCH;
         }
 
@@ -1238,7 +1239,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     private void editCard(final AutofillPaymentInstrument toEdit) {
         if (toEdit != null) {
             // Log the edit of a credit card.
-            mJourneyLogger.incrementSelectionEdits(Section.CREDIT_CARDS);
+            mJourneyLogger.incrementSelectionEdits(Section.PAYMENT_METHOD);
         }
         mCardEditor.edit(toEdit, new Callback<AutofillPaymentInstrument>() {
             @Override
@@ -1550,17 +1551,6 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
 
         Collections.sort(mPendingInstruments, PAYMENT_INSTRUMENT_COMPARATOR);
 
-        // Log the number of suggested credit cards.
-        int numberOfAutofillInstruments = 0;
-        for (int i = 0; i < mPendingInstruments.size(); i++) {
-            if (mPendingInstruments.get(i).isAutofillInstrument()) numberOfAutofillInstruments++;
-        }
-        mJourneyLogger.setNumberOfSuggestionsShown(
-                Section.CREDIT_CARDS, numberOfAutofillInstruments);
-
-        // Record whether the user had a form of payment initially.
-        if (!mPendingInstruments.isEmpty()) mJourneyLogger.setUserHadInitialFormOfPayment();
-
         // Possibly pre-select the first instrument on the list.
         int selection = !mPendingInstruments.isEmpty() && mPendingInstruments.get(0).canPreselect()
                 ? 0
@@ -1581,6 +1571,10 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
                         context.getString(mPaymentMethodsSectionAdditionalTextResourceId));
             }
         }
+
+        // Record the metrics for the payment methods.
+        mJourneyLogger.setNumberOfSuggestionsShown(Section.PAYMENT_METHOD,
+                mPendingInstruments.size(), selection != SectionInformation.NO_SELECTION);
 
         mPendingInstruments.clear();
 
