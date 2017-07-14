@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce06546_eca2ffeb",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:55:45Z",
+      "side": 1,
+      "message": "It correct to say that they are never deleted? If yes, then why do you use the smart pointers?",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7a0453_7c9016b1",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:55:45Z",
+      "side": 1,
+      "message": "I think you should point out that it will crash if called more than once.",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 35
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a397d85e_81796497",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:55:45Z",
+      "side": 1,
+      "message": "It\u0027s more like CreateKeyStorage now.",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 46
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e21e3b_e191010f",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:55:45Z",
+      "side": 1,
+      "message": "We don\u0027t like such a syntax for return values and you don\u0027t need it here at all.",
+      "range": {
+        "startLine": 27,
+        "startChar": 30,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034aa172_5b1765c6",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:55:45Z",
+      "side": 1,
+      "message": "That thing means exit time destructor is registered which is banned. Maybe in the tests people care less though.\n\nWhy can\u0027t you declare a pointer? It can point to the class variable which you can overwrite any time",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7433a28_d6e45097",
+        "filename": "components/os_crypt/os_crypt_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:55:45Z",
+      "side": 1,
+      "message": "use std::string()",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed99894_48d3bded",
+        "filename": "components/os_crypt/os_crypt_mocker_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-14T16:55:45Z",
+      "side": 1,
+      "message": "Declaration order should match definition order",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "b52201afe88f75201ed5f667f3f35f02678257b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
