@@ -699,6 +699,10 @@ void VideoCaptureManager::OnDeviceInfosReceived(
   }
 
   client_callback.Run(devices);
+
+  if (controllers_.empty()) {
+    video_capture_provider_->Uninitialize();
+  }
 }
 
 void VideoCaptureManager::DestroyControllerIfNoClients(
