@@ -350,6 +350,10 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NewPageInNewForegroundTab) {
   // foreground.
   histogram_tester_.ExpectTotalCount(internal::kHistogramLoad, 1);
   histogram_tester_.ExpectTotalCount(internal::kBackgroundHistogramLoad, 0);
+  histogram_tester_.ExpectTotalCount(
+      page_load_metrics::internal::kPageLoadStartedInForeground, 1);
+  histogram_tester_.ExpectBucketCount(
+      page_load_metrics::internal::kPageLoadStartedInForeground, true, 1);
 }
 
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoPaintForEmptyDocument) {
@@ -1120,7 +1124,8 @@ class SessionRestorePageLoadMetricsBrowserTest
   }
 
   GURL GetTestURL() const {
-    return embedded_test_server()->GetURL("/title1.html");
+    return embedded_test_server()->GetURL(
+        "/page_load_metrics/page_with_css.html");
   }
 
  private:

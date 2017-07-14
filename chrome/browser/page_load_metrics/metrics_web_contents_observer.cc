@@ -65,7 +65,6 @@ UserInitiatedInfo CreateUserInitiatedInfo(
 
 MetricsWebContentsObserver::MetricsWebContentsObserver(
     content::WebContents* web_contents,
-    const base::Optional<content::WebContents::CreateParams>& create_params,
     std::unique_ptr<PageLoadMetricsEmbedderInterface> embedder_interface)
     : content::WebContentsObserver(web_contents),
       in_foreground_(web_contents->IsVisible()),
@@ -85,13 +84,12 @@ MetricsWebContentsObserver::MetricsWebContentsObserver(
 // static
 MetricsWebContentsObserver* MetricsWebContentsObserver::CreateForWebContents(
     content::WebContents* web_contents,
-    const base::Optional<content::WebContents::CreateParams>& create_params,
     std::unique_ptr<PageLoadMetricsEmbedderInterface> embedder_interface) {
   DCHECK(web_contents);
 
   MetricsWebContentsObserver* metrics = FromWebContents(web_contents);
   if (!metrics) {
-    metrics = new MetricsWebContentsObserver(web_contents, create_params,
+    metrics = new MetricsWebContentsObserver(web_contents,
                                              std::move(embedder_interface));
     web_contents->SetUserData(UserDataKey(), base::WrapUnique(metrics));
   }

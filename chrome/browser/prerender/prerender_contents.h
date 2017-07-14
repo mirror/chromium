@@ -281,7 +281,6 @@ class PrerenderContents : public content::NotificationObserver,
   }
 
   content::WebContents* CreateWebContents(
-      const content::WebContents::CreateParams& create_params,
       content::SessionStorageNamespace* session_storage_namespace);
 
   PrerenderMode prerender_mode_;
