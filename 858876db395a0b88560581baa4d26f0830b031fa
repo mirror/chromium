@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "7a5950e7_5a65c091",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-14T12:12:26Z",
+      "side": 1,
+      "message": "Err, my mistake. Both flackr@ and majidvp@ seems to like the first idea better.",
+      "parentUuid": "f6b7badf_c9849d42",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 37
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd8357af_49485ba1",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
         "patchSetId": 12
