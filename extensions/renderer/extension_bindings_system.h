@@ -57,6 +57,18 @@ class ExtensionBindingsSystem {
   // Returns the associated RequestSender, if any.
   // TODO(devlin): Factor this out.
   virtual RequestSender* GetRequestSender() = 0;
+
+  // Returns true if any portion of the runtime API is available to the given
+  // |context|. This is different than just checking features because runtime's
+  // availability depends on the installed extensions and the active URL (in the
+  // case of extensions communicating with external websites).
+  static bool IsRuntimeAvailableToContext(ScriptContext* context);
+
+  // Hard-code registration of any APIs that are exposed to webpage-like
+  // contexts, because it's more expensive to iterate over all the existing
+  // features when only a handful could ever be available.
+  // All of the same permission checks will still apply.
+  static const char* kWebAvailableFeatures[3];
 };
 
 }  // namespace extensions
