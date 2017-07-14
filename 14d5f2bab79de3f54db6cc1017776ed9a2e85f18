@@ -34,6 +34,23 @@
       "revId": "14d5f2bab79de3f54db6cc1017776ed9a2e85f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92205ecf_afd0bd81",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-14T07:29:21Z",
+      "side": 1,
+      "message": "Nit: Could we make this a one LOG() line please? Perhaps something like:\n\nLOG(ERROR) \u003c\u003c \"This build of Chromium requires VA-API version \u003c\u003c VA_MAJOR_VERSION \u003c\u003c \".\" \u003c\u003c VA_MINOR_VERSION \u003c\u003c \", system version: \" \u003c\u003c major_version_ \u003c\u003c \".\" \u003c\u003c minor_version_;",
+      "revId": "14d5f2bab79de3f54db6cc1017776ed9a2e85f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
