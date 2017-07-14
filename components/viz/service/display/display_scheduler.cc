@@ -434,9 +434,18 @@ void DisplayScheduler::ScheduleBeginFrameDeadline() {
     return;
   }
 
-  begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
   base::TimeDelta delta =
       std::max(base::TimeDelta(), desired_deadline - base::TimeTicks::Now());
+
+  if (!delta.is_zero() && begin_frame_deadline_task_time_ ==
+                              current_begin_frame_args_.frame_time +
+                                  current_begin_frame_args_.interval) {
+    TRACE_EVENT2("viz", "Using implicit deadline on next BeginFrame", "delta",
+                 delta.ToInternalValue(), "desired_deadline", desired_deadline);
+    return;
+  }
+
+  begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
   task_runner_->PostDelayedTask(FROM_HERE,
                                 begin_frame_deadline_task_.callback(), delta);
   TRACE_EVENT2("viz", "Using new deadline", "delta", delta.ToInternalValue(),
