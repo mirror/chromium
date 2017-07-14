@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8422e642_a3f91f0b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T17:25:40Z",
+      "side": 1,
+      "message": "we don\u0027t need definition_ any more right?",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "8c4be225fb2c3c6e106896f1570bd66209b2c185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac8a593_dff26a0f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T17:25:40Z",
+      "side": 1,
+      "message": "const DocumentPaintDefintion\u0026 other ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 60
+      },
+      "revId": "8c4be225fb2c3c6e106896f1570bd66209b2c185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3046dc6b_8ae2a905",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T17:25:40Z",
+      "side": 1,
+      "message": "can use just use Vector\u0027s operator\u003d\u003d() ?\n\nE.g. if (native_invalidation_propertoes_ !\u003d other.Nat...)\n       return false;",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 38
+      },
+      "revId": "8c4be225fb2c3c6e106896f1570bd66209b2c185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7bfef7_c5027bb7",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T17:25:40Z",
+      "side": 1,
+      "message": "place below ctor.",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "8c4be225fb2c3c6e106896f1570bd66209b2c185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aadddb01_c617c5d6",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T17:25:40Z",
+      "side": 1,
+      "message": "TODO add policy for which global scope to select?",
+      "revId": "8c4be225fb2c3c6e106896f1570bd66209b2c185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b944eb26_9197f765",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T17:25:40Z",
+      "side": 1,
+      "message": "should the formatting be something like:\npaintWorklet #1 or something?\n\nwe should ask surma@ :)",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "8c4be225fb2c3c6e106896f1570bd66209b2c185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9b3436_130f216d",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-14T17:25:40Z",
+      "side": 1,
+      "message": "do we need another state in here eventually? I.e. states are:\n\n#1 - not registered (currently nullptr)\n#2 - registered (currently !nullptr)\n#3 - invalid (currently nullptr)\n\nmaybe a todo?",
+      "revId": "8c4be225fb2c3c6e106896f1570bd66209b2c185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
