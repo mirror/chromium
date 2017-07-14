@@ -160,9 +160,19 @@ std::string AuditorResult::ToText() const {
       error_text.pop_back();
       error_text.pop_back();
       error_text += ".";
-
       return error_text;
     }
+
+    case AuditorResult::ResultType::ERROR_UNIQUE_ID_INVALID_CHARACTER:
+      DCHECK(details_.size());
+      return base::StringPrintf(
+          "Unique id '%s' in '%s:%i' has an invalid charcter.",
+          details_[0].c_str(), file_path_.c_str(), line_);
+
+    case AuditorResult::ResultType::ERROR_MISSING_ANNOTATION:
+      DCHECK(details_.size());
+      return base::StringPrintf("Function '%s' in '%s:%i' requires annotation.",
+                                details_[0].c_str(), file_path_.c_str(), line_);
 
     default:
       return std::string();
@@ -554,6 +564,32 @@ void TrafficAnnotationAuditor::CheckDuplicateHashes() {
   }
 }
 
+void TrafficAnnotationAuditor::CheckUniqueIDsFormat() {
+  for (const AnnotationInstance& instance : extracted_annotations_) {
+    if (instance.proto.unique_id().find_first_not_of(
+            "0123456789_"
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") !=
+        std::string::npos) {
+      errors_.push_back(AuditorResult(
+          AuditorResult::ResultType::ERROR_UNIQUE_ID_INVALID_CHARACTER,
+          instance.proto.unique_id(), instance.proto.source().file(),
+          instance.proto.source().line()));
+    }
+  }
+}
+
+void TrafficAnnotationAuditor::CheckAllRequiredFunctionsAreAnnotated() {
+  for (const CallInstance& call : extracted_calls_) {
+    if (!call.is_annotated) {
+      errors_.push_back(
+          AuditorResult(AuditorResult::ResultType::ERROR_MISSING_ANNOTATION,
+                        call.function_name, call.file_path, call.line_number));
+    }
+  }
+}
+
 void TrafficAnnotationAuditor::RunAllChecks() {
   CheckDuplicateHashes();
+  CheckUniqueIDsFormat();
+  CheckAllRequiredFunctionsAreAnnotated();
 }

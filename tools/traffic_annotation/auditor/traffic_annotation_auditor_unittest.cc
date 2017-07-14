@@ -9,6 +9,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/traffic_annotation/auditor/traffic_annotation_file_filter.h"
 
@@ -55,6 +56,9 @@ class TrafficAnnotationAuditorTest : public ::testing::Test {
   AuditorResult::ResultType Deserialize(const std::string& file_name,
                                         InstanceBase* instance);
 
+  // Creates a complete annotation instance using sample files.
+  bool CreateAnnotationInstanceSample(AnnotationInstance* instance);
+
  private:
   base::FilePath source_path_;
   base::FilePath build_path_;  // Currently stays empty. Will be set if access
@@ -76,6 +80,12 @@ AuditorResult::ResultType TrafficAnnotationAuditorTest::Deserialize(
       file_content, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
 
   return instance->Deserialize(lines, 0, static_cast<int>(lines.size())).type();
+}
+
+bool TrafficAnnotationAuditorTest::CreateAnnotationInstanceSample(
+    AnnotationInstance* instance) {
+  return Deserialize("good_complete_annotation.txt", instance) ==
+         AuditorResult::ResultType::RESULT_OK;
 }
 
 // Tests if the two hash computation functions have the same result.
@@ -265,12 +275,31 @@ TEST_F(TrafficAnnotationAuditorTest, CallDeserialization) {
   }
 }
 
+// Tests if TrafficAnnotationAuditor::GetReservedUniqueIDs has all known ids and
+// they have currect text.
+TEST_F(TrafficAnnotationAuditorTest, GetReservedUniqueIDs) {
+  int expected_ids[] = {
+      TRAFFIC_ANNOTATION_FOR_TESTS.unique_id_hash_code,
+      PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS.unique_id_hash_code,
+      NO_TRAFFIC_ANNOTATION_YET.unique_id_hash_code,
+      NO_PARTIAL_TRAFFIC_ANNOTATION_YET.unique_id_hash_code,
+      MISSING_TRAFFIC_ANNOTATION.unique_id_hash_code};
+
+  std::map<int, std::string> reserved_words =
+      TrafficAnnotationAuditor::GetReservedUniqueIDs();
+
+  for (int id : expected_ids) {
+    EXPECT_NE(reserved_words.find(id), reserved_words.end());
+    EXPECT_EQ(id, TrafficAnnotationAuditor::ComputeHashValue(
+                      reserved_words.find(id)->second));
+  }
+}
+
 // Tests if TrafficAnnotationAuditor::CheckDuplicateHashes works as expected.
 TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateHashes) {
   // Load a valid annotation.
   AnnotationInstance test_case;
-  EXPECT_EQ(Deserialize("good_complete_annotation.txt", &test_case),
-            AuditorResult::ResultType::RESULT_OK);
+  EXPECT_TRUE(CreateAnnotationInstanceSample(&test_case));
 
   const std::map<int, std::string>& reserved_words =
       TrafficAnnotationAuditor::GetReservedUniqueIDs();
@@ -320,4 +349,39 @@ TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateHashes) {
     EXPECT_EQ(error.type(),
               AuditorResult::ResultType::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE);
   }
+}
+
+// Tests if TrafficAnnotationAuditor::CheckUniqueIDsFormat results as expected.
+TEST_F(TrafficAnnotationAuditorTest, CheckUniqueIDsFormat) {
+  std::map<std::string, bool> test_cases = {
+      {"ID1", true},   {"id2", true},   {"Id_3", true},
+      {"ID?4", false}, {"ID:5", false}, {"ID>>6", false},
+  };
+
+  TrafficAnnotationAuditor auditor(source_path(), build_path());
+  std::vector<AnnotationInstance> annotations;
+  std::vector<AnnotationInstance> all_annotations;
+  AnnotationInstance instance;
+  unsigned int false_samples_count = 0;
+  EXPECT_TRUE(CreateAnnotationInstanceSample(&instance));
+
+  // Test cases one by one.
+  for (const auto& test_case : test_cases) {
+    instance.proto.set_unique_id(test_case.first);
+    annotations.clear();
+    annotations.push_back(instance);
+    all_annotations.push_back(instance);
+    auditor.SetExtractedAnnotationsForTest(annotations);
+    auditor.ClearErrorsForTest();
+    auditor.CheckUniqueIDsFormat();
+    EXPECT_EQ(auditor.errors().size(), test_case.second ? 0u : 1u);
+    if (!test_case.second)
+      false_samples_count++;
+  }
+
+  // Test cases together.
+  auditor.SetExtractedAnnotationsForTest(all_annotations);
+  auditor.ClearErrorsForTest();
+  auditor.CheckUniqueIDsFormat();
+  EXPECT_EQ(auditor.errors().size(), false_samples_count);
 }
