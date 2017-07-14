@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e8d9b19_308fc3a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-14T17:41:40Z",
+      "side": 1,
+      "message": "Sounds good. Done.",
+      "parentUuid": "7ddaae56_4d1fe013",
+      "revId": "72ef6accec279651f0edd96e0f61da9c578ac297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecb2ef03_2200e8b6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "fc20e7f1_d5b7d106",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-14T17:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb2ef03_2200e8b6",
+      "range": {
+        "startLine": 256,
+        "startChar": 34,
+        "endLine": 256,
+        "endChar": 49
+      },
+      "revId": "72ef6accec279651f0edd96e0f61da9c578ac297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60897571_9defe930",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "72ef6accec279651f0edd96e0f61da9c578ac297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f9cafe_827153fa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-14T17:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60897571_9defe930",
+      "range": {
+        "startLine": 265,
+        "startChar": 5,
+        "endLine": 265,
+        "endChar": 16
+      },
+      "revId": "72ef6accec279651f0edd96e0f61da9c578ac297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
