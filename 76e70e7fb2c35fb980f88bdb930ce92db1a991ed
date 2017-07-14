@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b68b5b20_36583a68",
+        "filename": "content/browser/browser_associated_interface_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-14T06:08:09Z",
+      "side": 1,
+      "message": "FWIW, I tried writing a more meaningful test where the client sent a message to force calling ChannelProxy::Close() on the server, and then wait for the Mojo connection error callback to be called, but the callback wouldn\u0027t be called, so I went for this more direct and invasive test.",
+      "revId": "76e70e7fb2c35fb980f88bdb930ce92db1a991ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
