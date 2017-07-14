@@ -1,0 +1,35 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#import "ios/chrome/browser/passwords/js_credential_manager.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
+@interface JSCredentialManager ()
+
+- (void)executeScript:(NSString*)script
+    completionHandler:(ProceduralBlockWithBool)completionHandler;
+
+@end
+
+@implementation JSCredentialManager
+
+- (void)executeScript:(NSString*)script
+    completionHandler:(ProceduralBlockWithBool)completionHandler {
+  [self executeJavaScript:script
+        completionHandler:^(id result, NSError* error) {
+          if (completionHandler)
+            completionHandler(!error);
+        }];
+}
+
+#pragma mark - Protected methods
+
+- (NSString*)scriptPath {
+  return @"credential_manager";
+}
+
+@end
