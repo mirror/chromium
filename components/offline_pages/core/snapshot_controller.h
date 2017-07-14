@@ -60,6 +60,18 @@ class SnapshotController {
     virtual ~Client() {}
   };
 
+  // Optional renovation client of SnapshotController. If a
+  // RenovationClient is supplied, it should live longer than the
+  // SnapshotController.
+  class RenovationClient {
+   public:
+    // Invoked when the page is sufficiently loaded for running
+    // renovations. Will be called at most once. The client should
+    // call RenovationsCompleted (at most once) when finished;
+    // otherwise, a snapshot will be taken after the given timeout.
+    virtual void RunRenovations() = 0;
+  };
+
   // Creates a SnapshotController with document available delay = 7s,
   // document on load delay = 1s and triggers snapshot on document available.
   static std::unique_ptr<SnapshotController> CreateForForegroundOfflining(
@@ -69,13 +81,17 @@ class SnapshotController {
   // and ignores document available signal.
   static std::unique_ptr<SnapshotController> CreateForBackgroundOfflining(
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      SnapshotController::Client* client);
+      SnapshotController::Client* client,
+      SnapshotController::RenovationClient* renovation_client);
 
   SnapshotController(
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
       SnapshotController::Client* client,
+      SnapshotController::RenovationClient* renovation_client,
       int64_t delay_after_document_available_ms,
       int64_t delay_after_document_on_load_completed_ms,
+      int64_t delay_after_renovations_completed_ms,
+      int64_t timeout_after_renovations_started_ms,
       bool document_available_triggers_snapshot);
   virtual ~SnapshotController();
 
@@ -86,6 +102,9 @@ class SnapshotController {
   // invoked from the SnapshotController until current session is Reset().
   // Called by Client, for example when it encounters an error loading the page.
   void Stop();
+
+  // The RenovationClient (if any) calls this when renovations have completed.
+  void RenovationsCompleted();
 
   // The way for Client to report that previously started snapshot is
   // now completed (so the next one can be started).
@@ -109,9 +128,12 @@ class SnapshotController {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   // Client owns this class.
   SnapshotController::Client* client_;
+  SnapshotController::RenovationClient* renovation_client_;
   SnapshotController::State state_;
   int64_t delay_after_document_available_ms_;
   int64_t delay_after_document_on_load_completed_ms_;
+  int64_t delay_after_renovations_completed_ms_;
+  int64_t timeout_after_renovations_started_ms_;
   bool document_available_triggers_snapshot_;
 
   // The expected quality of a snapshot taken at the moment this value is
