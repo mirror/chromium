@@ -194,6 +194,30 @@
     },
     {
       "key": {
+        "uuid": "92c5c871_f22e4106",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-14T04:00:50Z",
+      "side": 1,
+      "message": "Apparently \"key payload\" is a general noun, not a proper noun, as it\u0027s spelled in lowercase.\nAbout what \"key payload\" means, in cryptohome_client.h, TpmAttestationGetKeyPayload()\u0027s function comment says what it gets is \"the payload associated with the key\".",
+      "parentUuid": "d8d6946d_94fca30a",
+      "range": {
+        "startLine": 310,
+        "startChar": 5,
+        "endLine": 310,
+        "endChar": 19
+      },
+      "revId": "671deb2597726a325bfd178142ca6257cb082f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0317e96_670495e6",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 2
