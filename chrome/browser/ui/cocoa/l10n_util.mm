@@ -5,6 +5,7 @@
 #import "chrome/browser/ui/cocoa/l10n_util.h"
 
 #include "base/i18n/rtl.h"
+#include "base/mac/availability.h"
 #include "base/mac/mac_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
@@ -93,7 +94,7 @@ bool ShouldFlipWindowControlsInRTL() {
   return ShouldDoExperimentalRTLLayout() && base::mac::IsAtLeastOS10_12();
 }
 
-// TODO(lgrey): Remove these when all builds are on 10.12 SDK.
+// TODO(lgrey): Remove these when deployment target is 10.12 SDK.
 #if defined(MAC_OS_X_VERSION_10_12) && \
     (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12)
 #warning LeadingCellImagePosition/TrailingCellImagePosition \
@@ -109,10 +110,10 @@ NSCellImagePosition TrailingCellImagePosition() {
   return ShouldDoExperimentalRTLLayout() ? NSImageLeft : NSImageRight;
 }
 #else
-NSCellImagePosition LeadingCellImagePosition() {
+NSCellImagePosition LeadingCellImagePosition() API_AVAILABLE(macos(10.12)) {
   return NSImageLeading;
 }
-NSCellImagePosition TrailingCellImagePosition() {
+NSCellImagePosition TrailingCellImagePosition() API_AVAILABLE(macos(10.12)) {
   return NSImageTrailing;
 }
 #endif  // MAC_OS_X_VERSION_10_12
