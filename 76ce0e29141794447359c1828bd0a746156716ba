@@ -62,6 +62,30 @@
       "revId": "76ce0e29141794447359c1828bd0a746156716ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1932bb_9f60c3c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-14T15:41:00Z",
+      "side": 1,
+      "message": "Keeping the index in the tile is probably the right thing to do, it will be easier to notice changes in order of the tiles that way.",
+      "parentUuid": "57676756_f99bbbfa",
+      "range": {
+        "startLine": 263,
+        "startChar": 82,
+        "endLine": 263,
+        "endChar": 83
+      },
+      "revId": "76ce0e29141794447359c1828bd0a746156716ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
