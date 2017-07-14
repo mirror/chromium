@@ -4876,6 +4876,12 @@ void RenderWidgetHostViewAuraOverscrollTest::
   // ScrollBegin, and ScrollEnd will be queued events.
   EXPECT_EQ(2U, GetSentMessageCountAndResetSink());
 
+  SimulateGestureEvent(WebInputEvent::kGestureFlingCancel,
+                       blink::kWebGestureDeviceTouchpad);
+  SendInputEventACK(WebInputEvent::kGestureFlingCancel,
+                    INPUT_EVENT_ACK_STATE_CONSUMED);
+  EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
+
   SimulateWheelEventPossiblyIncludingPhase(
       !wheel_scroll_latching_enabled_, -5, 0, 0, true,
       WebMouseWheelEvent::kPhaseBegan);  // sent directly
