@@ -15,9 +15,16 @@ Polymer({
   properties: {
     /**
      * The site that this widget is showing details for.
-     * @type {SiteException}
+     * @type {RawSiteException}
      */
     site: Object,
+
+    /**
+     * The default setting string for this permission category.
+     * @type {string}
+     * @private
+     */
+    defaultSettingString_: String,
   },
 
   observers: ['siteChanged_(site, category)'],
@@ -44,10 +51,20 @@ Polymer({
 
   /**
    * Updates the drop-down value after |site| has changed.
-   * @param {!SiteException} site The site to display.
+   * @param {!RawSiteException} site The site to display.
    * @private
    */
   siteChanged_: function(site) {
+    if (site.source == 'default') {
+      this.updateDefaultSettingString_(site.setting);
+      this.$.permission.value = settings.ContentSetting.DEFAULT;
+      return;
+    }
+    // The default setting is unknown, so consult the C++ backend for it.
+    this.browserProxy.getDefaultValueForContentType(this.category)
+        .then((defaultValue) => {
+          this.updateDefaultSettingString_(defaultValue.setting);
+        });
     this.$.permission.value = site.setting;
   },
 
@@ -86,8 +103,34 @@ Polymer({
    * @private
    */
   onPermissionSelectionChange_: function() {
+    if (this.$.permission.value == settings.ContentSetting.DEFAULT) {
+      this.resetPermission();
+      return;
+    }
     this.browserProxy.setCategoryPermissionForOrigin(
         this.site.origin, this.site.embeddingOrigin, this.category,
         this.$.permission.value, this.site.incognito);
+  },
+
+  /**
+   * Updates the string used for this permission category's default setting.
+   * @param {!settings.ContentSetting} defaultSetting The default setting, if
+   *    known.
+   * @private
+   */
+  updateDefaultSettingString_: function(defaultSetting) {
+    var stringId;
+    if (defaultSetting == settings.ContentSetting.ASK ||
+        defaultSetting == settings.ContentSetting.IMPORTANT_CONTENT) {
+      stringId = 'siteSettingsActionAskDefault';
+    } else if (defaultSetting == settings.ContentSetting.ALLOW) {
+      stringId = 'siteSettingsActionAllowDefault';
+    } else if (defaultSetting == settings.ContentSetting.BLOCK) {
+      stringId = 'siteSettingsActionBlockDefault';
+    }
+    assert(
+        stringId,
+        `No string for ${this.category}'s default of ${defaultSetting}`);
+    this.defaultSettingString_ = loadTimeData.getString(stringId);
   },
 });
