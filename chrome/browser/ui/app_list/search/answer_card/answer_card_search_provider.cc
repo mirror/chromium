@@ -10,9 +10,13 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/ui/app_list/search/answer_card/answer_card_result.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
+#include "components/omnibox/browser/autocomplete_input.h"
+#include "components/omnibox/browser/autocomplete_match.h"
+#include "components/search_engines/template_url_service.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/page_navigator.h"
 #include "net/http/http_response_headers.h"
@@ -50,7 +54,8 @@ AnswerCardSearchProvider::AnswerCardSearchProvider(
       model_(model),
       list_controller_(list_controller),
       contents_(std::move(contents)),
-      answer_server_url_(features::AnswerServerUrl()) {
+      answer_server_url_(features::AnswerServerUrl()),
+      template_url_service_(TemplateURLServiceFactory::GetForProfile(profile)) {
   contents_->SetDelegate(this);
 }
 
@@ -82,6 +87,12 @@ void AnswerCardSearchProvider::Start(bool is_voice_query,
     return;
 
   // Start a request to the answer server.
+
+  result_url_ =
+      template_url_service_->GetDefaultSearchProvider()
+          ->url_ref()
+          .ReplaceSearchTerms(TemplateURLRef::SearchTermsArgs(query),
+                              template_url_service_->search_terms_data());
 
   // Lifetime of |prefixed_query| should be longer than the one of
   // |replacements|.
@@ -202,8 +213,13 @@ void AnswerCardSearchProvider::OnResultAvailable(bool is_available) {
   SearchProvider::Results results;
   if (is_available) {
     results.reserve(1);
+
+    const GURL stripped_result_url = AutocompleteMatch::GURLToStrippedGURL(
+        GURL(result_url_), AutocompleteInput(), template_url_service_,
+        base::UTF8ToUTF16(""));
+
     results.emplace_back(base::MakeUnique<AnswerCardResult>(
-        profile_, list_controller_, result_url_,
+        profile_, list_controller_, result_url_, stripped_result_url.spec(),
         base::UTF8ToUTF16(result_title_), contents_.get()));
   }
   SwapResults(&results);
@@ -214,8 +230,6 @@ bool AnswerCardSearchProvider::ParseResponseHeaders(
   if (!headers || headers->response_code() != net::HTTP_OK)
     return false;
   if (!headers->HasHeaderValue("SearchAnswer-HasResult", "true"))
-    return false;
-  if (!headers->GetNormalizedHeader("SearchAnswer-OpenResultUrl", &result_url_))
     return false;
   if (!headers->GetNormalizedHeader("SearchAnswer-Title", &result_title_))
     return false;
