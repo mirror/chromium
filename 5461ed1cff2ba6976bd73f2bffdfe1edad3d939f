@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9745dfef_b91a9e35",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-14T03:04:09Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t realize that was exposed outside of Blink; if so, then yeah, you probably should just that.",
+      "parentUuid": "40d98938_860e3728",
+      "range": {
+        "startLine": 687,
+        "startChar": 53,
+        "endLine": 687,
+        "endChar": 56
+      },
+      "revId": "5461ed1cff2ba6976bd73f2bffdfe1edad3d939f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9a659be_d844f107",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 1
