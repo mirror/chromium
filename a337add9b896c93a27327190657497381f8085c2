@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed76b3e1_0a0a832c",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-14T17:55:04Z",
+      "side": 0,
+      "message": "If instead of the rest of this CL we just do content::RunAllBlockingPoolTasksUntilIdle(); at the end of this test, does that fix the problem?  It seems like that would mean we have no outstanding tasks referencing |consumer|, and then we destroy it and return out of this scope, so teardown couldn\u0027t post more tasks referencing it.",
+      "revId": "a337add9b896c93a27327190657497381f8085c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
