@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e332d1a_69a3921f",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T08:01:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "940f05d7_025edf74",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97ebb61c_c56a576f",
         "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T18:26:51Z",
       "side": 1,
       "message": "this class now has:\n\nstruct Results, struct RefreshResult, and typedef RefreshResults :\u003d vector\u003e\n\nSo the type names are a little confusing; the last two are private (and windows-only) so we can hopefully rework them pretty freely.\n\nMaybe (private) struct RefreshResult can embed a (public) struct Results?",
+      "range": {
+        "startLine": 81,
+        "startChar": 24,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80da575c_4ecb47ed",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T08:01:22Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not thrilled by the naming. :)\n\nHow would you feel about a generalized MultiTaskSampler that TaskGroupSampler and SharedSampler would both implement, with a single results structure that the two would both output (though they\u0027d typically output different combinations of fields).\n\n(The downside of using Result internally in RefreshResult is that base::Optional\u003c\u003e will bloat the struct due to interleaved bool/values, but compared to the other overheads in TaskManager, probably not an issue..)",
+      "parentUuid": "97ebb61c_c56a576f",
       "range": {
         "startLine": 81,
         "startChar": 24,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c840ccf3_11310eb9",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T08:01:22Z",
+      "side": 1,
+      "message": "This CL is a WIP, to judge how the single-callback + results struct feels; the TODO was to myself to check the threading model, since it seemed non-obvious.",
+      "parentUuid": "3806e5a7_ce681d2b",
+      "range": {
+        "startLine": 92,
+        "startChar": 32,
+        "endLine": 92,
+        "endChar": 43
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdb8ca3d_cd380378",
         "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-12T18:26:51Z",
       "side": 1,
       "message": "Ditto.",
+      "range": {
+        "startLine": 107,
+        "startChar": 22,
+        "endLine": 107,
+        "endChar": 32
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbb64e3_96b89f99",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T08:01:22Z",
+      "side": 1,
+      "message": "Yup; should have removed this before uploading.",
+      "parentUuid": "fdb8ca3d_cd380378",
       "range": {
         "startLine": 107,
         "startChar": 22,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "975fc01f_eeb55d41",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T08:01:22Z",
+      "side": 1,
+      "message": "Yes, I think so.",
+      "parentUuid": "e4ffe524_6714bb0e",
+      "range": {
+        "startLine": 535,
+        "startChar": 20,
+        "endLine": 535,
+        "endChar": 28
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dcabe50_3f5cdff1",
         "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-12T18:26:51Z",
       "side": 1,
       "message": "maybe we could flow this loop like like this (just make it about finding the match):\n\n    RefreshResult* match \u003d nullptr;\n    for (; result_index \u003c refresh_results-\u003esize(); ++result_index) {\n      const auto\u0026 result \u003d (*refresh_results)[result_index];\n      if (result.process_id \u003d\u003d process_id) {\n        match \u003d \u0026result;\n        ++result_index;\n        break;\n      }\n\n      if (result.process_id \u003e process_id) {\n        // An entry corresponding to |process_id| is missing. See above.\n        break;\n      }\n    }\n    \n    if (match) {\n      Results results \u003d match-\u003eresults;  // Copy it, assuming we embed the new type.\n      // Filter out the data we don\u0027t care about?  This could be a operation on Results even:\n      // (ClearTypes())?  However, AFAIK the right thing to do here would be to do the\n      // refresh_flags_ filtering on (refresh_results)\n      if (!TaskManagerObserver::IsResourceRefreshEnabled(REFRESH_TYPE_IDLE_WAKEUPS,\n                                                         refresh_flags_)) {\n        results-\u003eidle_wakeups.reset();\n      }\n    }",
+      "range": {
+        "startLine": 543,
+        "startChar": 9,
+        "endLine": 543,
+        "endChar": 10
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2935b612_b103040f",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T08:01:22Z",
+      "side": 1,
+      "message": "I\u0027m actually thinking the whole snapshot-making should be re-worked - we should be able to reduce the amount of re-allocation going on.\n\nBasically if we maintain a table of Results and PreviousState instances for each process that we are interested in then:\n- When a process is added by Chrome, we add its Id into the table, and similarly when it\u0027s removed.\n- For each interesting process in the OS ProcessInformation we check the table.\n  - If there is no entry, we ignore the process.\n  - If there is an entry then for each flag that is set, we do the update or diff calculation, versus the previous value, if present.\n  - For each of the flagged entries we copy the new data to PreviousState and update Results.\n\nThis avoids repeatedly re-allocating snapshot process maps, and should actually simplify the implementation by avoiding this copying via intermediate formats.",
+      "parentUuid": "3dcabe50_3f5cdff1",
       "range": {
         "startLine": 543,
         "startChar": 9,
@@ -156,6 +300,53 @@
         "startChar": 28,
         "endLine": 579,
         "endChar": 39
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe11f2c_312f50dd",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T08:01:22Z",
+      "side": 1,
+      "message": "Yes, we should already be able to DCHECK_NE(0, refresh_flags \u0026 GetSupportedFlags()). If the Task Manager is responsible for only requesting supported flags then we can also DCHECK_EQ(0, refresh_flags \u0026 ~GetSupportedFlags()).",
+      "parentUuid": "b06c6807_d3a07e12",
+      "range": {
+        "startLine": 579,
+        "startChar": 28,
+        "endLine": 579,
+        "endChar": 39
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8e0337_46a2d205",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-14T08:01:22Z",
+      "side": 1,
+      "message": "If we go with the MultiTaskSampler approach then both TaskGroupSampler and SharedSampler output the same Results structures, and this function becomes a general handler that applies the changed fields and updates the REFRESH_TYPES.\n\nOne downside to using Optional in Refresh struct to indicate whether a value is refreshed, is that we then can\u0027t use a null Optional value to mean \"we have no value for this\" (e.g. if the Sampler can\u0027t get a value for some reason then we report N/A, at present using sentinal values for each field).",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 27
       },
       "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
