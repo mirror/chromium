@@ -55,6 +55,14 @@
     </style>
 
     <div class="settings-box first">
+      <div class="settings-box first">
+      <span>
+        $i18n{cupsPrintersLearnMoreLable}
+        <a href="$i18n{printingCUPSPrintLearnMoreUrl}" target="_blank">
+          $i18n{learnMore}
+        </a>
+      </span>
+    </div>
       <paper-button class="primary-button" id="addPrinter"
           on-tap="onAddPrinterTap_" hidden="[[!canAddPrinter_]]">
         $i18n{addCupsPrinter}
