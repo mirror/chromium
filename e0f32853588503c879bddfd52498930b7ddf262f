@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d75b6e7_a272388d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-14T21:36:50Z",
+      "side": 1,
+      "message": "Nit: rename to IsDisplayingUrlForTesting?",
+      "revId": "e0f32853588503c879bddfd52498930b7ddf262f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4cb62f_f4d5030a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNativeUITest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-14T21:36:50Z",
+      "side": 1,
+      "message": "Nit: rename to VrShellNativeUiTest?",
+      "revId": "e0f32853588503c879bddfd52498930b7ddf262f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0091ce88_e1b24db3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNativeUITest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-14T21:36:50Z",
+      "side": 1,
+      "message": "Nit: rename to testUrlOnNativeUi?",
+      "revId": "e0f32853588503c879bddfd52498930b7ddf262f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e03316e_f1af3a9b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-14T21:36:50Z",
+      "side": 1,
+      "message": "Nit: rename to IsDisplayingUrlForTesting?",
+      "revId": "e0f32853588503c879bddfd52498930b7ddf262f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
