@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0072457d_f6f36683",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "Duplicate line. Also a little scarce on details... ;)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ac712d_a15a1132",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "Please create a crbug to reference here.",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386911d4_3151a042",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "Nit: please use base::MakeUnique\u003c\u003e()",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 80
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08eac2c1_8a5e64ea",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "Nit: --\u003e base::MakeUnique",
+      "range": {
+        "startLine": 943,
+        "startChar": 4,
+        "endLine": 946,
+        "endChar": 70
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc319e3_54003c71",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem to be needed",
+      "range": {
+        "startLine": 950,
+        "startChar": 5,
+        "endLine": 950,
+        "endChar": 27
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da1aad6_06730bca",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "i\u0027d suggest to just continue here",
+      "range": {
+        "startLine": 957,
+        "startChar": 9,
+        "endLine": 957,
+        "endChar": 27
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b20dd2d_bdc10c3d",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "just continue here",
+      "range": {
+        "startLine": 966,
+        "startChar": 10,
+        "endLine": 966,
+        "endChar": 27
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b86f8f_7aa8b4d0",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "This seems unused. Ideally you\u0027d also add the code that makes use of it so that the CL is self-contained.",
+      "range": {
+        "startLine": 981,
+        "startChar": 18,
+        "endLine": 981,
+        "endChar": 38
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca201bc_545c04cc",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "Nit: WeeklyTimeProto would seem like a better name -- it\u0027s not really a timestamp",
+      "range": {
+        "startLine": 838,
+        "startChar": 8,
+        "endLine": 838,
+        "endChar": 28
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38e74a7_01b608ac",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "Please add comment.",
+      "range": {
+        "startLine": 852,
+        "startChar": 1,
+        "endLine": 852,
+        "endChar": 29
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5916f8ea_ac4efe4d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 9861,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "Please add more details, especially describing the |policy| parameter and also please spell out explicitly what happens when the policy is not set.",
+      "range": {
+        "startLine": 9861,
+        "startChar": 17,
+        "endLine": 9861,
+        "endChar": 82
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6747cc43_281c26da",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 9863,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "Nit: pls drop blank line",
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe4d106_f0ca152f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92468,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T14:12:57Z",
+      "side": 1,
+      "message": "These changes seem to be unrelated to your CL.",
+      "range": {
+        "startLine": 92450,
+        "startChar": 0,
+        "endLine": 92468,
+        "endChar": 23
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
