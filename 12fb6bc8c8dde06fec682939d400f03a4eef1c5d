@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66ce4b6b_f84cb781",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-14T21:04:43Z",
+      "side": 1,
+      "message": "Add a comment explaining what this block does. Something like:\n\n// Determine whether any tail suggestions are present and if so, what the\n// common prefix text is.",
+      "revId": "12fb6bc8c8dde06fec682939d400f03a4eef1c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98cc229_b650eef4",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-14T21:04:43Z",
+      "side": 1,
+      "message": "I\u0027d still much prefer all the code to be in this class, so that all of the logic dealing with tail suggestions can be seen in one place.\n\nGiven that OmniboxResultView doesn\u0027t have any special knowledge about the match or how to deal with tail suggestions, the fixup method doesn\u0027t need to live there. Can you move it here? (And maybe give it a bit more descriptive name? Proposed: InlineTailPrefix)\n\nIn other words, this code would look something like this:\n\nAutocompleteMatch match \u003d GetMatchAtIndex(i);\nInlineTailPrefix(any_tail_suggestions, common_prefix, \u0026match);\nview-\u003eSetMatch(match);\n\nGranted, this requires an extra copy. But I don\u0027t think it\u0027s worth adding complexity by splitting this logic across 2 classes in order to avoid copying a small number of objects that are already being copied around a few times.",
+      "revId": "12fb6bc8c8dde06fec682939d400f03a4eef1c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
