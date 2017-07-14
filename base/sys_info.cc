@@ -15,10 +15,21 @@
 #include "build/build_config.h"
 
 namespace base {
+namespace {
+static const int kLowMemoryDeviceThresholdMB = 512;
+}
+
+// static
+int64_t SysInfo::AmountOfPhysicalMemory() {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableLowEndDeviceMode)) {
+    return kLowMemoryDeviceThresholdMB * 1024 * 1024;
+  }
+
+  return AmountOfPhysicalMemoryImpl();
+}
 
 #if !defined(OS_ANDROID)
-
-static const int kLowMemoryDeviceThresholdMB = 512;
 
 bool DetectLowEndDevice() {
   CommandLine* command_line = CommandLine::ForCurrentProcess();
