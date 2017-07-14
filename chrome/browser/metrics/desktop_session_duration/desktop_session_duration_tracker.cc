@@ -75,6 +75,12 @@ void DesktopSessionDurationTracker::OnUserEvent() {
   }
 }
 
+// static
+void DesktopSessionDurationTracker::CleanupForTesting() {
+  delete g_instance;
+  g_instance = nullptr;
+}
+
 void DesktopSessionDurationTracker::OnAudioStart() {
   // This may start session.
   is_audio_playing_ = true;
