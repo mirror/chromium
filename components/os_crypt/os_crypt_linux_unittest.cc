@@ -12,7 +12,7 @@
 
 namespace {
 
-KeyStorageLinux* GetNullKeyStorage() {
+std::unique_ptr<KeyStorageLinux> GetNullKeyStorage() {
   return nullptr;
 }
 
@@ -23,24 +23,34 @@ class OSCryptLinuxTest : public testing::Test {
 
   void SetUp() override {
     OSCryptMockerLinux::SetUpWithSingleton();
-    key_storage_ = OSCryptMockerLinux::GetInstance();
+    UseMockKeyStorageForTesting(
+        nullptr, []() -> std::string* { return OSCryptLinuxTest::GetKey(); });
   }
 
   void TearDown() override { OSCryptMockerLinux::TearDown(); }
 
  protected:
-  OSCryptMockerLinux* key_storage_ = nullptr;
+  void SetEncryptionKey(const std::string& key) {
+    *OSCryptLinuxTest::GetKey() = key;
+  }
+
+  static std::string* GetKey();
 
  private:
   DISALLOW_COPY_AND_ASSIGN(OSCryptLinuxTest);
 };
+
+std::string* OSCryptLinuxTest::GetKey() {
+  static std::string key_ = "something";
+  return &key_;
+}
 
 TEST_F(OSCryptLinuxTest, VerifyV0) {
   const std::string originaltext = "hello";
   std::string ciphertext;
   std::string decipheredtext;
 
-  key_storage_->ResetTo("");
+  SetEncryptionKey("");       // TODO(cfroussios) why?
   ciphertext = originaltext;  // No encryption
   ASSERT_TRUE(OSCrypt::DecryptString(ciphertext, &decipheredtext));
   ASSERT_EQ(originaltext, decipheredtext);
@@ -51,9 +61,9 @@ TEST_F(OSCryptLinuxTest, VerifyV10) {
   std::string ciphertext;
   std::string decipheredtext;
 
-  key_storage_->ResetTo("peanuts");
+  SetEncryptionKey("peanuts");
   ASSERT_TRUE(OSCrypt::EncryptString(originaltext, &ciphertext));
-  key_storage_->ResetTo("not_peanuts");
+  SetEncryptionKey("not_peanuts");
   ciphertext = ciphertext.substr(3).insert(0, "v10");
   ASSERT_TRUE(OSCrypt::DecryptString(ciphertext, &decipheredtext));
   ASSERT_EQ(originaltext, decipheredtext);
@@ -64,7 +74,7 @@ TEST_F(OSCryptLinuxTest, VerifyV11) {
   std::string ciphertext;
   std::string decipheredtext;
 
-  key_storage_->ResetTo("");
+  SetEncryptionKey("");
   ASSERT_TRUE(OSCrypt::EncryptString(originaltext, &ciphertext));
   ASSERT_EQ(ciphertext.substr(0, 3), "v11");
   ASSERT_TRUE(OSCrypt::DecryptString(ciphertext, &decipheredtext));

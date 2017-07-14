@@ -355,7 +355,7 @@ class PersonalDataManagerTest : public PersonalDataManagerTestBase,
     account_tracker_.reset();
     signin_client_.reset();
 
-    test::DisableSystemServices(prefs_.get());
+    test::ReenableSystemServices();
     OSCryptMocker::TearDown();
   }
 };

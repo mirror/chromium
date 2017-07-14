@@ -51,10 +51,8 @@ const char kObfuscationPrefix[][4] = {
 };
 
 struct Cache {
-  std::unique_ptr<KeyStorageLinux> key_storage_cache;
   std::unique_ptr<std::string> password_v10_cache;
   std::unique_ptr<std::string> password_v11_cache;
-  bool is_key_storage_cached;
   bool is_password_v11_cached;
   std::unique_ptr<os_crypt::Config> config;
   // Guards access to |g_cache|, making lazy initialization of individual parts
@@ -66,19 +64,17 @@ base::LazyInstance<Cache>::Leaky g_cache = LAZY_INSTANCE_INITIALIZER;
 
 // Lazy acquisition and caching of a KeyStorage. Will be null if no service is
 // found.
-KeyStorageLinux* GetKeyStorage() {
-  if (!g_cache.Get().is_key_storage_cached) {
-    DCHECK(g_cache.Get().config);
-    g_cache.Get().is_key_storage_cached = true;
-    g_cache.Get().key_storage_cache =
-        KeyStorageLinux::CreateService(*g_cache.Get().config);
-  }
-  return g_cache.Get().key_storage_cache.get();
+std::unique_ptr<KeyStorageLinux> GetKeyStorage() {
+  DCHECK(g_cache.Get().config);
+  std::unique_ptr<KeyStorageLinux> key_storage =
+      KeyStorageLinux::CreateService(*g_cache.Get().config);
+  g_cache.Get().config.reset();
+  return key_storage;
 }
 
 // Pointer to a function that creates and returns the |KeyStorage| instance to
 // be used. The function maintains ownership of the pointer.
-KeyStorageLinux* (*g_key_storage_provider)() = &GetKeyStorage;
+std::unique_ptr<KeyStorageLinux> (*g_key_storage_provider)() = &GetKeyStorage;
 
 // Returns a cached string of "peanuts". Is thread-safe.
 std::string* GetPasswordV10() {
@@ -94,10 +90,9 @@ std::string* GetPasswordV10() {
 std::string* GetPasswordV11() {
   base::AutoLock auto_lock(g_cache.Get().lock);
   if (!g_cache.Get().is_password_v11_cached) {
+    std::unique_ptr<KeyStorageLinux> key_storage = g_key_storage_provider();
     g_cache.Get().password_v11_cache.reset(
-        g_key_storage_provider()
-            ? new std::string(g_key_storage_provider()->GetKey())
-            : nullptr);
+        key_storage ? new std::string(key_storage->GetKey()) : nullptr);
     g_cache.Get().is_password_v11_cached = true;
   }
   return g_cache.Get().password_v11_cache.get();
@@ -230,7 +225,7 @@ bool OSCrypt::DecryptString(const std::string& ciphertext,
 // static
 void OSCrypt::SetConfig(std::unique_ptr<os_crypt::Config> config) {
   // Setting initialisation parameters makes no sense after initializing.
-  DCHECK(!g_cache.Get().is_key_storage_cached);
+  DCHECK(!g_cache.Get().is_password_v11_cached);
   g_cache.Get().config = std::move(config);
 }
 
@@ -240,15 +235,15 @@ bool OSCrypt::IsEncryptionAvailable() {
 }
 
 void ClearCacheForTesting() {
-  g_cache.Get().key_storage_cache.reset();
   g_cache.Get().password_v10_cache.reset();
   g_cache.Get().password_v11_cache.reset();
-  g_cache.Get().is_key_storage_cached = false;
   g_cache.Get().is_password_v11_cached = false;
+  g_cache.Get().config.reset();
 }
 
-void UseMockKeyStorageForTesting(KeyStorageLinux* (*get_key_storage_mock)(),
-                                 std::string* (*get_password_v11_mock)()) {
+void UseMockKeyStorageForTesting(
+    std::unique_ptr<KeyStorageLinux> (*get_key_storage_mock)(),
+    std::string* (*get_password_v11_mock)()) {
   // Save the real implementation to restore it later.
   static bool is_get_password_saved = false;
   static std::string* (*get_password_save[arraysize(g_get_password)])();
