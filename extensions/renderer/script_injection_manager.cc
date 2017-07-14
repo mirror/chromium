@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -310,7 +311,13 @@ void ScriptInjectionManager::OnExtensionUnloaded(
 }
 
 void ScriptInjectionManager::OnInjectionFinished(
-    ScriptInjection* injection) {
+    ScriptInjection* injection,
+    base::Optional<base::TimeDelta> elapsed) {
+  base::TimeTicks now = base::TimeTicks::Now();
+  if (elapsed)
+    UMA_HISTOGRAM_TIMES("Extensions.TimeYieldedBetweenContentScriptRuns",
+                        now - last_injection_finished_time_ - *elapsed);
+  last_injection_finished_time_ = now;
   auto iter =
       std::find_if(running_injections_.begin(), running_injections_.end(),
                    [injection](const std::unique_ptr<ScriptInjection>& mode) {
@@ -415,6 +422,7 @@ void ScriptInjectionManager::InjectScripts(
   active_injection_frames_.insert(frame);
 
   ScriptsRunInfo scripts_run_info(frame, run_location);
+  last_injection_finished_time_ = base::TimeTicks::Now();
   for (auto iter = frame_injections.begin(); iter != frame_injections.end();) {
     // It's possible for the frame to be invalidated in the course of injection
     // (if a script removes its own frame, for example). If this happens, abort.

@@ -42,7 +42,8 @@ class ScriptInjection {
     INJECTION_WAITING
   };
 
-  using CompletionCallback = base::Callback<void(ScriptInjection*)>;
+  using CompletionCallback =
+      base::Callback<void(ScriptInjection*, base::Optional<base::TimeDelta>)>;
 
   // Return the id of the injection host associated with the given world.
   static std::string GetHostIdForIsolatedWorld(int world_id);
