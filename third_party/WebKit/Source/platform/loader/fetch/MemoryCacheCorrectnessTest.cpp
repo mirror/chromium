@@ -61,7 +61,6 @@ class MemoryCacheCorrectnessTest : public ::testing::Test {
     if (response.Url().IsNull())
       response.SetURL(KURL(kParsedURLString, kResourceURL));
     ResourceRequest request(response.Url());
-    request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
     MockResource* resource = MockResource::Create(request);
     resource->SetResponse(response);
     resource->Finish();
@@ -354,7 +353,6 @@ TEST_F(MemoryCacheCorrectnessTest, FreshWithFreshRedirect) {
   KURL redirect_target_url(kParsedURLString, kRedirectTargetUrlString);
 
   ResourceRequest request(redirect_url);
-  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
   MockResource* first_resource = MockResource::Create(request);
 
   ResourceResponse fresh301_response;
@@ -432,7 +430,7 @@ TEST_F(MemoryCacheCorrectnessTest, FreshWithStaleRedirect) {
 TEST_F(MemoryCacheCorrectnessTest, PostToSameURLTwice) {
   ResourceRequest request1(KURL(kParsedURLString, kResourceURL));
   request1.SetHTTPMethod(HTTPNames::POST);
-  RawResource* resource1 = RawResource::Create(request1, Resource::kRaw);
+  RawResource* resource1 = RawResource::CreateForTest(request1, Resource::kRaw);
   resource1->SetStatus(ResourceStatus::kPending);
   GetMemoryCache()->Add(resource1);
 
@@ -492,7 +490,6 @@ TEST_F(MemoryCacheCorrectnessTest, 302RedirectExplicitlyFreshMaxAge) {
   KURL redirect_target_url(kParsedURLString, kRedirectTargetUrlString);
 
   ResourceRequest request(redirect_url);
-  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
   MockResource* first_resource = MockResource::Create(request);
 
   ResourceResponse fresh302_response;
@@ -533,7 +530,6 @@ TEST_F(MemoryCacheCorrectnessTest, 302RedirectExplicitlyFreshExpires) {
   KURL redirect_target_url(kParsedURLString, kRedirectTargetUrlString);
 
   ResourceRequest request(redirect_url);
-  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
   MockResource* first_resource = MockResource::Create(request);
 
   ResourceResponse fresh302_response;
