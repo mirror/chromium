@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a702b5e8_0aefec50",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-14T22:58:25Z",
+      "side": 1,
+      "message": "lgtm assuming you change this back before committing :).",
+      "revId": "fc5932a497ed956b82bc58d554b35a3a095408b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
