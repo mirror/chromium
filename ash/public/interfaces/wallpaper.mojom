@@ -24,6 +24,10 @@ interface WallpaperController {
   // large bitmaps over Mojo; use shared memory like BitmapUploader, etc.
   SetWallpaper(skia.mojom.Bitmap? wallpaper, WallpaperLayout layout);
 
+  // The same with |SetWallpaper| except for providing a unique ID of the image
+  // for color caching purpose.
+  SetWallpaperWithId(skia.mojom.Bitmap? wallpaper, string id, WallpaperLayout layout);
+
   // Runs to get wallpaper prominent colors.
   GetWallpaperColors() => (array<uint32> prominent_colors);
 };

@@ -192,6 +192,7 @@ class WallpaperManager
   base::FilePath GetDeviceWallpaperFilePath() override;
   void OnWallpaperDecoded(
       const AccountId& account_id,
+      const std::string& location,
       wallpaper::WallpaperLayout layout,
       bool update_wallpaper,
       wallpaper::MovableOnDestroyCallbackHolder on_finish,
