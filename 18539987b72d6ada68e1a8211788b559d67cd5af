@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4a32a4d_f0f4be77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T13:19:42Z",
+      "side": 1,
+      "message": "Please add more detail about what you\u0027re doing here.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "18539987b72d6ada68e1a8211788b559d67cd5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a727c5f1_8da48917",
+        "filename": "chrome/browser/chromeos/extensions/users_private/users_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T13:19:42Z",
+      "side": 1,
+      "message": "Nit: const",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "18539987b72d6ada68e1a8211788b559d67cd5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22327d6_c8dc7d6e",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T13:19:42Z",
+      "side": 1,
+      "message": "Nit: Add comment to explain the purpose of this.",
+      "range": {
+        "startLine": 1340,
+        "startChar": 1,
+        "endLine": 1340,
+        "endChar": 44
+      },
+      "revId": "18539987b72d6ada68e1a8211788b559d67cd5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30081410_900a97a7",
+        "filename": "chrome/browser/chromeos/login/users/fake_chrome_user_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T13:19:42Z",
+      "side": 1,
+      "message": "Nit: same...",
+      "range": {
+        "startLine": 331,
+        "startChar": 2,
+        "endLine": 331,
+        "endChar": 44
+      },
+      "revId": "18539987b72d6ada68e1a8211788b559d67cd5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d4fd96_4bd610fb",
+        "filename": "chrome/browser/chromeos/login/users/supervised_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T13:19:42Z",
+      "side": 1,
+      "message": "Nit: remove space",
+      "range": {
+        "startLine": 444,
+        "startChar": 46,
+        "endLine": 444,
+        "endChar": 47
+      },
+      "revId": "18539987b72d6ada68e1a8211788b559d67cd5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a59f66f_7a1df5b3",
+        "filename": "chrome/browser/chromeos/login/users/supervised_user_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-07-14T13:19:42Z",
+      "side": 1,
+      "message": "Nit: remove space",
+      "range": {
+        "startLine": 444,
+        "startChar": 72,
+        "endLine": 444,
+        "endChar": 73
+      },
+      "revId": "18539987b72d6ada68e1a8211788b559d67cd5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
