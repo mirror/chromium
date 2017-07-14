@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e152ecc6_9c30a59c",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7770,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-14T02:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "587f92f0_3afe46d4",
+      "range": {
+        "startLine": 7770,
+        "startChar": 6,
+        "endLine": 7770,
+        "endChar": 18
+      },
+      "revId": "3a017ec9e76c5ea59f61c9ef60ee7bfb9efc1e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a232ee6_721ec191",
         "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "3a017ec9e76c5ea59f61c9ef60ee7bfb9efc1e8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c14df52_0182db36",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 9951,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-14T02:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a232ee6_721ec191",
+      "revId": "3a017ec9e76c5ea59f61c9ef60ee7bfb9efc1e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "fcc2af66_a54e7dfb",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 11371,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-14T02:48:01Z",
+      "side": 1,
+      "message": "This is needed to ensure that the LayoutView\u0027s scrollbars take up layout space; otherwise, the hit test won\u0027t hit the scrollbar.\n\nThere are other places in the tests where REF features are enabled/disabled without being restored, so I don\u0027t think this is any different.",
+      "parentUuid": "80338851_5e311418",
+      "revId": "3a017ec9e76c5ea59f61c9ef60ee7bfb9efc1e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6337046_13f74d2b",
         "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
         "patchSetId": 6
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-14T00:59:16Z",
       "side": 1,
       "message": "Can you add checks on the scroll position of the WebLayer?  (area-\u003eLayerForScrolling()-\u003ePlatformLayer()-\u003eScrollPosition())\n\nGraphicsLayer::OffsetFromLayoutObject() is just some bookkeeping for Blink, it isn\u0027t plumbed directly into cc.  To convince me that the RLS expectation divergence is ok I\u0027d like to see that 10000 moving into the scroll position.",
+      "revId": "3a017ec9e76c5ea59f61c9ef60ee7bfb9efc1e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c906ad_939a4b9a",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 11752,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-14T02:48:01Z",
+      "side": 1,
+      "message": "I added checks for scroll position.  Checking the position on the platform seems pretty silly, considering this method:\n\nvoid GraphicsLayer::SetPosition(const FloatPoint\u0026 point) {                                                                                  \n  position_ \u003d point;                                                                                                                        \n  PlatformLayer()-\u003eSetPosition(position_);                                                                                                  \n}",
+      "parentUuid": "a6337046_13f74d2b",
       "revId": "3a017ec9e76c5ea59f61c9ef60ee7bfb9efc1e8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
