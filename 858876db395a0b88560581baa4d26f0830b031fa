@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "ce452759_fd55b61d",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-14T16:32:32Z",
+      "side": 1,
+      "message": "Right, I would have preferred to avoid an internal static variable if we can.\n\nBut now thinking about it more, it seems the right way to think about this is\nnot a count but rather a \"unique id\" per scope. In which case I can see how it\nis better to have the GlobalScope constructor be in charge of generating an \nuid for itself rather that receiving it from the worklet. The fact that these\nid\u0027s are sequential is just incidental.\n\nIn that light, I also suggest changing the name to be id_ rather than count\nand going with 2 as well.",
+      "parentUuid": "7a5950e7_5a65c091",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 37
+      },
+      "revId": "858876db395a0b88560581baa4d26f0830b031fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd8357af_49485ba1",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
         "patchSetId": 12
