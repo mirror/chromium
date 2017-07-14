@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7bac03c_7b675d5b",
+        "filename": "base/sys_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-14T20:01:15Z",
+      "side": 1,
+      "message": "Should this be capped too by the flag?",
+      "revId": "d0c05f33540a2d49769e9d77390d2177ac31eac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1759ef9_9573b4a6",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-14T20:01:15Z",
+      "side": 1,
+      "message": "Can you combine the two blocks together more, so they don\u0027t diverge? Maybe like\n\nif IsLowEndDevice() {\n  bool uselow \u003d Switch(lowenddevice);\n#ifdef ANDROID\n  uselow \u003d true;\n#endif\n  ..\n}\n\nSomething along those lines?",
+      "revId": "d0c05f33540a2d49769e9d77390d2177ac31eac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
