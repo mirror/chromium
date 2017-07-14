@@ -15,7 +15,6 @@
 #include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
-#include "core/paint/ScrollRecorder.h"
 #include "platform/RuntimeEnabledFeatures.h"
 
 namespace blink {
@@ -66,7 +65,6 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
 
   const DisplayItemClient* display_item_client = &layout_view_;
 
-  Optional<ScrollRecorder> scroll_recorder;
   if (BoxPainter::
           IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
               &layout_view_, paint_info)) {
@@ -76,8 +74,6 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
         static_cast<const DisplayItemClient*>(layout_view_.Layer()
                                                   ->GetCompositedLayerMapping()
                                                   ->ScrollingContentsLayer());
-    scroll_recorder.emplace(paint_info.context, layout_view_, paint_info.phase,
-                            layout_view_.ScrolledContentOffset());
   }
 
   if (DrawingRecorder::UseCachedDrawingIfPossible(
