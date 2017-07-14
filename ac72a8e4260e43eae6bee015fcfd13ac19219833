@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48ddd771_f43c7587",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DefaultAudioDestinationNode.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "nit: Start -\u003e Starts, use -\u003e uses\n\n\"These comments should be descriptive (\"Opens the file\") rather than imperative (\"Open the file\");\"\nhttps://google.github.io/styleguide/cppguide.html#Function_Comments",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8773106_e18d536f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "Should we clear |worklet_backing_thread_| here so that we can detect GetRenderingThread() is unexpectedly called after Uninitialize()?",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f0b82b_8fc21a95",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "This if-branch is not necessary because |reset()| on nullptr std::unique_ptr is not harmful.",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3860784_f08c5605",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "DCHECK(IsInitialized())?",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e7b09d_6d9097fd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "How about branching based on the runtime flag?\n\nif (RuntimeEnabledFeatures::AudioWorkletEnabled()) {\n  DCHECK(!render_thread_ \u0026\u0026 worklet_backing_thread_);\n  return worklet_backing_thread_;\n}\nDCHECK(render_thread_ \u0026\u0026 !worklet_backing_thread_);\nreturn render_thread_.get();",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6a4af3_85b71d55",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "can on run -\u003e can run on",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a20a71f_6eb70fd3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "This ownership comment would be redundant because this is std:unique_ptr.",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9e9c20_8edad99a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "Point -\u003e Points",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13128c53_afdf9583",
+        "filename": "third_party/WebKit/Source/modules/webaudio/WindowAudioWorklet.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abfe4dc_e99852ce",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "Branching based on an argument that can be \u0027default nullptr\u0027 seems to be fragile. How about using WTF::Optional\u003c\u003e to clarify the argument is optional?\n\n// If |worklet_backing_thread| has a value, AudioDestination runs on that thread instead of creating a new thread.\nvoid AudioDestination::Start(WTF::Optional\u003cWebThread*\u003e worklet_backing_thread) {\n  // ... snip ...\n  if (worklet_backing_thread.has_value()) {\n    DCHECK(RuntimeEnabledFeatures::AudioWorkletEnabled());\n    worklet_backing_thread_ \u003d *worklet_backing_thread;\n  } else {\n    rendering_thread_ \u003d Platform::Current()-\u003eCreateThread(\"...\");    \n  }\n}",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9152ee8_b3ab7bea",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "ditto (this branch is not necessary)",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaed0c35_46c8a754",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-14T23:58:15Z",
+      "side": 1,
+      "message": "Ditto: How about branching based on the runtime flag?\n\nif (RuntimeEnabledFeatures::AudioWorkletEnabled()) {\n  DCHECK(!render_thread_ \u0026\u0026 worklet_backing_thread_);\n  return worklet_backing_thread_;\n}\nDCHECK(render_thread_ \u0026\u0026 !worklet_backing_thread_);\nreturn render_thread_.get();",
+      "revId": "ac72a8e4260e43eae6bee015fcfd13ac19219833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
