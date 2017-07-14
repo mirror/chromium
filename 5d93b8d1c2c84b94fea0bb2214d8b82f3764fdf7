@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2977044_014daaf7",
+        "filename": "ios/clean/chrome/browser/ui/tools/tools_mediator_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-07-14T19:13:29Z",
+      "side": 1,
+      "message": "I plan on adding more Testing scenarios/combinations once ToolsMenu is displaying all the relevant items for each ToolsMenuConfiguration.",
+      "revId": "5d93b8d1c2c84b94fea0bb2214d8b82f3764fdf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
