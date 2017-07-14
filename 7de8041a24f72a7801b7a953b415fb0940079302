@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "282f52b5_3a6422b2",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-14T16:40:22Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3f0b54_53fb05af",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-14T16:40:22Z",
+      "side": 1,
+      "message": "Does it make sense to put the above in CancelGestureDrag()?",
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "901199a9_1ca350ce",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 13
