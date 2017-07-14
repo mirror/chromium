@@ -13,6 +13,14 @@
 
 namespace safe_browsing {
 
+TestSafeBrowsingDatabaseManager::TestSafeBrowsingDatabaseManager() {
+  DLOG(ERROR) << __FUNCTION__ << ": this: " << this;
+  /*
+  int *p = 0;
+  DLOG(ERROR) << __FUNCTION__ << ": nullptr: " << *((int*)(p));
+  */
+}
+
 void TestSafeBrowsingDatabaseManager::CancelCheck(Client* client) {
   NOTIMPLEMENTED();
 }

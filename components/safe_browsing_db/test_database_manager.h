@@ -22,6 +22,7 @@ class TestSafeBrowsingDatabaseManager
     : public SafeBrowsingDatabaseManager {
  public:
   // SafeBrowsingDatabaseManager implementation:
+  TestSafeBrowsingDatabaseManager();
   void CancelCheck(Client* client) override;
   bool CanCheckResourceType(content::ResourceType resource_type) const override;
   bool CanCheckUrl(const GURL& url) const override;
