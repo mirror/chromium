@@ -67,7 +67,7 @@ class APP_LIST_EXPORT SearchResultPageView
   int selected_index_;
 
   // Whether to use new UX design for search results.
-  bool const is_new_design_;
+  bool const is_touch_friendly_design_;
 
   // View containing SearchCardView instances. Owned by view hierarchy.
   views::View* const contents_view_;
