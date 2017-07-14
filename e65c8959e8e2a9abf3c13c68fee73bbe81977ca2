@@ -86,6 +86,24 @@
       "revId": "e65c8959e8e2a9abf3c13c68fee73bbe81977ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332a0ddb_a4a114b0",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-14T14:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61799811_46df56ce",
+      "revId": "e65c8959e8e2a9abf3c13c68fee73bbe81977ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
