@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e161db36_d9603dc1",
+        "filename": "ui/gfx/geometry/rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-14T16:47:03Z",
+      "side": 1,
+      "message": "I couldn\u0027t verify that the second argument can\u0027t overflow, so I made it saturated.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 75
+      },
+      "revId": "73d9ad09808d2af28bb76cad0170b6b910144e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1101eaef_e10b7628",
+        "filename": "ui/gfx/geometry/rect.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-14T16:47:03Z",
+      "side": 1,
+      "message": "We don\u0027t need saturation here, so I switched to the simpler/faster SafeUnsignedAbs().",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 63
+      },
+      "revId": "73d9ad09808d2af28bb76cad0170b6b910144e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
