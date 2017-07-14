@@ -44,7 +44,10 @@ target(link_target_type, "gpu_sources") {
     "in_process_gpu_thread.h",
   ]
 
-  configs += [ "//content:content_implementation" ]
+  configs += [
+    "//content:content_implementation",
+    "//media/gpu:gpu_config",
+  ]
 
   deps = [
     "//base",
@@ -101,10 +104,6 @@ target(link_target_type, "gpu_sources") {
       "//third_party/angle:libEGL",
       "//third_party/angle:libGLESv2",
     ]
-  }
-
-  if (is_chromeos && current_cpu != "arm") {
-    configs += [ "//third_party/libva:libva_config" ]
   }
 
   if (use_x11) {
