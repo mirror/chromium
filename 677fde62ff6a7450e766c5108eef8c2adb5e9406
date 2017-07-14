@@ -22,6 +22,23 @@
       "revId": "677fde62ff6a7450e766c5108eef8c2adb5e9406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63aea39_48f65d81",
+        "filename": "media/mojo/services/media_capabilities_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-14T15:44:31Z",
+      "side": 1,
+      "message": "I\u0027m afraid that having the service in media/mojo/services/ will be a problem because we will need to use //chrome concepts to record all of the gathered data. I think the difference with WT is that WT only record them as metrics, not as part of the user profile.",
+      "revId": "677fde62ff6a7450e766c5108eef8c2adb5e9406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
