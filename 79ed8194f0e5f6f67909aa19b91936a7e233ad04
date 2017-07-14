@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03661738_c6aef45b",
+        "filename": "chrome/browser/app_controller_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ecc8ee2_ee6d3c6c",
+      "range": {
+        "startLine": 379,
+        "startChar": 18,
+        "endLine": 379,
+        "endChar": 24
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21ea5720_5ca09623",
         "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h",
         "patchSetId": 4
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "6a41a12a_b0954a29",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Thats wrong. According to the SDK...\n\nNSTouchBar.h\n\n18 NS_CLASS_AVAILABLE_MAC(10_12_2)\n19 @interface NSTouchBar : NSObject \u003cNSCoding\u003e {",
+      "parentUuid": "cdcd57ba_ba23c9c0",
+      "range": {
+        "startLine": 91,
+        "startChar": 50,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c28ae3a_2f114b68",
         "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.mm",
         "patchSetId": 4
@@ -111,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c6b4fe78_eae2af2f",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c28ae3a_2f114b68",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0643dbba_f5edd1f5",
         "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.mm",
         "patchSetId": 4
@@ -125,6 +191,24 @@
       "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be903bb5_7e85ed39",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0643dbba_f5edd1f5",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "36f469c5_ee7363d2",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_editor_base_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a736a0_cdfe1cf9",
+      "range": {
+        "startLine": 363,
+        "startChar": 37,
+        "endLine": 363,
+        "endChar": 44
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cbdedbb_dc76831a",
         "filename": "chrome/browser/ui/cocoa/l10n_util.mm",
         "patchSetId": 4
@@ -162,6 +270,24 @@
       "writtenOn": "2017-07-14T02:06:59Z",
       "side": 1,
       "message": "this should be in the .h too, so that the compiler can check that callers of this method are 10.12+ code",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3fe956_9ae41f38",
+        "filename": "chrome/browser/ui/cocoa/l10n_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "See lines 106 and 109. Callers are no 10.12+ only code.",
+      "parentUuid": "1cbdedbb_dc76831a",
       "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -191,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "24c4f317_940574c8",
+        "filename": "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_editor_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8999c46_5c93081c",
+      "range": {
+        "startLine": 202,
+        "startChar": 42,
+        "endLine": 202,
+        "endChar": 49
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47eec134_30bb31bd",
         "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
         "patchSetId": 4
@@ -214,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "f306af51_813b6ad3",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47eec134_30bb31bd",
+      "range": {
+        "startLine": 532,
+        "startChar": 23,
+        "endLine": 532,
+        "endChar": 40
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9f0e720_a4dcbbb9",
         "filename": "net/ssl/ssl_platform_key_mac.cc",
         "patchSetId": 4
@@ -225,6 +399,24 @@
       "writtenOn": "2017-07-14T02:06:59Z",
       "side": 1,
       "message": "This looks wrong too (but if SignDigest() _is_ only called on 10.12+, please let me know why and ignore the rest of this comment). I think this file should lose the SecKeyAPIs stuff completely, then grow an if (!@available(10.12, *)) at the start that does the !apis.valid stuff and then the else where it calls the algorithms directly. …oh, I guess we\u0027re preparing for 10.12 switch in a separate CL from the actual switch – hm, can we just declare all the kSecKey thingies in this file if the SDK version is too old and still do what I said?",
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665d04b3_ddd7fafb",
+        "filename": "net/ssl/ssl_platform_key_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Instantiation of this class is guarded behind:\n\nif (base::mac::IsAtLeastOS10_12()) {",
+      "parentUuid": "b9f0e720_a4dcbbb9",
       "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -254,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "49c1d7e9_6d324eac",
+        "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2bfe9cd_2a57ecf8",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6f0d2d4_4aa6410c",
         "filename": "services/shape_detection/text_detection_impl_mac.mm",
         "patchSetId": 4
@@ -274,6 +490,30 @@
       "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8143322_f2b6a4c6",
+        "filename": "services/shape_detection/text_detection_impl_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6f0d2d4_4aa6410c",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -300,6 +540,30 @@
     },
     {
       "key": {
+        "uuid": "31abef11_312a7fa0",
+        "filename": "third_party/WebKit/Source/platform/fonts/mac/FontFamilyMatcherMac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ddf63c_17f567ab",
+      "range": {
+        "startLine": 135,
+        "startChar": 40,
+        "endLine": 135,
+        "endChar": 59
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01270bfc_e0cfb388",
         "filename": "third_party/WebKit/Source/platform/fonts/mac/FontFamilyMatcherMac.mm",
         "patchSetId": 4
@@ -320,6 +584,30 @@
       "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39572ffb_0fa9ecb6",
+        "filename": "third_party/WebKit/Source/platform/fonts/mac/FontFamilyMatcherMac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01270bfc_e0cfb388",
+      "range": {
+        "startLine": 162,
+        "startChar": 44,
+        "endLine": 163,
+        "endChar": 52
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -346,6 +634,30 @@
     },
     {
       "key": {
+        "uuid": "5ed95444_db2737d6",
+        "filename": "ui/accelerated_widget_mac/ca_layer_tree_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a348aa5_21ece791",
+      "range": {
+        "startLine": 31,
+        "startChar": 14,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13107907_cfb00b28",
         "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
         "patchSetId": 4
@@ -357,6 +669,30 @@
       "writtenOn": "2017-07-14T02:06:59Z",
       "side": 1,
       "message": "This happens so often, I wonder if we should have\n\n// ...has incorrectly been marked ...\n#define AVSampleBufferDisplayLayer109 \\\n#pragma clang diagnostic push \\\n#pragma clang diagnositc ignored \"...\" \\\nAVampleBufferDisplayLayer \\\n#pragma clang diagnostic pop\n\nin some fitting header in ui/a_w_m/ and then use that everywhere",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735f23f1_0983e952",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Writing macros to remove some copy-pastas? I\u0027ve elected to just keep the copy-pastes.",
+      "parentUuid": "13107907_cfb00b28",
       "range": {
         "startLine": 62,
         "startChar": 6,
@@ -392,6 +728,30 @@
     },
     {
       "key": {
+        "uuid": "5b844e9d_31c4a049",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bf86d17_0bf020de",
+      "range": {
+        "startLine": 691,
+        "startChar": 17,
+        "endLine": 691,
+        "endChar": 29
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e626f10_803d5305",
         "filename": "ui/base/cocoa/touch_bar_util.mm",
         "patchSetId": 4
@@ -412,6 +772,30 @@
       "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf656f9a_177f6ca5",
+        "filename": "ui/base/cocoa/touch_bar_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-14T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e626f10_803d5305",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "79ed8194f0e5f6f67909aa19b91936a7e233ad04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
