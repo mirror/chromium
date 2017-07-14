@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1437577c_cdda107c",
+        "filename": "chrome/browser/chromeos/system/device_disabling_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T13:08:10Z",
+      "side": 1,
+      "message": "Not sure about this part. Seems to me that the enrollment domain and the display domain are mixed up here - this Local State pref is filled with the value of |management_domain| from the DeviceStateRetrievalResponse proto, while in line 220 you\u0027re setting |enterprise_display_domain_| to the display domain.\n\nMaybe it\u0027s better to tackle this piece around Disabled Screen into a separate change? And with figuring out how to proceed with DeviceStateRetrievalResponse and with the kDeviceStateManagementDomain pref.\nOr do it in this CL - but let\u0027s make sure no inconsistency is introduced.",
+      "range": {
+        "startLine": 133,
+        "startChar": 11,
+        "endLine": 133,
+        "endChar": 37
+      },
+      "revId": "a19ac89a06e769f93f98a76ec1f86912a6706966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a10596e_254e905e",
+        "filename": "components/policy/proto/device_management_backend.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-07-14T13:08:10Z",
+      "side": 1,
+      "message": "nit: Please add a comment in which cases this field is expected to be filled - I guess, it\u0027s only for the device policies?",
+      "range": {
+        "startLine": 438,
+        "startChar": 2,
+        "endLine": 438,
+        "endChar": 69
+      },
+      "revId": "a19ac89a06e769f93f98a76ec1f86912a6706966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
