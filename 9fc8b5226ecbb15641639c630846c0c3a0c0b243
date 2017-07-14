@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8af7c4ee_ee1367e6",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-14T06:51:53Z",
+      "side": 0,
+      "message": "yay",
+      "revId": "9fc8b5226ecbb15641639c630846c0c3a0c0b243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
