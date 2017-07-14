@@ -161,6 +161,8 @@ class BASE_EXPORT SysInfo {
   FRIEND_TEST_ALL_PREFIXES(SysInfoTest, AmountOfAvailablePhysicalMemory);
   FRIEND_TEST_ALL_PREFIXES(debug::SystemMetricsTest, ParseMeminfo);
 
+  static int64_t AmountOfPhysicalMemoryImpl();
+
 #if defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_AIX)
   static int64_t AmountOfAvailablePhysicalMemory(
       const SystemMemoryInfoKB& meminfo);

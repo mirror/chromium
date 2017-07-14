@@ -11,6 +11,7 @@
 #include <string>
 #include <utility>
 
+#include "base/base_switches.h"
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/location.h"
@@ -511,6 +512,13 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     // These are the defaults, but recorded here as well.
     settings.decoded_image_cache_budget_bytes = 128 * 1024 * 1024;
     settings.decoded_image_working_set_budget_bytes = 128 * 1024 * 1024;
+  }
+
+  // When --enable-low-end-device-mode is set, simulate low-end android
+  // features on desktop.
+  if (cmd.HasSwitch(switches::kEnableLowEndDeviceMode)) {
+    settings.decoded_image_cache_budget_bytes = 2 * 1024 * 1024;
+    settings.preferred_tile_format = cc::RGBA_4444;
   }
 
 #endif  // defined(OS_ANDROID)
