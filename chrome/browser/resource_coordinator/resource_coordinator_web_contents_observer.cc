@@ -78,7 +78,8 @@ ResourceCoordinatorWebContentsObserver::
 
 // static
 bool ResourceCoordinatorWebContentsObserver::IsEnabled() {
-  return base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator);
+  return content::ServiceManagerConnection::GetForProcess() != nullptr &&
+         base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator);
 }
 
 void ResourceCoordinatorWebContentsObserver::WasShown() {
