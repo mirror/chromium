@@ -117,6 +117,30 @@
       "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd14133c_eb58c660",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-14T15:42:14Z",
+      "side": 1,
+      "message": "I think Ted was suggesting that this class not be made aware of non-visible HeaderItems if possible. Right now both DateDividedAdapter and HistoryAdapter share the responsibility of knowing about HeaderItem visibility. If we mandate that all HeaderItems are visible (and remove HeaderItem#setVisibility()), HistoryAdapter will have sole responsibility for knowing which HeaderItems should be displayed.  \n\nHistoryAdapter could keep track of:\nboolean mPrivacyDisclaimersVisible;\nboolean mClearBrowsingDataButtonVisible;\nHeaderItem mPrivacyDisclaimerHeaderItem;\nHeaderItem mClearBrowsingDataHeaderItem;\n\nAnd call setHeaders() with updated items when either mPrivcyDisclaimersVisible or mClearBrowsingDataButtonVisible changes.\n\nOptionally, instead of a List\u003cHeaderItem\u003e this method could take a \"HeaderItem... headerItems\" which would prevent HistoryAdapter from having to create or maintain a list of HeaderItem objects separate from mPrivacyDisclaimerHeaderItem and mClearBrowsingDataHeaderItem.",
+      "parentUuid": "5f4ea067_4c40b0dd",
+      "range": {
+        "startLine": 510,
+        "startChar": 21,
+        "endLine": 510,
+        "endChar": 30
+      },
+      "revId": "006a50a8e9b8cd00ec9533eabf68cbb67077795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
