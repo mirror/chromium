@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a1f4d2b_778415ca",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T20:13:41Z",
+      "side": 1,
+      "message": "nit: nuke empty line?",
+      "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cbaadf2_79d5197e",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T20:13:41Z",
+      "side": 1,
+      "message": "base::string16() instead? and add please /* name of param */",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 30
+      },
+      "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6401b14_00e03097",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T20:13:41Z",
+      "side": 1,
+      "message": "nit: to keep it in one style could you pleas move this comment // Unowned (pointer?) to L100",
+      "range": {
+        "startLine": 101,
+        "startChar": 52,
+        "endLine": 101,
+        "endChar": 62
+      },
+      "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6751076_51842065",
+        "filename": "ui/app_list/search_result.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-14T20:13:41Z",
+      "side": 1,
+      "message": "nit: looks like GetComparableId() rather than Calculate.\n\nI am also OK to make it as getter in h file\n\nconst std::string\u0026 comparable_id() const {..}\n\nOtherwise it might be confusing between comparable_id and Get(Calculate)ComparableId()",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 54
+      },
+      "revId": "ce9b1e679cdab60deb94e1a70a4cb1135cd27367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
