@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Build;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 
 /** Shows the dialog to install a host browser for launching WebAPK. */
 public class InstallHostBrowserDialog {
+    static final int PADDING_DP = 20;
+
     /**
      * A listener which is notified when user chooses to install the host browser, or dismiss the
      * dialog.
@@ -39,7 +43,9 @@ public class InstallHostBrowserDialog {
             int hostBrowserIconId) {
         View view = LayoutInflater.from(context).inflate(R.layout.host_browser_list_item, null);
         TextView name = (TextView) view.findViewById(R.id.browser_name);
+        setPadding(name, context, PADDING_DP, 0, 0, 0);
         ImageView icon = (ImageView) view.findViewById(R.id.browser_icon);
+        setPadding(icon, context, PADDING_DP, 0, 0, 0);
 
         name.setText(hostBrowserApplicationName);
         name.setTextColor(Color.BLACK);
@@ -74,4 +80,29 @@ public class InstallHostBrowserDialog {
         });
         dialog.show();
     };
+
+    /**
+     * Converts a dp value to a px value.
+     */
+    private static int dpToPx(Context context, int value) {
+        return Math.round(TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, value, context.getResources().getDisplayMetrics()));
+    }
+
+    /**
+     * Android uses padding_left under API level 17 and uses padding_start after that.
+     * If we set the padding in resource file, android will create duplicated resource xml
+     * with the padding to be different.
+     */
+    @SuppressWarnings("deprecation")
+    private static void setPadding(
+            View view, Context context, int start, int top, int end, int bottom) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            view.setPaddingRelative(dpToPx(context, start), dpToPx(context, top),
+                    dpToPx(context, end), dpToPx(context, bottom));
+        } else {
+            view.setPadding(dpToPx(context, start), dpToPx(context, top), dpToPx(context, end),
+                    dpToPx(context, bottom));
+        }
+    }
 }

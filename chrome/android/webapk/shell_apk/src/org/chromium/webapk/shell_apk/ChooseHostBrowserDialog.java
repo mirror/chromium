@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ import java.util.List;
  * host browser is chosen.
  */
 public class ChooseHostBrowserDialog {
+    static final int PADDING_DP = 20;
     /**
      * A listener which is notified when user chooses a host browser for the WebAPK, or dismiss the
      * dialog.
@@ -95,6 +98,7 @@ public class ChooseHostBrowserDialog {
         TextView desc = (TextView) view.findViewById(R.id.desc);
         ListView browserList = (ListView) view.findViewById(R.id.browser_list);
         desc.setText(R.string.choose_host_browser);
+        setPadding(desc, context, PADDING_DP, 0, PADDING_DP, 0);
         browserList.setAdapter(new BrowserArrayAdapter(context, browserItems));
 
         // The context theme wrapper is needed for pre-L.
@@ -130,6 +134,31 @@ public class ChooseHostBrowserDialog {
         });
         dialog.show();
     };
+
+    /**
+     * Converts a dp value to a px value.
+     */
+    private static int dpToPx(Context context, int value) {
+        return Math.round(TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, value, context.getResources().getDisplayMetrics()));
+    }
+
+    /**
+     * Android uses padding_left under API level 17 and uses padding_start after that.
+     * If we set the padding in resource file, android will create duplicated resource xml
+     * with the padding to be different.
+     */
+    @SuppressWarnings("deprecation")
+    private static void setPadding(
+            View view, Context context, int start, int top, int end, int bottom) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            view.setPaddingRelative(dpToPx(context, start), dpToPx(context, top),
+                    dpToPx(context, end), dpToPx(context, bottom));
+        } else {
+            view.setPadding(dpToPx(context, start), dpToPx(context, top), dpToPx(context, end),
+                    dpToPx(context, bottom));
+        }
+    }
 
     /** Returns a list of BrowserItem for all of the installed browsers. */
     private static List<BrowserItem> getBrowserInfosForHostBrowserSelection(
@@ -177,7 +206,9 @@ public class ChooseHostBrowserDialog {
             }
 
             TextView name = (TextView) convertView.findViewById(R.id.browser_name);
+            setPadding(name, mContext, PADDING_DP, 0, 0, 0);
             ImageView icon = (ImageView) convertView.findViewById(R.id.browser_icon);
+            setPadding(icon, mContext, PADDING_DP, 0, 0, 0);
             BrowserItem item = mBrowsers.get(position);
 
             name.setEnabled(item.supportsWebApks());
