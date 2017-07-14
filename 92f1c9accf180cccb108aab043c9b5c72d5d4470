@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1bee7ddb_a1a6dcca",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-14T06:11:55Z",
+      "side": 1,
+      "message": "nit: Does the i_ prefix imply \u0027input\u0027? Could they be in_url, in_need_preconnect etc? (i_ looks a bit cryptic)",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75bacf59_92076c11",
         "filename": "chrome/browser/predictors/preconnect_manager.h",
         "patchSetId": 9
@@ -47,6 +64,23 @@
       "writtenOn": "2017-07-13T23:56:54Z",
       "side": 1,
       "message": "\u003d 0",
+      "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6508389f_5cf7d332",
+        "filename": "content/browser/loader/resource_hints_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-14T06:11:55Z",
+      "side": 1,
+      "message": "Is it ok not to check if request_context is non-null?",
       "revId": "92f1c9accf180cccb108aab043c9b5c72d5d4470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
