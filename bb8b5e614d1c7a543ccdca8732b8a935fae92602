@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef7a10e_a957dd3b",
+        "filename": "net/ssl/ssl_platform_key_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-14T17:46:13Z",
+      "side": 1,
+      "message": "(you can use `__builtin_available()`, no need to rename this to .mm just for this)",
+      "range": {
+        "startLine": 358,
+        "startChar": 6,
+        "endLine": 358,
+        "endChar": 14
+      },
+      "revId": "bb8b5e614d1c7a543ccdca8732b8a935fae92602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
