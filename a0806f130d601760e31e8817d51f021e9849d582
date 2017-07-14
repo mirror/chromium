@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5002b5af_c3a56c18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-14T06:33:01Z",
+      "side": 1,
+      "message": "Naming bike-shedding.  It feels natural to use the term \u0027startup data\u0027 for thread, while it for global scope it might sound a little unnatural. GlobalScopeInitializationData maybe? But it might be just ok...",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6657013c_88b2efb2",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-14T06:33:01Z",
+      "side": 1,
+      "message": "nit: startup_data -\u003e global_scope_startup_data ?",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5b6a5a_66731e9c",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-14T06:33:01Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a0806f130d601760e31e8817d51f021e9849d582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
