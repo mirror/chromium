@@ -42,7 +42,7 @@
 
 namespace blink {
 
-class WebDevToolsAgentImpl;
+class WebDevToolsAgentCore;
 class WebLocalFrameBase;
 class WebSpellCheckPanelHostClient;
 
@@ -244,7 +244,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   explicit LocalFrameClientImpl(WebLocalFrameBase*);
 
   bool IsLocalFrameClientImpl() const override { return true; }
-  WebDevToolsAgentImpl* DevToolsAgent();
+  WebDevToolsAgentCore* DevToolsAgent();
 
   // The WebFrame that owns this object and manages its lifetime. Therefore,
   // the web frame object is guaranteed to exist.
