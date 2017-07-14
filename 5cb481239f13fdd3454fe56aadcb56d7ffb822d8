@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "2ccddb8f_6026f257",
+        "filename": "components/viz/common/gpu/context_cache_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-14T18:19:44Z",
+      "side": 0,
+      "message": "\u003e You mean convert source_set to component?\n\nYes.\n\n\u003e From this https://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/style_guide.md#Source-sets-versus-static-libraries, I didn\u0027t understand why source_set will lead to dup. Any hints on this?\n\nsource_set basically says \"take all these .cc and compile them into .o, and whenever a library depends on the source_set, include all .o into it\".\n\nSo if, say, both cc (a component, i.e. a shared library in component mode) and content (also a component) depend on a source_set, the .o are included in both shared libraries. It leads to duplication both in terms of code (code is duplicated, which \"only\" increases code size), but also duplicates all globals which can lead to unexpected behavior.\n\nWhile we don\u0027t ship the component build, note that on Windows, we have a split-DLL production configuration (browser vs renderer) that we ship and would have these problems.\n\n\u003e BTW, there is already one libcommon.so, after rename above source_set to component, it will report Two or more targets generate the same output, libcommon.so, and collisions:\n\u003e   //components/gcm_driver/common:common\n\u003e   //components/viz/common:common\n\nWe can rename the output library name, by specifying the \u0027output_name\u0027 variable in gn, e.g. see //cc/base:base which is renamed to \u0027cc_base\u0027 to avoid collisions with //base:base",
+      "parentUuid": "b186dd87_6b8d27f2",
+      "revId": "5cb481239f13fdd3454fe56aadcb56d7ffb822d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "189a36d0_8ff50cfc",
         "filename": "components/viz/common/gpu/context_provider.h",
         "patchSetId": 12
