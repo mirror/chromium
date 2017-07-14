@@ -43,7 +43,7 @@ base::LazyInstance<
 namespace base {
 
 // static
-int64_t SysInfo::AmountOfPhysicalMemory() {
+int64_t SysInfo::AmountOfPhysicalMemoryImpl() {
   return g_lazy_physical_memory.Get().value();
 }
 
