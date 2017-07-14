@@ -66,7 +66,6 @@ class MediaToughVideoCases(perf_benchmark.PerfBenchmark):
 
 
 @benchmark.Enabled('android')
-@benchmark.Disabled('l', 'android-webview')  # WebView: crbug.com/419689.
 @benchmark.Owner(emails=['crouleau@chromium.org', 'videostack-eng@google.com'],
                  component='Internals>Media')
 class MediaAndroidToughVideoCases(perf_benchmark.PerfBenchmark):
@@ -144,7 +143,6 @@ class MediaToughVideoCasesTBMv2(_MediaTBMv2Benchmark):
 @benchmark.Owner(emails=['johnchen@chromium.org', 'crouleau@chromium.org'],
                  component='Internals>Media')
 @benchmark.Enabled('android')
-@benchmark.Disabled('l', 'android-webview')  # WebView: crbug.com/419689.
 class MediaAndroidToughVideoCasesTBMv2(_MediaTBMv2Benchmark):
   """Obtains media metrics for key user scenarios on Android using TBMv2.
   Will eventually replace MediaAndroidToughVideoCases class."""
@@ -183,7 +181,6 @@ class MediaAndroidToughVideoCasesTBMv2(_MediaTBMv2Benchmark):
     return not _IGNORED_STATS_RE.search(value.name)
 
 
-@benchmark.Disabled('all')  # crbug/676345
 @benchmark.Owner(emails=['crouleau@chromium.org', 'videostack-eng@google.com'],
                  component='Internals>Media')
 class MediaNetworkSimulation(perf_benchmark.PerfBenchmark):
@@ -199,7 +196,6 @@ class MediaNetworkSimulation(perf_benchmark.PerfBenchmark):
     return page_sets.MediaCnsCasesPageSetStoryExpectations()
 
 
-@benchmark.Disabled('android-webview')  # crbug.com/419689
 @benchmark.Owner(emails=['crouleau@chromium.org', 'videostack-eng@google.com'],
                  component='Internals>Media>Source')
 class MediaSourceExtensions(perf_benchmark.PerfBenchmark):
