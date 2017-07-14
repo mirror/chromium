@@ -187,6 +187,7 @@ class TabManager : public TabStripModelObserver,
                            GetUnsortedTabStatsIsInVisibleWindow);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, HistogramsSessionRestoreSwitchToTab);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, DiscardTabWithNonVisibleTabs);
+  FRIEND_TEST_ALL_PREFIXES(InProcessBrowserTest, PlayTime);
 
   // Information about a Browser.
   struct BrowserInfo {
