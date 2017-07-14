@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf05dd43_8aad62fb",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T19:44:25Z",
+      "side": 1,
+      "message": "`href` is already a KURL, which means it\u0027s getting converted into a string, and then passed into `CompleteURL` for completion. But, it\u0027s already been through `CompleteURL` once in https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Element.cpp?rcl\u003dc29dde9a01968c1f9246f7d3fa776377f874e805\u0026l\u003d3609, so this call is unnecessary (and ends up breaking the `\\n` check, because the `\\n` has already been removed in the string that\u0027s processed here).",
+      "parentUuid": "a06445d2_3c2f2bdc",
+      "range": {
+        "startLine": 344,
+        "startChar": 35,
+        "endLine": 344,
+        "endChar": 39
+      },
+      "revId": "a53ca030cd9d270971fc541c3ecc9db992d0d67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "295513d8_51b11036",
         "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-14T13:43:07Z",
       "side": 1,
       "message": "Similar comment regarding relative URLs",
+      "range": {
+        "startLine": 381,
+        "startChar": 37,
+        "endLine": 381,
+        "endChar": 41
+      },
+      "revId": "a53ca030cd9d270971fc541c3ecc9db992d0d67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3e2c3d_771c3cec",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-14T19:44:25Z",
+      "side": 1,
+      "message": "Similar answer! :)",
+      "parentUuid": "295513d8_51b11036",
       "range": {
         "startLine": 381,
         "startChar": 37,
