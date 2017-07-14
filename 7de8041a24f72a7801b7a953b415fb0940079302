@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "901199a9_1ca350ce",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T00:36:01Z",
+      "side": 1,
+      "message": "/* y position */\n\nand if this is screen coordinates, this is wrong (you have to pass the top of the current display)",
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e8fcb9_7ed21d71",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T00:36:01Z",
+      "side": 1,
+      "message": "looks like this should never be called when is_dragging_app_list_.\nDCHECK(!is_dragging_app_list_) if that\u0027s correct.",
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59075029_43a99a36",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T00:36:01Z",
+      "side": 1,
+      "message": "show or hide ... depending the fling direction,",
+      "range": {
+        "startLine": 1225,
+        "startChar": 53,
+        "endLine": 1225,
+        "endChar": 57
+      },
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6135044b_1dfc3ae6",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T00:36:01Z",
+      "side": 1,
+      "message": "gesture_in_screen",
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377b1dc2_89f0a8a4",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T00:36:01Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d79f46d_aad2048b",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T00:36:01Z",
+      "side": 1,
+      "message": "Shell* shell \u003d Shell::Get()\n\nand use it below.",
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75aa88a_71f76cb6",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T00:36:01Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 338,
+        "startChar": 8,
+        "endLine": 338,
+        "endChar": 11
+      },
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e01bff0_ae6aafdf",
+        "filename": "ash/shell.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T00:36:01Z",
+      "side": 1,
+      "message": "add TODO to handle multi display case. You may have to close first or move the app list to the target display.",
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf8bb0f_eb7c55fd",
+        "filename": "ash/shell.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-14T00:36:01Z",
+      "side": 1,
+      "message": "y_postion_in_screen",
+      "revId": "7de8041a24f72a7801b7a953b415fb0940079302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
