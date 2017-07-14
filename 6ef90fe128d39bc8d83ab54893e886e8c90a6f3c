@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6aa6be5_accfb03d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-14T17:41:16Z",
+      "side": 1,
+      "message": "must be separate commit. because in the same commit, we still have correct state in active tree.",
+      "parentUuid": "9c0041d6_d32a2c52",
+      "range": {
+        "startLine": 17,
+        "startChar": 35,
+        "endLine": 19,
+        "endChar": 4
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79545951_d20feac6",
         "filename": "cc/layers/layer_impl.cc",
         "patchSetId": 4
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "612b37e2_2f43d91d",
+        "filename": "cc/layers/scrollbar_layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-14T17:41:16Z",
+      "side": 1,
+      "message": "Because we only set need_show_scrollbars for Aura Overlay Scrollbar\nhttps://cs.chromium.org/chromium/src/cc/layers/layer_impl.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d282\n\nWe can also apply this to Android.",
+      "parentUuid": "83c00b94_b32f226b",
+      "range": {
+        "startLine": 187,
+        "startChar": 50,
+        "endLine": 187,
+        "endChar": 62
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcb0524b_cc59dae4",
         "filename": "cc/layers/scrollbar_layer_unittest.cc",
         "patchSetId": 4
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3521274c_aa4520e7",
+        "filename": "cc/layers/scrollbar_layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-14T17:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb0524b_cc59dae4",
+      "range": {
+        "startLine": 872,
+        "startChar": 5,
+        "endLine": 873,
+        "endChar": 20
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c60d7ab8_1fbe0ed9",
         "filename": "cc/layers/scrollbar_layer_unittest.cc",
         "patchSetId": 4
@@ -105,6 +177,54 @@
       "writtenOn": "2017-07-14T15:00:44Z",
       "side": 1,
       "message": "Add an EXPECT_TRUE(scroll_layer-\u003eneeds_show_scrollbars())",
+      "range": {
+        "startLine": 895,
+        "startChar": 31,
+        "endLine": 895,
+        "endChar": 32
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35291450_f94155eb",
+        "filename": "cc/layers/scrollbar_layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-14T17:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c60d7ab8_1fbe0ed9",
+      "range": {
+        "startLine": 895,
+        "startChar": 31,
+        "endLine": 895,
+        "endChar": 32
+      },
+      "revId": "6ef90fe128d39bc8d83ab54893e886e8c90a6f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a62847a5_e1e1553e",
+        "filename": "cc/layers/scrollbar_layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-14T17:41:16Z",
+      "side": 1,
+      "message": "scroll_layer-\u003eneeds_show_scrollbars() is false now. because the state is pushed to layerImpl.",
+      "parentUuid": "c60d7ab8_1fbe0ed9",
       "range": {
         "startLine": 895,
         "startChar": 31,
