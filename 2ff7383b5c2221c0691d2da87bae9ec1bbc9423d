@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e3dcb9a_6d1073ca",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-14T13:08:41Z",
+      "side": 1,
+      "message": "I assume you meant not necessary.",
+      "parentUuid": "be8b12fe_b084cd45",
+      "range": {
+        "startLine": 548,
+        "startChar": 21,
+        "endLine": 548,
+        "endChar": 22
+      },
+      "revId": "2ff7383b5c2221c0691d2da87bae9ec1bbc9423d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e73731f1_77e83941",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T15:30:22Z",
       "side": 1,
       "message": "These are being written on one thread, read on another, so this is still not thread safe (Just think of a favicon, if we request one, could result on us seeing another request and updating this while reading from it).  It\u0027s better to use a RunLoop to wait until a request to be test_case.original_url has been received.  And use a lock to protect access to the request_headers array.",
+      "range": {
+        "startLine": 580,
+        "startChar": 36,
+        "endLine": 580,
+        "endChar": 58
+      },
+      "revId": "2ff7383b5c2221c0691d2da87bae9ec1bbc9423d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd3a384_05142ed9",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-14T13:08:41Z",
+      "side": 1,
+      "message": "The request_headers map should only be modified and read on the UI thread as\na) modifications are posted to the UI thread via this:\nMirrorMockURLRequestJob::ReportResponseHeadersOnUI report_request_headers \u003d base::Bind(\u0026ReportRequestHeaders, \u0026request_headers);\nb) the test is executed on the UI thread. \n\nOur current hypothesis is that you may be right with the favicon and that the page loading for the first iteration has a straggling load operation for the favicon that is then reported in the second iteration.\n\nLet\u0027s add some debug data to verify this hypothesis. The solution may be as simple as checking whether \"favicon\" occurs in the URL and then to not report it to request_headers.",
+      "parentUuid": "e73731f1_77e83941",
       "range": {
         "startLine": 580,
         "startChar": 36,
