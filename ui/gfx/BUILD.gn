@@ -530,6 +530,7 @@ source_set("memory_buffer_sources") {
       "gpu_memory_buffer.h",
       "gpu_memory_buffer_tracing.cc",
       "gpu_memory_buffer_tracing.h",
+      "overlay_transform.h",
     ]
   }
 
