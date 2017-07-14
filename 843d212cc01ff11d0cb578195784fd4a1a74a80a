@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b5d14ce_d8e5b040",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-14T07:07:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e1afbf4_116c7044",
+      "revId": "843d212cc01ff11d0cb578195784fd4a1a74a80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ffd58a3_7c977e58",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-30T04:53:51Z",
       "side": 1,
       "message": "nit: It\u0027s unclear what value this returns (from the new method name)",
+      "revId": "843d212cc01ff11d0cb578195784fd4a1a74a80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5320cba_a1951c8e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-14T07:07:46Z",
+      "side": 1,
+      "message": "Renamed. PTAL",
+      "parentUuid": "4ffd58a3_7c977e58",
       "revId": "843d212cc01ff11d0cb578195784fd4a1a74a80a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
