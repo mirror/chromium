@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34d3cc96_cb870662",
+        "filename": "third_party/WebKit/Source/core/input/GestureManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-07-14T23:30:22Z",
+      "side": 1,
+      "message": "yoichio, it looks like trying to access this using public blink api\u0027s won\u0027t work because  the only way to get a FrameCaret is from FrameCaretForTesting.  Does that sound right to you?  Do you think it makes sense to expose this so Contextual Search can access it without needing to add another int return from the ShowUnhandledTapUIIfNeeded method?",
+      "parentUuid": "0d9a17aa_c769c5c1",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 77
+      },
+      "revId": "0edfe26a55242e3a2a712ee358f5d58355a7d169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bda46f1_d57ef7cc",
         "filename": "third_party/WebKit/public/web/WebWidgetClient.h",
         "patchSetId": 1
