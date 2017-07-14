@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cc1d200d_f462257c",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-14T16:25:37Z",
+      "side": 1,
+      "message": "I would call this _hasViewAppeared.",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "105320188c5c993dd47e231566a48cc220f34a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc0c4910_7dc35659",
         "filename": "remoting/ios/app/client_connection_view_controller.mm",
         "patchSetId": 4
@@ -25,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a62b5705_102f21c1",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-14T16:25:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fc0c4910_7dc35659",
+      "range": {
+        "startLine": 303,
+        "startChar": 7,
+        "endLine": 303,
+        "endChar": 12
+      },
+      "revId": "105320188c5c993dd47e231566a48cc220f34a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa505603_1c692379",
         "filename": "remoting/ios/app/client_connection_view_controller.mm",
         "patchSetId": 4
@@ -45,6 +92,30 @@
       "revId": "105320188c5c993dd47e231566a48cc220f34a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93be29f_f643ce64",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-14T16:25:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aa505603_1c692379",
+      "range": {
+        "startLine": 332,
+        "startChar": 30,
+        "endLine": 332,
+        "endChar": 48
+      },
+      "revId": "105320188c5c993dd47e231566a48cc220f34a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
