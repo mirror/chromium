@@ -147,11 +147,6 @@ class MediaFactory {
   // Injected callback for requesting overlay routing tokens.
   media::RequestRoutingTokenCallback request_routing_token_cb_;
 
-  // Handy pointer to RenderFrame's remote interfaces. Null until SetupMojo().
-  // Lifetime matches that of the owning |render_frame_|. Will always be valid
-  // once assigned.
-  service_manager::InterfaceProvider* remote_interfaces_ = nullptr;
-
 #if defined(OS_ANDROID)
   // Manages media players and sessions in this render frame for communicating
   // with the real media player and sessions in the browser process.

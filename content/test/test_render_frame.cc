@@ -24,12 +24,21 @@ class MockFrameHost : public mojom::FrameHost {
 
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override {
-    mojom::CreateNewWindowReplyPtr reply = mojom::CreateNewWindowReply::New();
+    // Only the sync call signature below is used.
+    NOTREACHED();
+  }
+
+  bool CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
+                       mojom::CreateNewWindowReplyPtr* reply) override {
+    *reply = mojom::CreateNewWindowReply::New();
     MockRenderThread* mock_render_thread =
         static_cast<MockRenderThread*>(RenderThread::Get());
-    mock_render_thread->OnCreateWindow(*params, reply.get());
-    std::move(callback).Run(std::move(reply));
+    mock_render_thread->OnCreateWindow(*params, reply->get());
+    return true;
   }
+
+  void BindInterfaceProviderForNewDocument(
+      service_manager::mojom::InterfaceProviderRequest request) override {}
 
   void Bind(mojo::ScopedInterfaceEndpointHandle handle) {
     binding_.Bind(mojom::FrameHostAssociatedRequest(std::move(handle)));
@@ -49,15 +58,9 @@ RenderFrameImpl* TestRenderFrame::CreateTestRenderFrame(
 
 TestRenderFrame::TestRenderFrame(const RenderFrameImpl::CreateParams& params)
     : RenderFrameImpl(params),
-      mock_frame_host_(base::MakeUnique<MockFrameHost>()) {
-  GetRemoteAssociatedInterfaces()->OverrideBinderForTesting(
-      mojom::FrameHost::Name_,
-      base::Bind(&MockFrameHost::Bind,
-                 base::Unretained(mock_frame_host_.get())));
-}
+      mock_frame_host_(base::MakeUnique<MockFrameHost>()) {}
 
-TestRenderFrame::~TestRenderFrame() {
-}
+TestRenderFrame::~TestRenderFrame() {}
 
 void TestRenderFrame::Navigate(const CommonNavigationParams& common_params,
                                const StartNavigationParams& start_params,
@@ -130,12 +133,8 @@ std::unique_ptr<blink::WebURLLoader> TestRenderFrame::CreateURLLoader(
       nullptr, base::ThreadTaskRunnerHandle::Get(), nullptr);
 }
 
-mojom::FrameHostAssociatedPtr TestRenderFrame::GetFrameHost() {
-  mojom::FrameHostAssociatedPtr ptr = RenderFrameImpl::GetFrameHost();
-
-  // Needed to ensure no deadlocks when waiting for sync IPC.
-  ptr.FlushForTesting();
-  return ptr;
+mojom::FrameHost* TestRenderFrame::GetFrameHost() {
+  return mock_frame_host_.get();
 }
 
 }  // namespace content
