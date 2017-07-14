@@ -73,7 +73,7 @@ bool NGLayoutInputNode::IsOutOfFlowPositioned() const {
 }
 
 bool NGLayoutInputNode::CreatesNewFormattingContext() const {
-  return box_->AvoidsFloats();
+  return IsBlock() && box_->AvoidsFloats();
 }
 
 RefPtr<NGLayoutResult> NGLayoutInputNode::Layout(NGConstraintSpace* space,
