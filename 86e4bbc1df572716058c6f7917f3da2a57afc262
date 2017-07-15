@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "f55b8d7a_23882917",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-15T00:30:50Z",
+      "side": 1,
+      "message": "Currently this observer is very broad, meaning that it calls back when anything changes. Is there a reason for it to be so generic, given that it is used only in md_settings_ui? Can we tailor it to its current (and only) use more closely?\n\nSpecifically, how about\n - Rename on_state_change_ to on_show_cleanup_ui_change_\n - Call safe_browsing::ChromeCleanerController::ShouldShowCleanupInSettingsUI() as necessary within this class, and only call on_show_cleanup_ui_change_.Run() when the boolean flips to a different value.\n  - Reduce logic within md_settings_ui",
+      "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2bebcf_285e34e2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-15T00:30:50Z",
+      "side": 1,
+      "message": "Can this be private?",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "86e4bbc1df572716058c6f7917f3da2a57afc262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c69cb893_92f2c001",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 2
