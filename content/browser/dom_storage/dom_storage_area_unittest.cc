@@ -67,8 +67,7 @@ class DOMStorageAreaTest : public testing::Test {
     EXPECT_TRUE(area->HasUncommittedChanges());
     // Make additional change and verify that a new commit batch
     // is created for that change.
-    base::NullableString16 old_value;
-    EXPECT_TRUE(area->SetItem(kKey2, kValue2, &old_value));
+    EXPECT_TRUE(area->SetItem(kKey2, kValue2));
     EXPECT_TRUE(area->commit_batch_.get());
     EXPECT_EQ(1, area->commit_batches_in_flight_);
     EXPECT_TRUE(area->HasUncommittedChanges());
@@ -96,33 +95,62 @@ TEST_F(DOMStorageAreaTest, DOMStorageAreaBasics) {
   scoped_refptr<DOMStorageArea> area(
       new DOMStorageArea(1, std::string(), kOrigin, NULL, NULL));
   base::string16 old_value;
-  base::NullableString16 old_nullable_value;
   scoped_refptr<DOMStorageArea> copy;
 
-  // We don't focus on the underlying DOMStorageMap functionality
-  // since that's covered by seperate unit tests.
+  const size_t kValueBytes = kValue.size() * sizeof(base::char16);
+  const size_t kItemBytes =
+      (kKey.size() + kValue.size()) * sizeof(base::char16);
+  const size_t kKey2Bytes = kKey2.size() * sizeof(base::char16);
+  const size_t kItem2Bytes =
+      (kKey2.size() + kValue2.size()) * sizeof(base::char16);
+
+  // Check the behavior of an empty area.
   EXPECT_EQ(kOrigin, area->origin());
   EXPECT_EQ(1, area->namespace_id());
   EXPECT_EQ(0u, area->Length());
-  EXPECT_TRUE(area->SetItem(kKey, kValue, &old_nullable_value));
-  EXPECT_TRUE(area->SetItem(kKey2, kValue2, &old_nullable_value));
-  EXPECT_FALSE(area->HasUncommittedChanges());
+  EXPECT_TRUE(area->Key(0).is_null());
+  EXPECT_TRUE(area->Key(100).is_null());
+  EXPECT_EQ(0u, area->map_usage_in_bytes());
+  EXPECT_FALSE(area->RemoveItem(kKey));
+
+  EXPECT_TRUE(area->SetItem(kKey, kValue));
+  EXPECT_EQ(1u, area->Length());
+  EXPECT_EQ(kKey, area->Key(0).string());
+  EXPECT_TRUE(area->Key(1).is_null());
+  EXPECT_EQ(kValue, area->GetUncommittedItemForTesting(kKey).string());
+  EXPECT_TRUE(area->GetUncommittedItemForTesting(kKey2).is_null());
+  EXPECT_EQ(kItemBytes, area->map_usage_in_bytes());
+  EXPECT_TRUE(area->RemoveItem(kKey));
+  EXPECT_EQ(0u, area->map_usage_in_bytes());
+  EXPECT_EQ(0u, area->Length());
+
+  // Check the behavior of a area containing some values.
+  EXPECT_TRUE(area->SetItem(kKey, kValue));
+  EXPECT_TRUE(area->SetItem(kKey2, kValue));
+  EXPECT_EQ(kItemBytes + kKey2Bytes + kValueBytes, area->map_usage_in_bytes());
+  EXPECT_TRUE(area->SetItem(kKey2, kValue2));
+  EXPECT_EQ(kItemBytes + kItem2Bytes, area->map_usage_in_bytes());
+  EXPECT_EQ(2u, area->Length());
+  EXPECT_EQ(kKey, area->Key(0).string());
+  EXPECT_EQ(kKey2, area->Key(1).string());
+  EXPECT_EQ(kKey, area->Key(0).string());
+  EXPECT_EQ(kItemBytes + kItem2Bytes, area->map_usage_in_bytes());
 
   // Verify that a copy shares the same map.
   copy = area->ShallowCopy(2, std::string());
   EXPECT_EQ(kOrigin, copy->origin());
   EXPECT_EQ(2, copy->namespace_id());
   EXPECT_EQ(area->Length(), copy->Length());
-  EXPECT_EQ(area->GetItem(kKey).string(), copy->GetItem(kKey).string());
   EXPECT_EQ(area->Key(0).string(), copy->Key(0).string());
   EXPECT_EQ(copy->map_.get(), area->map_.get());
+  ASSERT_EQ(2u, area->Length());
 
   // But will deep copy-on-write as needed.
-  EXPECT_TRUE(area->RemoveItem(kKey, &old_value));
+  EXPECT_TRUE(area->RemoveItem(kKey));
   EXPECT_NE(copy->map_.get(), area->map_.get());
   copy = area->ShallowCopy(2, std::string());
   EXPECT_EQ(copy->map_.get(), area->map_.get());
-  EXPECT_TRUE(area->SetItem(kKey, kValue, &old_nullable_value));
+  EXPECT_TRUE(area->SetItem(kKey, kValue));
   EXPECT_NE(copy->map_.get(), area->map_.get());
   copy = area->ShallowCopy(2, std::string());
   EXPECT_EQ(copy->map_.get(), area->map_.get());
@@ -137,9 +165,9 @@ TEST_F(DOMStorageAreaTest, DOMStorageAreaBasics) {
   EXPECT_FALSE(area->map_.get());
   EXPECT_EQ(0u, area->Length());
   EXPECT_TRUE(area->Key(0).is_null());
-  EXPECT_TRUE(area->GetItem(kKey).is_null());
-  EXPECT_FALSE(area->SetItem(kKey, kValue, &old_nullable_value));
-  EXPECT_FALSE(area->RemoveItem(kKey, &old_value));
+  EXPECT_TRUE(area->GetUncommittedItemForTesting(kKey).is_null());
+  EXPECT_FALSE(area->SetItem(kKey, kValue));
+  EXPECT_FALSE(area->RemoveItem(kKey));
   EXPECT_FALSE(area->Clear());
 }
 
@@ -169,7 +197,7 @@ TEST_F(DOMStorageAreaTest, BackingDatabaseOpened) {
     EXPECT_TRUE(area->is_initial_import_done_);
 
     base::NullableString16 old_value;
-    EXPECT_TRUE(area->SetItem(kKey, kValue, &old_value));
+    EXPECT_TRUE(area->SetItem(kKey, kValue));
     ASSERT_TRUE(old_value.is_null());
 
     // Check that saving a value has still left us without a backing database.
@@ -198,7 +226,7 @@ TEST_F(DOMStorageAreaTest, BackingDatabaseOpened) {
 
     // Need to write something to ensure that the database is created.
     base::NullableString16 old_value;
-    EXPECT_TRUE(area->SetItem(kKey, kValue, &old_value));
+    EXPECT_TRUE(area->SetItem(kKey, kValue));
     ASSERT_TRUE(old_value.is_null());
     EXPECT_TRUE(area->is_initial_import_done_);
     EXPECT_TRUE(area->commit_batch_.get());
@@ -212,7 +240,7 @@ TEST_F(DOMStorageAreaTest, BackingDatabaseOpened) {
         area->backing_.get())->db_.get();
     EXPECT_TRUE(database->IsOpen());
     EXPECT_EQ(1u, area->Length());
-    EXPECT_EQ(kValue, area->GetItem(kKey).string());
+    EXPECT_EQ(kKey, area->Key(0).string());
 
     // Verify the content made it to the in memory database.
     DOMStorageValuesMap values;
@@ -243,12 +271,12 @@ TEST_F(DOMStorageAreaTest, CommitTasks) {
 
   // See that changes are batched up.
   EXPECT_FALSE(area->commit_batch_.get());
-  EXPECT_TRUE(area->SetItem(kKey, kValue, &old_value));
+  EXPECT_TRUE(area->SetItem(kKey, kValue));
   EXPECT_TRUE(area->HasUncommittedChanges());
   EXPECT_TRUE(area->commit_batch_.get());
   EXPECT_FALSE(area->commit_batch_->clear_all_first);
   EXPECT_EQ(1u, area->commit_batch_->changed_values.size());
-  EXPECT_TRUE(area->SetItem(kKey2, kValue2, &old_value));
+  EXPECT_TRUE(area->SetItem(kKey2, kValue2));
   EXPECT_TRUE(area->commit_batch_.get());
   EXPECT_FALSE(area->commit_batch_->clear_all_first);
   EXPECT_EQ(2u, area->commit_batch_->changed_values.size());
@@ -278,7 +306,7 @@ TEST_F(DOMStorageAreaTest, CommitTasks) {
 
   // See that if changes accrue while a commit is "in flight"
   // those will also get committed.
-  EXPECT_TRUE(area->SetItem(kKey, kValue, &old_value));
+  EXPECT_TRUE(area->SetItem(kKey, kValue));
   EXPECT_TRUE(area->HasUncommittedChanges());
   // At this point the StartCommitTimer task has been posted to the after
   // startup task queue. We inject another task in the queue that will
@@ -315,7 +343,7 @@ TEST_F(DOMStorageAreaTest, CommitChangesAtShutdown) {
 
   DOMStorageValuesMap values;
   base::NullableString16 old_value;
-  EXPECT_TRUE(area->SetItem(kKey, kValue, &old_value));
+  EXPECT_TRUE(area->SetItem(kKey, kValue));
   EXPECT_TRUE(area->HasUncommittedChanges());
   area->backing_->ReadAllValues(&values);
   EXPECT_TRUE(values.empty());  // not committed yet
@@ -349,7 +377,7 @@ TEST_F(DOMStorageAreaTest, DeleteOrigin) {
 
   // Commit something in the database and then delete.
   base::NullableString16 old_value;
-  area->SetItem(kKey, kValue, &old_value);
+  area->SetItem(kKey, kValue);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(base::PathExists(db_file_path));
   area->DeleteOrigin();
@@ -359,7 +387,7 @@ TEST_F(DOMStorageAreaTest, DeleteOrigin) {
 
   // Put some uncommitted changes to a non-existing database in
   // and then delete. No file ever gets created in this case.
-  area->SetItem(kKey, kValue, &old_value);
+  area->SetItem(kKey, kValue);
   EXPECT_TRUE(area->HasUncommittedChanges());
   EXPECT_EQ(1u, area->Length());
   area->DeleteOrigin();
@@ -371,10 +399,10 @@ TEST_F(DOMStorageAreaTest, DeleteOrigin) {
 
   // Put some uncommitted changes to a an existing database in
   // and then delete.
-  area->SetItem(kKey, kValue, &old_value);
+  area->SetItem(kKey, kValue);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(base::PathExists(db_file_path));
-  area->SetItem(kKey2, kValue2, &old_value);
+  area->SetItem(kKey2, kValue2);
   EXPECT_TRUE(area->HasUncommittedChanges());
   EXPECT_EQ(2u, area->Length());
   area->DeleteOrigin();
@@ -393,6 +421,40 @@ TEST_F(DOMStorageAreaTest, DeleteOrigin) {
   area->Shutdown();
 }
 
+TEST_F(DOMStorageAreaTest, EnforcesQuota) {
+  scoped_refptr<DOMStorageArea> area(
+      new DOMStorageArea(1, std::string(), kOrigin, NULL, NULL));
+
+  const base::string16 kKey = ASCIIToUTF16("test_key");
+  const base::string16 kValue = ASCIIToUTF16("test_value");
+  const base::string16 kKey2 = ASCIIToUTF16("test_key_2");
+  const size_t kValueSize = kValue.length() * sizeof(base::char16);
+
+  // A 50 byte quota is too small to hold both keys, so we
+  // should see the DOMStorageMap enforcing it.
+  const size_t kQuota = 50;
+  area->map_->set_quota_for_testing(kQuota);
+
+  EXPECT_TRUE(area->SetItem(kKey, kValue));
+  EXPECT_FALSE(area->SetItem(kKey2, kValue));
+  EXPECT_EQ(1u, area->Length());
+  EXPECT_TRUE(area->RemoveItem(kKey));
+  EXPECT_EQ(0u, area->Length());
+  EXPECT_TRUE(area->SetItem(kKey2, kValue));
+  EXPECT_EQ(1u, area->Length());
+
+  DOMStorageKeysMap other;
+  other[kKey] = kValueSize;
+  other[kKey2] = kValueSize;
+  area->map_->TakeValuesFrom(&other);
+
+  // When overbudget, a new value of greater size than the existing value can
+  // not be set, but a new value of lesser or equal size can be set.
+  EXPECT_TRUE(area->SetItem(kKey, kValue));
+  EXPECT_FALSE(area->SetItem(kKey, base::string16(kValue + kValue)));
+  EXPECT_TRUE(area->SetItem(kKey, base::string16()));
+}
+
 TEST_F(DOMStorageAreaTest, PurgeMemory) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
@@ -407,7 +469,7 @@ TEST_F(DOMStorageAreaTest, PurgeMemory) {
   DOMStorageDatabase* original_backing =
       static_cast<LocalStorageDatabaseAdapter*>(
           area->backing_.get())->db_.get();
-  DOMStorageMap* original_map = area->map_.get();
+  DOMStorageArea::KeysMapWrapper* original_map = area->map_.get();
 
   // Should do no harm when called on a newly constructed object.
   EXPECT_FALSE(area->is_initial_import_done_);
@@ -420,7 +482,7 @@ TEST_F(DOMStorageAreaTest, PurgeMemory) {
 
   // Should not do anything when commits are pending.
   base::NullableString16 old_value;
-  area->SetItem(kKey, kValue, &old_value);
+  area->SetItem(kKey, kValue);
   EXPECT_TRUE(area->is_initial_import_done_);
   EXPECT_TRUE(area->HasUncommittedChanges());
   area->PurgeMemory();

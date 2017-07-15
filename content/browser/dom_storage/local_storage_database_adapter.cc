@@ -20,6 +20,11 @@ void LocalStorageDatabaseAdapter::ReadAllValues(DOMStorageValuesMap* result) {
   db_->ReadAllValues(result);
 }
 
+void LocalStorageDatabaseAdapter::ReadAllKeysAndSizes(
+    DOMStorageKeysMap* result) {
+  NOTIMPLEMENTED();
+}
+
 bool LocalStorageDatabaseAdapter::CommitChanges(
     bool clear_all_first, const DOMStorageValuesMap& changes) {
   return db_->CommitChanges(clear_all_first, changes);

@@ -21,6 +21,7 @@ class SessionStorageDatabaseAdapter : public DOMStorageDatabaseAdapter {
                                 const GURL& origin);
   ~SessionStorageDatabaseAdapter() override;
   void ReadAllValues(DOMStorageValuesMap* result) override;
+  void ReadAllKeysAndSizes(DOMStorageKeysMap* result) override;
   bool CommitChanges(bool clear_all_first,
                      const DOMStorageValuesMap& changes) override;
 

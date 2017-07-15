@@ -54,6 +54,9 @@ class CONTENT_EXPORT SessionStorageDatabase :
   void ReadAreaValues(const std::string& namespace_id,
                       const GURL& origin,
                       DOMStorageValuesMap* result);
+  void ReadAllKeysAndSizes(const std::string& namespace_id,
+                           const GURL& origin,
+                           DOMStorageKeysMap* result);
 
   // Updates the data for |namespace_id| and |origin|. Will remove all keys
   // before updating the database if |clear_all_first| is set. Then all entries
@@ -158,12 +161,22 @@ class CONTENT_EXPORT SessionStorageDatabase :
                         const GURL& origin,
                         std::string* map_id,
                         leveldb::WriteBatch* batch);
-  // Reads the contents of the map |map_id| into |result|. If |only_keys| is
-  // true, only keys are aread from the database and the values in |result| will
-  // be empty.
+
+  // Helper to get snapshot of the open database and read the database into
+  // |result_{values,keys}| based on |only_keys|.
+  void ReadDatabaseInternal(const std::string& namespace_id,
+                            const GURL& origin,
+                            DOMStorageValuesMap* result_values,
+                            DOMStorageKeysMap* result_keys,
+                            bool only_keys);
+
+  // Reads the contents of the map |map_id| into |result_{values,keys}|. If
+  // |only_keys| is true, only keys are read from the database into
+  // |result_keys|, else the keys and values into |result_values|.
   bool ReadMap(const std::string& map_id,
                const leveldb::ReadOptions& options,
-               DOMStorageValuesMap* result,
+               DOMStorageValuesMap* result_values,
+               DOMStorageKeysMap* result_keys,
                bool only_keys);
   // Writes |values| into the map |map_id|.
   void WriteValuesToMap(const std::string& map_id,
