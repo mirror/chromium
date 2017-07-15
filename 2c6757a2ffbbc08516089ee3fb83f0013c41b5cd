@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "770bfcc7_eb71b2e7",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92efbe84_b6d57d4c",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18ec3f14_ac6bb20a",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b8dd5c_db6007ee",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18ec3f14_ac6bb20a",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ef180daf_7874920f",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "579cc1ca_c3871eff",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c696840c_f3c73206",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19e373b_e1cc01ec",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c696840c_f3c73206",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "277eb63f_5b8d2a4a",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c0c23c5_5b5c5f81",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8212812b_f4a9330b",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ace0903_853e7375",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8212812b_f4a9330b",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "24b49590_69058158",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eacfca6_6542c922",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3e1eb3c_00a7f48f",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 4
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "7fa761f5_c5214694",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e1eb3c_00a7f48f",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "493cd68b_75bade2e",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 4
@@ -149,6 +293,24 @@
       "writtenOn": "2017-07-14T15:54:34Z",
       "side": 1,
       "message": "not following the logic here. why destroy if root_window is null?",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576807a1_f4d9bd8d",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "This is a copy of LaserPointerController::SwitchTargetRootWindowIfNeeded. I am not quite sure myself what it does.",
+      "parentUuid": "493cd68b_75bade2e",
       "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "bcbfa7b2_497d1e39",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "6bec0bd4_d15ae0b3",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2adbb6c_575bcfa7",
         "filename": "ash/highlighter/highlighter_result_view.cc",
         "patchSetId": 4
@@ -183,6 +363,24 @@
       "writtenOn": "2017-07-14T15:54:34Z",
       "side": 1,
       "message": "kSrc? is this needed?",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fc029d_118a35a2",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d2adbb6c_575bcfa7",
       "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -203,6 +401,24 @@
       "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7731bfd_e33acf25",
+        "filename": "ash/highlighter/highlighter_result_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-15T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d823cf2a_c987db4e",
+      "revId": "2c6757a2ffbbc08516089ee3fb83f0013c41b5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
