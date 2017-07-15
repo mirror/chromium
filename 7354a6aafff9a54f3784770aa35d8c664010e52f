@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "32ec2974_c3af5730",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-15T01:10:12Z",
+      "side": 1,
+      "message": "I think I\u0027ve seen this extraction of the active payment request a couple of times. Consider moving the code to a private function.",
+      "parentUuid": "4a960dfe_ca28378f",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9661757d_6ef6efa0",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 1
@@ -218,6 +236,47 @@
       "side": 1,
       "message": "IIRC this is according to the spec.\nhttps://cs.chromium.org/chromium/src/components/payments/content/payment_request.cc?type\u003dcs\u0026l\u003d131\n\nMaybe I should also check for url_payment_method_identifiers_ after Randy\u0027s change (https://chromium-review.googlesource.com/c/567438/)?",
       "parentUuid": "9661757d_6ef6efa0",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f68155_625a4afa",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-15T01:10:12Z",
+      "side": 1,
+      "message": "You are correct! 10 points. I was thinking this was checking for whether the user had cards available.\n\n:)",
+      "parentUuid": "c2f54143_4bfacfcb",
+      "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69649e1b_81278a5a",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-15T01:10:12Z",
+      "side": 1,
+      "message": "I think it\u0027s NotSupportedError here",
+      "range": {
+        "startLine": 504,
+        "startChar": 8,
+        "endLine": 504,
+        "endChar": 26
+      },
       "revId": "7354a6aafff9a54f3784770aa35d8c664010e52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
