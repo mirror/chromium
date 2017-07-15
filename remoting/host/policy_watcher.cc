@@ -384,6 +384,16 @@ std::unique_ptr<PolicyWatcher> PolicyWatcher::CreateFromPolicyLoader(
       std::move(policy_provider), std::move(schema_registry)));
 }
 
+std::unique_ptr<PolicyWatcher> PolicyWatcher::CreateFromPolicyService(
+    policy::PolicyService* policy_service) {
+  return Create(policy_service, nullptr);
+}
+
+std::unique_ptr<PolicyWatcher> PolicyWatcher::CreateFromTaskRunner(
+    const scoped_refptr<base::SingleThreadTaskRunner>& file_task_runner) {
+  return Create(nullptr, file_task_runner);
+}
+
 std::unique_ptr<PolicyWatcher> PolicyWatcher::Create(
     policy::PolicyService* policy_service,
     const scoped_refptr<base::SingleThreadTaskRunner>& file_task_runner) {
