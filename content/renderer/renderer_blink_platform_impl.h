@@ -246,6 +246,9 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override;
 
+  void GetCORSURLLoaderFactory(
+      mojom::URLLoaderFactoryAssociatedRequest request);
+
   void RequestPurgeMemory() override;
 
  private:

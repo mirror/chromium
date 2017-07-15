@@ -657,7 +657,9 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       extra_data->frame_origin(),
       base::MakeUnique<WebURLLoaderImpl::RequestPeerImpl>(this),
       request.GetLoadingIPCType(), url_loader_factory_,
-      extra_data->TakeURLLoaderThrottles(), std::move(consumer_handle));
+      /*extra_data->TakeURLLoaderThrottles()*/
+      std::vector<std::unique_ptr<URLLoaderThrottle>>(),
+      std::move(consumer_handle));
 
   if (defers_loading_ != NOT_DEFERRING)
     resource_dispatcher_->SetDefersLoading(request_id_, true);
