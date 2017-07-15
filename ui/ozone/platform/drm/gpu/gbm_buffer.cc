@@ -363,6 +363,10 @@ gfx::BufferFormat GbmPixmap::GetBufferFormat() const {
   return ui::GetBufferFormatFromFourCCFormat(buffer_->GetFormat());
 }
 
+gfx::BufferUsage GbmPixmap::GetBufferUsage() const {
+  return ui::GetBufferUsageFromGbmFlags(buffer_->GetFlags());
+}
+
 gfx::Size GbmPixmap::GetBufferSize() const {
   return buffer_->GetSize();
 }

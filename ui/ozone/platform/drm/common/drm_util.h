@@ -77,6 +77,9 @@ gfx::BufferFormat GetBufferFormatFromFourCCFormat(int format);
 
 int GetFourCCFormatForOpaqueFramebuffer(gfx::BufferFormat format);
 
+uint32_t GetGbmFlagsFromBufferUsage(gfx::BufferUsage usage);
+gfx::BufferUsage GetBufferUsageFromGbmFlags(int flags);
+
 gfx::Size GetMaximumCursorSize(int fd);
 
 DisplayMode_Params GetDisplayModeParams(const display::DisplayMode& mode);
