@@ -20,7 +20,7 @@ class PrefChangeRegistrar;
 class Profile;
 
 namespace ash {
-class ScreenshotDelegate;
+class HighlighterDelegate;
 }
 
 namespace chromeos {
@@ -72,8 +72,7 @@ class PaletteDelegateChromeOS
       session_state_observer_;
   content::NotificationRegistrar registrar_;
 
-  std::unique_ptr<ash::ScreenshotDelegate>
-      voice_interaction_screenshot_delegate_;
+  std::unique_ptr<ash::HighlighterDelegate> highlighter_delegate_;
 
   base::WeakPtrFactory<PaletteDelegateChromeOS> weak_factory_;
 
