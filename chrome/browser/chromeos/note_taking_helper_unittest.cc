@@ -119,12 +119,24 @@ class TestObserver : public NoteTakingHelper::Observer {
   int num_updates() const { return num_updates_; }
   void reset_num_updates() { num_updates_ = 0; }
 
+  const std::vector<Profile*> preferred_app_updates() const {
+    return preferred_app_updates_;
+  }
+  void clear_preferred_app_updates() { preferred_app_updates_.clear(); }
+
  private:
   // NoteTakingHelper::Observer:
   void OnAvailableNoteTakingAppsUpdated() override { num_updates_++; }
 
+  void OnPreferredNoteTakingAppUpdated(Profile* profile) override {
+    preferred_app_updates_.push_back(profile);
+  }
+
   // Number of times that OnAvailableNoteTakingAppsUpdated() has been called.
   int num_updates_ = 0;
+
+  // Profiles for which OnPreferredNoteTakingAppUpdated was called.
+  std::vector<Profile*> preferred_app_updates_;
 
   DISALLOW_COPY_AND_ASSIGN(TestObserver);
 };
@@ -275,10 +287,13 @@ class NoteTakingHelperTest : public BrowserWithTestWindowTest,
   }
   void UninstallExtension(const extensions::Extension* extension,
                           Profile* profile) {
+    base::string16 error;
     extensions::ExtensionSystem::Get(profile)
         ->extension_service()
-        ->UnloadExtension(extension->id(),
-                          extensions::UnloadedExtensionReason::UNINSTALL);
+        ->UninstallExtension(
+            extension->id(),
+            extensions::UninstallReason::UNINSTALL_REASON_FOR_TESTING,
+            base::Closure(), &error);
   }
 
   // BrowserWithTestWindowTest:
@@ -496,26 +511,28 @@ TEST_P(NoteTakingHelperTest, PreferredAppEnabledOnLockScreen) {
   // preferred note taking app, the app should be reported as selected as lock
   // screen note taking app.
   helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
-  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    true);
+  helper()->SetAppEnabledOnLockScreen(
+      profile(), NoteTakingHelper::kDevKeepExtensionId, true);
+
   apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(1u, apps.size());
-  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
-                         true /* preferred */,
-                         NoteTakingLockScreenSupport::kSelected),
-            GetAppString(apps[0]));
+  EXPECT_EQ(
+      GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                   true /* preferred */, NoteTakingLockScreenSupport::kEnabled),
+      GetAppString(apps[0]));
   std::unique_ptr<NoteTakingAppInfo> preferred_info =
       helper()->GetPreferredChromeAppInfo(profile());
   ASSERT_TRUE(preferred_info);
-  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
-                         true /* preferred */,
-                         NoteTakingLockScreenSupport::kSelected),
-            GetAppString(*preferred_info));
+  EXPECT_EQ(
+      GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                   true /* preferred */, NoteTakingLockScreenSupport::kEnabled),
+      GetAppString(*preferred_info));
 
   // When lock screen note taking pref is reset, the app should not be reported
   // as selected on lock screen.
-  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    false);
+  helper()->SetAppEnabledOnLockScreen(
+      profile(), NoteTakingHelper::kDevKeepExtensionId, false);
+
   apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(1u, apps.size());
   EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
@@ -607,51 +624,32 @@ TEST_P(NoteTakingHelperTest,
   // is enabled, the keep app should be reported to be selected as the lock
   // screen note taking app.
   helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
-  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    true);
+  helper()->SetAppEnabledOnLockScreen(
+      profile(), NoteTakingHelper::kDevKeepExtensionId, true);
+
   apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(2u, apps.size());
-  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
-                         true /* preferred */,
-                         NoteTakingLockScreenSupport::kSelected),
-            GetAppString(apps[0]));
+  EXPECT_EQ(
+      GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                   true /* preferred */, NoteTakingLockScreenSupport::kEnabled),
+      GetAppString(apps[0]));
   EXPECT_EQ(GetAppString(kNewNoteId, kName, false /* preferred */,
                          NoteTakingLockScreenSupport::kNotSupported),
             GetAppString(apps[1]));
 
   // When a third party app (which does not support lock screen note taking) is
-  // set as the preferred app, Keep app should stop being reported as the
-  // selected note taking app.
+  // set as the preferred app, Keep app's lock screen support state remain
+  // enabled - even though it will not be launchable from the lock screen.
   helper()->SetPreferredApp(profile(), kNewNoteId);
   apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(2u, apps.size());
   EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
                          false /* preferred */,
-                         NoteTakingLockScreenSupport::kSupported),
+                         NoteTakingLockScreenSupport::kEnabled),
             GetAppString(apps[0]));
   EXPECT_EQ(GetAppString(kNewNoteId, kName, true /* preferred */,
                          NoteTakingLockScreenSupport::kNotSupported),
             GetAppString(apps[1]));
-
-  // Setting an app that does not support lock screen note taking should reset
-  // the 'enable lock screen note taking' preference to |false|.
-  EXPECT_FALSE(profile()->GetPrefs()->GetBoolean(
-      prefs::kNoteTakingAppEnabledOnLockScreen));
-
-  // Setting the Keep app as the preferred app again should not re-anable lock
-  // screen note taking.
-  helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
-  apps = helper()->GetAvailableApps(profile());
-  ASSERT_EQ(2u, apps.size());
-  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
-                         true /* preferred */,
-                         NoteTakingLockScreenSupport::kSupported),
-            GetAppString(apps[0]));
-  EXPECT_EQ(GetAppString(kNewNoteId, kName, false /* preferred */,
-                         NoteTakingLockScreenSupport::kNotSupported),
-            GetAppString(apps[1]));
-  EXPECT_FALSE(profile()->GetPrefs()->GetBoolean(
-      prefs::kNoteTakingAppEnabledOnLockScreen));
 }
 
 TEST_P(NoteTakingHelperTest,
@@ -677,8 +675,8 @@ TEST_P(NoteTakingHelperTest,
   InstallExtension(dev_extension.get(), profile());
 
   helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
-  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    true);
+  helper()->SetAppEnabledOnLockScreen(
+      profile(), NoteTakingHelper::kDevKeepExtensionId, true);
 
   std::vector<NoteTakingAppInfo> apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(1u, apps.size());
@@ -1155,6 +1153,172 @@ TEST_P(NoteTakingHelperTest, NotifyObserverAboutChromeApps) {
   UninstallExtension(keep_extension.get(), second_profile);
   EXPECT_EQ(2, observer.num_updates());
   profile_manager_->DeleteTestingProfile(kSecondProfileName);
+}
+
+TEST_P(NoteTakingHelperTest, NotifyObserverAboutPreferredAppChanges) {
+  Init(ENABLE_PALETTE);
+  TestObserver observer;
+
+  scoped_refptr<const extensions::Extension> prod_keep_extension =
+      CreateExtension(NoteTakingHelper::kProdKeepExtensionId, "Keep");
+  InstallExtension(prod_keep_extension.get(), profile());
+
+  scoped_refptr<const extensions::Extension> dev_keep_extension =
+      CreateExtension(NoteTakingHelper::kDevKeepExtensionId, "Keep");
+  InstallExtension(dev_keep_extension.get(), profile());
+
+  ASSERT_TRUE(observer.preferred_app_updates().empty());
+
+  helper()->SetPreferredApp(profile(), prod_keep_extension->id());
+  EXPECT_EQ(std::vector<Profile*>{profile()}, observer.preferred_app_updates());
+  observer.clear_preferred_app_updates();
+
+  helper()->SetPreferredApp(profile(), prod_keep_extension->id());
+  EXPECT_TRUE(observer.preferred_app_updates().empty());
+
+  helper()->SetPreferredApp(profile(), dev_keep_extension->id());
+  EXPECT_EQ(std::vector<Profile*>{profile()}, observer.preferred_app_updates());
+  observer.clear_preferred_app_updates();
+
+  helper()->SetPreferredApp(profile(), "");
+  EXPECT_EQ(std::vector<Profile*>{profile()}, observer.preferred_app_updates());
+  observer.clear_preferred_app_updates();
+
+  helper()->SetPreferredApp(profile(), "");
+  EXPECT_TRUE(observer.preferred_app_updates().empty());
+
+  const std::string kSecondProfileName = "second-profile";
+  TestingProfile* second_profile =
+      profile_manager_->CreateTestingProfile(kSecondProfileName);
+  InitExtensionService(second_profile);
+  scoped_refptr<const extensions::Extension>
+      second_profile_prod_keep_extension =
+          CreateExtension(NoteTakingHelper::kProdKeepExtensionId, "Keep");
+  InstallExtension(second_profile_prod_keep_extension.get(), second_profile);
+
+  helper()->SetPreferredApp(second_profile,
+                            second_profile_prod_keep_extension->id());
+  EXPECT_EQ(std::vector<Profile*>{second_profile},
+            observer.preferred_app_updates());
+  observer.clear_preferred_app_updates();
+
+  helper()->SetPreferredApp(second_profile, "");
+  EXPECT_EQ(std::vector<Profile*>{second_profile},
+            observer.preferred_app_updates());
+  observer.clear_preferred_app_updates();
+
+  profile_manager_->DeleteTestingProfile(kSecondProfileName);
+}
+
+TEST_P(NoteTakingHelperTest,
+       NotifyObserverAboutPreferredAppLockScreenSupportChanges) {
+  Init(ENABLE_PALETTE | ENABLE_LOCK_SCREEN_APPS);
+  TestObserver observer;
+
+  std::unique_ptr<base::Value> lock_enabled_action_handler =
+      extensions::ListBuilder()
+          .Append(extensions::DictionaryBuilder()
+                      .Set("action", app_runtime::ToString(
+                                         app_runtime::ACTION_TYPE_NEW_NOTE))
+                      .SetBoolean("enabled_on_lock_screen", true)
+                      .Build())
+          .Build();
+
+  scoped_refptr<const extensions::Extension> dev_extension =
+      CreateExtension(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                      extensions::ListBuilder().Append("lockScreen").Build(),
+                      std::move(lock_enabled_action_handler));
+  InstallExtension(dev_extension.get(), profile());
+
+  scoped_refptr<const extensions::Extension> prod_extension =
+      CreateExtension(NoteTakingHelper::kProdKeepExtensionId, "Keep");
+  InstallExtension(prod_extension.get(), profile());
+
+  ASSERT_TRUE(observer.preferred_app_updates().empty());
+
+  // Enabling app that is not set a preferred - it should succeed, but there
+  // should be no preferred app change notification.
+  EXPECT_TRUE(helper()->SetAppEnabledOnLockScreen(profile(),
+                                                  dev_extension->id(), true));
+  EXPECT_TRUE(observer.preferred_app_updates().empty());
+
+  helper()->SetPreferredApp(profile(), dev_extension->id());
+  EXPECT_EQ(std::vector<Profile*>{profile()}, observer.preferred_app_updates());
+  observer.clear_preferred_app_updates();
+
+  // Enabling lock screen support for already enabled app should be no-op.
+  EXPECT_FALSE(helper()->SetAppEnabledOnLockScreen(profile(),
+                                                   dev_extension->id(), true));
+  EXPECT_TRUE(observer.preferred_app_updates().empty());
+
+  // Change the state of the preferred app - it should succeed, and a
+  // notification should be fired.
+  EXPECT_TRUE(helper()->SetAppEnabledOnLockScreen(profile(),
+                                                  dev_extension->id(), false));
+  EXPECT_EQ(std::vector<Profile*>{profile()}, observer.preferred_app_updates());
+  observer.clear_preferred_app_updates();
+
+  // No-op, becuase the preferred app state is not changing.
+  EXPECT_FALSE(helper()->SetAppEnabledOnLockScreen(profile(),
+                                                   dev_extension->id(), false));
+  EXPECT_TRUE(observer.preferred_app_updates().empty());
+
+  // Set an app that does not support lock screen as primary.
+  helper()->SetPreferredApp(profile(), prod_extension->id());
+  EXPECT_EQ(std::vector<Profile*>{profile()}, observer.preferred_app_updates());
+  observer.clear_preferred_app_updates();
+
+  // Chaning state for an app that does not support lock screen note taking
+  // should be no-op.
+  EXPECT_FALSE(helper()->SetAppEnabledOnLockScreen(profile(),
+                                                   prod_extension->id(), true));
+  EXPECT_FALSE(helper()->SetAppEnabledOnLockScreen(
+      profile(), prod_extension->id(), false));
+  EXPECT_TRUE(observer.preferred_app_updates().empty());
+}
+
+TEST_P(NoteTakingHelperTest, LockScreenSupportResetOnUninstall) {
+  Init(ENABLE_PALETTE | ENABLE_LOCK_SCREEN_APPS);
+  TestObserver observer;
+
+  std::unique_ptr<base::Value> lock_enabled_action_handler =
+      extensions::ListBuilder()
+          .Append(extensions::DictionaryBuilder()
+                      .Set("action", app_runtime::ToString(
+                                         app_runtime::ACTION_TYPE_NEW_NOTE))
+                      .SetBoolean("enabled_on_lock_screen", true)
+                      .Build())
+          .Build();
+
+  scoped_refptr<const extensions::Extension> keep_extension =
+      CreateExtension(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                      extensions::ListBuilder().Append("lockScreen").Build(),
+                      std::move(lock_enabled_action_handler));
+  InstallExtension(keep_extension.get(), profile());
+
+  EXPECT_TRUE(observer.preferred_app_updates().empty());
+
+  helper()->SetPreferredApp(profile(), keep_extension->id());
+  EXPECT_TRUE(helper()->SetAppEnabledOnLockScreen(profile(),
+                                                  keep_extension->id(), true));
+
+  std::unique_ptr<NoteTakingAppInfo> preferred_info =
+      helper()->GetPreferredChromeAppInfo(profile());
+  ASSERT_TRUE(preferred_info);
+  ASSERT_EQ(keep_extension->id(), preferred_info->app_id);
+  EXPECT_EQ(NoteTakingLockScreenSupport::kEnabled,
+            preferred_info->lock_screen_support);
+
+  UninstallExtension(keep_extension.get(), profile());
+  InstallExtension(keep_extension.get(), profile());
+
+  helper()->SetPreferredApp(profile(), keep_extension->id());
+
+  preferred_info = helper()->GetPreferredChromeAppInfo(profile());
+  ASSERT_TRUE(preferred_info);
+  ASSERT_EQ(keep_extension->id(), preferred_info->app_id);
+  EXPECT_EQ(NoteTakingLockScreenSupport::kSupported,
+            preferred_info->lock_screen_support);
 }
 
 }  // namespace chromeos

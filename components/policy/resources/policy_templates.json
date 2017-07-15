@@ -143,7 +143,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 375
+#   For your editing convenience: highest ID currently used: 376
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -9759,6 +9759,35 @@
       If you set this policy to 'AllowMigration', users with ecryptfs home directories will be offered to migrate these to ext4 encryption as necessary (currently when Android N becomes available on the device).
 
       If this policy is left not set, the device will behave as if 'DisallowArc' was chosen.''',
+    },
+    {
+      'name': 'NoteTakingAppsAllowedOnLockScreen',
+      'type': 'list',
+      'schema': {
+        'type': 'array',
+        'items': { 'type': 'string' },
+      },
+      'supported_on': [
+        'chrome_os:61-',
+      ],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': True
+      },
+      'example_value': ['abcdefghabcdefghabcdefghabcdefgh'],
+      'id': 376,
+      'caption': '''Enable note-taking from the <ph name="PRODUCT_OS_NAME">$2<ex>Google Chrome OS</ex></ph> lock screen''',
+      'tags': [],
+      'desc': '''Specifies whether note-taking is enabled on Chrome OS lock screen.
+
+      If note-taking on the lock screen is enabled, the lock screen will contain UI element for launching the preferred note taking app (provided an app that supports note taking on lock screen is installed and selected as the preferred note taking app by the user).
+      When launched, the app will be able to create an app window on top of the lock screen.
+
+      Setting this policy to True will enable the note taking app selected as preferred by the user on the lock screen (if the app supports lock screen use case).
+
+      Setting this policy to False will disable all note taking apps on the lock screen.
+
+      If left unset, the user will be able to enable/disable the feature in Chrome OS settings UI.'''
     },
   ],
   'messages': {

@@ -51,7 +51,26 @@ Polymer({
   },
 
   supportsLockScreen_: function() {
-    return this.selectedApp_ && this.selectedApp_.supportsLockScreen;
+    return this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport != 'NotSupported';
+  },
+
+  lockScreenSupportAllowed_: function() {
+    return this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport != 'NotAllowedByPolicy';
+  },
+
+  getLockScreenIndicatorType_: function() {
+    if (this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport == 'NotAllowedByPolicy') {
+      return CrPolicyIndicatorType.USER_POLICY;
+    }
+    return CrPolicyIndicatorType.NONE;
+  },
+
+  lockScreenSupportEnabled_: function() {
+    return this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport == 'Enabled';
   },
 
   /** @private {?settings.DevicePageBrowserProxy} */
@@ -82,13 +101,24 @@ Polymer({
         null;
   },
 
+  toggleLockScreenSupport_: function() {
+    if (!this.lockScreenSupportAllowed_())
+      return;
+
+    this.browserProxy_.setNoteTakingAppEnabledOnLockScreen(
+        this.selectedApp_.value,
+        this.selectedApp_.lockScreenSupport == 'Supported');
+  },
+
   /** @private */
   onSelectedAppChanged_: function() {
     var app = this.findApp_(this.$.menu.value);
-    this.selectedApp_ = app;
 
-    if (app && !app.preferred)
+    if (app && !app.preferred) {
       this.browserProxy_.setPreferredNoteTakingApp(app.value);
+    } else {
+      this.selectedApp_ = app;
+    }
   },
 
   /**
