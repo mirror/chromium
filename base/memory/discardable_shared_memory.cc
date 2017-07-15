@@ -24,6 +24,10 @@
 #include "third_party/ashmem/ashmem.h"
 #endif
 
+#if defined(OS_WIN)
+#include "base/win/windows_version.h"
+#endif
+
 namespace base {
 namespace {
 
@@ -231,6 +235,15 @@ DiscardableSharedMemory::LockResult DiscardableSharedMemory::Lock(
       return PURGED;
     }
   }
+#elif defined(OS_WIN)
+  if (base::win::GetVersion() >= base::win::VERSION_WIN8_1) {
+    DWORD reclaim_result =
+        ReclaimVirtualMemory(reinterpret_cast<char*>(shared_memory_.memory()) +
+                                 AlignToPageSize(sizeof(SharedState)) + offset,
+                             length);
+    if (reclaim_result != ERROR_SUCCESS)
+      return PURGED;
+  }
 #endif
 
   return SUCCESS;
@@ -257,6 +270,17 @@ void DiscardableSharedMemory::Unlock(size_t offset, size_t length) {
                             AlignToPageSize(sizeof(SharedState)) + offset,
                             length)) {
       DPLOG(ERROR) << "ashmem_unpin_region() failed";
+    }
+  }
+#elif defined(OS_WIN)
+  if (base::win::GetVersion() >= base::win::VERSION_WIN8_1) {
+    if (length) {
+      DWORD offer_result =
+          OfferVirtualMemory(reinterpret_cast<char*>(shared_memory_.memory()) +
+                                 AlignToPageSize(sizeof(SharedState)) + offset,
+                             length, VmOfferPriorityNormal);
+      if (offer_result != ERROR_SUCCESS)
+        DLOG(ERROR) << "OfferVirtualMemory(Unlock) failed: " << offer_result;
     }
   }
 #endif
@@ -363,12 +387,14 @@ bool DiscardableSharedMemory::Purge(Time current_time) {
     DPLOG(ERROR) << "madvise() failed";
   }
 #elif defined(OS_WIN)
-  // MEM_DECOMMIT the purged pages to release the physical storage,
-  // either in memory or in the paging file on disk.  Pages remain RESERVED.
-  if (!VirtualFree(reinterpret_cast<char*>(shared_memory_.memory()) +
-                       AlignToPageSize(sizeof(SharedState)),
-                   AlignToPageSize(mapped_size_), MEM_DECOMMIT)) {
-    DPLOG(ERROR) << "VirtualFree() MEM_DECOMMIT failed in Purge()";
+  if (base::win::GetVersion() < base::win::VERSION_WIN8_1) {
+    // MEM_DECOMMIT the purged pages to release the physical storage,
+    // either in memory or in the paging file on disk.  Pages remain RESERVED.
+    if (!VirtualFree(reinterpret_cast<char*>(shared_memory_.memory()) +
+                         AlignToPageSize(sizeof(SharedState)),
+                     AlignToPageSize(mapped_size_), MEM_DECOMMIT)) {
+      DPLOG(ERROR) << "VirtualFree() MEM_DECOMMIT failed in Purge()";
+    }
   }
 #endif
 
