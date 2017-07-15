@@ -1079,6 +1079,10 @@
       status: "experimental",
     },
     {
+      name: "WebAssemblyIndexedDB",
+      status: "experimental",
+    },
+    {
       name: "WebAssemblyStreaming",
       status: "experimental",
     },
