@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32485c1d_758191a6",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "IMHO, this should all go in UpdateAndMaybeSwitch(). It\u0027s bad for a \"query\" method to have side-effects like this. (Actually, ShouldBeRemoting() should be a const method, too.)",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 3
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904a1c0d_849ad9d1",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "This could just go in the else clause below, where you set remote_rendering_started_ \u003d false.",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 3
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffb38ed_210a78eb",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "Please move this method down in the file, so that the order of definition in the .cc file matches the order of declaration in the header file.",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 373,
+        "endChar": 1
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f530ba9_12be61f7",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary since this method is only called from one place, and only the first time  ShouldBeRemoting() starts returning true. You could DCHECK() it to state the assumption that the timer shouldn\u0027t be running.",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 11
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20427d6b_6907cf69",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "Let\u0027s move this back to where it was before, in UpdateAndMaybeSwitch(), since the else clause on L356 needs |client_| to be !nullptr.",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 18
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce47d36f_397a83a6",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "Use base::Unretained(this) instead of the WeakPtr. The timer is owned by this class, and destroying the timer will cause it to cancel all outstanding callbacks.",
+      "range": {
+        "startLine": 386,
+        "startChar": 17,
+        "endLine": 386,
+        "endChar": 43
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b956a4_0bb7404e",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "Doesn\u0027t matter if it\u0027s running. Just call Stop() unconditionally. Simpler code. :)",
+      "range": {
+        "startLine": 392,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 53
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abd0b13_6662b434",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "What if it became false during the 5 seconds of waiting?",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 31
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44422a6_a6aa2758",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "Something may have changed over 5 seconds. So, we need to re-check that all the conditions are still good-to-go. So, this should be something like:\n\n  if (ShouldBeRemoting() \u0026\u0026 we_have_enough_bandwidth_it_seems) {\n    StartRemoting(start_trigger);\n  }",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 408,
+        "endChar": 31
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546a6e73_ab6b9bf1",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "What\u0027s the difference between CanBeRemoting() and ShouldBeRemoting()? Perhaps CanBeRemoting() should be something more-specific, like AreCapabilitiesSatisfied()?",
+      "range": {
+        "startLine": 96,
+        "startChar": 1,
+        "endLine": 97,
+        "endChar": 26
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e897eebb_909e48c0",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "\"Transition\" could refer to a lot of things handled by the controller. Can we use more specific naming in the methods/vars/comments? Since the point of this is to delay the start of remoting to both 1) monitor network bandwidth and 2) stay dominant for 5 seconds; and we do this to help ensure remoting will be stable; you might name things like this:\n\n  StartTransition() --\u003e WaitForStablilityBeforeStart()\n  StopTransition() --\u003e CancelDelayedStart()\n  remoting_start_transition_timer_ --\u003e delayed_start_stability_timer_\n\nI\u0027m not sure if the above are the best naming. I\u0027ll leave it to you to decide. :)",
+      "range": {
+        "startLine": 106,
+        "startChar": 15,
+        "endLine": 106,
+        "endChar": 25
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ea499f_e2d61f6e",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "You don\u0027t need this bool: Everywhere you do this:\n\n  if (!activated_..._monitoring_ \u0026\u0026 client_) {\n    client_-\u003eActivate...Monitoring(true);\n    activated_..._monitoring_ \u003d true;\n  }\n\n...you could just do this without ill effects:\n\n  if (client_) {\n    client_-\u003eActivate...Monitoring(true);\n  }",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 58
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7426d9b_a0942e18",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "Delete this?",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 62
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623142aa_51adfe89",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:02:03Z",
+      "side": 1,
+      "message": "What condition?",
+      "range": {
+        "startLine": 173,
+        "startChar": 18,
+        "endLine": 173,
+        "endChar": 49
+      },
+      "revId": "c7260d01fb3e15335a9b749fd0d7d3e2015537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
