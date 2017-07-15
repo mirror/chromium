@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be81fa20_dbd73476",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-15T07:43:26Z",
+      "side": 1,
+      "message": "Clients, such as RTCVideoEncoder, expect Initialize() to return false synchronously. Here we are always returning true and NotifyError() doesn\u0027t do same thing as return false. Why not make the service side return a value here?\nhttps://cs.chromium.org/chromium/src/content/renderer/media/gpu/rtc_video_encoder.cc?rcl\u003dc3591587a699a76a6409b560022dda89b2b1d05e\u0026l\u003d815",
+      "range": {
+        "startLine": 140,
+        "startChar": 9,
+        "endLine": 140,
+        "endChar": 13
+      },
+      "revId": "c95418b78464d017eb35b76ee2b3c591b8bf7c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fdefa8e_7a60bff6",
+        "filename": "media/mojo/clients/mojo_video_encode_accelerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-15T07:43:26Z",
+      "side": 1,
+      "message": "This class only makes use of VideoEncodeAcceleratorSupportedProfiles so pass that instead?",
+      "range": {
+        "startLine": 36,
+        "startChar": 40,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "c95418b78464d017eb35b76ee2b3c591b8bf7c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
