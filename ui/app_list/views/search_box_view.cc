@@ -399,6 +399,7 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
     speech_button_->SetVisible(!active);
   close_button_->SetVisible(active);
   content_container_->Layout();
+  ModelChanged();
 }
 
 void SearchBoxView::HandleSearchBoxEvent(ui::LocatedEvent* located_event) {
@@ -711,8 +712,10 @@ void SearchBoxView::OnSpeechRecognitionStateChanged(
 
 void SearchBoxView::UpdateSearchIcon(bool is_google,
                                      const SkColor& search_box_color) {
+  const gfx::VectorIcon& google_icon =
+      is_search_box_active() ? kIcGoogleColorIcon : kIcGoogleBlackIcon;
   const gfx::VectorIcon& icon =
-      is_google ? kIcGoogleBlackIcon : kIcSearchEngineNotGoogleIcon;
+      is_google ? google_icon : kIcSearchEngineNotGoogleIcon;
   search_icon_->SetImage(
       gfx::CreateVectorIcon(icon, kSearchIconSize, search_box_color));
 }
