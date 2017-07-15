@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06121c99_5c3af227",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorBaseAgent.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-15T18:54:59Z",
+      "side": 1,
+      "message": "Use raw pointers (instead of Members) for on-stack pointers.",
+      "revId": "ab57b7532e64626b0c60d75d7bad3954d9f96255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309b2cb3_4aa7bf16",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-15T18:54:59Z",
+      "side": 1,
+      "message": "TODO(nverne):",
+      "revId": "ab57b7532e64626b0c60d75d7bad3954d9f96255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
