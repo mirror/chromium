@@ -84,29 +84,34 @@ base::NullableString16 DOMStorageHost::GetAreaItem(int connection_id,
   return area->GetItem(key);
 }
 
-bool DOMStorageHost::SetAreaItem(
-    int connection_id, const base::string16& key,
-    const base::string16& value, const GURL& page_url,
-    base::NullableString16* old_value) {
+bool DOMStorageHost::SetAreaItem(int connection_id,
+                                 const base::string16& key,
+                                 const base::string16& value,
+                                 const base::NullableString16& old_value,
+                                 const GURL& page_url) {
   DOMStorageArea* area = GetOpenArea(connection_id);
   if (!area)
     return false;
-  if (!area->SetItem(key, value, old_value))
+  base::NullableString16 unused;
+  if (!area->SetItem(key, value, &unused))
     return false;
-  if (old_value->is_null() || old_value->string() != value)
-    context_->NotifyItemSet(area, key, value, *old_value, page_url);
+  if (old_value.is_null() || old_value.string() != value)
+    context_->NotifyItemSet(area, key, value, old_value, page_url);
   return true;
 }
 
-bool DOMStorageHost::RemoveAreaItem(
-    int connection_id, const base::string16& key, const GURL& page_url,
-    base::string16* old_value) {
+bool DOMStorageHost::RemoveAreaItem(int connection_id,
+                                    const base::string16& key,
+                                    const base::NullableString16& old_value,
+                                    const GURL& page_url) {
   DOMStorageArea* area = GetOpenArea(connection_id);
   if (!area)
     return false;
-  if (!area->RemoveItem(key, old_value))
+  base::string16 unused;
+  if (!area->RemoveItem(key, &unused))
     return false;
-  context_->NotifyItemRemoved(area, key, *old_value, page_url);
+  DCHECK(!old_value.is_null());
+  context_->NotifyItemRemoved(area, key, old_value.string(), page_url);
   return true;
 }
 
