@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1126930b_ad7ed909",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-15T05:44:50Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "3ab123070a73d76e1ed205c21931db2e9cf6300e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
