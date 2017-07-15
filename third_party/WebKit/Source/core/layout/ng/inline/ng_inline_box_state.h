@@ -65,10 +65,7 @@ struct NGInlineBoxState {
 
   // Compute text metrics for a box. All text in a box share the same metrics.
   void ComputeTextMetrics(const ComputedStyle& style, FontBaseline);
-  void AccumulateUsedFonts(const NGInlineItem&,
-                           unsigned start,
-                           unsigned end,
-                           FontBaseline);
+  void AccumulateUsedFonts(const ShapeResult*, FontBaseline);
 
   // Create a box fragment for this box.
   void SetNeedsBoxFragment(bool when_empty);
