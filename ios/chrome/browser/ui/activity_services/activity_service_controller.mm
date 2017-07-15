@@ -276,13 +276,25 @@
       activity_type_util::RecordMetricForActivity(type);
       message = activity_type_util::CompletionMessageForActivity(type);
     }
-    [shareToDelegate_ passwordAppExDidFinish:activityResult
-                                    username:username
-                                    password:password
-                           completionMessage:message];
-    // Controller state can be reset only after delegate has processed the
-    // item returned from the App Extension.
-    [self resetUserInterface];
+    // Password autofill uses JavaScript injection which must be executed on
+    // the main thread. |fillPassword} block intentionally retains |self|.
+    // TODO(crbug.com/742554): It is not clear whether it is an iOS 11 bug that
+    // callbacks are not in the same thread. This needs further investigation.
+    void (^fillPassword)() = ^{
+      [shareToDelegate_ passwordAppExDidFinish:activityResult
+                                      username:username
+                                      password:password
+                             completionMessage:message];
+      // Controller state can be reset only after delegate has processed the
+      // item returned from the App Extension.
+      [self resetUserInterface];
+    };
+    if ([NSThread isMainThread]) {
+      fillPassword();
+    } else {
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
+                     dispatch_get_main_queue(), fillPassword);
+    }
   };
   [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypePropertyList
                                   options:nil
