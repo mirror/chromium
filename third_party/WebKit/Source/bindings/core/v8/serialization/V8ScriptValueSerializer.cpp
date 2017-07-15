@@ -561,8 +561,20 @@ v8::Maybe<uint32_t> V8ScriptValueSerializer::GetWasmModuleTransferId(
     v8::Isolate* isolate,
     v8::Local<v8::WasmCompiledModule> module) {
   switch (wasm_policy_) {
-    case Options::kSerialize:
+    case Options::kSerialize: {
+      if (RuntimeEnabledFeatures::WebAssemblyIndexedDBEnabled())
+        return v8::Nothing<uint32_t>();
+      // Throw if indexeddb support is disabled
+      ExceptionState exception_state(isolate, exception_state_->Context(),
+                                     exception_state_->InterfaceName(),
+                                     exception_state_->PropertyName());
+      exception_state.ThrowDOMException(
+          kDataCloneError,
+          "Persisting WebAssembly modules in IndexedDB "
+          "is disabled by default. To enable, see "
+          "chrome://flags#enable-webassembly-indexeddb");
       return v8::Nothing<uint32_t>();
+    }
 
     case Options::kBlockedInNonSecureContext: {
       // This happens, currently, when we try to serialize to IndexedDB
