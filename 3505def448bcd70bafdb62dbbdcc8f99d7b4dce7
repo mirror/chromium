@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29c7bed3_8138d3cf",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-15T05:46:13Z",
+      "side": 1,
+      "message": "Done. crbug/743239",
+      "parentUuid": "ade5410f_5b572e5c",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ada1c5fd_75cec3c0",
         "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b3f76a41_11b2078a",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-15T05:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ada1c5fd_75cec3c0",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "448e1738_f52d7ca2",
         "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-13T21:02:41Z",
       "side": 1,
       "message": "Are you sure this will hold? I am thinking of a case where the browser window is really narrow, and on the right-edge of the screen. For touchscreen, we would use |window_width - start_threshold| as the max_delta_, but it should be possible to overscroll (towards left) much more than that.",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c16612_bf8d5500",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-15T05:46:13Z",
+      "side": 1,
+      "message": "Hmm, the expectation was that the overscroll controller will not send a value greater than |max_delta_|. However, in a case like you mentioned where |max_delta_| is negative, the overscroll controller will send 0 which is greater than |max_delta_|. A simple solution is to prevent |max_delta_| from becoming less than zero. This way, we might still have some peculiarities, but this should be a very rare case (if at all possible, unless we implement vertical overscroll, i.e., pull-to-refresh. See my response to the next comment). WDYT?",
+      "parentUuid": "448e1738_f52d7ca2",
       "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bf7cd48d_ca36fa6d",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-15T05:46:13Z",
+      "side": 1,
+      "message": "As far as I can tell, in all Aura platforms we have a large enough minimum browser window width that won\u0027t let |width| \u003c |start_threshold|. However, we can set |max_delta_| to 0 if it becomes less than 0 (see my response to previous comment). There is no minimum height, though. So, we should be more careful when implementing vertical overscroll (i.e., pull-to-refresh).",
+      "parentUuid": "162321d1_49832b7c",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1a9c6a_f25e3d3c",
         "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
         "patchSetId": 1
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fe2744f2_fda9d8d5",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-15T05:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b1a9c6a_f25e3d3c",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e07316b_26fa4681",
         "filename": "ui/gfx/animation/linear_animation.h",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-13T21:02:41Z",
       "side": 1,
       "message": "Why this change?",
+      "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ccab06_d81b7986",
+        "filename": "ui/gfx/animation/linear_animation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-15T05:46:13Z",
+      "side": 1,
+      "message": "When I replaced the instantiations of LinearAnimation in Affordance class to use base::MakeUnique\u003c\u003e instead of new keyword, I got some link errors which were fixed by this change. And generally I believe the best way to initialize static member variables (event if const) is to do it in the .cc file.",
+      "parentUuid": "6e07316b_26fa4681",
       "revId": "3505def448bcd70bafdb62dbbdcc8f99d7b4dce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
