@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f16d85e_899dff39",
+        "filename": "cc/tiles/image_decode_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-15T20:05:55Z",
+      "side": 1,
+      "message": "nit: This should be 33 rather than 32 -- if the largest value actually emitted is N, then the boundary value should be N + 1.",
+      "range": {
+        "startLine": 15,
+        "startChar": 29,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "8c703a27d759f4d2f8c48ed28fad7d85b95d3967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
