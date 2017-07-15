@@ -218,12 +218,14 @@ void VideoCaptureDeviceFactoryLinux::GetDeviceDescriptors(
       static CameraConfigChromeOS* config = new CameraConfigChromeOS();
       device_descriptors->emplace_back(
           reinterpret_cast<char*>(cap.card), unique_id, model_id,
+          reinterpret_cast<char*>(cap.bus_info),
           VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE,
           VideoCaptureTransportType::OTHER_TRANSPORT,
           config->GetCameraFacing(unique_id, model_id));
 #else
       device_descriptors->emplace_back(
           reinterpret_cast<char*>(cap.card), unique_id, model_id,
+          reinterpret_cast<char*>(cap.bus_info),
           VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE);
 #endif
     }

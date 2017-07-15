@@ -217,7 +217,7 @@ class MockVideoCaptureDeviceClient : public VideoCaptureDevice::Client {
 class V4L2CaptureDelegateTest : public ::testing::Test {
  public:
   V4L2CaptureDelegateTest()
-      : device_descriptor_("Device 0", "/dev/video0"),
+      : device_descriptor_("Device 0", "/dev/video0", ""),
         delegate_(base::MakeUnique<V4L2CaptureDelegate>(
             device_descriptor_,
             base::ThreadTaskRunnerHandle::Get(),

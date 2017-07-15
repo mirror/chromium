@@ -16,10 +16,12 @@ VideoCaptureDeviceDescriptor::VideoCaptureDeviceDescriptor()
 VideoCaptureDeviceDescriptor::VideoCaptureDeviceDescriptor(
     const std::string& display_name,
     const std::string& device_id,
+    const std::string& group_id,
     VideoCaptureApi capture_api,
     VideoCaptureTransportType transport_type)
     : display_name(display_name),
       device_id(device_id),
+      group_id(group_id),
       facing(VideoFacingMode::MEDIA_VIDEO_FACING_NONE),
       capture_api(capture_api),
       transport_type(transport_type) {}
@@ -28,12 +30,14 @@ VideoCaptureDeviceDescriptor::VideoCaptureDeviceDescriptor(
     const std::string& display_name,
     const std::string& device_id,
     const std::string& model_id,
+    const std::string& group_id,
     VideoCaptureApi capture_api,
     VideoCaptureTransportType transport_type,
     VideoFacingMode facing)
     : display_name(display_name),
       device_id(device_id),
       model_id(model_id),
+      group_id(group_id),
       facing(facing),
       capture_api(capture_api),
       transport_type(transport_type) {}

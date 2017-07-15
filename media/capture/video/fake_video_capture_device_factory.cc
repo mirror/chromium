@@ -54,6 +54,13 @@ media::VideoPixelFormat GetPixelFormatFromDeviceIndex(int device_index) {
   return media::PIXEL_FORMAT_I420;
 }
 
+std::string GetGroupIdFromDeviceIndex(int device_index) {
+  // Make the devices on index 1 and 2 to have the same groupId.
+  if (device_index == 1 || device_index == 2)
+    return "1";
+  return std::string();
+}
+
 void AppendAllCombinationsToFormatsContainer(
     const std::vector<media::VideoPixelFormat>& pixel_formats,
     const std::vector<gfx::Size>& resolutions,
@@ -199,6 +206,7 @@ void FakeVideoCaptureDeviceFactory::GetDeviceDescriptors(
   for (const auto& entry : devices_config_) {
     device_descriptors->emplace_back(
         base::StringPrintf("fake_device_%d", entry_index), entry.device_id,
+        GetGroupIdFromDeviceIndex(entry_index),
 #if defined(OS_LINUX)
         VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE
 #elif defined(OS_MACOSX)

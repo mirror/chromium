@@ -108,7 +108,7 @@ class MockCameraDevice : public arc::mojom::Camera3DeviceOps {
   DISALLOW_COPY_AND_ASSIGN(MockCameraDevice);
 };
 
-const VideoCaptureDeviceDescriptor kDefaultDescriptor("Fake device", "0");
+const VideoCaptureDeviceDescriptor kDefaultDescriptor("Fake device", "0", "0");
 const VideoCaptureFormat kDefaultCaptureFormat(gfx::Size(1280, 720),
                                                30.0,
                                                PIXEL_FORMAT_I420);
