@@ -34,6 +34,24 @@
       "revId": "8b8b0555fe1b8a018b18b58ce728a6e222aaa0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b63536_7e57313b",
+        "filename": "third_party/WebKit/Source/web/WebViewImpl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-15T06:40:52Z",
+      "side": 0,
+      "message": "Without NON_EXPORTED_BASE (which just suppresses the warning), you get \n../../third_party/WebKit/Source\\web/WebViewImpl.h(101): warning C4275: non dll-interface class \u0027blink::WebViewBase\u0027 used as base for dll-interface class \u0027blink::WebViewImpl\u0027\n\ni.e. if you export a class, you need to export its bases if there is actual code in the base class (e.g. static functions) coming from another dll (in this case, core/). Since AllInstances had to move to core/, it became necessary.",
+      "parentUuid": "4413a02e_318c8c72",
+      "revId": "8b8b0555fe1b8a018b18b58ce728a6e222aaa0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
