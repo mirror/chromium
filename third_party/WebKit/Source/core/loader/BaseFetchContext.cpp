@@ -191,13 +191,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
     case Resource::kCSSStyleSheet:
     case Resource::kScript:
     case Resource::kFont:
+      break;
     case Resource::kRaw:
-    case Resource::kLinkPrefetch:
-    case Resource::kTextTrack:
-    case Resource::kImportResource:
-    case Resource::kMedia:
-    case Resource::kManifest:
-    case Resource::kMock:
       // By default these types of resources can be loaded from any origin.
       // FIXME: Are we sure about Resource::kFont?
       if (origin_restriction == FetchParameters::kRestrictToSameOrigin &&
@@ -205,6 +200,13 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
         PrintAccessDeniedMessage(url);
         return ResourceRequestBlockedReason::kOrigin;
       }
+      break;
+    case Resource::kLinkPrefetch:
+    case Resource::kTextTrack:
+    case Resource::kImportResource:
+    case Resource::kMedia:
+    case Resource::kManifest:
+    case Resource::kMock:
       break;
     case Resource::kXSLStyleSheet:
       DCHECK(RuntimeEnabledFeatures::XSLTEnabled());
