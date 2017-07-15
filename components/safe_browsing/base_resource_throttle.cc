@@ -10,6 +10,7 @@
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
 #include "components/safe_browsing/base_ui_manager.h"
+#include "components/safe_browsing/web_ui/constants.h"
 #include "components/safe_browsing_db/util.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "content/public/browser/browser_thread.h"
@@ -348,6 +349,25 @@ bool BaseResourceThrottle::CheckUrl(const GURL& url) {
   // be consistent with the other PVer4 metrics.
   UMA_HISTOGRAM_ENUMERATION("SB2.ResourceTypes2.Checked", resource_type_,
                             content::RESOURCE_TYPE_LAST_TYPE);
+
+  DCHECK(threat_type_ == safe_browsing::SB_THREAT_TYPE_SAFE);
+  if (url == kChromeUISafeBrowsingMatchMalwareUrl) {
+    threat_type_ = safe_browsing::SB_THREAT_TYPE_URL_MALWARE;
+  } else if (url == kChromeUISafeBrowsingMatchPhishingUrl) {
+    threat_type_ = safe_browsing::SB_THREAT_TYPE_URL_PHISHING;
+  } else if (url == kChromeUISafeBrowsingMatchUnwantedUrl) {
+    threat_type_ = safe_browsing::SB_THREAT_TYPE_URL_UNWANTED;
+  }
+
+  if (threat_type_ != safe_browsing::SB_THREAT_TYPE_SAFE) {
+    state_ = STATE_CHECKING_URL;
+    url_being_checked_ = url;
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::Bind(&BaseResourceThrottle::OnCheckBrowseUrlResult, AsWeakPtr(),
+                   url, threat_type_, ThreatMetadata()));
+    return false;
+  }
 
   if (database_manager_->CheckBrowseUrl(url, threat_types_, this)) {
     threat_type_ = SB_THREAT_TYPE_SAFE;
