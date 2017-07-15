@@ -16,6 +16,24 @@
       "revId": "4985757a9f5627ce90a4ad060f26fde0c9638a2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79fa9b87_159a8ded",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-15T00:34:11Z",
+      "side": 1,
+      "message": "Ah, ok. I misunderstood what \"shutdown\" means. Please ignore this comment.",
+      "parentUuid": "6b51f893_4c819d3b",
+      "revId": "4985757a9f5627ce90a4ad060f26fde0c9638a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
