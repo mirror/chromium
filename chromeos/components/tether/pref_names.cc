@@ -29,6 +29,8 @@ const char kDisconnectingWifiNetworkGuid[] =
 
 const char kHostScanCache[] = "tether.host_scan_cache";
 
+const char kUserLastActiveTimestamp[] = "tether.user_last_active_timestamp";
+
 }  // namespace prefs
 
 }  // namespace tether

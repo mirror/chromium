@@ -18,6 +18,7 @@ class NetworkStateHandler;
 namespace tether {
 
 class ActiveHost;
+class ActiveUsersLogger;
 class BleConnectionManager;
 class DeviceIdTetherNetworkGuidMap;
 class HostScanCache;
@@ -43,7 +44,8 @@ class TetherConnector : public ConnectTetheringOperation::Observer {
       DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map,
       HostScanCache* host_scan_cache,
       NotificationPresenter* notification_presenter,
-      HostConnectionMetricsLogger* host_connection_metrics_logger);
+      HostConnectionMetricsLogger* host_connection_metrics_logger,
+      ActiveUsersLogger* active_users_logger);
   virtual ~TetherConnector();
 
   virtual void ConnectToNetwork(
@@ -93,6 +95,7 @@ class TetherConnector : public ConnectTetheringOperation::Observer {
   HostScanCache* host_scan_cache_;
   NotificationPresenter* notification_presenter_;
   HostConnectionMetricsLogger* host_connection_metrics_logger_;
+  ActiveUsersLogger* active_users_logger_;
 
   std::string device_id_pending_connection_;
   base::Closure success_callback_;

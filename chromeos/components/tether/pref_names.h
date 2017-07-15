@@ -55,6 +55,10 @@ extern const char kDisconnectingWifiNetworkGuid[];
 // more details.
 extern const char kHostScanCache[];
 
+// The last time the user was active, i.e. attempted to connect to a host. The
+// value stored is an Int64 which corresponds to a time.
+extern const char kUserLastActiveTimestamp[];
+
 }  // namespace prefs
 
 }  // namespace tether
