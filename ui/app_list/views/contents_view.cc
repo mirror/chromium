@@ -372,8 +372,8 @@ gfx::Rect ContentsView::GetDefaultSearchBoxBounds() const {
   gfx::Rect search_box_bounds;
   if (is_fullscreen_app_list_enabled_) {
     search_box_bounds.set_size(GetSearchBoxView()->GetPreferredSize());
-    search_box_bounds.Offset(
-        (GetDefaultContentsSize().width() - search_box_bounds.width()) / 2, 0);
+    search_box_bounds.Offset((bounds().width() - search_box_bounds.width()) / 2,
+                             0);
     search_box_bounds.set_y(kSearchBoxTopPadding);
   } else {
     search_box_bounds =
@@ -392,12 +392,23 @@ gfx::Rect ContentsView::GetSearchBoxBoundsForState(
 }
 
 gfx::Rect ContentsView::GetDefaultContentsBounds() const {
-  gfx::Rect bounds(gfx::Point(0, GetDefaultSearchBoxBounds().bottom() +
-                                     (is_fullscreen_app_list_enabled_
-                                          ? kSearchBoxBottomPadding
-                                          : 0)),
-                   GetDefaultContentsSize());
-  return bounds;
+  gfx::Size contents_size(GetDefaultContentsSize());
+  gfx::Point origin(
+      (bounds().width() - contents_size.width()) / 2,
+      GetDefaultSearchBoxBounds().bottom() +
+          (is_fullscreen_app_list_enabled_ ? kSearchBoxBottomPadding : 0));
+  return gfx::Rect(origin, contents_size);
+}
+
+gfx::Size ContentsView::GetMaximumContentsSize() const {
+  int max_width = 0;
+  int max_height = 0;
+  for (AppListPage* page : app_list_pages_) {
+    gfx::Size size(page->GetPreferredSize());
+    max_width = std::max(size.width(), max_width);
+    max_height = std::max(size.height(), max_height);
+  }
+  return gfx::Size(max_width, max_height);
 }
 
 bool ContentsView::Back() {
