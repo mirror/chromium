@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16399806_877f9910",
+        "filename": "third_party/WebKit/Source/core/timing/SharedWorkerPerformance.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-07-15T00:21:02Z",
+      "side": 1,
+      "message": "How is this interface used? Can we delete it altogether?",
+      "range": {
+        "startLine": 34,
+        "startChar": 34,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "d71eea469f696e38c1476e508b675348d1367636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
