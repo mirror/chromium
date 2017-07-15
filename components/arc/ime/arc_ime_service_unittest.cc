@@ -135,7 +135,6 @@ class ArcImeServiceTest : public testing::Test {
   ArcImeServiceTest() = default;
 
  protected:
-  std::unique_ptr<ArcBridgeService> arc_bridge_service_;
   std::unique_ptr<FakeInputMethod> fake_input_method_;
   std::unique_ptr<ArcImeService> instance_;
   FakeArcImeBridge* fake_arc_ime_bridge_;  // Owned by |instance_|
@@ -145,8 +144,8 @@ class ArcImeServiceTest : public testing::Test {
 
  private:
   void SetUp() override {
-    arc_bridge_service_ = base::MakeUnique<ArcBridgeService>();
-    instance_ = base::MakeUnique<ArcImeService>(arc_bridge_service_.get());
+    // TODO(hidehiko): Use Singleton instance tied to BrowserContext.
+    instance_ = base::MakeUnique<ArcImeService>(nullptr, nullptr);
     fake_arc_ime_bridge_ = new FakeArcImeBridge();
     instance_->SetImeBridgeForTesting(base::WrapUnique(fake_arc_ime_bridge_));
 
@@ -164,7 +163,6 @@ class ArcImeServiceTest : public testing::Test {
     fake_window_delegate_ = nullptr;
     fake_arc_ime_bridge_ = nullptr;
     instance_.reset();
-    arc_bridge_service_.reset();
   }
 };
 
