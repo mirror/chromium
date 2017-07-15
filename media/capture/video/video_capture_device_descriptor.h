@@ -47,6 +47,7 @@ struct CAPTURE_EXPORT VideoCaptureDeviceDescriptor {
   VideoCaptureDeviceDescriptor(
       const std::string& display_name,
       const std::string& device_id,
+      const std::string& group_id,
       VideoCaptureApi capture_api = VideoCaptureApi::UNKNOWN,
       VideoCaptureTransportType transport_type =
           VideoCaptureTransportType::OTHER_TRANSPORT);
@@ -54,6 +55,7 @@ struct CAPTURE_EXPORT VideoCaptureDeviceDescriptor {
       const std::string& display_name,
       const std::string& device_id,
       const std::string& model_id,
+      const std::string& group_id,
       VideoCaptureApi capture_api,
       VideoCaptureTransportType transport_type =
           VideoCaptureTransportType::OTHER_TRANSPORT,
@@ -79,6 +81,7 @@ struct CAPTURE_EXPORT VideoCaptureDeviceDescriptor {
   // It is of the form "[vid]:[pid]" when a USB device is detected, and empty
   // otherwise.
   std::string model_id;
+  std::string group_id;
 
   VideoFacingMode facing;
 

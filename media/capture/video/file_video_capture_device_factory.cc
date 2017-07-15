@@ -49,16 +49,17 @@ void FileVideoCaptureDeviceFactory::GetDeviceDescriptors(
   device_descriptors->emplace_back(
 #if defined(OS_WIN)
       base::SysWideToUTF8(command_line_file_path.value()),
-      kFileVideoCaptureDeviceName, VideoCaptureApi::WIN_DIRECT_SHOW
+      kFileVideoCaptureDeviceName, std::string(),
+      VideoCaptureApi::WIN_DIRECT_SHOW
 #elif defined(OS_MACOSX)
       command_line_file_path.value(), kFileVideoCaptureDeviceName,
-      VideoCaptureApi::MACOSX_AVFOUNDATION
+      std::string(), VideoCaptureApi::MACOSX_AVFOUNDATION
 #elif defined(OS_LINUX)
       command_line_file_path.value(), kFileVideoCaptureDeviceName,
-      VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE
+      std::string(), VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE
 #else
       command_line_file_path.value(), kFileVideoCaptureDeviceName,
-      VideoCaptureApi::UNKNOWN
+      std::string(), VideoCaptureApi::UNKNOWN
 #endif
       );
 }

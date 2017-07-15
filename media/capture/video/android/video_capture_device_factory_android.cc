@@ -78,7 +78,7 @@ void VideoCaptureDeviceFactoryAndroid::GetDeviceDescriptors(
     // currently only used for USB model identifiers, so this implementation
     // just indicates an unknown device model (by not providing one).
     device_descriptors->emplace_back(
-        display_name, device_id,
+        display_name, device_id, std::string(),
         static_cast<VideoCaptureApi>(capture_api_type));
 
     DVLOG(1) << __func__ << ": camera "

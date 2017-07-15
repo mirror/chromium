@@ -96,7 +96,7 @@ void VideoCaptureDeviceFactoryMac::GetDeviceDescriptors(
         device_id, capture_api, device_transport_type);
     VideoCaptureDeviceDescriptor descriptor(
         [[[capture_devices valueForKey:key] deviceName] UTF8String], device_id,
-        model_id, capture_api, device_transport_type);
+        model_id, std::string(), capture_api, device_transport_type);
     if (IsDeviceBlacklisted(descriptor))
       continue;
     device_descriptors->push_back(descriptor);
