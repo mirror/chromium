@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/debug/stack_trace.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -340,6 +341,8 @@ void CommandBufferProxyImpl::SetNeedsVSync(bool needs_vsync) {
 gpu::CommandBuffer::State CommandBufferProxyImpl::WaitForTokenInRange(
     int32_t start,
     int32_t end) {
+  // LOG(INFO) << base::dbug::StackTrace().ToString();
+
   CheckLock();
   base::AutoLock lock(last_state_lock_);
   TRACE_EVENT2("gpu", "CommandBufferProxyImpl::WaitForToken", "start", start,

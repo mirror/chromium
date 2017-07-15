@@ -181,6 +181,9 @@ void GpuChannelHost::InternalFlush(StreamFlushInfo* flush_info) {
   DCHECK(flush_info);
   DCHECK(flush_info->flush_pending);
   DCHECK_LT(flush_info->flushed_stream_flush_id, flush_info->flush_id);
+  TRACE_EVENT_FLOW_BEGIN0("gpu", "CommandBuffer::AsyncFlush",
+                          (static_cast<int64_t>(flush_info->route_id) << 32) |
+                              flush_info->flush_count);
   Send(new GpuCommandBufferMsg_AsyncFlush(
       flush_info->route_id, flush_info->put_offset, flush_info->flush_count,
       flush_info->latency_info, flush_info->sync_token_fences));

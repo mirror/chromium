@@ -961,8 +961,8 @@ void GpuCommandBufferStub::OnAsyncFlush(
     uint32_t flush_count,
     const std::vector<ui::LatencyInfo>& latency_info,
     const std::vector<SyncToken>& sync_token_fences) {
-  TRACE_EVENT1(
-      "gpu", "GpuCommandBufferStub::OnAsyncFlush", "put_offset", put_offset);
+  TRACE_EVENT1("gpu", "GpuCommandBufferStub::OnAsyncFlush", "put_offset",
+               put_offset);
   DCHECK(command_buffer_);
 
   // We received this message out-of-order. This should not happen but is here
@@ -982,6 +982,12 @@ void GpuCommandBufferStub::OnAsyncFlush(
   FastSetActiveURL(active_url_, active_url_hash_, channel_);
   command_buffer_->Flush(put_offset, decoder_.get());
   CommandBuffer::State post_state = command_buffer_->GetState();
+
+  if (post_state.get_offset == put_offset) {
+    TRACE_EVENT_FLOW_END0(
+        "gpu", "CommandBuffer::AsyncFlush",
+        (static_cast<int64_t>(route_id_) << 32) | flush_count);
+  }
 
   if (pre_state.get_offset != post_state.get_offset)
     ReportState();

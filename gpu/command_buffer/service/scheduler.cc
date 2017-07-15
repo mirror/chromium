@@ -241,16 +241,46 @@ uint32_t Scheduler::Sequence::BeginTask(base::OnceClosure* closure) {
 void Scheduler::Sequence::FinishTask() {
   DCHECK_EQ(running_state_, RUNNING);
   running_state_ = IDLE;
+  if (!tasks_.empty() && !wait_fences_.empty() &&
+      wait_fences_.front().order_num <= tasks_.front().order_num) {
+    SchedulingState state;
+    state.sequence_id = sequence_id_;
+    state.priority = GetSchedulingPriority();
+    state.order_num = !tasks_.empty() ? tasks_.front().order_num : UINT32_MAX;
+    TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("gpu", "Scheduler::WaitFence",
+                                      sequence_id_.GetUnsafeValue(), "state",
+                                      state.AsValue());
+  }
 }
 
 void Scheduler::Sequence::AddWaitFence(const SyncToken& sync_token,
                                        uint32_t order_num) {
+  bool was_runnable = IsRunnable();
   wait_fences_.push_back({sync_token, order_num});
+  if (was_runnable && !IsRunnable()) {
+    SchedulingState state;
+    state.sequence_id = sequence_id_;
+    state.priority = GetSchedulingPriority();
+    state.order_num = !tasks_.empty() ? tasks_.front().order_num : UINT32_MAX;
+    TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("gpu", "Scheduler::WaitFence",
+                                      sequence_id_.GetUnsafeValue(), "state",
+                                      state.AsValue());
+  }
 }
 
 void Scheduler::Sequence::RemoveWaitFence(const SyncToken& sync_token,
                                           uint32_t order_num) {
+  bool was_runnable = IsRunnable();
   base::Erase(wait_fences_, Fence{sync_token, order_num});
+  if (!was_runnable && IsRunnable()) {
+    SchedulingState state;
+    state.sequence_id = sequence_id_;
+    state.priority = GetSchedulingPriority();
+    state.order_num = !tasks_.empty() ? tasks_.front().order_num : UINT32_MAX;
+    TRACE_EVENT_NESTABLE_ASYNC_END1("gpu", "Scheduler::WaitFence",
+                                    sequence_id_.GetUnsafeValue(), "state",
+                                    state.AsValue());
+  }
 }
 
 void Scheduler::Sequence::AddReleaseFence(const SyncToken& sync_token,

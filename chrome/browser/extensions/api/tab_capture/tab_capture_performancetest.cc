@@ -3,10 +3,13 @@
 // found in the LICENSE file.
 
 #include <cmath>
+#include <sstream>
 
 #include "base/command_line.h"
+#include "base/files/file_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/trace_event_analyzer.h"
+#include "base/time/time.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/tab_helper.h"
@@ -248,14 +251,14 @@ class TabCapturePerformanceTest
 
   void RunTest(const std::string& test_name) {
     if (HasFlag(kUseGpu) && !IsGpuAvailable()) {
-      LOG(WARNING) <<
-          "Test skipped: requires gpu. Pass --enable-gpu on the command "
-          "line if use of GPU is desired.";
+      LOG(WARNING)
+          << "Test skipped: requires gpu. Pass --enable-gpu on the command "
+             "line if use of GPU is desired.";
       return;
     }
 
     std::string json_events;
-    ASSERT_TRUE(tracing::BeginTracing("gpu,gpu.capture"));
+    ASSERT_TRUE(tracing::BeginTracing("blink,cc,gpu,gpu.capture,v8"));
     std::string page = "performance.html";
     page += HasFlag(kTestThroughWebRTC) ? "?WebRTC=1" : "?WebRTC=0";
     // Ideally we'd like to run a higher capture rate when vsync is disabled,
@@ -264,6 +267,17 @@ class TabCapturePerformanceTest
     page += "&fps=60";
     ASSERT_TRUE(RunExtensionSubtest("tab_capture", page)) << message_;
     ASSERT_TRUE(tracing::EndTracing(&json_events));
+
+    std::stringstream trace_file_name;
+    trace_file_name << test_name << GetSuffixForTestFlags() << " "
+                    << base::Time::Now() << ".json";
+
+    base::FilePath trace_file_path;
+    base::GetCurrentDirectory(&trace_file_path);
+    trace_file_path = trace_file_path.Append(trace_file_name.str());
+
+    base::WriteFile(trace_file_path, json_events.c_str(), json_events.size());
+
     std::unique_ptr<trace_analyzer::TraceAnalyzer> analyzer;
     analyzer.reset(trace_analyzer::TraceAnalyzer::Create(json_events));
     analyzer->AssociateAsyncBeginEndEvents();

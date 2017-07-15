@@ -1084,6 +1084,7 @@ bool GpuDataManagerImplPrivate::UpdateActiveGpu(uint32_t vendor_id,
 
 bool GpuDataManagerImplPrivate::IsGpuSchedulerEnabled() const {
   return base::FeatureList::IsEnabled(features::kGpuScheduler);
+  // return false;
 }
 
 bool GpuDataManagerImplPrivate::CanUseGpuBrowserCompositor() const {
