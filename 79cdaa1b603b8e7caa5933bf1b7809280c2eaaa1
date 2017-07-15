@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b41c428_f3ec754f",
+        "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/migrate_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-15T04:27:24Z",
+      "side": 1,
+      "message": "Since we started mass-converting, let\u0027s leave the tests in place, and figure out which runner to use by extension (js vs html).",
+      "range": {
+        "startLine": 252,
+        "startChar": 87,
+        "endLine": 252,
+        "endChar": 98
+      },
+      "revId": "79cdaa1b603b8e7caa5933bf1b7809280c2eaaa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

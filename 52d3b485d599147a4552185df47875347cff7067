@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2629fca7_1f52fbad",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/devtools-js/console/console-big-array-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-15T04:27:24Z",
+      "side": 1,
+      "message": "Using sourceURL at the end of evaluated code will help with these. We should not commit VM:8 since it\u0027s flaky.",
+      "revId": "52d3b485d599147a4552185df47875347cff7067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
