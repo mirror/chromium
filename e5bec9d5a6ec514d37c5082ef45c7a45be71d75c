@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f51d2e3c_50231bb4",
+        "filename": "chrome/browser/ui/views/constrained_web_dialog_delegate_views.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T04:00:30Z",
+      "side": 1,
+      "message": "Do we really want 0 here?  It seems like this would want the same margins a normal dialog would.\n\nThat would simplify dialog_delegate.cc a bit too.",
+      "revId": "e5bec9d5a6ec514d37c5082ef45c7a45be71d75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69dc104e_95999947",
+        "filename": "chrome/browser/ui/views/importer/import_lock_dialog_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T04:00:30Z",
+      "side": 1,
+      "message": "Nice",
+      "revId": "e5bec9d5a6ec514d37c5082ef45c7a45be71d75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d055c76b_7e21c64a",
+        "filename": "ui/gfx/geometry/insets.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T04:00:30Z",
+      "side": 1,
+      "message": "Man I have wanted these for so long",
+      "revId": "e5bec9d5a6ec514d37c5082ef45c7a45be71d75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816e66c3_c04284c4",
+        "filename": "ui/views/window/dialog_client_view_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T04:00:30Z",
+      "side": 1,
+      "message": "Nit: Might be clearer as EXPECT_GE(delegate_.bounds().width(), preferred_size.width());",
+      "revId": "e5bec9d5a6ec514d37c5082ef45c7a45be71d75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352c3375_fc21e9c1",
+        "filename": "ui/views/window/dialog_client_view_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T04:00:30Z",
+      "side": 1,
+      "message": "Wait, I\u0027m confused.\n\nThe names here are the param names, not the effects, so the effect of passing \"dont_loop\" is that we do in fact loop (because we pass false for it).  Similarly, we pass \"reverse\" but we don\u0027t reverse.\n\nI had to look up the original function declaration to understand what the code here was doing.  It would have been less confusing without these named constants :(",
+      "revId": "e5bec9d5a6ec514d37c5082ef45c7a45be71d75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39eb283_3f0e3c30",
+        "filename": "ui/views/window/dialog_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T04:00:30Z",
+      "side": 1,
+      "message": "Wait, I\u0027m confused.  So, the title and body are basically siblings but the buttons are a child of the body or something?\n\nIt would have been a lot less confusing to me to have the buttons be a sibling as well.  This also would avoid the need to transfer margins in ClearHorizontalContentMargins().",
+      "revId": "e5bec9d5a6ec514d37c5082ef45c7a45be71d75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
