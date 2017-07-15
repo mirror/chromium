@@ -39,11 +39,14 @@ namespace {
 
 // USB VID and PID are both 4 bytes long.
 const size_t kVidPidSize = 4;
+const size_t kMaxInterfaceNameSize = 256;
 
 // /sys/class/video4linux/video{N}/device is a symlink to the corresponding
 // USB device info directory.
 const char kVidPathTemplate[] = "/sys/class/video4linux/%s/device/../idVendor";
 const char kPidPathTemplate[] = "/sys/class/video4linux/%s/device/../idProduct";
+const char kInterfacePathTemplate[] =
+    "/sys/class/video4linux/%s/device/interface";
 
 bool ReadIdFile(const std::string& path, std::string* id) {
   char id_buf[kVidPidSize];
@@ -151,6 +154,29 @@ void GetSupportedFormatsForV4L2BufferType(
   }
 }
 
+std::string GetDeviceDisplayName(const std::string& device_id) {
+  // |device_id| is of the form "/dev/video2".  |file_name| is "video2".
+  const char kDevDir[] = "/dev/";
+  DCHECK(base::StartsWith(device_id, kDevDir, base::CompareCase::SENSITIVE));
+  const std::string file_name =
+      device_id.substr(strlen(kDevDir), device_id.length());
+
+  const std::string interface_path =
+      base::StringPrintf(kInterfacePathTemplate, file_name.c_str());
+
+  char display_name[kMaxInterfaceNameSize + 1];
+  FILE* file = fopen(interface_path.c_str(), "rb");
+  if (!file)
+    return std::string();
+  const size_t length = fread(display_name, 1, kMaxInterfaceNameSize, file);
+  const bool success = length > 0 && !ferror(file);
+  fclose(file);
+  if (!success)
+    return std::string();
+  display_name[length] = 0;
+  return display_name;
+}
+
 }  // namespace
 
 VideoCaptureDeviceFactoryLinux::VideoCaptureDeviceFactoryLinux(
@@ -214,16 +240,19 @@ void VideoCaptureDeviceFactoryLinux::GetDeviceDescriptors(
          !(cap.capabilities & V4L2_CAP_VIDEO_OUTPUT)) &&
         HasUsableFormats(fd.get(), cap.capabilities)) {
       const std::string model_id = GetDeviceModelId(unique_id);
+      std::string display_name = GetDeviceDisplayName(unique_id);
+      if (display_name.empty())
+        display_name = reinterpret_cast<char*>(cap.card);
 #if defined(OS_CHROMEOS)
       static CameraConfigChromeOS* config = new CameraConfigChromeOS();
       device_descriptors->emplace_back(
-          reinterpret_cast<char*>(cap.card), unique_id, model_id,
+          display_name, unique_id, model_id,
           VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE,
           VideoCaptureTransportType::OTHER_TRANSPORT,
           config->GetCameraFacing(unique_id, model_id));
 #else
       device_descriptors->emplace_back(
-          reinterpret_cast<char*>(cap.card), unique_id, model_id,
+          display_name, unique_id, model_id,
           VideoCaptureApi::LINUX_V4L2_SINGLE_PLANE);
 #endif
     }
