@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87ab806b_b6779945",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "I think this requires #include \u003cios\u003e.",
+      "range": {
+        "startLine": 137,
+        "startChar": 23,
+        "endLine": 137,
+        "endChar": 36
+      },
+      "revId": "76cd5dc465e4e4efa1cb755bbc8f3ed5a99fb2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81ff2fc_06d12137",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "Please enforce that then.\n\nstatic MemoryKillsMonitor* GetForTesting();",
+      "revId": "76cd5dc465e4e4efa1cb755bbc8f3ed5a99fb2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b0f46a_adda0725",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "This variable is accessed only from the UI thread right? Please mention that as a code comment.",
+      "revId": "76cd5dc465e4e4efa1cb755bbc8f3ed5a99fb2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3090a8_362cf2f0",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "same",
+      "revId": "76cd5dc465e4e4efa1cb755bbc8f3ed5a99fb2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3ec105_a9cad6d1",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "Can you mention that the variable is only accessed from |non_joinable_worker_thread_|?",
+      "revId": "76cd5dc465e4e4efa1cb755bbc8f3ed5a99fb2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e06dfd_ea5d9add",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "Where is this initialized? MemoryKillsMonitor::LogOOMKill() seems to read uninitialized |last_oom_kill_time_|.",
+      "revId": "76cd5dc465e4e4efa1cb755bbc8f3ed5a99fb2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268aa1c4_f484966f",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "Same. Please mention |non_joinable_worker_thread_|.",
+      "revId": "76cd5dc465e4e4efa1cb755bbc8f3ed5a99fb2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2546915_5e2a6bc2",
+        "filename": "chrome/browser/memory/memory_kills_monitor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "Can you run try jobs?",
+      "revId": "76cd5dc465e4e4efa1cb755bbc8f3ed5a99fb2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b34f1ad_a495bbc0",
+        "filename": "chrome/browser/memory/memory_kills_monitor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "Can you mention what this sleep is for?",
+      "revId": "76cd5dc465e4e4efa1cb755bbc8f3ed5a99fb2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

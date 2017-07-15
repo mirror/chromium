@@ -494,6 +494,24 @@
     },
     {
       "key": {
+        "uuid": "96c1d0ae_7f95b75d",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "But the test coverage isn\u0027t great still. That might be out of scope of this CL though.",
+      "parentUuid": "c2bc40b7_fd050864",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aa0a662_b6564fac",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -541,6 +559,24 @@
       "side": 1,
       "message": "Ok, can you test it in the unit test? (i.e. call StartMonitoring() multiple times and then confirm UMA with 0 is recorded only once, or something like that.)\n\nSince the thread is not joinable, synchronization (e.g. some wait before EXPECT_EQ) might be a bit tricky though.",
       "parentUuid": "02f0a703_66eb439e",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53cf87ec_c3213d2c",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-15T08:26:33Z",
+      "side": 1,
+      "message": "Ping. Can you reply?",
+      "parentUuid": "95068bc1_7146e3f3",
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
