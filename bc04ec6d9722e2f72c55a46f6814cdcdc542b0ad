@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abbde508_ac46a8e3",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-15T00:41:46Z",
+      "side": 1,
+      "message": "Are you sure this is the only place size could be updated?",
+      "revId": "bc04ec6d9722e2f72c55a46f6814cdcdc542b0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab2e220_8e141169",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-15T00:41:46Z",
+      "side": 1,
+      "message": "Move this before line 200, and remove the local variable |length|\nin favor of using data_size_.",
+      "revId": "bc04ec6d9722e2f72c55a46f6814cdcdc542b0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
