@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a20c6beb_fa47d997",
+        "filename": "extensions/renderer/service_worker_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-15T00:31:53Z",
+      "side": 1,
+      "message": "move this initializer after binding_system_ initializer below.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "edb72433ec777cf664ff55d6b93ed7f83339d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f65bcd_f113917c",
+        "filename": "extensions/renderer/worker_thread_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-15T00:31:53Z",
+      "side": 1,
+      "message": "As WorkerThreadDispatcher is singleton (guaranteed to outlive) and the separate worker threads are calling Send() and not accessing any data, my assumption was that this is safe.\nI might have missed something, what kind of race conditions can occur here?",
+      "range": {
+        "startLine": 158,
+        "startChar": 40,
+        "endLine": 158,
+        "endChar": 66
+      },
+      "revId": "edb72433ec777cf664ff55d6b93ed7f83339d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
