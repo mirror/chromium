@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "09f65b90_dc0655a0",
+        "filename": "chrome/test/data/extensions/underscore_metadata_folders/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T02:08:24Z",
+      "side": 1,
+      "message": "nit: remove newline (even though it\u0027s just copy-pasted)",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afcda108_d8239043",
         "filename": "chrome/test/data/extensions/underscore_metadata_folders/manifest.json",
         "patchSetId": 4
@@ -64,6 +81,24 @@
       "writtenOn": "2017-07-14T23:42:26Z",
       "side": 1,
       "message": "This test extension was copied over from an existing directory.\nI can change the description, if you prefer.",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ec63ec_eac9d096",
+        "filename": "chrome/test/data/extensions/underscore_metadata_folders/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T02:08:24Z",
+      "side": 1,
+      "message": "heh, yeah, sometimes it\u0027s nice to include a description of the test here - something like \"A test extension with a disallowed undercore-prefixed folder\".",
+      "parentUuid": "afcda108_d8239043",
       "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -115,6 +150,125 @@
       "writtenOn": "2017-07-14T23:42:26Z",
       "side": 1,
       "message": "Will remove the new line in next patch.",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17167649_968ac0a2",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T02:08:24Z",
+      "side": 1,
+      "message": "For tests with relatively simple directories, it can be useful to use either a ScopedTempDir or a TestExtensionDir.  Both basically put a temp directory on disk for use in the test.  The advantage to this is that it makes it very easy to tell from the test what the directory structure looks like.  I\u0027d recommend using those in these test cases to avoid needing to add quite so many test resources and make the test more self-contained.\n\n(These aren\u0027t as useful when you need to write a full API test, because writing JS in string literals isn\u0027t as satisfying.)",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ef4454_9e644a0a",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T02:08:24Z",
+      "side": 1,
+      "message": "Is this with an underscore folder, or an underscore name?",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a235f59_3528e1a4",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T02:08:24Z",
+      "side": 1,
+      "message": "Similarly here, I only see _badfolder and manifest...",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bdcb450_db0edba2",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T02:08:24Z",
+      "side": 1,
+      "message": "nit: This can just be ASSERT_TRUE(extension);",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b78115_be35893e",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T02:08:24Z",
+      "side": 1,
+      "message": "nit: minorly prefer EXPECT_TRUE(error.empty());",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2efcd175_0973c0df",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T02:08:24Z",
+      "side": 1,
+      "message": "This loads \"underscore_metadata_folders\", but all I see in that directory is _badfolder and manifest.json?",
+      "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6f94d3_52f139a7",
+        "filename": "third_party/WebKit/Source/core/testing/data/mhtml/simple_test.mht",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T02:08:24Z",
+      "side": 1,
+      "message": "My guess is this shouldn\u0027t be included in this patch?",
       "revId": "618af1e1bdb896e5f123f242e3eb671c36fb5034",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
