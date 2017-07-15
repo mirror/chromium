@@ -123,6 +123,24 @@
       "revId": "cfc24270bfc43126129faa67579555fd531c0691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2d00ff_71f824ea",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-15T02:02:12Z",
+      "side": 1,
+      "message": "I am afraid I don\u0027t quite understand still. Sorry :-(\n\nIf we want to create GMBImpl on |task_runner_|\u0027s thread, then it should happen either in AllocateGpuMemoryBuffer above, or in OnGpuMemoryBufferAllocated below. But I can\u0027t think of a way of doing that which does not involve having two versions of the functions with duplicated code (where callback in one version receives a handle, and the callback in the other version receives a GMBImpl).\n\nAlternatively, maybe you are suggesting that all callers, including GpuClient, should receive only a GpuMemoryBufferImpl? I don\u0027t think that will work, since the GpuClient only needs to send the handle over IPC. It does not need to retain the GpuMemoryBufferImpl, which means it will be destroyed immediately, causing the memory-buffer to be destroyed, which we do not want to happen.\n\nI can\u0027t think of another way where some callbacks (GpuClient) would receive a handle, while some other callbacks (ServerGMBManager::CreateGpuMemoryBuffer) receive a GMBImpl.\n\nMaybe I am missing something though?",
+      "parentUuid": "0c0bc8d8_b2b92b97",
+      "revId": "cfc24270bfc43126129faa67579555fd531c0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
