@@ -318,9 +318,11 @@ bool MixedContentChecker::ShouldBlockFetch(
     return false;
 
   MixedContentChecker::Count(mixed_frame, request_context, frame);
+  /*
   if (ContentSecurityPolicy* policy =
           frame->GetSecurityContext()->GetContentSecurityPolicy())
     policy->ReportMixedContent(url, redirect_status);
+  */
 
   Settings* settings = mixed_frame->GetSettings();
   // Use the current local frame's client; the embedder doesn't distinguish
