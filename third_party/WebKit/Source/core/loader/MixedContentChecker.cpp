@@ -407,11 +407,12 @@ bool MixedContentChecker::ShouldBlockFetch(
       NOTREACHED();
       break;
   };
-
-  if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
-    LogToConsoleAboutFetch(frame, MainResourceUrlForFrame(mixed_frame), url,
-                           request_context, allowed, nullptr);
-  }
+  /*
+    if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
+      LogToConsoleAboutFetch(frame, MainResourceUrlForFrame(mixed_frame), url,
+                             request_context, allowed, nullptr);
+    }
+    */
   return !allowed;
 }
 
