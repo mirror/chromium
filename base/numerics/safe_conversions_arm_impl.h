@@ -43,15 +43,29 @@ struct IsValueInRangeFastOp<
   }
 };
 
+template <typename Dst, typename Src, typename Enable = void>
+struct SaturateFastAsmOp {
+  static const bool is_supported = false;
+  static constexpr bool Do(Src value) {
+    // Force a compile failure if instantiated.
+    return CheckOnFailure::template HandleFailure<bool>();
+  }
+};
+
 // Fast saturation to a destination type.
 template <typename Dst, typename Src>
-struct SaturateFastAsmOp {
-  static const bool is_supported =
-      std::is_signed<Src>::value && std::is_integral<Dst>::value &&
-      std::is_integral<Src>::value &&
-      IntegerBitsPlusSign<Src>::value <= IntegerBitsPlusSign<int32_t>::value &&
-      IntegerBitsPlusSign<Dst>::value <= IntegerBitsPlusSign<int32_t>::value &&
-      !IsTypeInRangeForNumericType<Dst, Src>::value;
+struct SaturateFastAsmOp<
+    Src,
+    Dst,
+    typename std::enable_if<
+        std::is_signed<Src>::value && std::is_integral<Src>::value &&
+        std::is_integral<Dst>::value &&
+        IntegerBitsPlusSign<Src>::value <=
+            IntegerBitsPlusSign<int32_t>::value &&
+        IntegerBitsPlusSign<Dst>::value <=
+            IntegerBitsPlusSign<int32_t>::value &&
+        !IsTypeInRangeForNumericType<Dst, Src>::value>::type> {
+  static const bool is_supported = true;
 
   __attribute__((always_inline)) static Dst Do(Src value) {
     int32_t src = value;
@@ -64,7 +78,6 @@ struct SaturateFastAsmOp {
     } else {
       asm("usat %[dst], %[shift], %[src]"
           : [dst] "=r"(result)
-          :
           [src] "r"(src), [shift] "n"(std::is_same<uint32_t, Dst>::value
                                           ? IntegerBitsPlusSign<Dst>::value - 1
                                           : IntegerBitsPlusSign<Dst>::value));
@@ -72,6 +85,14 @@ struct SaturateFastAsmOp {
     return static_cast<Dst>(result);
   }
 };
+
+}  // namespace internal
+}  // namespace base
+}
+return static_cast<Dst>(result);
+}
+}
+;
 
 }  // namespace internal
 }  // namespace base
