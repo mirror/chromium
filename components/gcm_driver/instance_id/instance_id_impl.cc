@@ -12,7 +12,6 @@
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -48,13 +47,6 @@ InstanceID::Result GCMClientResultToInstanceIDResult(
 }
 
 }  // namespace
-
-// static
-std::unique_ptr<InstanceID> InstanceID::CreateInternal(
-    const std::string& app_id,
-    gcm::GCMDriver* gcm_driver) {
-  return base::WrapUnique(new InstanceIDImpl(app_id, gcm_driver));
-}
 
 InstanceIDImpl::InstanceIDImpl(const std::string& app_id,
                                gcm::GCMDriver* gcm_driver)

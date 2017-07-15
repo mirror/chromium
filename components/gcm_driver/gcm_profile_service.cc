@@ -19,15 +19,18 @@
 #include "base/sequenced_task_runner.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "components/gcm_driver/gcm_driver_android.h"
+#include "components/gcm_driver/instance_id/instance_id_factory_android.h"
 #else
 #include "base/bind.h"
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "components/gcm_driver/gcm_account_tracker.h"
 #include "components/gcm_driver/gcm_channel_status_syncer.h"
 #include "components/gcm_driver/gcm_client_factory.h"
 #include "components/gcm_driver/gcm_desktop_utils.h"
 #include "components/gcm_driver/gcm_driver_desktop.h"
+#include "components/gcm_driver/instance_id/instance_id_impl_factory.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "google_apis/gaia/account_tracker.h"
 #include "google_apis/gaia/identity_provider.h"
@@ -134,6 +137,8 @@ GCMProfileService::GCMProfileService(
     scoped_refptr<base::SequencedTaskRunner>& blocking_task_runner) {
   driver_.reset(new GCMDriverAndroid(path.Append(gcm_driver::kGCMStoreDirname),
                                      blocking_task_runner));
+  instance_id_factory_ =
+      base::MakeUnique<instance_id::InstanceIDAndroidFactory>();
 }
 #else
 GCMProfileService::GCMProfileService(
@@ -154,6 +159,7 @@ GCMProfileService::GCMProfileService(
       path.Append(gcm_driver::kGCMStoreDirname), request_context_, channel,
       product_category_for_subtypes, ui_task_runner, io_task_runner,
       blocking_task_runner);
+  instance_id_factory_ = base::MakeUnique<instance_id::InstanceIDImplFactory>();
 
   identity_observer_.reset(new IdentityObserver(
       profile_identity_provider_.get(), request_context_, driver_.get()));

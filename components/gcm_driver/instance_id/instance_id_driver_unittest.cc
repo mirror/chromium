@@ -16,6 +16,7 @@
 #include "components/gcm_driver/gcm_build_features.h"
 #include "components/gcm_driver/instance_id/fake_gcm_driver_for_instance_id.h"
 #include "components/gcm_driver/instance_id/instance_id.h"
+#include "components/gcm_driver/instance_id/instance_id_impl_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if BUILDFLAG(USE_GCM_FROM_PLATFORM)
@@ -90,6 +91,7 @@ class InstanceIDDriverTest : public testing::Test {
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<FakeGCMDriverForInstanceID> gcm_driver_;
+  std::unique_ptr<InstanceIDImplFactory> instance_id_factory_;
   std::unique_ptr<InstanceIDDriver> driver_;
 
 #if BUILDFLAG(USE_GCM_FROM_PLATFORM)
@@ -119,11 +121,13 @@ InstanceIDDriverTest::~InstanceIDDriverTest() {
 
 void InstanceIDDriverTest::SetUp() {
   gcm_driver_.reset(new FakeGCMDriverForInstanceID);
+  instance_id_factory_.reset(new InstanceIDImplFactory);
   RecreateInstanceIDDriver();
 }
 
 void InstanceIDDriverTest::TearDown() {
   driver_.reset();
+  instance_id_factory_.reset();
   gcm_driver_.reset();
   // |gcm_driver_| owns a GCMKeyStore that owns a ProtoDatabaseImpl whose
   // destructor deletes the underlying LevelDB on the task runner.
@@ -131,7 +135,8 @@ void InstanceIDDriverTest::TearDown() {
 }
 
 void InstanceIDDriverTest::RecreateInstanceIDDriver() {
-  driver_.reset(new InstanceIDDriver(gcm_driver_.get()));
+  driver_.reset(
+      new InstanceIDDriver(gcm_driver_.get(), instance_id_factory_.get()));
 }
 
 void InstanceIDDriverTest::WaitForAsyncOperation() {

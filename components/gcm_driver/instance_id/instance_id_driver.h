@@ -18,6 +18,7 @@ class GCMDriver;
 namespace instance_id {
 
 class InstanceID;
+class InstanceIDFactory;
 
 // Bridge between Instance ID users in Chrome and the platform-specific
 // implementation.
@@ -26,7 +27,7 @@ class InstanceIDDriver {
   // Returns whether InstanceID is enabled.
   static bool IsInstanceIDEnabled();
 
-  explicit InstanceIDDriver(gcm::GCMDriver* gcm_driver);
+  InstanceIDDriver(gcm::GCMDriver* gcm_driver, InstanceIDFactory* factory);
   virtual ~InstanceIDDriver();
 
   // Returns the InstanceID that provides the Instance ID service for the given
@@ -45,6 +46,7 @@ class InstanceIDDriver {
   // Owned by GCMProfileServiceFactory, which is a dependency of
   // InstanceIDProfileServiceFactory, which owns this.
   gcm::GCMDriver* gcm_driver_;
+  InstanceIDFactory* const factory_;
 
   std::map<std::string, std::unique_ptr<InstanceID>> instance_id_map_;
 

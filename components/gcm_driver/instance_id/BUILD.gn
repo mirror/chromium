@@ -10,8 +10,11 @@ static_library("instance_id") {
     "instance_id.h",
     "instance_id_driver.cc",
     "instance_id_driver.h",
+    "instance_id_factory.h",
     "instance_id_impl.cc",
     "instance_id_impl.h",
+    "instance_id_impl_factory.cc",
+    "instance_id_impl_factory.h",
   ]
 
   deps = [
@@ -23,10 +26,14 @@ static_library("instance_id") {
     sources -= [
       "instance_id_impl.cc",
       "instance_id_impl.h",
+      "instance_id_impl_factory.cc",
+      "instance_id_impl_factory.h",
     ]
     sources += [
       "instance_id_android.cc",
       "instance_id_android.h",
+      "instance_id_android_factory.cc",
+      "instance_id_android_factory.h",
     ]
     deps += [ "android:jni_headers" ]
   }

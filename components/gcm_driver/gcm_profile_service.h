@@ -25,6 +25,10 @@ namespace base {
 class SequencedTaskRunner;
 }
 
+namespace instance_id {
+class InstanceIDFactory;
+}
+
 namespace net {
 class URLRequestContextGetter;
 }
@@ -67,6 +71,10 @@ class GCMProfileService : public KeyedService {
 
   GCMDriver* driver() const { return driver_.get(); }
 
+  instance_id::InstanceIDFactory* instance_id_factory() const {
+    return instance_id_factory_.get();
+  }
+
  protected:
   // Used for constructing fake GCMProfileService for testing purpose.
   GCMProfileService();
@@ -74,6 +82,7 @@ class GCMProfileService : public KeyedService {
  private:
   std::unique_ptr<ProfileIdentityProvider> profile_identity_provider_;
   std::unique_ptr<GCMDriver> driver_;
+  std::unique_ptr<instance_id::InstanceIDFactory> instance_id_factory_;
 
 #if !BUILDFLAG(USE_GCM_FROM_PLATFORM)
   net::URLRequestContextGetter* request_context_ = nullptr;

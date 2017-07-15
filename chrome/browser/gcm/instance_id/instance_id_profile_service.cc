@@ -24,8 +24,10 @@ bool InstanceIDProfileService::IsInstanceIDEnabled(Profile* profile) {
 InstanceIDProfileService::InstanceIDProfileService(Profile* profile) {
   DCHECK(!profile->IsOffTheRecord());
 
-  driver_.reset(new InstanceIDDriver(
-      gcm::GCMProfileServiceFactory::GetForProfile(profile)->driver()));
+  gcm::GCMProfileService* profile_service =
+      gcm::GCMProfileServiceFactory::GetForProfile(profile);
+  driver_.reset(new InstanceIDDriver(profile_service->driver(),
+                                     profile_service->instance_id_factory()));
 }
 
 InstanceIDProfileService::~InstanceIDProfileService() {

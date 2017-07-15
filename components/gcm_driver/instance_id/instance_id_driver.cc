@@ -9,6 +9,7 @@
 #include "build/build_config.h"
 #include "components/gcm_driver/gcm_driver.h"
 #include "components/gcm_driver/instance_id/instance_id.h"
+#include "components/gcm_driver/instance_id/instance_id_factory.h"
 
 namespace instance_id {
 
@@ -25,8 +26,10 @@ bool InstanceIDDriver::IsInstanceIDEnabled() {
                            base::CompareCase::INSENSITIVE_ASCII);
 }
 
-InstanceIDDriver::InstanceIDDriver(gcm::GCMDriver* gcm_driver)
-    : gcm_driver_(gcm_driver) {
+InstanceIDDriver::InstanceIDDriver(gcm::GCMDriver* gcm_driver,
+                                   InstanceIDFactory* factory)
+    : gcm_driver_(gcm_driver), factory_(factory) {
+  DCHECK(factory_);
 }
 
 InstanceIDDriver::~InstanceIDDriver() {
@@ -38,7 +41,7 @@ InstanceID* InstanceIDDriver::GetInstanceID(const std::string& app_id) {
     return iter->second.get();
 
   std::unique_ptr<InstanceID> instance_id =
-      InstanceID::CreateInternal(app_id, gcm_driver_);
+      factory_->Create(app_id, gcm_driver_);
   InstanceID* instance_id_ptr = instance_id.get();
   instance_id_map_.insert(std::make_pair(app_id, std::move(instance_id)));
   return instance_id_ptr;
