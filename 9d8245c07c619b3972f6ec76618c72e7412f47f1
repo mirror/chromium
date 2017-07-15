@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "81907e43_cebaadf6",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-15T01:56:18Z",
+      "side": 1,
+      "message": "Please see https://chromium-review.googlesource.com/c/560936/9/chrome/installer/zucchini/patch_utils.h",
+      "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02519012_d2d1610c",
         "filename": "chrome/installer/zucchini/patch_utils.h",
         "patchSetId": 2
@@ -36,6 +53,23 @@
         "endLine": 90,
         "endChar": 21
       },
+      "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656b441c_b73e5aae",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-15T01:56:18Z",
+      "side": 1,
+      "message": "Please see https://chromium-review.googlesource.com/c/560936/9/chrome/installer/zucchini/patch_utils_unittest.cc",
       "revId": "9d8245c07c619b3972f6ec76618c72e7412f47f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
