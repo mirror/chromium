@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "aafcec01_d3faf179",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-15T06:57:25Z",
+      "side": 1,
+      "message": "Interesting. I always found long parameter lists more error prone, especially when you\ncan\u0027t name the params in the callback typedef. \n\ne.g. using Callback \u003d void(int, int, int, bool, bool)\nallows me to pass the wrong parameter in the wrong position without noticing. I\u0027ve seen a number of long-standing, subtle bugs from this in other projects. I\u0027m far less likely to make a mistake if the params are in a struct with sensible names. I can even set the members in any order and still know the code will be correct.",
+      "parentUuid": "0a431153_be6a4b9e",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591154de_c83276d8",
         "filename": "third_party/WebKit/Source/core/exported/WebViewBase.cpp",
         "patchSetId": 13
