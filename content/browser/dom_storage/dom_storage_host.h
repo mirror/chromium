@@ -43,8 +43,6 @@ class CONTENT_EXPORT DOMStorageHost {
   bool ExtractAreaValues(int connection_id, DOMStorageValuesMap* map);
   unsigned GetAreaLength(int connection_id);
   base::NullableString16 GetAreaKey(int connection_id, unsigned index);
-  base::NullableString16 GetAreaItem(int connection_id,
-                                     const base::string16& key);
   bool SetAreaItem(int connection_id,
                    const base::string16& key,
                    const base::string16& value,

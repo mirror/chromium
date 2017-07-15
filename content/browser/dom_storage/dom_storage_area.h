@@ -18,7 +18,6 @@
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string16.h"
 #include "content/common/content_export.h"
-#include "content/common/dom_storage/dom_storage_map.h"
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "url/gurl.h"
 
@@ -65,19 +64,21 @@ class CONTENT_EXPORT DOMStorageArea
 
   const GURL& origin() const { return origin_; }
   int64_t namespace_id() const { return namespace_id_; }
-  size_t map_usage_in_bytes() const { return map_ ? map_->bytes_used() : 0; }
+  size_t map_usage_in_bytes() const { return map_->bytes_used(); }
 
   // Writes a copy of the current set of values in the area to the |map|.
   void ExtractValues(DOMStorageValuesMap* map);
 
   unsigned Length();
   base::NullableString16 Key(unsigned index);
-  base::NullableString16 GetItem(const base::string16& key);
-  bool SetItem(const base::string16& key, const base::string16& value,
-               base::NullableString16* old_value);
-  bool RemoveItem(const base::string16& key, base::string16* old_value);
+  bool SetItem(const base::string16& key, const base::string16& value);
+  bool RemoveItem(const base::string16& key);
   bool Clear();
   void FastClear();
+
+  // Gets the value for the given |key| if the item is not committed.
+  base::NullableString16 GetUncommittedItemForTesting(
+      const base::string16& key);
 
   DOMStorageArea* ShallowCopy(
       int64_t destination_namespace_id,
@@ -114,6 +115,7 @@ class CONTENT_EXPORT DOMStorageArea
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, CommitTasks);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, CommitChangesAtShutdown);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, DeleteOrigin);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, EnforcesQuota);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, PurgeMemory);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, RateLimiter);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageContextImplTest, PersistentIds);
@@ -150,8 +152,39 @@ class CONTENT_EXPORT DOMStorageArea
     DOMStorageValuesMap changed_values;
 
     CommitBatch();
+    CommitBatch(const CommitBatch& other);
     ~CommitBatch();
     size_t GetDataSize() const;
+  };
+
+  class CONTENT_EXPORT KeysMapWrapper
+      : public base::RefCountedThreadSafe<KeysMapWrapper> {
+   public:
+    KeysMapWrapper(size_t quota);
+    KeysMapWrapper(const KeysMapWrapper& other);
+
+    bool SetItem(const base::string16& key, size_t value_size);
+    bool RemoveItem(const base::string16& key);
+    void TakeValuesFrom(DOMStorageKeysMap* values);
+    base::NullableString16 Key(unsigned index);
+
+    const DOMStorageKeysMap& values() const { return values_; }
+    size_t bytes_used() const { return bytes_used_; }
+    void set_quota_for_testing(size_t quota) { quota_ = quota; }
+
+    size_t EstimateMemoryUsage() const;
+
+   private:
+    friend class base::RefCountedThreadSafe<KeysMapWrapper>;
+    ~KeysMapWrapper();
+
+    void ResetKeyIterator();
+
+    DOMStorageKeysMap values_;
+    size_t quota_;
+    size_t bytes_used_;
+    DOMStorageKeysMap::const_iterator key_iterator_;
+    unsigned last_key_index_;
   };
 
   ~DOMStorageArea();
@@ -182,7 +215,7 @@ class CONTENT_EXPORT DOMStorageArea
   GURL origin_;
   base::FilePath directory_;
   scoped_refptr<DOMStorageTaskRunner> task_runner_;
-  scoped_refptr<DOMStorageMap> map_;
+  scoped_refptr<KeysMapWrapper> map_;
   std::unique_ptr<DOMStorageDatabaseAdapter> backing_;
   scoped_refptr<SessionStorageDatabase> session_storage_backing_;
   bool is_initial_import_done_;

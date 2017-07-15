@@ -26,6 +26,7 @@ class CONTENT_EXPORT LocalStorageDatabaseAdapter :
   explicit LocalStorageDatabaseAdapter(const base::FilePath& path);
   ~LocalStorageDatabaseAdapter() override;
   void ReadAllValues(DOMStorageValuesMap* result) override;
+  void ReadAllKeysAndSizes(DOMStorageKeysMap* result) override;
   bool CommitChanges(bool clear_all_first,
                      const DOMStorageValuesMap& changes) override;
   void DeleteFiles() override;

@@ -23,6 +23,11 @@ void SessionStorageDatabaseAdapter::ReadAllValues(DOMStorageValuesMap* result) {
   db_->ReadAreaValues(permanent_namespace_id_, origin_, result);
 }
 
+void SessionStorageDatabaseAdapter::ReadAllKeysAndSizes(
+    DOMStorageKeysMap* result) {
+  db_->ReadAllKeysAndSizes(permanent_namespace_id_, origin_, result);
+}
+
 bool SessionStorageDatabaseAdapter::CommitChanges(
     bool clear_all_first, const DOMStorageValuesMap& changes) {
   return db_->CommitAreaChanges(permanent_namespace_id_, origin_,
