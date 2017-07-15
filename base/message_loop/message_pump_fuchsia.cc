@@ -28,7 +28,7 @@ MessagePumpFuchsia::FileDescriptorWatcher::~FileDescriptorWatcher() {
 }
 
 bool MessagePumpFuchsia::FileDescriptorWatcher::StopWatchingFileDescriptor() {
-  if (handle_ == MX_HANDLE_INVALID)
+  if (!weak_pump_ || handle_ == MX_HANDLE_INVALID)
     return true;
   uint64_t this_as_key =
       static_cast<uint64_t>(reinterpret_cast<uintptr_t>(this));
@@ -40,7 +40,8 @@ bool MessagePumpFuchsia::FileDescriptorWatcher::StopWatchingFileDescriptor() {
   return result == MX_OK;
 }
 
-MessagePumpFuchsia::MessagePumpFuchsia() : keep_running_(true) {
+MessagePumpFuchsia::MessagePumpFuchsia()
+    : keep_running_(true), weak_factory_(this) {
   // TODO(wez): Remove MX_PORT_OPT_V2 once the SDK is rolled, or migrate
   // this implementation use ulib/port helpers.
   CHECK(mx_port_create(MX_PORT_OPT_V2, &port_) == MX_OK);
@@ -61,8 +62,6 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
   DCHECK_GE(fd, 0);
   DCHECK(controller);
   DCHECK(delegate);
-  controller->watcher_ = delegate;
-  controller->port_ = port_;
 
   uint32_t events = 0;
   switch (mode) {
@@ -79,7 +78,6 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
       NOTREACHED() << "unexpected mode: " << mode;
       return false;
   }
-
   controller->desired_events_ = events;
 
   controller->io_ = __mxio_fd_to_io(fd);
@@ -90,6 +88,10 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
 
   controller->fd_ = fd;
   controller->persistent_ = persistent;
+  controller->watcher_ = delegate;
+
+  controller->port_ = port_;
+  controller->weak_pump_ = weak_factory_.GetWeakPtr();
 
   return controller->WaitBegin();
 }

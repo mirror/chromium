@@ -8,6 +8,7 @@
 #include "base/base_export.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_pump.h"
 
 #include <magenta/syscalls/port.h>
@@ -68,6 +69,9 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
     // WaitBegin and WaitEnd calls), and MX_HANDLE_INVALID otherwise.
     mx_handle_t handle_ = MX_HANDLE_INVALID;
 
+    // Used to detect whether the watcher outlived the pump, during teardown.
+    WeakPtr<MessagePumpFuchsia> weak_pump_;
+
     // This bool is used during calling |Watcher| callbacks. This object's
     // lifetime is owned by the user of this class. If the message loop is woken
     // up in the case where it needs to call both the readable and writable
@@ -112,6 +116,8 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
 
   // The time at which we should call DoDelayedWork.
   TimeTicks delayed_work_time_;
+
+  base::WeakPtrFactory<MessagePumpFuchsia> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MessagePumpFuchsia);
 };

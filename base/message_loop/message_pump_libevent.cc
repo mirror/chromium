@@ -33,13 +33,6 @@
 // StopWatchingFileDescriptor().
 // It is moved into and out of lists in struct event_base by
 // the libevent functions event_add() and event_del().
-//
-// TODO(dkegel):
-// At the moment bad things happen if a FileDescriptorWatcher
-// is active after its MessagePumpLibevent has been destroyed.
-// See MessageLoopTest.FileDescriptorWatcherOutlivesMessageLoop
-// Not clear yet whether that situation occurs in practice,
-// but if it does, we need to fix it.
 
 namespace base {
 
@@ -52,9 +45,8 @@ MessagePumpLibevent::FileDescriptorWatcher::FileDescriptorWatcher(
       created_from_location_(from_here) {}
 
 MessagePumpLibevent::FileDescriptorWatcher::~FileDescriptorWatcher() {
-  if (event_) {
-    StopWatchingFileDescriptor();
-  }
+  if (!StopWatchingFileDescriptor())
+    NOTREACHED();
   if (was_destroyed_) {
     DCHECK(!*was_destroyed_);
     *was_destroyed_ = true;
