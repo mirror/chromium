@@ -98,7 +98,7 @@ class WebSettingsImpl;
 class WebViewScheduler;
 
 class WEB_EXPORT WebViewImpl final
-    : NON_EXPORTED_BASE(public WebViewBase),
+    : public WebViewBase,
       NON_EXPORTED_BASE(public WebGestureCurveTarget),
       public PageWidgetEventHandler,
       public WebScheduler::InterventionReporter,

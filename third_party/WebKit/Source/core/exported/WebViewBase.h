@@ -5,6 +5,7 @@
 #ifndef WebViewBase_h
 #define WebViewBase_h
 
+#include "core/CoreExport.h"
 #include "core/page/EventWithHitTestResults.h"
 #include "platform/graphics/paint/PaintImage.h"
 #include "platform/transforms/TransformationMatrix.h"
@@ -49,7 +50,8 @@ struct WebRect;
 //
 // Once WebViewImpl is moved from web to core/exported then this class should be
 // removed and clients can once again depend on WebViewImpl.
-class WebViewBase : public WebView, public RefCounted<WebViewBase> {
+class CORE_EXPORT WebViewBase : public NON_EXPORTED_BASE(WebView),
+                                public RefCounted<WebViewBase> {
  public:
   virtual ~WebViewBase() {}
 
@@ -225,4 +227,4 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
 };
 }
 
-#endif
+#endif  // WebViewBase_h
