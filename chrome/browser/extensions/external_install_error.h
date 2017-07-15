@@ -80,9 +80,6 @@ class ExternalInstallError : public WebstoreDataFetcherDelegate {
                      const ExtensionInstallPrompt::DoneCallback& done_callback,
                      std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt);
 
-  // Removes the error.
-  void RemoveError();
-
   // The associated BrowserContext.
   content::BrowserContext* browser_context_;
 
