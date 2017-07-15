@@ -53,7 +53,6 @@ public class WebappInfo {
         }
     }
 
-    private boolean mIsInitialized;
     private String mId;
     private Icon mIcon;
     private Uri mUri;
@@ -180,14 +179,9 @@ public class WebappInfo {
         mThemeColor = themeColor;
         mBackgroundColor = backgroundColor;
         mIsIconGenerated = isIconGenerated;
-        mIsInitialized = mUri != null;
     }
 
     protected WebappInfo() {
-    }
-
-    public boolean isInitialized() {
-        return mIsInitialized;
     }
 
     public String id() {

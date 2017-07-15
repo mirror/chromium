@@ -142,12 +142,12 @@ public class WebappActivity extends SingleTabActivity {
     @Override
     public void preInflationStartup() {
         WebappInfo info = createWebappInfo(getIntent());
-
-        String id = "";
-        if (info != null) {
-            mWebappInfo = info;
-            id = info.id();
+        if (info == null) {
+            ApiCompatibilityUtils.finishAndRemoveTask(this);
+            return;
         }
+
+        mWebappInfo = info;
 
         // Initialize the WebappRegistry and warm up the shared preferences for this web app. No-ops
         // if the registry and this web app are already initialized. Must override Strict Mode to
@@ -155,7 +155,7 @@ public class WebappActivity extends SingleTabActivity {
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {
             WebappRegistry.getInstance();
-            WebappRegistry.warmUpSharedPrefsForId(id);
+            WebappRegistry.warmUpSharedPrefsForId(mWebappInfo.id());
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
@@ -167,11 +167,6 @@ public class WebappActivity extends SingleTabActivity {
 
     @Override
     public void finishNativeInitialization() {
-        if (!mWebappInfo.isInitialized()) {
-            ApiCompatibilityUtils.finishAndRemoveTask(this);
-            return;
-        }
-
         initializeUI(getSavedInstanceState());
         ControlContainer controlContainer = (ControlContainer) findViewById(R.id.control_container);
         initializeCompositorContent(new LayoutManagerDocument(getCompositorViewHolder()),
