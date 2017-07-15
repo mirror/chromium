@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14f3422d_f618f506",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-15T02:36:43Z",
+      "side": 0,
+      "message": "Why do you want to factor the enum class out to a new file?",
+      "revId": "2675a47a1c288ab4536067e8569ef52d279d21c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
