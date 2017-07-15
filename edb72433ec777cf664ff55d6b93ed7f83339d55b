@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "58fbfd0b_e6920f90",
+        "filename": "extensions/renderer/service_worker_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-15T01:45:18Z",
+      "side": 1,
+      "message": "My bad, I read the header opposite for some reason...",
+      "parentUuid": "16a73d52_c6302c2c",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "edb72433ec777cf664ff55d6b93ed7f83339d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13f65bcd_f113917c",
         "filename": "extensions/renderer/worker_thread_dispatcher.cc",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Hmm, okay.  I think as long as *all* we do is call Send() (which does access data, but I think the message filter is designed to be thread-safe?), we should be okay.  Just looks like a bit of a dangerous pattern, since it might not be obvious that\u0027s the case.  I wonder if it\u0027s worth documenting more, or even separating out a message sender (or passing this as a message sender) if that\u0027s all we need, to prevent accidental usage of other data.",
       "parentUuid": "13f65bcd_f113917c",
+      "range": {
+        "startLine": 158,
+        "startChar": 40,
+        "endLine": 158,
+        "endChar": 66
+      },
+      "revId": "edb72433ec777cf664ff55d6b93ed7f83339d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9dd5f44_412247f7",
+        "filename": "extensions/renderer/worker_thread_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-15T01:45:18Z",
+      "side": 1,
+      "message": "Sounds good, I can do that.",
+      "parentUuid": "ebd1c9e7_eea3e0b0",
       "range": {
         "startLine": 158,
         "startChar": 40,
