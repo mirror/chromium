@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6fa1fce_27f765c1",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-15T00:49:40Z",
+      "side": 1,
+      "message": "Didn\u0027t shelf_widget_-\u003eGetNativeWIndow() work? This may work, but I still think using the shelf_widget_ is better because that\u0027s where the app list should be opened.",
+      "range": {
+        "startLine": 1141,
+        "startChar": 32,
+        "endLine": 1141,
+        "endChar": 58
+      },
+      "revId": "3eb8df080757db0a7319047e2efa453f3217caef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
