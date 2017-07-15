@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad22025_8c96ee00",
+        "filename": "chrome/browser/media/cast_remoting_connector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "How about moving the contents of this function to L412 in OnSinkAvailable() and deleting this function? Helps to keep related things close together.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 3
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd92ccd3_40d92702",
+        "filename": "chrome/browser/media/cast_remoting_connector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "s/and/and cleared/",
+      "range": {
+        "startLine": 167,
+        "startChar": 73,
+        "endLine": 167,
+        "endChar": 76
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd85e810_24a91e5b",
+        "filename": "media/mojo/interfaces/remoting_common.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t notice this in the last code review. These names should be singular, not plural. So: RemotingSinkFeature, RemotingSinkAudioCapability, RemotingSinkVideoCapability. It\u0027s because the name is a type name, not a collection of things.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f6bd79_8e3a5413",
+        "filename": "media/mojo/interfaces/remoting_common.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "FYI--There\u0027s a side discussion on Eric\u0027s code review about how using standardized strings for these. That would alleviate us from having to maintain this separate enum and parse strings to generate them, etc. So, this may need to change again. ;-)",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 2
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d326eb_6b0a16f8",
+        "filename": "media/mojo/interfaces/remoting_common.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "nit: Please remove extra space.",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e44c7e_5764be62",
+        "filename": "media/mojo/interfaces/remoting_common.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "Why are we adding |model_name|?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8153389d_8e07d5ab",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "This needs to be moved to the top of the method, since the \"is_encrypted\" hack on L274 will trigger.",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 0
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e33ab29_2fd92a94",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "Did you mean to leave these VLOG\u0027s in?",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 76
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9233cf_3fa6dc23",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "std::find() isn\u0027t something we want to inline in a header file. So, these don\u0027t qualify as simple accessors.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 3
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d13d68d_bd343217",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "nit: is_remoting_enabled()",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 25
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4f7931_e2de6e7a",
+        "filename": "media/remoting/sink_availability_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "Make this return const mojom::RemotingSinkMetadata\u0026, and then you won\u0027t need to Clone().",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717bc3ba_5e5514d1",
+        "filename": "media/remoting/sink_availability_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 1,
+      "message": "ditto: Too much to inline in the header file.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "2803469b601f68550d80d29ce24972ef5d1b39ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

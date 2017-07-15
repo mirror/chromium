@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b29b009_2df50eaa",
+        "filename": "chrome/browser/media/cast_remoting_connector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-15T00:51:17Z",
+      "side": 0,
+      "message": "Why was the mock method removed? Seems like we can put this back the way it was...",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 64
+      },
+      "revId": "07eb249cdc03c7ca1eceda2c755def72fcbcf5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
