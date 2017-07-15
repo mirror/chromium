@@ -1992,7 +1992,7 @@ void WebLocalFrameImpl::LoadData(const WebData& data,
   // we only do this when there is an unreachableURL since a non-empty
   // unreachableURL informs FrameLoader::reload to load unreachableURL
   // instead of the currently loaded URL.
-  ResourceRequest request;
+  ResourceRequest request(base_url);
   HistoryItem* history_item = item;
   DocumentLoader* provisional_document_loader =
       GetFrame()->Loader().ProvisionalDocumentLoader();
@@ -2006,7 +2006,6 @@ void WebLocalFrameImpl::LoadData(const WebData& data,
       web_frame_load_type = WebFrameLoadType::kBackForward;
     }
   }
-  request.SetURL(base_url);
   request.SetCheckForBrowserSideNavigation(false);
 
   FrameLoadRequest frame_request(

@@ -10,9 +10,6 @@
 
 namespace blink {
 
-FrameLoadRequest::FrameLoadRequest(Document* origin_document)
-    : FrameLoadRequest(origin_document, ResourceRequest()) {}
-
 FrameLoadRequest::FrameLoadRequest(Document* origin_document,
                                    const ResourceRequest& resource_request)
     : FrameLoadRequest(origin_document, resource_request, AtomicString()) {}

@@ -99,7 +99,7 @@ class CreateWindowTest : public ::testing::Test {
 TEST_F(CreateWindowTest, CreateWindowFromSuspendedPage) {
   ScopedPageSuspender suspender;
   LocalFrame* frame = ToWebLocalFrameBase(main_frame_)->GetFrame();
-  FrameLoadRequest request(frame->GetDocument());
+  FrameLoadRequest request(frame->GetDocument(), ResourceRequest());
   WebWindowFeatures features;
   EXPECT_EQ(nullptr, chrome_client_impl_->CreateWindow(
                          frame, request, features,
