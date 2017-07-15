@@ -284,6 +284,16 @@ void ExternalInstallBubbleAlert::BubbleViewCancelButtonPressed(
   error_->OnInstallPromptDone(ExtensionInstallPrompt::Result::USER_CANCELED);
 }
 
+// Removes and deletes the ExternalInstallError associated with |extension_id|,
+// if one exists.
+void RemoveError(base::WeakPtr<ExtensionService> extension_service,
+                 const std::string& extension_id) {
+  if (!extension_service)
+    return;
+  extension_service->external_install_manager()->RemoveExternalInstallError(
+      extension_id);
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -327,12 +337,15 @@ void ExternalInstallError::OnInstallPromptDone(
     ExtensionInstallPrompt::Result result) {
   const Extension* extension = GetExtension();
 
+  ExtensionService* extension_service =
+      ExtensionSystem::Get(browser_context_)->extension_service();
+
   // If the error isn't removed and deleted as part of handling the user's
   // response (which can happen, e.g., if an uninstall fails), be sure to remove
   // the error directly in order to ensure it's not called twice.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(&ExternalInstallError::RemoveError,
-                                weak_factory_.GetWeakPtr()));
+      FROM_HERE, base::BindOnce(&RemoveError, extension_service->AsWeakPtr(),
+                                extension_id_));
 
   switch (result) {
     case ExtensionInstallPrompt::Result::ACCEPTED:
@@ -344,12 +357,10 @@ void ExternalInstallError::OnInstallPromptDone(
       break;
     case ExtensionInstallPrompt::Result::USER_CANCELED:
       if (extension) {
-        bool uninstallation_result = ExtensionSystem::Get(browser_context_)
-            ->extension_service()
-            ->UninstallExtension(extension_id_,
-                                 extensions::UNINSTALL_REASON_INSTALL_CANCELED,
-                                 base::Bind(&base::DoNothing),
-                                 nullptr);  // Ignore error.
+        bool uninstallation_result = extension_service->UninstallExtension(
+            extension_id_, extensions::UNINSTALL_REASON_INSTALL_CANCELED,
+            base::Bind(&base::DoNothing),
+            nullptr);  // Ignore error.
         UMA_HISTOGRAM_BOOLEAN("Extensions.ExternalWarningUninstallationResult",
                               uninstallation_result);
       }
@@ -463,10 +474,6 @@ void ExternalInstallError::OnDialogReady(
     global_error_.reset(new ExternalInstallMenuAlert(this));
     error_service_->AddUnownedGlobalError(global_error_.get());
   }
-}
-
-void ExternalInstallError::RemoveError() {
-  manager_->RemoveExternalInstallError(extension_id_);
 }
 
 }  // namespace extensions
