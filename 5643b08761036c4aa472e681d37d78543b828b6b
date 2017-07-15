@@ -16,6 +16,24 @@
       "revId": "5643b08761036c4aa472e681d37d78543b828b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b1529d_82af51ad",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-15T20:55:33Z",
+      "side": 1,
+      "message": "So it\u0027s not a anonymous line box, but a anonymous wrapping box. E.g.\n\n\u003cdiv\u003e\n  Text\n\u003c/div\u003e\n\nNGBoxFragment (NGBlockNode - div)\n  NGBoxFragment (NGInlineNode - div) (this check - box_ \u003d\u003d layout_obj)\n    NGLineBoxFragment (text node)\n      NGTextFragment (\"text\")\n\nWe may want to just have a switch inside of NGBlockLayoutAlgorithm for inline children, to remove this level of indirection.",
+      "parentUuid": "8f3eea9d_dbe0aca4",
+      "revId": "5643b08761036c4aa472e681d37d78543b828b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
