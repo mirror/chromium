@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec21cb5d_509d042c",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-15T22:54:21Z",
+      "side": 1,
+      "message": "does this need to be a member function?",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696944df_14d7e8d9",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-15T22:54:21Z",
+      "side": 1,
+      "message": "ditto?",
+      "revId": "52650042feb92d411a6d6bf69a91477c3a3ceeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
