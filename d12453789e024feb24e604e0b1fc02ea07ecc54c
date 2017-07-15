@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b950068_e64c7f0b",
+        "filename": "components/safe_browsing/base_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-15T18:06:13Z",
+      "side": 1,
+      "message": "I would much prefer that this section be a separate function that\u0027s called here.\n\nbool CheckWebUIUrls();\nthat returns true if it is a WebUI URL, and also PostsTask in that case.\n\nSo this could would become:\nif (CheckWebUIUrls()) {\n  return false;\n}",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 61
+      },
+      "revId": "d12453789e024feb24e604e0b1fc02ea07ecc54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
