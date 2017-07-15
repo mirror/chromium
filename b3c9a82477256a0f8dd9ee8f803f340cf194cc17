@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84fba236_4ca2e056",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-15T04:22:50Z",
+      "side": 1,
+      "message": "I think this should be cu_graph.other_tab because we already check cu_graph.tab on the line above.",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "b3c9a82477256a0f8dd9ee8f803f340cf194cc17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
