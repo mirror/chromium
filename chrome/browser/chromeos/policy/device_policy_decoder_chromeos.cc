@@ -826,6 +826,16 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
     }
   }
 
+  if (policy.has_display_legacy_sort_order()) {
+    const em::DisplayLegacySortOrderEnabledProto& container(
+        policy.display_legacy_sort_order());
+    policies->Set(key::kDisplayLegacySortOrderEnabled, POLICY_LEVEL_MANDATORY,
+                  POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
+                  base::MakeUnique<base::Value>(
+                      container.display_legacy_sort_order_enabled()),
+                  nullptr);
+  }
+
   if (policy.has_display_rotation_default()) {
     const em::DisplayRotationDefaultProto& container(
         policy.display_rotation_default());
