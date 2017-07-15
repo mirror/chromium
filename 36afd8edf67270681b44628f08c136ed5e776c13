@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f1395da_3463c345",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-15T00:17:05Z",
+      "side": 1,
+      "message": "It\u0027s a CHECK, not a DCHECK, in Document::UpdateStyleAndLayoutTree. WDYT of making this a CHECK too?\n\nNit: Can you add enough info to this comment that it\u0027s still useful without looking up the other comment? Maybe just \"Updating style can modify, or even completely tear down, the layout tree\".",
+      "revId": "36afd8edf67270681b44628f08c136ed5e776c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e01094_30fcaa7b",
+        "filename": "third_party/WebKit/Source/core/paint/MediaControlsPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-15T00:17:05Z",
+      "side": 1,
+      "message": "It\u0027s confusing that we have panel_box and box below. Are these the same object? Can you unify them?",
+      "revId": "36afd8edf67270681b44628f08c136ed5e776c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
