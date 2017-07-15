@@ -33,6 +33,35 @@ class DialAPITest : public ExtensionApiTest {
         extensions::switches::kWhitelistedExtensionID,
         "ddchlicdkolnonkihahngkmmmjnjlkkf");
   }
+
+ protected:
+  void SetUp() override {
+    net::NetworkChangeNotifier::SetTestNotificationsOnly(true);
+
+    // This will create a NetworkChangeNotifier via BrowserTestBase, so make
+    // sure this is after SetTestNotificationsOnly but before we try to create a
+    // DiscoveryNetworkMonitor.
+    ExtensionApiTest::SetUp();
+  }
+
+  void SetUpOnMainThread() override {
+    // This executes after SetUp() so NetworkChangeNotifier should exist here.
+    auto* discovery_network_monitor = DiscoveryNetworkMonitor::GetInstance();
+    discovery_network_monitor->SetNetworkInfoFunctionForTest(
+        &FakeGetNetworkInfo);
+    ExtensionApiTest::SetUpOnMainThread();
+  }
+
+  void TearDown() override { fake_network_info().clear(); }
+
+  static std::vector<DiscoveryNetworkInfo> FakeGetNetworkInfo() {
+    return fake_network_info();
+  }
+
+  static std::vector<DiscoveryNetworkInfo>& fake_network_info() {
+    static std::vector<DiscoveryNetworkInfo> info;
+    return info;
+  }
 };
 
 }  // namespace
@@ -91,8 +120,8 @@ IN_PROC_BROWSER_TEST_F(DialAPITest, Discovery) {
 // discoverNow does not do discovery when there are no listeners; in that case
 // the DIAL service will not be active.
 IN_PROC_BROWSER_TEST_F(DialAPITest, DiscoveryNoListeners) {
-  ASSERT_TRUE(RunExtensionSubtest("dial/experimental",
-                                  "discovery_no_listeners.html"));
+  ASSERT_TRUE(
+      RunExtensionSubtest("dial/experimental", "discovery_no_listeners.html"));
 }
 
 // Make sure this API is only accessible to whitelisted extensions.
@@ -134,4 +163,50 @@ IN_PROC_BROWSER_TEST_F(DialAPITest, FetchDeviceDescription) {
 
   ASSERT_TRUE(RunExtensionSubtest("dial/experimental",
                                   "fetch_device_description.html"));
+}
+
+IN_PROC_BROWSER_TEST_F(DialAPITest, GetNetworkId) {
+  fake_network_info() = std::vector<DiscoveryNetworkInfo>(
+      {{std::string("enp0s2"), std::string("ethernet1")}});
+
+  ASSERT_TRUE(RunExtensionSubtest("dial/experimental", "get_network_id.html"));
+
+  ResultCatcher catcher;
+  EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();
+}
+
+IN_PROC_BROWSER_TEST_F(DialAPITest, NetworkIdChanged) {
+  ASSERT_TRUE(
+      RunExtensionSubtest("dial/experimental", "network_id_changed.html"));
+
+  ResultCatcher catcher;
+  ExtensionTestMessageListener listener("continue", false);
+
+  fake_network_info() = std::vector<DiscoveryNetworkInfo>(
+      {{std::string("enp0s2"), std::string("ethernet1")}});
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_ETHERNET);
+  EXPECT_TRUE(listener.WaitUntilSatisfied());
+  listener.Reset();
+
+  fake_network_info() = std::vector<DiscoveryNetworkInfo>(
+      {{std::string("wlp0s3"), std::string("wifi1")}});
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_WIFI);
+  EXPECT_TRUE(listener.WaitUntilSatisfied());
+  listener.Reset();
+
+  fake_network_info() = std::vector<DiscoveryNetworkInfo>();
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_NONE);
+  EXPECT_TRUE(listener.WaitUntilSatisfied());
+  listener.Reset();
+
+  fake_network_info() = std::vector<DiscoveryNetworkInfo>(
+      {{std::string("wlp0s3"), std::string()}});
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_WIFI);
+  EXPECT_TRUE(listener.WaitUntilSatisfied());
+
+  EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();
 }
