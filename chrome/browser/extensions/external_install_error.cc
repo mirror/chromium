@@ -284,6 +284,19 @@ void ExternalInstallBubbleAlert::BubbleViewCancelButtonPressed(
   error_->OnInstallPromptDone(ExtensionInstallPrompt::Result::USER_CANCELED);
 }
 
+// Removes and deletes the ExternalInstallError associated with |extension_id|
+// and |context|, if one exists.
+void RemoveError(content::BrowserContext* context,
+                 const std::string& extension_id) {
+  ExtensionSystem* system = ExtensionSystem::Get(context);
+  if (!system)
+    return;
+
+  system->extension_service()
+      ->external_install_manager()
+      ->RemoveExternalInstallError(extension_id);
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -331,8 +344,7 @@ void ExternalInstallError::OnInstallPromptDone(
   // response (which can happen, e.g., if an uninstall fails), be sure to remove
   // the error directly in order to ensure it's not called twice.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(&ExternalInstallError::RemoveError,
-                                weak_factory_.GetWeakPtr()));
+      FROM_HERE, base::BindOnce(&RemoveError, browser_context_, extension_id_));
 
   switch (result) {
     case ExtensionInstallPrompt::Result::ACCEPTED:
@@ -463,10 +475,6 @@ void ExternalInstallError::OnDialogReady(
     global_error_.reset(new ExternalInstallMenuAlert(this));
     error_service_->AddUnownedGlobalError(global_error_.get());
   }
-}
-
-void ExternalInstallError::RemoveError() {
-  manager_->RemoveExternalInstallError(extension_id_);
 }
 
 }  // namespace extensions

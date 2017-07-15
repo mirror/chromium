@@ -37,8 +37,10 @@ class ExternalInstallManager : public ExtensionRegistryObserver,
   // Returns true if prompting for external extensions is enabled.
   static bool IsPromptingEnabled();
 
-  // Removes the error associated with a given extension.
-  void RemoveExternalInstallError(const std::string& extension_id);
+  // Removes the error associated with a given extension. This takes the
+  // |extension_id| by value and not by reference to avoid subtle UAF errors.
+  // E.g. see crbug.com/739142.
+  void RemoveExternalInstallError(std::string extension_id);
 
   // Checks if there are any new external extensions to notify the user about.
   void UpdateExternalExtensionAlert();

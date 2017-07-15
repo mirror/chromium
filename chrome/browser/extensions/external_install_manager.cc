@@ -111,7 +111,7 @@ void ExternalInstallManager::AddExternalInstallError(const Extension* extension,
 }
 
 void ExternalInstallManager::RemoveExternalInstallError(
-    const std::string& extension_id) {
+    std::string extension_id) {
   auto iter = errors_.find(extension_id);
   if (iter != errors_.end()) {
     if (iter->second.get() == currently_visible_install_alert_)
