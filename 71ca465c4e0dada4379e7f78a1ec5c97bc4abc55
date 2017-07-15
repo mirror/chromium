@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85951c28_b014ada9",
+        "filename": "chrome/browser/extensions/external_install_error.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T03:05:40Z",
+      "side": 0,
+      "message": "There were other ways to solve the bug, but the fact that an object was calling a method on its owner to delete itself did not seem like a good pattern.",
+      "range": {
+        "startLine": 83,
+        "startChar": 3,
+        "endLine": 83,
+        "endChar": 18
+      },
+      "revId": "71ca465c4e0dada4379e7f78a1ec5c97bc4abc55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
