@@ -106,6 +106,24 @@ class CAPTURE_EXPORT VideoCaptureDeviceAndroid : public VideoCaptureDevice {
 
   void ConfigureForTesting();
 
+ protected:
+  // Helper code executed when the frame is available; if it is the first frame,
+  // setup time fluctuation control and process any pending photo requests.
+  void ProcessFirstFrameAvailable(base::TimeTicks current_time);
+
+  // Check if there is client and if the state is valid.
+  bool IsClientConfiguredForIncomingData();
+
+  // Check if the incoming frame didn't arrived too, advance the next frame
+  // expectation time and return true;
+  bool AdvanceToNextFrameTime(base::TimeTicks current_time);
+
+  void SendIncomingDataToClient(const uint8_t* data,
+                                int length,
+                                int rotation,
+                                base::TimeTicks reference_time,
+                                base::TimeDelta timestamp);
+
  private:
   enum InternalState {
     kIdle,        // The device is opened but not in use.
