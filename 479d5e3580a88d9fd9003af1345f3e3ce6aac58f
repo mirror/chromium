@@ -70,6 +70,30 @@
       "revId": "479d5e3580a88d9fd9003af1345f3e3ce6aac58f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f00118d_a6d30b29",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T00:11:59Z",
+      "side": 1,
+      "message": "The order would matter if you were round-tripping things between task scheduler and loop-based calls.  Generally, I think this test is doing simple things like:\n\n* web_data_service-\u003ePostSomeTaskOnTaskScheduler\n* \u003cwait\u003e\n* Read data off consumer\n\nFor this, probably just FlushForTesting() (and not even a WaitForBackgroundTasks()) is needed.  If we need both, I\u0027d put FlushForTesting() first, as I know the web db stuff can run without further main-thread interaction, but I don\u0027t know if the main thread locations that are called back need the message loop spun afterwards.",
+      "parentUuid": "6eab4051_a816d61b",
+      "range": {
+        "startLine": 462,
+        "startChar": 38,
+        "endLine": 462,
+        "endChar": 53
+      },
+      "revId": "479d5e3580a88d9fd9003af1345f3e3ce6aac58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
