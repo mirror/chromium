@@ -2,18 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// MSVC++ requires this to be set before any other includes to get M_PI.
-#define _USE_MATH_DEFINES
-
 #include "ui/events/blink/blink_event_util.h"
 
 #include <stddef.h>
 
 #include <algorithm>
 #include <bitset>
-#include <cmath>
 #include <limits>
 
+#include "base/numerics/math_util.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -188,7 +185,7 @@ WebTouchPoint CreateWebTouchPoint(const MotionEvent& event,
 
   float major_radius = event.GetTouchMajor(pointer_index) / 2.f;
   float minor_radius = event.GetTouchMinor(pointer_index) / 2.f;
-  float orientation_deg = event.GetOrientation(pointer_index) * 180.f / M_PI;
+  float orientation_deg = base::RadToDeg(event.GetOrientation(pointer_index));
 
   DCHECK_GE(major_radius, 0);
   DCHECK_GE(minor_radius, 0);
