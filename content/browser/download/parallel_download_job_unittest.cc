@@ -361,14 +361,9 @@ TEST_F(ParallelDownloadJobTest, ParallelRequestNotCreatedUntilFileInitialized) {
   auto save_info = base::MakeUnique<DownloadSaveInfo>();
   StrictMock<MockByteStreamReader>* input_stream =
       new StrictMock<MockByteStreamReader>();
-  auto observer =
-      base::MakeUnique<StrictMock<MockDownloadDestinationObserver>>();
-  base::WeakPtrFactory<DownloadDestinationObserver> observer_factory(
-      observer.get());
   auto download_file = base::MakeUnique<DownloadFileImpl>(
       std::move(save_info), base::FilePath(),
-      std::unique_ptr<ByteStreamReader>(input_stream), net::NetLogWithSource(),
-      observer_factory.GetWeakPtr());
+      std::unique_ptr<ByteStreamReader>(input_stream), net::NetLogWithSource());
   CreateParallelJob(0, 100, DownloadItem::ReceivedSlices(), 2, 0, 0);
   job_->Start(download_file.get(),
               base::Bind(&ParallelDownloadJobTest::OnFileInitialized,
@@ -378,7 +373,6 @@ TEST_F(ParallelDownloadJobTest, ParallelRequestNotCreatedUntilFileInitialized) {
   EXPECT_EQ(0u, job_->workers().size());
   EXPECT_CALL(*input_stream, RegisterCallback(_));
   EXPECT_CALL(*input_stream, Read(_, _));
-  EXPECT_CALL(*(observer.get()), DestinationUpdate(_, _, _));
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(file_initialized_);
   EXPECT_EQ(1u, job_->workers().size());

@@ -9,6 +9,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "content/browser/byte_stream.h"
+#include "content/browser/download/download_destination_observer.h"
 #include "content/browser/download/download_file.h"
 #include "content/browser/download/download_request_handle.h"
 #include "content/common/content_export.h"
@@ -23,7 +24,7 @@ class WebContents;
 // DownloadJob lives on UI thread and subclasses implement actual download logic
 // and interact with DownloadItemImpl.
 // The base class is a friend class of DownloadItemImpl.
-class CONTENT_EXPORT DownloadJob {
+class CONTENT_EXPORT DownloadJob : public DownloadDestinationObserver {
  public:
   DownloadJob(DownloadItemImpl* download_item,
               std::unique_ptr<DownloadRequestHandleInterface> request_handle);
@@ -59,6 +60,23 @@ class CONTENT_EXPORT DownloadJob {
 
   // Whether the download is save package.
   virtual bool IsSavePackageDownload() const;
+
+  // DownloadDestinationObserver
+  void DestinationUpdate(
+      int64_t bytes_so_far,
+      int64_t bytes_per_sec,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices) override;
+  void DestinationError(
+      DownloadInterruptReason reason,
+      int64_t bytes_so_far,
+      std::unique_ptr<crypto::SecureHash> hash_state) override;
+  void DestinationCompleted(
+      int64_t total_bytes,
+      std::unique_ptr<crypto::SecureHash> hash_state) override;
+
+  // Provide a weak pointer reference to a DownloadDestinationObserver
+  // for use by download destinations.
+  base::WeakPtr<DownloadDestinationObserver> DestinationObserverAsWeakPtr();
 
  protected:
   // Callback from file thread when we initialize the DownloadFile.

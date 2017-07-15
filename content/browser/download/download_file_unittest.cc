@@ -118,17 +118,14 @@ enum DownloadFileRenameMethodType { RENAME_AND_UNIQUIFY, RENAME_AND_ANNOTATE };
 // retries renames failed due to ACCESS_DENIED.
 class TestDownloadFileImpl : public DownloadFileImpl {
  public:
-  TestDownloadFileImpl(
-      std::unique_ptr<DownloadSaveInfo> save_info,
-      const base::FilePath& default_downloads_directory,
-      std::unique_ptr<ByteStreamReader> stream,
-      const net::NetLogWithSource& net_log,
-      base::WeakPtr<DownloadDestinationObserver> observer)
+  TestDownloadFileImpl(std::unique_ptr<DownloadSaveInfo> save_info,
+                       const base::FilePath& default_downloads_directory,
+                       std::unique_ptr<ByteStreamReader> stream,
+                       const net::NetLogWithSource& net_log)
       : DownloadFileImpl(std::move(save_info),
                          default_downloads_directory,
                          std::move(stream),
-                         net_log,
-                         observer) {}
+                         net_log) {}
 
  protected:
   base::TimeDelta GetRetryDelayForFailedRename(int attempt_count) override {
@@ -230,7 +227,7 @@ class DownloadFileTest : public testing::Test {
     download_file_.reset(new TestDownloadFileImpl(
         std::move(save_info), base::FilePath(),
         std::unique_ptr<ByteStreamReader>(input_stream_),
-        net::NetLogWithSource(), observer_factory_.GetWeakPtr()));
+        net::NetLogWithSource()));
 
     EXPECT_CALL(*input_stream_, Read(_, _))
         .WillOnce(Return(ByteStreamReader::STREAM_EMPTY))
@@ -243,7 +240,8 @@ class DownloadFileTest : public testing::Test {
         base::Bind(&DownloadFileTest::SetInterruptReasonCallback,
                    weak_ptr_factory.GetWeakPtr(), loop_runner.QuitClosure(),
                    &result),
-        DownloadFile::CancelRequestCallback(), received_slices, true);
+        DownloadFile::CancelRequestCallback(), received_slices,
+        observer_factory_.GetWeakPtr(), true);
     loop_runner.Run();
 
     ::testing::Mock::VerifyAndClearExpectations(input_stream_);

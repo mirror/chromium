@@ -18,7 +18,6 @@
 #include "base/files/file.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
@@ -43,12 +42,10 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // Note that the DownloadFileImpl automatically reads from the passed in
   // stream, and sends updates and status of those reads to the
   // DownloadDestinationObserver.
-  DownloadFileImpl(
-      std::unique_ptr<DownloadSaveInfo> save_info,
-      const base::FilePath& default_downloads_directory,
-      std::unique_ptr<ByteStreamReader> stream_reader,
-      const net::NetLogWithSource& net_log,
-      base::WeakPtr<DownloadDestinationObserver> observer);
+  DownloadFileImpl(std::unique_ptr<DownloadSaveInfo> save_info,
+                   const base::FilePath& default_downloads_directory,
+                   std::unique_ptr<ByteStreamReader> stream_reader,
+                   const net::NetLogWithSource& net_log);
 
   ~DownloadFileImpl() override;
 
@@ -56,6 +53,7 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   void Initialize(const InitializeCallback& initialize_callback,
                   const CancelRequestCallback& cancel_request_callback,
                   const DownloadItem::ReceivedSlices& received_slices,
+                  base::WeakPtr<DownloadDestinationObserver> observer,
                   bool is_parallelizable) override;
 
   void AddByteStream(std::unique_ptr<ByteStreamReader> stream_reader,
