@@ -267,6 +267,30 @@
     },
     {
       "key": {
+        "uuid": "e18fdc8d_063924ac",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-15T02:27:32Z",
+      "side": 1,
+      "message": "It seems base::ThreadRestrictions::ScopedAllowIO is banned from production. It\u0027s a warning in presubmit.",
+      "parentUuid": "92ee27ec_997f6d65",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35cbbbb8_dde8575b",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
@@ -446,6 +470,24 @@
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b1ce53_01fcf38d",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-15T02:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dc8f99a_6716f0ea",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -942,6 +984,30 @@
       "side": 1,
       "message": "You can make it private, just need to add the right friend statement.\n\nTry changing the friend struct below to:\n\nfriend struct base::DefaultSingletonTraits\u003cUrlLog\u003e;",
       "parentUuid": "a79047fc_4a80bccc",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252c97b5_7daf7785",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-15T02:27:32Z",
+      "side": 1,
+      "message": "Making the constructor and the destructor private doesn\u0027t seem to work in unit tests.\n\nI can\u0027t base::MakeUnique\u003cUrlLog\u003e() because the constructor is private. It also can\u0027t be destroyed in std::unique_ptr\u003cUrlLog\u003e() because the destructor is private.\n\nI\u0027m new to C++. I might do something wrong here. Please let me know.",
+      "parentUuid": "126b0d56_8b92c60d",
       "range": {
         "startLine": 49,
         "startChar": 12,
