@@ -64,8 +64,7 @@
 
 namespace blink {
 
-void LocalWindowProxy::DisposeContext(Lifecycle next_status,
-                                      FrameReuseStatus frame_reuse_status) {
+void LocalWindowProxy::DisposeContext(Lifecycle next_status) {
   DCHECK(next_status == Lifecycle::kGlobalObjectIsDetached ||
          next_status == Lifecycle::kFrameIsDetached);
 
@@ -103,7 +102,7 @@ void LocalWindowProxy::DisposeContext(Lifecycle next_status,
   // garbage. Notify V8 about this so it'll have a chance of cleaning
   // it up when idle.
   V8GCForContextDispose::Instance().NotifyContextDisposed(
-      GetFrame()->IsMainFrame(), frame_reuse_status);
+      GetFrame()->IsMainFrame());
 
   if (next_status == Lifecycle::kFrameIsDetached) {
     // The context's frame is detached from the DOM, so there shouldn't be a

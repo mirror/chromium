@@ -63,15 +63,11 @@ WindowProxy::WindowProxy(v8::Isolate* isolate,
       lifecycle_(Lifecycle::kContextIsUninitialized) {}
 
 void WindowProxy::ClearForClose() {
-  DisposeContext(Lifecycle::kFrameIsDetached, kFrameWillNotBeReused);
+  DisposeContext(Lifecycle::kFrameIsDetached);
 }
 
 void WindowProxy::ClearForNavigation() {
-  DisposeContext(Lifecycle::kGlobalObjectIsDetached, kFrameWillBeReused);
-}
-
-void WindowProxy::ClearForSwap() {
-  DisposeContext(Lifecycle::kGlobalObjectIsDetached, kFrameWillNotBeReused);
+  DisposeContext(Lifecycle::kGlobalObjectIsDetached);
 }
 
 v8::Local<v8::Object> WindowProxy::GlobalProxyIfNotDetached() {

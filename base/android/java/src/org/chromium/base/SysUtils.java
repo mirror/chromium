@@ -105,19 +105,6 @@ public class SysUtils {
     }
 
     /**
-     * @return Whether or not the system has low available memory.
-     */
-    @CalledByNative
-    private static boolean isCurrentlyLowMemory() {
-        ActivityManager am =
-                (ActivityManager) ContextUtils.getApplicationContext().getSystemService(
-                        Context.ACTIVITY_SERVICE);
-        ActivityManager.MemoryInfo info = new ActivityManager.MemoryInfo();
-        am.getMemoryInfo(info);
-        return info.lowMemory;
-    }
-
-    /**
      * Resets the cached value, if any.
      */
     @VisibleForTesting

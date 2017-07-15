@@ -570,12 +570,12 @@ void ChromeContentRendererClient::RenderFrameCreated(
   // Set up a mojo service to test if this page is a contextual search page.
   new contextual_search::OverlayJsRenderFrameObserver(render_frame);
 
-  PasswordAutofillAgent* password_autofill_agent =
-      new PasswordAutofillAgent(render_frame);
-  PasswordGenerationAgent* password_generation_agent =
-      new PasswordGenerationAgent(render_frame, password_autofill_agent);
-  new AutofillAgent(render_frame, password_autofill_agent,
-                    password_generation_agent);
+//  PasswordAutofillAgent* password_autofill_agent =
+//      new PasswordAutofillAgent(render_frame);
+//  PasswordGenerationAgent* password_generation_agent =
+//      new PasswordGenerationAgent(render_frame, password_autofill_agent);
+//  new AutofillAgent(render_frame, password_autofill_agent,
+//                    password_generation_agent);
 
   // There is no render thread, thus no UnverifiedRulesetDealer in
   // ChromeRenderViewTests.

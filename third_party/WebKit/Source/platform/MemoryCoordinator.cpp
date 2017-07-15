@@ -40,15 +40,6 @@ void MemoryCoordinator::SetPhysicalMemoryMBForTesting(
 }
 
 // static
-bool MemoryCoordinator::IsCurrentlyLowMemory() {
-#if defined(OS_ANDROID)
-  return base::android::SysUtils::IsCurrentlyLowMemory();
-#else
-  return false;
-#endif
-}
-
-// static
 void MemoryCoordinator::Initialize() {
   is_low_end_device_ = ::base::SysInfo::IsLowEndDevice();
   physical_memory_mb_ = ::base::SysInfo::AmountOfPhysicalMemoryMB();

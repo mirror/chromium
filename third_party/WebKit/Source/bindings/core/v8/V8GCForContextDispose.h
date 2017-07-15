@@ -41,7 +41,7 @@ class V8GCForContextDispose {
   WTF_MAKE_NONCOPYABLE(V8GCForContextDispose);
 
  public:
-  void NotifyContextDisposed(bool is_main_frame, WindowProxy::FrameReuseStatus);
+  void NotifyContextDisposed(bool is_main_frame);
   void NotifyIdle();
 
   static V8GCForContextDispose& Instance();
