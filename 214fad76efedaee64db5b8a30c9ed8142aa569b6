@@ -16,6 +16,24 @@
       "revId": "214fad76efedaee64db5b8a30c9ed8142aa569b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c3e926_82525806",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-15T04:25:39Z",
+      "side": 1,
+      "message": "We want, but it takes a little more time. Filed crbug.com/743311 for it.\n\nRemoved Deprecated prefixes.",
+      "parentUuid": "583ac466_28f56535",
+      "revId": "214fad76efedaee64db5b8a30c9ed8142aa569b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
