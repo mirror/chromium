@@ -1,50 +1,51 @@
 <!DOCTYPE HTML>
-<html>
-<head>
-<script src="/js-test-resources/js-test.js"></script>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
 <script>
-description("Checking transmission of Beacons involving cookies.");
-
-window.jsTestIsAsync = true;
-
-function test() {
-    if (window.testRunner) {
-        testRunner.dumpAsText();
-        testRunner.waitUntilDone();
-        testRunner.dumpPingLoaderCallbacks();
-    }
-    try {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "../cookies/resources/setCookies.cgi", false);
-        xhr.setRequestHeader("SET-COOKIE", "hello=world;path=/");
-        xhr.send(null);
-        if (xhr.status != 200) {
-            testFailed("cookie not set");
-            finishJSTest();
-        }
-    } catch (e) {
-        testFailed("cookie not set");
-        finishJSTest();
-    }
-
-    shouldBeTrue('navigator.sendBeacon("resources/save-beacon.php?name=cookie", "Blip");');
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "resources/check-beacon.php?name=cookie");
-    xhr.onload = function () {
-        var lines = xhr.responseText.split("\n");
-        for (var i in lines)
-            testPassed(lines[i]);
-        finishJSTest();
-    };
-    xhr.onerror = function () {
-        testFailed("Unable to fetch beacon status");
-        finishJSTest();
-    };
-
-    xhr.send();
+if (window.testRunner) {
+  testRunner.dumpPingLoaderCallbacks();
 }
+
+let resolveWindowLoadPromise;
+const windowLoadPromise = new Promise(r => {
+  resolveWindowLoadPromise = r;
+});
+
+promise_test(t => {
+  return windowLoadPromise.then(() => {
+    try {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "../cookies/resources/setCookies.cgi", false);
+      xhr.setRequestHeader("SET-COOKIE", "hello=world;path=/");
+      xhr.send(null);
+      assert_equals(xhr.status, 200, "Failed to set cookie");
+    } catch (e) {
+      assert_unreached("Failed to set cookie");
+    }
+
+    const result = navigator.sendBeacon("resources/save-beacon.php?name=cookie", "Blip");
+    assert_true(result, "sendBeacon() should succeed");
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "resources/check-beacon.php?name=cookie");
+
+    return new Promise((resolve, reject) => {
+      xhr.onload = resolve;
+      xhr.onerror = reject;
+
+      xhr.send();
+    }).then(() => {
+      assert_equals(xhr.responseText, "Beacon sent successfully\n\
+Content-Type: text/plain;charset=UTF-8\n\
+Cookie: hello=world\n\
+Origin: http://127.0.0.1:8000\n\
+Referer: http://127.0.0.1:8000/sendbeacon/beacon-cookie.html\n\
+Request-Method: POST\n\
+Length: 4\n\
+Body: Blip\n");
+    });
+  });
+}, "Checking transmission of Beacons involving cookies.");
 </script>
-</head>
-<body onload="test();">
+<body onload="resolveWindowLoadPromise();">
 </body>
-</html>
