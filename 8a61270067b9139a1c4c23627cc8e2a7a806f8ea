@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc5a5358_30d46abd",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-15T22:36:02Z",
+      "side": 1,
+      "message": "nit: \"if (ReclaimVirtualMemory(...) !\u003d ERROR_SUCCESS) return PURGED;\" to be consistent with OS_ANDROID case above",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4a2791_af281618",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-15T22:36:02Z",
+      "side": 1,
+      "message": "can this be 0 here? see line 260. DCHECK instead?",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a380e177_a99c064d",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-15T22:36:02Z",
+      "side": 1,
+      "message": "nit: \"if (OfferVirtualMemory(...) !\u003d ERROR_SUCCESS) {}\" to be more aligned with ashmem_unpin_region code above or maybe adjust both to do:\n\nTYPE result \u003d OfferVirtualMemory/ashmem_unpin_region(...)\nDLOG_IF(ERROR, result !\u003d GOOD) \u003c\u003c ...\n\nif having the return value in the LOG is important",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
