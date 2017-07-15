@@ -825,8 +825,7 @@ void FrameFetchContext::PopulateResourceRequest(
   // allows site owners to learn about requests that are being modified
   // (e.g. mixed content that is being upgraded by upgrade-insecure-requests).
   CheckCSPForRequest(request, url, options, reporting_policy,
-                     request.GetRedirectStatus(),
-                     ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
+                     request.GetRedirectStatus());
 
   ModifyRequestForCSP(request);
   AddClientHintsIfNecessary(hints_preferences, resource_width, request);
