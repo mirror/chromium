@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39565587_5e5c5c3c",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T01:11:04Z",
+      "side": 0,
+      "message": "Would it make sense to go ahead and remove at least this icon from the .mm as well, so there will be no references to it and we can rip it out entirely?",
+      "revId": "b1ca34a0edebb9b81f7db3c58b759029a64d7baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

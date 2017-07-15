@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c224d13_82134913",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 5411,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T01:11:04Z",
+      "side": 1,
+      "message": "Nit: Maybe give the translators context saying what other information is already given to the user?  These strings feel pretty out-of-context to me.",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca83e7b_2fbff3b2",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 5424,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T01:11:04Z",
+      "side": 1,
+      "message": "Should this be title case?  I thought most of our buttons were sentence case (see e.g. \"Stop plugin\" just below).  Or is this supposed to be governed by the use_titlecase define?",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8cfa59_f08a894b",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T01:11:04Z",
+      "side": 1,
+      "message": "Nit: Prefer namespace{} to static for making symbols file-scoped (but I know you\u0027re just tweaking the value here so this doesn\u0027t have to be done in this patch... indeed, I\u0027d prefer to see us make the table width/height not be set by hardcoded pixel values, but I\u0027m willing to punt that for now too).",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ccb689_b18f6afd",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-15T01:11:04Z",
+      "side": 1,
+      "message": "Based on Trent\u0027s changes in e.g. https://chromium-review.googlesource.com/c/559205/15/chrome/browser/ui/views/harmony/chrome_layout_provider.cc , it would probably make sense to do this as a minimum amount of padding around the font.\n\nPerhaps the GetControlHeightForFont() function there could be generalized something like GetHeightForObjectWithFont(enum ObjectType), where ObjectType is CONTROL or TABLE_ROW or something, and we could eliminate the DISTANCE_ values?",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
