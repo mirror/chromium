@@ -16,34 +16,9 @@
 
 namespace {
 
-using content::BrowserThread;
-
-std::string ComputeNetworkId(
-    const std::vector<DiscoveryNetworkInfo>& network_info_list) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  if (network_info_list.size() == 0) {
-    return DiscoveryNetworkMonitor::kNetworkIdDisconnected;
-  }
-  if (std::find_if(network_info_list.begin(), network_info_list.end(),
-                   [](const DiscoveryNetworkInfo& network_info) {
-                     return network_info.network_id.size() > 0;
-                   }) == network_info_list.end()) {
-    return DiscoveryNetworkMonitor::kNetworkIdUnknown;
-  }
-
-  std::string combined_ids;
-  for (const auto& network_info : network_info_list) {
-    combined_ids = combined_ids + "!" + network_info.network_id;
-  }
-
-  std::string hash = base::SHA1HashString(combined_ids);
-  return base::ToLowerASCII(base::HexEncode(hash.data(), hash.length()));
-}
-
-std::vector<DiscoveryNetworkInfo> GetNetworkInfo() {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  return GetDiscoveryNetworkInfoList();
+void ReplyAdapter(DiscoveryNetworkMonitor::NetworkIdCallback&& callback,
+                  std::unique_ptr<std::string> network_id) {
+  std::move(callback).Run(*network_id);
 }
 
 base::LazyInstance<DiscoveryNetworkMonitor>::Leaky g_discovery_monitor;
@@ -77,17 +52,24 @@ void DiscoveryNetworkMonitor::RemoveObserver(Observer* const observer) {
   observers_->RemoveObserver(observer);
 }
 
-void DiscoveryNetworkMonitor::Refresh(NetworkRefreshCompleteCallback callback) {
-  BrowserThread::PostTaskAndReply(
-      BrowserThread::IO, FROM_HERE,
+void DiscoveryNetworkMonitor::Refresh(NetworkIdCallback callback) {
+  auto network_id_result = base::MakeUnique<std::string>();
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&DiscoveryNetworkMonitor::UpdateNetworkInfo,
-                     base::Unretained(this)),
-      std::move(callback));
+                     base::Unretained(this), network_id_result.get()),
+      base::BindOnce(&ReplyAdapter, std::move(callback),
+                     std::move(network_id_result)));
 }
 
-const std::string& DiscoveryNetworkMonitor::GetNetworkId() const {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  return network_id_;
+void DiscoveryNetworkMonitor::GetNetworkId(NetworkIdCallback callback) {
+  auto network_id_result = base::MakeUnique<std::string>();
+  task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&DiscoveryNetworkMonitor::GetNetworkIdOnSequence,
+                     base::Unretained(this), network_id_result.get()),
+      base::BindOnce(&ReplyAdapter, std::move(callback),
+                     std::move(network_id_result)));
 }
 
 DiscoveryNetworkMonitor::DiscoveryNetworkMonitor()
@@ -95,7 +77,9 @@ DiscoveryNetworkMonitor::DiscoveryNetworkMonitor()
       observers_(new base::ObserverListThreadSafe<Observer>(
           base::ObserverListThreadSafe<
               Observer>::NotificationType::NOTIFY_EXISTING_ONLY)),
-      network_info_function_(&GetNetworkInfo) {
+      task_runner_(base::CreateSequencedTaskRunnerWithTraits(base::MayBlock())),
+      network_info_function_(&GetDiscoveryNetworkInfoList) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
 }
 
@@ -105,14 +89,43 @@ DiscoveryNetworkMonitor::~DiscoveryNetworkMonitor() {
 
 void DiscoveryNetworkMonitor::OnNetworkChanged(
     net::NetworkChangeNotifier::ConnectionType) {
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::Bind(&DiscoveryNetworkMonitor::UpdateNetworkInfo,
-                 base::Unretained(this)));
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&DiscoveryNetworkMonitor::UpdateNetworkInfo,
+                                base::Unretained(this), nullptr));
 }
 
-void DiscoveryNetworkMonitor::UpdateNetworkInfo() {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+std::string DiscoveryNetworkMonitor::ComputeNetworkId(
+    const std::vector<DiscoveryNetworkInfo>& network_info_list) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  if (network_info_list.size() == 0) {
+    return DiscoveryNetworkMonitor::kNetworkIdDisconnected;
+  }
+  if (std::find_if(network_info_list.begin(), network_info_list.end(),
+                   [](const DiscoveryNetworkInfo& network_info) {
+                     return network_info.network_id.size() > 0;
+                   }) == network_info_list.end()) {
+    return DiscoveryNetworkMonitor::kNetworkIdUnknown;
+  }
+
+  std::string combined_ids;
+  for (const auto& network_info : network_info_list) {
+    combined_ids = combined_ids + "!" + network_info.network_id;
+  }
+
+  std::string hash = base::SHA1HashString(combined_ids);
+  return base::ToLowerASCII(base::HexEncode(hash.data(), hash.length()));
+}
+
+void DiscoveryNetworkMonitor::GetNetworkIdOnSequence(
+    std::string* result) const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(result);
+  *result = network_id_;
+}
+
+void DiscoveryNetworkMonitor::UpdateNetworkInfo(std::string* result) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   auto network_info_list = network_info_function_();
   auto network_id = ComputeNetworkId(network_info_list);
@@ -121,6 +134,10 @@ void DiscoveryNetworkMonitor::UpdateNetworkInfo() {
 
   if (network_id_ != network_id) {
     observers_->Notify(FROM_HERE, &Observer::OnNetworksChanged,
-                       base::ConstRef(*this));
+                       base::ConstRef(network_id_));
+  }
+
+  if (result) {
+    *result = network_id_;
   }
 }
