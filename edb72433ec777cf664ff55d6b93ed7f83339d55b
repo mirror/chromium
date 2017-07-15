@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16a73d52_c6302c2c",
+        "filename": "extensions/renderer/service_worker_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T01:28:10Z",
+      "side": 1,
+      "message": "Why? It\u0027s declared before the bindings system in the header file, and the bindings system expects that the IPC sender outlives it...",
+      "parentUuid": "a20c6beb_fa47d997",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "edb72433ec777cf664ff55d6b93ed7f83339d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13f65bcd_f113917c",
         "filename": "extensions/renderer/worker_thread_dispatcher.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-15T00:31:53Z",
       "side": 1,
       "message": "As WorkerThreadDispatcher is singleton (guaranteed to outlive) and the separate worker threads are calling Send() and not accessing any data, my assumption was that this is safe.\nI might have missed something, what kind of race conditions can occur here?",
+      "range": {
+        "startLine": 158,
+        "startChar": 40,
+        "endLine": 158,
+        "endChar": 66
+      },
+      "revId": "edb72433ec777cf664ff55d6b93ed7f83339d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd1c9e7_eea3e0b0",
+        "filename": "extensions/renderer/worker_thread_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-15T01:28:10Z",
+      "side": 1,
+      "message": "Hmm, okay.  I think as long as *all* we do is call Send() (which does access data, but I think the message filter is designed to be thread-safe?), we should be okay.  Just looks like a bit of a dangerous pattern, since it might not be obvious that\u0027s the case.  I wonder if it\u0027s worth documenting more, or even separating out a message sender (or passing this as a message sender) if that\u0027s all we need, to prevent accidental usage of other data.",
+      "parentUuid": "13f65bcd_f113917c",
       "range": {
         "startLine": 158,
         "startChar": 40,
