@@ -678,10 +678,10 @@ void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
   }
 }
 
-void AppListView::OnMaximizeModeChanged(bool started) {
+void AppListView::OnTabletModeChanged(bool started) {
   is_maximize_mode_ = started;
   if (is_maximize_mode_ && !is_fullscreen()) {
-    // Set |app_list_state_| to a maximize mode friendly state.
+    // Set |app_list_state_| to a tablet mode friendly state.
     SetState(app_list_state_ == PEEKING ? FULLSCREEN_ALL_APPS
                                         : FULLSCREEN_SEARCH);
   }
@@ -825,8 +825,8 @@ void AppListView::SchedulePaintInRect(const gfx::Rect& rect) {
 void AppListView::SetState(AppListState new_state) {
   AppListState new_state_override = new_state;
   if (is_side_shelf_ || is_maximize_mode_) {
-    // If side shelf or maximize mode are active, all transitions should be
-    // made to the maximize mode/side shelf friendly versions.
+    // If side shelf or tablet mode are active, all transitions should be
+    // made to the tablet mode/side shelf friendly versions.
     if (new_state == PEEKING)
       new_state_override = FULLSCREEN_ALL_APPS;
     else if (new_state == HALF)

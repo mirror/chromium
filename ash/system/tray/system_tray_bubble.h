@@ -79,7 +79,7 @@ class SystemTrayBubble {
   int autoclose_delay_;
   base::OneShotTimer autoclose_;
 
-  // Used in maximize mode to make sure the system tray bubble only be shown in
+  // Used in tablet mode to make sure the system tray bubble only be shown in
   // work area.
   std::unique_ptr<aura::Window> clipping_window_;
 

@@ -15,7 +15,7 @@
 #include "ash/system/tray/system_tray_item.h"
 #include "ash/system/tray/tray_bubble_wrapper.h"
 #include "ash/system/tray/tray_constants.h"
-#include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/compositor/layer.h"
@@ -222,12 +222,12 @@ void SystemTrayBubble::InitView(views::View* anchor,
 
   init_params->delegate = tray_;
   // Place the bubble on same display as this system tray if it is not on
-  // maximize mode. Otherwise, create an clipping window to hold the system
+  // tablet mode. Otherwise, create an clipping window to hold the system
   // bubble. And place the clipping window on the same display as the system
   // tray.
   if (Shell::Get()
-          ->maximize_mode_controller()
-          ->IsMaximizeModeWindowManagerEnabled()) {
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled()) {
     if (!clipping_window_.get()) {
       clipping_window_ =
           std::unique_ptr<aura::Window>(new aura::Window(nullptr));

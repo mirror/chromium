@@ -22,7 +22,7 @@
 #include "ash/test/ash_test_base.h"
 #include "ash/test/status_area_widget_test_helper.h"
 #include "ash/test/test_system_tray_item.h"
-#include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
@@ -128,8 +128,7 @@ TEST_F(SystemTrayTest, SwipingOnShelfDuringAnimation) {
   SystemTray* system_tray = GetPrimarySystemTray();
   gfx::Point start = system_tray->GetLocalBounds().CenterPoint();
   shelf->SetAlignment(SHELF_ALIGNMENT_BOTTOM);
-  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
-      true);
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
 
   gfx::Rect shelf_bounds_in_screen =
       shelf->shelf_widget()->GetWindowBoundsInScreen();
@@ -182,8 +181,7 @@ TEST_F(SystemTrayTest, FlingOnSystemTray) {
   SystemTray* system_tray = GetPrimarySystemTray();
   gfx::Point start = system_tray->GetBoundsInScreen().CenterPoint();
   shelf->SetAlignment(SHELF_ALIGNMENT_BOTTOM);
-  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
-      true);
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
 
   // Fling up on the system tray should show the bubble if the |velocity_y| is
   // larger than |kFlingVelocity| and the dragging amount is larger than one
@@ -251,8 +249,7 @@ TEST_F(SystemTrayTest, TapOutsideCloseBubble) {
   shelf->SetAlignment(SHELF_ALIGNMENT_BOTTOM);
 
   float delta = -GetSystemBubbleHeight();
-  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
-      true);
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
   base::TimeTicks timestamp = base::TimeTicks::Now();
   SendScrollStartAndUpdate(start, delta, timestamp);
   EXPECT_TRUE(system_tray->HasSystemBubble());
@@ -271,18 +268,16 @@ TEST_F(SystemTrayTest, SwipingOnSystemTray) {
   gfx::Point start = system_tray->GetLocalBounds().CenterPoint();
   shelf->SetAlignment(SHELF_ALIGNMENT_BOTTOM);
 
-  // Swiping up on the system tray has no effect if it is not in maximize mode.
+  // Swiping up on the system tray has no effect if it is not in tablet mode.
   float delta = -GetSystemBubbleHeight();
-  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
-      false);
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(false);
   EXPECT_FALSE(system_tray->HasSystemBubble());
   SendGestureEvent(start, delta, false, 0);
   EXPECT_FALSE(system_tray->HasSystemBubble());
 
   // Swiping up on the system tray should show the system tray bubble if it is
-  // in maximize mode.
-  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
-      true);
+  // in tablet mode.
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
   SendGestureEvent(start, delta, false, 0);
   EXPECT_TRUE(system_tray->HasSystemBubble());
   system_tray->CloseSystemBubble();
