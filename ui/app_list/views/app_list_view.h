@@ -65,7 +65,7 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Initializes the widget as a bubble or fullscreen view depending on if the
   // fullscreen app list feature is set. |parent| and |initial_apps_page| are
   // used for both the bubble and fullscreen initialization. |is_maximize_mode|
-  // is whether the display is in maximize mode and |is_side_shelf| is whether
+  // is whether the display is in tablet mode and |is_side_shelf| is whether
   // the shelf is oriented on the side, and both are used for fullscreen
   // app list initialization.
   void Initialize(gfx::NativeView parent,
@@ -133,8 +133,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   AppListState app_list_state() const { return app_list_state_; }
 
-  // Called when maximize mode starts and ends.
-  void OnMaximizeModeChanged(bool started);
+  // Called when tablet mode starts and ends.
+  void OnTabletModeChanged(bool started);
 
  private:
   friend class test::AppListViewTestApi;
@@ -202,7 +202,7 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Owned by the app list's widget. Null if the fullscreen app list is not
   // enabled.
   views::View* app_list_background_shield_ = nullptr;
-  // Whether maximize mode is active.
+  // Whether tablet mode is active.
   bool is_maximize_mode_ = false;
   // Whether the shelf is oriented on the side.
   bool is_side_shelf_ = false;
