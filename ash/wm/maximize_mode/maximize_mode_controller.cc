@@ -10,6 +10,7 @@
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
+#include "ash/wm/maximize_mode/maximize_mode_observer.h"
 #include "ash/wm/maximize_mode/maximize_mode_window_manager.h"
 #include "ash/wm/maximize_mode/scoped_disable_internal_mouse_and_keyboard.h"
 #include "base/bind.h"
@@ -180,7 +181,9 @@ void MaximizeModeController::EnableMaximizeModeWindowManager(
     // TODO(jonross): Move the maximize mode notifications from ShellObserver
     // to MaximizeModeController::Observer
     Shell::Get()->metrics()->RecordUserMetricsAction(UMA_MAXIMIZE_MODE_ENABLED);
-    Shell::Get()->NotifyMaximizeModeStarted();
+    RecordTouchViewUsageInterval(TOUCH_VIEW_INTERVAL_INACTIVE);
+    for (auto& observer : maximize_mode_observers_)
+      observer.OnMaximizeModeStarted();
 
     observers_.ForAllPtrs([](mojom::TouchViewObserver* observer) {
       observer->OnTouchViewToggled(true);
@@ -188,11 +191,14 @@ void MaximizeModeController::EnableMaximizeModeWindowManager(
 
   } else {
     maximize_mode_window_manager_->SetIgnoreWmEventsForExit();
-    Shell::Get()->NotifyMaximizeModeEnding();
+    for (auto& observer : maximize_mode_observers_)
+      observer.OnMaximizeModeEnding();
     maximize_mode_window_manager_.reset();
     Shell::Get()->metrics()->RecordUserMetricsAction(
         UMA_MAXIMIZE_MODE_DISABLED);
-    Shell::Get()->NotifyMaximizeModeEnded();
+    RecordTouchViewUsageInterval(TOUCH_VIEW_INTERVAL_ACTIVE);
+    for (auto& observer : maximize_mode_observers_)
+      observer.OnMaximizeModeEnded();
 
     observers_.ForAllPtrs([](mojom::TouchViewObserver* observer) {
       observer->OnTouchViewToggled(false);
@@ -212,6 +218,16 @@ void MaximizeModeController::AddWindow(aura::Window* window) {
 void MaximizeModeController::BindRequest(
     mojom::TouchViewManagerRequest request) {
   bindings_.AddBinding(this, std::move(request));
+}
+
+void MaximizeModeController::AddMaximizeModeObserver(
+    MaximizeModeObserver* observer) {
+  maximize_mode_observers_.AddObserver(observer);
+}
+
+void MaximizeModeController::RemoveMaximizeModeObserver(
+    MaximizeModeObserver* observer) {
+  maximize_mode_observers_.RemoveObserver(observer);
 }
 
 void MaximizeModeController::OnAccelerometerUpdated(
@@ -384,17 +400,6 @@ void MaximizeModeController::LeaveMaximizeMode() {
   if (!IsMaximizeModeWindowManagerEnabled())
     return;
   EnableMaximizeModeWindowManager(false);
-}
-
-// Called after maximize mode has started, windows might still animate though.
-void MaximizeModeController::OnMaximizeModeStarted() {
-  RecordTouchViewUsageInterval(TOUCH_VIEW_INTERVAL_INACTIVE);
-}
-
-// Called after maximize mode has ended, windows might still be returning to
-// their original position.
-void MaximizeModeController::OnMaximizeModeEnded() {
-  RecordTouchViewUsageInterval(TOUCH_VIEW_INTERVAL_ACTIVE);
 }
 
 void MaximizeModeController::OnShellInitialized() {

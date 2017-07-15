@@ -9,6 +9,7 @@
 #include "ash/session/session_observer.h"
 #include "ash/shell_observer.h"
 #include "ash/system/tray/tray_background_view.h"
+#include "ash/wm/maximize_mode/maximize_mode_observer.h"
 #include "base/macros.h"
 
 namespace views {
@@ -24,7 +25,8 @@ namespace ash {
 // provide any bubble view windows.
 class ASH_EXPORT OverviewButtonTray : public TrayBackgroundView,
                                       public SessionObserver,
-                                      public ShellObserver {
+                                      public ShellObserver,
+                                      public MaximizeModeObserver {
  public:
   explicit OverviewButtonTray(Shelf* shelf);
   ~OverviewButtonTray() override;
@@ -39,9 +41,11 @@ class ASH_EXPORT OverviewButtonTray : public TrayBackgroundView,
   // SessionObserver:
   void OnSessionStateChanged(session_manager::SessionState state) override;
 
-  // ShellObserver:
+  // MaximizeModeObserver:
   void OnMaximizeModeStarted() override;
   void OnMaximizeModeEnded() override;
+
+  // ShellObserver:
   void OnOverviewModeStarting() override;
   void OnOverviewModeEnded() override;
 

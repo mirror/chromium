@@ -133,7 +133,7 @@ TabletPowerButtonController::TabletPowerButtonController(
       weak_ptr_factory_(this) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
-  Shell::Get()->AddShellObserver(this);
+  Shell::Get()->maximize_mode_controller()->AddMaximizeModeObserver(this);
   // TODO(mash): Provide a way for this class to observe stylus events:
   // http://crbug.com/682460
   if (ui::InputDeviceManager::HasInstance())
@@ -148,7 +148,8 @@ TabletPowerButtonController::~TabletPowerButtonController() {
   Shell::Get()->RemovePreTargetHandler(this);
   if (ui::InputDeviceManager::HasInstance())
     ui::InputDeviceManager::GetInstance()->RemoveObserver(this);
-  Shell::Get()->RemoveShellObserver(this);
+  if (Shell::Get()->maximize_mode_controller())
+    Shell::Get()->maximize_mode_controller()->RemoveMaximizeModeObserver(this);
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
       this);
 }
