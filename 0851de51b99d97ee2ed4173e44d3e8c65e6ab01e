@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c8f1506_f8fa63cb",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-15T01:14:19Z",
+      "side": 1,
+      "message": "Check whether \n    NV12_SINGLE_GMB,  // One NV12 GMB\n    NV12_DUAL_GMB,    // One R8, one RG88 GMB\nhttps://cs.chromium.org/chromium/src/media/renderers/gpu_video_accelerator_factories.h?q\u003dNV12_DUAL_GMB\u0026sq\u003dpackage:chromium\u0026l\u003d67\n\nmedia::PIXEL_FORMAT_NV12 can be either of them, but we must use YUV_RESOURCE for NV12_DUAL_GMB.",
+      "parentUuid": "5d75d10a_fa08cdf4",
+      "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc0dbf14_5df237f7",
         "filename": "media/gpu/vaapi_drm_picture.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-13T00:56:03Z",
       "side": 1,
       "message": "I already commented on this method in the other CL and I\u0027m not quite sure why you didn\u0027t address this already.\n\nAllowOverlay returning true at this level is completely fine. As you well know, it just means that the compositor will consider the VideoFrame originating from this picture as an overlay. DrmOverlayValidator will be used to determine if it can actually be scanned out. If leaving this to true break anything, we need to fix whatever is broken in ozone/overlay validation.",
+      "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f89637e_96b9add0",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-15T01:14:19Z",
+      "side": 1,
+      "message": "Sorry for the stale comment. I just removed the comment. And I think current code is better than hardcoding \u0027true\u0027, because we know enough information.\n\nIn addition, it\u0027s not true that AllowOverlay returning true at this level is completely fine. OverlayCandidateValidator validates format, size and position, instead of actual buffer.\nDrmOverlayValidator reports to cc it\u0027s fine, and then when actuall flip happen, HardwareDisplayPlaneManager::AssignOverlayPlanes() fails because this plane isn\u0027t scanout and doesn\u0027t have fb id.\n\n[4523:4533:0714/153410.712048:ERROR:hardware_display_plane_manager.cc(249)] Failed to find a free plane for crtc 35\n[4523:4533:0714/153410.712125:ERROR:crtc_controller.cc(102)] Failed to assign overlay planes for crtc 35: Invalid argument",
+      "parentUuid": "cc0dbf14_5df237f7",
       "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-13T01:05:37Z",
       "side": 1,
       "message": "I really think it\u0027s a bad idea to convert from gbmflags back to BufferUsage and it shouldn\u0027t be needed. Please remove.",
+      "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49d7e83_fc716ba0",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-15T01:14:19Z",
+      "side": 1,
+      "message": "As I replied above, we need the way to figure out whether the GBM is scanout or not.",
+      "parentUuid": "6a6c1bab_fb1177aa",
       "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
