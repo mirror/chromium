@@ -2580,11 +2580,8 @@ crbug.com/684874 virtual/threaded/fast/scroll-behavior/smooth-scroll/scroll-duri
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-before-after-002.html [ Failure ]
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-dynamic-flex-002-inline.html [ Failure ]
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-dynamic-flex-002-none.html [ Failure ]
-crbug.com/657748 external/wpt/css/css-display-3/display-contents-dynamic-flex-003-inline.html [ Failure ]
-crbug.com/657748 external/wpt/css/css-display-3/display-contents-dynamic-flex-003-none.html [ Failure ]
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-dynamic-table-001-inline.html [ Failure ]
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-flex-002.html [ Failure ]
-crbug.com/657748 external/wpt/css/css-display-3/display-contents-flex-003.html [ Failure ]
 
 # ====== End of display: contents tests ======
 
