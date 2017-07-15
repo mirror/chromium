@@ -36,6 +36,7 @@ namespace dial {
     DOMString deviceDescription;
   };
 
+  // Deprecated.  Use onNetworkIdChanged instead.
   enum DialErrorCode {
     no_listeners,
     no_valid_network_interfaces,
@@ -51,6 +52,7 @@ namespace dial {
 
   callback BooleanCallback = void (boolean result);
   callback DeviceDescriptionCallback = void (DialDeviceDescription result);
+  callback NetworkIdCallback = void (DOMString result);
 
   interface Functions {
 
@@ -70,6 +72,10 @@ namespace dial {
     // code.
     static void fetchDeviceDescription(DOMString deviceLabel,
                                        DeviceDescriptionCallback callback);
+
+    // Returns the current discovery network identifier.  See the documentation
+    // for onNetworkIdChanged for details.
+    static void getNetworkId(NetworkIdCallback callback);
   };
 
   interface Events {
@@ -86,6 +92,23 @@ namespace dial {
     static void onDeviceList(DialDevice[] result);
 
     // Event fired to inform clients on errors during device discovery.
+    // Deprecated.  Use onNetworkIdChanged instead.
     static void onError(DialError error);
+
+    // Fired when the network being used for discovery has changed.  |networkId|
+    // contains a short signature combining information from network interface
+    // and WiFi network identifiers to identify the current set of networks
+    // being used for discovery.  This can be used by clients to clear and
+    // re-bootstrap device caches on a network change.
+    //
+    // |networkId| can take the following values:
+    // - "hex-string" is a hash-style signature of the set of active networks.
+    // - "__disconnected__" means there is no active network for discovery.
+    // - "__unknown__" means there is an active network, but its signature
+    //   cannot be determined.
+    //
+    // This event may be throttled to prevent it from firing too frequently; it
+    // is designed to be event-page friendly.
+    static void onNetworkIdChanged(DOMString networkId);
   };
 };
