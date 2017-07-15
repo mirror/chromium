@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -26,6 +27,7 @@ import android.view.Window;
 import android.view.accessibility.AccessibilityManager;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.BuildInfo;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ObserverList;
@@ -211,6 +213,12 @@ public class WindowAndroid {
         mAccessibilityManager = (AccessibilityManager) mApplicationContext.getSystemService(
                 Context.ACCESSIBILITY_SERVICE);
         mDisplayAndroid = display;
+        // Configuration.isDisplayServerWideColorGamut must be queried from the window's context.
+        // TODO(boliu): Observe configuration changes to update the value of isScreenWideColorGamut.
+        if (BuildInfo.isAtLeastO() && activityFromContext(context) != null) {
+            Configuration configuration = context.getResources().getConfiguration();
+            display.updateIsDisplayServerWideColorGamut(configuration.isScreenWideColorGamut());
+        }
     }
 
     @CalledByNative
