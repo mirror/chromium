@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/numerics/math_util.h"
 #include "base/run_loop.h"
 #include "base/win/iunknown_impl.h"
 #include "base/win/scoped_propvariant.h"
@@ -624,9 +625,9 @@ TEST_F(PlatformSensorAndProviderTestWin, CheckGyroscopeReadingConversion) {
   base::RunLoop().RunUntilIdle();
   SensorReadingSharedBuffer* buffer =
       static_cast<SensorReadingSharedBuffer*>(mapping.get());
-  EXPECT_THAT(buffer->reading.values[0], -x_ang_accel * kRadiansInDegrees);
-  EXPECT_THAT(buffer->reading.values[1], -y_ang_accel * kRadiansInDegrees);
-  EXPECT_THAT(buffer->reading.values[2], -z_ang_accel * kRadiansInDegrees);
+  EXPECT_THAT(buffer->reading.values[0], base::DegToRad(-x_ang_accel));
+  EXPECT_THAT(buffer->reading.values[1], base::DegToRad(-y_ang_accel));
+  EXPECT_THAT(buffer->reading.values[2], base::DegToRad(-z_ang_accel));
   EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
 }
 

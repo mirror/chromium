@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "base/numerics/math_util.h"
 #include "base/stl_util.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_events.h"
@@ -13,7 +14,6 @@
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
 #include "cc/animation/transform_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/trees/property_animation_state.h"
 
 namespace cc {
@@ -745,8 +745,8 @@ void AnimationPlayer::TickAnimation(base::TimeTicks monotonic_time,
       break;
     case TargetProperty::OPACITY:
       target->NotifyClientOpacityAnimated(
-          MathUtil::ClampToRange(
-              curve->ToFloatAnimationCurve()->GetValue(trimmed), 0.0f, 1.0f),
+          base::ClampToRange(curve->ToFloatAnimationCurve()->GetValue(trimmed),
+                             0.0f, 1.0f),
           animation);
       break;
     case TargetProperty::FILTER:
