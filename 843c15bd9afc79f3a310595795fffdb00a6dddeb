@@ -243,6 +243,30 @@
     },
     {
       "key": {
+        "uuid": "92ee27ec_997f6d65",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-15T00:12:20Z",
+      "side": 1,
+      "message": "You can use base::ThreadRestrictions::ScopedAllowIO to override that.\n\nAlso -- use the open mode as \"wb\", otherwise it will behave a bit differently on Windows (windows will mangle the newlines).",
+      "parentUuid": "d65ae7cc_93e245ff",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35cbbbb8_dde8575b",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
@@ -405,6 +429,23 @@
       "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dc8f99a_6716f0ea",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-15T00:12:20Z",
+      "side": 1,
+      "message": "Alternately could disable buffering on file_ when it is first initialized, with setbuf(file_.get(), nullptr);",
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -877,6 +918,30 @@
       "side": 1,
       "message": "It seems GetInstance() and base::Singleton\u003cUrlLog, base::LeakySingletonTraits\u003cUrlLog\u003e\u003e::get() need the constructor to be public.",
       "parentUuid": "98aaaf45_43241d5b",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126b0d56_8b92c60d",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-15T00:12:20Z",
+      "side": 1,
+      "message": "You can make it private, just need to add the right friend statement.\n\nTry changing the friend struct below to:\n\nfriend struct base::DefaultSingletonTraits\u003cUrlLog\u003e;",
+      "parentUuid": "a79047fc_4a80bccc",
       "range": {
         "startLine": 49,
         "startChar": 12,
