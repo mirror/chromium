@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ab8240a_0a841e66",
+        "filename": "ui/login/account_picker/md_screen_account_picker.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-15T01:14:01Z",
+      "side": 1,
+      "message": "Are you sure you need other attributes here? Display: none would make the element not rendered, so no other properties matter.\n\nOr are you modifying \"display:none\" attribute later?",
+      "revId": "d3c088ebdd12b70341dc9eff67ecff68d8a73b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
