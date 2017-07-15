@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b9894d_bee493d7",
+        "filename": "components/offline_pages/core/offline_page_model_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-15T00:31:40Z",
+      "side": 1,
+      "message": "if the file is not yet using this form of initializers, we should not. Either switch all  applicablr fields to use this (and remove initializers from ctors) or add this new init to ctor.",
+      "range": {
+        "startLine": 293,
+        "startChar": 49,
+        "endLine": 293,
+        "endChar": 54
+      },
+      "revId": "760cd51accf7e5eef834f90c8d2631419e734d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
