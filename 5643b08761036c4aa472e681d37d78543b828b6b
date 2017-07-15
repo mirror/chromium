@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f3eea9d_dbe0aca4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T20:37:47Z",
+      "side": 1,
+      "message": "Am I understanding this correctly that basically blocks will have three types of children:\n- anonymous line boxes (the ones where child_fragment-\u003eLayoutObject() \u003d\u003d box_)\n- floats (child-\u003eLayoutObject() !\u003d box_)\n- regular block children (child-\u003eLayoutObject() !\u003d box_)\n\nIf yes:\nWould the check be more clearly be written as child_fragment()-\u003eType() \u003d\u003d LineBox?\nAnd, I thought floats were directly added to the block because we use container_builder when we insert float children; why do we look for floats as children of the linebox?",
+      "revId": "5643b08761036c4aa472e681d37d78543b828b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
