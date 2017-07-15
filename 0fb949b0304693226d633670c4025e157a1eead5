@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e37fc627_9010f1f7",
+        "filename": "extensions/common/api/_api_features.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "Makes sense. I wasn\u0027t thinking about it clearly.",
+      "parentUuid": "c44c2bcf_fbf9374a",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a68e1ff8_5beef835",
         "filename": "extensions/common/api/_manifest_features.json",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "0fb949b0304693226d633670c4025e157a1eead5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf6b58c_e839e2c4",
+        "filename": "extensions/common/api/_manifest_features.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a68e1ff8_5beef835",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cabfa168_f06ba7cb",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3353c0c9_8d5a8586",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "801372f5_f20e2a66",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1bc68e88_81c55736",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "Done. Was borrowing the terminology from registry_controlled_domains::SameDomainOrHost (https://cs.chromium.org/chromium/src/net/base/registry_controlled_domains/registry_controlled_domain.h?type\u003dcs\u0026q\u003dregistry_controlled_domains::SameDomainOrHost\u0026sq\u003dpackage:chromium\u0026l\u003d198) which I\u0027ll use for implementing the check. But yeah the crux is that the domain should be the same.",
+      "parentUuid": "801372f5_f20e2a66",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab2c0cf7_4bbc999c",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-14T23:04:43Z",
       "side": 1,
       "message": "Can you give an example of this?",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27466a28_6d6d6da2",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "This merely means that both first party and third party requests can be accepted (a request can\u0027t be both first party and third party simultaneously of course). Have rephrased.",
+      "parentUuid": "ab2c0cf7_4bbc999c",
       "revId": "0fb949b0304693226d633670c4025e157a1eead5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "12e0d9b8_42d15a1a",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f7dcf780_768964f8",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "254189cc_b5d8fa24",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 11
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3e91b01a_7475c329",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "254189cc_b5d8fa24",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b219f398_f7b62d86",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 11
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-14T23:04:43Z",
       "side": 1,
       "message": "Do we need this if we also have whitelist as a rule action?",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525237de_874077ff",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "This would lead to less verbose rules and aligns more closely with Easylist. Also, its needed for whitelist rules themselves. E.g.: \"Whitelist all requests from google.com except from api.google.com\".",
+      "parentUuid": "b219f398_f7b62d86",
       "revId": "0fb949b0304693226d633670c4025e157a1eead5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "83ae0742_3a0ab035",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "Yeah these checks seem sufficient. I was just wondering if there were any other corner cases, which might allow the extension to give a path outside the extension directory.",
+      "parentUuid": "f1f8ed82_576f1dd9",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c289fdf7_88c98c0b",
         "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
         "patchSetId": 11
@@ -166,6 +328,24 @@
       "writtenOn": "2017-07-14T23:04:43Z",
       "side": 1,
       "message": "As I mentioned in the features file, sometimes it\u0027s nice to just require them to add the permission as well for static analysis purposes (though I don\u0027t feel super strongly).",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be202150_29121678",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "Makes sense, have made the permission mandatory.",
+      "parentUuid": "c289fdf7_88c98c0b",
       "revId": "0fb949b0304693226d633670c4025e157a1eead5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "150e0860_32e0c06a",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "What validation can we do? As per the current design, RulesManifestHandler just sets the JSON ruleset path and validates that the passed file exists. (I think) the manifest handler is run each time an extension is loaded, and hence I didn\u0027t put any performance intensive code here. Actual parsing of the JSON ruleset and persisting of the flatbuffer ruleset is done during unpacking for packaged extensions and loading for unpackaged extensions.",
+      "parentUuid": "46a10cc6_64063719",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88868312_d53d14d2",
         "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
         "patchSetId": 11
@@ -203,6 +401,24 @@
       "revId": "0fb949b0304693226d633670c4025e157a1eead5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a849f379_bd2cb50a",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-15T05:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88868312_d53d14d2",
+      "revId": "0fb949b0304693226d633670c4025e157a1eead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
