@@ -106,6 +106,9 @@ void ParseSupportedMethods(
       "amex",       "diners", "discover", "jcb",
       "mastercard", "mir",    "unionpay", "visa"};
   std::set<std::string> remaining_card_networks(kBasicCardNetworks);
+
+  std::set<GURL> url_payment_method_identifiers;
+
   for (const PaymentMethodData& method_data_entry : method_data) {
     if (method_data_entry.supported_methods.empty())
       return;
@@ -156,10 +159,14 @@ void ParseSupportedMethods(
       } else {
         // Here |method| could be a repeated deprecated supported network (e.g.,
         // "visa"), some invalid string or a URL Payment Method Identifier.
-        // Capture this last category if the URL is https.
+        // Capture this last category if the URL is valid. Avoid duplicate URLs.
         GURL url(method);
-        if (url.is_valid() && url.SchemeIs(url::kHttpsScheme))
-          out_url_payment_method_identifiers->push_back(method);
+        if (url.is_valid() && url.SchemeIs(url::kHttpsScheme) &&
+            !url.has_username() && !url.has_password()) {
+          const auto result = url_payment_method_identifiers.insert(url);
+          if (result.second)
+            out_url_payment_method_identifiers->push_back(url.spec());
+        }
       }
     }
   }
