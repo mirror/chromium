@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cdab8af_866be4bc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-07-15T00:12:10Z",
+      "side": 1,
+      "message": "for Widevine CDM properties.",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "0f4e0fe906ab66340dbf96a66f0eed7af4ac758b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5604af99_42d4770f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-07-15T00:12:10Z",
+      "side": 1,
+      "message": "add bug #",
+      "revId": "0f4e0fe906ab66340dbf96a66f0eed7af4ac758b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
