@@ -16,6 +16,24 @@
       "revId": "8b8b0555fe1b8a018b18b58ce728a6e222aaa0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4413a02e_318c8c72",
+        "filename": "third_party/WebKit/Source/web/WebViewImpl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-15T00:48:52Z",
+      "side": 0,
+      "message": "IIRC without this I got failures in the Windows builds. Now there\u0027s real code for WebViewBase statics in another lib.",
+      "parentUuid": "62f75668_0a3e326a",
+      "revId": "8b8b0555fe1b8a018b18b58ce728a6e222aaa0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

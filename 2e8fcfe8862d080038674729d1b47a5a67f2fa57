@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "903098d0_25a8b3a3",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-15T00:48:52Z",
+      "side": 1,
+      "message": "Ack. There are 4 parameters (.page too). But we intend to delete this code ASAP, so it shouldn\u0027t matter! May I leave it as is?",
+      "parentUuid": "60f606c5_95a5cfb4",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591154de_c83276d8",
         "filename": "third_party/WebKit/Source/core/exported/WebViewBase.cpp",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T17:31:26Z",
       "side": 1,
       "message": "Why do you need to move line 34 - 49 to WebViewBase.cpp?",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b49c95b_776c0545",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewBase.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-15T00:48:52Z",
+      "side": 1,
+      "message": "WebDevToolsAgentImpl makes use of AllInstances. While I was making WebViewBase.cpp, it seemed sensible to move UseExternalPopupMenus, but not strictly necessary. I\u0027ll move them back to WebViewImpl.cpp if you like.",
+      "parentUuid": "591154de_c83276d8",
       "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4560ea30_47037c46",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorBaseAgent.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-15T00:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a2b574_2d372fc9",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d5191ea_b942eda8",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorBaseAgent.cpp",
         "patchSetId": 13
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "75b38bad_6cf08c2f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorBaseAgent.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-15T00:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d5191ea_b942eda8",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6468845_ccb656cd",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 13
@@ -84,6 +156,24 @@
       "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30089787_83c563af",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-15T00:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6468845_ccb656cd",
+      "revId": "2e8fcfe8862d080038674729d1b47a5a67f2fa57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
