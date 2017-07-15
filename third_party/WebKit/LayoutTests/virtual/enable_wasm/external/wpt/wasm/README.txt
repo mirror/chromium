@@ -1,1 +1,1 @@
-Tests that depend on --enable-features=WebAssembly
+Tests that depend on --enable-features=WebAssemblyIndexedDB
