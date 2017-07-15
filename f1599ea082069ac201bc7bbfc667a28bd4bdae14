@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ba85ec9_aa0df0b3",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-15T01:21:05Z",
+      "side": 1,
+      "message": "Would it make sense to optionally pass an actual card here?\n\nvoid ShowLocalBubble(CreditCard* card \u003d nullptr) {\n  controller()-\u003eShowBubbleForLocalSave(card ? CreditCard(*card) : autofill::test::GetCreditCard());  // Visa by default.\n}\n\nFrom https://cs.chromium.org/chromium/src/components/autofill/core/browser/autofill_test_utils.h?rcl\u003de08f39a041f2b288403fa7c36ee43f5afe89c5c7\u0026l\u003d87\n\nThe reason I ask is that for the CVC validity test you could call\n\nCreditCard amex \u003d autofill::test::GetCreditCard2();  // Amex.\nShowLocalBubble(\u0026amex);\nEXPECT_TRUE(controller()-\u003eInputCvcIsValid(base::ASCIIToUTF16(\"1234\")));\nEXPECT_FALSE(controller()-\u003eInputCvcIsValid(base::ASCIIToUTF16(\"123\")));",
+      "revId": "f1599ea082069ac201bc7bbfc667a28bd4bdae14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
