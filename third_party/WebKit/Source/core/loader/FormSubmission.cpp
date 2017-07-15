@@ -287,25 +287,25 @@ KURL FormSubmission::RequestURL() const {
 
 FrameLoadRequest FormSubmission::CreateFrameLoadRequest(
     Document* origin_document) {
-  FrameLoadRequest frame_request(origin_document);
-
-  if (!target_.IsEmpty())
-    frame_request.SetFrameName(target_);
+  ResourceRequest resource_request(RequestURL());
 
   if (method_ == FormSubmission::kPostMethod) {
-    frame_request.GetResourceRequest().SetHTTPMethod("POST");
-    frame_request.GetResourceRequest().SetHTTPBody(form_data_);
+    resource_request.SetHTTPMethod("POST");
+    resource_request.SetHTTPBody(form_data_);
 
     // construct some user headers if necessary
     if (boundary_.IsEmpty()) {
-      frame_request.GetResourceRequest().SetHTTPContentType(content_type_);
+      resource_request.SetHTTPContentType(content_type_);
     } else {
-      frame_request.GetResourceRequest().SetHTTPContentType(
-          content_type_ + "; boundary=" + boundary_);
+      resource_request.SetHTTPContentType(content_type_ +
+                                          "; boundary=" + boundary_);
     }
   }
 
-  frame_request.GetResourceRequest().SetURL(RequestURL());
+  FrameLoadRequest frame_request(origin_document, resource_request);
+
+  if (!target_.IsEmpty())
+    frame_request.SetFrameName(target_);
 
   frame_request.SetTriggeringEvent(event_);
   frame_request.SetForm(form_);
