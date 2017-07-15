@@ -34,6 +34,24 @@
       "revId": "43a2e8f0178b2ffd0e084c0395b93318100ae1d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f6671e_9add47ed",
+        "filename": "chrome/browser/chromeos/arc/downloads_watcher/arc_downloads_watcher_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-15T11:43:10Z",
+      "side": 1,
+      "message": "Ok, then let\u0027s remove.",
+      "parentUuid": "99cec1b7_cc262323",
+      "revId": "43a2e8f0178b2ffd0e084c0395b93318100ae1d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
