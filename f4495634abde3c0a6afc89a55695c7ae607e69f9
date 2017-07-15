@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0acff5ba_d195a1c1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T18:42:36Z",
+      "side": 1,
+      "message": "What if width_is_shrink_to_fit is true? Will the code do the right thing and shrink to fit, or just size to available width?",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13871e3c_80811e69",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T18:42:36Z",
+      "side": 1,
+      "message": "I\u0027m not completely sure that height: auto will do the right thing when top/bottom are set to nonzero values?",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5293a926_559ffbbb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T18:42:36Z",
+      "side": 1,
+      "message": "You are passing an NGPhysicalSize -- why the comment that this is a physical size?\n\n(same question below)",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210d39ca_2fcef6f8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T18:42:36Z",
+      "side": 1,
+      "message": "Why not just pass WTF::nullopt for intrinsic_size here, to make it clearer what this does? (also below)",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f20c417_23f589f8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_base_layout_algorithm_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T18:42:36Z",
+      "side": 1,
+      "message": "same question",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226d35a8_a5a679bf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_constraint_space.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T18:42:36Z",
+      "side": 1,
+      "message": "Perhaps document in the header that override_logical_width is only used if the box does not already have an override logical width?",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b00cc95_b1d89adb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T18:42:36Z",
+      "side": 1,
+      "message": "Document that this should only be called if IsReplaced() is true?",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8718ff5f_2ea2aae2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T18:42:36Z",
+      "side": 1,
+      "message": "Hm... the only reason IntrinsicSize() needs a constraint space is so that it can return the border-box intrinsic size. What do you think about making it IntrinsicContentSize() and letting callers adjust it to border-box if they need to?",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04a8583_0c1ae61a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-15T18:42:36Z",
+      "side": 1,
+      "message": "nullopt",
+      "revId": "f4495634abde3c0a6afc89a55695c7ae607e69f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
