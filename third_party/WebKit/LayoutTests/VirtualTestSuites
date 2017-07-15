@@ -144,7 +144,7 @@
   },
   {
     "prefix": "off-main-thread-fetch",
-    "base": "http/tests/security/cookies",
+    "base": "http/tests/security",
     "args": ["--enable-features=OffMainThreadFetch"]
   },
   {
