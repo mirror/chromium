@@ -454,6 +454,7 @@ class BlobEntryKey {
 class IndexDataKey {
  public:
   IndexDataKey();
+  IndexDataKey(IndexDataKey&& other);
   ~IndexDataKey();
   static bool Decode(base::StringPiece* slice, IndexDataKey* result);
   CONTENT_EXPORT static std::string Encode(
@@ -483,6 +484,8 @@ class IndexDataKey {
   int64_t IndexId() const;
   std::unique_ptr<IndexedDBKey> user_key() const;
   std::unique_ptr<IndexedDBKey> primary_key() const;
+
+  std::string Encode() const;
 
  private:
   int64_t database_id_;

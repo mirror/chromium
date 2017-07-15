@@ -838,6 +838,8 @@ source_set("browser") {
     "indexed_db/indexed_db_quota_client.cc",
     "indexed_db/indexed_db_quota_client.h",
     "indexed_db/indexed_db_return_value.h",
+    "indexed_db/indexed_db_tombstone_crawler.cc",
+    "indexed_db/indexed_db_tombstone_crawler.h",
     "indexed_db/indexed_db_tracing.h",
     "indexed_db/indexed_db_transaction.cc",
     "indexed_db/indexed_db_transaction.h",

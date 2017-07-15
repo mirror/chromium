@@ -10,12 +10,15 @@
 #include <vector>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/default_clock.h"
 #include "base/time/time.h"
 #include "content/browser/indexed_db/indexed_db_backing_store.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/indexed_db/indexed_db_database_error.h"
+#include "content/browser/indexed_db/indexed_db_tombstone_crawler.h"
 #include "content/browser/indexed_db/indexed_db_tracing.h"
 #include "content/browser/indexed_db/indexed_db_transaction_coordinator.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseException.h"
@@ -87,6 +90,16 @@ void IndexedDBFactoryImpl::ReleaseBackingStore(const Origin& origin,
     CloseBackingStore(origin);
     return;
   }
+
+  scoped_refptr<IndexedDBBackingStore> store = backing_store_map_[origin];
+
+  std::unique_ptr<IndexedDBTombstoneCrawler> crawler =
+      base::MakeUnique<IndexedDBTombstoneCrawler>(
+          IndexedDBTombstoneCrawler::Mode::DELETION,
+          base::TimeDelta::FromSeconds(5),
+          base::MakeUnique<base::DefaultClock>(), base::Bind(&base::DoNothing));
+
+  store->DetectTombstones(std::move(crawler));
 
   // Start a timer to close the backing store, unless something else opens it
   // in the mean time.

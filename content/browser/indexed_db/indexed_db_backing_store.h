@@ -59,6 +59,7 @@ class LevelDBDatabase;
 class LevelDBFactory;
 struct IndexedDBDataLossInfo;
 struct IndexedDBValue;
+class IndexedDBTombstoneCrawler;
 
 class CONTENT_EXPORT IndexedDBBackingStore
     : public base::RefCounted<IndexedDBBackingStore> {
@@ -584,6 +585,8 @@ class CONTENT_EXPORT IndexedDBBackingStore
       const IndexedDBKeyRange& key_range,
       blink::WebIDBCursorDirection,
       leveldb::Status*);
+
+  void DetectTombstones(std::unique_ptr<IndexedDBTombstoneCrawler> crawler);
 
  protected:
   friend class base::RefCounted<IndexedDBBackingStore>;
