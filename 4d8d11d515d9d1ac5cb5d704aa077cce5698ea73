@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e54aba7_44e394c1",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-15T07:24:59Z",
+      "side": 1,
+      "message": "Oh -- WebView is using this (see the bits in aw_web_contents_view_delegate) to ensure that we always draw sRGB in WebView. In aw_web_contents_view_delegate we\u0027ll want to enable this only when the embedding window is WCG -- I left a TODO there.",
+      "parentUuid": "76bce294_4818dcfb",
+      "revId": "4d8d11d515d9d1ac5cb5d704aa077cce5698ea73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3261edf5_561afbf3",
         "filename": "ui/android/java/src/org/chromium/ui/base/WindowAndroid.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "41c73bca_47de0897",
+        "filename": "ui/android/java/src/org/chromium/ui/base/WindowAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-15T07:24:59Z",
+      "side": 1,
+      "message": "Done:\n- used context directly\n- don\u0027t update the value if activityFromContext is null (the default value is not-WCG)\n- added TODO for observing configuration changes",
+      "parentUuid": "3261edf5_561afbf3",
+      "revId": "4d8d11d515d9d1ac5cb5d704aa077cce5698ea73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab1ca771_7180abdf",
         "filename": "ui/android/java/src/org/chromium/ui/display/DisplayAndroid.java",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-14T21:18:24Z",
       "side": 1,
       "message": "can we name something else..? \"screen\" has a specific meaning here, it\u0027s the one and only \"virtual screen\" space where windows can move, which (on desktop) is pieced together multiple displays.\n\nmaybe isDisplayServerWideColorGamut? since I think that\u0027s what it actually is\n\nalso, I understand these are here so VirtualDisplay can access them, but I think protected should be fine. Publicly, should only expose the and-ed result",
+      "range": {
+        "startLine": 162,
+        "startChar": 18,
+        "endLine": 162,
+        "endChar": 24
+      },
+      "revId": "4d8d11d515d9d1ac5cb5d704aa077cce5698ea73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727dcb0f_016b2bf5",
+        "filename": "ui/android/java/src/org/chromium/ui/display/DisplayAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-15T07:24:59Z",
+      "side": 1,
+      "message": "Updated\n- using isDisplayServerWideColorGamut for the variable name\n- changed variables to protected and merged the accessor to return the conjunction",
+      "parentUuid": "ab1ca771_7180abdf",
       "range": {
         "startLine": 162,
         "startChar": 18,
