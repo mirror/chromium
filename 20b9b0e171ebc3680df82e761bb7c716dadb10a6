@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "052a9294_e5540b23",
+        "filename": "ui/compositor/paint_cache.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-15T00:40:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bef1f680_42a143c9",
+      "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b03855a_85f39911",
         "filename": "ui/compositor/paint_cache.h",
         "patchSetId": 15
@@ -51,6 +69,24 @@
       "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba89233_c589effd",
+        "filename": "ui/compositor/paint_cache.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-15T00:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b03855a_85f39911",
+      "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1b6f1367_1496d0ec",
+        "filename": "ui/compositor/paint_recorder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-15T00:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9468859_b398dae2",
+      "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1883532_075b4a57",
         "filename": "ui/compositor/paint_recorder.cc",
         "patchSetId": 15
@@ -82,6 +136,24 @@
       "writtenOn": "2017-07-14T15:42:34Z",
       "side": 1,
       "message": "I\u0027m not sure you rly need to do this, it\u0027d be hella weird to use the cache before we finished the PaintRecorder. The old code did this but it was to get the context more than to null things. Up to you.",
+      "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc58bc99_28778ec1",
+        "filename": "ui/compositor/paint_recorder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-15T00:40:18Z",
+      "side": 1,
+      "message": "Removed, this was me debugging things.",
+      "parentUuid": "e1883532_075b4a57",
       "revId": "20b9b0e171ebc3680df82e761bb7c716dadb10a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
