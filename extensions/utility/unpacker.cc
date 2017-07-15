@@ -10,7 +10,6 @@
 #include <set>
 #include <tuple>
 #include <utility>
-
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
@@ -233,6 +232,17 @@ bool Unpacker::Run() {
   if (!LocaleInfo::GetDefaultLocale(extension.get()).empty()) {
     if (!ReadAllMessageCatalogs())
       return false;  // Error was already reported.
+  }
+
+  // Index the ruleset for the Declarative Net Request API if necessary.
+  // COMMENT: As per my understanding it is safe to parse a flatbuffer file in
+  // the browser process. Confirm.
+  // COMMENT:
+  // Alternative: we can just use safe_json_parser in sandboxed_unpacker, which
+  // parses json OOP or Have this return base::Value of json ruleset (like
+  // manifest) but passing a big Value object over IPC might be expensive.
+  if (!file_util::IndexAndPersistRulesetIfNeeded(extension.get(), &error)) {
+    return false;  // error should be populated by the above call.
   }
 
   return DumpImagesToFile() && DumpMessageCatalogsToFile();
