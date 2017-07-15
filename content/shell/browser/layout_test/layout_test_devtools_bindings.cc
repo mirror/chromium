@@ -133,6 +133,11 @@ void LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend(
   if (parsed_message && parsed_message->GetAsDictionary(&dict) &&
       dict->GetString("method", &method) && method == "readyForTest") {
     ready_for_test_ = true;
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kDebugDevTools)) {
+      web_contents()->GetMainFrame()->ExecuteJavaScriptForTests(
+          base::UTF8ToUTF16("self.debugTest = true;"));
+    }
     for (const auto& pair : pending_evaluations_)
       EvaluateInFrontend(pair.first, pair.second);
     pending_evaluations_.clear();
