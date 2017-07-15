@@ -107,8 +107,8 @@ std::unique_ptr<NativeMessageHost> CreateIt2MeHost() {
           content::BrowserThread::GetTaskRunnerForThread(
               content::BrowserThread::FILE));
   std::unique_ptr<remoting::PolicyWatcher> policy_watcher =
-      remoting::PolicyWatcher::Create(g_browser_process->policy_service(),
-                                      context->file_task_runner());
+      remoting::PolicyWatcher::CreateFromPolicyService(
+          g_browser_process->policy_service());
   std::unique_ptr<NativeMessageHost> host(
       new remoting::It2MeNativeMessagingHost(
           /*needs_elevation=*/false, std::move(policy_watcher),
