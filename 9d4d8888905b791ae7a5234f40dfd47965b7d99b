@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c0ca408_05cae7b3",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-15T01:11:57Z",
+      "side": 1,
+      "message": "This is error-prone. Outside of unit tests, there shouldn\u0027t ever be a case where you keep a pointer and pass it to another object using WrapUnique(). Even if this were completely safe right now, it would be easy for someone else to introduce a bug which deletes the ActiveUsersLogger object and causes a segfault.\n\nInstead, separate ActiveUsersLogger into two classes: one which just keeps track of when the last time the user was active and one which implements the Observer interface. You\u0027ll want to inject the first class into the second one.\n\nThen, pass the first class through to TetherConnector and pass your second class to |daily_event_|.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 68
+      },
+      "revId": "9d4d8888905b791ae7a5234f40dfd47965b7d99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c1349d_c7a404b0",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-15T01:11:57Z",
+      "side": 1,
+      "message": "nit: Can you add newline around this?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 1
+      },
+      "revId": "9d4d8888905b791ae7a5234f40dfd47965b7d99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2402b4a9_1ba02c93",
+        "filename": "chromeos/components/tether/tether_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-15T01:11:57Z",
+      "side": 1,
+      "message": "num_times_record_user_was_active_called()",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "9d4d8888905b791ae7a5234f40dfd47965b7d99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19c4382_cbb85296",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 26757,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-15T01:11:57Z",
+      "side": 1,
+      "message": "nit: Can you sort these in order (1, 7, 14, 28)?",
+      "range": {
+        "startLine": 26757,
+        "startChar": 0,
+        "endLine": 26757,
+        "endChar": 1
+      },
+      "revId": "9d4d8888905b791ae7a5234f40dfd47965b7d99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418558d6_493dfd01",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 26891,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-15T01:11:57Z",
+      "side": 1,
+      "message": "Can you explain this metric? I\u0027m not sure I understand what it represents.",
+      "range": {
+        "startLine": 26891,
+        "startChar": 17,
+        "endLine": 26891,
+        "endChar": 57
+      },
+      "revId": "9d4d8888905b791ae7a5234f40dfd47965b7d99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
