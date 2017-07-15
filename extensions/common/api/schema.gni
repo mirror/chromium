@@ -16,6 +16,7 @@ extensions_api_schema_files_ = [
   "cast_channel.idl",
   "clipboard.idl",
   "document_scan.idl",
+  "declarative_net_request.idl",
   "display_source.idl",
   "dns.idl",
   "events.json",
