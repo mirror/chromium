@@ -24,10 +24,11 @@ public class AwSafeBrowsingConfigHelper {
     public static void maybeInitSafeBrowsingFromSettings(final Context appContext) {
         if (CommandLine.getInstance().hasSwitch(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
                 || appHasOptedIn(appContext)) {
+            AwContentsStatics.setSafeBrowsingEnabledByManifest(true);
             // Assume safebrowsing on by default initially. If GMS is available, we later use
             // isVerifyAppsEnabled() to check if "Scan device for security threats" has been checked
             // by the user.
-            AwContentsStatics.setSafeBrowsingEnabled(true);
+            AwContentsStatics.setSafeBrowsingUserOptIn(true);
         }
     }
 

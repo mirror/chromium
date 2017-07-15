@@ -18,13 +18,14 @@ bool g_safebrowsing_enabled = false;
 namespace android_webview {
 
 // static
-void AwSafeBrowsingConfigHelper::SetSafeBrowsingEnabled(bool enabled) {
+void AwSafeBrowsingConfigHelper::SetSafeBrowsingEnabledByManifest(
+    bool enabled) {
   base::AutoLock lock(g_safebrowsing_enabled_lock.Get());
   g_safebrowsing_enabled = enabled;
 }
 
 // static
-bool AwSafeBrowsingConfigHelper::GetSafeBrowsingEnabled() {
+bool AwSafeBrowsingConfigHelper::GetSafeBrowsingEnabledByManifest() {
   base::AutoLock lock(g_safebrowsing_enabled_lock.Get());
   return g_safebrowsing_enabled;
 }
