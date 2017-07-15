@@ -6,7 +6,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
+#include "base/numerics/math_util.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/close_button_texture.h"
 #include "chrome/browser/vr/elements/exclusive_screen_toast.h"
@@ -189,7 +189,7 @@ void UiSceneManager::CreateSecurityWarnings() {
   cc::TransformOperations operations;
   operations.AppendTranslate(0, kWarningDistance * sin(kWarningAngleRadians),
                              -kWarningDistance * cos(kWarningAngleRadians));
-  operations.AppendRotate(1, 0, 0, cc::MathUtil::Rad2Deg(kWarningAngleRadians));
+  operations.AppendRotate(1, 0, 0, base::RadToDeg(kWarningAngleRadians));
   operations.AppendScale(kWarningDistance, kWarningDistance, 1);
   element->set_transform_operations(operations);
 
@@ -372,7 +372,7 @@ void UiSceneManager::CreateUrlBar() {
   url_bar->set_id(AllocateId());
   cc::TransformOperations operations;
   operations.AppendTranslate(0, kUrlBarVerticalOffset, -kUrlBarDistance);
-  operations.AppendRotate(1, 0, 0, cc::MathUtil::Rad2Deg(kUrlBarRotationRad));
+  operations.AppendRotate(1, 0, 0, base::RadToDeg(kUrlBarRotationRad));
   url_bar->set_transform_operations(operations);
   url_bar->set_size({kUrlBarWidth, kUrlBarHeight, 1});
   url_bar_ = url_bar.get();
@@ -406,7 +406,7 @@ void UiSceneManager::CreateTransientUrlBar() {
   cc::TransformOperations operations;
   operations.AppendTranslate(0, kTransientUrlBarVerticalOffset,
                              -kTransientUrlBarDistance);
-  operations.AppendRotate(1, 0, 0, cc::MathUtil::Rad2Deg(kUrlBarRotationRad));
+  operations.AppendRotate(1, 0, 0, base::RadToDeg(kUrlBarRotationRad));
   url_bar->set_transform_operations(operations);
   url_bar->set_size({kTransientUrlBarWidth, kTransientUrlBarHeight, 1});
   transient_url_bar_ = url_bar.get();
@@ -735,7 +735,7 @@ void UiSceneManager::ConfigureExclusiveScreenToast() {
     cc::TransformOperations operations;
     operations.AppendTranslate(0, kWebVrToastDistance * sin(kWebVrAngleRadians),
                                -kWebVrToastDistance * cos(kWebVrAngleRadians));
-    operations.AppendRotate(1, 0, 0, cc::MathUtil::Rad2Deg(kWebVrAngleRadians));
+    operations.AppendRotate(1, 0, 0, base::RadToDeg(kWebVrAngleRadians));
     operations.AppendScale(kWebVrToastDistance, kWebVrToastDistance, 1);
     exclusive_screen_toast_->set_transform_operations(operations);
     exclusive_screen_toast_->set_lock_to_fov(true);

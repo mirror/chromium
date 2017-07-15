@@ -584,6 +584,7 @@ component("base") {
     "numerics/checked_math_impl.h",
     "numerics/clamped_math.h",
     "numerics/clamped_math_impl.h",
+    "numerics/math_util.h",
     "numerics/safe_conversions.h",
     "numerics/safe_conversions_arm_impl.h",
     "numerics/safe_conversions_impl.h",
