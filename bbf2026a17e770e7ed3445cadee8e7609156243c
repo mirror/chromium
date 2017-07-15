@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06341b2a_f692be7f",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-objects-tracking.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-15T01:25:24Z",
+      "side": 1,
+      "message": "nit: await",
+      "revId": "bbf2026a17e770e7ed3445cadee8e7609156243c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b39be3_d7e46709",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/heap-profiler/heap-snapshot-with-active-dom-object.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-15T01:25:24Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "bbf2026a17e770e7ed3445cadee8e7609156243c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
