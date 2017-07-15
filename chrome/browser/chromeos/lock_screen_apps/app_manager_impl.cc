@@ -144,7 +144,11 @@ void AppManagerImpl::Initialize(Profile* primary_profile,
       base::Bind(&AppManagerImpl::OnNoteTakingExtensionChanged,
                  base::Unretained(this)));
   pref_change_registrar_.Add(
-      prefs::kNoteTakingAppEnabledOnLockScreen,
+      prefs::kNoteTakingAppsAllowedOnLockScreen,
+      base::Bind(&AppManagerImpl::OnNoteTakingExtensionChanged,
+                 base::Unretained(this)));
+  pref_change_registrar_.Add(
+      prefs::kNoteTakingAppsEnabledOnLockScreen,
       base::Bind(&AppManagerImpl::OnNoteTakingExtensionChanged,
                  base::Unretained(this)));
 }
@@ -259,9 +263,9 @@ std::string AppManagerImpl::FindLockScreenNoteTakingApp() const {
       chromeos::NoteTakingHelper::Get()->GetPreferredChromeAppInfo(
           primary_profile_);
 
-  if (!note_taking_app ||
+  if (!note_taking_app || !note_taking_app->preferred ||
       note_taking_app->lock_screen_support !=
-          chromeos::NoteTakingLockScreenSupport::kSelected) {
+          chromeos::NoteTakingLockScreenSupport::kEnabled) {
     return std::string();
   }
 

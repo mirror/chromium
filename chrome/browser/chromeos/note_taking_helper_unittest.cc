@@ -496,26 +496,28 @@ TEST_P(NoteTakingHelperTest, PreferredAppEnabledOnLockScreen) {
   // preferred note taking app, the app should be reported as selected as lock
   // screen note taking app.
   helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
-  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    true);
+  helper()->SetAppEnabledOnLockScreen(
+      profile(), NoteTakingHelper::kDevKeepExtensionId, true);
+
   apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(1u, apps.size());
-  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
-                         true /* preferred */,
-                         NoteTakingLockScreenSupport::kSelected),
-            GetAppString(apps[0]));
+  EXPECT_EQ(
+      GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                   true /* preferred */, NoteTakingLockScreenSupport::kEnabled),
+      GetAppString(apps[0]));
   std::unique_ptr<NoteTakingAppInfo> preferred_info =
       helper()->GetPreferredChromeAppInfo(profile());
   ASSERT_TRUE(preferred_info);
-  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
-                         true /* preferred */,
-                         NoteTakingLockScreenSupport::kSelected),
-            GetAppString(*preferred_info));
+  EXPECT_EQ(
+      GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                   true /* preferred */, NoteTakingLockScreenSupport::kEnabled),
+      GetAppString(*preferred_info));
 
   // When lock screen note taking pref is reset, the app should not be reported
   // as selected on lock screen.
-  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    false);
+  helper()->SetAppEnabledOnLockScreen(
+      profile(), NoteTakingHelper::kDevKeepExtensionId, false);
+
   apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(1u, apps.size());
   EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
@@ -607,51 +609,32 @@ TEST_P(NoteTakingHelperTest,
   // is enabled, the keep app should be reported to be selected as the lock
   // screen note taking app.
   helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
-  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    true);
+  helper()->SetAppEnabledOnLockScreen(
+      profile(), NoteTakingHelper::kDevKeepExtensionId, true);
+
   apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(2u, apps.size());
-  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
-                         true /* preferred */,
-                         NoteTakingLockScreenSupport::kSelected),
-            GetAppString(apps[0]));
+  EXPECT_EQ(
+      GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
+                   true /* preferred */, NoteTakingLockScreenSupport::kEnabled),
+      GetAppString(apps[0]));
   EXPECT_EQ(GetAppString(kNewNoteId, kName, false /* preferred */,
                          NoteTakingLockScreenSupport::kNotSupported),
             GetAppString(apps[1]));
 
   // When a third party app (which does not support lock screen note taking) is
-  // set as the preferred app, Keep app should stop being reported as the
-  // selected note taking app.
+  // set as the preferred app, Keep app's lock screen support state remain
+  // enabled - even though it will not be launchable from the lock screen.
   helper()->SetPreferredApp(profile(), kNewNoteId);
   apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(2u, apps.size());
   EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
                          false /* preferred */,
-                         NoteTakingLockScreenSupport::kSupported),
+                         NoteTakingLockScreenSupport::kEnabled),
             GetAppString(apps[0]));
   EXPECT_EQ(GetAppString(kNewNoteId, kName, true /* preferred */,
                          NoteTakingLockScreenSupport::kNotSupported),
             GetAppString(apps[1]));
-
-  // Setting an app that does not support lock screen note taking should reset
-  // the 'enable lock screen note taking' preference to |false|.
-  EXPECT_FALSE(profile()->GetPrefs()->GetBoolean(
-      prefs::kNoteTakingAppEnabledOnLockScreen));
-
-  // Setting the Keep app as the preferred app again should not re-anable lock
-  // screen note taking.
-  helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
-  apps = helper()->GetAvailableApps(profile());
-  ASSERT_EQ(2u, apps.size());
-  EXPECT_EQ(GetAppString(NoteTakingHelper::kDevKeepExtensionId, kDevKeepAppName,
-                         true /* preferred */,
-                         NoteTakingLockScreenSupport::kSupported),
-            GetAppString(apps[0]));
-  EXPECT_EQ(GetAppString(kNewNoteId, kName, false /* preferred */,
-                         NoteTakingLockScreenSupport::kNotSupported),
-            GetAppString(apps[1]));
-  EXPECT_FALSE(profile()->GetPrefs()->GetBoolean(
-      prefs::kNoteTakingAppEnabledOnLockScreen));
 }
 
 TEST_P(NoteTakingHelperTest,
@@ -677,8 +660,8 @@ TEST_P(NoteTakingHelperTest,
   InstallExtension(dev_extension.get(), profile());
 
   helper()->SetPreferredApp(profile(), NoteTakingHelper::kDevKeepExtensionId);
-  profile()->GetPrefs()->SetBoolean(prefs::kNoteTakingAppEnabledOnLockScreen,
-                                    true);
+  helper()->SetAppEnabledOnLockScreen(
+      profile(), NoteTakingHelper::kDevKeepExtensionId, true);
 
   std::vector<NoteTakingAppInfo> apps = helper()->GetAvailableApps(profile());
   ASSERT_EQ(1u, apps.size());

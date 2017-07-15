@@ -70,7 +70,7 @@ settings.PowerManagementSettings;
  * @typedef {{name:string,
  *            value:string,
  *            preferred:boolean,
- *            supportsLockScreen: boolean}}
+ *            supportsLockScreen: string}}
  */
 settings.NoteAppInfo;
 
@@ -146,6 +146,8 @@ cr.define('settings', function() {
      *     |onNoteTakingAppsUpdated| callback.
      */
     setPreferredNoteTakingApp(appId) {}
+
+    setNoteTakingAppEnabledOnLockScreen(appId, enabled) {}
   }
 
   /**
@@ -223,6 +225,11 @@ cr.define('settings', function() {
     /** @override */
     setPreferredNoteTakingApp(appId) {
       chrome.send('setPreferredNoteTakingApp', [appId]);
+    }
+
+    /** @override */
+    setNoteTakingAppEnabledOnLockScreen(appId, enabled) {
+      chrome.send('setNoteTakingAppEnabledOnLockScreen', [appId, enabled]);
     }
   }
 

@@ -42,6 +42,7 @@ class StylusHandler : public ::settings::SettingsPageUIHandler,
   void UpdateNoteTakingApps();
   void RequestApps(const base::ListValue* unused_args);
   void SetPreferredNoteTakingApp(const base::ListValue* args);
+  void SetNoteTakingAppEnabledOnLockScreen(const base::ListValue* args);
 
   // Called by JS to request a |SendHasStylus| call.
   void HandleInitialize(const base::ListValue* args);

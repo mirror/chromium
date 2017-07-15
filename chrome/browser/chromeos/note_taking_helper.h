@@ -48,14 +48,12 @@ namespace chromeos {
 enum class NoteTakingLockScreenSupport {
   // The app does not support note taking on lock screen.
   kNotSupported,
+  kNotAllowedByPolicy,
   // The app supports note taking on lock screen, but is not selected as the
   // lock screen note taking app by the user. This state implies that the user
   // can be offered to select this app as the lock screen note taking handler.
   kSupported,
-  // The app is selected as the lock screen note taking app by the user.
-  // Currently, only the preferred note taking app can be selected as the lock
-  // screen handler.
-  kSelected
+  kEnabled,
 };
 
 // Information about an installed note-taking app.
@@ -166,6 +164,10 @@ class NoteTakingHelper : public arc::ArcIntentHelperObserver,
   // Sets the preferred note-taking app. |app_id| is a value from a
   // NoteTakingAppInfo object.
   void SetPreferredApp(Profile* profile, const std::string& app_id);
+
+  void SetAppEnabledOnLockScreen(Profile* profile,
+                                 const std::string& app_id,
+                                 bool enabled);
 
   // Returns true if an app that can be used to take notes is available. UI
   // surfaces that call LaunchAppForNewNote() should be hidden otherwise.

@@ -710,11 +710,20 @@ const char kLaunchPaletteOnEjectEvent[] =
 // indicates that the user hasn't selected an app yet.
 const char kNoteTakingAppId[] = "settings.note_taking_app_id";
 
-// A boolean pref indicating whether preferred note-taking app (see
-// |kNoteTakingAppId|) is allowed to handle note taking actions on the lock
-// screen.
-const char kNoteTakingAppEnabledOnLockScreen[] =
-    "settings.note_taking_app_enabled_on_lock_screen";
+// List of note taking aps that can be enabled to run on the lock screen.
+// The intended usage is to whitelist the set of apps that the user can enable
+// to run on lock screen - i.e. the set of apps that can be added to
+// |kNoteTakingAppsEnabledOnLockScreen| list.
+const char kNoteTakingAppsAllowedOnLockScreen[] =
+    "settings.note_taking_apps_allowed_on_lock_screen";
+
+// A list pref that contains note taking apps that have been enabled to run on
+// the lock screen. It is a subset of |kNoteTakingAppsAllowedOnLockScreen| -
+// any app ID that is not listed in that pref will be ignored.
+// Note that currently only the app that is selected as the preferred note
+// taking app (kNoteTakingAppId) will be launchable from the lock screen.
+const char kNoteTakingAppsEnabledOnLockScreen[] =
+    "settings.note_taking_apps_enabled_on_lock_screen";
 
 // A boolean pref indicating whether user activity has been observed in the
 // current session already. The pref is used to restore information about user
