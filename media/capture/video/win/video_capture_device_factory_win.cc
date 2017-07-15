@@ -35,6 +35,9 @@ namespace media {
 const char kVidPrefix[] = "vid_";  // Also contains '\0'.
 const char kPidPrefix[] = "pid_";  // Also contains '\0'.
 const size_t kVidPidSize = 4;
+const char kMiPrefix[] = "mi_";
+const size_t kGroupIdOffsetAfterMi = 6;
+const size_t kGroupIdSize = 16;
 
 // Avoid enumerating and/or using certain devices due to they provoking crashes
 // or any other reason (http://crbug.com/378494). This enum is defined for the
@@ -150,6 +153,18 @@ static std::string GetDeviceModelId(const std::string& device_id) {
   return id_vendor + ":" + id_product;
 }
 
+static std::string GetDeviceGroupId(const std::string& device_id) {
+  // DevicePath for composited devices is formed as
+  // \?usb#vid_vvvv&pid_pppp&mi_ii#aaaaaaaaaaaaaaaa#{gggggggg-gggg-gggg-gggg-gggggggggggg}
+  // We use aaaaaaaaaaaaaaaa identifying USB port and interface as group_id.
+  const size_t mi_location = device_id.find(kMiPrefix);
+  if (mi_location == std::string::npos ||
+      mi_location + kGroupIdOffsetAfterMi + kGroupIdSize > device_id.size()) {
+    return std::string();
+  }
+  return device_id.substr(mi_location + kGroupIdOffsetAfterMi, kGroupIdSize);
+}
+
 static void GetDeviceDescriptorsDirectShow(Descriptors* device_descriptors) {
   DCHECK(device_descriptors);
   DVLOG(1) << __func__;
@@ -201,8 +216,9 @@ static void GetDeviceDescriptorsDirectShow(Descriptors* device_descriptors) {
     }
 
     const std::string model_id = GetDeviceModelId(id);
+    const std::string group_id = GetDeviceGroupId(id);
 
-    device_descriptors->emplace_back(device_name, id, model_id,
+    device_descriptors->emplace_back(device_name, id, model_id, group_id,
                                      VideoCaptureApi::WIN_DIRECT_SHOW);
   }
 }
@@ -230,9 +246,10 @@ static void GetDeviceDescriptorsMediaFoundation(
         const std::string device_id =
             base::SysWideToUTF8(std::wstring(id, id_size));
         const std::string model_id = GetDeviceModelId(device_id);
+        const std::string group_id = GetDeviceGroupId(device_id);
         device_descriptors->emplace_back(
             base::SysWideToUTF8(std::wstring(name, name_size)), device_id,
-            model_id, VideoCaptureApi::WIN_MEDIA_FOUNDATION);
+            model_id, group_id, VideoCaptureApi::WIN_MEDIA_FOUNDATION);
       }
     }
     DLOG_IF(ERROR, FAILED(hr)) << "GetAllocatedString failed: "
