@@ -1425,7 +1425,7 @@
     ],
 
     'release_bot_fuchsia': [
-      'release_bot', 'fuchsia',
+      'release_bot', 'fuchsia', 'dcheck_always_on',
     ],
 
     'release_bot_mac_new_sdk': [
