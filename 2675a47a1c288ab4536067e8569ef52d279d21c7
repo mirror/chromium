@@ -16,6 +16,24 @@
       "revId": "2675a47a1c288ab4536067e8569ef52d279d21c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47854422_8a444f7d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-15T03:12:30Z",
+      "side": 0,
+      "message": "The change of adding the callback to FirstMeaningfulPaintDetector.h that takes a PaintEvent creates a cyclic dependency of nested enum classes between FirstMeaningfulPaintDetector.h and PaintTiming.h. PaintTiming.h includes FirstMeaningfulPaintDetector.h for enum HadUserInput, and FirstMeaningfulPaintDetector.h includes PaintTiming.h for PaintEvent. I don\u0027t think I can forward declare my way out of that?\n\nI didn\u0027t want to factor it out, but couldn\u0027t seem to get around it. I\u0027m open to suggestions on a better way :)",
+      "parentUuid": "14f3422d_f618f506",
+      "revId": "2675a47a1c288ab4536067e8569ef52d279d21c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
