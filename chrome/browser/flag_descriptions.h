@@ -287,6 +287,9 @@ extern const char kEnableZeroSuggestRedirectToChromeDescription[];
 extern const char kEnableWasmStreamingName[];
 extern const char kEnableWasmStreamingDescription[];
 
+extern const char kEnableWasmIndexedDBName[];
+extern const char kEnableWasmIndexedDBDescription[];
+
 extern const char kEnableWebfontsInterventionName[];
 extern const char kEnableWebfontsInterventionDescription[];
 extern const char kEnableWebfontsInterventionV2ChoiceDefault[];

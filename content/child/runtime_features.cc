@@ -121,6 +121,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableWebAssemblyStreaming(
       base::FeatureList::IsEnabled(features::kWebAssemblyStreaming));
 
+  WebRuntimeFeatures::EnableWebAssemblyIndexedDB(
+      base::FeatureList::IsEnabled(features::kWebAssemblyIndexedDB));
+
   WebRuntimeFeatures::EnableSharedArrayBuffer(
       base::FeatureList::IsEnabled(features::kSharedArrayBuffer));
 

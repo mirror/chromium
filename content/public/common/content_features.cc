@@ -315,13 +315,17 @@ const base::Feature kVrShell {
 // Enable WebAssembly structured cloning.
 // http://webassembly.org/
 const base::Feature kWebAssembly{"WebAssembly",
-                                 base::FEATURE_DISABLED_BY_DEFAULT};
+                                 base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enable WebAssembly streamed compilation.
 const base::Feature kWebAssemblyStreaming{"WebAssemblyStreaming",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
+// Enable WebAssembly IndexedDB support.
+// Disabling kWebAssembly overrides this.
+const base::Feature kWebAssemblyIndexedDB{"WebAssemblyIndexedDB",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Enable WebAssembly streamed compilation.
+// Enable WebAssembly trap handler.
 const base::Feature kWebAssemblyTrapHandler{"WebAssemblyTrapHandler",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
 

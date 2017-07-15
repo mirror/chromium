@@ -381,12 +381,12 @@
   {
     "prefix": "enable_wasm",
     "base": "http/tests/wasm",
-    "args": ["--enable-features=WebAssembly"]
+    "args": ["--enable-features=WebAssemblyIndexedDB"]
   },
   {
     "prefix": "enable_wasm",
     "base": "external/wpt/wasm",
-    "args": ["--enable-features=WebAssembly"]
+    "args": ["--enable-features=WebAssemblyIndexedDB"]
   },
   {
     "prefix": "enable_wasm_streaming",

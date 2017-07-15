@@ -429,6 +429,11 @@ const char kEnableWasmStreamingName[] =
 const char kEnableWasmStreamingDescription[] =
     "WebAssembly.{compile|instantiate} taking a Response as parameter.";
 
+const char kEnableWasmIndexedDBName[] =
+    "WebAssembly IndexedDB storage support.";
+const char kEnableWasmIndexedDBDescription[] =
+    "Persist WebAssembly.Module in IndexedDB.";
+
 const char kEnableWebfontsInterventionName[] =
     "New version of User Agent Intervention for WebFonts loading.";
 const char kEnableWebfontsInterventionDescription[] =
