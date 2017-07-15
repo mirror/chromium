@@ -17,6 +17,7 @@
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
+#include "components/safe_browsing_db/database_params.pb.h"
 #include "components/safe_browsing_db/v4_feature_list.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "content/public/browser/browser_thread.h"
@@ -180,6 +181,14 @@ scoped_refptr<V4LocalDatabaseManager> V4LocalDatabaseManager::Create(
     ExtendedReportingLevelCallback extended_reporting_level_callback) {
   return make_scoped_refptr(
       new V4LocalDatabaseManager(base_path, extended_reporting_level_callback));
+}
+
+// static
+base::WeakPtr<V4LocalDatabaseManager>
+    V4LocalDatabaseManager::local_database_manager_instance;
+
+database_params::V4DatabaseInfo V4LocalDatabaseManager::GetV4DatabaseParams() {
+  return v4_database_info;
 }
 
 V4LocalDatabaseManager::V4LocalDatabaseManager(
@@ -867,6 +876,8 @@ void V4LocalDatabaseManager::SetupDatabase() {
       base::Bind(&V4LocalDatabaseManager::DatabaseReadyForChecks,
                  weak_factory_.GetWeakPtr());
   V4Database::Create(task_runner_, base_path_, list_infos_, db_ready_callback);
+  local_database_manager_instance = weak_factory_.GetWeakPtr();
+  v4_database_info.set_network_status(400);
 }
 
 void V4LocalDatabaseManager::SetupUpdateProtocolManager(

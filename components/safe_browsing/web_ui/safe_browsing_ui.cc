@@ -12,6 +12,8 @@
 #include "components/grit/components_scaled_resources.h"
 #include "components/safe_browsing/features.h"
 #include "components/safe_browsing/web_ui/constants.h"
+#include "components/safe_browsing_db/database_params.pb.h"
+#include "components/safe_browsing_db/v4_local_database_manager.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
@@ -52,10 +54,23 @@ void SafeBrowsingUIHandler::ExpParamList(const base::ListValue* unused) {
   CallJavascriptFunction("safe_browsing.addExperiment", GetFeatureStatusList());
 }
 
+void SafeBrowsingUIHandler::GetDatabaseInfo(const base::ListValue* unused) {
+  AllowJavascript();
+  if (V4LocalDatabaseManager::local_database_manager_instance != NULL)
+    // database_params::V4DatabaseInfo db_info=
+    V4LocalDatabaseManager::local_database_manager_instance
+        ->GetV4DatabaseParams();
+  CallJavascriptFunction("safe_browsing.addDatabaseInfo",
+                         base::Value(/*db_info.network_status()*/ 200));
+}
+
 void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "expParamList",
       base::Bind(&SafeBrowsingUIHandler::ExpParamList, base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getDatabaseInfo", base::Bind(&SafeBrowsingUIHandler::GetDatabaseInfo,
+                                    base::Unretained(this)));
 }
 
 SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {}

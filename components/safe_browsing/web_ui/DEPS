@@ -1,5 +1,7 @@
 include_rules = [
   "+components/grit/components_resources.h",
   "+components/strings/grit/components_strings.h",
-  "+components/grit/components_scaled_resources.h"
+  "+components/grit/components_scaled_resources.h",
+  "+components/safe_browsing_db/v4_local_database_manager.h",
+  "+components/safe_browsing_db/database_params.pb.h",
 ]

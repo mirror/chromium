@@ -19,6 +19,12 @@ proto_library("v4_store_proto") {
   ]
 }
 
+proto_library("database_params_proto") {
+  sources = [
+    "database_params.proto",
+  ]
+}
+
 proto_library("metadata_proto") {
   sources = [
     "metadata.proto",
@@ -247,6 +253,7 @@ static_library("v4_local_database_manager") {
   ]
   deps = [
     ":database_manager",
+    ":database_params_proto",
     ":hit_report",
     ":safebrowsing_proto",
     ":v4_database",

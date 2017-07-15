@@ -7,6 +7,7 @@
 
     function initialize() {
      chrome.send('expParamList',[]);
+     chrome.send('getDatabaseInfo',[]);
     }
 
    function addExperiment(result) {
@@ -19,9 +20,13 @@ for (var i = 0; i < resLength; i+=2) {
      $('experimentsList').innerHTML = experimentsListFormatted;
   }
 
+   function addDatabaseInfo(result) {
+     $('databaseInfoList').innerHTML = result;
+  }
     return {
+     addDatabaseInfo: addDatabaseInfo,
      addExperiment: addExperiment,
-      initialize: initialize,
+     initialize: initialize,
     };
 
 });

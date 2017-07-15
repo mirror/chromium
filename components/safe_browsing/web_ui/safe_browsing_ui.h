@@ -9,6 +9,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/values.h"
+#include "components/safe_browsing_db/database_params.pb.h"
 #include "content/public/browser/url_data_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
@@ -22,6 +23,7 @@ class SafeBrowsingUIHandler : public content::WebUIMessageHandler {
   SafeBrowsingUIHandler();
   ~SafeBrowsingUIHandler() override;
   void ExpParamList(const base::ListValue* args);
+  void GetDatabaseInfo(const base::ListValue* args);
   void RegisterMessages() override;
 
  private:
