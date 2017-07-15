@@ -16,6 +16,24 @@
       "revId": "6f7f2374d98e6bb3689ecd78c57867d0667fe6d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc332b6b_c72135bb",
+        "filename": "third_party/WebKit/Source/modules/websockets/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-15T00:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359dba54_7bdfb40e",
+      "revId": "6f7f2374d98e6bb3689ecd78c57867d0667fe6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
