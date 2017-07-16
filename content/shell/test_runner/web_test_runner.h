@@ -25,6 +25,8 @@ class WebView;
 
 namespace test_runner {
 
+class MockCredentialManager;
+
 class WebTestRunner {
  public:
   // Returns a mock WebContentSettings that is used for layout tests. An
@@ -88,6 +90,11 @@ class WebTestRunner {
   // Sets focus on the given view.  Internally tracks currently focused view,
   // to aid in defocusing previously focused views at the right time.
   virtual void SetFocus(blink::WebView* web_view, bool focus) = 0;
+
+  // Retrieves the fake Credential Manager API implementation that can be
+  // configured through the TestRunner, to be used to service
+  // navigator.credentials requests through Mojo.
+  virtual MockCredentialManager* GetMockCredentialManager() = 0;
 };
 
 }  // namespace test_runner

@@ -528,6 +528,8 @@ component("platform") {
     "clipboard/ClipboardUtilities.cpp",
     "clipboard/ClipboardUtilities.h",
     "cpu/mips/CommonMacrosMSA.h",
+    "credentialmanager/CredentialManagerTraits.cpp",
+    "credentialmanager/CredentialManagerTraits.h",
     "credentialmanager/PlatformCredential.cpp",
     "credentialmanager/PlatformCredential.h",
     "credentialmanager/PlatformFederatedCredential.cpp",

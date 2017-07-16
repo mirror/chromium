@@ -46,7 +46,7 @@ class Arguments;
 namespace test_runner {
 
 class MockContentSettingsClient;
-class MockCredentialManagerClient;
+class MockCredentialManager;
 class MockScreenOrientationClient;
 class MockWebSpeechRecognizer;
 class MockWebUserMediaClient;
@@ -103,6 +103,7 @@ class TestRunner : public WebTestRunner {
   blink::WebTextCheckClient* GetWebTextCheckClient() const override;
   void InitializeWebViewWithMocks(blink::WebView* web_view) override;
   void SetFocus(blink::WebView* web_view, bool focus) override;
+  MockCredentialManager* GetMockCredentialManager() override;
 
   // Methods used by WebViewTestClient and WebFrameTestClient.
   void OnNavigationBegin(blink::WebFrame* frame);
@@ -632,7 +633,7 @@ class TestRunner : public WebTestRunner {
   // two events.
   bool will_navigate_;
 
-  std::unique_ptr<MockCredentialManagerClient> credential_manager_client_;
+  std::unique_ptr<MockCredentialManager> credential_manager_;
   std::unique_ptr<MockScreenOrientationClient> mock_screen_orientation_client_;
   std::unique_ptr<MockWebSpeechRecognizer> speech_recognizer_;
   std::unique_ptr<MockWebUserMediaClient> user_media_client_;

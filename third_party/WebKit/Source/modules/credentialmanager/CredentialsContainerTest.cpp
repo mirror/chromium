@@ -23,17 +23,15 @@ using ::testing::SaveArg;
 
 namespace {
 
-class MockCredentialManagerClient : public WebCredentialManagerClient {
+class MockCredentialManagerClient : public CredentialManagerClient {
  public:
-  MOCK_METHOD2(DispatchFailedSignIn,
-               void(const WebCredential&, NotificationCallbacks*));
-  MOCK_METHOD2(DispatchStore,
-               void(const WebCredential&, NotificationCallbacks*));
-  MOCK_METHOD1(DispatchPreventSilentAccess, void(NotificationCallbacks*));
+  MockCredentialManagerClient() : CredentialManagerClient(nullptr) {}
+  ~MockCredentialManagerClient() {}
+
   MOCK_METHOD4(DispatchGet,
                void(WebCredentialMediationRequirement,
                     bool,
-                    const WebVector<WebURL>& federations,
+                    const ::WTF::Vector<KURL>& federations,
                     RequestCallbacks*));
 };
 
@@ -43,7 +41,7 @@ class MockCredentialManagerClient : public WebCredentialManagerClient {
 // Make sure that the renderer doesn't crash if got a credential.
 TEST(CredentialsContainerTest, TestGetWithDocumentDestroyed) {
   CredentialsContainer* credential_container = CredentialsContainer::Create();
-  std::unique_ptr<WebCredentialManagerClient::RequestCallbacks> get_callback;
+  std::unique_ptr<CredentialManagerClient::RequestCallbacks> get_callback;
 
   V8TestingScope scope;
   {
@@ -51,11 +49,11 @@ TEST(CredentialsContainerTest, TestGetWithDocumentDestroyed) {
     scope.GetDocument().SetSecurityOrigin(
         SecurityOrigin::CreateFromString("https://example.test"));
     ::testing::StrictMock<MockCredentialManagerClient> mock_client;
-    ProvideCredentialManagerClientTo(scope.GetPage(),
-                                     new CredentialManagerClient(&mock_client));
+    CredentialManagerClient::ProvideToExecutionContext(&scope.GetDocument(),
+                                                       &mock_client);
 
     // Request a credential.
-    WebCredentialManagerClient::RequestCallbacks* callback = nullptr;
+    CredentialManagerClient::RequestCallbacks* callback = nullptr;
     EXPECT_CALL(mock_client, DispatchGet(_, _, _, _))
         .WillOnce(SaveArg<3>(&callback));
     credential_container->get(scope.GetScriptState(),

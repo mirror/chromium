@@ -52,7 +52,7 @@ CredentialManagerImpl::CredentialManagerImpl(content::WebContents* web_contents,
 CredentialManagerImpl::~CredentialManagerImpl() {}
 
 void CredentialManagerImpl::BindRequest(
-    mojom::CredentialManagerAssociatedRequest request) {
+    mojom::CredentialManagerRequest request) {
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request));
 
