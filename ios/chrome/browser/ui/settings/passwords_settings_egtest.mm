@@ -422,6 +422,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   // other tests.
   [MDCSnackbarManager
       dismissAndCallCompletionBlocksWithCategory:@"PasswordsSnackbarCategory"];
+
+  ClearPasswordStore();
+
   [super tearDown];
 }
 
@@ -454,7 +457,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that attempts to copy a password provide appropriate feedback,
@@ -499,7 +501,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that attempts to copy a username provide appropriate feedback.
@@ -527,7 +528,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that attempts to copy a site URL provide appropriate feedback.
@@ -555,7 +555,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that deleting a password from password details view goes back to the
@@ -608,7 +607,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that deleting a password from password details can be cancelled.
@@ -655,7 +653,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that if the list view is in edit mode, then the details password view
@@ -682,7 +679,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that attempts to copy the site via the context menu item provide an
@@ -719,7 +715,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that attempts to copy the username via the context menu item provide
@@ -757,7 +752,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that attempts to copy the password via the context menu item provide
@@ -802,7 +796,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that attempts to show and hide the password via the context menu item
@@ -854,7 +847,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks that federated credentials have no password but show the federation.
@@ -895,7 +887,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks the order of the elements in the detail view layout for a
@@ -950,7 +941,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks the order of the elements in the detail view layout for a blacklisted
@@ -995,7 +985,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Checks the order of the elements in the detail view layout for a federated
@@ -1052,7 +1041,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Check that stored entries are shown no matter what the preference for saving
@@ -1089,7 +1077,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
       performAction:grey_tap()];
   TapDone();
-  ClearPasswordStore();
 }
 
 // Check that toggling the switch for the "save passwords" preference changes
