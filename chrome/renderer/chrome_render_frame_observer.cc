@@ -51,7 +51,7 @@
 
 #if BUILDFLAG(ENABLE_PRINTING)
 #include "components/printing/common/print_messages.h"
-#include "components/printing/renderer/print_web_view_helper.h"
+#include "components/printing/renderer/print_web_frame_helper.h"
 #endif
 
 using blink::WebDataSource;
@@ -245,8 +245,8 @@ void ChromeRenderFrameObserver::RequestThumbnailForContextNode(
 
 void ChromeRenderFrameObserver::OnPrintNodeUnderContextMenu() {
 #if BUILDFLAG(ENABLE_PRINTING)
-  printing::PrintWebViewHelper* helper =
-      printing::PrintWebViewHelper::Get(render_frame());
+  printing::PrintWebFrameHelper* helper =
+      printing::PrintWebFrameHelper::Get(render_frame());
   if (helper)
     helper->PrintNode(render_frame()->GetWebFrame()->ContextMenuNode());
 #endif

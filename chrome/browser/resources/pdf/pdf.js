@@ -146,7 +146,7 @@ function PDFViewer(browserApi) {
   // according to the scroll position of the window.
   this.plugin_ = document.createElement('embed');
   // NOTE: The plugin's 'id' field must be set to 'plugin' since
-  // chrome/renderer/printing/print_web_view_helper.cc actually references it.
+  // chrome/renderer/printing/print_web_frame_helper.cc actually references it.
   this.plugin_.id = 'plugin';
   this.plugin_.type = 'application/x-google-chrome-pdf';
   this.plugin_.addEventListener(

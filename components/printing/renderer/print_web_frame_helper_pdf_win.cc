@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/printing/renderer/print_web_view_helper.h"
+#include "components/printing/renderer/print_web_frame_helper.h"
 
 #include <stddef.h>
 
@@ -15,8 +15,8 @@
 namespace printing {
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
-bool PrintWebViewHelper::PrintPagesNative(blink::WebLocalFrame* frame,
-                                          int page_count) {
+bool PrintWebFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
+                                           int page_count) {
   const PrintMsg_PrintPages_Params& params = *print_pages_params_;
   std::vector<int> printed_pages = GetPrintedPages(params, page_count);
   if (printed_pages.empty())
@@ -41,8 +41,8 @@ bool PrintWebViewHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   metafile.FinishDocument();
 
   PrintHostMsg_DidPrintPage_Params printed_page_params;
-  if (!CopyMetafileDataToSharedMem(
-          metafile, &printed_page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(metafile,
+                                   &printed_page_params.metafile_data_handle)) {
     return false;
   }
 

@@ -5,7 +5,7 @@
 #include "components/printing/test/print_test_content_renderer_client.h"
 
 #include "base/memory/ptr_util.h"
-#include "components/printing/renderer/print_web_view_helper.h"
+#include "components/printing/renderer/print_web_frame_helper.h"
 #include "printing/features/features.h"
 #include "third_party/WebKit/public/web/WebElement.h"
 
@@ -13,9 +13,9 @@ namespace printing {
 
 namespace {
 
-class PrintWebViewHelperDelegate : public PrintWebViewHelper::Delegate {
+class PrintWebFrameHelperDelegate : public PrintWebFrameHelper::Delegate {
  public:
-  ~PrintWebViewHelperDelegate() override {}
+  ~PrintWebFrameHelperDelegate() override {}
 
   bool CancelPrerender(content::RenderFrame* render_frame) override {
     return false;
@@ -43,8 +43,8 @@ PrintTestContentRendererClient::~PrintTestContentRendererClient() {
 
 void PrintTestContentRendererClient::RenderFrameCreated(
     content::RenderFrame* render_frame) {
-  new PrintWebViewHelper(render_frame,
-                         base::MakeUnique<PrintWebViewHelperDelegate>());
+  new PrintWebFrameHelper(render_frame,
+                          base::MakeUnique<PrintWebFrameHelperDelegate>());
 }
 
 }  // namespace printing
