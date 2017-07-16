@@ -488,10 +488,10 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       has_selection_(false),
       is_audible_(false),
       last_navigation_previews_state_(PREVIEWS_UNSPECIFIED),
-      frame_host_interface_broker_binding_(this),
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
+      document_scoped_interface_provider_binding_(this),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
@@ -1580,6 +1580,14 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
     // NavigationHandle.
     validated_params.searchable_form_url = GURL();
     validated_params.searchable_form_encoding = std::string();
+  }
+
+  if (!validated_params.was_within_same_document) {
+    // This is allegedly a navigation to a new document, so we expect to receive
+    // a BindInterfaceProviderForNewDocument request immediately after this IPC.
+    // Close the document-scoped binding now to ensure no further requests are
+    // dispatched on behalf of the previous document.
+    document_scoped_interface_provider_binding_.Close();
   }
 
   accessibility_reset_count_ = 0;
@@ -2812,6 +2820,30 @@ void RenderFrameHostImpl::CreateNewWindow(
       main_frame_route_id, main_frame_widget_route_id, cloned_namespace->id());
 }
 
+void RenderFrameHostImpl::BindInterfaceProviderForNewDocument(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  // We completely replace the old binding if present, ensuring that all
+  // dispatched interface requests pertain strictly to the frame's current
+  // document.
+  service_manager::mojom::InterfaceProviderPtr provider;
+  document_scoped_interface_provider_binding_.Bind(
+      mojo::MakeRequest(&provider));
+
+  // Have the InterfaceProvider filtered through the Service Manager to apply
+  // service manifest capability-based filtering before any requests reach the
+  // browser.
+  //
+  // TODO(rockot): Re-evaluate whether this layer of defense is really
+  // worthwhile. Perhaps it would be better replaced by a similarly declarative
+  // but browser-defined spec exclusively for context-bound interface policy,
+  // leaving the Service Manager out of these decisions entirely.
+  service_manager::Identity child_identity = GetProcess()->GetChildIdentity();
+  service_manager::Connector* connector =
+      BrowserContext::GetConnectorFor(GetProcess()->GetBrowserContext());
+  connector->FilterInterfaces(mojom::kNavigation_FrameSpec, child_identity,
+                              std::move(request), std::move(provider));
+}
+
 void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
     CreateNewWindowCallback callback,
     mojom::CreateNewWindowReplyPtr reply,
@@ -3341,11 +3373,7 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   RegisterMojoInterfaces();
   mojom::FrameFactoryPtr frame_factory;
   BindInterface(GetProcess(), &frame_factory);
-
-  mojom::FrameHostInterfaceBrokerPtr broker_proxy;
-  frame_host_interface_broker_binding_.Bind(mojo::MakeRequest(&broker_proxy));
-  frame_factory->CreateFrame(routing_id_, MakeRequest(&frame_),
-                             std::move(broker_proxy));
+  frame_factory->CreateFrame(routing_id_, MakeRequest(&frame_));
 
   service_manager::mojom::InterfaceProviderPtr remote_interfaces;
   frame_->GetInterfaceProvider(mojo::MakeRequest(&remote_interfaces));
@@ -3363,8 +3391,8 @@ void RenderFrameHostImpl::InvalidateMojoConnection() {
   interface_registry_.reset();
 
   frame_.reset();
-  frame_host_interface_broker_binding_.Close();
   frame_bindings_control_.reset();
+  document_scoped_interface_provider_binding_.Close();
 
   // Disconnect with ImageDownloader Mojo service in RenderFrame.
   mojo_image_downloader_.reset();
@@ -3658,17 +3686,6 @@ void RenderFrameHostImpl::FilesSelectedInChooser(
 
 bool RenderFrameHostImpl::HasSelection() {
   return has_selection_;
-}
-
-void RenderFrameHostImpl::GetInterfaceProvider(
-    service_manager::mojom::InterfaceProviderRequest interfaces) {
-  service_manager::Identity child_identity = GetProcess()->GetChildIdentity();
-  service_manager::Connector* connector =
-      BrowserContext::GetConnectorFor(GetProcess()->GetBrowserContext());
-  service_manager::mojom::InterfaceProviderPtr provider;
-  interface_provider_bindings_.AddBinding(this, mojo::MakeRequest(&provider));
-  connector->FilterInterfaces(mojom::kNavigation_FrameSpec, child_identity,
-                              std::move(interfaces), std::move(provider));
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
@@ -4000,6 +4017,10 @@ void RenderFrameHostImpl::BindNFCRequest(
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+  // NOTE: This method services requests on
+  // |document_scoped_interface_provider_binding_|. It is therefore safe to
+  // assume that every incoming interface request is coming from the currently
+  // committed navigation's document in the renderer.
   service_manager::BindSourceInfo source_info(GetProcess()->GetChildIdentity(),
                                               service_manager::CapabilitySet());
   if (interface_registry_.get() &&
