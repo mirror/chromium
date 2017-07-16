@@ -8,6 +8,11 @@
 <dom-module id="settings-stylus">
   <template>
     <style include="settings-shared md-select">
+      .settings-box {
+        display: flex;
+        flex-direction: row;
+      }
+
       .settings-box > .secondary {
         align-items: center;
         display: flex;
@@ -22,6 +27,14 @@
       paper-spinner {
         margin-left: 12px;
         @apply(--cr-icon-height-width);
+      }
+
+      cr-policy-indicator {
+        padding: 0 var(--cr-controlled-by-spacing);
+      }
+
+      #lock-screen-toggle-label {
+        flex: 1 0 auto;
       }
     </style>
 
@@ -58,7 +71,8 @@
       <div id="select-app" class="md-select-wrapper"
           hidden$="[[!showApps_(appChoices_, waitingForAndroid_)]]">
         <select id="menu" class="md-select" on-change="onSelectedAppChanged_"
-            aria-labelledby="stylusNoteTakingAppLabel">
+            aria-labelledby="stylusNoteTakingAppLabel"
+            disabled="[[!selectedApp_]]">
           <template is="dom-repeat" items="[[appChoices_]]">
             <option value="[[item.value]]" selected="[[item.preferred]]">
               [[item.name]]
@@ -71,11 +85,24 @@
 
     <template is="dom-if" if="[[supportsLockScreen_(selectedApp_)]]">
       <div class="settings-box">
-        <settings-toggle-button id="enable-app-on-lock-screen-toggle"
-            class="start"
-            pref="{{prefs.settings.note_taking_app_enabled_on_lock_screen}}"
-            label="$i18n{stylusNoteTakingAppEnabledOnLockScreen}">
-        </settings-toggle-button>
+        <div class="flex" id="lock-screen-toggle-label" class="label"
+            actionable$="[[!disallowedOnLockScreenByPolicy_(selectedApp_)]]"
+            on-tap="toggleLockScreenSupport_">
+          $i18n{stylusNoteTakingAppEnabledOnLockScreen}
+        </div>
+        <template is="dom-if"
+            if="[[disallowedOnLockScreenByPolicy_(selectedApp_)]]">
+          <cr-policy-indicator
+              id="enable-app-on-lock-screen-policy-indicator"
+              indicator-type="[[CrPolicyIndicatorType.USER_POLICY]]">
+          </cr-policy-indicator>
+        </template>
+        <paper-toggle-button id="enable-app-on-lock-screen-toggle"
+            aria-labelledby="lock-screen-toggle-label"
+            disabled="[[disallowedOnLockScreenByPolicy_(selectedApp_)]]"
+            checked="[[lockScreenSupportEnabled_(selectedApp_)]]"
+            on-change="toggleLockScreenSupport_">
+        </paper-toggle-button>
       </div>
     </template>
 

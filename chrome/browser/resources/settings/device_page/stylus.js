@@ -50,8 +50,34 @@ Polymer({
     },
   },
 
+  /**
+   * @return {boolean} Whether note taking from the lock screen is supported
+   *     by the selected note-taking app.
+   */
   supportsLockScreen_: function() {
-    return this.selectedApp_ && this.selectedApp_.supportsLockScreen;
+    return !!this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport !=
+        settings.NoteAppLockScreenSupport.NOT_SUPPORTED;
+  },
+
+  /**
+   * @return {boolean} Whether the selected app is disallowed to handle note
+   *     actions from lock screen as a result of a user policy.
+   */
+  disallowedOnLockScreenByPolicy_: function() {
+    return !!this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport ==
+        settings.NoteAppLockScreenSupport.NOT_ALLOWED_BY_POLICY;
+  },
+
+  /**
+   * @return {boolean} Whether the selected app is enabled as a note action
+   *     handler on the lock screen.
+   */
+  lockScreenSupportEnabled_: function() {
+    return !!this.selectedApp_ &&
+        this.selectedApp_.lockScreenSupport ==
+        settings.NoteAppLockScreenSupport.ENABLED;
   },
 
   /** @private {?settings.DevicePageBrowserProxy} */
@@ -82,13 +108,37 @@ Polymer({
         null;
   },
 
+  /**
+   * Toggles whether the selected app is enabled as a note action handler on
+   * lock screen. If the app is enabled on the lock screen, the app will be
+   * disabled; if the app is disabled on the lock screen it will be enabled.
+   * Should not be called if the app does not support note taking on lock
+   * screen, nor if the app is not allowed on lock screen by policy.
+   */
+  toggleLockScreenSupport_: function() {
+    assert(!!this.selectedApp_);
+    if (this.selectedApp_.lockScreenSupport !=
+            settings.NoteAppLockScreenSupport.ENABLED &&
+        this.selectedApp_.lockScreenSupport !=
+            settings.NoteAppLockScreenSupport.SUPPORTED) {
+      return;
+    }
+
+    var enable = this.selectedApp_.lockScreenSupport ==
+        settings.NoteAppLockScreenSupport.SUPPORTED;
+    this.browserProxy_.setNoteTakingAppEnabledOnLockScreen(
+        this.selectedApp_.value, enable);
+  },
+
   /** @private */
   onSelectedAppChanged_: function() {
     var app = this.findApp_(this.$.menu.value);
-    this.selectedApp_ = app;
 
-    if (app && !app.preferred)
+    if (app && !app.preferred) {
       this.browserProxy_.setPreferredNoteTakingApp(app.value);
+    } else {
+      this.selectedApp_ = app;
+    }
   },
 
   /**
