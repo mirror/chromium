@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "131e8848_d880a732",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:02:58Z",
+      "side": 1,
+      "message": "Took a look at the existing DCHECK()s and tried moving\nthem to actual conditions, with NotifyError() where possible.",
+      "parentUuid": "228fd037_9e033aa7",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 8
+      },
+      "revId": "a63675c032c6f887457c41d60482938233e38f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c079d02e_4ecdf617",
         "filename": "media/mojo/services/mojo_video_encode_accelerator_service.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "a63675c032c6f887457c41d60482938233e38f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff109712_8e635b3d",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:02:58Z",
+      "side": 1,
+      "message": "Done. Also added a test case.",
+      "parentUuid": "c079d02e_4ecdf617",
+      "range": {
+        "startLine": 127,
+        "startChar": 18,
+        "endLine": 127,
+        "endChar": 19
+      },
+      "revId": "a63675c032c6f887457c41d60482938233e38f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c95d4e5c_8694f0b8",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:02:58Z",
+      "side": 1,
+      "message": "Done.\n\nAlso added a test case.",
+      "parentUuid": "82ac51fe_d6ea6808",
+      "range": {
+        "startLine": 152,
+        "startChar": 21,
+        "endLine": 152,
+        "endChar": 37
+      },
+      "revId": "a63675c032c6f887457c41d60482938233e38f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2e98ae4_0f23999c",
         "filename": "media/mojo/services/mojo_video_encode_accelerator_service.h",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "a63675c032c6f887457c41d60482938233e38f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b075c94_eb852aee",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2e98ae4_0f23999c",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "a63675c032c6f887457c41d60482938233e38f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6f95aeba_e29b479e",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61dcc8a0_f505b7ff",
+      "range": {
+        "startLine": 33,
+        "startChar": 26,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "a63675c032c6f887457c41d60482938233e38f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fadad963_2124ac08",
         "filename": "media/mojo/services/mojo_video_encode_accelerator_service_unittest.cc",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "a63675c032c6f887457c41d60482938233e38f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97d80e5_47c8d272",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fadad963_2124ac08",
+      "range": {
+        "startLine": 220,
+        "startChar": 18,
+        "endLine": 220,
+        "endChar": 35
+      },
+      "revId": "a63675c032c6f887457c41d60482938233e38f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
