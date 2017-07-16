@@ -44,6 +44,21 @@ if [ "$repo_add_once" = "true" ]; then
     ;;
   esac
 
+  # If an alternate package manager needs to be configured, let's run through this
+  # again and be sure it is set up, too.
+  if [ "$ALT_PACKAGEMANAGER" ]; then
+    verify_install $ALT_PACKAGEMANAGER
+    if [ $? -ne 0 ]; then
+      install_${ALT_PACKAGEMANAGER}
+    fi
+
+    case $ALT_PACKAGEMANAGER in
+    "urpmi")
+      configure_urpmi
+      ;;
+    esac
+  fi
+
   if [ $? -eq 0 ]; then
     # Before we quit auto-configuration, check that everything looks sane, since
     # part of this happened during package install and we don't have the return
@@ -52,6 +67,14 @@ if [ "$repo_add_once" = "true" ]; then
     if [ $? -eq 0 ]; then
       sed -i -e 's/[[:space:]]*repo_add_once=.*/repo_add_once="false"/' \
         "$DEFAULTS_FILE"
+    fi
+    # Do this again for any alternate package manager...
+    if [ "$ALT_PACKAGEMANAGER" ]; then
+      verify_install $ALT_PACKAGEMANAGER
+      if [ $? -eq 0 ]; then
+        sed -i -e 's/[[:space:]]*repo_add_once=.*/repo_add_once="false"/' \
+          "$DEFAULTS_FILE"
+      fi
     fi
   fi
 else
