@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "faf1571a_7ee88fe5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-16T06:19:58Z",
+      "side": 1,
+      "message": "thx.  init function removed.",
+      "parentUuid": "daef4964_d657851e",
+      "range": {
+        "startLine": 648,
+        "startChar": 8,
+        "endLine": 648,
+        "endChar": 20
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fe141c2_a2a6d4fe",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-13T08:59:40Z",
       "side": 1,
       "message": "Why don\u0027t you just put this code in the init method? No need to test for nil. For one line of code it would be simpler.",
+      "range": {
+        "startLine": 651,
+        "startChar": 0,
+        "endLine": 651,
+        "endChar": 80
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4eb3ff_5399e198",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-16T06:19:58Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "4fe141c2_a2a6d4fe",
       "range": {
         "startLine": 651,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1c5eee9a_74da892f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-16T06:19:58Z",
+      "side": 1,
+      "message": "thx.  dealloc removed.",
+      "parentUuid": "c486f6ec_de3a6367",
+      "range": {
+        "startLine": 656,
+        "startChar": 2,
+        "endLine": 656,
+        "endChar": 25
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10209529_f54d4414",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-14T05:24:29Z",
       "side": 1,
       "message": "nit: why not assign directly to self?\nself.loadingSpinnerBackgroundView \u003d [[BookmarkHomeWaitingView alloc] initWithFrame:CGRectZero];",
+      "range": {
+        "startLine": 959,
+        "startChar": 4,
+        "endLine": 959,
+        "endChar": 69
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53e0661_fbb9c01a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-16T06:19:58Z",
+      "side": 1,
+      "message": "done. thx.",
+      "parentUuid": "10209529_f54d4414",
       "range": {
         "startLine": 959,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b8b7b40e_f9877bce",
+        "filename": "ios/chrome/browser/ui/sync/synced_sessions_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-16T06:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eabb37dc_073dd2b6",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ceecb5e_38f49ad7",
         "filename": "ios/chrome/browser/ui/sync/synced_sessions_bridge.mm",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-14T05:24:29Z",
       "side": 1,
       "message": "Use snake_case instead of camelCase for variables here?",
+      "range": {
+        "startLine": 98,
+        "startChar": 20,
+        "endLine": 98,
+        "endChar": 36
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6211171_cf1bf351",
+        "filename": "ios/chrome/browser/ui/sync/synced_sessions_bridge.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-16T06:19:58Z",
+      "side": 1,
+      "message": "done. thx",
+      "parentUuid": "0ceecb5e_38f49ad7",
       "range": {
         "startLine": 98,
         "startChar": 20,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c1185e07_8e0c9dd7",
+        "filename": "ios/chrome/browser/ui/sync/synced_sessions_bridge.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-16T06:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18fb3cc1_035cf863",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 18
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39618481_8eaf924d",
         "filename": "ios/chrome/browser/ui/sync/synced_sessions_bridge.mm",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68cb016_d3e4da17",
+        "filename": "ios/chrome/browser/ui/sync/synced_sessions_bridge.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-16T06:19:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39618481_8eaf924d",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 18
+      },
+      "revId": "6d69a7f8d8df558951796659b292ffabfca4e88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
