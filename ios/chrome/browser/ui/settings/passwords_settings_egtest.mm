@@ -8,10 +8,12 @@
 #include "base/mac/foundation_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/time/time.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/keyed_service/core/service_access_type.h"
 #include "components/password_manager/core/browser/password_store.h"
+#include "components/password_manager/core/common/password_manager_features.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/passwords/ios_chrome_password_store_factory.h"
 #import "ios/chrome/browser/ui/settings/password_details_collection_view_controller_for_testing.h"
@@ -273,29 +275,6 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [super tearDown];
 }
 
-// Restores the experimental flag for viewing passwords.
-- (void)passwordsTearDown:(NSString*)oldExperiment {
-  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject:oldExperiment forKey:@"EnableViewCopyPasswords"];
-}
-
-// Activates the flag to use the new UI for viewing passwords in settings.
-// Also, ensures that original state is restored after the test ends.
-- (void)scopedEnablePasswordManagementAndViewingUI {
-  // Retrieve the experiment setting.
-  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-  NSString* oldSetting = [defaults stringForKey:@"EnableViewCopyPasswords"];
-
-  // Ensure restoring that on tear-down.
-  __weak PasswordsSettingsTestCase* weakSelf = self;
-  [self setTearDownHandler:^{
-    [weakSelf passwordsTearDown:oldSetting];
-  }];
-
-  // Enable viewing passwords in settings.
-  [defaults setObject:@"Enabled" forKey:@"EnableViewCopyPasswords"];
-}
-
 - (scoped_refptr<password_manager::PasswordStore>)passwordStore {
   // ServiceAccessType governs behaviour in Incognito: only modifications with
   // EXPLICIT_ACCESS, which correspond to user's explicit gesture, succeed.
@@ -359,7 +338,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 // passwords), where in settings_egtest.mm the default (old) UI is tested.
 // Once the new is the default, just remove the test in settings_egtest.mm.
 - (void)testAccessibilityOnPasswords {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Saving a form is needed for using the "password details" view.
   [self saveExamplePasswordForm];
@@ -388,7 +369,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 // Checks that attempts to copy a password provide appropriate feedback,
 // both when reauthentication succeeds and when it fails.
 - (void)testCopyPasswordToast {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Saving a form is needed for using the "password details" view.
   [self saveExamplePasswordForm];
@@ -442,7 +425,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
 // Checks that attempts to copy a username provide appropriate feedback.
 - (void)testCopyUsernameToast {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Saving a form is needed for using the "password details" view.
   [self saveExamplePasswordForm];
@@ -477,7 +462,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
 // Checks that attempts to copy a site URL provide appropriate feedback.
 - (void)testCopySiteToast {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Saving a form is needed for using the "password details" view.
   [self saveExamplePasswordForm];
@@ -513,7 +500,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 // Checks that deleting a password from password details view goes back to the
 // list-of-passwords view.
 - (void)testDeletion {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Save form to be deleted later.
   [self saveExamplePasswordForm];
@@ -563,7 +552,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
 // Checks that deleting a password from password details can be cancelled.
 - (void)testCancelDeletion {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Save form to be deleted later.
   [self saveExamplePasswordForm];
@@ -614,7 +605,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 // Checks that if the list view is in edit mode, then the details password view
 // is not accessible on tapping the entries.
 - (void)testEditMode {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Save a form to have something to tap on.
   [self saveExamplePasswordForm];
@@ -640,7 +633,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
 // Checks that blacklisted credentials only have the Site section.
 - (void)testBlacklisted {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   PasswordForm blacklisted;
   blacklisted.origin = GURL("https://example.com");
@@ -681,7 +676,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 // Checks that attempts to copy the site via the context menu item provide an
 // appropriate feedback.
 - (void)testCopySiteMenuItem {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Saving a form is needed for using the "password details" view.
   [self saveExamplePasswordForm];
@@ -724,7 +721,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 // Checks that attempts to copy the username via the context menu item provide
 // an appropriate feedback.
 - (void)testCopyUsernameMenuItem {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Saving a form is needed for using the "password details" view.
   [self saveExamplePasswordForm];
@@ -768,7 +767,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 // Checks that attempts to copy the password via the context menu item provide
 // an appropriate feedback.
 - (void)testCopyPasswordMenuItem {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Saving a form is needed for using the "password details" view.
   [self saveExamplePasswordForm];
@@ -819,7 +820,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 // Checks that attempts to show and hide the password via the context menu item
 // provide an appropriate feedback.
 - (void)testShowHidePasswordMenuItem {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   // Saving a form is needed for using the "password details" view.
   [self saveExamplePasswordForm];
@@ -887,7 +890,9 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
 
 // Checks that federated credentials have no password but show the federation.
 - (void)testFederated {
-  [self scopedEnablePasswordManagementAndViewingUI];
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      password_manager::features::kViewPasswords);
 
   PasswordForm federated;
   federated.username_value = base::ASCIIToUTF16("federated username");
