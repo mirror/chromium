@@ -30,6 +30,7 @@
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/memory/oom_memory_details.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/resource_coordinator/resource_coordinator_utils.h"
 #include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
@@ -53,7 +54,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/page_importance_signals.h"
-#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 
 #if defined(OS_CHROMEOS)
 #include "ash/multi_profile_uma.h"
