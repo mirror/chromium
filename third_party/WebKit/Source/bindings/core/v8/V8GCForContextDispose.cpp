@@ -67,10 +67,11 @@ void V8GCForContextDispose::NotifyContextDisposed(
   // When a low end device is in a low memory situation we should prioritize
   // memory use and trigger a V8+Blink GC. However, on Android, if the frame
   // will not be reused, the process will likely to be killed soon so skip this.
-  if (is_main_frame && frame_reuse_status == WindowProxy::kFrameWillBeReused &&
+  if (is_main_frame && frame_reuse_status == WindowProxy::kFrameWillBeReused/* &&
       MemoryCoordinator::IsLowEndDevice() &&
-      MemoryCoordinator::IsCurrentlyLowMemory()) {
+      MemoryCoordinator::IsCurrentlyLowMemory()*/) {
     size_t pre_gc_memory_usage = GetMemoryUsage();
+    if (pre_gc_memory_usage > 10 * 1024 * 1024) {
     V8PerIsolateData::MainThreadIsolate()->MemoryPressureNotification(
         v8::MemoryPressureLevel::kCritical);
     size_t post_gc_memory_usage = GetMemoryUsage();
@@ -80,6 +81,7 @@ void V8GCForContextDispose::NotifyContextDisposed(
         CustomCountHistogram, reduction_histogram,
         ("BlinkGC.LowMemoryPageNavigationGC.Reduction", 1, 512, 50));
     reduction_histogram.Count(reduction / 1024 / 1024);
+    }
   }
 #endif
   V8PerIsolateData::MainThreadIsolate()->ContextDisposedNotification(
