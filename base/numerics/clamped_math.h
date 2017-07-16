@@ -83,7 +83,7 @@ class ClampedNumeric {
         // only overflow case we have to check for. And in the case of a
         // run-time variable value_, we can use an optimized code path.
         std::is_signed<T>::value
-            ? (IsCompileTimeConstant(value_)
+            ? (!kCanDetectCompileTimeConstant || IsCompileTimeConstant(value_)
                    ? ((std::is_floating_point<T>::value ||
                        NegateWrapper(value_) !=
                            std::numeric_limits<T>::lowest())
