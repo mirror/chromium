@@ -34,6 +34,11 @@ struct CSSSyntaxComponent {
   CSSSyntaxComponent(CSSSyntaxType type, const String& string, bool repeatable)
       : type_(type), string_(string), repeatable_(repeatable) {}
 
+  bool operator==(const CSSSyntaxComponent& a) const {
+    return type_ == a.type_ && string_ == a.string_ &&
+           repeatable_ == a.repeatable_;
+  }
+
   CSSSyntaxType type_;
   String string_;  // Only used when type_ is CSSSyntaxType::kIdent
   bool repeatable_;
@@ -58,6 +63,15 @@ class CORE_EXPORT CSSSyntaxDescriptor {
  private:
   Vector<CSSSyntaxComponent> syntax_components_;
 };
+
+inline bool operator==(const CSSSyntaxDescriptor& a,
+                       const CSSSyntaxDescriptor& b) {
+  return a.Components() == b.Components();
+}
+inline bool operator!=(const CSSSyntaxDescriptor& a,
+                       const CSSSyntaxDescriptor& b) {
+  return !(a == b);
+}
 
 }  // namespace blink
 

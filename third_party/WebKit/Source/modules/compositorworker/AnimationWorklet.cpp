@@ -32,7 +32,8 @@ bool AnimationWorklet::NeedsToCreateGlobalScope() {
   return GetNumberOfGlobalScopes() == 0;
 }
 
-WorkletGlobalScopeProxy* AnimationWorklet::CreateGlobalScope() {
+WorkletGlobalScopeProxy* AnimationWorklet::CreateGlobalScope(
+    int global_scope_instance_count) {
   DCHECK(NeedsToCreateGlobalScope());
   AnimationWorkletThread::EnsureSharedBackingThread();
 

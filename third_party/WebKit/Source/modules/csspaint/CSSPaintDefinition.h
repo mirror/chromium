@@ -32,9 +32,9 @@ class CSSPaintDefinition final
       ScriptState*,
       v8::Local<v8::Function> constructor,
       v8::Local<v8::Function> paint,
-      Vector<CSSPropertyID>&,
-      Vector<AtomicString>& custom_invalidation_properties,
-      Vector<CSSSyntaxDescriptor>& input_argument_types,
+      Vector<CSSPropertyID>,
+      Vector<AtomicString> custom_invalidation_properties,
+      Vector<CSSSyntaxDescriptor> input_argument_types,
       bool has_alpha);
   virtual ~CSSPaintDefinition();
 
