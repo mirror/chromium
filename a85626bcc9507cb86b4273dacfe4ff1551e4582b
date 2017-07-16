@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9016d26d_b66c0e0c",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-16T23:26:56Z",
+      "side": 1,
+      "message": "nit: should this comment be moved above the CountDeprecation above?",
+      "revId": "a85626bcc9507cb86b4273dacfe4ff1551e4582b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

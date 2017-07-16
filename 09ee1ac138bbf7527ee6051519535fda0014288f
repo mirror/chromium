@@ -234,6 +234,30 @@
       "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcb9d4dc_da74205e",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-16T23:26:56Z",
+      "side": 1,
+      "message": "\u003e since both developers and the specs expect there to be a single consistent permission state per origin\n\nI disagree as well. For a given origin permission may be allowed or denied in various realms and it\u0027s very important that developers be able to distinguish which of those realms it is allowed in. A practical reason is that we encourage websites to display particular UI when they are going to prompt. If they can\u0027t tell whether or not a call to \"request\" is going to prompt, it\u0027s going to result in a bad user experience.\n\nCould you point to where you see the spec say there should be a single consistent permission state per origin? The permission state is a per-realm value. In the spec this is reflected by the fact that retrieving the current permission state for a particular environment settings object and not by origin (see https://w3c.github.io/permissions/#reading-current-states).",
+      "parentUuid": "46514a6d_422024f2",
+      "range": {
+        "startLine": 381,
+        "startChar": 49,
+        "endLine": 381,
+        "endChar": 55
+      },
+      "revId": "09ee1ac138bbf7527ee6051519535fda0014288f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
