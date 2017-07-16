@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fcd6312_0d75fa62",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-16T22:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ce4b6b_f84cb781",
+      "revId": "12fb6bc8c8dde06fec682939d400f03a4eef1c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f98cc229_b650eef4",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T21:04:43Z",
       "side": 1,
       "message": "I\u0027d still much prefer all the code to be in this class, so that all of the logic dealing with tail suggestions can be seen in one place.\n\nGiven that OmniboxResultView doesn\u0027t have any special knowledge about the match or how to deal with tail suggestions, the fixup method doesn\u0027t need to live there. Can you move it here? (And maybe give it a bit more descriptive name? Proposed: InlineTailPrefix)\n\nIn other words, this code would look something like this:\n\nAutocompleteMatch match \u003d GetMatchAtIndex(i);\nInlineTailPrefix(any_tail_suggestions, common_prefix, \u0026match);\nview-\u003eSetMatch(match);\n\nGranted, this requires an extra copy. But I don\u0027t think it\u0027s worth adding complexity by splitting this logic across 2 classes in order to avoid copying a small number of objects that are already being copied around a few times.",
+      "revId": "12fb6bc8c8dde06fec682939d400f03a4eef1c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9314999_bf0795cd",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-16T22:02:12Z",
+      "side": 1,
+      "message": "To be fair, this class doesn\u0027t know anything about tail suggestions either. The only reason there\u0027s any code here at all is because Update() is the best place to capture \u0027any_tail_suggestions\u0027 which would be a one-liner in Python and we wouldn\u0027t think twice about it.\n\nI prefer leaving it in ResultView because I see the match as \"his\" data. I worry much more about data consistency than having some code in a single file. Granted, it\u0027s not \"his\" data yet technically, but you know how code changes, and tail suggestion code is already spread over several directories.\n\nAlso, notice how there\u0027s already code to modify the match in SetMatch(). I\u0027d prefer not modifying it two separate places. It already raises the question of which should occur first. Putting it all there makes it obvious it\u0027s happening more than once.\n\nA possibly better place to move the actual method might be autocomplete_match.cc. Like PossiblySwapContents(), the match could define InlineTailPrefix(). One benefit of this approach would be that if/when we change the provider to put \"correct\" strings in the matches, we could do it all from the components directory.\n\nThe only reason I didn\u0027t put it there in this CL is because it still bothers my sensibilities to put UI code down there, but I could be convinced that it\u0027s the best place.",
+      "parentUuid": "f98cc229_b650eef4",
       "revId": "12fb6bc8c8dde06fec682939d400f03a4eef1c5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
