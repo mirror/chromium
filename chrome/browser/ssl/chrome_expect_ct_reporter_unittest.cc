@@ -48,7 +48,8 @@ class TestCertificateReportSender : public net::ReportSender {
             const base::Callback<void()>& success_callback,
             const base::Callback<void(const GURL&, int, int)>& error_callback)
       override {
-    latest_report_uri_ = report_uri;
+    LOG(ERROR) << "Report being sent for " << report_uri : latest_report_uri_ =
+        report_uri;
     serialized_report.CopyToString(&latest_serialized_report_);
     content_type.CopyToString(&latest_content_type_);
     if (!report_callback_.is_null()) {
@@ -338,6 +339,7 @@ class ChromeExpectCTReporterTest : public ::testing::Test {
   std::unique_ptr<net::test_server::HttpResponse> HandleReportPreflight(
       const net::test_server::HttpRequest& request) {
     num_requests_++;
+    LOG(ERROR) << "Handling report preflight for " << request.GetURL();
     if (!requests_callback_.is_null()) {
       requests_callback_.Run();
     }
@@ -345,6 +347,8 @@ class ChromeExpectCTReporterTest : public ::testing::Test {
         new net::test_server::BasicHttpResponse());
     http_response->set_code(net::HTTP_OK);
     for (const auto& cors_header : cors_headers_) {
+      LOG(ERROR) << "Adding CORS header " << cors_header.first << ": "
+                 << cors_header.second;
       http_response->AddCustomHeader(cors_header.first, cors_header.second);
     }
     return http_response;
@@ -376,6 +380,7 @@ class ChromeExpectCTReporterTest : public ::testing::Test {
       const std::string& preflight_header_good_value) {
     cors_headers_[preflight_header_name] = preflight_header_bad_value;
     const GURL fail_report_uri = test_server().GetURL("/report1");
+    LOG(ERROR) << "OnExpectCTFailed " << fail_report_uri;
     reporter->OnExpectCTFailed(
         host_port, fail_report_uri, base::Time(), ssl_info.cert.get(),
         ssl_info.unverified_cert.get(), ssl_info.signed_certificate_timestamps);
@@ -389,6 +394,7 @@ class ChromeExpectCTReporterTest : public ::testing::Test {
     // instead of the expected report to /report2.
     const GURL successful_report_uri = test_server().GetURL("/report2");
     cors_headers_[preflight_header_name] = preflight_header_good_value;
+    LOG(ERROR) << "OnExpectCTFailed " << successful_report_uri;
     reporter->OnExpectCTFailed(
         host_port, successful_report_uri, base::Time(), ssl_info.cert.get(),
         ssl_info.unverified_cert.get(), ssl_info.signed_certificate_timestamps);
