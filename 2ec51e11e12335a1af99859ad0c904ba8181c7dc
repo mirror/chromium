@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b96f65f_c6e147ea",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-16T03:08:51Z",
+      "side": 1,
+      "message": "missing semicolon?",
+      "range": {
+        "startLine": 705,
+        "startChar": 36,
+        "endLine": 705,
+        "endChar": 42
+      },
+      "revId": "2ec51e11e12335a1af99859ad0c904ba8181c7dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
