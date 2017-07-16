@@ -78,7 +78,7 @@ ResourceCoordinatorWebContentsObserver::
 
 // static
 bool ResourceCoordinatorWebContentsObserver::IsEnabled() {
-  return base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator);
+  return resource_coordinator::IsResourceCoordinatorEnabled();
 }
 
 void ResourceCoordinatorWebContentsObserver::WasShown() {

@@ -13,14 +13,20 @@
 namespace resource_coordinator {
 
 TabManager::GRCTabSignalObserver::GRCTabSignalObserver() : binding_(this) {
+  LOG(ERROR) << "ONE";
+  LOG(ERROR) << content::ServiceManagerConnection::GetForProcess();
   service_manager::Connector* connector =
       content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  LOG(ERROR) << "TWO";
   mojom::TabSignalGeneratorPtr tab_signal_generator_ptr;
+  LOG(ERROR) << "THREE";
   connector->BindInterface(mojom::kServiceName,
                            mojo::MakeRequest(&tab_signal_generator_ptr));
-
+  LOG(ERROR) << "FOUR";
   mojom::TabSignalObserverPtr tab_signal_observer_ptr;
+  LOG(ERROR) << "FIVE";
   binding_.Bind(mojo::MakeRequest(&tab_signal_observer_ptr));
+  LOG(ERROR) << "SIX";
   tab_signal_generator_ptr->AddObserver(std::move(tab_signal_observer_ptr));
 }
 
