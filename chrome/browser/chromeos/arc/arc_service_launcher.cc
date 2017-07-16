@@ -117,8 +117,6 @@ void ArcServiceLauncher::Initialize() {
   arc_service_manager_->AddService(
       base::MakeUnique<ArcStorageManager>(arc_bridge_service));
   arc_service_manager_->AddService(
-      base::MakeUnique<ArcTracingBridge>(arc_bridge_service));
-  arc_service_manager_->AddService(
       base::MakeUnique<ArcTtsService>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcUserSessionService>(arc_bridge_service));
@@ -193,6 +191,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcFileSystemMounter::GetForBrowserContext(profile);
   ArcMetricsService::GetForBrowserContext(profile);
   ArcObbMounterBridge::GetForBrowserContext(profile);
+  ArcTracingBridge::GetForBrowserContext(profile);
 
   arc_service_manager_->AddService(base::MakeUnique<ArcBootPhaseMonitorBridge>(
       arc_service_manager_->arc_bridge_service(),
