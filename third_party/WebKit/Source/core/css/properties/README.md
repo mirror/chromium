@@ -10,44 +10,53 @@ Examples:
 
 *   A single property API: the `CSSPropertyAPILineHeight` class is used only by
     the `line-height` property
-*   A group of properties that share logic: the `CSSPropertyAPIImage` class
-    is shared by the `border-image-source` and `list-style-image` properties.
+*   A group of properties that share logic: the `CSSPropertyAPIImage` class is
+    shared by the `border-image-source` and `list-style-image` properties.
 
 Status (March 16 2017): Eventually, all logic pertaining to a single property
 should be found only within its CSS property API. Currently, the code base is in
 a transitional state and property specific logic is still scattered around the
-code base. See Project Ribbon
-[tracking bug](https://bugs.chromium.org/p/chromium/issues/detail?id=545324) and
-[design doc](https://docs.google.com/document/d/1ywjUTmnxF5FXlpUTuLpint0w4TdSsjJzdWJqmhNzlss/edit#heading=h.1ckibme4i78b)
+code base. See Project Ribbon [tracking
+bug](https://bugs.chromium.org/p/chromium/issues/detail?id=545324) and [design
+doc](https://docs.google.com/document/d/1ywjUTmnxF5FXlpUTuLpint0w4TdSsjJzdWJqmhNzlss/edit#heading=h.1ckibme4i78b)
 for details of progress.
 
 ## Methods implemented by each property API
 
-Methods implemented by a property API depends on whether it is a longhand or shorthand property.
-They implement different methods because a shorthand property will cease to exist after parsing is done.
-It will not be relevant in subsequent operations, except for serialization.
+Methods implemented by a property API depends on whether it is a longhand or
+shorthand property. They implement different methods because a shorthand
+property will cease to exist after parsing is done. It will not be relevant in
+subsequent operations, except for serialization.
 
-Each <LonghandProperty> has a property API called CSSPropertyAPI<LonghandProperty> and each <ShorthandProperty>
-has a property API called CSSShorthandPropertyAPI<ShorthandProperty>.
+Each <LonghandProperty> has a property API called
+CSSPropertyAPI<LonghandProperty> and each <ShorthandProperty> has a property API
+called CSSShorthandPropertyAPI<ShorthandProperty>.
 
-1.  CSSPropertyAPI<LonghandProperty>
-    Aims to implement all property-specific logic for this longhand property. Currently(7/6/2017) it implements:
-    1. static const CSSValue* parseSingleValue(CSSParserTokenRange&, const CSSParserContext&, const CSSParserLocalContext&);
-       - Parses a single CSS property and returns the corresponding CSSValue. If the input is invalid it returns nullptr.
+1.  CSSPropertyAPI<LonghandProperty> Aims to implement all property-specific
+    logic for this longhand property. Currently(7/6/2017) it implements:
 
-2.  CSSShorthandPropertyAPI<ShorthandProperty>
-    Aims to implement all property-specific logic for this shorthand property. Currently(7/6/2017) it implements:
-    1. static bool parseShorthand(bool important, CSSParserTokenRange&, const CSSParserContext*, HeapVector<CSSProperty, 256>& properties);
-       - Returns true if the property can be parsed as a shorthand. It also adds parsed properties to the `properties` set.
+    1.  static const CSSValue* parseSingleValue(CSSParserTokenRange&, const
+        CSSParserContext&, const CSSParserLocalContext&);
+        -   Parses a single CSS property and returns the corresponding CSSValue.
+            If the input is invalid it returns nullptr.
 
+2.  CSSShorthandPropertyAPI<ShorthandProperty> Aims to implement all
+    property-specific logic for this shorthand property. Currently(7/6/2017) it
+    implements:
+
+    1.  static bool parseShorthand(bool important, CSSParserTokenRange&, const
+        CSSParserContext*, HeapVector<CSSProperty, 256>& properties);
+        -   Returns true if the property can be parsed as a shorthand. It also
+            adds parsed properties to the `properties` set.
 
 ## How to add a new property API
 
 1.  Add a .cpp file to this directory named
     `CSSPropertyAPI<Property/GroupName>.cpp`
 2.  Implement the property API in the .cpp file
-    1.  Add `#include "core/css/properties/CSSPropertyAPI<Property/GroupName>.h"`
-        (this will be a generated file)
+    1.  Add `#include
+        "core/css/properties/CSSPropertyAPI<Property/GroupName>.h"` (this will
+        be a generated file)
     2.  Implement the required methods on the API.
 3.  If logic is required by multiple property APIs you may need to create a new
     Utils file.

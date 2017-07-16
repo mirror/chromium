@@ -1,9 +1,16 @@
 # core/url/
 
-This directory contains:
-- [the URL and URLSearchParams API][1] implementation
-- the utility for [Location][2], [WorkerLocation][3] and [the a and area element][4] to implement URL operations
-- the object URL methods for [Blob][5], [Media Source Extensions][6] and [Media Capture and Streams][7]
+This directory contains: <<<<<<< Updated upstream - [the URL and URLSearchParams
+API][1] implementation - the utility for [Location][2], [WorkerLocation][3] and
+[the a and area element][4] to implement URL operations
+
+# - the object URL methods for [Blob][5], [Media Source Extensions][6] and [Media Capture and Streams][7]
+
+-   [The URL and URLSearchParams API][1] implementation
+-   The utility for [Location][2], [WorkerLocation][3] and [the a and area
+    element][4] to implement URL operations
+-   The object URL methods for [Blob][5], [Media Source Extensions][6] and
+    [Media Capture and Streams][7] >>>>>>> Stashed changes
 
 [1]: https://url.spec.whatwg.org/
 [2]: https://html.spec.whatwg.org/multipage/history.html#the-location-interface

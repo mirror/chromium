@@ -1,15 +1,17 @@
-# Block Layout #
+# Block Layout
 
-This document can be viewed in formatted form [here](https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/core/layout/ng/BlockLayout.md).
+This document can be viewed in formatted form
+[here](https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/core/layout/ng/BlockLayout.md).
 
-## Floats ##
+## Floats
 
 TODO.
 
-## An introduction to margin collapsing ##
+## An introduction to margin collapsing
 
-A simple way to think about [margin collapsing](https://www.w3.org/TR/CSS2/box.html#collapsing-margins)
-is that it takes the maximum margin between two elements. For example:
+A simple way to think about [margin
+collapsing](https://www.w3.org/TR/CSS2/box.html#collapsing-margins) is that it
+takes the maximum margin between two elements. For example:
 
 ```html
 <!-- The divs below are 20px apart -->
@@ -47,29 +49,20 @@ elements it would be pretty simple, however consider the following:
 
 In the above example as there isn't **anything** separating the edges of two
 fragments the margins stack together (e.g. no borders or padding). There are
-known as **adjoining margins**.  If we apply our formula to the above we get:
+known as **adjoining margins**. If we apply our formula to the above we get:
 `max(3, 7, 11) + min(-5, -13) = -2`.
 
 A useful concept is a **margin strut**. This is a pair of margins consisting of
 one positive and one negative margin.
 
 A margin strut allows us to keep track of the largest positive and smallest
-negative margin. E.g.
-```cpp
-struct MarginStrut {
-  LayoutUnit pos_margin;
-  LayoutUnit neg_margin;
+negative margin. E.g. ```cpp struct MarginStrut { LayoutUnit pos_margin;
+LayoutUnit neg_margin;
 
-  void Append(LayoutUnit margin) {
-    if (margin < 0)
-      neg_margin = std::min(margin, neg_margin);
-    else
-      pos_margin = std::max(margin, pos_margin);
-  }
+void Append(LayoutUnit margin) { if (margin < 0) neg_margin = std::min(margin,
+neg_margin); else pos_margin = std::max(margin, pos_margin); }
 
-  LayoutUnit Sum() { return pos_margin + neg_margin; }
-}
-```
+LayoutUnit Sum() { return pos_margin + neg_margin; } } ```
 
 A naïve algorithm for the adjoining margins case would be to _bubble_ up
 margins. For example each fragment would have a **margin strut** at the
@@ -92,14 +85,10 @@ builder.SetEndMarginStrut(s2);
 ```
 
 When it comes time to collapse the margins you can use the margin collapsing
-rule, e.g.
-```cpp
-MarginStrut s1 = fragment1.block_end_margin_strut;
-MarginStrut s2 = fragment2.block_start_margin_strut;
-LayoutUnit distance =
-    std::max(s1.pos_margin, s2.pos_margin) +
-    std::min(s1.neg_margin, s2.neg_margin);
-```
+rule, e.g. `cpp MarginStrut s1 = fragment1.block_end_margin_strut; MarginStrut
+s2 = fragment2.block_start_margin_strut; LayoutUnit distance =
+std::max(s1.pos_margin, s2.pos_margin) + std::min(s1.neg_margin,
+s2.neg_margin);`
 
 This would be pretty simple - however it doesn't work. As we discussed in the
 floats section a _child_ will position _itself_ within the BFC. If we did margin
@@ -110,13 +99,13 @@ would allow us to perform layout.
 
 We **invert** the problem. A fragment now only produces an _end_ margin strut.
 The _start_ margin strut becomes an input as well as where the margin strut is
-currently positioned within the BFC.  For example:
+currently positioned within the BFC. For example:
 
 ```cpp
 Fragment* Layout(LogicalOffset bfc_estimate, MarginStrut input_strut) {
   MarginStrut curr_strut = input_strut;
   LogicalOffset curr_bfc_estimate = bfc_estimate;
-  
+
   // We collapse the margin strut which allows us to compute our BFC offset if
   // we have border or padding. I.e. we don't have an adjoining margin.
   if (border_padding.block_start) {
@@ -150,7 +139,6 @@ There are lots of different things which can "resolve" the BFC offset of an
 element. For example inline content (text, atomic inlines), border and padding,
 if a child _might_ be affected by clearance.
 
-## Zero block-size fragments ##
+## Zero block-size fragments
 
 TODO.
-
