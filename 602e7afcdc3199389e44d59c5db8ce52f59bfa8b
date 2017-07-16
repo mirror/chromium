@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "069dbe15_2111044f",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-16T16:38:32Z",
+      "side": 1,
+      "message": "I assume that you\u0027ve checked that OfferVirtualMemory doesn\u0027t support 0 length? otherwise not having this check would of course be preferred..",
+      "revId": "602e7afcdc3199389e44d59c5db8ce52f59bfa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517cda61_929bbc12",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-16T16:38:32Z",
+      "side": 1,
+      "message": "nit: handle this real error case above the PURGED case. error handling first then other logic..",
+      "revId": "602e7afcdc3199389e44d59c5db8ce52f59bfa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a225343c_b27a1001",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-16T16:38:32Z",
+      "side": 1,
+      "message": "nit: handle this real error case above the PURGED case",
+      "revId": "602e7afcdc3199389e44d59c5db8ce52f59bfa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
