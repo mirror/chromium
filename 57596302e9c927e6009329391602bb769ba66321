@@ -16,6 +16,24 @@
       "revId": "57596302e9c927e6009329391602bb769ba66321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d58ca2_de93e566",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-16T18:41:57Z",
+      "side": 1,
+      "message": "Yes, we still need this. This is used by CreateForTesting.",
+      "parentUuid": "d73da259_bf823ce1",
+      "revId": "57596302e9c927e6009329391602bb769ba66321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
