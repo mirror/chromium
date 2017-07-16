@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e8ee630b_333c2887",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-16T16:42:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2b8010b2_74ee1edf",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da4a2791_af281618",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b2b9d54b_dafb9608",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-16T16:42:00Z",
+      "side": 1,
+      "message": "Ack. You can add a comment above where we adjust length if you like but not needed as we have the unit test after all.",
+      "parentUuid": "0ff6829f_151d7857",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a380e177_a99c064d",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 3
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "TYPE result \u003d ....\nDLOG_IF(ERROR, result ...)\n\nis only appropriate if |result| will also be used by later logic; otherwise in Release builds |result| will be unused and compilation will fail.  if(result ....) DLOG(ERROR) is the preferred-workaround, or DCHECK(result) also ensures that |result ...| is referenced, if you\u0027re OK with crash-on-failure in Debug builds.\n\nI don\u0027t know of circumstances under which Offer can fail, other than calling it the wrong way, so we could even make this CHECK.  WDYT?",
       "parentUuid": "a380e177_a99c064d",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c281039_dbe837be",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-16T16:42:00Z",
+      "side": 1,
+      "message": "Makes sense. I would avoid the CHECK unless it\u0027s a situation that we can\u0027t recover from and we\u0027ll end up crashing in some more hard to diagnose way without it.",
+      "parentUuid": "91e131f2_60b04459",
       "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
