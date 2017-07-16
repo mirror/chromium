@@ -1,3 +1,7 @@
+interface AbortPaymentEvent : ExtendableEvent
+    attribute @@toStringTag
+    method constructor
+    method respondWith
 interface BackgroundFetchClickEvent : BackgroundFetchEvent
     getter state
     method constructor
