@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b8010b2_74ee1edf",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-16T07:47:07Z",
+      "side": 1,
+      "message": "Actually this is going to need to become:\n\nDWORD reclaim_result \u003d ...\nif (ERROR_SUCCESS) return SUCCESS;\nif (ERROR_BUSY) return PURGED;\nelse return FAILED;\n\nsince PURGED means you have the allocated pages, but their contents were lost, but for general Reclaim failures we should not assume the pages are available.",
+      "parentUuid": "dc5a5358_30d46abd",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da4a2791_af281618",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0ff6829f_151d7857",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-16T07:47:07Z",
+      "side": 1,
+      "message": "The special-case for |length| being zero above resets it to |mapped_size_|, but |mapped_size_| can be zero as well - I don\u0027t know what the use-case is for zero-sized allocations, but we have DiscardableSharedMemoryTest.ZeroSize to verify that it works...\n\nPerhaps we should add a comment to the length \u003d ... mapped_size_ ... to clarify that |length| may still be zero?",
+      "parentUuid": "da4a2791_af281618",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a380e177_a99c064d",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-15T22:36:02Z",
       "side": 1,
       "message": "nit: \"if (OfferVirtualMemory(...) !\u003d ERROR_SUCCESS) {}\" to be more aligned with ashmem_unpin_region code above or maybe adjust both to do:\n\nTYPE result \u003d OfferVirtualMemory/ashmem_unpin_region(...)\nDLOG_IF(ERROR, result !\u003d GOOD) \u003c\u003c ...\n\nif having the return value in the LOG is important",
+      "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e131f2_60b04459",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-16T07:47:07Z",
+      "side": 1,
+      "message": "TYPE result \u003d ....\nDLOG_IF(ERROR, result ...)\n\nis only appropriate if |result| will also be used by later logic; otherwise in Release builds |result| will be unused and compilation will fail.  if(result ....) DLOG(ERROR) is the preferred-workaround, or DCHECK(result) also ensures that |result ...| is referenced, if you\u0027re OK with crash-on-failure in Debug builds.\n\nI don\u0027t know of circumstances under which Offer can fail, other than calling it the wrong way, so we could even make this CHECK.  WDYT?",
+      "parentUuid": "a380e177_a99c064d",
       "revId": "8a61270067b9139a1c4c23627cc8e2a7a806f8ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
