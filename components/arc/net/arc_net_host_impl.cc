@@ -327,27 +327,8 @@ void ArcNetHostImpl::OnInstanceClosed() {
 }
 
 void ArcNetHostImpl::GetNetworksDeprecated(
-    bool configured_only,
-    bool visible_only,
+    mojom::GetNetworksRequestType type,
     const GetNetworksDeprecatedCallback& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  if (configured_only && visible_only) {
-    VLOG(1) << "Illegal arguments - both configured and visible networks "
-               "requested.";
-    return;
-  }
-
-  mojom::GetNetworksRequestType type =
-      mojom::GetNetworksRequestType::CONFIGURED_ONLY;
-  if (visible_only) {
-    type = mojom::GetNetworksRequestType::VISIBLE_ONLY;
-  }
-
-  GetNetworks(type, callback);
-}
-
-void ArcNetHostImpl::GetNetworks(mojom::GetNetworksRequestType type,
-                                 const GetNetworksCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   mojom::NetworkDataPtr data = mojom::NetworkData::New();
@@ -421,6 +402,45 @@ void ArcNetHostImpl::GetNetworks(mojom::GetNetworksRequestType type,
   }
   data->networks = std::move(networks);
   callback.Run(std::move(data));
+}
+
+void ArcNetHostImpl::GetNetworks(mojom::GetNetworksRequestType type,
+                                 const GetNetworksCallback& callback) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  mojom::GetNetworksResponseTypePtr response =
+      mojom::GetNetworksResponseType::New();
+  bool configured_only = true;
+  bool visible_only = false;
+  if (type == mojom::GetNetworksRequestType::VISIBLE_ONLY) {
+    configured_only = false;
+    visible_only = true;
+  }
+
+  // Retrieve list of nearby wifi networks
+  chromeos::NetworkTypePattern network_pattern =
+      chromeos::onc::NetworkTypePatternFromOncType(onc::network_type::kWiFi);
+  std::unique_ptr<base::ListValue> network_properties_list =
+      chromeos::network_util::TranslateNetworkListToONC(
+          network_pattern, configured_only, visible_only,
+          kGetNetworksListLimit);
+
+  // Extract info for each network and add it to the list.
+  // Even if there's no WiFi, an empty (size=0) list must be returned and not a
+  // null one. The explicitly sized New() constructor ensures the non-null
+  // property.
+  std::vector<mojom::NetworkConfigurationPtr> networks;
+  for (const auto& value : *network_properties_list) {
+    mojom::NetworkConfigurationPtr wc = mojom::NetworkConfiguration::New();
+
+    const base::DictionaryValue* network_dict = nullptr;
+    value.GetAsDictionary(&network_dict);
+    DCHECK(network_dict);
+    networks.push_back(TranslateONCConfiguration(network_dict));
+  }
+  response->status = arc::mojom::NetworkResult::SUCCESS;
+  response->networks = std::move(networks);
+  callback.Run(std::move(response));
 }
 
 void ArcNetHostImpl::CreateNetworkSuccessCallback(
