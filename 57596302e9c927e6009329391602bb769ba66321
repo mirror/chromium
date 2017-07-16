@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73da259_bf823ce1",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-16T05:24:16Z",
+      "side": 1,
+      "message": "nit: Do we still need a separate constructor? Is that any simpler? (I guess not.)\n\nNow that two constructors have completely different parameters, and the first one\u0027s body at L45 is empty. I guess we can just instantiate DelegateImpl inside the first ctor and delete the private one here.",
+      "revId": "57596302e9c927e6009329391602bb769ba66321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
