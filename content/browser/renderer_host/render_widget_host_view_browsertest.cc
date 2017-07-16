@@ -260,9 +260,11 @@ IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewBrowserTestBase,
       NavigationController::LoadURLParams(GURL(url::kAboutBlankURL)));
   EXPECT_TRUE(WaitForLoadStop(new_web_contents.get()));
 
+  LOG(ERROR) << " 1 ";
   // Start a cross-process navigation.
   shell()->LoadURL(embedded_test_server()->GetURL("foo.com", "/title1.html"));
 
+  LOG(ERROR) << " 2 ";
   // When the navigation is about to commit, wait for the next frame to be
   // submitted by the renderer before proceeding with page load.
   {
@@ -272,8 +274,11 @@ IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewBrowserTestBase,
               new_web_contents->GetRenderProcessHost());
   }
 
+  LOG(ERROR) << " 3 ";
+
   // Go back and verify that the renderer continues to draw new frames.
   shell()->GoBackOrForward(-1);
+  LOG(ERROR) << " 4 ";
   EXPECT_TRUE(WaitForLoadStop(web_contents));
   EXPECT_EQ(web_contents->GetRenderProcessHost(),
             new_web_contents->GetRenderProcessHost());

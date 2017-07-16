@@ -85,12 +85,6 @@ MediaFactory::MediaFactory(
 MediaFactory::~MediaFactory() {}
 
 void MediaFactory::SetupMojo() {
-  // Only do setup once.
-  DCHECK(!remote_interfaces_);
-
-  remote_interfaces_ = render_frame_->GetRemoteInterfaces();
-  DCHECK(remote_interfaces_);
-
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
   // Create the SinkAvailabilityObserver to monitor the remoting sink
   // availablity.
@@ -289,14 +283,12 @@ MediaFactory::CreateRendererFactorySelector(
   auto factory_selector = base::MakeUnique<media::RendererFactorySelector>();
 
 #if defined(OS_ANDROID)
-  DCHECK(remote_interfaces_);
-
   // The only MojoRendererService that is registered at the RenderFrameHost
   // level uses the MediaPlayerRenderer as its underlying media::Renderer.
   auto mojo_media_player_renderer_factory =
       base::MakeUnique<media::MojoRendererFactory>(
           media::MojoRendererFactory::GetGpuFactoriesCB(),
-          remote_interfaces_->get());
+          render_frame_->GetRemoteInterfaces());
 
   // Always give |factory_selector| a MediaPlayerRendererClient factory. WMPI
   // might fallback to it if the final redirected URL is an HLS url.
@@ -447,8 +439,8 @@ RendererMediaPlayerManager* MediaFactory::GetMediaPlayerManager() {
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
 media::mojom::RemoterFactory* MediaFactory::GetRemoterFactory() {
   if (!remoter_factory_) {
-    DCHECK(remote_interfaces_);
-    remote_interfaces_->GetInterface(&remoter_factory_);
+    DCHECK(render_frame_->GetRemoteInterfaces());
+    render_frame_->GetRemoteInterfaces()->GetInterface(&remoter_factory_);
   }
   return remoter_factory_.get();
 }
@@ -487,9 +479,8 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
 service_manager::mojom::InterfaceProvider*
 MediaFactory::GetMediaInterfaceProvider() {
   if (!media_interface_provider_) {
-    DCHECK(remote_interfaces_);
     media_interface_provider_.reset(
-        new MediaInterfaceProvider(remote_interfaces_));
+        new MediaInterfaceProvider(render_frame_->GetRemoteInterfaces()));
   }
 
   return media_interface_provider_.get();
