@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fab91b3_3d5053e2",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-16T01:24:52Z",
+      "side": 1,
+      "message": "This error should send back an HPTT_NOT_FOUND status.",
+      "revId": "3b4dcb97eb40ce1f36295d9a61ec5d17a908553e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0fe6ff_69df683d",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-16T01:24:52Z",
+      "side": 1,
+      "message": "nit: there is an extra space between \u0027 and cookie.",
+      "range": {
+        "startLine": 965,
+        "startChar": 43,
+        "endLine": 965,
+        "endChar": 44
+      },
+      "revId": "3b4dcb97eb40ce1f36295d9a61ec5d17a908553e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7083a626_1d3e38d3",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-16T01:24:52Z",
+      "side": 1,
+      "message": "The scope of this |if| statement is incorrect, since |return Status(kNoSuchCookie)| is included in it, so when a web site has no cookies, the code ends up returning |kOk|. In any case, I think this |if| isn\u0027t really necessary, since when there are no cookies, the |for| loop below would just execute 0 times and still behave correctly.",
+      "revId": "3b4dcb97eb40ce1f36295d9a61ec5d17a908553e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d806b8_12380059",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-16T01:24:52Z",
+      "side": 1,
+      "message": "This variable isn\u0027t used.",
+      "range": {
+        "startLine": 974,
+        "startChar": 37,
+        "endLine": 974,
+        "endChar": 48
+      },
+      "revId": "3b4dcb97eb40ce1f36295d9a61ec5d17a908553e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af522291_3494e50b",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-16T01:24:52Z",
+      "side": 1,
+      "message": "This results in an unnecessary copying of the actual cookie name. It\u0027s more efficient to do\n\nif (name \u003d\u003d it-\u003ename)",
+      "revId": "3b4dcb97eb40ce1f36295d9a61ec5d17a908553e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3135b79f_4b911992",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-16T01:24:52Z",
+      "side": 1,
+      "message": "Since you return immediately after finding the cookie, there is no need for |cookie_found| variable. Simply return |kNoSuchCookie| after the |for| loop.",
+      "revId": "3b4dcb97eb40ce1f36295d9a61ec5d17a908553e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
