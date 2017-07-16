@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c72da33b_1c3069cd",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-16T04:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a27f594_5ab0e254",
+      "revId": "bbdfd185b0218cbddd5064df7e601b842812ab23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d10f3988_4c05f513",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "bbdfd185b0218cbddd5064df7e601b842812ab23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf05a93_b796e759",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-16T04:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d10f3988_4c05f513",
+      "revId": "bbdfd185b0218cbddd5064df7e601b842812ab23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
