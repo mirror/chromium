@@ -143,11 +143,17 @@ class CheckedNumeric {
   }
 
   constexpr CheckedNumeric Abs() const {
-    return CheckedNumeric<T>(
-        AbsWrapper(state_.value()),
-        IsValid() &&
-            (!std::is_signed<T>::value || std::is_floating_point<T>::value ||
-             AbsWrapper(state_.value()) != std::numeric_limits<T>::lowest()));
+    constexpr bool is_signed_int =
+        std::is_signed<T>::value && !std::is_floating_point<T>::value;
+    return !CanDetectCompileTimeConstant() ||
+                   IsCompileTimeConstant(state_.value()) || !is_signed_int
+               ? CheckedNumeric<T>(
+                     AbsWrapper(state_.value()),
+                     IsValid() && (!is_signed_int ||
+                                   AbsWrapper(state_.value()) !=
+                                       std::numeric_limits<T>::lowest()))
+               : (!IsValueNegative(state_.value()) ? *this
+                                                   : FastRuntimeNegate());
   }
 
   template <typename U>

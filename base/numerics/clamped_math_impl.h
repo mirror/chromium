@@ -21,6 +21,22 @@
 namespace base {
 namespace internal {
 
+// The following implementation has good performance across compilers and CPUs.
+// It's possible to get even more compact and faster code by handcoding
+// assembler, but this path doesn't seem hot enough to warrant the complexity.
+template <typename T,
+          typename std::enable_if<std::is_integral<T>::value>::type* = nullptr>
+constexpr T SaturatedAbsWrapper(T value) {
+  return saturated_cast<T>(SafeUnsignedAbs(value));
+}
+
+template <
+    typename T,
+    typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr>
+constexpr T SaturatedAbsWrapper(T value) {
+  return value < 0 ? -value : value;
+}
+
 template <typename T, typename U, class Enable = void>
 struct ClampedAddOp {};
 
