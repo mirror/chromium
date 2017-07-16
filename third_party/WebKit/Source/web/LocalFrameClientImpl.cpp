@@ -1067,6 +1067,10 @@ std::unique_ptr<blink::WebURLLoader> LocalFrameClientImpl::CreateURLLoader(
                                      task_runner->ToSingleThreadTaskRunner());
 }
 
+bool LocalFrameClientImpl::IsFake() const {
+  return web_frame_->Client()->IsFake();
+}
+
 service_manager::InterfaceProvider*
 LocalFrameClientImpl::GetInterfaceProvider() {
   return web_frame_->Client()->GetInterfaceProvider();

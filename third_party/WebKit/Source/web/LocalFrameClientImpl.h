@@ -236,6 +236,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
                                                 WebTaskRunner*) override;
 
+  bool IsFake() const override;
+
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
   void AnnotatedRegionsChanged() override;
