@@ -1679,11 +1679,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
 
-  if (base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator)) {
-    registry->AddInterface(base::Bind(
-        &CreateResourceCoordinatorProcessInterface, base::Unretained(this)));
-  }
-
   if (base::FeatureList::IsEnabled(features::kOffMainThreadFetch)) {
     scoped_refptr<ServiceWorkerContextWrapper> service_worker_context(
         static_cast<ServiceWorkerContextWrapper*>(
@@ -1933,14 +1928,10 @@ mojom::Renderer* RenderProcessHostImpl::GetRendererInterface() {
 resource_coordinator::ResourceCoordinatorInterface*
 RenderProcessHostImpl::GetProcessResourceCoordinator() {
   if (!process_resource_coordinator_) {
-    base::ProcessHandle process_handle = GetHandle();
-    DCHECK(process_handle);
-
     process_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
             ServiceManagerConnection::GetForProcess()->GetConnector(),
-            resource_coordinator::CoordinationUnitType::kProcess,
-            base::Process(process_handle).Pid());
+            resource_coordinator::CoordinationUnitType::kProcess);
   }
   return process_resource_coordinator_.get();
 }
