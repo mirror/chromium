@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1559e611_cacaff02",
+        "filename": "third_party/WebKit/Source/core/layout/ng/BlockLayout.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-16T21:37:27Z",
+      "side": 1,
+      "message": "This isn\u0027t particularly good?",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 59,
+        "endChar": 20
+      },
+      "revId": "06a4a514718410013b9c88e35393dc8e7ef34149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9efbcdd_2385bae5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/BlockLayout.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-16T21:37:27Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 7
+      },
+      "revId": "06a4a514718410013b9c88e35393dc8e7ef34149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
