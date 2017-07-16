@@ -132,12 +132,13 @@ class CheckedNumeric {
     // The negation of two's complement int min is int min, so we simply
     // check for that in the constexpr case.
     // We use an optimized code path for a known run-time variable.
+    constexpr bool is_signed_int =
+        std::is_signed<T>::value && !std::is_floating_point<T>::value;
     return !CanDetectCompileTimeConstant() ||
-                   IsCompileTimeConstant(state_.value())
+                   IsCompileTimeConstant(state_.value()) || !is_signed_int
                ? CheckedNumeric<T>(
                      NegateWrapper(state_.value()),
-                     IsValid() && (!std::is_signed<T>::value ||
-                                   std::is_floating_point<T>::value ||
+                     IsValid() && (!is_signed_int ||
                                    NegateWrapper(state_.value()) !=
                                        std::numeric_limits<T>::lowest()))
                : FastRuntimeNegate();
