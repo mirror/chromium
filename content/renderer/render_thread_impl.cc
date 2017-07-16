@@ -2516,7 +2516,7 @@ void RenderThreadImpl::OnSyncMemoryPressure(
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level) {
   if (!blink::MainThreadIsolate())
     return;
-
+  TRACE_COUNTER1("blink_gc", "memory pressure", static_cast<int>(memory_pressure_level));
   v8::MemoryPressureLevel v8_memory_pressure_level =
       static_cast<v8::MemoryPressureLevel>(memory_pressure_level);
 
