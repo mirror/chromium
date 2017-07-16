@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae2783b2_74b34032",
+        "filename": "chrome/browser/exo_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-16T17:06:15Z",
+      "side": 1,
+      "message": "I would prefer to have a ShouldCreateChromeBrowserMainExoParts helper instead of this factory method. I find calling \"Create\" and getting a return value of null when the instance should not be created to be surprising",
+      "revId": "d67b3d65d463be7a06bf89c0fa068f2228e7cbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6e14cf_b0aff43f",
+        "filename": "chrome/browser/exo_init.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-16T17:06:15Z",
+      "side": 1,
+      "message": "ExoInit is ubiquitous name. Would ChromeBrowserMainExoParts better describe what this is?",
+      "revId": "d67b3d65d463be7a06bf89c0fa068f2228e7cbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
