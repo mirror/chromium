@@ -1,4 +1,4 @@
-# `Source/core/paint`
+# core/paint
 
 This directory contains implementation of painters of layout objects. It covers
 the following document lifecycle phases:
@@ -34,7 +34,7 @@ are treated in different ways during painting:
         elements because `z-index:auto` and `z-index:0` are considered equal for
         stacking context sorting and they may interleave by DOM order.
 
-        The difference of a stacked element of this type from a real stacking 
+        The difference of a stacked element of this type from a real stacking
         context is that it doesn't manage z-ordering of stacked descendants.
         These descendants are managed by the parent stacking context of this
         stacked element.
@@ -45,11 +45,10 @@ are treated in different ways during painting:
 
     A stacked element is represented by a `PaintLayerStackingNode` associated
     with a `PaintLayer`. It's painted as self-painting `PaintLayer`s by
-    `PaintLayerPainter`
-    by executing all of the steps of the painting algorithm explained in the
-    documentation for the element. When painting a stacked element of the second
-    type, we don't paint its stacked descendants which are managed by the parent
-    stacking context.
+    `PaintLayerPainter` by executing all of the steps of the painting algorithm
+    explained in the documentation for the element. When painting a stacked
+    element of the second type, we don't paint its stacked descendants which are
+    managed by the parent stacking context.
 
 *   Non-stacked pseudo stacking contexts: elements that are not stacked, but
     paint their descendants (excluding any stacked contents) as if they created
@@ -72,10 +71,10 @@ are treated in different ways during painting:
 
 ### Other glossaries
 
-*   Paint container: the parent of an object for painting, as defined by
-    [CSS2.1 spec for painting]((http://www.w3.org/TR/CSS21/zindex.html)). For
-    regular objects, this is the parent in the DOM. For stacked objects, it's
-    the containing stacking context-inducing object.
+*   Paint container: the parent of an object for painting, as defined by [CSS2.1
+    spec for painting](\(http://www.w3.org/TR/CSS21/zindex.html\)). For regular
+    objects, this is the parent in the DOM. For stacked objects, it's the
+    containing stacking context-inducing object.
 
 *   Paint container chain: the chain of paint ancestors between an element and
     the root of the page.
@@ -189,7 +188,8 @@ the `LayoutText` in `LayoutText::InvalidateDisplayItemClients()`. We don't need
 to traverse into the subtree of `InlineFlowBox`s in
 `LayoutInline::InvalidateDisplayItemClients()` because the descendant
 `InlineFlowBox`s and `InlineTextBox`s will be handled by their owning
-`LayoutInline`s and `LayoutText`s, respectively, when changed style is propagated.
+`LayoutInline`s and `LayoutText`s, respectively, when changed style is
+propagated.
 
 ### Specialty of `::first-line`
 
@@ -203,7 +203,8 @@ style to the first line part of the `LayoutInline`. In Blink's style
 implementation, the combined first line style of `LayoutInline` is identified
 with `FIRST_LINE_INHERITED` pseudo ID.
 
-The normal paint invalidation of texts doesn't work for first line because
+The normal paint invalidation of texts doesn't work for first line because:
+
 *   `ComputedStyle::VisualInvalidationDiff()` can't detect first line style
     changes;
 *   The normal paint invalidation is based on whole LayoutObject's, not aware of
@@ -215,6 +216,7 @@ layout system when the computed first-line style changes through
 `InlineBox`es in the first line.
 
 ## PrePaint (Slimming paint invalidation/v2 only)
+
 [`PrePaintTreeWalk`](PrePaintTreeWalk.h)
 
 During `InPrePaint` document lifecycle state, this class is called to walk the
@@ -222,10 +224,11 @@ whole layout tree, beginning from the root FrameView, across frame boundaries.
 We do the following during the tree walk:
 
 ### Building paint property trees
+
 [`PaintPropertyTreeBuilder`](PaintPropertyTreeBuilder.h)
 
-This class is responsible for building property trees
-(see [the platform paint README file](../../platform/graphics/paint/README.md)).
+This class is responsible for building property trees (see [the platform paint
+README file](../../platform/graphics/paint/README.md)).
 
 Each `PaintLayer`'s `LayoutObject` has one or more `FragmentData` objects (see
 below for more on fragments). Every `FragmentData` has an
@@ -254,11 +257,12 @@ See [`LayoutMultiColumnFlowThread.h`](../layout/LayoutMultiColumnFlowThread.h)
 for a much more detail about multicolumn/pagination.
 
 ### Paint invalidation
+
 [`PaintInvalidator`](PaintInvalidator.h)
 
 This class replaces [`PaintInvalidationState`] for SlimmingPaintInvalidation.
-The main difference is that in PaintInvalidator, visual rects and locations
-are computed by `GeometryMapper`(../../platform/graphics/paint/GeometryMapper.h),
+The main difference is that in PaintInvalidator, visual rects and locations are
+computed by `GeometryMapper`(../../platform/graphics/paint/GeometryMapper.h),
 based on paint properties produced by `PaintPropertyTreeBuilder`.
 
 TODO(wangxianzhu): Combine documentation of PaintInvalidation phase into here.
@@ -285,9 +289,11 @@ the scope as a "subsequence". Before painting a layer, if we are sure that the
 layer will generate exactly the same display items as the previous paint, we'll
 get the whole subsequence from the cache instead of repainting them.
 
-There are many conditions affecting
+There are many conditions affecting:
+
 *   whether we need to generate subsequence for a PaintLayer;
 *   whether we can use cached subsequence for a PaintLayer.
+
 See `ShouldCreateSubsequence()` and `shouldRepaintSubsequence()` in
 `PaintLayerPainter.cpp` for the conditions.
 

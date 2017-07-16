@@ -1,6 +1,7 @@
-# core/streams/
+# core/streams
 
-This directory contains the Blink implementation of [the WHATWG Streams standard][1].
+This directory contains the Blink implementation of [the WHATWG Streams
+standard][1].
 
 We use [V8 extras][2] to implement it.
 
