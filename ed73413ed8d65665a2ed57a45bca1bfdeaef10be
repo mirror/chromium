@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6359f13_4bdfe5d1",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:39:48Z",
+      "side": 1,
+      "message": "This logic is getting complicated, could we move it to a small \nfile static function? Sth like:\n\n#if defined(OS_ANDROID)\nstatic bool IsDeviceUsableForTesting(\n    const VideoCaptureDeviceDescriptor\u0026 descriptor) {\n  // Android deprecated/legacy devices and Tango cameras capture on a single\n  // thread, which is occupied by the tests, so nothing gets actually delivered.\n  // TODO(mcasas): use those devices\u0027 test mode to deliver frames in a\n  // background thread, https://crbug.com/626857\n  return !VideoCaptureDeviceFactoryAndroid::IsLegacyOrDeprecatedDevice(\n             descriptor.device_id) \u0026\u0026\n         descriptor.capture_api !\u003d VideoCaptureApi::ANDROID_TANGO;\n};\n#endif\n\nand just call it here?",
+      "range": {
+        "startLine": 305,
+        "startChar": 10,
+        "endLine": 307,
+        "endChar": 67
+      },
+      "revId": "ed73413ed8d65665a2ed57a45bca1bfdeaef10be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2cbf138_556ae08e",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:39:48Z",
+      "side": 1,
+      "message": "descriptor.GetNameAndModel(). (Also in l. 322).\n\nhttps://cs.chromium.org/chromium/src/media/capture/video/video_capture_device_descriptor.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d74",
+      "range": {
+        "startLine": 308,
+        "startChar": 40,
+        "endLine": 309,
+        "endChar": 40
+      },
+      "revId": "ed73413ed8d65665a2ed57a45bca1bfdeaef10be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee51bc05_f50ed651",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:39:48Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003cVideoCaptureDeviceDescriptor\u003e(descriptor);\nsimilarly in l.324",
+      "range": {
+        "startLine": 310,
+        "startChar": 15,
+        "endLine": 311,
+        "endChar": 58
+      },
+      "revId": "ed73413ed8d65665a2ed57a45bca1bfdeaef10be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c648c7_dd40e823",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:39:48Z",
+      "side": 1,
+      "message": "In general prefer DVLOG(num) \u003e DLOG() \u003e LOG()",
+      "range": {
+        "startLine": 314,
+        "startChar": 4,
+        "endLine": 314,
+        "endChar": 7
+      },
+      "revId": "ed73413ed8d65665a2ed57a45bca1bfdeaef10be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704012fd_6a296763",
+        "filename": "media/capture/video/video_capture_device_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-16T11:39:48Z",
+      "side": 1,
+      "message": "const auto?",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 6
+      },
+      "revId": "ed73413ed8d65665a2ed57a45bca1bfdeaef10be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
