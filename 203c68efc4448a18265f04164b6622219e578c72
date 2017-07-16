@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92f68407_4855e93f",
+        "filename": "tools/gn/docs/cross_compiles.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-16T20:58:22Z",
+      "side": 0,
+      "message": "(This link didn\u0027t seem relevant anymore.)",
+      "revId": "203c68efc4448a18265f04164b6622219e578c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0bbe2ba_b8840b19",
+        "filename": "tools/gn/docs/language.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-16T20:58:22Z",
+      "side": 0,
+      "message": "This link was dead.",
+      "revId": "203c68efc4448a18265f04164b6622219e578c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
