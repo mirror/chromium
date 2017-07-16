@@ -317,7 +317,7 @@ ServiceManagerContext::ServiceManagerContext() {
   packaged_services_connection_->AddEmbeddedService(device::mojom::kServiceName,
                                                     device_info);
 
-  if (base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator)) {
+  if (resource_coordinator::IsResourceCoordinatorEnabled()) {
     service_manager::EmbeddedServiceInfo resource_coordinator_info;
     resource_coordinator_info.factory =
         base::Bind(&resource_coordinator::ResourceCoordinatorService::Create);
