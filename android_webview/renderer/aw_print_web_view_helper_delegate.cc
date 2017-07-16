@@ -8,27 +8,27 @@
 
 namespace android_webview {
 
-AwPrintWebViewHelperDelegate::~AwPrintWebViewHelperDelegate() {}
+AwPrintWebFrameHelperDelegate::~AwPrintWebFrameHelperDelegate() {}
 
-bool AwPrintWebViewHelperDelegate::CancelPrerender(
+bool AwPrintWebFrameHelperDelegate::CancelPrerender(
     content::RenderFrame* render_frame) {
   return false;
 }
 
-blink::WebElement AwPrintWebViewHelperDelegate::GetPdfElement(
+blink::WebElement AwPrintWebFrameHelperDelegate::GetPdfElement(
     blink::WebLocalFrame* frame) {
   return blink::WebElement();
 }
 
-bool AwPrintWebViewHelperDelegate::IsPrintPreviewEnabled() {
+bool AwPrintWebFrameHelperDelegate::IsPrintPreviewEnabled() {
   return false;
 }
 
-bool AwPrintWebViewHelperDelegate::IsScriptedPrintEnabled() {
+bool AwPrintWebFrameHelperDelegate::IsScriptedPrintEnabled() {
   return false;
 }
 
-bool AwPrintWebViewHelperDelegate::OverridePrint(blink::WebLocalFrame* frame) {
+bool AwPrintWebFrameHelperDelegate::OverridePrint(blink::WebLocalFrame* frame) {
   return false;
 }
 

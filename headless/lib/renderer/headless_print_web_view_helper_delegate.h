@@ -9,13 +9,13 @@
 
 namespace headless {
 
-class HeadlessPrintWebViewHelperDelegate
-    : public printing::PrintWebViewHelper::Delegate {
+class HeadlessPrintWebFrameHelperDelegate
+    : public printing::PrintWebFrameHelper::Delegate {
  public:
-  HeadlessPrintWebViewHelperDelegate();
-  ~HeadlessPrintWebViewHelperDelegate() override;
+  HeadlessPrintWebFrameHelperDelegate();
+  ~HeadlessPrintWebFrameHelperDelegate() override;
 
-  // PrintWebViewHelper Delegate implementation.
+  // PrintWebFrameHelper Delegate implementation.
   bool CancelPrerender(content::RenderFrame* render_frame) override;
   bool IsPrintPreviewEnabled() override;
   bool OverridePrint(blink::WebLocalFrame* frame) override;

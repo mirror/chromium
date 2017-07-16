@@ -19,8 +19,8 @@
 namespace printing {
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
-bool PrintWebViewHelper::PrintPagesNative(blink::WebLocalFrame* frame,
-                                          int page_count) {
+bool PrintWebFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
+                                           int page_count) {
   const PrintMsg_PrintPages_Params& params = *print_pages_params_;
   const PrintMsg_Print_Params& print_params = params.params;
 
@@ -40,7 +40,7 @@ bool PrintWebViewHelper::PrintPagesNative(blink::WebLocalFrame* frame,
 }
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
 
-void PrintWebViewHelper::PrintPagesInternal(
+void PrintWebFrameHelper::PrintPagesInternal(
     const PrintMsg_Print_Params& params,
     const std::vector<int>& printed_pages,
     int page_count,
@@ -77,7 +77,7 @@ void PrintWebViewHelper::PrintPagesInternal(
 }
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-bool PrintWebViewHelper::RenderPreviewPage(
+bool PrintWebFrameHelper::RenderPreviewPage(
     int page_number,
     const PrintMsg_Print_Params& print_params) {
   PrintMsg_Print_Params printParams = print_params;
@@ -117,14 +117,14 @@ bool PrintWebViewHelper::RenderPreviewPage(
 }
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
-void PrintWebViewHelper::RenderPage(const PrintMsg_Print_Params& params,
-                                    int page_number,
-                                    int page_count,
-                                    blink::WebLocalFrame* frame,
-                                    bool is_preview,
-                                    PdfMetafileSkia* metafile,
-                                    gfx::Size* page_size,
-                                    gfx::Rect* content_rect) {
+void PrintWebFrameHelper::RenderPage(const PrintMsg_Print_Params& params,
+                                     int page_number,
+                                     int page_count,
+                                     blink::WebLocalFrame* frame,
+                                     bool is_preview,
+                                     PdfMetafileSkia* metafile,
+                                     gfx::Size* page_size,
+                                     gfx::Rect* content_rect) {
   double scale_factor =
       params.scale_factor >= kEpsilon ? params.scale_factor : 1.0f;
   double webkit_shrink_factor = frame->GetPrintPageShrink(page_number);

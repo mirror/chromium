@@ -536,8 +536,8 @@ void ChromeContentRendererClient::RenderFrameCreated(
 #endif
 
 #if BUILDFLAG(ENABLE_PRINTING)
-  new printing::PrintWebViewHelper(
-      render_frame, base::MakeUnique<ChromePrintWebViewHelperDelegate>());
+  new printing::PrintWebFrameHelper(
+      render_frame, base::MakeUnique<ChromePrintWebFrameHelperDelegate>());
 #endif
 
 #if defined(OS_ANDROID)

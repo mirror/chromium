@@ -9,13 +9,13 @@
 
 namespace android_webview {
 
-class AwPrintWebViewHelperDelegate
-    : public printing::PrintWebViewHelper::Delegate {
+class AwPrintWebFrameHelperDelegate
+    : public printing::PrintWebFrameHelper::Delegate {
  public:
-  ~AwPrintWebViewHelperDelegate() override;
+  ~AwPrintWebFrameHelperDelegate() override;
 
  private:
-  // printing::PrintWebViewHelper::Delegate:
+  // printing::PrintWebFrameHelper::Delegate:
   bool CancelPrerender(content::RenderFrame* render_frame) override;
   blink::WebElement GetPdfElement(blink::WebLocalFrame* frame) override;
   bool IsPrintPreviewEnabled() override;

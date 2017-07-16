@@ -31,12 +31,12 @@ struct PrintHostMsg_SetOptionsFromDocument_Params;
 // RenderViewTest-based tests crash on Android
 // http://crbug.com/187500
 #if defined(OS_ANDROID)
-#define MAYBE_PrintWebViewHelperTest DISABLED_PrintWebViewHelperTest
-#define MAYBE_PrintWebViewHelperPreviewTest \
-    DISABLED_PrintWebViewHelperPreviewTest
+#define MAYBE_PrintWebFrameHelperTest DISABLED_PrintWebFrameHelperTest
+#define MAYBE_PrintWebFrameHelperPreviewTest \
+  DISABLED_PrintWebFrameHelperPreviewTest
 #else
-#define MAYBE_PrintWebViewHelperTest PrintWebViewHelperTest
-#define MAYBE_PrintWebViewHelperPreviewTest PrintWebViewHelperPreviewTest
+#define MAYBE_PrintWebFrameHelperTest PrintWebFrameHelperTest
+#define MAYBE_PrintWebFrameHelperPreviewTest PrintWebFrameHelperPreviewTest
 #endif  // defined(OS_ANDROID)
 
 namespace base {
@@ -74,12 +74,12 @@ class FrameReference {
   DISALLOW_COPY_AND_ASSIGN(FrameReference);
 };
 
-// PrintWebViewHelper handles most of the printing grunt work for RenderView.
+// PrintWebFrameHelper handles most of the printing grunt work for RenderView.
 // We plan on making print asynchronous and that will require copying the DOM
 // of the document and creating a new WebView with the contents.
-class PrintWebViewHelper
+class PrintWebFrameHelper
     : public content::RenderFrameObserver,
-      public content::RenderFrameObserverTracker<PrintWebViewHelper> {
+      public content::RenderFrameObserverTracker<PrintWebFrameHelper> {
  public:
   class Delegate {
    public:
@@ -117,9 +117,9 @@ class PrintWebViewHelper
 #endif
   };
 
-  PrintWebViewHelper(content::RenderFrame* render_frame,
-                     std::unique_ptr<Delegate> delegate);
-  ~PrintWebViewHelper() override;
+  PrintWebFrameHelper(content::RenderFrame* render_frame,
+                      std::unique_ptr<Delegate> delegate);
+  ~PrintWebFrameHelper() override;
 
   // Minimum valid value for scaling. Since scaling is originally an integer
   // representing a percentage, it should never be less than this if it is
@@ -135,17 +135,17 @@ class PrintWebViewHelper
   void PrintNode(const blink::WebNode& node);
 
  private:
-  friend class PrintWebViewHelperTestBase;
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperPreviewTest,
+  friend class PrintWebFrameHelperTestBase;
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebFrameHelperPreviewTest,
                            BlockScriptInitiatedPrinting);
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest, OnPrintPages);
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest,
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebFrameHelperTest, OnPrintPages);
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebFrameHelperTest,
                            BlockScriptInitiatedPrinting);
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest,
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebFrameHelperTest,
                            BlockScriptInitiatedPrintingFromPopup);
 #if defined(OS_WIN) || defined(OS_MACOSX)
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest, PrintLayoutTest);
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest, PrintWithIframe);
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebFrameHelperTest, PrintLayoutTest);
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebFrameHelperTest, PrintWithIframe);
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
   enum PrintingResult {
@@ -557,9 +557,9 @@ class PrintWebViewHelper
   // parameters so that it can be invoked after DidStopLoading.
   base::Closure on_stop_loading_closure_;
 
-  base::WeakPtrFactory<PrintWebViewHelper> weak_ptr_factory_;
+  base::WeakPtrFactory<PrintWebFrameHelper> weak_ptr_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(PrintWebViewHelper);
+  DISALLOW_COPY_AND_ASSIGN(PrintWebFrameHelper);
 };
 
 }  // namespace printing
