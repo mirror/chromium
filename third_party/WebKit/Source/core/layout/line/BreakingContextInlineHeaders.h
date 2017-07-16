@@ -1516,8 +1516,8 @@ inline void BreakingContext::CommitAndUpdateLineBreakIfNeeded() {
         current_style_->CollapseWhiteSpace())
       trailing_objects_.Clear();
 
-    if (!width_.FitsOnLine() && width_.FitsOnLine(0, kExcludeWhitespace) &&
-        ignoring_spaces_ && next_object_) {
+    if (width_.FitsOnLine(0, kExcludeWhitespace) &&
+        current_character_is_space_ && next_object_ && !next_object_.IsBR()) {
       width_.Commit();
       line_break_.MoveToStartOf(next_object_);
     }
