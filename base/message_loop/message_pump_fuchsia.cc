@@ -41,9 +41,7 @@ bool MessagePumpFuchsia::FileDescriptorWatcher::StopWatchingFileDescriptor() {
 }
 
 MessagePumpFuchsia::MessagePumpFuchsia() : keep_running_(true) {
-  // TODO(wez): Remove MX_PORT_OPT_V2 once the SDK is rolled, or migrate
-  // this implementation use ulib/port helpers.
-  CHECK(mx_port_create(MX_PORT_OPT_V2, &port_) == MX_OK);
+  CHECK(mx_port_create(0, &port_) == MX_OK);
 }
 
 MessagePumpFuchsia::~MessagePumpFuchsia() {
