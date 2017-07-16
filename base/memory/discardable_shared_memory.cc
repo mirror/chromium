@@ -24,6 +24,10 @@
 #include "third_party/ashmem/ashmem.h"
 #endif
 
+#if defined(OS_WIN)
+#include "base/win/windows_version.h"
+#endif
+
 namespace base {
 namespace {
 
@@ -221,19 +225,10 @@ DiscardableSharedMemory::LockResult DiscardableSharedMemory::Lock(
   if (!length)
       return PURGED;
 
-// Pin pages if supported.
-#if defined(OS_ANDROID)
-  SharedMemoryHandle handle = shared_memory_.handle();
-  if (handle.IsValid()) {
-    if (ashmem_pin_region(handle.GetHandle(),
-                          AlignToPageSize(sizeof(SharedState)) + offset,
-                          length)) {
-      return PURGED;
-    }
-  }
-#endif
-
-  return SUCCESS;
+  // On platforms with no native discardable memory support, this returns
+  // SUCCESS.
+  return PlatformLockPages(
+      shared_memory_, AlignToPageSize(sizeof(SharedState)) + offset, length);
 }
 
 void DiscardableSharedMemory::Unlock(size_t offset, size_t length) {
@@ -243,23 +238,16 @@ void DiscardableSharedMemory::Unlock(size_t offset, size_t length) {
   // Calls to this function must be synchronized properly.
   DFAKE_SCOPED_LOCK(thread_collision_warner_);
 
-  // Zero for length means "everything onward".
+  // Passing zero for |length| means "everything onward". Note that |length| may
+  // still be zero after this calculation, e.g. if |mapped_size_| is zero.
   if (!length)
     length = AlignToPageSize(mapped_size_) - offset;
 
   DCHECK(shared_memory_.memory());
 
-// Unpin pages if supported.
-#if defined(OS_ANDROID)
-  SharedMemoryHandle handle = shared_memory_.handle();
-  if (handle.IsValid()) {
-    if (ashmem_unpin_region(handle.GetHandle(),
-                            AlignToPageSize(sizeof(SharedState)) + offset,
-                            length)) {
-      DPLOG(ERROR) << "ashmem_unpin_region() failed";
-    }
-  }
-#endif
+  // On platforms with no native discardable memory support, this is a no-op.
+  PlatformUnlockPages(shared_memory_,
+                      AlignToPageSize(sizeof(SharedState)) + offset, length);
 
   size_t start = offset / base::GetPageSize();
   size_t end = start + length / base::GetPageSize();
@@ -363,12 +351,14 @@ bool DiscardableSharedMemory::Purge(Time current_time) {
     DPLOG(ERROR) << "madvise() failed";
   }
 #elif defined(OS_WIN)
-  // MEM_DECOMMIT the purged pages to release the physical storage,
-  // either in memory or in the paging file on disk.  Pages remain RESERVED.
-  if (!VirtualFree(reinterpret_cast<char*>(shared_memory_.memory()) +
-                       AlignToPageSize(sizeof(SharedState)),
-                   AlignToPageSize(mapped_size_), MEM_DECOMMIT)) {
-    DPLOG(ERROR) << "VirtualFree() MEM_DECOMMIT failed in Purge()";
+  if (base::win::GetVersion() < base::win::VERSION_WIN8_1) {
+    // MEM_DECOMMIT the purged pages to release the physical storage,
+    // either in memory or in the paging file on disk.  Pages remain RESERVED.
+    if (!VirtualFree(reinterpret_cast<char*>(shared_memory_.memory()) +
+                         AlignToPageSize(sizeof(SharedState)),
+                     AlignToPageSize(mapped_size_), MEM_DECOMMIT)) {
+      DPLOG(ERROR) << "VirtualFree() MEM_DECOMMIT failed in Purge()";
+    }
   }
 #endif
 
@@ -401,6 +391,55 @@ void DiscardableSharedMemory::Close() {
 
 Time DiscardableSharedMemory::Now() const {
   return Time::Now();
+}
+
+// static
+void DiscardableSharedMemory::PlatformUnlockPages(const SharedMemory& memory,
+                                                  size_t offset,
+                                                  size_t length) {
+#if defined(OS_ANDROID)
+  SharedMemoryHandle handle = memory.handle();
+  if (handle.IsValid()) {
+    int unpin_result = ashmem_unpin_region(handle.GetHandle(), offset, length);
+    DCHECK_EQ(0, unpin_result);
+  }
+#elif defined(OS_WIN)
+  if (base::win::GetVersion() >= base::win::VERSION_WIN8_1) {
+    if (length) {
+      DWORD offer_result =
+          OfferVirtualMemory(reinterpret_cast<char*>(memory.memory()) + offset,
+                             length, VmOfferPriorityNormal);
+      DCHECK_EQ(ERROR_SUCCESS, offer_result);
+    }
+  }
+#endif
+}
+
+// static
+DiscardableSharedMemory::LockResult DiscardableSharedMemory::PlatformLockPages(
+    const SharedMemory& memory,
+    size_t offset,
+    size_t length) {
+#if defined(OS_ANDROID)
+  SharedMemoryHandle handle = memory.handle();
+  if (handle.IsValid()) {
+    int pin_result = ashmem_pin_region(handle.GetHandle(), offset, length);
+    if (pin_result == ASHMEM_WAS_PURGED)
+      return PURGED;
+    if (pin_result < 0)
+      return FAILED;
+  }
+#elif defined(OS_WIN)
+  if (base::win::GetVersion() >= base::win::VERSION_WIN8_1) {
+    DWORD reclaim_result = ReclaimVirtualMemory(
+        reinterpret_cast<char*>(shared_memory_.memory()) + Aoffset, length);
+    if (reclaim_result == EBUSY)
+      return PURGED;
+    if (reclaim_result != ERROR_SUCCESS)
+      return FAILED;
+  }
+#endif
+  return SUCCESS;
 }
 
 }  // namespace base
