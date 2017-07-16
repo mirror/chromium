@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5899a853_23dc6d88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-16T07:51:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4de98a1f_7f675937",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94457199_7485f855",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "24b6025a_87886c5c",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-16T07:51:39Z",
+      "side": 1,
+      "message": "Sure, I think it will be clearer",
+      "parentUuid": "6ea7ed14_6f5554a8",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fccff6f3_fcc9dd5c",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 5
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "791fd64d_a4fbbe4b",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-16T07:51:39Z",
+      "side": 1,
+      "message": "this one is to ensure the first enum format will always be chosen. \nIn this code, each property_ in properties have an enum type. 2 property_ may have the same enum type. If this happens, the last property_ with enum type X and format Y will override the other enum before. \nProperties \u003d css_properties + extra_fields. The keyword sorting only happens in css_properties so I want to make this so that if an enum is already sorted at css_properties, it will become the template to create the enum. Because CSSValueKeywords.jspn5 only concern with keywords in css_properties so I cant sort extra_fields.",
+      "parentUuid": "fccff6f3_fcc9dd5c",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82ebeee4_d5ad1630",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 5
@@ -98,6 +152,24 @@
       "writtenOn": "2017-07-14T06:55:30Z",
       "side": 1,
       "message": "Please put this documentation with the code it refers to (line 524). This makes it sound like the purpose of ComputedStyleBaseWriter is to sort enum values.",
+      "revId": "f240e0ceb199dea778b136512a5074d800da4903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b3d9f0_1685a9d3",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-16T07:51:39Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "82ebeee4_d5ad1630",
       "revId": "f240e0ceb199dea778b136512a5074d800da4903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
