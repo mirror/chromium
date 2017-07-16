@@ -15,6 +15,8 @@ namespace content {
 // mojo::AssociatedInterfacePtr<T>, but not both. Mojo-related functions in
 // mojo::InterfacePtr<T> and mojo::AssociatedInterfacePtr<T> are not accessible,
 // but a user can access the raw pointer to the interface.
+//
+// TODO(kinuko): Rename this to PossiblyAssociatedOrDirectInterfacePtr?
 template <typename T>
 class PossiblyAssociatedInterfacePtr final {
  public:
@@ -24,10 +26,13 @@ class PossiblyAssociatedInterfacePtr final {
       : independent_ptr_(std::move(independent_ptr)) {}
   PossiblyAssociatedInterfacePtr(mojo::AssociatedInterfacePtr<T> associated_ptr)
       : associated_ptr_(std::move(associated_ptr)) {}
+  PossiblyAssociatedInterfacePtr(std::unique_ptr<T> direct_ptr)
+      : direct_ptr_(std::move(direct_ptr)) {}
 
   PossiblyAssociatedInterfacePtr(PossiblyAssociatedInterfacePtr&& other) {
     independent_ptr_ = std::move(other.independent_ptr_);
     associated_ptr_ = std::move(other.associated_ptr_);
+    direct_ptr_ = std::move(other.direct_ptr_);
   }
   ~PossiblyAssociatedInterfacePtr() {}
 
@@ -35,11 +40,16 @@ class PossiblyAssociatedInterfacePtr final {
       PossiblyAssociatedInterfacePtr&& other) {
     independent_ptr_ = std::move(other.independent_ptr_);
     associated_ptr_ = std::move(other.associated_ptr_);
+    direct_ptr_ = std::move(other.direct_ptr_);
     return *this;
   }
 
   T* get() const {
-    return independent_ptr_ ? independent_ptr_.get() : associated_ptr_.get();
+    if (independent_ptr_)
+      return independent_ptr_.get();
+    if (associated_ptr_)
+      return associated_ptr_.get();
+    return direct_ptr_.get();
   }
   T* operator->() const { return get(); }
   T& operator*() const { return *get(); }
@@ -48,6 +58,7 @@ class PossiblyAssociatedInterfacePtr final {
  private:
   mojo::InterfacePtr<T> independent_ptr_;
   mojo::AssociatedInterfacePtr<T> associated_ptr_;
+  std::unique_ptr<T> direct_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(PossiblyAssociatedInterfacePtr);
 };
