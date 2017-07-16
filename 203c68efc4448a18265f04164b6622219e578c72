@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5b3550_7caeeea2",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-16T22:20:59Z",
+      "side": 0,
+      "message": "Need to add a newline here",
+      "revId": "203c68efc4448a18265f04164b6622219e578c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

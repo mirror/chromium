@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "b88055dd_2819d47a",
+        "filename": "third_party/WebKit/Source/core/dom/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-16T22:20:59Z",
+      "side": 1,
+      "message": "Also this is merge stuff accidentally added in, will fix",
+      "revId": "06a4a514718410013b9c88e35393dc8e7ef34149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e55595_243b82f3",
+        "filename": "third_party/WebKit/Source/core/dom/stylerecalc.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-16T22:20:59Z",
+      "side": 1,
+      "message": "This needs to be fixed here",
+      "revId": "06a4a514718410013b9c88e35393dc8e7ef34149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1559e611_cacaff02",
         "filename": "third_party/WebKit/Source/core/layout/ng/BlockLayout.md",
         "patchSetId": 1
@@ -13,6 +47,30 @@
       "writtenOn": "2017-07-16T21:37:27Z",
       "side": 1,
       "message": "This isn\u0027t particularly good?",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 59,
+        "endChar": 20
+      },
+      "revId": "06a4a514718410013b9c88e35393dc8e7ef34149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8f8b52_a8ffdc64",
+        "filename": "third_party/WebKit/Source/core/layout/ng/BlockLayout.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-16T22:20:59Z",
+      "side": 1,
+      "message": "Ah, thanks for finding this -- I think that mdformat would have done the correct thing if there were a blank line between the e.g. and the code block; will fix.",
+      "parentUuid": "1559e611_cacaff02",
       "range": {
         "startLine": 59,
         "startChar": 19,
@@ -42,6 +100,23 @@
         "endLine": 88,
         "endChar": 7
       },
+      "revId": "06a4a514718410013b9c88e35393dc8e7ef34149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b007cdbf_133c9a01",
+        "filename": "third_party/WebKit/Source/core/paint/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-16T22:20:59Z",
+      "side": 1,
+      "message": "Another place where stuff was accidentally added, will fix",
       "revId": "06a4a514718410013b9c88e35393dc8e7ef34149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
