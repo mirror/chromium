@@ -6,7 +6,7 @@
 import json5_generator
 import template_expander
 import make_style_builder
-
+import keyword_utils
 from name_utilities import enum_for_css_keyword, enum_value_name
 
 
@@ -103,6 +103,11 @@ class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
             'CSSValueIDMappingsGenerated.h': self.generate_css_value_mappings,
         }
         self.css_values_dictionary_file = json5_file_path[1]
+        css_properties = [value for value in self._properties.values() if not value['longhands']]
+        css_properties = keyword_utils.sort_keyword_css_properties(css_properties,
+                                                                   json5_file_path[1],
+                                                                   self.json5_file.parameters)
+
 
     @template_expander.use_jinja('templates/CSSValueIDMappingsGenerated.h.tmpl')
     def generate_css_value_mappings(self):
