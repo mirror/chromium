@@ -146,7 +146,7 @@ namespace test {
 
 // A test class for preparing the chrome::MultiUserWindowManager. It creates
 // various windows and instantiates the chrome::MultiUserWindowManager.
-class MultiUserWindowManagerChromeOSTest : public AshTestBase {
+class MultiUserWindowManagerChromeOSTest : public test::AshTestBase {
  public:
   MultiUserWindowManagerChromeOSTest()
       : multi_user_window_manager_(NULL),

@@ -21,12 +21,11 @@
 #include "ui/display/screen.h"
 
 namespace ash {
-namespace test {
 
 // A test class for preparing window positioner tests - it creates a testing
 // base by adding a window and a popup which can be independently
 // positioned to see where the positioner will place the window.
-class WindowPositionerTest : public AshTestBase {
+class WindowPositionerTest : public test::AshTestBase {
  public:
   WindowPositionerTest();
 
@@ -225,5 +224,4 @@ TEST_F(WindowPositionerTest, biggerThenBorder) {
                       full);
 }
 
-}  // namespace test
 }  // namespace ash

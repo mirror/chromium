@@ -31,8 +31,11 @@
 #include "ui/events/test/event_generator.h"
 #include "ui/gfx/geometry/size.h"
 
+using ash::test::TestSessionStateAnimator;
+using ash::test::LockStateControllerTestApi;
+using ash::test::TestShellDelegate;
+
 namespace ash {
-namespace test {
 namespace {
 
 bool cursor_visible() {
@@ -65,7 +68,7 @@ class TestShutdownController : public ShutdownController {
 
 }  // namespace
 
-class LockStateControllerTest : public AshTestBase {
+class LockStateControllerTest : public test::AshTestBase {
  public:
   LockStateControllerTest()
       : power_button_controller_(nullptr),
@@ -1081,5 +1084,4 @@ TEST_F(LockStateControllerTest, Screenshot) {
   EXPECT_EQ(1, delegate->handle_take_screenshot_count());
 }
 
-}  // namespace test
 }  // namespace ash

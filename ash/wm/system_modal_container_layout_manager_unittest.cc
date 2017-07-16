@@ -37,7 +37,6 @@
 #include "ui/wm/core/window_util.h"
 
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -146,7 +145,7 @@ class TransientWindowObserver : public aura::WindowObserver {
 
 }  // namespace
 
-class SystemModalContainerLayoutManagerTest : public AshTestBase {
+class SystemModalContainerLayoutManagerTest : public test::AshTestBase {
  public:
   void SetUp() override {
     // Allow a virtual keyboard (and initialize it per default).
@@ -927,5 +926,4 @@ TEST_F(SystemModalContainerLayoutManagerTest, BlockEventsInMultiDisplays) {
   delegate.RunTest(this);
 }
 
-}  // namespace test
 }  // namespace ash

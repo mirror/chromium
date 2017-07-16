@@ -37,8 +37,9 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
+using ash::test::TestSystemTrayItem;
+
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -58,7 +59,7 @@ class ModalWidgetDelegate : public views::WidgetDelegateView {
 
 }  // namespace
 
-class SystemTrayTest : public AshTestBase {
+class SystemTrayTest : public test::AshTestBase {
  public:
   SystemTrayTest() {}
   ~SystemTrayTest() override {}
@@ -853,5 +854,4 @@ TEST_F(SystemTrayTest, SeparatorThickness) {
   EXPECT_EQ(kSeparatorWidth, views::Separator::kThickness);
 }
 
-}  // namespace test
 }  // namespace ash

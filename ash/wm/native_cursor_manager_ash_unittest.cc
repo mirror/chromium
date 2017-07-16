@@ -23,8 +23,9 @@
 #include "ui/resources/grit/ui_resources.h"
 #endif
 
+using ash::test::CursorManagerTestApi;
+
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -200,5 +201,4 @@ TEST_F(NativeCursorManagerAshTest, CursorLoaderX11Test) {
 }
 #endif
 
-}  // namespace test
 }  // namespace ash

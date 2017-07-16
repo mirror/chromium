@@ -19,9 +19,8 @@
 #include "ui/views/widget/widget.h"
 
 namespace ash {
-namespace test {
 
-class ShelfTooltipManagerTest : public AshTestBase {
+class ShelfTooltipManagerTest : public test::AshTestBase {
  public:
   ShelfTooltipManagerTest() {}
   ~ShelfTooltipManagerTest() override {}
@@ -240,5 +239,4 @@ TEST_F(ShelfTooltipManagerTest, DoNotHideForKeyEvents) {
   EXPECT_TRUE(tooltip_manager_->IsVisible());
 }
 
-}  // namespace test
 }  // namespace ash

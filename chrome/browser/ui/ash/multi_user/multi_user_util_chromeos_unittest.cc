@@ -50,7 +50,7 @@ class MultiUserTestingProfile : public TestingProfile {
 
 }  // namespace
 
-class MultiUserUtilTest : public AshTestBase {
+class MultiUserUtilTest : public test::AshTestBase {
  public:
   MultiUserUtilTest() {}
   ~MultiUserUtilTest() override {}

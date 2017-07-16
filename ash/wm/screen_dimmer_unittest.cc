@@ -16,9 +16,8 @@
 #include "ui/compositor/layer.h"
 
 namespace ash {
-namespace test {
 
-class ScreenDimmerTest : public AshTestBase {
+class ScreenDimmerTest : public test::AshTestBase {
  public:
   ScreenDimmerTest() {}
   ~ScreenDimmerTest() override {}
@@ -112,7 +111,7 @@ TEST_F(ScreenDimmerTest, DimAtBottom) {
 }
 
 // See description above TEST_F for details.
-class ScreenDimmerShellDestructionTest : public AshTestBase {
+class ScreenDimmerShellDestructionTest : public test::AshTestBase {
  public:
   ScreenDimmerShellDestructionTest() {}
   ~ScreenDimmerShellDestructionTest() override {}
@@ -133,5 +132,4 @@ class ScreenDimmerShellDestructionTest : public AshTestBase {
 TEST_F(ScreenDimmerShellDestructionTest, DontCrashIfScreenDimmerOutlivesShell) {
 }
 
-}  // namespace test
 }  // namespace ash

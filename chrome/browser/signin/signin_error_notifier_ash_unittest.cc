@@ -51,7 +51,7 @@ static const char kNotificationId[] =
     "chrome://settings/signin/testuser@test.com";
 }
 
-class SigninErrorNotifierTest : public AshTestBase {
+class SigninErrorNotifierTest : public test::AshTestBase {
  public:
   void SetUp() override {
     // Create a signed-in profile.

@@ -29,7 +29,7 @@
 namespace ash {
 namespace test {
 
-class ChromeScreenshotGrabberTest : public AshTestBase,
+class ChromeScreenshotGrabberTest : public test::AshTestBase,
                                     public ui::ScreenshotGrabberObserver {
  public:
   ChromeScreenshotGrabberTest()

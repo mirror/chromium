@@ -21,8 +21,9 @@
 #include "ui/display/screen.h"
 #include "ui/events/test/event_generator.h"
 
+using ash::test::ShellTestApi;
+
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -339,5 +340,4 @@ TEST_F(ScreenPositionControllerTest,
   EXPECT_TRUE(event_handler->could_convert_to_screen());
 }
 
-}  // namespace test
 }  // namespace ash

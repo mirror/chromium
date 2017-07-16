@@ -27,8 +27,10 @@
 #include "ui/events/event.h"
 #include "ui/events/test/event_generator.h"
 
+using ash::test::LockStateControllerTestApi;
+using ash::test::TestShellDelegate;
+
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -53,7 +55,7 @@ void CopyResult(bool* dest, bool src) {
 
 }  // namespace
 
-class TabletPowerButtonControllerTest : public AshTestBase {
+class TabletPowerButtonControllerTest : public test::AshTestBase {
  public:
   TabletPowerButtonControllerTest() {}
   ~TabletPowerButtonControllerTest() override {}
@@ -688,5 +690,4 @@ TEST_F(TabletPowerButtonControllerTest, SuspendDoneStopsForcingOff) {
   EXPECT_FALSE(GetBacklightsForcedOff());
 }
 
-}  // namespace test
 }  // namespace ash

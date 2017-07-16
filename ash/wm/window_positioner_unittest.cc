@@ -20,7 +20,14 @@
 
 namespace ash {
 
-using WindowPositionerTest = test::AshTestBase;
+class WindowPositionerTest : public test::AshTestBase {
+ public:
+  WindowPositionerTest() = default;
+  ~WindowPositionerTest() override = default;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(WindowPositionerTest);
+};
 
 TEST_F(WindowPositionerTest, OpenMaximizedWindowOnSecondDisplay) {
   // Tests that for a screen that is narrower than kForceMaximizeWidthLimit

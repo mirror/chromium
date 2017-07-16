@@ -19,8 +19,9 @@
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
+using ash::test::TestSessionControllerClient;
+
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -83,7 +84,7 @@ class LockScreenSessionControllerClient : public TestSessionControllerClient {
 
 // Defines a class that will be used to test the correct behavior of
 // |AshFocusRules| when locking and unlocking the screen.
-class LockScreenAshFocusRulesTest : public AshTestBase {
+class LockScreenAshFocusRulesTest : public test::AshTestBase {
  public:
   LockScreenAshFocusRulesTest() {}
   ~LockScreenAshFocusRulesTest() override {}
@@ -198,5 +199,4 @@ TEST_F(LockScreenAshFocusRulesTest, PreventFocusChangeWithLockScreenPresent) {
   EXPECT_TRUE(delegate.view()->HasFocus());
 }
 
-}  // namespace test
 }  // namespace ash

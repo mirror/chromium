@@ -21,8 +21,9 @@
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
+using ash::test::AshTestBase;
+
 namespace ash {
-namespace test {
 
 namespace {
 
@@ -230,5 +231,4 @@ TEST_F(TrayDetailsViewTest, ScrollContentsTest) {
   EXPECT_EQ(view2->layer(), layers[2]);
 }
 
-}  // namespace test
 }  // namespace ash

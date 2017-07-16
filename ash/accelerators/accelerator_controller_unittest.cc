@@ -54,6 +54,7 @@
 #include "ui/events/test/events_test_utils_x11.h"
 #endif
 
+using ash::test::TestScreenshotDelegate;
 using chromeos::input_method::InputMethodManager;
 
 namespace ash {
@@ -685,7 +686,7 @@ TEST_F(AcceleratorControllerTest, GlobalAccelerators) {
   // The "Take Screenshot", "Take Partial Screenshot", volume, brightness, and
   // keyboard brightness accelerators are only defined on ChromeOS.
   {
-    test::TestScreenshotDelegate* delegate = GetScreenshotDelegate();
+    TestScreenshotDelegate* delegate = GetScreenshotDelegate();
     delegate->set_can_take_screenshot(false);
     EXPECT_TRUE(ProcessInController(
         ui::Accelerator(ui::VKEY_MEDIA_LAUNCH_APP1, ui::EF_CONTROL_DOWN)));
@@ -1134,7 +1135,7 @@ TEST_F(AcceleratorControllerTest, DisallowedAtModalWindow) {
   //
   // Screenshot
   {
-    test::TestScreenshotDelegate* delegate = GetScreenshotDelegate();
+    TestScreenshotDelegate* delegate = GetScreenshotDelegate();
     delegate->set_can_take_screenshot(false);
     EXPECT_TRUE(ProcessInController(
         ui::Accelerator(ui::VKEY_MEDIA_LAUNCH_APP1, ui::EF_CONTROL_DOWN)));
