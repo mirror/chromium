@@ -76,16 +76,19 @@ constexpr typename std::make_unsigned<T>::type SafeUnsignedAbs(T value) {
                                 : static_cast<UnsignedT>(value);
 }
 
-// This provides a small optimization that generates more compact code when one
-// of the components in an operation is a compile-time constant.
+// This allows us to switch paths on known compile-time constants.
 #if defined(__clang__) || defined(__GNUC__)
-constexpr bool kCanDetectCompileTimeConstant = true;
+constexpr bool CanDetectCompileTimeConstant() {
+  return true;
+}
 template <typename T>
 constexpr bool IsCompileTimeConstant(const T v) {
   return __builtin_constant_p(v);
 }
 #else
-constexpr bool kCanDetectCompileTimeConstant = false;
+constexpr bool CanDetectCompileTimeConstant() {
+  return false;
+}
 template <typename T>
 constexpr bool IsCompileTimeConstant(const T v) {
   return false;
