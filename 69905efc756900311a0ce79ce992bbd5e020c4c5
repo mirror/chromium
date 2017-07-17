@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7afe0197_ced376c5",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-07-17T18:46:33Z",
+      "side": 1,
+      "message": "The GetOrigin() here is the GURL::GetOrigin() which returns a GURL (and IIRC, improperly handles some schemes that we don\u0027t care about here). Still, I think it\u0027s better to just construct the Origin from gaia_url(), since it does the same canonicalization.",
+      "range": {
+        "startLine": 1504,
+        "startChar": 33,
+        "endLine": 1504,
+        "endChar": 41
+      },
+      "revId": "69905efc756900311a0ce79ce992bbd5e020c4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
