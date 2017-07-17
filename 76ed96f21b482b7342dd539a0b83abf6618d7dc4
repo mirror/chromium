@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb13c8b_fc6122cc",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-17T09:21:28Z",
+      "side": 1,
+      "message": "If you want, window[0][0] is a shorter way to write this\n\n(but that\u0027s purely up to you)",
+      "range": {
+        "startLine": 789,
+        "startChar": 11,
+        "endLine": 789,
+        "endChar": 37
+      },
+      "revId": "76ed96f21b482b7342dd539a0b83abf6618d7dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39787ec9_1d35ee6a",
+        "filename": "chrome/test/data/subresource_filter/frame_set_special_urls.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-17T09:21:28Z",
+      "side": 1,
+      "message": "Super minor nit: be consistent with let or var",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 7
+      },
+      "revId": "76ed96f21b482b7342dd539a0b83abf6618d7dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4110d2_eca1f70a",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-17T09:21:28Z",
+      "side": 1,
+      "message": "One thing that\u0027s not clear to me is why this needs to store the parent\u0027s initial activation state. It seems like we should be able to just calculate it here.",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 73
+      },
+      "revId": "76ed96f21b482b7342dd539a0b83abf6618d7dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5da1c1_b4a86c27",
+        "filename": "components/subresource_filter/content/renderer/web_document_subresource_filter_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-17T09:21:28Z",
+      "side": 1,
+      "message": "By value might be slightly more efficient given that this is an enum.\n\nAlso, maybe just return filter_.activation_state() instead of storing a duplicate?",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 7
+      },
+      "revId": "76ed96f21b482b7342dd539a0b83abf6618d7dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
