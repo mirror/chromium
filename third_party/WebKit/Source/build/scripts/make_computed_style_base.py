@@ -11,7 +11,7 @@ import make_style_builder
 
 from name_utilities import (
     enum_for_css_keyword, enum_type_name, enum_value_name, class_member_name, method_name,
-    class_name, join_name
+    class_name, join_names
 )
 from itertools import chain
 
@@ -194,9 +194,9 @@ class Field(object):
         # TODO(nainar): Method name generation is inconsistent. Fix.
         self.getter_method_name = getter_method_name
         self.setter_method_name = setter_method_name
-        self.internal_getter_method_name = method_name(join_name(self.name, 'Internal'))
-        self.internal_mutable_method_name = method_name(join_name('Mutable', name_for_methods, 'Internal'))
-        self.internal_setter_method_name = method_name(join_name(setter_method_name, 'Internal'))
+        self.internal_getter_method_name = method_name([self.name, 'internal'])
+        self.internal_mutable_method_name = method_name(['mutable', name_for_methods, 'internal'])
+        self.internal_setter_method_name = method_name([setter_method_name, 'internal'])
         self.initial_method_name = initial_method_name
         self.resetter_method_name = method_name(join_name('Reset', name_for_methods))
         self.default_generated_functions = default_generated_functions
