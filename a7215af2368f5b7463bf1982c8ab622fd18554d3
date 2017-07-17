@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d1954b6_159fa04a",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1c9b761_2d3812ed",
+      "range": {
+        "startLine": 213,
+        "startChar": 72,
+        "endLine": 213,
+        "endChar": 75
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f0d5ea_0ea6ff8a",
         "filename": "components/download/internal/stats.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c818b6_fb753fa9",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f0d5ea_0ea6ff8a",
+      "range": {
+        "startLine": 216,
+        "startChar": 72,
+        "endLine": 216,
+        "endChar": 75
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7235e537_73463925",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3784415f_60b4ff70",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64c7af17_db00e87c",
         "filename": "components/download/internal/stats.h",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-15T01:21:43Z",
       "side": 1,
       "message": "I noticed that this used to be \"EXTERNAL\", and is now \"MAX\".  What happened to \"EXTERNAL\"?",
+      "range": {
+        "startLine": 120,
+        "startChar": 10,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42ed6eb_1e8dc1b3",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "EXTERNAL is intentionally removed. We check \"EXTERNAL\" on every cleanup pass, so it\u0027s recorded in another metric.",
+      "parentUuid": "64c7af17_db00e87c",
       "range": {
         "startLine": 120,
         "startChar": 10,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a577af95_f1731437",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15060,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ea9ee06_d4218fed",
+      "range": {
+        "startLine": 15060,
+        "startChar": 17,
+        "endLine": 15060,
+        "endChar": 32
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b2b0c45_9ad16dac",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-15T01:21:43Z",
       "side": 1,
       "message": "Please add the attribute base\u003d\"true\" to reflect this; ditto for any other histograms that are completed by histogram_suffixes, and not used directly.  (Or, if this histogram name is used directly as well, then it\u0027s probably appropriate to just remove this \u003c!-- comment --\u003e)",
+      "range": {
+        "startLine": 15074,
+        "startChar": 42,
+        "endLine": 15074,
+        "endChar": 0
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bba551_1e9cca8b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15074,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done, sorry I forgot to add this attribute.",
+      "parentUuid": "4b2b0c45_9ad16dac",
       "range": {
         "startLine": 15074,
         "startChar": 42,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "25257559_d9508b32",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15107,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea25ebf_f70fabd0",
+      "range": {
+        "startLine": 15107,
+        "startChar": 18,
+        "endLine": 15107,
+        "endChar": 25
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38ba1eb_88f8ab62",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-15T01:21:43Z",
       "side": 1,
       "message": "Why are you adding this second value to the denominator?  It sounds like you\u0027re measuring (A / (B + A)).  Is that correct?  That seems to me like an odd thing to measure.",
+      "range": {
+        "startLine": 15147,
+        "startChar": 74,
+        "endLine": 15148,
+        "endChar": 43
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea6b4b8_6e38068d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15148,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done, removed this metric, \n\nYeah.. this is probably hard to interpret.",
+      "parentUuid": "c38ba1eb_88f8ab62",
       "range": {
         "startLine": 15147,
         "startChar": 74,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "0a0a1ae0_fa8e8880",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15155,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7614e3e_fb321d1e",
+      "range": {
+        "startLine": 15155,
+        "startChar": 8,
+        "endLine": 15155,
+        "endChar": 17
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b80c678_56b24e88",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -229,6 +445,30 @@
       "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d34eefe_8dd66f5a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15160,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done, added BooleanRenamed.",
+      "parentUuid": "8b80c678_56b24e88",
+      "range": {
+        "startLine": 15160,
+        "startChar": 58,
+        "endLine": 15160,
+        "endChar": 65
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "571dafe7_e4e9236b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15163,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done, make sense.",
+      "parentUuid": "48b50a9b_f081d5a6",
+      "range": {
+        "startLine": 15163,
+        "startChar": 76,
+        "endLine": 15163,
+        "endChar": 0
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe0787d5_66ed6364",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -275,6 +539,30 @@
       "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdabe8d4_38bfcc22",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15194,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "fe0787d5_66ed6364",
+      "range": {
+        "startLine": 15194,
+        "startChar": 29,
+        "endLine": 15194,
+        "endChar": 37
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "4e953052_46fa197b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 89182,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done, External has been removed in the enum, forgot to remove it here.",
+      "parentUuid": "dd394501_90108787",
+      "range": {
+        "startLine": 89182,
+        "startChar": 28,
+        "endLine": 89182,
+        "endChar": 66
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "755f1b79_811d9346",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -312,6 +624,30 @@
       "writtenOn": "2017-07-15T01:21:43Z",
       "side": 1,
       "message": "So, I don\u0027t really understand how to interpret this histogram.  The full description text for it ends up being something like\n\n\"The status of task scheduler when the platform background jobs invoke the download service. Download task.\"\n\nI think that this description could be written in a much clearer way.  Because I don\u0027t actually really understand what it means, I\u0027m not able to offer a great suggestion, sorry.\n\nPlease try to read through the histogram descriptions and think about whether they make sense standing on their own.  There were some other descriptions that I found somewhat confusing as well, though this one I found to be particularly tough to understand.",
+      "range": {
+        "startLine": 89214,
+        "startChar": 54,
+        "endLine": 89214,
+        "endChar": 0
+      },
+      "revId": "a7215af2368f5b7463bf1982c8ab622fd18554d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaea816d_49f0bad7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 89214,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-17T21:16:21Z",
+      "side": 1,
+      "message": "Done, added some context in histogram description.",
+      "parentUuid": "755f1b79_811d9346",
       "range": {
         "startLine": 89214,
         "startChar": 54,
