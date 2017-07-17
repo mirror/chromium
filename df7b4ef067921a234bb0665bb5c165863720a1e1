@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8318266_acc5c184",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-17T15:25:10Z",
+      "side": 1,
+      "message": "Please wrap change descriptions to 72 characters.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 134
+      },
+      "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a92395_911b6fea",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-17T15:25:10Z",
+      "side": 1,
+      "message": "Add a comment explaining why this function doesn\u0027t set |state_| to kIdle. I believe it is so that on error it does not transition to the idle state until the error event is dispatched.",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 40
+      },
+      "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679e28df_267d9950",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-17T15:25:10Z",
+      "side": 1,
+      "message": "Given that this method doesn\u0027t do anything other than update |state_| I would remove it as every time I see it used I assume that it is doing more than just updating |state_|, such as perhaps dispatching an event.",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 1
+      },
+      "revId": "df7b4ef067921a234bb0665bb5c165863720a1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
