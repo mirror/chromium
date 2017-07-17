@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7bebcb3_4b14d167",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T22:47:15Z",
+      "side": 1,
+      "message": "nit: The more common formatting for this copyright comment is:\n\n\u003c!-- Copyright 2017 The Chromium Authors. All rights reserved.\n     Use of this source code is governed by a BSD-style license that can be\n     found in the LICENSE file. --\u003e",
+      "range": {
+        "startLine": 6,
+        "startChar": 3,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5c2aca_074ddb74",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T22:47:15Z",
+      "side": 1,
+      "message": "Since all of the paddings are the same you can use android:padding\u003d\"16dp\"",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd2873f_32983be3",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T22:47:15Z",
+      "side": 1,
+      "message": "nit: add a period after \"present\"",
+      "range": {
+        "startLine": 80,
+        "startChar": 28,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f88b7b1_081cfa38",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T22:47:15Z",
+      "side": 1,
+      "message": "Do you have a draft CL of the hookup so I can see how this is going to be used? \n\nI assume the XML is used with Preference#setLayoutResource(), but I\u0027m wondering if there\u0027s a better way to architect than including a bunch of \"gone\" views in the XML.",
+      "range": {
+        "startLine": 98,
+        "startChar": 35,
+        "endLine": 98,
+        "endChar": 36
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0968e39_0484a0d4",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T22:47:15Z",
+      "side": 1,
+      "message": "This should be the default, as should textAllCaps false. Can you try moving this line and the one below?",
+      "range": {
+        "startLine": 606,
+        "startChar": 39,
+        "endLine": 606,
+        "endChar": 45
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f55e644_69d593cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T22:47:15Z",
+      "side": 1,
+      "message": "nit: add a period after \"promos\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42907ad6_a807d74e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoView.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-17T22:47:15Z",
+      "side": 1,
+      "message": "nit: public methods need JavaDocs",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "a6a02b3f95d1c12ed8b16d78f7257b823f384d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
