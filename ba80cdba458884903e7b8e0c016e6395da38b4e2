@@ -34,6 +34,24 @@
       "revId": "ba80cdba458884903e7b8e0c016e6395da38b4e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d747dfac_6df9b856",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-17T16:51:40Z",
+      "side": 1,
+      "message": "Ah hmmm, ok then.",
+      "parentUuid": "302195bb_ea3ffaba",
+      "revId": "ba80cdba458884903e7b8e0c016e6395da38b4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
