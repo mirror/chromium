@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "e504d708_ce571741",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-17T13:45:56Z",
+      "side": 1,
+      "message": "Ah I see it\u0027s just a string now that would be better place closer to where it\u0027s used.",
+      "parentUuid": "120f9128_6e1b5b31",
+      "revId": "cfd2355d65a1ae33c5e66985dead99cba10d86f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7fb38d9_4aa6281d",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
         "patchSetId": 3
