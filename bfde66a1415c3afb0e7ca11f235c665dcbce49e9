@@ -139,6 +139,24 @@
       "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d21b703_abec14d8",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-17T22:13:29Z",
+      "side": 1,
+      "message": "Do we really want the table row height to be 32 DIP specifically?\n\nDo we even want it to be 32 incidentally?  Maybe it can match what we do for controls and be 28.",
+      "parentUuid": "2322a06e_ab217b5a",
+      "revId": "bfde66a1415c3afb0e7ca11f235c665dcbce49e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
