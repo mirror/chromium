@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "97d5fc78_e4e98995",
+        "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-07-17T09:30:39Z",
+      "side": 0,
+      "message": "It turned out to be because a pending message on the current queue needed to be flushed before the background tasks could be flushed.\n\nRestored the InSequence check now.",
+      "parentUuid": "c0981a3b_b59ec17d",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 24
+      },
+      "revId": "1caa0802385fff5ac048cfe1423c19ab3a72acdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63d45438_e2f19645",
         "filename": "chrome/browser/media/webrtc/webrtc_rtp_dump_writer_unittest.cc",
         "patchSetId": 1
