@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdba5e63_e4f03933",
+        "filename": "chrome/browser/permissions/permission_request_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T04:40:48Z",
+      "side": 0,
+      "message": "Maybe just keep this and ifdef on Android? Rename to PermissionRequestWhileTabSwitchedAway?",
+      "revId": "0bcc3cf4a15b3230dc99c7fc8805707ee9dd632c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4116fb9_4ceb99aa",
+        "filename": "chrome/browser/permissions/permission_request_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T04:40:48Z",
+      "side": 0,
+      "message": "Maybe just keep this and ifdef on Android? Rename to PermissionRequestWhileTabSwitchedAway?",
+      "revId": "0bcc3cf4a15b3230dc99c7fc8805707ee9dd632c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc30d0f9_bb043493",
+        "filename": "chrome/browser/permissions/permission_request_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T04:40:48Z",
+      "side": 0,
+      "message": "Maybe just keep this and ifdef on Android? Rename to PermissionRequestWhileTabSwitchedAway?",
+      "revId": "0bcc3cf4a15b3230dc99c7fc8805707ee9dd632c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f497529b_33c80a4f",
+        "filename": "chrome/browser/permissions/permission_request_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T04:40:48Z",
+      "side": 0,
+      "message": "Maybe just keep this and ifdef on Android? Rename to PermissionRequestWhileTabSwitchedAway?",
+      "revId": "0bcc3cf4a15b3230dc99c7fc8805707ee9dd632c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8809d275_22cc8e0c",
+        "filename": "chrome/browser/permissions/permission_request_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T04:40:48Z",
+      "side": 0,
+      "message": "Maybe just keep this and ifdef on Android? Rename to PermissionRequestWhileTabSwitchedAway?",
+      "revId": "0bcc3cf4a15b3230dc99c7fc8805707ee9dd632c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc681a1_2bdf4fa1",
+        "filename": "chrome/browser/permissions/permission_request_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-17T04:40:48Z",
+      "side": 0,
+      "message": "Maybe just keep this and ifdef on Android? Rename to PermissionRequestWhileTabSwitchedAway?",
+      "revId": "0bcc3cf4a15b3230dc99c7fc8805707ee9dd632c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
