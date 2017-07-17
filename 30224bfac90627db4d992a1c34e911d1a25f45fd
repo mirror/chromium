@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fc09b08_ab92b2b0",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-17T09:59:47Z",
+      "side": 1,
+      "message": "For me either, this is probably old comment for some old code that doesn\u0027t exist anymore. Please remove it.",
+      "range": {
+        "startLine": 936,
+        "startChar": 3,
+        "endLine": 936,
+        "endChar": 35
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9b33e8_3d29c511",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-17T09:59:47Z",
+      "side": 1,
+      "message": "Agree with simplification. As far as I remember this condition was implemented in several CLs, each of part in different CLs.\nBasically this condition means: if there are matches and no username, to consider it as update case.",
+      "range": {
+        "startLine": 1027,
+        "startChar": 0,
+        "endLine": 1028,
+        "endChar": 50
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca95776_d27aa1c0",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-17T09:59:47Z",
+      "side": 1,
+      "message": "In code, retry password form \u003d \"a form with one field which is a password field\". I called it retry, since pretty often such forms are used in case when the username is already known for a site, but for some reasons typing of the password is required (eg. incorrect login on some site for a couple of times, then the site shows a form of such type or reauthintication for doing important action).\nI agree that this name is probably not immediately clear from name, but nor I nor Vaclav (he was reviewing CL) didn\u0027t find anything better.",
+      "range": {
+        "startLine": 1034,
+        "startChar": 0,
+        "endLine": 1034,
+        "endChar": 31
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a25de079_1e3c3bea",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-17T09:59:47Z",
+      "side": 1,
+      "message": "1.We\u0027re inside update password case, so is_new_login_ \u003d false is correct\n2.We have no idea what saved credentials are the best candidate for updating, so we don\u0027t need to put in |pending_credentials_| not relevant information. The user will choose in multi-credentials update bubble the correct credentials.\n3.|origin| is required somewhere, as soon as I remember for detecting which credentials are PSL or/and whether the bubble title will contain \"...for this site\" or \"...for abx.xyz\".",
+      "range": {
+        "startLine": 1051,
+        "startChar": 0,
+        "endLine": 1053,
+        "endChar": 57
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b6816e_72227b10",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-17T09:59:47Z",
+      "side": 1,
+      "message": "This is just easy new credentials case.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 4,
+        "endLine": 1058,
+        "endChar": 45
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b5eaf3_1367afde",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-17T09:59:47Z",
+      "side": 1,
+      "message": "Nit: |base_matches_|",
+      "range": {
+        "startLine": 1227,
+        "startChar": 5,
+        "endLine": 1227,
+        "endChar": 18
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c3bcdb_c793d4c5",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-17T09:59:47Z",
+      "side": 1,
+      "message": "Nit: |username_element|, |new_password_element|, |password_value|",
+      "range": {
+        "startLine": 1233,
+        "startChar": 21,
+        "endLine": 1233,
+        "endChar": 37
+      },
+      "revId": "30224bfac90627db4d992a1c34e911d1a25f45fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
