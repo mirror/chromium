@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "986dfd93_80e4fcac",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-07-17T17:25:54Z",
+      "side": 1,
+      "message": "I\u0027d prefer if this (and related things) said \"exceeded cache storage size\", so it\u0027s clear *which* limit is exceeded.",
+      "revId": "118ab8ce8bc16a1d5de6d7427bb12418b8f850e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49d75b8a_a1fb8b5e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
