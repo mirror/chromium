@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30953d63_e5990979",
+        "filename": "device/vr/vr_display_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T21:23:06Z",
+      "side": 1,
+      "message": "vr_service_impl owns all instances of VrDisplayImpl and has a mojo::MakeStrongBinding with the RenderFrameHostImpl, so when the RenderFrameHost goes away, the VrDisplayImpls get deleted.\n\n(At least, this is my understanding of how MakeStrongBinding works)",
+      "parentUuid": "cf6d57aa_f45b1bd4",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53335e39_7609d093",
         "filename": "ui/views/controls/webview/webview.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-17T19:57:43Z",
       "side": 1,
       "message": "It looks like WebView::OnWebContentsFocused is going to be called now in some circumstances that it didn\u0027t used to be. Does doing so fix any bugs that you\u0027re aware of? If not, then are we adding extra work -- or changing the user-visible behavior -- here in some way?\n\nIf I\u0027m reading the code corectly, the behavior here is that this method asks WebView seems to treat OnWebContentsFocused() as an event where the WebContents is asking its embedding view to be focused (which feels more like a delegate method than an observer method). Is the VR code treating it with similar semantics?",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 301,
+        "endChar": 14
+      },
+      "revId": "0fd9794e5704a1804e1df85799b76cc120da3d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd832d1_06053251",
+        "filename": "ui/views/controls/webview/webview.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-17T21:23:06Z",
+      "side": 1,
+      "message": "So this Views code is all very confusing. But browsing through the code I think that this function is intended to be used both as a delegate method and an observer method.\n\nOnFocus() above calls web_contents()-\u003eFocus(), which eventually ends up back here. RequestFocus() eventually calls OnFocus(), and we end up in a loop broken by the check in FocusManager::SetFocusedViewWithReason \"if (focused_view_ \u003d\u003d view) return;\"\n\nI think this is intended as a way to have WebContents set itself focused and have the views view get focus styling in response, and also have the WebContents get focused if the users focuses the Views view.\n\nIn any case I don\u0027t think I\u0027m changing the behaviour here, other than having it called more frequently than in just the fullscreen widget case, which may have been the only case previously of WebContents focusing itself? I don\u0027t know. It seems to be safe, because of the early exit mentioned above.\n\nsadrul@, am I correct here? If you don\u0027t know, who would?",
+      "parentUuid": "53335e39_7609d093",
       "range": {
         "startLine": 301,
         "startChar": 2,
