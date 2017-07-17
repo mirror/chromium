@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "458feff9_479feab5",
+        "filename": "remoting/ios/facade/remoting_oauth_authentication.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-17T21:12:43Z",
+      "side": 1,
+      "message": "I think it sounds better. Maybe activeUserId?",
+      "parentUuid": "c78659aa_3c657a13",
+      "range": {
+        "startLine": 186,
+        "startChar": 35,
+        "endLine": 186,
+        "endChar": 50
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b4c7e88_2cabc2e0",
         "filename": "remoting/ios/persistence/remoting_preferences.h",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "That stores data to the keychain, this stores to defaults.\n\nhost_preferences_persistence is only needed for chromium builds, SSO does the same job.",
       "parentUuid": "7b4c7e88_2cabc2e0",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "81dab1d3898fa14fc312f1a0b8e6e5417a7131ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3b286ab_ebba8f34",
+        "filename": "remoting/ios/persistence/remoting_preferences.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-17T21:12:43Z",
+      "side": 1,
+      "message": "But HostPreferences doesn\u0027t seem to be used anywhere in the codebase. We use KeyChainWrapper to store pairing IDs...\n\nIs that just unused code copied from the old app?",
+      "parentUuid": "b80b18fe_8ead59e2",
       "range": {
         "startLine": 10,
         "startChar": 0,
