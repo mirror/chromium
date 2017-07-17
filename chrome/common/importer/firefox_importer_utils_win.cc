@@ -56,6 +56,10 @@ base::FilePath GetFirefoxInstallPathFromRegistry() {
   if (result != ERROR_SUCCESS)
     return base::FilePath();
 
+  if (buffer_length >= arraysize(buffer))
+    buffer_length = arraysize(buffer) - 1;
+  // Ensure null termination.
+  buffer[buffer_length - 1] = 0;
   registry_path += L"\\" + base::string16(buffer) + L"\\Main";
   buffer_length = sizeof(buffer);
   base::win::RegKey reg_key_directory(HKEY_LOCAL_MACHINE,
