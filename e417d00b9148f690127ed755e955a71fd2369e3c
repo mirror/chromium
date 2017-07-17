@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "7710e9ac_8a5864e4",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_utils.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-17T20:10:41Z",
+      "side": 1,
+      "message": "Could we check the connection where tab_coordinator is created? Maybe we can delay the creation of WebContentsResourceCoordinator by creating it inside tab_resource_coordinator() https://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h?l\u003d28? And do the check like:\n\ncontent::ServiceManagerConnection* connection \u003d\n    content::ServiceManagerConnection::GetForProcess();\nservice_manager::Connector* connector \u003d\n    connection ? connection-\u003eGetConnector() : nullptr;\nif (!connector)\n  return nullptr;\n\nWould this approach help us pass the test? we can do null check when we call tab_resource_coordinator().\n\nThere is a Blink platform/ and Blink core, Blink core can\u0027t use content/, and even base/. I believe we have plan to let Blink platform/ use content/ so that it serves as a layer, but I don\u0027t think we are using content/ except for testing.",
+      "parentUuid": "a8af0abb_829d1e41",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "e417d00b9148f690127ed755e955a71fd2369e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d82159b_de5e2e4c",
         "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
         "patchSetId": 16
