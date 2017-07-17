@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a28c5e6_7765f290",
+        "filename": "mojo/public/c/system/message_pipe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-17T17:07:05Z",
+      "side": 1,
+      "message": "Nit: typo whch",
+      "range": {
+        "startLine": 126,
+        "startChar": 14,
+        "endLine": 126,
+        "endChar": 18
+      },
+      "revId": "5814adc50ff29454076cee28d0702ab45d4ab742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9587e43f_351b63ea",
+        "filename": "mojo/public/c/system/message_pipe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-17T17:07:05Z",
+      "side": 1,
+      "message": "Nit: remove unfinished sentence.",
+      "range": {
+        "startLine": 406,
+        "startChar": 42,
+        "endLine": 406,
+        "endChar": 43
+      },
+      "revId": "5814adc50ff29454076cee28d0702ab45d4ab742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
