@@ -8,6 +8,7 @@
 #include <set>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "services/ui/ws/server_window_observer.h"
 
 namespace ui {
@@ -22,6 +23,8 @@ class ServerWindowDrawnTrackerObserver;
 // NOTE: you must ensure this class is destroyed before the root.
 class ServerWindowDrawnTracker : public ServerWindowObserver {
  public:
+  // |notify_drawn_changed_on_new_root| is used to indicate if moving to a new
+  // root should trigger treating the drawn state as false.
   ServerWindowDrawnTracker(ServerWindow* window,
                            ServerWindowDrawnTrackerObserver* observer);
   ~ServerWindowDrawnTracker() override;
@@ -49,11 +52,14 @@ class ServerWindowDrawnTracker : public ServerWindowObserver {
   void OnWillChangeWindowVisibility(ServerWindow* window) override;
   void OnWindowVisibilityChanged(ServerWindow* window) override;
 
+  ServerWindow* root_ = nullptr;
   ServerWindow* window_;
   ServerWindowDrawnTrackerObserver* observer_;
   bool drawn_;
   // Set of windows we're observing. This is |window_| and all its ancestors.
   std::set<ServerWindow*> windows_;
+
+  base::WeakPtrFactory<ServerWindowDrawnTracker> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServerWindowDrawnTracker);
 };
