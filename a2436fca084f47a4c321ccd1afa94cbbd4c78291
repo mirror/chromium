@@ -22,6 +22,30 @@
       "revId": "a2436fca084f47a4c321ccd1afa94cbbd4c78291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30826087_2e60738c",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-17T23:51:31Z",
+      "side": 1,
+      "message": "Talked offline.  We\u0027re safe due to OnDownloadFailed() only processing the call if the state is READY.",
+      "parentUuid": "a5a492c4_246f09f3",
+      "range": {
+        "startLine": 683,
+        "startChar": 2,
+        "endLine": 683,
+        "endChar": 11
+      },
+      "revId": "a2436fca084f47a4c321ccd1afa94cbbd4c78291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
