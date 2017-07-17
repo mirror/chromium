@@ -402,9 +402,9 @@ bool DirectRenderer::ShouldSkipQuad(const DrawQuad& quad,
     return true;
 
   gfx::Rect target_rect = MathUtil::MapEnclosingClippedRect(
-      quad.shared_quad_state->quad_to_target_transform, quad.visible_rect);
-  if (quad.shared_quad_state->is_clipped)
-    target_rect.Intersect(quad.shared_quad_state->clip_rect);
+      quad.shared_quad_state()->quad_to_target_transform, quad.visible_rect);
+  if (quad.shared_quad_state()->is_clipped)
+    target_rect.Intersect(quad.shared_quad_state()->clip_rect);
 
   target_rect.Intersect(render_pass_scissor);
   return target_rect.IsEmpty();
@@ -416,12 +416,12 @@ void DirectRenderer::SetScissorStateForQuad(
     bool use_render_pass_scissor) {
   if (use_render_pass_scissor) {
     gfx::Rect quad_scissor_rect = render_pass_scissor;
-    if (quad.shared_quad_state->is_clipped)
-      quad_scissor_rect.Intersect(quad.shared_quad_state->clip_rect);
+    if (quad.shared_quad_state()->is_clipped)
+      quad_scissor_rect.Intersect(quad.shared_quad_state()->clip_rect);
     SetScissorTestRectInDrawSpace(quad_scissor_rect);
     return;
-  } else if (quad.shared_quad_state->is_clipped) {
-    SetScissorTestRectInDrawSpace(quad.shared_quad_state->clip_rect);
+  } else if (quad.shared_quad_state()->is_clipped) {
+    SetScissorTestRectInDrawSpace(quad.shared_quad_state()->clip_rect);
     return;
   }
 
@@ -569,18 +569,20 @@ void DirectRenderer::DrawRenderPass(const RenderPass* render_pass) {
       continue;
     }
 
-    if (last_sorting_context_id != quad.shared_quad_state->sorting_context_id) {
-      last_sorting_context_id = quad.shared_quad_state->sorting_context_id;
+    if (last_sorting_context_id !=
+        quad.shared_quad_state()->sorting_context_id) {
+      last_sorting_context_id = quad.shared_quad_state()->sorting_context_id;
       FlushPolygons(&poly_list, render_pass_scissor_in_draw_space,
                     render_pass_requires_scissor);
     }
 
     // This layer is in a 3D sorting context so we add it to the list of
     // polygons to go into the BSP tree.
-    if (quad.shared_quad_state->sorting_context_id != 0) {
-      std::unique_ptr<DrawPolygon> new_polygon(new DrawPolygon(
-          *it, gfx::RectF(quad.visible_rect),
-          quad.shared_quad_state->quad_to_target_transform, next_polygon_id++));
+    if (quad.shared_quad_state()->sorting_context_id != 0) {
+      std::unique_ptr<DrawPolygon> new_polygon(
+          new DrawPolygon(*it, gfx::RectF(quad.visible_rect),
+                          quad.shared_quad_state()->quad_to_target_transform,
+                          next_polygon_id++));
       if (new_polygon->points().size() > 2u) {
         poly_list.push_back(std::move(new_polygon));
       }

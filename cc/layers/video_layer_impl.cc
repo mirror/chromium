@@ -169,7 +169,7 @@ void VideoLayerImpl::AppendQuads(RenderPass* render_pass,
 
   SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  shared_quad_state->SetAll(transform, gfx::Rect(rotated_size),
+  shared_quad_state->SetAll(id(), transform, gfx::Rect(rotated_size),
                             visible_layer_rect(), clip_rect(), is_clipped(),
                             draw_opacity(), SkBlendMode::kSrcOver,
                             GetSortingContextId());

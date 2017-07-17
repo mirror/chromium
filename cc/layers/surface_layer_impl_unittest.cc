@@ -169,6 +169,7 @@ TEST(SurfaceLayerImplTest, SurfaceStretchedToLayerBounds) {
       SurfaceInfo(surface_id, surface_scale, surface_size));
   surface_layer_impl->SetFallbackSurfaceInfo(
       SurfaceInfo(surface_id2, surface_scale, surface_size));
+  surface_layer_impl->SetFallbackLayerId(surface_layer_impl->id() + 1);
   surface_layer_impl->SetStretchContentToFillBounds(true);
 
   impl.CalcDrawProps(viewport_size);
@@ -180,7 +181,9 @@ TEST(SurfaceLayerImplTest, SurfaceStretchedToLayerBounds) {
 
   const QuadList& quads = render_pass->quad_list;
   ASSERT_EQ(2u, quads.size());
-  const SharedQuadState* shared_quad_state = quads.front()->shared_quad_state;
+  const SharedQuadState* shared_quad_state =
+      render_pass->shared_quad_state_list.front();
+  ASSERT_EQ(shared_quad_state->stable_id, quads.front()->stable_id);
 
   // We expect that the transform for the quad stretches the quad to cover the
   // entire bounds of the layer.
@@ -240,6 +243,7 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplEmitsTwoDrawQuadsIfUniqueFallback) {
   surface_layer_impl->SetDrawsContent(true);
   surface_layer_impl->SetPrimarySurfaceInfo(primary_surface_info);
   surface_layer_impl->SetFallbackSurfaceInfo(fallback_surface_info);
+  surface_layer_impl->SetFallbackLayerId(surface_layer_impl->id() + 1);
 
   gfx::Size viewport_size(1000, 1000);
   impl.CalcDrawProps(viewport_size);
@@ -301,8 +305,7 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplEmitsTwoDrawQuadsIfUniqueFallback) {
   EXPECT_EQ(surface_id2, surface_draw_quad2->surface_id);
   // If the device scale factor of the primary and fallback are different then
   // they do not share a SharedQuadState.
-  EXPECT_NE(surface_draw_quad1->shared_quad_state,
-            surface_draw_quad2->shared_quad_state);
+  EXPECT_NE(surface_draw_quad1->stable_id, surface_draw_quad2->stable_id);
 
   EXPECT_EQ(SurfaceDrawQuadType::PRIMARY,
             surface_draw_quad3->surface_draw_quad_type);
@@ -318,8 +321,7 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplEmitsTwoDrawQuadsIfUniqueFallback) {
   EXPECT_EQ(surface_id2, surface_draw_quad5->surface_id);
   // If the device scale factor of the primary and fallback are the same then
   // they share a SharedQuadState.
-  EXPECT_EQ(surface_draw_quad4->shared_quad_state,
-            surface_draw_quad5->shared_quad_state);
+  EXPECT_EQ(surface_draw_quad4->stable_id, surface_draw_quad5->stable_id);
 }
 
 // This test verifies that one SurfaceDrawQuad is emitted if a
@@ -347,6 +349,7 @@ TEST(SurfaceLayerImplTest,
   surface_layer_impl->SetDrawsContent(true);
   surface_layer_impl->SetPrimarySurfaceInfo(primary_surface_info);
   surface_layer_impl->SetFallbackSurfaceInfo(primary_surface_info);
+  surface_layer_impl->SetFallbackLayerId(surface_layer_impl->id() + 1);
 
   gfx::Size viewport_size(1000, 1000);
   impl.CalcDrawProps(viewport_size);

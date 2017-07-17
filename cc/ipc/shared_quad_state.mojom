@@ -8,6 +8,10 @@ import "ui/gfx/geometry/mojo/geometry.mojom";
 import "ui/gfx/mojo/transform.mojom";
 
 struct SharedQuadState {
+  // The stable id used to identify which layer this shared quad state comes
+  // from.
+  uint64 stable_id;
+
   // gfx.mojom.Transforms quad rects into the target content space.
   gfx.mojom.Transform quad_to_target_transform;
 

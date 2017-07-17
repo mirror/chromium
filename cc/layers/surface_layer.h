@@ -55,6 +55,7 @@ class CC_EXPORT SurfaceLayer : public Layer {
 
   SurfaceInfo primary_surface_info_;
   SurfaceInfo fallback_surface_info_;
+  int fallback_layer_id_;
   base::Closure fallback_reference_returner_;
 
   scoped_refptr<SurfaceReferenceFactory> ref_factory_;

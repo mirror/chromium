@@ -761,8 +761,9 @@ static void AppendQuadsToFillScreen(
   int sorting_context_id = 0;
   SharedQuadState* shared_quad_state =
       target_render_pass->CreateAndAppendSharedQuadState();
-  shared_quad_state->SetAll(gfx::Transform(), root_target_rect,
-                            root_target_rect, root_target_rect, false, opacity,
+  shared_quad_state->SetAll(root_render_surface->id(), gfx::Transform(),
+                            root_target_rect, root_target_rect,
+                            root_target_rect, false, opacity,
                             SkBlendMode::kSrcOver, sorting_context_id);
 
   for (Region::Iterator fill_rects(fill_region); fill_rects.has_rect();
@@ -989,7 +990,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
 #if DCHECK_IS_ON()
   for (const auto& render_pass : frame->render_passes) {
     for (auto* quad : render_pass->quad_list)
-      DCHECK(quad->shared_quad_state);
+      DCHECK(quad->shared_quad_state());
   }
   DCHECK(frame->render_passes.back()->output_rect.origin().IsOrigin());
 #endif

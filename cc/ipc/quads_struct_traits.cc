@@ -267,6 +267,7 @@ bool StructTraits<cc::mojom::DrawQuadDataView, cc::DrawQuad>::Read(
       !data.ReadVisibleRect(&out->visible_rect)) {
     return false;
   }
+  out->stable_id = data.stable_id();
   out->needs_blending = data.needs_blending();
   return data.ReadDrawQuadState(out);
 }
