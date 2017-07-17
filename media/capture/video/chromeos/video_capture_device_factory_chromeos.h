@@ -53,6 +53,8 @@ class CAPTURE_EXPORT VideoCaptureDeviceFactoryChromeOS final
   // |camera_hal_ipc_thread_|.
   scoped_refptr<CameraHalDelegate> camera_hal_delegate_;
 
+  bool initialized_;
+
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureDeviceFactoryChromeOS);
 };
 
