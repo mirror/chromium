@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c02164bd_f7b4c02b",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-17T06:57:07Z",
+      "side": 1,
+      "message": "nit: 1 extra line",
+      "revId": "ecdedd34e575fcf35f06ff2cb2b88445c999b392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
