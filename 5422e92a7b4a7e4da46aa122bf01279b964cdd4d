@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8224d93_c2e04126",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-17T23:13:25Z",
+      "side": 1,
+      "message": "Can we use $i18nPolymer here*. Like:\n\n[[defaultSettingString_(\n              someDataMember_,\n              \u0027$i18nPolymer{siteSettingsActionAskDefault}\u0027,\n              \u0027$i18nPolymer{siteSettingsActionAllowDefault}\u0027,\n              \u0027$i18nPolymer{siteSettingsActionBlockDefault}\u0027)]]\n\n\n* Examples:\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/site_settings_page/site_settings_page.html?q\u003di18nPolymer\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d37\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/site_settings_page/site_settings_page.js?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d133",
+      "revId": "5422e92a7b4a7e4da46aa122bf01279b964cdd4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
