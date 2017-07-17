@@ -275,6 +275,14 @@ void LegacyInputRouterImpl::OnTouchEventAck(
 
   // Reset the touch action at the end of a touch-action sequence.
   if (WebTouchEventTraits::IsTouchSequenceEnd(event.event)) {
+    // Report effective touch action such as kTouchActionNone, kTouchActionPanX,
+    // etc.
+    // Since |cc::kTouchActionAuto| is equivalent to |cc::kTouchActionMax|, we
+    // must add one to the upper bound to be able to visualize the number of
+    // times |cc::kTouchActionAuto| is hit.
+    UMA_HISTOGRAM_ENUMERATION("TouchAction.EffectiveTouchAction",
+                              touch_action_filter_.allowed_touch_action(),
+                              cc::kTouchActionMax + 1);
     touch_action_filter_.ResetTouchAction();
     UpdateTouchAckTimeoutEnabled();
   }
