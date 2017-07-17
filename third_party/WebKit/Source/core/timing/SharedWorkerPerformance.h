@@ -36,7 +36,6 @@
 
 namespace blink {
 
-class ScriptState;
 class SharedWorker;
 
 class SharedWorkerPerformance final
@@ -45,16 +44,10 @@ class SharedWorkerPerformance final
   USING_GARBAGE_COLLECTED_MIXIN(SharedWorkerPerformance);
 
  public:
-  static SharedWorkerPerformance& From(SharedWorker&);
-
-  static double workerStart(ScriptState*, SharedWorker&);
-  double GetWorkerStart(ExecutionContext*, SharedWorker&) const;
-
   DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<SharedWorker>::Trace(visitor); }
 
  private:
   explicit SharedWorkerPerformance(SharedWorker&);
-  static const char* SupplementName();
 
   double time_origin_;
 };
