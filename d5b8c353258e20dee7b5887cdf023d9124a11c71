@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6bfccd_2d990b54",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-17T11:40:29Z",
+      "side": 1,
+      "message": "Maybe platform/geometry/GeometryTestHelpers.h would be a better fit?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 17
+      },
+      "revId": "d5b8c353258e20dee7b5887cdf023d9124a11c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
